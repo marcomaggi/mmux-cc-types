@@ -144,6 +144,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 @menu
 * overview::                    Overview of the package.
 * version::                     Version functions.
+* memory::                      Standard memory allocation.
 
 Appendices
 
@@ -216,6 +217,68 @@ Return an integer representing the library interface current revision number.
 @deftypefun int mmux_bash_pointers_version_interface_age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
+
+@c page
+@node memory
+@chapter Standard memory allocation
+
+
+Basically, to allocate new memory we should do:
+
+@example
+declare PTR
+
+malloc PTR 123
+realloc PTR $PTR 456
+free $PTR
+@end example
+
+@noindent
+we must remember that if we execute Bash code in a subshell: the pointers will not be valid across
+shells; so the following will not work:
+
+@example
+declare PTR
+
+$(malloc PTR 123)
+free $PTR
+@end example
+
+@noindent
+because @func{malloc} allocates memory in a subshell.
+
+
+@deffn Builtin malloc @var{PTRVAR} @var{SIZE}
+Allocate a memory block using the standard @cfunc{malloc} function; if successful return true,
+otherwise return false.
+
+The argument @var{PTRVAR} must be the name of a variable in which @func{malloc} will store a string
+representation of the pointer to the newly allocated block.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the requested number of bytes in the newly allocated block; it must fit the C language type
+@objtype{size_t}.
+@end deffn
+
+
+@deffn Builtin realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
+Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
+otherwise return false.
+
+The argument @var{PTRVAR} must be the name of a variable in which @func{malloc} will store a string
+representation of the pointer to the newly allocated block.
+
+The argument @var{OLDPTR} must be the string representation of the old memory pointer.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the newly requested number of bytes in the newly allocated block; it must fit the C language type
+@objtype{size_t}.
+@end deffn
+
+
+@deffn Builtin free @var{PTR}
+Release a previously allocated memory block using the standard @cfunc{free} function.
+@end deffn
 
 @c page
 @c ------------------------------------------------------------
