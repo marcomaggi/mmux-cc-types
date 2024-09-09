@@ -1,0 +1,49 @@
+#
+# Part of: MMUX Bash Pointers
+# Contents: core library
+# Date: Sep  9, 2024
+#
+# Abstract
+#
+#	This library  must be  sourced from an  interactive shell  or from a  script.  It  loads the
+#	shared library and enables the implemented builtins.
+#
+#	The Bash builtin "enable" will search the shared library file in the usual places, including
+#	the directories from "LD_LIBRARY_PATH".
+#
+# Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify it under the terms of the GNU
+# Lesser General Public  License as published by  the Free Software Foundation, either  version 3 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that  it will be useful, but WITHOUT ANY WARRANTY; without
+# even the  implied warranty of MERCHANTABILITY  or FITNESS FOR  A PARTICULAR PURPOSE.  See  the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the  GNU Lesser General Public License along with this program.
+# If not, see <http://www.gnu.org/licenses/>.
+#
+
+declare -rg MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
+declare -rg MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
+declare -rg MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
+declare -rg MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
+
+enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmuxbashlibcmathinit
+
+# This initialises the library.
+if mmuxbashpointersinit
+then
+    declare MMUX_BASH_LIBC_MATH_BUILTIN
+    for MMUX_BASH_LIBC_MATH_BUILTIN in \
+	malloc realloc free
+    do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
+    done
+    unset MMUX_BASH_LIBC_MATH_BUILTIN
+fi
+
+### end of file
+# Local Variables:
+# mode: sh
+# End:
