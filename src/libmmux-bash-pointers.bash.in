@@ -30,7 +30,7 @@ declare -rg MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CUR
 declare -rg MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
 declare -rg MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
 
-enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmuxbashlibcmathinit
+enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmuxbashpointersinit
 
 # This initialises the library.
 if mmuxbashpointersinit

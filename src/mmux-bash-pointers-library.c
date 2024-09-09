@@ -56,6 +56,57 @@ mmux_bash_pointers_version_interface_age (void)
 
 
 /** --------------------------------------------------------------------
+ ** Type parsers.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_parse_pointer (void ** p_data, char const * s_arg, char const * caller_name)
+{
+  int	rv;
+
+  rv = sscanf(s_arg, "%p", p_data);
+  if ((EOF != rv) && (1 == rv)) {
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected pointer: \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+}
+
+int
+mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char const * caller_name)
+{
+  int	rv;
+
+  rv = sscanf(s_arg, "%lu", p_data);
+  if ((EOF != rv) && (1 == rv)) {
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected pointer: \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type printers.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_print_pointer (void * data)
+{
+  printf("%p", data);
+  return EXECUTION_SUCCESS;
+}
+int
+mmux_bash_pointers_print_size_t (size_t data)
+{
+  printf("%lu", data);
+  return EXECUTION_SUCCESS;
+}
+
+
+/** --------------------------------------------------------------------
  ** Library initialisation.
  ** ----------------------------------------------------------------- */
 
@@ -70,7 +121,7 @@ static char * mmuxbashpointersinit_doc[] = {
 };
 struct builtin mmuxbashpointersinit_struct = {
   .name		= "mmuxbashpointersinit",		/* Builtin name */
-  .function	= mmuxbashpointersinit_builtin,	/* Function implementing the builtin */
+  .function	= mmuxbashpointersinit_builtin,		/* Function implementing the builtin */
   .flags	= BUILTIN_ENABLED,			/* Initial flags for builtin */
   .long_doc	= mmuxbashpointersinit_doc,		/* Array of long documentation strings. */
   .short_doc	= "mmuxbashpointersinit",		/* Usage synopsis; becomes short_doc */

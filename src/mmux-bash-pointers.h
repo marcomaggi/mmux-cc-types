@@ -114,8 +114,19 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
- ** Helpers.
+ ** Type parsers.
  ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_pointer (void **  p_data, char const * s_arg, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char const * caller_name);
+
+
+/** --------------------------------------------------------------------
+ ** Type printers.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl int mmux_bash_pointers_print_pointer (void * data);
+mmux_bash_pointers_decl int mmux_bash_pointers_print_size_t  (size_t data);
 
 
 /** --------------------------------------------------------------------

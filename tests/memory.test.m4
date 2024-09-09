@@ -1,13 +1,13 @@
 #!#
 #!# Part of: MMUX Bash Libc Mathematics
-#!# Contents: tests for version numbers
+#!# Contents: tests for memory management
 #!# Date: Sep  9, 2024
 #!#
 #!# Abstract
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/version.bash ; less tests/version.log
+#!#		$ make all check TESTS=tests/memory.bash ; less tests/memory.log
 #!#
 #!#	that will select these tests.
 #!#
@@ -51,20 +51,22 @@ source "$MMUX_LIBRARY"
 
 #### version numbers
 
-function version-1.1 () {
-    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_CURRENT)
+function memory-1.1 () {
+    declare PTR
+    malloc PTR 123
+    free $PTR
 }
-function version-1.2 () {
-    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_REVISION)
-}
-function version-1.3 () {
-    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_AGE)
+function memory-1.2 () {
+    declare PTR
+    malloc PTR 123
+    realloc PTR $PTR 456
+    free $PTR
 }
 
 
 #### let's go
 
-dotest version-
+dotest memory-
 dotest-final-report
 
 ### end of file

@@ -81,7 +81,7 @@ EXTRA_DIST	+= \
 
 mmux_bash_pointers_CURRENT		= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
 mmux_bash_pointers_REVISION		= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@
-mmux_bash_pointers_AGE		= @mmux_bash_pointers_VERSION_INTERFACE_AGE@
+mmux_bash_pointers_AGE			= @mmux_bash_pointers_VERSION_INTERFACE_AGE@
 mmux_bash_pointers_LINKER_VERSION	= \
 	-version-info $(mmux_bash_pointers_CURRENT):$(mmux_bash_pointers_REVISION):$(mmux_bash_pointers_AGE)
 
@@ -89,12 +89,13 @@ include_HEADERS				= src/mmux-bash-pointers.h
 
 lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS)
-libmmux_bash_pointers_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS)
+libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
 libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-internals.h	\
-	src/mmux-bash-pointers-library.c
+	src/mmux-bash-pointers-library.c	\
+	src/mmux-bash-pointers-memory.c
 
 .PHONY: library
 
@@ -113,10 +114,12 @@ EXTRA_DIST		+= $(mmux_library_SCRIPTS)
 #### tests
 
 EXTRA_DIST		+= \
-	tests/version.test.m4
+	tests/version.test.m4		\
+	tests/memory.test.m4
 
 MMUX_CHECK_BUILT_TESTS	=		\
-	tests/version.test
+	tests/version.test		\
+	tests/memory.test
 
 if MMUX_TESTING_ENABLED
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)
@@ -144,7 +147,7 @@ MBFL_TESTS_ENV		+= export LD_LIBRARY_PATH=$(builddir)/.libs/:$(LD_LIBRARY_PATH);
 MBFL_TESTS_COMPILE	= $(MBFL_TESTS_ENV) $(MBFLPP_PROG_RUN)
 MBFL_TESTS_FLAGS	= $(MBFLPP_GENERAL_FLAGS)
 
-MBFL_TESTS_PREREQUISITES= $(MMUX_LIBRARY)
+MBFL_TESTS_PREREQUISITES= $(MMUX_LIBRARY) libmmux-bash-pointers.la
 
 # Read "Parallel Test Harness" in the documentation of GNU Automake to
 # understand how to use this interface for "make check".
