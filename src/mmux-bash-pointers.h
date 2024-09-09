@@ -119,11 +119,21 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 #undef  mmux_bash_pointers_parse_offset
 #define mmux_bash_pointers_parse_offset(P_DATA,S_ARG,CALLER_NAME) \
-  mmux_bash_pointers_parse_size_t(P_DATA,S_ARG,CALLER_NAME)
+  mmux_bash_pointers_parse_usize(P_DATA,S_ARG,CALLER_NAME)
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_pointer (void **  p_data, char const * s_arg, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (int *    p_data, char const * s_arg, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t * p, char const * s, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (signed   int  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint    (unsigned int  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_slong   (signed   long * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ulong   (unsigned long * p, char const * s, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_float   (float   * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_double  (double  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, char const * s, char const * caller_name);
 
 
 /** --------------------------------------------------------------------

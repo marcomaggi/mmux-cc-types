@@ -38,7 +38,15 @@ then
     declare MMUX_BASH_LIBC_MATH_BUILTIN
     for MMUX_BASH_LIBC_MATH_BUILTIN in \
 	malloc realloc free			\
-	       mmuxpointerspointersetsint	mmuxpointerspointerrefsint
+	       mmuxpointerspointersetsint	mmuxpointerspointerrefsint	\
+	       mmuxpointerspointersetuint	mmuxpointerspointerrefuint	\
+	       mmuxpointerspointersetslong	mmuxpointerspointerrefslong	\
+	       mmuxpointerspointersetulong	mmuxpointerspointerrefulong	\
+	       mmuxpointerspointersetssize	mmuxpointerspointerrefssize	\
+	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize	\
+	       mmuxpointerspointersetfloat	mmuxpointerspointerreffloat	\
+	       mmuxpointerspointersetdouble	mmuxpointerspointerrefdouble	\
+	       mmuxpointerspointersetldouble	mmuxpointerspointerrefldouble
     do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
     done
     unset MMUX_BASH_LIBC_MATH_BUILTIN
@@ -46,6 +54,30 @@ fi
 
 alias pointer-set-sint='mmuxpointerspointersetsint'
 alias pointer-ref-sint='mmuxpointerspointerrefsint'
+
+alias pointer-set-uint='mmuxpointerspointersetuint'
+alias pointer-ref-uint='mmuxpointerspointerrefuint'
+
+alias pointer-set-slong='mmuxpointerspointersetslong'
+alias pointer-ref-slong='mmuxpointerspointerrefslong'
+
+alias pointer-set-ulong='mmuxpointerspointersetulong'
+alias pointer-ref-ulong='mmuxpointerspointerrefulong'
+
+alias pointer-set-float='mmuxpointerspointersetfloat'
+alias pointer-ref-float='mmuxpointerspointerreffloat'
+
+alias pointer-set-double='mmuxpointerspointersetdouble'
+alias pointer-ref-double='mmuxpointerspointerrefdouble'
+
+alias pointer-set-ldouble='mmuxpointerspointersetldouble'
+alias pointer-ref-ldouble='mmuxpointerspointerrefldouble'
+
+alias pointer-set-ssize='mmuxpointerspointersetssize'
+alias pointer-ref-ssize='mmuxpointerspointerrefssize'
+
+alias pointer-set-usize='mmuxpointerspointersetusize'
+alias pointer-ref-usize='mmuxpointerspointerrefusize'
 
 ### end of file
 # Local Variables:

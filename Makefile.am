@@ -78,8 +78,14 @@ install-html-local:
 
 EXTRA_DIST	+= \
 	src/mmux-bash-pointers.m4		\
-	src/mmux-bash-pointers-memory.m4	\
-	src/mmux-bash-pointers-arrays.m4
+	src/mmux-bash-pointers-library.c.m4	\
+	src/mmux-bash-pointers-memory.c.m4	\
+	src/mmux-bash-pointers-arrays.c.m4
+
+CLEANFILES	+=
+	src/mmux-bash-pointers-library.c	\
+	src/mmux-bash-pointers-memory.c		\
+	src/mmux-bash-pointers-arrays.c
 
 mmux_bash_pointers_CURRENT		= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
 mmux_bash_pointers_REVISION		= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@

@@ -72,12 +72,14 @@ mmux_bash_pointers_parse_pointer (void ** p_data, char const * s_arg, char const
     return EXECUTION_FAILURE;
   }
 }
+
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char const * caller_name)
+mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * caller_name)
 {
   int	rv;
 
-  rv = sscanf(s_arg, "%lu", p_data);
+  rv = sscanf(s_arg, $3, p_data);
   if ((EOF != rv) && (1 == rv)) {
     return EXECUTION_SUCCESS;
   } else {
@@ -85,19 +87,19 @@ mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char cons
     return EXECUTION_FAILURE;
   }
 }
-int
-mmux_bash_pointers_parse_sint  (int * p_data, char const * s_arg, char const * caller_name)
-{
-  int	rv;
+]]])
 
-  rv = sscanf(s_arg, "%d", p_data);
-  if ((EOF != rv) && (1 == rv)) {
-    return EXECUTION_SUCCESS;
-  } else {
-    fprintf(stderr, "%s: error: invalid argument, expected pointer: \"%s\"\n", caller_name, s_arg);
-    return EXECUTION_FAILURE;
-  }
-}
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ssize]]],	[[[ssize_t]]],		[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[usize]]],	[[[size_t]]],		[[["%lu"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[sint]]],	[[[signed int]]],	[[["%d"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[uint]]],	[[[unsigned int]]],	[[["%u"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[slong]]],	[[[signed long]]],	[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ulong]]],	[[[unsigned long]]],	[[["%lu"]]])
+
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],		[[["%f"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],		[[["%lf"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],	[[["%Lf"]]])
+
 
 
 /** --------------------------------------------------------------------

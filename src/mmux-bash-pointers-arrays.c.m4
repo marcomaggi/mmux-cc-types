@@ -30,17 +30,18 @@
 
 
 /** --------------------------------------------------------------------
- ** Standard memory management.
+ ** Arrays mutators.
  ** ----------------------------------------------------------------- */
 
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_MUTATOR]]],[[[
 static int
-mmuxpointerspointersetsint_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmuxpointerspointerset[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"pointer-set-sint"
+#define MMUX_BUILTIN_NAME	"pointer-set-$1"
 {
-  int *		ptr;
+  $2 *		ptr;
   size_t	offset;
-  int		value;
+  $2		value;
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer((void **)&ptr, argv[1], MMUX_BUILTIN_NAME);
@@ -49,27 +50,43 @@ mmuxpointerspointersetsint_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
   rv = mmux_bash_pointers_parse_offset(&offset, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_sint(&value, argv[3], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_$1(&value, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   *(ptr + offset) = value;
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointersetsint]]],[[[(4 != argc)]]],
-    [[["pointer-set-sint POINTER OFFSET VALUE"]]],
-    [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"int\"."]]])
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerset$1]]],[[[(4 != argc)]]],
+    [[["pointer-set-$1 POINTER OFFSET VALUE"]]],
+    [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"$2\"."]]])
+]]])
 
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint]]],		[[[signed   int]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint]]],		[[[unsigned int]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[slong]]],		[[[signed   long]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ulong]]],		[[[unsigned long]]])
 
-/* ------------------------------------------------------------------ */
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]])
 
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[float]]],		[[[float]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[double]]],		[[[double]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ldouble]]],	[[[long double]]])
+
+
+/** --------------------------------------------------------------------
+ ** Arrays accessors.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_ACCESSOR]]],[[[
 static int
-mmuxpointerspointerrefsint_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"pointer-ref-sint"
+#define MMUX_BUILTIN_NAME	"pointer-ref-$1"
 {
-  int *		ptr;
+  $2 *		ptr;
   size_t	offset;
-  int		value;
+  $2		value;
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer((void **)&ptr, argv[2], MMUX_BUILTIN_NAME);
@@ -79,25 +96,34 @@ mmuxpointerspointerrefsint_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   value = *(ptr + offset);
-  if (0) {
-    fprintf(stderr, "%s: pointer %p, offset %lu, value %d\n", __func__, ptr, offset, value);
-  }
 
   {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
     char	str[64];
     int		flags = 0;
 
-    snprintf(str, 1024, "%d", value);
+    snprintf(str, 1024, $3, value);
     /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
        (Marco Maggi; Sep 9, 2024) */
     v = bind_variable(argv[1], str, flags);
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerrefsint]]],[[[(4 != argc)]]],
-    [[["pointer-ref-sint VALUEVAR POINTER OFFSET"]]],
-    [[["Retrieve a C language type \"int\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerref$1]]],[[[(4 != argc)]]],
+    [[["pointer-ref-$1 VALUEVAR POINTER OFFSET"]]],
+    [[["Retrieve a C language type \"$2\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
+]]])
 
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],	[[["%d"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],	[[["%u"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],	[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],	[[["%lu"]]])
+
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],		[[["%lu"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],		[[["%ld"]]])
+
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[float]]],		[[[float]]],		[[["%f"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],		[[["%lf"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],	[[["%Lf"]]])
 
 /* end of file */

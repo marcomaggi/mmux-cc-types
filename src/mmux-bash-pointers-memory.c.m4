@@ -40,7 +40,7 @@ malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   size_t	len;
   int		rv;
 
-  rv = mmux_bash_pointers_parse_size_t(&len, argv[2], "malloc");
+  rv = mmux_bash_pointers_parse_usize(&len, argv[2], "malloc");
   if (EXECUTION_SUCCESS != rv) { return rv; }
   ptr = malloc(len);
   if (0) {
@@ -77,7 +77,7 @@ realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], "realloc");
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_size_t(&len, argv[3], "realloc");
+  rv = mmux_bash_pointers_parse_usize(&len, argv[3], "realloc");
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   ptr = realloc(ptr, len);
