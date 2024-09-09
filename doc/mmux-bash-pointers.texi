@@ -144,6 +144,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 @menu
 * overview::                    Overview of the package.
 * version::                     Version functions.
+* variables::                   Global variables.
 * memory::                      Standard memory allocation.
 * pointers::                    Memory block accessors and mutators.
 
@@ -218,6 +219,28 @@ Return an integer representing the library interface current revision number.
 @deftypefun int mmux_bash_pointers_version_interface_age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
+
+@c page
+@node variables
+@chapter Global variables
+
+
+@macro MmuxDefineGlobalVar{VARNAME}
+@defvar \VARNAME\
+Global variable holding the size of the specified C language type.
+@end defvar
+
+@end macro
+
+@MmuxDefineGlobalVar{SIZEOF_SCHAR}
+@MmuxDefineGlobalVar{SIZEOF_UCHAR}
+@MmuxDefineGlobalVar{SIZEOF_SINT}
+@MmuxDefineGlobalVar{SIZEOF_UINT}
+@MmuxDefineGlobalVar{SIZEOF_SLONG}
+@MmuxDefineGlobalVar{SIZEOF_ULONG}
+@MmuxDefineGlobalVar{SIZEOF_FLOAT}
+@MmuxDefineGlobalVar{SIZEOF_DOUBLE}
+@MmuxDefineGlobalVar{SIZEOF_LDOUBLE}
 
 @c page
 @node memory
