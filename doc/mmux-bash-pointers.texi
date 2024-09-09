@@ -360,6 +360,7 @@ Accessor and mutator for memory blocks operating on C language types @code{\TYPE
 @MmuxDefineAccessorMutator{float,float}
 @MmuxDefineAccessorMutator{double,double}
 @MmuxDefineAccessorMutator{ldouble,long double}
+@MmuxDefineAccessorMutator{complex,double complex}
 
 @c page
 @c ------------------------------------------------------------

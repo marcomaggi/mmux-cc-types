@@ -48,7 +48,8 @@ then
 	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize	\
 	       mmuxpointerspointersetfloat	mmuxpointerspointerreffloat	\
 	       mmuxpointerspointersetdouble	mmuxpointerspointerrefdouble	\
-	       mmuxpointerspointersetldouble	mmuxpointerspointerrefldouble
+	       mmuxpointerspointersetldouble	mmuxpointerspointerrefldouble	\
+	       mmuxpointerspointersetcomplex	mmuxpointerspointerrefcomplex
     do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
     done
     unset MMUX_BASH_LIBC_MATH_BUILTIN
@@ -86,6 +87,9 @@ alias pointer-ref-ssize='mmuxpointerspointerrefssize'
 
 alias pointer-set-usize='mmuxpointerspointersetusize'
 alias pointer-ref-usize='mmuxpointerspointerrefusize'
+
+alias pointer-set-complex='mmuxpointerspointersetcomplex'
+alias pointer-ref-complex='mmuxpointerspointerrefcomplex'
 
 ### end of file
 # Local Variables:

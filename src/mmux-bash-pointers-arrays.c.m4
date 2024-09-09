@@ -165,6 +165,47 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointersetucha
     [[["pointer-set-uchar POINTER OFFSET VALUE"]]],
     [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"signed char\"."]]])
 
+/* ------------------------------------------------------------------ */
+
+static int
+mmuxpointerspointersetcomplex_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"pointer-set-complex"
+{
+  void *		ptr;
+  size_t		offset;
+  double complex	value;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr,   argv[1], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_offset(&offset, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_complex(&value, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  if (0) {
+    fprintf(stderr, "%s: poking ptr=%p, offset=%lu, re=%lf, im=%lf\n",
+	    __func__, ptr, offset, creal(value), cimag(value));
+  }
+
+  {
+    uint8_t *		ptr_byte;
+    double complex *	ptr_value;
+
+    ptr_byte   = ptr;
+    ptr_byte  += offset;
+    ptr_value  = (double complex *)ptr_byte;
+    *ptr_value = (double complex)value;
+    return EXECUTION_SUCCESS;
+  }
+}
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointersetcomplex]]],[[[(4 != argc)]]],
+    [[["pointer-set-complex POINTER OFFSET VALUE"]]],
+    [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"double complex\"."]]])
+
 
 /** --------------------------------------------------------------------
  ** Arrays accessors.
@@ -197,10 +238,12 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
 
   {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-    char	str[128];
+#undef  STRLEN
+#define STRLEN	128
+    char	str[STRLEN];
     int		flags = 0;
 
-    snprintf(str, 1024, $3, value);
+    snprintf(str, STRLEN, $3, value);
     /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
        (Marco Maggi; Sep 9, 2024) */
     v = bind_variable(argv[1], str, flags);
@@ -257,10 +300,12 @@ mmuxpointerspointerreffloat_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * ar
 
   {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-    char	str[64];
+#undef  STRLEN
+#define STRLEN	64
+    char	str[STRLEN];
     int		flags = 0;
 
-    snprintf(str, 1024, "%f", (double)value);
+    snprintf(str, STRLEN, "%f", (double)value);
     /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
        (Marco Maggi; Sep 9, 2024) */
     v = bind_variable(argv[1], str, flags);
@@ -270,5 +315,53 @@ mmuxpointerspointerreffloat_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * ar
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerreffloat]]],[[[(4 != argc)]]],
     [[["pointer-ref-float VALUEVAR POINTER OFFSET"]]],
     [[["Retrieve a C language type \"float\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmuxpointerspointerrefcomplex_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"pointer-ref-complex"
+{
+  void *		ptr;
+  size_t		offset;
+  double complex	value;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_offset(&offset, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  {
+    uint8_t *		ptr_byte;
+    double complex *	ptr_value;
+
+    ptr_byte  = ptr;
+    ptr_byte += offset;
+    ptr_value = (double complex *)ptr_byte;
+
+    value = *ptr_value;
+  }
+
+  {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  STRLEN
+#define STRLEN	512
+    char	str[STRLEN];
+    int		flags = 0;
+
+    snprintf(str, STRLEN, "(%lf)+i*(%lf)", creal(value), cimag(value));
+    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
+       (Marco Maggi; Sep 9, 2024) */
+    v = bind_variable(argv[1], str, flags);
+  }
+  return EXECUTION_SUCCESS;
+}
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerrefcomplex]]],[[[(4 != argc)]]],
+    [[["pointer-ref-complex VALUEVAR POINTER OFFSET"]]],
+    [[["Retrieve a C language type \"double complex\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
+
 
 /* end of file */

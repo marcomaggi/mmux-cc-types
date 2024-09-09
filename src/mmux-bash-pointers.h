@@ -96,6 +96,8 @@ extern "C" {
   #include <unistd.h>
 */
 
+#include <complex.h>
+
 
 /** --------------------------------------------------------------------
  ** Constants and preprocessor macros.
@@ -136,6 +138,8 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_float   (float   * p, char 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_double  (double  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, char const * s, char const * caller_name);
 
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_complex (double complex * p, const char * s, char const * caller_name);
+
 
 /** --------------------------------------------------------------------
  ** Type printers.
@@ -143,6 +147,7 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, c
 
 mmux_bash_pointers_decl int mmux_bash_pointers_print_pointer (void * data);
 mmux_bash_pointers_decl int mmux_bash_pointers_print_usize   (size_t data);
+mmux_bash_pointers_decl int mmux_bash_pointers_print_complex (double complex data);
 
 
 /** --------------------------------------------------------------------
