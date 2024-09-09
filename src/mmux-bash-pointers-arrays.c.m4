@@ -239,7 +239,7 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
   {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
 #undef  STRLEN
-#define STRLEN	128
+#define STRLEN	1024 /* This size has to be good for every type. Ha! Ha! */
     char	str[STRLEN];
     int		flags = 0;
 
@@ -348,7 +348,7 @@ mmuxpointerspointerrefcomplex_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * 
   {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
 #undef  STRLEN
-#define STRLEN	512
+#define STRLEN	1024
     char	str[STRLEN];
     int		flags = 0;
 

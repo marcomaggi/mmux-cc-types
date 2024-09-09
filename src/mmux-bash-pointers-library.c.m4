@@ -67,12 +67,14 @@ void
 mmux_bash_pointers_create_global_double_variable (const char * name, int value)
 {
   SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-  char		str[1024];
+#undef  STRLEN
+#define STRLEN	64
+  char		str[STRLEN];
   /* NOTE I do not know what FLAGS is for, but setting it to zero seems fine.  (Marco
      Maggi; Sep 4, 2024) */
   int		flags = 0;
 
-  snprintf(str, 1024, "%d", value);
+  snprintf(str, STRLEN, "%d", value);
   v = bind_global_variable(name, str, flags);
 }
 
