@@ -77,7 +77,9 @@ install-html-local:
 #### libraries
 
 EXTRA_DIST	+= \
-	src/mmux-bash-pointers.m4
+	src/mmux-bash-pointers.m4		\
+	src/mmux-bash-pointers-memory.m4	\
+	src/mmux-bash-pointers-arrays.m4
 
 mmux_bash_pointers_CURRENT		= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
 mmux_bash_pointers_REVISION		= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@
@@ -95,7 +97,8 @@ libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-internals.h	\
 	src/mmux-bash-pointers-library.c	\
-	src/mmux-bash-pointers-memory.c
+	src/mmux-bash-pointers-memory.c		\
+	src/mmux-bash-pointers-arrays.c
 
 .PHONY: library
 
@@ -115,11 +118,13 @@ EXTRA_DIST		+= $(mmux_library_SCRIPTS)
 
 EXTRA_DIST		+= \
 	tests/version.test.m4		\
-	tests/memory.test.m4
+	tests/memory.test.m4		\
+	tests/arrays.test.m4
 
 MMUX_CHECK_BUILT_TESTS	=		\
 	tests/version.test		\
-	tests/memory.test
+	tests/memory.test		\
+	tests/arrays.test
 
 if MMUX_TESTING_ENABLED
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)

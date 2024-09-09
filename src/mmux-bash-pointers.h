@@ -117,8 +117,13 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
  ** Type parsers.
  ** ----------------------------------------------------------------- */
 
+#undef  mmux_bash_pointers_parse_offset
+#define mmux_bash_pointers_parse_offset(P_DATA,S_ARG,CALLER_NAME) \
+  mmux_bash_pointers_parse_size_t(P_DATA,S_ARG,CALLER_NAME)
+
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_pointer (void **  p_data, char const * s_arg, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (int *    p_data, char const * s_arg, char const * caller_name);
 
 
 /** --------------------------------------------------------------------

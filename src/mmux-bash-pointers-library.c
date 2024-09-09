@@ -72,13 +72,25 @@ mmux_bash_pointers_parse_pointer (void ** p_data, char const * s_arg, char const
     return EXECUTION_FAILURE;
   }
 }
-
 int
 mmux_bash_pointers_parse_size_t  (size_t * p_data, char const * s_arg, char const * caller_name)
 {
   int	rv;
 
   rv = sscanf(s_arg, "%lu", p_data);
+  if ((EOF != rv) && (1 == rv)) {
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected pointer: \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+}
+int
+mmux_bash_pointers_parse_sint  (int * p_data, char const * s_arg, char const * caller_name)
+{
+  int	rv;
+
+  rv = sscanf(s_arg, "%d", p_data);
   if ((EOF != rv) && (1 == rv)) {
     return EXECUTION_SUCCESS;
   } else {

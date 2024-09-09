@@ -37,11 +37,15 @@ if mmuxbashpointersinit
 then
     declare MMUX_BASH_LIBC_MATH_BUILTIN
     for MMUX_BASH_LIBC_MATH_BUILTIN in \
-	malloc realloc free
+	malloc realloc free			\
+	       mmuxpointerspointersetsint	mmuxpointerspointerrefsint
     do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
     done
     unset MMUX_BASH_LIBC_MATH_BUILTIN
 fi
+
+alias pointer-set-sint='mmuxpointerspointersetsint'
+alias pointer-ref-sint='mmuxpointerspointerrefsint'
 
 ### end of file
 # Local Variables:
