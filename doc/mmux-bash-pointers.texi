@@ -145,6 +145,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * overview::                    Overview of the package.
 * version::                     Version functions.
 * memory::                      Standard memory allocation.
+* pointers::                    Memory block accessors and mutators.
 
 Appendices
 
@@ -279,6 +280,63 @@ the newly requested number of bytes in the newly allocated block; it must fit th
 @deffn Builtin free @var{PTR}
 Release a previously allocated memory block using the standard @cfunc{free} function.
 @end deffn
+
+@c page
+@node pointers
+@chapter Memory block accessors and mutators
+
+
+If we allocate memory using the standard C library functions, we can poke and peek values in the
+memory blocks:
+
+@example
+declare PTR VALUE
+
+malloc PTR 1024
+pointer-set-double $PTR 0 1.23
+pointer-ref-double VALUE $PTR 0
+free $PTR
+@end example
+
+For all the following builtins, the argument:
+
+@table @var
+@item POINTER
+must be the string representation of a memory pointer referencing a previously allocated block;
+
+@item OFFSET
+must be the string representation of an exact, positive integer, compatible with the C language type
+@code{size_t}, representing an offset from @var{POINTER};
+
+@item VALUE
+must be the string representation of a number, compatible with a C language type: it is stored by
+the mutators at @var{OFFSET} from @var{POINTER};
+
+@item VALUEVAR
+must be a string representing the name of a Bash variable: it is used by the accessors to store the
+value extracted at @var{OFFSET} from @var{POINTER}.
+@end table
+
+
+@macro MmuxDefineAccessorMutator{STEM,TYPE}
+@deffn Builtin pointer-set-\STEM\ @var{POINTER} @var{OFFSET} @var{VALUE}
+@deffnx Builtin pointer-ref-\STEM\ @var{VALUEVAR} @var{POINTER} @var{OFFSET}
+Accessor and mutator for memory blocks operating on C language types @code{\TYPE\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineAccessorMutator{schar,signed char}
+@MmuxDefineAccessorMutator{uchar,unsigned char}
+@MmuxDefineAccessorMutator{sint,signed int}
+@MmuxDefineAccessorMutator{uint,unsigned int}
+@MmuxDefineAccessorMutator{slong,signed long}
+@MmuxDefineAccessorMutator{ulong,unsigned long}
+@MmuxDefineAccessorMutator{ssize,ssize_t}
+@MmuxDefineAccessorMutator{usize,size_t}
+@MmuxDefineAccessorMutator{float,float}
+@MmuxDefineAccessorMutator{double,double}
+@MmuxDefineAccessorMutator{ldouble,long double}
 
 @c page
 @c ------------------------------------------------------------

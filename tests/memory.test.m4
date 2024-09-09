@@ -49,7 +49,7 @@ mbfl_linker_source_library_by_stem(tests)
 source "$MMUX_LIBRARY"
 
 
-#### version numbers
+#### standard memory allocation
 
 function memory-1.1 () {
     declare PTR

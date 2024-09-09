@@ -123,13 +123,14 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_pointer (void **  p_data, char const * s_arg, char const * caller_name);
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t  * p, char const * s, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t * p, char const * s, char const * caller_name);
-
+/* To parse schar and uchar let's just use sint and check the boundaries. */
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (signed   int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint    (unsigned int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_slong   (signed   long * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ulong   (unsigned long * p, char const * s, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t * p, char const * s, char const * caller_name);
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_float   (float   * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_double  (double  * p, char const * s, char const * caller_name);
@@ -141,7 +142,7 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, c
  ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_decl int mmux_bash_pointers_print_pointer (void * data);
-mmux_bash_pointers_decl int mmux_bash_pointers_print_size_t  (size_t data);
+mmux_bash_pointers_decl int mmux_bash_pointers_print_usize   (size_t data);
 
 
 /** --------------------------------------------------------------------

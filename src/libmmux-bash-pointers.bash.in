@@ -38,6 +38,8 @@ then
     declare MMUX_BASH_LIBC_MATH_BUILTIN
     for MMUX_BASH_LIBC_MATH_BUILTIN in \
 	malloc realloc free			\
+	       mmuxpointerspointersetschar	mmuxpointerspointerrefschar	\
+	       mmuxpointerspointersetuchar	mmuxpointerspointerrefuchar	\
 	       mmuxpointerspointersetsint	mmuxpointerspointerrefsint	\
 	       mmuxpointerspointersetuint	mmuxpointerspointerrefuint	\
 	       mmuxpointerspointersetslong	mmuxpointerspointerrefslong	\
@@ -51,6 +53,12 @@ then
     done
     unset MMUX_BASH_LIBC_MATH_BUILTIN
 fi
+
+alias pointer-set-schar='mmuxpointerspointersetschar'
+alias pointer-ref-schar='mmuxpointerspointerrefschar'
+
+alias pointer-set-uchar='mmuxpointerspointersetuchar'
+alias pointer-ref-uchar='mmuxpointerspointerrefuchar'
 
 alias pointer-set-sint='mmuxpointerspointersetsint'
 alias pointer-ref-sint='mmuxpointerspointerrefsint'

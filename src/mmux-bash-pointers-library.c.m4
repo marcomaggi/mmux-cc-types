@@ -56,6 +56,24 @@ mmux_bash_pointers_version_interface_age (void)
 
 
 /** --------------------------------------------------------------------
+ ** Helpers.
+ ** ----------------------------------------------------------------- */
+
+void
+mmux_bash_pointers_create_global_double_variable (const char * name, int value)
+{
+  SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+  char		str[1024];
+  /* NOTE I do not know what FLAGS is for, but setting it to zero seems fine.  (Marco
+     Maggi; Sep 4, 2024) */
+  int		flags = 0;
+
+  snprintf(str, 1024, "%d", value);
+  v = bind_global_variable(name, str, flags);
+}
+
+
+/** --------------------------------------------------------------------
  ** Type parsers.
  ** ----------------------------------------------------------------- */
 
@@ -79,27 +97,29 @@ mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * calle
 {
   int	rv;
 
+  /* NOTE I  know that to convert  integers there are functions  like "strtol()", but
+     let's not be picky.  (Marco Maggi; Sep 9, 2024) */
   rv = sscanf(s_arg, $3, p_data);
   if ((EOF != rv) && (1 == rv)) {
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected pointer: \"%s\"\n", caller_name, s_arg);
+    fprintf(stderr, "%s: error: invalid argument, expected $2: \"%s\"\n", caller_name, s_arg);
     return EXECUTION_FAILURE;
   }
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[ssize]]],	[[[ssize_t]]],		[[["%ld"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[usize]]],	[[[size_t]]],		[[["%lu"]]])
+/* To parse schar and uchar let's just use sint and check the boundaries. */
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[sint]]],	[[[signed int]]],	[[["%d"]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[uint]]],	[[[unsigned int]]],	[[["%u"]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[slong]]],	[[[signed long]]],	[[["%ld"]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[ulong]]],	[[[unsigned long]]],	[[["%lu"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ssize]]],	[[[ssize_t]]],		[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[usize]]],	[[[size_t]]],		[[["%lu"]]])
 
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],		[[["%f"]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],		[[["%lf"]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],	[[["%Lf"]]])
-
 
 
 /** --------------------------------------------------------------------
@@ -113,7 +133,7 @@ mmux_bash_pointers_print_pointer (void * data)
   return EXECUTION_SUCCESS;
 }
 int
-mmux_bash_pointers_print_size_t (size_t data)
+mmux_bash_pointers_print_usize (size_t data)
 {
   printf("%lu", data);
   return EXECUTION_SUCCESS;
@@ -127,6 +147,19 @@ mmux_bash_pointers_print_size_t (size_t data)
 static int
 mmuxbashpointersinit_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
 {
+  /* These constants are defined by the Standard C Library; we make them available as
+     global shell variables. */
+  {
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SCHAR",		sizeof(signed char));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UCHAR",		sizeof(unsigned char));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT",		sizeof(signed int));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT",		sizeof(unsigned int));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SLONG",		sizeof(signed long));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_ULONG",		sizeof(unsigned long));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_FLOAT",		sizeof(float));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_DOUBLE",		sizeof(double));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_LDOUBLE",		sizeof(long double));
+  }
   return EXECUTION_SUCCESS;
 }
 static char * mmuxbashpointersinit_doc[] = {
