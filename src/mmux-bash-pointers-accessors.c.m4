@@ -35,7 +35,7 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"pointer-ref-$1"
 {
-#if ($4)
+#if ($3)
   void *	ptr;
   uint8_t *	ptr_byte;
   $2 *		ptr_value;
@@ -62,10 +62,14 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
     char	str[STRLEN];
     int		flags = 0;
 
-    snprintf(str, STRLEN, $3, value);
-    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
-       (Marco Maggi; Sep 9, 2024) */
-    v = bind_variable(argv[1], str, flags);
+    rv = mmux_bash_pointers_sprint_$1(str,STRLEN,value);
+    if (EXECUTION_SUCCESS == rv) {
+      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
+	 (Marco Maggi; Sep 9, 2024) */
+      v = bind_variable(argv[1], str, flags);
+    } else {
+      return rv;
+    }
   }
   return EXECUTION_SUCCESS;
 #else
@@ -79,112 +83,21 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerref$1]]
     [[["Retrieve a C language type \"$2\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],		[[["%d"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],		[[["%d"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],		[[["%d"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],		[[["%ld"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],		[[["%lu"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sllong]]],	[[[signed   long long]]],	[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ullong]]],	[[[unsigned long long]]],	[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sllong]]],	[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ullong]]],	[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[["%lu"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[["%ld"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],			[[["%lf"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],   [[[HAVE_LONG_DOUBLE]]])
-
-
-static int
-mmuxpointerspointerreffloat_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"pointer-ref-float"
-/* NOTE The only reason this is a separate function is that the call to "snprintf()",
-   when compiled  with GCC, causes a  warning of implicit conversion  from "float" to
-   "double"; it irritates me.  So I do the explicit conversion.  (Marco Maggi; Sep 9,
-   2024) */
-{
-  void *	ptr;
-  uint8_t *	ptr_byte;
-  float *		ptr_value;
-  size_t	offset;
-  float		value;
-  int		rv;
-
-  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
-
-  rv = mmux_bash_pointers_parse_offset(&offset, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
-
-  ptr_byte  = ptr;
-  ptr_byte += offset;
-  ptr_value = (float *)ptr_byte;
-
-  value = *ptr_value;
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  STRLEN
-#define STRLEN	64
-    char	str[STRLEN];
-    int		flags = 0;
-
-    snprintf(str, STRLEN, "%lf", (double)value);
-    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
-       (Marco Maggi; Sep 9, 2024) */
-    v = bind_variable(argv[1], str, flags);
-  }
-  return EXECUTION_SUCCESS;
-}
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerreffloat]]],[[[(4 != argc)]]],
-    [[["pointer-ref-float VALUEVAR POINTER OFFSET"]]],
-    [[["Retrieve a C language type \"float\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
-
-
-static int
-mmuxpointerspointerrefcomplex_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"pointer-ref-complex"
-{
-  void *		ptr;
-  size_t		offset;
-  double complex	value;
-  int			rv;
-
-  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
-
-  rv = mmux_bash_pointers_parse_offset(&offset, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
-
-  {
-    uint8_t *		ptr_byte;
-    double complex *	ptr_value;
-
-    ptr_byte  = ptr;
-    ptr_byte += offset;
-    ptr_value = (double complex *)ptr_byte;
-
-    value = *ptr_value;
-  }
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  STRLEN
-#define STRLEN	1024
-    char	str[STRLEN];
-    int		flags = 0;
-
-    snprintf(str, STRLEN, "(%lf)+i*(%lf)", creal(value), cimag(value));
-    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
-       (Marco Maggi; Sep 9, 2024) */
-    v = bind_variable(argv[1], str, flags);
-  }
-  return EXECUTION_SUCCESS;
-}
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerrefcomplex]]],[[[(4 != argc)]]],
-    [[["pointer-ref-complex VALUEVAR POINTER OFFSET"]]],
-    [[["Retrieve a C language type \"double complex\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[float]]],		[[[float]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[complex]]],	[[[double complex]]],		[[[1]]])
 
 /* end of file */

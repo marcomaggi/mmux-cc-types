@@ -136,6 +136,42 @@ MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],			[[["%f"]]],   [[[1]
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],			[[["%lf"]]],  [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],  [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_schar (signed char * p_data, char const * s_arg, char const * caller_name)
+{
+  int	data;
+  int	rv;
+
+  rv = sscanf(s_arg, "%d", &data);
+  if ((EOF != rv) && (1 == rv)) {
+    if ((SCHAR_MIN <= data) && (data <= SCHAR_MAX)) {
+      *p_data = (signed char)data;
+      return EXECUTION_SUCCESS;
+    }
+  }
+  fprintf(stderr, "%s: error: invalid argument, expected signed char: \"%s\"\n", caller_name, s_arg);
+  return EXECUTION_FAILURE;
+}
+
+int
+mmux_bash_pointers_parse_uchar (unsigned char * p_data, char const * s_arg, char const * caller_name)
+{
+  int	data;
+  int	rv;
+
+  rv = sscanf(s_arg, "%d", &data);
+  if ((EOF != rv) && (1 == rv)) {
+    if ((0 <= data) && (data <= UCHAR_MAX)) {
+      *p_data = (signed char)data;
+      return EXECUTION_SUCCESS;
+    }
+  }
+  fprintf(stderr, "%s: error: invalid argument, expected unsigned char: \"%s\"\n", caller_name, s_arg);
+  return EXECUTION_FAILURE;
+}
+
 
 /** --------------------------------------------------------------------
  ** Parsing complex numbers in double format.
@@ -244,7 +280,59 @@ parse_complex_parentheses_format (double complex * p_value, const char * s_arg, 
 
 
 /** --------------------------------------------------------------------
- ** Type printers.
+ ** Type string printers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINT]]],[[[
+int
+mmux_bash_pointers_sprint_[[[]]]$1 (char * strptr, size_t strlen, $2 value)
+{
+#if ($4)
+  snprintf(strptr, strlen, $3, value);
+  return EXECUTION_SUCCESS;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
+  return EXECUTION_FAILURE;
+#endif
+}
+]]])
+
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[pointer]]],		[[[void *]]],			[[["%p"]]],   [[[1]]])
+
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[[signed char]]],		[[["%d"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uchar]]],		[[[unsigned char]]],		[[["%u"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sint]]],		[[[signed int]]],		[[["%d"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uint]]],		[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[slong]]],		[[[signed long]]],		[[["%ld"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ulong]]],		[[[unsigned long]]],		[[["%lu"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sllong]]],		[[[signed long long]]],		[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ullong]]],		[[[unsigned long long]]],	[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ssize]]],		[[[ssize_t]]],			[[["%ld"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[usize]]],		[[[size_t]]],			[[["%lu"]]],  [[[1]]])
+
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[[double]]],			[[["%lf"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[[long double]]],		[[["%Lf"]]],  [[[HAVE_LONG_DOUBLE]]])
+
+int
+mmux_bash_pointers_sprint_float (char * strptr, size_t strlen, float value)
+{
+  snprintf(strptr, strlen, "%f", (double)value);
+  return EXECUTION_SUCCESS;
+}
+int
+mmux_bash_pointers_sprint_complex (char * strptr, size_t strlen, double complex value)
+{
+  double	re = creal(value), im = cimag(value);
+
+  snprintf(strptr, strlen, "(%lf)+i*(%lf)", re, im);
+  return EXECUTION_SUCCESS;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type stdout printers.
  ** ----------------------------------------------------------------- */
 
 int

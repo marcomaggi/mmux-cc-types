@@ -86,16 +86,17 @@ extern "C" {
  ** ----------------------------------------------------------------- */
 
 /*
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <stdbool.h>
-  #include <stdint.h>
-  #include <stddef.h>
   #include <setjmp.h>
   #include <errno.h>
   #include <unistd.h>
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <inttypes.h>
 #include <complex.h>
 
 
@@ -116,7 +117,7 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
- ** Type parsers.
+ ** Type string parsers.
  ** ----------------------------------------------------------------- */
 
 #undef  mmux_bash_pointers_parse_offset
@@ -125,7 +126,8 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_pointer (void **  p_data, char const * s_arg, char const * caller_name);
 
-/* To parse schar and uchar let's just use sint and check the boundaries. */
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_schar   (signed   char * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uchar   (unsigned char * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (signed   int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint    (unsigned int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_slong   (signed   long * p, char const * s, char const * caller_name);
@@ -148,7 +150,41 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_complex (double complex * p
 
 
 /** --------------------------------------------------------------------
- ** Type printers.
+ ** Type string printers.
+ ** ----------------------------------------------------------------- */
+
+#undef  mmux_bash_pointers_sprint_offset
+#define mmux_bash_pointers_sprint_offset(STRPTR,STRLEN,VALUE) \
+  mmux_bash_pointers_sprint_usize(STRPTR,STRLEN,VALUE)
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_pointer (char * strptr, size_t strlen, void * value);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_schar   (char * strptr, size_t strlen, signed   char value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uchar   (char * strptr, size_t strlen, unsigned char value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint    (char * strptr, size_t strlen, signed   int  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint    (char * strptr, size_t strlen, unsigned int  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_slong   (char * strptr, size_t strlen, signed   long value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ulong   (char * strptr, size_t strlen, unsigned long value);
+#if (HAVE_LONG_LONG_INT)
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sllong  (char * strptr, size_t strlen, signed   long long value);
+#endif
+#if (HAVE_UNSIGNED_LONG_LONG_INT)
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ullong  (char * strptr, size_t strlen, unsigned long long value);
+#endif
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_usize   (char * strptr, size_t strlen, size_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ssize   (char * strptr, size_t strlen, ssize_t value);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_float   (char * strptr, size_t strlen, float   value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_double  (char * strptr, size_t strlen, double  value);
+#if (HAVE_LONG_DOUBLE)
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ldouble (char * strptr, size_t strlen, long double value);
+#endif
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_complex (char * strptr, size_t strlen, double complex value);
+
+
+/** --------------------------------------------------------------------
+ ** Type stdout printers.
  ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_decl int mmux_bash_pointers_print_pointer (void * data);
