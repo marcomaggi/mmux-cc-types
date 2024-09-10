@@ -35,6 +35,7 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"pointer-ref-$1"
 {
+#if ($4)
   void *	ptr;
   uint8_t *	ptr_byte;
   $2 *		ptr_value;
@@ -67,24 +68,31 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
     v = bind_variable(argv[1], str, flags);
   }
   return EXECUTION_SUCCESS;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+#endif
 }
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerref$1]]],[[[(4 != argc)]]],
     [[["pointer-ref-$1 VALUEVAR POINTER OFFSET"]]],
     [[["Retrieve a C language type \"$2\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],	[[["%d"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],	[[["%d"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],	[[["%d"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],	[[["%u"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],	[[["%ld"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],	[[["%lu"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],		[[["%d"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],		[[["%d"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],		[[["%d"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],		[[["%ld"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],		[[["%lu"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sllong]]],	[[[signed   long long]]],	[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ullong]]],	[[[unsigned long long]]],	[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],		[[["%lu"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],		[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[["%lu"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[["%ld"]]],   [[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],		[[["%lf"]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],	[[["%Lf"]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],			[[["%lf"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],   [[[HAVE_LONG_DOUBLE]]])
 
 
 static int

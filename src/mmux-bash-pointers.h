@@ -130,6 +130,12 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (signed   int  * p,
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint    (unsigned int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_slong   (signed   long * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ulong   (unsigned long * p, char const * s, char const * caller_name);
+#if (HAVE_LONG_LONG_INT)
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sllong  (signed   long long * p, char const * s, char const * caller_name);
+#endif
+#if (HAVE_UNSIGNED_LONG_LONG_INT)
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ullong  (unsigned long long * p, char const * s, char const * caller_name);
+#endif
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t * p, char const * s, char const * caller_name);

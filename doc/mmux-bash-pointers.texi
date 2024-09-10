@@ -355,6 +355,8 @@ Accessor and mutator for memory blocks operating on C language types @code{\TYPE
 @MmuxDefineAccessorMutator{uint,unsigned int}
 @MmuxDefineAccessorMutator{slong,signed long}
 @MmuxDefineAccessorMutator{ulong,unsigned long}
+@MmuxDefineAccessorMutator{sllong,signed long long}
+@MmuxDefineAccessorMutator{ullong,unsigned long long}
 @MmuxDefineAccessorMutator{ssize,ssize_t}
 @MmuxDefineAccessorMutator{usize,size_t}
 @MmuxDefineAccessorMutator{float,float}

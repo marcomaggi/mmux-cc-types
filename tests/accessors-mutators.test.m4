@@ -379,6 +379,116 @@ function raw-memory-ulong-1.3 () {
 }
 
 
+#### array accessors and mutators: sllong
+
+function raw-memory-sllong-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-sllong $PTR 0 123
+	pointer-ref-sllong VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 123 QQ(VALUE)
+}
+function raw-memory-sllong-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sllong $PTR  0 123
+	pointer-set-sllong $PTR  8 456
+	pointer-set-sllong $PTR 16 789
+
+	pointer-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sllong VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-sllong-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sllong $PTR  0 123
+	pointer-set-sllong $PTR  8 456
+	pointer-set-sllong $PTR 16 789
+	realloc PTR $PTR 2048
+	pointer-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sllong VALUE $PTR 16	;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: ullong
+
+function raw-memory-ullong-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-ullong $PTR 0 123
+	pointer-ref-ullong VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 123 QQ(VALUE)
+}
+function raw-memory-ullong-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-ullong $PTR  0 123
+	pointer-set-ullong $PTR  8 456
+	pointer-set-ullong $PTR 16 789
+
+	pointer-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-ullong-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-ullong $PTR  0 123
+	pointer-set-ullong $PTR  8 456
+	pointer-set-ullong $PTR 16 789
+	realloc PTR $PTR 2048
+	pointer-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+
+
 #### array accessors and mutators: ssize
 
 function raw-memory-ssize-1.1 () {

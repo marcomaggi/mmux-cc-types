@@ -101,6 +101,7 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_PARSER]]],[[[
 int
 mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * caller_name)
 {
+#if ($4)
   int	rv;
 
   /* NOTE I  know that to convert  integers there are functions  like "strtol()", but
@@ -112,20 +113,28 @@ mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * calle
     fprintf(stderr, "%s: error: invalid argument, expected $2: \"%s\"\n", caller_name, s_arg);
     return EXECUTION_FAILURE;
   }
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
+  return EXECUTION_FAILURE;
+#endif
 }
 ]]])
 
 /* To parse schar and uchar let's just use sint and check the boundaries. */
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[sint]]],	[[[signed int]]],	[[["%d"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[uint]]],	[[[unsigned int]]],	[[["%u"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[slong]]],	[[[signed long]]],	[[["%ld"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[ulong]]],	[[[unsigned long]]],	[[["%lu"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[ssize]]],	[[[ssize_t]]],		[[["%ld"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[usize]]],	[[[size_t]]],		[[["%lu"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[sint]]],	[[[signed int]]],		[[["%d"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[uint]]],	[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[slong]]],	[[[signed long]]],		[[["%ld"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ulong]]],	[[[unsigned long]]],		[[["%lu"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[sllong]]],	[[[signed long long]]],		[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ullong]]],	[[[unsigned long long]]],	[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],		[[["%f"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],		[[["%lf"]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],	[[["%Lf"]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ssize]]],	[[[ssize_t]]],			[[["%ld"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[usize]]],	[[[size_t]]],			[[["%lu"]]],  [[[1]]])
+
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],			[[["%f"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],			[[["%lf"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],  [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
 
 /** --------------------------------------------------------------------

@@ -35,6 +35,7 @@ mmuxpointerspointerset[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, c
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"pointer-set-$1"
 {
+#if ($3)
   void *	ptr;
   uint8_t *	ptr_byte;
   $2 *		ptr_value;
@@ -57,23 +58,30 @@ mmuxpointerspointerset[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, c
 
   *ptr_value = value;
   return EXECUTION_SUCCESS;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+#endif
 }
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerset$1]]],[[[(4 != argc)]]],
     [[["pointer-set-$1 POINTER OFFSET VALUE"]]],
     [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"$2\"."]]])
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint]]],		[[[signed   int]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint]]],		[[[unsigned int]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[slong]]],		[[[signed   long]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ulong]]],		[[[unsigned long]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint]]],		[[[unsigned int]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[slong]]],		[[[signed   long]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sllong]]],		[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ullong]]],		[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[float]]],		[[[float]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[double]]],		[[[double]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ldouble]]],	[[[long double]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[float]]],		[[[float]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[double]]],		[[[double]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
 
 
 static int

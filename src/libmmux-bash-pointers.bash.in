@@ -44,6 +44,8 @@ then
 	       mmuxpointerspointersetuint	mmuxpointerspointerrefuint	\
 	       mmuxpointerspointersetslong	mmuxpointerspointerrefslong	\
 	       mmuxpointerspointersetulong	mmuxpointerspointerrefulong	\
+	       mmuxpointerspointersetsllong	mmuxpointerspointerrefsllong	\
+	       mmuxpointerspointersetullong	mmuxpointerspointerrefullong	\
 	       mmuxpointerspointersetssize	mmuxpointerspointerrefssize	\
 	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize	\
 	       mmuxpointerspointersetfloat	mmuxpointerspointerreffloat	\
@@ -72,6 +74,12 @@ alias pointer-ref-slong='mmuxpointerspointerrefslong'
 
 alias pointer-set-ulong='mmuxpointerspointersetulong'
 alias pointer-ref-ulong='mmuxpointerspointerrefulong'
+
+alias pointer-set-sllong='mmuxpointerspointersetsllong'
+alias pointer-ref-sllong='mmuxpointerspointerrefsllong'
+
+alias pointer-set-ullong='mmuxpointerspointersetullong'
+alias pointer-ref-ullong='mmuxpointerspointerrefullong'
 
 alias pointer-set-float='mmuxpointerspointersetfloat'
 alias pointer-ref-float='mmuxpointerspointerreffloat'
