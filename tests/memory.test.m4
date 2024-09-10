@@ -53,14 +53,20 @@ source "$MMUX_LIBRARY"
 
 function memory-1.1 () {
     declare PTR
-    malloc PTR 123
-    free $PTR
+    if malloc PTR 123
+    then free $PTR
+    else return $?
+    fi
 }
 function memory-1.2 () {
     declare PTR
-    malloc PTR 123
-    realloc PTR $PTR 456
-    free $PTR
+    if malloc PTR 123
+    then
+	if realloc PTR $PTR 456
+	then free $PTR
+	else return $?
+	fi
+    fi
 }
 
 
