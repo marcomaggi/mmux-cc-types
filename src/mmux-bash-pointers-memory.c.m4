@@ -35,12 +35,14 @@
 
 static int
 malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"malloc"
 {
   void *	ptr;
   size_t	len;
   int		rv;
 
-  rv = mmux_bash_pointers_parse_usize(&len, argv[2], "malloc");
+  rv = mmux_bash_pointers_parse_usize(&len, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
   ptr = malloc(len);
   if (0) {
@@ -71,16 +73,18 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[malloc]]],[[[(3 != argc)]]
 
 static int
 calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"calloc"
 {
   void *	ptr;
   size_t	item_count;
   size_t	item_size;
   int		rv;
 
-  rv = mmux_bash_pointers_parse_usize(&item_count, argv[2], "calloc");
+  rv = mmux_bash_pointers_parse_usize(&item_count, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_usize(&item_size, argv[3], "calloc");
+  rv = mmux_bash_pointers_parse_usize(&item_size, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   ptr = calloc(item_count, item_size);
@@ -112,15 +116,17 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[calloc]]],[[[(4 != argc)]]
 
 static int
 realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"realloc"
 {
   void *	ptr;
   size_t	len;
   int		rv;
 
-  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], "realloc");
+  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_usize(&len, argv[3], "realloc");
+  rv = mmux_bash_pointers_parse_usize(&len, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   ptr = realloc(ptr, len);
@@ -148,11 +154,13 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[realloc]]],[[[(4 != argc)]
 
 static int
 free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"free"
 {
   void *	ptr;
   int		rv;
 
-  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], "free");
+  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   if (0) {
@@ -164,5 +172,95 @@ free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[free]]],[[[(2 != argc)]]],
     [[["free PTR"]]],
     [[["Release a memory block."]]])
+
+
+/** --------------------------------------------------------------------
+ ** Standard memory operations.
+ ** ----------------------------------------------------------------- */
+
+static int
+memset_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"memset"
+{
+  void *	ptr;
+  unsigned char	c;
+  int		i;
+  size_t	len;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_uchar(&c, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_usize(&len, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  i = (int)c;
+
+  memset(ptr, i, len);
+  return EXECUTION_SUCCESS;
+}
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[memset]]],[[[(4 != argc)]]],
+    [[["memset BLOCK C SIZE"]]],
+    [[["Copy C to each of the SIZE bytes of BLOCK."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+memcpy_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"memcpy"
+{
+  void *	ptr_from;
+  void *	ptr_to;
+  size_t	len;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr_to,   argv[1], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr_from, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_usize(&len,        argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  memcpy(ptr_to, ptr_from, len);
+  return EXECUTION_SUCCESS;
+}
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[memcpy]]],[[[(4 != argc)]]],
+    [[["memcpy POINTER_TO POINTER_FROM SIZE"]]],
+    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+memmove_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"memmove"
+{
+  void *	ptr_from;
+  void *	ptr_to;
+  size_t	len;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr_to,   argv[1], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_pointer(&ptr_from, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_usize(&len,        argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  memmove(ptr_to, ptr_from, len);
+  return EXECUTION_SUCCESS;
+}
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[memmove]]],[[[(4 != argc)]]],
+    [[["memmove POINTER_TO POINTER_FROM SIZE"]]],
+    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
 
 /* end of file */

@@ -77,6 +77,58 @@ function memory-1.3 () {
 }
 
 
+#### standard memory operations
+
+function memory-2.1 () {
+    declare PTR SIZE=123 RESULT=Z
+
+    if malloc PTR $SIZE
+    then
+	memset $PTR 1 $SIZE
+	pointer-ref-uint8 RESULT $PTR 1
+	free $PTR
+	dotest-equal 1 $RESULT
+    else return $?
+    fi
+}
+
+function memory-3.1 () {
+    declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
+
+    malloc PTR_FROM $SIZE
+    malloc PTR_TO   $SIZE
+
+    memset $PTR_FROM 1 $SIZE
+    memset $PTR_TO   0 $SIZE
+
+    memcpy $PTR_TO $PTR_FROM $SIZE
+    pointer-ref-uint8 RESULT $PTR_TO 10
+
+    free $PTR_FROM
+    free $PTR_TO
+
+    dotest-equal 1 $RESULT
+}
+
+function memory-4.1 () {
+    declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
+
+    malloc PTR_FROM $SIZE
+    malloc PTR_TO   $SIZE
+
+    memset $PTR_FROM 1 $SIZE
+    memset $PTR_TO   0 $SIZE
+
+    memmove $PTR_TO $PTR_FROM $SIZE
+    pointer-ref-uint8 RESULT $PTR_TO 10
+
+    free $PTR_FROM
+    free $PTR_TO
+
+    dotest-equal 1 $RESULT
+}
+
+
 #### let's go
 
 dotest memory-

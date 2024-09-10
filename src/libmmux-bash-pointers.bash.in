@@ -37,7 +37,7 @@ if mmuxbashpointersinit
 then
     declare MMUX_BASH_LIBC_MATH_BUILTIN
     for MMUX_BASH_LIBC_MATH_BUILTIN in \
-	malloc realloc calloc free			\
+	malloc realloc calloc free memset memcpy memmove			\
 	       mmuxpointerspointersetpointer	mmuxpointerspointerrefpointer	\
 	       \
 	       mmuxpointerspointersetschar	mmuxpointerspointerrefschar	\

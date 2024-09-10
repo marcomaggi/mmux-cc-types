@@ -146,6 +146,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * version::                     Version functions.
 * variables::                   Global variables.
 * memory::                      Standard memory allocation.
+* operations::                  Standard memory operations.
 * pointers::                    Memory block accessors and mutators.
 
 Appendices
@@ -342,6 +343,25 @@ the newly requested number of bytes in the newly allocated block; it must fit th
 
 @deffn Builtin free @var{PTR}
 Release a previously allocated memory block using the standard @cfunc{free} function.
+@end deffn
+
+@c page
+@node operations
+@chapter Standard memory operations
+
+
+@deffn Builtin memset @var{POINTER} @var{BYTE} @var{SIZE}
+Interface to the standard C language function @cfunc{memset}.
+@end deffn
+
+
+@deffn Builtin memcpy @var{POINTER_TO} @var{POINTER_FROM} @var{SIZE}
+Interface to the standard C language function @cfunc{memcpy}.
+@end deffn
+
+
+@deffn Builtin memmove @var{POINTER_TO} @var{POINTER_FROM} @var{SIZE}
+Interface to the standard C language function @cfunc{memmove}.
 @end deffn
 
 @c page
