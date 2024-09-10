@@ -80,12 +80,14 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers.m4		\
 	src/mmux-bash-pointers-library.c.m4	\
 	src/mmux-bash-pointers-memory.c.m4	\
-	src/mmux-bash-pointers-arrays.c.m4
+	src/mmux-bash-pointers-accessors.c.m4	\
+	src/mmux-bash-pointers-mutators.c.m4
 
 CLEANFILES	+=
 	src/mmux-bash-pointers-library.c	\
 	src/mmux-bash-pointers-memory.c		\
-	src/mmux-bash-pointers-arrays.c
+	src/mmux-bash-pointers-accessors.c	\
+	src/mmux-bash-pointers-mutators.c
 
 mmux_bash_pointers_CURRENT		= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
 mmux_bash_pointers_REVISION		= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@
@@ -104,7 +106,8 @@ libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers-internals.h	\
 	src/mmux-bash-pointers-library.c	\
 	src/mmux-bash-pointers-memory.c		\
-	src/mmux-bash-pointers-arrays.c
+	src/mmux-bash-pointers-accessors.c	\
+	src/mmux-bash-pointers-mutators.c
 
 .PHONY: library
 
@@ -123,14 +126,14 @@ EXTRA_DIST		+= $(mmux_library_SCRIPTS)
 #### tests
 
 EXTRA_DIST		+= \
-	tests/version.test.m4		\
-	tests/memory.test.m4		\
-	tests/arrays.test.m4
+	tests/version.test.m4			\
+	tests/memory.test.m4			\
+	tests/accessors-mutators.test.m4
 
-MMUX_CHECK_BUILT_TESTS	=		\
-	tests/version.test		\
-	tests/memory.test		\
-	tests/arrays.test
+MMUX_CHECK_BUILT_TESTS	= \
+	tests/version.test			\
+	tests/memory.test			\
+	tests/accessors-mutators.test
 
 if MMUX_TESTING_ENABLED
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)

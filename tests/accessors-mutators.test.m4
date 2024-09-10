@@ -1,13 +1,13 @@
 #!#
 #!# Part of: MMUX Bash Libc Mathematics
-#!# Contents: tests for memory arrays builtins
+#!# Contents: tests for raw memory accessor and mutator builtins
 #!# Date: Sep  9, 2024
 #!#
 #!# Abstract
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/arrays.bash ; less tests/arrays.log
+#!#		$ make all check TESTS=tests/accessors-mutators.bash ; less tests/accessors-mutators.log
 #!#
 #!#	that will select these tests.
 #!#
@@ -51,7 +51,7 @@ source "$MMUX_LIBRARY"
 
 #### array accessors and mutators: schar
 
-function arrays-schar-1.1 () {
+function raw-memory-schar-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -62,7 +62,7 @@ function arrays-schar-1.1 () {
     free $PTR
     dotest-equal 12 QQ(VALUE)
 }
-function arrays-schar-1.2 () {
+function raw-memory-schar-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -82,7 +82,7 @@ function arrays-schar-1.2 () {
 	dotest-equal 34 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 56 mbfl_slot_qref(VALUES,2)
 }
-function arrays-schar-1.3 () {
+function raw-memory-schar-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -106,7 +106,7 @@ function arrays-schar-1.3 () {
 
 #### array accessors and mutators: uchar
 
-function arrays-uchar-1.1 () {
+function raw-memory-uchar-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -117,7 +117,7 @@ function arrays-uchar-1.1 () {
     free $PTR
     dotest-equal 12 QQ(VALUE)
 }
-function arrays-uchar-1.2 () {
+function raw-memory-uchar-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -137,7 +137,7 @@ function arrays-uchar-1.2 () {
 	dotest-equal 34 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 56 mbfl_slot_qref(VALUES,2)
 }
-function arrays-uchar-1.3 () {
+function raw-memory-uchar-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -161,7 +161,7 @@ function arrays-uchar-1.3 () {
 
 #### array accessors and mutators: sint
 
-function arrays-sint-1.1 () {
+function raw-memory-sint-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -172,7 +172,7 @@ function arrays-sint-1.1 () {
     free $PTR
     dotest-equal 123 QQ(VALUE)
 }
-function arrays-sint-1.2 () {
+function raw-memory-sint-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -192,7 +192,7 @@ function arrays-sint-1.2 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
-function arrays-sint-1.3 () {
+function raw-memory-sint-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -216,7 +216,7 @@ function arrays-sint-1.3 () {
 
 #### array accessors and mutators: uint
 
-function arrays-uint-1.1 () {
+function raw-memory-uint-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -227,7 +227,7 @@ function arrays-uint-1.1 () {
     free $PTR
     dotest-equal 123 QQ(VALUE)
 }
-function arrays-uint-1.2 () {
+function raw-memory-uint-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -247,7 +247,7 @@ function arrays-uint-1.2 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
-function arrays-uint-1.3 () {
+function raw-memory-uint-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -271,7 +271,7 @@ function arrays-uint-1.3 () {
 
 #### array accessors and mutators: slong
 
-function arrays-slong-1.1 () {
+function raw-memory-slong-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -282,7 +282,7 @@ function arrays-slong-1.1 () {
     free $PTR
     dotest-equal 123 QQ(VALUE)
 }
-function arrays-slong-1.2 () {
+function raw-memory-slong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -302,7 +302,7 @@ function arrays-slong-1.2 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
-function arrays-slong-1.3 () {
+function raw-memory-slong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -326,7 +326,7 @@ function arrays-slong-1.3 () {
 
 #### array accessors and mutators: ulong
 
-function arrays-ulong-1.1 () {
+function raw-memory-ulong-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -337,7 +337,7 @@ function arrays-ulong-1.1 () {
     free $PTR
     dotest-equal 123 QQ(VALUE)
 }
-function arrays-ulong-1.2 () {
+function raw-memory-ulong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -357,7 +357,7 @@ function arrays-ulong-1.2 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
-function arrays-ulong-1.3 () {
+function raw-memory-ulong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -381,7 +381,7 @@ function arrays-ulong-1.3 () {
 
 #### array accessors and mutators: ssize
 
-function arrays-ssize-1.1 () {
+function raw-memory-ssize-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -392,7 +392,7 @@ function arrays-ssize-1.1 () {
     free $PTR
     dotest-equal 123 QQ(VALUE)
 }
-function arrays-ssize-1.2 () {
+function raw-memory-ssize-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -412,7 +412,7 @@ function arrays-ssize-1.2 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
-function arrays-ssize-1.3 () {
+function raw-memory-ssize-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -436,7 +436,7 @@ function arrays-ssize-1.3 () {
 
 #### array accessors and mutators: usize
 
-function arrays-usize-1.1 () {
+function raw-memory-usize-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -447,7 +447,7 @@ function arrays-usize-1.1 () {
     free $PTR
     dotest-equal 123 QQ(VALUE)
 }
-function arrays-usize-1.2 () {
+function raw-memory-usize-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -467,7 +467,7 @@ function arrays-usize-1.2 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
-function arrays-usize-1.3 () {
+function raw-memory-usize-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -491,7 +491,7 @@ function arrays-usize-1.3 () {
 
 #### array accessors and mutators: float
 
-function arrays-float-1.1 () {
+function raw-memory-float-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -502,7 +502,7 @@ function arrays-float-1.1 () {
     free $PTR
     dotest-equal 1.230000 QQ(VALUE)
 }
-function arrays-float-1.2 () {
+function raw-memory-float-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -522,7 +522,7 @@ function arrays-float-1.2 () {
 	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
 }
-function arrays-float-1.3 () {
+function raw-memory-float-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -546,7 +546,7 @@ function arrays-float-1.3 () {
 
 #### array accessors and mutators: double
 
-function arrays-double-1.1 () {
+function raw-memory-double-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -557,7 +557,7 @@ function arrays-double-1.1 () {
     free $PTR
     dotest-equal 1.230000 QQ(VALUE)
 }
-function arrays-double-1.2 () {
+function raw-memory-double-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -577,7 +577,7 @@ function arrays-double-1.2 () {
 	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
 }
-function arrays-double-1.3 () {
+function raw-memory-double-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -601,7 +601,7 @@ function arrays-double-1.3 () {
 
 #### array accessors and mutators: ldouble
 
-function arrays-ldouble-1.1 () {
+function raw-memory-ldouble-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -612,7 +612,7 @@ function arrays-ldouble-1.1 () {
     free $PTR
     dotest-equal 1.230000 QQ(VALUE)
 }
-function arrays-ldouble-1.2 () {
+function raw-memory-ldouble-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -632,7 +632,7 @@ function arrays-ldouble-1.2 () {
 	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
 }
-function arrays-ldouble-1.3 () {
+function raw-memory-ldouble-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -656,7 +656,7 @@ function arrays-ldouble-1.3 () {
 
 #### array accessors and mutators: complex
 
-function arrays-complex-1.1 () {
+function raw-memory-complex-1.1 () {
     declare PTR VALUE
 
     malloc PTR 1024
@@ -667,7 +667,7 @@ function arrays-complex-1.1 () {
     free $PTR
     dotest-equal '(1.200000)+i*(3.400000)' QQ(VALUE)
 }
-function arrays-complex-1.2 () {
+function raw-memory-complex-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -687,7 +687,7 @@ function arrays-complex-1.2 () {
 	dotest-equal '(5.600000)+i*(7.800000)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(9.000000)+i*(1.200000)' mbfl_slot_qref(VALUES,2)
 }
-function arrays-complex-1.3 () {
+function raw-memory-complex-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
@@ -711,7 +711,7 @@ function arrays-complex-1.3 () {
 
 #### let's go
 
-dotest arrays-
+dotest raw-memory-
 dotest-final-report
 
 ### end of file
