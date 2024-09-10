@@ -305,7 +305,7 @@ mmuxpointerspointerreffloat_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * ar
     char	str[STRLEN];
     int		flags = 0;
 
-    snprintf(str, STRLEN, "%f", (double)value);
+    snprintf(str, STRLEN, "%lf", (double)value);
     /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
        (Marco Maggi; Sep 9, 2024) */
     v = bind_variable(argv[1], str, flags);
