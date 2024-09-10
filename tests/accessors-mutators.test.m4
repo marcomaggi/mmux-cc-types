@@ -49,6 +49,61 @@ mbfl_linker_source_library_by_stem(tests)
 source "$MMUX_LIBRARY"
 
 
+#### array accessors and mutators: pointer
+
+function raw-memory-pointer-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-pointer $PTR 0 '0x12'
+	pointer-ref-pointer VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal '0x12' QQ(VALUE)
+}
+function raw-memory-pointer-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-pointer $PTR  0 '0x12'
+	pointer-set-pointer $PTR  8 '0x34'
+	pointer-set-pointer $PTR 16 '0x56'
+
+	pointer-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal '0x12' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '0x34' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '0x56' mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-pointer-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-pointer $PTR  0 '0x12'
+	pointer-set-pointer $PTR  8 '0x34'
+	pointer-set-pointer $PTR 16 '0x56'
+	realloc PTR $PTR 2048
+	pointer-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal '0x12' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '0x34' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '0x56' mbfl_slot_qref(VALUES,2)
+}
+
+
 #### array accessors and mutators: schar
 
 function raw-memory-schar-1.1 () {
@@ -816,6 +871,446 @@ function raw-memory-complex-1.3 () {
     dotest-equal '(1.200000)+i*(3.400000)' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '(5.600000)+i*(7.800000)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(9.000000)+i*(1.200000)' mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: sint8
+
+function raw-memory-sint8-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-sint8 $PTR 0 12
+	pointer-ref-sint8 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-sint8-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint8 $PTR  0 12
+	pointer-set-sint8 $PTR  8 45
+	pointer-set-sint8 $PTR 16 78
+
+	pointer-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-sint8-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint8 $PTR  0 12
+	pointer-set-sint8 $PTR  8 45
+	pointer-set-sint8 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: uint8
+
+function raw-memory-uint8-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-uint8 $PTR 0 12
+	pointer-ref-uint8 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-uint8-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint8 $PTR  0 12
+	pointer-set-uint8 $PTR  8 45
+	pointer-set-uint8 $PTR 16 78
+
+	pointer-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-uint8-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint8 $PTR  0 12
+	pointer-set-uint8 $PTR  8 45
+	pointer-set-uint8 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: sint16
+
+function raw-memory-sint16-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-sint16 $PTR 0 12
+	pointer-ref-sint16 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-sint16-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint16 $PTR  0 12
+	pointer-set-sint16 $PTR  8 45
+	pointer-set-sint16 $PTR 16 78
+
+	pointer-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-sint16-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint16 $PTR  0 12
+	pointer-set-sint16 $PTR  8 45
+	pointer-set-sint16 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: uint16
+
+function raw-memory-uint16-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-uint16 $PTR 0 12
+	pointer-ref-uint16 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-uint16-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint16 $PTR  0 12
+	pointer-set-uint16 $PTR  8 45
+	pointer-set-uint16 $PTR 16 78
+
+	pointer-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-uint16-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint16 $PTR  0 12
+	pointer-set-uint16 $PTR  8 45
+	pointer-set-uint16 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: sint32
+
+function raw-memory-sint32-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-sint32 $PTR 0 12
+	pointer-ref-sint32 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-sint32-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint32 $PTR  0 12
+	pointer-set-sint32 $PTR  8 45
+	pointer-set-sint32 $PTR 16 78
+
+	pointer-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-sint32-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint32 $PTR  0 12
+	pointer-set-sint32 $PTR  8 45
+	pointer-set-sint32 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: uint32
+
+function raw-memory-uint32-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-uint32 $PTR 0 12
+	pointer-ref-uint32 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-uint32-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint32 $PTR  0 12
+	pointer-set-uint32 $PTR  8 45
+	pointer-set-uint32 $PTR 16 78
+
+	pointer-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-uint32-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint32 $PTR  0 12
+	pointer-set-uint32 $PTR  8 45
+	pointer-set-uint32 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: sint64
+
+function raw-memory-sint64-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-sint64 $PTR 0 12
+	pointer-ref-sint64 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-sint64-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint64 $PTR  0 12
+	pointer-set-sint64 $PTR  8 45
+	pointer-set-sint64 $PTR 16 78
+
+	pointer-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-sint64-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-sint64 $PTR  0 12
+	pointer-set-sint64 $PTR  8 45
+	pointer-set-sint64 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: uint64
+
+function raw-memory-uint64-1.1 () {
+    declare PTR VALUE
+
+    malloc PTR 1024
+    {
+	pointer-set-uint64 $PTR 0 12
+	pointer-ref-uint64 VALUE $PTR 0
+    }
+    free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+function raw-memory-uint64-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint64 $PTR  0 12
+	pointer-set-uint64 $PTR  8 45
+	pointer-set-uint64 $PTR 16 78
+
+	pointer-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
+}
+function raw-memory-uint64-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    malloc PTR 1024
+    {
+	pointer-set-uint64 $PTR  0 12
+	pointer-set-uint64 $PTR  8 45
+	pointer-set-uint64 $PTR 16 78
+	realloc PTR $PTR 2048
+	pointer-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    free $PTR
+
+    dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 78 mbfl_slot_qref(VALUES,2)
 }
 
 

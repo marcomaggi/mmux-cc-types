@@ -57,12 +57,12 @@ mmuxpointerspointerref[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  
 
   {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  STRLEN
-#define STRLEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[STRLEN];
+#undef  LEN
+#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
+    char	str[LEN];
     int		flags = 0;
 
-    rv = mmux_bash_pointers_sprint_$1(str,STRLEN,value);
+    rv = mmux_bash_pointers_sprint_$1(str,LEN,value);
     if (EXECUTION_SUCCESS == rv) {
       /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
 	 (Marco Maggi; Sep 9, 2024) */
@@ -83,6 +83,8 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerref$1]]
     [[["Retrieve a C language type \"$2\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
 ]]])
 
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[pointer]]],	[[[void *]]],			[[[1]]])
+
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],		[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
@@ -92,12 +94,21 @@ MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sllong]]],	[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ullong]]],	[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
-
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[float]]],		[[[float]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[complex]]],	[[[double complex]]],		[[[1]]])
+
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint16]]],	[[[int16_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint16]]],	[[[uint16_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint32]]],	[[[int32_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint32]]],	[[[uint32_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint64]]],	[[[int64_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint64]]],	[[[uint64_t]]],			[[[1]]])
+
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
 /* end of file */

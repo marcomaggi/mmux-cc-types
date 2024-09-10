@@ -225,22 +225,47 @@ Return an integer representing the library interface current age.
 @chapter Global variables
 
 
-@macro MmuxDefineGlobalVar{VARNAME}
+If a C language type referenced by one of the following variables is undefined: the corresponding
+Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
+underlying platform implements the type @code{long long}, we can do:
+
+@example
+if test -v SIZEOF_SLLONG
+then # implemented
+else # not implemented
+fi
+@end example
+
+@macro MmuxDefineGlobalVar{VARNAME,TYPE}
 @defvar \VARNAME\
-Global variable holding the size of the specified C language type.
+Global variable holding the size, measured in bytes, of the C language type @code{\TYPE\}.
 @end defvar
 
 @end macro
 
-@MmuxDefineGlobalVar{SIZEOF_SCHAR}
-@MmuxDefineGlobalVar{SIZEOF_UCHAR}
-@MmuxDefineGlobalVar{SIZEOF_SINT}
-@MmuxDefineGlobalVar{SIZEOF_UINT}
-@MmuxDefineGlobalVar{SIZEOF_SLONG}
-@MmuxDefineGlobalVar{SIZEOF_ULONG}
-@MmuxDefineGlobalVar{SIZEOF_FLOAT}
-@MmuxDefineGlobalVar{SIZEOF_DOUBLE}
-@MmuxDefineGlobalVar{SIZEOF_LDOUBLE}
+@MmuxDefineGlobalVar{SIZEOF_POINTER,void *}
+@MmuxDefineGlobalVar{SIZEOF_SCHAR, signed char}
+@MmuxDefineGlobalVar{SIZEOF_UCHAR, unsigned char}
+@MmuxDefineGlobalVar{SIZEOF_SINT, signed int}
+@MmuxDefineGlobalVar{SIZEOF_UINT, unsigned int}
+@MmuxDefineGlobalVar{SIZEOF_SLONG, signed long}
+@MmuxDefineGlobalVar{SIZEOF_ULONG, unsigned long}
+@MmuxDefineGlobalVar{SIZEOF_SLLONG, signed long long}
+@MmuxDefineGlobalVar{SIZEOF_ULLONG, unsigned long long}
+@MmuxDefineGlobalVar{SIZEOF_FLOAT, float}
+@MmuxDefineGlobalVar{SIZEOF_DOUBLE, double}
+@MmuxDefineGlobalVar{SIZEOF_LDOUBLE, long double}
+@MmuxDefineGlobalVar{SIZEOF_COMPLEX, double complex}
+@MmuxDefineGlobalVar{SIZEOF_SINT8, int8_t}
+@MmuxDefineGlobalVar{SIZEOF_UINT8, uint8_t}
+@MmuxDefineGlobalVar{SIZEOF_SINT16, int16_t}
+@MmuxDefineGlobalVar{SIZEOF_UINT16, uint16_t}
+@MmuxDefineGlobalVar{SIZEOF_SINT32, int32_t}
+@MmuxDefineGlobalVar{SIZEOF_UINT32, uint32_t}
+@MmuxDefineGlobalVar{SIZEOF_SINT64, int64_t}
+@MmuxDefineGlobalVar{SIZEOF_UINT64, uint64_t}
+@MmuxDefineGlobalVar{SIZEOF_SSIZE, ssize_t}
+@MmuxDefineGlobalVar{SIZEOF_USIZE, size_t}
 
 @c page
 @node memory
@@ -344,11 +369,12 @@ value extracted at @var{OFFSET} from @var{POINTER}.
 @macro MmuxDefineAccessorMutator{STEM,TYPE}
 @deffn Builtin pointer-set-\STEM\ @var{POINTER} @var{OFFSET} @var{VALUE}
 @deffnx Builtin pointer-ref-\STEM\ @var{VALUEVAR} @var{POINTER} @var{OFFSET}
-Accessor and mutator for memory blocks operating on C language types @code{\TYPE\}.
+Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
 @end deffn
 
 @end macro
 
+@MmuxDefineAccessorMutator{pointer,void *}
 @MmuxDefineAccessorMutator{schar,signed char}
 @MmuxDefineAccessorMutator{uchar,unsigned char}
 @MmuxDefineAccessorMutator{sint,signed int}
@@ -357,12 +383,20 @@ Accessor and mutator for memory blocks operating on C language types @code{\TYPE
 @MmuxDefineAccessorMutator{ulong,unsigned long}
 @MmuxDefineAccessorMutator{sllong,signed long long}
 @MmuxDefineAccessorMutator{ullong,unsigned long long}
-@MmuxDefineAccessorMutator{ssize,ssize_t}
-@MmuxDefineAccessorMutator{usize,size_t}
 @MmuxDefineAccessorMutator{float,float}
 @MmuxDefineAccessorMutator{double,double}
 @MmuxDefineAccessorMutator{ldouble,long double}
 @MmuxDefineAccessorMutator{complex,double complex}
+@MmuxDefineAccessorMutator{sint8,int8_t}
+@MmuxDefineAccessorMutator{uint8,uint8_t}
+@MmuxDefineAccessorMutator{sint16,int16_t}
+@MmuxDefineAccessorMutator{uint16,uint16_t}
+@MmuxDefineAccessorMutator{sint32,int32_t}
+@MmuxDefineAccessorMutator{uint32,uint32_t}
+@MmuxDefineAccessorMutator{sint64,int64_t}
+@MmuxDefineAccessorMutator{uint64,uint64_t}
+@MmuxDefineAccessorMutator{ssize,ssize_t}
+@MmuxDefineAccessorMutator{usize,size_t}
 
 @c page
 @c ------------------------------------------------------------

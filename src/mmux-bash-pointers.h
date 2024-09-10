@@ -138,15 +138,24 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_sllong  (signed   long long
 #if (HAVE_UNSIGNED_LONG_LONG_INT)
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ullong  (unsigned long long * p, char const * s, char const * caller_name);
 #endif
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_float   (float   * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_double  (double  * p, char const * s, char const * caller_name);
+#if (HAVE_LONG_DOUBLE)
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, char const * s, char const * caller_name);
+#endif
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_complex (double complex * p, const char * s, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint8   (int8_t   * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint8   (uint8_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint16  (int16_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint16  (uint16_t * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint32  (int32_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint32  (uint32_t * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint64  (int64_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint64  (uint64_t * p, char const * s, char const * caller_name);
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t * p, char const * s, char const * caller_name);
-
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_float   (float   * p, char const * s, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_double  (double  * p, char const * s, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, char const * s, char const * caller_name);
-
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_complex (double complex * p, const char * s, char const * caller_name);
 
 
 /** --------------------------------------------------------------------
@@ -154,33 +163,41 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_complex (double complex * p
  ** ----------------------------------------------------------------- */
 
 #undef  mmux_bash_pointers_sprint_offset
-#define mmux_bash_pointers_sprint_offset(STRPTR,STRLEN,VALUE) \
-  mmux_bash_pointers_sprint_usize(STRPTR,STRLEN,VALUE)
+#define mmux_bash_pointers_sprint_offset(STRPTR,LEN,VALUE) \
+  mmux_bash_pointers_sprint_usize(STRPTR,LEN,VALUE)
 
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_pointer (char * strptr, size_t strlen, void * value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_pointer (char * strptr, size_t len, void * value);
 
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_schar   (char * strptr, size_t strlen, signed   char value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uchar   (char * strptr, size_t strlen, unsigned char value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint    (char * strptr, size_t strlen, signed   int  value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint    (char * strptr, size_t strlen, unsigned int  value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_slong   (char * strptr, size_t strlen, signed   long value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ulong   (char * strptr, size_t strlen, unsigned long value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_schar   (char * strptr, size_t len, signed   char value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uchar   (char * strptr, size_t len, unsigned char value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint    (char * strptr, size_t len, signed   int  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint    (char * strptr, size_t len, unsigned int  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_slong   (char * strptr, size_t len, signed   long value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ulong   (char * strptr, size_t len, unsigned long value);
 #if (HAVE_LONG_LONG_INT)
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sllong  (char * strptr, size_t strlen, signed   long long value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sllong  (char * strptr, size_t len, signed   long long value);
 #endif
 #if (HAVE_UNSIGNED_LONG_LONG_INT)
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ullong  (char * strptr, size_t strlen, unsigned long long value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ullong  (char * strptr, size_t len, unsigned long long value);
 #endif
-
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_usize   (char * strptr, size_t strlen, size_t  value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ssize   (char * strptr, size_t strlen, ssize_t value);
-
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_float   (char * strptr, size_t strlen, float   value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_double  (char * strptr, size_t strlen, double  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_float   (char * strptr, size_t len, float   value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_double  (char * strptr, size_t len, double  value);
 #if (HAVE_LONG_DOUBLE)
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ldouble (char * strptr, size_t strlen, long double value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ldouble (char * strptr, size_t len, long double value);
 #endif
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_complex (char * strptr, size_t strlen, double complex value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex value);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint8   (char * strptr, size_t len, int8_t   value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint8   (char * strptr, size_t len, uint8_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint16  (char * strptr, size_t len, int16_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint16  (char * strptr, size_t len, uint16_t value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint32  (char * strptr, size_t len, int32_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint32  (char * strptr, size_t len, uint32_t value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint64  (char * strptr, size_t len, int64_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint64  (char * strptr, size_t len, uint64_t value);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_usize   (char * strptr, size_t len, size_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ssize   (char * strptr, size_t len, ssize_t value);
 
 
 /** --------------------------------------------------------------------

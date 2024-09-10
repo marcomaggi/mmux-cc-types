@@ -69,6 +69,8 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerset$1]]
     [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"$2\"."]]])
 ]]])
 
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[pointer]]],	[[[void *]]],			[[[1]]])
+
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[schar]]],		[[[signed   char]]],		[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
@@ -78,12 +80,21 @@ MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sllong]]],		[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ullong]]],		[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
-
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[float]]],		[[[float]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[double]]],		[[[double]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[complex]]],	[[[double complex]]],		[[[HAVE_LONG_DOUBLE]]])
+
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint16]]],		[[[int16_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint16]]],		[[[uint16_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint32]]],		[[[int32_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint32]]],		[[[uint32_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint64]]],		[[[int64_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint64]]],		[[[uint64_t]]],			[[[1]]])
+
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
 /* end of file */

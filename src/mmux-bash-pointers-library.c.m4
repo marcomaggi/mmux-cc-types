@@ -67,14 +67,14 @@ void
 mmux_bash_pointers_create_global_double_variable (const char * name, int value)
 {
   SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  STRLEN
-#define STRLEN	64
-  char		str[STRLEN];
+#undef  LEN
+#define LEN	64
+  char		str[LEN];
   /* NOTE I do not know what FLAGS is for, but setting it to zero seems fine.  (Marco
      Maggi; Sep 4, 2024) */
   int		flags = 0;
 
-  snprintf(str, STRLEN, "%d", value);
+  snprintf(str, LEN, "%d", value);
   v = bind_global_variable(name, str, flags);
 }
 
@@ -82,20 +82,6 @@ mmux_bash_pointers_create_global_double_variable (const char * name, int value)
 /** --------------------------------------------------------------------
  ** Type parsers.
  ** ----------------------------------------------------------------- */
-
-int
-mmux_bash_pointers_parse_pointer (void ** p_data, char const * s_arg, char const * caller_name)
-{
-  int	rv;
-
-  rv = sscanf(s_arg, "%p", p_data);
-  if ((EOF != rv) && (1 == rv)) {
-    return EXECUTION_SUCCESS;
-  } else {
-    fprintf(stderr, "%s: error: invalid argument, expected pointer: \"%s\"\n", caller_name, s_arg);
-    return EXECUTION_FAILURE;
-  }
-}
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_PARSER]]],[[[
 int
@@ -110,7 +96,7 @@ mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * calle
   if ((EOF != rv) && (1 == rv)) {
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected $2: \"%s\"\n", caller_name, s_arg);
+    fprintf(stderr, "%s: error: invalid argument, expected \"$2\": \"%s\"\n", caller_name, s_arg);
     return EXECUTION_FAILURE;
   }
 #else
@@ -121,7 +107,7 @@ mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * calle
 }
 ]]])
 
-/* To parse schar and uchar let's just use sint and check the boundaries. */
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[pointer]]],	[[[void *]]],			[[["%p"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[sint]]],	[[[signed int]]],		[[["%d"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[uint]]],	[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[slong]]],	[[[signed long]]],		[[["%ld"]]],  [[[1]]])
@@ -136,7 +122,10 @@ MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],			[[["%f"]]],   [[[1]
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],			[[["%lf"]]],  [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],  [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Type parsers: char.
+ ** ----------------------------------------------------------------- */
 
 int
 mmux_bash_pointers_parse_schar (signed char * p_data, char const * s_arg, char const * caller_name)
@@ -144,32 +133,225 @@ mmux_bash_pointers_parse_schar (signed char * p_data, char const * s_arg, char c
   int	data;
   int	rv;
 
-  rv = sscanf(s_arg, "%d", &data);
-  if ((EOF != rv) && (1 == rv)) {
-    if ((SCHAR_MIN <= data) && (data <= SCHAR_MAX)) {
-      *p_data = (signed char)data;
-      return EXECUTION_SUCCESS;
-    }
+  rv = mmux_bash_pointers_parse_sint(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
   }
-  fprintf(stderr, "%s: error: invalid argument, expected signed char: \"%s\"\n", caller_name, s_arg);
-  return EXECUTION_FAILURE;
+  if ((SCHAR_MIN <= data) && (data <= SCHAR_MAX)) {
+    *p_data = (signed char)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"signed char\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
 }
-
 int
 mmux_bash_pointers_parse_uchar (unsigned char * p_data, char const * s_arg, char const * caller_name)
+{
+  unsigned	data;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_uint(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if (data <= UCHAR_MAX) {
+    *p_data = (unsigned char)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"unsigned char\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type parsers: int8.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_parse_sint8 (int8_t * p_data, char const * s_arg, char const * caller_name)
 {
   int	data;
   int	rv;
 
-  rv = sscanf(s_arg, "%d", &data);
-  if ((EOF != rv) && (1 == rv)) {
-    if ((0 <= data) && (data <= UCHAR_MAX)) {
-      *p_data = (signed char)data;
-      return EXECUTION_SUCCESS;
-    }
+  rv = mmux_bash_pointers_parse_sint(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
   }
-  fprintf(stderr, "%s: error: invalid argument, expected unsigned char: \"%s\"\n", caller_name, s_arg);
+  if ((INT8_MIN <= data) && (data <= INT8_MAX)) {
+    *p_data = (int8_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"int8_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+int
+mmux_bash_pointers_parse_uint8 (uint8_t * p_data, char const * s_arg, char const * caller_name)
+{
+  unsigned	data;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_uint(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if (data <= UINT8_MAX) {
+    *p_data = (uint8_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"uint8_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type parsers: int16.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_parse_sint16 (int16_t * p_data, char const * s_arg, char const * caller_name)
+{
+  int	data;
+  int	rv;
+
+  rv = mmux_bash_pointers_parse_sint(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if ((INT16_MIN <= data) && (data <= INT16_MAX)) {
+    *p_data = (int16_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"int16_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+int
+mmux_bash_pointers_parse_uint16 (uint16_t * p_data, char const * s_arg, char const * caller_name)
+{
+  unsigned	data;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_uint(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if (data <= UINT16_MAX) {
+    *p_data = (uint16_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"uint16_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type parsers: int32.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_parse_sint32 (int32_t  * p_data, char const * s_arg, char const * caller_name)
+{
+  long 	data;
+  int	rv;
+
+  rv = mmux_bash_pointers_parse_slong(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if ((INT32_MIN <= data) && (data <= INT32_MAX)) {
+    *p_data = (int32_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"int32_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+int
+mmux_bash_pointers_parse_uint32  (uint32_t * p_data, char const * s_arg, char const * caller_name)
+{
+  unsigned long	data;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_ulong(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if (data <= UINT32_MAX) {
+    *p_data = (uint32_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"uint32_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type parsers: int64.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_parse_sint64  (int64_t  * p_data, char const * s_arg, char const * caller_name)
+{
+#if (HAVE_LONG_LONG_INT)
+  long long 	data;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_sllong(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if ((INT64_MIN <= data) && (data <= INT64_MAX)) {
+    *p_data = (int64_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"int64_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: parser \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
   return EXECUTION_FAILURE;
+#endif
+}
+int
+mmux_bash_pointers_parse_uint64  (uint64_t * p_data, char const * s_arg, char const * caller_name)
+{
+#if (HAVE_UNSIGNED_LONG_LONG_INT)
+  unsigned long	long	data;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_ullong(&data, s_arg, caller_name);
+  if (EXECUTION_FAILURE == rv) {
+    return rv;
+  }
+  if (data <= UINT64_MAX) {
+    *p_data = (uint64_t)data;
+    return EXECUTION_SUCCESS;
+  } else {
+    fprintf(stderr, "%s: error: invalid argument, expected \"uint64_t\": \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  }
+  return rv;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: parser \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
+  return EXECUTION_FAILURE;
+#endif
 }
 
 
@@ -285,10 +467,10 @@ parse_complex_parentheses_format (double complex * p_value, const char * s_arg, 
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINT]]],[[[
 int
-mmux_bash_pointers_sprint_[[[]]]$1 (char * strptr, size_t strlen, $2 value)
+mmux_bash_pointers_sprint_[[[]]]$1 (char * strptr, size_t len, $2 value)
 {
 #if ($4)
-  snprintf(strptr, strlen, $3, value);
+  snprintf(strptr, len, $3, value);
   return EXECUTION_SUCCESS;
 #else
   fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
@@ -316,18 +498,94 @@ MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[[double]]],			[[["%lf"]]],  [[
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[[long double]]],		[[["%Lf"]]],  [[[HAVE_LONG_DOUBLE]]])
 
 int
-mmux_bash_pointers_sprint_float (char * strptr, size_t strlen, float value)
+mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
 {
-  snprintf(strptr, strlen, "%f", (double)value);
+  snprintf(strptr, len, "%f", (double)value);
   return EXECUTION_SUCCESS;
 }
 int
-mmux_bash_pointers_sprint_complex (char * strptr, size_t strlen, double complex value)
+mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex value)
 {
   double	re = creal(value), im = cimag(value);
 
-  snprintf(strptr, strlen, "(%lf)+i*(%lf)", re, im);
+  snprintf(strptr, len, "(%lf)+i*(%lf)", re, im);
   return EXECUTION_SUCCESS;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type string printers: int8.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_sprint_sint8 (char * strptr, size_t len, int8_t value)
+{
+  return mmux_bash_pointers_sprint_sint(strptr, len, (signed int)value);
+}
+int
+mmux_bash_pointers_sprint_uint8 (char * strptr, size_t len, uint8_t value)
+{
+  return mmux_bash_pointers_sprint_uint(strptr, len, (unsigned int)value);
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type string printers: int16.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_sprint_sint16 (char * strptr, size_t len, int16_t value)
+{
+  return mmux_bash_pointers_sprint_sint(strptr, len, (signed int)value);
+}
+int
+mmux_bash_pointers_sprint_uint16 (char * strptr, size_t len, uint16_t value)
+{
+  return mmux_bash_pointers_sprint_uint(strptr, len, (unsigned int)value);
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type string printers: int32.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_sprint_sint32 (char * strptr, size_t len, int32_t value)
+{
+  return mmux_bash_pointers_sprint_slong(strptr, len, (signed long int)value);
+}
+int
+mmux_bash_pointers_sprint_uint32 (char * strptr, size_t len, uint32_t value)
+{
+  return mmux_bash_pointers_sprint_ulong(strptr, len, (unsigned long int)value);
+}
+
+
+/** --------------------------------------------------------------------
+ ** Type string printers: int64.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_sprint_sint64 (char * strptr, size_t len, int64_t value)
+{
+#if (HAVE_LONG_LONG_INT)
+  return mmux_bash_pointers_sprint_sllong(strptr, len, (signed long long int)value);
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
+  return EXECUTION_FAILURE;
+#endif
+}
+int
+mmux_bash_pointers_sprint_uint64 (char * strptr, size_t len, uint64_t value)
+{
+#if (HAVE_UNSIGNED_LONG_LONG_INT)
+  return mmux_bash_pointers_sprint_ullong(strptr, len, (unsigned long long int)value);
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
+  return EXECUTION_FAILURE;
+#endif
 }
 
 
@@ -395,15 +653,36 @@ mmuxbashpointersinit_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
   /* These constants are defined by the Standard C Library; we make them available as
      global shell variables. */
   {
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_POINTER",		sizeof(void *));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_SCHAR",		sizeof(signed char));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_UCHAR",		sizeof(unsigned char));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT",		sizeof(signed int));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT",		sizeof(unsigned int));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_SLONG",		sizeof(signed long));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_ULONG",		sizeof(unsigned long));
+#if (HAVE_LONG_LONG_INT)
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SLLONG",		sizeof(signed long long));
+#endif
+#if (HAVE_UNSIGNED_LONG_LONG_INT)
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_ULLONG",		sizeof(unsigned long long));
+#endif
     mmux_bash_pointers_create_global_double_variable("SIZEOF_FLOAT",		sizeof(float));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_DOUBLE",		sizeof(double));
+#if (HAVE_LONG_DOUBLE)
     mmux_bash_pointers_create_global_double_variable("SIZEOF_LDOUBLE",		sizeof(long double));
+#endif
+
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SSIZE",		sizeof(ssize_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_USIZE",		sizeof(size_t));
+
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT8",		sizeof(int8_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT8",		sizeof(uint8_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT16",		sizeof(int16_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT16",		sizeof(uint16_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT32",		sizeof(int32_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT32",		sizeof(uint32_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT64",		sizeof(int64_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT64",		sizeof(uint64_t));
   }
   return EXECUTION_SUCCESS;
 }

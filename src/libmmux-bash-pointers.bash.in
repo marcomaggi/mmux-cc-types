@@ -38,6 +38,8 @@ then
     declare MMUX_BASH_LIBC_MATH_BUILTIN
     for MMUX_BASH_LIBC_MATH_BUILTIN in \
 	malloc realloc free			\
+	       mmuxpointerspointersetpointer	mmuxpointerspointerrefpointer	\
+	       \
 	       mmuxpointerspointersetschar	mmuxpointerspointerrefschar	\
 	       mmuxpointerspointersetuchar	mmuxpointerspointerrefuchar	\
 	       mmuxpointerspointersetsint	mmuxpointerspointerrefsint	\
@@ -46,16 +48,32 @@ then
 	       mmuxpointerspointersetulong	mmuxpointerspointerrefulong	\
 	       mmuxpointerspointersetsllong	mmuxpointerspointerrefsllong	\
 	       mmuxpointerspointersetullong	mmuxpointerspointerrefullong	\
-	       mmuxpointerspointersetssize	mmuxpointerspointerrefssize	\
-	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize	\
+	       \
 	       mmuxpointerspointersetfloat	mmuxpointerspointerreffloat	\
 	       mmuxpointerspointersetdouble	mmuxpointerspointerrefdouble	\
 	       mmuxpointerspointersetldouble	mmuxpointerspointerrefldouble	\
-	       mmuxpointerspointersetcomplex	mmuxpointerspointerrefcomplex
+	       mmuxpointerspointersetcomplex	mmuxpointerspointerrefcomplex	\
+	       \
+	       mmuxpointerspointersetsint8	mmuxpointerspointerrefsint8	\
+	       mmuxpointerspointersetuint8	mmuxpointerspointerrefuint8	\
+	       mmuxpointerspointersetsint16	mmuxpointerspointerrefsint16	\
+	       mmuxpointerspointersetuint16	mmuxpointerspointerrefuint16	\
+	       mmuxpointerspointersetsint32	mmuxpointerspointerrefsint32	\
+	       mmuxpointerspointersetuint32	mmuxpointerspointerrefuint32	\
+	       mmuxpointerspointersetsint64	mmuxpointerspointerrefsint64	\
+	       mmuxpointerspointersetuint64	mmuxpointerspointerrefuint64	\
+	       \
+	       mmuxpointerspointersetssize	mmuxpointerspointerrefssize	\
+	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize
     do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
     done
     unset MMUX_BASH_LIBC_MATH_BUILTIN
 fi
+
+alias pointer-set-pointer='mmuxpointerspointersetpointer'
+alias pointer-ref-pointer='mmuxpointerspointerrefpointer'
+
+### ------------------------------------------------------------------------
 
 alias pointer-set-schar='mmuxpointerspointersetschar'
 alias pointer-ref-schar='mmuxpointerspointerrefschar'
@@ -81,6 +99,8 @@ alias pointer-ref-sllong='mmuxpointerspointerrefsllong'
 alias pointer-set-ullong='mmuxpointerspointersetullong'
 alias pointer-ref-ullong='mmuxpointerspointerrefullong'
 
+### ------------------------------------------------------------------------
+
 alias pointer-set-float='mmuxpointerspointersetfloat'
 alias pointer-ref-float='mmuxpointerspointerreffloat'
 
@@ -90,14 +110,43 @@ alias pointer-ref-double='mmuxpointerspointerrefdouble'
 alias pointer-set-ldouble='mmuxpointerspointersetldouble'
 alias pointer-ref-ldouble='mmuxpointerspointerrefldouble'
 
+alias pointer-set-complex='mmuxpointerspointersetcomplex'
+alias pointer-ref-complex='mmuxpointerspointerrefcomplex'
+
+### ------------------------------------------------------------------------
+
+alias pointer-set-sint8='mmuxpointerspointersetsint8'
+alias pointer-ref-sint8='mmuxpointerspointerrefsint8'
+
+alias pointer-set-uint8='mmuxpointerspointersetuint8'
+alias pointer-ref-uint8='mmuxpointerspointerrefuint8'
+
+alias pointer-set-sint16='mmuxpointerspointersetsint16'
+alias pointer-ref-sint16='mmuxpointerspointerrefsint16'
+
+alias pointer-set-uint16='mmuxpointerspointersetuint16'
+alias pointer-ref-uint16='mmuxpointerspointerrefuint16'
+
+alias pointer-set-sint32='mmuxpointerspointersetsint32'
+alias pointer-ref-sint32='mmuxpointerspointerrefsint32'
+
+alias pointer-set-uint32='mmuxpointerspointersetuint32'
+alias pointer-ref-uint32='mmuxpointerspointerrefuint32'
+
+alias pointer-set-sint64='mmuxpointerspointersetsint64'
+alias pointer-ref-sint64='mmuxpointerspointerrefsint64'
+
+alias pointer-set-uint64='mmuxpointerspointersetuint64'
+alias pointer-ref-uint64='mmuxpointerspointerrefuint64'
+
+### ------------------------------------------------------------------------
+
 alias pointer-set-ssize='mmuxpointerspointersetssize'
 alias pointer-ref-ssize='mmuxpointerspointerrefssize'
 
 alias pointer-set-usize='mmuxpointerspointersetusize'
 alias pointer-ref-usize='mmuxpointerspointerrefusize'
 
-alias pointer-set-complex='mmuxpointerspointersetcomplex'
-alias pointer-ref-complex='mmuxpointerspointerrefcomplex'
 
 ### end of file
 # Local Variables:
