@@ -120,7 +120,7 @@ MMUX_BASH_POINTERS_DEFINE_PARSER([[[usize]]],	[[[size_t]]],			[[["%lu"]]],  [[[1
 
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],	[[[float]]],			[[["%f"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],	[[[double]]],			[[["%lf"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],  [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],	[[[long double]]],		[[["%Lf"]]],  [[[HAVE_LONG_DOUBLE]]])
 
 
 /** --------------------------------------------------------------------
@@ -494,13 +494,13 @@ MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ullong]]],		[[[unsigned long long]]],	[[["%l
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ssize]]],		[[[ssize_t]]],			[[["%ld"]]],  [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[usize]]],		[[[size_t]]],			[[["%lu"]]],  [[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[[double]]],			[[["%lf"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[[long double]]],		[[["%Lf"]]],  [[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[[double]]],			[[["%lA"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[[long double]]],		[[["%LA"]]],  [[[HAVE_LONG_DOUBLE]]])
 
 int
 mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
 {
-  snprintf(strptr, len, "%f", (double)value);
+  snprintf(strptr, len, "%A", (double)value);
   return EXECUTION_SUCCESS;
 }
 int
@@ -508,7 +508,7 @@ mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex val
 {
   double	re = creal(value), im = cimag(value);
 
-  snprintf(strptr, len, "(%lf)+i*(%lf)", re, im);
+  snprintf(strptr, len, "(%lA)+i*(%lA)", re, im);
   return EXECUTION_SUCCESS;
 }
 

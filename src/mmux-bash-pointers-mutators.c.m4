@@ -83,7 +83,7 @@ MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ullong]]],		[[[unsigned long long]]],	[[[HA
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[float]]],		[[[float]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[double]]],		[[[double]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[complex]]],	[[[double complex]]],		[[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[complex]]],	[[[double complex]]],		[[[1]]])
 
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])

@@ -68,6 +68,13 @@ function memory-1.2 () {
 	fi
     fi
 }
+function memory-1.3 () {
+    declare PTR
+    if calloc PTR 123 1
+    then free $PTR
+    else return $?
+    fi
+}
 
 
 #### let's go

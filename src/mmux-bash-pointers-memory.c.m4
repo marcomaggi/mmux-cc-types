@@ -49,10 +49,12 @@ malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 
   if (ptr) {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-    char	str[32];
+#undef  LEN
+#define LEN	32
+    char	str[LEN];
     int		flags = 0;
 
-    snprintf(str, 1024, "%p", ptr);
+    snprintf(str, LEN, "%p", ptr);
     /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
        (Marco Maggi; Sep 9, 2024) */
     v = bind_variable(argv[1], str, flags);
@@ -64,6 +66,47 @@ malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[malloc]]],[[[(3 != argc)]]],
     [[["malloc PTRVAR SIZE"]]],
     [[["Allocate a memory block, store the pointer in the given variable."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+{
+  void *	ptr;
+  size_t	item_count;
+  size_t	item_size;
+  int		rv;
+
+  rv = mmux_bash_pointers_parse_usize(&item_count, argv[2], "calloc");
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_pointers_parse_usize(&item_size, argv[3], "calloc");
+  if (EXECUTION_SUCCESS != rv) { return rv; }
+
+  ptr = calloc(item_count, item_size);
+  if (0) {
+    fprintf(stderr, "%s: allocated pointer %p\n", __func__, ptr);
+  }
+
+  if (ptr) {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  LEN
+#define LEN	32
+    char	str[LEN];
+    int		flags = 0;
+
+    snprintf(str, LEN, "%p", ptr);
+    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
+       (Marco Maggi; Sep 9, 2024) */
+    v = bind_variable(argv[1], str, flags);
+    return EXECUTION_SUCCESS;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[calloc]]],[[[(4 != argc)]]],
+    [[["calloc PTRVAR ITEM_COUNT ITEM_SIZE"]]],
+    [[["Allocate a memory block wide enough to hold ITEM_COUNT items of ITEM_SIZE, store the pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -83,10 +126,12 @@ realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   ptr = realloc(ptr, len);
   if (ptr) {
     SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-    char	str[32];
+#undef  LEN
+#define LEN	32
+    char	str[LEN];
     int		flags = 0;
 
-    snprintf(str, 1024, "%p", ptr);
+    snprintf(str, LEN, "%p", ptr);
     /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
        (Marco Maggi; Sep 9, 2024) */
     v = bind_variable(argv[1], str, flags);

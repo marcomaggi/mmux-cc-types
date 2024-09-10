@@ -310,6 +310,21 @@ the requested number of bytes in the newly allocated block; it must fit the C la
 @end deffn
 
 
+@deffn Builtin calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
+Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
+otherwise return false.
+
+The argument @var{PTRVAR} must be the name of a variable in which @func{malloc} will store a string
+representation of the pointer to the newly allocated block.
+
+The argument @var{ITEM_COUNT} must be the string representation of an exact, positive integer
+representing the number of items that the memory block has to contain.
+
+The argument @var{ITEM_SIZE} must be the string representation of an exact, positive integer
+representing the size of each item the memory block has to contain.
+@end deffn
+
+
 @deffn Builtin realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
 Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
 otherwise return false.

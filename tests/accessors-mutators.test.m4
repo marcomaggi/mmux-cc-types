@@ -54,7 +54,7 @@ source "$MMUX_LIBRARY"
 function raw-memory-pointer-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-pointer $PTR 0 '0x12'
 	pointer-ref-pointer VALUE $PTR 0
@@ -66,7 +66,7 @@ function raw-memory-pointer-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-pointer $PTR  0 '0x12'
 	pointer-set-pointer $PTR  8 '0x34'
@@ -86,7 +86,7 @@ function raw-memory-pointer-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-pointer $PTR  0 '0x12'
 	pointer-set-pointer $PTR  8 '0x34'
@@ -109,7 +109,7 @@ function raw-memory-pointer-1.3 () {
 function raw-memory-schar-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-schar $PTR 0 12
 	pointer-ref-schar VALUE $PTR 0
@@ -121,7 +121,7 @@ function raw-memory-schar-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-schar $PTR  0 12
 	pointer-set-schar $PTR  8 34
@@ -141,7 +141,7 @@ function raw-memory-schar-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-schar $PTR  0 12
 	pointer-set-schar $PTR  8 34
@@ -164,7 +164,7 @@ function raw-memory-schar-1.3 () {
 function raw-memory-uchar-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uchar $PTR 0 12
 	pointer-ref-uchar VALUE $PTR 0
@@ -176,7 +176,7 @@ function raw-memory-uchar-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uchar $PTR  0 12
 	pointer-set-uchar $PTR  8 34
@@ -196,7 +196,7 @@ function raw-memory-uchar-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uchar $PTR  0 12
 	pointer-set-uchar $PTR  8 34
@@ -219,7 +219,7 @@ function raw-memory-uchar-1.3 () {
 function raw-memory-sint-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint $PTR 0 123
 	pointer-ref-sint VALUE $PTR 0
@@ -231,7 +231,7 @@ function raw-memory-sint-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint $PTR  0 123
 	pointer-set-sint $PTR  8 456
@@ -251,7 +251,7 @@ function raw-memory-sint-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint $PTR  0 123
 	pointer-set-sint $PTR  8 456
@@ -274,7 +274,7 @@ function raw-memory-sint-1.3 () {
 function raw-memory-uint-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint $PTR 0 123
 	pointer-ref-uint VALUE $PTR 0
@@ -286,7 +286,7 @@ function raw-memory-uint-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint $PTR  0 123
 	pointer-set-uint $PTR  8 456
@@ -306,7 +306,7 @@ function raw-memory-uint-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint $PTR  0 123
 	pointer-set-uint $PTR  8 456
@@ -329,7 +329,7 @@ function raw-memory-uint-1.3 () {
 function raw-memory-slong-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-slong $PTR 0 123
 	pointer-ref-slong VALUE $PTR 0
@@ -341,7 +341,7 @@ function raw-memory-slong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-slong $PTR  0 123
 	pointer-set-slong $PTR  8 456
@@ -361,7 +361,7 @@ function raw-memory-slong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-slong $PTR  0 123
 	pointer-set-slong $PTR  8 456
@@ -384,7 +384,7 @@ function raw-memory-slong-1.3 () {
 function raw-memory-ulong-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ulong $PTR 0 123
 	pointer-ref-ulong VALUE $PTR 0
@@ -396,7 +396,7 @@ function raw-memory-ulong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ulong $PTR  0 123
 	pointer-set-ulong $PTR  8 456
@@ -416,7 +416,7 @@ function raw-memory-ulong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ulong $PTR  0 123
 	pointer-set-ulong $PTR  8 456
@@ -439,7 +439,7 @@ function raw-memory-ulong-1.3 () {
 function raw-memory-sllong-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sllong $PTR 0 123
 	pointer-ref-sllong VALUE $PTR 0
@@ -451,7 +451,7 @@ function raw-memory-sllong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sllong $PTR  0 123
 	pointer-set-sllong $PTR  8 456
@@ -471,7 +471,7 @@ function raw-memory-sllong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sllong $PTR  0 123
 	pointer-set-sllong $PTR  8 456
@@ -494,7 +494,7 @@ function raw-memory-sllong-1.3 () {
 function raw-memory-ullong-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ullong $PTR 0 123
 	pointer-ref-ullong VALUE $PTR 0
@@ -506,7 +506,7 @@ function raw-memory-ullong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ullong $PTR  0 123
 	pointer-set-ullong $PTR  8 456
@@ -526,7 +526,7 @@ function raw-memory-ullong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ullong $PTR  0 123
 	pointer-set-ullong $PTR  8 456
@@ -549,7 +549,7 @@ function raw-memory-ullong-1.3 () {
 function raw-memory-ssize-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ssize $PTR 0 123
 	pointer-ref-ssize VALUE $PTR 0
@@ -561,7 +561,7 @@ function raw-memory-ssize-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ssize $PTR  0 123
 	pointer-set-ssize $PTR  8 456
@@ -581,7 +581,7 @@ function raw-memory-ssize-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ssize $PTR  0 123
 	pointer-set-ssize $PTR  8 456
@@ -604,7 +604,7 @@ function raw-memory-ssize-1.3 () {
 function raw-memory-usize-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-usize $PTR 0 123
 	pointer-ref-usize VALUE $PTR 0
@@ -616,7 +616,7 @@ function raw-memory-usize-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-usize $PTR  0 123
 	pointer-set-usize $PTR  8 456
@@ -636,7 +636,7 @@ function raw-memory-usize-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-usize $PTR  0 123
 	pointer-set-usize $PTR  8 456
@@ -659,19 +659,19 @@ function raw-memory-usize-1.3 () {
 function raw-memory-float-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-float $PTR 0 1.23
 	pointer-ref-float VALUE $PTR 0
     }
     free $PTR
-    dotest-equal 1.230000 QQ(VALUE)
+    dotest-equal 0X1.3AE148P+0 QQ(VALUE)
 }
 function raw-memory-float-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-float $PTR  0 1.23
 	pointer-set-float $PTR  8 4.56
@@ -683,15 +683,15 @@ function raw-memory-float-1.2 () {
     }
     free $PTR
 
-    dotest-equal 1.230000 mbfl_slot_qref(VALUES,0) &&
-	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
-	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
+    dotest-equal 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
 }
 function raw-memory-float-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-float $PTR  0 1.23
 	pointer-set-float $PTR  8 4.56
@@ -703,9 +703,9 @@ function raw-memory-float-1.3 () {
     }
     free $PTR
 
-    dotest-equal 1.230000 mbfl_slot_qref(VALUES,0) &&
-	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
-	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
+    dotest-equal 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
 }
 
 
@@ -714,19 +714,19 @@ function raw-memory-float-1.3 () {
 function raw-memory-double-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-double $PTR 0 1.23
 	pointer-ref-double VALUE $PTR 0
     }
     free $PTR
-    dotest-equal 1.230000 QQ(VALUE)
+    dotest-equal '0X1.3AE147AE147AEP+0' QQ(VALUE)
 }
 function raw-memory-double-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-double $PTR  0 1.23
 	pointer-set-double $PTR  8 4.56
@@ -738,15 +738,15 @@ function raw-memory-double-1.2 () {
     }
     free $PTR
 
-    dotest-equal 1.230000 mbfl_slot_qref(VALUES,0) &&
-	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
-	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
+    dotest-equal     '0X1.3AE147AE147AEP+0' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '0X1.23D70A3D70A3DP+2' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '0X1.F8F5C28F5C28FP+2' mbfl_slot_qref(VALUES,2)
 }
 function raw-memory-double-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-double $PTR  0 1.23
 	pointer-set-double $PTR  8 4.56
@@ -758,9 +758,9 @@ function raw-memory-double-1.3 () {
     }
     free $PTR
 
-    dotest-equal 1.230000 mbfl_slot_qref(VALUES,0) &&
-	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
-	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
+    dotest-equal     '0X1.3AE147AE147AEP+0' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '0X1.23D70A3D70A3DP+2' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '0X1.F8F5C28F5C28FP+2' mbfl_slot_qref(VALUES,2)
 }
 
 
@@ -769,53 +769,53 @@ function raw-memory-double-1.3 () {
 function raw-memory-ldouble-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ldouble $PTR 0 1.23
 	pointer-ref-ldouble VALUE $PTR 0
     }
     free $PTR
-    dotest-equal 1.230000 QQ(VALUE)
+    dotest-equal '0X9.D70A3D70A3D70A4P-3' QQ(VALUE)
 }
 function raw-memory-ldouble-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ldouble $PTR  0 1.23
-	pointer-set-ldouble $PTR 16 4.56
-	pointer-set-ldouble $PTR 32 7.89
+	pointer-set-ldouble $PTR 32 4.56
+	pointer-set-ldouble $PTR 64 7.89
 
 	pointer-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 16		;VALUES[1]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 32		;VALUES[2]=$VALUE
+	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
+	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     free $PTR
 
-    dotest-equal 1.230000 mbfl_slot_qref(VALUES,0) &&
-	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
-	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
+    dotest-equal     '0X9.D70A3D70A3D70A4P-3' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '0X9.1EB851EB851EB85P-1' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '0XF.C7AE147AE147AE1P-1' mbfl_slot_qref(VALUES,2)
 }
 function raw-memory-ldouble-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-ldouble $PTR  0 1.23
-	pointer-set-ldouble $PTR  16 4.56
-	pointer-set-ldouble $PTR 32 7.89
+	pointer-set-ldouble $PTR 32 4.56
+	pointer-set-ldouble $PTR 64 7.89
 	realloc PTR $PTR 2048
 	pointer-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 16		;VALUES[1]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 32		;VALUES[2]=$VALUE
+	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
+	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     free $PTR
 
-    dotest-equal 1.230000 mbfl_slot_qref(VALUES,0) &&
-	dotest-equal 4.560000 mbfl_slot_qref(VALUES,1) &&
-	dotest-equal 7.890000 mbfl_slot_qref(VALUES,2)
+    dotest-equal     '0X9.D70A3D70A3D70A4P-3' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '0X9.1EB851EB851EB85P-1' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '0XF.C7AE147AE147AE1P-1' mbfl_slot_qref(VALUES,2)
 }
 
 
@@ -824,22 +824,22 @@ function raw-memory-ldouble-1.3 () {
 function raw-memory-complex-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-complex $PTR 0 '(1.2)+i*(3.4)'
 	pointer-ref-complex VALUE $PTR 0
     }
     free $PTR
-    dotest-equal '(1.200000)+i*(3.400000)' QQ(VALUE)
+    dotest-equal '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' QQ(VALUE)
 }
 function raw-memory-complex-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
-	pointer-set-complex $PTR  32 '(5.6)+i*(7.8)'
+	pointer-set-complex $PTR 32 '(5.6)+i*(7.8)'
 	pointer-set-complex $PTR 64 '(9.0)+i*(1.2)'
 
 	pointer-ref-complex VALUE $PTR 0		;VALUES[0]=$VALUE
@@ -848,15 +848,15 @@ function raw-memory-complex-1.2 () {
     }
     free $PTR
 
-    dotest-equal '(1.200000)+i*(3.400000)' mbfl_slot_qref(VALUES,0) &&
-	dotest-equal '(5.600000)+i*(7.800000)' mbfl_slot_qref(VALUES,1) &&
-	dotest-equal '(9.000000)+i*(1.200000)' mbfl_slot_qref(VALUES,2)
+    dotest-equal     '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
 }
 function raw-memory-complex-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
 	pointer-set-complex $PTR  32 '(5.6)+i*(7.8)'
@@ -868,9 +868,9 @@ function raw-memory-complex-1.3 () {
     }
     free $PTR
 
-    dotest-equal '(1.200000)+i*(3.400000)' mbfl_slot_qref(VALUES,0) &&
-	dotest-equal '(5.600000)+i*(7.800000)' mbfl_slot_qref(VALUES,1) &&
-	dotest-equal '(9.000000)+i*(1.200000)' mbfl_slot_qref(VALUES,2)
+    dotest-equal     '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
 }
 
 
@@ -879,7 +879,7 @@ function raw-memory-complex-1.3 () {
 function raw-memory-sint8-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint8 $PTR 0 12
 	pointer-ref-sint8 VALUE $PTR 0
@@ -891,7 +891,7 @@ function raw-memory-sint8-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint8 $PTR  0 12
 	pointer-set-sint8 $PTR  8 45
@@ -911,7 +911,7 @@ function raw-memory-sint8-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint8 $PTR  0 12
 	pointer-set-sint8 $PTR  8 45
@@ -934,7 +934,7 @@ function raw-memory-sint8-1.3 () {
 function raw-memory-uint8-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint8 $PTR 0 12
 	pointer-ref-uint8 VALUE $PTR 0
@@ -946,7 +946,7 @@ function raw-memory-uint8-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint8 $PTR  0 12
 	pointer-set-uint8 $PTR  8 45
@@ -966,7 +966,7 @@ function raw-memory-uint8-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint8 $PTR  0 12
 	pointer-set-uint8 $PTR  8 45
@@ -989,7 +989,7 @@ function raw-memory-uint8-1.3 () {
 function raw-memory-sint16-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint16 $PTR 0 12
 	pointer-ref-sint16 VALUE $PTR 0
@@ -1001,7 +1001,7 @@ function raw-memory-sint16-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint16 $PTR  0 12
 	pointer-set-sint16 $PTR  8 45
@@ -1021,7 +1021,7 @@ function raw-memory-sint16-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint16 $PTR  0 12
 	pointer-set-sint16 $PTR  8 45
@@ -1044,7 +1044,7 @@ function raw-memory-sint16-1.3 () {
 function raw-memory-uint16-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint16 $PTR 0 12
 	pointer-ref-uint16 VALUE $PTR 0
@@ -1056,7 +1056,7 @@ function raw-memory-uint16-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint16 $PTR  0 12
 	pointer-set-uint16 $PTR  8 45
@@ -1076,7 +1076,7 @@ function raw-memory-uint16-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint16 $PTR  0 12
 	pointer-set-uint16 $PTR  8 45
@@ -1099,7 +1099,7 @@ function raw-memory-uint16-1.3 () {
 function raw-memory-sint32-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint32 $PTR 0 12
 	pointer-ref-sint32 VALUE $PTR 0
@@ -1111,7 +1111,7 @@ function raw-memory-sint32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint32 $PTR  0 12
 	pointer-set-sint32 $PTR  8 45
@@ -1131,7 +1131,7 @@ function raw-memory-sint32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint32 $PTR  0 12
 	pointer-set-sint32 $PTR  8 45
@@ -1154,7 +1154,7 @@ function raw-memory-sint32-1.3 () {
 function raw-memory-uint32-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint32 $PTR 0 12
 	pointer-ref-uint32 VALUE $PTR 0
@@ -1166,7 +1166,7 @@ function raw-memory-uint32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint32 $PTR  0 12
 	pointer-set-uint32 $PTR  8 45
@@ -1186,7 +1186,7 @@ function raw-memory-uint32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint32 $PTR  0 12
 	pointer-set-uint32 $PTR  8 45
@@ -1209,7 +1209,7 @@ function raw-memory-uint32-1.3 () {
 function raw-memory-sint64-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint64 $PTR 0 12
 	pointer-ref-sint64 VALUE $PTR 0
@@ -1221,7 +1221,7 @@ function raw-memory-sint64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint64 $PTR  0 12
 	pointer-set-sint64 $PTR  8 45
@@ -1241,7 +1241,7 @@ function raw-memory-sint64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-sint64 $PTR  0 12
 	pointer-set-sint64 $PTR  8 45
@@ -1264,7 +1264,7 @@ function raw-memory-sint64-1.3 () {
 function raw-memory-uint64-1.1 () {
     declare PTR VALUE
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint64 $PTR 0 12
 	pointer-ref-uint64 VALUE $PTR 0
@@ -1276,7 +1276,7 @@ function raw-memory-uint64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint64 $PTR  0 12
 	pointer-set-uint64 $PTR  8 45
@@ -1296,7 +1296,7 @@ function raw-memory-uint64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    malloc PTR 1024
+    calloc PTR 1024 1
     {
 	pointer-set-uint64 $PTR  0 12
 	pointer-set-uint64 $PTR  8 45
