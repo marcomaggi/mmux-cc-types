@@ -60,7 +60,7 @@ mmux_bash_pointers_version_interface_age (void)
  ** ----------------------------------------------------------------- */
 
 void
-mmux_bash_pointers_create_global_double_variable (const char * name, int value)
+mmux_bash_pointers_create_global_sint_variable (const char * name, int value)
 {
   SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
 #undef  LEN
@@ -139,46 +139,46 @@ mmuxbashpointersinit_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
   /* These constants are defined by the Standard C Library; we make them available as
      global shell variables. */
   {
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_POINTER",		sizeof(void *));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SCHAR",		sizeof(signed char));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UCHAR",		sizeof(unsigned char));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT",		sizeof(signed int));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT",		sizeof(unsigned int));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SLONG",		sizeof(signed long));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_ULONG",		sizeof(unsigned long));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_POINTER",		sizeof(void *));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SCHAR",		sizeof(signed char));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UCHAR",		sizeof(unsigned char));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SINT",		sizeof(signed int));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UINT",		sizeof(unsigned int));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SLONG",		sizeof(signed long));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_ULONG",		sizeof(unsigned long));
 #if (HAVE_LONG_LONG_INT)
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SLLONG",		sizeof(signed long long));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SLLONG",		sizeof(signed long long));
 #endif
 #if (HAVE_UNSIGNED_LONG_LONG_INT)
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_ULLONG",		sizeof(unsigned long long));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_ULLONG",		sizeof(unsigned long long));
 #endif
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_FLOAT",		sizeof(float));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_DOUBLE",		sizeof(double));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_FLOAT",		sizeof(float));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_DOUBLE",		sizeof(double));
 #if (HAVE_LONG_DOUBLE)
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_LDOUBLE",		sizeof(long double));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_LDOUBLE",		sizeof(long double));
 #endif
 
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT8",		sizeof(int8_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT8",		sizeof(uint8_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT16",		sizeof(int16_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT16",		sizeof(uint16_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT32",		sizeof(int32_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT32",		sizeof(uint32_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SINT64",		sizeof(int64_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINT64",		sizeof(uint64_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SINT8",		sizeof(int8_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UINT8",		sizeof(uint8_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SINT16",		sizeof(int16_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UINT16",		sizeof(uint16_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SINT32",		sizeof(int32_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UINT32",		sizeof(uint32_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SINT64",		sizeof(int64_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UINT64",		sizeof(uint64_t));
 
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_USIZE",		sizeof(size_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_SSIZE",		sizeof(ssize_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_USIZE",		sizeof(size_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_SSIZE",		sizeof(ssize_t));
 
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_INTMAX",		sizeof(intmax_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_INTPTR",		sizeof(intptr_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINTPTR",		sizeof(uintptr_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_PTRDIFF",		sizeof(ptrdiff_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_MODE",		sizeof(mode_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_OFF",		sizeof(off_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_PID",		sizeof(pid_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_UID",		sizeof(uid_t));
-    mmux_bash_pointers_create_global_double_variable("SIZEOF_GID",		sizeof(gid_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_INTMAX",		sizeof(intmax_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_INTPTR",		sizeof(intptr_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UINTPTR",		sizeof(uintptr_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_PTRDIFF",		sizeof(ptrdiff_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_MODE",		sizeof(mode_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_OFF",		sizeof(off_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_PID",		sizeof(pid_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_UID",		sizeof(uid_t));
+    mmux_bash_pointers_create_global_sint_variable("SIZEOF_GID",		sizeof(gid_t));
   }
   return EXECUTION_SUCCESS;
 }
