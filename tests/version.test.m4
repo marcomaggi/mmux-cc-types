@@ -1,5 +1,5 @@
 #!#
-#!# Part of: MMUX Bash Libc Mathematics
+#!# Part of: MMUX Bash Pointers
 #!# Contents: tests for version numbers
 #!# Date: Sep  9, 2024
 #!#

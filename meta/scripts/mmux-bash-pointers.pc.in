@@ -19,7 +19,7 @@ sysconfdir=@sysconfdir@
 ## ------------------------------------------------------------
 
 Name: @PACKAGE_NAME@
-Description: GNU Bash builtins extension implementing byte vectors
+Description: GNU Bash builtins extension implementing raw memory access
 Version: @MMUX_PKG_CONFIG_VERSION@
 Requires: bash >= 5
 Libs: -L${libdir} -lmmux-bash-pointers
