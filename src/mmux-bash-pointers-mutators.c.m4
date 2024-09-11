@@ -97,4 +97,14 @@ MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint64]]],		[[[uint64_t]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[intmax]]],		[[[intmax_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[off]]],		[[[off_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+
 /* end of file */

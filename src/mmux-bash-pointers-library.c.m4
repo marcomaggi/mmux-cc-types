@@ -172,6 +172,8 @@ mmuxbashpointersinit_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
 
     mmux_bash_pointers_create_global_double_variable("SIZEOF_INTMAX",		sizeof(intmax_t));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_INTPTR",		sizeof(intptr_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_UINTPTR",		sizeof(uintptr_t));
+    mmux_bash_pointers_create_global_double_variable("SIZEOF_PTRDIFF",		sizeof(ptrdiff_t));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_MODE",		sizeof(mode_t));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_OFF",		sizeof(off_t));
     mmux_bash_pointers_create_global_double_variable("SIZEOF_PID",		sizeof(pid_t));

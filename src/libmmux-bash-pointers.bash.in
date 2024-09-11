@@ -64,7 +64,17 @@ then
 	       mmuxpointerspointersetuint64	mmuxpointerspointerrefuint64	\
 	       \
 	       mmuxpointerspointersetssize	mmuxpointerspointerrefssize	\
-	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize
+	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize	\
+	       \
+	       mmuxpointerspointersetintmax	mmuxpointerspointerrefintmax	\
+	       mmuxpointerspointersetintptr	mmuxpointerspointerrefintptr	\
+	       mmuxpointerspointersetuintptr	mmuxpointerspointerrefuintptr	\
+	       mmuxpointerspointersetptrdiff	mmuxpointerspointerrefptrdiff	\
+	       mmuxpointerspointersetmode	mmuxpointerspointerrefmode	\
+	       mmuxpointerspointersetoff	mmuxpointerspointerrefoff	\
+	       mmuxpointerspointersetpid	mmuxpointerspointerrefpid	\
+	       mmuxpointerspointersetuid	mmuxpointerspointerrefuid	\
+	       mmuxpointerspointersetgid	mmuxpointerspointerrefgid
     do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
     done
     unset MMUX_BASH_LIBC_MATH_BUILTIN
@@ -147,6 +157,32 @@ alias pointer-ref-ssize='mmuxpointerspointerrefssize'
 alias pointer-set-usize='mmuxpointerspointersetusize'
 alias pointer-ref-usize='mmuxpointerspointerrefusize'
 
+alias pointer-set-intmax='mmuxpointerspointersetintmax'
+alias pointer-ref-intmax='mmuxpointerspointerrefintmax'
+
+alias pointer-set-intptr='mmuxpointerspointersetintptr'
+alias pointer-ref-intptr='mmuxpointerspointerrefintptr'
+
+alias pointer-set-uintptr='mmuxpointerspointersetuintptr'
+alias pointer-ref-uintptr='mmuxpointerspointerrefuintptr'
+
+alias pointer-set-ptrdiff='mmuxpointerspointersetptrdiff'
+alias pointer-ref-ptrdiff='mmuxpointerspointerrefptrdiff'
+
+alias pointer-set-mode='mmuxpointerspointersetmode'
+alias pointer-ref-mode='mmuxpointerspointerrefmode'
+
+alias pointer-set-off='mmuxpointerspointersetoff'
+alias pointer-ref-off='mmuxpointerspointerrefoff'
+
+alias pointer-set-pid='mmuxpointerspointersetpid'
+alias pointer-ref-pid='mmuxpointerspointerrefpid'
+
+alias pointer-set-uid='mmuxpointerspointersetuid'
+alias pointer-ref-uid='mmuxpointerspointerrefuid'
+
+alias pointer-set-gid='mmuxpointerspointersetgid'
+alias pointer-ref-gid='mmuxpointerspointerrefgid'
 
 ### end of file
 # Local Variables:

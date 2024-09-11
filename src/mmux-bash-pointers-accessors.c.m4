@@ -111,4 +111,14 @@ MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint64]]],	[[[uint64_t]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[[1]]])
 MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[intmax]]],	[[[intmax_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[intptr]]],	[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[off]]],		[[[off_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+
 /* end of file */

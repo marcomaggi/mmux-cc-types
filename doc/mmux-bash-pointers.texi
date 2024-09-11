@@ -504,6 +504,7 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @end macro
 
 @MmuxDefineAccessorMutator{pointer,void *}
+
 @MmuxDefineAccessorMutator{schar,signed char}
 @MmuxDefineAccessorMutator{uchar,unsigned char}
 @MmuxDefineAccessorMutator{sint,signed int}
@@ -516,6 +517,7 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineAccessorMutator{double,double}
 @MmuxDefineAccessorMutator{ldouble,long double}
 @MmuxDefineAccessorMutator{complex,double complex}
+
 @MmuxDefineAccessorMutator{sint8,int8_t}
 @MmuxDefineAccessorMutator{uint8,uint8_t}
 @MmuxDefineAccessorMutator{sint16,int16_t}
@@ -524,8 +526,16 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineAccessorMutator{uint32,uint32_t}
 @MmuxDefineAccessorMutator{sint64,int64_t}
 @MmuxDefineAccessorMutator{uint64,uint64_t}
+
 @MmuxDefineAccessorMutator{ssize,ssize_t}
 @MmuxDefineAccessorMutator{usize,size_t}
+@MmuxDefineAccessorMutator{intmax, intmax_t}
+@MmuxDefineAccessorMutator{intptr, intptr_t}
+@MmuxDefineAccessorMutator{mode, mode_t}
+@MmuxDefineAccessorMutator{off, off_t}
+@MmuxDefineAccessorMutator{pid, pid_t}
+@MmuxDefineAccessorMutator{uid, uid_t}
+@MmuxDefineAccessorMutator{gid, gid_t}
 
 @c page
 @c ------------------------------------------------------------

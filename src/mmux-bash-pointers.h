@@ -112,7 +112,7 @@ extern "C" {
 
 mmux_bash_pointers_decl char const *	mmux_bash_pointers_version_string		(void);
 mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_current	(void);
-mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_revision(void);
+mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_revision	(void);
 mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 
@@ -154,8 +154,18 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint32  (uint32_t * p, char
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint64  (int64_t  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint64  (uint64_t * p, char const * s, char const * caller_name);
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t  * p, char const * s, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_usize   (size_t   * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t  * p, char const * s, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_intmax (intmax_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_intptr (intptr_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uintptr(uintptr_t * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ptrdiff(ptrdiff_t * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_mode    (mode_t   * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_off     (off_t    * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_pid     (pid_t    * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_uid     (uid_t    * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_gid     (gid_t    * p, char const * s, char const * caller_name);
 
 
 /** --------------------------------------------------------------------
@@ -198,6 +208,16 @@ mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint64  (char * strptr, si
 
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_usize   (char * strptr, size_t len, size_t  value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ssize   (char * strptr, size_t len, ssize_t value);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_intmax  (char * strptr, size_t len, intmax_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_intptr  (char * strptr, size_t len, intptr_t  value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uintptr (char * strptr, size_t len, uintptr_t value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ptrdiff (char * strptr, size_t len, ptrdiff_t value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_mode    (char * strptr, size_t len, mode_t   value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_off     (char * strptr, size_t len, off_t    value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_pid     (char * strptr, size_t len, pid_t    value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uid     (char * strptr, size_t len, uid_t    value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_gid     (char * strptr, size_t len, gid_t    value);
 
 
 /** --------------------------------------------------------------------

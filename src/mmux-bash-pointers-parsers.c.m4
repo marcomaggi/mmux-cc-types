@@ -414,4 +414,319 @@ parse_complex_parentheses_format (double complex * p_value, const char * s_arg, 
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Other C language and Unix type parsers.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_parse_intmax (intmax_t * p, char const * s, char const * caller_name)
+{
+#if (HAVE_LONG_LONG_INT)
+  if (sizeof(intmax_t) == sizeof(signed long long int)) {
+    signed long long int	value;
+    int				rv;
+
+    rv = mmux_bash_pointers_parse_sllong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (intmax_t)value;
+    }
+    return rv;
+  }
+#endif
+  if (sizeof(intmax_t) == sizeof(signed long int)) {
+    long int	value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_slong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (intmax_t)value;
+    }
+    return rv;
+  } else if (sizeof(intmax_t) == sizeof(signed int)) {
+    int		value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (intmax_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_intptr (intptr_t * p, char const * s, char const * caller_name)
+{
+#if (HAVE_LONG_LONG_INT)
+  if (sizeof(intptr_t) == sizeof(signed long long int)) {
+    signed long long int	value;
+    int				rv;
+
+    rv = mmux_bash_pointers_parse_sllong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (intptr_t)value;
+    }
+    return rv;
+  }
+#endif
+  if (sizeof(intptr_t) == sizeof(signed long int)) {
+    long int	value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_slong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (intptr_t)value;
+    }
+    return rv;
+  } else if (sizeof(intptr_t) == sizeof(signed int)) {
+    int		value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (intptr_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_uintptr (uintptr_t * p, char const * s, char const * caller_name)
+{
+#if (HAVE_UNSIGNED_LONG_LONG)
+  if (sizeof(uintptr_t) == sizeof(unsigned long long int)) {
+    unsigned long long int	value;
+    int				rv;
+
+    rv = mmux_bash_pointers_parse_ullong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uintptr_t)value;
+    }
+    return rv;
+  }
+#endif
+  if (sizeof(uintptr_t) == sizeof(unsigned long int)) {
+    unsigned long int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_ulong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uintptr_t)value;
+    }
+    return rv;
+  } else if (sizeof(uintptr_t) == sizeof(unsigned int)) {
+    unsigned int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_uint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uintptr_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_ptrdiff (ptrdiff_t * p, char const * s, char const * caller_name)
+{
+#if (HAVE_LONG_LONG_INT)
+  if (sizeof(ptrdiff_t) == sizeof(signed long long int)) {
+    signed long long int	value;
+    int				rv;
+
+    rv = mmux_bash_pointers_parse_sllong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (ptrdiff_t)value;
+    }
+    return rv;
+  }
+#endif
+  if (sizeof(ptrdiff_t) == sizeof(signed long int)) {
+    long int	value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_slong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (ptrdiff_t)value;
+    }
+    return rv;
+  } else if (sizeof(ptrdiff_t) == sizeof(signed int)) {
+    int		value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (ptrdiff_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_mode (mode_t  * p, char const * s, char const * caller_name)
+{
+  if (sizeof(mode_t) == sizeof(unsigned long int)) {
+    unsigned long int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_ulong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (mode_t)value;
+    }
+    return rv;
+  } else if (sizeof(mode_t) == sizeof(unsigned int)) {
+    unsigned int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_uint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (mode_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_off     (off_t   * p, char const * s, char const * caller_name)
+{
+#if (HAVE_LONG_LONG_INT)
+  if (sizeof(off_t) == sizeof(signed long long int)) {
+    signed long long int	value;
+    int				rv;
+
+    rv = mmux_bash_pointers_parse_sllong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (off_t)value;
+    }
+    return rv;
+  }
+#endif
+  if (sizeof(off_t) == sizeof(signed long int)) {
+    long int	value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_slong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (off_t)value;
+    }
+    return rv;
+  } else if (sizeof(off_t) == sizeof(signed int)) {
+    int		value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (off_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_pid     (pid_t   * p, char const * s, char const * caller_name)
+{
+  if (sizeof(pid_t) == sizeof(signed long int)) {
+    signed long int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_slong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (pid_t)value;
+    }
+    return rv;
+  } else if (sizeof(pid_t) == sizeof(int)) {
+    int		value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (pid_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_uid     (uid_t   * p, char const * s, char const * caller_name)
+{
+  if (sizeof(uid_t) == sizeof(unsigned long int)) {
+    unsigned long int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_ulong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uid_t)value;
+    }
+    return rv;
+  } else if (sizeof(uid_t) == sizeof(unsigned int)) {
+    unsigned int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_uint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uid_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_gid     (gid_t   * p, char const * s, char const * caller_name)
+{
+  if (sizeof(gid_t) == sizeof(unsigned long int)) {
+    unsigned long int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_ulong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (gid_t)value;
+    }
+    return rv;
+  } else if (sizeof(gid_t) == sizeof(unsigned int)) {
+    unsigned int	value;
+    int			rv;
+
+    rv = mmux_bash_pointers_parse_uint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (gid_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
 /* end of file */
