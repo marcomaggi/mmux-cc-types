@@ -50,8 +50,6 @@
 @set PackageHeaderFile                  @file{@value{PackageHeader}}
 
 @set GithubUrl                 @url{https://github.com/marcomaggi/@value{PACKAGE_NICKNAME}}
-@set BitbucketUrl              @url{https://bitbucket.org/marcomaggi/@value{PACKAGE_NICKNAME}}
-@set DownloadUrl               @url{https://bitbucket.org/marcomaggi/@value{PACKAGE_NICKNAME}/downloads}
 @set DocumentationUrl          @url{https://marcomaggi.github.io/docs/@value{PACKAGE_NICKNAME}.html}
 
 @c page
@@ -59,7 +57,16 @@
 @c Local macros.
 @c ------------------------------------------------------------
 
-
+@ifinfo
+@macro mbfl{}
+@acronym{MBFL}
+@end macro
+@end ifinfo
+@ifnotinfo
+@macro mbfl{}
+@acronym{mbfl}
+@end macro
+@end ifnotinfo
 
 @c page
 @c ------------------------------------------------------------
@@ -68,28 +75,32 @@
 
 @copying
 
-This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
+This  document  describes  version  @value{VERSION}   of  @value{PACKAGE},  a  package  implementing
 additional builtin commands for the @gnu{} Bash shell; to do so it installs a C language library and
-a shell script which is meant to be sourced in a Bash session or script.
+a shell script  which is meant to  be sourced in a Bash  session or script.
+
+This package makes raw memory pointers available in shell scripts:
+
+@example
+declare PTR VALUE
+
+malloc PTR 1024
+@{
+  pointer-set-sint $PTR 0 123
+  pointer-ref-sint VALUE $PTR 0
+@}
+free $PTR
+$VALUE  @result{} 123
+@end example
 
 The package targets @posix{} platforms.  Only for testing: this package depends on the external
 package @acronym{MBFL} (at least version @samp{v3.0.0-devel.8}).
 
 This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
 
-The latest release can be downloaded from:
-
-@center @value{DownloadUrl}
-
-@noindent
-development takes place at:
+Development of this package takes place at:
 
 @center @value{GithubUrl}
-
-@noindent
-and as backup at:
-
-@center @value{BitbucketUrl}
 
 @noindent
 Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
@@ -173,6 +184,20 @@ This document describes version @value{VERSION} of @value{PACKAGE}, a package im
 additional builtin commands for the @gnu{} Bash shell; to do so it installs a C language library and
 a shell script which is meant to be sourced in a Bash session or script.
 
+This package makes raw memory pointers available in shell scripts:
+
+@example
+declare PTR VALUE
+
+malloc PTR 1024
+@{
+  pointer-set-sint $PTR 0 123
+  pointer-ref-sint VALUE $PTR 0
+@}
+free $PTR
+$VALUE  @result{} 123
+@end example
+
 @value{PACKAGE} installs a shared library under @code{$libdir}; for example:
 
 @center @file{/usr/local/lib64/libmmux-bash-pointers.so}
@@ -226,6 +251,9 @@ Return an integer representing the library interface current age.
 @chapter Global variables
 
 
+The shell library installed by @value{PACKAGE} defines global variables to allow inspection of the
+underlying C language platform.
+
 If a C language type referenced by one of the following variables is undefined: the corresponding
 Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
 underlying platform implements the type @code{long long}, we can do:
@@ -249,10 +277,10 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVar{SIZEOF_UCHAR, unsigned char}
 @MmuxDefineGlobalVar{SIZEOF_SINT, signed int}
 @MmuxDefineGlobalVar{SIZEOF_UINT, unsigned int}
-@MmuxDefineGlobalVar{SIZEOF_SLONG, signed long}
-@MmuxDefineGlobalVar{SIZEOF_ULONG, unsigned long}
-@MmuxDefineGlobalVar{SIZEOF_SLLONG, signed long long}
-@MmuxDefineGlobalVar{SIZEOF_ULLONG, unsigned long long}
+@MmuxDefineGlobalVar{SIZEOF_SLONG, signed long int}
+@MmuxDefineGlobalVar{SIZEOF_ULONG, unsigned long int}
+@MmuxDefineGlobalVar{SIZEOF_SLLONG, signed long long int}
+@MmuxDefineGlobalVar{SIZEOF_ULLONG, unsigned long long int}
 @MmuxDefineGlobalVar{SIZEOF_FLOAT, float}
 @MmuxDefineGlobalVar{SIZEOF_DOUBLE, double}
 @MmuxDefineGlobalVar{SIZEOF_LDOUBLE, long double}
@@ -279,12 +307,14 @@ Basically, to allocate new memory we should do:
 declare PTR
 
 malloc PTR 123
-realloc PTR $PTR 456
+@{
+  # do something
+@}
 free $PTR
 @end example
 
 @noindent
-we must remember that if we execute Bash code in a subshell: the pointers will not be valid across
+we must remember that if we execute code in a subshell: the pointers will not be valid across
 shells; so the following will not work:
 
 @example
@@ -315,7 +345,7 @@ the requested number of bytes in the newly allocated block; it must fit the C la
 Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
 otherwise return false.
 
-The argument @var{PTRVAR} must be the name of a variable in which @func{malloc} will store a string
+The argument @var{PTRVAR} must be the name of a variable in which @func{calloc} will store a string
 representation of the pointer to the newly allocated block.
 
 The argument @var{ITEM_COUNT} must be the string representation of an exact, positive integer
@@ -330,7 +360,7 @@ representing the size of each item the memory block has to contain.
 Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
 otherwise return false.
 
-The argument @var{PTRVAR} must be the name of a variable in which @func{malloc} will store a string
+The argument @var{PTRVAR} must be the name of a variable in which @func{realloc} will store a string
 representation of the pointer to the newly allocated block.
 
 The argument @var{OLDPTR} must be the string representation of the old memory pointer.
@@ -350,18 +380,70 @@ Release a previously allocated memory block using the standard @cfunc{free} func
 @chapter Standard memory operations
 
 
-@deffn Builtin memset @var{POINTER} @var{BYTE} @var{SIZE}
+@deffn Builtin memset @var{PTR} @var{BYTE} @var{SIZE}
 Interface to the standard C language function @cfunc{memset}.
+
+The argument @var{PTR} must be the string representation of a pointer referencing a previously
+allocated memory block.
+
+The argument @var{BYTE} must be the string representation of an exact, positive integer representing
+the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to set to @var{BYTE}.
+
+@example
+declare PTR SIZE=123
+
+malloc PTR $SIZE
+memset $PTR 1 $SIZE
+@end example
 @end deffn
 
 
-@deffn Builtin memcpy @var{POINTER_TO} @var{POINTER_FROM} @var{SIZE}
+@deffn Builtin memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memcpy}.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the destination of the copy operation.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to copy.
+
+@example
+declare PTR_FROM PTR_TO SIZE=123
+
+malloc PTR_FROM $SIZE
+malloc PTR_TO   $SIZE
+
+memcpy $PTR_TO $PTR_FROM $SIZE
+@end example
 @end deffn
 
 
-@deffn Builtin memmove @var{POINTER_TO} @var{POINTER_FROM} @var{SIZE}
+@deffn Builtin memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memmove}.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the destination of the copy operation.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to copy.
+
+@example
+declare PTR_FROM PTR_TO SIZE=123
+
+malloc PTR_FROM $SIZE
+malloc PTR_TO   $SIZE
+
+memmove $PTR_TO $PTR_FROM $SIZE
+@end example
 @end deffn
 
 @c page
@@ -376,8 +458,10 @@ memory blocks:
 declare PTR VALUE
 
 malloc PTR 1024
-pointer-set-double $PTR 0 1.23
-pointer-ref-double VALUE $PTR 0
+@{
+  pointer-set-double $PTR 0 1.23
+  pointer-ref-double VALUE $PTR 0
+@}
 free $PTR
 @end example
 
@@ -396,14 +480,14 @@ must be the string representation of a number, compatible with a C language type
 mutator: it is stored by the mutators at @var{OFFSET} from @var{POINTER};
 
 @item VALUEVAR
-must be a string representing the name of a Bash variable: it is used by the accessors to store the
+must be a string representing the name of a shell variable: it is used by the accessors to store the
 value extracted at @var{OFFSET} from @var{POINTER}.
 @end table
 
 
 @macro MmuxDefineAccessorMutator{STEM,TYPE}
-@deffn Builtin pointer-set-\STEM\ @var{POINTER} @var{OFFSET} @var{VALUE}
-@deffnx Builtin pointer-ref-\STEM\ @var{VALUEVAR} @var{POINTER} @var{OFFSET}
+@deffn {Builtin Mutator} pointer-set-\STEM\ @var{POINTER} @var{OFFSET} @var{VALUE}
+@deffnx {Builtin Accessor} pointer-ref-\STEM\ @var{VALUEVAR} @var{POINTER} @var{OFFSET}
 Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
 @end deffn
 
@@ -451,22 +535,12 @@ The documentation of @value{PACKAGE} is available online:
 @center @value{DocumentationUrl}
 
 @noindent
-the latest release of this package can be downloaded from:
-
-@center @value{DownloadUrl}
-
-@noindent
 development takes place at:
 
 @center @value{GithubUrl}
 
 @noindent
-and as backup at:
-
-@center @value{BitbucketUrl}
-
-@noindent
-the package @acronym{MBFL} is available online:
+the package @mbfl{} is available online:
 
 @center @url{http://github.com/marcomaggi/mbfl/}
 

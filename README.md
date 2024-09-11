@@ -6,6 +6,20 @@ This package  implements additional  builtin commands  for the  GNU Bash
 shell; to  do so  it installs a  C language library  and a  shell script
 which is meant to be sourced in a Bash session or script.
 
+This package makes raw memory pointers available in shell scripts:
+
+```
+declare PTR VALUE
+
+malloc PTR 1024
+{
+  pointer-set-sint $PTR 0 123
+  pointer-ref-sint VALUE $PTR 0
+}
+free $PTR
+$VALUE => 123
+```
+
 The package  targets POSIX  platforms.  Only  for testing:  this package
 depends on the external package MBFL (at least version v3.0.0-devel.8).
 
@@ -141,17 +155,9 @@ Pull Requests feature at the project's GitHub site.
 
 ## Resources
 
-The latest release of this package can be downloaded from:
-
-[https://bitbucket.org/marcomaggi/mmux-bash-pointers/downloads](https://bitbucket.org/marcomaggi/mmux-bash-pointers/downloads)
-
-development takes place at:
+Development of this package takes place at:
 
 [http://github.com/marcomaggi/mmux-bash-pointers/](http://github.com/marcomaggi/mmux-bash-pointers/)
-
-and as backup at:
-
-[https://bitbucket.org/marcomaggi/mmux-bash-pointers/](https://bitbucket.org/marcomaggi/mmux-bash-pointers/)
 
 the documentation is available online:
 
