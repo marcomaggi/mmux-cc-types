@@ -79,12 +79,16 @@ install-html-local:
 EXTRA_DIST	+= \
 	src/mmux-bash-pointers.m4		\
 	src/mmux-bash-pointers-library.c.m4	\
+	src/mmux-bash-pointers-sprinters.c.m4	\
+	src/mmux-bash-pointers-parsers.c.m4	\
 	src/mmux-bash-pointers-memory.c.m4	\
 	src/mmux-bash-pointers-accessors.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4
 
 CLEANFILES	+=
 	src/mmux-bash-pointers-library.c	\
+	src/mmux-bash-pointers-sprinters.c	\
+	src/mmux-bash-pointers-parsers.c	\
 	src/mmux-bash-pointers-memory.c		\
 	src/mmux-bash-pointers-accessors.c	\
 	src/mmux-bash-pointers-mutators.c
@@ -105,6 +109,8 @@ libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-internals.h	\
 	src/mmux-bash-pointers-library.c	\
+	src/mmux-bash-pointers-sprinters.c	\
+	src/mmux-bash-pointers-parsers.c	\
 	src/mmux-bash-pointers-memory.c		\
 	src/mmux-bash-pointers-accessors.c	\
 	src/mmux-bash-pointers-mutators.c

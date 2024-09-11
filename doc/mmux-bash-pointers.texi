@@ -273,6 +273,7 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @end macro
 
 @MmuxDefineGlobalVar{SIZEOF_POINTER,void *}
+
 @MmuxDefineGlobalVar{SIZEOF_SCHAR, signed char}
 @MmuxDefineGlobalVar{SIZEOF_UCHAR, unsigned char}
 @MmuxDefineGlobalVar{SIZEOF_SINT, signed int}
@@ -285,6 +286,7 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVar{SIZEOF_DOUBLE, double}
 @MmuxDefineGlobalVar{SIZEOF_LDOUBLE, long double}
 @MmuxDefineGlobalVar{SIZEOF_COMPLEX, double complex}
+
 @MmuxDefineGlobalVar{SIZEOF_SINT8, int8_t}
 @MmuxDefineGlobalVar{SIZEOF_UINT8, uint8_t}
 @MmuxDefineGlobalVar{SIZEOF_SINT16, int16_t}
@@ -293,8 +295,16 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVar{SIZEOF_UINT32, uint32_t}
 @MmuxDefineGlobalVar{SIZEOF_SINT64, int64_t}
 @MmuxDefineGlobalVar{SIZEOF_UINT64, uint64_t}
+
 @MmuxDefineGlobalVar{SIZEOF_SSIZE, ssize_t}
 @MmuxDefineGlobalVar{SIZEOF_USIZE, size_t}
+@MmuxDefineGlobalVar{SIZEOF_INTMAX, intmax_t}
+@MmuxDefineGlobalVar{SIZEOF_INTPTR, intptr_t}
+@MmuxDefineGlobalVar{SIZEOF_MODE, mode_t}
+@MmuxDefineGlobalVar{SIZEOF_OFF, off_t}
+@MmuxDefineGlobalVar{SIZEOF_PID, pid_t}
+@MmuxDefineGlobalVar{SIZEOF_UID, uid_t}
+@MmuxDefineGlobalVar{SIZEOF_GID, gid_t}
 
 @c page
 @node memory

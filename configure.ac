@@ -94,9 +94,11 @@ AC_TYPE_OFF_T
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
-AC_TYPE_UID_T
 AC_TYPE_INTMAX_T
 AC_TYPE_INTPTR_T
+
+# This defines both "uid_t" and "gid_t".
+AC_TYPE_UID_T
 
 
 #### checks for library functions
