@@ -35,8 +35,8 @@ enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmuxbashpointersinit
 # This initialises the library.
 if mmuxbashpointersinit
 then
-    declare MMUX_BASH_LIBC_MATH_BUILTIN
-    for MMUX_BASH_LIBC_MATH_BUILTIN in \
+    declare MMUX_BASH_POINTERS_BUILTIN
+    for MMUX_BASH_POINTERS_BUILTIN in \
 	malloc realloc calloc free memset memcpy memmove			\
 	       mmuxpointerspointersetpointer	mmuxpointerspointerrefpointer	\
 	       \
@@ -75,9 +75,9 @@ then
 	       mmuxpointerspointersetpid	mmuxpointerspointerrefpid	\
 	       mmuxpointerspointersetuid	mmuxpointerspointerrefuid	\
 	       mmuxpointerspointersetgid	mmuxpointerspointerrefgid
-    do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_LIBC_MATH_BUILTIN"
+    do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_POINTERS_BUILTIN"
     done
-    unset MMUX_BASH_LIBC_MATH_BUILTIN
+    unset MMUX_BASH_POINTERS_BUILTIN
 fi
 
 alias pointer-set-pointer='mmuxpointerspointersetpointer'
