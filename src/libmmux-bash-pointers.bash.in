@@ -89,16 +89,22 @@ function mmux-bash-pointers-library-unload () {
     for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_LIBC_BUILTINS[@]}; ++IDX))
     do
 	printf -v NAME  'mmux_bash_pointers_%s' "${MMUX_BASH_POINTERS_LIBC_BUILTINS[$IDX]}"
+	printf -v ALIAS 'libc_%s'               "${MMUX_BASH_POINTERS_LIBC_BUILTINS[$IDX]}"
 	enable -d "$NAME"
+	unalias "$ALIAS"
     done
 
     for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
     do
 	printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v ALIAS 'pointer-set-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	enable -d "$NAME"
+	unalias "$ALIAS"
 
 	printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	enable -d "$NAME"
+	unalias "$ALIAS"
     done
 
     enable -d "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_errno_to_string'
