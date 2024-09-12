@@ -160,6 +160,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * operations::                  Standard memory operations.
 * pointers::                    Memory block accessors and mutators.
 * conversions::                 Converting data to and from memory blocks.
+* errors::                      Handling errors.
 
 Appendices
 
@@ -257,6 +258,7 @@ underlying C language platform.
 
 @menu
 * variables sizeof::            C language type sizes.
+* variables errno::             Value of @code{errno}.
 @end menu
 
 @c page
@@ -275,46 +277,201 @@ else # not implemented
 fi
 @end example
 
-@macro MmuxDefineGlobalVar{NAME,TYPE}
+@macro MmuxDefineGlobalVarSizeof{NAME,TYPE}
 @defvar libc_SIZEOF_\NAME\
 Global variable holding the size, measured in bytes, of the C language type @code{\TYPE\}.
 @end defvar
 
 @end macro
 
-@MmuxDefineGlobalVar{POINTER,void *}
+@MmuxDefineGlobalVarSizeof{POINTER,void *}
 
-@MmuxDefineGlobalVar{SCHAR, signed char}
-@MmuxDefineGlobalVar{UCHAR, unsigned char}
-@MmuxDefineGlobalVar{SINT, signed int}
-@MmuxDefineGlobalVar{UINT, unsigned int}
-@MmuxDefineGlobalVar{SLONG, signed long int}
-@MmuxDefineGlobalVar{ULONG, unsigned long int}
-@MmuxDefineGlobalVar{SLLONG, signed long long int}
-@MmuxDefineGlobalVar{ULLONG, unsigned long long int}
-@MmuxDefineGlobalVar{FLOAT, float}
-@MmuxDefineGlobalVar{DOUBLE, double}
-@MmuxDefineGlobalVar{LDOUBLE, long double}
-@MmuxDefineGlobalVar{COMPLEX, double complex}
+@MmuxDefineGlobalVarSizeof{SCHAR, signed char}
+@MmuxDefineGlobalVarSizeof{UCHAR, unsigned char}
+@MmuxDefineGlobalVarSizeof{SINT, signed int}
+@MmuxDefineGlobalVarSizeof{UINT, unsigned int}
+@MmuxDefineGlobalVarSizeof{SLONG, signed long int}
+@MmuxDefineGlobalVarSizeof{ULONG, unsigned long int}
+@MmuxDefineGlobalVarSizeof{SLLONG, signed long long int}
+@MmuxDefineGlobalVarSizeof{ULLONG, unsigned long long int}
+@MmuxDefineGlobalVarSizeof{FLOAT, float}
+@MmuxDefineGlobalVarSizeof{DOUBLE, double}
+@MmuxDefineGlobalVarSizeof{LDOUBLE, long double}
+@MmuxDefineGlobalVarSizeof{COMPLEX, double complex}
 
-@MmuxDefineGlobalVar{SINT8, int8_t}
-@MmuxDefineGlobalVar{UINT8, uint8_t}
-@MmuxDefineGlobalVar{SINT16, int16_t}
-@MmuxDefineGlobalVar{UINT16, uint16_t}
-@MmuxDefineGlobalVar{SINT32, int32_t}
-@MmuxDefineGlobalVar{UINT32, uint32_t}
-@MmuxDefineGlobalVar{SINT64, int64_t}
-@MmuxDefineGlobalVar{UINT64, uint64_t}
+@MmuxDefineGlobalVarSizeof{SINT8, int8_t}
+@MmuxDefineGlobalVarSizeof{UINT8, uint8_t}
+@MmuxDefineGlobalVarSizeof{SINT16, int16_t}
+@MmuxDefineGlobalVarSizeof{UINT16, uint16_t}
+@MmuxDefineGlobalVarSizeof{SINT32, int32_t}
+@MmuxDefineGlobalVarSizeof{UINT32, uint32_t}
+@MmuxDefineGlobalVarSizeof{SINT64, int64_t}
+@MmuxDefineGlobalVarSizeof{UINT64, uint64_t}
 
-@MmuxDefineGlobalVar{SSIZE, ssize_t}
-@MmuxDefineGlobalVar{USIZE, size_t}
-@MmuxDefineGlobalVar{INTMAX, intmax_t}
-@MmuxDefineGlobalVar{INTPTR, intptr_t}
-@MmuxDefineGlobalVar{MODE, mode_t}
-@MmuxDefineGlobalVar{OFF, off_t}
-@MmuxDefineGlobalVar{PID, pid_t}
-@MmuxDefineGlobalVar{UID, uid_t}
-@MmuxDefineGlobalVar{GID, gid_t}
+@MmuxDefineGlobalVarSizeof{SSIZE, ssize_t}
+@MmuxDefineGlobalVarSizeof{USIZE, size_t}
+@MmuxDefineGlobalVarSizeof{INTMAX, intmax_t}
+@MmuxDefineGlobalVarSizeof{INTPTR, intptr_t}
+@MmuxDefineGlobalVarSizeof{MODE, mode_t}
+@MmuxDefineGlobalVarSizeof{OFF, off_t}
+@MmuxDefineGlobalVarSizeof{PID, pid_t}
+@MmuxDefineGlobalVarSizeof{UID, uid_t}
+@MmuxDefineGlobalVarSizeof{GID, gid_t}
+
+@c page
+@node variables errno
+@section Value of @code{errno}
+
+
+If a C language constant referenced by one of the following variables is undefined: the
+corresponding Bash variable is undefined; we can test this condition with @code{test -v}; to test if
+the underlying platform implements the constant @code{ENOMEM}, we can do:
+
+@example
+if test -v libc_ENOMEM
+then # implemented
+else # not implemented
+fi
+@end example
+
+@macro MmuxDefineGlobalVarErrno{NAME}
+@defvar libc_\NAME\
+Global variable holding the value of the C language constant @code{\NAME\}.
+@end defvar
+
+@end macro
+
+@MmuxDefineGlobalVarErrno{EPERM}
+@MmuxDefineGlobalVarErrno{ENOENT}
+@MmuxDefineGlobalVarErrno{ESRCH}
+@MmuxDefineGlobalVarErrno{EINTR}
+@MmuxDefineGlobalVarErrno{EIO}
+@MmuxDefineGlobalVarErrno{ENXIO}
+@MmuxDefineGlobalVarErrno{E2BIG}
+@MmuxDefineGlobalVarErrno{ENOEXEC}
+@MmuxDefineGlobalVarErrno{EBADF}
+@MmuxDefineGlobalVarErrno{ECHILD}
+@MmuxDefineGlobalVarErrno{EAGAIN}
+@MmuxDefineGlobalVarErrno{ENOMEM}
+@MmuxDefineGlobalVarErrno{EACCES}
+@MmuxDefineGlobalVarErrno{EFAULT}
+@MmuxDefineGlobalVarErrno{ENOTBLK}
+@MmuxDefineGlobalVarErrno{EBUSY}
+@MmuxDefineGlobalVarErrno{EEXIST}
+@MmuxDefineGlobalVarErrno{EXDEV}
+@MmuxDefineGlobalVarErrno{ENODEV}
+@MmuxDefineGlobalVarErrno{ENOTDIR}
+@MmuxDefineGlobalVarErrno{EISDIR}
+@MmuxDefineGlobalVarErrno{EINVAL}
+@MmuxDefineGlobalVarErrno{ENFILE}
+@MmuxDefineGlobalVarErrno{EMFILE}
+@MmuxDefineGlobalVarErrno{ENOTTY}
+@MmuxDefineGlobalVarErrno{ETXTBSY}
+@MmuxDefineGlobalVarErrno{EFBIG}
+@MmuxDefineGlobalVarErrno{ENOSPC}
+@MmuxDefineGlobalVarErrno{ESPIPE}
+@MmuxDefineGlobalVarErrno{EROFS}
+@MmuxDefineGlobalVarErrno{EMLINK}
+@MmuxDefineGlobalVarErrno{EPIPE}
+@MmuxDefineGlobalVarErrno{EDOM}
+@MmuxDefineGlobalVarErrno{ERANGE}
+@MmuxDefineGlobalVarErrno{EDEADLK}
+@MmuxDefineGlobalVarErrno{ENAMETOOLONG}
+@MmuxDefineGlobalVarErrno{ENOLCK}
+@MmuxDefineGlobalVarErrno{ENOSYS}
+@MmuxDefineGlobalVarErrno{ENOTEMPTY}
+@MmuxDefineGlobalVarErrno{ELOOP}
+@MmuxDefineGlobalVarErrno{EWOULDBLOCK}
+@MmuxDefineGlobalVarErrno{ENOMSG}
+@MmuxDefineGlobalVarErrno{EIDRM}
+@MmuxDefineGlobalVarErrno{ECHRNG}
+@MmuxDefineGlobalVarErrno{EL2NSYNC}
+@MmuxDefineGlobalVarErrno{EL3HLT}
+@MmuxDefineGlobalVarErrno{EL3RST}
+@MmuxDefineGlobalVarErrno{ELNRNG}
+@MmuxDefineGlobalVarErrno{EUNATCH}
+@MmuxDefineGlobalVarErrno{ENOCSI}
+@MmuxDefineGlobalVarErrno{EL2HLT}
+@MmuxDefineGlobalVarErrno{EBADE}
+@MmuxDefineGlobalVarErrno{EBADR}
+@MmuxDefineGlobalVarErrno{EXFULL}
+@MmuxDefineGlobalVarErrno{ENOANO}
+@MmuxDefineGlobalVarErrno{EBADRQC}
+@MmuxDefineGlobalVarErrno{EBADSLT}
+@MmuxDefineGlobalVarErrno{EDEADLOCK}
+@MmuxDefineGlobalVarErrno{EBFONT}
+@MmuxDefineGlobalVarErrno{ENOSTR}
+@MmuxDefineGlobalVarErrno{ENODATA}
+@MmuxDefineGlobalVarErrno{ETIME}
+@MmuxDefineGlobalVarErrno{ENOSR}
+@MmuxDefineGlobalVarErrno{ENONET}
+@MmuxDefineGlobalVarErrno{ENOPKG}
+@MmuxDefineGlobalVarErrno{EREMOTE}
+@MmuxDefineGlobalVarErrno{ENOLINK}
+@MmuxDefineGlobalVarErrno{EADV}
+@MmuxDefineGlobalVarErrno{ESRMNT}
+@MmuxDefineGlobalVarErrno{ECOMM}
+@MmuxDefineGlobalVarErrno{EPROTO}
+@MmuxDefineGlobalVarErrno{EMULTIHOP}
+@MmuxDefineGlobalVarErrno{EDOTDOT}
+@MmuxDefineGlobalVarErrno{EBADMSG}
+@MmuxDefineGlobalVarErrno{EOVERFLOW}
+@MmuxDefineGlobalVarErrno{ENOTUNIQ}
+@MmuxDefineGlobalVarErrno{EBADFD}
+@MmuxDefineGlobalVarErrno{EREMCHG}
+@MmuxDefineGlobalVarErrno{ELIBACC}
+@MmuxDefineGlobalVarErrno{ELIBBAD}
+@MmuxDefineGlobalVarErrno{ELIBSCN}
+@MmuxDefineGlobalVarErrno{ELIBMAX}
+@MmuxDefineGlobalVarErrno{ELIBEXEC}
+@MmuxDefineGlobalVarErrno{EILSEQ}
+@MmuxDefineGlobalVarErrno{ERESTART}
+@MmuxDefineGlobalVarErrno{ESTRPIPE}
+@MmuxDefineGlobalVarErrno{EUSERS}
+@MmuxDefineGlobalVarErrno{ENOTSOCK}
+@MmuxDefineGlobalVarErrno{EDESTADDRREQ}
+@MmuxDefineGlobalVarErrno{EMSGSIZE}
+@MmuxDefineGlobalVarErrno{EPROTOTYPE}
+@MmuxDefineGlobalVarErrno{ENOPROTOOPT}
+@MmuxDefineGlobalVarErrno{EPROTONOSUPPORT}
+@MmuxDefineGlobalVarErrno{ESOCKTNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EOPNOTSUPP}
+@MmuxDefineGlobalVarErrno{EPFNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EAFNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EADDRINUSE}
+@MmuxDefineGlobalVarErrno{EADDRNOTAVAIL}
+@MmuxDefineGlobalVarErrno{ENETDOWN}
+@MmuxDefineGlobalVarErrno{ENETUNREACH}
+@MmuxDefineGlobalVarErrno{ENETRESET}
+@MmuxDefineGlobalVarErrno{ECONNABORTED}
+@MmuxDefineGlobalVarErrno{ECONNRESET}
+@MmuxDefineGlobalVarErrno{ENOBUFS}
+@MmuxDefineGlobalVarErrno{EISCONN}
+@MmuxDefineGlobalVarErrno{ENOTCONN}
+@MmuxDefineGlobalVarErrno{ESHUTDOWN}
+@MmuxDefineGlobalVarErrno{ETOOMANYREFS}
+@MmuxDefineGlobalVarErrno{ETIMEDOUT}
+@MmuxDefineGlobalVarErrno{ECONNREFUSED}
+@MmuxDefineGlobalVarErrno{EHOSTDOWN}
+@MmuxDefineGlobalVarErrno{EHOSTUNREACH}
+@MmuxDefineGlobalVarErrno{EALREADY}
+@MmuxDefineGlobalVarErrno{EINPROGRESS}
+@MmuxDefineGlobalVarErrno{ESTALE}
+@MmuxDefineGlobalVarErrno{EUCLEAN}
+@MmuxDefineGlobalVarErrno{ENOTNAM}
+@MmuxDefineGlobalVarErrno{ENAVAIL}
+@MmuxDefineGlobalVarErrno{EISNAM}
+@MmuxDefineGlobalVarErrno{EREMOTEIO}
+@MmuxDefineGlobalVarErrno{EDQUOT}
+@MmuxDefineGlobalVarErrno{ENOMEDIUM}
+@MmuxDefineGlobalVarErrno{EMEDIUMTYPE}
+@MmuxDefineGlobalVarErrno{ECANCELED}
+@MmuxDefineGlobalVarErrno{ENOKEY}
+@MmuxDefineGlobalVarErrno{EKEYEXPIRED}
+@MmuxDefineGlobalVarErrno{EKEYREVOKED}
+@MmuxDefineGlobalVarErrno{EKEYREJECTED}
+@MmuxDefineGlobalVarErrno{EOWNERDEAD}
+@MmuxDefineGlobalVarErrno{ENOTRECOVERABLE}
 
 @c page
 @node memory
@@ -676,6 +833,30 @@ fi
 mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @end example
 @end defun
+
+@c page
+@node errors
+@chapter Handling errors
+
+
+@deffn Builtin strerror @var{MSGVAR} @var{ERRNUM}
+Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
+representation of an exact integer representing a valid value for @code{errno}; @var{ERRNUM} must
+fit the C language type @code{int}.
+
+@example
+declare MSG
+
+if test -v libc_EINVAL
+then libc_strerror MSG $libc_EINVAL
+else MSG='EINVAL undefined'
+fi
+
+"$MSG"  @result{} Invalid argument
+@end example
+@end deffn
+
+
 
 @c page
 @c ------------------------------------------------------------

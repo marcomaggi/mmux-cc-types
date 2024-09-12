@@ -81,6 +81,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-sprinters.c.m4	\
 	src/mmux-bash-pointers-parsers.c.m4	\
 	src/mmux-bash-pointers-memory.c.m4	\
+	src/mmux-bash-pointers-errors.c.m4	\
 	src/mmux-bash-pointers-accessors.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4
 
@@ -89,6 +90,7 @@ CLEANFILES	+=
 	src/mmux-bash-pointers-sprinters.c	\
 	src/mmux-bash-pointers-parsers.c	\
 	src/mmux-bash-pointers-memory.c		\
+	src/mmux-bash-pointers-errors.c		\
 	src/mmux-bash-pointers-accessors.c	\
 	src/mmux-bash-pointers-mutators.c
 
@@ -111,6 +113,7 @@ libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers-sprinters.c	\
 	src/mmux-bash-pointers-parsers.c	\
 	src/mmux-bash-pointers-memory.c		\
+	src/mmux-bash-pointers-errors.c		\
 	src/mmux-bash-pointers-accessors.c	\
 	src/mmux-bash-pointers-mutators.c
 
@@ -133,13 +136,15 @@ EXTRA_DIST		+= $(mmux_library_SCRIPTS)
 EXTRA_DIST		+= \
 	tests/version.test.m4			\
 	tests/memory.test.m4			\
+	tests/errors.test.m4			\
 	tests/accessors-mutators.test.m4	\
 	tests/conversion.test.m4
 
 MMUX_CHECK_BUILT_TESTS	= \
 	tests/version.test			\
 	tests/memory.test			\
-	tests/accessors-mutators.test	\
+	tests/errors.test			\
+	tests/accessors-mutators.test		\
 	tests/conversion.test
 
 if MMUX_TESTING_ENABLED

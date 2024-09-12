@@ -85,16 +85,6 @@ extern "C" {
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-/*
-  #include <setjmp.h>
-  #include <errno.h>
-  #include <unistd.h>
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stddef.h>
 #include <stdint.h>
 #include <inttypes.h>
 #include <complex.h>

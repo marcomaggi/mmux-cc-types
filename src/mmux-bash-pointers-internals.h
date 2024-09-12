@@ -41,13 +41,15 @@
 #undef _POSIX_C_SOURCE
 #define _POSIX_C_SOURCE		200809L
 
-#include <stddef.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <inttypes.h>
+#include <errno.h>
 #include <math.h>
-#include <complex.h>
 #include <regex.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 /* We  really need  to pay  attention to  the order  in which  we include  the files,
    otherwise errors will ensue. */
@@ -56,7 +58,7 @@
 #include "shell.h"
 #include "common.h"
 
-#include "mmux-bash-pointers.h"
+#include <mmux-bash-pointers.h>
 
 
 /** --------------------------------------------------------------------
