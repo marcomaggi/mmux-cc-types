@@ -839,7 +839,7 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @chapter Handling errors
 
 
-@deffn Builtin strerror @var{MSGVAR} @var{ERRNUM}
+@deffn Builtin libc_strerror @var{MSGVAR} @var{ERRNUM}
 Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
 representation of an exact integer representing a valid value for @code{errno}; @var{ERRNUM} must
 fit the C language type @code{int}.
@@ -857,6 +857,17 @@ fi
 @end deffn
 
 
+@defun mmux-bash-pointers-errno-to-string @var{SYMVAR} @var{ERRNUM}
+Store in @var{SYMVAR} a string representation of the @code{errno} code @var{ERRNUM}.  When
+successful return true, otherwise return false.
+
+@example
+declare SYM
+
+mmux-bash-pointers-errno-to-string SYM $libc_ENOMEM
+"$SYM"  @result{} ENOMEM
+@end example
+@end defun
 
 @c page
 @c ------------------------------------------------------------

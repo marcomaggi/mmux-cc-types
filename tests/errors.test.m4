@@ -60,7 +60,6 @@ function errors-strerror-1.1 () {
     fi
     dotest-equal 'Invalid argument' "$MSG"
 }
-
 function errors-strerror-1.2 () {
     declare MSG
 
@@ -69,6 +68,16 @@ function errors-strerror-1.2 () {
     else MSG='ENOMEM undefined'
     fi
     dotest-equal 'Cannot allocate memory' "$MSG"
+}
+
+
+#### errno to symbol
+
+function errors-errno-to-symbol-1.1 () {
+    declare SYM
+
+    mmux-bash-pointers-errno-to-string SYM $libc_ENOMEM
+    dotest-equal 'ENOMEM' "$SYM"
 }
 
 
