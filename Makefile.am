@@ -133,12 +133,14 @@ EXTRA_DIST		+= $(mmux_library_SCRIPTS)
 EXTRA_DIST		+= \
 	tests/version.test.m4			\
 	tests/memory.test.m4			\
-	tests/accessors-mutators.test.m4
+	tests/accessors-mutators.test.m4	\
+	tests/conversion.test.m4
 
 MMUX_CHECK_BUILT_TESTS	= \
 	tests/version.test			\
 	tests/memory.test			\
-	tests/accessors-mutators.test
+	tests/accessors-mutators.test	\
+	tests/conversion.test
 
 if MMUX_TESTING_ENABLED
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)

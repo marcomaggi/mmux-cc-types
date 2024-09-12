@@ -91,7 +91,7 @@ function raw-pointer-1.3 () {
 	pointer-set-pointer $PTR  0 '0x12'
 	pointer-set-pointer $PTR  8 '0x34'
 	pointer-set-pointer $PTR 16 '0x56'
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -146,7 +146,7 @@ function raw-schar-1.3 () {
 	pointer-set-schar $PTR  0 12
 	pointer-set-schar $PTR  8 34
 	pointer-set-schar $PTR 16 56
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-schar VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -201,7 +201,7 @@ function raw-uchar-1.3 () {
 	pointer-set-uchar $PTR  0 12
 	pointer-set-uchar $PTR  8 34
 	pointer-set-uchar $PTR 16 56
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-uchar VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -256,7 +256,7 @@ function raw-sint-1.3 () {
 	pointer-set-sint $PTR  0 123
 	pointer-set-sint $PTR  8 456
 	pointer-set-sint $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-sint VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -311,7 +311,7 @@ function raw-uint-1.3 () {
 	pointer-set-uint $PTR  0 123
 	pointer-set-uint $PTR  8 456
 	pointer-set-uint $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-uint VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -366,7 +366,7 @@ function raw-slong-1.3 () {
 	pointer-set-slong $PTR  0 123
 	pointer-set-slong $PTR  8 456
 	pointer-set-slong $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-slong VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -421,7 +421,7 @@ function raw-ulong-1.3 () {
 	pointer-set-ulong $PTR  0 123
 	pointer-set-ulong $PTR  8 456
 	pointer-set-ulong $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-ulong VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -476,7 +476,7 @@ function raw-sllong-1.3 () {
 	pointer-set-sllong $PTR  0 123
 	pointer-set-sllong $PTR  8 456
 	pointer-set-sllong $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sllong VALUE $PTR 16	;VALUES[2]=$VALUE
@@ -531,7 +531,7 @@ function raw-ullong-1.3 () {
 	pointer-set-ullong $PTR  0 123
 	pointer-set-ullong $PTR  8 456
 	pointer-set-ullong $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -586,7 +586,7 @@ function raw-ssize-1.3 () {
 	pointer-set-ssize $PTR  0 123
 	pointer-set-ssize $PTR  8 456
 	pointer-set-ssize $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-ssize VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -641,7 +641,7 @@ function raw-usize-1.3 () {
 	pointer-set-usize $PTR  0 123
 	pointer-set-usize $PTR  8 456
 	pointer-set-usize $PTR 16 789
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-usize VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -696,7 +696,7 @@ function raw-float-1.3 () {
 	pointer-set-float $PTR  0 1.23
 	pointer-set-float $PTR  8 4.56
 	pointer-set-float $PTR 16 7.89
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-float VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -751,7 +751,7 @@ function raw-double-1.3 () {
 	pointer-set-double $PTR  0 1.23
 	pointer-set-double $PTR  8 4.56
 	pointer-set-double $PTR 16 7.89
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-double VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -806,7 +806,7 @@ function raw-ldouble-1.3 () {
 	pointer-set-ldouble $PTR  0 1.23
 	pointer-set-ldouble $PTR 32 4.56
 	pointer-set-ldouble $PTR 64 7.89
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
 	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
@@ -861,7 +861,7 @@ function raw-complex-1.3 () {
 	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
 	pointer-set-complex $PTR  32 '(5.6)+i*(7.8)'
 	pointer-set-complex $PTR 64 '(9.0)+i*(1.2)'
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-complex VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
 	pointer-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
@@ -916,7 +916,7 @@ function raw-sint8-1.3 () {
 	pointer-set-sint8 $PTR  0 12
 	pointer-set-sint8 $PTR  8 45
 	pointer-set-sint8 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -971,7 +971,7 @@ function raw-uint8-1.3 () {
 	pointer-set-uint8 $PTR  0 12
 	pointer-set-uint8 $PTR  8 45
 	pointer-set-uint8 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -1026,7 +1026,7 @@ function raw-sint16-1.3 () {
 	pointer-set-sint16 $PTR  0 12
 	pointer-set-sint16 $PTR  8 45
 	pointer-set-sint16 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -1081,7 +1081,7 @@ function raw-uint16-1.3 () {
 	pointer-set-uint16 $PTR  0 12
 	pointer-set-uint16 $PTR  8 45
 	pointer-set-uint16 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -1136,7 +1136,7 @@ function raw-sint32-1.3 () {
 	pointer-set-sint32 $PTR  0 12
 	pointer-set-sint32 $PTR  8 45
 	pointer-set-sint32 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -1191,7 +1191,7 @@ function raw-uint32-1.3 () {
 	pointer-set-uint32 $PTR  0 12
 	pointer-set-uint32 $PTR  8 45
 	pointer-set-uint32 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -1246,7 +1246,7 @@ function raw-sint64-1.3 () {
 	pointer-set-sint64 $PTR  0 12
 	pointer-set-sint64 $PTR  8 45
 	pointer-set-sint64 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
@@ -1301,7 +1301,7 @@ function raw-uint64-1.3 () {
 	pointer-set-uint64 $PTR  0 12
 	pointer-set-uint64 $PTR  8 45
 	pointer-set-uint64 $PTR 16 78
-	realloc PTR $PTR 2048
+	libc_realloc PTR $PTR 2048
 	pointer-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
 	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE

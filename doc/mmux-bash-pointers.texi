@@ -159,6 +159,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * memory::                      Standard memory allocation.
 * operations::                  Standard memory operations.
 * pointers::                    Memory block accessors and mutators.
+* conversions::                 Converting data to and from memory blocks.
 
 Appendices
 
@@ -552,6 +553,129 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineAccessorMutator{pid, pid_t}
 @MmuxDefineAccessorMutator{uid, uid_t}
 @MmuxDefineAccessorMutator{gid, gid_t}
+
+@c page
+@node conversions
+@chapter Converting data to and from memory blocks
+
+
+@menu
+* conversions arrays::          Converting data to and from index arrays.
+* conversions strings::         Converting data to and from strings.
+@end menu
+
+@c page
+@node conversions arrays
+@section Converting data to and from index arrays
+
+
+@defun mmux-bash-pointers-array-from-memory @var{ARRY_TO} @var{PTR_FROM} @var{SIZE}
+Copy byte by byte data from a memory block into a Bash index array.
+
+The argument @var{ARRY_TO} must be a string representing the name of a Bash index array; this
+function stores in this array the bytes from the memory block, starting from index zero.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare -a ARRY
+
+if ! libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-array-from-memory ARRY $POINTER $SIZE
+@end example
+@end defun
+
+
+@defun mmux-bash-pointers-memory-from-array @var{PTR_TO} @var{ARRY_FROM} @var{SIZE}
+Copy byte by byte data from a Bash index array into a memory block.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the target of the copy operation.
+
+The argument @var{ARRY_FROM} must be a string representing the name of a Bash index array; this
+function reads from this array the bytes to store in the memory block, starting from index zero.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare -a ARRY=(1 2 3 4 5)
+
+if ! libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-memory-from-array $POINTER ARRY $SIZE
+@end example
+@end defun
+
+@c page
+@node conversions strings
+@section Converting data to and from strings
+
+
+@defun mmux-bash-pointers-string-from-memory @var{STRINGVAR_TO} @var{PTR_FROM} @var{SIZE}
+Copy byte by byte data from a memory block into a Bash string.
+
+The argument @var{STRINGVAR_TO} must be a string representing a Bash variable name; this function
+stores in this variable a string built with the bytes from the memory block, starting from index
+zero.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare STRING
+
+if ! libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-string-from-memory STRING $POINTER $SIZE
+@end example
+@end defun
+
+
+@defun mmux-bash-pointers-memory-from-string @var{PTR_TO} @var{STRING_FROM} @var{SIZE}
+Copy byte by byte data from a Bash string into a memory block.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the target of the copy operation.
+
+The argument @var{STRING_FROM} must be a string; this function reads from this strings the bytes to
+store in the memory block, starting from index zero.
+
+The argument @var{SIZE} must be the string representation of an exact, positive integer representing
+the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare -a STRING="12345"
+
+if ! libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
+@end example
+@end defun
 
 @c page
 @c ------------------------------------------------------------
