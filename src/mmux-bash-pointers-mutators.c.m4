@@ -31,7 +31,7 @@
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_MUTATOR]]],[[[
 static int
-mmuxpointerspointerset[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"pointer-set-$1"
 {
@@ -64,7 +64,7 @@ mmuxpointerspointerset[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, c
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmuxpointerspointerset$1]]],[[[(4 != argc)]]],
+MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_set_$1]]],[[[(4 != argc)]]],
     [[["pointer-set-$1 POINTER OFFSET VALUE"]]],
     [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"$2\"."]]])
 ]]])

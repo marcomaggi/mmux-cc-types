@@ -112,7 +112,7 @@ mmux_bash_pointers_print_complex (double complex data)
  ** ----------------------------------------------------------------- */
 
 static int
-mmuxbashpointersinit_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
+mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
 {
   /* Compile the POSIX regular expression required to parse the string representation
    * of complex numbers.
@@ -182,16 +182,16 @@ mmuxbashpointersinit_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
   }
   return EXECUTION_SUCCESS;
 }
-static char * mmuxbashpointersinit_doc[] = {
+static char * mmux_bash_pointers_library_init_doc[] = {
   "Initialise the library.",
   (char *)NULL
 };
-struct builtin mmuxbashpointersinit_struct = {
-  .name		= "mmuxbashpointersinit",		/* Builtin name */
-  .function	= mmuxbashpointersinit_builtin,		/* Function implementing the builtin */
+struct builtin mmux_bash_pointers_library_init_struct = {
+  .name		= "mmux_bash_pointers_library_init",	/* Builtin name */
+  .function	= mmux_bash_pointers_library_init_builtin,	/* Function implementing the builtin */
   .flags	= BUILTIN_ENABLED,			/* Initial flags for builtin */
-  .long_doc	= mmuxbashpointersinit_doc,		/* Array of long documentation strings. */
-  .short_doc	= "mmuxbashpointersinit",		/* Usage synopsis; becomes short_doc */
+  .long_doc	= mmux_bash_pointers_library_init_doc,	/* Array of long documentation strings. */
+  .short_doc	= "mmux_bash_pointers_library_init",	/* Usage synopsis; becomes short_doc */
   .handle	= 0					/* Reserved for internal use */
 };
 

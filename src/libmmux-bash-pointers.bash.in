@@ -25,164 +25,79 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-declare -rg MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
-declare -rg MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
-declare -rg MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
-declare -rg MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
+function mmux-bash-pointers-library-load () {
+    declare -rg MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
+    declare -rg MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
+    declare -rg MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
+    declare -rg MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
 
-enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmuxbashpointersinit
+    declare -rga MMUX_BASH_POINTERS_POINTER_TYPES=(pointer schar uchar sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize intmax intptr uintptr ptrdiff mode off pid uid gid)
 
-# This initialises the library.
-if mmuxbashpointersinit
-then
-    declare MMUX_BASH_POINTERS_BUILTIN
-    for MMUX_BASH_POINTERS_BUILTIN in \
-	malloc realloc calloc free memset memcpy memmove			\
-	       mmuxpointerspointersetpointer	mmuxpointerspointerrefpointer	\
-	       \
-	       mmuxpointerspointersetschar	mmuxpointerspointerrefschar	\
-	       mmuxpointerspointersetuchar	mmuxpointerspointerrefuchar	\
-	       mmuxpointerspointersetsint	mmuxpointerspointerrefsint	\
-	       mmuxpointerspointersetuint	mmuxpointerspointerrefuint	\
-	       mmuxpointerspointersetslong	mmuxpointerspointerrefslong	\
-	       mmuxpointerspointersetulong	mmuxpointerspointerrefulong	\
-	       mmuxpointerspointersetsllong	mmuxpointerspointerrefsllong	\
-	       mmuxpointerspointersetullong	mmuxpointerspointerrefullong	\
-	       \
-	       mmuxpointerspointersetfloat	mmuxpointerspointerreffloat	\
-	       mmuxpointerspointersetdouble	mmuxpointerspointerrefdouble	\
-	       mmuxpointerspointersetldouble	mmuxpointerspointerrefldouble	\
-	       mmuxpointerspointersetcomplex	mmuxpointerspointerrefcomplex	\
-	       \
-	       mmuxpointerspointersetsint8	mmuxpointerspointerrefsint8	\
-	       mmuxpointerspointersetuint8	mmuxpointerspointerrefuint8	\
-	       mmuxpointerspointersetsint16	mmuxpointerspointerrefsint16	\
-	       mmuxpointerspointersetuint16	mmuxpointerspointerrefuint16	\
-	       mmuxpointerspointersetsint32	mmuxpointerspointerrefsint32	\
-	       mmuxpointerspointersetuint32	mmuxpointerspointerrefuint32	\
-	       mmuxpointerspointersetsint64	mmuxpointerspointerrefsint64	\
-	       mmuxpointerspointersetuint64	mmuxpointerspointerrefuint64	\
-	       \
-	       mmuxpointerspointersetssize	mmuxpointerspointerrefssize	\
-	       mmuxpointerspointersetusize	mmuxpointerspointerrefusize	\
-	       \
-	       mmuxpointerspointersetintmax	mmuxpointerspointerrefintmax	\
-	       mmuxpointerspointersetintptr	mmuxpointerspointerrefintptr	\
-	       mmuxpointerspointersetuintptr	mmuxpointerspointerrefuintptr	\
-	       mmuxpointerspointersetptrdiff	mmuxpointerspointerrefptrdiff	\
-	       mmuxpointerspointersetmode	mmuxpointerspointerrefmode	\
-	       mmuxpointerspointersetoff	mmuxpointerspointerrefoff	\
-	       mmuxpointerspointersetpid	mmuxpointerspointerrefpid	\
-	       mmuxpointerspointersetuid	mmuxpointerspointerrefuid	\
-	       mmuxpointerspointersetgid	mmuxpointerspointerrefgid
-    do enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$MMUX_BASH_POINTERS_BUILTIN"
+    declare -rga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove)
+
+    enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmux_bash_pointers_library_init
+
+    # This initialises the library.
+    if mmux_bash_pointers_library_init
+    then
+	declare -i IDX
+	declare NAME ALIAS
+
+	for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_LIBC_BUILTINS[@]}; ++IDX))
+	do
+	    printf -v NAME  'mmux_bash_pointers_%s' "${MMUX_BASH_POINTERS_LIBC_BUILTINS[$IDX]}"
+	    printf -v ALIAS 'libc_%s'               "${MMUX_BASH_POINTERS_LIBC_BUILTINS[$IDX]}"
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+	    alias "$ALIAS"="$NAME"
+	done
+
+	for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+	do
+	    printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v ALIAS 'pointer-set-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+	    alias "$ALIAS"="$NAME"
+
+	    printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+	    alias "$ALIAS"="$NAME"
+	done
+    fi
+}
+
+function mmux-bash-pointers-library-unload () {
+    declare -i IDX
+    declare NAME ALIAS
+
+    enable -d mmux_bash_pointers_library_init
+
+    for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_LIBC_BUILTINS[@]}; ++IDX))
+    do
+	printf -v NAME  'mmux_bash_pointers_%s' "${MMUX_BASH_POINTERS_LIBC_BUILTINS[$IDX]}"
+	enable -d "$NAME"
     done
-    unset MMUX_BASH_POINTERS_BUILTIN
-fi
 
-alias pointer-set-pointer='mmuxpointerspointersetpointer'
-alias pointer-ref-pointer='mmuxpointerspointerrefpointer'
+    for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+    do
+	printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	enable -d "$NAME"
 
-### ------------------------------------------------------------------------
+	printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	enable -d "$NAME"
+    done
 
-alias pointer-set-schar='mmuxpointerspointersetschar'
-alias pointer-ref-schar='mmuxpointerspointerrefschar'
+    # NOTE This  is an  error: we  cannot unset  read-only variables.  But  I would  like to  do it.
+    # Making these variables not read-only is too dangerous.  (Marco Maggi; Sep 12, 2024)
+    unset -v MMUX_BASH_POINTERS_LIBRARY
+    unset -v MMUX_BASH_POINTERS_CURRENT
+    unset -v MMUX_BASH_POINTERS_REVISION
+    unset -v MMUX_BASH_POINTERS_AGE
+    unset -v MMUX_BASH_POINTERS_POINTER_TYPES
+    unset -v MMUX_BASH_POINTERS_LIBC_BUILTINS
+}
 
-alias pointer-set-uchar='mmuxpointerspointersetuchar'
-alias pointer-ref-uchar='mmuxpointerspointerrefuchar'
-
-alias pointer-set-sint='mmuxpointerspointersetsint'
-alias pointer-ref-sint='mmuxpointerspointerrefsint'
-
-alias pointer-set-uint='mmuxpointerspointersetuint'
-alias pointer-ref-uint='mmuxpointerspointerrefuint'
-
-alias pointer-set-slong='mmuxpointerspointersetslong'
-alias pointer-ref-slong='mmuxpointerspointerrefslong'
-
-alias pointer-set-ulong='mmuxpointerspointersetulong'
-alias pointer-ref-ulong='mmuxpointerspointerrefulong'
-
-alias pointer-set-sllong='mmuxpointerspointersetsllong'
-alias pointer-ref-sllong='mmuxpointerspointerrefsllong'
-
-alias pointer-set-ullong='mmuxpointerspointersetullong'
-alias pointer-ref-ullong='mmuxpointerspointerrefullong'
-
-### ------------------------------------------------------------------------
-
-alias pointer-set-float='mmuxpointerspointersetfloat'
-alias pointer-ref-float='mmuxpointerspointerreffloat'
-
-alias pointer-set-double='mmuxpointerspointersetdouble'
-alias pointer-ref-double='mmuxpointerspointerrefdouble'
-
-alias pointer-set-ldouble='mmuxpointerspointersetldouble'
-alias pointer-ref-ldouble='mmuxpointerspointerrefldouble'
-
-alias pointer-set-complex='mmuxpointerspointersetcomplex'
-alias pointer-ref-complex='mmuxpointerspointerrefcomplex'
-
-### ------------------------------------------------------------------------
-
-alias pointer-set-sint8='mmuxpointerspointersetsint8'
-alias pointer-ref-sint8='mmuxpointerspointerrefsint8'
-
-alias pointer-set-uint8='mmuxpointerspointersetuint8'
-alias pointer-ref-uint8='mmuxpointerspointerrefuint8'
-
-alias pointer-set-sint16='mmuxpointerspointersetsint16'
-alias pointer-ref-sint16='mmuxpointerspointerrefsint16'
-
-alias pointer-set-uint16='mmuxpointerspointersetuint16'
-alias pointer-ref-uint16='mmuxpointerspointerrefuint16'
-
-alias pointer-set-sint32='mmuxpointerspointersetsint32'
-alias pointer-ref-sint32='mmuxpointerspointerrefsint32'
-
-alias pointer-set-uint32='mmuxpointerspointersetuint32'
-alias pointer-ref-uint32='mmuxpointerspointerrefuint32'
-
-alias pointer-set-sint64='mmuxpointerspointersetsint64'
-alias pointer-ref-sint64='mmuxpointerspointerrefsint64'
-
-alias pointer-set-uint64='mmuxpointerspointersetuint64'
-alias pointer-ref-uint64='mmuxpointerspointerrefuint64'
-
-### ------------------------------------------------------------------------
-
-alias pointer-set-ssize='mmuxpointerspointersetssize'
-alias pointer-ref-ssize='mmuxpointerspointerrefssize'
-
-alias pointer-set-usize='mmuxpointerspointersetusize'
-alias pointer-ref-usize='mmuxpointerspointerrefusize'
-
-alias pointer-set-intmax='mmuxpointerspointersetintmax'
-alias pointer-ref-intmax='mmuxpointerspointerrefintmax'
-
-alias pointer-set-intptr='mmuxpointerspointersetintptr'
-alias pointer-ref-intptr='mmuxpointerspointerrefintptr'
-
-alias pointer-set-uintptr='mmuxpointerspointersetuintptr'
-alias pointer-ref-uintptr='mmuxpointerspointerrefuintptr'
-
-alias pointer-set-ptrdiff='mmuxpointerspointersetptrdiff'
-alias pointer-ref-ptrdiff='mmuxpointerspointerrefptrdiff'
-
-alias pointer-set-mode='mmuxpointerspointersetmode'
-alias pointer-ref-mode='mmuxpointerspointerrefmode'
-
-alias pointer-set-off='mmuxpointerspointersetoff'
-alias pointer-ref-off='mmuxpointerspointerrefoff'
-
-alias pointer-set-pid='mmuxpointerspointersetpid'
-alias pointer-ref-pid='mmuxpointerspointerrefpid'
-
-alias pointer-set-uid='mmuxpointerspointersetuid'
-alias pointer-ref-uid='mmuxpointerspointerrefuid'
-
-alias pointer-set-gid='mmuxpointerspointersetgid'
-alias pointer-ref-gid='mmuxpointerspointerrefgid'
+mmux-bash-pointers-library-load
 
 ### end of file
 # Local Variables:

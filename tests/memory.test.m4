@@ -53,25 +53,25 @@ source "$MMUX_LIBRARY"
 
 function memory-1.1 () {
     declare PTR
-    if malloc PTR 123
-    then free $PTR
+    if libc_malloc PTR 123
+    then libc_free $PTR
     else return $?
     fi
 }
 function memory-1.2 () {
     declare PTR
-    if malloc PTR 123
+    if libc_malloc PTR 123
     then
-	if realloc PTR $PTR 456
-	then free $PTR
+	if libc_realloc PTR $PTR 456
+	then libc_free $PTR
 	else return $?
 	fi
     fi
 }
 function memory-1.3 () {
     declare PTR
-    if calloc PTR 123 1
-    then free $PTR
+    if libc_calloc PTR 123 1
+    then libc_free $PTR
     else return $?
     fi
 }
@@ -82,11 +82,11 @@ function memory-1.3 () {
 function memory-2.1 () {
     declare PTR SIZE=123 RESULT=Z
 
-    if malloc PTR $SIZE
+    if libc_malloc PTR $SIZE
     then
-	memset $PTR 1 $SIZE
+	libc_memset $PTR 1 $SIZE
 	pointer-ref-uint8 RESULT $PTR 1
-	free $PTR
+	libc_free $PTR
 	dotest-equal 1 $RESULT
     else return $?
     fi
@@ -95,17 +95,17 @@ function memory-2.1 () {
 function memory-3.1 () {
     declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
 
-    malloc PTR_FROM $SIZE
-    malloc PTR_TO   $SIZE
+    libc_malloc PTR_FROM $SIZE
+    libc_malloc PTR_TO   $SIZE
 
-    memset $PTR_FROM 1 $SIZE
-    memset $PTR_TO   0 $SIZE
+    libc_memset $PTR_FROM 1 $SIZE
+    libc_memset $PTR_TO   0 $SIZE
 
-    memcpy $PTR_TO $PTR_FROM $SIZE
+    libc_memcpy $PTR_TO $PTR_FROM $SIZE
     pointer-ref-uint8 RESULT $PTR_TO 10
 
-    free $PTR_FROM
-    free $PTR_TO
+    libc_free $PTR_FROM
+    libc_free $PTR_TO
 
     dotest-equal 1 $RESULT
 }
@@ -113,17 +113,17 @@ function memory-3.1 () {
 function memory-4.1 () {
     declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
 
-    malloc PTR_FROM $SIZE
-    malloc PTR_TO   $SIZE
+    libc_malloc PTR_FROM $SIZE
+    libc_malloc PTR_TO   $SIZE
 
-    memset $PTR_FROM 1 $SIZE
-    memset $PTR_TO   0 $SIZE
+    libc_memset $PTR_FROM 1 $SIZE
+    libc_memset $PTR_TO   0 $SIZE
 
-    memmove $PTR_TO $PTR_FROM $SIZE
+    libc_memmove $PTR_TO $PTR_FROM $SIZE
     pointer-ref-uint8 RESULT $PTR_TO 10
 
-    free $PTR_FROM
-    free $PTR_TO
+    libc_free $PTR_FROM
+    libc_free $PTR_TO
 
     dotest-equal 1 $RESULT
 }

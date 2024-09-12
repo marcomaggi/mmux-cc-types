@@ -54,19 +54,19 @@ source "$MMUX_LIBRARY"
 function raw-pointer-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-pointer $PTR 0 '0x12'
 	pointer-ref-pointer VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal '0x12' QQ(VALUE)
 }
 function raw-pointer-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-pointer $PTR  0 '0x12'
 	pointer-set-pointer $PTR  8 '0x34'
@@ -76,7 +76,7 @@ function raw-pointer-1.2 () {
 	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal '0x12' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0x34' mbfl_slot_qref(VALUES,1) &&
@@ -86,7 +86,7 @@ function raw-pointer-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-pointer $PTR  0 '0x12'
 	pointer-set-pointer $PTR  8 '0x34'
@@ -96,7 +96,7 @@ function raw-pointer-1.3 () {
 	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal '0x12' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0x34' mbfl_slot_qref(VALUES,1) &&
@@ -109,19 +109,19 @@ function raw-pointer-1.3 () {
 function raw-schar-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-schar $PTR 0 12
 	pointer-ref-schar VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-schar-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-schar $PTR  0 12
 	pointer-set-schar $PTR  8 34
@@ -131,7 +131,7 @@ function raw-schar-1.2 () {
 	pointer-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 34 mbfl_slot_qref(VALUES,1) &&
@@ -141,7 +141,7 @@ function raw-schar-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-schar $PTR  0 12
 	pointer-set-schar $PTR  8 34
@@ -151,7 +151,7 @@ function raw-schar-1.3 () {
 	pointer-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 34 mbfl_slot_qref(VALUES,1) &&
@@ -164,19 +164,19 @@ function raw-schar-1.3 () {
 function raw-uchar-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uchar $PTR 0 12
 	pointer-ref-uchar VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-uchar-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uchar $PTR  0 12
 	pointer-set-uchar $PTR  8 34
@@ -186,7 +186,7 @@ function raw-uchar-1.2 () {
 	pointer-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 34 mbfl_slot_qref(VALUES,1) &&
@@ -196,7 +196,7 @@ function raw-uchar-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uchar $PTR  0 12
 	pointer-set-uchar $PTR  8 34
@@ -206,7 +206,7 @@ function raw-uchar-1.3 () {
 	pointer-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 34 mbfl_slot_qref(VALUES,1) &&
@@ -219,19 +219,19 @@ function raw-uchar-1.3 () {
 function raw-sint-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint $PTR 0 123
 	pointer-ref-sint VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-sint-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint $PTR  0 123
 	pointer-set-sint $PTR  8 456
@@ -241,7 +241,7 @@ function raw-sint-1.2 () {
 	pointer-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -251,7 +251,7 @@ function raw-sint-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint $PTR  0 123
 	pointer-set-sint $PTR  8 456
@@ -261,7 +261,7 @@ function raw-sint-1.3 () {
 	pointer-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -274,19 +274,19 @@ function raw-sint-1.3 () {
 function raw-uint-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint $PTR 0 123
 	pointer-ref-uint VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-uint-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint $PTR  0 123
 	pointer-set-uint $PTR  8 456
@@ -296,7 +296,7 @@ function raw-uint-1.2 () {
 	pointer-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -306,7 +306,7 @@ function raw-uint-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint $PTR  0 123
 	pointer-set-uint $PTR  8 456
@@ -316,7 +316,7 @@ function raw-uint-1.3 () {
 	pointer-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -329,19 +329,19 @@ function raw-uint-1.3 () {
 function raw-slong-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-slong $PTR 0 123
 	pointer-ref-slong VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-slong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-slong $PTR  0 123
 	pointer-set-slong $PTR  8 456
@@ -351,7 +351,7 @@ function raw-slong-1.2 () {
 	pointer-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -361,7 +361,7 @@ function raw-slong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-slong $PTR  0 123
 	pointer-set-slong $PTR  8 456
@@ -371,7 +371,7 @@ function raw-slong-1.3 () {
 	pointer-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -384,19 +384,19 @@ function raw-slong-1.3 () {
 function raw-ulong-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ulong $PTR 0 123
 	pointer-ref-ulong VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-ulong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ulong $PTR  0 123
 	pointer-set-ulong $PTR  8 456
@@ -406,7 +406,7 @@ function raw-ulong-1.2 () {
 	pointer-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -416,7 +416,7 @@ function raw-ulong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ulong $PTR  0 123
 	pointer-set-ulong $PTR  8 456
@@ -426,7 +426,7 @@ function raw-ulong-1.3 () {
 	pointer-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -439,19 +439,19 @@ function raw-ulong-1.3 () {
 function raw-sllong-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sllong $PTR 0 123
 	pointer-ref-sllong VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-sllong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sllong $PTR  0 123
 	pointer-set-sllong $PTR  8 456
@@ -461,7 +461,7 @@ function raw-sllong-1.2 () {
 	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sllong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -471,7 +471,7 @@ function raw-sllong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sllong $PTR  0 123
 	pointer-set-sllong $PTR  8 456
@@ -481,7 +481,7 @@ function raw-sllong-1.3 () {
 	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sllong VALUE $PTR 16	;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -494,19 +494,19 @@ function raw-sllong-1.3 () {
 function raw-ullong-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ullong $PTR 0 123
 	pointer-ref-ullong VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-ullong-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ullong $PTR  0 123
 	pointer-set-ullong $PTR  8 456
@@ -516,7 +516,7 @@ function raw-ullong-1.2 () {
 	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -526,7 +526,7 @@ function raw-ullong-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ullong $PTR  0 123
 	pointer-set-ullong $PTR  8 456
@@ -536,7 +536,7 @@ function raw-ullong-1.3 () {
 	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -549,19 +549,19 @@ function raw-ullong-1.3 () {
 function raw-ssize-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ssize $PTR 0 123
 	pointer-ref-ssize VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-ssize-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ssize $PTR  0 123
 	pointer-set-ssize $PTR  8 456
@@ -571,7 +571,7 @@ function raw-ssize-1.2 () {
 	pointer-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -581,7 +581,7 @@ function raw-ssize-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ssize $PTR  0 123
 	pointer-set-ssize $PTR  8 456
@@ -591,7 +591,7 @@ function raw-ssize-1.3 () {
 	pointer-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -604,19 +604,19 @@ function raw-ssize-1.3 () {
 function raw-usize-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-usize $PTR 0 123
 	pointer-ref-usize VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 123 QQ(VALUE)
 }
 function raw-usize-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-usize $PTR  0 123
 	pointer-set-usize $PTR  8 456
@@ -626,7 +626,7 @@ function raw-usize-1.2 () {
 	pointer-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -636,7 +636,7 @@ function raw-usize-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-usize $PTR  0 123
 	pointer-set-usize $PTR  8 456
@@ -646,7 +646,7 @@ function raw-usize-1.3 () {
 	pointer-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
@@ -659,19 +659,19 @@ function raw-usize-1.3 () {
 function raw-float-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-float $PTR 0 1.23
 	pointer-ref-float VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 0X1.3AE148P+0 QQ(VALUE)
 }
 function raw-float-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-float $PTR  0 1.23
 	pointer-set-float $PTR  8 4.56
@@ -681,7 +681,7 @@ function raw-float-1.2 () {
 	pointer-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
@@ -691,7 +691,7 @@ function raw-float-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-float $PTR  0 1.23
 	pointer-set-float $PTR  8 4.56
@@ -701,7 +701,7 @@ function raw-float-1.3 () {
 	pointer-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
@@ -714,19 +714,19 @@ function raw-float-1.3 () {
 function raw-double-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-double $PTR 0 1.23
 	pointer-ref-double VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal '0X1.3AE147AE147AEP+0' QQ(VALUE)
 }
 function raw-double-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-double $PTR  0 1.23
 	pointer-set-double $PTR  8 4.56
@@ -736,7 +736,7 @@ function raw-double-1.2 () {
 	pointer-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal     '0X1.3AE147AE147AEP+0' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0X1.23D70A3D70A3DP+2' mbfl_slot_qref(VALUES,1) &&
@@ -746,7 +746,7 @@ function raw-double-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-double $PTR  0 1.23
 	pointer-set-double $PTR  8 4.56
@@ -756,7 +756,7 @@ function raw-double-1.3 () {
 	pointer-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal     '0X1.3AE147AE147AEP+0' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0X1.23D70A3D70A3DP+2' mbfl_slot_qref(VALUES,1) &&
@@ -769,19 +769,19 @@ function raw-double-1.3 () {
 function raw-ldouble-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ldouble $PTR 0 1.23
 	pointer-ref-ldouble VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal '0X9.D70A3D70A3D70A4P-3' QQ(VALUE)
 }
 function raw-ldouble-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ldouble $PTR  0 1.23
 	pointer-set-ldouble $PTR 32 4.56
@@ -791,7 +791,7 @@ function raw-ldouble-1.2 () {
 	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
 	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal     '0X9.D70A3D70A3D70A4P-3' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0X9.1EB851EB851EB85P-1' mbfl_slot_qref(VALUES,1) &&
@@ -801,7 +801,7 @@ function raw-ldouble-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ldouble $PTR  0 1.23
 	pointer-set-ldouble $PTR 32 4.56
@@ -811,7 +811,7 @@ function raw-ldouble-1.3 () {
 	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
 	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal     '0X9.D70A3D70A3D70A4P-3' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0X9.1EB851EB851EB85P-1' mbfl_slot_qref(VALUES,1) &&
@@ -824,19 +824,19 @@ function raw-ldouble-1.3 () {
 function raw-complex-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-complex $PTR 0 '(1.2)+i*(3.4)'
 	pointer-ref-complex VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' QQ(VALUE)
 }
 function raw-complex-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
 	pointer-set-complex $PTR 32 '(5.6)+i*(7.8)'
@@ -846,7 +846,7 @@ function raw-complex-1.2 () {
 	pointer-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
 	pointer-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal     '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
@@ -856,7 +856,7 @@ function raw-complex-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
 	pointer-set-complex $PTR  32 '(5.6)+i*(7.8)'
@@ -866,7 +866,7 @@ function raw-complex-1.3 () {
 	pointer-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
 	pointer-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal     '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
@@ -879,19 +879,19 @@ function raw-complex-1.3 () {
 function raw-sint8-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint8 $PTR 0 12
 	pointer-ref-sint8 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-sint8-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint8 $PTR  0 12
 	pointer-set-sint8 $PTR  8 45
@@ -901,7 +901,7 @@ function raw-sint8-1.2 () {
 	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -911,7 +911,7 @@ function raw-sint8-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint8 $PTR  0 12
 	pointer-set-sint8 $PTR  8 45
@@ -921,7 +921,7 @@ function raw-sint8-1.3 () {
 	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -934,19 +934,19 @@ function raw-sint8-1.3 () {
 function raw-uint8-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint8 $PTR 0 12
 	pointer-ref-uint8 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-uint8-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint8 $PTR  0 12
 	pointer-set-uint8 $PTR  8 45
@@ -956,7 +956,7 @@ function raw-uint8-1.2 () {
 	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -966,7 +966,7 @@ function raw-uint8-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint8 $PTR  0 12
 	pointer-set-uint8 $PTR  8 45
@@ -976,7 +976,7 @@ function raw-uint8-1.3 () {
 	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -989,19 +989,19 @@ function raw-uint8-1.3 () {
 function raw-sint16-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint16 $PTR 0 12
 	pointer-ref-sint16 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-sint16-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint16 $PTR  0 12
 	pointer-set-sint16 $PTR  8 45
@@ -1011,7 +1011,7 @@ function raw-sint16-1.2 () {
 	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1021,7 +1021,7 @@ function raw-sint16-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint16 $PTR  0 12
 	pointer-set-sint16 $PTR  8 45
@@ -1031,7 +1031,7 @@ function raw-sint16-1.3 () {
 	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1044,19 +1044,19 @@ function raw-sint16-1.3 () {
 function raw-uint16-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint16 $PTR 0 12
 	pointer-ref-uint16 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-uint16-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint16 $PTR  0 12
 	pointer-set-uint16 $PTR  8 45
@@ -1066,7 +1066,7 @@ function raw-uint16-1.2 () {
 	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1076,7 +1076,7 @@ function raw-uint16-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint16 $PTR  0 12
 	pointer-set-uint16 $PTR  8 45
@@ -1086,7 +1086,7 @@ function raw-uint16-1.3 () {
 	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1099,19 +1099,19 @@ function raw-uint16-1.3 () {
 function raw-sint32-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint32 $PTR 0 12
 	pointer-ref-sint32 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-sint32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint32 $PTR  0 12
 	pointer-set-sint32 $PTR  8 45
@@ -1121,7 +1121,7 @@ function raw-sint32-1.2 () {
 	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1131,7 +1131,7 @@ function raw-sint32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint32 $PTR  0 12
 	pointer-set-sint32 $PTR  8 45
@@ -1141,7 +1141,7 @@ function raw-sint32-1.3 () {
 	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1154,19 +1154,19 @@ function raw-sint32-1.3 () {
 function raw-uint32-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint32 $PTR 0 12
 	pointer-ref-uint32 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-uint32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint32 $PTR  0 12
 	pointer-set-uint32 $PTR  8 45
@@ -1176,7 +1176,7 @@ function raw-uint32-1.2 () {
 	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1186,7 +1186,7 @@ function raw-uint32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint32 $PTR  0 12
 	pointer-set-uint32 $PTR  8 45
@@ -1196,7 +1196,7 @@ function raw-uint32-1.3 () {
 	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1209,19 +1209,19 @@ function raw-uint32-1.3 () {
 function raw-sint64-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint64 $PTR 0 12
 	pointer-ref-sint64 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-sint64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint64 $PTR  0 12
 	pointer-set-sint64 $PTR  8 45
@@ -1231,7 +1231,7 @@ function raw-sint64-1.2 () {
 	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1241,7 +1241,7 @@ function raw-sint64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-sint64 $PTR  0 12
 	pointer-set-sint64 $PTR  8 45
@@ -1251,7 +1251,7 @@ function raw-sint64-1.3 () {
 	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1264,19 +1264,19 @@ function raw-sint64-1.3 () {
 function raw-uint64-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint64 $PTR 0 12
 	pointer-ref-uint64 VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 function raw-uint64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint64 $PTR  0 12
 	pointer-set-uint64 $PTR  8 45
@@ -1286,7 +1286,7 @@ function raw-uint64-1.2 () {
 	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1296,7 +1296,7 @@ function raw-uint64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uint64 $PTR  0 12
 	pointer-set-uint64 $PTR  8 45
@@ -1306,7 +1306,7 @@ function raw-uint64-1.3 () {
 	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
 	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
     }
-    free $PTR
+    libc_free $PTR
 
     dotest-equal 12 mbfl_slot_qref(VALUES,0) &&
 	dotest-equal 45 mbfl_slot_qref(VALUES,1) &&
@@ -1319,12 +1319,12 @@ function raw-uint64-1.3 () {
 function raw-intmax-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-intmax $PTR 5 12
 	pointer-ref-intmax VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1334,12 +1334,12 @@ function raw-intmax-1.1 () {
 function raw-intptr-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-intptr $PTR 5 12
 	pointer-ref-intptr VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1349,12 +1349,12 @@ function raw-intptr-1.1 () {
 function raw-uintptr-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uintptr $PTR 5 12
 	pointer-ref-uintptr VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1364,12 +1364,12 @@ function raw-uintptr-1.1 () {
 function raw-ptrdiff-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-ptrdiff $PTR 5 12
 	pointer-ref-ptrdiff VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1379,12 +1379,12 @@ function raw-ptrdiff-1.1 () {
 function raw-mode-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-mode $PTR 5 12
 	pointer-ref-mode VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1394,12 +1394,12 @@ function raw-mode-1.1 () {
 function raw-off-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-off $PTR 5 12
 	pointer-ref-off VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1409,12 +1409,12 @@ function raw-off-1.1 () {
 function raw-pid-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-pid $PTR 5 12
 	pointer-ref-pid VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1424,12 +1424,12 @@ function raw-pid-1.1 () {
 function raw-uid-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-uid $PTR 5 12
 	pointer-ref-uid VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
@@ -1439,12 +1439,12 @@ function raw-uid-1.1 () {
 function raw-gid-1.1 () {
     declare PTR VALUE
 
-    calloc PTR 1024 1
+    libc_calloc PTR 1024 1
     {
 	pointer-set-gid $PTR 5 12
 	pointer-ref-gid VALUE $PTR 5
     }
-    free $PTR
+    libc_free $PTR
     dotest-equal 12 QQ(VALUE)
 }
 
