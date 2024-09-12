@@ -69,8 +69,18 @@ function mmux-bash-pointers-library-load () {
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 
+	    printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v ALIAS 'array-set-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+	    alias "$ALIAS"="$NAME"
+
 	    printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	    printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+	    alias "$ALIAS"="$NAME"
+
+	    printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v ALIAS 'array-ref-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 	done
@@ -101,8 +111,18 @@ function mmux-bash-pointers-library-unload () {
 	enable -d "$NAME"
 	unalias "$ALIAS"
 
+	printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v ALIAS 'array-set-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	enable -d "$NAME"
+	unalias "$ALIAS"
+
 	printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	enable -d "$NAME"
+	unalias "$ALIAS"
+
+	printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v ALIAS 'array-ref-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
     done

@@ -137,14 +137,16 @@ EXTRA_DIST		+= \
 	tests/version.test.m4			\
 	tests/memory.test.m4			\
 	tests/errors.test.m4			\
-	tests/accessors-mutators.test.m4	\
+	tests/pointers.test.m4			\
+	tests/arrays.test.m4			\
 	tests/conversion.test.m4
 
 MMUX_CHECK_BUILT_TESTS	= \
 	tests/version.test			\
 	tests/memory.test			\
 	tests/errors.test			\
-	tests/accessors-mutators.test		\
+	tests/pointers.test			\
+	tests/arrays.test			\
 	tests/conversion.test
 
 if MMUX_TESTING_ENABLED

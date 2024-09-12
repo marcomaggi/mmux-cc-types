@@ -159,6 +159,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * memory::                      Standard memory allocation.
 * operations::                  Standard memory operations.
 * pointers::                    Memory block accessors and mutators.
+* arrays::                      Memory arrays accessors and mutators.
 * conversions::                 Converting data to and from memory blocks.
 * errors::                      Handling errors.
 
@@ -656,8 +657,8 @@ For all the following builtins, the argument:
 must be the string representation of a memory pointer referencing a previously allocated block;
 
 @item OFFSET
-must be the string representation of an exact, positive integer, compatible with the C language type
-@code{size_t}, representing an offset from @var{POINTER} @strong{measured in bytes};
+must be the string representation of an exact, non--negative integer, compatible with the C language
+type @code{size_t}, representing an offset from @var{POINTER} @strong{measured in bytes};
 
 @item VALUE
 must be the string representation of a number, compatible with a C language type of the specific
@@ -710,6 +711,88 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineAccessorMutator{pid, pid_t}
 @MmuxDefineAccessorMutator{uid, uid_t}
 @MmuxDefineAccessorMutator{gid, gid_t}
+
+@c page
+@node arrays
+@chapter Memory arrays accessors and mutators
+
+
+If we allocate memory using the standard C library functions, we can poke and peek values in the
+memory blocks, handling them as arrays of a specified C type:
+
+@example
+declare PTR VALUE
+
+libc_malloc PTR $(( 55 * libc_SIZEOF_ULONG ))
+@{
+  array-set-ulong $PTR 0 1234567890
+  array-ref-ulong VALUE $PTR 0
+@}
+libc_free $PTR
+@end example
+
+For all the following builtins, the argument:
+
+@table @var
+@item ARRAY
+must be the string representation of a memory pointer referencing a previously allocated block; the
+block is to be interpreted as an array of a specified C type;
+
+@item INDEX
+must be the string representation of an exact, non--negative integer, compatible with the C language
+type @code{size_t}, representing an index in @var{ARRAY};
+
+@item VALUE
+must be the string representation of a number, compatible with a C language type of the specific
+mutator: it is stored by the mutators at @var{INDEX} in @var{ARRAY};
+
+@item VALUEVAR
+must be a string representing the name of a shell variable: it is used by the accessors to store the
+value extracted at @var{INDEX} from @var{ARRAY}.
+@end table
+
+
+@macro MmuxDefineArrayAccessorMutator{STEM,TYPE}
+@deffn {Builtin Mutator} array-set-\STEM\ @var{ARRAY} @var{INDEX} @var{VALUE}
+@deffnx {Builtin Accessor} array-ref-\STEM\ @var{VALUEVAR} @var{ARRAY} @var{INDEX}
+Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineArrayAccessorMutator{pointer,void *}
+
+@MmuxDefineArrayAccessorMutator{schar,signed char}
+@MmuxDefineArrayAccessorMutator{uchar,unsigned char}
+@MmuxDefineArrayAccessorMutator{sint,signed int}
+@MmuxDefineArrayAccessorMutator{uint,unsigned int}
+@MmuxDefineArrayAccessorMutator{slong,signed long}
+@MmuxDefineArrayAccessorMutator{ulong,unsigned long}
+@MmuxDefineArrayAccessorMutator{sllong,signed long long}
+@MmuxDefineArrayAccessorMutator{ullong,unsigned long long}
+@MmuxDefineArrayAccessorMutator{float,float}
+@MmuxDefineArrayAccessorMutator{double,double}
+@MmuxDefineArrayAccessorMutator{ldouble,long double}
+@MmuxDefineArrayAccessorMutator{complex,double complex}
+
+@MmuxDefineArrayAccessorMutator{sint8,int8_t}
+@MmuxDefineArrayAccessorMutator{uint8,uint8_t}
+@MmuxDefineArrayAccessorMutator{sint16,int16_t}
+@MmuxDefineArrayAccessorMutator{uint16,uint16_t}
+@MmuxDefineArrayAccessorMutator{sint32,int32_t}
+@MmuxDefineArrayAccessorMutator{uint32,uint32_t}
+@MmuxDefineArrayAccessorMutator{sint64,int64_t}
+@MmuxDefineArrayAccessorMutator{uint64,uint64_t}
+
+@MmuxDefineArrayAccessorMutator{ssize,ssize_t}
+@MmuxDefineArrayAccessorMutator{usize,size_t}
+@MmuxDefineArrayAccessorMutator{intmax, intmax_t}
+@MmuxDefineArrayAccessorMutator{intptr, intptr_t}
+@MmuxDefineArrayAccessorMutator{mode, mode_t}
+@MmuxDefineArrayAccessorMutator{off, off_t}
+@MmuxDefineArrayAccessorMutator{pid, pid_t}
+@MmuxDefineArrayAccessorMutator{uid, uid_t}
+@MmuxDefineArrayAccessorMutator{gid, gid_t}
 
 @c page
 @node conversions
