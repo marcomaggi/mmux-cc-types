@@ -2,7 +2,7 @@
 
 ACLOCAL_AMFLAGS		= -I meta/autotools
 AUTOMAKE_OPTIONS	= foreign
-EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in
+EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in meta/m4/libmmux-bash-builtins.m4
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
 AM_CPPFLAGS		= -I$(srcdir)/src
@@ -77,7 +77,6 @@ install-html-local:
 #### libraries
 
 EXTRA_DIST	+= \
-	src/mmux-bash-pointers.m4		\
 	src/mmux-bash-pointers-library.c.m4	\
 	src/mmux-bash-pointers-sprinters.c.m4	\
 	src/mmux-bash-pointers-parsers.c.m4	\
@@ -119,8 +118,8 @@ libmmux_bash_pointers_la_SOURCES	=	\
 
 library: libmmux-bash-pointers.la
 
-src/%.c: src/%.c.m4 src/mmux-bash-pointers.m4
-	$(M4_PROGRAM) --prefix-builtins $(top_srcdir)/src/mmux-bash-pointers.m4 $< >$@
+src/%.c: src/%.c.m4 $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4
+	$(M4_PROGRAM) --prefix-builtins $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4 $< >$@
 
 ## ------------------------------------------------------------------------
 

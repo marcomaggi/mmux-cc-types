@@ -1,13 +1,13 @@
 m4_divert(-1)m4_dnl
 m4_dnl
-m4_dnl Part of: MMUX Bash Pointers
-m4_dnl Contents: macros
+m4_dnl Part of: MMUX Bash Builtins Macros
+m4_dnl Contents: macros to define builtins
 m4_dnl Date: Sep  9, 2024
 m4_dnl
 m4_dnl Abstract
 m4_dnl
-m4_dnl	This library  defines macros to  automatically generate C  language functions
-m4_dnl	for GNU Bash builtings implementation.
+m4_dnl		This library  defines macros to  automatically generate C language
+m4_dnl		functions for GNU Bash builtings implementation.
 m4_dnl
 m4_dnl Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
 m4_dnl
@@ -33,8 +33,8 @@ m4_changequote(`[[[', `]]]')
 m4_dnl function definitions
 
 m4_dnl $1 - bulitin identifier
-m4_dnl $2 - C language expression about "argc": if true the number of argumets is wrong
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_BUILTIN_FUNCTION_NO_OPTIONS]]],[[[m4_dnl
+m4_dnl $2 - C language expression, between parentheses, about "argc": if true the number of argumets is correct
+m4_define([[[MMUX_BASH_DEFINE_BUILTIN_FUNCTION_NO_OPTIONS]]],[[[m4_dnl
 static int
 $1_builtin (WORD_LIST * list)
 {
@@ -48,10 +48,10 @@ $1_builtin (WORD_LIST * list)
     argv = make_builtin_argv(list, &argc);
     if (argv) {
       if $2 {
+        rv = $1_main(argc, argv);
+      } else {
         builtin_usage();
         rv = EX_USAGE;
-      } else {
-        rv = $1_main(argc, argv);
       }
       free(argv);
     } else {
@@ -64,8 +64,8 @@ $1_builtin (WORD_LIST * list)
 ]]])
 
 m4_dnl $1 - bulitin identifier
-m4_dnl $2 - C language expression about "argc": if true the number of argumets is wrong
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_BUILTIN_FUNCTION]]],[[[m4_dnl
+m4_dnl $2 - C language expression, between parentheses, about "argc": if true the number of argumets is correct
+m4_define([[[MMUX_BASH_DEFINE_BUILTIN_FUNCTION]]],[[[m4_dnl
 static int
 $1_builtin (WORD_LIST * list)
 {
@@ -76,10 +76,10 @@ $1_builtin (WORD_LIST * list)
   argv = make_builtin_argv(list, &argc);
   if (argv) {
     if $2 {
+      rv = $1_main(argc, argv);
+    } else {
       builtin_usage();
       rv = EX_USAGE;
-    } else {
-      rv = $1_main(argc, argv);
     }
     free(argv);
   } else {
@@ -95,7 +95,7 @@ m4_dnl data structures
 
 m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language string representing the short documentation
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_BUILTIN_STRUCT]]],[[[m4_dnl
+m4_define([[[MMUX_BASH_DEFINE_BUILTIN_STRUCT]]],[[[m4_dnl
 /* Bash will search for this struct  building the name "$1_struct" from the command
    line argument "$1" we have given to the "enable" builtin. */
 struct builtin $1_struct = {
@@ -110,7 +110,7 @@ struct builtin $1_struct = {
 
 m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language string representing a single-line long documentation
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE]]],[[[m4_dnl
+m4_define([[[MMUX_BASH_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE]]],[[[m4_dnl
 /* A NULL-terminated array of ASCIIZ strings representing the lines of the
    builtin long documentation. */
 static char * $1_doc[] = {
@@ -126,14 +126,14 @@ m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language expression about "argc": if true the number of argumets is wrong
 m4_dnl $3 - C language string representing the short documentation
 m4_dnl $4 - C language string representing the long documentation, a single-line
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION]]],[[[m4_dnl
+m4_define([[[MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION]]],[[[m4_dnl
 m4_dnl Here we do not use the NO_OPTION  version of the implementation function: with that
 m4_dnl version an argument  like "-1.2" is interpreted  as an option, and  an error raised
 m4_dnl because there  are no  options allowed.   Here we  want such  arguments to  just go
 m4_dnl through any validation and come to us as they are.
-MMUX_BASH_POINTERS_DEFINE_BUILTIN_FUNCTION([[[$1]]],[[[$2]]])
-MMUX_BASH_POINTERS_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE([[[$1]]],[[[$4]]])
-MMUX_BASH_POINTERS_DEFINE_BUILTIN_STRUCT([[[$1]]],[[[$3]]])
+MMUX_BASH_DEFINE_BUILTIN_FUNCTION([[[$1]]],[[[$2]]])
+MMUX_BASH_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE([[[$1]]],[[[$4]]])
+MMUX_BASH_DEFINE_BUILTIN_STRUCT([[[$1]]],[[[$3]]])
 ]]])
 
 m4_dnl m4_dnlif 0

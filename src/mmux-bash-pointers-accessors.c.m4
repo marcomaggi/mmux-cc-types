@@ -29,7 +29,7 @@
 #include "mmux-bash-pointers-internals.h"
 
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_ACCESSOR]]],[[[
+m4_define([[[MMUX_BASH_DEFINE_ACCESSOR]]],[[[
 static int
 mmux_bash_pointers_pointer_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -78,47 +78,48 @@ mmux_bash_pointers_pointer_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_ref_$1]]],[[[(4 != argc)]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_ref_$1]]],
+    [[[(4 == argc)]]],
     [[["pointer-ref-$1 VALUEVAR POINTER OFFSET"]]],
     [[["Retrieve a C language type \"$2\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[pointer]]],	[[[void *]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[pointer]]],	[[[void *]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sllong]]],	[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ullong]]],	[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[schar]]],		[[[signed char]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uint]]],		[[[unsigned int]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[slong]]],		[[[signed   long]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[sllong]]],		[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[ullong]]],		[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[float]]],		[[[float]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[double]]],	[[[double]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[complex]]],	[[[double complex]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[float]]],		[[[float]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[double]]],		[[[double]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[complex]]],	[[[double complex]]],		[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint16]]],	[[[int16_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint16]]],	[[[uint16_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint32]]],	[[[int32_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint32]]],	[[[uint32_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[sint64]]],	[[[int64_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uint64]]],	[[[uint64_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[sint16]]],		[[[int16_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uint16]]],		[[[uint16_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[sint32]]],		[[[int32_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uint32]]],		[[[uint32_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[sint64]]],		[[[int64_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uint64]]],		[[[uint64_t]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[usize]]],		[[[size_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[intmax]]],	[[[intmax_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[intptr]]],	[[[intptr_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[off]]],		[[[off_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_ACCESSOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[intmax]]],		[[[intmax_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[off]]],		[[[off_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ACCESSOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
 
 /* end of file */

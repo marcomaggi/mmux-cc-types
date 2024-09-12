@@ -29,7 +29,7 @@
 #include "mmux-bash-pointers-internals.h"
 
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_MUTATOR]]],[[[
+m4_define([[[MMUX_BASH_DEFINE_MUTATOR]]],[[[
 static int
 mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -64,47 +64,48 @@ mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_set_$1]]],[[[(4 != argc)]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_set_$1]]],
+    [[[(4 == argc)]]],
     [[["pointer-set-$1 POINTER OFFSET VALUE"]]],
     [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"$2\"."]]])
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[pointer]]],	[[[void *]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[pointer]]],		[[[void *]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[schar]]],		[[[signed   char]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint]]],		[[[unsigned int]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[slong]]],		[[[signed   long]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sllong]]],		[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ullong]]],		[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_MUTATOR([[[schar]]],		[[[signed   char]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uchar]]],		[[[unsigned char]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[sint]]],		[[[signed   int]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uint]]],		[[[unsigned int]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[slong]]],		[[[signed   long]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[ulong]]],		[[[unsigned long]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[sllong]]],		[[[signed   long long]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_MUTATOR([[[ullong]]],		[[[unsigned long long]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[float]]],		[[[float]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[double]]],		[[[double]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ldouble]]],	[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[complex]]],	[[[double complex]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[float]]],		[[[float]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[double]]],		[[[double]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[ldouble]]],		[[[long double]]],		[[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_DEFINE_MUTATOR([[[complex]]],		[[[double complex]]],		[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint16]]],		[[[int16_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint16]]],		[[[uint16_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint32]]],		[[[int32_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint32]]],		[[[uint32_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[sint64]]],		[[[int64_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uint64]]],		[[[uint64_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[sint8]]],		[[[int8_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uint8]]],		[[[uint8_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[sint16]]],		[[[int16_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uint16]]],		[[[uint16_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[sint32]]],		[[[int32_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uint32]]],		[[[uint32_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[sint64]]],		[[[int64_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uint64]]],		[[[uint64_t]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[usize]]],		[[[size_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[intmax]]],		[[[intmax_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[off]]],		[[[off_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_MUTATOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[intmax]]],		[[[intmax_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uintptr]]],		[[[uintptr_t]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[ptrdiff]]],		[[[ptrdiff_t]]],		[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[off]]],		[[[off_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_MUTATOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
 
 /* end of file */

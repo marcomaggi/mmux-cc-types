@@ -26,14 +26,18 @@
 #
 
 function mmux-bash-pointers-library-load () {
-    declare -rg MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
-    declare -rg MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
-    declare -rg MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
-    declare -rg MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
-
-    declare -rga MMUX_BASH_POINTERS_POINTER_TYPES=(pointer schar uchar sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize intmax intptr uintptr ptrdiff mode off pid uid gid)
-
-    declare -rga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove)
+    # NOTE These  variables are not  read-only; I felt  in the past  that making them  read-only was
+    # safer;  but making  them read-only  prevents unsetting  them, which  is needed  to unload  the
+    # library.  Given  that if  you can load  this library,  you can make  much damage  even without
+    # mutating these  variables: I have  settled on accepting that  they are not  read-only.  (Marco
+    # Maggi; Sep 12, 2024)
+    #
+    declare -g MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
+    declare -g MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
+    declare -g MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
+    declare -g MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
+    declare -ga MMUX_BASH_POINTERS_POINTER_TYPES=(pointer schar uchar sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize intmax intptr uintptr ptrdiff mode off pid uid gid)
+    declare -ga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove)
 
     enable -f "$MMUX_BASH_POINTERS_LIBRARY" mmux_bash_pointers_library_init
 
@@ -87,14 +91,16 @@ function mmux-bash-pointers-library-unload () {
 	enable -d "$NAME"
     done
 
-    # NOTE This  is an  error: we  cannot unset  read-only variables.  But  I would  like to  do it.
-    # Making these variables not read-only is too dangerous.  (Marco Maggi; Sep 12, 2024)
     unset -v MMUX_BASH_POINTERS_LIBRARY
     unset -v MMUX_BASH_POINTERS_CURRENT
     unset -v MMUX_BASH_POINTERS_REVISION
     unset -v MMUX_BASH_POINTERS_AGE
     unset -v MMUX_BASH_POINTERS_POINTER_TYPES
     unset -v MMUX_BASH_POINTERS_LIBC_BUILTINS
+
+    # FIXME  For a  perfect cleanup  we should  also unset  the global  variables defined  by the  C
+    # language library  initialisation builtin,  like "libc_SIZEOF_POINTER"  and all  those.  (Marco
+    # Maggi; Sep 12, 2024)
 }
 
 mmux-bash-pointers-library-load
