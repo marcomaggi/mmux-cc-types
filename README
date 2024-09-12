@@ -27,12 +27,12 @@ which is meant to be sourced in a Bash session or script.
 
     declare PTR VALUE
 
-    malloc PTR 1024
+    libc_malloc PTR 1024
     {
       pointer-set-sint $PTR 0 123
       pointer-ref-sint VALUE $PTR 0
     }
-    free $PTR
+    libc_free $PTR
     $VALUE => 123
 
   The package  targets POSIX  systems.  Only  for testing:  this package

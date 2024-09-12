@@ -84,12 +84,12 @@ This package makes raw memory pointers available in shell scripts:
 @example
 declare PTR VALUE
 
-malloc PTR 1024
+libc_malloc PTR 1024
 @{
   pointer-set-sint $PTR 0 123
   pointer-ref-sint VALUE $PTR 0
 @}
-free $PTR
+libc_free $PTR
 $VALUE  @result{} 123
 @end example
 
@@ -189,12 +189,12 @@ This package makes raw memory pointers available in shell scripts:
 @example
 declare PTR VALUE
 
-malloc PTR 1024
+libc_malloc PTR 1024
 @{
   pointer-set-sint $PTR 0 123
   pointer-ref-sint VALUE $PTR 0
 @}
-free $PTR
+libc_free $PTR
 $VALUE  @result{} 123
 @end example
 
@@ -254,57 +254,66 @@ Return an integer representing the library interface current age.
 The shell library installed by @value{PACKAGE} defines global variables to allow inspection of the
 underlying C language platform.
 
+@menu
+* variables sizeof::            C language type sizes.
+@end menu
+
+@c page
+@node variables sizeof
+@section C language type sizes
+
+
 If a C language type referenced by one of the following variables is undefined: the corresponding
 Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
 underlying platform implements the type @code{long long}, we can do:
 
 @example
-if test -v SIZEOF_SLLONG
+if test -v libc_SIZEOF_SLLONG
 then # implemented
 else # not implemented
 fi
 @end example
 
-@macro MmuxDefineGlobalVar{VARNAME,TYPE}
-@defvar \VARNAME\
+@macro MmuxDefineGlobalVar{NAME,TYPE}
+@defvar libc_SIZEOF_\NAME\
 Global variable holding the size, measured in bytes, of the C language type @code{\TYPE\}.
 @end defvar
 
 @end macro
 
-@MmuxDefineGlobalVar{SIZEOF_POINTER,void *}
+@MmuxDefineGlobalVar{POINTER,void *}
 
-@MmuxDefineGlobalVar{SIZEOF_SCHAR, signed char}
-@MmuxDefineGlobalVar{SIZEOF_UCHAR, unsigned char}
-@MmuxDefineGlobalVar{SIZEOF_SINT, signed int}
-@MmuxDefineGlobalVar{SIZEOF_UINT, unsigned int}
-@MmuxDefineGlobalVar{SIZEOF_SLONG, signed long int}
-@MmuxDefineGlobalVar{SIZEOF_ULONG, unsigned long int}
-@MmuxDefineGlobalVar{SIZEOF_SLLONG, signed long long int}
-@MmuxDefineGlobalVar{SIZEOF_ULLONG, unsigned long long int}
-@MmuxDefineGlobalVar{SIZEOF_FLOAT, float}
-@MmuxDefineGlobalVar{SIZEOF_DOUBLE, double}
-@MmuxDefineGlobalVar{SIZEOF_LDOUBLE, long double}
-@MmuxDefineGlobalVar{SIZEOF_COMPLEX, double complex}
+@MmuxDefineGlobalVar{SCHAR, signed char}
+@MmuxDefineGlobalVar{UCHAR, unsigned char}
+@MmuxDefineGlobalVar{SINT, signed int}
+@MmuxDefineGlobalVar{UINT, unsigned int}
+@MmuxDefineGlobalVar{SLONG, signed long int}
+@MmuxDefineGlobalVar{ULONG, unsigned long int}
+@MmuxDefineGlobalVar{SLLONG, signed long long int}
+@MmuxDefineGlobalVar{ULLONG, unsigned long long int}
+@MmuxDefineGlobalVar{FLOAT, float}
+@MmuxDefineGlobalVar{DOUBLE, double}
+@MmuxDefineGlobalVar{LDOUBLE, long double}
+@MmuxDefineGlobalVar{COMPLEX, double complex}
 
-@MmuxDefineGlobalVar{SIZEOF_SINT8, int8_t}
-@MmuxDefineGlobalVar{SIZEOF_UINT8, uint8_t}
-@MmuxDefineGlobalVar{SIZEOF_SINT16, int16_t}
-@MmuxDefineGlobalVar{SIZEOF_UINT16, uint16_t}
-@MmuxDefineGlobalVar{SIZEOF_SINT32, int32_t}
-@MmuxDefineGlobalVar{SIZEOF_UINT32, uint32_t}
-@MmuxDefineGlobalVar{SIZEOF_SINT64, int64_t}
-@MmuxDefineGlobalVar{SIZEOF_UINT64, uint64_t}
+@MmuxDefineGlobalVar{SINT8, int8_t}
+@MmuxDefineGlobalVar{UINT8, uint8_t}
+@MmuxDefineGlobalVar{SINT16, int16_t}
+@MmuxDefineGlobalVar{UINT16, uint16_t}
+@MmuxDefineGlobalVar{SINT32, int32_t}
+@MmuxDefineGlobalVar{UINT32, uint32_t}
+@MmuxDefineGlobalVar{SINT64, int64_t}
+@MmuxDefineGlobalVar{UINT64, uint64_t}
 
-@MmuxDefineGlobalVar{SIZEOF_SSIZE, ssize_t}
-@MmuxDefineGlobalVar{SIZEOF_USIZE, size_t}
-@MmuxDefineGlobalVar{SIZEOF_INTMAX, intmax_t}
-@MmuxDefineGlobalVar{SIZEOF_INTPTR, intptr_t}
-@MmuxDefineGlobalVar{SIZEOF_MODE, mode_t}
-@MmuxDefineGlobalVar{SIZEOF_OFF, off_t}
-@MmuxDefineGlobalVar{SIZEOF_PID, pid_t}
-@MmuxDefineGlobalVar{SIZEOF_UID, uid_t}
-@MmuxDefineGlobalVar{SIZEOF_GID, gid_t}
+@MmuxDefineGlobalVar{SSIZE, ssize_t}
+@MmuxDefineGlobalVar{USIZE, size_t}
+@MmuxDefineGlobalVar{INTMAX, intmax_t}
+@MmuxDefineGlobalVar{INTPTR, intptr_t}
+@MmuxDefineGlobalVar{MODE, mode_t}
+@MmuxDefineGlobalVar{OFF, off_t}
+@MmuxDefineGlobalVar{PID, pid_t}
+@MmuxDefineGlobalVar{UID, uid_t}
+@MmuxDefineGlobalVar{GID, gid_t}
 
 @c page
 @node memory
@@ -316,11 +325,13 @@ Basically, to allocate new memory we should do:
 @example
 declare PTR
 
-malloc PTR 123
+if libc_malloc PTR 123
+then exit 1
+fi
 @{
   # do something
 @}
-free $PTR
+libc_free $PTR
 @end example
 
 @noindent
@@ -330,19 +341,19 @@ shells; so the following will not work:
 @example
 declare PTR
 
-$(malloc PTR 123)
-free $PTR
+$(libc_malloc PTR 123)
+libc_free $PTR
 @end example
 
 @noindent
-because @func{malloc} allocates memory in a subshell.
+because @func{libc_malloc} allocates memory in a subshell.
 
 
-@deffn Builtin malloc @var{PTRVAR} @var{SIZE}
+@deffn Builtin libc_malloc @var{PTRVAR} @var{SIZE}
 Allocate a memory block using the standard @cfunc{malloc} function; if successful return true,
 otherwise return false.
 
-The argument @var{PTRVAR} must be the name of a variable in which @func{malloc} will store a string
+The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
 representation of the pointer to the newly allocated block.
 
 The argument @var{SIZE} must be the string representation of an exact, positive integer representing
@@ -351,26 +362,28 @@ the requested number of bytes in the newly allocated block; it must fit the C la
 @end deffn
 
 
-@deffn Builtin calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
+@deffn Builtin libc_calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
 Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
 otherwise return false.
 
-The argument @var{PTRVAR} must be the name of a variable in which @func{calloc} will store a string
+The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
 representation of the pointer to the newly allocated block.
 
 The argument @var{ITEM_COUNT} must be the string representation of an exact, positive integer
-representing the number of items that the memory block has to contain.
+representing the number of items the memory block has to contain; it must fit the C language type
+@objtype{size_t}.
 
 The argument @var{ITEM_SIZE} must be the string representation of an exact, positive integer
-representing the size of each item the memory block has to contain.
+representing the size of each item the memory block has to contain; it must fit the C language type
+@objtype{size_t}.
 @end deffn
 
 
-@deffn Builtin realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
+@deffn Builtin libc_realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
 Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
 otherwise return false.
 
-The argument @var{PTRVAR} must be the name of a variable in which @func{realloc} will store a string
+The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
 representation of the pointer to the newly allocated block.
 
 The argument @var{OLDPTR} must be the string representation of the old memory pointer.
@@ -381,8 +394,11 @@ the newly requested number of bytes in the newly allocated block; it must fit th
 @end deffn
 
 
-@deffn Builtin free @var{PTR}
+@deffn Builtin libc_free @var{PTR}
 Release a previously allocated memory block using the standard @cfunc{free} function.
+
+The argument @var{PTR} must be the string representation of a memory pointer referencing a
+previously allocated block.
 @end deffn
 
 @c page
@@ -390,7 +406,7 @@ Release a previously allocated memory block using the standard @cfunc{free} func
 @chapter Standard memory operations
 
 
-@deffn Builtin memset @var{PTR} @var{BYTE} @var{SIZE}
+@deffn Builtin libc_memset @var{PTR} @var{BYTE} @var{SIZE}
 Interface to the standard C language function @cfunc{memset}.
 
 The argument @var{PTR} must be the string representation of a pointer referencing a previously
@@ -400,18 +416,18 @@ The argument @var{BYTE} must be the string representation of an exact, positive 
 the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
 
 The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to set to @var{BYTE}.
+the number of bytes to set to @var{BYTE}; it must fit the C language type @objtype{size_t}.
 
 @example
 declare PTR SIZE=123
 
-malloc PTR $SIZE
-memset $PTR 1 $SIZE
+libc_malloc PTR $SIZE
+libc_memset $PTR 1 $SIZE
 @end example
 @end deffn
 
 
-@deffn Builtin memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+@deffn Builtin libc_memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memcpy}.
 
 The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
@@ -421,20 +437,20 @@ The argument @var{PTR_FROM} must be the string representation of a pointer refer
 allocated memory block; the referenced memory is the source of the copy operation.
 
 The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy.
+the number of bytes to copy; it must fit the C language type @objtype{size_t}.
 
 @example
 declare PTR_FROM PTR_TO SIZE=123
 
-malloc PTR_FROM $SIZE
-malloc PTR_TO   $SIZE
+libc_malloc PTR_FROM $SIZE
+libc_malloc PTR_TO   $SIZE
 
-memcpy $PTR_TO $PTR_FROM $SIZE
+libc_memcpy $PTR_TO $PTR_FROM $SIZE
 @end example
 @end deffn
 
 
-@deffn Builtin memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+@deffn Builtin libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memmove}.
 
 The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
@@ -449,10 +465,10 @@ the number of bytes to copy.
 @example
 declare PTR_FROM PTR_TO SIZE=123
 
-malloc PTR_FROM $SIZE
-malloc PTR_TO   $SIZE
+libc_malloc PTR_FROM $SIZE
+libc_malloc PTR_TO   $SIZE
 
-memmove $PTR_TO $PTR_FROM $SIZE
+libc_memmove $PTR_TO $PTR_FROM $SIZE
 @end example
 @end deffn
 
@@ -467,12 +483,12 @@ memory blocks:
 @example
 declare PTR VALUE
 
-malloc PTR 1024
+libc_malloc PTR 1024
 @{
   pointer-set-double $PTR 0 1.23
   pointer-ref-double VALUE $PTR 0
 @}
-free $PTR
+libc_free $PTR
 @end example
 
 For all the following builtins, the argument:
