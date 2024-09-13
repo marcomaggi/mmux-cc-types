@@ -75,6 +75,18 @@ function memory-1.3 () {
     else return $?
     fi
 }
+function memory-1.4 () {
+    declare PTR ERRNO SYM
+
+    if libc_malloc PTR 'ciao'
+    then
+	libc_free $PTR
+	return_failure
+    else
+	mmux-bash-pointers-errno-to-string SYM QQ(ERRNO)
+	dotest-equal 'EINVAL' QQ(SYM)
+    fi
+}
 
 
 #### standard memory operations

@@ -66,12 +66,27 @@ mmux_bash_pointers_create_global_sint_variable (const char * name, int value)
 #undef  LEN
 #define LEN	64
   char		str[LEN];
-  /* NOTE I do not know what FLAGS is for, but setting it to zero seems fine.  (Marco
-     Maggi; Sep 4, 2024) */
-  int		flags = 0;
+  /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
+     I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
+  int		flags = att_integer;
 
   snprintf(str, LEN, "%d", value);
   v = bind_global_variable(name, str, flags);
+}
+int
+mmux_bash_pointers_set_ERRNO (int errnum)
+{
+  SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+  /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
+     I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
+  int		flags = att_integer;
+#undef  LEN
+#define LEN	32
+  char	str[LEN];
+
+  mmux_bash_pointers_sprint_sint(str, LEN, errnum);
+  v = bind_variable("ERRNO", str, flags);
+  return EXECUTION_SUCCESS;
 }
 
 

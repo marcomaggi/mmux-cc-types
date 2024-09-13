@@ -50,7 +50,9 @@ mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * calle
   if ((EOF != rv) && (1 == rv)) {
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"$2\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"$2\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
 #else
@@ -95,7 +97,9 @@ mmux_bash_pointers_parse_schar (signed char * p_data, char const * s_arg, char c
     *p_data = (signed char)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"signed char\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"signed char\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -114,7 +118,9 @@ mmux_bash_pointers_parse_uchar (unsigned char * p_data, char const * s_arg, char
     *p_data = (unsigned char)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"unsigned char\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"unsigned char\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -139,7 +145,9 @@ mmux_bash_pointers_parse_sint8 (int8_t * p_data, char const * s_arg, char const 
     *p_data = (int8_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"int8_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"int8_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -158,7 +166,9 @@ mmux_bash_pointers_parse_uint8 (uint8_t * p_data, char const * s_arg, char const
     *p_data = (uint8_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"uint8_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"uint8_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -183,7 +193,9 @@ mmux_bash_pointers_parse_sint16 (int16_t * p_data, char const * s_arg, char cons
     *p_data = (int16_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"int16_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"int16_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -202,7 +214,9 @@ mmux_bash_pointers_parse_uint16 (uint16_t * p_data, char const * s_arg, char con
     *p_data = (uint16_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"uint16_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"uint16_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -227,7 +241,9 @@ mmux_bash_pointers_parse_sint32 (int32_t  * p_data, char const * s_arg, char con
     *p_data = (int32_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"int32_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"int32_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -246,7 +262,9 @@ mmux_bash_pointers_parse_uint32  (uint32_t * p_data, char const * s_arg, char co
     *p_data = (uint32_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"uint32_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"uint32_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -272,7 +290,9 @@ mmux_bash_pointers_parse_sint64  (int64_t  * p_data, char const * s_arg, char co
     *p_data = (int64_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"int64_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"int64_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -297,7 +317,9 @@ mmux_bash_pointers_parse_uint64  (uint64_t * p_data, char const * s_arg, char co
     *p_data = (uint64_t)data;
     return EXECUTION_SUCCESS;
   } else {
-    fprintf(stderr, "%s: error: invalid argument, expected \"uint64_t\": \"%s\"\n", caller_name, s_arg);
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, expected \"uint64_t\": \"%s\"\n", caller_name, s_arg);
+    }
     return EXECUTION_FAILURE;
   }
   return rv;
@@ -337,7 +359,9 @@ mmux_bash_pointers_parse_complex (double complex * p_value, const char * s_arg, 
 	*p_value = op_re + 0.0 * ((double complex)_Complex_I);
 	return EXECUTION_SUCCESS;
       } else {
-	fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
+	if (caller_name) {
+	  fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
+	}
 	return EXECUTION_FAILURE;
       }
     }

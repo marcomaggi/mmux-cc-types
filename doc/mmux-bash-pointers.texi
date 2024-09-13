@@ -939,6 +939,21 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @chapter Handling errors
 
 
+@defvr {Shell Variable} ERRNO
+If an error occurs in the call to a builtin that interfaces a Standard C Library function: the
+builtin will set the shell variable @env{ERRNO} to the string representation of an exact integer,
+itself representing a standard @code{errno} code.
+
+@example
+declare PTR ERRNO=0 SYM
+
+libc_malloc PTR 'ciao'
+mmux-bash-pointers-errno-to-string SYM $ERRNO
+$SYM    @result{} EINVAL
+@end example
+@end defvr
+
+
 @deffn Builtin libc_strerror @var{MSGVAR} @var{ERRNUM}
 Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
 representation of an exact integer representing a valid value for @code{errno}; @var{ERRNUM} must

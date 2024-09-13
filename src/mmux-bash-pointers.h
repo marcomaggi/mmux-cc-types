@@ -220,6 +220,13 @@ mmux_bash_pointers_decl int mmux_bash_pointers_print_complex (double complex dat
 
 
 /** --------------------------------------------------------------------
+ ** Error handling functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum);
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

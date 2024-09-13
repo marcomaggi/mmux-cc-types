@@ -43,7 +43,7 @@ mmux_bash_pointers_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   int		rv;
 
   rv = mmux_bash_pointers_parse_usize(&len, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
   ptr = malloc(len);
   if (0) {
     fprintf(stderr, "%s: allocated pointer %p\n", __func__, ptr);
@@ -62,6 +62,7 @@ mmux_bash_pointers_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
     v = bind_variable(argv[1], str, flags);
     return EXECUTION_SUCCESS;
   } else {
+    mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
   }
 }
@@ -106,6 +107,7 @@ mmux_bash_pointers_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
     v = bind_variable(argv[1], str, flags);
     return EXECUTION_SUCCESS;
   } else {
+    mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
   }
 }
@@ -145,6 +147,7 @@ mmux_bash_pointers_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
     v = bind_variable(argv[1], str, flags);
     return EXECUTION_SUCCESS;
   } else {
+    mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
   }
 }
@@ -194,13 +197,13 @@ mmux_bash_pointers_memset_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_uchar(&c, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_usize(&len, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   i = (int)c;
 
@@ -225,13 +228,13 @@ mmux_bash_pointers_memcpy_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr_to,   argv[1], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_pointer(&ptr_from, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_usize(&len,        argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   memcpy(ptr_to, ptr_from, len);
   return EXECUTION_SUCCESS;
@@ -254,13 +257,13 @@ mmux_bash_pointers_memmove_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr_to,   argv[1], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_pointer(&ptr_from, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_usize(&len,        argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   memmove(ptr_to, ptr_from, len);
   return EXECUTION_SUCCESS;
