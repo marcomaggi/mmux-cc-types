@@ -122,15 +122,15 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (signed   int  * p,
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint    (unsigned int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_slong   (signed   long * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ulong   (unsigned long * p, char const * s, char const * caller_name);
-#if (HAVE_LONG_LONG_INT)
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_sllong  (signed   long long * p, char const * s, char const * caller_name);
 #endif
-#if (HAVE_UNSIGNED_LONG_LONG_INT)
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ullong  (unsigned long long * p, char const * s, char const * caller_name);
 #endif
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_float   (float   * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_double  (double  * p, char const * s, char const * caller_name);
-#if (HAVE_LONG_DOUBLE)
+#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ldouble (long double * p, char const * s, char const * caller_name);
 #endif
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_complex (double complex * p, const char * s, char const * caller_name);
@@ -174,15 +174,15 @@ mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint    (char * strptr, si
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint    (char * strptr, size_t len, unsigned int  value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_slong   (char * strptr, size_t len, signed   long value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ulong   (char * strptr, size_t len, unsigned long value);
-#if (HAVE_LONG_LONG_INT)
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sllong  (char * strptr, size_t len, signed   long long value);
 #endif
-#if (HAVE_UNSIGNED_LONG_LONG_INT)
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ullong  (char * strptr, size_t len, unsigned long long value);
 #endif
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_float   (char * strptr, size_t len, float   value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_double  (char * strptr, size_t len, double  value);
-#if (HAVE_LONG_DOUBLE)
+#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ldouble (char * strptr, size_t len, long double value);
 #endif
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex value);
