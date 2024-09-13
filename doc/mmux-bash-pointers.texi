@@ -201,21 +201,38 @@ libc_free $PTR
 $VALUE  @result{} 123
 @end example
 
-@value{PACKAGE} installs a shared library under @code{$libdir}; for example:
+@menu
+* overview install::            Installed files.
+* overview linking::            Linking code with the library.
+@end menu
 
-@center @file{/usr/local/lib64/libmmux-bash-pointers.so}
+@c page
+@node overview install
+@section Installed files
 
-@noindent
-it also installs a shell script, a ``shell library'', under @code{$datavar/bash}; for example:
+
+@value{PACKAGE} installs a shell script, a ``shell library'', under @code{$datavar/bash}; for
+example:
 
 @center @file{/usr/local/share/bash/libmmux-bash-pointers.bash}
 
 @noindent
-to use the builtins, we have to load the shell library using the builtin @code{source}.
+to use the builtins, we have to load the shell library using Bash's builtin @code{source}.  A shared
+library, actually implementing the builtins, is installed under @code{$libdir}; for example:
 
-@menu
-* overview linking::            Linking code with the library.
-@end menu
+@center @file{/usr/local/lib64/libmmux-bash-pointers.so}
+
+@noindent
+the shared library is automatically loaded by the shell library.
+
+A C language header file is also installed under @code{$includedire}, for example:
+
+@center @file{/usr/local/include/libmmux-bash-pointers.h}
+
+@noindent
+we can write code that links to the shared library to reuse some of its facilities.
+
+@c page
 
 @include overview-linking.texi
 
