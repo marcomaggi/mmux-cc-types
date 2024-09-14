@@ -36,7 +36,7 @@ which is meant to be sourced in a Bash session or script.
     $VALUE => 123
 
   The package  targets POSIX  systems.  Only  for testing:  this package
-depends on the external package MBFL (at least version v3.0.0-devel.8).
+depends on the external package MBFL (at least version v3.0.0-devel.9).
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
 systems.  The  package relies on  "pkg-config" to find  the dependencies

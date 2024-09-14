@@ -94,7 +94,7 @@ $VALUE  @result{} 123
 @end example
 
 The package targets @posix{} platforms.  Only for testing: this package depends on the external
-package @acronym{MBFL} (at least version @samp{v3.0.0-devel.8}).
+package @acronym{MBFL} (at least version @samp{v3.0.0-devel.9}).
 
 This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
 
@@ -681,6 +681,9 @@ must be a string representing the name of a shell variable: it is used by the ac
 value extracted at @var{OFFSET} from @var{POINTER}.
 @end table
 
+For all the following builtins: if the operation is successful, the return value is true; otherwise
+the return value is false.
+
 
 @macro MmuxDefineAccessorMutator{STEM,TYPE}
 @deffn {Builtin Mutator} pointer-set-\STEM\ @var{POINTER} @var{OFFSET} @var{VALUE}
@@ -762,6 +765,9 @@ mutator: it is stored by the mutators at @var{INDEX} in @var{ARRAY};
 must be a string representing the name of a shell variable: it is used by the accessors to store the
 value extracted at @var{INDEX} from @var{ARRAY}.
 @end table
+
+For all the following builtins: if the operation is successful, the return value is true; otherwise
+the return value is false.
 
 
 @macro MmuxDefineArrayAccessorMutator{STEM,TYPE}

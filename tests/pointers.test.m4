@@ -54,29 +54,60 @@ source "$MMUX_LIBRARY"
 function pointers-pointer-1.1 () {
     declare PTR VALUE
 
-    libc_calloc PTR 1024 1
+    mbfl_location_enter
     {
-	pointer-set-pointer $PTR 0 '0x12'
-	pointer-ref-pointer VALUE $PTR 0
+	if libc_calloc PTR 1024 1
+	then mbfl_location_handler "libc_free $PTR"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! pointer-set-pointer $PTR 0 '0x12'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! pointer-ref-pointer VALUE $PTR 0
+	then mbfl_location_leave_then_return_failure
+	fi
     }
-    libc_free $PTR
+    mbfl_location_leave
     dotest-equal '0x12' QQ(VALUE)
 }
 function pointers-pointer-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    libc_calloc PTR 1024 1
+    mbfl_location_enter
     {
-	pointer-set-pointer $PTR  0 '0x12'
-	pointer-set-pointer $PTR  8 '0x34'
-	pointer-set-pointer $PTR 16 '0x56'
+	if libc_calloc PTR 1024 1
+	then mbfl_location_handler "libc_free $PTR"
+	else mbfl_location_leave_then_return_failure
+	fi
 
-	pointer-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
+	{
+	    if ! pointer-set-pointer $PTR  0 '0x12'
+	    then mbfl_location_leave_then_return_failure
+	    fi
+	    if ! pointer-set-pointer $PTR  8 '0x34'
+	    then mbfl_location_leave_then_return_failure
+	    fi
+	    if ! pointer-set-pointer $PTR 16 '0x56'
+	    then mbfl_location_leave_then_return_failure
+	    fi
+
+	    if pointer-ref-pointer VALUE $PTR 0
+	    then VALUES[0]=$VALUE
+	    else mbfl_location_leave_then_return_failure
+	    fi
+	    if pointer-ref-pointer VALUE $PTR 8
+	    then VALUES[1]=$VALUE
+	    else mbfl_location_leave_then_return_failure
+	    fi
+	    if pointer-ref-pointer VALUE $PTR 16
+	    then VALUES[2]=$VALUE
+	    else mbfl_location_leave_then_return_failure
+	    fi
+	}
     }
-    libc_free $PTR
+    mbfl_location_leave
 
     dotest-equal '0x12' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0x34' mbfl_slot_qref(VALUES,1) &&
@@ -86,17 +117,46 @@ function pointers-pointer-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    libc_calloc PTR 1024 1
+    mbfl_location_enter
     {
-	pointer-set-pointer $PTR  0 '0x12'
-	pointer-set-pointer $PTR  8 '0x34'
-	pointer-set-pointer $PTR 16 '0x56'
-	libc_realloc PTR $PTR 2048
-	pointer-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
+	mbfl_declare_varref(ID)
+
+	if libc_calloc PTR 1024 1
+	then mbfl_location_handler "libc_free $PTR" _(ID)
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! pointer-set-pointer $PTR  0 '0x12'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! pointer-set-pointer $PTR  8 '0x34'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! pointer-set-pointer $PTR 16 '0x56'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if libc_realloc PTR $PTR 2048
+	then
+	    mbfl_location_remove_handler_by_id _(ID)
+	    mbfl_location_handler "libc_free $PTR" _(ID)
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if pointer-ref-pointer VALUE $PTR 0
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if pointer-ref-pointer VALUE $PTR 8
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if pointer-ref-pointer VALUE $PTR 16
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
     }
-    libc_free $PTR
+    mbfl_location_leave
 
     dotest-equal '0x12' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '0x34' mbfl_slot_qref(VALUES,1) &&
