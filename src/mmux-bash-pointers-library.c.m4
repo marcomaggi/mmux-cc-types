@@ -192,7 +192,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_USIZE",		sizeof(size_t));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SSIZE",		sizeof(ssize_t));
 
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_INTMAX",	sizeof(intmax_t));
+    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINTMAX",	sizeof(intmax_t));
+    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINTMAX",	sizeof(uintmax_t));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_INTPTR",	sizeof(intptr_t));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINTPTR",	sizeof(uintptr_t));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_PTRDIFF",	sizeof(ptrdiff_t));

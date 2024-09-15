@@ -128,7 +128,6 @@ src/%.c: src/%.c.m4 $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4
 
 mmux_bashlib_DATA	= src/libmmux-bash-pointers.bash
 mmux_bashlibdir		= $(datadir)/bash
-EXTRA_DIST		+= $(mmux_library_SCRIPTS)
 
 
 #### tests

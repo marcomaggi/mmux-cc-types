@@ -117,6 +117,8 @@ function pointers-pointer-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
+    #dotest-set-debug
+
     mbfl_location_enter
     {
 	mbfl_declare_varref(ID)
@@ -138,8 +140,9 @@ function pointers-pointer-1.3 () {
 
 	if libc_realloc PTR $PTR 2048
 	then
-	    mbfl_location_remove_handler_by_id _(ID)
-	    mbfl_location_handler "libc_free $PTR" _(ID)
+	    dotest-debug removing handler QQ(ID)
+	    mbfl_location_remove_handler_by_id QQ(ID)
+	    mbfl_location_handler "libc_free $PTR"
 	else mbfl_location_leave_then_return_failure
 	fi
 
@@ -1374,15 +1377,30 @@ function pointers-uint64-1.3 () {
 }
 
 
-#### array accessors and mutators: intmax
+#### array accessors and mutators: sintmax
 
-function pointers-intmax-1.1 () {
+function pointers-sintmax-1.1 () {
     declare PTR VALUE
 
     libc_calloc PTR 1024 1
     {
-	pointer-set-intmax $PTR 5 12
-	pointer-ref-intmax VALUE $PTR 5
+	pointer-set-sintmax $PTR 5 12
+	pointer-ref-sintmax VALUE $PTR 5
+    }
+    libc_free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+
+
+#### array accessors and mutators: uintmax
+
+function pointers-uintmax-1.1 () {
+    declare PTR VALUE
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-uintmax $PTR 5 12
+	pointer-ref-uintmax VALUE $PTR 5
     }
     libc_free $PTR
     dotest-equal 12 QQ(VALUE)

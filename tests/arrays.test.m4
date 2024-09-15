@@ -1314,15 +1314,30 @@ function arrays-uint64-1.3 () {
 }
 
 
-#### array accessors and mutators: intmax
+#### array accessors and mutators: sintmax
 
-function arrays-intmax-1.1 () {
+function arrays-sintmax-1.1 () {
     declare PTR VALUE
 
     libc_calloc PTR 1024 1
     {
-	array-set-intmax $PTR 5 12
-	array-ref-intmax VALUE $PTR 5
+	array-set-sintmax $PTR 5 12
+	array-ref-sintmax VALUE $PTR 5
+    }
+    libc_free $PTR
+    dotest-equal 12 QQ(VALUE)
+}
+
+
+#### array accessors and mutators: uintmax
+
+function arrays-uintmax-1.1 () {
+    declare PTR VALUE
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-uintmax $PTR 5 12
+	array-ref-uintmax VALUE $PTR 5
     }
     libc_free $PTR
     dotest-equal 12 QQ(VALUE)

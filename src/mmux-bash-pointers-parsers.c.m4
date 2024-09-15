@@ -444,7 +444,7 @@ parse_complex_parentheses_format (double complex * p_value, const char * s_arg, 
  ** ----------------------------------------------------------------- */
 
 int
-mmux_bash_pointers_parse_intmax (intmax_t * p, char const * s, char const * caller_name)
+mmux_bash_pointers_parse_sintmax (intmax_t * p, char const * s, char const * caller_name)
 {
 #if (HAVE_LONG_LONG_INT)
   if (sizeof(intmax_t) == sizeof(signed long long int)) {
@@ -474,6 +474,46 @@ mmux_bash_pointers_parse_intmax (intmax_t * p, char const * s, char const * call
     rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
     if (EXECUTION_SUCCESS == rv) {
       *p = (intmax_t)value;
+    }
+    return rv;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_uintmax (uintmax_t * p, char const * s, char const * caller_name)
+{
+#if (HAVE_UNSIGNED_LONG_LONG)
+  if (sizeof(uintmax_t) == sizeof(signed long long int)) {
+    signed long long int	value;
+    int				rv;
+
+    rv = mmux_bash_pointers_parse_sllong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uintmax_t)value;
+    }
+    return rv;
+  }
+#endif
+  if (sizeof(uintmax_t) == sizeof(signed long int)) {
+    long int	value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_slong(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uintmax_t)value;
+    }
+    return rv;
+  } else if (sizeof(uintmax_t) == sizeof(signed int)) {
+    int		value;
+    int		rv;
+
+    rv = mmux_bash_pointers_parse_sint(&value, s, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      *p = (uintmax_t)value;
     }
     return rv;
   } else {

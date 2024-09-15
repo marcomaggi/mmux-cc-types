@@ -158,7 +158,7 @@ mmux_bash_pointers_sprint_uint64 (char * strptr, size_t len, uint64_t value)
  ** ----------------------------------------------------------------- */
 
 int
-mmux_bash_pointers_sprint_intmax (char * strptr, size_t len, intmax_t value)
+mmux_bash_pointers_sprint_sintmax (char * strptr, size_t len, intmax_t value)
 {
 #if (HAVE_LONG_LONG_INT)
   if (sizeof(intmax_t) == sizeof(signed long long int)) {
@@ -177,14 +177,33 @@ mmux_bash_pointers_sprint_intmax (char * strptr, size_t len, intmax_t value)
 /* ------------------------------------------------------------------ */
 
 int
-mmux_bash_pointers_sprint_intptr (char * strptr, size_t len, intptr_t value)
+mmux_bash_pointers_sprint_uintmax (char * strptr, size_t len, uintmax_t value)
 {
 #if (HAVE_LONG_LONG_INT)
-  if (sizeof(intmax_t) == sizeof(signed long long int)) {
+  if (sizeof(uintmax_t) == sizeof(signed long long int)) {
     return mmux_bash_pointers_sprint_sllong(strptr, len, (signed long long int)value);
   }
 #endif
-  if (sizeof(intmax_t) == sizeof(signed long int)) {
+  if (sizeof(uintmax_t) == sizeof(signed long int)) {
+    return mmux_bash_pointers_sprint_slong(strptr, len, (signed long int)value);
+  } else if (sizeof(uintmax_t) == sizeof(signed int)) {
+    return mmux_bash_pointers_sprint_sint(strptr, len, (signed int)value);
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_sprint_intptr (char * strptr, size_t len, intptr_t value)
+{
+#if (HAVE_LONG_LONG_INT)
+  if (sizeof(intptr_t) == sizeof(signed long long int)) {
+    return mmux_bash_pointers_sprint_sllong(strptr, len, (signed long long int)value);
+  }
+#endif
+  if (sizeof(intptr_t) == sizeof(signed long int)) {
     return mmux_bash_pointers_sprint_slong(strptr, len, (signed long int)value);
   } else if (sizeof(intmax_t) == sizeof(signed int)) {
     return mmux_bash_pointers_sprint_sint(strptr, len, (signed int)value);
