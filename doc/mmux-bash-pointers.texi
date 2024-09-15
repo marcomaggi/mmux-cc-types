@@ -225,7 +225,7 @@ library, actually implementing the builtins, is installed under @code{$libdir}; 
 @noindent
 the shared library is automatically loaded by the shell library.
 
-A C language header file is also installed under @code{$includedire}, for example:
+A C language header file is also installed under @code{$includedir}, for example:
 
 @center @file{/usr/local/include/libmmux-bash-pointers.h}
 
