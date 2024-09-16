@@ -17,6 +17,11 @@ Revision 0.1.0-devel.1
 
 * Renamed nickname of "intptr_t" from "intptr" to "sintptr".
 
+* The following  standard types are handled  through their corresponding,
+  equivalent,  signed  or  unsigned,   integer  type:  ssize_t,  size_t,
+  intmax_t,  uintmax_t, intptr_t,  uintptr_t,  off_t, pid_t,  ptrdiff_t,
+  mode_t, uid_t, gid_t.
+
 
 Revision 0.1.0-devel.0
 ----------------------
