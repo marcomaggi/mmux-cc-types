@@ -198,7 +198,7 @@ mmux_bash_pointers_sprint_uintmax (char * strptr, size_t len, uintmax_t value)
 /* ------------------------------------------------------------------ */
 
 int
-mmux_bash_pointers_sprint_intptr (char * strptr, size_t len, intptr_t value)
+mmux_bash_pointers_sprint_sintptr (char * strptr, size_t len, intptr_t value)
 {
 #if (HAVE_LONG_LONG_INT)
   if (sizeof(intptr_t) == sizeof(signed long long int)) {

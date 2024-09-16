@@ -327,7 +327,8 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVarSizeof{USIZE, size_t}
 @MmuxDefineGlobalVarSizeof{SINTMAX, intmax_t}
 @MmuxDefineGlobalVarSizeof{UINTMAX, uintmax_t}
-@MmuxDefineGlobalVarSizeof{INTPTR, intptr_t}
+@MmuxDefineGlobalVarSizeof{SINTPTR, intptr_t}
+@MmuxDefineGlobalVarSizeof{UINTPTR, uintptr_t}
 @MmuxDefineGlobalVarSizeof{MODE, mode_t}
 @MmuxDefineGlobalVarSizeof{OFF, off_t}
 @MmuxDefineGlobalVarSizeof{PID, pid_t}
@@ -726,7 +727,8 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineAccessorMutator{usize,size_t}
 @MmuxDefineAccessorMutator{sintmax, intmax_t}
 @MmuxDefineAccessorMutator{uintmax, uintmax_t}
-@MmuxDefineAccessorMutator{intptr, intptr_t}
+@MmuxDefineAccessorMutator{sintptr, intptr_t}
+@MmuxDefineAccessorMutator{uintptr, uintptr_t}
 @MmuxDefineAccessorMutator{mode, mode_t}
 @MmuxDefineAccessorMutator{off, off_t}
 @MmuxDefineAccessorMutator{pid, pid_t}
@@ -814,7 +816,8 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineArrayAccessorMutator{usize,size_t}
 @MmuxDefineArrayAccessorMutator{sintmax, intmax_t}
 @MmuxDefineArrayAccessorMutator{uintmax, uintmax_t}
-@MmuxDefineArrayAccessorMutator{intptr, intptr_t}
+@MmuxDefineArrayAccessorMutator{sintptr, intptr_t}
+@MmuxDefineArrayAccessorMutator{uintptr, uintptr_t}
 @MmuxDefineArrayAccessorMutator{mode, mode_t}
 @MmuxDefineArrayAccessorMutator{off, off_t}
 @MmuxDefineArrayAccessorMutator{pid, pid_t}
@@ -1130,7 +1133,8 @@ requested the parsing operation, for example: the name of a builtin.
 @MmuxDefineCFunctionParser{usize,size_t}
 @MmuxDefineCFunctionParser{sintmax, intmax_t}
 @MmuxDefineCFunctionParser{uintmax, uintmax_t}
-@MmuxDefineCFunctionParser{intptr, intptr_t}
+@MmuxDefineCFunctionParser{sintptr, intptr_t}
+@MmuxDefineCFunctionParser{uintptr, uintptr_t}
 @MmuxDefineCFunctionParser{mode, mode_t}
 @MmuxDefineCFunctionParser{off, off_t}
 @MmuxDefineCFunctionParser{pid, pid_t}
@@ -1183,7 +1187,8 @@ When successful return @code{EXECUTION_SUCCESS}; otherwise leave @var{STRPTR} un
 @MmuxDefineCFunctionSprinter{usize,size_t}
 @MmuxDefineCFunctionSprinter{sintmax, intmax_t}
 @MmuxDefineCFunctionSprinter{uintmax, uintmax_t}
-@MmuxDefineCFunctionSprinter{intptr, intptr_t}
+@MmuxDefineCFunctionSprinter{sintptr, intptr_t}
+@MmuxDefineCFunctionSprinter{uintptr, uintptr_t}
 @MmuxDefineCFunctionSprinter{mode, mode_t}
 @MmuxDefineCFunctionSprinter{off, off_t}
 @MmuxDefineCFunctionSprinter{pid, pid_t}

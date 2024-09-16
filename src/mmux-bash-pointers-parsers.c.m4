@@ -526,7 +526,7 @@ mmux_bash_pointers_parse_uintmax (uintmax_t * p, char const * s, char const * ca
 /* ------------------------------------------------------------------ */
 
 int
-mmux_bash_pointers_parse_intptr (intptr_t * p, char const * s, char const * caller_name)
+mmux_bash_pointers_parse_sintptr (intptr_t * p, char const * s, char const * caller_name)
 {
 #if (HAVE_LONG_LONG_INT)
   if (sizeof(intptr_t) == sizeof(signed long long int)) {

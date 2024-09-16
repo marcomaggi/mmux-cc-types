@@ -107,6 +107,59 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
+ ** Type definitions.
+ ** ----------------------------------------------------------------- */
+
+/* These definitions can be useful when expanding macros. */
+typedef void *				mmux_libc_pointer_t;
+typedef signed char			mmux_libc_schar_t;
+typedef unsigned char			mmux_libc_uchar_t;
+typedef signed short int		mmux_libc_sshort_t;
+typedef unsigned short int		mmux_libc_ushort_t;
+typedef signed int			mmux_libc_sint_t;
+typedef unsigned int			mmux_libc_uint_t;
+typedef signed long			mmux_libc_slong_t;
+typedef unsigned long			mmux_libc_ulong_t;
+
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+typedef signed long long		mmux_libc_sllong_t;
+#endif
+#if ((defined HAVE_UNSIGNED_LONG_LONG) && (1 == HAVE_UNSIGNED_LONG_LONG))
+typedef unsigned long long		mmux_libc_ullong_t;
+#endif
+
+typedef int8_t				mmux_libc_sint8_t;
+typedef uint8_t				mmux_libc_uint8_t;
+typedef int16_t				mmux_libc_sint16_t;
+typedef uint16_t			mmux_libc_uint16_t;
+typedef int32_t				mmux_libc_sint32_t;
+typedef uint32_t			mmux_libc_uint32_t;
+typedef int64_t				mmux_libc_sint64_t;
+typedef uint64_t			mmux_libc_uint64_t;
+
+typedef float				mmux_libc_float_t;
+typedef double				mmux_libc_double_t;
+#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
+typedef long double			mmux_libc_ldouble_t;
+#endif
+typedef double complex			mmux_libc_complex_t;
+
+typedef ssize_t				mmux_libc_ssize_t;
+typedef size_t				mmux_libc_usize_t;
+typedef intmax_t			mmux_libc_sintmax_t;
+typedef uintmax_t			mmux_libc_uintmax_t;
+typedef intptr_t			mmux_libc_sintptr_t;
+typedef uintptr_t			mmux_libc_uintptr_t;
+
+typedef ptrdiff_t			mmux_libc_ptrdiff_t;
+typedef mode_t				mmux_libc_mode_t;
+typedef off_t				mmux_libc_off_t;
+typedef pid_t				mmux_libc_pid_t;
+typedef uid_t				mmux_libc_uid_t;
+typedef gid_t				mmux_libc_gid_t;
+
+
+/** --------------------------------------------------------------------
  ** Type string parsers.
  ** ----------------------------------------------------------------- */
 
@@ -151,7 +204,7 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_ssize   (ssize_t  * p, char
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_sintmax(intmax_t  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uintmax(uintmax_t * p, char const * s, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_intptr (intptr_t  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sintptr(intptr_t  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uintptr(uintptr_t * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_ptrdiff(ptrdiff_t * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_mode    (mode_t   * p, char const * s, char const * caller_name);

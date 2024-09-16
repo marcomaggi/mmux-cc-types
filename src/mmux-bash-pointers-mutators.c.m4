@@ -102,7 +102,7 @@ MMUX_BASH_DEFINE_POINTER_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[sintmax]]],		[[[intmax_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[uintmax]]],		[[[uintmax_t]]],		[[[1]]])
-MMUX_BASH_DEFINE_POINTER_MUTATOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_POINTER_MUTATOR([[[sintptr]]],		[[[intptr_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[uintptr]]],		[[[uintptr_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[ptrdiff]]],		[[[ptrdiff_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
@@ -181,7 +181,7 @@ MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[sintmax]]],		[[[intmax_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[uintmax]]],		[[[uintmax_t]]],		[[[1]]])
-MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[sintptr]]],		[[[intptr_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[uintptr]]],		[[[uintptr_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[ptrdiff]]],		[[[ptrdiff_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
@@ -189,6 +189,5 @@ MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[off]]],		[[[off_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
-
 
 /* end of file */

@@ -36,12 +36,12 @@ mmux_bash_pointers_pointer_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
 #define MMUX_BUILTIN_NAME	"pointer-ref-$1"
 {
 #if ($3)
-  void *	ptr;
-  uint8_t *	ptr_byte;
-  $2 *		ptr_value;
-  size_t	offset;
-  $2		value;
-  int		rv;
+  void *		ptr;
+  uint8_t *		ptr_byte;
+  mmux_libc_$1_t *	ptr_value;
+  size_t		offset;
+  mmux_libc_$1_t	value;
+  int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
@@ -116,7 +116,7 @@ MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[ssize]]],		[[[ssize_t]]],			[[[1]]])
 
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[sintmax]]],	[[[intmax_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[uintmax]]],	[[[uintmax_t]]],		[[[1]]])
-MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[intptr]]],		[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[sintptr]]],	[[[intptr_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[mode]]],		[[[mode_t]]],			[[[1]]])
@@ -209,7 +209,7 @@ MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[ssize]]],	[[[ssize_t]]],			[[[1]]])
 
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[sintmax]]],	[[[intmax_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[uintmax]]],	[[[uintmax_t]]],		[[[1]]])
-MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[intptr]]],	[[[intptr_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[sintptr]]],	[[[intptr_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[uintptr]]],	[[[uintptr_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[ptrdiff]]],	[[[ptrdiff_t]]],		[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[mode]]],	[[[mode_t]]],			[[[1]]])

@@ -1454,15 +1454,15 @@ function arrays-uintmax-1.1 () {
 }
 
 
-#### array accessors and mutators: intptr
+#### array accessors and mutators: sintptr
 
-function arrays-intptr-1.1 () {
+function arrays-sintptr-1.1 () {
     declare PTR VALUE
 
     libc_calloc PTR 1024 1
     {
-	array-set-intptr $PTR 5 12
-	array-ref-intptr VALUE $PTR 5
+	array-set-sintptr $PTR 5 12
+	array-ref-sintptr VALUE $PTR 5
     }
     libc_free $PTR
     dotest-equal 12 QQ(VALUE)
