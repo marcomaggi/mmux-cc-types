@@ -118,6 +118,8 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_pointer (void **  p_data, c
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_schar   (signed   char * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uchar   (unsigned char * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_sshort  (signed   short int  * p, char const * s, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_ushort  (unsigned short int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_sint    (signed   int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_uint    (unsigned int  * p, char const * s, char const * caller_name);
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_slong   (signed   long * p, char const * s, char const * caller_name);
@@ -171,6 +173,8 @@ mmux_bash_pointers_decl int mmux_bash_pointers_sprint_pointer (char * strptr, si
 
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_schar   (char * strptr, size_t len, signed   char value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uchar   (char * strptr, size_t len, unsigned char value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sshort  (char * strptr, size_t len, signed   short value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ushort  (char * strptr, size_t len, unsigned short value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_sint    (char * strptr, size_t len, signed   int  value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_uint    (char * strptr, size_t len, unsigned int  value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_slong   (char * strptr, size_t len, signed   long value);

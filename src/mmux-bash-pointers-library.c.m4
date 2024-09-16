@@ -164,6 +164,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
 
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SCHAR",		sizeof(signed char));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UCHAR",		sizeof(unsigned char));
+    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SSHORT",	sizeof(signed short int));
+    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_USHORT",	sizeof(unsigned short int));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINT",		sizeof(signed int));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT",		sizeof(unsigned int));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SLONG",		sizeof(signed long));

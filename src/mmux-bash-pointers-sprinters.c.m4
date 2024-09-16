@@ -48,6 +48,8 @@ MMUX_BASH_POINTERS_DEFINE_SPRINT([[[pointer]]],		[[[void *]]],			[[["%p"]]],   [
 
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[[signed char]]],		[[["%d"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uchar]]],		[[[unsigned char]]],		[[["%u"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sshort]]],		[[[signed short int]]],		[[["%hd"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ushort]]],		[[[unsigned short int]]],	[[["%hu"]]],  [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sint]]],		[[[signed int]]],		[[["%d"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uint]]],		[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[slong]]],		[[[signed long]]],		[[["%ld"]]],  [[[1]]])

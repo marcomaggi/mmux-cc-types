@@ -303,6 +303,8 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVarSizeof{UCHAR, unsigned char}
 @MmuxDefineGlobalVarSizeof{SINT, signed int}
 @MmuxDefineGlobalVarSizeof{UINT, unsigned int}
+@MmuxDefineGlobalVarSizeof{SSHORT, signed short int}
+@MmuxDefineGlobalVarSizeof{USHORT, unsigned short int}
 @MmuxDefineGlobalVarSizeof{SLONG, signed long int}
 @MmuxDefineGlobalVarSizeof{ULONG, unsigned long int}
 @MmuxDefineGlobalVarSizeof{SLLONG, signed long long int}
@@ -700,6 +702,8 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 @MmuxDefineAccessorMutator{uchar,unsigned char}
 @MmuxDefineAccessorMutator{sint,signed int}
 @MmuxDefineAccessorMutator{uint,unsigned int}
+@MmuxDefineAccessorMutator{sshort,signed short int}
+@MmuxDefineAccessorMutator{ushort,unsigned short int}
 @MmuxDefineAccessorMutator{slong,signed long}
 @MmuxDefineAccessorMutator{ulong,unsigned long}
 @MmuxDefineAccessorMutator{sllong,signed long long}
@@ -784,6 +788,8 @@ Accessor and mutator for memory blocks operating on the C language type @code{\T
 
 @MmuxDefineArrayAccessorMutator{schar,signed char}
 @MmuxDefineArrayAccessorMutator{uchar,unsigned char}
+@MmuxDefineArrayAccessorMutator{sshort,signed short int}
+@MmuxDefineArrayAccessorMutator{ushort,unsigned short int}
 @MmuxDefineArrayAccessorMutator{sint,signed int}
 @MmuxDefineArrayAccessorMutator{uint,unsigned int}
 @MmuxDefineArrayAccessorMutator{slong,signed long}
@@ -1098,6 +1104,8 @@ requested the parsing operation, for example: the name of a builtin.
 
 @MmuxDefineCFunctionParser{schar,signed char}
 @MmuxDefineCFunctionParser{uchar,unsigned char}
+@MmuxDefineCFunctionParser{sshort,signed short int}
+@MmuxDefineCFunctionParser{ushort,unsigned short int}
 @MmuxDefineCFunctionParser{sint,signed int}
 @MmuxDefineCFunctionParser{uint,unsigned int}
 @MmuxDefineCFunctionParser{slong,signed long}
@@ -1149,6 +1157,8 @@ When successful return @code{EXECUTION_SUCCESS}; otherwise leave @var{STRPTR} un
 
 @MmuxDefineCFunctionSprinter{schar,signed char}
 @MmuxDefineCFunctionSprinter{uchar,unsigned char}
+@MmuxDefineCFunctionSprinter{sshort,signed short int}
+@MmuxDefineCFunctionSprinter{ushort,unsigned short int}
 @MmuxDefineCFunctionSprinter{sint,signed int}
 @MmuxDefineCFunctionSprinter{uint,unsigned int}
 @MmuxDefineCFunctionSprinter{slong,signed long}

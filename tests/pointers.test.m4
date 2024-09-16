@@ -277,6 +277,116 @@ function pointers-uchar-1.3 () {
 }
 
 
+#### array accessors and mutators: sshort
+
+function pointers-sshort-1.1 () {
+    declare PTR VALUE
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-sshort $PTR 0 123
+	pointer-ref-sshort VALUE $PTR 0
+    }
+    libc_free $PTR
+    dotest-equal 123 QQ(VALUE)
+}
+function pointers-sshort-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-sshort $PTR  0 123
+	pointer-set-sshort $PTR  8 456
+	pointer-set-sshort $PTR 16 789
+
+	pointer-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sshort VALUE $PTR 16	;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+function pointers-sshort-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-sshort $PTR  0 123
+	pointer-set-sshort $PTR  8 456
+	pointer-set-sshort $PTR 16 789
+	libc_realloc PTR $PTR 2048
+	pointer-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-sshort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: ushort
+
+function pointers-ushort-1.1 () {
+    declare PTR VALUE
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-ushort $PTR 0 123
+	pointer-ref-ushort VALUE $PTR 0
+    }
+    libc_free $PTR
+    dotest-equal 123 QQ(VALUE)
+}
+function pointers-ushort-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-ushort $PTR  0 123
+	pointer-set-ushort $PTR  8 456
+	pointer-set-ushort $PTR 16 789
+
+	pointer-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+function pointers-ushort-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	pointer-set-ushort $PTR  0 123
+	pointer-set-ushort $PTR  8 456
+	pointer-set-ushort $PTR 16 789
+	libc_realloc PTR $PTR 2048
+	pointer-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
+	pointer-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
+	pointer-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+
+
 #### array accessors and mutators: sint
 
 function pointers-sint-1.1 () {

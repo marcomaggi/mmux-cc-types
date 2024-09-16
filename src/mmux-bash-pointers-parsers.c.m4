@@ -64,6 +64,8 @@ mmux_bash_pointers_parse_$1 ($2 * p_data, char const * s_arg, char const * calle
 ]]])
 
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[pointer]]],	[[[void *]]],			[[["%p"]]],   [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[sshort]]],	[[[signed short int]]],		[[["%hd"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_PARSER([[[ushort]]],	[[[unsigned short int]]],	[[["%hu"]]],  [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[sint]]],	[[[signed int]]],		[[["%d"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[uint]]],	[[[unsigned int]]],		[[["%u"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_PARSER([[[slong]]],	[[[signed long]]],		[[["%ld"]]],  [[[1]]])

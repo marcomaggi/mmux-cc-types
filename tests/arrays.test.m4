@@ -214,6 +214,116 @@ function arrays-uchar-1.3 () {
 }
 
 
+#### array accessors and mutators: sshort
+
+function arrays-sshort-1.1 () {
+    declare PTR VALUE
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-sshort $PTR 0 123
+	array-ref-sshort VALUE $PTR 0
+    }
+    libc_free $PTR
+    dotest-equal 123 QQ(VALUE)
+}
+function arrays-sshort-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-sshort $PTR  0 123
+	array-set-sshort $PTR  8 456
+	array-set-sshort $PTR 16 789
+
+	array-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
+	array-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
+	array-ref-sshort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+function arrays-sshort-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-sshort $PTR  0 123
+	array-set-sshort $PTR  8 456
+	array-set-sshort $PTR 16 789
+	libc_realloc PTR $PTR 2048
+	array-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
+	array-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
+	array-ref-sshort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: ushort
+
+function arrays-ushort-1.1 () {
+    declare PTR VALUE
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-ushort $PTR 0 123
+	array-ref-ushort VALUE $PTR 0
+    }
+    libc_free $PTR
+    dotest-equal 123 QQ(VALUE)
+}
+function arrays-ushort-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-ushort $PTR  0 123
+	array-set-ushort $PTR  8 456
+	array-set-ushort $PTR 16 789
+
+	array-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
+	array-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
+	array-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+function arrays-ushort-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    libc_calloc PTR 1024 1
+    {
+	array-set-ushort $PTR  0 123
+	array-set-ushort $PTR  8 456
+	array-set-ushort $PTR 16 789
+	libc_realloc PTR $PTR 2048
+	array-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
+	array-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
+	array-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    libc_free $PTR
+
+    dotest-equal 123 mbfl_slot_qref(VALUES,0) &&
+	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
+	dotest-equal 789 mbfl_slot_qref(VALUES,2)
+}
+
+
 #### array accessors and mutators: sint
 
 function arrays-sint-1.1 () {
