@@ -55,7 +55,7 @@ AM_PROG_AS
 AM_PROG_CC_C_O
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([assert.h stdint.h strings.h errno.h stddef.h math.h])
+AC_CHECK_HEADERS([assert.h stdint.h inttypes.h strings.h errno.h stddef.h unistd.h math.h complex.h])
 
 AC_PATH_PROG([M4_PROGRAM],[m4])
 AC_PATH_PROG([BASH_PROGRAM],[/bin/bash],[/bin/bash],[:])
@@ -109,14 +109,45 @@ AC_FUNC_MEMCMP
 AC_CACHE_SAVE
 
 
-#### inspecting
+#### includes for tests
+
+m4_define([MMUX_INCLUDES_FOR_TESTS],[
+AC_INCLUDES_DEFAULT
+#ifdef HAVE_COMPLEX_H
+#  include <complex.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#  include <errno.h>
+#endif
+#ifdef HAVE_INTTYPES_H
+#  include <inttypes.h>
+#endif
+#ifdef HAVE_MATH_H
+#  include <math.h>
+#endif
+#ifdef HAVE_STDDEF_H
+#  include <stddef.h>
+#endif
+#ifdef HAVE_STDINT_H
+#  include <stdint.h>
+#endif
+#ifdef HAVE_STRINGS_H
+#  include <strings.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
+])
+
+
+#### inspecting errno constants
 
 AC_DEFUN([MMUX_VALUEOF_TEST],
   [AC_CACHE_CHECK([the value of '$2'],
      [mmux_cv_valueof_$1],
      [AC_COMPUTE_INT([mmux_cv_valueof_$1],
         [$2],
-        [#include <errno.h>],
+        [MMUX_INCLUDES_FOR_TESTS],
         [AS_VAR_SET([mmux_cv_valueof_$1],[no])])])
     if test "x$mmux_cv_valueof_$1" = "xno"
     then AS_VAR_SET([MMUX_HAVE_$1],[0])
@@ -125,140 +156,163 @@ AC_DEFUN([MMUX_VALUEOF_TEST],
     AC_DEFINE_UNQUOTED([MMUX_HAVE_$1],[$MMUX_HAVE_$1],[The value $1 of errno is defined.])])
 
 AC_DEFUN([MMUX_ERRNO_TEST],[MMUX_VALUEOF_TEST([$1],[$1])])
+AC_DEFUN([MMUX_ERRNO_TESTS],[m4_map_args_w($1,[MMUX_ERRNO_TEST(],[)])])
 
-MMUX_ERRNO_TEST([EPERM])
-MMUX_ERRNO_TEST([ENOENT])
-MMUX_ERRNO_TEST([ESRCH])
-MMUX_ERRNO_TEST([EINTR])
-MMUX_ERRNO_TEST([EIO])
-MMUX_ERRNO_TEST([ENXIO])
-MMUX_ERRNO_TEST([E2BIG])
-MMUX_ERRNO_TEST([ENOEXEC])
-MMUX_ERRNO_TEST([EBADF])
-MMUX_ERRNO_TEST([ECHILD])
-MMUX_ERRNO_TEST([EAGAIN])
-MMUX_ERRNO_TEST([ENOMEM])
-MMUX_ERRNO_TEST([EACCES])
-MMUX_ERRNO_TEST([EFAULT])
-MMUX_ERRNO_TEST([ENOTBLK])
-MMUX_ERRNO_TEST([EBUSY])
-MMUX_ERRNO_TEST([EEXIST])
-MMUX_ERRNO_TEST([EXDEV])
-MMUX_ERRNO_TEST([ENODEV])
-MMUX_ERRNO_TEST([ENOTDIR])
-MMUX_ERRNO_TEST([EISDIR])
-MMUX_ERRNO_TEST([EINVAL])
-MMUX_ERRNO_TEST([ENFILE])
-MMUX_ERRNO_TEST([EMFILE])
-MMUX_ERRNO_TEST([ENOTTY])
-MMUX_ERRNO_TEST([ETXTBSY])
-MMUX_ERRNO_TEST([EFBIG])
-MMUX_ERRNO_TEST([ENOSPC])
-MMUX_ERRNO_TEST([ESPIPE])
-MMUX_ERRNO_TEST([EROFS])
-MMUX_ERRNO_TEST([EMLINK])
-MMUX_ERRNO_TEST([EPIPE])
-MMUX_ERRNO_TEST([EDOM])
-MMUX_ERRNO_TEST([ERANGE])
-MMUX_ERRNO_TEST([EDEADLK])
-MMUX_ERRNO_TEST([ENAMETOOLONG])
-MMUX_ERRNO_TEST([ENOLCK])
-MMUX_ERRNO_TEST([ENOSYS])
-MMUX_ERRNO_TEST([ENOTEMPTY])
-MMUX_ERRNO_TEST([ELOOP])
-MMUX_ERRNO_TEST([EWOULDBLOCK])
-MMUX_ERRNO_TEST([ENOMSG])
-MMUX_ERRNO_TEST([EIDRM])
-MMUX_ERRNO_TEST([ECHRNG])
-MMUX_ERRNO_TEST([EL2NSYNC])
-MMUX_ERRNO_TEST([EL3HLT])
-MMUX_ERRNO_TEST([EL3RST])
-MMUX_ERRNO_TEST([ELNRNG])
-MMUX_ERRNO_TEST([EUNATCH])
-MMUX_ERRNO_TEST([ENOCSI])
-MMUX_ERRNO_TEST([EL2HLT])
-MMUX_ERRNO_TEST([EBADE])
-MMUX_ERRNO_TEST([EBADR])
-MMUX_ERRNO_TEST([EXFULL])
-MMUX_ERRNO_TEST([ENOANO])
-MMUX_ERRNO_TEST([EBADRQC])
-MMUX_ERRNO_TEST([EBADSLT])
-MMUX_ERRNO_TEST([EDEADLOCK])
-MMUX_ERRNO_TEST([EBFONT])
-MMUX_ERRNO_TEST([ENOSTR])
-MMUX_ERRNO_TEST([ENODATA])
-MMUX_ERRNO_TEST([ETIME])
-MMUX_ERRNO_TEST([ENOSR])
-MMUX_ERRNO_TEST([ENONET])
-MMUX_ERRNO_TEST([ENOPKG])
-MMUX_ERRNO_TEST([EREMOTE])
-MMUX_ERRNO_TEST([ENOLINK])
-MMUX_ERRNO_TEST([EADV])
-MMUX_ERRNO_TEST([ESRMNT])
-MMUX_ERRNO_TEST([ECOMM])
-MMUX_ERRNO_TEST([EPROTO])
-MMUX_ERRNO_TEST([EMULTIHOP])
-MMUX_ERRNO_TEST([EDOTDOT])
-MMUX_ERRNO_TEST([EBADMSG])
-MMUX_ERRNO_TEST([EOVERFLOW])
-MMUX_ERRNO_TEST([ENOTUNIQ])
-MMUX_ERRNO_TEST([EBADFD])
-MMUX_ERRNO_TEST([EREMCHG])
-MMUX_ERRNO_TEST([ELIBACC])
-MMUX_ERRNO_TEST([ELIBBAD])
-MMUX_ERRNO_TEST([ELIBSCN])
-MMUX_ERRNO_TEST([ELIBMAX])
-MMUX_ERRNO_TEST([ELIBEXEC])
-MMUX_ERRNO_TEST([EILSEQ])
-MMUX_ERRNO_TEST([ERESTART])
-MMUX_ERRNO_TEST([ESTRPIPE])
-MMUX_ERRNO_TEST([EUSERS])
-MMUX_ERRNO_TEST([ENOTSOCK])
-MMUX_ERRNO_TEST([EDESTADDRREQ])
-MMUX_ERRNO_TEST([EMSGSIZE])
-MMUX_ERRNO_TEST([EPROTOTYPE])
-MMUX_ERRNO_TEST([ENOPROTOOPT])
-MMUX_ERRNO_TEST([EPROTONOSUPPORT])
-MMUX_ERRNO_TEST([ESOCKTNOSUPPORT])
-MMUX_ERRNO_TEST([EOPNOTSUPP])
-MMUX_ERRNO_TEST([EPFNOSUPPORT])
-MMUX_ERRNO_TEST([EAFNOSUPPORT])
-MMUX_ERRNO_TEST([EADDRINUSE])
-MMUX_ERRNO_TEST([EADDRNOTAVAIL])
-MMUX_ERRNO_TEST([ENETDOWN])
-MMUX_ERRNO_TEST([ENETUNREACH])
-MMUX_ERRNO_TEST([ENETRESET])
-MMUX_ERRNO_TEST([ECONNABORTED])
-MMUX_ERRNO_TEST([ECONNRESET])
-MMUX_ERRNO_TEST([ENOBUFS])
-MMUX_ERRNO_TEST([EISCONN])
-MMUX_ERRNO_TEST([ENOTCONN])
-MMUX_ERRNO_TEST([ESHUTDOWN])
-MMUX_ERRNO_TEST([ETOOMANYREFS])
-MMUX_ERRNO_TEST([ETIMEDOUT])
-MMUX_ERRNO_TEST([ECONNREFUSED])
-MMUX_ERRNO_TEST([EHOSTDOWN])
-MMUX_ERRNO_TEST([EHOSTUNREACH])
-MMUX_ERRNO_TEST([EALREADY])
-MMUX_ERRNO_TEST([EINPROGRESS])
-MMUX_ERRNO_TEST([ESTALE])
-MMUX_ERRNO_TEST([EUCLEAN])
-MMUX_ERRNO_TEST([ENOTNAM])
-MMUX_ERRNO_TEST([ENAVAIL])
-MMUX_ERRNO_TEST([EISNAM])
-MMUX_ERRNO_TEST([EREMOTEIO])
-MMUX_ERRNO_TEST([EDQUOT])
-MMUX_ERRNO_TEST([ENOMEDIUM])
-MMUX_ERRNO_TEST([EMEDIUMTYPE])
-MMUX_ERRNO_TEST([ECANCELED])
-MMUX_ERRNO_TEST([ENOKEY])
-MMUX_ERRNO_TEST([EKEYEXPIRED])
-MMUX_ERRNO_TEST([EKEYREVOKED])
-MMUX_ERRNO_TEST([EKEYREJECTED])
-MMUX_ERRNO_TEST([EOWNERDEAD])
-MMUX_ERRNO_TEST([ENOTRECOVERABLE])
+MMUX_ERRNO_TESTS([EPERM ENOENT ESRCH EINTR EIO ENXIO E2BIG ENOEXEC EBADF ECHILD EAGAIN ENOMEM
+                  EACCES EFAULT ENOTBLK EBUSY EEXIST EXDEV ENODEV ENOTDIR EISDIR EINVAL ENFILE
+                  EMFILE ENOTTY ETXTBSY EFBIG ENOSPC ESPIPE EROFS EMLINK EPIPE EDOM ERANGE EDEADLK
+                  ENAMETOOLONG ENOLCK ENOSYS ENOTEMPTY ELOOP EWOULDBLOCK ENOMSG EIDRM ECHRNG
+                  EL2NSYNC EL3HLT EL3RST ELNRNG EUNATCH ENOCSI EL2HLT EBADE EBADR EXFULL ENOANO
+                  EBADRQC EBADSLT EDEADLOCK EBFONT ENOSTR ENODATA ETIME ENOSR ENONET ENOPKG EREMOTE
+                  ENOLINK EADV ESRMNT ECOMM EPROTO EMULTIHOP EDOTDOT EBADMSG EOVERFLOW ENOTUNIQ EBADFD
+                  EREMCHG ELIBACC ELIBBAD ELIBSCN ELIBMAX ELIBEXEC EILSEQ ERESTART ESTRPIPE EUSERS ENOTSOCK
+                  EDESTADDRREQ EMSGSIZE EPROTOTYPE ENOPROTOOPT EPROTONOSUPPORT ESOCKTNOSUPPORT EOPNOTSUPP
+                  EPFNOSUPPORT EAFNOSUPPORT EADDRINUSE EADDRNOTAVAIL ENETDOWN ENETUNREACH ENETRESET
+                  ECONNABORTED ECONNRESET ENOBUFS EISCONN ENOTCONN ESHUTDOWN ETOOMANYREFS ETIMEDOUT
+                  ECONNREFUSED EHOSTDOWN EHOSTUNREACH EALREADY EINPROGRESS ESTALE EUCLEAN ENOTNAM
+                  ENAVAIL EISNAM EREMOTEIO EDQUOT ENOMEDIUM EMEDIUMTYPE ECANCELED ENOKEY
+                  EKEYEXPIRED EKEYREVOKED EKEYREJECTED EOWNERDEAD ENOTRECOVERABLE])
 
 AC_CACHE_SAVE
+
+
+#### inspecting standard types
+
+AC_CHECK_SIZEOF([void *])
+AC_SUBST([MMUX_LIBC_SIZEOF_POINTER],[$ac_cv_sizeof_void_p])
+
+dnl --------------------------------------------------------------------
+
+AC_DEFUN([MMUX_SIZEOF_STANDARD_TYPE],
+  [AC_CHECK_SIZEOF([$2],,[MMUX_INCLUDES_FOR_TESTS])
+   AC_SUBST([MMUX_LIBC_SIZEOF_$1],[$[]ac_cv_sizeof_$3])])
+
+MMUX_SIZEOF_STANDARD_TYPE([SCHAR],      [signed char],                  [signed_char])
+MMUX_SIZEOF_STANDARD_TYPE([UCHAR],      [unsigned char],                [unsigned_char])
+MMUX_SIZEOF_STANDARD_TYPE([SSHORT],     [signed short int],             [signed_short_int])
+MMUX_SIZEOF_STANDARD_TYPE([USHORT],     [unsigned short int],           [unsigned_short_int])
+MMUX_SIZEOF_STANDARD_TYPE([SINT],       [signed int],                   [signed_int])
+MMUX_SIZEOF_STANDARD_TYPE([UINT],       [unsigned int],                 [unsigned_int])
+MMUX_SIZEOF_STANDARD_TYPE([SLONG],      [signed long int],              [signed_long_int])
+MMUX_SIZEOF_STANDARD_TYPE([ULONG],      [unsigned long int],            [unsigned_long_int])
+MMUX_SIZEOF_STANDARD_TYPE([SLLONG],     [signed long long int],         [signed_long_long_int])
+MMUX_SIZEOF_STANDARD_TYPE([ULLONG],     [unsigned long long int],       [unsigned_long_long_int])
+
+MMUX_SIZEOF_STANDARD_TYPE([FLOAT],      [float],                        [float])
+MMUX_SIZEOF_STANDARD_TYPE([DOUBLE],     [double],                       [double])
+MMUX_SIZEOF_STANDARD_TYPE([LDOUBLE],    [long double],                  [long_double])
+MMUX_SIZEOF_STANDARD_TYPE([COMPLEX],    [double complex],               [double_complex])
+
+dnl We know these, but for uniformity...
+MMUX_SIZEOF_STANDARD_TYPE([SINT8],      [int8_t],                       [int8_t])
+MMUX_SIZEOF_STANDARD_TYPE([UINT8],      [uint8_t],                      [uint8_t])
+MMUX_SIZEOF_STANDARD_TYPE([SINT16],     [int16_t],                      [int16_t])
+MMUX_SIZEOF_STANDARD_TYPE([UINT16],     [uint16_t],                     [uint16_t])
+MMUX_SIZEOF_STANDARD_TYPE([SINT32],     [int32_t],                      [int32_t])
+MMUX_SIZEOF_STANDARD_TYPE([UINT32],     [uint32_t],                     [uint32_t])
+MMUX_SIZEOF_STANDARD_TYPE([SINT64],     [int64_t],                      [int64_t])
+MMUX_SIZEOF_STANDARD_TYPE([UINT64],     [uint64_t],                     [uint64_t])
+
+MMUX_SIZEOF_STANDARD_TYPE([SSIZE],      [ssize_t],                      [ssize_t])
+MMUX_SIZEOF_STANDARD_TYPE([USIZE],      [size_t],                       [size_t])
+MMUX_SIZEOF_STANDARD_TYPE([SINTMAX],    [intmax_t],                     [intmax_t])
+MMUX_SIZEOF_STANDARD_TYPE([UINTMAX],    [uintmax_t],                    [uintmax_t])
+MMUX_SIZEOF_STANDARD_TYPE([SINTPTR],    [intptr_t],                     [intptr_t])
+MMUX_SIZEOF_STANDARD_TYPE([UINTPTR],    [uintptr_t],                    [uintptr_t])
+
+MMUX_SIZEOF_STANDARD_TYPE([PTRDIFF],    [ptrdiff_t],                    [ptrdiff_t])
+MMUX_SIZEOF_STANDARD_TYPE([MODE],       [mode_t],                       [mode_t])
+MMUX_SIZEOF_STANDARD_TYPE([OFF],        [off_t],                        [off_t])
+MMUX_SIZEOF_STANDARD_TYPE([UID],        [uid_t],                        [uid_t])
+MMUX_SIZEOF_STANDARD_TYPE([PID],        [pid_t],                        [pid_t])
+MMUX_SIZEOF_STANDARD_TYPE([GID],        [gid_t],                        [gid_t])
+
+
+#### type aliasest
+
+AC_DEFUN([MMUX_TYPE_ALIAS_SIGNED_TEST],
+  [AC_CACHE_CHECK([the type alias of the exact signed integer '$2' (size=$ac_cv_sizeof_$2)],
+     [mmux_cv_type_alias_$1],
+     [AS_CASE([$ac_cv_sizeof_$2],
+       [$ac_cv_sizeof_signed_char],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_schar_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_schar])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_schar])],
+
+       [$ac_cv_sizeof_signed_short_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_sshort_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_sshort])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_sshort])],
+
+       [$ac_cv_sizeof_signed_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_sint_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_sint])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_sint])],
+
+       [$ac_cv_sizeof_signed_long_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_slong_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_slong])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_slong])],
+
+       [$ac_cv_sizeof_signed_long_long_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_sllong_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_sllong])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_sllong])],
+
+       [AS_VAR_SET([mmux_cv_type_alias_$1],[mmux_libc_void_t])])])
+   AC_SUBST([MMUX_TYPE_ALIAS_$1],       [$mmux_cv_type_alias_$1])
+   AC_SUBST([MMUX_TYPE_PARSE_$1],       [$mmux_cv_type_parse_$1])
+   AC_SUBST([MMUX_TYPE_SPRINT_$1],      [$mmux_cv_type_sprint_$1])])
+
+AC_DEFUN([MMUX_TYPE_ALIAS_UNSIGNED_TEST],
+  [AC_CACHE_CHECK([the type alias of the exact unsigned integer '$2' (size=$ac_cv_sizeof_$2)],
+     [mmux_cv_type_alias_$1],
+     [AS_CASE([$ac_cv_sizeof_$2],
+       [$ac_cv_sizeof_unsigned_char],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_uchar_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_uchar])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_uchar])],
+
+       [$ac_cv_sizeof_unsigned_short_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_ushort_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_uint])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_uint])],
+
+       [$ac_cv_sizeof_unsigned_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_uint_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_uint])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_uint])],
+
+       [$ac_cv_sizeof_unsigned_long_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_ulong_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_ulong])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_ulong])],
+
+       [$ac_cv_sizeof_unsigned_long_long_int],
+       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_ullong_t])
+        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_ullong])
+        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_ullong])],
+
+       [AS_VAR_SET([mmux_cv_type_alias_$1],[mmux_libc_void_t])])])
+   AC_SUBST([MMUX_TYPE_ALIAS_$1],       [$mmux_cv_type_alias_$1])
+   AC_SUBST([MMUX_TYPE_PARSE_$1],       [$mmux_cv_type_parse_$1])
+   AC_SUBST([MMUX_TYPE_SPRINT_$1],      [$mmux_cv_type_sprint_$1])])
+
+dnl --------------------------------------------------------------------
+
+MMUX_TYPE_ALIAS_SIGNED_TEST([SSIZE],        [ssize_t])
+MMUX_TYPE_ALIAS_SIGNED_TEST([SINTMAX],      [intmax_t])
+MMUX_TYPE_ALIAS_SIGNED_TEST([SINTPTR],      [intptr_t])
+MMUX_TYPE_ALIAS_SIGNED_TEST([OFF],          [off_t])
+MMUX_TYPE_ALIAS_SIGNED_TEST([PID],          [pid_t])
+MMUX_TYPE_ALIAS_SIGNED_TEST([PTRDIFF],      [ptrdiff_t])
+
+MMUX_TYPE_ALIAS_UNSIGNED_TEST([USIZE],      [size_t])
+MMUX_TYPE_ALIAS_UNSIGNED_TEST([UINTMAX],    [uintmax_t])
+MMUX_TYPE_ALIAS_UNSIGNED_TEST([UINTPTR],    [uintptr_t])
+MMUX_TYPE_ALIAS_UNSIGNED_TEST([MODE],       [mode_t])
+MMUX_TYPE_ALIAS_UNSIGNED_TEST([UID],        [uid_t])
+MMUX_TYPE_ALIAS_UNSIGNED_TEST([GID],        [gid_t])
 
 
 #### external libraries
@@ -277,6 +331,9 @@ AC_CACHE_SAVE
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
+  [src/mmux-bash-pointers.h]
+  [src/mmux-bash-pointers-parsers.c.m4]
+  [src/mmux-bash-pointers-sprinters.c.m4]
   [src/libmmux-bash-pointers.bash]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])

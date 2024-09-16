@@ -39,14 +39,14 @@ mmux_bash_pointers_pointer_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
   void *		ptr;
   uint8_t *		ptr_byte;
   mmux_libc_$1_t *	ptr_value;
-  size_t		offset;
+  ptrdiff_t		offset;
   mmux_libc_$1_t	value;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_offset(&offset, argv[3], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_ptrdiff(&offset, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   ptr_byte  = ptr;
@@ -135,14 +135,14 @@ mmux_bash_pointers_array_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UN
 #if ($3)
   void *	ptr;
   $2 *		ptr_value;
-  size_t	index;
+  ptrdiff_t	index;
   $2		value;
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_offset(&index, argv[3], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_ptrdiff(&index, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   ptr_value = ($2 *)ptr;

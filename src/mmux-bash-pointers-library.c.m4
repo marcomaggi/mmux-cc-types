@@ -170,15 +170,15 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT",		sizeof(unsigned int));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SLONG",		sizeof(signed long));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_ULONG",		sizeof(unsigned long));
-#if (HAVE_LONG_LONG_INT)
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SLLONG",	sizeof(signed long long));
 #endif
-#if (HAVE_UNSIGNED_LONG_LONG_INT)
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_ULLONG",	sizeof(unsigned long long));
 #endif
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_FLOAT",		sizeof(float));
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_DOUBLE",	sizeof(double));
-#if (HAVE_LONG_DOUBLE)
+#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
     mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_LDOUBLE",	sizeof(long double));
 #endif
 

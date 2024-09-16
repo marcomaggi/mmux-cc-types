@@ -103,7 +103,7 @@ mmux_bash_pointers_LINKER_VERSION	= \
 include_HEADERS				= src/mmux-bash-pointers.h
 
 lib_LTLIBRARIES				= libmmux-bash-pointers.la
-libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS)
+libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
 libmmux_bash_pointers_la_SOURCES	=	\
@@ -123,6 +123,8 @@ library: libmmux-bash-pointers.la
 
 src/%.c: src/%.c.m4 $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4
 	$(M4_PROGRAM) --prefix-builtins $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4 $< >$@
+
+src/%.$(OBJEXT): src/mmux-bash-pointers.h
 
 ## ------------------------------------------------------------------------
 

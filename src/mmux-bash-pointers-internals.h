@@ -34,6 +34,8 @@
 #  include <config.h>
 #endif
 
+#include <mmux-bash-pointers.h>
+
 /* Enable everything GNU. */
 #define _GNU_SOURCE		1
 
@@ -54,11 +56,10 @@
 /* We  really need  to pay  attention to  the order  in which  we include  the files,
    otherwise errors will ensue. */
 #include "bashtypes.h"
+#include "bashjmp.h"
 #include "builtins.h"
 #include "shell.h"
 #include "common.h"
-
-#include <mmux-bash-pointers.h>
 
 
 /** --------------------------------------------------------------------

@@ -39,14 +39,14 @@ mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
   void *	ptr;
   uint8_t *	ptr_byte;
   $2 *		ptr_value;
-  size_t	offset;
+  ptrdiff_t	offset;
   $2		value;
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_offset(&offset, argv[2], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_ptrdiff(&offset, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_pointers_parse_$1(&value, argv[3], MMUX_BUILTIN_NAME);
@@ -121,14 +121,14 @@ mmux_bash_pointers_array_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UN
 #if ($3)
   void *	ptr;
   $2 *		ptr_value;
-  size_t	index;
+  ptrdiff_t	index;
   $2		value;
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_pointers_parse_offset(&index, argv[2], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_ptrdiff(&index, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_pointers_parse_$1(&value, argv[3], MMUX_BUILTIN_NAME);
