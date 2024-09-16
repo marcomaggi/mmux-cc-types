@@ -77,22 +77,26 @@ install-html-local:
 #### libraries
 
 EXTRA_DIST	+= \
-	src/mmux-bash-pointers-library.c.m4	\
-	src/mmux-bash-pointers-sprinters.c.m4	\
-	src/mmux-bash-pointers-parsers.c.m4	\
-	src/mmux-bash-pointers-memory.c.m4	\
-	src/mmux-bash-pointers-errors.c.m4	\
 	src/mmux-bash-pointers-accessors.c.m4	\
-	src/mmux-bash-pointers-mutators.c.m4
+	src/mmux-bash-pointers-errors.c.m4	\
+	src/mmux-bash-pointers-library.c.m4	\
+	src/mmux-bash-pointers-memory.c.m4	\
+	src/mmux-bash-pointers-mutators.c.m4	\
+	src/mmux-bash-pointers-parsers.c.m4	\
+	src/mmux-bash-pointers-sprinters.c.m4
 
-CLEANFILES	+=
-	src/mmux-bash-pointers-library.c	\
-	src/mmux-bash-pointers-sprinters.c	\
-	src/mmux-bash-pointers-parsers.c	\
-	src/mmux-bash-pointers-memory.c		\
-	src/mmux-bash-pointers-errors.c		\
+MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-accessors.c	\
-	src/mmux-bash-pointers-mutators.c
+	src/mmux-bash-pointers-errors.c		\
+	src/mmux-bash-pointers-library.c	\
+	src/mmux-bash-pointers-memory.c		\
+	src/mmux-bash-pointers-mutators.c	\
+	src/mmux-bash-pointers-parsers.c	\
+	src/mmux-bash-pointers-sprinters.c
+
+BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
+CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
+DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 
 mmux_bash_pointers_CURRENT		= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
 mmux_bash_pointers_REVISION		= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@
