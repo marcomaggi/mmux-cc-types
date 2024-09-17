@@ -43,15 +43,85 @@
 #undef _POSIX_C_SOURCE
 #define _POSIX_C_SOURCE		200809L
 
-#include <errno.h>
-#include <math.h>
-#include <regex.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/* ------------------------------------------------------------------ */
 
+#ifdef HAVE_INTTYPES_H
+#  include <inttypes.h>
+#endif
+
+#ifdef HAVE_STDINT_H
+#  include <stdint.h>
+#endif
+
+#ifdef HAVE_STDIO_H
+#  include <stdio.h>
+#endif
+
+#ifdef HAVE_STDLIB_H
+#  include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#  include <string.h>
+#endif
+
+#ifdef HAVE_STRINGS_H
+#  include <strings.h>
+#endif
+
+#ifdef HAVE_SYS_STAT_H
+#  include <sys/stat.h>
+#endif
+
+#ifdef HAVE_SYS_TYPES_H
+#  include <sys/types.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef HAVE_ASSERT_H
+#  include <assert.h>
+#endif
+
+#ifdef HAVE_COMPLEX_H
+#  include <complex.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#  include <errno.h>
+#endif
+
+#ifdef HAVE_FLOAT_H
+#  include <float.h>
+#endif
+
+#ifdef HAVE_LIMITS_H
+#  include <limits.h>
+#endif
+
+#ifdef HAVE_MATH_H
+#  include <math.h>
+#endif
+
+#ifdef HAVE_STDBOOL_H
+#  include <stdbool.h>
+#endif
+
+#ifdef HAVE_WCHAR_H
+#  include <wchar.h>
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef HAVE_REGEX_H
+#  include <regex.h>
+#endif
+
+/* ------------------------------------------------------------------ */
 
 /* We  really need  to pay  attention to  the order  in which  we include  the files,
    otherwise errors will ensue. */

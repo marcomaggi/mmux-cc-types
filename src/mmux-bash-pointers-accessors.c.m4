@@ -124,6 +124,8 @@ MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[off]]],		[[[off_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[wchar]]],		[[[wchar_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[wint]]],		[[[wint_t]]],			[[[1]]])
 
 
 m4_define([[[MMUX_BASH_DEFINE_ARRAY_ACCESSOR]]],[[[
@@ -217,5 +219,7 @@ MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[off]]],	[[[off_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[pid]]],	[[[pid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[uid]]],	[[[uid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[gid]]],	[[[gid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[wchar]]],	[[[wchar_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ARRAY_ACCESSOR([[[wint]]],	[[[wint_t]]],			[[[1]]])
 
 /* end of file */

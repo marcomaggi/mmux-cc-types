@@ -94,9 +94,10 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
- ** Constants and preprocessor macros.
+ ** Constants and preprocessor macros: type sizes measured in bytes.
  ** ----------------------------------------------------------------- */
 
+/*
 #undef  MMUX_LIBC_SIZEOF_POINTER
 #define MMUX_LIBC_SIZEOF_POINTER		@MMUX_LIBC_SIZEOF_POINTER@
 #undef  MMUX_LIBC_SIZEOF_SCHAR
@@ -178,6 +179,141 @@ extern "C" {
 #define MMUX_LIBC_SIZEOF_UID			@MMUX_LIBC_SIZEOF_UID@
 #undef  MMUX_LIBC_SIZEOF_GID
 #define MMUX_LIBC_SIZEOF_GID			@MMUX_LIBC_SIZEOF_GID@
+#undef  MMUX_LIBC_SIZEOF_WCHAR
+#define MMUX_LIBC_SIZEOF_WCHAR			@MMUX_LIBC_SIZEOF_WCHAR@
+#undef  MMUX_LIBC_SIZEOF_WINT
+#define MMUX_LIBC_SIZEOF_WINT			@MMUX_LIBC_SIZEOF_WINT@
+*/
+
+
+/** --------------------------------------------------------------------
+ ** Constants and preprocessor macros: type maximum values.
+ ** ----------------------------------------------------------------- */
+
+/*
+#undef  MMUX_BASH_TYPE_MAX_POINTER
+#define MMUX_BASH_TYPE_MAX_POINTER			@MMUX_BASH_TYPE_MAX_UINTPTR@
+#undef  MMUX_BASH_TYPE_MAX_SCHAR
+#define MMUX_BASH_TYPE_MAX_SCHAR			@MMUX_BASH_TYPE_MAX_SCHAR@
+#undef  MMUX_BASH_TYPE_MAX_UCHAR
+#define MMUX_BASH_TYPE_MAX_UCHAR			@MMUX_BASH_TYPE_MAX_UCHAR@
+#undef  MMUX_BASH_TYPE_MAX_SSHORT
+#define MMUX_BASH_TYPE_MAX_SSHORT			@MMUX_BASH_TYPE_MAX_SSHORT@
+#undef  MMUX_BASH_TYPE_MAX_USHORT
+#define MMUX_BASH_TYPE_MAX_USHORT			@MMUX_BASH_TYPE_MAX_USHORT@
+#undef  MMUX_BASH_TYPE_MAX_SINT
+#define MMUX_BASH_TYPE_MAX_SINT			@MMUX_BASH_TYPE_MAX_SINT@
+#undef  MMUX_BASH_TYPE_MAX_UINT
+#define MMUX_BASH_TYPE_MAX_UINT			@MMUX_BASH_TYPE_MAX_UINT@
+#undef  MMUX_BASH_TYPE_MAX_SLONG
+#define MMUX_BASH_TYPE_MAX_SLONG			@MMUX_BASH_TYPE_MAX_SLONG@
+#undef  MMUX_BASH_TYPE_MAX_ULONG
+#define MMUX_BASH_TYPE_MAX_ULONG			@MMUX_BASH_TYPE_MAX_ULONG@
+
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+#undef  MMUX_BASH_TYPE_MAX_SLLONG
+#define MMUX_BASH_TYPE_MAX_SLLONG			@MMUX_BASH_TYPE_MAX_SLLONG@
+#endif
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
+#undef  MMUX_BASH_TYPE_MAX_ULLONG
+#define MMUX_BASH_TYPE_MAX_ULLONG			@MMUX_BASH_TYPE_MAX_ULLONG@
+#endif
+
+#undef  MMUX_BASH_TYPE_MAX_SSIZE
+#define MMUX_BASH_TYPE_MAX_SSIZE			@MMUX_BASH_TYPE_MAX_SSIZE@
+#undef  MMUX_BASH_TYPE_MAX_USIZE
+#define MMUX_BASH_TYPE_MAX_USIZE			@MMUX_BASH_TYPE_MAX_USIZE@
+#undef  MMUX_BASH_TYPE_MAX_SINTMAX
+#define MMUX_BASH_TYPE_MAX_SINTMAX			@MMUX_BASH_TYPE_MAX_SINTMAX@
+#undef  MMUX_BASH_TYPE_MAX_UINTMAX
+#define MMUX_BASH_TYPE_MAX_UINTMAX			@MMUX_BASH_TYPE_MAX_UINTMAX@
+#undef  MMUX_BASH_TYPE_MAX_SINTPTR
+#define MMUX_BASH_TYPE_MAX_SINTPTR			@MMUX_BASH_TYPE_MAX_SINTPTR@
+#undef  MMUX_BASH_TYPE_MAX_UINTPTR
+#define MMUX_BASH_TYPE_MAX_UINTPTR			@MMUX_BASH_TYPE_MAX_UINTPTR@
+
+#undef  MMUX_BASH_TYPE_MAX_PTRDIFF
+#define MMUX_BASH_TYPE_MAX_PTRDIFF			@MMUX_BASH_TYPE_MAX_PTRDIFF@
+#undef  MMUX_BASH_TYPE_MAX_MODE
+#define MMUX_BASH_TYPE_MAX_MODE			@MMUX_BASH_TYPE_MAX_MODE@
+#undef  MMUX_BASH_TYPE_MAX_OFF
+#define MMUX_BASH_TYPE_MAX_OFF			@MMUX_BASH_TYPE_MAX_OFF@
+#undef  MMUX_BASH_TYPE_MAX_PID
+#define MMUX_BASH_TYPE_MAX_PID			@MMUX_BASH_TYPE_MAX_PID@
+#undef  MMUX_BASH_TYPE_MAX_UID
+#define MMUX_BASH_TYPE_MAX_UID			@MMUX_BASH_TYPE_MAX_UID@
+#undef  MMUX_BASH_TYPE_MAX_GID
+#define MMUX_BASH_TYPE_MAX_GID			@MMUX_BASH_TYPE_MAX_GID@
+#undef  MMUX_BASH_TYPE_MAX_WCHAR
+#define MMUX_BASH_TYPE_MAX_WCHAR			@MMUX_BASH_TYPE_MAX_WCHAR@
+#undef  MMUX_BASH_TYPE_MAX_WINT
+#define MMUX_BASH_TYPE_MAX_WINT			@MMUX_BASH_TYPE_MAX_WINT@
+*/
+
+
+/** --------------------------------------------------------------------
+ ** Constants and preprocessor macros: type maximum values.
+ ** ----------------------------------------------------------------- */
+
+/*
+#undef  MMUX_LIBC_MIN_POINTER
+#define MMUX_BASH_TYPE_MIN_POINTER			@MMUX_BASH_TYPE_MIN_UINTPTR@
+#undef  MMUX_BASH_TYPE_MIN_SCHAR
+#define MMUX_BASH_TYPE_MIN_SCHAR			@MMUX_BASH_TYPE_MIN_SCHAR@
+#undef  MMUX_BASH_TYPE_MIN_UCHAR
+#define MMUX_BASH_TYPE_MIN_UCHAR			@MMUX_BASH_TYPE_MIN_UCHAR@
+#undef  MMUX_BASH_TYPE_MIN_SSHORT
+#define MMUX_BASH_TYPE_MIN_SSHORT			@MMUX_BASH_TYPE_MIN_SSHORT@
+#undef  MMUX_BASH_TYPE_MIN_USHORT
+#define MMUX_BASH_TYPE_MIN_USHORT			@MMUX_BASH_TYPE_MIN_USHORT@
+#undef  MMUX_BASH_TYPE_MIN_SINT
+#define MMUX_BASH_TYPE_MIN_SINT			@MMUX_BASH_TYPE_MIN_SINT@
+#undef  MMUX_BASH_TYPE_MIN_UINT
+#define MMUX_BASH_TYPE_MIN_UINT			@MMUX_BASH_TYPE_MIN_UINT@
+#undef  MMUX_BASH_TYPE_MIN_SLONG
+#define MMUX_BASH_TYPE_MIN_SLONG			@MMUX_BASH_TYPE_MIN_SLONG@
+#undef  MMUX_BASH_TYPE_MIN_ULONG
+#define MMUX_BASH_TYPE_MIN_ULONG			@MMUX_BASH_TYPE_MIN_ULONG@
+
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+#undef  MMUX_BASH_TYPE_MIN_SLLONG
+#define MMUX_BASH_TYPE_MIN_SLLONG			@MMUX_BASH_TYPE_MIN_SLLONG@
+#endif
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
+#undef  MMUX_BASH_TYPE_MIN_ULLONG
+#define MMUX_BASH_TYPE_MIN_ULLONG			@MMUX_BASH_TYPE_MIN_ULLONG@
+#endif
+
+#undef  MMUX_BASH_TYPE_MIN_SSIZE
+#define MMUX_BASH_TYPE_MIN_SSIZE			@MMUX_BASH_TYPE_MIN_SSIZE@
+#undef  MMUX_BASH_TYPE_MIN_USIZE
+#define MMUX_BASH_TYPE_MIN_USIZE			@MMUX_BASH_TYPE_MIN_USIZE@
+#undef  MMUX_BASH_TYPE_MIN_SINTMAX
+#define MMUX_BASH_TYPE_MIN_SINTMAX			@MMUX_BASH_TYPE_MIN_SINTMAX@
+#undef  MMUX_BASH_TYPE_MIN_UINTMAX
+#define MMUX_BASH_TYPE_MIN_UINTMAX			@MMUX_BASH_TYPE_MIN_UINTMAX@
+#undef  MMUX_BASH_TYPE_MIN_SINTPTR
+#define MMUX_BASH_TYPE_MIN_SINTPTR			@MMUX_BASH_TYPE_MIN_SINTPTR@
+#undef  MMUX_BASH_TYPE_MIN_UINTPTR
+#define MMUX_BASH_TYPE_MIN_UINTPTR			@MMUX_BASH_TYPE_MIN_UINTPTR@
+
+#undef  MMUX_BASH_TYPE_MIN_PTRDIFF
+#define MMUX_BASH_TYPE_MIN_PTRDIFF			@MMUX_BASH_TYPE_MIN_PTRDIFF@
+#undef  MMUX_BASH_TYPE_MIN_MODE
+#define MMUX_BASH_TYPE_MIN_MODE			@MMUX_BASH_TYPE_MIN_MODE@
+#undef  MMUX_BASH_TYPE_MIN_OFF
+#define MMUX_BASH_TYPE_MIN_OFF			@MMUX_BASH_TYPE_MIN_OFF@
+#undef  MMUX_BASH_TYPE_MIN_PID
+#define MMUX_BASH_TYPE_MIN_PID			@MMUX_BASH_TYPE_MIN_PID@
+#undef  MMUX_BASH_TYPE_MIN_UID
+#define MMUX_BASH_TYPE_MIN_UID			@MMUX_BASH_TYPE_MIN_UID@
+#undef  MMUX_BASH_TYPE_MIN_GID
+#define MMUX_BASH_TYPE_MIN_GID			@MMUX_BASH_TYPE_MIN_GID@
+#undef  MMUX_BASH_TYPE_MIN_WCHAR
+#define MMUX_BASH_TYPE_MIN_WCHAR			@MMUX_BASH_TYPE_MIN_WCHAR@
+#undef  MMUX_BASH_TYPE_MIN_WINT
+#define MMUX_BASH_TYPE_MIN_WINT			@MMUX_BASH_TYPE_MIN_WINT@
+*/
 
 
 /** --------------------------------------------------------------------
@@ -228,19 +364,21 @@ typedef long double			mmux_libc_ldouble_t;
 #endif
 typedef double complex			mmux_libc_complex_t;
 
-typedef @MMUX_TYPE_ALIAS_SSIZE@		mmux_libc_ssize_t;
-typedef @MMUX_TYPE_ALIAS_USIZE@		mmux_libc_usize_t;
-typedef @MMUX_TYPE_ALIAS_SINTMAX@	mmux_libc_sintmax_t;
-typedef @MMUX_TYPE_ALIAS_UINTMAX@	mmux_libc_uintmax_t;
-typedef @MMUX_TYPE_ALIAS_SINTPTR@	mmux_libc_sintptr_t;
-typedef @MMUX_TYPE_ALIAS_UINTPTR@	mmux_libc_uintptr_t;
+typedef @MMUX_BASH_TYPE_ALIAS_SSIZE@		mmux_libc_ssize_t;
+typedef @MMUX_BASH_TYPE_ALIAS_USIZE@		mmux_libc_usize_t;
+typedef @MMUX_BASH_TYPE_ALIAS_SINTMAX@	mmux_libc_sintmax_t;
+typedef @MMUX_BASH_TYPE_ALIAS_UINTMAX@	mmux_libc_uintmax_t;
+typedef @MMUX_BASH_TYPE_ALIAS_SINTPTR@	mmux_libc_sintptr_t;
+typedef @MMUX_BASH_TYPE_ALIAS_UINTPTR@	mmux_libc_uintptr_t;
 
-typedef @MMUX_TYPE_ALIAS_PTRDIFF@	mmux_libc_ptrdiff_t;
-typedef @MMUX_TYPE_ALIAS_MODE@		mmux_libc_mode_t;
-typedef @MMUX_TYPE_ALIAS_OFF@		mmux_libc_off_t;
-typedef @MMUX_TYPE_ALIAS_PID@		mmux_libc_pid_t;
-typedef @MMUX_TYPE_ALIAS_UID@		mmux_libc_uid_t;
-typedef @MMUX_TYPE_ALIAS_GID@		mmux_libc_gid_t;
+typedef @MMUX_BASH_TYPE_ALIAS_PTRDIFF@	mmux_libc_ptrdiff_t;
+typedef @MMUX_BASH_TYPE_ALIAS_MODE@		mmux_libc_mode_t;
+typedef @MMUX_BASH_TYPE_ALIAS_OFF@		mmux_libc_off_t;
+typedef @MMUX_BASH_TYPE_ALIAS_PID@		mmux_libc_pid_t;
+typedef @MMUX_BASH_TYPE_ALIAS_UID@		mmux_libc_uid_t;
+typedef @MMUX_BASH_TYPE_ALIAS_GID@		mmux_libc_gid_t;
+typedef @MMUX_BASH_TYPE_ALIAS_WCHAR@		mmux_libc_wchar_t;
+typedef @MMUX_BASH_TYPE_ALIAS_WINT@		mmux_libc_wint_t;
 
 
 /** --------------------------------------------------------------------
@@ -296,6 +434,8 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_PARSER(off);
 MMUX_BASH_POINTERS_DEFINE_TYPE_PARSER(pid);
 MMUX_BASH_POINTERS_DEFINE_TYPE_PARSER(uid);
 MMUX_BASH_POINTERS_DEFINE_TYPE_PARSER(gid);
+MMUX_BASH_POINTERS_DEFINE_TYPE_PARSER(wchar);
+MMUX_BASH_POINTERS_DEFINE_TYPE_PARSER(wint);
 
 
 /** --------------------------------------------------------------------
@@ -351,6 +491,8 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_SPRINTER(off);
 MMUX_BASH_POINTERS_DEFINE_TYPE_SPRINTER(pid);
 MMUX_BASH_POINTERS_DEFINE_TYPE_SPRINTER(uid);
 MMUX_BASH_POINTERS_DEFINE_TYPE_SPRINTER(gid);
+MMUX_BASH_POINTERS_DEFINE_TYPE_SPRINTER(wchar);
+MMUX_BASH_POINTERS_DEFINE_TYPE_SPRINTER(wint);
 
 
 /** --------------------------------------------------------------------

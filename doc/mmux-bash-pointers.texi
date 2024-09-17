@@ -247,6 +247,7 @@ underlying C language platform.
 @menu
 * variables version::           Version variables.
 * variables sizeof::            C language type sizes.
+* variables limits::            C language type maximum and minimum values.
 * variables errno::             Value of @code{errno}.
 @end menu
 
@@ -334,6 +335,74 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVarSizeof{PID, pid_t}
 @MmuxDefineGlobalVarSizeof{UID, uid_t}
 @MmuxDefineGlobalVarSizeof{GID, gid_t}
+@MmuxDefineGlobalVarSizeof{WCHAR, wchar_t}
+@MmuxDefineGlobalVarSizeof{WINT, wint_t}
+
+@c page
+@node variables limits
+@section C language type maximum and minimum values
+
+
+If a C language type referenced by one of the following variables is undefined: the corresponding
+Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
+underlying platform implements the type @code{long long}, we can do:
+
+@example
+if test -v libc_MAX_SLLONG
+then # implemented
+else # not implemented
+fi
+@end example
+
+Notice that the C language type @objtype{double complex} has no maximum or minimum limit.
+
+@macro MmuxDefineGlobalVarLimits{NAME,TYPE}
+@defvar libc_MAX_\NAME\
+@defvarx libc_MIN_\NAME\
+Global variables holding the maximum and minimum values of the C language type @code{\TYPE\}.
+@end defvar
+
+@end macro
+
+@MmuxDefineGlobalVarLimits{POINTER,void *}
+
+@MmuxDefineGlobalVarLimits{SCHAR, signed char}
+@MmuxDefineGlobalVarLimits{UCHAR, unsigned char}
+@MmuxDefineGlobalVarLimits{SINT, signed int}
+@MmuxDefineGlobalVarLimits{UINT, unsigned int}
+@MmuxDefineGlobalVarLimits{SSHORT, signed short int}
+@MmuxDefineGlobalVarLimits{USHORT, unsigned short int}
+@MmuxDefineGlobalVarLimits{SLONG, signed long int}
+@MmuxDefineGlobalVarLimits{ULONG, unsigned long int}
+@MmuxDefineGlobalVarLimits{SLLONG, signed long long int}
+@MmuxDefineGlobalVarLimits{ULLONG, unsigned long long int}
+@MmuxDefineGlobalVarLimits{FLOAT, float}
+@MmuxDefineGlobalVarLimits{DOUBLE, double}
+@MmuxDefineGlobalVarLimits{LDOUBLE, long double}
+@c @MmuxDefineGlobalVarLimits{COMPLEX, double complex}
+
+@MmuxDefineGlobalVarLimits{SINT8, int8_t}
+@MmuxDefineGlobalVarLimits{UINT8, uint8_t}
+@MmuxDefineGlobalVarLimits{SINT16, int16_t}
+@MmuxDefineGlobalVarLimits{UINT16, uint16_t}
+@MmuxDefineGlobalVarLimits{SINT32, int32_t}
+@MmuxDefineGlobalVarLimits{UINT32, uint32_t}
+@MmuxDefineGlobalVarLimits{SINT64, int64_t}
+@MmuxDefineGlobalVarLimits{UINT64, uint64_t}
+
+@MmuxDefineGlobalVarLimits{SSIZE, ssize_t}
+@MmuxDefineGlobalVarLimits{USIZE, size_t}
+@MmuxDefineGlobalVarLimits{SINTMAX, intmax_t}
+@MmuxDefineGlobalVarLimits{UINTMAX, uintmax_t}
+@MmuxDefineGlobalVarLimits{SINTPTR, intptr_t}
+@MmuxDefineGlobalVarLimits{UINTPTR, uintptr_t}
+@MmuxDefineGlobalVarLimits{MODE, mode_t}
+@MmuxDefineGlobalVarLimits{OFF, off_t}
+@MmuxDefineGlobalVarLimits{PID, pid_t}
+@MmuxDefineGlobalVarLimits{UID, uid_t}
+@MmuxDefineGlobalVarLimits{GID, gid_t}
+@MmuxDefineGlobalVarLimits{WCHAR, wchar_t}
+@MmuxDefineGlobalVarLimits{WINT, wint_t}
 
 @c page
 @node variables errno
@@ -1140,6 +1209,8 @@ requested the parsing operation, for example: the name of a builtin.
 @MmuxDefineCFunctionParser{pid, pid_t}
 @MmuxDefineCFunctionParser{uid, uid_t}
 @MmuxDefineCFunctionParser{gid, gid_t}
+@MmuxDefineCFunctionParser{wchar, wchar_t}
+@MmuxDefineCFunctionParser{wint, wint_t}
 
 @c page
 @node shared library sprinters
@@ -1194,6 +1265,8 @@ When successful return @code{EXECUTION_SUCCESS}; otherwise leave @var{STRPTR} un
 @MmuxDefineCFunctionSprinter{pid, pid_t}
 @MmuxDefineCFunctionSprinter{uid, uid_t}
 @MmuxDefineCFunctionSprinter{gid, gid_t}
+@MmuxDefineCFunctionSprinter{wchar, wchar_t}
+@MmuxDefineCFunctionSprinter{wint, wint_t}
 
 @c page
 @node references

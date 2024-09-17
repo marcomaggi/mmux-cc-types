@@ -154,7 +154,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/arrays.test			\
 	tests/conversion.test
 
-if MMUX_TESTING_ENABLED
+if MMUX_BASH_TESTING_ENABLED
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)
 endif
 check_SCRIPTS		= $(MMUX_CHECK_BUILT_TESTS)

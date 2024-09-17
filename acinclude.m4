@@ -20,5 +20,6 @@ m4_include(meta/autoconf/mmux-lang-c11.m4)
 m4_include(meta/autoconf/mmux-c-headers-includes.m4)
 
 m4_include(meta/autoconf/mbfl.m4)
+m4_include(meta/autoconf/mmux-bash-extensions-macros.m4)
 
 ### end of file

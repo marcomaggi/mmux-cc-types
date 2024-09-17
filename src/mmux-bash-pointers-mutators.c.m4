@@ -110,6 +110,8 @@ MMUX_BASH_DEFINE_POINTER_MUTATOR([[[off]]],		[[[off_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_POINTER_MUTATOR([[[wchar]]],		[[[wchar_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_POINTER_MUTATOR([[[wint]]],		[[[wint_t]]],			[[[1]]])
 
 
 m4_define([[[MMUX_BASH_DEFINE_ARRAY_MUTATOR]]],[[[
@@ -189,5 +191,7 @@ MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[off]]],		[[[off_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[pid]]],		[[[pid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[uid]]],		[[[uid_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[gid]]],		[[[gid_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[wchar]]],		[[[wchar_t]]],			[[[1]]])
+MMUX_BASH_DEFINE_ARRAY_MUTATOR([[[wint]]],		[[[wint_t]]],			[[[1]]])
 
 /* end of file */
