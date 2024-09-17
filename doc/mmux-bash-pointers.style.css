@@ -35,8 +35,9 @@ samp {
     font-size: large;
 }
 
-ACRONYM {
-    font-variant: small-caps;
+abbr.acronym {
+    font-variant-caps: small-caps;
+    font-size: larger;
 }
 
 /* end of file */

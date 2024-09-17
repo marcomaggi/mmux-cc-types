@@ -37,6 +37,10 @@
 
 @c ------------------------------------------------------------
 
+@set MmuxRequiredMbflVersion            v3.0.0-devel.10
+
+@c ------------------------------------------------------------
+
 @set PackageAutoconfPrefix              MMUX_BASH_POINTERS
 @set PackagePkgconfigModule             mmux-bash-pointers
 @set PackageLibsVar                     @env{MMUX_BASH_POINTERS_LIBS}
@@ -68,6 +72,17 @@
 @end macro
 @end ifnotinfo
 
+@ifinfo
+@macro mmux{}
+@acronym{MMUX}
+@end macro
+@end ifinfo
+@ifnotinfo
+@macro mmux{}
+@acronym{mmux}
+@end macro
+@end ifnotinfo
+
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
@@ -79,22 +94,11 @@ This  document  describes  version  @value{VERSION}   of  @value{PACKAGE},  a  p
 additional builtin commands for the @gnu{} Bash shell; to do so it installs a C language library and
 a shell script  which is meant to  be sourced in a Bash  session or script.
 
-This package makes raw memory pointers available in shell scripts:
-
-@example
-declare PTR VALUE
-
-libc_malloc PTR 1024
-@{
-  pointer-set-sint $PTR 0 123
-  pointer-ref-sint VALUE $PTR 0
-@}
-libc_free $PTR
-$VALUE  @result{} 123
-@end example
+This package makes raw memory pointers available in shell scripts; it also interfaces some basic
+functions from the C language @posix{} standard library.
 
 The package targets @posix{} platforms.  Only for testing: this package depends on the external
-package @acronym{MBFL} (at least version @samp{v3.0.0-devel.9}).
+package @mbfl{} (at least version @samp{@value{MmuxRequiredMbflVersion}}).
 
 This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
 
@@ -190,6 +194,8 @@ a shell script which is meant to be sourced in a Bash session or script.
 This package makes raw memory pointers available in shell scripts:
 
 @example
+source /usr/local/share/bash/libmmux-bash-pointers.bash
+
 declare PTR VALUE
 
 libc_malloc PTR 1024
