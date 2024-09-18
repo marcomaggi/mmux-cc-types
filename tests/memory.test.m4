@@ -76,16 +76,30 @@ function memory-1.3 () {
     fi
 }
 function memory-1.4 () {
-    declare PTR ERRNO SYM
+    declare PTR ERRNO SYM MSG
+    declare EXPECTED_SYM='EINVAL' EXPECTED_MSG='malloc: error: invalid argument, expected "ulong": "ciao"'
 
-    if libc_malloc PTR 'ciao'
-    then
-	libc_free $PTR
-	return_failure
-    else
-	mmux-bash-pointers-errno-to-string SYM QQ(ERRNO)
-	dotest-equal 'EINVAL' QQ(SYM)
-    fi
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	mbfl_location_handler_restore_lastpipe
+        shopt -s lastpipe
+
+	{
+	    libc_malloc PTR 'ciao' 2>&1
+	    printf '%s\n' QQ(ERRNO)
+	} | {
+	    read MSG
+	    read ERRNO
+	    dotest-debug MSG=QQ(MSG)
+	    dotest-debug ERRNO=QQ(ERRNO)
+	    mmux-bash-pointers-errno-to-string SYM QQ(ERRNO)
+	    dotest-equal QQ(EXPECTED_SYM) QQ(SYM) &&
+		dotest-equal QQ(EXPECTED_MSG) QQ(MSG)
+	}
+    }
+    mbfl_location_leave
 }
 
 
