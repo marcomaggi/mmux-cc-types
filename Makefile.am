@@ -2,7 +2,7 @@
 
 ACLOCAL_AMFLAGS		= -I meta/autotools
 AUTOMAKE_OPTIONS	= foreign
-EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in \
+EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in
 EXTRA_DIST		+= meta/m4/libmmux-bash-builtins.m4 src/mmux-bash-pointers-config.m4.in
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
