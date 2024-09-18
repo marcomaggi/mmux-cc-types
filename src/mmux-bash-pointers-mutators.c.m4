@@ -29,6 +29,10 @@
 #include "mmux-bash-pointers-internals.h"
 
 
+/** --------------------------------------------------------------------
+ ** Type accessors: pointers to C standard types.
+ ** ----------------------------------------------------------------- */
+
 m4_define([[[MMUX_BASH_DEFINE_POINTER_MUTATOR]]],[[[
 static int
 mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
@@ -114,6 +118,10 @@ MMUX_BASH_DEFINE_POINTER_MUTATOR([[[wchar]]],		[[[wchar_t]]],			[[[1]]])
 MMUX_BASH_DEFINE_POINTER_MUTATOR([[[wint]]],		[[[wint_t]]],			[[[1]]])
 
 
+/** --------------------------------------------------------------------
+ ** Type accessors: pointers to arrays of C standard types.
+ ** ----------------------------------------------------------------- */
+
 m4_define([[[MMUX_BASH_DEFINE_ARRAY_MUTATOR]]],[[[
 static int
 mmux_bash_pointers_array_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])

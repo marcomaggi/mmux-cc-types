@@ -54,14 +54,17 @@ source "$MMUX_LIBRARY"
 function pointers-pointer-1.1 () {
     declare PTR VALUE
 
+    dotest-unset-debug
+    dotest-debug max pointer value ${libc_MAX_POINTER}
+
     mbfl_location_enter
     {
-	if libc_calloc PTR 1024 1
+	if libc_calloc PTR $((32 * ${libc_SIZEOF_POINTER:?})) 1
 	then mbfl_location_handler "libc_free $PTR"
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! pointer-set-pointer $PTR 0 '0x12'
+	if ! pointer-set-pointer $PTR 0 "${libc_MAX_POINTER:?}"
 	then mbfl_location_leave_then_return_failure
 	fi
 	if ! pointer-ref-pointer VALUE $PTR 0
@@ -69,7 +72,7 @@ function pointers-pointer-1.1 () {
 	fi
     }
     mbfl_location_leave
-    dotest-equal '0x12' QQ(VALUE)
+    dotest-equal "${libc_MAX_POINTER:?}" QQ(VALUE)
 }
 function pointers-pointer-1.2 () {
     declare PTR VALUE
@@ -77,7 +80,7 @@ function pointers-pointer-1.2 () {
 
     mbfl_location_enter
     {
-	if libc_calloc PTR 1024 1
+	if libc_calloc PTR $((32 * ${libc_SIZEOF_POINTER:?})) 1
 	then mbfl_location_handler "libc_free $PTR"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -123,7 +126,7 @@ function pointers-pointer-1.3 () {
     {
 	mbfl_declare_varref(ID)
 
-	if libc_calloc PTR 1024 1
+	if libc_calloc PTR $((32 * ${libc_SIZEOF_POINTER:?})) 1
 	then mbfl_location_handler "libc_free $PTR" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -138,7 +141,7 @@ function pointers-pointer-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if libc_realloc PTR $PTR 2048
+	if libc_realloc PTR $PTR $((64 * ${libc_SIZEOF_POINTER:?}))
 	then
 	    dotest-debug removing handler QQ(ID)
 	    mbfl_location_remove_handler_by_id QQ(ID)

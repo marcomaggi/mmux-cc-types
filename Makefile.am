@@ -2,7 +2,8 @@
 
 ACLOCAL_AMFLAGS		= -I meta/autotools
 AUTOMAKE_OPTIONS	= foreign
-EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in meta/m4/libmmux-bash-builtins.m4
+EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in \
+EXTRA_DIST		+= meta/m4/libmmux-bash-builtins.m4 src/mmux-bash-pointers-config.m4.in
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
 AM_CPPFLAGS		= -I$(srcdir)/src
@@ -77,22 +78,32 @@ install-html-local:
 #### libraries
 
 EXTRA_DIST	+= \
+	src/mmux-bash-pointers.h.m4		\
 	src/mmux-bash-pointers-accessors.c.m4	\
 	src/mmux-bash-pointers-errors.c.m4	\
 	src/mmux-bash-pointers-library.c.m4	\
 	src/mmux-bash-pointers-memory.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4	\
 	src/mmux-bash-pointers-parsers.c.m4	\
-	src/mmux-bash-pointers-sprinters.c.m4
+	src/mmux-bash-pointers-predicates.c.m4	\
+	src/mmux-bash-pointers-sprinters.c.m4	\
+	src/mmux-bash-pointers-types.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
+	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-accessors.c	\
 	src/mmux-bash-pointers-errors.c		\
 	src/mmux-bash-pointers-library.c	\
 	src/mmux-bash-pointers-memory.c		\
 	src/mmux-bash-pointers-mutators.c	\
 	src/mmux-bash-pointers-parsers.c	\
-	src/mmux-bash-pointers-sprinters.c
+	src/mmux-bash-pointers-predicates.c	\
+	src/mmux-bash-pointers-sprinters.c	\
+	src/mmux-bash-pointers-types.c
+
+MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES = \
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
+	$(builddir)/src/mmux-bash-pointers-config.m4
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -113,22 +124,27 @@ libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDF
 libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-internals.h	\
-	src/mmux-bash-pointers-library.c	\
-	src/mmux-bash-pointers-sprinters.c	\
-	src/mmux-bash-pointers-parsers.c	\
-	src/mmux-bash-pointers-memory.c		\
-	src/mmux-bash-pointers-errors.c		\
 	src/mmux-bash-pointers-accessors.c	\
-	src/mmux-bash-pointers-mutators.c
+	src/mmux-bash-pointers-errors.c		\
+	src/mmux-bash-pointers-library.c	\
+	src/mmux-bash-pointers-memory.c		\
+	src/mmux-bash-pointers-mutators.c	\
+	src/mmux-bash-pointers-parsers.c	\
+	src/mmux-bash-pointers-predicates.c	\
+	src/mmux-bash-pointers-sprinters.c	\
+	src/mmux-bash-pointers-types.c
 
 .PHONY: library
 
 library: libmmux-bash-pointers.la
 
-src/%.c: src/%.c.m4 $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4
-	$(M4_PROGRAM) --prefix-builtins $(top_srcdir)/meta/m4/libmmux-bash-builtins.m4 $< >$@
+src/%.h: src/%.h.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES) $< >$@
 
-src/%.$(OBJEXT): src/mmux-bash-pointers.h
+src/%.c: src/%.c.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES) $< >$@
+
+src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h
 
 ## ------------------------------------------------------------------------
 
@@ -140,6 +156,7 @@ mmux_bashlibdir		= $(datadir)/bash
 
 EXTRA_DIST		+= \
 	tests/version.test.m4			\
+	tests/types.test.m4			\
 	tests/memory.test.m4			\
 	tests/errors.test.m4			\
 	tests/pointers.test.m4			\
@@ -148,6 +165,7 @@ EXTRA_DIST		+= \
 
 MMUX_CHECK_BUILT_TESTS	= \
 	tests/version.test			\
+	tests/types.test			\
 	tests/memory.test			\
 	tests/errors.test			\
 	tests/pointers.test			\

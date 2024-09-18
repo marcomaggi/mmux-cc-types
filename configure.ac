@@ -97,6 +97,259 @@ dnl AC_FUNC_MEMCMP
 dnl AC_CACHE_SAVE
 
 
+#### inspecting standard types
+
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([POINTER],    [void *])
+
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SCHAR],      [signed char])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UCHAR],      [unsigned char])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SSHORT],     [signed short int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([USHORT],     [unsigned short int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINT],       [signed int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINT],       [unsigned int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SLONG],      [signed long int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([ULONG],      [unsigned long int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SLLONG],     [signed long long int])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([ULLONG],     [unsigned long long int])
+
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([FLOAT],      [float])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([DOUBLE],     [double])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([LDOUBLE],    [long double])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([COMPLEX],    [double complex])
+
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINT8],      [int8_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINT8],      [uint8_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINT16],     [int16_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINT16],     [uint16_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINT32],     [int32_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINT32],     [uint32_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINT64],     [int64_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINT64],     [uint64_t])
+
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SSIZE],      [ssize_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([USIZE],      [size_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINTMAX],    [intmax_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINTMAX],    [uintmax_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([SINTPTR],    [intptr_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UINTPTR],    [uintptr_t])
+
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([PTRDIFF],    [ptrdiff_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([MODE],       [mode_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([OFF],        [off_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([UID],        [uid_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([PID],        [pid_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([GID],        [gid_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([WCHAR],      [wchar_t])
+MMUX_BASH_TYPE_DETERMINE_SIZEOF([WINT],       [wint_t])
+
+
+#### limits of standard types
+
+AC_DEFUN([MMUX_BASH_SIGNED_INTEGER_TYPE_MAX_TEST],
+  [AC_CACHE_CHECK([the maximum value of '$1' ($2)],
+     [mmux_cv_maximumof_[]m4_tolower($1)],
+     [AC_COMPUTE_INT([mmux_cv_maximumof_[]m4_tolower($1)],
+        [$2],
+        [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],
+        [AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],[no])])])
+   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_[]m4_toupper($1)],[$mmux_cv_maximumof_[]m4_tolower($1)],[Maximum value of a "$1".])])
+
+AC_DEFUN([MMUX_BASH_SIGNED_INTEGER_TYPE_MIN_TEST],
+  [AC_CACHE_CHECK([the minimum value of '$1' ($2)],
+     [mmux_cv_minimumof_[]m4_tolower($1)],
+     [AC_COMPUTE_INT([mmux_cv_minimumof_[]m4_tolower($1)],
+        [$2],
+        [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],
+        [AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],[no])])])
+   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_[]m4_toupper($1)],[$mmux_cv_minimumof_[]m4_tolower($1)],[Minimum value of a "$1"])])
+
+AC_DEFUN([MMUX_BASH_SIGNED_INTEGER_TYPE_MAXMIN_TEST],
+  [MMUX_BASH_SIGNED_INTEGER_TYPE_MIN_TEST([$1],[$3])
+   MMUX_BASH_SIGNED_INTEGER_TYPE_MAX_TEST([$1],[$2])])
+
+dnl --------------------------------------------------------------------
+
+AC_DEFUN([MMUX_BASH_UNSIGNED_INTEGER_TYPE_MIN_TEST],
+  [AC_CACHE_CHECK([the minimum value of '$1'],
+     [mmux_cv_minimumof_[]m4_tolower($1)],
+     [AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],[0])])
+   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_[]m4_toupper($1)],[$mmux_cv_minimumof_[]m4_tolower($1)],[Minimum value of a "$1".])])
+
+AC_DEFUN([MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAX_TEST],
+  [AC_CACHE_CHECK([the maximum value of '$1' ($2)],
+     [mmux_cv_maximumof_[]m4_tolower($1)],
+     [AC_COMPUTE_INT([mmux_cv_maximumof_[]m4_tolower($1)],
+        [$2],
+        [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],
+        [AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],[no])])])
+   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_[]m4_toupper($1)],[$mmux_cv_maximumof_[]m4_tolower($1)],[Maximum value of a "$1".])])
+
+AC_DEFUN([MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAXMIN_TEST],
+  [MMUX_BASH_UNSIGNED_INTEGER_TYPE_MIN_TEST([$1])
+   MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAX_TEST([$1],[$2])])
+
+dnl --------------------------------------------------------------------
+
+MMUX_BASH_SIGNED_INTEGER_TYPE_MAXMIN_TEST([schar],   [SCHAR_MAX],    [SCHAR_MIN])
+MMUX_BASH_SIGNED_INTEGER_TYPE_MAXMIN_TEST([sshort],  [SHRT_MAX],     [SHRT_MIN])
+MMUX_BASH_SIGNED_INTEGER_TYPE_MAXMIN_TEST([sint],    [INT_MAX],      [INT_MIN])
+MMUX_BASH_SIGNED_INTEGER_TYPE_MAXMIN_TEST([slong],   [LONG_MAX],     [LONG_MIN])
+MMUX_BASH_SIGNED_INTEGER_TYPE_MAXMIN_TEST([sllong],  [LLONG_MAX],    [LLONG_MIN])
+
+MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAXMIN_TEST([uchar],   [UCHAR_MAX])
+MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAXMIN_TEST([ushort],  [USHRT_MAX])
+MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAXMIN_TEST([uint],    [UINT_MAX])
+MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAXMIN_TEST([ulong],   [ULONG_MAX])
+MMUX_BASH_UNSIGNED_INTEGER_TYPE_MAXMIN_TEST([ullong],  [ULLONG_MAX])
+
+
+#### type aliases
+
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([SSIZE],        [ssize_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([SINTMAX],      [intmax_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([SINTPTR],      [intptr_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([OFF],          [off_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([PID],          [pid_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([PTRDIFF],      [ptrdiff_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_SIGNED_INTEGER_ALIAS([WCHAR],        [wchar_t])
+
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([USIZE],      [size_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([UINTMAX],    [uintmax_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([UINTPTR],    [uintptr_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([MODE],       [mode_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([UID],        [uid_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([GID],        [gid_t])
+MMUX_BASH_TYPE_DETERMINE_CUSTOM_UNSIGNED_INTEGER_ALIAS([WINT],       [wint_t])
+
+dnl --------------------------------------------------------------------
+
+dnl AC_DEFUN([MMUX_BASH_TYPE_ALIAS_SIGNED_TEST],
+dnl   [AC_CACHE_CHECK([the type alias of the exact signed integer '$2' (size=$ac_cv_sizeof_$2)],
+dnl      [mmux_cv_type_alias_[]m4_tolower($1)],
+dnl      [AS_CASE([$ac_cv_sizeof_$2],
+dnl         [$ac_cv_sizeof_signed_char],
+dnl         [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_schar_t])
+dnl          AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_schar])
+dnl          AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_schar])
+dnl          AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],      [$mmux_cv_maximumof_schar])
+dnl          AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],      [$mmux_cv_minimumof_schar])],
+
+dnl         [$ac_cv_sizeof_signed_short_int],
+dnl         [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_sshort_t])
+dnl          AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_sshort])
+dnl          AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_sshort])
+dnl          AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],      [$mmux_cv_maximumof_sshrt])
+dnl          AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],      [$mmux_cv_minimumof_sshrt])],
+
+dnl         [$ac_cv_sizeof_signed_int],
+dnl         [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_sint_t])
+dnl          AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_sint])
+dnl          AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_sint])]
+dnl          AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],      [$mmux_cv_maximumof_sint])
+dnl          AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],      [$mmux_cv_minimumof_sint]),
+
+dnl         [$ac_cv_sizeof_signed_long_int],
+dnl         [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_slong_t])
+dnl          AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_slong])
+dnl          AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_slong])]
+dnl          AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],      [$mmux_cv_maximumof_slong])
+dnl          AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],      [$mmux_cv_minimumof_slong]),
+
+dnl         [$ac_cv_sizeof_signed_long_long_int],
+dnl         [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_sllong_t])
+dnl          AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_sllong])
+dnl          AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_sllong])
+dnl          AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],      [$mmux_cv_maximumof_sllong])
+dnl          AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],      [$mmux_cv_minimumof_sllong])],
+
+dnl         [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_void_t])
+dnl          AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [void])
+dnl          AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [void])
+dnl          AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],      [0])
+dnl          AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],      [0])])])
+dnl    AC_SUBST(MMUX_BASH_TYPE_ALIAS_[]m4_toupper($1),[$mmux_cv_type_alias_[]m4_tolower($1)])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_PARSE_[]m4_toupper($1)], [$mmux_cv_type_parse_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type parser for "$2".])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_SPRINT_[]m4_toupper($1)],[$mmux_cv_type_sprint_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type sprinter for "$2".])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_[]m4_toupper($1)],   [$mmux_cv_maximumof_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type maximum for "$2".])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_[]m4_toupper($1)],   [$mmux_cv_minimumof_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type minimum for "$2".])])
+
+dnl AC_DEFUN([MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST],
+dnl   [AC_CACHE_CHECK([the type alias of the exact unsigned integer '$2' (size=$ac_cv_sizeof_$2)],
+dnl      [mmux_cv_type_alias_[]m4_tolower($1)],
+dnl      [AS_CASE([$ac_cv_sizeof_$2],
+dnl        [$ac_cv_sizeof_unsigned_char],
+dnl        [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_uchar_t])
+dnl         AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_uchar])
+dnl         AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_uchar])
+dnl         AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],       [$mmux_cv_maximumof_uchar])
+dnl         AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],       [0])],
+
+dnl        [$ac_cv_sizeof_unsigned_short_int],
+dnl        [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_ushort_t])
+dnl         AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_ushort])
+dnl         AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_ushort])
+dnl         AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],       [$mmux_cv_maximumof_ushrt])
+dnl         AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],       [0])],
+
+dnl        [$ac_cv_sizeof_unsigned_int],
+dnl        [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_uint_t])
+dnl         AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_uint])
+dnl         AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_uint])
+dnl         AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],       [$mmux_cv_maximumof_uint])
+dnl         AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],       [0])],
+
+dnl        [$ac_cv_sizeof_unsigned_long_int],
+dnl        [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_ulong_t])
+dnl         AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_ulong])
+dnl         AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_ulong])
+dnl         AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],       [$mmux_cv_maximumof_ulong])
+dnl         AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],       [0])],
+
+dnl        [$ac_cv_sizeof_unsigned_long_long_int],
+dnl        [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_ullong_t])
+dnl         AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [mmux_bash_pointers_parse_ullong])
+dnl         AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [mmux_bash_pointers_sprint_ullong])
+dnl         AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],       [$mmux_cv_maximumof_ullong])
+dnl         AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],       [0])],
+
+dnl        [AS_VAR_SET([mmux_cv_type_alias_[]m4_tolower($1)],     [mmux_libc_void_t])
+dnl         AS_VAR_SET([mmux_cv_type_parse_[]m4_tolower($1)],     [void])
+dnl         AS_VAR_SET([mmux_cv_type_sprint_[]m4_tolower($1)],    [void])
+dnl         AS_VAR_SET([mmux_cv_maximumof_[]m4_tolower($1)],       [0])
+dnl         AS_VAR_SET([mmux_cv_minimumof_[]m4_tolower($1)],       [0])])])
+dnl    AC_SUBST(MMUX_BASH_TYPE_ALIAS_[]m4_toupper($1),[$mmux_cv_type_alias_[]m4_tolower($1)])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_PARSE_[]m4_toupper($1)], [$mmux_cv_type_parse_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type parser for "$2".])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_SPRINT_[]m4_toupper($1)],[$mmux_cv_type_sprint_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type sprinter for "$2".])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_[]m4_toupper($1)],   [$mmux_cv_maximumof_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type maximum for "$2".])
+dnl    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_[]m4_toupper($1)],   [$mmux_cv_minimumof_[]m4_tolower($1)],
+dnl                       [MMUX Bash Pointers type minimum for "$2".])])
+
+dnl dnl --------------------------------------------------------------------
+
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([SSIZE],        [ssize_t])
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([SINTMAX],      [intmax_t])
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([SINTPTR],      [intptr_t])
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([OFF],          [off_t])
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([PID],          [pid_t])
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([PTRDIFF],      [ptrdiff_t])
+dnl MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([WCHAR],        [wchar_t])
+
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([USIZE],      [size_t])
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([UINTMAX],    [uintmax_t])
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([UINTPTR],    [uintptr_t])
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([MODE],       [mode_t])
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([UID],        [uid_t])
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([GID],        [gid_t])
+dnl MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([WINT],       [wint_t])
+
+
 #### inspecting errno constants
 
 AC_DEFUN([MMUX_ERRNO_TEST],[MMUX_DEFINE_VALUEOF_TEST([$1],[$1],MMUX_BASH_COMMON_INCLUDES_FOR_TESTS)])
@@ -120,235 +373,6 @@ MMUX_ERRNO_TESTS([EPERM ENOENT ESRCH EINTR EIO ENXIO E2BIG ENOEXEC EBADF ECHILD 
 AC_CACHE_SAVE
 
 
-#### inspecting standard types
-
-AC_CHECK_SIZEOF([void *])
-AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_SIZEOF_POINTER],[$ac_cv_sizeof_void_p],[Size measured in bytes of a pointer.])
-
-dnl --------------------------------------------------------------------
-
-AC_DEFUN([MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE],
-  [AC_CHECK_SIZEOF([$2],,[MMUX_BASH_COMMON_INCLUDES_FOR_TESTS])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_SIZEOF_$1],[$[]ac_cv_sizeof_$3],[Size measured in bytes of a "$2".])])
-
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SCHAR],      [signed char],                  [signed_char])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UCHAR],      [unsigned char],                [unsigned_char])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SSHORT],     [signed short int],             [signed_short_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([USHORT],     [unsigned short int],           [unsigned_short_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINT],       [signed int],                   [signed_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINT],       [unsigned int],                 [unsigned_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SLONG],      [signed long int],              [signed_long_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([ULONG],      [unsigned long int],            [unsigned_long_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SLLONG],     [signed long long int],         [signed_long_long_int])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([ULLONG],     [unsigned long long int],       [unsigned_long_long_int])
-
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([FLOAT],      [float],                        [float])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([DOUBLE],     [double],                       [double])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([LDOUBLE],    [long double],                  [long_double])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([COMPLEX],    [double complex],               [double_complex])
-
-dnl We know these, but for uniformity...
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINT8],      [int8_t],                       [int8_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINT8],      [uint8_t],                      [uint8_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINT16],     [int16_t],                      [int16_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINT16],     [uint16_t],                     [uint16_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINT32],     [int32_t],                      [int32_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINT32],     [uint32_t],                     [uint32_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINT64],     [int64_t],                      [int64_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINT64],     [uint64_t],                     [uint64_t])
-
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SSIZE],      [ssize_t],                      [ssize_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([USIZE],      [size_t],                       [size_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINTMAX],    [intmax_t],                     [intmax_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINTMAX],    [uintmax_t],                    [uintmax_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([SINTPTR],    [intptr_t],                     [intptr_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UINTPTR],    [uintptr_t],                    [uintptr_t])
-
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([PTRDIFF],    [ptrdiff_t],                    [ptrdiff_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([MODE],       [mode_t],                       [mode_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([OFF],        [off_t],                        [off_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([UID],        [uid_t],                        [uid_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([PID],        [pid_t],                        [pid_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([GID],        [gid_t],                        [gid_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([WCHAR],      [wchar_t],                      [wchar_t])
-MMUX_BASH_TYPE_SIZEOF_STANDARD_TYPE([WINT],       [wint_t],                       [wint_t])
-
-
-#### limits of standard types
-
-AC_DEFUN([MMUX_BASH_SIGNED_TYPE_MAXMIN_TEST],
-  [AC_CACHE_CHECK([the maximum value of '$1'],
-     [mmux_cv_maximumof_$1],
-     [AC_COMPUTE_INT([mmux_cv_maximumof_$1],
-        [$2],
-        [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],
-        [AS_VAR_SET([mmux_cv_maximumof_$1],[no])])])
-
-   AC_CACHE_CHECK([the minimum value of '$1'],
-     [mmux_cv_minimumof_$1],
-     [AC_COMPUTE_INT([mmux_cv_minimumof_$1],
-        [$3],
-        [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],
-        [AS_VAR_SET([mmux_cv_minimumof_$1],[no])])])
-
-    AS_VAR_SET(MMUX_BASH_TYPE_MAX_[]m4_toupper($1), [$mmux_cv_maximumof_$1])
-    AS_VAR_SET(MMUX_BASH_TYPE_MIN_[]m4_toupper($1), [$mmux_cv_minimumof_$1])
-    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_[]m4_toupper($1)],[$mmux_cv_maximumof_$1],[Maximum value of a "$1".])
-    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_[]m4_toupper($1)],[$mmux_cv_minimumof_$1],[Minimum value of a "$1"])])
-
-AC_DEFUN([MMUX_UNSIGNED_TYPE_MAXMIN_TEST],
-  [AC_CACHE_CHECK([the maximum value of '$1'],
-     [mmux_cv_maximumof_$1],
-     [AC_COMPUTE_INT([mmux_cv_maximumof_$1],
-        [$2],
-        [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],
-        [AS_VAR_SET([mmux_cv_maximumof_$1],[no])])])
-
-    AS_VAR_SET([mmux_cv_maximumof_$1],[0])
-
-    AS_VAR_SET(MMUX_BASH_TYPE_MAX_[]m4_toupper($1), [$mmux_cv_maximumof_$1])
-    AS_VAR_SET(MMUX_BASH_TYPE_MIN_[]m4_toupper($1), [$mmux_cv_minimumof_$1])
-    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_[]m4_toupper($1)],[$mmux_cv_maximumof_$1],[Maximum value of a "$1".])
-    AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_[]m4_toupper($1)],[$mmux_cv_minimumof_$1],[Minimum value of a "$1".])])
-
-dnl --------------------------------------------------------------------
-
-MMUX_BASH_SIGNED_TYPE_MAXMIN_TEST([schar],   [SCHAR_MAX],    [SCHAR_MIN])
-MMUX_BASH_SIGNED_TYPE_MAXMIN_TEST([sshort],  [SHRT_MAX],     [SHRT_MIN])
-MMUX_BASH_SIGNED_TYPE_MAXMIN_TEST([sint],    [INT_MAX],      [INT_MIN])
-MMUX_BASH_SIGNED_TYPE_MAXMIN_TEST([slong],   [LONG_MAX],     [LONG_MIN])
-MMUX_BASH_SIGNED_TYPE_MAXMIN_TEST([sllong],  [LLONG_MAX],    [LLONG_MIN])
-
-MMUX_UNSIGNED_TYPE_MAXMIN_TEST([uchar],   [UCHAR_MAX])
-MMUX_UNSIGNED_TYPE_MAXMIN_TEST([ushort],  [USHRT_MAX])
-MMUX_UNSIGNED_TYPE_MAXMIN_TEST([uint],    [UINT_MAX])
-MMUX_UNSIGNED_TYPE_MAXMIN_TEST([ulong],   [ULONG_MAX])
-MMUX_UNSIGNED_TYPE_MAXMIN_TEST([ullong],  [ULLONG_MAX])
-
-
-#### type aliasest
-
-AC_DEFUN([MMUX_BASH_TYPE_ALIAS_SIGNED_TEST],
-  [AC_CACHE_CHECK([the type alias of the exact signed integer '$2' (size=$ac_cv_sizeof_$2)],
-     [mmux_cv_type_alias_$1],
-     [AS_CASE([$ac_cv_sizeof_$2],
-       [$ac_cv_sizeof_signed_char],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_schar_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_schar])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_schar])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [SCHAR_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [SCHAR_MIN])],
-
-       [$ac_cv_sizeof_signed_short_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_sshort_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_sshort])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_sshort])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [SHRT_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [SHRT_MIN])],
-
-       [$ac_cv_sizeof_signed_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_sint_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_sint])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_sint])]
-        AS_VAR_SET([mmux_cv_type_max_$1],       [INT_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [INT_MIN]),
-
-       [$ac_cv_sizeof_signed_long_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_slong_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_slong])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_slong])]
-        AS_VAR_SET([mmux_cv_type_max_$1],       [LONG_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [LONG_MIN]),
-
-       [$ac_cv_sizeof_signed_long_long_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_sllong_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_sllong])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_sllong])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [LLONG_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [LLONG_MIN])],
-
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_void_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [void])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [void])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [0])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])])])
-   AC_SUBST([MMUX_BASH_TYPE_ALIAS_$1],[$mmux_cv_type_alias_$1])
-dnl   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_ALIAS_$1],       [$mmux_cv_type_alias_$1], [MMUX Bash Pointers type alias for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_PARSE_$1],       [$mmux_cv_type_parse_$1], [MMUX Bash Pointers type parser for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_SPRINT_$1],      [$mmux_cv_type_sprint_$1],[MMUX Bash Pointers type sprinter for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_$1],         [$mmux_cv_type_max_$1],   [MMUX Bash Pointers type maximum for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_$1],         [$mmux_cv_type_min_$1],   [MMUX Bash Pointers type minimum for "$2".])])
-
-AC_DEFUN([MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST],
-  [AC_CACHE_CHECK([the type alias of the exact unsigned integer '$2' (size=$ac_cv_sizeof_$2)],
-     [mmux_cv_type_alias_$1],
-     [AS_CASE([$ac_cv_sizeof_$2],
-       [$ac_cv_sizeof_unsigned_char],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_uchar_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_uchar])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_uchar])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [UCHAR_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])],
-
-       [$ac_cv_sizeof_unsigned_short_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_ushort_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_ushort])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_ushort])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [USHRT_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])],
-
-       [$ac_cv_sizeof_unsigned_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_uint_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_uint])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_uint])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [UINT_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])],
-
-       [$ac_cv_sizeof_unsigned_long_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_ulong_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_ulong])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_ulong])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [ULONG_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])],
-
-       [$ac_cv_sizeof_unsigned_long_long_int],
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_ullong_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [mmux_bash_pointers_parse_ullong])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [mmux_bash_pointers_sprint_ullong])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [ULLONG_MAX])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])],
-
-       [AS_VAR_SET([mmux_cv_type_alias_$1],     [mmux_libc_void_t])
-        AS_VAR_SET([mmux_cv_type_parse_$1],     [void])
-        AS_VAR_SET([mmux_cv_type_sprint_$1],    [void])
-        AS_VAR_SET([mmux_cv_type_max_$1],       [0])
-        AS_VAR_SET([mmux_cv_type_min_$1],       [0])])])
-   AC_SUBST([MMUX_BASH_TYPE_ALIAS_$1],[$mmux_cv_type_alias_$1])
-dnl AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_ALIAS_$1],       [$mmux_cv_type_alias_$1], [MMUX Bash Pointers type alias for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_PARSE_$1],       [$mmux_cv_type_parse_$1], [MMUX Bash Pointers type parser for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_SPRINT_$1],      [$mmux_cv_type_sprint_$1],[MMUX Bash Pointers type sprinter for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MAX_$1],         [$mmux_cv_type_max_$1],   [MMUX Bash Pointers type maximum for "$2".])
-   AC_DEFINE_UNQUOTED([MMUX_BASH_TYPE_MIN_$1],         [$mmux_cv_type_min_$1],   [MMUX Bash Pointers type minimum for "$2".])])
-
-dnl --------------------------------------------------------------------
-
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([SSIZE],        [ssize_t])
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([SINTMAX],      [intmax_t])
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([SINTPTR],      [intptr_t])
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([OFF],          [off_t])
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([PID],          [pid_t])
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([PTRDIFF],      [ptrdiff_t])
-MMUX_BASH_TYPE_ALIAS_SIGNED_TEST([WCHAR],        [wchar_t])
-
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([USIZE],      [size_t])
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([UINTMAX],    [uintmax_t])
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([UINTPTR],    [uintptr_t])
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([MODE],       [mode_t])
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([UID],        [uid_t])
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([GID],        [gid_t])
-MMUX_BASH_TYPE_ALIAS_UNSIGNED_TEST([WINT],       [wint_t])
-
-
 #### external libraries
 
 PKG_PREREQ([0.29])
@@ -365,8 +389,8 @@ AC_CACHE_SAVE
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
-  [src/mmux-bash-pointers.h]
   [src/libmmux-bash-pointers.bash]
+  [src/mmux-bash-pointers-config.m4]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT

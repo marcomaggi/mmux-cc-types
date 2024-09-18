@@ -30,6 +30,12 @@ m4_dnl preamble
 m4_changequote(`[[[', `]]]')
 
 
+m4_dnl helpers
+
+m4_define([[[mmux_toupper]]],[[[m4_translit([[[$1]]],[[[abcdefghijklmnopqrstuvwxyz]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]])]]])
+m4_define([[[mmux_tolower]]],[[[m4_translit([[[$1]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]],[[[abcdefghijklmnopqrstuvwxyz]]])]]])
+
+
 m4_dnl function definitions
 
 m4_dnl $1 - bulitin identifier

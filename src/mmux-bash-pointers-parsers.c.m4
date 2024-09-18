@@ -34,7 +34,7 @@ regex_t mmux_bash_pointers_complex_rex;
 
 
 /** --------------------------------------------------------------------
- ** Type parsers.
+ ** Type parsers: raw C standard types, no typedefs.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_PARSER]]],[[[
@@ -81,7 +81,7 @@ MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],		[[["%Lf"]]],	[[[HAVE_LONG_DOUBL
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: int8.
+ ** Type parsers: C standard type int8.
  ** ----------------------------------------------------------------- */
 
 int
@@ -129,7 +129,7 @@ mmux_bash_pointers_parse_uint8 (uint8_t * p_data, char const * s_arg, char const
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: int16.
+ ** Type parsers: C standard type int16.
  ** ----------------------------------------------------------------- */
 
 int
@@ -177,7 +177,7 @@ mmux_bash_pointers_parse_uint16 (uint16_t * p_data, char const * s_arg, char con
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: int32.
+ ** Type parsers: C standard type int32.
  ** ----------------------------------------------------------------- */
 
 int
@@ -225,7 +225,7 @@ mmux_bash_pointers_parse_uint32  (uint32_t * p_data, char const * s_arg, char co
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: int64.
+ ** Type parsers: C standard type int64.
  ** ----------------------------------------------------------------- */
 
 int
@@ -398,26 +398,26 @@ parse_complex_parentheses_format (double complex * p_value, const char * s_arg, 
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s, char const * caller_name)
+mmux_bash_pointers_parse_[[[]]]$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg, char const * caller_name)
 {
-  return $2(p_value, s, caller_name);
+  return mmux_bash_pointers_parse_[[[]]]$2[[[]]](p_value, s_arg, caller_name);
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[ssize]]],		[[[MMUX_BASH_TYPE_PARSE_SSIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[usize]]],		[[[MMUX_BASH_TYPE_PARSE_USIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[sintmax]]],		[[[MMUX_BASH_TYPE_PARSE_SINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uintmax]]],		[[[MMUX_BASH_TYPE_PARSE_UINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[sintptr]]],		[[[MMUX_BASH_TYPE_PARSE_SINTPTR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uintptr]]],		[[[MMUX_BASH_TYPE_PARSE_UINTPTR]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[ssize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[usize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[sintmax]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uintmax]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[sintptr]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uintptr]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[ptrdiff]]],		[[[MMUX_BASH_TYPE_PARSE_PTRDIFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[mode]]],		[[[MMUX_BASH_TYPE_PARSE_MODE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[off]]],		[[[MMUX_BASH_TYPE_PARSE_OFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[pid]]],		[[[MMUX_BASH_TYPE_PARSE_PID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uid]]],		[[[MMUX_BASH_TYPE_PARSE_UID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[gid]]],		[[[MMUX_BASH_TYPE_PARSE_GID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[wchar]]],		[[[MMUX_BASH_TYPE_PARSE_WCHAR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[wint]]],		[[[MMUX_BASH_TYPE_PARSE_WINT]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[ptrdiff]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[mode]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[off]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[pid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[gid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[wchar]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[wint]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]])
 
 /* end of file */

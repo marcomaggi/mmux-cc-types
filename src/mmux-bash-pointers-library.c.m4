@@ -28,74 +28,6 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-/* Yes, we need two macros.  Because. */
-#undef  STRINGISE2
-#undef  STRINGISE
-#define STRINGISE2(STR)	#STR
-#define STRINGISE(STR)	STRINGISE2(STR)
-
-
-/** --------------------------------------------------------------------
- ** Preprocessor symbols: minimum type values.
- ** ----------------------------------------------------------------- */
-
-#undef  MMUX_BASH_TYPE_MIN_SINT8
-#define MMUX_BASH_TYPE_MIN_SINT8			INT8_MIN
-#undef  MMUX_BASH_TYPE_MIN_UINT8
-#define MMUX_BASH_TYPE_MIN_UINT8			UINT8_MIN
-#undef  MMUX_BASH_TYPE_MIN_SINT16
-#define MMUX_BASH_TYPE_MIN_SINT16			INT16_MIN
-#undef  MMUX_BASH_TYPE_MIN_UINT16
-#define MMUX_BASH_TYPE_MIN_UINT16			UINT16_MIN
-#undef  MMUX_BASH_TYPE_MIN_SINT32
-#define MMUX_BASH_TYPE_MIN_SINT32			INT32_MIN
-#undef  MMUX_BASH_TYPE_MIN_UINT32
-#define MMUX_BASH_TYPE_MIN_UINT32			INT32_MIN
-#undef  MMUX_BASH_TYPE_MIN_SINT64
-#define MMUX_BASH_TYPE_MIN_SINT64			SINT64_MIN
-#undef  MMUX_BASH_TYPE_MIN_UINT64
-#define MMUX_BASH_TYPE_MIN_UINT64			INT64_MIN
-
-#undef  MMUX_BASH_TYPE_MIN_FLOAT
-#define MMUX_BASH_TYPE_MIN_FLOAT			FLT_MIN
-#undef  MMUX_BASH_TYPE_MIN_DOUBLE
-#define MMUX_BASH_TYPE_MIN_DOUBLE			DBL_MIN
-#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-#undef  MMUX_BASH_TYPE_MIN_LDOUBLE
-#define MMUX_BASH_TYPE_MIN_LDOUBLE			LDBL_MIN
-#endif
-
-
-/** --------------------------------------------------------------------
- ** Preprocessor symbols: maximum type values.
- ** ----------------------------------------------------------------- */
-
-#undef  MMUX_BASH_TYPE_MAX_SINT8
-#define MMUX_BASH_TYPE_MAX_SINT8			INT8_MAX
-#undef  MMUX_BASH_TYPE_MAX_UINT8
-#define MMUX_BASH_TYPE_MAX_UINT8			UINT8_MAX
-#undef  MMUX_BASH_TYPE_MAX_SINT16
-#define MMUX_BASH_TYPE_MAX_SINT16			INT16_MAX
-#undef  MMUX_BASH_TYPE_MAX_UINT16
-#define MMUX_BASH_TYPE_MAX_UINT16			UINT16_MAX
-#undef  MMUX_BASH_TYPE_MAX_SINT32
-#define MMUX_BASH_TYPE_MAX_SINT32			INT32_MAX
-#undef  MMUX_BASH_TYPE_MAX_UINT32
-#define MMUX_BASH_TYPE_MAX_UINT32			INT32_MAX
-#undef  MMUX_BASH_TYPE_MAX_SINT64
-#define MMUX_BASH_TYPE_MAX_SINT64			SINT64_MAX
-#undef  MMUX_BASH_TYPE_MAX_UINT64
-#define MMUX_BASH_TYPE_MAX_UINT64			INT64_MAX
-
-#undef  MMUX_BASH_TYPE_MAX_FLOAT
-#define MMUX_BASH_TYPE_MAX_FLOAT			FLT_MAX
-#undef  MMUX_BASH_TYPE_MAX_DOUBLE
-#define MMUX_BASH_TYPE_MAX_DOUBLE			DBL_MAX
-#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-#undef  MMUX_BASH_TYPE_MAX_LDOUBLE
-#define MMUX_BASH_TYPE_MAX_LDOUBLE			LDBL_MAX
-#endif
-
 
 /** --------------------------------------------------------------------
  ** Version functions.
@@ -202,11 +134,46 @@ mmux_bash_pointers_print_complex (double complex data)
  ** Library initialisation.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_DEFINE_ERRNO_VARIABLE]]],[[[
-#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
+m4_divert(-1)m4_dnl
+m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],
+  [[[mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])",m4_dnl
+ mmux_bash_pointers_sizeof_[[[]]]mmux_tolower([[[$1]]])[[[]]]())]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
+#undef  LEN
+#define LEN	1024
+  char	str[LEN];
+
+  memset(str, '\0', LEN);
+  mmux_bash_pointers_sprint_maximum_[[[]]]mmux_tolower([[[$1]]])[[[]]](str, LEN);
+  if (0) { fprintf(stderr, "%s: maximum $1: %s\n", __func__, str); }
+  mmux_bash_pointers_create_global_string_variable("libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str);
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
+#undef  LEN
+#define LEN	1024
+  char	str[LEN];
+
+  memset(str, '\0', LEN);
+  mmux_bash_pointers_sprint_minimum_[[[]]]mmux_tolower([[[$1]]])[[[]]](str, LEN);
+  if (0) { fprintf(stderr, "%s: minimum $1: %s\n", __func__, str); }
+  mmux_bash_pointers_create_global_string_variable("libc_MIN_[[[]]]mmux_toupper([[[$1]]])", str);
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[MMUX_DEFINE_ERRNO_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
   mmux_bash_pointers_create_global_sint_variable("libc_$1",	$1);
 #endif
 ]]])
+
+/* ------------------------------------------------------------------ */
+m4_divert(0)m4_dnl
 
 static int
 mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
@@ -236,143 +203,142 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
   /* These constants are defined by the Standard C Library; we make them available as
      global shell variables. */
   {
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_POINTER",	sizeof(void *));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[pointer]]]);
 
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SCHAR",		sizeof(signed char));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UCHAR",		sizeof(unsigned char));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SSHORT",	sizeof(signed short int));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_USHORT",	sizeof(unsigned short int));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINT",		sizeof(signed int));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT",		sizeof(unsigned int));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SLONG",		sizeof(signed long));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_ULONG",		sizeof(unsigned long));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[schar]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uchar]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sshort]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[ushort]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sint]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uint]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[slong]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[ulong]]]);
 #if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SLLONG",	sizeof(signed long long));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sllong]]]);
 #endif
 #if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_ULLONG",	sizeof(unsigned long long));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[ullong]]]);
 #endif
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_FLOAT",		sizeof(float));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_DOUBLE",	sizeof(double));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[float]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[double]]]);
 #if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_LDOUBLE",	sizeof(long double));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[ldouble]]]);
 #endif
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_COMPLEX",	sizeof(complex));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[complex]]]);
 
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINT8",		sizeof(int8_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT8",		sizeof(uint8_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINT16",	sizeof(int16_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT16",	sizeof(uint16_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINT32",	sizeof(int32_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT32",	sizeof(uint32_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINT64",	sizeof(int64_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINT64",	sizeof(uint64_t));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sint8]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uint8]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sint16]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uint16]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sint32]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uint32]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sint64]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uint64]]]);
 
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_USIZE",		sizeof(size_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SSIZE",		sizeof(ssize_t));
-
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINTMAX",	sizeof(intmax_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINTMAX",	sizeof(uintmax_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_SINTPTR",	sizeof(intptr_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UINTPTR",	sizeof(uintptr_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_PTRDIFF",	sizeof(ptrdiff_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_MODE",		sizeof(mode_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_OFF",		sizeof(off_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_PID",		sizeof(pid_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_UID",		sizeof(uid_t));
-    mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_GID",		sizeof(gid_t));
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[usize]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[ssize]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sintmax]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uintmax]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[sintptr]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uintptr]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[ptrdiff]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[mode]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[off]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[pid]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[uid]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[gid]]]);
   }
   {
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_POINTER",	STRINGISE(MMUX_BASH_TYPE_MAX_UINTMAX));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[pointer]]]);
 
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SCHAR",		STRINGISE(MMUX_BASH_TYPE_MAX_SCHAR));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UCHAR",		STRINGISE(MMUX_BASH_TYPE_MAX_UCHAR));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SSHORT",		STRINGISE(MMUX_BASH_TYPE_MAX_SSHORT));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_USHORT",		STRINGISE(MMUX_BASH_TYPE_MAX_USHORT));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINT",		STRINGISE(MMUX_BASH_TYPE_MAX_SINT));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINT",		STRINGISE(MMUX_BASH_TYPE_MAX_UINT));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SLONG",		STRINGISE(MMUX_BASH_TYPE_MAX_SLONG));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_ULONG",		STRINGISE(MMUX_BASH_TYPE_MAX_ULONG));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[schar]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uchar]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sshort]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[ushort]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sint]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uint]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[slong]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[ulong]]]);
 #if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SLLONG",		STRINGISE(MMUX_BASH_TYPE_MAX_SLLONG));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sllong]]]);
 #endif
 #if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_ULLONG",		STRINGISE(MMUX_BASH_TYPE_MAX_ULLONG));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[ullong]]]);
 #endif
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_FLOAT",		STRINGISE(MMUX_BASH_TYPE_MAX_FLOAT));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_DOUBLE",		STRINGISE(MMUX_BASH_TYPE_MAX_DOUBLE));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[float]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[double]]]);
 #if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_LDOUBLE",	STRINGISE(MMUX_BASH_TYPE_MAX_LDOUBLE));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[ldouble]]]);
 #endif
+    /* There is no maximum variable for "complex". */
 
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINT8",		STRINGISE(MMUX_BASH_TYPE_MAX_SINT8));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINT8",		STRINGISE(MMUX_BASH_TYPE_MAX_UINT8));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINT16",		STRINGISE(MMUX_BASH_TYPE_MAX_SINT16));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINT16",		STRINGISE(MMUX_BASH_TYPE_MAX_UINT16));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINT32",		STRINGISE(MMUX_BASH_TYPE_MAX_SINT32));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINT32",		STRINGISE(MMUX_BASH_TYPE_MAX_UINT32));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINT64",		STRINGISE(MMUX_BASH_TYPE_MAX_SINT64));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINT64",		STRINGISE(MMUX_BASH_TYPE_MAX_UINT64));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sint8]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uint8]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sint16]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uint16]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sint32]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uint32]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sint64]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uint64]]]);
 
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_USIZE",		STRINGISE(MMUX_BASH_TYPE_MAX_USIZE));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SSIZE",		STRINGISE(MMUX_BASH_TYPE_MAX_SSIZE));
-
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINTMAX",	STRINGISE(MMUX_BASH_TYPE_MAX_SINTMAX));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINTMAX",	STRINGISE(MMUX_BASH_TYPE_MAX_UINTMAX));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_SINTPTR",	STRINGISE(MMUX_BASH_TYPE_MAX_SINTPTR));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UINTPTR",	STRINGISE(MMUX_BASH_TYPE_MAX_UINTPTR));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_PTRDIFF",	STRINGISE(MMUX_BASH_TYPE_MAX_PTRDIFF));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_MODE",		STRINGISE(MMUX_BASH_TYPE_MAX_MODE));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_OFF",		STRINGISE(MMUX_BASH_TYPE_MAX_OFF));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_PID",		STRINGISE(MMUX_BASH_TYPE_MAX_PID));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_UID",		STRINGISE(MMUX_BASH_TYPE_MAX_UID));
-    mmux_bash_pointers_create_global_string_variable("libc_MAX_GID",		STRINGISE(MMUX_BASH_TYPE_MAX_GID));
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[usize]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[ssize]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sintmax]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uintmax]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[sintptr]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uintptr]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[ptrdiff]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[mode]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[off]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[pid]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[uid]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[gid]]]);
   }
   {
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_POINTER",	STRINGISE(MMUX_BASH_TYPE_MIN_UINTMIN));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[pointer]]]);
 
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SCHAR",		STRINGISE(MMUX_BASH_TYPE_MIN_SCHAR));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UCHAR",		STRINGISE(MMUX_BASH_TYPE_MIN_UCHAR));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SSHORT",		STRINGISE(MMUX_BASH_TYPE_MIN_SSHORT));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_USHORT",		STRINGISE(MMUX_BASH_TYPE_MIN_USHORT));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINT",		STRINGISE(MMUX_BASH_TYPE_MIN_SINT));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINT",		STRINGISE(MMUX_BASH_TYPE_MIN_UINT));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SLONG",		STRINGISE(MMUX_BASH_TYPE_MIN_SLONG));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_ULONG",		STRINGISE(MMUX_BASH_TYPE_MIN_ULONG));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[schar]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uchar]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sshort]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[ushort]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sint]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uint]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[slong]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[ulong]]]);
 #if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SLLONG",		STRINGISE(MMUX_BASH_TYPE_MIN_SLLONG));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sllong]]]);
 #endif
 #if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_ULLONG",		STRINGISE(MMUX_BASH_TYPE_MIN_ULLONG));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[ullong]]]);
 #endif
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_FLOAT",		STRINGISE(MMUX_BASH_TYPE_MIN_FLOAT));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_DOUBLE",		STRINGISE(MMUX_BASH_TYPE_MIN_DOUBLE));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[float]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[double]]]);
 #if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_LDOUBLE",	STRINGISE(MMUX_BASH_TYPE_MIN_LDOUBLE));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[ldouble]]]);
 #endif
+    /* There is no minimum variable for "complex". */
 
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINT8",		STRINGISE(MMUX_BASH_TYPE_MIN_SINT8));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINT8",		STRINGISE(MMUX_BASH_TYPE_MIN_UINT8));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINT16",		STRINGISE(MMUX_BASH_TYPE_MIN_SINT16));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINT16",		STRINGISE(MMUX_BASH_TYPE_MIN_UINT16));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINT32",		STRINGISE(MMUX_BASH_TYPE_MIN_SINT32));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINT32",		STRINGISE(MMUX_BASH_TYPE_MIN_UINT32));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINT64",		STRINGISE(MMUX_BASH_TYPE_MIN_SINT64));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINT64",		STRINGISE(MMUX_BASH_TYPE_MIN_UINT64));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sint8]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uint8]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sint16]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uint16]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sint32]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uint32]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sint64]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uint64]]]);
 
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_USIZE",		STRINGISE(MMUX_BASH_TYPE_MIN_USIZE));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SSIZE",		STRINGISE(MMUX_BASH_TYPE_MIN_SSIZE));
-
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINTMAX",	STRINGISE(MMUX_BASH_TYPE_MIN_SINTMAX));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINTMAX",	STRINGISE(MMUX_BASH_TYPE_MIN_UINTMAX));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_SINTPTR",	STRINGISE(MMUX_BASH_TYPE_MIN_SINTPTR));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UINTPTR",	STRINGISE(MMUX_BASH_TYPE_MIN_UINTPTR));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_PTRDIFF",	STRINGISE(MMUX_BASH_TYPE_MIN_PTRDIFF));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_MODE",		STRINGISE(MMUX_BASH_TYPE_MIN_MODE));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_OFF",		STRINGISE(MMUX_BASH_TYPE_MIN_OFF));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_PID",		STRINGISE(MMUX_BASH_TYPE_MIN_PID));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_UID",		STRINGISE(MMUX_BASH_TYPE_MIN_UID));
-    mmux_bash_pointers_create_global_string_variable("libc_MIN_GID",		STRINGISE(MMUX_BASH_TYPE_MIN_GID));
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[usize]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[ssize]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sintmax]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uintmax]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[sintptr]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uintptr]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[ptrdiff]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[mode]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[off]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[pid]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[uid]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[gid]]]);
   }
   {
     MMUX_DEFINE_ERRNO_VARIABLE([[[EPERM]]]);

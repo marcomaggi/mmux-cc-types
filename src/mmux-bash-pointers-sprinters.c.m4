@@ -29,20 +29,28 @@
 #include "mmux-bash-pointers-internals.h"
 
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINT]]],[[[
-int
+/** --------------------------------------------------------------------
+ ** Type string printers: raw C standard types, no typedefs.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINT]]],[[[int
 mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, size_t len, mmux_libc_[[[$1]]]_t value)
 {
 #if ($3)
-  snprintf(strptr, len, $2, value);
-  return EXECUTION_SUCCESS;
+  size_t	to_be_written_chars;
+
+  to_be_written_chars = snprintf(strptr, len, $2, value);
+  if (len > to_be_written_chars) {
+    return EXECUTION_SUCCESS;
+  } else {
+    return EXECUTION_FAILURE;
+  }
 #else
   fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
 #endif
-}
-]]])
+}]]])
 
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[pointer]]],		[[["%p"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[["%hhd"]]], [[[1]]])
@@ -80,7 +88,7 @@ mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex val
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: int8.
+ ** Type string printers: C standard type int8.
  ** ----------------------------------------------------------------- */
 
 int
@@ -96,7 +104,7 @@ mmux_bash_pointers_sprint_uint8 (char * strptr, size_t len, uint8_t value)
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: int16.
+ ** Type string printers: C standard type int16.
  ** ----------------------------------------------------------------- */
 
 int
@@ -112,7 +120,7 @@ mmux_bash_pointers_sprint_uint16 (char * strptr, size_t len, uint16_t value)
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: int32.
+ ** Type string printers: C standard type int32.
  ** ----------------------------------------------------------------- */
 
 int
@@ -128,7 +136,7 @@ mmux_bash_pointers_sprint_uint32 (char * strptr, size_t len, uint32_t value)
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: int64.
+ ** Type string printers: C standard type int64.
  ** ----------------------------------------------------------------- */
 
 int
@@ -163,24 +171,24 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER]]],[[[
 int
 mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_[[[$1]]]_t value)
 {
-  return $2(strptr, len, value);
+  return mmux_bash_pointers_sprint_[[[]]]$2[[[]]](strptr, len, value);
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ssize]]],		[[[MMUX_BASH_TYPE_SPRINT_SSIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[usize]]],		[[[MMUX_BASH_TYPE_SPRINT_USIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sintmax]]],	[[[MMUX_BASH_TYPE_SPRINT_SINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uintmax]]],	[[[MMUX_BASH_TYPE_SPRINT_UINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sintptr]]],	[[[MMUX_BASH_TYPE_SPRINT_SINTPTR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uintptr]]],	[[[MMUX_BASH_TYPE_SPRINT_UINTPTR]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ssize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[usize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ptrdiff]]],	[[[MMUX_BASH_TYPE_SPRINT_PTRDIFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[mode]]],		[[[MMUX_BASH_TYPE_SPRINT_MODE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[off]]],		[[[MMUX_BASH_TYPE_SPRINT_OFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[pid]]],		[[[MMUX_BASH_TYPE_SPRINT_PID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uid]]],		[[[MMUX_BASH_TYPE_SPRINT_UID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[gid]]],		[[[MMUX_BASH_TYPE_SPRINT_GID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[wchar]]],		[[[MMUX_BASH_TYPE_SPRINT_WCHAR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[wint]]],		[[[MMUX_BASH_TYPE_SPRINT_WINT]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ptrdiff]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[mode]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[off]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[pid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[gid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[wchar]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[wint]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]])
 
 /* end of file */
