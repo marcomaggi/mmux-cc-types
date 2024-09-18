@@ -7,6 +7,9 @@
 Revision 0.1.0-devel.1
 ----------------------
 
+* Updated to require GNU Automake at least version 1.17 and GNU Autoconf
+  at least version 2.72.
+
 * Added "unalias" usages to remove aliases when unloading the library.
 
 * Added array accessors and mutators.
@@ -21,6 +24,9 @@ Revision 0.1.0-devel.1
   equivalent,  signed  or  unsigned,   integer  type:  ssize_t,  size_t,
   intmax_t,  uintmax_t, intptr_t,  uintptr_t,  off_t, pid_t,  ptrdiff_t,
   mode_t, uid_t, gid_t.
+
+* Added predicate builtins to validate  the string representation of the
+  supported C language types.
 
 
 Revision 0.1.0-devel.0

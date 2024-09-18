@@ -43,8 +43,9 @@ library.
 depends on the external package MBFL (at least version v3.0.0-devel.9).
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
-systems.  The  package relies on  "pkg-config" to find  the dependencies
-installed on the system.
+systems; it requires GNU Automake at least version 1.17; it requires GNU
+Autoconf at least  version 2.72.  The package relies  on "pkg-config" to
+find the dependencies installed on the system.
 
 2. License
 ----------
