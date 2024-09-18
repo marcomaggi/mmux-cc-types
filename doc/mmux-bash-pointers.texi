@@ -164,6 +164,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * pointers::                    Memory block accessors and mutators.
 * arrays::                      Memory arrays accessors and mutators.
 * conversions::                 Converting data to and from memory blocks.
+* predicates::                  Type predicates.
 * errors::                      Handling errors.
 
 Appendices
@@ -1021,6 +1022,59 @@ fi
 mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @end example
 @end defun
+
+@c page
+@node predicates
+@chapter Type predicates
+
+
+@macro MmuxDefineTypePredicateBuiltin{STEM}
+@deffn Builtin libc_\STEM\_p @var{STRING_REP}
+Return true if @var{STRING_REP} is a valid string representation for the C language type; otherwise
+return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateBuiltin{pointer}
+
+@MmuxDefineTypePredicateBuiltin{schar}
+@MmuxDefineTypePredicateBuiltin{uchar}
+@MmuxDefineTypePredicateBuiltin{sint}
+@MmuxDefineTypePredicateBuiltin{uint}
+@MmuxDefineTypePredicateBuiltin{sshort}
+@MmuxDefineTypePredicateBuiltin{ushort}
+@MmuxDefineTypePredicateBuiltin{slong}
+@MmuxDefineTypePredicateBuiltin{ulong}
+@MmuxDefineTypePredicateBuiltin{sllong}
+@MmuxDefineTypePredicateBuiltin{ullong}
+@MmuxDefineTypePredicateBuiltin{float}
+@MmuxDefineTypePredicateBuiltin{double}
+@MmuxDefineTypePredicateBuiltin{ldouble}
+@MmuxDefineTypePredicateBuiltin{complex}
+
+@MmuxDefineTypePredicateBuiltin{sint8}
+@MmuxDefineTypePredicateBuiltin{uint8}
+@MmuxDefineTypePredicateBuiltin{sint16}
+@MmuxDefineTypePredicateBuiltin{uint16}
+@MmuxDefineTypePredicateBuiltin{sint32}
+@MmuxDefineTypePredicateBuiltin{uint32}
+@MmuxDefineTypePredicateBuiltin{sint64}
+@MmuxDefineTypePredicateBuiltin{uint64}
+
+@MmuxDefineTypePredicateBuiltin{ssize}
+@MmuxDefineTypePredicateBuiltin{usize}
+@MmuxDefineTypePredicateBuiltin{sintmax}
+@MmuxDefineTypePredicateBuiltin{uintmax}
+@MmuxDefineTypePredicateBuiltin{sintptr}
+@MmuxDefineTypePredicateBuiltin{uintptr}
+@MmuxDefineTypePredicateBuiltin{mode}
+@MmuxDefineTypePredicateBuiltin{off}
+@MmuxDefineTypePredicateBuiltin{pid}
+@MmuxDefineTypePredicateBuiltin{uid}
+@MmuxDefineTypePredicateBuiltin{gid}
+@MmuxDefineTypePredicateBuiltin{wchar}
+@MmuxDefineTypePredicateBuiltin{wint}
 
 @c page
 @node errors
