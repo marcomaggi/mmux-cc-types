@@ -1156,6 +1156,7 @@ linking} for details.
 * shared library config::       How to configure a package to link the shared library.
 * shared library version::      Version functions.
 * shared library typedefs::     Type definitions.
+* shared library sizeof::       Type size measured in bytes.
 * shared library predicates::   Type predicates for string representations.
 * shared library maximum::      Type representations of maximum values.
 * shared library minimum::      Type representations of minimum values.
@@ -1314,6 +1315,60 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{gid, gid_t}
 @MmuxDefineCAliasTypedef{wchar, wchar_t}
 @MmuxDefineCAliasTypedef{wint, wint_t}
+
+@c page
+@node shared library sizeof
+@appendixsec Type size measured in bytes
+
+
+@macro MmuxDefineCFunctionSizeof{STEM}
+@deftypefun int mmux_bash_pointers_sizeof_\STEM\ (void)
+Return a positive integer representing the size in bytes of the C language standard type
+@objtype{mmux_libc_\STEM\_t}.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineCFunctionSizeof{pointer}
+
+@MmuxDefineCFunctionSizeof{schar}
+@MmuxDefineCFunctionSizeof{uchar}
+@MmuxDefineCFunctionSizeof{sshort}
+@MmuxDefineCFunctionSizeof{ushort}
+@MmuxDefineCFunctionSizeof{sint}
+@MmuxDefineCFunctionSizeof{uint}
+@MmuxDefineCFunctionSizeof{slong}
+@MmuxDefineCFunctionSizeof{ulong}
+@MmuxDefineCFunctionSizeof{sllong}
+@MmuxDefineCFunctionSizeof{ullong}
+@MmuxDefineCFunctionSizeof{float}
+@MmuxDefineCFunctionSizeof{double}
+@MmuxDefineCFunctionSizeof{ldouble}
+@MmuxDefineCFunctionSizeof{complex}
+
+@MmuxDefineCFunctionSizeof{sint8}
+@MmuxDefineCFunctionSizeof{uint8}
+@MmuxDefineCFunctionSizeof{sint16}
+@MmuxDefineCFunctionSizeof{uint16}
+@MmuxDefineCFunctionSizeof{sint32}
+@MmuxDefineCFunctionSizeof{uint32}
+@MmuxDefineCFunctionSizeof{sint64}
+@MmuxDefineCFunctionSizeof{uint64}
+
+@MmuxDefineCFunctionSizeof{ssize}
+@MmuxDefineCFunctionSizeof{usize}
+@MmuxDefineCFunctionSizeof{sintmax}
+@MmuxDefineCFunctionSizeof{uintmax}
+@MmuxDefineCFunctionSizeof{sintptr}
+@MmuxDefineCFunctionSizeof{uintptr}
+@MmuxDefineCFunctionSizeof{mode}
+@MmuxDefineCFunctionSizeof{off}
+@MmuxDefineCFunctionSizeof{pid}
+@MmuxDefineCFunctionSizeof{uid}
+@MmuxDefineCFunctionSizeof{gid}
+@MmuxDefineCFunctionSizeof{wchar}
+@MmuxDefineCFunctionSizeof{wint}
 
 @c page
 @node shared library predicates
