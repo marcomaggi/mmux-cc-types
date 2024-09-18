@@ -1155,6 +1155,7 @@ linking} for details.
 @menu
 * shared library config::       How to configure a package to link the shared library.
 * shared library version::      Version functions.
+* shared library typedefs::     Type definitions.
 * shared library parsers::      Parsing string representations of C language types.
 * shared library sprinters::    Printing string representations of C language types.
 @end menu
@@ -1214,12 +1215,122 @@ Return an integer representing the library interface current age.
 @end deftypefun
 
 @c page
+@node shared library typedefs
+@appendixsec Type definitions
+
+
+@cindex Type stems
+@cindex @code{pointer}, type stem
+@cindex @code{schar}, type stem
+@cindex @code{uchar}, type stem
+@cindex @code{sshort}, type stem
+@cindex @code{ushort}, type stem
+@cindex @code{sint}, type stem
+@cindex @code{uint}, type stem
+@cindex @code{slong}, type stem
+@cindex @code{ulong}, type stem
+@cindex @code{sllong}, type stem
+@cindex @code{ullong}, type stem
+@cindex @code{float}, type stem
+@cindex @code{double}, type stem
+@cindex @code{ldouble}, type stem
+@cindex @code{complex}, type stem
+
+@cindex @code{sint8}, type stem
+@cindex @code{uint8}, type stem
+@cindex @code{sint16}, type stem
+@cindex @code{uint16}, type stem
+@cindex @code{sint32}, type stem
+@cindex @code{uint32}, type stem
+@cindex @code{sint64}, type stem
+@cindex @code{uint64}, type stem
+
+@cindex @code{ssize}, type stem
+@cindex @code{usize}, type stem
+@cindex @code{sintmax}, type stem
+@cindex @code{uintmax}, type stem
+@cindex @code{sintptr}, type stem
+@cindex @code{uintptr}, type stem
+@cindex @code{mode}, type stem
+@cindex @code{off}, type stem
+@cindex @code{pid}, type stem
+@cindex @code{uid}, type stem
+@cindex @code{gid}, type stem
+@cindex @code{wchar}, type stem
+@cindex @code{wint}, type stem
+
+
+The following type definitions just alias the corresponding standard C language type; the type name
+is composed from a ``stem'': a single word representing the name of the type.  Such uniform names
+are useful when using preprocessor macros to generate code.
+
+@macro MmuxDefineCAliasTypedef{STEM,TYPE}
+@deftp {Typedef} mmux_libc_\STEM\_t
+Type definition aliasing the standard C language type @code{\TYPE\}.
+@end deftp
+
+@end macro
+
+
+@MmuxDefineCAliasTypedef{pointer,void *}
+
+@MmuxDefineCAliasTypedef{schar,signed char}
+@MmuxDefineCAliasTypedef{uchar,unsigned char}
+@MmuxDefineCAliasTypedef{sshort,signed short int}
+@MmuxDefineCAliasTypedef{ushort,unsigned short int}
+@MmuxDefineCAliasTypedef{sint,signed int}
+@MmuxDefineCAliasTypedef{uint,unsigned int}
+@MmuxDefineCAliasTypedef{slong,signed long}
+@MmuxDefineCAliasTypedef{ulong,unsigned long}
+@MmuxDefineCAliasTypedef{sllong,signed long long}
+@MmuxDefineCAliasTypedef{ullong,unsigned long long}
+@MmuxDefineCAliasTypedef{float,float}
+@MmuxDefineCAliasTypedef{double,double}
+@MmuxDefineCAliasTypedef{ldouble,long double}
+@MmuxDefineCAliasTypedef{complex,double complex}
+
+@MmuxDefineCAliasTypedef{sint8,int8_t}
+@MmuxDefineCAliasTypedef{uint8,uint8_t}
+@MmuxDefineCAliasTypedef{sint16,int16_t}
+@MmuxDefineCAliasTypedef{uint16,uint16_t}
+@MmuxDefineCAliasTypedef{sint32,int32_t}
+@MmuxDefineCAliasTypedef{uint32,uint32_t}
+@MmuxDefineCAliasTypedef{sint64,int64_t}
+@MmuxDefineCAliasTypedef{uint64,uint64_t}
+
+@MmuxDefineCAliasTypedef{ssize,ssize_t}
+@MmuxDefineCAliasTypedef{usize,size_t}
+@MmuxDefineCAliasTypedef{sintmax, intmax_t}
+@MmuxDefineCAliasTypedef{uintmax, uintmax_t}
+@MmuxDefineCAliasTypedef{sintptr, intptr_t}
+@MmuxDefineCAliasTypedef{uintptr, uintptr_t}
+@MmuxDefineCAliasTypedef{mode, mode_t}
+@MmuxDefineCAliasTypedef{off, off_t}
+@MmuxDefineCAliasTypedef{pid, pid_t}
+@MmuxDefineCAliasTypedef{uid, uid_t}
+@MmuxDefineCAliasTypedef{gid, gid_t}
+@MmuxDefineCAliasTypedef{wchar, wchar_t}
+@MmuxDefineCAliasTypedef{wint, wint_t}
+
+@c page
 @node shared library parsers
 @appendixsec Parsing string representations of C language types
 
 
+Type parsers convert string representations to C language values; to parse a @code{signed int}
+representation we do:
+
+@example
+char const *            arg = "123";
+mmux_libc_sint_t        value;
+int                     rv;
+
+rv = mmux_bash_pointers_parse_sint(&value, arg, "my-builtin");
+@end example
+
+
 @macro MmuxDefineCFunctionParser{STEM,TYPE}
-@deftypefun int mmux_bash_pointers_parse_\STEM\ (\TYPE\ * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
+@deftypefun int mmux_bash_pointers_parse_\STEM\ (mmux_libc_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
 Parse a string which is meant to be the representation of a C language type @code{\TYPE\}; when
 successful store the result in the variable referenced by @var{PTR}, then return
 @code{EXECUTION_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{EXECUTION_FAILURE}.
