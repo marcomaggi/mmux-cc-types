@@ -235,8 +235,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     MMUX_DEFINE_SIZEOF_VARIABLE([[[sint64]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[uint64]]]);
 
-    MMUX_DEFINE_SIZEOF_VARIABLE([[[usize]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[ssize]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[usize]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[sintmax]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[uintmax]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[sintptr]]]);
@@ -247,6 +247,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     MMUX_DEFINE_SIZEOF_VARIABLE([[[pid]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[uid]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[gid]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[wchar]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[wint]]]);
   }
   {
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[pointer]]]);
@@ -281,8 +283,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[sint64]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[uint64]]]);
 
-    MMUX_DEFINE_MAXIMUM_VARIABLE([[[usize]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[ssize]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[usize]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[sintmax]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[uintmax]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[sintptr]]]);
@@ -293,6 +295,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[pid]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[uid]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[gid]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[wchar]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[wint]]]);
   }
   {
     MMUX_DEFINE_MINIMUM_VARIABLE([[[pointer]]]);
@@ -327,8 +331,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     MMUX_DEFINE_MINIMUM_VARIABLE([[[sint64]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[uint64]]]);
 
-    MMUX_DEFINE_MINIMUM_VARIABLE([[[usize]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[ssize]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[usize]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[sintmax]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[uintmax]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[sintptr]]]);
@@ -339,6 +343,8 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     MMUX_DEFINE_MINIMUM_VARIABLE([[[pid]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[uid]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[gid]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[wchar]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[wint]]]);
   }
   {
     MMUX_DEFINE_ERRNO_VARIABLE([[[EPERM]]]);
