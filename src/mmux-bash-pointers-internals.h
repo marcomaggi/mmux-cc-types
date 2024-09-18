@@ -73,10 +73,12 @@
 #  include <sys/stat.h>
 #endif
 
+/* for the type: mode_t, uid_t, gid_t */
 #ifdef HAVE_SYS_TYPES_H
 #  include <sys/types.h>
 #endif
 
+/* for the type: ssize_t, pid_t */
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif

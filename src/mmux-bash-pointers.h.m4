@@ -87,10 +87,7 @@ extern "C" {
 
 #include <stdbool.h>
 #include <stddef.h>
-#include <unistd.h>		/* for the type: ssize_t, pid_t */
-#include <stdint.h>
 #include <inttypes.h>
-#include <sys/types.h>		/* for the type: mode_t, uid_t, gid_t */
 #include <complex.h>
 
 
@@ -132,10 +129,12 @@ typedef long double			mmux_libc_ldouble_t;
 #endif
 typedef double complex			mmux_libc_complex_t;
 
+m4_divert(-1)m4_dnl
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF]]],
-  [[[typedef mmux_libc_[[[]]]$2[[[]]]_t	mmux_libc_[[[]]]$1[[[]]]_t]]])
+  [[[typedef mmux_libc_[[[]]]$2[[[]]]_t		mmux_libc_[[[]]]$1[[[]]]_t]]])
+m4_divert(0)m4_dnl
 
 MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[ssize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]]);
 MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[usize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]]);
@@ -157,23 +156,25 @@ MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_A
  ** Type functions definition.
  ** ----------------------------------------------------------------- */
 
-#undef  MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES
-#define MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(STEM)									\
-  mmux_bash_pointers_decl bool mmux_bash_pointers_string_ ## STEM ## _p (char const * s_arg);						\
-  mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_ ## STEM (void)									\
-       __attribute__((__const__));													\
-  mmux_bash_pointers_decl mmux_libc_ ## STEM ## _t mmux_bash_pointers_minimum_ ## STEM (void)						\
-  __attribute__((__const__));														\
-  mmux_bash_pointers_decl mmux_libc_ ## STEM ## _t mmux_bash_pointers_maximum_ ## STEM (void)						\
-  __attribute__((__const__));														\
-  mmux_bash_pointers_decl int mmux_bash_pointers_sprint_maximum_ ## STEM (char * s, size_t l)						\
-       __attribute__((__nonnull__(1)));													\
-  mmux_bash_pointers_decl int mmux_bash_pointers_sprint_minimum_ ## STEM (char * s, size_t l)						\
-       __attribute__((__nonnull__(1)));													\
-  mmux_bash_pointers_decl int mmux_bash_pointers_parse_ ## STEM	(mmux_libc_ ## STEM ## _t * p, char const * s, char const * who)	\
-       __attribute__((__nonnull__(1,2)));												\
-  mmux_bash_pointers_decl int mmux_bash_pointers_sprint_ ## STEM (char * s, size_t l, mmux_libc_ ## STEM ## _t v)			\
-       __attribute__((__nonnull__(1)))
+m4_divert(-1)m4_dnl
+m4_dnl $1 - type stem
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES]]],[[[m4_dnl
+mmux_bash_pointers_decl bool mmux_bash_pointers_string_[[[]]]$1[[[]]]_p (char const * s_arg);
+mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_[[[]]]$1[[[]]] (void)
+     __attribute__((__const__));
+mmux_bash_pointers_decl mmux_libc_[[[]]]$1[[[]]]_t mmux_bash_pointers_minimum_$1 (void)
+     __attribute__((__const__));
+mmux_bash_pointers_decl mmux_libc_[[[]]]$1[[[]]]_t mmux_bash_pointers_maximum_$1 (void)
+     __attribute__((__const__));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_maximum_$1 (char * s, size_t l)
+       __attribute__((__nonnull__(1)));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_minimum_$1 (char * s, size_t l)
+       __attribute__((__nonnull__(1)));
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_[[[]]]$1[[[]]]_t * p, char const * s, char const * who)
+       __attribute__((__nonnull__(1,2)));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, size_t l, mmux_libc_[[[]]]$1[[[]]]_t v)
+       __attribute__((__nonnull__(1)))]]])
+m4_divert(0)m4_dnl
 
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(pointer);
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(schar);
