@@ -1156,6 +1156,7 @@ linking} for details.
 * shared library config::       How to configure a package to link the shared library.
 * shared library version::      Version functions.
 * shared library typedefs::     Type definitions.
+* shared library predicates::   Type predicates for string representations.
 * shared library parsers::      Parsing string representations of C language types.
 * shared library sprinters::    Printing string representations of C language types.
 @end menu
@@ -1313,11 +1314,65 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{wint, wint_t}
 
 @c page
+@node shared library predicates
+@appendixsec Type predicates for string representations
+
+
+@macro MmuxDefineCFunctionPredicate{STEM}
+@deftypefun bool mmux_bash_pointers_string_\STEM\_p (char const * @var{str})
+Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a
+value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineCFunctionPredicate{pointer}
+
+@MmuxDefineCFunctionPredicate{schar}
+@MmuxDefineCFunctionPredicate{uchar}
+@MmuxDefineCFunctionPredicate{sshort}
+@MmuxDefineCFunctionPredicate{ushort}
+@MmuxDefineCFunctionPredicate{sint}
+@MmuxDefineCFunctionPredicate{uint}
+@MmuxDefineCFunctionPredicate{slong}
+@MmuxDefineCFunctionPredicate{ulong}
+@MmuxDefineCFunctionPredicate{sllong}
+@MmuxDefineCFunctionPredicate{ullong}
+@MmuxDefineCFunctionPredicate{float}
+@MmuxDefineCFunctionPredicate{double}
+@MmuxDefineCFunctionPredicate{ldouble}
+@MmuxDefineCFunctionPredicate{complex}
+
+@MmuxDefineCFunctionPredicate{sint8}
+@MmuxDefineCFunctionPredicate{uint8}
+@MmuxDefineCFunctionPredicate{sint16}
+@MmuxDefineCFunctionPredicate{uint16}
+@MmuxDefineCFunctionPredicate{sint32}
+@MmuxDefineCFunctionPredicate{uint32}
+@MmuxDefineCFunctionPredicate{sint64}
+@MmuxDefineCFunctionPredicate{uint64}
+
+@MmuxDefineCFunctionPredicate{ssize}
+@MmuxDefineCFunctionPredicate{usize}
+@MmuxDefineCFunctionPredicate{sintmax}
+@MmuxDefineCFunctionPredicate{uintmax}
+@MmuxDefineCFunctionPredicate{sintptr}
+@MmuxDefineCFunctionPredicate{uintptr}
+@MmuxDefineCFunctionPredicate{mode}
+@MmuxDefineCFunctionPredicate{off}
+@MmuxDefineCFunctionPredicate{pid}
+@MmuxDefineCFunctionPredicate{uid}
+@MmuxDefineCFunctionPredicate{gid}
+@MmuxDefineCFunctionPredicate{wchar}
+@MmuxDefineCFunctionPredicate{wint}
+
+@c page
 @node shared library parsers
 @appendixsec Parsing string representations of C language types
 
 
-Type parsers convert string representations to C language values; to parse a @code{signed int}
+Type parsers convert string representations to C language values; to parse a @code{mmuc_libc_sint_t}
 representation we do:
 
 @example
@@ -1386,6 +1441,21 @@ requested the parsing operation, for example: the name of a builtin.
 @c page
 @node shared library sprinters
 @appendixsec Printing string representations of C language types
+
+
+Type string printers convert binary representations of standard C language values to string
+representations; to print a @objtype{mmux_libc_sint_t} string representation we do:
+
+@example
+mmux_libc_sint_t        value = 123;
+
+#undef  LEN
+#define LEN     256     /* enough? */
+char    str[LEN];
+int     rv;
+
+rv = mmux_bash_pointers_sprint_sint(str, LEN, value);
+@end example
 
 
 @macro MmuxDefineCFunctionSprinter{STEM,TYPE}
