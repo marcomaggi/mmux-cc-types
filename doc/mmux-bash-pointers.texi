@@ -1157,6 +1157,8 @@ linking} for details.
 * shared library version::      Version functions.
 * shared library typedefs::     Type definitions.
 * shared library predicates::   Type predicates for string representations.
+* shared library maximum::      Type representations of maximum values.
+* shared library minimum::      Type representations of minimum values.
 * shared library parsers::      Parsing string representations of C language types.
 * shared library sprinters::    Printing string representations of C language types.
 @end menu
@@ -1366,6 +1368,128 @@ value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{gid}
 @MmuxDefineCFunctionPredicate{wchar}
 @MmuxDefineCFunctionPredicate{wint}
+
+@c page
+@node shared library maximum
+@appendixsec Type representations of maximum values
+
+
+@macro MmuxDefineCFunctionMaximum{STEM}
+@deftypefun mmux_clib_\STEM\_t mmux_bash_pointers_maximum_\STEM\ (void)
+@deftypefunx int mmux_bash_pointers_sprint_maximum_\STEM\ (char * @var{STR}, size_t @var{LEN})
+The first function returns the maximum value representable by the range of values of the type
+@objtype{mmux_clib_\STEM\_t}.
+
+The second function writes in the buffer referenced by @var{STR} a string representation, in
+@asciiz{} format, of the maximum value representable by the range of values of the type
+@objtype{mmux_clib_\STEM\_t}; the buffer can contain at most @var{LEN} characters, terminating--zero
+included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it returns
+@code{EXECUTION_FAILURE}.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineCFunctionMaximum{pointer}
+
+@MmuxDefineCFunctionMaximum{schar}
+@MmuxDefineCFunctionMaximum{uchar}
+@MmuxDefineCFunctionMaximum{sshort}
+@MmuxDefineCFunctionMaximum{ushort}
+@MmuxDefineCFunctionMaximum{sint}
+@MmuxDefineCFunctionMaximum{uint}
+@MmuxDefineCFunctionMaximum{slong}
+@MmuxDefineCFunctionMaximum{ulong}
+@MmuxDefineCFunctionMaximum{sllong}
+@MmuxDefineCFunctionMaximum{ullong}
+@MmuxDefineCFunctionMaximum{float}
+@MmuxDefineCFunctionMaximum{double}
+@MmuxDefineCFunctionMaximum{ldouble}
+@MmuxDefineCFunctionMaximum{complex}
+
+@MmuxDefineCFunctionMaximum{sint8}
+@MmuxDefineCFunctionMaximum{uint8}
+@MmuxDefineCFunctionMaximum{sint16}
+@MmuxDefineCFunctionMaximum{uint16}
+@MmuxDefineCFunctionMaximum{sint32}
+@MmuxDefineCFunctionMaximum{uint32}
+@MmuxDefineCFunctionMaximum{sint64}
+@MmuxDefineCFunctionMaximum{uint64}
+
+@MmuxDefineCFunctionMaximum{ssize}
+@MmuxDefineCFunctionMaximum{usize}
+@MmuxDefineCFunctionMaximum{sintmax}
+@MmuxDefineCFunctionMaximum{uintmax}
+@MmuxDefineCFunctionMaximum{sintptr}
+@MmuxDefineCFunctionMaximum{uintptr}
+@MmuxDefineCFunctionMaximum{mode}
+@MmuxDefineCFunctionMaximum{off}
+@MmuxDefineCFunctionMaximum{pid}
+@MmuxDefineCFunctionMaximum{uid}
+@MmuxDefineCFunctionMaximum{gid}
+@MmuxDefineCFunctionMaximum{wchar}
+@MmuxDefineCFunctionMaximum{wint}
+
+@c page
+@node shared library minimum
+@appendixsec Type representations of minimum values
+
+
+@macro MmuxDefineCFunctionMinimum{STEM}
+@deftypefun mmux_clib_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
+@deftypefunx int mmux_bash_pointers_sprint_minimum_\STEM\ (char * @var{STR}, size_t @var{LEN})
+The first function returns the minimum value representable by the range of values of the type
+@objtype{mmux_clib_\STEM\_t}.
+
+The second function writes in the buffer referenced by @var{STR} a string representation, in
+@asciiz{} format, of the minimum value representable by the range of values of the type
+@objtype{mmux_clib_\STEM\_t}; the buffer can contain at most @var{LEN} characters, terminating--zero
+included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it returns
+@code{EXECUTION_FAILURE}.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineCFunctionMinimum{pointer}
+
+@MmuxDefineCFunctionMinimum{schar}
+@MmuxDefineCFunctionMinimum{uchar}
+@MmuxDefineCFunctionMinimum{sshort}
+@MmuxDefineCFunctionMinimum{ushort}
+@MmuxDefineCFunctionMinimum{sint}
+@MmuxDefineCFunctionMinimum{uint}
+@MmuxDefineCFunctionMinimum{slong}
+@MmuxDefineCFunctionMinimum{ulong}
+@MmuxDefineCFunctionMinimum{sllong}
+@MmuxDefineCFunctionMinimum{ullong}
+@MmuxDefineCFunctionMinimum{float}
+@MmuxDefineCFunctionMinimum{double}
+@MmuxDefineCFunctionMinimum{ldouble}
+@MmuxDefineCFunctionMinimum{complex}
+
+@MmuxDefineCFunctionMinimum{sint8}
+@MmuxDefineCFunctionMinimum{uint8}
+@MmuxDefineCFunctionMinimum{sint16}
+@MmuxDefineCFunctionMinimum{uint16}
+@MmuxDefineCFunctionMinimum{sint32}
+@MmuxDefineCFunctionMinimum{uint32}
+@MmuxDefineCFunctionMinimum{sint64}
+@MmuxDefineCFunctionMinimum{uint64}
+
+@MmuxDefineCFunctionMinimum{ssize}
+@MmuxDefineCFunctionMinimum{usize}
+@MmuxDefineCFunctionMinimum{sintmax}
+@MmuxDefineCFunctionMinimum{uintmax}
+@MmuxDefineCFunctionMinimum{sintptr}
+@MmuxDefineCFunctionMinimum{uintptr}
+@MmuxDefineCFunctionMinimum{mode}
+@MmuxDefineCFunctionMinimum{off}
+@MmuxDefineCFunctionMinimum{pid}
+@MmuxDefineCFunctionMinimum{uid}
+@MmuxDefineCFunctionMinimum{gid}
+@MmuxDefineCFunctionMinimum{wchar}
+@MmuxDefineCFunctionMinimum{wint}
 
 @c page
 @node shared library parsers
