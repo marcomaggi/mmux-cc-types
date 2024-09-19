@@ -36,9 +36,11 @@ function mmux-bash-pointers-library-load () {
     declare -g MMUX_BASH_POINTERS_CURRENT=mmux_bash_pointers_VERSION_INTERFACE_CURRENT
     declare -g MMUX_BASH_POINTERS_REVISION=mmux_bash_pointers_VERSION_INTERFACE_REVISION
     declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
-    declare -ga MMUX_BASH_POINTERS_POINTER_TYPES=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
+    declare -ga MMUX_BASH_POINTERS_TYPE_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
+    declare -ga MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror)
     declare -ga MMUX_BASH_POINTERS_ARITHMETICS_OPS=(add sub mul div neg)
+    declare -ga MMUX_BASH_POINTERS_BITWISE_OPS=(and or xor not)
 
     # Given an exact integer, in base 10, representing the ASCII code of a character: the element at
     # that index in this array is the character itself.
@@ -63,30 +65,30 @@ function mmux-bash-pointers-library-load () {
 	    alias "$ALIAS"="$NAME"
 	done
 
-	for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+	for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_TYPE_STEMS[@]}; ++IDX))
 	do
-	    printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	    printf -v ALIAS 'pointer-set-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	    printf -v ALIAS 'pointer-set-%s'                    "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	    printf -v ALIAS 'array-set-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	    printf -v ALIAS 'array-set-%s'                      "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	    printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	    printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	    printf -v ALIAS 'array-ref-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	    printf -v ALIAS 'array-ref-%s'                      "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_%s_p'		"${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	    printf -v ALIAS 'libc_%s_p'                         "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	    printf -v NAME  'mmux_bash_pointers_%s_p'		"${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	    printf -v ALIAS 'libc_%s_p'                         "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 	done
@@ -98,16 +100,34 @@ function mmux-bash-pointers-library-load () {
 
 	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
 	    # arithmetics operations.
-	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_TYPE_STEMS[@]}; ++IDX))
 	    do
 		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
 		do
 		    printf -v NAME  'mmux_bash_pointers_%s_%s' \
-			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
+			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
 			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
 		    printf -v ALIAS '%s-%s' \
-			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
+			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
 			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+		    alias "$ALIAS"="$NAME"
+		done
+	    done
+	}
+
+	# Bitwise builtins.
+	{
+	    for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[@]}; ++IDX))
+	    do
+		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_BITWISE_OPS[@]}; ++JDX))
+		do
+		    printf -v NAME  'mmux_bash_pointers_bitwise_%s_%s'  \
+			   "${MMUX_BASH_POINTERS_BITWISE_OPS[$JDX]}"	\
+			   "${MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[$IDX]}"
+		    printf -v ALIAS 'bitwise-%s-%s'			\
+			   "${MMUX_BASH_POINTERS_BITWISE_OPS[$JDX]}"	\
+			   "${MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[$IDX]}"
 		    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 		    alias "$ALIAS"="$NAME"
 		done
@@ -133,57 +153,74 @@ function mmux-bash-pointers-library-unload () {
 	unalias "$ALIAS"
     done
 
-    for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+    for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_TYPE_STEMS[@]}; ++IDX))
     do
-	printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	printf -v ALIAS 'pointer-set-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	printf -v ALIAS 'pointer-set-%s'                    "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
 
-	printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	printf -v ALIAS 'array-set-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	printf -v ALIAS 'array-set-%s'                      "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
 
-	printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	printf -v ALIAS 'pointer-ref-%s'                    "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
 
-	printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	printf -v ALIAS 'array-ref-%s'                      "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	printf -v ALIAS 'array-ref-%s'                      "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
 
-	printf -v NAME  'mmux_bash_pointers_%s_p'	    "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
-	printf -v ALIAS 'libc_%s_p'                         "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
+	printf -v NAME  'mmux_bash_pointers_%s_p'	    "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+	printf -v ALIAS 'libc_%s_p'                         "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
-
-
-	# Arithmetics builtins.
-	{
-	    enable -d 'mmux_bash_pointers_pointer_add'
-	    unalias 'pointer-add'
-
-	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
-	    # arithmetics operations.
-	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
-	    do
-		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
-		do
-		    printf -v NAME  'mmux_bash_pointers_%s_%s' \
-			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
-			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
-		    printf -v ALIAS '%s-%s' \
-			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
-			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
-		    enable -d "$NAME"
-		    unalias "$ALIAS"
-		done
-	    done
-	}
     done
+
+    # Arithmetics builtins.
+    {
+	enable -d 'mmux_bash_pointers_pointer_add'
+	unalias 'pointer-add'
+
+	# Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
+	# arithmetics operations.
+	for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_TYPE_STEMS[@]}; ++IDX))
+	do
+	    for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
+	    do
+		printf -v NAME  'mmux_bash_pointers_%s_%s' \
+		       "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
+		       "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		printf -v ALIAS '%s-%s' \
+		       "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
+		       "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		enable -d "$NAME"
+		unalias "$ALIAS"
+	    done
+	done
+    }
+
+    # Bitwise builtins.
+    {
+	for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[@]}; ++IDX))
+	do
+	    for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_BITWISE_OPS[@]}; ++JDX))
+	    do
+		printf -v NAME  'mmux_bash_pointers_bitwise_%s_%s'	\
+		       "${MMUX_BASH_POINTERS_BITWISE_OPS[$JDX]}"	\
+		       "${MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[$IDX]}"
+		printf -v ALIAS 'bitwise-%s-%s'				\
+		       "${MMUX_BASH_POINTERS_BITWISE_OPS[$JDX]}"	\
+		       "${MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[$IDX]}"
+		enable -d "$NAME"
+		unalias "$ALIAS"
+	    done
+	done
+    }
 
     enable -d "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_errno_to_string'
 
@@ -191,7 +228,7 @@ function mmux-bash-pointers-library-unload () {
     unset -v MMUX_BASH_POINTERS_CURRENT
     unset -v MMUX_BASH_POINTERS_REVISION
     unset -v MMUX_BASH_POINTERS_AGE
-    unset -v MMUX_BASH_POINTERS_POINTER_TYPES
+    unset -v MMUX_BASH_POINTERS_TYPE_STEMS
     unset -v MMUX_BASH_POINTERS_LIBC_BUILTINS
     unset -v MMUX_BASH_POINTERS_ASCII_TABLE
 

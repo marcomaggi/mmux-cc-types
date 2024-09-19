@@ -1,5 +1,5 @@
 #!#
-#!# Part of: MMUX Bash Libc Mathematics
+#!# Part of: MMUX Bash Pointers
 #!# Contents: tests for arithmetics builtins
 #!# Date: Sep 19, 2024
 #!#
@@ -52,7 +52,7 @@ source "$MMUX_LIBRARY"
 #### type variables: pointer
 
 function arithmetics-pointer-add-1.1 () {
-    declare rop OP=0x100 DELTA=7
+    declare ROP OP=0x100 DELTA=7
     declare -r EXPECTED_ROP='0x107'
 
     pointer-add ROP QQ(OP) QQ(DELTA)

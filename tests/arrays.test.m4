@@ -1,5 +1,5 @@
 #!#
-#!# Part of: MMUX Bash Libc Mathematics
+#!# Part of: MMUX Bash Pointers
 #!# Contents: tests for raw memory accessor and mutator builtins
 #!# Date: Sep 12, 2024
 #!#

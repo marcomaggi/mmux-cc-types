@@ -158,7 +158,8 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * arrays::                      Memory arrays accessors and mutators.
 * conversions::                 Converting data to and from memory blocks.
 * predicates::                  Type predicates.
-* arithmetics::                 Arithmetics builtins.
+* arithmetics::                 Arithmetics operation builtins.
+* bitwise::                     Bitwise operation builtins.
 * errors::                      Handling errors.
 
 Appendices
@@ -1095,7 +1096,7 @@ return false.
 
 @c page
 @node arithmetics
-@chapter Arithmetics builtins
+@chapter Arithmetics operation builtins
 
 
 @menu
@@ -1454,6 +1455,52 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{gid}
 @MmuxDefineTypeNegationBuiltin{wchar}
 @MmuxDefineTypeNegationBuiltin{wint}
+
+@c page
+@node bitwise
+@chapter Bitwise operation builtins
+
+
+@menu
+* bitwise and::                 Bitwise AND operation.
+* bitwise or::                  Bitwise OR operation.
+* bitwise xor::                 Bitwise XOR operation.
+* bitwise not::                 Bitwise NOT operation.
+@end menu
+
+@c page
+@node bitwise and
+@section Bitwise AND operation
+
+
+For the following builtins, the bitwise AND operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} & @var{OP} & @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+All the builtins perform the operation between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+@c page
+@node bitwise or
+@section Bitwise OR operation
+
+@c page
+@node bitwise xor
+@section Bitwise XOR operation
+
+@c page
+@node bitwise not
+@section Bitwise NOT operation
+
 
 @c page
 @node errors
