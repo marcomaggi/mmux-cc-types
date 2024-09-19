@@ -940,8 +940,8 @@ function stores in this array the bytes from the memory block, starting from ind
 The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
 allocated memory block; the referenced memory is the source of the copy operation.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
 
 @example
 declare POINTER
@@ -966,8 +966,8 @@ allocated memory block; the referenced memory is the target of the copy operatio
 The argument @var{ARRY_FROM} must be a string representing the name of a Bash index array; this
 function reads from this array the bytes to store in the memory block, starting from index zero.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
 
 @example
 declare POINTER
@@ -997,8 +997,8 @@ zero.
 The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
 allocated memory block; the referenced memory is the source of the copy operation.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
 
 @example
 declare POINTER
@@ -1023,8 +1023,8 @@ allocated memory block; the referenced memory is the target of the copy operatio
 The argument @var{STRING_FROM} must be a string; this function reads from this strings the bytes to
 store in the memory block, starting from index zero.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
 
 @example
 declare POINTER
@@ -1056,10 +1056,10 @@ return false.
 
 @MmuxDefineTypePredicateBuiltin{schar}
 @MmuxDefineTypePredicateBuiltin{uchar}
-@MmuxDefineTypePredicateBuiltin{sint}
-@MmuxDefineTypePredicateBuiltin{uint}
 @MmuxDefineTypePredicateBuiltin{sshort}
 @MmuxDefineTypePredicateBuiltin{ushort}
+@MmuxDefineTypePredicateBuiltin{sint}
+@MmuxDefineTypePredicateBuiltin{uint}
 @MmuxDefineTypePredicateBuiltin{slong}
 @MmuxDefineTypePredicateBuiltin{ulong}
 @MmuxDefineTypePredicateBuiltin{sllong}
@@ -1114,8 +1114,8 @@ $SYM    @result{} EINVAL
 
 @deffn Builtin libc_strerror @var{MSGVAR} @var{ERRNUM}
 Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
-representation of an exact integer representing a valid value for @code{errno}; @var{ERRNUM} must
-fit the C language type @code{int}.
+representation of an exact integer, itself representing a valid value for @code{errno}; @var{ERRNUM}
+must fit the C language type @code{int}.
 
 @example
 declare MSG
