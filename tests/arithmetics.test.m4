@@ -1956,6 +1956,200 @@ function arithmetics-gid-div-1.3 () {
 }
 
 
+#### type variables: wchar
+
+function arithmetics-wchar-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wchar-add ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    wchar-add ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    wchar-add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wchar-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wchar-sub ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    wchar-sub ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    wchar-sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wchar-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wchar-mul ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    wchar-mul ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    wchar-mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wchar-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wchar-div ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    wchar-div ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wchar-div-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3
+    declare -r EXPECTED_ROP=$((100 / 2 / 3))
+
+    wchar-div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+
+#### type variables: wint
+
+function arithmetics-wint-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wint-add ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    wint-add ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    wint-add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wint-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wint-sub ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    wint-sub ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    wint-sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wint-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wint-mul ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    wint-mul ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    wint-mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wint-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    wint-div ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    wint-div ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-wint-div-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3
+    declare -r EXPECTED_ROP=$((100 / 2 / 3))
+
+    wint-div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+
 #### let's go
 
 dotest arithmetics-

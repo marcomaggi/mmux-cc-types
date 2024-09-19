@@ -158,6 +158,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * arrays::                      Memory arrays accessors and mutators.
 * conversions::                 Converting data to and from memory blocks.
 * predicates::                  Type predicates.
+* arithmetics::                 Arithmetics builtins.
 * errors::                      Handling errors.
 
 Appendices
@@ -1091,6 +1092,368 @@ return false.
 @MmuxDefineTypePredicateBuiltin{gid}
 @MmuxDefineTypePredicateBuiltin{wchar}
 @MmuxDefineTypePredicateBuiltin{wint}
+
+@c page
+@node arithmetics
+@chapter Arithmetics builtins
+
+
+@menu
+* arithmetics addition::        Addition builtins.
+* arithmetics subtraction::     Subtraction builtins.
+* arithmetics multiplication::  Multiplication builtins.
+* arithmetics division::        Division builtins.
+* arithmetics negation::        Negation builtins.
+@end menu
+
+@c page
+@node arithmetics addition
+@section Addition builtins
+
+
+@deffn Builtin pointer-add @var{PTRVAR} @var{PTR} @var{DELTA}
+Perform the addition between @var{PTR} and @var{DELTA}, then store a string representation of the
+result in the variable @var{PTRVAR}; when successful: return true, otherwise return false and set
+the shell variable @code{ERRNO} to the string representation of an exact integer, itself
+representing an @code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a pointer.
+
+The argument @var{DELTA} must be the string representation of an exact number, in the range of the C
+language type @objtype{ptrdiff_t}.
+@end deffn
+
+
+For the following builtins, the addition operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} + @var{OP} + @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+All the builtins perform the addition between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+
+@macro MmuxDefineTypeAdditionBuiltin{STEM}
+@deffn Builtin \STEM\-add @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the addition between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeAdditionBuiltin{schar}
+@MmuxDefineTypeAdditionBuiltin{uchar}
+@MmuxDefineTypeAdditionBuiltin{sshort}
+@MmuxDefineTypeAdditionBuiltin{ushort}
+@MmuxDefineTypeAdditionBuiltin{sint}
+@MmuxDefineTypeAdditionBuiltin{uint}
+@MmuxDefineTypeAdditionBuiltin{slong}
+@MmuxDefineTypeAdditionBuiltin{ulong}
+@MmuxDefineTypeAdditionBuiltin{sllong}
+@MmuxDefineTypeAdditionBuiltin{ullong}
+@MmuxDefineTypeAdditionBuiltin{float}
+@MmuxDefineTypeAdditionBuiltin{double}
+@MmuxDefineTypeAdditionBuiltin{ldouble}
+@MmuxDefineTypeAdditionBuiltin{complex}
+
+@MmuxDefineTypeAdditionBuiltin{sint8}
+@MmuxDefineTypeAdditionBuiltin{uint8}
+@MmuxDefineTypeAdditionBuiltin{sint16}
+@MmuxDefineTypeAdditionBuiltin{uint16}
+@MmuxDefineTypeAdditionBuiltin{sint32}
+@MmuxDefineTypeAdditionBuiltin{uint32}
+@MmuxDefineTypeAdditionBuiltin{sint64}
+@MmuxDefineTypeAdditionBuiltin{uint64}
+
+@MmuxDefineTypeAdditionBuiltin{ssize}
+@MmuxDefineTypeAdditionBuiltin{usize}
+@MmuxDefineTypeAdditionBuiltin{sintmax}
+@MmuxDefineTypeAdditionBuiltin{uintmax}
+@MmuxDefineTypeAdditionBuiltin{sintptr}
+@MmuxDefineTypeAdditionBuiltin{uintptr}
+@MmuxDefineTypeAdditionBuiltin{mode}
+@MmuxDefineTypeAdditionBuiltin{off}
+@MmuxDefineTypeAdditionBuiltin{pid}
+@MmuxDefineTypeAdditionBuiltin{uid}
+@MmuxDefineTypeAdditionBuiltin{gid}
+@MmuxDefineTypeAdditionBuiltin{wchar}
+@MmuxDefineTypeAdditionBuiltin{wint}
+
+@c page
+@node arithmetics subtraction
+@section Subtraction builtins
+
+
+For the following builtins, the subtraction operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} - @var{OP} - @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+All the builtins perform the subtraction between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+
+@macro MmuxDefineTypeSubtractionBuiltin{STEM}
+@deffn Builtin \STEM\-sub @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the subtraction between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeSubtractionBuiltin{schar}
+@MmuxDefineTypeSubtractionBuiltin{uchar}
+@MmuxDefineTypeSubtractionBuiltin{sshort}
+@MmuxDefineTypeSubtractionBuiltin{ushort}
+@MmuxDefineTypeSubtractionBuiltin{sint}
+@MmuxDefineTypeSubtractionBuiltin{uint}
+@MmuxDefineTypeSubtractionBuiltin{slong}
+@MmuxDefineTypeSubtractionBuiltin{ulong}
+@MmuxDefineTypeSubtractionBuiltin{sllong}
+@MmuxDefineTypeSubtractionBuiltin{ullong}
+@MmuxDefineTypeSubtractionBuiltin{float}
+@MmuxDefineTypeSubtractionBuiltin{double}
+@MmuxDefineTypeSubtractionBuiltin{ldouble}
+@MmuxDefineTypeSubtractionBuiltin{complex}
+
+@MmuxDefineTypeSubtractionBuiltin{sint8}
+@MmuxDefineTypeSubtractionBuiltin{uint8}
+@MmuxDefineTypeSubtractionBuiltin{sint16}
+@MmuxDefineTypeSubtractionBuiltin{uint16}
+@MmuxDefineTypeSubtractionBuiltin{sint32}
+@MmuxDefineTypeSubtractionBuiltin{uint32}
+@MmuxDefineTypeSubtractionBuiltin{sint64}
+@MmuxDefineTypeSubtractionBuiltin{uint64}
+
+@MmuxDefineTypeSubtractionBuiltin{ssize}
+@MmuxDefineTypeSubtractionBuiltin{usize}
+@MmuxDefineTypeSubtractionBuiltin{sintmax}
+@MmuxDefineTypeSubtractionBuiltin{uintmax}
+@MmuxDefineTypeSubtractionBuiltin{sintptr}
+@MmuxDefineTypeSubtractionBuiltin{uintptr}
+@MmuxDefineTypeSubtractionBuiltin{mode}
+@MmuxDefineTypeSubtractionBuiltin{off}
+@MmuxDefineTypeSubtractionBuiltin{pid}
+@MmuxDefineTypeSubtractionBuiltin{uid}
+@MmuxDefineTypeSubtractionBuiltin{gid}
+@MmuxDefineTypeSubtractionBuiltin{wchar}
+@MmuxDefineTypeSubtractionBuiltin{wint}
+
+@c page
+@node arithmetics multiplication
+@section Multiplication builtins
+
+
+For the following builtins, the multiplication operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} * @var{OP} * @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+All the builtins perform the multiplication between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+
+@macro MmuxDefineTypeMultiplicationBuiltin{STEM}
+@deffn Builtin \STEM\-mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the multiplication between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeMultiplicationBuiltin{schar}
+@MmuxDefineTypeMultiplicationBuiltin{uchar}
+@MmuxDefineTypeMultiplicationBuiltin{sshort}
+@MmuxDefineTypeMultiplicationBuiltin{ushort}
+@MmuxDefineTypeMultiplicationBuiltin{sint}
+@MmuxDefineTypeMultiplicationBuiltin{uint}
+@MmuxDefineTypeMultiplicationBuiltin{slong}
+@MmuxDefineTypeMultiplicationBuiltin{ulong}
+@MmuxDefineTypeMultiplicationBuiltin{sllong}
+@MmuxDefineTypeMultiplicationBuiltin{ullong}
+@MmuxDefineTypeMultiplicationBuiltin{float}
+@MmuxDefineTypeMultiplicationBuiltin{double}
+@MmuxDefineTypeMultiplicationBuiltin{ldouble}
+@MmuxDefineTypeMultiplicationBuiltin{complex}
+
+@MmuxDefineTypeMultiplicationBuiltin{sint8}
+@MmuxDefineTypeMultiplicationBuiltin{uint8}
+@MmuxDefineTypeMultiplicationBuiltin{sint16}
+@MmuxDefineTypeMultiplicationBuiltin{uint16}
+@MmuxDefineTypeMultiplicationBuiltin{sint32}
+@MmuxDefineTypeMultiplicationBuiltin{uint32}
+@MmuxDefineTypeMultiplicationBuiltin{sint64}
+@MmuxDefineTypeMultiplicationBuiltin{uint64}
+
+@MmuxDefineTypeMultiplicationBuiltin{ssize}
+@MmuxDefineTypeMultiplicationBuiltin{usize}
+@MmuxDefineTypeMultiplicationBuiltin{sintmax}
+@MmuxDefineTypeMultiplicationBuiltin{uintmax}
+@MmuxDefineTypeMultiplicationBuiltin{sintptr}
+@MmuxDefineTypeMultiplicationBuiltin{uintptr}
+@MmuxDefineTypeMultiplicationBuiltin{mode}
+@MmuxDefineTypeMultiplicationBuiltin{off}
+@MmuxDefineTypeMultiplicationBuiltin{pid}
+@MmuxDefineTypeMultiplicationBuiltin{uid}
+@MmuxDefineTypeMultiplicationBuiltin{gid}
+@MmuxDefineTypeMultiplicationBuiltin{wchar}
+@MmuxDefineTypeMultiplicationBuiltin{wint}
+
+@c page
+@node arithmetics division
+@section Division builtins
+
+
+For the following builtins, the division operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} * @var{OP} * @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+All the builtins perform the division between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+
+@macro MmuxDefineTypeDivisionBuiltin{STEM}
+@deffn Builtin \STEM\-mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the division between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeDivisionBuiltin{schar}
+@MmuxDefineTypeDivisionBuiltin{uchar}
+@MmuxDefineTypeDivisionBuiltin{sshort}
+@MmuxDefineTypeDivisionBuiltin{ushort}
+@MmuxDefineTypeDivisionBuiltin{sint}
+@MmuxDefineTypeDivisionBuiltin{uint}
+@MmuxDefineTypeDivisionBuiltin{slong}
+@MmuxDefineTypeDivisionBuiltin{ulong}
+@MmuxDefineTypeDivisionBuiltin{sllong}
+@MmuxDefineTypeDivisionBuiltin{ullong}
+@MmuxDefineTypeDivisionBuiltin{float}
+@MmuxDefineTypeDivisionBuiltin{double}
+@MmuxDefineTypeDivisionBuiltin{ldouble}
+@MmuxDefineTypeDivisionBuiltin{complex}
+
+@MmuxDefineTypeDivisionBuiltin{sint8}
+@MmuxDefineTypeDivisionBuiltin{uint8}
+@MmuxDefineTypeDivisionBuiltin{sint16}
+@MmuxDefineTypeDivisionBuiltin{uint16}
+@MmuxDefineTypeDivisionBuiltin{sint32}
+@MmuxDefineTypeDivisionBuiltin{uint32}
+@MmuxDefineTypeDivisionBuiltin{sint64}
+@MmuxDefineTypeDivisionBuiltin{uint64}
+
+@MmuxDefineTypeDivisionBuiltin{ssize}
+@MmuxDefineTypeDivisionBuiltin{usize}
+@MmuxDefineTypeDivisionBuiltin{sintmax}
+@MmuxDefineTypeDivisionBuiltin{uintmax}
+@MmuxDefineTypeDivisionBuiltin{sintptr}
+@MmuxDefineTypeDivisionBuiltin{uintptr}
+@MmuxDefineTypeDivisionBuiltin{mode}
+@MmuxDefineTypeDivisionBuiltin{off}
+@MmuxDefineTypeDivisionBuiltin{pid}
+@MmuxDefineTypeDivisionBuiltin{uid}
+@MmuxDefineTypeDivisionBuiltin{gid}
+@MmuxDefineTypeDivisionBuiltin{wchar}
+@MmuxDefineTypeDivisionBuiltin{wint}
+
+@c page
+@node arithmetics negation
+@section Negation builtins
+
+
+For the following builtins, the negation operation is as follows:
+
+@example
+@var{ROP} = - @var{OP}
+@end example
+
+@noindent
+All the builtins perform the negation of the operand @var{OP}, then store a string representation of
+the result in the variable @var{ROPVAR}; when successful: return true, otherwise return false and
+set the shell variable @code{ERRNO} to the string representation of an exact integer, itself
+representing an @code{errno} error code.
+
+The argument @var{OP} must be a string representation of a value of the specific builtin type.
+
+@strong{NOTE} The builtins are implemented also for unsigned integers, for which the operation is
+undefined; this will be fixed in the future, probably@dots{}
+
+
+@macro MmuxDefineTypeNegationBuiltin{STEM}
+@deffn Builtin \STEM\-neg @var{ROPVAR} @var{OP}
+Perform the negation of a value of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeNegationBuiltin{schar}
+@MmuxDefineTypeNegationBuiltin{uchar}
+@MmuxDefineTypeNegationBuiltin{sshort}
+@MmuxDefineTypeNegationBuiltin{ushort}
+@MmuxDefineTypeNegationBuiltin{sint}
+@MmuxDefineTypeNegationBuiltin{uint}
+@MmuxDefineTypeNegationBuiltin{slong}
+@MmuxDefineTypeNegationBuiltin{ulong}
+@MmuxDefineTypeNegationBuiltin{sllong}
+@MmuxDefineTypeNegationBuiltin{ullong}
+@MmuxDefineTypeNegationBuiltin{float}
+@MmuxDefineTypeNegationBuiltin{double}
+@MmuxDefineTypeNegationBuiltin{ldouble}
+@MmuxDefineTypeNegationBuiltin{complex}
+
+@MmuxDefineTypeNegationBuiltin{sint8}
+@MmuxDefineTypeNegationBuiltin{uint8}
+@MmuxDefineTypeNegationBuiltin{sint16}
+@MmuxDefineTypeNegationBuiltin{uint16}
+@MmuxDefineTypeNegationBuiltin{sint32}
+@MmuxDefineTypeNegationBuiltin{uint32}
+@MmuxDefineTypeNegationBuiltin{sint64}
+@MmuxDefineTypeNegationBuiltin{uint64}
+
+@MmuxDefineTypeNegationBuiltin{ssize}
+@MmuxDefineTypeNegationBuiltin{usize}
+@MmuxDefineTypeNegationBuiltin{sintmax}
+@MmuxDefineTypeNegationBuiltin{uintmax}
+@MmuxDefineTypeNegationBuiltin{sintptr}
+@MmuxDefineTypeNegationBuiltin{uintptr}
+@MmuxDefineTypeNegationBuiltin{mode}
+@MmuxDefineTypeNegationBuiltin{off}
+@MmuxDefineTypeNegationBuiltin{pid}
+@MmuxDefineTypeNegationBuiltin{uid}
+@MmuxDefineTypeNegationBuiltin{gid}
+@MmuxDefineTypeNegationBuiltin{wchar}
+@MmuxDefineTypeNegationBuiltin{wint}
 
 @c page
 @node errors
