@@ -38,6 +38,7 @@ function mmux-bash-pointers-library-load () {
     declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
     declare -ga MMUX_BASH_POINTERS_POINTER_TYPES=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror)
+    declare -ga MMUX_BASH_POINTERS_ARITHMETICS_OPS=(add sub mul div neg)
 
     # Given an exact integer, in base 10, representing the ASCII code of a character: the element at
     # that index in this array is the character itself.
@@ -51,7 +52,7 @@ function mmux-bash-pointers-library-load () {
     # This initialises the library.
     if mmux_bash_pointers_library_init
     then
-	declare -i IDX
+	declare -i IDX JDX
 	declare NAME ALIAS
 
 	for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_LIBC_BUILTINS[@]}; ++IDX))
@@ -89,6 +90,29 @@ function mmux-bash-pointers-library-load () {
 	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 	    alias "$ALIAS"="$NAME"
 	done
+
+	# Arithmetics builtins.
+	{
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_pointer_add'
+	    alias 'pointer-add'='mmux_bash_pointers_pointer_add'
+
+	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
+	    # arithmetics operations.
+	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+	    do
+		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
+		do
+		    printf -v NAME  'mmux_bash_pointers_%s_%s' \
+			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
+			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		    printf -v ALIAS '%s-%s' \
+			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
+			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
+		    alias "$ALIAS"="$NAME"
+		done
+	    done
+	}
 
 	enable -f "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_errno_to_string'
 	alias mmux-bash-pointers-errno-to-string='mmux_bash_pointers_errno_to_string'
@@ -135,6 +159,30 @@ function mmux-bash-pointers-library-unload () {
 	printf -v ALIAS 'libc_%s_p'                         "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}"
 	enable -d "$NAME"
 	unalias "$ALIAS"
+
+
+	# Arithmetics builtins.
+	{
+	    enable -d 'mmux_bash_pointers_pointer_add'
+	    unalias 'pointer-add'
+
+	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
+	    # arithmetics operations.
+	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_POINTER_TYPES[@]}; ++IDX))
+	    do
+		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
+		do
+		    printf -v NAME  'mmux_bash_pointers_%s_%s' \
+			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
+			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		    printf -v ALIAS '%s-%s' \
+			   "${MMUX_BASH_POINTERS_POINTER_TYPES[$IDX]}" \
+			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		    enable -d "$NAME"
+		    unalias "$ALIAS"
+		done
+	    done
+	}
     done
 
     enable -d "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_errno_to_string'

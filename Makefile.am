@@ -80,6 +80,7 @@ install-html-local:
 EXTRA_DIST	+= \
 	src/mmux-bash-pointers.h.m4		\
 	src/mmux-bash-pointers-accessors.c.m4	\
+	src/mmux-bash-pointers-arithmetics.c.m4	\
 	src/mmux-bash-pointers-errors.c.m4	\
 	src/mmux-bash-pointers-library.c.m4	\
 	src/mmux-bash-pointers-memory.c.m4	\
@@ -92,6 +93,7 @@ EXTRA_DIST	+= \
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-accessors.c	\
+	src/mmux-bash-pointers-arithmetics.c	\
 	src/mmux-bash-pointers-errors.c		\
 	src/mmux-bash-pointers-library.c	\
 	src/mmux-bash-pointers-memory.c		\
@@ -125,6 +127,7 @@ libmmux_bash_pointers_la_SOURCES	=	\
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-internals.h	\
 	src/mmux-bash-pointers-accessors.c	\
+	src/mmux-bash-pointers-arithmetics.c	\
 	src/mmux-bash-pointers-errors.c		\
 	src/mmux-bash-pointers-library.c	\
 	src/mmux-bash-pointers-memory.c		\
@@ -161,22 +164,24 @@ src/%.bash: src/%.bash.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
 #### tests
 
 EXTRA_DIST		+= \
-	tests/version.test.m4			\
-	tests/types.test.m4			\
-	tests/memory.test.m4			\
-	tests/errors.test.m4			\
-	tests/pointers.test.m4			\
+	tests/arithmetics.test.m4		\
 	tests/arrays.test.m4			\
-	tests/conversion.test.m4
+	tests/conversion.test.m4		\
+	tests/errors.test.m4			\
+	tests/memory.test.m4			\
+	tests/pointers.test.m4			\
+	tests/types.test.m4			\
+	tests/version.test.m4
 
 MMUX_CHECK_BUILT_TESTS	= \
-	tests/version.test			\
-	tests/types.test			\
-	tests/memory.test			\
-	tests/errors.test			\
-	tests/pointers.test			\
+	tests/arithmetics.test			\
 	tests/arrays.test			\
-	tests/conversion.test
+	tests/conversion.test			\
+	tests/errors.test			\
+	tests/memory.test			\
+	tests/pointers.test			\
+	tests/types.test			\
+	tests/version.test
 
 if MMUX_BASH_TESTING_ENABLED
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)

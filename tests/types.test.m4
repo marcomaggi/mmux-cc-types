@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/types-inspection.bash ; less tests/types-inspection.log
+#!#		$ make all check TESTS=tests/types.bash ; less tests/types.log
 #!#
 #!#	that will select these tests.
 #!#
