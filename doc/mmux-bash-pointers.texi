@@ -764,11 +764,11 @@ must be the string representation of a memory pointer referencing a previously a
 
 @item OFFSET
 must be the string representation of an exact, non--negative integer, compatible with the C language
-type @code{size_t}, representing an offset from @var{POINTER} @strong{measured in bytes};
+type @code{size_t}, itself representing an offset from @var{POINTER} @strong{measured in bytes};
 
 @item VALUE
 must be the string representation of a number, compatible with a C language type of the specific
-mutator: it is stored by the mutators at @var{OFFSET} from @var{POINTER};
+mutator: such number is stored by the mutators at @var{OFFSET} from @var{POINTER};
 
 @item VALUEVAR
 must be a string representing the name of a shell variable: it is used by the accessors to store the
