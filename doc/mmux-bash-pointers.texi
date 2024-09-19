@@ -597,29 +597,31 @@ because @func{libc_malloc} allocates memory in a subshell.
 
 @deffn Builtin libc_malloc @var{PTRVAR} @var{SIZE}
 Allocate a memory block using the standard @cfunc{malloc} function; if successful return true,
-otherwise return false.
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing the @code{errno} error code.
 
 The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
 representation of the pointer to the newly allocated block.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the requested number of bytes in the newly allocated block; it must fit the C language type
-@objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer, itself
+representing the requested number of bytes in the newly allocated block; it must fit the C language
+type @objtype{size_t}.
 @end deffn
 
 
 @deffn Builtin libc_calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
 Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
-otherwise return false.
+otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
+@code{errno} error code.
 
 The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
 representation of the pointer to the newly allocated block.
 
-The argument @var{ITEM_COUNT} must be the string representation of an exact, positive integer
-representing the number of items the memory block has to contain; it must fit the C language type
-@objtype{size_t}.
+The argument @var{ITEM_COUNT} must be the string representation of an exact, positive, integer,
+itself representing the number of items the memory block has to contain; it must fit the C language
+type @objtype{size_t}.
 
-The argument @var{ITEM_SIZE} must be the string representation of an exact, positive integer
+The argument @var{ITEM_SIZE} must be the string representation of an exact, positive, integer, itself
 representing the size of each item the memory block has to contain; it must fit the C language type
 @objtype{size_t}.
 @end deffn
@@ -627,24 +629,30 @@ representing the size of each item the memory block has to contain; it must fit 
 
 @deffn Builtin libc_realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
 Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
-otherwise return false.
+otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
+@code{errno} error code.
 
 The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
 representation of the pointer to the newly allocated block.
 
 The argument @var{OLDPTR} must be the string representation of the old memory pointer.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the newly requested number of bytes in the newly allocated block; it must fit the C language type
-@objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer, itself
+representing the newly requested number of bytes in the newly allocated block; it must fit the C
+language type @objtype{size_t}.
 @end deffn
 
 
 @deffn Builtin libc_free @var{PTR}
-Release a previously allocated memory block using the standard @cfunc{free} function.
+Release a previously allocated memory block using the standard @cfunc{free} function; if successful
+return true, otherwise return false and set the shell variable @code{ERRNO} to an exact integer
+representing the @code{errno} error code.
 
 The argument @var{PTR} must be the string representation of a memory pointer referencing a
 previously allocated block.
+
+Notice that this builtin can fail if the argument @var{PTR} is not a valid pointer string
+representation; in this case the error code is @samp{EINVAL}.
 @end deffn
 
 @c page
@@ -652,8 +660,14 @@ previously allocated block.
 @chapter Standard memory operations
 
 
+The following builtins can fail if one of the arguments @var{PTR} is not a valid pointer string
+representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.
+
+
 @deffn Builtin libc_memset @var{PTR} @var{BYTE} @var{SIZE}
-Interface to the standard C language function @cfunc{memset}.
+Interface to the standard C language function @cfunc{memset}; if successful return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
 
 The argument @var{PTR} must be the string representation of a pointer referencing a previously
 allocated memory block.
@@ -674,7 +688,9 @@ libc_memset $PTR 1 $SIZE
 
 
 @deffn Builtin libc_memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
-Interface to the standard C language function @cfunc{memcpy}.
+Interface to the standard C language function @cfunc{memcpy}; if successful return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
 
 The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
 allocated memory block; the referenced memory is the destination of the copy operation.
@@ -697,7 +713,9 @@ libc_memcpy $PTR_TO $PTR_FROM $SIZE
 
 
 @deffn Builtin libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
-Interface to the standard C language function @cfunc{memmove}.
+Interface to the standard C language function @cfunc{memmove}; if successful return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
 
 The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
 allocated memory block; the referenced memory is the destination of the copy operation.

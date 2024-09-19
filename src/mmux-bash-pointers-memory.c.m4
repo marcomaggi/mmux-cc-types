@@ -84,10 +84,10 @@ mmux_bash_pointers_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   int		rv;
 
   rv = mmux_bash_pointers_parse_usize(&item_count, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_usize(&item_size, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   ptr = calloc(item_count, item_size);
   if (0) {
@@ -128,10 +128,10 @@ mmux_bash_pointers_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   rv = mmux_bash_pointers_parse_usize(&len, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   ptr = realloc(ptr, len);
   if (ptr) {
@@ -167,7 +167,7 @@ mmux_bash_pointers_free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[]
   int		rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[1], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   if (0) {
     fprintf(stderr, "%s: releasing pointer %p\n", __func__, ptr);
