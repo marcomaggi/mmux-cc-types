@@ -3,7 +3,7 @@
 ACLOCAL_AMFLAGS		= -I meta/autotools
 AUTOMAKE_OPTIONS	= foreign
 EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in
-EXTRA_DIST		+= meta/m4/libmmux-bash-builtins.m4 src/mmux-bash-pointers-config.m4.in
+EXTRA_DIST		+= meta/m4/libmmux-bash-builtins.m4 src/config.m4.in
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
 AM_CPPFLAGS		= -I$(srcdir)/src
@@ -103,7 +103,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 
 MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES = \
 	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
-	$(builddir)/src/mmux-bash-pointers-config.m4
+	$(builddir)/src/config.m4
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -148,8 +148,14 @@ src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h
 
 ## ------------------------------------------------------------------------
 
-mmux_bashlib_DATA	= src/libmmux-bash-pointers.bash
-mmux_bashlibdir		= $(datadir)/bash
+EXTRA_DIST		+= src/libmmux-bash-pointers.bash.m4
+BUILT_SOURCES		+= src/libmmux-bash-pointers.bash
+CLEANFILES		+= src/libmmux-bash-pointers.bash
+mmuxbashlib_DATA	= src/libmmux-bash-pointers.bash
+mmuxbashlibdir		= $(datadir)/bash
+
+src/%.bash: src/%.bash.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES) $< >$@
 
 
 #### tests
@@ -225,7 +231,7 @@ tests/%.test: tests/%.test.m4 $(MBFL_TESTS_PREREQUISITES)
 MBFL_ICHECK_ENV	 = PATH=$(DESTDIR)$(bindir):$$PATH; export PATH;
 MBFL_ICHECK_ENV	+= TMPDIR=$(PWD)/tmp; export TMPDIR;
 MBFL_ICHECK_ENV	+= testsdir=$(builddir)/tests; export testsdir;
-MBFL_ICHECK_ENV	+= export MMUX_LIBRARY=$(DESTDIR)$(mmux_bashlibdir)/libmmux-bash-pointers.bash
+MBFL_ICHECK_ENV	+= export MMUX_LIBRARY=$(DESTDIR)$(mmuxbashlibdir)/libmmux-bash-pointers.bash
 MBFL_ICHECK_ENV	+= export LD_LIBRARY_PATH=$(DESTDIR)$(libdir):$(LD_LIBRARY_PATH)
 MBFL_ICHECK_RUN	 = $(BASH_PROGRAM) $(MBFL_ICHECK_FLAGS)
 

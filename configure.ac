@@ -143,8 +143,7 @@ AC_CACHE_SAVE
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
-  [src/mmux-bash-pointers-config.m4]
-  [src/libmmux-bash-pointers.bash]
+  [src/config.m4]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT

@@ -33,9 +33,9 @@ function mmux-bash-pointers-library-load () {
     # Maggi; Sep 12, 2024)
     #
     declare -g MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
-    declare -g MMUX_BASH_POINTERS_CURRENT=@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
-    declare -g MMUX_BASH_POINTERS_REVISION=@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
-    declare -g MMUX_BASH_POINTERS_AGE=@mmux_bash_pointers_VERSION_INTERFACE_AGE@
+    declare -g MMUX_BASH_POINTERS_CURRENT=mmux_bash_pointers_VERSION_INTERFACE_CURRENT
+    declare -g MMUX_BASH_POINTERS_REVISION=mmux_bash_pointers_VERSION_INTERFACE_REVISION
+    declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
     declare -ga MMUX_BASH_POINTERS_POINTER_TYPES=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror)
 

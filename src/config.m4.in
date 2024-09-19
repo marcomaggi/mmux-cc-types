@@ -23,7 +23,15 @@ m4_dnl this library; if not, write to the Free Software Foundation, Inc., 59 Tem
 m4_dnl Suite 330, Boston, MA 02111-1307 USA.
 m4_dnl
 
+m4_dnl This is  already set  in "libmmux-bash-builtins.m4";  we need  to load  that
+m4_dnl library before loading this one.
+m4_dnl
 m4_dnl m4_changequote(`[[[', `]]]')
+
+m4_define([[[mmux_bash_pointers_VERSION_INTERFACE_CURRENT]]],  [[[@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@]]])
+m4_define([[[mmux_bash_pointers_VERSION_INTERFACE_REVISION]]], [[[@mmux_bash_pointers_VERSION_INTERFACE_REVISION@]]])
+m4_define([[[mmux_bash_pointers_VERSION_INTERFACE_AGE]]],      [[[@mmux_bash_pointers_VERSION_INTERFACE_AGE@]]])
+
 
 m4_define([[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]],	[[[@MMUX_BASH_TYPE_STANDARD_STEM_ALIAS_OF_SSIZE@]]])
 m4_define([[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]],	[[[@MMUX_BASH_TYPE_STANDARD_STEM_ALIAS_OF_USIZE@]]])
