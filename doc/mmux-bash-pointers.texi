@@ -282,7 +282,7 @@ An integer representing the library interface current age.
 
 If a C language type referenced by one of the following variables is undefined: the corresponding
 Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
-underlying platform implements the type @code{long long}, we can do:
+underlying platform implements the type @code{signed long long int}, we can do:
 
 @example
 if test -v libc_SIZEOF_SLLONG
@@ -302,10 +302,10 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 
 @MmuxDefineGlobalVarSizeof{SCHAR, signed char}
 @MmuxDefineGlobalVarSizeof{UCHAR, unsigned char}
-@MmuxDefineGlobalVarSizeof{SINT, signed int}
-@MmuxDefineGlobalVarSizeof{UINT, unsigned int}
 @MmuxDefineGlobalVarSizeof{SSHORT, signed short int}
 @MmuxDefineGlobalVarSizeof{USHORT, unsigned short int}
+@MmuxDefineGlobalVarSizeof{SINT, signed int}
+@MmuxDefineGlobalVarSizeof{UINT, unsigned int}
 @MmuxDefineGlobalVarSizeof{SLONG, signed long int}
 @MmuxDefineGlobalVarSizeof{ULONG, unsigned long int}
 @MmuxDefineGlobalVarSizeof{SLLONG, signed long long int}
@@ -330,6 +330,7 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 @MmuxDefineGlobalVarSizeof{UINTMAX, uintmax_t}
 @MmuxDefineGlobalVarSizeof{SINTPTR, intptr_t}
 @MmuxDefineGlobalVarSizeof{UINTPTR, uintptr_t}
+@MmuxDefineGlobalVarSizeof{PTRDIFF, ptrdiff_t}
 @MmuxDefineGlobalVarSizeof{MODE, mode_t}
 @MmuxDefineGlobalVarSizeof{OFF, off_t}
 @MmuxDefineGlobalVarSizeof{PID, pid_t}
@@ -345,7 +346,7 @@ Global variable holding the size, measured in bytes, of the C language type @cod
 
 If a C language type referenced by one of the following variables is undefined: the corresponding
 Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
-underlying platform implements the type @code{long long}, we can do:
+underlying platform implements the type @code{signed long long int}, we can do:
 
 @example
 if test -v libc_MAX_SLLONG
@@ -368,10 +369,10 @@ Global variables holding the maximum and minimum values of the C language type @
 
 @MmuxDefineGlobalVarLimits{SCHAR, signed char}
 @MmuxDefineGlobalVarLimits{UCHAR, unsigned char}
-@MmuxDefineGlobalVarLimits{SINT, signed int}
-@MmuxDefineGlobalVarLimits{UINT, unsigned int}
 @MmuxDefineGlobalVarLimits{SSHORT, signed short int}
 @MmuxDefineGlobalVarLimits{USHORT, unsigned short int}
+@MmuxDefineGlobalVarLimits{SINT, signed int}
+@MmuxDefineGlobalVarLimits{UINT, unsigned int}
 @MmuxDefineGlobalVarLimits{SLONG, signed long int}
 @MmuxDefineGlobalVarLimits{ULONG, unsigned long int}
 @MmuxDefineGlobalVarLimits{SLLONG, signed long long int}
@@ -396,6 +397,7 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{UINTMAX, uintmax_t}
 @MmuxDefineGlobalVarLimits{SINTPTR, intptr_t}
 @MmuxDefineGlobalVarLimits{UINTPTR, uintptr_t}
+@MmuxDefineGlobalVarLimits{PTRDIFF, ptrdiff_t}
 @MmuxDefineGlobalVarLimits{MODE, mode_t}
 @MmuxDefineGlobalVarLimits{OFF, off_t}
 @MmuxDefineGlobalVarLimits{PID, pid_t}
