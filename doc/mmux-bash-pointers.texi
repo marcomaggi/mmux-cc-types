@@ -672,11 +672,12 @@ integer, itself representing an @code{errno} error code.
 The argument @var{PTR} must be the string representation of a pointer referencing a previously
 allocated memory block.
 
-The argument @var{BYTE} must be the string representation of an exact, positive integer representing
-the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
+The argument @var{BYTE} must be the string representation of an exact, positive, integer itself
+representing the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to set to @var{BYTE}; it must fit the C language type @objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to set to @var{BYTE}; it must fit the C language type
+@objtype{size_t}.
 
 @example
 declare PTR SIZE=123
@@ -698,8 +699,8 @@ allocated memory block; the referenced memory is the destination of the copy ope
 The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
 allocated memory block; the referenced memory is the source of the copy operation.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
 
 @example
 declare PTR_FROM PTR_TO SIZE=123
@@ -723,8 +724,8 @@ allocated memory block; the referenced memory is the destination of the copy ope
 The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
 allocated memory block; the referenced memory is the source of the copy operation.
 
-The argument @var{SIZE} must be the string representation of an exact, positive integer representing
-the number of bytes to copy.
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy.
 
 @example
 declare PTR_FROM PTR_TO SIZE=123
