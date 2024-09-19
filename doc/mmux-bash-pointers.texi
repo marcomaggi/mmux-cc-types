@@ -37,10 +37,6 @@
 
 @c ------------------------------------------------------------
 
-@set MmuxRequiredMbflVersion            v3.0.0-devel.10
-
-@c ------------------------------------------------------------
-
 @set PackageAutoconfPrefix              MMUX_BASH_POINTERS
 @set PackagePkgconfigModule             mmux-bash-pointers
 @set PackageLibsVar                     @env{MMUX_BASH_POINTERS_LIBS}
@@ -95,10 +91,7 @@ additional builtin commands for the @gnu{} Bash shell; to do so it installs a C 
 a shell script  which is meant to  be sourced in a Bash  session or script.
 
 This package makes raw memory pointers available in shell scripts; it also interfaces some basic
-functions from the C language @posix{} standard library.
-
-The package targets @posix{} platforms.  Only for testing: this package depends on the external
-package @mbfl{} (at least version @samp{@value{MmuxRequiredMbflVersion}}).
+functions from the C language @posix{} standard library.  The package targets @posix{} platforms.
 
 This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
 
@@ -255,7 +248,7 @@ underlying C language platform.
 * variables version::           Version variables.
 * variables sizeof::            C language type sizes.
 * variables limits::            C language type maximum and minimum values.
-* variables errno::             Value of @code{errno}.
+* variables errno::             Values of @code{errno}.
 @end menu
 
 @c page
@@ -413,7 +406,7 @@ Global variables holding the maximum and minimum values of the C language type @
 
 @c page
 @node variables errno
-@section Value of @code{errno}
+@section Values of @code{errno}
 
 
 If a C language constant referenced by one of the following variables is undefined: the
