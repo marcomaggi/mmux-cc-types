@@ -83,6 +83,9 @@ mmux_bash_pointers_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  ch
   errsym = strerror(errnum);
   if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errsym);}
 
+  /* We use this chain of ifs rather  than a big switch because the compile complains
+     if  there  are  cases with  the  same  constant;  using  ifs we  only  get  some
+     warnings. */
   MMUX_DEFINE_ERRNO_CASE([[[EPERM]]])
   MMUX_DEFINE_ERRNO_CASE([[[ENOENT]]])
   MMUX_DEFINE_ERRNO_CASE([[[ESRCH]]])
