@@ -270,12 +270,19 @@ function bitwise-uchar-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uchar-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UCHAR - OP ))
+    declare ROP OP=$libc_MAX_UCHAR
+    declare EXPECTED_ROP=0
 
     bitwise-not-uchar ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-uchar-1.2 () {
+    declare ROP OP=$libc_MIN_UCHAR
+    declare EXPECTED_ROP=$libc_MAX_UCHAR
+
+    bitwise-not-uchar ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -440,12 +447,19 @@ function bitwise-ushort-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-ushort-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_USHORT - OP ))
+    declare ROP OP=$libc_MAX_USHORT
+    declare EXPECTED_ROP=0
 
     bitwise-not-ushort ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-ushort-1.2 () {
+    declare ROP OP=$libc_MIN_USHORT
+    declare EXPECTED_ROP=$libc_MAX_USHORT
+
+    bitwise-not-ushort ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -610,12 +624,19 @@ function bitwise-uint-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINT - OP ))
+    declare ROP OP=$libc_MAX_UINT
+    declare EXPECTED_ROP=0
 
     bitwise-not-uint ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-uint-1.2 () {
+    declare ROP OP=$libc_MIN_UINT
+    declare EXPECTED_ROP=$libc_MAX_UINT
+
+    bitwise-not-uint ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -695,12 +716,19 @@ function bitwise-slong-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-slong-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( ~ OP ))
+    declare ROP OP=$libc_MAX_SLONG
+    declare EXPECTED_ROP=$libc_MIN_SLONG
 
     bitwise-not-slong ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-slong-1.2 () {
+    declare ROP OP=$libc_MIN_SLONG
+    declare EXPECTED_ROP=$libc_MAX_SLONG
+
+    bitwise-not-slong ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -780,12 +808,19 @@ function bitwise-ulong-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-ulong-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( -1 * ( 1 +  OP ) ))
+    declare ROP OP=$libc_MAX_ULONG
+    declare EXPECTED_ROP=0
 
     bitwise-not-ulong ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-ulong-1.2 () {
+    declare ROP OP=$libc_MIN_ULONG
+    declare EXPECTED_ROP=$libc_MAX_ULONG
+
+    bitwise-not-ulong ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -950,12 +985,19 @@ function bitwise-ullong-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-ullong-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( -1 * ( 1 + OP ) ))
+    declare ROP OP=$libc_MAX_ULLONG
+    declare EXPECTED_ROP=0
 
     bitwise-not-ullong ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-ullong-1.2 () {
+    declare ROP OP=$libc_MIN_ULLONG
+    declare EXPECTED_ROP=$libc_MAX_ULLONG
+
+    bitwise-not-ullong ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1120,14 +1162,22 @@ function bitwise-uint8-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint8-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINT8 - OP ))
+    declare ROP OP=$libc_MAX_UINT8
+    declare EXPECTED_ROP=0
 
     bitwise-not-uint8 ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
+function bitwise-not-uint8-1.2 () {
+    declare ROP OP=$libc_MIN_UINT8
+    declare EXPECTED_ROP=$libc_MAX_UINT8
+
+    bitwise-not-uint8 ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 
 #### bitwise operations for type: sint16
@@ -1290,14 +1340,22 @@ function bitwise-uint16-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint16-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINT16 - OP ))
+    declare ROP OP=$libc_MAX_UINT16
+    declare EXPECTED_ROP=0
 
     bitwise-not-uint16 ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
+function bitwise-not-uint16-1.2 () {
+    declare ROP OP=$libc_MIN_UINT16
+    declare EXPECTED_ROP=$libc_MAX_UINT16
+
+    bitwise-not-uint16 ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 
 #### bitwise operations for type: sint32
@@ -1460,12 +1518,19 @@ function bitwise-uint32-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint32-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINT32 - OP ))
+    declare ROP OP=$libc_MAX_UINT32
+    declare EXPECTED_ROP=0
 
     bitwise-not-uint32 ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-uint32-1.2 () {
+    declare ROP OP=$libc_MIN_UINT32
+    declare EXPECTED_ROP=$libc_MAX_UINT32
+
+    bitwise-not-uint32 ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1630,12 +1695,19 @@ function bitwise-uint64-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint64-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINT64 - OP ))
+    declare ROP OP=$libc_MAX_UINT64
+    declare EXPECTED_ROP=0
 
     bitwise-not-uint64 ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-uint64-1.2 () {
+    declare ROP OP=$libc_MIN_UINT64
+    declare EXPECTED_ROP=$libc_MAX_UINT64
+
+    bitwise-not-uint64 ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1800,14 +1872,22 @@ function bitwise-uintmax-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uintmax-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINTMAX - OP ))
+    declare ROP OP=$libc_MAX_UINTMAX
+    declare EXPECTED_ROP=0
 
     bitwise-not-uintmax ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
+function bitwise-not-uintmax-1.2 () {
+    declare ROP OP=$libc_MIN_UINTMAX
+    declare EXPECTED_ROP=$libc_MAX_UINTMAX
+
+    bitwise-not-uintmax ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 
 #### bitwise operations for type: sintptr
@@ -1970,12 +2050,19 @@ function bitwise-uintptr-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uintptr-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_UINTPTR - OP ))
+    declare ROP OP=$libc_MAX_UINTPTR
+    declare EXPECTED_ROP=0
 
     bitwise-not-uintptr ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-uintptr-1.2 () {
+    declare ROP OP=$libc_MIN_UINTPTR
+    declare EXPECTED_ROP=$libc_MAX_UINTPTR
+
+    bitwise-not-uintptr ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -2140,14 +2227,22 @@ function bitwise-usize-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-usize-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( libc_MAX_USIZE - OP ))
+    declare ROP OP=$libc_MAX_USIZE
+    declare EXPECTED_ROP=0
 
     bitwise-not-usize ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
+function bitwise-not-usize-1.2 () {
+    declare ROP OP=$libc_MIN_USIZE
+    declare EXPECTED_ROP=$libc_MAX_USIZE
+
+    bitwise-not-usize ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 
 #### bitwise operations for type: ptrdiff
@@ -2395,12 +2490,19 @@ function bitwise-mode-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-mode-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( ~ OP ))
+    declare ROP OP=$libc_MAX_MODE
+    declare EXPECTED_ROP=0
 
     bitwise-not-mode ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-mode-1.2 () {
+    declare ROP OP=$libc_MIN_MODE
+    declare EXPECTED_ROP=$libc_MAX_MODE
+
+    bitwise-not-mode ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -2565,12 +2667,19 @@ function bitwise-uid-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uid-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( ~ OP ))
+    declare ROP OP=$libc_MAX_UID
+    declare EXPECTED_ROP=0
 
     bitwise-not-uid ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-uid-1.2 () {
+    declare ROP OP=$libc_MIN_UID
+    declare EXPECTED_ROP=$libc_MAX_UID
+
+    bitwise-not-uid ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -2650,14 +2759,22 @@ function bitwise-gid-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-gid-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( ~ OP ))
+    declare ROP OP=$libc_MAX_GID
+    declare EXPECTED_ROP=0
 
     bitwise-not-gid ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
+function bitwise-not-gid-1.2 () {
+    declare ROP OP=$libc_MIN_GID
+    declare EXPECTED_ROP=$libc_MAX_GID
+
+    bitwise-not-gid ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 
 #### bitwise operations for type: wchar
@@ -2820,12 +2937,19 @@ function bitwise-wint-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-wint-1.1 () {
-    declare ROP OP=123
-    declare -r EXPECTED_ROP=$(( ~ OP ))
+    declare ROP OP=$libc_MAX_WINT
+    declare EXPECTED_ROP=0
 
     bitwise-not-wint ROP WW(OP)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-not-wint-1.2 () {
+    declare ROP OP=$libc_MIN_WINT
+    declare EXPECTED_ROP=$libc_MAX_WINT
+
+    bitwise-not-wint ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
