@@ -530,4 +530,260 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_not_poin
     [[["bitwise-not-pointer ROPVAR PTR"]]],
     [[["Perform the bitwise NOT operation of the pointer PTR, store the result in PTRVAR."]]])
 
+
+/** --------------------------------------------------------------------
+ ** Bitwise shl builtins.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN]]],[[[
+static int
+mmux_bash_pointers_bitwise_shl_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"bitwise-shl-$1"
+{
+#if ($2)
+  mmux_libc_$1_t	op;
+  mmux_libc_sint_t	nbits;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op <<= nbits;
+
+  {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  LEN
+#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
+    char	str[LEN];
+
+    rv = mmux_bash_pointers_sprint_$1(str,LEN,op);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_variable(argv[1], str, 0);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+#endif
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shl_$1]]],
+    [[[(4 == argc)]]],
+    [[["bitwise-shl-$1 ROPVAR OP NBITS"]]],
+    [[["Compute the bitwise shl of OP, by NBITS, store the result in ROPVAR."]]])
+]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[schar]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uchar]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sshort]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ushort]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[slong]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ulong]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint8]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint8]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint16]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint16]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint32]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint32]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint64]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint64]]],	[[[1]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[usize]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ssize]]],	[[[1]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sintmax]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uintmax]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sintptr]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uintptr]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ptrdiff]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[mode]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[off]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[pid]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uid]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[gid]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wchar]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wint]]],		[[[1]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmux_bash_pointers_bitwise_shl_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"bitwise-shl-pointer"
+{
+  mmux_libc_pointer_t	op;
+  mmux_libc_uintptr_t	op_uintptr;
+  mmux_libc_sint_t	nbits;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op_uintptr   = (mmux_libc_uintptr_t)op;
+  op_uintptr <<= nbits;
+  op           = (mmux_libc_pointer_t)op_uintptr;
+
+  {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  LEN
+#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
+    char	str[LEN];
+
+    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_variable(argv[1], str, 0);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shl_pointer]]],
+    [[[(4 == argc)]]],
+    [[["bitwise-shl-pointer ROPVAR OP NBITS"]]],
+    [[["Compute the bitwise shl of OP, by NBITS, store the result in ROPVAR."]]])
+
+
+/** --------------------------------------------------------------------
+ ** Bitwise shr builtins.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN]]],[[[
+static int
+mmux_bash_pointers_bitwise_shr_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"bitwise-shr-$1"
+{
+#if ($2)
+  mmux_libc_$1_t	op;
+  mmux_libc_sint_t	nbits;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op >>= nbits;
+
+  {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  LEN
+#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
+    char	str[LEN];
+
+    rv = mmux_bash_pointers_sprint_$1(str,LEN,op);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_variable(argv[1], str, 0);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+#endif
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shr_$1]]],
+    [[[(4 == argc)]]],
+    [[["bitwise-shr-$1 ROPVAR OP NBITS"]]],
+    [[["Compute the bitwise shr of OP, by NBITS, store the result in ROPVAR."]]])
+]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[schar]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uchar]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sshort]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ushort]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[slong]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ulong]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint8]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint8]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint16]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint16]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint32]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint32]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint64]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint64]]],	[[[1]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[usize]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ssize]]],	[[[1]]])
+
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sintmax]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uintmax]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sintptr]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uintptr]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ptrdiff]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[mode]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[off]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[pid]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uid]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[gid]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wchar]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wint]]],		[[[1]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmux_bash_pointers_bitwise_shr_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"bitwise-shr-pointer"
+{
+  mmux_libc_pointer_t	op;
+  mmux_libc_uintptr_t	op_uintptr;
+  mmux_libc_sint_t	nbits;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op_uintptr   = (mmux_libc_uintptr_t)op;
+  op_uintptr >>= nbits;
+  op           = (mmux_libc_pointer_t)op_uintptr;
+
+  {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  LEN
+#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
+    char	str[LEN];
+
+    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_variable(argv[1], str, 0);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shr_pointer]]],
+    [[[(4 == argc)]]],
+    [[["bitwise-shr-pointer ROPVAR OP NBITS"]]],
+    [[["Compute the bitwise shr of OP, by NBITS, store the result in ROPVAR."]]])
+
 /* end of file */

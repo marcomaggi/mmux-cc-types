@@ -1477,6 +1477,8 @@ operations are implemented for every supported data type.
 * bitwise or::                  Bitwise OR operation.
 * bitwise xor::                 Bitwise XOR operation.
 * bitwise not::                 Bitwise NOT operation.
+* bitwise shl::                 Bitwise shift--left operation.
+* bitwise shr::                 Bitwise shift--right operation.
 @end menu
 
 @c page
@@ -1772,6 +1774,114 @@ Perform the bitwise NOT operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseNotBuiltin{gid}
 @MmuxDefineTypeBitwiseNotBuiltin{wchar}
 @MmuxDefineTypeBitwiseNotBuiltin{wint}
+
+@c page
+@node bitwise shl
+@section Bitwise shift--left operation
+
+
+All the following builtins perform the bitwise shift--left operation on a value @var{OP}, shifting
+by @var{NBITS}, then store the result in the variable @var{ROPVAR}; when successful: return true,
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing an @code{errno} error code.
+
+The argument @var{NBITS} must be the string representation of a @objtype{sint}.
+
+
+@macro MmuxDefineTypeBitwiseShlBuiltin{STEM}
+@deffn Builtin bitwise-shl-\STEM\ @var{ROPVAR} @var{OP} @var{NBITS}
+Perform the bitwise shift--left operation on an operand of type \STEM\.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeBitwiseShlBuiltin{schar}
+@MmuxDefineTypeBitwiseShlBuiltin{uchar}
+@MmuxDefineTypeBitwiseShlBuiltin{sshort}
+@MmuxDefineTypeBitwiseShlBuiltin{ushort}
+@MmuxDefineTypeBitwiseShlBuiltin{sint}
+@MmuxDefineTypeBitwiseShlBuiltin{uint}
+@MmuxDefineTypeBitwiseShlBuiltin{slong}
+@MmuxDefineTypeBitwiseShlBuiltin{ulong}
+@MmuxDefineTypeBitwiseShlBuiltin{sllong}
+@MmuxDefineTypeBitwiseShlBuiltin{ullong}
+
+@MmuxDefineTypeBitwiseShlBuiltin{sint8}
+@MmuxDefineTypeBitwiseShlBuiltin{uint8}
+@MmuxDefineTypeBitwiseShlBuiltin{sint16}
+@MmuxDefineTypeBitwiseShlBuiltin{uint16}
+@MmuxDefineTypeBitwiseShlBuiltin{sint32}
+@MmuxDefineTypeBitwiseShlBuiltin{uint32}
+@MmuxDefineTypeBitwiseShlBuiltin{sint64}
+@MmuxDefineTypeBitwiseShlBuiltin{uint64}
+
+@MmuxDefineTypeBitwiseShlBuiltin{ssize}
+@MmuxDefineTypeBitwiseShlBuiltin{usize}
+@MmuxDefineTypeBitwiseShlBuiltin{sintmax}
+@MmuxDefineTypeBitwiseShlBuiltin{uintmax}
+@MmuxDefineTypeBitwiseShlBuiltin{sintptr}
+@MmuxDefineTypeBitwiseShlBuiltin{uintptr}
+@MmuxDefineTypeBitwiseShlBuiltin{mode}
+@MmuxDefineTypeBitwiseShlBuiltin{off}
+@MmuxDefineTypeBitwiseShlBuiltin{pid}
+@MmuxDefineTypeBitwiseShlBuiltin{uid}
+@MmuxDefineTypeBitwiseShlBuiltin{gid}
+@MmuxDefineTypeBitwiseShlBuiltin{wchar}
+@MmuxDefineTypeBitwiseShlBuiltin{wint}
+
+@c page
+@node bitwise shr
+@section Bitwise shift--right operation
+
+
+All the following builtins perform the bitwise shift--right operation on a value @var{OP}, shifting
+by @var{NBITS}, then store the result in the variable @var{ROPVAR}; when successful: return true,
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing an @code{errno} error code.
+
+The argument @var{NBITS} must be the string representation of a @objtype{sint}.
+
+
+@macro MmuxDefineTypeBitwiseShrBuiltin{STEM}
+@deffn Builtin bitwise-shr-\STEM\ @var{ROPVAR} @var{OP} @var{NBITS}
+Perform the bitwise shift--right operation on an operand of type \STEM\.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeBitwiseShrBuiltin{schar}
+@MmuxDefineTypeBitwiseShrBuiltin{uchar}
+@MmuxDefineTypeBitwiseShrBuiltin{sshort}
+@MmuxDefineTypeBitwiseShrBuiltin{ushort}
+@MmuxDefineTypeBitwiseShrBuiltin{sint}
+@MmuxDefineTypeBitwiseShrBuiltin{uint}
+@MmuxDefineTypeBitwiseShrBuiltin{slong}
+@MmuxDefineTypeBitwiseShrBuiltin{ulong}
+@MmuxDefineTypeBitwiseShrBuiltin{sllong}
+@MmuxDefineTypeBitwiseShrBuiltin{ullong}
+
+@MmuxDefineTypeBitwiseShrBuiltin{sint8}
+@MmuxDefineTypeBitwiseShrBuiltin{uint8}
+@MmuxDefineTypeBitwiseShrBuiltin{sint16}
+@MmuxDefineTypeBitwiseShrBuiltin{uint16}
+@MmuxDefineTypeBitwiseShrBuiltin{sint32}
+@MmuxDefineTypeBitwiseShrBuiltin{uint32}
+@MmuxDefineTypeBitwiseShrBuiltin{sint64}
+@MmuxDefineTypeBitwiseShrBuiltin{uint64}
+
+@MmuxDefineTypeBitwiseShrBuiltin{ssize}
+@MmuxDefineTypeBitwiseShrBuiltin{usize}
+@MmuxDefineTypeBitwiseShrBuiltin{sintmax}
+@MmuxDefineTypeBitwiseShrBuiltin{uintmax}
+@MmuxDefineTypeBitwiseShrBuiltin{sintptr}
+@MmuxDefineTypeBitwiseShrBuiltin{uintptr}
+@MmuxDefineTypeBitwiseShrBuiltin{mode}
+@MmuxDefineTypeBitwiseShrBuiltin{off}
+@MmuxDefineTypeBitwiseShrBuiltin{pid}
+@MmuxDefineTypeBitwiseShrBuiltin{uid}
+@MmuxDefineTypeBitwiseShrBuiltin{gid}
+@MmuxDefineTypeBitwiseShrBuiltin{wchar}
+@MmuxDefineTypeBitwiseShrBuiltin{wint}
 
 @c page
 @node errors

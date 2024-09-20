@@ -40,7 +40,7 @@ function mmux-bash-pointers-library-load () {
     declare -ga MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror)
     declare -ga MMUX_BASH_POINTERS_ARITHMETICS_OPS=(add sub mul div neg)
-    declare -ga MMUX_BASH_POINTERS_BITWISE_OPS=(and or xor not)
+    declare -ga MMUX_BASH_POINTERS_BITWISE_OPS=(and or xor not shl shr)
 
     # Given an exact integer, in base 10, representing the ASCII code of a character: the element at
     # that index in this array is the character itself.

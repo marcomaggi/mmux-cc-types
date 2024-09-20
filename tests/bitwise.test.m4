@@ -109,6 +109,30 @@ function bitwise-pointer-not-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-pointer-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=0x$(( 1 << 3 ))
+
+    bitwise-shl-pointer ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-pointer-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=0x$(( 8 >> 3 ))
+
+    bitwise-shr-pointer ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: schar
 
