@@ -38,12 +38,14 @@ regex_t mmux_bash_pointers_complex_rex;
  ** ----------------------------------------------------------------- */
 
 int
-mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_target, char const * s_source,
+mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_dest, char const * s_source,
 					 mmux_libc_sintmax_t target_min, mmux_libc_sintmax_t target_max,
 					 char const * target_type_name, char const * caller_name)
 {
   mmux_libc_sintmax_t	rv;
+  char const *		s_source_beg;
   char *		s_source_end	= NULL;
+  int			base            = 0;
   size_t		len		= strlen(s_source);
 
   if (0 == len) {
@@ -56,16 +58,19 @@ mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_target, char co
        at the beginning of the source string: we do not want them. */
     goto parsing_error;
   }
-  errno = 0;
 
   if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
     /* String specifications like "0b101100110" are parsed with base 2. */
-    rv = strtoimax(2+s_source, &s_source_end, 2);
+    s_source_beg = 2 + s_source;
+    base         = 2;
   } else {
-    rv = strtoimax(s_source, &s_source_end, 0);
+    s_source_beg = s_source;
   }
 
-  if ((0 == rv) && (s_source_end == s_source)) {
+  errno = 0;
+  rv = strtoimax(s_source_beg, &s_source_end, base);
+
+  if ((0 == rv) && (s_source_end == s_source_beg)) {
     /* Parsing error: the source string does not represent a valid number. */
     goto parsing_error;
   } else if (ERANGE == errno) {
@@ -88,7 +93,7 @@ mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_target, char co
     goto parsing_error;
   } else {
     /* Success! */
-    *p_target = rv;
+    *p_dest = rv;
     return EXECUTION_SUCCESS;
   }
  parsing_error:
@@ -99,12 +104,14 @@ mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_target, char co
   return EXECUTION_FAILURE;
 }
 int
-mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_target, char const * s_source,
+mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char const * s_source,
 					   mmux_libc_uintmax_t target_max,
 					   char const * target_type_name, char const * caller_name)
 {
   mmux_libc_uintmax_t	rv;
+  char const *		s_source_beg;
   char *		s_source_end	= NULL;
+  int			base            = 0;
   size_t		len		= strlen(s_source);
 
   if (0) { fprintf(stderr, "%s: uintmax=%lu, target_max=%lu\n", __func__, mmux_bash_pointers_maximum_uintmax(), target_max); }
@@ -119,26 +126,22 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_target, char 
        spaces at the beginning of the source string: we do not want them. */
     goto parsing_error;
   }
-  errno = 0;
 
   if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
     /* String specifications like "0b101100110" are parsed with base 2. */
-    rv = strtoumax(2+s_source, &s_source_end, 2);
-    if ((0 == rv) && (s_source_end == (2+s_source))) {
-      /* Parsing error: the source string does not represent a valid number. */
-      if (0) { fprintf(stderr, "%s: parsing error: not a number\n", __func__); }
-      goto parsing_error;
-    }
+    s_source_beg = 2 + s_source;
+    base         = 2;
   } else {
-    rv = strtoumax(s_source, &s_source_end, 0);
-    if ((0 == rv) && (s_source_end == s_source)) {
-      /* Parsing error: the source string does not represent a valid number. */
-      if (0) { fprintf(stderr, "%s: parsing error: not a number\n", __func__); }
-      goto parsing_error;
-    }
+    s_source_beg = s_source;
   }
 
-  if (ERANGE == errno) {
+  errno = 0;
+  rv = strtoumax(s_source_beg, &s_source_end, base);
+
+  if ((0 == rv) && (s_source_end == s_source_beg)) {
+    /* Parsing error: the source string does not represent a valid number. */
+    goto parsing_error;
+  } else if (ERANGE == errno) {
     /* Parsing error: the source string may represet a number, but it is out of range
        according to the parser function. */
     if (0) { fprintf(stderr, "%s: parsing error: out of range, %s\n", __func__, s_source); }
@@ -156,7 +159,7 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_target, char 
     goto parsing_error;
   } else {
     /* Success! */
-    *p_target = rv;
+    *p_dest = rv;
     return EXECUTION_SUCCESS;
   }
  parsing_error:
@@ -169,10 +172,10 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_target, char 
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: raw C standard types, no typedefs.
+ ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_PARSER]]],[[[
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER]]],[[[
 int
 mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_data, char const * s_arg, char const * caller_name)
 {
@@ -198,9 +201,9 @@ mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_data, char const * s_arg, 
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[float]]],		[[["%f"]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[double]]],		[[["%lf"]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],		[[["%Lf"]]],	[[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[["%f"]]],	[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[["%lf"]]],	[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[["%Lf"]]],	[[[HAVE_LONG_DOUBLE]]])
 
 
 /** --------------------------------------------------------------------
@@ -209,38 +212,93 @@ MMUX_BASH_POINTERS_DEFINE_PARSER([[[ldouble]]],		[[["%Lf"]]],	[[[HAVE_LONG_DOUBL
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg, char const * caller_name)
+mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_dest, char const * s_source, char const * caller_name)
 {
-#if ($2)
   mmux_libc_sintmax_t	value;
   int			rv;
 
-  rv = mmux_bash_pointers_parse_signed_integer(&value, s_arg,
-					       mmux_bash_pointers_minimum_$1(),
-					       mmux_bash_pointers_maximum_$1(),
+  rv = mmux_bash_pointers_parse_signed_integer(&value, s_source,
+					       mmux_bash_pointers_minimum_$1(), mmux_bash_pointers_maximum_$1(),
 					       "$1", caller_name);
   if (EXECUTION_SUCCESS == rv) {
-    *p_value = (mmux_libc_$1_t)value;
+    *p_dest = (mmux_libc_$1_t)value;
   }
   return rv;
+}
+]]])
+
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[schar]]])
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sshort]]])
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint]]])
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[slong]]])
+
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint8]]])
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint16]]])
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint32]]])
+MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_sllong (mmux_libc_sllong_t * p_dest, char const * s_source, char const * caller_name)
+{
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+  mmux_libc_sllong_t	rv;
+  char const *		s_source_beg;
+  char *		s_source_end	= NULL;
+  int			base            = 0;
+  size_t		len		= strlen(s_source);
+
+  if (0 == len) {
+    /* Parsing error: empty strings are not valid number representations. */
+    goto parsing_error;
+  }
+  if ((! isalnum(s_source[0])) && ('+' != s_source[0]) && ('-' != s_source[0])) {
+    /* Parsing error:  either the first  character is  a sign or  it is a  digit, for
+       whatever base it is selected.  The  function "strtoll()" accepts spaces at the
+       beginning of the source string: we do not want them. */
+    goto parsing_error;
+  }
+
+  if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
+    /* String specifications like "0b101100110" are parsed with base 2. */
+    s_source_beg = 2 + s_source;
+    base         = 2;
+  } else {
+    s_source_beg = s_source;
+  }
+
+  errno = 0;
+  rv = strtoll(s_source_beg, &s_source_end, base);
+
+  if ((0 == rv) && (s_source_end == s_source_beg)) {
+    /* Parsing error: the source string does not represent a valid number. */
+    goto parsing_error;
+  } else if (ERANGE == errno) {
+    /* Parsing error: the source string may represet a number, but it is out of range
+       according to the parser function. */
+    goto parsing_error;
+  } else if (len != (size_t)(s_source_end - s_source)) {
+    /* Parsing  error:  there   must  be  no  characters  after   the  number  string
+       representation. */
+    goto parsing_error;
+  } else {
+    /* Success! */
+    *p_dest = rv;
+    return EXECUTION_SUCCESS;
+  }
+ parsing_error:
+  if (caller_name) {
+    fprintf(stderr, "%s: error: invalid argument, expected \"sllong\": \"%s\"\n", caller_name, s_source);
+  }
+  errno = 0; /* We consider the error consumed here. */
+  return EXECUTION_FAILURE;
 #else
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
 #endif
 }
-]]])
-
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[schar]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sshort]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[slong]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
-
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint8]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint16]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint32]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]],	[[[1]]])
 
 
 /** --------------------------------------------------------------------
@@ -251,7 +309,6 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
 int
 mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg, char const * caller_name)
 {
-#if ($2)
   mmux_libc_uintmax_t	value;
   int			rv;
 
@@ -262,26 +319,83 @@ mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg,
     *p_value = (mmux_libc_$1_t)value;
   }
   return rv;
+}
+]]])
+
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[pointer]]])
+
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uchar]]])
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ushort]]])
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint]]])
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ulong]]])
+
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint8]]])
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint16]]])
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint32]]])
+MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_parse_ullong (mmux_libc_ullong_t * p_dest, char const * s_source, char const * caller_name)
+{
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
+  mmux_libc_ullong_t	rv;
+  char const *		s_source_beg;
+  char *		s_source_end	= NULL;
+  int			base            = 0;
+  size_t		len		= strlen(s_source);
+
+  if (0 == len) {
+    /* Parsing error: empty strings are not valid number representations. */
+    goto parsing_error;
+  }
+  if ((! isalnum(s_source[0])) && ('+' != s_source[0])) {
+    /* Parsing error:  either the first  character is  a sign or  it is a  digit, for
+       whatever base it is selected.  The  function "strtoll()" accepts spaces at the
+       beginning of the source string: we do not want them. */
+    goto parsing_error;
+  }
+
+  if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
+    /* String specifications like "0b101100110" are parsed with base 2. */
+    s_source_beg = 2 + s_source;
+    base         = 2;
+  } else {
+    s_source_beg = s_source;
+  }
+
+  errno = 0;
+  rv = strtoull(s_source_beg, &s_source_end, base);
+
+  if ((0 == rv) && (s_source_end == s_source_beg)) {
+    /* Parsing error: the source string does not represent a valid number. */
+    goto parsing_error;
+  } else if (ERANGE == errno) {
+    /* Parsing error: the source string may represet a number, but it is out of range
+       according to the parser function. */
+    goto parsing_error;
+  } else if (len != (size_t)(s_source_end - s_source)) {
+    /* Parsing  error:  there   must  be  no  characters  after   the  number  string
+       representation. */
+    goto parsing_error;
+  } else {
+    /* Success! */
+    *p_dest = rv;
+    return EXECUTION_SUCCESS;
+  }
+ parsing_error:
+  if (caller_name) {
+    fprintf(stderr, "%s: error: invalid argument, expected \"ullong\": \"%s\"\n", caller_name, s_source);
+  }
+  errno = 0; /* We consider the error consumed here. */
+  return EXECUTION_FAILURE;
 #else
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
 #endif
 }
-]]])
-
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[pointer]]],	[[[1]]])
-
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uchar]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ushort]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ulong]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
-
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint8]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint16]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint32]]],		[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]],		[[[1]]])
 
 
 /** --------------------------------------------------------------------
