@@ -121,19 +121,18 @@ mmux_bash_pointers_bitwise_and_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"bitwise-and-pointer"
 {
-  mmux_libc_pointer_t	op, mask;
-  mmux_libc_uintptr_t	op_uintptr, mask_uintptr;
+  mmux_libc_pointer_t	op;
+  mmux_libc_uintptr_t	op_uintptr, mask;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
-  rv = mmux_bash_pointers_parse_pointer(&mask, argv[3], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_uintptr(&mask, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   op_uintptr    = (mmux_libc_uintptr_t)op;
-  mask_uintptr  = (mmux_libc_uintptr_t)mask;
-  op_uintptr   &= mask_uintptr;
+  op_uintptr   &= mask;
   op          = (mmux_libc_pointer_t)op_uintptr;
 
   {
@@ -249,19 +248,18 @@ mmux_bash_pointers_bitwise_or_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED, 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"bitwise-or-pointer"
 {
-  mmux_libc_pointer_t	op, mask;
-  mmux_libc_uintptr_t	op_uintptr, mask_uintptr;
+  mmux_libc_pointer_t	op;
+  mmux_libc_uintptr_t	op_uintptr, mask;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
-  rv = mmux_bash_pointers_parse_pointer(&mask, argv[3], MMUX_BUILTIN_NAME);
+  rv = mmux_bash_pointers_parse_uintptr(&mask, argv[3], MMUX_BUILTIN_NAME);
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   op_uintptr    = (mmux_libc_uintptr_t)op;
-  mask_uintptr  = (mmux_libc_uintptr_t)mask;
-  op_uintptr   |= mask_uintptr;
+  op_uintptr   |= mask;
   op          = (mmux_libc_pointer_t)op_uintptr;
 
   {

@@ -169,6 +169,7 @@ src/%.bash: src/%.bash.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
 EXTRA_DIST		+= \
 	tests/arithmetics.test.m4		\
 	tests/arrays.test.m4			\
+	tests/bitwise.test.m4			\
 	tests/conversion.test.m4		\
 	tests/errors.test.m4			\
 	tests/memory.test.m4			\
@@ -179,6 +180,7 @@ EXTRA_DIST		+= \
 MMUX_CHECK_BUILT_TESTS	= \
 	tests/arithmetics.test			\
 	tests/arrays.test			\
+	tests/bitwise.test			\
 	tests/conversion.test			\
 	tests/errors.test			\
 	tests/memory.test			\

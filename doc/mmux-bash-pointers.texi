@@ -1099,6 +1099,10 @@ return false.
 @chapter Arithmetics operation builtins
 
 
+@gnu{} Bash already implements arithmetics operations for integer values, and such implementation
+might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for completeness, the
+bitwise operations are implemented for every supported data type.
+
 @menu
 * arithmetics addition::        Addition builtins.
 * arithmetics subtraction::     Subtraction builtins.
@@ -1133,6 +1137,7 @@ For the following builtins, the addition operation is as follows:
 
 @noindent
 and there can be any number of operands, depending on the capabilities of the underlying platform.
+
 All the builtins perform the addition between the operands @var{OP}, of which @varo{OP} is
 mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
 successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
@@ -1200,6 +1205,7 @@ For the following builtins, the subtraction operation is as follows:
 
 @noindent
 and there can be any number of operands, depending on the capabilities of the underlying platform.
+
 All the builtins perform the subtraction between the operands @var{OP}, of which @varo{OP} is
 mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
 successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
@@ -1267,6 +1273,7 @@ For the following builtins, the multiplication operation is as follows:
 
 @noindent
 and there can be any number of operands, depending on the capabilities of the underlying platform.
+
 All the builtins perform the multiplication between the operands @var{OP}, of which @varo{OP} is
 mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
 successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
@@ -1334,6 +1341,7 @@ For the following builtins, the division operation is as follows:
 
 @noindent
 and there can be any number of operands, depending on the capabilities of the underlying platform.
+
 All the builtins perform the division between the operands @var{OP}, of which @varo{OP} is
 mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
 successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
@@ -1399,7 +1407,6 @@ For the following builtins, the negation operation is as follows:
 @var{ROP} = - @var{OP}
 @end example
 
-@noindent
 All the builtins perform the negation of the operand @var{OP}, then store a string representation of
 the result in the variable @var{ROPVAR}; when successful: return true, otherwise return false and
 set the shell variable @code{ERRNO} to the string representation of an exact integer, itself
@@ -1461,6 +1468,10 @@ Perform the negation of a value of type @code{\STEM\}.
 @chapter Bitwise operation builtins
 
 
+@gnu{} Bash already implements bitwise operations for integer values, and such implementation might
+be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for completeness, the bitwise
+operations are implemented for every supported data type.
+
 @menu
 * bitwise and::                 Bitwise AND operation.
 * bitwise or::                  Bitwise OR operation.
@@ -1473,6 +1484,18 @@ Perform the negation of a value of type @code{\STEM\}.
 @section Bitwise AND operation
 
 
+@deffn Builtin bitwise-and-pointer @var{PTRVAR} @var{PTR} @var{MASK}
+Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
+AND operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing an @code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a pointer value.
+
+The argument @var{MASK} must be the string representation of a number of type @objtype{uintptr_t}.
+@end deffn
+
+
 For the following builtins, the bitwise AND operation is as follows:
 
 @example
@@ -1481,6 +1504,7 @@ For the following builtins, the bitwise AND operation is as follows:
 
 @noindent
 and there can be any number of operands, depending on the capabilities of the underlying platform.
+
 All the builtins perform the operation between the operands @var{OP}, of which @varo{OP} is
 mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
 successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
@@ -1489,18 +1513,265 @@ string representation of an exact integer, itself representing an @code{errno} e
 The arguments @var{OP} must be string representations of values of the specific builtin type.  If
 only @varo{OP} is present: the result is @varo{OP} itself.
 
+@macro MmuxDefineTypeBitwiseAndBuiltin{STEM}
+@deffn Builtin bitwise-and-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the bitwise AND operation between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeBitwiseAndBuiltin{schar}
+@MmuxDefineTypeBitwiseAndBuiltin{uchar}
+@MmuxDefineTypeBitwiseAndBuiltin{sshort}
+@MmuxDefineTypeBitwiseAndBuiltin{ushort}
+@MmuxDefineTypeBitwiseAndBuiltin{sint}
+@MmuxDefineTypeBitwiseAndBuiltin{uint}
+@MmuxDefineTypeBitwiseAndBuiltin{slong}
+@MmuxDefineTypeBitwiseAndBuiltin{ulong}
+@MmuxDefineTypeBitwiseAndBuiltin{sllong}
+@MmuxDefineTypeBitwiseAndBuiltin{ullong}
+
+@MmuxDefineTypeBitwiseAndBuiltin{sint8}
+@MmuxDefineTypeBitwiseAndBuiltin{uint8}
+@MmuxDefineTypeBitwiseAndBuiltin{sint16}
+@MmuxDefineTypeBitwiseAndBuiltin{uint16}
+@MmuxDefineTypeBitwiseAndBuiltin{sint32}
+@MmuxDefineTypeBitwiseAndBuiltin{uint32}
+@MmuxDefineTypeBitwiseAndBuiltin{sint64}
+@MmuxDefineTypeBitwiseAndBuiltin{uint64}
+
+@MmuxDefineTypeBitwiseAndBuiltin{ssize}
+@MmuxDefineTypeBitwiseAndBuiltin{usize}
+@MmuxDefineTypeBitwiseAndBuiltin{sintmax}
+@MmuxDefineTypeBitwiseAndBuiltin{uintmax}
+@MmuxDefineTypeBitwiseAndBuiltin{sintptr}
+@MmuxDefineTypeBitwiseAndBuiltin{uintptr}
+@MmuxDefineTypeBitwiseAndBuiltin{mode}
+@MmuxDefineTypeBitwiseAndBuiltin{off}
+@MmuxDefineTypeBitwiseAndBuiltin{pid}
+@MmuxDefineTypeBitwiseAndBuiltin{uid}
+@MmuxDefineTypeBitwiseAndBuiltin{gid}
+@MmuxDefineTypeBitwiseAndBuiltin{wchar}
+@MmuxDefineTypeBitwiseAndBuiltin{wint}
+
 @c page
 @node bitwise or
 @section Bitwise OR operation
+
+
+@deffn Builtin bitwise-or-pointer @var{PTRVAR} @var{PTR} @var{MASK}
+Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
+OR operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing an @code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a pointer value.
+
+The argument @var{MASK} must be the string representation of a number of type @objtype{uintptr_t}.
+@end deffn
+
+
+For the following builtins, the bitwise OR operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} & @var{OP} & @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+
+All the builtins perform the operation between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+@macro MmuxDefineTypeBitwiseOrBuiltin{STEM}
+@deffn Builtin bitwise-or-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the bitwise OR operation between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeBitwiseOrBuiltin{schar}
+@MmuxDefineTypeBitwiseOrBuiltin{uchar}
+@MmuxDefineTypeBitwiseOrBuiltin{sshort}
+@MmuxDefineTypeBitwiseOrBuiltin{ushort}
+@MmuxDefineTypeBitwiseOrBuiltin{sint}
+@MmuxDefineTypeBitwiseOrBuiltin{uint}
+@MmuxDefineTypeBitwiseOrBuiltin{slong}
+@MmuxDefineTypeBitwiseOrBuiltin{ulong}
+@MmuxDefineTypeBitwiseOrBuiltin{sllong}
+@MmuxDefineTypeBitwiseOrBuiltin{ullong}
+
+@MmuxDefineTypeBitwiseOrBuiltin{sint8}
+@MmuxDefineTypeBitwiseOrBuiltin{uint8}
+@MmuxDefineTypeBitwiseOrBuiltin{sint16}
+@MmuxDefineTypeBitwiseOrBuiltin{uint16}
+@MmuxDefineTypeBitwiseOrBuiltin{sint32}
+@MmuxDefineTypeBitwiseOrBuiltin{uint32}
+@MmuxDefineTypeBitwiseOrBuiltin{sint64}
+@MmuxDefineTypeBitwiseOrBuiltin{uint64}
+
+@MmuxDefineTypeBitwiseOrBuiltin{ssize}
+@MmuxDefineTypeBitwiseOrBuiltin{usize}
+@MmuxDefineTypeBitwiseOrBuiltin{sintmax}
+@MmuxDefineTypeBitwiseOrBuiltin{uintmax}
+@MmuxDefineTypeBitwiseOrBuiltin{sintptr}
+@MmuxDefineTypeBitwiseOrBuiltin{uintptr}
+@MmuxDefineTypeBitwiseOrBuiltin{mode}
+@MmuxDefineTypeBitwiseOrBuiltin{off}
+@MmuxDefineTypeBitwiseOrBuiltin{pid}
+@MmuxDefineTypeBitwiseOrBuiltin{uid}
+@MmuxDefineTypeBitwiseOrBuiltin{gid}
+@MmuxDefineTypeBitwiseOrBuiltin{wchar}
+@MmuxDefineTypeBitwiseOrBuiltin{wint}
 
 @c page
 @node bitwise xor
 @section Bitwise XOR operation
 
+
+@deffn Builtin bitwise-xor-pointer @var{PTRVAR} @var{PTR} @var{MASK}
+Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
+XOR operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing an @code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a pointer value.
+
+The argument @var{MASK} must be the string representation of a number of type @objtype{uintptr_t}.
+@end deffn
+
+
+For the following builtins, the bitwise XOR operation is as follows:
+
+@example
+@var{ROP} = @varo{OP} & @var{OP} & @dots{}
+@end example
+
+@noindent
+and there can be any number of operands, depending on the capabilities of the underlying platform.
+
+All the builtins perform the operation between the operands @var{OP}, of which @varo{OP} is
+mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
+successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.  If
+only @varo{OP} is present: the result is @varo{OP} itself.
+
+@macro MmuxDefineTypeBitwiseXorBuiltin{STEM}
+@deffn Builtin bitwise-xor-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Perform the bitwise XOR operation between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeBitwiseXorBuiltin{schar}
+@MmuxDefineTypeBitwiseXorBuiltin{uchar}
+@MmuxDefineTypeBitwiseXorBuiltin{sshort}
+@MmuxDefineTypeBitwiseXorBuiltin{ushort}
+@MmuxDefineTypeBitwiseXorBuiltin{sint}
+@MmuxDefineTypeBitwiseXorBuiltin{uint}
+@MmuxDefineTypeBitwiseXorBuiltin{slong}
+@MmuxDefineTypeBitwiseXorBuiltin{ulong}
+@MmuxDefineTypeBitwiseXorBuiltin{sllong}
+@MmuxDefineTypeBitwiseXorBuiltin{ullong}
+
+@MmuxDefineTypeBitwiseXorBuiltin{sint8}
+@MmuxDefineTypeBitwiseXorBuiltin{uint8}
+@MmuxDefineTypeBitwiseXorBuiltin{sint16}
+@MmuxDefineTypeBitwiseXorBuiltin{uint16}
+@MmuxDefineTypeBitwiseXorBuiltin{sint32}
+@MmuxDefineTypeBitwiseXorBuiltin{uint32}
+@MmuxDefineTypeBitwiseXorBuiltin{sint64}
+@MmuxDefineTypeBitwiseXorBuiltin{uint64}
+
+@MmuxDefineTypeBitwiseXorBuiltin{ssize}
+@MmuxDefineTypeBitwiseXorBuiltin{usize}
+@MmuxDefineTypeBitwiseXorBuiltin{sintmax}
+@MmuxDefineTypeBitwiseXorBuiltin{uintmax}
+@MmuxDefineTypeBitwiseXorBuiltin{sintptr}
+@MmuxDefineTypeBitwiseXorBuiltin{uintptr}
+@MmuxDefineTypeBitwiseXorBuiltin{mode}
+@MmuxDefineTypeBitwiseXorBuiltin{off}
+@MmuxDefineTypeBitwiseXorBuiltin{pid}
+@MmuxDefineTypeBitwiseXorBuiltin{uid}
+@MmuxDefineTypeBitwiseXorBuiltin{gid}
+@MmuxDefineTypeBitwiseXorBuiltin{wchar}
+@MmuxDefineTypeBitwiseXorBuiltin{wint}
+
 @c page
 @node bitwise not
 @section Bitwise NOT operation
 
+
+@deffn Builtin bitwise-not-pointer @var{PTRVAR} @var{PTR}
+Perform the bitwise NOT operation on a pointer value @var{PTR}, then store the result in the
+variable @var{ROPVAR}; when successful: return true, otherwise return false and set the shell
+variable @code{ERRNO} to the string representation of an exact integer, itself representing an
+@code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a pointer value.
+@end deffn
+
+
+For the following builtins, the bitwise NOT operation is as follows:
+
+@example
+@var{ROP} = ~ @var{OP}
+@end example
+
+@noindent
+
+When successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
+
+The argument @var{OP} must be a string representation of a value of the specific builtin type.
+
+@macro MmuxDefineTypeBitwiseNotBuiltin{STEM}
+@deffn Builtin bitwise-not-\STEM\ @var{ROPVAR} @varo{OP}
+Perform the bitwise NOT operation between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeBitwiseNotBuiltin{schar}
+@MmuxDefineTypeBitwiseNotBuiltin{uchar}
+@MmuxDefineTypeBitwiseNotBuiltin{sshort}
+@MmuxDefineTypeBitwiseNotBuiltin{ushort}
+@MmuxDefineTypeBitwiseNotBuiltin{sint}
+@MmuxDefineTypeBitwiseNotBuiltin{uint}
+@MmuxDefineTypeBitwiseNotBuiltin{slong}
+@MmuxDefineTypeBitwiseNotBuiltin{ulong}
+@MmuxDefineTypeBitwiseNotBuiltin{sllong}
+@MmuxDefineTypeBitwiseNotBuiltin{ullong}
+
+@MmuxDefineTypeBitwiseNotBuiltin{sint8}
+@MmuxDefineTypeBitwiseNotBuiltin{uint8}
+@MmuxDefineTypeBitwiseNotBuiltin{sint16}
+@MmuxDefineTypeBitwiseNotBuiltin{uint16}
+@MmuxDefineTypeBitwiseNotBuiltin{sint32}
+@MmuxDefineTypeBitwiseNotBuiltin{uint32}
+@MmuxDefineTypeBitwiseNotBuiltin{sint64}
+@MmuxDefineTypeBitwiseNotBuiltin{uint64}
+
+@MmuxDefineTypeBitwiseNotBuiltin{ssize}
+@MmuxDefineTypeBitwiseNotBuiltin{usize}
+@MmuxDefineTypeBitwiseNotBuiltin{sintmax}
+@MmuxDefineTypeBitwiseNotBuiltin{uintmax}
+@MmuxDefineTypeBitwiseNotBuiltin{sintptr}
+@MmuxDefineTypeBitwiseNotBuiltin{uintptr}
+@MmuxDefineTypeBitwiseNotBuiltin{mode}
+@MmuxDefineTypeBitwiseNotBuiltin{off}
+@MmuxDefineTypeBitwiseNotBuiltin{pid}
+@MmuxDefineTypeBitwiseNotBuiltin{uid}
+@MmuxDefineTypeBitwiseNotBuiltin{gid}
+@MmuxDefineTypeBitwiseNotBuiltin{wchar}
+@MmuxDefineTypeBitwiseNotBuiltin{wint}
 
 @c page
 @node errors
