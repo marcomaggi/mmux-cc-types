@@ -52,10 +52,10 @@ source "$MMUX_LIBRARY"
 #### bitwise operations for type: pointer
 
 function bitwise-pointer-and-1.1 () {
-    declare ROP OP=0x101 MASK=0x100
-    declare EXPECTED_ROP=$(( OP & MASK ))
+    declare ROP OP='0b11110000' MASK=0b11001100
+    declare EXPECTED_ROP=0b11000000
 
-    printf -v EXPECTED_ROP '0x%x' WW(EXPECTED_ROP)
+    pointer-add EXPECTED_ROP WW(EXPECTED_ROP) 0
 
     bitwise-and-pointer ROP WW(OP) WW(MASK)
 
@@ -67,10 +67,10 @@ function bitwise-pointer-and-1.1 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-pointer-or-1.1 () {
-    declare ROP OP=0x100 MASK=0x111
-    declare EXPECTED_ROP=$(( OP | MASK ))
+    declare ROP OP='0b11110000' MASK=0b11001100
+    declare EXPECTED_ROP=0b11111100
 
-    printf -v EXPECTED_ROP '0x%x' WW(EXPECTED_ROP)
+    pointer-add EXPECTED_ROP WW(EXPECTED_ROP) 0
 
     bitwise-or-pointer ROP WW(OP) WW(MASK)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -79,10 +79,10 @@ function bitwise-pointer-or-1.1 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-pointer-xor-1.1 () {
-    declare ROP OP=0x100 MASK=0x111
-    declare EXPECTED_ROP=$(( OP ^ MASK ))
+    declare ROP OP='0b11110000' MASK=0b11001100
+    declare EXPECTED_ROP=0b00111100
 
-    printf -v EXPECTED_ROP '0x%x' WW(EXPECTED_ROP)
+    pointer-add EXPECTED_ROP WW(EXPECTED_ROP) 0
 
     bitwise-xor-pointer ROP WW(OP) WW(MASK)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -91,10 +91,17 @@ function bitwise-pointer-xor-1.1 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-pointer-not-1.1 () {
-    declare ROP OP=0x100
-    declare EXPECTED_ROP=$(( ~ OP ))
+    declare ROP OP=$libc_MAX_POINTER
+    declare EXPECTED_ROP=0x0
 
-    printf -v EXPECTED_ROP '0x%x' WW(EXPECTED_ROP)
+    bitwise-not-pointer ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-pointer-not-1.2 () {
+    declare ROP OP=$libc_MIN_POINTER
+    declare EXPECTED_ROP=$libc_MAX_POINTER
 
     bitwise-not-pointer ROP WW(OP)
     dotest-unset-debug
