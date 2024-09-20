@@ -52,7 +52,6 @@ mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, size_t len, mmux_libc_[[[$1]]
 #endif
 }]]])
 
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[pointer]]],		[[["%p"]]],   [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[["%hhd"]]], [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uchar]]],		[[["%hhu"]]], [[[1]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sshort]]],		[[["%hd"]]],  [[[1]]])
@@ -70,20 +69,49 @@ MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[["%LA"]]],  [[[HAVE_LONG_DOUB
 /* ------------------------------------------------------------------ */
 
 int
+mmux_bash_pointers_sprint_pointer (char * strptr, size_t len, mmux_libc_pointer_t value)
+/* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
+   the template is "%p"; we want a proper number representation. */
+{
+  size_t	to_be_written_chars;
+
+  if (value) {
+    to_be_written_chars = snprintf(strptr, len, "%p", value);
+  } else {
+    to_be_written_chars = snprintf(strptr, len, "0x0");
+  }
+  if (len > to_be_written_chars) {
+    return EXECUTION_SUCCESS;
+  } else {
+    return EXECUTION_FAILURE;
+  }
+}
+int
 mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
 /* This exists  because of the  explicit cast to "double";  without it: GCC  raises a
    warning. */
 {
-  snprintf(strptr, len, "%A", (double)value);
-  return EXECUTION_SUCCESS;
+  size_t	to_be_written_chars;
+
+  to_be_written_chars = snprintf(strptr, len, "%A", (double)value);
+  if (len > to_be_written_chars) {
+    return EXECUTION_SUCCESS;
+  } else {
+    return EXECUTION_FAILURE;
+  }
 }
 int
 mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex value)
 {
   double	re = creal(value), im = cimag(value);
+  size_t	to_be_written_chars;
 
-  snprintf(strptr, len, "(%lA)+i*(%lA)", re, im);
-  return EXECUTION_SUCCESS;
+  to_be_written_chars = snprintf(strptr, len, "(%lA)+i*(%lA)", re, im);
+  if (len > to_be_written_chars) {
+    return EXECUTION_SUCCESS;
+  } else {
+    return EXECUTION_FAILURE;
+  }
 }
 
 
