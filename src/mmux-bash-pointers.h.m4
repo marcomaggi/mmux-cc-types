@@ -153,6 +153,19 @@ MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_A
 
 
 /** --------------------------------------------------------------------
+ ** Special parser functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_target, char const * s_source,
+								     mmux_libc_sintmax_t target_min, mmux_libc_sintmax_t target_max,
+								     char const * target_type_name, char const * caller_name);
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_target, char const * s_source,
+								       mmux_libc_uintmax_t target_max,
+								       char const * target_type_name, char const * caller_name);
+
+
+/** --------------------------------------------------------------------
  ** Type functions definition.
  ** ----------------------------------------------------------------- */
 
