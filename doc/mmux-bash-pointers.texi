@@ -1116,7 +1116,7 @@ bitwise operations are implemented for every supported data type.
 @section Addition builtins
 
 
-@deffn Builtin pointer-add @var{PTRVAR} @var{PTR} @var{DELTA}
+@deffn Builtin arithmetics-add-pointer @var{PTRVAR} @var{PTR} @var{DELTA}
 Perform the addition between @var{PTR} and @var{DELTA}, then store a string representation of the
 result in the variable @var{PTRVAR}; when successful: return true, otherwise return false and set
 the shell variable @code{ERRNO} to the string representation of an exact integer, itself
@@ -1148,7 +1148,7 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeAdditionBuiltin{STEM}
-@deffn Builtin \STEM\-add @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin arithmetics-add-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the addition between values of type @code{\STEM\}.
 @end deffn
 
@@ -1216,7 +1216,7 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeSubtractionBuiltin{STEM}
-@deffn Builtin \STEM\-sub @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin arithmetics-sub-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the subtraction between values of type @code{\STEM\}.
 @end deffn
 
@@ -1284,7 +1284,7 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeMultiplicationBuiltin{STEM}
-@deffn Builtin \STEM\-mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin arithmetics-mul-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the multiplication between values of type @code{\STEM\}.
 @end deffn
 
@@ -1352,7 +1352,7 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeDivisionBuiltin{STEM}
-@deffn Builtin \STEM\-mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin arithmetics-div-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the division between values of type @code{\STEM\}.
 @end deffn
 
@@ -1419,7 +1419,7 @@ undefined; this will be fixed in the future, probably@dots{}
 
 
 @macro MmuxDefineTypeNegationBuiltin{STEM}
-@deffn Builtin \STEM\-neg @var{ROPVAR} @var{OP}
+@deffn Builtin arithmetics-neg-\STEM\ @var{ROPVAR} @var{OP}
 Perform the negation of a value of type @code{\STEM\}.
 @end deffn
 

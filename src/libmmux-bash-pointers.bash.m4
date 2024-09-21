@@ -95,8 +95,8 @@ function mmux-bash-pointers-library-load () {
 
 	# Arithmetics builtins.
 	{
-	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_pointer_add'
-	    alias 'pointer-add'='mmux_bash_pointers_pointer_add'
+	    enable -f "$MMUX_BASH_POINTERS_LIBRARY" 'mmux_bash_pointers_arithmetics_add_pointer'
+	    alias 'arithmetics-add-pointer'='mmux_bash_pointers_arithmetics_add_pointer'
 
 	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
 	    # arithmetics operations.
@@ -104,12 +104,12 @@ function mmux-bash-pointers-library-load () {
 	    do
 		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
 		do
-		    printf -v NAME  'mmux_bash_pointers_%s_%s' \
-			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
-			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
-		    printf -v ALIAS '%s-%s' \
-			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
-			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		    printf -v NAME  'mmux_bash_pointers_arithmetics_%s_%s' \
+			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}" \
+			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+		    printf -v ALIAS 'arithmetics-%s-%s' \
+			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}" \
+			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 		    enable -f "$MMUX_BASH_POINTERS_LIBRARY" "$NAME"
 		    alias "$ALIAS"="$NAME"
 		done
@@ -183,8 +183,8 @@ function mmux-bash-pointers-library-unload () {
 
     # Arithmetics builtins.
     {
-	enable -d 'mmux_bash_pointers_pointer_add'
-	unalias 'pointer-add'
+	enable -d 'mmux_bash_pointers_arithmetics_add_pointer'
+	unalias 'arithmetics-add-pointer'
 
 	# Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
 	# arithmetics operations.
@@ -192,12 +192,12 @@ function mmux-bash-pointers-library-unload () {
 	do
 	    for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
 	    do
-		printf -v NAME  'mmux_bash_pointers_%s_%s' \
-		       "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
-		       "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
-		printf -v ALIAS '%s-%s' \
-		       "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}" \
-		       "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"
+		printf -v NAME  'mmux_bash_pointers_arithmetics_%s_%s' \
+		       "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"	\
+		       "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+		printf -v ALIAS 'arithmetics-%s-%s' \
+		       "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}"	\
+		       "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
 		enable -d "$NAME"
 		unalias "$ALIAS"
 	    done
