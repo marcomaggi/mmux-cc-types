@@ -218,6 +218,30 @@ function bitwise-not-schar-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-schar-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-schar ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-schar-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-schar ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: uchar
 
@@ -310,6 +334,30 @@ function bitwise-not-uchar-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-uchar-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uchar ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uchar-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uchar ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sshort
 
@@ -390,6 +438,30 @@ function bitwise-not-sshort-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sshort ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sshort-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sshort ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sshort-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sshort ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -487,6 +559,30 @@ function bitwise-not-ushort-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-ushort-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-ushort ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-ushort-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-ushort ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sint
 
@@ -567,6 +663,30 @@ function bitwise-not-sint-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sint ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sint ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sint ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -664,6 +784,30 @@ function bitwise-not-uint-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-uint-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uint ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uint-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uint ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: slong
 
@@ -753,6 +897,30 @@ function bitwise-not-slong-1.2 () {
     declare EXPECTED_ROP=$libc_MAX_SLONG
 
     bitwise-not-slong ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-slong-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-slong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-slong-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-slong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -848,6 +1016,30 @@ function bitwise-not-ulong-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-ulong-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-ulong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-ulong-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-ulong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sllong
 
@@ -928,6 +1120,30 @@ function bitwise-not-sllong-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sllong ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sllong-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sllong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sllong-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sllong ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1025,6 +1241,30 @@ function bitwise-not-ullong-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-ullong-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-ullong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-ullong-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-ullong ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sint8
 
@@ -1105,6 +1345,30 @@ function bitwise-not-sint8-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sint8 ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint8-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sint8 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint8-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sint8 ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1203,6 +1467,30 @@ function bitwise-not-uint8-1.2 () {
 }
 
 
+### ------------------------------------------------------------------------
+
+function bitwise-uint8-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uint8 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uint8-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uint8 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sint16
 
@@ -1283,6 +1571,30 @@ function bitwise-not-sint16-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sint16 ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint16-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sint16 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint16-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sint16 ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1381,6 +1693,30 @@ function bitwise-not-uint16-1.2 () {
 }
 
 
+### ------------------------------------------------------------------------
+
+function bitwise-uint16-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uint16 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uint16-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uint16 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sint32
 
@@ -1461,6 +1797,30 @@ function bitwise-not-sint32-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sint32 ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint32-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sint32 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint32-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sint32 ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1558,6 +1918,30 @@ function bitwise-not-uint32-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-uint32-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uint32 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uint32-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uint32 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sint64
 
@@ -1638,6 +2022,30 @@ function bitwise-not-sint64-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sint64 ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint64-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sint64 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sint64-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sint64 ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1735,6 +2143,30 @@ function bitwise-not-uint64-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-uint64-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uint64 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uint64-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uint64 ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sintmax
 
@@ -1815,6 +2247,30 @@ function bitwise-not-sintmax-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sintmax ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sintmax-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sintmax ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sintmax-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sintmax ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1913,6 +2369,30 @@ function bitwise-not-uintmax-1.2 () {
 }
 
 
+### ------------------------------------------------------------------------
+
+function bitwise-uintmax-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uintmax ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uintmax-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uintmax ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: sintptr
 
@@ -1993,6 +2473,30 @@ function bitwise-not-sintptr-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-sintptr ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sintptr-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-sintptr ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-sintptr-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-sintptr ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2090,6 +2594,30 @@ function bitwise-not-uintptr-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-uintptr-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uintptr ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uintptr-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uintptr ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: ssize
 
@@ -2170,6 +2698,30 @@ function bitwise-not-ssize-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-ssize ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-ssize-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-ssize ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-ssize-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-ssize ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2268,6 +2820,30 @@ function bitwise-not-usize-1.2 () {
 }
 
 
+### ------------------------------------------------------------------------
+
+function bitwise-usize-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-usize ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-usize-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-usize ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: ptrdiff
 
@@ -2353,6 +2929,30 @@ function bitwise-not-ptrdiff-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-ptrdiff-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-ptrdiff ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-ptrdiff-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-ptrdiff ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: off
 
@@ -2433,6 +3033,30 @@ function bitwise-not-off-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-off ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-off-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-off ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-off-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-off ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2530,6 +3154,30 @@ function bitwise-not-mode-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-mode-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-mode ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-mode-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-mode ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: pid
 
@@ -2610,6 +3258,30 @@ function bitwise-not-pid-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-pid ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-gid-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-gid ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-gid-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-gid ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2707,6 +3379,30 @@ function bitwise-not-uid-1.2 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function bitwise-uid-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-uid ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-uid-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-uid ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: gid
 
@@ -2800,6 +3496,30 @@ function bitwise-not-gid-1.2 () {
 }
 
 
+### ------------------------------------------------------------------------
+
+function bitwise-gid-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-gid ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-gid-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-gid ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### bitwise operations for type: wchar
 
@@ -2880,6 +3600,30 @@ function bitwise-not-wchar-1.1 () {
     declare -r EXPECTED_ROP=$(( ~ OP ))
 
     bitwise-not-wchar ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-wchar-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-wchar ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-wchar-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-wchar ROP WW(OP) WW(NBITS)
     dotest-unset-debug
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2974,6 +3718,30 @@ function bitwise-not-wint-1.2 () {
     declare EXPECTED_ROP=$libc_MAX_WINT
 
     bitwise-not-wint ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-wint-shift-left-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    bitwise-shl-wint ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-wint-shift-right-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    bitwise-shr-wint ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
