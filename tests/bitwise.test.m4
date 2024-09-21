@@ -111,7 +111,7 @@ function bitwise-pointer-not-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-pointer-shift-left-1.1 () {
+function bitwise-pointer-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=0x$(( 1 << 3 ))
 
@@ -123,7 +123,7 @@ function bitwise-pointer-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-pointer-shift-right-1.1 () {
+function bitwise-pointer-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=0x$(( 8 >> 3 ))
 
@@ -220,7 +220,7 @@ function bitwise-not-schar-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-schar-shift-left-1.1 () {
+function bitwise-schar-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -232,7 +232,7 @@ function bitwise-schar-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-schar-shift-right-1.1 () {
+function bitwise-schar-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -336,7 +336,7 @@ function bitwise-not-uchar-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uchar-shift-left-1.1 () {
+function bitwise-uchar-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -348,7 +348,7 @@ function bitwise-uchar-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uchar-shift-right-1.1 () {
+function bitwise-uchar-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -445,7 +445,7 @@ function bitwise-not-sshort-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sshort-shift-left-1.1 () {
+function bitwise-sshort-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -457,7 +457,7 @@ function bitwise-sshort-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sshort-shift-right-1.1 () {
+function bitwise-sshort-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -561,7 +561,7 @@ function bitwise-not-ushort-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ushort-shift-left-1.1 () {
+function bitwise-ushort-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -573,7 +573,7 @@ function bitwise-ushort-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ushort-shift-right-1.1 () {
+function bitwise-ushort-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -670,7 +670,7 @@ function bitwise-not-sint-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint-shift-left-1.1 () {
+function bitwise-sint-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -682,7 +682,7 @@ function bitwise-sint-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint-shift-right-1.1 () {
+function bitwise-sint-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -786,7 +786,7 @@ function bitwise-not-uint-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint-shift-left-1.1 () {
+function bitwise-uint-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -798,7 +798,7 @@ function bitwise-uint-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint-shift-right-1.1 () {
+function bitwise-uint-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -902,7 +902,7 @@ function bitwise-not-slong-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-slong-shift-left-1.1 () {
+function bitwise-slong-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -914,7 +914,7 @@ function bitwise-slong-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-slong-shift-right-1.1 () {
+function bitwise-slong-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1018,7 +1018,7 @@ function bitwise-not-ulong-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ulong-shift-left-1.1 () {
+function bitwise-ulong-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1030,7 +1030,7 @@ function bitwise-ulong-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ulong-shift-right-1.1 () {
+function bitwise-ulong-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1127,7 +1127,7 @@ function bitwise-not-sllong-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sllong-shift-left-1.1 () {
+function bitwise-sllong-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1139,7 +1139,7 @@ function bitwise-sllong-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sllong-shift-right-1.1 () {
+function bitwise-sllong-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1243,7 +1243,7 @@ function bitwise-not-ullong-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ullong-shift-left-1.1 () {
+function bitwise-ullong-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1255,7 +1255,7 @@ function bitwise-ullong-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ullong-shift-right-1.1 () {
+function bitwise-ullong-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1352,7 +1352,7 @@ function bitwise-not-sint8-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint8-shift-left-1.1 () {
+function bitwise-sint8-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1364,7 +1364,7 @@ function bitwise-sint8-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint8-shift-right-1.1 () {
+function bitwise-sint8-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1469,7 +1469,7 @@ function bitwise-not-uint8-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint8-shift-left-1.1 () {
+function bitwise-uint8-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1481,7 +1481,7 @@ function bitwise-uint8-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint8-shift-right-1.1 () {
+function bitwise-uint8-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1578,7 +1578,7 @@ function bitwise-not-sint16-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint16-shift-left-1.1 () {
+function bitwise-sint16-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1590,7 +1590,7 @@ function bitwise-sint16-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint16-shift-right-1.1 () {
+function bitwise-sint16-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1695,7 +1695,7 @@ function bitwise-not-uint16-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint16-shift-left-1.1 () {
+function bitwise-uint16-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1707,7 +1707,7 @@ function bitwise-uint16-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint16-shift-right-1.1 () {
+function bitwise-uint16-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1804,7 +1804,7 @@ function bitwise-not-sint32-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint32-shift-left-1.1 () {
+function bitwise-sint32-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1816,7 +1816,7 @@ function bitwise-sint32-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint32-shift-right-1.1 () {
+function bitwise-sint32-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -1920,7 +1920,7 @@ function bitwise-not-uint32-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint32-shift-left-1.1 () {
+function bitwise-uint32-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -1932,7 +1932,7 @@ function bitwise-uint32-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint32-shift-right-1.1 () {
+function bitwise-uint32-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2029,7 +2029,7 @@ function bitwise-not-sint64-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint64-shift-left-1.1 () {
+function bitwise-sint64-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2041,7 +2041,7 @@ function bitwise-sint64-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sint64-shift-right-1.1 () {
+function bitwise-sint64-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2145,7 +2145,7 @@ function bitwise-not-uint64-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint64-shift-left-1.1 () {
+function bitwise-uint64-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2157,7 +2157,7 @@ function bitwise-uint64-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uint64-shift-right-1.1 () {
+function bitwise-uint64-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2254,7 +2254,7 @@ function bitwise-not-sintmax-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sintmax-shift-left-1.1 () {
+function bitwise-sintmax-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2266,7 +2266,7 @@ function bitwise-sintmax-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sintmax-shift-right-1.1 () {
+function bitwise-sintmax-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2371,7 +2371,7 @@ function bitwise-not-uintmax-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uintmax-shift-left-1.1 () {
+function bitwise-uintmax-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2383,7 +2383,7 @@ function bitwise-uintmax-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uintmax-shift-right-1.1 () {
+function bitwise-uintmax-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2480,7 +2480,7 @@ function bitwise-not-sintptr-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sintptr-shift-left-1.1 () {
+function bitwise-sintptr-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2492,7 +2492,7 @@ function bitwise-sintptr-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-sintptr-shift-right-1.1 () {
+function bitwise-sintptr-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2596,7 +2596,7 @@ function bitwise-not-uintptr-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uintptr-shift-left-1.1 () {
+function bitwise-uintptr-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2608,7 +2608,7 @@ function bitwise-uintptr-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uintptr-shift-right-1.1 () {
+function bitwise-uintptr-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2705,7 +2705,7 @@ function bitwise-not-ssize-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ssize-shift-left-1.1 () {
+function bitwise-ssize-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2717,7 +2717,7 @@ function bitwise-ssize-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ssize-shift-right-1.1 () {
+function bitwise-ssize-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2822,7 +2822,7 @@ function bitwise-not-usize-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-usize-shift-left-1.1 () {
+function bitwise-usize-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2834,7 +2834,7 @@ function bitwise-usize-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-usize-shift-right-1.1 () {
+function bitwise-usize-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -2931,7 +2931,7 @@ function bitwise-not-ptrdiff-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ptrdiff-shift-left-1.1 () {
+function bitwise-ptrdiff-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -2943,7 +2943,7 @@ function bitwise-ptrdiff-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-ptrdiff-shift-right-1.1 () {
+function bitwise-ptrdiff-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3040,7 +3040,7 @@ function bitwise-not-off-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-off-shift-left-1.1 () {
+function bitwise-off-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3052,7 +3052,7 @@ function bitwise-off-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-off-shift-right-1.1 () {
+function bitwise-off-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3156,7 +3156,7 @@ function bitwise-not-mode-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-mode-shift-left-1.1 () {
+function bitwise-mode-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3168,7 +3168,7 @@ function bitwise-mode-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-mode-shift-right-1.1 () {
+function bitwise-mode-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3265,7 +3265,7 @@ function bitwise-not-pid-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-gid-shift-left-1.1 () {
+function bitwise-gid-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3277,7 +3277,7 @@ function bitwise-gid-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-gid-shift-right-1.1 () {
+function bitwise-gid-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3381,7 +3381,7 @@ function bitwise-not-uid-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uid-shift-left-1.1 () {
+function bitwise-uid-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3393,7 +3393,7 @@ function bitwise-uid-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-uid-shift-right-1.1 () {
+function bitwise-uid-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3498,7 +3498,7 @@ function bitwise-not-gid-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-gid-shift-left-1.1 () {
+function bitwise-gid-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3510,7 +3510,7 @@ function bitwise-gid-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-gid-shift-right-1.1 () {
+function bitwise-gid-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3607,7 +3607,7 @@ function bitwise-not-wchar-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-wchar-shift-left-1.1 () {
+function bitwise-wchar-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3619,7 +3619,7 @@ function bitwise-wchar-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-wchar-shift-right-1.1 () {
+function bitwise-wchar-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
@@ -3723,7 +3723,7 @@ function bitwise-not-wint-1.2 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-wint-shift-left-1.1 () {
+function bitwise-wint-shl-1.1 () {
     declare ROP OP=0b1 NBITS=3
     declare EXPECTED_ROP=$(( 1 << 3 ))
 
@@ -3735,7 +3735,7 @@ function bitwise-wint-shift-left-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function bitwise-wint-shift-right-1.1 () {
+function bitwise-wint-shr-1.1 () {
     declare ROP OP=8 NBITS=3
     declare EXPECTED_ROP=$(( 8 >> 3 ))
 
