@@ -142,7 +142,6 @@ function mmux-bash-pointers-library-load () {
 
 #page
 function mmux-bash-pointers-library-unload () {
-    enable -d mmux_bash_pointers_library_init
     mmux-bash-pointers-library-undefine-all-builtins
 
     unset -v MMUX_BASH_POINTERS_LIBRARY
