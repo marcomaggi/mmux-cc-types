@@ -1433,10 +1433,6 @@ Perform the remainder between values of type @code{\STEM\}.
 @MmuxDefineTypeRemainderBuiltin{ulong}
 @MmuxDefineTypeRemainderBuiltin{sllong}
 @MmuxDefineTypeRemainderBuiltin{ullong}
-@MmuxDefineTypeRemainderBuiltin{float}
-@MmuxDefineTypeRemainderBuiltin{double}
-@MmuxDefineTypeRemainderBuiltin{ldouble}
-@MmuxDefineTypeRemainderBuiltin{complex}
 
 @MmuxDefineTypeRemainderBuiltin{sint8}
 @MmuxDefineTypeRemainderBuiltin{uint8}
