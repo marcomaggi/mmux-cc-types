@@ -1108,6 +1108,7 @@ bitwise operations are implemented for every supported data type.
 * arithmetics subtraction::     Subtraction builtins.
 * arithmetics multiplication::  Multiplication builtins.
 * arithmetics division::        Division builtins.
+* arithmetics remainder::       Remainder builtins.
 * arithmetics negation::        Negation builtins.
 @end menu
 
@@ -1395,6 +1396,70 @@ Perform the division between values of type @code{\STEM\}.
 @MmuxDefineTypeDivisionBuiltin{gid}
 @MmuxDefineTypeDivisionBuiltin{wchar}
 @MmuxDefineTypeDivisionBuiltin{wint}
+
+@c page
+@node arithmetics remainder
+@section Remainder builtins
+
+
+For the following builtins, the remainder operation is as follows:
+
+@example
+@var{ROP} = @vari{OP} % @varii{OP}
+@end example
+
+All the builtins perform the remainder between the operands @var{OP}, then store a string
+representation of the result in the variable @var{ROPVAR}; when successful: return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
+
+The arguments @var{OP} must be string representations of values of the specific builtin type.
+
+
+@macro MmuxDefineTypeRemainderBuiltin{STEM}
+@deffn Builtin arithmetics-mod-\STEM\ @var{ROPVAR} @vari{OP} @varii{OP}
+Perform the remainder between values of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeRemainderBuiltin{schar}
+@MmuxDefineTypeRemainderBuiltin{uchar}
+@MmuxDefineTypeRemainderBuiltin{sshort}
+@MmuxDefineTypeRemainderBuiltin{ushort}
+@MmuxDefineTypeRemainderBuiltin{sint}
+@MmuxDefineTypeRemainderBuiltin{uint}
+@MmuxDefineTypeRemainderBuiltin{slong}
+@MmuxDefineTypeRemainderBuiltin{ulong}
+@MmuxDefineTypeRemainderBuiltin{sllong}
+@MmuxDefineTypeRemainderBuiltin{ullong}
+@MmuxDefineTypeRemainderBuiltin{float}
+@MmuxDefineTypeRemainderBuiltin{double}
+@MmuxDefineTypeRemainderBuiltin{ldouble}
+@MmuxDefineTypeRemainderBuiltin{complex}
+
+@MmuxDefineTypeRemainderBuiltin{sint8}
+@MmuxDefineTypeRemainderBuiltin{uint8}
+@MmuxDefineTypeRemainderBuiltin{sint16}
+@MmuxDefineTypeRemainderBuiltin{uint16}
+@MmuxDefineTypeRemainderBuiltin{sint32}
+@MmuxDefineTypeRemainderBuiltin{uint32}
+@MmuxDefineTypeRemainderBuiltin{sint64}
+@MmuxDefineTypeRemainderBuiltin{uint64}
+
+@MmuxDefineTypeRemainderBuiltin{ssize}
+@MmuxDefineTypeRemainderBuiltin{usize}
+@MmuxDefineTypeRemainderBuiltin{sintmax}
+@MmuxDefineTypeRemainderBuiltin{uintmax}
+@MmuxDefineTypeRemainderBuiltin{sintptr}
+@MmuxDefineTypeRemainderBuiltin{uintptr}
+@MmuxDefineTypeRemainderBuiltin{mode}
+@MmuxDefineTypeRemainderBuiltin{off}
+@MmuxDefineTypeRemainderBuiltin{pid}
+@MmuxDefineTypeRemainderBuiltin{uid}
+@MmuxDefineTypeRemainderBuiltin{gid}
+@MmuxDefineTypeRemainderBuiltin{wchar}
+@MmuxDefineTypeRemainderBuiltin{wint}
 
 @c page
 @node arithmetics negation

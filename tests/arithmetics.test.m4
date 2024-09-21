@@ -158,6 +158,16 @@ function arithmetics-schar-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-schar-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-schar ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-schar-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -261,6 +271,16 @@ function arithmetics-sshort-div-1.3 () {
 
     arithmetics-div-sshort ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sshort-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sshort ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -372,6 +392,16 @@ function arithmetics-sint-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-sint-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sint ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-sint-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -475,6 +505,16 @@ function arithmetics-slong-div-1.3 () {
 
     arithmetics-div-slong ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-slong-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-slong ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -586,6 +626,16 @@ function arithmetics-sllong-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-sllong-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sllong ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-sllong-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -689,6 +739,16 @@ function arithmetics-sint8-div-1.3 () {
 
     arithmetics-div-sint8 ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint8-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sint8 ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -800,6 +860,16 @@ function arithmetics-sint16-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-sint16-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sint16 ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-sint16-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -903,6 +973,16 @@ function arithmetics-sint32-div-1.3 () {
 
     arithmetics-div-sint32 ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint32-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sint32 ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -1014,6 +1094,16 @@ function arithmetics-sint64-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-sint64-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sint64 ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-sint64-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -1117,6 +1207,16 @@ function arithmetics-sintmax-div-1.3 () {
 
     arithmetics-div-sintmax ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sintmax-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sintmax ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -1228,6 +1328,16 @@ function arithmetics-sintptr-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-sintptr-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-sintptr ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-sintptr-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -1335,109 +1445,12 @@ function arithmetics-ptrdiff-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-ptrdiff-neg-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='-1'
+function arithmetics-ptrdiff-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-neg-ptrdiff ROP QQ(OP)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-
-
-#### type variables: ptrdiff
-
-function arithmetics-ptrdiff-add-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    arithmetics-add-ptrdiff ROP QQ(OP)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-add-1.2 () {
-    declare ROP OP0=1 OP1=2
-    declare -r EXPECTED_ROP=$((1 + 2))
-
-    arithmetics-add-ptrdiff ROP QQ(OP0) QQ(OP1)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
-
-    arithmetics-add-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-
-### ------------------------------------------------------------------------
-
-function arithmetics-ptrdiff-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    arithmetics-sub-ptrdiff ROP QQ(OP)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-sub-1.2 () {
-    declare ROP OP0=1 OP1=2
-    declare -r EXPECTED_ROP=$((1 - 2))
-
-    arithmetics-sub-ptrdiff ROP QQ(OP0) QQ(OP1)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-sub-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    arithmetics-sub-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-
-### ------------------------------------------------------------------------
-
-function arithmetics-ptrdiff-mul-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    arithmetics-mul-ptrdiff ROP QQ(OP)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-mul-1.2 () {
-    declare ROP OP0=1 OP1=2
-    declare -r EXPECTED_ROP=$((1 * 2))
-
-    arithmetics-mul-ptrdiff ROP QQ(OP0) QQ(OP1)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
-
-    arithmetics-mul-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-
-### ------------------------------------------------------------------------
-
-function arithmetics-ptrdiff-div-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    arithmetics-div-ptrdiff ROP QQ(OP)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
-
-    arithmetics-div-ptrdiff ROP QQ(OP0) QQ(OP1)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-ptrdiff-div-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3
-    declare -r EXPECTED_ROP=$((100 / 2 / 3))
-
-    arithmetics-div-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+    arithmetics-mod-ptrdiff ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -1549,6 +1562,16 @@ function arithmetics-off-div-1.3 () {
 
 ### ------------------------------------------------------------------------
 
+function arithmetics-off-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-off ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function arithmetics-off-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
@@ -1652,6 +1675,16 @@ function arithmetics-mode-div-1.3 () {
 
     arithmetics-div-mode ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-mode-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-mode ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 
@@ -1761,6 +1794,16 @@ function arithmetics-pid-neg-1.1 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-pid-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-pid ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### type variables: uid
 
@@ -1856,6 +1899,16 @@ function arithmetics-uid-div-1.3 () {
 
     arithmetics-div-uid ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-uid-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-uid ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 
@@ -1955,6 +2008,16 @@ function arithmetics-gid-div-1.3 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-gid-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-gid ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### type variables: wchar
 
@@ -2052,6 +2115,16 @@ function arithmetics-wchar-div-1.3 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-wchar-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-wchar ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### type variables: wint
 
@@ -2147,6 +2220,16 @@ function arithmetics-wint-div-1.3 () {
 
     arithmetics-div-wint ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wint-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    arithmetics-mod-wint ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
 

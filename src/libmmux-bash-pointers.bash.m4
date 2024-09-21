@@ -39,8 +39,10 @@ function mmux-bash-pointers-library-load () {
     declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
     declare -ga MMUX_BASH_POINTERS_TYPE_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ga MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
+    declare -ga MMUX_BASH_POINTERS_FLOAT_TYPE_STEMS=(float double ldouble complex)
     declare -ga MMUX_BASH_POINTERS_LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror)
-    declare -ga MMUX_BASH_POINTERS_ARITHMETICS_OPS=(add sub mul div neg)
+    declare -ga MMUX_BASH_POINTERS_INTEGER_ARITHMETICS_OPS=(add sub mul div mod neg)
+    declare -ga MMUX_BASH_POINTERS_FLOAT_ARITHMETICS_OPS=(add sub mul div neg)
     declare -ga MMUX_BASH_POINTERS_BITWISE_OPS=(and or xor not shl shr)
 
     # The identifier of every defined builtin is stored in this array.
@@ -101,16 +103,30 @@ function mmux-bash-pointers-library-load () {
 
 	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
 	    # arithmetics operations.
-	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_TYPE_STEMS[@]}; ++IDX))
+	    for ((IDX=1; IDX < ${#MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[@]}; ++IDX))
 	    do
-		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_ARITHMETICS_OPS[@]}; ++JDX))
+		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_INTEGER_ARITHMETICS_OPS[@]}; ++JDX))
 		do
 		    printf -v NAME  'mmux_bash_pointers_arithmetics_%s_%s' \
-			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}" \
-			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+			   "${MMUX_BASH_POINTERS_INTEGER_ARITHMETICS_OPS[$JDX]}" \
+			   "${MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[$IDX]}"
 		    printf -v ALIAS 'arithmetics-%s-%s' \
-			   "${MMUX_BASH_POINTERS_ARITHMETICS_OPS[$JDX]}" \
-			   "${MMUX_BASH_POINTERS_TYPE_STEMS[$IDX]}"
+			   "${MMUX_BASH_POINTERS_INTEGER_ARITHMETICS_OPS[$JDX]}" \
+			   "${MMUX_BASH_POINTERS_INTEGER_TYPE_STEMS[$IDX]}"
+		    mmux-bash-pointers-library-define-builtin "$NAME" "$ALIAS"
+		done
+	    done
+
+	    for ((IDX=0; IDX < ${#MMUX_BASH_POINTERS_FLOAT_TYPE_STEMS[@]}; ++IDX))
+	    do
+		for ((JDX=0; JDX < ${#MMUX_BASH_POINTERS_FLOAT_ARITHMETICS_OPS[@]}; ++JDX))
+		do
+		    printf -v NAME  'mmux_bash_pointers_arithmetics_%s_%s' \
+			   "${MMUX_BASH_POINTERS_FLOAT_ARITHMETICS_OPS[$JDX]}" \
+			   "${MMUX_BASH_POINTERS_FLOAT_TYPE_STEMS[$IDX]}"
+		    printf -v ALIAS 'arithmetics-%s-%s' \
+			   "${MMUX_BASH_POINTERS_FLOAT_ARITHMETICS_OPS[$JDX]}" \
+			   "${MMUX_BASH_POINTERS_FLOAT_TYPE_STEMS[$IDX]}"
 		    mmux-bash-pointers-library-define-builtin "$NAME" "$ALIAS"
 		done
 	    done

@@ -438,6 +438,91 @@ MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[wint]]],		[[[1]]])
 
 
 /** --------------------------------------------------------------------
+ ** Remainder builtins.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_DEFINE_REMAINDER_BUILTIN]]],[[[
+static int
+mmux_bash_pointers_arithmetics_mod_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"arithmetics-mod-$1"
+{
+#if ($2)
+  mmux_libc_$1_t	op1, op2;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op1, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  rv = mmux_bash_pointers_parse_$1(&op2, argv[3], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op1 = op1 % op2;
+
+  {
+    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+#undef  LEN
+#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
+    char	str[LEN];
+
+    rv = mmux_bash_pointers_sprint_$1(str,LEN,op1);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_variable(argv[1], str, 0);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
+#else
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+#endif
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_mod_$1]]],
+    [[[(4 == argc)]]],
+    [[["$1-mod ROPVAR OP0 OP"]]],
+    [[["Compute the remainder between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+]]])
+
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[schar]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uchar]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sshort]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ushort]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[slong]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ulong]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint8]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint8]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint16]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint16]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint32]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint32]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint64]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint64]]],	[[[1]]])
+
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[usize]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ssize]]],		[[[1]]])
+
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sintmax]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uintmax]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sintptr]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uintptr]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ptrdiff]]],	[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[mode]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[off]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[pid]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uid]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[gid]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[wchar]]],		[[[1]]])
+MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[wint]]],		[[[1]]])
+
+
+/** --------------------------------------------------------------------
  ** Negation builtins.
  ** ----------------------------------------------------------------- */
 
