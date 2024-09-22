@@ -35,9 +35,9 @@
 
 m4_define([[[MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_bitwise_and_$1_main (int argc,  char * argv[])
+mmux_$1_bitwise_and_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-and-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_and"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -72,9 +72,9 @@ mmux_bash_pointers_bitwise_and_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_and_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_and]]],
     [[[(3 <= argc)]]],
-    [[["bitwise-and-$1 ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_bitwise_and ROPVAR OP0 OP ..."]]],
     [[["Compute the bitwise AND between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -117,9 +117,9 @@ MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[wint]]],		[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_bitwise_and_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-and-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_and"
 {
   mmux_libc_pointer_t	op;
   mmux_libc_uintptr_t	op_uintptr, mask;
@@ -150,9 +150,9 @@ mmux_bash_pointers_bitwise_and_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_and_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_and]]],
     [[[(4 == argc)]]],
-    [[["bitwise-and-pointer ROPVAR PTR MASK"]]],
+    [[["mmux_pointer_bitwise_and ROPVAR PTR MASK"]]],
     [[["Perform the bitwise AND operation between the pointer PTR by the unsigned integer MASK, store the result in PTRVAR."]]])
 
 
@@ -162,9 +162,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_and_poin
 
 m4_define([[[MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_bitwise_or_$1_main (int argc,  char * argv[])
+mmux_$1_bitwise_or_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-or-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_or"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -199,9 +199,9 @@ mmux_bash_pointers_bitwise_or_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_or_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_or]]],
     [[[(3 <= argc)]]],
-    [[["bitwise-or-$1 ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_bitwise_or ROPVAR OP0 OP ..."]]],
     [[["Compute the bitwise OR between the operors OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -244,9 +244,9 @@ MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[wint]]],			[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_bitwise_or_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-or-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_or"
 {
   mmux_libc_pointer_t	op;
   mmux_libc_uintptr_t	op_uintptr, mask;
@@ -277,9 +277,9 @@ mmux_bash_pointers_bitwise_or_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED, 
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_or_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_or]]],
     [[[(4 == argc)]]],
-    [[["bitwise-or-pointer ROPVAR PTR MASK"]]],
+    [[["mmux_pointer_bitwise_or ROPVAR PTR MASK"]]],
     [[["Perform the bitwise OR operation between the pointer PTR by the unsigned integer MASK, store the result in PTRVAR."]]])
 
 
@@ -289,9 +289,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_or_point
 
 m4_define([[[MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_bitwise_xor_$1_main (int argc,  char * argv[])
+mmux_$1_bitwise_xor_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-xor-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_xor"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -326,9 +326,9 @@ mmux_bash_pointers_bitwise_xor_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_xor_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_xor]]],
     [[[(3 <= argc)]]],
-    [[["bitwise-xor-$1 ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_bitwise_xor ROPVAR OP0 OP ..."]]],
     [[["Compute the bitwise XOR between the operxors OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -371,9 +371,9 @@ MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[wint]]],		[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_bitwise_xor_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-xor-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_xor"
 {
   mmux_libc_pointer_t	op, mask;
   mmux_libc_uintptr_t	op_uintptr, mask_uintptr;
@@ -405,9 +405,9 @@ mmux_bash_pointers_bitwise_xor_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_xor_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_xor]]],
     [[[(4 == argc)]]],
-    [[["bitwise-xor-pointer ROPVAR PTR MASK"]]],
+    [[["mmux_pointer_bitwise_xor ROPVAR PTR MASK"]]],
     [[["Perform the bitwise XOR operation between the pointer PTR by the unsigned integer MASK, store the result in PTRVAR."]]])
 
 
@@ -417,9 +417,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_xor_poin
 
 m4_define([[[MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_bitwise_not_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-not-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_not"
 {
 #if ($2)
   mmux_libc_$1_t	op;
@@ -450,9 +450,9 @@ mmux_bash_pointers_bitwise_not_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_not_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_not]]],
     [[[(3 == argc)]]],
-    [[["bitwise-not-$1 ROPVAR OP"]]],
+    [[["mmux_$1_bitwise_not ROPVAR OP"]]],
     [[["Compute the bitwise NOT between of the opernot OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -495,9 +495,9 @@ MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[wint]]],		[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_bitwise_not_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-not-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_not"
 {
   mmux_libc_pointer_t	op;
   mmux_libc_uintptr_t	op_uintptr;
@@ -525,9 +525,9 @@ mmux_bash_pointers_bitwise_not_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_not_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_not]]],
     [[[(3 == argc)]]],
-    [[["bitwise-not-pointer ROPVAR PTR"]]],
+    [[["mmux_pointer_bitwise_not ROPVAR PTR"]]],
     [[["Perform the bitwise NOT operation of the pointer PTR, store the result in PTRVAR."]]])
 
 
@@ -537,9 +537,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_not_poin
 
 m4_define([[[MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_bitwise_shl_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-shl-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_shl"
 {
 #if ($2)
   mmux_libc_$1_t	op;
@@ -574,9 +574,9 @@ mmux_bash_pointers_bitwise_shl_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shl_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_shl]]],
     [[[(4 == argc)]]],
-    [[["bitwise-shl-$1 ROPVAR OP NBITS"]]],
+    [[["mmux_$1_bitwise_shl ROPVAR OP NBITS"]]],
     [[["Compute the bitwise shl of OP, by NBITS, store the result in ROPVAR."]]])
 ]]])
 
@@ -619,9 +619,9 @@ MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wint]]],		[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_bitwise_shl_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-shl-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shl"
 {
   mmux_libc_pointer_t	op;
   mmux_libc_uintptr_t	op_uintptr;
@@ -653,9 +653,9 @@ mmux_bash_pointers_bitwise_shl_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shl_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shl]]],
     [[[(4 == argc)]]],
-    [[["bitwise-shl-pointer ROPVAR OP NBITS"]]],
+    [[["mmux_pointer_bitwise_shl ROPVAR OP NBITS"]]],
     [[["Compute the bitwise shl of OP, by NBITS, store the result in ROPVAR."]]])
 
 
@@ -665,9 +665,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shl_poin
 
 m4_define([[[MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_bitwise_shr_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-shr-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_shr"
 {
 #if ($2)
   mmux_libc_$1_t	op;
@@ -702,9 +702,9 @@ mmux_bash_pointers_bitwise_shr_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shr_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_shr]]],
     [[[(4 == argc)]]],
-    [[["bitwise-shr-$1 ROPVAR OP NBITS"]]],
+    [[["mmux_$1_bitwise_shr ROPVAR OP NBITS"]]],
     [[["Compute the bitwise shr of OP, by NBITS, store the result in ROPVAR."]]])
 ]]])
 
@@ -712,8 +712,8 @@ MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[schar]]],	[[[1]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uchar]]],	[[[1]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sshort]]],	[[[1]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ushort]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint]]],	[[[1]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[slong]]],	[[[1]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ulong]]],	[[[1]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
@@ -747,9 +747,9 @@ MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wint]]],		[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_bitwise_shr_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"bitwise-shr-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shr"
 {
   mmux_libc_pointer_t	op;
   mmux_libc_uintptr_t	op_uintptr;
@@ -781,9 +781,9 @@ mmux_bash_pointers_bitwise_shr_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_bitwise_shr_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shr]]],
     [[[(4 == argc)]]],
-    [[["bitwise-shr-pointer ROPVAR OP NBITS"]]],
+    [[["mmux_pointer_bitwise_shr ROPVAR OP NBITS"]]],
     [[["Compute the bitwise shr of OP, by NBITS, store the result in ROPVAR."]]])
 
 /* end of file */

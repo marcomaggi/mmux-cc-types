@@ -42,7 +42,6 @@ function mmux_bash_pointers_library_load () {
     declare -ra INTEGER_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ra FLOAT_STEMS=(float double ldouble complex)
     declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror)
-    declare -ra BITWISE_OPS=(and or xor not shl shr)
 
     # The identifier of every defined builtin is stored in this array.
     declare -ga MMUX_BASH_POINTERS_DEFINED_BUILTINS
@@ -122,11 +121,10 @@ function mmux_bash_pointers_library_load () {
 	{
 	    for ((IDX=0; IDX < ${#INTEGER_STEMS[@]}; ++IDX))
 	    do
-		for ((JDX=0; JDX < ${#BITWISE_OPS[@]}; ++JDX))
+		for ITEM in and or xor not shl shr
 		do
-		    printf -v NAME  'mmux_bash_pointers_bitwise_%s_%s' "${BITWISE_OPS[$JDX]}" "${INTEGER_STEMS[$IDX]}"
-		    printf -v ALIAS 'bitwise-%s-%s'                    "${BITWISE_OPS[$JDX]}" "${INTEGER_STEMS[$IDX]}"
-		    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
+		    printf -v NAME  'mmux_%s_bitwise_%s' "${INTEGER_STEMS[$IDX]}" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
 		done
 	    done
 	}

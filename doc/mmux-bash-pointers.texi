@@ -1947,7 +1947,7 @@ operations are implemented for every supported data type.
 @section Bitwise AND operation
 
 
-@deffn Builtin bitwise-and-pointer @var{PTRVAR} @var{PTR} @var{MASK}
+@deffn Builtin mmux_pointer_bitwise_and @var{PTRVAR} @var{PTR} @var{MASK}
 Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
 AND operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
@@ -1977,7 +1977,7 @@ The arguments @var{OP} must be string representations of values of the specific 
 only @varo{OP} is present: the result is @varo{OP} itself.
 
 @macro MmuxDefineTypeBitwiseAndBuiltin{STEM}
-@deffn Builtin bitwise-and-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin mmux_\STEM\_bitwise_and @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the bitwise AND operation between values of type @code{\STEM\}.
 @end deffn
 
@@ -2022,7 +2022,7 @@ Perform the bitwise AND operation between values of type @code{\STEM\}.
 @section Bitwise OR operation
 
 
-@deffn Builtin bitwise-or-pointer @var{PTRVAR} @var{PTR} @var{MASK}
+@deffn Builtin mmux_pointer_bitwise_or @var{PTRVAR} @var{PTR} @var{MASK}
 Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
 OR operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
@@ -2037,7 +2037,7 @@ The argument @var{MASK} must be the string representation of a number of type @o
 For the following builtins, the bitwise OR operation is as follows:
 
 @example
-@var{ROP} = @varo{OP} & @var{OP} & @dots{}
+@var{ROP} = @varo{OP} | @var{OP} | @dots{}
 @end example
 
 @noindent
@@ -2052,7 +2052,7 @@ The arguments @var{OP} must be string representations of values of the specific 
 only @varo{OP} is present: the result is @varo{OP} itself.
 
 @macro MmuxDefineTypeBitwiseOrBuiltin{STEM}
-@deffn Builtin bitwise-or-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin mmux_\STEM\_bitwise_or @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the bitwise OR operation between values of type @code{\STEM\}.
 @end deffn
 
@@ -2097,7 +2097,7 @@ Perform the bitwise OR operation between values of type @code{\STEM\}.
 @section Bitwise XOR operation
 
 
-@deffn Builtin bitwise-xor-pointer @var{PTRVAR} @var{PTR} @var{MASK}
+@deffn Builtin mmux_pointer_bitwise_xor @var{PTRVAR} @var{PTR} @var{MASK}
 Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
 XOR operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
@@ -2112,7 +2112,7 @@ The argument @var{MASK} must be the string representation of a number of type @o
 For the following builtins, the bitwise XOR operation is as follows:
 
 @example
-@var{ROP} = @varo{OP} & @var{OP} & @dots{}
+@var{ROP} = @varo{OP} ^ @var{OP} ^ @dots{}
 @end example
 
 @noindent
@@ -2127,7 +2127,7 @@ The arguments @var{OP} must be string representations of values of the specific 
 only @varo{OP} is present: the result is @varo{OP} itself.
 
 @macro MmuxDefineTypeBitwiseXorBuiltin{STEM}
-@deffn Builtin bitwise-xor-\STEM\ @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffn Builtin mmux_\STEM\_bitwise_xor @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the bitwise XOR operation between values of type @code{\STEM\}.
 @end deffn
 
@@ -2172,7 +2172,7 @@ Perform the bitwise XOR operation between values of type @code{\STEM\}.
 @section Bitwise NOT operation
 
 
-@deffn Builtin bitwise-not-pointer @var{PTRVAR} @var{PTR}
+@deffn Builtin mmux_pointer_bitwise_not @var{PTRVAR} @var{PTR}
 Perform the bitwise NOT operation on a pointer value @var{PTR}, then store the result in the
 variable @var{ROPVAR}; when successful: return true, otherwise return false and set the shell
 variable @code{ERRNO} to the string representation of an exact integer, itself representing an
@@ -2196,7 +2196,7 @@ string representation of an exact integer, itself representing an @code{errno} e
 The argument @var{OP} must be a string representation of a value of the specific builtin type.
 
 @macro MmuxDefineTypeBitwiseNotBuiltin{STEM}
-@deffn Builtin bitwise-not-\STEM\ @var{ROPVAR} @varo{OP}
+@deffn Builtin mmux_\STEM\_bitwise_not @var{ROPVAR} @varo{OP}
 Perform the bitwise NOT operation between values of type @code{\STEM\}.
 @end deffn
 
@@ -2250,7 +2250,7 @@ The argument @var{NBITS} must be the string representation of a @objtype{sint}.
 
 
 @macro MmuxDefineTypeBitwiseShlBuiltin{STEM}
-@deffn Builtin bitwise-shl-\STEM\ @var{ROPVAR} @var{OP} @var{NBITS}
+@deffn Builtin mmux_\STEM\_bitwise_shl @var{ROPVAR} @var{OP} @var{NBITS}
 Perform the bitwise shift--left operation on an operand of type \STEM\.
 @end deffn
 
@@ -2304,7 +2304,7 @@ The argument @var{NBITS} must be the string representation of a @objtype{sint}.
 
 
 @macro MmuxDefineTypeBitwiseShrBuiltin{STEM}
-@deffn Builtin bitwise-shr-\STEM\ @var{ROPVAR} @var{OP} @var{NBITS}
+@deffn Builtin mmux_\STEM\_bitwise_shr @var{ROPVAR} @var{OP} @var{NBITS}
 Perform the bitwise shift--right operation on an operand of type \STEM\.
 @end deffn
 
