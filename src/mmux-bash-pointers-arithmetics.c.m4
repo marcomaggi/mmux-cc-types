@@ -74,7 +74,7 @@ mmux_$1_add_main (int argc,  char * argv[])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
     [[[(3 <= argc)]]],
-    [[["arith$1-add ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_add ROPVAR OP0 OP ..."]]],
     [[["Compute the addition between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -209,7 +209,7 @@ mmux_$1_sub_main (int argc,  char * argv[])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_sub]]],
     [[[(3 <= argc)]]],
-    [[["$1-sub ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_sub ROPVAR OP0 OP ..."]]],
     [[["Compute the subtraction between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -300,7 +300,7 @@ mmux_$1_mul_main (int argc,  char * argv[])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mul]]],
     [[[(3 <= argc)]]],
-    [[["$1-mul ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_mul ROPVAR OP0 OP ..."]]],
     [[["Compute the multiplication between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -391,7 +391,7 @@ mmux_$1_div_main (int argc,  char * argv[])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_div]]],
     [[[(3 <= argc)]]],
-    [[["$1-div ROPVAR OP0 OP ..."]]],
+    [[["mmux_$1_div ROPVAR OP0 OP ..."]]],
     [[["Compute the division between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -481,7 +481,7 @@ mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
     [[[(4 == argc)]]],
-    [[["$1-mod ROPVAR OP0 OP"]]],
+    [[["mmux_$1_mod ROPVAR OP0 OP"]]],
     [[["Compute the remainder between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -563,7 +563,7 @@ mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
     [[[(3 == argc)]]],
-    [[["$1-neg ROPVAR OP"]]],
+    [[["mmux_$1_neg ROPVAR OP"]]],
     [[["Compute the negation of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 

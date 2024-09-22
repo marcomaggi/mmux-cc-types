@@ -136,6 +136,29 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 	}
+
+	# Comparison builtins.
+	{
+	    for ((IDX=0; IDX < ${#INTEGER_STEMS[@]}; ++IDX))
+	    do
+		for ITEM in equal greater lesser greater_equal lesser_equal
+		do
+		    printf -v NAME  'mmux_%s_%s' "${INTEGER_STEMS[$IDX]}" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
+		done
+	    done
+
+	    for STEM in float double ldouble
+	    do
+		for ITEM in equal greater lesser greater_equal lesser_equal
+		do
+		    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
+		done
+	    done
+
+	    mmux_bash_pointers_library_define_builtin 'mmux_complex_equal'
+	}
     fi
 }
 

@@ -158,6 +158,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * arrays::                      Memory arrays accessors and mutators.
 * conversions::                 Converting data to and from memory blocks.
 * predicates::                  Type predicates.
+* comparison::                  Comparison builtins.
 * arithmetics::                 Arithmetics operation builtins.
 * bitwise::                     Bitwise operation builtins.
 * errors::                      Handling errors.
@@ -1493,6 +1494,112 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{gid}
 @MmuxDefineTypePredicateInfiniteBuiltin{wchar}
 @MmuxDefineTypePredicateInfiniteBuiltin{wint}
+
+@c page
+@node comparison
+@chapter Comparison builtins
+
+
+@gnu{} Bash already implements comparison operations for integer values, and such implementation
+might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for completeness, the
+comparison operations are implemented for every supported data type.
+
+@itemize
+@item
+The @samp{equal} builtins return true if all the operands (of which only @varo{OP} is mandatory) are
+equal:
+
+@example
+@varo{OP} == @var{OP} == @dots{}
+@end example
+
+@item
+The @samp{greater} builtins return true if for all the operands (of which only @varo{OP} is
+mandatory):
+
+@example
+@varo{OP} > @var{OP} > @dots{}
+@end example
+
+@item
+The @samp{lesser} builtins return true if for all the operands (of which only @varo{OP} is
+mandatory):
+
+@example
+@varo{OP} < @var{OP} < @dots{}
+@end example
+
+@item
+The @samp{greater_equal} builtins return true if for all the operands (of which only @varo{OP} is
+mandatory):
+
+@example
+@varo{OP} >= @var{OP} >= @dots{}
+@end example
+
+@item
+The @samp{lesser_equal} builtins return true if for all the operands (of which only @varo{OP} is
+mandatory):
+
+@example
+@varo{OP} <= @var{OP} <= @dots{}
+@end example
+@end itemize
+
+
+@macro MmuxDefineTypeComparisonEqualBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_greater @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_lesser @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_greater_equal @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_lesser_equal @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between values of type @objtype{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeComparisonEqualBuiltin{pointer}
+
+@MmuxDefineTypeComparisonEqualBuiltin{schar}
+@MmuxDefineTypeComparisonEqualBuiltin{uchar}
+@MmuxDefineTypeComparisonEqualBuiltin{sshort}
+@MmuxDefineTypeComparisonEqualBuiltin{ushort}
+@MmuxDefineTypeComparisonEqualBuiltin{sint}
+@MmuxDefineTypeComparisonEqualBuiltin{uint}
+@MmuxDefineTypeComparisonEqualBuiltin{slong}
+@MmuxDefineTypeComparisonEqualBuiltin{ulong}
+@MmuxDefineTypeComparisonEqualBuiltin{sllong}
+@MmuxDefineTypeComparisonEqualBuiltin{ullong}
+@MmuxDefineTypeComparisonEqualBuiltin{float}
+@MmuxDefineTypeComparisonEqualBuiltin{double}
+@MmuxDefineTypeComparisonEqualBuiltin{ldouble}
+
+@deffn Builtin mmux_complex_equal @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between values of type @objtype{complex}.
+@end deffn
+
+@MmuxDefineTypeComparisonEqualBuiltin{sint8}
+@MmuxDefineTypeComparisonEqualBuiltin{uint8}
+@MmuxDefineTypeComparisonEqualBuiltin{sint16}
+@MmuxDefineTypeComparisonEqualBuiltin{uint16}
+@MmuxDefineTypeComparisonEqualBuiltin{sint32}
+@MmuxDefineTypeComparisonEqualBuiltin{uint32}
+@MmuxDefineTypeComparisonEqualBuiltin{sint64}
+@MmuxDefineTypeComparisonEqualBuiltin{uint64}
+
+@MmuxDefineTypeComparisonEqualBuiltin{ssize}
+@MmuxDefineTypeComparisonEqualBuiltin{usize}
+@MmuxDefineTypeComparisonEqualBuiltin{sintmax}
+@MmuxDefineTypeComparisonEqualBuiltin{uintmax}
+@MmuxDefineTypeComparisonEqualBuiltin{sintptr}
+@MmuxDefineTypeComparisonEqualBuiltin{uintptr}
+@MmuxDefineTypeComparisonEqualBuiltin{mode}
+@MmuxDefineTypeComparisonEqualBuiltin{off}
+@MmuxDefineTypeComparisonEqualBuiltin{pid}
+@MmuxDefineTypeComparisonEqualBuiltin{uid}
+@MmuxDefineTypeComparisonEqualBuiltin{gid}
+@MmuxDefineTypeComparisonEqualBuiltin{wchar}
+@MmuxDefineTypeComparisonEqualBuiltin{wint}
 
 @c page
 @node arithmetics
