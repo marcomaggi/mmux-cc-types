@@ -64,10 +64,10 @@ function pointers-pointer-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! pointer-set-pointer $PTR 0 "${mmux_libc_MAX_POINTER:?}"
+	if ! mmux_pointer_pointer_set $PTR 0 "${mmux_libc_MAX_POINTER:?}"
 	then mbfl_location_leave_then_return_failure
 	fi
-	if ! pointer-ref-pointer VALUE $PTR 0
+	if ! mmux_pointer_pointer_ref VALUE $PTR 0
 	then mbfl_location_leave_then_return_failure
 	fi
     }
@@ -86,25 +86,25 @@ function pointers-pointer-1.2 () {
 	fi
 
 	{
-	    if ! pointer-set-pointer $PTR  0 '0x12'
+	    if ! mmux_pointer_pointer_set $PTR  0 '0x12'
 	    then mbfl_location_leave_then_return_failure
 	    fi
-	    if ! pointer-set-pointer $PTR  8 '0x34'
+	    if ! mmux_pointer_pointer_set $PTR  8 '0x34'
 	    then mbfl_location_leave_then_return_failure
 	    fi
-	    if ! pointer-set-pointer $PTR 16 '0x56'
+	    if ! mmux_pointer_pointer_set $PTR 16 '0x56'
 	    then mbfl_location_leave_then_return_failure
 	    fi
 
-	    if pointer-ref-pointer VALUE $PTR 0
+	    if mmux_pointer_pointer_ref VALUE $PTR 0
 	    then VALUES[0]=$VALUE
 	    else mbfl_location_leave_then_return_failure
 	    fi
-	    if pointer-ref-pointer VALUE $PTR 8
+	    if mmux_pointer_pointer_ref VALUE $PTR 8
 	    then VALUES[1]=$VALUE
 	    else mbfl_location_leave_then_return_failure
 	    fi
-	    if pointer-ref-pointer VALUE $PTR 16
+	    if mmux_pointer_pointer_ref VALUE $PTR 16
 	    then VALUES[2]=$VALUE
 	    else mbfl_location_leave_then_return_failure
 	    fi
@@ -131,13 +131,13 @@ function pointers-pointer-1.3 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! pointer-set-pointer $PTR  0 '0x12'
+	if ! mmux_pointer_pointer_set $PTR  0 '0x12'
 	then mbfl_location_leave_then_return_failure
 	fi
-	if ! pointer-set-pointer $PTR  8 '0x34'
+	if ! mmux_pointer_pointer_set $PTR  8 '0x34'
 	then mbfl_location_leave_then_return_failure
 	fi
-	if ! pointer-set-pointer $PTR 16 '0x56'
+	if ! mmux_pointer_pointer_set $PTR 16 '0x56'
 	then mbfl_location_leave_then_return_failure
 	fi
 
@@ -149,15 +149,15 @@ function pointers-pointer-1.3 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if pointer-ref-pointer VALUE $PTR 0
+	if mmux_pointer_pointer_ref VALUE $PTR 0
 	then VALUES[0]=$VALUE
 	else mbfl_location_leave_then_return_failure
 	fi
-	if pointer-ref-pointer VALUE $PTR 8
+	if mmux_pointer_pointer_ref VALUE $PTR 8
 	then VALUES[1]=$VALUE
 	else mbfl_location_leave_then_return_failure
 	fi
-	if pointer-ref-pointer VALUE $PTR 16
+	if mmux_pointer_pointer_ref VALUE $PTR 16
 	then VALUES[2]=$VALUE
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -177,8 +177,8 @@ function pointers-schar-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-schar $PTR 0 12
-	pointer-ref-schar VALUE $PTR 0
+	mmux_schar_pointer_set $PTR 0 12
+	mmux_schar_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -189,13 +189,13 @@ function pointers-schar-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-schar $PTR  0 12
-	pointer-set-schar $PTR  8 34
-	pointer-set-schar $PTR 16 56
+	mmux_schar_pointer_set $PTR  0 12
+	mmux_schar_pointer_set $PTR  8 34
+	mmux_schar_pointer_set $PTR 16 56
 
-	pointer-ref-schar VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_schar_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_schar_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_schar_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -209,13 +209,13 @@ function pointers-schar-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-schar $PTR  0 12
-	pointer-set-schar $PTR  8 34
-	pointer-set-schar $PTR 16 56
+	mmux_schar_pointer_set $PTR  0 12
+	mmux_schar_pointer_set $PTR  8 34
+	mmux_schar_pointer_set $PTR 16 56
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-schar VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_schar_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_schar_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_schar_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -232,8 +232,8 @@ function pointers-uchar-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uchar $PTR 0 12
-	pointer-ref-uchar VALUE $PTR 0
+	mmux_uchar_pointer_set $PTR 0 12
+	mmux_uchar_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -244,13 +244,13 @@ function pointers-uchar-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uchar $PTR  0 12
-	pointer-set-uchar $PTR  8 34
-	pointer-set-uchar $PTR 16 56
+	mmux_uchar_pointer_set $PTR  0 12
+	mmux_uchar_pointer_set $PTR  8 34
+	mmux_uchar_pointer_set $PTR 16 56
 
-	pointer-ref-uchar VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uchar_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uchar_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uchar_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -264,13 +264,13 @@ function pointers-uchar-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uchar $PTR  0 12
-	pointer-set-uchar $PTR  8 34
-	pointer-set-uchar $PTR 16 56
+	mmux_uchar_pointer_set $PTR  0 12
+	mmux_uchar_pointer_set $PTR  8 34
+	mmux_uchar_pointer_set $PTR 16 56
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-uchar VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uchar_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uchar_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uchar_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -287,8 +287,8 @@ function pointers-sshort-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sshort $PTR 0 123
-	pointer-ref-sshort VALUE $PTR 0
+	mmux_sshort_pointer_set $PTR 0 123
+	mmux_sshort_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -299,13 +299,13 @@ function pointers-sshort-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sshort $PTR  0 123
-	pointer-set-sshort $PTR  8 456
-	pointer-set-sshort $PTR 16 789
+	mmux_sshort_pointer_set $PTR  0 123
+	mmux_sshort_pointer_set $PTR  8 456
+	mmux_sshort_pointer_set $PTR 16 789
 
-	pointer-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sshort VALUE $PTR 16	;VALUES[2]=$VALUE
+	mmux_sshort_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sshort_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sshort_pointer_ref VALUE $PTR 16	;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -319,13 +319,13 @@ function pointers-sshort-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sshort $PTR  0 123
-	pointer-set-sshort $PTR  8 456
-	pointer-set-sshort $PTR 16 789
+	mmux_sshort_pointer_set $PTR  0 123
+	mmux_sshort_pointer_set $PTR  8 456
+	mmux_sshort_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sshort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sshort_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sshort_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sshort_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -342,8 +342,8 @@ function pointers-ushort-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ushort $PTR 0 123
-	pointer-ref-ushort VALUE $PTR 0
+	mmux_ushort_pointer_set $PTR 0 123
+	mmux_ushort_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -354,13 +354,13 @@ function pointers-ushort-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ushort $PTR  0 123
-	pointer-set-ushort $PTR  8 456
-	pointer-set-ushort $PTR 16 789
+	mmux_ushort_pointer_set $PTR  0 123
+	mmux_ushort_pointer_set $PTR  8 456
+	mmux_ushort_pointer_set $PTR 16 789
 
-	pointer-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ushort_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ushort_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ushort_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -374,13 +374,13 @@ function pointers-ushort-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ushort $PTR  0 123
-	pointer-set-ushort $PTR  8 456
-	pointer-set-ushort $PTR 16 789
+	mmux_ushort_pointer_set $PTR  0 123
+	mmux_ushort_pointer_set $PTR  8 456
+	mmux_ushort_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ushort_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ushort_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ushort_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -397,8 +397,8 @@ function pointers-sint-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint $PTR 0 123
-	pointer-ref-sint VALUE $PTR 0
+	mmux_sint_pointer_set $PTR 0 123
+	mmux_sint_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -409,13 +409,13 @@ function pointers-sint-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint $PTR  0 123
-	pointer-set-sint $PTR  8 456
-	pointer-set-sint $PTR 16 789
+	mmux_sint_pointer_set $PTR  0 123
+	mmux_sint_pointer_set $PTR  8 456
+	mmux_sint_pointer_set $PTR 16 789
 
-	pointer-ref-sint VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -429,13 +429,13 @@ function pointers-sint-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint $PTR  0 123
-	pointer-set-sint $PTR  8 456
-	pointer-set-sint $PTR 16 789
+	mmux_sint_pointer_set $PTR  0 123
+	mmux_sint_pointer_set $PTR  8 456
+	mmux_sint_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sint VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -452,8 +452,8 @@ function pointers-uint-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint $PTR 0 123
-	pointer-ref-uint VALUE $PTR 0
+	mmux_uint_pointer_set $PTR 0 123
+	mmux_uint_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -464,13 +464,13 @@ function pointers-uint-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint $PTR  0 123
-	pointer-set-uint $PTR  8 456
-	pointer-set-uint $PTR 16 789
+	mmux_uint_pointer_set $PTR  0 123
+	mmux_uint_pointer_set $PTR  8 456
+	mmux_uint_pointer_set $PTR 16 789
 
-	pointer-ref-uint VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -484,13 +484,13 @@ function pointers-uint-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint $PTR  0 123
-	pointer-set-uint $PTR  8 456
-	pointer-set-uint $PTR 16 789
+	mmux_uint_pointer_set $PTR  0 123
+	mmux_uint_pointer_set $PTR  8 456
+	mmux_uint_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-uint VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -507,8 +507,8 @@ function pointers-slong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-slong $PTR 0 123
-	pointer-ref-slong VALUE $PTR 0
+	mmux_slong_pointer_set $PTR 0 123
+	mmux_slong_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -519,13 +519,13 @@ function pointers-slong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-slong $PTR  0 123
-	pointer-set-slong $PTR  8 456
-	pointer-set-slong $PTR 16 789
+	mmux_slong_pointer_set $PTR  0 123
+	mmux_slong_pointer_set $PTR  8 456
+	mmux_slong_pointer_set $PTR 16 789
 
-	pointer-ref-slong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_slong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_slong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_slong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -539,13 +539,13 @@ function pointers-slong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-slong $PTR  0 123
-	pointer-set-slong $PTR  8 456
-	pointer-set-slong $PTR 16 789
+	mmux_slong_pointer_set $PTR  0 123
+	mmux_slong_pointer_set $PTR  8 456
+	mmux_slong_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-slong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_slong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_slong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_slong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -562,8 +562,8 @@ function pointers-ulong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ulong $PTR 0 123
-	pointer-ref-ulong VALUE $PTR 0
+	mmux_ulong_pointer_set $PTR 0 123
+	mmux_ulong_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -574,13 +574,13 @@ function pointers-ulong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ulong $PTR  0 123
-	pointer-set-ulong $PTR  8 456
-	pointer-set-ulong $PTR 16 789
+	mmux_ulong_pointer_set $PTR  0 123
+	mmux_ulong_pointer_set $PTR  8 456
+	mmux_ulong_pointer_set $PTR 16 789
 
-	pointer-ref-ulong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ulong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ulong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ulong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -594,13 +594,13 @@ function pointers-ulong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ulong $PTR  0 123
-	pointer-set-ulong $PTR  8 456
-	pointer-set-ulong $PTR 16 789
+	mmux_ulong_pointer_set $PTR  0 123
+	mmux_ulong_pointer_set $PTR  8 456
+	mmux_ulong_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-ulong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ulong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ulong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ulong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -617,8 +617,8 @@ function pointers-sllong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sllong $PTR 0 123
-	pointer-ref-sllong VALUE $PTR 0
+	mmux_sllong_pointer_set $PTR 0 123
+	mmux_sllong_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -629,13 +629,13 @@ function pointers-sllong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sllong $PTR  0 123
-	pointer-set-sllong $PTR  8 456
-	pointer-set-sllong $PTR 16 789
+	mmux_sllong_pointer_set $PTR  0 123
+	mmux_sllong_pointer_set $PTR  8 456
+	mmux_sllong_pointer_set $PTR 16 789
 
-	pointer-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sllong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sllong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sllong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sllong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -649,13 +649,13 @@ function pointers-sllong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sllong $PTR  0 123
-	pointer-set-sllong $PTR  8 456
-	pointer-set-sllong $PTR 16 789
+	mmux_sllong_pointer_set $PTR  0 123
+	mmux_sllong_pointer_set $PTR  8 456
+	mmux_sllong_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sllong VALUE $PTR 16	;VALUES[2]=$VALUE
+	mmux_sllong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sllong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sllong_pointer_ref VALUE $PTR 16	;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -672,8 +672,8 @@ function pointers-ullong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ullong $PTR 0 123
-	pointer-ref-ullong VALUE $PTR 0
+	mmux_ullong_pointer_set $PTR 0 123
+	mmux_ullong_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -684,13 +684,13 @@ function pointers-ullong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ullong $PTR  0 123
-	pointer-set-ullong $PTR  8 456
-	pointer-set-ullong $PTR 16 789
+	mmux_ullong_pointer_set $PTR  0 123
+	mmux_ullong_pointer_set $PTR  8 456
+	mmux_ullong_pointer_set $PTR 16 789
 
-	pointer-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ullong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ullong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ullong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -704,13 +704,13 @@ function pointers-ullong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ullong $PTR  0 123
-	pointer-set-ullong $PTR  8 456
-	pointer-set-ullong $PTR 16 789
+	mmux_ullong_pointer_set $PTR  0 123
+	mmux_ullong_pointer_set $PTR  8 456
+	mmux_ullong_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ullong_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ullong_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ullong_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -727,8 +727,8 @@ function pointers-ssize-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ssize $PTR 0 123
-	pointer-ref-ssize VALUE $PTR 0
+	mmux_ssize_pointer_set $PTR 0 123
+	mmux_ssize_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -739,13 +739,13 @@ function pointers-ssize-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ssize $PTR  0 123
-	pointer-set-ssize $PTR  8 456
-	pointer-set-ssize $PTR 16 789
+	mmux_ssize_pointer_set $PTR  0 123
+	mmux_ssize_pointer_set $PTR  8 456
+	mmux_ssize_pointer_set $PTR 16 789
 
-	pointer-ref-ssize VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ssize_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ssize_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ssize_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -759,13 +759,13 @@ function pointers-ssize-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ssize $PTR  0 123
-	pointer-set-ssize $PTR  8 456
-	pointer-set-ssize $PTR 16 789
+	mmux_ssize_pointer_set $PTR  0 123
+	mmux_ssize_pointer_set $PTR  8 456
+	mmux_ssize_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-ssize VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ssize_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ssize_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ssize_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -782,8 +782,8 @@ function pointers-usize-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-usize $PTR 0 123
-	pointer-ref-usize VALUE $PTR 0
+	mmux_usize_pointer_set $PTR 0 123
+	mmux_usize_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -794,13 +794,13 @@ function pointers-usize-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-usize $PTR  0 123
-	pointer-set-usize $PTR  8 456
-	pointer-set-usize $PTR 16 789
+	mmux_usize_pointer_set $PTR  0 123
+	mmux_usize_pointer_set $PTR  8 456
+	mmux_usize_pointer_set $PTR 16 789
 
-	pointer-ref-usize VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_usize_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_usize_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_usize_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -814,13 +814,13 @@ function pointers-usize-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-usize $PTR  0 123
-	pointer-set-usize $PTR  8 456
-	pointer-set-usize $PTR 16 789
+	mmux_usize_pointer_set $PTR  0 123
+	mmux_usize_pointer_set $PTR  8 456
+	mmux_usize_pointer_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-usize VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_usize_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_usize_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_usize_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -837,8 +837,8 @@ function pointers-float-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-float $PTR 0 1.23
-	pointer-ref-float VALUE $PTR 0
+	mmux_float_pointer_set $PTR 0 1.23
+	mmux_float_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 0X1.3AE148P+0 QQ(VALUE)
@@ -849,13 +849,13 @@ function pointers-float-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-float $PTR  0 1.23
-	pointer-set-float $PTR  8 4.56
-	pointer-set-float $PTR 16 7.89
+	mmux_float_pointer_set $PTR  0 1.23
+	mmux_float_pointer_set $PTR  8 4.56
+	mmux_float_pointer_set $PTR 16 7.89
 
-	pointer-ref-float VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_float_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_float_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_float_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -869,13 +869,13 @@ function pointers-float-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-float $PTR  0 1.23
-	pointer-set-float $PTR  8 4.56
-	pointer-set-float $PTR 16 7.89
+	mmux_float_pointer_set $PTR  0 1.23
+	mmux_float_pointer_set $PTR  8 4.56
+	mmux_float_pointer_set $PTR 16 7.89
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-float VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_float_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_float_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_float_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -892,8 +892,8 @@ function pointers-double-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-double $PTR 0 1.23
-	pointer-ref-double VALUE $PTR 0
+	mmux_double_pointer_set $PTR 0 1.23
+	mmux_double_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '0X1.3AE147AE147AEP+0' QQ(VALUE)
@@ -904,13 +904,13 @@ function pointers-double-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-double $PTR  0 1.23
-	pointer-set-double $PTR  8 4.56
-	pointer-set-double $PTR 16 7.89
+	mmux_double_pointer_set $PTR  0 1.23
+	mmux_double_pointer_set $PTR  8 4.56
+	mmux_double_pointer_set $PTR 16 7.89
 
-	pointer-ref-double VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_double_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_double_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_double_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -924,13 +924,13 @@ function pointers-double-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-double $PTR  0 1.23
-	pointer-set-double $PTR  8 4.56
-	pointer-set-double $PTR 16 7.89
+	mmux_double_pointer_set $PTR  0 1.23
+	mmux_double_pointer_set $PTR  8 4.56
+	mmux_double_pointer_set $PTR 16 7.89
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-double VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_double_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_double_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_double_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -947,8 +947,8 @@ function pointers-ldouble-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ldouble $PTR 0 1.23
-	pointer-ref-ldouble VALUE $PTR 0
+	mmux_ldouble_pointer_set $PTR 0 1.23
+	mmux_ldouble_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '0X9.D70A3D70A3D70A4P-3' QQ(VALUE)
@@ -959,13 +959,13 @@ function pointers-ldouble-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ldouble $PTR  0 1.23
-	pointer-set-ldouble $PTR 32 4.56
-	pointer-set-ldouble $PTR 64 7.89
+	mmux_ldouble_pointer_set $PTR  0 1.23
+	mmux_ldouble_pointer_set $PTR 32 4.56
+	mmux_ldouble_pointer_set $PTR 64 7.89
 
-	pointer-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_ldouble_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ldouble_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_ldouble_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -979,13 +979,13 @@ function pointers-ldouble-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ldouble $PTR  0 1.23
-	pointer-set-ldouble $PTR 32 4.56
-	pointer-set-ldouble $PTR 64 7.89
+	mmux_ldouble_pointer_set $PTR  0 1.23
+	mmux_ldouble_pointer_set $PTR 32 4.56
+	mmux_ldouble_pointer_set $PTR 64 7.89
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
-	pointer-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_ldouble_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ldouble_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_ldouble_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1002,8 +1002,8 @@ function pointers-complex-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-complex $PTR 0 '(1.2)+i*(3.4)'
-	pointer-ref-complex VALUE $PTR 0
+	mmux_complex_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complex_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' QQ(VALUE)
@@ -1014,13 +1014,13 @@ function pointers-complex-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
-	pointer-set-complex $PTR 32 '(5.6)+i*(7.8)'
-	pointer-set-complex $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complex_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complex_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complex_pointer_set $PTR 64 '(9.0)+i*(1.2)'
 
-	pointer-ref-complex VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
-	pointer-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complex_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complex_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complex_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1034,13 +1034,13 @@ function pointers-complex-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-complex $PTR  0 '(1.2)+i*(3.4)'
-	pointer-set-complex $PTR  32 '(5.6)+i*(7.8)'
-	pointer-set-complex $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complex_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complex_pointer_set $PTR  32 '(5.6)+i*(7.8)'
+	mmux_complex_pointer_set $PTR 64 '(9.0)+i*(1.2)'
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-complex VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
-	pointer-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complex_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complex_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complex_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1057,8 +1057,8 @@ function pointers-sint8-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint8 $PTR 0 12
-	pointer-ref-sint8 VALUE $PTR 0
+	mmux_sint8_pointer_set $PTR 0 12
+	mmux_sint8_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1069,13 +1069,13 @@ function pointers-sint8-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint8 $PTR  0 12
-	pointer-set-sint8 $PTR  8 45
-	pointer-set-sint8 $PTR 16 78
+	mmux_sint8_pointer_set $PTR  0 12
+	mmux_sint8_pointer_set $PTR  8 45
+	mmux_sint8_pointer_set $PTR 16 78
 
-	pointer-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint8_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint8_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint8_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1089,13 +1089,13 @@ function pointers-sint8-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint8 $PTR  0 12
-	pointer-set-sint8 $PTR  8 45
-	pointer-set-sint8 $PTR 16 78
+	mmux_sint8_pointer_set $PTR  0 12
+	mmux_sint8_pointer_set $PTR  8 45
+	mmux_sint8_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint8_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint8_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint8_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1112,8 +1112,8 @@ function pointers-uint8-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint8 $PTR 0 12
-	pointer-ref-uint8 VALUE $PTR 0
+	mmux_uint8_pointer_set $PTR 0 12
+	mmux_uint8_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1124,13 +1124,13 @@ function pointers-uint8-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint8 $PTR  0 12
-	pointer-set-uint8 $PTR  8 45
-	pointer-set-uint8 $PTR 16 78
+	mmux_uint8_pointer_set $PTR  0 12
+	mmux_uint8_pointer_set $PTR  8 45
+	mmux_uint8_pointer_set $PTR 16 78
 
-	pointer-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint8_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint8_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint8_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1144,13 +1144,13 @@ function pointers-uint8-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint8 $PTR  0 12
-	pointer-set-uint8 $PTR  8 45
-	pointer-set-uint8 $PTR 16 78
+	mmux_uint8_pointer_set $PTR  0 12
+	mmux_uint8_pointer_set $PTR  8 45
+	mmux_uint8_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint8_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint8_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint8_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1167,8 +1167,8 @@ function pointers-sint16-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint16 $PTR 0 12
-	pointer-ref-sint16 VALUE $PTR 0
+	mmux_sint16_pointer_set $PTR 0 12
+	mmux_sint16_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1179,13 +1179,13 @@ function pointers-sint16-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint16 $PTR  0 12
-	pointer-set-sint16 $PTR  8 45
-	pointer-set-sint16 $PTR 16 78
+	mmux_sint16_pointer_set $PTR  0 12
+	mmux_sint16_pointer_set $PTR  8 45
+	mmux_sint16_pointer_set $PTR 16 78
 
-	pointer-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint16_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint16_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint16_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1199,13 +1199,13 @@ function pointers-sint16-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint16 $PTR  0 12
-	pointer-set-sint16 $PTR  8 45
-	pointer-set-sint16 $PTR 16 78
+	mmux_sint16_pointer_set $PTR  0 12
+	mmux_sint16_pointer_set $PTR  8 45
+	mmux_sint16_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint16_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint16_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint16_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1222,8 +1222,8 @@ function pointers-uint16-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint16 $PTR 0 12
-	pointer-ref-uint16 VALUE $PTR 0
+	mmux_uint16_pointer_set $PTR 0 12
+	mmux_uint16_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1234,13 +1234,13 @@ function pointers-uint16-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint16 $PTR  0 12
-	pointer-set-uint16 $PTR  8 45
-	pointer-set-uint16 $PTR 16 78
+	mmux_uint16_pointer_set $PTR  0 12
+	mmux_uint16_pointer_set $PTR  8 45
+	mmux_uint16_pointer_set $PTR 16 78
 
-	pointer-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint16_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint16_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint16_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1254,13 +1254,13 @@ function pointers-uint16-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint16 $PTR  0 12
-	pointer-set-uint16 $PTR  8 45
-	pointer-set-uint16 $PTR 16 78
+	mmux_uint16_pointer_set $PTR  0 12
+	mmux_uint16_pointer_set $PTR  8 45
+	mmux_uint16_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint16_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint16_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint16_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1277,8 +1277,8 @@ function pointers-sint32-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint32 $PTR 0 12
-	pointer-ref-sint32 VALUE $PTR 0
+	mmux_sint32_pointer_set $PTR 0 12
+	mmux_sint32_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1289,13 +1289,13 @@ function pointers-sint32-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint32 $PTR  0 12
-	pointer-set-sint32 $PTR  8 45
-	pointer-set-sint32 $PTR 16 78
+	mmux_sint32_pointer_set $PTR  0 12
+	mmux_sint32_pointer_set $PTR  8 45
+	mmux_sint32_pointer_set $PTR 16 78
 
-	pointer-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint32_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint32_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1309,13 +1309,13 @@ function pointers-sint32-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint32 $PTR  0 12
-	pointer-set-sint32 $PTR  8 45
-	pointer-set-sint32 $PTR 16 78
+	mmux_sint32_pointer_set $PTR  0 12
+	mmux_sint32_pointer_set $PTR  8 45
+	mmux_sint32_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint32_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint32_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1332,8 +1332,8 @@ function pointers-uint32-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint32 $PTR 0 12
-	pointer-ref-uint32 VALUE $PTR 0
+	mmux_uint32_pointer_set $PTR 0 12
+	mmux_uint32_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1344,13 +1344,13 @@ function pointers-uint32-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint32 $PTR  0 12
-	pointer-set-uint32 $PTR  8 45
-	pointer-set-uint32 $PTR 16 78
+	mmux_uint32_pointer_set $PTR  0 12
+	mmux_uint32_pointer_set $PTR  8 45
+	mmux_uint32_pointer_set $PTR 16 78
 
-	pointer-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint32_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint32_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1364,13 +1364,13 @@ function pointers-uint32-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint32 $PTR  0 12
-	pointer-set-uint32 $PTR  8 45
-	pointer-set-uint32 $PTR 16 78
+	mmux_uint32_pointer_set $PTR  0 12
+	mmux_uint32_pointer_set $PTR  8 45
+	mmux_uint32_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint32_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint32_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1387,8 +1387,8 @@ function pointers-sint64-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint64 $PTR 0 12
-	pointer-ref-sint64 VALUE $PTR 0
+	mmux_sint64_pointer_set $PTR 0 12
+	mmux_sint64_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1399,13 +1399,13 @@ function pointers-sint64-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint64 $PTR  0 12
-	pointer-set-sint64 $PTR  8 45
-	pointer-set-sint64 $PTR 16 78
+	mmux_sint64_pointer_set $PTR  0 12
+	mmux_sint64_pointer_set $PTR  8 45
+	mmux_sint64_pointer_set $PTR 16 78
 
-	pointer-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint64_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint64_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1419,13 +1419,13 @@ function pointers-sint64-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sint64 $PTR  0 12
-	pointer-set-sint64 $PTR  8 45
-	pointer-set-sint64 $PTR 16 78
+	mmux_sint64_pointer_set $PTR  0 12
+	mmux_sint64_pointer_set $PTR  8 45
+	mmux_sint64_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint64_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint64_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1442,8 +1442,8 @@ function pointers-uint64-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint64 $PTR 0 12
-	pointer-ref-uint64 VALUE $PTR 0
+	mmux_uint64_pointer_set $PTR 0 12
+	mmux_uint64_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1454,13 +1454,13 @@ function pointers-uint64-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint64 $PTR  0 12
-	pointer-set-uint64 $PTR  8 45
-	pointer-set-uint64 $PTR 16 78
+	mmux_uint64_pointer_set $PTR  0 12
+	mmux_uint64_pointer_set $PTR  8 45
+	mmux_uint64_pointer_set $PTR 16 78
 
-	pointer-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint64_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint64_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1474,13 +1474,13 @@ function pointers-uint64-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uint64 $PTR  0 12
-	pointer-set-uint64 $PTR  8 45
-	pointer-set-uint64 $PTR 16 78
+	mmux_uint64_pointer_set $PTR  0 12
+	mmux_uint64_pointer_set $PTR  8 45
+	mmux_uint64_pointer_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	pointer-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	pointer-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	pointer-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint64_pointer_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint64_pointer_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1497,8 +1497,8 @@ function pointers-sintmax-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sintmax $PTR 5 12
-	pointer-ref-sintmax VALUE $PTR 5
+	mmux_sintmax_pointer_set $PTR 5 12
+	mmux_sintmax_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1512,8 +1512,8 @@ function pointers-uintmax-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uintmax $PTR 5 12
-	pointer-ref-uintmax VALUE $PTR 5
+	mmux_uintmax_pointer_set $PTR 5 12
+	mmux_uintmax_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1527,8 +1527,8 @@ function pointers-sintptr-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-sintptr $PTR 5 12
-	pointer-ref-sintptr VALUE $PTR 5
+	mmux_sintptr_pointer_set $PTR 5 12
+	mmux_sintptr_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1542,8 +1542,8 @@ function pointers-uintptr-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uintptr $PTR 5 12
-	pointer-ref-uintptr VALUE $PTR 5
+	mmux_uintptr_pointer_set $PTR 5 12
+	mmux_uintptr_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1557,8 +1557,8 @@ function pointers-ptrdiff-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-ptrdiff $PTR 5 12
-	pointer-ref-ptrdiff VALUE $PTR 5
+	mmux_ptrdiff_pointer_set $PTR 5 12
+	mmux_ptrdiff_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1572,8 +1572,8 @@ function pointers-mode-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-mode $PTR 5 12
-	pointer-ref-mode VALUE $PTR 5
+	mmux_mode_pointer_set $PTR 5 12
+	mmux_mode_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1587,8 +1587,8 @@ function pointers-off-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-off $PTR 5 12
-	pointer-ref-off VALUE $PTR 5
+	mmux_off_pointer_set $PTR 5 12
+	mmux_off_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1602,8 +1602,8 @@ function pointers-pid-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-pid $PTR 5 12
-	pointer-ref-pid VALUE $PTR 5
+	mmux_pid_pointer_set $PTR 5 12
+	mmux_pid_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1617,8 +1617,8 @@ function pointers-uid-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-uid $PTR 5 12
-	pointer-ref-uid VALUE $PTR 5
+	mmux_uid_pointer_set $PTR 5 12
+	mmux_uid_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1632,8 +1632,8 @@ function pointers-gid-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	pointer-set-gid $PTR 5 12
-	pointer-ref-gid VALUE $PTR 5
+	mmux_gid_pointer_set $PTR 5 12
+	mmux_gid_pointer_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)

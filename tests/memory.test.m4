@@ -111,7 +111,7 @@ function memory-2.1 () {
     if mmux_libc_malloc PTR $SIZE
     then
 	mmux_libc_memset $PTR 1 $SIZE
-	pointer-ref-uint8 RESULT $PTR 1
+	mmux_uint8_pointer_ref RESULT $PTR 1
 	mmux_libc_free $PTR
 	dotest-equal 1 $RESULT
     else return $?
@@ -128,7 +128,7 @@ function memory-3.1 () {
     mmux_libc_memset $PTR_TO   0 $SIZE
 
     mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
-    pointer-ref-uint8 RESULT $PTR_TO 10
+    mmux_uint8_pointer_ref RESULT $PTR_TO 10
 
     mmux_libc_free $PTR_FROM
     mmux_libc_free $PTR_TO
@@ -146,7 +146,7 @@ function memory-4.1 () {
     mmux_libc_memset $PTR_TO   0 $SIZE
 
     mmux_libc_memmove $PTR_TO $PTR_FROM $SIZE
-    pointer-ref-uint8 RESULT $PTR_TO 10
+    mmux_uint8_pointer_ref RESULT $PTR_TO 10
 
     mmux_libc_free $PTR_FROM
     mmux_libc_free $PTR_TO

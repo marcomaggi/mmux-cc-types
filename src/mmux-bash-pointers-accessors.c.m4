@@ -35,9 +35,9 @@
 
 m4_define([[[MMUX_BASH_DEFINE_POINTER_ACCESSOR]]],[[[
 static int
-mmux_bash_pointers_pointer_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_pointer_ref_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"pointer-ref-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_pointer_ref"
 {
 #if ($3)
   void *		ptr;
@@ -82,9 +82,9 @@ mmux_bash_pointers_pointer_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_ref_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_ref]]],
     [[[(4 == argc)]]],
-    [[["pointer-ref-$1 VALUEVAR POINTER OFFSET"]]],
+    [[["mmux_$1_pointer_ref VALUEVAR POINTER OFFSET"]]],
     [[["Retrieve a C language type \"$2\" value at OFFSET from POINTER, store it in the given VALUEVAR."]]])
 ]]])
 
@@ -138,9 +138,9 @@ MMUX_BASH_DEFINE_POINTER_ACCESSOR([[[wint]]],		[[[wint_t]]],			[[[1]]])
 
 m4_define([[[MMUX_BASH_DEFINE_ARRAY_ACCESSOR]]],[[[
 static int
-mmux_bash_pointers_array_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_array_ref_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"array-ref-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_array_ref"
 {
 #if ($3)
   void *	ptr;
@@ -181,9 +181,9 @@ mmux_bash_pointers_array_ref_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UN
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_array_ref_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_array_ref]]],
     [[[(4 == argc)]]],
-    [[["array-ref-$1 VALUEVAR ARRAY INDEX"]]],
+    [[["mmux_$1_array_ref VALUEVAR ARRAY INDEX"]]],
     [[["Retrieve a C language type \"$2\" value at INDEX in ARRAY, store it in the given VALUEVAR."]]])
 ]]])
 

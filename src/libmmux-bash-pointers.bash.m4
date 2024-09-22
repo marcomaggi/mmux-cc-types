@@ -71,21 +71,17 @@ function mmux_bash_pointers_library_load () {
 
 	for ((IDX=0; IDX < ${#STEMS[@]}; ++IDX))
 	do
-	    printf -v NAME  'mmux_bash_pointers_pointer_set_%s' "${STEMS[$IDX]}"
-	    printf -v ALIAS 'pointer-set-%s'                    "${STEMS[$IDX]}"
-	    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
+	    printf -v NAME  'mmux_%s_pointer_set' "${STEMS[$IDX]}"
+	    mmux_bash_pointers_library_define_builtin "$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_array_set_%s'   "${STEMS[$IDX]}"
-	    printf -v ALIAS 'array-set-%s'                      "${STEMS[$IDX]}"
-	    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
+	    printf -v NAME  'mmux_%s_array_set'   "${STEMS[$IDX]}"
+	    mmux_bash_pointers_library_define_builtin "$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_pointer_ref_%s' "${STEMS[$IDX]}"
-	    printf -v ALIAS 'pointer-ref-%s'                    "${STEMS[$IDX]}"
-	    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
+	    printf -v NAME  'mmux_%s_pointer_ref' "${STEMS[$IDX]}"
+	    mmux_bash_pointers_library_define_builtin "$NAME"
 
-	    printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${STEMS[$IDX]}"
-	    printf -v ALIAS 'array-ref-%s'                      "${STEMS[$IDX]}"
-	    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
+	    printf -v NAME  'mmux_%s_array_ref' "${STEMS[$IDX]}"
+	    mmux_bash_pointers_library_define_builtin "$NAME"
 	done
 
 	# Arithmetics builtins.
@@ -209,7 +205,7 @@ function mmux-bash-pointers-array-from-memory () {
 
     for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
     do
-	pointer-ref-uint8 BYTE $POINTER $IDX
+	mmux_uint8_pointer_ref BYTE $POINTER $IDX
 	ARRY[$IDX]=$BYTE
     done
 }
@@ -220,7 +216,7 @@ function mmux-bash-pointers-memory-from-array () {
     declare -i  IDX
 
     for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
-    do pointer-set-uint8 $POINTER $IDX "${ARRY[$IDX]}"
+    do mmux_uint8_pointer_set $POINTER $IDX "${ARRY[$IDX]}"
     done
 }
 
@@ -235,7 +231,7 @@ function mmux-bash-pointers-string-from-memory () {
 
     for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
     do
-	pointer-ref-uint8 BYTE $POINTER $IDX
+	mmux_uint8_pointer_ref BYTE $POINTER $IDX
 	STRING+=${MMUX_BASH_POINTERS_ASCII_TABLE[$BYTE]}
     done
 }
@@ -248,7 +244,7 @@ function mmux-bash-pointers-memory-from-string () {
     for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
     do
 	printf -v CHAR '%d' "'${STRING:$IDX:1}"
-	pointer-set-uint8 $POINTER $IDX "$CHAR"
+	mmux_uint8_pointer_set $POINTER $IDX "$CHAR"
     done
 }
 

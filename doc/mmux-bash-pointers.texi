@@ -196,8 +196,8 @@ declare PTR VALUE
 
 mmux_libc_malloc PTR 1024
 @{
-  pointer-set-sint $PTR 0 123
-  pointer-ref-sint VALUE $PTR 0
+  mmux_sint_pointer_set $PTR 0 123
+  mmux_sint_pointer_ref VALUE $PTR 0
 @}
 mmux_libc_free $PTR
 $VALUE  @result{} 123
@@ -752,8 +752,8 @@ declare PTR VALUE
 
 mmux_libc_malloc PTR 1024
 @{
-  pointer-set-double $PTR 0 1.23
-  pointer-ref-double VALUE $PTR 0
+  mmux_double_pointer_set $PTR 0 1.23
+  mmux_double_pointer_ref VALUE $PTR 0
 @}
 mmux_libc_free $PTR
 @end example
@@ -783,8 +783,8 @@ an exact integer, itself representing an @code{errno} error code.
 
 
 @macro MmuxDefineAccessorMutator{STEM,TYPE}
-@deffn {Builtin Mutator} pointer-set-\STEM\ @var{POINTER} @var{OFFSET} @var{VALUE}
-@deffnx {Builtin Accessor} pointer-ref-\STEM\ @var{VALUEVAR} @var{POINTER} @var{OFFSET}
+@deffn {Builtin Mutator} mmux_\STEM\_pointer_set @var{POINTER} @var{OFFSET} @var{VALUE}
+@deffnx {Builtin Accessor} mmux_\STEM\_pointer_ref @var{VALUEVAR} @var{POINTER} @var{OFFSET}
 Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
 @end deffn
 
@@ -841,8 +841,8 @@ declare PTR VALUE
 
 mmux_libc_malloc PTR $(( 55 * mmux_libc_SIZEOF_ULONG ))
 @{
-  array-set-ulong $PTR 0 1234567890
-  array-ref-ulong VALUE $PTR 0
+  mmux_ulong_array_set $PTR 0 1234567890
+  mmux_ulong_array_ref VALUE $PTR 0
 @}
 mmux_libc_free $PTR
 @end example
@@ -873,8 +873,8 @@ an exact integer, itself representing an @code{errno} error code.
 
 
 @macro MmuxDefineArrayAccessorMutator{STEM,TYPE}
-@deffn {Builtin Mutator} array-set-\STEM\ @var{ARRAY} @var{INDEX} @var{VALUE}
-@deffnx {Builtin Accessor} array-ref-\STEM\ @var{VALUEVAR} @var{ARRAY} @var{INDEX}
+@deffn {Builtin Mutator} mmux_\STEM\_array_set @var{ARRAY} @var{INDEX} @var{VALUE}
+@deffnx {Builtin Accessor} mmux_\STEM\_array_ref @var{VALUEVAR} @var{ARRAY} @var{INDEX}
 Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
 @end deffn
 

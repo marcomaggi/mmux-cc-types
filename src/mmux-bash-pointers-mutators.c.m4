@@ -35,9 +35,9 @@
 
 m4_define([[[MMUX_BASH_DEFINE_POINTER_MUTATOR]]],[[[
 static int
-mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_pointer_set_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"pointer-set-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_pointer_set"
 {
 #if ($3)
   void *	ptr;
@@ -68,9 +68,9 @@ mmux_bash_pointers_pointer_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_pointer_set_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_set]]],
     [[[(4 == argc)]]],
-    [[["pointer-set-$1 POINTER OFFSET VALUE"]]],
+    [[["mmux_$1_pointer_set POINTER OFFSET VALUE"]]],
     [[["Store VALUE at OFFSET from POINTER, VALUE must fit a C language type \"$2\"."]]])
 ]]])
 
@@ -124,9 +124,9 @@ MMUX_BASH_DEFINE_POINTER_MUTATOR([[[wint]]],		[[[wint_t]]],			[[[1]]])
 
 m4_define([[[MMUX_BASH_DEFINE_ARRAY_MUTATOR]]],[[[
 static int
-mmux_bash_pointers_array_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_array_set_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"array-set-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_array_set"
 {
 #if ($3)
   void *	ptr;
@@ -153,9 +153,9 @@ mmux_bash_pointers_array_set_[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UN
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_array_set_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_array_set]]],
     [[[(4 == argc)]]],
-    [[["array-set-$1 ARRAY INDEX VALUE"]]],
+    [[["mmux_$1_array_set ARRAY INDEX VALUE"]]],
     [[["Store VALUE at INDEX in ARRAY, VALUE must fit a C language type \"$2\"."]]])
 ]]])
 

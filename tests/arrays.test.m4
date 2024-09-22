@@ -56,8 +56,8 @@ function arrays-pointer-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-pointer $PTR 0 '0x12'
-	array-ref-pointer VALUE $PTR 0
+	mmux_pointer_array_set $PTR 0 '0x12'
+	mmux_pointer_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '0x12' QQ(VALUE)
@@ -68,13 +68,13 @@ function arrays-pointer-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-pointer $PTR  0 '0x12'
-	array-set-pointer $PTR  8 '0x34'
-	array-set-pointer $PTR 16 '0x56'
+	mmux_pointer_array_set $PTR  0 '0x12'
+	mmux_pointer_array_set $PTR  8 '0x34'
+	mmux_pointer_array_set $PTR 16 '0x56'
 
-	array-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_pointer_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_pointer_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_pointer_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -88,13 +88,13 @@ function arrays-pointer-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-pointer $PTR  0 '0x12'
-	array-set-pointer $PTR  8 '0x34'
-	array-set-pointer $PTR 16 '0x56'
+	mmux_pointer_array_set $PTR  0 '0x12'
+	mmux_pointer_array_set $PTR  8 '0x34'
+	mmux_pointer_array_set $PTR 16 '0x56'
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-pointer VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-pointer VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-pointer VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_pointer_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_pointer_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_pointer_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -111,8 +111,8 @@ function arrays-schar-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-schar $PTR 0 12
-	array-ref-schar VALUE $PTR 0
+	mmux_schar_array_set $PTR 0 12
+	mmux_schar_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -123,13 +123,13 @@ function arrays-schar-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-schar $PTR  0 12
-	array-set-schar $PTR  8 34
-	array-set-schar $PTR 16 56
+	mmux_schar_array_set $PTR  0 12
+	mmux_schar_array_set $PTR  8 34
+	mmux_schar_array_set $PTR 16 56
 
-	array-ref-schar VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_schar_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_schar_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_schar_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -143,13 +143,13 @@ function arrays-schar-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-schar $PTR  0 12
-	array-set-schar $PTR  8 34
-	array-set-schar $PTR 16 56
+	mmux_schar_array_set $PTR  0 12
+	mmux_schar_array_set $PTR  8 34
+	mmux_schar_array_set $PTR 16 56
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-schar VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-schar VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-schar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_schar_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_schar_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_schar_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -166,8 +166,8 @@ function arrays-uchar-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uchar $PTR 0 12
-	array-ref-uchar VALUE $PTR 0
+	mmux_uchar_array_set $PTR 0 12
+	mmux_uchar_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -178,13 +178,13 @@ function arrays-uchar-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uchar $PTR  0 12
-	array-set-uchar $PTR  8 34
-	array-set-uchar $PTR 16 56
+	mmux_uchar_array_set $PTR  0 12
+	mmux_uchar_array_set $PTR  8 34
+	mmux_uchar_array_set $PTR 16 56
 
-	array-ref-uchar VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uchar_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uchar_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uchar_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -198,13 +198,13 @@ function arrays-uchar-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uchar $PTR  0 12
-	array-set-uchar $PTR  8 34
-	array-set-uchar $PTR 16 56
+	mmux_uchar_array_set $PTR  0 12
+	mmux_uchar_array_set $PTR  8 34
+	mmux_uchar_array_set $PTR 16 56
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-uchar VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uchar VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uchar VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uchar_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uchar_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uchar_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -221,8 +221,8 @@ function arrays-sshort-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sshort $PTR 0 123
-	array-ref-sshort VALUE $PTR 0
+	mmux_sshort_array_set $PTR 0 123
+	mmux_sshort_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -233,13 +233,13 @@ function arrays-sshort-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sshort $PTR  0 123
-	array-set-sshort $PTR  8 456
-	array-set-sshort $PTR 16 789
+	mmux_sshort_array_set $PTR  0 123
+	mmux_sshort_array_set $PTR  8 456
+	mmux_sshort_array_set $PTR 16 789
 
-	array-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sshort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sshort_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sshort_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sshort_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -253,13 +253,13 @@ function arrays-sshort-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sshort $PTR  0 123
-	array-set-sshort $PTR  8 456
-	array-set-sshort $PTR 16 789
+	mmux_sshort_array_set $PTR  0 123
+	mmux_sshort_array_set $PTR  8 456
+	mmux_sshort_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sshort VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sshort VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sshort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sshort_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sshort_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sshort_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -276,8 +276,8 @@ function arrays-ushort-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ushort $PTR 0 123
-	array-ref-ushort VALUE $PTR 0
+	mmux_ushort_array_set $PTR 0 123
+	mmux_ushort_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -288,13 +288,13 @@ function arrays-ushort-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ushort $PTR  0 123
-	array-set-ushort $PTR  8 456
-	array-set-ushort $PTR 16 789
+	mmux_ushort_array_set $PTR  0 123
+	mmux_ushort_array_set $PTR  8 456
+	mmux_ushort_array_set $PTR 16 789
 
-	array-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ushort_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ushort_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ushort_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -308,13 +308,13 @@ function arrays-ushort-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ushort $PTR  0 123
-	array-set-ushort $PTR  8 456
-	array-set-ushort $PTR 16 789
+	mmux_ushort_array_set $PTR  0 123
+	mmux_ushort_array_set $PTR  8 456
+	mmux_ushort_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-ushort VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ushort VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ushort VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ushort_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ushort_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ushort_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -331,8 +331,8 @@ function arrays-sint-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint $PTR 0 123
-	array-ref-sint VALUE $PTR 0
+	mmux_sint_array_set $PTR 0 123
+	mmux_sint_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -343,13 +343,13 @@ function arrays-sint-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint $PTR  0 123
-	array-set-sint $PTR  8 456
-	array-set-sint $PTR 16 789
+	mmux_sint_array_set $PTR  0 123
+	mmux_sint_array_set $PTR  8 456
+	mmux_sint_array_set $PTR 16 789
 
-	array-ref-sint VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -363,13 +363,13 @@ function arrays-sint-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint $PTR  0 123
-	array-set-sint $PTR  8 456
-	array-set-sint $PTR 16 789
+	mmux_sint_array_set $PTR  0 123
+	mmux_sint_array_set $PTR  8 456
+	mmux_sint_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sint VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -386,8 +386,8 @@ function arrays-uint-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint $PTR 0 123
-	array-ref-uint VALUE $PTR 0
+	mmux_uint_array_set $PTR 0 123
+	mmux_uint_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -398,13 +398,13 @@ function arrays-uint-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint $PTR  0 123
-	array-set-uint $PTR  8 456
-	array-set-uint $PTR 16 789
+	mmux_uint_array_set $PTR  0 123
+	mmux_uint_array_set $PTR  8 456
+	mmux_uint_array_set $PTR 16 789
 
-	array-ref-uint VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -418,13 +418,13 @@ function arrays-uint-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint $PTR  0 123
-	array-set-uint $PTR  8 456
-	array-set-uint $PTR 16 789
+	mmux_uint_array_set $PTR  0 123
+	mmux_uint_array_set $PTR  8 456
+	mmux_uint_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-uint VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -441,8 +441,8 @@ function arrays-slong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-slong $PTR 0 123
-	array-ref-slong VALUE $PTR 0
+	mmux_slong_array_set $PTR 0 123
+	mmux_slong_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -453,13 +453,13 @@ function arrays-slong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-slong $PTR  0 123
-	array-set-slong $PTR  8 456
-	array-set-slong $PTR 16 789
+	mmux_slong_array_set $PTR  0 123
+	mmux_slong_array_set $PTR  8 456
+	mmux_slong_array_set $PTR 16 789
 
-	array-ref-slong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_slong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_slong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_slong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -473,13 +473,13 @@ function arrays-slong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-slong $PTR  0 123
-	array-set-slong $PTR  8 456
-	array-set-slong $PTR 16 789
+	mmux_slong_array_set $PTR  0 123
+	mmux_slong_array_set $PTR  8 456
+	mmux_slong_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-slong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-slong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-slong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_slong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_slong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_slong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -496,8 +496,8 @@ function arrays-ulong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ulong $PTR 0 123
-	array-ref-ulong VALUE $PTR 0
+	mmux_ulong_array_set $PTR 0 123
+	mmux_ulong_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -508,13 +508,13 @@ function arrays-ulong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ulong $PTR  0 123
-	array-set-ulong $PTR  8 456
-	array-set-ulong $PTR 16 789
+	mmux_ulong_array_set $PTR  0 123
+	mmux_ulong_array_set $PTR  8 456
+	mmux_ulong_array_set $PTR 16 789
 
-	array-ref-ulong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ulong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ulong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ulong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -528,13 +528,13 @@ function arrays-ulong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ulong $PTR  0 123
-	array-set-ulong $PTR  8 456
-	array-set-ulong $PTR 16 789
+	mmux_ulong_array_set $PTR  0 123
+	mmux_ulong_array_set $PTR  8 456
+	mmux_ulong_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-ulong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ulong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ulong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ulong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ulong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ulong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -551,8 +551,8 @@ function arrays-sllong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sllong $PTR 0 123
-	array-ref-sllong VALUE $PTR 0
+	mmux_sllong_array_set $PTR 0 123
+	mmux_sllong_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -563,13 +563,13 @@ function arrays-sllong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sllong $PTR  0 123
-	array-set-sllong $PTR  8 456
-	array-set-sllong $PTR 16 789
+	mmux_sllong_array_set $PTR  0 123
+	mmux_sllong_array_set $PTR  8 456
+	mmux_sllong_array_set $PTR 16 789
 
-	array-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sllong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sllong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sllong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sllong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -583,13 +583,13 @@ function arrays-sllong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sllong $PTR  0 123
-	array-set-sllong $PTR  8 456
-	array-set-sllong $PTR 16 789
+	mmux_sllong_array_set $PTR  0 123
+	mmux_sllong_array_set $PTR  8 456
+	mmux_sllong_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sllong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sllong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sllong VALUE $PTR 16	;VALUES[2]=$VALUE
+	mmux_sllong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sllong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sllong_array_ref VALUE $PTR 16	;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -606,8 +606,8 @@ function arrays-ullong-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ullong $PTR 0 123
-	array-ref-ullong VALUE $PTR 0
+	mmux_ullong_array_set $PTR 0 123
+	mmux_ullong_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -618,13 +618,13 @@ function arrays-ullong-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ullong $PTR  0 123
-	array-set-ullong $PTR  8 456
-	array-set-ullong $PTR 16 789
+	mmux_ullong_array_set $PTR  0 123
+	mmux_ullong_array_set $PTR  8 456
+	mmux_ullong_array_set $PTR 16 789
 
-	array-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ullong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ullong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ullong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -638,13 +638,13 @@ function arrays-ullong-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ullong $PTR  0 123
-	array-set-ullong $PTR  8 456
-	array-set-ullong $PTR 16 789
+	mmux_ullong_array_set $PTR  0 123
+	mmux_ullong_array_set $PTR  8 456
+	mmux_ullong_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-ullong VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ullong VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ullong VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ullong_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ullong_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ullong_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -661,8 +661,8 @@ function arrays-ssize-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ssize $PTR 0 123
-	array-ref-ssize VALUE $PTR 0
+	mmux_ssize_array_set $PTR 0 123
+	mmux_ssize_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -673,13 +673,13 @@ function arrays-ssize-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ssize $PTR  0 123
-	array-set-ssize $PTR  8 456
-	array-set-ssize $PTR 16 789
+	mmux_ssize_array_set $PTR  0 123
+	mmux_ssize_array_set $PTR  8 456
+	mmux_ssize_array_set $PTR 16 789
 
-	array-ref-ssize VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ssize_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ssize_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ssize_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -693,13 +693,13 @@ function arrays-ssize-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ssize $PTR  0 123
-	array-set-ssize $PTR  8 456
-	array-set-ssize $PTR 16 789
+	mmux_ssize_array_set $PTR  0 123
+	mmux_ssize_array_set $PTR  8 456
+	mmux_ssize_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-ssize VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ssize VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-ssize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_ssize_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ssize_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_ssize_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -716,8 +716,8 @@ function arrays-usize-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-usize $PTR 0 123
-	array-ref-usize VALUE $PTR 0
+	mmux_usize_array_set $PTR 0 123
+	mmux_usize_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 123 QQ(VALUE)
@@ -728,13 +728,13 @@ function arrays-usize-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-usize $PTR  0 123
-	array-set-usize $PTR  8 456
-	array-set-usize $PTR 16 789
+	mmux_usize_array_set $PTR  0 123
+	mmux_usize_array_set $PTR  8 456
+	mmux_usize_array_set $PTR 16 789
 
-	array-ref-usize VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_usize_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_usize_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_usize_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -748,13 +748,13 @@ function arrays-usize-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-usize $PTR  0 123
-	array-set-usize $PTR  8 456
-	array-set-usize $PTR 16 789
+	mmux_usize_array_set $PTR  0 123
+	mmux_usize_array_set $PTR  8 456
+	mmux_usize_array_set $PTR 16 789
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-usize VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-usize VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-usize VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_usize_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_usize_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_usize_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -771,8 +771,8 @@ function arrays-float-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-float $PTR 0 1.23
-	array-ref-float VALUE $PTR 0
+	mmux_float_array_set $PTR 0 1.23
+	mmux_float_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 0X1.3AE148P+0 QQ(VALUE)
@@ -783,13 +783,13 @@ function arrays-float-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-float $PTR  0 1.23
-	array-set-float $PTR  8 4.56
-	array-set-float $PTR 16 7.89
+	mmux_float_array_set $PTR  0 1.23
+	mmux_float_array_set $PTR  8 4.56
+	mmux_float_array_set $PTR 16 7.89
 
-	array-ref-float VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_float_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_float_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_float_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -803,13 +803,13 @@ function arrays-float-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-float $PTR  0 1.23
-	array-set-float $PTR  8 4.56
-	array-set-float $PTR 16 7.89
+	mmux_float_array_set $PTR  0 1.23
+	mmux_float_array_set $PTR  8 4.56
+	mmux_float_array_set $PTR 16 7.89
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-float VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-float VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-float VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_float_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_float_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_float_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -826,8 +826,8 @@ function arrays-double-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-double $PTR 0 1.23
-	array-ref-double VALUE $PTR 0
+	mmux_double_array_set $PTR 0 1.23
+	mmux_double_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '0X1.3AE147AE147AEP+0' QQ(VALUE)
@@ -838,13 +838,13 @@ function arrays-double-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-double $PTR  0 1.23
-	array-set-double $PTR  8 4.56
-	array-set-double $PTR 16 7.89
+	mmux_double_array_set $PTR  0 1.23
+	mmux_double_array_set $PTR  8 4.56
+	mmux_double_array_set $PTR 16 7.89
 
-	array-ref-double VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_double_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_double_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_double_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -858,13 +858,13 @@ function arrays-double-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-double $PTR  0 1.23
-	array-set-double $PTR  8 4.56
-	array-set-double $PTR 16 7.89
+	mmux_double_array_set $PTR  0 1.23
+	mmux_double_array_set $PTR  8 4.56
+	mmux_double_array_set $PTR 16 7.89
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-double VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-double VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-double VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_double_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_double_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_double_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -881,8 +881,8 @@ function arrays-ldouble-1.1 () {
 
     mmux_libc_calloc PTR 2048 1
     {
-	array-set-ldouble $PTR 0 1.23
-	array-ref-ldouble VALUE $PTR 0
+	mmux_ldouble_array_set $PTR 0 1.23
+	mmux_ldouble_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '0X9.D70A3D70A3D70A4P-3' QQ(VALUE)
@@ -893,13 +893,13 @@ function arrays-ldouble-1.2 () {
 
     mmux_libc_calloc PTR 2048 1
     {
-	array-set-ldouble $PTR  0 1.23
-	array-set-ldouble $PTR 32 4.56
-	array-set-ldouble $PTR 64 7.89
+	mmux_ldouble_array_set $PTR  0 1.23
+	mmux_ldouble_array_set $PTR 32 4.56
+	mmux_ldouble_array_set $PTR 64 7.89
 
-	array-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
-	array-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -913,13 +913,13 @@ function arrays-ldouble-1.3 () {
 
     mmux_libc_calloc PTR 2048 1
     {
-	array-set-ldouble $PTR  0 1.23
-	array-set-ldouble $PTR 32 4.56
-	array-set-ldouble $PTR 64 7.89
+	mmux_ldouble_array_set $PTR  0 1.23
+	mmux_ldouble_array_set $PTR 32 4.56
+	mmux_ldouble_array_set $PTR 64 7.89
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-ldouble VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-ldouble VALUE $PTR 32		;VALUES[1]=$VALUE
-	array-ref-ldouble VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -936,8 +936,8 @@ function arrays-complex-1.1 () {
 
     mmux_libc_calloc PTR 2048 1
     {
-	array-set-complex $PTR 0 '(1.2)+i*(3.4)'
-	array-ref-complex VALUE $PTR 0
+	mmux_complex_array_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complex_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' QQ(VALUE)
@@ -948,13 +948,13 @@ function arrays-complex-1.2 () {
 
     mmux_libc_calloc PTR 2048 1
     {
-	array-set-complex $PTR  0 '(1.2)+i*(3.4)'
-	array-set-complex $PTR 32 '(5.6)+i*(7.8)'
-	array-set-complex $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complex_array_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complex_array_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complex_array_set $PTR 64 '(9.0)+i*(1.2)'
 
-	array-ref-complex VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
-	array-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complex_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complex_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complex_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -968,13 +968,13 @@ function arrays-complex-1.3 () {
 
     mmux_libc_calloc PTR 2048 1
     {
-	array-set-complex $PTR  0 '(1.2)+i*(3.4)'
-	array-set-complex $PTR  32 '(5.6)+i*(7.8)'
-	array-set-complex $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complex_array_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complex_array_set $PTR  32 '(5.6)+i*(7.8)'
+	mmux_complex_array_set $PTR 64 '(9.0)+i*(1.2)'
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-complex VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-complex VALUE $PTR 32		;VALUES[1]=$VALUE
-	array-ref-complex VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complex_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complex_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complex_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -991,8 +991,8 @@ function arrays-sint8-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint8 $PTR 0 12
-	array-ref-sint8 VALUE $PTR 0
+	mmux_sint8_array_set $PTR 0 12
+	mmux_sint8_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1003,13 +1003,13 @@ function arrays-sint8-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint8 $PTR  0 12
-	array-set-sint8 $PTR  8 45
-	array-set-sint8 $PTR 16 78
+	mmux_sint8_array_set $PTR  0 12
+	mmux_sint8_array_set $PTR  8 45
+	mmux_sint8_array_set $PTR 16 78
 
-	array-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint8_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint8_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint8_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1023,13 +1023,13 @@ function arrays-sint8-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint8 $PTR  0 12
-	array-set-sint8 $PTR  8 45
-	array-set-sint8 $PTR 16 78
+	mmux_sint8_array_set $PTR  0 12
+	mmux_sint8_array_set $PTR  8 45
+	mmux_sint8_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint8_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint8_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint8_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1046,8 +1046,8 @@ function arrays-uint8-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint8 $PTR 0 12
-	array-ref-uint8 VALUE $PTR 0
+	mmux_uint8_array_set $PTR 0 12
+	mmux_uint8_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1058,13 +1058,13 @@ function arrays-uint8-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint8 $PTR  0 12
-	array-set-uint8 $PTR  8 45
-	array-set-uint8 $PTR 16 78
+	mmux_uint8_array_set $PTR  0 12
+	mmux_uint8_array_set $PTR  8 45
+	mmux_uint8_array_set $PTR 16 78
 
-	array-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint8_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint8_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint8_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1078,13 +1078,13 @@ function arrays-uint8-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint8 $PTR  0 12
-	array-set-uint8 $PTR  8 45
-	array-set-uint8 $PTR 16 78
+	mmux_uint8_array_set $PTR  0 12
+	mmux_uint8_array_set $PTR  8 45
+	mmux_uint8_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-uint8 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint8 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint8 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint8_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint8_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint8_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1101,8 +1101,8 @@ function arrays-sint16-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint16 $PTR 0 12
-	array-ref-sint16 VALUE $PTR 0
+	mmux_sint16_array_set $PTR 0 12
+	mmux_sint16_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1113,13 +1113,13 @@ function arrays-sint16-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint16 $PTR  0 12
-	array-set-sint16 $PTR  8 45
-	array-set-sint16 $PTR 16 78
+	mmux_sint16_array_set $PTR  0 12
+	mmux_sint16_array_set $PTR  8 45
+	mmux_sint16_array_set $PTR 16 78
 
-	array-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint16_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint16_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint16_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1133,13 +1133,13 @@ function arrays-sint16-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint16 $PTR  0 12
-	array-set-sint16 $PTR  8 45
-	array-set-sint16 $PTR 16 78
+	mmux_sint16_array_set $PTR  0 12
+	mmux_sint16_array_set $PTR  8 45
+	mmux_sint16_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint16_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint16_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint16_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1156,8 +1156,8 @@ function arrays-uint16-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint16 $PTR 0 12
-	array-ref-uint16 VALUE $PTR 0
+	mmux_uint16_array_set $PTR 0 12
+	mmux_uint16_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1168,13 +1168,13 @@ function arrays-uint16-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint16 $PTR  0 12
-	array-set-uint16 $PTR  8 45
-	array-set-uint16 $PTR 16 78
+	mmux_uint16_array_set $PTR  0 12
+	mmux_uint16_array_set $PTR  8 45
+	mmux_uint16_array_set $PTR 16 78
 
-	array-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint16_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint16_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint16_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1188,13 +1188,13 @@ function arrays-uint16-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint16 $PTR  0 12
-	array-set-uint16 $PTR  8 45
-	array-set-uint16 $PTR 16 78
+	mmux_uint16_array_set $PTR  0 12
+	mmux_uint16_array_set $PTR  8 45
+	mmux_uint16_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-uint16 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint16 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint16 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint16_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint16_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint16_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1211,8 +1211,8 @@ function arrays-sint32-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint32 $PTR 0 12
-	array-ref-sint32 VALUE $PTR 0
+	mmux_sint32_array_set $PTR 0 12
+	mmux_sint32_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1223,13 +1223,13 @@ function arrays-sint32-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint32 $PTR  0 12
-	array-set-sint32 $PTR  8 45
-	array-set-sint32 $PTR 16 78
+	mmux_sint32_array_set $PTR  0 12
+	mmux_sint32_array_set $PTR  8 45
+	mmux_sint32_array_set $PTR 16 78
 
-	array-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint32_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint32_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint32_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1243,13 +1243,13 @@ function arrays-sint32-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint32 $PTR  0 12
-	array-set-sint32 $PTR  8 45
-	array-set-sint32 $PTR 16 78
+	mmux_sint32_array_set $PTR  0 12
+	mmux_sint32_array_set $PTR  8 45
+	mmux_sint32_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint32_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint32_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint32_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1266,8 +1266,8 @@ function arrays-uint32-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint32 $PTR 0 12
-	array-ref-uint32 VALUE $PTR 0
+	mmux_uint32_array_set $PTR 0 12
+	mmux_uint32_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1278,13 +1278,13 @@ function arrays-uint32-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint32 $PTR  0 12
-	array-set-uint32 $PTR  8 45
-	array-set-uint32 $PTR 16 78
+	mmux_uint32_array_set $PTR  0 12
+	mmux_uint32_array_set $PTR  8 45
+	mmux_uint32_array_set $PTR 16 78
 
-	array-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint32_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint32_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint32_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1298,13 +1298,13 @@ function arrays-uint32-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint32 $PTR  0 12
-	array-set-uint32 $PTR  8 45
-	array-set-uint32 $PTR 16 78
+	mmux_uint32_array_set $PTR  0 12
+	mmux_uint32_array_set $PTR  8 45
+	mmux_uint32_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-uint32 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint32 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint32 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint32_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint32_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint32_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1321,8 +1321,8 @@ function arrays-sint64-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint64 $PTR 0 12
-	array-ref-sint64 VALUE $PTR 0
+	mmux_sint64_array_set $PTR 0 12
+	mmux_sint64_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1333,13 +1333,13 @@ function arrays-sint64-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint64 $PTR  0 12
-	array-set-sint64 $PTR  8 45
-	array-set-sint64 $PTR 16 78
+	mmux_sint64_array_set $PTR  0 12
+	mmux_sint64_array_set $PTR  8 45
+	mmux_sint64_array_set $PTR 16 78
 
-	array-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint64_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint64_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint64_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1353,13 +1353,13 @@ function arrays-sint64-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sint64 $PTR  0 12
-	array-set-sint64 $PTR  8 45
-	array-set-sint64 $PTR 16 78
+	mmux_sint64_array_set $PTR  0 12
+	mmux_sint64_array_set $PTR  8 45
+	mmux_sint64_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-sint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-sint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-sint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_sint64_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_sint64_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_sint64_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1376,8 +1376,8 @@ function arrays-uint64-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint64 $PTR 0 12
-	array-ref-uint64 VALUE $PTR 0
+	mmux_uint64_array_set $PTR 0 12
+	mmux_uint64_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1388,13 +1388,13 @@ function arrays-uint64-1.2 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint64 $PTR  0 12
-	array-set-uint64 $PTR  8 45
-	array-set-uint64 $PTR 16 78
+	mmux_uint64_array_set $PTR  0 12
+	mmux_uint64_array_set $PTR  8 45
+	mmux_uint64_array_set $PTR 16 78
 
-	array-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint64_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint64_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint64_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1408,13 +1408,13 @@ function arrays-uint64-1.3 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uint64 $PTR  0 12
-	array-set-uint64 $PTR  8 45
-	array-set-uint64 $PTR 16 78
+	mmux_uint64_array_set $PTR  0 12
+	mmux_uint64_array_set $PTR  8 45
+	mmux_uint64_array_set $PTR 16 78
 	mmux_libc_realloc PTR $PTR 2048
-	array-ref-uint64 VALUE $PTR 0		;VALUES[0]=$VALUE
-	array-ref-uint64 VALUE $PTR 8		;VALUES[1]=$VALUE
-	array-ref-uint64 VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_uint64_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_uint64_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_uint64_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1431,8 +1431,8 @@ function arrays-sintmax-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sintmax $PTR 5 12
-	array-ref-sintmax VALUE $PTR 5
+	mmux_sintmax_array_set $PTR 5 12
+	mmux_sintmax_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1446,8 +1446,8 @@ function arrays-uintmax-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uintmax $PTR 5 12
-	array-ref-uintmax VALUE $PTR 5
+	mmux_uintmax_array_set $PTR 5 12
+	mmux_uintmax_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1461,8 +1461,8 @@ function arrays-sintptr-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-sintptr $PTR 5 12
-	array-ref-sintptr VALUE $PTR 5
+	mmux_sintptr_array_set $PTR 5 12
+	mmux_sintptr_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1476,8 +1476,8 @@ function arrays-uintptr-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uintptr $PTR 5 12
-	array-ref-uintptr VALUE $PTR 5
+	mmux_uintptr_array_set $PTR 5 12
+	mmux_uintptr_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1491,8 +1491,8 @@ function arrays-ptrdiff-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-ptrdiff $PTR 5 12
-	array-ref-ptrdiff VALUE $PTR 5
+	mmux_ptrdiff_array_set $PTR 5 12
+	mmux_ptrdiff_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1506,8 +1506,8 @@ function arrays-mode-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-mode $PTR 5 12
-	array-ref-mode VALUE $PTR 5
+	mmux_mode_array_set $PTR 5 12
+	mmux_mode_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1521,8 +1521,8 @@ function arrays-off-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-off $PTR 5 12
-	array-ref-off VALUE $PTR 5
+	mmux_off_array_set $PTR 5 12
+	mmux_off_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1536,8 +1536,8 @@ function arrays-pid-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-pid $PTR 5 12
-	array-ref-pid VALUE $PTR 5
+	mmux_pid_array_set $PTR 5 12
+	mmux_pid_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1551,8 +1551,8 @@ function arrays-uid-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-uid $PTR 5 12
-	array-ref-uid VALUE $PTR 5
+	mmux_uid_array_set $PTR 5 12
+	mmux_uid_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
@@ -1566,8 +1566,8 @@ function arrays-gid-1.1 () {
 
     mmux_libc_calloc PTR 1024 1
     {
-	array-set-gid $PTR 5 12
-	array-ref-gid VALUE $PTR 5
+	mmux_gid_array_set $PTR 5 12
+	mmux_gid_array_ref VALUE $PTR 5
     }
     mmux_libc_free $PTR
     dotest-equal 12 QQ(VALUE)
