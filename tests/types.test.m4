@@ -68,7 +68,7 @@ function types-sizeof-pointer-1.1 () {
     test -v libc_SIZEOF_POINTER
 }
 function types-sizeof-pointer-1.2 () {
-    libc_pointer_p $libc_SIZEOF_POINTER
+    mmux_pointer_is_string $libc_SIZEOF_POINTER
 }
 
 function types-maximum-pointer-2.1 () {
@@ -77,7 +77,7 @@ function types-maximum-pointer-2.1 () {
     test -v libc_MAX_POINTER
 }
 function types-minimum-pointer-2.2 () {
-    libc_pointer_p $libc_MAX_POINTER
+    mmux_pointer_is_string $libc_MAX_POINTER
 }
 
 function types-maximum-pointer-3.1 () {
@@ -88,7 +88,7 @@ function types-maximum-pointer-3.1 () {
 function types-minimum-pointer-3.2 () {
     dotest-unset-debug
     dotest-debug libc_MIN_POINTER=\"$libc_MIN_POINTER\"
-    libc_pointer_p $libc_MIN_POINTER
+    mmux_pointer_is_string $libc_MIN_POINTER
 }
 
 
@@ -100,7 +100,7 @@ function types-sizeof-schar-1.1 () {
     test -v libc_SIZEOF_SCHAR
 }
 function types-sizeof-schar-1.2 () {
-    libc_schar_p $libc_SIZEOF_SCHAR
+    mmux_schar_is_string $libc_SIZEOF_SCHAR
 }
 
 function types-maximum-schar-2.1 () {
@@ -109,7 +109,7 @@ function types-maximum-schar-2.1 () {
     test -v libc_MAX_SCHAR
 }
 function types-minimum-schar-2.2 () {
-    libc_schar_p $libc_MAX_SCHAR
+    mmux_schar_is_string $libc_MAX_SCHAR
 }
 
 function types-maximum-schar-3.1 () {
@@ -118,7 +118,7 @@ function types-maximum-schar-3.1 () {
     test -v libc_MIN_SCHAR
 }
 function types-minimum-schar-3.2 () {
-    libc_schar_p $libc_MIN_SCHAR
+    mmux_schar_is_string $libc_MIN_SCHAR
 }
 
 
@@ -130,7 +130,7 @@ function types-sizeof-uchar-1.1 () {
     test -v libc_SIZEOF_UCHAR
 }
 function types-sizeof-uchar-1.2 () {
-    libc_uchar_p $libc_SIZEOF_UCHAR
+    mmux_uchar_is_string $libc_SIZEOF_UCHAR
 }
 
 function types-maximum-uchar-2.1 () {
@@ -139,7 +139,7 @@ function types-maximum-uchar-2.1 () {
     test -v libc_MAX_UCHAR
 }
 function types-minimum-uchar-2.2 () {
-    libc_uchar_p $libc_MAX_UCHAR
+    mmux_uchar_is_string $libc_MAX_UCHAR
 }
 
 function types-maximum-uchar-3.1 () {
@@ -148,7 +148,7 @@ function types-maximum-uchar-3.1 () {
     test -v libc_MIN_UCHAR
 }
 function types-minimum-uchar-3.2 () {
-    libc_uchar_p $libc_MIN_UCHAR
+    mmux_uchar_is_string $libc_MIN_UCHAR
 }
 
 
@@ -160,7 +160,7 @@ function types-sizeof-sint-1.1 () {
     test -v libc_SIZEOF_SINT
 }
 function types-sizeof-sint-1.2 () {
-    libc_sint_p $libc_SIZEOF_SINT
+    mmux_sint_is_string $libc_SIZEOF_SINT
 }
 
 function types-maximum-sint-2.1 () {
@@ -169,7 +169,7 @@ function types-maximum-sint-2.1 () {
     test -v libc_MAX_SINT
 }
 function types-minimum-sint-2.2 () {
-    libc_sint_p $libc_MAX_SINT
+    mmux_sint_is_string $libc_MAX_SINT
 }
 
 function types-maximum-sint-3.1 () {
@@ -178,7 +178,7 @@ function types-maximum-sint-3.1 () {
     test -v libc_MIN_SINT
 }
 function types-minimum-sint-3.2 () {
-    libc_sint_p $libc_MIN_SINT
+    mmux_sint_is_string $libc_MIN_SINT
 }
 
 
@@ -190,7 +190,7 @@ function types-sizeof-uint-1.1 () {
     test -v libc_SIZEOF_UINT
 }
 function types-sizeof-uint-1.2 () {
-    libc_uint_p $libc_SIZEOF_UINT
+    mmux_uint_is_string $libc_SIZEOF_UINT
 }
 
 function types-maximum-uint-2.1 () {
@@ -199,7 +199,7 @@ function types-maximum-uint-2.1 () {
     test -v libc_MAX_UINT
 }
 function types-minimum-uint-2.2 () {
-    libc_uint_p $libc_MAX_UINT
+    mmux_uint_is_string $libc_MAX_UINT
 }
 
 function types-maximum-uint-3.1 () {
@@ -208,7 +208,7 @@ function types-maximum-uint-3.1 () {
     test -v libc_MIN_UINT
 }
 function types-minimum-uint-3.2 () {
-    libc_uint_p $libc_MIN_UINT
+    mmux_uint_is_string $libc_MIN_UINT
 }
 
 
@@ -220,7 +220,7 @@ function types-sizeof-slong-1.1 () {
     test -v libc_SIZEOF_SLONG
 }
 function types-sizeof-slong-1.2 () {
-    libc_slong_p $libc_SIZEOF_SLONG
+    mmux_slong_is_string $libc_SIZEOF_SLONG
 }
 
 function types-maximum-slong-2.1 () {
@@ -229,7 +229,7 @@ function types-maximum-slong-2.1 () {
     test -v libc_MAX_SLONG
 }
 function types-minimum-slong-2.2 () {
-    libc_slong_p $libc_MAX_SLONG
+    mmux_slong_is_string $libc_MAX_SLONG
 }
 
 function types-maximum-slong-3.1 () {
@@ -238,7 +238,7 @@ function types-maximum-slong-3.1 () {
     test -v libc_MIN_SLONG
 }
 function types-minimum-slong-3.2 () {
-    libc_slong_p $libc_MIN_SLONG
+    mmux_slong_is_string $libc_MIN_SLONG
 }
 
 
@@ -250,7 +250,7 @@ function types-sizeof-ulong-1.1 () {
     test -v libc_SIZEOF_ULONG
 }
 function types-sizeof-ulong-1.2 () {
-    libc_ulong_p $libc_SIZEOF_ULONG
+    mmux_ulong_is_string $libc_SIZEOF_ULONG
 }
 
 function types-maximum-ulong-2.1 () {
@@ -259,7 +259,7 @@ function types-maximum-ulong-2.1 () {
     test -v libc_MAX_ULONG
 }
 function types-minimum-ulong-2.2 () {
-    libc_ulong_p $libc_MAX_ULONG
+    mmux_ulong_is_string $libc_MAX_ULONG
 }
 
 function types-maximum-ulong-3.1 () {
@@ -268,7 +268,7 @@ function types-maximum-ulong-3.1 () {
     test -v libc_MIN_ULONG
 }
 function types-minimum-ulong-3.2 () {
-    libc_ulong_p $libc_MIN_ULONG
+    mmux_ulong_is_string $libc_MIN_ULONG
 }
 
 
@@ -280,7 +280,7 @@ function types-sizeof-sllong-1.1 () {
     test -v libc_SIZEOF_SLLONG
 }
 function types-sizeof-sllong-1.2 () {
-    libc_sllong_p $libc_SIZEOF_SLLONG
+    mmux_sllong_is_string $libc_SIZEOF_SLLONG
 }
 
 function types-maximum-sllong-2.1 () {
@@ -289,7 +289,7 @@ function types-maximum-sllong-2.1 () {
     test -v libc_MAX_SLLONG
 }
 function types-minimum-sllong-2.2 () {
-    libc_sllong_p $libc_MAX_SLLONG
+    mmux_sllong_is_string $libc_MAX_SLLONG
 }
 
 function types-maximum-sllong-3.1 () {
@@ -298,7 +298,7 @@ function types-maximum-sllong-3.1 () {
     test -v libc_MIN_SLLONG
 }
 function types-minimum-sllong-3.2 () {
-    libc_sllong_p $libc_MIN_SLLONG
+    mmux_sllong_is_string $libc_MIN_SLLONG
 }
 
 
@@ -310,7 +310,7 @@ function types-sizeof-ullong-1.1 () {
     test -v libc_SIZEOF_ULLONG
 }
 function types-sizeof-ullong-1.2 () {
-    libc_ullong_p $libc_SIZEOF_ULLONG
+    mmux_ullong_is_string $libc_SIZEOF_ULLONG
 }
 
 function types-maximum-ullong-2.1 () {
@@ -319,7 +319,7 @@ function types-maximum-ullong-2.1 () {
     test -v libc_MAX_ULLONG
 }
 function types-minimum-ullong-2.2 () {
-    libc_ullong_p $libc_MAX_ULLONG
+    mmux_ullong_is_string $libc_MAX_ULLONG
 }
 
 function types-maximum-ullong-3.1 () {
@@ -328,7 +328,7 @@ function types-maximum-ullong-3.1 () {
     test -v libc_MIN_ULLONG
 }
 function types-minimum-ullong-3.2 () {
-    libc_ullong_p $libc_MIN_ULLONG
+    mmux_ullong_is_string $libc_MIN_ULLONG
 }
 
 
@@ -340,7 +340,7 @@ function types-sizeof-sint8-1.1 () {
     test -v libc_SIZEOF_SINT8
 }
 function types-sizeof-sint8-1.2 () {
-    libc_sint8_p $libc_SIZEOF_SINT8
+    mmux_sint8_is_string $libc_SIZEOF_SINT8
 }
 
 function types-maximum-sint8-2.1 () {
@@ -349,7 +349,7 @@ function types-maximum-sint8-2.1 () {
     test -v libc_MAX_SINT8
 }
 function types-minimum-sint8-2.2 () {
-    libc_sint8_p $libc_MAX_SINT8
+    mmux_sint8_is_string $libc_MAX_SINT8
 }
 
 function types-maximum-sint8-3.1 () {
@@ -358,7 +358,7 @@ function types-maximum-sint8-3.1 () {
     test -v libc_MIN_SINT8
 }
 function types-minimum-sint8-3.2 () {
-    libc_sint8_p $libc_MIN_SINT8
+    mmux_sint8_is_string $libc_MIN_SINT8
 }
 
 
@@ -370,7 +370,7 @@ function types-sizeof-uint8-1.1 () {
     test -v libc_SIZEOF_UINT8
 }
 function types-sizeof-uint8-1.2 () {
-    libc_uint8_p $libc_SIZEOF_UINT8
+    mmux_uint8_is_string $libc_SIZEOF_UINT8
 }
 
 function types-maximum-uint8-2.1 () {
@@ -379,7 +379,7 @@ function types-maximum-uint8-2.1 () {
     test -v libc_MAX_UINT8
 }
 function types-minimum-uint8-2.2 () {
-    libc_uint8_p $libc_MAX_UINT8
+    mmux_uint8_is_string $libc_MAX_UINT8
 }
 
 function types-maximum-uint8-3.1 () {
@@ -388,7 +388,7 @@ function types-maximum-uint8-3.1 () {
     test -v libc_MIN_UINT8
 }
 function types-minimum-uint8-3.2 () {
-    libc_uint8_p $libc_MIN_UINT8
+    mmux_uint8_is_string $libc_MIN_UINT8
 }
 
 
@@ -400,7 +400,7 @@ function types-sizeof-sint16-1.1 () {
     test -v libc_SIZEOF_SINT16
 }
 function types-sizeof-sint16-1.2 () {
-    libc_sint16_p $libc_SIZEOF_SINT16
+    mmux_sint16_is_string $libc_SIZEOF_SINT16
 }
 
 function types-maximum-sint16-2.1 () {
@@ -409,7 +409,7 @@ function types-maximum-sint16-2.1 () {
     test -v libc_MAX_SINT16
 }
 function types-minimum-sint16-2.2 () {
-    libc_sint16_p $libc_MAX_SINT16
+    mmux_sint16_is_string $libc_MAX_SINT16
 }
 
 function types-maximum-sint16-3.1 () {
@@ -418,7 +418,7 @@ function types-maximum-sint16-3.1 () {
     test -v libc_MIN_SINT16
 }
 function types-minimum-sint16-3.2 () {
-    libc_sint16_p $libc_MIN_SINT16
+    mmux_sint16_is_string $libc_MIN_SINT16
 }
 
 
@@ -430,7 +430,7 @@ function types-sizeof-uint16-1.1 () {
     test -v libc_SIZEOF_UINT16
 }
 function types-sizeof-uint16-1.2 () {
-    libc_uint16_p $libc_SIZEOF_UINT16
+    mmux_uint16_is_string $libc_SIZEOF_UINT16
 }
 
 function types-maximum-uint16-2.1 () {
@@ -439,7 +439,7 @@ function types-maximum-uint16-2.1 () {
     test -v libc_MAX_UINT16
 }
 function types-minimum-uint16-2.2 () {
-    libc_uint16_p $libc_MAX_UINT16
+    mmux_uint16_is_string $libc_MAX_UINT16
 }
 
 function types-maximum-uint16-3.1 () {
@@ -448,7 +448,7 @@ function types-maximum-uint16-3.1 () {
     test -v libc_MIN_UINT16
 }
 function types-minimum-uint16-3.2 () {
-    libc_uint16_p $libc_MIN_UINT16
+    mmux_uint16_is_string $libc_MIN_UINT16
 }
 
 
@@ -460,7 +460,7 @@ function types-sizeof-sint32-1.1 () {
     test -v libc_SIZEOF_SINT32
 }
 function types-sizeof-sint32-1.2 () {
-    libc_sint32_p $libc_SIZEOF_SINT32
+    mmux_sint32_is_string $libc_SIZEOF_SINT32
 }
 
 function types-maximum-sint32-2.1 () {
@@ -469,7 +469,7 @@ function types-maximum-sint32-2.1 () {
     test -v libc_MAX_SINT32
 }
 function types-minimum-sint32-2.2 () {
-    libc_sint32_p $libc_MAX_SINT32
+    mmux_sint32_is_string $libc_MAX_SINT32
 }
 
 function types-maximum-sint32-3.1 () {
@@ -478,7 +478,7 @@ function types-maximum-sint32-3.1 () {
     test -v libc_MIN_SINT32
 }
 function types-minimum-sint32-3.2 () {
-    libc_sint32_p $libc_MIN_SINT32
+    mmux_sint32_is_string $libc_MIN_SINT32
 }
 
 
@@ -490,7 +490,7 @@ function types-sizeof-uint32-1.1 () {
     test -v libc_SIZEOF_UINT32
 }
 function types-sizeof-uint32-1.2 () {
-    libc_uint32_p $libc_SIZEOF_UINT32
+    mmux_uint32_is_string $libc_SIZEOF_UINT32
 }
 
 function types-maximum-uint32-2.1 () {
@@ -499,7 +499,7 @@ function types-maximum-uint32-2.1 () {
     test -v libc_MAX_UINT32
 }
 function types-minimum-uint32-2.2 () {
-    libc_uint32_p $libc_MAX_UINT32
+    mmux_uint32_is_string $libc_MAX_UINT32
 }
 
 function types-maximum-uint32-3.1 () {
@@ -508,7 +508,7 @@ function types-maximum-uint32-3.1 () {
     test -v libc_MIN_UINT32
 }
 function types-minimum-uint32-3.2 () {
-    libc_uint32_p $libc_MIN_UINT32
+    mmux_uint32_is_string $libc_MIN_UINT32
 }
 
 
@@ -520,7 +520,7 @@ function types-sizeof-sint64-1.1 () {
     test -v libc_SIZEOF_SINT64
 }
 function types-sizeof-sint64-1.2 () {
-    libc_sint64_p $libc_SIZEOF_SINT64
+    mmux_sint64_is_string $libc_SIZEOF_SINT64
 }
 
 function types-maximum-sint64-2.1 () {
@@ -529,7 +529,7 @@ function types-maximum-sint64-2.1 () {
     test -v libc_MAX_SINT64
 }
 function types-minimum-sint64-2.2 () {
-    libc_sint64_p $libc_MAX_SINT64
+    mmux_sint64_is_string $libc_MAX_SINT64
 }
 
 function types-maximum-sint64-3.1 () {
@@ -538,7 +538,7 @@ function types-maximum-sint64-3.1 () {
     test -v libc_MIN_SINT64
 }
 function types-minimum-sint64-3.2 () {
-    libc_sint64_p $libc_MIN_SINT64
+    mmux_sint64_is_string $libc_MIN_SINT64
 }
 
 
@@ -550,7 +550,7 @@ function types-sizeof-uint64-1.1 () {
     test -v libc_SIZEOF_UINT64
 }
 function types-sizeof-uint64-1.2 () {
-    libc_uint64_p $libc_SIZEOF_UINT64
+    mmux_uint64_is_string $libc_SIZEOF_UINT64
 }
 
 function types-maximum-uint64-2.1 () {
@@ -559,7 +559,7 @@ function types-maximum-uint64-2.1 () {
     test -v libc_MAX_UINT64
 }
 function types-minimum-uint64-2.2 () {
-    libc_uint64_p $libc_MAX_UINT64
+    mmux_uint64_is_string $libc_MAX_UINT64
 }
 
 function types-maximum-uint64-3.1 () {
@@ -568,7 +568,7 @@ function types-maximum-uint64-3.1 () {
     test -v libc_MIN_UINT64
 }
 function types-minimum-uint64-3.2 () {
-    libc_uint64_p $libc_MIN_UINT64
+    mmux_uint64_is_string $libc_MIN_UINT64
 }
 
 
@@ -580,7 +580,7 @@ function types-sizeof-float-1.1 () {
     test -v libc_SIZEOF_FLOAT
 }
 function types-sizeof-float-1.2 () {
-    libc_float_p $libc_SIZEOF_FLOAT
+    mmux_float_is_string $libc_SIZEOF_FLOAT
 }
 
 function types-maximum-float-2.1 () {
@@ -589,7 +589,7 @@ function types-maximum-float-2.1 () {
     test -v libc_MAX_FLOAT
 }
 function types-minimum-float-2.2 () {
-    libc_float_p $libc_MAX_FLOAT
+    mmux_float_is_string $libc_MAX_FLOAT
 }
 
 function types-maximum-float-3.1 () {
@@ -598,7 +598,7 @@ function types-maximum-float-3.1 () {
     test -v libc_MIN_FLOAT
 }
 function types-minimum-float-3.2 () {
-    libc_float_p $libc_MIN_FLOAT
+    mmux_float_is_string $libc_MIN_FLOAT
 }
 
 
@@ -610,7 +610,7 @@ function types-sizeof-double-1.1 () {
     test -v libc_SIZEOF_DOUBLE
 }
 function types-sizeof-double-1.2 () {
-    libc_double_p $libc_SIZEOF_DOUBLE
+    mmux_double_is_string $libc_SIZEOF_DOUBLE
 }
 
 function types-maximum-double-2.1 () {
@@ -619,7 +619,7 @@ function types-maximum-double-2.1 () {
     test -v libc_MAX_DOUBLE
 }
 function types-minimum-double-2.2 () {
-    libc_double_p $libc_MAX_DOUBLE
+    mmux_double_is_string $libc_MAX_DOUBLE
 }
 
 function types-maximum-double-3.1 () {
@@ -628,7 +628,7 @@ function types-maximum-double-3.1 () {
     test -v libc_MIN_DOUBLE
 }
 function types-minimum-double-3.2 () {
-    libc_double_p $libc_MIN_DOUBLE
+    mmux_double_is_string $libc_MIN_DOUBLE
 }
 
 
@@ -640,7 +640,7 @@ function types-sizeof-ldouble-1.1 () {
     test -v libc_SIZEOF_LDOUBLE
 }
 function types-sizeof-ldouble-1.2 () {
-    libc_ldouble_p $libc_SIZEOF_LDOUBLE
+    mmux_ldouble_is_string $libc_SIZEOF_LDOUBLE
 }
 
 function types-maximum-ldouble-2.1 () {
@@ -649,7 +649,7 @@ function types-maximum-ldouble-2.1 () {
     test -v libc_MAX_LDOUBLE
 }
 function types-minimum-ldouble-2.2 () {
-    libc_ldouble_p $libc_MAX_LDOUBLE
+    mmux_ldouble_is_string $libc_MAX_LDOUBLE
 }
 
 function types-maximum-ldouble-3.1 () {
@@ -658,7 +658,7 @@ function types-maximum-ldouble-3.1 () {
     test -v libc_MIN_LDOUBLE
 }
 function types-minimum-ldouble-3.2 () {
-    libc_ldouble_p $libc_MIN_LDOUBLE
+    mmux_ldouble_is_string $libc_MIN_LDOUBLE
 }
 
 
@@ -670,7 +670,7 @@ function types-sizeof-ssize-1.1 () {
     test -v libc_SIZEOF_SSIZE
 }
 function types-sizeof-ssize-1.2 () {
-    libc_ssize_p $libc_SIZEOF_SSIZE
+    mmux_ssize_is_string $libc_SIZEOF_SSIZE
 }
 
 function types-maximum-ssize-2.1 () {
@@ -679,7 +679,7 @@ function types-maximum-ssize-2.1 () {
     test -v libc_MAX_SSIZE
 }
 function types-minimum-ssize-2.2 () {
-    libc_ssize_p $libc_MAX_SSIZE
+    mmux_ssize_is_string $libc_MAX_SSIZE
 }
 
 function types-maximum-ssize-3.1 () {
@@ -688,7 +688,7 @@ function types-maximum-ssize-3.1 () {
     test -v libc_MIN_SSIZE
 }
 function types-minimum-ssize-3.2 () {
-    libc_ssize_p $libc_MIN_SSIZE
+    mmux_ssize_is_string $libc_MIN_SSIZE
 }
 
 
@@ -700,7 +700,7 @@ function types-sizeof-usize-1.1 () {
     test -v libc_SIZEOF_USIZE
 }
 function types-sizeof-usize-1.2 () {
-    libc_usize_p $libc_SIZEOF_USIZE
+    mmux_usize_is_string $libc_SIZEOF_USIZE
 }
 
 function types-maximum-usize-2.1 () {
@@ -709,7 +709,7 @@ function types-maximum-usize-2.1 () {
     test -v libc_MAX_USIZE
 }
 function types-minimum-usize-2.2 () {
-    libc_usize_p $libc_MAX_USIZE
+    mmux_usize_is_string $libc_MAX_USIZE
 }
 
 function types-maximum-usize-3.1 () {
@@ -718,7 +718,7 @@ function types-maximum-usize-3.1 () {
     test -v libc_MIN_USIZE
 }
 function types-minimum-usize-3.2 () {
-    libc_usize_p $libc_MIN_USIZE
+    mmux_usize_is_string $libc_MIN_USIZE
 }
 
 
@@ -730,7 +730,7 @@ function types-sizeof-sintmax-1.1 () {
     test -v libc_SIZEOF_SINTMAX
 }
 function types-sizeof-sintmax-1.2 () {
-    libc_sintmax_p $libc_SIZEOF_SINTMAX
+    mmux_sintmax_is_string $libc_SIZEOF_SINTMAX
 }
 
 function types-maximum-sintmax-2.1 () {
@@ -739,7 +739,7 @@ function types-maximum-sintmax-2.1 () {
     test -v libc_MAX_SINTMAX
 }
 function types-minimum-sintmax-2.2 () {
-    libc_sintmax_p $libc_MAX_SINTMAX
+    mmux_sintmax_is_string $libc_MAX_SINTMAX
 }
 
 function types-maximum-sintmax-3.1 () {
@@ -748,7 +748,7 @@ function types-maximum-sintmax-3.1 () {
     test -v libc_MIN_SINTMAX
 }
 function types-minimum-sintmax-3.2 () {
-    libc_sintmax_p $libc_MIN_SINTMAX
+    mmux_sintmax_is_string $libc_MIN_SINTMAX
 }
 
 
@@ -760,7 +760,7 @@ function types-sizeof-uintmax-1.1 () {
     test -v libc_SIZEOF_UINTMAX
 }
 function types-sizeof-uintmax-1.2 () {
-    libc_uintmax_p $libc_SIZEOF_UINTMAX
+    mmux_uintmax_is_string $libc_SIZEOF_UINTMAX
 }
 
 function types-maximum-uintmax-2.1 () {
@@ -769,7 +769,7 @@ function types-maximum-uintmax-2.1 () {
     test -v libc_MAX_UINTMAX
 }
 function types-minimum-uintmax-2.2 () {
-    libc_uintmax_p $libc_MAX_UINTMAX
+    mmux_uintmax_is_string $libc_MAX_UINTMAX
 }
 
 function types-maximum-uintmax-3.1 () {
@@ -778,7 +778,7 @@ function types-maximum-uintmax-3.1 () {
     test -v libc_MIN_UINTMAX
 }
 function types-minimum-uintmax-3.2 () {
-    libc_uintmax_p $libc_MIN_UINTMAX
+    mmux_uintmax_is_string $libc_MIN_UINTMAX
 }
 
 
@@ -790,7 +790,7 @@ function types-sizeof-sintptr-1.1 () {
     test -v libc_SIZEOF_SINTPTR
 }
 function types-sizeof-sintptr-1.2 () {
-    libc_sintptr_p $libc_SIZEOF_SINTPTR
+    mmux_sintptr_is_string $libc_SIZEOF_SINTPTR
 }
 
 function types-maximum-sintptr-2.1 () {
@@ -799,7 +799,7 @@ function types-maximum-sintptr-2.1 () {
     test -v libc_MAX_SINTPTR
 }
 function types-minimum-sintptr-2.2 () {
-    libc_sintptr_p $libc_MAX_SINTPTR
+    mmux_sintptr_is_string $libc_MAX_SINTPTR
 }
 
 function types-maximum-sintptr-3.1 () {
@@ -808,7 +808,7 @@ function types-maximum-sintptr-3.1 () {
     test -v libc_MIN_SINTPTR
 }
 function types-minimum-sintptr-3.2 () {
-    libc_sintptr_p $libc_MIN_SINTPTR
+    mmux_sintptr_is_string $libc_MIN_SINTPTR
 }
 
 
@@ -820,7 +820,7 @@ function types-sizeof-uintptr-1.1 () {
     test -v libc_SIZEOF_UINTPTR
 }
 function types-sizeof-uintptr-1.2 () {
-    libc_uintptr_p $libc_SIZEOF_UINTPTR
+    mmux_uintptr_is_string $libc_SIZEOF_UINTPTR
 }
 
 function types-maximum-uintptr-2.1 () {
@@ -829,7 +829,7 @@ function types-maximum-uintptr-2.1 () {
     test -v libc_MAX_UINTPTR
 }
 function types-minimum-uintptr-2.2 () {
-    libc_uintptr_p $libc_MAX_UINTPTR
+    mmux_uintptr_is_string $libc_MAX_UINTPTR
 }
 
 function types-maximum-uintptr-3.1 () {
@@ -838,7 +838,7 @@ function types-maximum-uintptr-3.1 () {
     test -v libc_MIN_UINTPTR
 }
 function types-minimum-uintptr-3.2 () {
-    libc_uintptr_p $libc_MIN_UINTPTR
+    mmux_uintptr_is_string $libc_MIN_UINTPTR
 }
 
 
@@ -850,7 +850,7 @@ function types-sizeof-ptrdiff-1.1 () {
     test -v libc_SIZEOF_PTRDIFF
 }
 function types-sizeof-ptrdiff-1.2 () {
-    libc_ptrdiff_p $libc_SIZEOF_PTRDIFF
+    mmux_ptrdiff_is_string $libc_SIZEOF_PTRDIFF
 }
 
 function types-maximum-ptrdiff-2.1 () {
@@ -859,7 +859,7 @@ function types-maximum-ptrdiff-2.1 () {
     test -v libc_MAX_PTRDIFF
 }
 function types-minimum-ptrdiff-2.2 () {
-    libc_ptrdiff_p $libc_MAX_PTRDIFF
+    mmux_ptrdiff_is_string $libc_MAX_PTRDIFF
 }
 
 function types-maximum-ptrdiff-3.1 () {
@@ -868,7 +868,7 @@ function types-maximum-ptrdiff-3.1 () {
     test -v libc_MIN_PTRDIFF
 }
 function types-minimum-ptrdiff-3.2 () {
-    libc_ptrdiff_p $libc_MIN_PTRDIFF
+    mmux_ptrdiff_is_string $libc_MIN_PTRDIFF
 }
 
 
@@ -880,7 +880,7 @@ function types-sizeof-mode-1.1 () {
     test -v libc_SIZEOF_MODE
 }
 function types-sizeof-mode-1.2 () {
-    libc_mode_p $libc_SIZEOF_MODE
+    mmux_mode_is_string $libc_SIZEOF_MODE
 }
 
 function types-maximum-mode-2.1 () {
@@ -889,7 +889,7 @@ function types-maximum-mode-2.1 () {
     test -v libc_MAX_MODE
 }
 function types-minimum-mode-2.2 () {
-    libc_mode_p $libc_MAX_MODE
+    mmux_mode_is_string $libc_MAX_MODE
 }
 
 function types-maximum-mode-3.1 () {
@@ -898,7 +898,7 @@ function types-maximum-mode-3.1 () {
     test -v libc_MIN_MODE
 }
 function types-minimum-mode-3.2 () {
-    libc_mode_p $libc_MIN_MODE
+    mmux_mode_is_string $libc_MIN_MODE
 }
 
 
@@ -910,7 +910,7 @@ function types-sizeof-off-1.1 () {
     test -v libc_SIZEOF_OFF
 }
 function types-sizeof-off-1.2 () {
-    libc_off_p $libc_SIZEOF_OFF
+    mmux_off_is_string $libc_SIZEOF_OFF
 }
 
 function types-maximum-off-2.1 () {
@@ -919,7 +919,7 @@ function types-maximum-off-2.1 () {
     test -v libc_MAX_OFF
 }
 function types-minimum-off-2.2 () {
-    libc_off_p $libc_MAX_OFF
+    mmux_off_is_string $libc_MAX_OFF
 }
 
 function types-maximum-off-3.1 () {
@@ -928,7 +928,7 @@ function types-maximum-off-3.1 () {
     test -v libc_MIN_OFF
 }
 function types-minimum-off-3.2 () {
-    libc_off_p $libc_MIN_OFF
+    mmux_off_is_string $libc_MIN_OFF
 }
 
 
@@ -940,7 +940,7 @@ function types-sizeof-pid-1.1 () {
     test -v libc_SIZEOF_PID
 }
 function types-sizeof-pid-1.2 () {
-    libc_pid_p $libc_SIZEOF_PID
+    mmux_pid_is_string $libc_SIZEOF_PID
 }
 
 function types-maximum-pid-2.1 () {
@@ -949,7 +949,7 @@ function types-maximum-pid-2.1 () {
     test -v libc_MAX_PID
 }
 function types-minimum-pid-2.2 () {
-    libc_pid_p $libc_MAX_PID
+    mmux_pid_is_string $libc_MAX_PID
 }
 
 function types-maximum-pid-3.1 () {
@@ -958,7 +958,7 @@ function types-maximum-pid-3.1 () {
     test -v libc_MIN_PID
 }
 function types-minimum-pid-3.2 () {
-    libc_pid_p $libc_MIN_PID
+    mmux_pid_is_string $libc_MIN_PID
 }
 
 
@@ -970,7 +970,7 @@ function types-sizeof-uid-1.1 () {
     test -v libc_SIZEOF_UID
 }
 function types-sizeof-uid-1.2 () {
-    libc_uid_p $libc_SIZEOF_UID
+    mmux_uid_is_string $libc_SIZEOF_UID
 }
 
 function types-maximum-uid-2.1 () {
@@ -979,7 +979,7 @@ function types-maximum-uid-2.1 () {
     test -v libc_MAX_UID
 }
 function types-minimum-uid-2.2 () {
-    libc_uid_p $libc_MAX_UID
+    mmux_uid_is_string $libc_MAX_UID
 }
 
 function types-maximum-uid-3.1 () {
@@ -988,7 +988,7 @@ function types-maximum-uid-3.1 () {
     test -v libc_MIN_UID
 }
 function types-minimum-uid-3.2 () {
-    libc_uid_p $libc_MIN_UID
+    mmux_uid_is_string $libc_MIN_UID
 }
 
 
@@ -1000,7 +1000,7 @@ function types-sizeof-gid-1.1 () {
     test -v libc_SIZEOF_GID
 }
 function types-sizeof-gid-1.2 () {
-    libc_gid_p $libc_SIZEOF_GID
+    mmux_gid_is_string $libc_SIZEOF_GID
 }
 
 function types-maximum-gid-2.1 () {
@@ -1009,7 +1009,7 @@ function types-maximum-gid-2.1 () {
     test -v libc_MAX_GID
 }
 function types-minimum-gid-2.2 () {
-    libc_gid_p $libc_MAX_GID
+    mmux_gid_is_string $libc_MAX_GID
 }
 
 function types-maximum-gid-3.1 () {
@@ -1018,7 +1018,7 @@ function types-maximum-gid-3.1 () {
     test -v libc_MIN_GID
 }
 function types-minimum-gid-3.2 () {
-    libc_gid_p $libc_MIN_GID
+    mmux_gid_is_string $libc_MIN_GID
 }
 
 
@@ -1030,7 +1030,7 @@ function types-sizeof-wchar-1.1 () {
     test -v libc_SIZEOF_WCHAR
 }
 function types-sizeof-wchar-1.2 () {
-    libc_wchar_p $libc_SIZEOF_WCHAR
+    mmux_wchar_is_string $libc_SIZEOF_WCHAR
 }
 
 function types-maximum-wchar-2.1 () {
@@ -1039,7 +1039,7 @@ function types-maximum-wchar-2.1 () {
     test -v libc_MAX_WCHAR
 }
 function types-minimum-wchar-2.2 () {
-    libc_wchar_p $libc_MAX_WCHAR
+    mmux_wchar_is_string $libc_MAX_WCHAR
 }
 
 function types-maximum-wchar-3.1 () {
@@ -1048,7 +1048,7 @@ function types-maximum-wchar-3.1 () {
     test -v libc_MIN_WCHAR
 }
 function types-minimum-wchar-3.2 () {
-    libc_wchar_p $libc_MIN_WCHAR
+    mmux_wchar_is_string $libc_MIN_WCHAR
 }
 
 
@@ -1060,7 +1060,7 @@ function types-sizeof-wint-1.1 () {
     test -v libc_SIZEOF_WINT
 }
 function types-sizeof-wint-1.2 () {
-    libc_wint_p $libc_SIZEOF_WINT
+    mmux_wint_is_string $libc_SIZEOF_WINT
 }
 
 function types-maximum-wint-2.1 () {
@@ -1069,7 +1069,7 @@ function types-maximum-wint-2.1 () {
     test -v libc_MAX_WINT
 }
 function types-minimum-wint-2.2 () {
-    libc_wint_p $libc_MAX_WINT
+    mmux_wint_is_string $libc_MAX_WINT
 }
 
 function types-maximum-wint-3.1 () {
@@ -1078,7 +1078,7 @@ function types-maximum-wint-3.1 () {
     test -v libc_MIN_WINT
 }
 function types-minimum-wint-3.2 () {
-    libc_wint_p $libc_MIN_WINT
+    mmux_wint_is_string $libc_MIN_WINT
 }
 
 

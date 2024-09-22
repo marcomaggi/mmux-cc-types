@@ -1046,53 +1046,453 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @chapter Type predicates
 
 
-@macro MmuxDefineTypePredicateBuiltin{STEM}
-@deffn Builtin libc_\STEM\_p @var{STRING_REP}
+@menu
+* predicates stringrep::        String representation predicates.
+* predicates zero::             Zero number predicates.
+* predicates positive::         Positive number predicates.
+* predicates negative::         Negative number predicates.
+* predicates non-positive::     Non-positive number predicates.
+* predicates non-negative::     Non-negative number predicates.
+* predicates nan::              Not-a-number predicates.
+* predicates infinite::         Infinite number predicates.
+@end menu
+
+@c page
+@node predicates stringrep
+@section String representation predicates
+
+
+@macro MmuxDefineTypePredicateStringrepBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_string @var{STRING_REP}
 Return true if @var{STRING_REP} is a valid string representation for the C language type; otherwise
 return false.
 @end deffn
 
 @end macro
 
-@MmuxDefineTypePredicateBuiltin{pointer}
+@MmuxDefineTypePredicateStringrepBuiltin{pointer}
 
-@MmuxDefineTypePredicateBuiltin{schar}
-@MmuxDefineTypePredicateBuiltin{uchar}
-@MmuxDefineTypePredicateBuiltin{sshort}
-@MmuxDefineTypePredicateBuiltin{ushort}
-@MmuxDefineTypePredicateBuiltin{sint}
-@MmuxDefineTypePredicateBuiltin{uint}
-@MmuxDefineTypePredicateBuiltin{slong}
-@MmuxDefineTypePredicateBuiltin{ulong}
-@MmuxDefineTypePredicateBuiltin{sllong}
-@MmuxDefineTypePredicateBuiltin{ullong}
-@MmuxDefineTypePredicateBuiltin{float}
-@MmuxDefineTypePredicateBuiltin{double}
-@MmuxDefineTypePredicateBuiltin{ldouble}
-@MmuxDefineTypePredicateBuiltin{complex}
+@MmuxDefineTypePredicateStringrepBuiltin{schar}
+@MmuxDefineTypePredicateStringrepBuiltin{uchar}
+@MmuxDefineTypePredicateStringrepBuiltin{sshort}
+@MmuxDefineTypePredicateStringrepBuiltin{ushort}
+@MmuxDefineTypePredicateStringrepBuiltin{sint}
+@MmuxDefineTypePredicateStringrepBuiltin{uint}
+@MmuxDefineTypePredicateStringrepBuiltin{slong}
+@MmuxDefineTypePredicateStringrepBuiltin{ulong}
+@MmuxDefineTypePredicateStringrepBuiltin{sllong}
+@MmuxDefineTypePredicateStringrepBuiltin{ullong}
+@MmuxDefineTypePredicateStringrepBuiltin{float}
+@MmuxDefineTypePredicateStringrepBuiltin{double}
+@MmuxDefineTypePredicateStringrepBuiltin{ldouble}
+@MmuxDefineTypePredicateStringrepBuiltin{complex}
 
-@MmuxDefineTypePredicateBuiltin{sint8}
-@MmuxDefineTypePredicateBuiltin{uint8}
-@MmuxDefineTypePredicateBuiltin{sint16}
-@MmuxDefineTypePredicateBuiltin{uint16}
-@MmuxDefineTypePredicateBuiltin{sint32}
-@MmuxDefineTypePredicateBuiltin{uint32}
-@MmuxDefineTypePredicateBuiltin{sint64}
-@MmuxDefineTypePredicateBuiltin{uint64}
+@MmuxDefineTypePredicateStringrepBuiltin{sint8}
+@MmuxDefineTypePredicateStringrepBuiltin{uint8}
+@MmuxDefineTypePredicateStringrepBuiltin{sint16}
+@MmuxDefineTypePredicateStringrepBuiltin{uint16}
+@MmuxDefineTypePredicateStringrepBuiltin{sint32}
+@MmuxDefineTypePredicateStringrepBuiltin{uint32}
+@MmuxDefineTypePredicateStringrepBuiltin{sint64}
+@MmuxDefineTypePredicateStringrepBuiltin{uint64}
 
-@MmuxDefineTypePredicateBuiltin{ssize}
-@MmuxDefineTypePredicateBuiltin{usize}
-@MmuxDefineTypePredicateBuiltin{sintmax}
-@MmuxDefineTypePredicateBuiltin{uintmax}
-@MmuxDefineTypePredicateBuiltin{sintptr}
-@MmuxDefineTypePredicateBuiltin{uintptr}
-@MmuxDefineTypePredicateBuiltin{mode}
-@MmuxDefineTypePredicateBuiltin{off}
-@MmuxDefineTypePredicateBuiltin{pid}
-@MmuxDefineTypePredicateBuiltin{uid}
-@MmuxDefineTypePredicateBuiltin{gid}
-@MmuxDefineTypePredicateBuiltin{wchar}
-@MmuxDefineTypePredicateBuiltin{wint}
+@MmuxDefineTypePredicateStringrepBuiltin{ssize}
+@MmuxDefineTypePredicateStringrepBuiltin{usize}
+@MmuxDefineTypePredicateStringrepBuiltin{sintmax}
+@MmuxDefineTypePredicateStringrepBuiltin{uintmax}
+@MmuxDefineTypePredicateStringrepBuiltin{sintptr}
+@MmuxDefineTypePredicateStringrepBuiltin{uintptr}
+@MmuxDefineTypePredicateStringrepBuiltin{mode}
+@MmuxDefineTypePredicateStringrepBuiltin{off}
+@MmuxDefineTypePredicateStringrepBuiltin{pid}
+@MmuxDefineTypePredicateStringrepBuiltin{uid}
+@MmuxDefineTypePredicateStringrepBuiltin{gid}
+@MmuxDefineTypePredicateStringrepBuiltin{wchar}
+@MmuxDefineTypePredicateStringrepBuiltin{wint}
+
+@c page
+@node predicates zero
+@section Zero number predicates
+
+
+@macro MmuxDefineTypePredicateZeroBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_zero @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents a
+zero number; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateZeroBuiltin{pointer}
+
+@MmuxDefineTypePredicateZeroBuiltin{schar}
+@MmuxDefineTypePredicateZeroBuiltin{uchar}
+@MmuxDefineTypePredicateZeroBuiltin{sshort}
+@MmuxDefineTypePredicateZeroBuiltin{ushort}
+@MmuxDefineTypePredicateZeroBuiltin{sint}
+@MmuxDefineTypePredicateZeroBuiltin{uint}
+@MmuxDefineTypePredicateZeroBuiltin{slong}
+@MmuxDefineTypePredicateZeroBuiltin{ulong}
+@MmuxDefineTypePredicateZeroBuiltin{sllong}
+@MmuxDefineTypePredicateZeroBuiltin{ullong}
+@MmuxDefineTypePredicateZeroBuiltin{float}
+@MmuxDefineTypePredicateZeroBuiltin{double}
+@MmuxDefineTypePredicateZeroBuiltin{ldouble}
+@MmuxDefineTypePredicateZeroBuiltin{complex}
+
+@MmuxDefineTypePredicateZeroBuiltin{sint8}
+@MmuxDefineTypePredicateZeroBuiltin{uint8}
+@MmuxDefineTypePredicateZeroBuiltin{sint16}
+@MmuxDefineTypePredicateZeroBuiltin{uint16}
+@MmuxDefineTypePredicateZeroBuiltin{sint32}
+@MmuxDefineTypePredicateZeroBuiltin{uint32}
+@MmuxDefineTypePredicateZeroBuiltin{sint64}
+@MmuxDefineTypePredicateZeroBuiltin{uint64}
+
+@MmuxDefineTypePredicateZeroBuiltin{ssize}
+@MmuxDefineTypePredicateZeroBuiltin{usize}
+@MmuxDefineTypePredicateZeroBuiltin{sintmax}
+@MmuxDefineTypePredicateZeroBuiltin{uintmax}
+@MmuxDefineTypePredicateZeroBuiltin{sintptr}
+@MmuxDefineTypePredicateZeroBuiltin{uintptr}
+@MmuxDefineTypePredicateZeroBuiltin{mode}
+@MmuxDefineTypePredicateZeroBuiltin{off}
+@MmuxDefineTypePredicateZeroBuiltin{pid}
+@MmuxDefineTypePredicateZeroBuiltin{uid}
+@MmuxDefineTypePredicateZeroBuiltin{gid}
+@MmuxDefineTypePredicateZeroBuiltin{wchar}
+@MmuxDefineTypePredicateZeroBuiltin{wint}
+
+@c page
+@node predicates positive
+@section Positive number predicates
+
+
+@macro MmuxDefineTypePredicatePositiveBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_positive @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents a
+positive number; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicatePositiveBuiltin{pointer}
+
+@MmuxDefineTypePredicatePositiveBuiltin{schar}
+@MmuxDefineTypePredicatePositiveBuiltin{uchar}
+@MmuxDefineTypePredicatePositiveBuiltin{sshort}
+@MmuxDefineTypePredicatePositiveBuiltin{ushort}
+@MmuxDefineTypePredicatePositiveBuiltin{sint}
+@MmuxDefineTypePredicatePositiveBuiltin{uint}
+@MmuxDefineTypePredicatePositiveBuiltin{slong}
+@MmuxDefineTypePredicatePositiveBuiltin{ulong}
+@MmuxDefineTypePredicatePositiveBuiltin{sllong}
+@MmuxDefineTypePredicatePositiveBuiltin{ullong}
+@MmuxDefineTypePredicatePositiveBuiltin{float}
+@MmuxDefineTypePredicatePositiveBuiltin{double}
+@MmuxDefineTypePredicatePositiveBuiltin{ldouble}
+@MmuxDefineTypePredicatePositiveBuiltin{complex}
+
+@deffn Builtin mmux_complex_is_positive @var{OP}
+Always return false.
+@end deffn
+
+@MmuxDefineTypePredicatePositiveBuiltin{sint8}
+@MmuxDefineTypePredicatePositiveBuiltin{uint8}
+@MmuxDefineTypePredicatePositiveBuiltin{sint16}
+@MmuxDefineTypePredicatePositiveBuiltin{uint16}
+@MmuxDefineTypePredicatePositiveBuiltin{sint32}
+@MmuxDefineTypePredicatePositiveBuiltin{uint32}
+@MmuxDefineTypePredicatePositiveBuiltin{sint64}
+@MmuxDefineTypePredicatePositiveBuiltin{uint64}
+
+@MmuxDefineTypePredicatePositiveBuiltin{ssize}
+@MmuxDefineTypePredicatePositiveBuiltin{usize}
+@MmuxDefineTypePredicatePositiveBuiltin{sintmax}
+@MmuxDefineTypePredicatePositiveBuiltin{uintmax}
+@MmuxDefineTypePredicatePositiveBuiltin{sintptr}
+@MmuxDefineTypePredicatePositiveBuiltin{uintptr}
+@MmuxDefineTypePredicatePositiveBuiltin{mode}
+@MmuxDefineTypePredicatePositiveBuiltin{off}
+@MmuxDefineTypePredicatePositiveBuiltin{pid}
+@MmuxDefineTypePredicatePositiveBuiltin{uid}
+@MmuxDefineTypePredicatePositiveBuiltin{gid}
+@MmuxDefineTypePredicatePositiveBuiltin{wchar}
+@MmuxDefineTypePredicatePositiveBuiltin{wint}
+
+@c page
+@node predicates negative
+@section Negative number predicates
+
+
+@macro MmuxDefineTypePredicateNegativeBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_negative @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents a
+negative number; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateNegativeBuiltin{pointer}
+
+@MmuxDefineTypePredicateNegativeBuiltin{schar}
+@MmuxDefineTypePredicateNegativeBuiltin{uchar}
+@MmuxDefineTypePredicateNegativeBuiltin{sshort}
+@MmuxDefineTypePredicateNegativeBuiltin{ushort}
+@MmuxDefineTypePredicateNegativeBuiltin{sint}
+@MmuxDefineTypePredicateNegativeBuiltin{uint}
+@MmuxDefineTypePredicateNegativeBuiltin{slong}
+@MmuxDefineTypePredicateNegativeBuiltin{ulong}
+@MmuxDefineTypePredicateNegativeBuiltin{sllong}
+@MmuxDefineTypePredicateNegativeBuiltin{ullong}
+@MmuxDefineTypePredicateNegativeBuiltin{float}
+@MmuxDefineTypePredicateNegativeBuiltin{double}
+@MmuxDefineTypePredicateNegativeBuiltin{ldouble}
+
+@deffn Builtin mmux_complex_is_negative @var{OP}
+Always return false.
+@end deffn
+
+@MmuxDefineTypePredicateNegativeBuiltin{sint8}
+@MmuxDefineTypePredicateNegativeBuiltin{uint8}
+@MmuxDefineTypePredicateNegativeBuiltin{sint16}
+@MmuxDefineTypePredicateNegativeBuiltin{uint16}
+@MmuxDefineTypePredicateNegativeBuiltin{sint32}
+@MmuxDefineTypePredicateNegativeBuiltin{uint32}
+@MmuxDefineTypePredicateNegativeBuiltin{sint64}
+@MmuxDefineTypePredicateNegativeBuiltin{uint64}
+
+@MmuxDefineTypePredicateNegativeBuiltin{ssize}
+@MmuxDefineTypePredicateNegativeBuiltin{usize}
+@MmuxDefineTypePredicateNegativeBuiltin{sintmax}
+@MmuxDefineTypePredicateNegativeBuiltin{uintmax}
+@MmuxDefineTypePredicateNegativeBuiltin{sintptr}
+@MmuxDefineTypePredicateNegativeBuiltin{uintptr}
+@MmuxDefineTypePredicateNegativeBuiltin{mode}
+@MmuxDefineTypePredicateNegativeBuiltin{off}
+@MmuxDefineTypePredicateNegativeBuiltin{pid}
+@MmuxDefineTypePredicateNegativeBuiltin{uid}
+@MmuxDefineTypePredicateNegativeBuiltin{gid}
+@MmuxDefineTypePredicateNegativeBuiltin{wchar}
+@MmuxDefineTypePredicateNegativeBuiltin{wint}
+
+@c page
+@node predicates non-positive
+@section Non--positive number predicates
+
+
+@macro MmuxDefineTypePredicateNonPositiveBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_non_positive @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents a
+non--positive number; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateNonPositiveBuiltin{pointer}
+
+@MmuxDefineTypePredicateNonPositiveBuiltin{schar}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uchar}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sshort}
+@MmuxDefineTypePredicateNonPositiveBuiltin{ushort}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sint}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uint}
+@MmuxDefineTypePredicateNonPositiveBuiltin{slong}
+@MmuxDefineTypePredicateNonPositiveBuiltin{ulong}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sllong}
+@MmuxDefineTypePredicateNonPositiveBuiltin{ullong}
+@MmuxDefineTypePredicateNonPositiveBuiltin{float}
+@MmuxDefineTypePredicateNonPositiveBuiltin{double}
+@MmuxDefineTypePredicateNonPositiveBuiltin{ldouble}
+
+@deffn Builtin mmux_complex_is_non_positive @var{OP}
+Always return false.
+@end deffn
+
+@MmuxDefineTypePredicateNonPositiveBuiltin{sint8}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uint8}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sint16}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uint16}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sint32}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uint32}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sint64}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uint64}
+
+@MmuxDefineTypePredicateNonPositiveBuiltin{ssize}
+@MmuxDefineTypePredicateNonPositiveBuiltin{usize}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sintmax}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uintmax}
+@MmuxDefineTypePredicateNonPositiveBuiltin{sintptr}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uintptr}
+@MmuxDefineTypePredicateNonPositiveBuiltin{mode}
+@MmuxDefineTypePredicateNonPositiveBuiltin{off}
+@MmuxDefineTypePredicateNonPositiveBuiltin{pid}
+@MmuxDefineTypePredicateNonPositiveBuiltin{uid}
+@MmuxDefineTypePredicateNonPositiveBuiltin{gid}
+@MmuxDefineTypePredicateNonPositiveBuiltin{wchar}
+@MmuxDefineTypePredicateNonPositiveBuiltin{wint}
+
+@c page
+@node predicates non-negative
+@section Non--negative number predicates
+
+
+@macro MmuxDefineTypePredicateNonNegativeBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_non_negative @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents a
+non--negative number; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateNonNegativeBuiltin{pointer}
+
+@MmuxDefineTypePredicateNonNegativeBuiltin{schar}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uchar}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sshort}
+@MmuxDefineTypePredicateNonNegativeBuiltin{ushort}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sint}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uint}
+@MmuxDefineTypePredicateNonNegativeBuiltin{slong}
+@MmuxDefineTypePredicateNonNegativeBuiltin{ulong}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sllong}
+@MmuxDefineTypePredicateNonNegativeBuiltin{ullong}
+@MmuxDefineTypePredicateNonNegativeBuiltin{float}
+@MmuxDefineTypePredicateNonNegativeBuiltin{double}
+@MmuxDefineTypePredicateNonNegativeBuiltin{ldouble}
+
+@deffn Builtin mmux_complex_is_non_negative @var{OP}
+Always return false.
+@end deffn
+
+@MmuxDefineTypePredicateNonNegativeBuiltin{sint8}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uint8}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sint16}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uint16}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sint32}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uint32}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sint64}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uint64}
+
+@MmuxDefineTypePredicateNonNegativeBuiltin{ssize}
+@MmuxDefineTypePredicateNonNegativeBuiltin{usize}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sintmax}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uintmax}
+@MmuxDefineTypePredicateNonNegativeBuiltin{sintptr}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uintptr}
+@MmuxDefineTypePredicateNonNegativeBuiltin{mode}
+@MmuxDefineTypePredicateNonNegativeBuiltin{off}
+@MmuxDefineTypePredicateNonNegativeBuiltin{pid}
+@MmuxDefineTypePredicateNonNegativeBuiltin{uid}
+@MmuxDefineTypePredicateNonNegativeBuiltin{gid}
+@MmuxDefineTypePredicateNonNegativeBuiltin{wchar}
+@MmuxDefineTypePredicateNonNegativeBuiltin{wint}
+
+@c page
+@node predicates nan
+@section Not--a--number predicates
+
+
+@macro MmuxDefineTypePredicateNanBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_nan @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents a
+not--a--number value; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateNanBuiltin{pointer}
+
+@MmuxDefineTypePredicateNanBuiltin{schar}
+@MmuxDefineTypePredicateNanBuiltin{uchar}
+@MmuxDefineTypePredicateNanBuiltin{sshort}
+@MmuxDefineTypePredicateNanBuiltin{ushort}
+@MmuxDefineTypePredicateNanBuiltin{sint}
+@MmuxDefineTypePredicateNanBuiltin{uint}
+@MmuxDefineTypePredicateNanBuiltin{slong}
+@MmuxDefineTypePredicateNanBuiltin{ulong}
+@MmuxDefineTypePredicateNanBuiltin{sllong}
+@MmuxDefineTypePredicateNanBuiltin{ullong}
+@MmuxDefineTypePredicateNanBuiltin{float}
+@MmuxDefineTypePredicateNanBuiltin{double}
+@MmuxDefineTypePredicateNanBuiltin{ldouble}
+@MmuxDefineTypePredicateNanBuiltin{complex}
+
+@MmuxDefineTypePredicateNanBuiltin{sint8}
+@MmuxDefineTypePredicateNanBuiltin{uint8}
+@MmuxDefineTypePredicateNanBuiltin{sint16}
+@MmuxDefineTypePredicateNanBuiltin{uint16}
+@MmuxDefineTypePredicateNanBuiltin{sint32}
+@MmuxDefineTypePredicateNanBuiltin{uint32}
+@MmuxDefineTypePredicateNanBuiltin{sint64}
+@MmuxDefineTypePredicateNanBuiltin{uint64}
+
+@MmuxDefineTypePredicateNanBuiltin{ssize}
+@MmuxDefineTypePredicateNanBuiltin{usize}
+@MmuxDefineTypePredicateNanBuiltin{sintmax}
+@MmuxDefineTypePredicateNanBuiltin{uintmax}
+@MmuxDefineTypePredicateNanBuiltin{sintptr}
+@MmuxDefineTypePredicateNanBuiltin{uintptr}
+@MmuxDefineTypePredicateNanBuiltin{mode}
+@MmuxDefineTypePredicateNanBuiltin{off}
+@MmuxDefineTypePredicateNanBuiltin{pid}
+@MmuxDefineTypePredicateNanBuiltin{uid}
+@MmuxDefineTypePredicateNanBuiltin{gid}
+@MmuxDefineTypePredicateNanBuiltin{wchar}
+@MmuxDefineTypePredicateNanBuiltin{wint}
+
+@c page
+@node predicates infinite
+@section Infinite number predicates
+
+
+@macro MmuxDefineTypePredicateInfiniteBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_is_infinite @var{OP}
+Return true if @var{OP} is a valid string representation for the C language type and it represents
+an infinite number; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypePredicateInfiniteBuiltin{pointer}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{schar}
+@MmuxDefineTypePredicateInfiniteBuiltin{uchar}
+@MmuxDefineTypePredicateInfiniteBuiltin{sshort}
+@MmuxDefineTypePredicateInfiniteBuiltin{ushort}
+@MmuxDefineTypePredicateInfiniteBuiltin{sint}
+@MmuxDefineTypePredicateInfiniteBuiltin{uint}
+@MmuxDefineTypePredicateInfiniteBuiltin{slong}
+@MmuxDefineTypePredicateInfiniteBuiltin{ulong}
+@MmuxDefineTypePredicateInfiniteBuiltin{sllong}
+@MmuxDefineTypePredicateInfiniteBuiltin{ullong}
+@MmuxDefineTypePredicateInfiniteBuiltin{float}
+@MmuxDefineTypePredicateInfiniteBuiltin{double}
+@MmuxDefineTypePredicateInfiniteBuiltin{ldouble}
+@MmuxDefineTypePredicateInfiniteBuiltin{complex}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{sint8}
+@MmuxDefineTypePredicateInfiniteBuiltin{uint8}
+@MmuxDefineTypePredicateInfiniteBuiltin{sint16}
+@MmuxDefineTypePredicateInfiniteBuiltin{uint16}
+@MmuxDefineTypePredicateInfiniteBuiltin{sint32}
+@MmuxDefineTypePredicateInfiniteBuiltin{uint32}
+@MmuxDefineTypePredicateInfiniteBuiltin{sint64}
+@MmuxDefineTypePredicateInfiniteBuiltin{uint64}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{ssize}
+@MmuxDefineTypePredicateInfiniteBuiltin{usize}
+@MmuxDefineTypePredicateInfiniteBuiltin{sintmax}
+@MmuxDefineTypePredicateInfiniteBuiltin{uintmax}
+@MmuxDefineTypePredicateInfiniteBuiltin{sintptr}
+@MmuxDefineTypePredicateInfiniteBuiltin{uintptr}
+@MmuxDefineTypePredicateInfiniteBuiltin{mode}
+@MmuxDefineTypePredicateInfiniteBuiltin{off}
+@MmuxDefineTypePredicateInfiniteBuiltin{pid}
+@MmuxDefineTypePredicateInfiniteBuiltin{uid}
+@MmuxDefineTypePredicateInfiniteBuiltin{gid}
+@MmuxDefineTypePredicateInfiniteBuiltin{wchar}
+@MmuxDefineTypePredicateInfiniteBuiltin{wint}
 
 @c page
 @node arithmetics

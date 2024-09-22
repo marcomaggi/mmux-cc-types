@@ -339,9 +339,9 @@ MMUX_BASH_POINTERS_DEFINE_CORE_UNSIGNED_INTEGER_PREDICATES([[[wint]]],		[[[1]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[static int
-mmux_bash_pointers_$1_p_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_is_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"$1_p"
+#define MMUX_BUILTIN_NAME	"mmux_$1_is_string"
 {
 #if ($2)
   mmux_libc_$1_t	data;
@@ -353,9 +353,9 @@ mmux_bash_pointers_$1_p_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[]
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_$1_p]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_is_string]]],
     [[[(2 == argc)]]],
-    [[["$1[[[]]]_p STRING_REP"]]],
+    [[["mmux_$1_is_string STRING_REP"]]],
     [[["Return true if STRING_REP is a valid string representation for the C language type."]]])
 ]]])
 

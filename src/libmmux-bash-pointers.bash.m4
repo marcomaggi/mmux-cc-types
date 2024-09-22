@@ -91,10 +91,6 @@ function mmux_bash_pointers_library_load () {
 	    printf -v NAME  'mmux_bash_pointers_array_ref_%s'   "${STEMS[$IDX]}"
 	    printf -v ALIAS 'array-ref-%s'                      "${STEMS[$IDX]}"
 	    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
-
-	    printf -v NAME  'mmux_bash_pointers_%s_p'		"${STEMS[$IDX]}"
-	    printf -v ALIAS 'libc_%s_p'                         "${STEMS[$IDX]}"
-	    mmux_bash_pointers_library_define_builtin "$NAME" "$ALIAS"
 	done
 
 	# Arithmetics builtins.
@@ -142,6 +138,8 @@ function mmux_bash_pointers_library_load () {
 	{
 	    for ((IDX=0; IDX < ${#STEMS[@]}; ++IDX))
 	    do
+		printf -v NAME  'mmux_%s_is_string' "${STEMS[$IDX]}"
+		mmux_bash_pointers_library_define_builtin "$NAME"
 		for ITEM in zero positive negative non_positive non_negative nan infinite
 		do
 		    printf -v NAME  'mmux_%s_is_%s' "${STEMS[$IDX]}" "$ITEM"
