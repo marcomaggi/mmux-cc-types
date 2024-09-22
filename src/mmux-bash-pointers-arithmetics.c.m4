@@ -35,9 +35,9 @@
 
 m4_define([[[MMUX_BASH_DEFINE_ADDITION_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_arithmetics_add_$1_main (int argc,  char * argv[])
+mmux_$1_add_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-add-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_add"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -72,7 +72,7 @@ mmux_bash_pointers_arithmetics_add_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_add_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
     [[[(3 <= argc)]]],
     [[["arith$1-add ROPVAR OP0 OP ..."]]],
     [[["Compute the addition between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
@@ -122,9 +122,9 @@ MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[wint]]],		[[[1]]])
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_arithmetics_add_pointer_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-add-pointer"
+#define MMUX_BUILTIN_NAME	"mmux_pointer_add"
 {
   mmux_libc_pointer_t	op;
   mmux_libc_uint8_t *	op_octets;
@@ -158,9 +158,9 @@ mmux_bash_pointers_arithmetics_add_pointer_main (int argc MMUX_BASH_POINTERS_UNU
   }
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_add_pointer]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_add]]],
     [[[(4 == argc)]]],
-    [[["pointer-add ROPVAR PTR DELTA"]]],
+    [[["mmux_pointer_add ROPVAR PTR DELTA"]]],
     [[["Increment the pointer PTR by the signed integer DELTA, store the result in PTRVAR."]]])
 
 
@@ -170,9 +170,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_add_
 
 m4_define([[[MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_arithmetics_sub_$1_main (int argc,  char * argv[])
+mmux_$1_sub_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-sub-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_sub"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -207,7 +207,7 @@ mmux_bash_pointers_arithmetics_sub_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_sub_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_sub]]],
     [[[(3 <= argc)]]],
     [[["$1-sub ROPVAR OP0 OP ..."]]],
     [[["Compute the subtraction between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
@@ -261,9 +261,9 @@ MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[wint]]],		[[[1]]])
 
 m4_define([[[MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_arithmetics_mul_$1_main (int argc,  char * argv[])
+mmux_$1_mul_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-mul-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_mul"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -298,7 +298,7 @@ mmux_bash_pointers_arithmetics_mul_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_mul_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mul]]],
     [[[(3 <= argc)]]],
     [[["$1-mul ROPVAR OP0 OP ..."]]],
     [[["Compute the multiplication between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
@@ -352,9 +352,9 @@ MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[wint]]],		[[[1]]])
 
 m4_define([[[MMUX_BASH_DEFINE_DIVISION_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_arithmetics_div_$1_main (int argc,  char * argv[])
+mmux_$1_div_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-div-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_div"
 {
 #if ($2)
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -389,7 +389,7 @@ mmux_bash_pointers_arithmetics_div_$1_main (int argc,  char * argv[])
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_div_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_div]]],
     [[[(3 <= argc)]]],
     [[["$1-div ROPVAR OP0 OP ..."]]],
     [[["Compute the division between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
@@ -443,9 +443,9 @@ MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[wint]]],		[[[1]]])
 
 m4_define([[[MMUX_BASH_DEFINE_REMAINDER_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_arithmetics_mod_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-mod-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_mod"
 {
 #if ($2)
   mmux_libc_$1_t	op1, op2;
@@ -479,7 +479,7 @@ mmux_bash_pointers_arithmetics_mod_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, 
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_mod_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
     [[[(4 == argc)]]],
     [[["$1-mod ROPVAR OP0 OP"]]],
     [[["Compute the remainder between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
@@ -528,9 +528,9 @@ MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[wint]]],		[[[1]]])
 
 m4_define([[[MMUX_BASH_DEFINE_NEGATION_BUILTIN]]],[[[
 static int
-mmux_bash_pointers_arithmetics_neg_$1_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"arithmetics-neg-$1"
+#define MMUX_BUILTIN_NAME	"mmux_$1_neg"
 {
 #if ($2)
   mmux_libc_$1_t	op;
@@ -561,7 +561,7 @@ mmux_bash_pointers_arithmetics_neg_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, 
   return EXECUTION_FAILURE;
 #endif
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_arithmetics_neg_$1]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
     [[[(3 == argc)]]],
     [[["$1-neg ROPVAR OP"]]],
     [[["Compute the negation of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])

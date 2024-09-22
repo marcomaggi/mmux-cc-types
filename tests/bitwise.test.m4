@@ -55,7 +55,7 @@ function bitwise-pointer-and-1.1 () {
     declare ROP OP='0b11110000' MASK=0b11001100
     declare EXPECTED_ROP=0b11000000
 
-    arithmetics-add-pointer EXPECTED_ROP WW(EXPECTED_ROP) 0
+    mmux_pointer_add EXPECTED_ROP WW(EXPECTED_ROP) 0
 
     bitwise-and-pointer ROP WW(OP) WW(MASK)
 
@@ -70,7 +70,7 @@ function bitwise-pointer-or-1.1 () {
     declare ROP OP='0b11110000' MASK=0b11001100
     declare EXPECTED_ROP=0b11111100
 
-    arithmetics-add-pointer EXPECTED_ROP WW(EXPECTED_ROP) 0
+    mmux_pointer_add EXPECTED_ROP WW(EXPECTED_ROP) 0
 
     bitwise-or-pointer ROP WW(OP) WW(MASK)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -82,7 +82,7 @@ function bitwise-pointer-xor-1.1 () {
     declare ROP OP='0b11110000' MASK=0b11001100
     declare EXPECTED_ROP=0b00111100
 
-    arithmetics-add-pointer EXPECTED_ROP WW(EXPECTED_ROP) 0
+    mmux_pointer_add EXPECTED_ROP WW(EXPECTED_ROP) 0
 
     bitwise-xor-pointer ROP WW(OP) WW(MASK)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)

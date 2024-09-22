@@ -55,7 +55,7 @@ function arithmetics-pointer-add-1.1 () {
     declare ROP OP=0x100 DELTA=7
     declare -r EXPECTED_ROP='0x107'
 
-    arithmetics-add-pointer ROP QQ(OP) QQ(DELTA)
+    mmux_pointer_add ROP QQ(OP) QQ(DELTA)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -66,21 +66,21 @@ function arithmetics-schar-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-schar ROP QQ(OP)
+    mmux_schar_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-schar ROP QQ(OP0) QQ(OP1)
+    mmux_schar_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-schar ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_schar_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -90,21 +90,21 @@ function arithmetics-schar-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-schar ROP QQ(OP)
+    mmux_schar_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-schar ROP QQ(OP0) QQ(OP1)
+    mmux_schar_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-schar ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_schar_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -114,21 +114,21 @@ function arithmetics-schar-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-schar ROP QQ(OP)
+    mmux_schar_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-schar ROP QQ(OP0) QQ(OP1)
+    mmux_schar_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((1 * 2 * 3))
 
-    arithmetics-mul-schar ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_schar_mul ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -138,21 +138,21 @@ function arithmetics-schar-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-schar ROP QQ(OP)
+    mmux_schar_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-schar ROP QQ(OP0) QQ(OP1)
+    mmux_schar_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-schar-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-schar ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_schar_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -162,7 +162,7 @@ function arithmetics-schar-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-schar ROP WW(OP1) WW(OP2)
+    mmux_schar_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -172,7 +172,7 @@ function arithmetics-schar-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-schar ROP QQ(OP)
+    mmux_schar_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -183,21 +183,21 @@ function arithmetics-sshort-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sshort ROP QQ(OP)
+    mmux_sshort_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sshort ROP QQ(OP0) QQ(OP1)
+    mmux_sshort_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sshort ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sshort_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -207,21 +207,21 @@ function arithmetics-sshort-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sshort ROP QQ(OP)
+    mmux_sshort_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sshort ROP QQ(OP0) QQ(OP1)
+    mmux_sshort_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sshort ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sshort_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -231,21 +231,21 @@ function arithmetics-sshort-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sshort ROP QQ(OP)
+    mmux_sshort_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sshort ROP QQ(OP0) QQ(OP1)
+    mmux_sshort_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sshort ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sshort_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -255,21 +255,21 @@ function arithmetics-sshort-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sshort ROP QQ(OP)
+    mmux_sshort_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sshort ROP QQ(OP0) QQ(OP1)
+    mmux_sshort_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sshort-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sshort ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sshort_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -279,7 +279,7 @@ function arithmetics-sshort-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sshort ROP WW(OP1) WW(OP2)
+    mmux_sshort_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -289,7 +289,7 @@ function arithmetics-sshort-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sshort ROP QQ(OP)
+    mmux_sshort_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -300,21 +300,21 @@ function arithmetics-sint-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sint ROP QQ(OP)
+    mmux_sint_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sint ROP QQ(OP0) QQ(OP1)
+    mmux_sint_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sint ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -324,21 +324,21 @@ function arithmetics-sint-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sint ROP QQ(OP)
+    mmux_sint_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sint ROP QQ(OP0) QQ(OP1)
+    mmux_sint_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sint ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -348,21 +348,21 @@ function arithmetics-sint-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sint ROP QQ(OP)
+    mmux_sint_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sint ROP QQ(OP0) QQ(OP1)
+    mmux_sint_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sint ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -372,21 +372,21 @@ function arithmetics-sint-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sint ROP QQ(OP)
+    mmux_sint_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sint ROP QQ(OP0) QQ(OP1)
+    mmux_sint_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sint ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sint_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -396,7 +396,7 @@ function arithmetics-sint-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sint ROP WW(OP1) WW(OP2)
+    mmux_sint_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -406,7 +406,7 @@ function arithmetics-sint-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sint ROP QQ(OP)
+    mmux_sint_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -417,21 +417,21 @@ function arithmetics-slong-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-slong ROP QQ(OP)
+    mmux_slong_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-slong ROP QQ(OP0) QQ(OP1)
+    mmux_slong_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-slong ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_slong_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -441,21 +441,21 @@ function arithmetics-slong-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-slong ROP QQ(OP)
+    mmux_slong_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-slong ROP QQ(OP0) QQ(OP1)
+    mmux_slong_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-slong ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_slong_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -465,21 +465,21 @@ function arithmetics-slong-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-slong ROP QQ(OP)
+    mmux_slong_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-slong ROP QQ(OP0) QQ(OP1)
+    mmux_slong_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-slong ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_slong_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -489,21 +489,21 @@ function arithmetics-slong-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-slong ROP QQ(OP)
+    mmux_slong_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-slong ROP QQ(OP0) QQ(OP1)
+    mmux_slong_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-slong-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-slong ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_slong_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -513,7 +513,7 @@ function arithmetics-slong-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-slong ROP WW(OP1) WW(OP2)
+    mmux_slong_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -523,7 +523,7 @@ function arithmetics-slong-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-slong ROP QQ(OP)
+    mmux_slong_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -534,21 +534,21 @@ function arithmetics-sllong-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sllong ROP QQ(OP)
+    mmux_sllong_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sllong ROP QQ(OP0) QQ(OP1)
+    mmux_sllong_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sllong ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sllong_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -558,21 +558,21 @@ function arithmetics-sllong-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sllong ROP QQ(OP)
+    mmux_sllong_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sllong ROP QQ(OP0) QQ(OP1)
+    mmux_sllong_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sllong ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sllong_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -582,21 +582,21 @@ function arithmetics-sllong-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sllong ROP QQ(OP)
+    mmux_sllong_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sllong ROP QQ(OP0) QQ(OP1)
+    mmux_sllong_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sllong ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sllong_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -606,21 +606,21 @@ function arithmetics-sllong-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sllong ROP QQ(OP)
+    mmux_sllong_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sllong ROP QQ(OP0) QQ(OP1)
+    mmux_sllong_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sllong-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sllong ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sllong_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -630,7 +630,7 @@ function arithmetics-sllong-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sllong ROP WW(OP1) WW(OP2)
+    mmux_sllong_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -640,7 +640,7 @@ function arithmetics-sllong-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sllong ROP QQ(OP)
+    mmux_sllong_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -651,21 +651,21 @@ function arithmetics-sint8-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sint8 ROP QQ(OP)
+    mmux_sint8_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sint8 ROP QQ(OP0) QQ(OP1)
+    mmux_sint8_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sint8 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint8_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -675,21 +675,21 @@ function arithmetics-sint8-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sint8 ROP QQ(OP)
+    mmux_sint8_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sint8 ROP QQ(OP0) QQ(OP1)
+    mmux_sint8_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sint8 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint8_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -699,21 +699,21 @@ function arithmetics-sint8-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sint8 ROP QQ(OP)
+    mmux_sint8_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sint8 ROP QQ(OP0) QQ(OP1)
+    mmux_sint8_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((1 * 2 * 3))
 
-    arithmetics-mul-sint8 ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sint8_mul ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -723,21 +723,21 @@ function arithmetics-sint8-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sint8 ROP QQ(OP)
+    mmux_sint8_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sint8 ROP QQ(OP0) QQ(OP1)
+    mmux_sint8_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint8-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sint8 ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sint8_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -747,7 +747,7 @@ function arithmetics-sint8-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sint8 ROP WW(OP1) WW(OP2)
+    mmux_sint8_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -757,7 +757,7 @@ function arithmetics-sint8-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sint8 ROP QQ(OP)
+    mmux_sint8_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -768,21 +768,21 @@ function arithmetics-sint16-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sint16 ROP QQ(OP)
+    mmux_sint16_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sint16 ROP QQ(OP0) QQ(OP1)
+    mmux_sint16_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sint16 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint16_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -792,21 +792,21 @@ function arithmetics-sint16-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sint16 ROP QQ(OP)
+    mmux_sint16_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sint16 ROP QQ(OP0) QQ(OP1)
+    mmux_sint16_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sint16 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint16_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -816,21 +816,21 @@ function arithmetics-sint16-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sint16 ROP QQ(OP)
+    mmux_sint16_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sint16 ROP QQ(OP0) QQ(OP1)
+    mmux_sint16_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sint16 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint16_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -840,21 +840,21 @@ function arithmetics-sint16-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sint16 ROP QQ(OP)
+    mmux_sint16_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sint16 ROP QQ(OP0) QQ(OP1)
+    mmux_sint16_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint16-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sint16 ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sint16_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -864,7 +864,7 @@ function arithmetics-sint16-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sint16 ROP WW(OP1) WW(OP2)
+    mmux_sint16_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -874,7 +874,7 @@ function arithmetics-sint16-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sint16 ROP QQ(OP)
+    mmux_sint16_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -885,21 +885,21 @@ function arithmetics-sint32-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sint32 ROP QQ(OP)
+    mmux_sint32_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sint32 ROP QQ(OP0) QQ(OP1)
+    mmux_sint32_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sint32 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint32_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -909,21 +909,21 @@ function arithmetics-sint32-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sint32 ROP QQ(OP)
+    mmux_sint32_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sint32 ROP QQ(OP0) QQ(OP1)
+    mmux_sint32_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sint32 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint32_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -933,21 +933,21 @@ function arithmetics-sint32-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sint32 ROP QQ(OP)
+    mmux_sint32_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sint32 ROP QQ(OP0) QQ(OP1)
+    mmux_sint32_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sint32 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint32_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -957,21 +957,21 @@ function arithmetics-sint32-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sint32 ROP QQ(OP)
+    mmux_sint32_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sint32 ROP QQ(OP0) QQ(OP1)
+    mmux_sint32_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint32-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sint32 ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sint32_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -981,7 +981,7 @@ function arithmetics-sint32-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sint32 ROP WW(OP1) WW(OP2)
+    mmux_sint32_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -991,7 +991,7 @@ function arithmetics-sint32-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sint32 ROP QQ(OP)
+    mmux_sint32_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1002,21 +1002,21 @@ function arithmetics-sint64-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sint64 ROP QQ(OP)
+    mmux_sint64_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sint64 ROP QQ(OP0) QQ(OP1)
+    mmux_sint64_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sint64 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint64_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1026,21 +1026,21 @@ function arithmetics-sint64-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sint64 ROP QQ(OP)
+    mmux_sint64_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sint64 ROP QQ(OP0) QQ(OP1)
+    mmux_sint64_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sint64 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint64_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1050,21 +1050,21 @@ function arithmetics-sint64-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sint64 ROP QQ(OP)
+    mmux_sint64_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sint64 ROP QQ(OP0) QQ(OP1)
+    mmux_sint64_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sint64 ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sint64_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1074,21 +1074,21 @@ function arithmetics-sint64-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sint64 ROP QQ(OP)
+    mmux_sint64_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sint64 ROP QQ(OP0) QQ(OP1)
+    mmux_sint64_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sint64-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sint64 ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sint64_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1098,7 +1098,7 @@ function arithmetics-sint64-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sint64 ROP WW(OP1) WW(OP2)
+    mmux_sint64_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1108,7 +1108,7 @@ function arithmetics-sint64-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sint64 ROP QQ(OP)
+    mmux_sint64_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1119,21 +1119,21 @@ function arithmetics-sintmax-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sintmax ROP QQ(OP)
+    mmux_sintmax_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sintmax ROP QQ(OP0) QQ(OP1)
+    mmux_sintmax_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sintmax ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sintmax_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1143,21 +1143,21 @@ function arithmetics-sintmax-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sintmax ROP QQ(OP)
+    mmux_sintmax_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sintmax ROP QQ(OP0) QQ(OP1)
+    mmux_sintmax_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sintmax ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sintmax_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1167,21 +1167,21 @@ function arithmetics-sintmax-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sintmax ROP QQ(OP)
+    mmux_sintmax_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sintmax ROP QQ(OP0) QQ(OP1)
+    mmux_sintmax_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sintmax ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sintmax_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1191,21 +1191,21 @@ function arithmetics-sintmax-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sintmax ROP QQ(OP)
+    mmux_sintmax_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sintmax ROP QQ(OP0) QQ(OP1)
+    mmux_sintmax_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintmax-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sintmax ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sintmax_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1215,7 +1215,7 @@ function arithmetics-sintmax-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sintmax ROP WW(OP1) WW(OP2)
+    mmux_sintmax_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1225,7 +1225,7 @@ function arithmetics-sintmax-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sintmax ROP QQ(OP)
+    mmux_sintmax_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1236,21 +1236,21 @@ function arithmetics-sintptr-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-sintptr ROP QQ(OP)
+    mmux_sintptr_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-sintptr ROP QQ(OP0) QQ(OP1)
+    mmux_sintptr_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-sintptr ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sintptr_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1260,21 +1260,21 @@ function arithmetics-sintptr-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-sintptr ROP QQ(OP)
+    mmux_sintptr_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-sintptr ROP QQ(OP0) QQ(OP1)
+    mmux_sintptr_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-sintptr ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sintptr_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1284,21 +1284,21 @@ function arithmetics-sintptr-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-sintptr ROP QQ(OP)
+    mmux_sintptr_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-sintptr ROP QQ(OP0) QQ(OP1)
+    mmux_sintptr_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-sintptr ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_sintptr_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1308,21 +1308,21 @@ function arithmetics-sintptr-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-sintptr ROP QQ(OP)
+    mmux_sintptr_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-sintptr ROP QQ(OP0) QQ(OP1)
+    mmux_sintptr_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-sintptr-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-sintptr ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_sintptr_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1332,7 +1332,7 @@ function arithmetics-sintptr-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-sintptr ROP WW(OP1) WW(OP2)
+    mmux_sintptr_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1342,7 +1342,7 @@ function arithmetics-sintptr-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-sintptr ROP QQ(OP)
+    mmux_sintptr_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1353,21 +1353,21 @@ function arithmetics-ptrdiff-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-ptrdiff ROP QQ(OP)
+    mmux_ptrdiff_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-ptrdiff ROP QQ(OP0) QQ(OP1)
+    mmux_ptrdiff_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_ptrdiff_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1377,21 +1377,21 @@ function arithmetics-ptrdiff-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-ptrdiff ROP QQ(OP)
+    mmux_ptrdiff_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-ptrdiff ROP QQ(OP0) QQ(OP1)
+    mmux_ptrdiff_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_ptrdiff_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1401,21 +1401,21 @@ function arithmetics-ptrdiff-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-ptrdiff ROP QQ(OP)
+    mmux_ptrdiff_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-ptrdiff ROP QQ(OP0) QQ(OP1)
+    mmux_ptrdiff_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_ptrdiff_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1425,21 +1425,21 @@ function arithmetics-ptrdiff-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-ptrdiff ROP QQ(OP)
+    mmux_ptrdiff_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-ptrdiff ROP QQ(OP0) QQ(OP1)
+    mmux_ptrdiff_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-ptrdiff-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-ptrdiff ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_ptrdiff_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1449,7 +1449,7 @@ function arithmetics-ptrdiff-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-ptrdiff ROP WW(OP1) WW(OP2)
+    mmux_ptrdiff_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1459,7 +1459,7 @@ function arithmetics-ptrdiff-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-ptrdiff ROP QQ(OP)
+    mmux_ptrdiff_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1470,21 +1470,21 @@ function arithmetics-off-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-off ROP QQ(OP)
+    mmux_off_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-off ROP QQ(OP0) QQ(OP1)
+    mmux_off_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-off ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_off_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1494,21 +1494,21 @@ function arithmetics-off-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-off ROP QQ(OP)
+    mmux_off_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-off ROP QQ(OP0) QQ(OP1)
+    mmux_off_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-off ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_off_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1518,21 +1518,21 @@ function arithmetics-off-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-off ROP QQ(OP)
+    mmux_off_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-off ROP QQ(OP0) QQ(OP1)
+    mmux_off_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-off ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_off_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1542,21 +1542,21 @@ function arithmetics-off-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-off ROP QQ(OP)
+    mmux_off_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-off ROP QQ(OP0) QQ(OP1)
+    mmux_off_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-off-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-off ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_off_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1566,7 +1566,7 @@ function arithmetics-off-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-off ROP WW(OP1) WW(OP2)
+    mmux_off_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1576,7 +1576,7 @@ function arithmetics-off-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-off ROP QQ(OP)
+    mmux_off_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1587,21 +1587,21 @@ function arithmetics-mode-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-mode ROP QQ(OP)
+    mmux_mode_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-mode ROP QQ(OP0) QQ(OP1)
+    mmux_mode_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-mode ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_mode_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1611,21 +1611,21 @@ function arithmetics-mode-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-mode ROP QQ(OP)
+    mmux_mode_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-sub-1.2 () {
     declare ROP OP0=100 OP1=2
     declare -r EXPECTED_ROP=$((100 - 2))
 
-    arithmetics-sub-mode ROP QQ(OP0) QQ(OP1)
+    mmux_mode_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-sub-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-mode ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_mode_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1635,21 +1635,21 @@ function arithmetics-mode-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-mode ROP QQ(OP)
+    mmux_mode_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-mode ROP QQ(OP0) QQ(OP1)
+    mmux_mode_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-mode ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_mode_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1659,21 +1659,21 @@ function arithmetics-mode-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-mode ROP QQ(OP)
+    mmux_mode_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-mode ROP QQ(OP0) QQ(OP1)
+    mmux_mode_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-mode-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-mode ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_mode_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1683,7 +1683,7 @@ function arithmetics-mode-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-mode ROP WW(OP1) WW(OP2)
+    mmux_mode_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1694,21 +1694,21 @@ function arithmetics-pid-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-pid ROP QQ(OP)
+    mmux_pid_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-pid ROP QQ(OP0) QQ(OP1)
+    mmux_pid_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-pid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_pid_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1718,21 +1718,21 @@ function arithmetics-pid-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-pid ROP QQ(OP)
+    mmux_pid_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-sub-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 - 2))
 
-    arithmetics-sub-pid ROP QQ(OP0) QQ(OP1)
+    mmux_pid_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-sub-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-pid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_pid_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1742,21 +1742,21 @@ function arithmetics-pid-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-pid ROP QQ(OP)
+    mmux_pid_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-pid ROP QQ(OP0) QQ(OP1)
+    mmux_pid_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-pid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_pid_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1766,21 +1766,21 @@ function arithmetics-pid-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-pid ROP QQ(OP)
+    mmux_pid_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-pid ROP QQ(OP0) QQ(OP1)
+    mmux_pid_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-pid-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-pid ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_pid_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1790,7 +1790,7 @@ function arithmetics-pid-neg-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='-1'
 
-    arithmetics-neg-pid ROP QQ(OP)
+    mmux_pid_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1800,7 +1800,7 @@ function arithmetics-pid-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-pid ROP WW(OP1) WW(OP2)
+    mmux_pid_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1811,21 +1811,21 @@ function arithmetics-uid-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-uid ROP QQ(OP)
+    mmux_uid_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-uid ROP QQ(OP0) QQ(OP1)
+    mmux_uid_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-uid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_uid_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1835,21 +1835,21 @@ function arithmetics-uid-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-uid ROP QQ(OP)
+    mmux_uid_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-sub-1.2 () {
     declare ROP OP0=100 OP1=2
     declare -r EXPECTED_ROP=$((100 - 2))
 
-    arithmetics-sub-uid ROP QQ(OP0) QQ(OP1)
+    mmux_uid_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-sub-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-uid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_uid_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1859,21 +1859,21 @@ function arithmetics-uid-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-uid ROP QQ(OP)
+    mmux_uid_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-uid ROP QQ(OP0) QQ(OP1)
+    mmux_uid_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-uid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_uid_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1883,21 +1883,21 @@ function arithmetics-uid-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-uid ROP QQ(OP)
+    mmux_uid_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-uid ROP QQ(OP0) QQ(OP1)
+    mmux_uid_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-uid-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-uid ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_uid_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1907,7 +1907,7 @@ function arithmetics-uid-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-uid ROP WW(OP1) WW(OP2)
+    mmux_uid_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -1918,21 +1918,21 @@ function arithmetics-gid-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-gid ROP QQ(OP)
+    mmux_gid_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-gid ROP QQ(OP0) QQ(OP1)
+    mmux_gid_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-gid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_gid_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1942,21 +1942,21 @@ function arithmetics-gid-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-gid ROP QQ(OP)
+    mmux_gid_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-sub-1.2 () {
     declare ROP OP0=100 OP1=2
     declare -r EXPECTED_ROP=$((100 - 2))
 
-    arithmetics-sub-gid ROP QQ(OP0) QQ(OP1)
+    mmux_gid_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-sub-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-gid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_gid_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1966,21 +1966,21 @@ function arithmetics-gid-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-gid ROP QQ(OP)
+    mmux_gid_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-gid ROP QQ(OP0) QQ(OP1)
+    mmux_gid_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-gid ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_gid_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1990,21 +1990,21 @@ function arithmetics-gid-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-gid ROP QQ(OP)
+    mmux_gid_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-gid ROP QQ(OP0) QQ(OP1)
+    mmux_gid_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-gid-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-gid ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_gid_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2014,7 +2014,7 @@ function arithmetics-gid-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-gid ROP WW(OP1) WW(OP2)
+    mmux_gid_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -2025,21 +2025,21 @@ function arithmetics-wchar-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-wchar ROP QQ(OP)
+    mmux_wchar_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-wchar ROP QQ(OP0) QQ(OP1)
+    mmux_wchar_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-wchar ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_wchar_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2049,21 +2049,21 @@ function arithmetics-wchar-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-wchar ROP QQ(OP)
+    mmux_wchar_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-sub-1.2 () {
     declare ROP OP0=100 OP1=2
     declare -r EXPECTED_ROP=$((100 - 2))
 
-    arithmetics-sub-wchar ROP QQ(OP0) QQ(OP1)
+    mmux_wchar_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-sub-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-wchar ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_wchar_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2073,21 +2073,21 @@ function arithmetics-wchar-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-wchar ROP QQ(OP)
+    mmux_wchar_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-wchar ROP QQ(OP0) QQ(OP1)
+    mmux_wchar_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-wchar ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_wchar_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2097,21 +2097,21 @@ function arithmetics-wchar-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-wchar ROP QQ(OP)
+    mmux_wchar_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-wchar ROP QQ(OP0) QQ(OP1)
+    mmux_wchar_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wchar-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-wchar ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_wchar_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2121,7 +2121,7 @@ function arithmetics-wchar-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-wchar ROP WW(OP1) WW(OP2)
+    mmux_wchar_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
@@ -2132,21 +2132,21 @@ function arithmetics-wint-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-add-wint ROP QQ(OP)
+    mmux_wint_add ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-add-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    arithmetics-add-wint ROP QQ(OP0) QQ(OP1)
+    mmux_wint_add ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-add-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
 
-    arithmetics-add-wint ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_wint_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2156,21 +2156,21 @@ function arithmetics-wint-sub-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-sub-wint ROP QQ(OP)
+    mmux_wint_sub ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-sub-1.2 () {
     declare ROP OP0=100 OP1=2
     declare -r EXPECTED_ROP=$((100 - 2))
 
-    arithmetics-sub-wint ROP QQ(OP0) QQ(OP1)
+    mmux_wint_sub ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-sub-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
 
-    arithmetics-sub-wint ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_wint_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2180,21 +2180,21 @@ function arithmetics-wint-mul-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-mul-wint ROP QQ(OP)
+    mmux_wint_mul ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-mul-1.2 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    arithmetics-mul-wint ROP QQ(OP0) QQ(OP1)
+    mmux_wint_mul ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-mul-1.3 () {
     declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
     declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
 
-    arithmetics-mul-wint ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_wint_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2204,21 +2204,21 @@ function arithmetics-wint-div-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
 
-    arithmetics-div-wint ROP QQ(OP)
+    mmux_wint_div ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-div-1.2 () {
     declare ROP OP0=10 OP1=2
     declare -r EXPECTED_ROP=$((10 / 2))
 
-    arithmetics-div-wint ROP QQ(OP0) QQ(OP1)
+    mmux_wint_div ROP QQ(OP0) QQ(OP1)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-wint-div-1.3 () {
     declare ROP OP0=100 OP1=2 OP2=3
     declare -r EXPECTED_ROP=$((100 / 2 / 3))
 
-    arithmetics-div-wint ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_wint_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2228,7 +2228,7 @@ function arithmetics-wint-mod-1.1 () {
     declare ROP OP1=11 OP2=3
     declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
 
-    arithmetics-mod-wint ROP WW(OP1) WW(OP2)
+    mmux_wint_mod ROP WW(OP1) WW(OP2)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
