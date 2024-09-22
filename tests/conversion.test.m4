@@ -59,8 +59,8 @@ function conversion-array-1.1 () {
 
     mbfl_location_enter
     {
-	if libc_malloc POINTER $SIZE
-	then mbfl_location_handler "libc_free $POINTER"
+	if mmux_libc_malloc POINTER $SIZE
+	then mbfl_location_handler "mmux_libc_free $POINTER"
 	else mbfl_location_leave_then_return_failure
 	fi
 
@@ -87,8 +87,8 @@ function conversion-string-1.1 () {
 
     mbfl_location_enter
     {
-	if libc_malloc POINTER $SIZE
-	then mbfl_location_handler "libc_free $POINTER"
+	if mmux_libc_malloc POINTER $SIZE
+	then mbfl_location_handler "mmux_libc_free $POINTER"
 	else mbfl_location_leave_then_return_failure
 	fi
 

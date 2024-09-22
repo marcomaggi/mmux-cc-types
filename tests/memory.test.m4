@@ -53,31 +53,31 @@ source "$MMUX_LIBRARY"
 
 function memory-1.1 () {
     declare PTR
-    if libc_malloc PTR 123
-    then libc_free $PTR
+    if mmux_libc_malloc PTR 123
+    then mmux_libc_free $PTR
     else return $?
     fi
 }
 function memory-1.2 () {
     declare PTR
-    if libc_malloc PTR 123
+    if mmux_libc_malloc PTR 123
     then
-	if libc_realloc PTR $PTR 456
-	then libc_free $PTR
+	if mmux_libc_realloc PTR $PTR 456
+	then mmux_libc_free $PTR
 	else return $?
 	fi
     fi
 }
 function memory-1.3 () {
     declare PTR
-    if libc_calloc PTR 123 1
-    then libc_free $PTR
+    if mmux_libc_calloc PTR 123 1
+    then mmux_libc_free $PTR
     else return $?
     fi
 }
 function memory-1.4 () {
     declare PTR ERRNO SYM MSG
-    declare EXPECTED_SYM='EINVAL' EXPECTED_MSG='malloc: error: invalid argument, expected "ulong": "ciao"'
+    declare EXPECTED_SYM='EINVAL' EXPECTED_MSG='mmux_libc_malloc: error: invalid argument, expected "ulong": "ciao"'
 
     dotest-unset-debug
 
@@ -87,14 +87,14 @@ function memory-1.4 () {
         shopt -s lastpipe
 
 	{
-	    libc_malloc PTR 'ciao' 2>&1
+	    mmux_libc_malloc PTR 'ciao' 2>&1
 	    printf '%s\n' QQ(ERRNO)
 	} | {
 	    read MSG
 	    read ERRNO
 	    dotest-debug MSG=QQ(MSG)
 	    dotest-debug ERRNO=QQ(ERRNO)
-	    mmux-bash-pointers-errno-to-string SYM QQ(ERRNO)
+	    mmux_libc_errno_to_string SYM QQ(ERRNO)
 	    dotest-equal QQ(EXPECTED_SYM) QQ(SYM) &&
 		dotest-equal QQ(EXPECTED_MSG) QQ(MSG)
 	}
@@ -108,11 +108,11 @@ function memory-1.4 () {
 function memory-2.1 () {
     declare PTR SIZE=123 RESULT=Z
 
-    if libc_malloc PTR $SIZE
+    if mmux_libc_malloc PTR $SIZE
     then
-	libc_memset $PTR 1 $SIZE
+	mmux_libc_memset $PTR 1 $SIZE
 	pointer-ref-uint8 RESULT $PTR 1
-	libc_free $PTR
+	mmux_libc_free $PTR
 	dotest-equal 1 $RESULT
     else return $?
     fi
@@ -121,17 +121,17 @@ function memory-2.1 () {
 function memory-3.1 () {
     declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
 
-    libc_malloc PTR_FROM $SIZE
-    libc_malloc PTR_TO   $SIZE
+    mmux_libc_malloc PTR_FROM $SIZE
+    mmux_libc_malloc PTR_TO   $SIZE
 
-    libc_memset $PTR_FROM 1 $SIZE
-    libc_memset $PTR_TO   0 $SIZE
+    mmux_libc_memset $PTR_FROM 1 $SIZE
+    mmux_libc_memset $PTR_TO   0 $SIZE
 
-    libc_memcpy $PTR_TO $PTR_FROM $SIZE
+    mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
     pointer-ref-uint8 RESULT $PTR_TO 10
 
-    libc_free $PTR_FROM
-    libc_free $PTR_TO
+    mmux_libc_free $PTR_FROM
+    mmux_libc_free $PTR_TO
 
     dotest-equal 1 $RESULT
 }
@@ -139,17 +139,17 @@ function memory-3.1 () {
 function memory-4.1 () {
     declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
 
-    libc_malloc PTR_FROM $SIZE
-    libc_malloc PTR_TO   $SIZE
+    mmux_libc_malloc PTR_FROM $SIZE
+    mmux_libc_malloc PTR_TO   $SIZE
 
-    libc_memset $PTR_FROM 1 $SIZE
-    libc_memset $PTR_TO   0 $SIZE
+    mmux_libc_memset $PTR_FROM 1 $SIZE
+    mmux_libc_memset $PTR_TO   0 $SIZE
 
-    libc_memmove $PTR_TO $PTR_FROM $SIZE
+    mmux_libc_memmove $PTR_TO $PTR_FROM $SIZE
     pointer-ref-uint8 RESULT $PTR_TO 10
 
-    libc_free $PTR_FROM
-    libc_free $PTR_TO
+    mmux_libc_free $PTR_FROM
+    mmux_libc_free $PTR_TO
 
     dotest-equal 1 $RESULT
 }

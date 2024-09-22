@@ -54,8 +54,8 @@ source "$MMUX_LIBRARY"
 function errors-strerror-1.1 () {
     declare MSG
 
-    if test -v libc_EINVAL
-    then libc_strerror MSG $libc_EINVAL
+    if test -v mmux_libc_EINVAL
+    then mmux_libc_strerror MSG $mmux_libc_EINVAL
     else MSG='EINVAL undefined'
     fi
     dotest-equal 'Invalid argument' "$MSG"
@@ -63,8 +63,8 @@ function errors-strerror-1.1 () {
 function errors-strerror-1.2 () {
     declare MSG
 
-    if test -v libc_ENOMEM
-    then libc_strerror MSG $libc_ENOMEM
+    if test -v mmux_libc_ENOMEM
+    then mmux_libc_strerror MSG $mmux_libc_ENOMEM
     else MSG='ENOMEM undefined'
     fi
     dotest-equal 'Cannot allocate memory' "$MSG"
@@ -76,7 +76,7 @@ function errors-strerror-1.2 () {
 function errors-errno-to-symbol-1.1 () {
     declare SYM
 
-    mmux-bash-pointers-errno-to-string SYM $libc_ENOMEM
+    mmux_libc_errno_to_string SYM $mmux_libc_ENOMEM
     dotest-equal 'ENOMEM' "$SYM"
 }
 

@@ -34,9 +34,9 @@
  ** ----------------------------------------------------------------- */
 
 static int
-mmux_bash_pointers_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"malloc"
+#define MMUX_BUILTIN_NAME	"mmux_libc_malloc"
 {
   void *	ptr;
   size_t	len;
@@ -66,17 +66,17 @@ mmux_bash_pointers_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
     return EXECUTION_FAILURE;
   }
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_malloc]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_malloc]]],
     [[[(3 == argc)]]],
-    [[["malloc PTRVAR SIZE"]]],
+    [[["mmux_libc_malloc PTRVAR SIZE"]]],
     [[["Allocate a memory block, store the pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"calloc"
+#define MMUX_BUILTIN_NAME	"mmux_libc_calloc"
 {
   void *	ptr;
   size_t	item_count;
@@ -111,17 +111,17 @@ mmux_bash_pointers_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
     return EXECUTION_FAILURE;
   }
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_calloc]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_calloc]]],
     [[[(4 == argc)]]],
-    [[["calloc PTRVAR ITEM_COUNT ITEM_SIZE"]]],
+    [[["mmux_libc_calloc PTRVAR ITEM_COUNT ITEM_SIZE"]]],
     [[["Allocate a memory block wide enough to hold ITEM_COUNT items of ITEM_SIZE, store the pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"realloc"
+#define MMUX_BUILTIN_NAME	"mmux_libc_realloc"
 {
   void *	ptr;
   size_t	len;
@@ -151,17 +151,17 @@ mmux_bash_pointers_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
     return EXECUTION_FAILURE;
   }
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_realloc]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_realloc]]],
     [[[(4 == argc)]]],
-    [[["realloc PTRVAR OLDPTR NEW_SIZE"]]],
+    [[["mmux_libc_realloc PTRVAR OLDPTR NEW_SIZE"]]],
     [[["Reallocate a memory block to a new size, store the new pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"free"
+#define MMUX_BUILTIN_NAME	"mmux_libc_free"
 {
   void *	ptr;
   int		rv;
@@ -175,9 +175,9 @@ mmux_bash_pointers_free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[]
   free(ptr);
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_free]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_free]]],
     [[[(2 == argc)]]],
-    [[["free PTR"]]],
+    [[["mmux_libc_free PTR"]]],
     [[["Release a memory block."]]])
 
 
@@ -186,9 +186,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_free]]],
  ** ----------------------------------------------------------------- */
 
 static int
-mmux_bash_pointers_memset_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_memset_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"memset"
+#define MMUX_BUILTIN_NAME	"mmux_libc_memset"
 {
   void *	ptr;
   unsigned char	c;
@@ -210,17 +210,17 @@ mmux_bash_pointers_memset_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   memset(ptr, i, len);
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_memset]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memset]]],
     [[[(4 == argc)]]],
-    [[["memset BLOCK C SIZE"]]],
+    [[["mmux_libc_memset BLOCK C SIZE"]]],
     [[["Copy C to each of the SIZE bytes of BLOCK."]]])
 
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_memcpy_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_memcpy_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"memcpy"
+#define MMUX_BUILTIN_NAME	"mmux_libc_memcpy"
 {
   void *	ptr_from;
   void *	ptr_to;
@@ -239,17 +239,17 @@ mmux_bash_pointers_memcpy_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   memcpy(ptr_to, ptr_from, len);
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_memcpy]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memcpy]]],
     [[[(4 == argc)]]],
-    [[["memcpy POINTER_TO POINTER_FROM SIZE"]]],
+    [[["mmux_libc_memcpy POINTER_TO POINTER_FROM SIZE"]]],
     [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
 
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_bash_pointers_memmove_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_memmove_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"memmove"
+#define MMUX_BUILTIN_NAME	"mmux_libc_memmove"
 {
   void *	ptr_from;
   void *	ptr_to;
@@ -268,9 +268,9 @@ mmux_bash_pointers_memmove_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * arg
   memmove(ptr_to, ptr_from, len);
   return EXECUTION_SUCCESS;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_memmove]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memmove]]],
     [[[(4 == argc)]]],
-    [[["memmove POINTER_TO POINTER_FROM SIZE"]]],
+    [[["mmux_libc_memmove POINTER_TO POINTER_FROM SIZE"]]],
     [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
 
 /* end of file */

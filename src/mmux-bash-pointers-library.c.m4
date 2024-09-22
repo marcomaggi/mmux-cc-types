@@ -136,7 +136,7 @@ mmux_bash_pointers_print_complex (double complex data)
 
 m4_divert(-1)m4_dnl
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],
-  [[[mmux_bash_pointers_create_global_sint_variable("libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])",m4_dnl
+  [[[mmux_bash_pointers_create_global_sint_variable("mmux_libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])",m4_dnl
  mmux_bash_pointers_sizeof_[[[]]]mmux_tolower([[[$1]]])[[[]]]())]]])
 
 /* ------------------------------------------------------------------ */
@@ -149,7 +149,7 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
   memset(str, '\0', LEN);
   mmux_bash_pointers_sprint_maximum_[[[]]]mmux_tolower([[[$1]]])[[[]]](str, LEN);
   if (0) { fprintf(stderr, "%s: maximum $1: %s\n", __func__, str); }
-  mmux_bash_pointers_create_global_string_variable("libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str);
+  mmux_bash_pointers_create_global_string_variable("mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str);
 }]]])
 
 /* ------------------------------------------------------------------ */
@@ -162,13 +162,13 @@ m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
   memset(str, '\0', LEN);
   mmux_bash_pointers_sprint_minimum_[[[]]]mmux_tolower([[[$1]]])[[[]]](str, LEN);
   if (0) { fprintf(stderr, "%s: minimum $1: %s\n", __func__, str); }
-  mmux_bash_pointers_create_global_string_variable("libc_MIN_[[[]]]mmux_toupper([[[$1]]])", str);
+  mmux_bash_pointers_create_global_string_variable("mmux_libc_MIN_[[[]]]mmux_toupper([[[$1]]])", str);
 }]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_ERRNO_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
-  mmux_bash_pointers_create_global_sint_variable("libc_$1",	$1);
+  mmux_bash_pointers_create_global_sint_variable("mmux_libc_$1",	$1);
 #endif
 ]]])
 

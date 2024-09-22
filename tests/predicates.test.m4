@@ -55,10 +55,10 @@ function predicates-is-zero-schar-1.1 () {
     mmux_schar_is_zero 0
 }
 function predicates-is-zero-schar-1.2 () {
-    ! mmux_schar_is_zero WW(libc_MAX_SCHAR)
+    ! mmux_schar_is_zero WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-zero-schar-1.3 () {
-    ! mmux_schar_is_zero WW(libc_MIN_SCHAR)
+    ! mmux_schar_is_zero WW(mmux_libc_MIN_SCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -67,10 +67,10 @@ function predicates-is-positive-schar-1.1 () {
     ! mmux_schar_is_positive 0
 }
 function predicates-is-positive-schar-1.2 () {
-    mmux_schar_is_positive WW(libc_MAX_SCHAR)
+    mmux_schar_is_positive WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-positive-schar-1.3 () {
-    ! mmux_schar_is_positive WW(libc_MIN_SCHAR)
+    ! mmux_schar_is_positive WW(mmux_libc_MIN_SCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -79,10 +79,10 @@ function predicates-is-negative-schar-1.1 () {
     ! mmux_schar_is_negative 0
 }
 function predicates-is-negative-schar-1.2 () {
-    ! mmux_schar_is_negative WW(libc_MAX_SCHAR)
+    ! mmux_schar_is_negative WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-negative-schar-1.3 () {
-    mmux_schar_is_negative WW(libc_MIN_SCHAR)
+    mmux_schar_is_negative WW(mmux_libc_MIN_SCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -91,10 +91,10 @@ function predicates-is-non-positive-schar-1.1 () {
     mmux_schar_is_non_positive 0
 }
 function predicates-is-non-positive-schar-1.2 () {
-    ! mmux_schar_is_non_positive WW(libc_MAX_SCHAR)
+    ! mmux_schar_is_non_positive WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-non-positive-schar-1.3 () {
-    mmux_schar_is_non_positive WW(libc_MIN_SCHAR)
+    mmux_schar_is_non_positive WW(mmux_libc_MIN_SCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -103,28 +103,28 @@ function predicates-is-non-negative-schar-1.1 () {
     mmux_schar_is_non_negative 0
 }
 function predicates-is-non-negative-schar-1.2 () {
-    mmux_schar_is_non_negative WW(libc_MAX_SCHAR)
+    mmux_schar_is_non_negative WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-non-negative-schar-1.3 () {
-    ! mmux_schar_is_non_negative WW(libc_MIN_SCHAR)
+    ! mmux_schar_is_non_negative WW(mmux_libc_MIN_SCHAR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-schar-1.1 () {
-    ! mmux_schar_is_infinite WW(libc_MAX_SCHAR)
+    ! mmux_schar_is_infinite WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-infinite-schar-1.2 () {
-    ! mmux_schar_is_infinite WW(libc_MIN_SCHAR)
+    ! mmux_schar_is_infinite WW(mmux_libc_MIN_SCHAR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-schar-1.1 () {
-    ! mmux_schar_is_nan WW(libc_MAX_SCHAR)
+    ! mmux_schar_is_nan WW(mmux_libc_MAX_SCHAR)
 }
 function predicates-is-nan-schar-1.2 () {
-    ! mmux_schar_is_nan WW(libc_MIN_SCHAR)
+    ! mmux_schar_is_nan WW(mmux_libc_MIN_SCHAR)
 }
 
 
@@ -134,10 +134,10 @@ function predicates-is-zero-uchar-1.1 () {
     mmux_uchar_is_zero 0
 }
 function predicates-is-zero-uchar-1.2 () {
-    ! mmux_uchar_is_zero WW(libc_MAX_UCHAR)
+    ! mmux_uchar_is_zero WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-zero-uchar-1.3 () {
-    mmux_uchar_is_zero WW(libc_MIN_UCHAR)
+    mmux_uchar_is_zero WW(mmux_libc_MIN_UCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -146,10 +146,10 @@ function predicates-is-positive-uchar-1.1 () {
     ! mmux_uchar_is_positive 0
 }
 function predicates-is-positive-uchar-1.2 () {
-    mmux_uchar_is_positive WW(libc_MAX_UCHAR)
+    mmux_uchar_is_positive WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-positive-uchar-1.3 () {
-    ! mmux_uchar_is_positive WW(libc_MIN_UCHAR)
+    ! mmux_uchar_is_positive WW(mmux_libc_MIN_UCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -158,10 +158,10 @@ function predicates-is-negative-uchar-1.1 () {
     ! mmux_uchar_is_negative 0
 }
 function predicates-is-negative-uchar-1.2 () {
-    ! mmux_uchar_is_negative WW(libc_MAX_UCHAR)
+    ! mmux_uchar_is_negative WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-negative-uchar-1.3 () {
-    ! mmux_uchar_is_negative WW(libc_MIN_UCHAR)
+    ! mmux_uchar_is_negative WW(mmux_libc_MIN_UCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -170,10 +170,10 @@ function predicates-is-non-positive-uchar-1.1 () {
     mmux_uchar_is_non_positive 0
 }
 function predicates-is-non-positive-uchar-1.2 () {
-    ! mmux_uchar_is_non_positive WW(libc_MAX_UCHAR)
+    ! mmux_uchar_is_non_positive WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-non-positive-uchar-1.3 () {
-    mmux_uchar_is_non_positive WW(libc_MIN_UCHAR)
+    mmux_uchar_is_non_positive WW(mmux_libc_MIN_UCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -182,28 +182,28 @@ function predicates-is-non-negative-uchar-1.1 () {
     mmux_uchar_is_non_negative 0
 }
 function predicates-is-non-negative-uchar-1.2 () {
-    mmux_uchar_is_non_negative WW(libc_MAX_UCHAR)
+    mmux_uchar_is_non_negative WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-non-negative-uchar-1.3 () {
-    mmux_uchar_is_non_negative WW(libc_MIN_UCHAR)
+    mmux_uchar_is_non_negative WW(mmux_libc_MIN_UCHAR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uchar-1.1 () {
-    ! mmux_uchar_is_infinite WW(libc_MAX_UCHAR)
+    ! mmux_uchar_is_infinite WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-infinite-uchar-1.2 () {
-    ! mmux_uchar_is_infinite WW(libc_MIN_UCHAR)
+    ! mmux_uchar_is_infinite WW(mmux_libc_MIN_UCHAR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uchar-1.1 () {
-    ! mmux_uchar_is_nan WW(libc_MAX_UCHAR)
+    ! mmux_uchar_is_nan WW(mmux_libc_MAX_UCHAR)
 }
 function predicates-is-nan-uchar-1.2 () {
-    ! mmux_uchar_is_nan WW(libc_MIN_UCHAR)
+    ! mmux_uchar_is_nan WW(mmux_libc_MIN_UCHAR)
 }
 
 
@@ -213,10 +213,10 @@ function predicates-is-zero-sshort-1.1 () {
     mmux_sshort_is_zero 0
 }
 function predicates-is-zero-sshort-1.2 () {
-    ! mmux_sshort_is_zero WW(libc_MAX_SSHORT)
+    ! mmux_sshort_is_zero WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-zero-sshort-1.3 () {
-    ! mmux_sshort_is_zero WW(libc_MIN_SSHORT)
+    ! mmux_sshort_is_zero WW(mmux_libc_MIN_SSHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -225,10 +225,10 @@ function predicates-is-positive-sshort-1.1 () {
     ! mmux_sshort_is_positive 0
 }
 function predicates-is-positive-sshort-1.2 () {
-    mmux_sshort_is_positive WW(libc_MAX_SSHORT)
+    mmux_sshort_is_positive WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-positive-sshort-1.3 () {
-    ! mmux_sshort_is_positive WW(libc_MIN_SSHORT)
+    ! mmux_sshort_is_positive WW(mmux_libc_MIN_SSHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -237,10 +237,10 @@ function predicates-is-negative-sshort-1.1 () {
     ! mmux_sshort_is_negative 0
 }
 function predicates-is-negative-sshort-1.2 () {
-    ! mmux_sshort_is_negative WW(libc_MAX_SSHORT)
+    ! mmux_sshort_is_negative WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-negative-sshort-1.3 () {
-    mmux_sshort_is_negative WW(libc_MIN_SSHORT)
+    mmux_sshort_is_negative WW(mmux_libc_MIN_SSHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -249,10 +249,10 @@ function predicates-is-non-positive-sshort-1.1 () {
     mmux_sshort_is_non_positive 0
 }
 function predicates-is-non-positive-sshort-1.2 () {
-    ! mmux_sshort_is_non_positive WW(libc_MAX_SSHORT)
+    ! mmux_sshort_is_non_positive WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-non-positive-sshort-1.3 () {
-    mmux_sshort_is_non_positive WW(libc_MIN_SSHORT)
+    mmux_sshort_is_non_positive WW(mmux_libc_MIN_SSHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -261,28 +261,28 @@ function predicates-is-non-negative-sshort-1.1 () {
     mmux_sshort_is_non_negative 0
 }
 function predicates-is-non-negative-sshort-1.2 () {
-    mmux_sshort_is_non_negative WW(libc_MAX_SSHORT)
+    mmux_sshort_is_non_negative WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-non-negative-sshort-1.3 () {
-    ! mmux_sshort_is_non_negative WW(libc_MIN_SSHORT)
+    ! mmux_sshort_is_non_negative WW(mmux_libc_MIN_SSHORT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sshort-1.1 () {
-    ! mmux_sshort_is_infinite WW(libc_MAX_SSHORT)
+    ! mmux_sshort_is_infinite WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-infinite-sshort-1.2 () {
-    ! mmux_sshort_is_infinite WW(libc_MIN_SSHORT)
+    ! mmux_sshort_is_infinite WW(mmux_libc_MIN_SSHORT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sshort-1.1 () {
-    ! mmux_sshort_is_nan WW(libc_MAX_SSHORT)
+    ! mmux_sshort_is_nan WW(mmux_libc_MAX_SSHORT)
 }
 function predicates-is-nan-sshort-1.2 () {
-    ! mmux_sshort_is_nan WW(libc_MIN_SSHORT)
+    ! mmux_sshort_is_nan WW(mmux_libc_MIN_SSHORT)
 }
 
 
@@ -292,10 +292,10 @@ function predicates-is-zero-ushort-1.1 () {
     mmux_ushort_is_zero 0
 }
 function predicates-is-zero-ushort-1.2 () {
-    ! mmux_ushort_is_zero WW(libc_MAX_USHORT)
+    ! mmux_ushort_is_zero WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-zero-ushort-1.3 () {
-    mmux_ushort_is_zero WW(libc_MIN_USHORT)
+    mmux_ushort_is_zero WW(mmux_libc_MIN_USHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -304,10 +304,10 @@ function predicates-is-positive-ushort-1.1 () {
     ! mmux_ushort_is_positive 0
 }
 function predicates-is-positive-ushort-1.2 () {
-    mmux_ushort_is_positive WW(libc_MAX_USHORT)
+    mmux_ushort_is_positive WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-positive-ushort-1.3 () {
-    ! mmux_ushort_is_positive WW(libc_MIN_USHORT)
+    ! mmux_ushort_is_positive WW(mmux_libc_MIN_USHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -316,10 +316,10 @@ function predicates-is-negative-ushort-1.1 () {
     ! mmux_ushort_is_negative 0
 }
 function predicates-is-negative-ushort-1.2 () {
-    ! mmux_ushort_is_negative WW(libc_MAX_USHORT)
+    ! mmux_ushort_is_negative WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-negative-ushort-1.3 () {
-    ! mmux_ushort_is_negative WW(libc_MIN_USHORT)
+    ! mmux_ushort_is_negative WW(mmux_libc_MIN_USHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -328,10 +328,10 @@ function predicates-is-non-positive-ushort-1.1 () {
     mmux_ushort_is_non_positive 0
 }
 function predicates-is-non-positive-ushort-1.2 () {
-    ! mmux_ushort_is_non_positive WW(libc_MAX_USHORT)
+    ! mmux_ushort_is_non_positive WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-non-positive-ushort-1.3 () {
-    mmux_ushort_is_non_positive WW(libc_MIN_USHORT)
+    mmux_ushort_is_non_positive WW(mmux_libc_MIN_USHORT)
 }
 
 ### ------------------------------------------------------------------------
@@ -340,28 +340,28 @@ function predicates-is-non-negative-ushort-1.1 () {
     mmux_ushort_is_non_negative 0
 }
 function predicates-is-non-negative-ushort-1.2 () {
-    mmux_ushort_is_non_negative WW(libc_MAX_USHORT)
+    mmux_ushort_is_non_negative WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-non-negative-ushort-1.3 () {
-    mmux_ushort_is_non_negative WW(libc_MIN_USHORT)
+    mmux_ushort_is_non_negative WW(mmux_libc_MIN_USHORT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-ushort-1.1 () {
-    ! mmux_ushort_is_infinite WW(libc_MAX_USHORT)
+    ! mmux_ushort_is_infinite WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-infinite-ushort-1.2 () {
-    ! mmux_ushort_is_infinite WW(libc_MIN_USHORT)
+    ! mmux_ushort_is_infinite WW(mmux_libc_MIN_USHORT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-ushort-1.1 () {
-    ! mmux_ushort_is_nan WW(libc_MAX_USHORT)
+    ! mmux_ushort_is_nan WW(mmux_libc_MAX_USHORT)
 }
 function predicates-is-nan-ushort-1.2 () {
-    ! mmux_ushort_is_nan WW(libc_MIN_USHORT)
+    ! mmux_ushort_is_nan WW(mmux_libc_MIN_USHORT)
 }
 
 
@@ -371,10 +371,10 @@ function predicates-is-zero-sint-1.1 () {
     mmux_sint_is_zero 0
 }
 function predicates-is-zero-sint-1.2 () {
-    ! mmux_sint_is_zero WW(libc_MAX_SINT)
+    ! mmux_sint_is_zero WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-zero-sint-1.3 () {
-    ! mmux_sint_is_zero WW(libc_MIN_SINT)
+    ! mmux_sint_is_zero WW(mmux_libc_MIN_SINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -383,10 +383,10 @@ function predicates-is-positive-sint-1.1 () {
     ! mmux_sint_is_positive 0
 }
 function predicates-is-positive-sint-1.2 () {
-    mmux_sint_is_positive WW(libc_MAX_SINT)
+    mmux_sint_is_positive WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-positive-sint-1.3 () {
-    ! mmux_sint_is_positive WW(libc_MIN_SINT)
+    ! mmux_sint_is_positive WW(mmux_libc_MIN_SINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -395,10 +395,10 @@ function predicates-is-negative-sint-1.1 () {
     ! mmux_sint_is_negative 0
 }
 function predicates-is-negative-sint-1.2 () {
-    ! mmux_sint_is_negative WW(libc_MAX_SINT)
+    ! mmux_sint_is_negative WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-negative-sint-1.3 () {
-    mmux_sint_is_negative WW(libc_MIN_SINT)
+    mmux_sint_is_negative WW(mmux_libc_MIN_SINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -407,10 +407,10 @@ function predicates-is-non-positive-sint-1.1 () {
     mmux_sint_is_non_positive 0
 }
 function predicates-is-non-positive-sint-1.2 () {
-    ! mmux_sint_is_non_positive WW(libc_MAX_SINT)
+    ! mmux_sint_is_non_positive WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-non-positive-sint-1.3 () {
-    mmux_sint_is_non_positive WW(libc_MIN_SINT)
+    mmux_sint_is_non_positive WW(mmux_libc_MIN_SINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -419,28 +419,28 @@ function predicates-is-non-negative-sint-1.1 () {
     mmux_sint_is_non_negative 0
 }
 function predicates-is-non-negative-sint-1.2 () {
-    mmux_sint_is_non_negative WW(libc_MAX_SINT)
+    mmux_sint_is_non_negative WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-non-negative-sint-1.3 () {
-    ! mmux_sint_is_non_negative WW(libc_MIN_SINT)
+    ! mmux_sint_is_non_negative WW(mmux_libc_MIN_SINT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sint-1.1 () {
-    ! mmux_sint_is_infinite WW(libc_MAX_SINT)
+    ! mmux_sint_is_infinite WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-infinite-sint-1.2 () {
-    ! mmux_sint_is_infinite WW(libc_MIN_SINT)
+    ! mmux_sint_is_infinite WW(mmux_libc_MIN_SINT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sint-1.1 () {
-    ! mmux_sint_is_nan WW(libc_MAX_SINT)
+    ! mmux_sint_is_nan WW(mmux_libc_MAX_SINT)
 }
 function predicates-is-nan-sint-1.2 () {
-    ! mmux_sint_is_nan WW(libc_MIN_SINT)
+    ! mmux_sint_is_nan WW(mmux_libc_MIN_SINT)
 }
 
 
@@ -450,10 +450,10 @@ function predicates-is-zero-uint-1.1 () {
     mmux_uint_is_zero 0
 }
 function predicates-is-zero-uint-1.2 () {
-    ! mmux_uint_is_zero WW(libc_MAX_UINT)
+    ! mmux_uint_is_zero WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-zero-uint-1.3 () {
-    mmux_uint_is_zero WW(libc_MIN_UINT)
+    mmux_uint_is_zero WW(mmux_libc_MIN_UINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -462,10 +462,10 @@ function predicates-is-positive-uint-1.1 () {
     ! mmux_uint_is_positive 0
 }
 function predicates-is-positive-uint-1.2 () {
-    mmux_uint_is_positive WW(libc_MAX_UINT)
+    mmux_uint_is_positive WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-positive-uint-1.3 () {
-    ! mmux_uint_is_positive WW(libc_MIN_UINT)
+    ! mmux_uint_is_positive WW(mmux_libc_MIN_UINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -474,10 +474,10 @@ function predicates-is-negative-uint-1.1 () {
     ! mmux_uint_is_negative 0
 }
 function predicates-is-negative-uint-1.2 () {
-    ! mmux_uint_is_negative WW(libc_MAX_UINT)
+    ! mmux_uint_is_negative WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-negative-uint-1.3 () {
-    ! mmux_uint_is_negative WW(libc_MIN_UINT)
+    ! mmux_uint_is_negative WW(mmux_libc_MIN_UINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -486,10 +486,10 @@ function predicates-is-non-positive-uint-1.1 () {
     mmux_uint_is_non_positive 0
 }
 function predicates-is-non-positive-uint-1.2 () {
-    ! mmux_uint_is_non_positive WW(libc_MAX_UINT)
+    ! mmux_uint_is_non_positive WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-non-positive-uint-1.3 () {
-    mmux_uint_is_non_positive WW(libc_MIN_UINT)
+    mmux_uint_is_non_positive WW(mmux_libc_MIN_UINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -498,28 +498,28 @@ function predicates-is-non-negative-uint-1.1 () {
     mmux_uint_is_non_negative 0
 }
 function predicates-is-non-negative-uint-1.2 () {
-    mmux_uint_is_non_negative WW(libc_MAX_UINT)
+    mmux_uint_is_non_negative WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-non-negative-uint-1.3 () {
-    mmux_uint_is_non_negative WW(libc_MIN_UINT)
+    mmux_uint_is_non_negative WW(mmux_libc_MIN_UINT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uint-1.1 () {
-    ! mmux_uint_is_infinite WW(libc_MAX_UINT)
+    ! mmux_uint_is_infinite WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-infinite-uint-1.2 () {
-    ! mmux_uint_is_infinite WW(libc_MIN_UINT)
+    ! mmux_uint_is_infinite WW(mmux_libc_MIN_UINT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uint-1.1 () {
-    ! mmux_uint_is_nan WW(libc_MAX_UINT)
+    ! mmux_uint_is_nan WW(mmux_libc_MAX_UINT)
 }
 function predicates-is-nan-uint-1.2 () {
-    ! mmux_uint_is_nan WW(libc_MIN_UINT)
+    ! mmux_uint_is_nan WW(mmux_libc_MIN_UINT)
 }
 
 
@@ -529,10 +529,10 @@ function predicates-is-zero-slong-1.1 () {
     mmux_slong_is_zero 0
 }
 function predicates-is-zero-slong-1.2 () {
-    ! mmux_slong_is_zero WW(libc_MAX_SLONG)
+    ! mmux_slong_is_zero WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-zero-slong-1.3 () {
-    ! mmux_slong_is_zero WW(libc_MIN_SLONG)
+    ! mmux_slong_is_zero WW(mmux_libc_MIN_SLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -541,10 +541,10 @@ function predicates-is-positive-slong-1.1 () {
     ! mmux_slong_is_positive 0
 }
 function predicates-is-positive-slong-1.2 () {
-    mmux_slong_is_positive WW(libc_MAX_SLONG)
+    mmux_slong_is_positive WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-positive-slong-1.3 () {
-    ! mmux_slong_is_positive WW(libc_MIN_SLONG)
+    ! mmux_slong_is_positive WW(mmux_libc_MIN_SLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -553,10 +553,10 @@ function predicates-is-negative-slong-1.1 () {
     ! mmux_slong_is_negative 0
 }
 function predicates-is-negative-slong-1.2 () {
-    ! mmux_slong_is_negative WW(libc_MAX_SLONG)
+    ! mmux_slong_is_negative WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-negative-slong-1.3 () {
-    mmux_slong_is_negative WW(libc_MIN_SLONG)
+    mmux_slong_is_negative WW(mmux_libc_MIN_SLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -565,10 +565,10 @@ function predicates-is-non-positive-slong-1.1 () {
     mmux_slong_is_non_positive 0
 }
 function predicates-is-non-positive-slong-1.2 () {
-    ! mmux_slong_is_non_positive WW(libc_MAX_SLONG)
+    ! mmux_slong_is_non_positive WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-non-positive-slong-1.3 () {
-    mmux_slong_is_non_positive WW(libc_MIN_SLONG)
+    mmux_slong_is_non_positive WW(mmux_libc_MIN_SLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -577,28 +577,28 @@ function predicates-is-non-negative-slong-1.1 () {
     mmux_slong_is_non_negative 0
 }
 function predicates-is-non-negative-slong-1.2 () {
-    mmux_slong_is_non_negative WW(libc_MAX_SLONG)
+    mmux_slong_is_non_negative WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-non-negative-slong-1.3 () {
-    ! mmux_slong_is_non_negative WW(libc_MIN_SLONG)
+    ! mmux_slong_is_non_negative WW(mmux_libc_MIN_SLONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-slong-1.1 () {
-    ! mmux_slong_is_infinite WW(libc_MAX_SLONG)
+    ! mmux_slong_is_infinite WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-infinite-slong-1.2 () {
-    ! mmux_slong_is_infinite WW(libc_MIN_SLONG)
+    ! mmux_slong_is_infinite WW(mmux_libc_MIN_SLONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-slong-1.1 () {
-    ! mmux_slong_is_nan WW(libc_MAX_SLONG)
+    ! mmux_slong_is_nan WW(mmux_libc_MAX_SLONG)
 }
 function predicates-is-nan-slong-1.2 () {
-    ! mmux_slong_is_nan WW(libc_MIN_SLONG)
+    ! mmux_slong_is_nan WW(mmux_libc_MIN_SLONG)
 }
 
 
@@ -608,10 +608,10 @@ function predicates-is-zero-ulong-1.1 () {
     mmux_ulong_is_zero 0
 }
 function predicates-is-zero-ulong-1.2 () {
-    ! mmux_ulong_is_zero WW(libc_MAX_ULONG)
+    ! mmux_ulong_is_zero WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-zero-ulong-1.3 () {
-    mmux_ulong_is_zero WW(libc_MIN_ULONG)
+    mmux_ulong_is_zero WW(mmux_libc_MIN_ULONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -620,10 +620,10 @@ function predicates-is-positive-ulong-1.1 () {
     ! mmux_ulong_is_positive 0
 }
 function predicates-is-positive-ulong-1.2 () {
-    mmux_ulong_is_positive WW(libc_MAX_ULONG)
+    mmux_ulong_is_positive WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-positive-ulong-1.3 () {
-    ! mmux_ulong_is_positive WW(libc_MIN_ULONG)
+    ! mmux_ulong_is_positive WW(mmux_libc_MIN_ULONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -632,10 +632,10 @@ function predicates-is-negative-ulong-1.1 () {
     ! mmux_ulong_is_negative 0
 }
 function predicates-is-negative-ulong-1.2 () {
-    ! mmux_ulong_is_negative WW(libc_MAX_ULONG)
+    ! mmux_ulong_is_negative WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-negative-ulong-1.3 () {
-    ! mmux_ulong_is_negative WW(libc_MIN_ULONG)
+    ! mmux_ulong_is_negative WW(mmux_libc_MIN_ULONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -644,10 +644,10 @@ function predicates-is-non-positive-ulong-1.1 () {
     mmux_ulong_is_non_positive 0
 }
 function predicates-is-non-positive-ulong-1.2 () {
-    ! mmux_ulong_is_non_positive WW(libc_MAX_ULONG)
+    ! mmux_ulong_is_non_positive WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-non-positive-ulong-1.3 () {
-    mmux_ulong_is_non_positive WW(libc_MIN_ULONG)
+    mmux_ulong_is_non_positive WW(mmux_libc_MIN_ULONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -656,28 +656,28 @@ function predicates-is-non-negative-ulong-1.1 () {
     mmux_ulong_is_non_negative 0
 }
 function predicates-is-non-negative-ulong-1.2 () {
-    mmux_ulong_is_non_negative WW(libc_MAX_ULONG)
+    mmux_ulong_is_non_negative WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-non-negative-ulong-1.3 () {
-    mmux_ulong_is_non_negative WW(libc_MIN_ULONG)
+    mmux_ulong_is_non_negative WW(mmux_libc_MIN_ULONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-ulong-1.1 () {
-    ! mmux_ulong_is_infinite WW(libc_MAX_ULONG)
+    ! mmux_ulong_is_infinite WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-infinite-ulong-1.2 () {
-    ! mmux_ulong_is_infinite WW(libc_MIN_ULONG)
+    ! mmux_ulong_is_infinite WW(mmux_libc_MIN_ULONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-ulong-1.1 () {
-    ! mmux_ulong_is_nan WW(libc_MAX_ULONG)
+    ! mmux_ulong_is_nan WW(mmux_libc_MAX_ULONG)
 }
 function predicates-is-nan-ulong-1.2 () {
-    ! mmux_ulong_is_nan WW(libc_MIN_ULONG)
+    ! mmux_ulong_is_nan WW(mmux_libc_MIN_ULONG)
 }
 
 
@@ -687,10 +687,10 @@ function predicates-is-zero-sllong-1.1 () {
     mmux_sllong_is_zero 0
 }
 function predicates-is-zero-sllong-1.2 () {
-    ! mmux_sllong_is_zero WW(libc_MAX_SLLONG)
+    ! mmux_sllong_is_zero WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-zero-sllong-1.3 () {
-    ! mmux_sllong_is_zero WW(libc_MIN_SLLONG)
+    ! mmux_sllong_is_zero WW(mmux_libc_MIN_SLLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -699,10 +699,10 @@ function predicates-is-positive-sllong-1.1 () {
     ! mmux_sllong_is_positive 0
 }
 function predicates-is-positive-sllong-1.2 () {
-    mmux_sllong_is_positive WW(libc_MAX_SLLONG)
+    mmux_sllong_is_positive WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-positive-sllong-1.3 () {
-    ! mmux_sllong_is_positive WW(libc_MIN_SLLONG)
+    ! mmux_sllong_is_positive WW(mmux_libc_MIN_SLLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -711,10 +711,10 @@ function predicates-is-negative-sllong-1.1 () {
     ! mmux_sllong_is_negative 0
 }
 function predicates-is-negative-sllong-1.2 () {
-    ! mmux_sllong_is_negative WW(libc_MAX_SLLONG)
+    ! mmux_sllong_is_negative WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-negative-sllong-1.3 () {
-    mmux_sllong_is_negative WW(libc_MIN_SLLONG)
+    mmux_sllong_is_negative WW(mmux_libc_MIN_SLLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -723,10 +723,10 @@ function predicates-is-non-positive-sllong-1.1 () {
     mmux_sllong_is_non_positive 0
 }
 function predicates-is-non-positive-sllong-1.2 () {
-    ! mmux_sllong_is_non_positive WW(libc_MAX_SLLONG)
+    ! mmux_sllong_is_non_positive WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-non-positive-sllong-1.3 () {
-    mmux_sllong_is_non_positive WW(libc_MIN_SLLONG)
+    mmux_sllong_is_non_positive WW(mmux_libc_MIN_SLLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -735,28 +735,28 @@ function predicates-is-non-negative-sllong-1.1 () {
     mmux_sllong_is_non_negative 0
 }
 function predicates-is-non-negative-sllong-1.2 () {
-    mmux_sllong_is_non_negative WW(libc_MAX_SLLONG)
+    mmux_sllong_is_non_negative WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-non-negative-sllong-1.3 () {
-    ! mmux_sllong_is_non_negative WW(libc_MIN_SLLONG)
+    ! mmux_sllong_is_non_negative WW(mmux_libc_MIN_SLLONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sllong-1.1 () {
-    ! mmux_sllong_is_infinite WW(libc_MAX_SLLONG)
+    ! mmux_sllong_is_infinite WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-infinite-sllong-1.2 () {
-    ! mmux_sllong_is_infinite WW(libc_MIN_SLLONG)
+    ! mmux_sllong_is_infinite WW(mmux_libc_MIN_SLLONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sllong-1.1 () {
-    ! mmux_sllong_is_nan WW(libc_MAX_SLLONG)
+    ! mmux_sllong_is_nan WW(mmux_libc_MAX_SLLONG)
 }
 function predicates-is-nan-sllong-1.2 () {
-    ! mmux_sllong_is_nan WW(libc_MIN_SLLONG)
+    ! mmux_sllong_is_nan WW(mmux_libc_MIN_SLLONG)
 }
 
 
@@ -766,10 +766,10 @@ function predicates-is-zero-ullong-1.1 () {
     mmux_ullong_is_zero 0
 }
 function predicates-is-zero-ullong-1.2 () {
-    ! mmux_ullong_is_zero WW(libc_MAX_ULLONG)
+    ! mmux_ullong_is_zero WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-zero-ullong-1.3 () {
-    mmux_ullong_is_zero WW(libc_MIN_ULLONG)
+    mmux_ullong_is_zero WW(mmux_libc_MIN_ULLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -778,10 +778,10 @@ function predicates-is-positive-ullong-1.1 () {
     ! mmux_ullong_is_positive 0
 }
 function predicates-is-positive-ullong-1.2 () {
-    mmux_ullong_is_positive WW(libc_MAX_ULLONG)
+    mmux_ullong_is_positive WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-positive-ullong-1.3 () {
-    ! mmux_ullong_is_positive WW(libc_MIN_ULLONG)
+    ! mmux_ullong_is_positive WW(mmux_libc_MIN_ULLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -790,10 +790,10 @@ function predicates-is-negative-ullong-1.1 () {
     ! mmux_ullong_is_negative 0
 }
 function predicates-is-negative-ullong-1.2 () {
-    ! mmux_ullong_is_negative WW(libc_MAX_ULLONG)
+    ! mmux_ullong_is_negative WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-negative-ullong-1.3 () {
-    ! mmux_ullong_is_negative WW(libc_MIN_ULLONG)
+    ! mmux_ullong_is_negative WW(mmux_libc_MIN_ULLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -802,10 +802,10 @@ function predicates-is-non-positive-ullong-1.1 () {
     mmux_ullong_is_non_positive 0
 }
 function predicates-is-non-positive-ullong-1.2 () {
-    ! mmux_ullong_is_non_positive WW(libc_MAX_ULLONG)
+    ! mmux_ullong_is_non_positive WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-non-positive-ullong-1.3 () {
-    mmux_ullong_is_non_positive WW(libc_MIN_ULLONG)
+    mmux_ullong_is_non_positive WW(mmux_libc_MIN_ULLONG)
 }
 
 ### ------------------------------------------------------------------------
@@ -814,28 +814,28 @@ function predicates-is-non-negative-ullong-1.1 () {
     mmux_ullong_is_non_negative 0
 }
 function predicates-is-non-negative-ullong-1.2 () {
-    mmux_ullong_is_non_negative WW(libc_MAX_ULLONG)
+    mmux_ullong_is_non_negative WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-non-negative-ullong-1.3 () {
-    mmux_ullong_is_non_negative WW(libc_MIN_ULLONG)
+    mmux_ullong_is_non_negative WW(mmux_libc_MIN_ULLONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-ullong-1.1 () {
-    ! mmux_ullong_is_infinite WW(libc_MAX_ULLONG)
+    ! mmux_ullong_is_infinite WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-infinite-ullong-1.2 () {
-    ! mmux_ullong_is_infinite WW(libc_MIN_ULLONG)
+    ! mmux_ullong_is_infinite WW(mmux_libc_MIN_ULLONG)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-ullong-1.1 () {
-    ! mmux_ullong_is_nan WW(libc_MAX_ULLONG)
+    ! mmux_ullong_is_nan WW(mmux_libc_MAX_ULLONG)
 }
 function predicates-is-nan-ullong-1.2 () {
-    ! mmux_ullong_is_nan WW(libc_MIN_ULLONG)
+    ! mmux_ullong_is_nan WW(mmux_libc_MIN_ULLONG)
 }
 
 
@@ -845,10 +845,10 @@ function predicates-is-zero-sint8-1.1 () {
     mmux_sint8_is_zero 0
 }
 function predicates-is-zero-sint8-1.2 () {
-    ! mmux_sint8_is_zero WW(libc_MAX_SINT8)
+    ! mmux_sint8_is_zero WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-zero-sint8-1.3 () {
-    ! mmux_sint8_is_zero WW(libc_MIN_SINT8)
+    ! mmux_sint8_is_zero WW(mmux_libc_MIN_SINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -857,10 +857,10 @@ function predicates-is-positive-sint8-1.1 () {
     ! mmux_sint8_is_positive 0
 }
 function predicates-is-positive-sint8-1.2 () {
-    mmux_sint8_is_positive WW(libc_MAX_SINT8)
+    mmux_sint8_is_positive WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-positive-sint8-1.3 () {
-    ! mmux_sint8_is_positive WW(libc_MIN_SINT8)
+    ! mmux_sint8_is_positive WW(mmux_libc_MIN_SINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -869,10 +869,10 @@ function predicates-is-negative-sint8-1.1 () {
     ! mmux_sint8_is_negative 0
 }
 function predicates-is-negative-sint8-1.2 () {
-    ! mmux_sint8_is_negative WW(libc_MAX_SINT8)
+    ! mmux_sint8_is_negative WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-negative-sint8-1.3 () {
-    mmux_sint8_is_negative WW(libc_MIN_SINT8)
+    mmux_sint8_is_negative WW(mmux_libc_MIN_SINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -881,10 +881,10 @@ function predicates-is-non-positive-sint8-1.1 () {
     mmux_sint8_is_non_positive 0
 }
 function predicates-is-non-positive-sint8-1.2 () {
-    ! mmux_sint8_is_non_positive WW(libc_MAX_SINT8)
+    ! mmux_sint8_is_non_positive WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-non-positive-sint8-1.3 () {
-    mmux_sint8_is_non_positive WW(libc_MIN_SINT8)
+    mmux_sint8_is_non_positive WW(mmux_libc_MIN_SINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -893,28 +893,28 @@ function predicates-is-non-negative-sint8-1.1 () {
     mmux_sint8_is_non_negative 0
 }
 function predicates-is-non-negative-sint8-1.2 () {
-    mmux_sint8_is_non_negative WW(libc_MAX_SINT8)
+    mmux_sint8_is_non_negative WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-non-negative-sint8-1.3 () {
-    ! mmux_sint8_is_non_negative WW(libc_MIN_SINT8)
+    ! mmux_sint8_is_non_negative WW(mmux_libc_MIN_SINT8)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sint8-1.1 () {
-    ! mmux_sint8_is_infinite WW(libc_MAX_SINT8)
+    ! mmux_sint8_is_infinite WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-infinite-sint8-1.2 () {
-    ! mmux_sint8_is_infinite WW(libc_MIN_SINT8)
+    ! mmux_sint8_is_infinite WW(mmux_libc_MIN_SINT8)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sint8-1.1 () {
-    ! mmux_sint8_is_nan WW(libc_MAX_SINT8)
+    ! mmux_sint8_is_nan WW(mmux_libc_MAX_SINT8)
 }
 function predicates-is-nan-sint8-1.2 () {
-    ! mmux_sint8_is_nan WW(libc_MIN_SINT8)
+    ! mmux_sint8_is_nan WW(mmux_libc_MIN_SINT8)
 }
 
 
@@ -924,10 +924,10 @@ function predicates-is-zero-uint8-1.1 () {
     mmux_uint8_is_zero 0
 }
 function predicates-is-zero-uint8-1.2 () {
-    ! mmux_uint8_is_zero WW(libc_MAX_UINT8)
+    ! mmux_uint8_is_zero WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-zero-uint8-1.3 () {
-    mmux_uint8_is_zero WW(libc_MIN_UINT8)
+    mmux_uint8_is_zero WW(mmux_libc_MIN_UINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -936,10 +936,10 @@ function predicates-is-positive-uint8-1.1 () {
     ! mmux_uint8_is_positive 0
 }
 function predicates-is-positive-uint8-1.2 () {
-    mmux_uint8_is_positive WW(libc_MAX_UINT8)
+    mmux_uint8_is_positive WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-positive-uint8-1.3 () {
-    ! mmux_uint8_is_positive WW(libc_MIN_UINT8)
+    ! mmux_uint8_is_positive WW(mmux_libc_MIN_UINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -948,10 +948,10 @@ function predicates-is-negative-uint8-1.1 () {
     ! mmux_uint8_is_negative 0
 }
 function predicates-is-negative-uint8-1.2 () {
-    ! mmux_uint8_is_negative WW(libc_MAX_UINT8)
+    ! mmux_uint8_is_negative WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-negative-uint8-1.3 () {
-    ! mmux_uint8_is_negative WW(libc_MIN_UINT8)
+    ! mmux_uint8_is_negative WW(mmux_libc_MIN_UINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -960,10 +960,10 @@ function predicates-is-non-positive-uint8-1.1 () {
     mmux_uint8_is_non_positive 0
 }
 function predicates-is-non-positive-uint8-1.2 () {
-    ! mmux_uint8_is_non_positive WW(libc_MAX_UINT8)
+    ! mmux_uint8_is_non_positive WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-non-positive-uint8-1.3 () {
-    mmux_uint8_is_non_positive WW(libc_MIN_UINT8)
+    mmux_uint8_is_non_positive WW(mmux_libc_MIN_UINT8)
 }
 
 ### ------------------------------------------------------------------------
@@ -972,28 +972,28 @@ function predicates-is-non-negative-uint8-1.1 () {
     mmux_uint8_is_non_negative 0
 }
 function predicates-is-non-negative-uint8-1.2 () {
-    mmux_uint8_is_non_negative WW(libc_MAX_UINT8)
+    mmux_uint8_is_non_negative WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-non-negative-uint8-1.3 () {
-    mmux_uint8_is_non_negative WW(libc_MIN_UINT8)
+    mmux_uint8_is_non_negative WW(mmux_libc_MIN_UINT8)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uint8-1.1 () {
-    ! mmux_uint8_is_infinite WW(libc_MAX_UINT8)
+    ! mmux_uint8_is_infinite WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-infinite-uint8-1.2 () {
-    ! mmux_uint8_is_infinite WW(libc_MIN_UINT8)
+    ! mmux_uint8_is_infinite WW(mmux_libc_MIN_UINT8)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uint8-1.1 () {
-    ! mmux_uint8_is_nan WW(libc_MAX_UINT8)
+    ! mmux_uint8_is_nan WW(mmux_libc_MAX_UINT8)
 }
 function predicates-is-nan-uint8-1.2 () {
-    ! mmux_uint8_is_nan WW(libc_MIN_UINT8)
+    ! mmux_uint8_is_nan WW(mmux_libc_MIN_UINT8)
 }
 
 
@@ -1003,10 +1003,10 @@ function predicates-is-zero-sint16-1.1 () {
     mmux_sint16_is_zero 0
 }
 function predicates-is-zero-sint16-1.2 () {
-    ! mmux_sint16_is_zero WW(libc_MAX_SINT16)
+    ! mmux_sint16_is_zero WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-zero-sint16-1.3 () {
-    ! mmux_sint16_is_zero WW(libc_MIN_SINT16)
+    ! mmux_sint16_is_zero WW(mmux_libc_MIN_SINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1015,10 +1015,10 @@ function predicates-is-positive-sint16-1.1 () {
     ! mmux_sint16_is_positive 0
 }
 function predicates-is-positive-sint16-1.2 () {
-    mmux_sint16_is_positive WW(libc_MAX_SINT16)
+    mmux_sint16_is_positive WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-positive-sint16-1.3 () {
-    ! mmux_sint16_is_positive WW(libc_MIN_SINT16)
+    ! mmux_sint16_is_positive WW(mmux_libc_MIN_SINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1027,10 +1027,10 @@ function predicates-is-negative-sint16-1.1 () {
     ! mmux_sint16_is_negative 0
 }
 function predicates-is-negative-sint16-1.2 () {
-    ! mmux_sint16_is_negative WW(libc_MAX_SINT16)
+    ! mmux_sint16_is_negative WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-negative-sint16-1.3 () {
-    mmux_sint16_is_negative WW(libc_MIN_SINT16)
+    mmux_sint16_is_negative WW(mmux_libc_MIN_SINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1039,10 +1039,10 @@ function predicates-is-non-positive-sint16-1.1 () {
     mmux_sint16_is_non_positive 0
 }
 function predicates-is-non-positive-sint16-1.2 () {
-    ! mmux_sint16_is_non_positive WW(libc_MAX_SINT16)
+    ! mmux_sint16_is_non_positive WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-non-positive-sint16-1.3 () {
-    mmux_sint16_is_non_positive WW(libc_MIN_SINT16)
+    mmux_sint16_is_non_positive WW(mmux_libc_MIN_SINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1051,28 +1051,28 @@ function predicates-is-non-negative-sint16-1.1 () {
     mmux_sint16_is_non_negative 0
 }
 function predicates-is-non-negative-sint16-1.2 () {
-    mmux_sint16_is_non_negative WW(libc_MAX_SINT16)
+    mmux_sint16_is_non_negative WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-non-negative-sint16-1.3 () {
-    ! mmux_sint16_is_non_negative WW(libc_MIN_SINT16)
+    ! mmux_sint16_is_non_negative WW(mmux_libc_MIN_SINT16)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sint16-1.1 () {
-    ! mmux_sint16_is_infinite WW(libc_MAX_SINT16)
+    ! mmux_sint16_is_infinite WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-infinite-sint16-1.2 () {
-    ! mmux_sint16_is_infinite WW(libc_MIN_SINT16)
+    ! mmux_sint16_is_infinite WW(mmux_libc_MIN_SINT16)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sint16-1.1 () {
-    ! mmux_sint16_is_nan WW(libc_MAX_SINT16)
+    ! mmux_sint16_is_nan WW(mmux_libc_MAX_SINT16)
 }
 function predicates-is-nan-sint16-1.2 () {
-    ! mmux_sint16_is_nan WW(libc_MIN_SINT16)
+    ! mmux_sint16_is_nan WW(mmux_libc_MIN_SINT16)
 }
 
 
@@ -1082,10 +1082,10 @@ function predicates-is-zero-uint16-1.1 () {
     mmux_uint16_is_zero 0
 }
 function predicates-is-zero-uint16-1.2 () {
-    ! mmux_uint16_is_zero WW(libc_MAX_UINT16)
+    ! mmux_uint16_is_zero WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-zero-uint16-1.3 () {
-    mmux_uint16_is_zero WW(libc_MIN_UINT16)
+    mmux_uint16_is_zero WW(mmux_libc_MIN_UINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1094,10 +1094,10 @@ function predicates-is-positive-uint16-1.1 () {
     ! mmux_uint16_is_positive 0
 }
 function predicates-is-positive-uint16-1.2 () {
-    mmux_uint16_is_positive WW(libc_MAX_UINT16)
+    mmux_uint16_is_positive WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-positive-uint16-1.3 () {
-    ! mmux_uint16_is_positive WW(libc_MIN_UINT16)
+    ! mmux_uint16_is_positive WW(mmux_libc_MIN_UINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1106,10 +1106,10 @@ function predicates-is-negative-uint16-1.1 () {
     ! mmux_uint16_is_negative 0
 }
 function predicates-is-negative-uint16-1.2 () {
-    ! mmux_uint16_is_negative WW(libc_MAX_UINT16)
+    ! mmux_uint16_is_negative WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-negative-uint16-1.3 () {
-    ! mmux_uint16_is_negative WW(libc_MIN_UINT16)
+    ! mmux_uint16_is_negative WW(mmux_libc_MIN_UINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1118,10 +1118,10 @@ function predicates-is-non-positive-uint16-1.1 () {
     mmux_uint16_is_non_positive 0
 }
 function predicates-is-non-positive-uint16-1.2 () {
-    ! mmux_uint16_is_non_positive WW(libc_MAX_UINT16)
+    ! mmux_uint16_is_non_positive WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-non-positive-uint16-1.3 () {
-    mmux_uint16_is_non_positive WW(libc_MIN_UINT16)
+    mmux_uint16_is_non_positive WW(mmux_libc_MIN_UINT16)
 }
 
 ### ------------------------------------------------------------------------
@@ -1130,28 +1130,28 @@ function predicates-is-non-negative-uint16-1.1 () {
     mmux_uint16_is_non_negative 0
 }
 function predicates-is-non-negative-uint16-1.2 () {
-    mmux_uint16_is_non_negative WW(libc_MAX_UINT16)
+    mmux_uint16_is_non_negative WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-non-negative-uint16-1.3 () {
-    mmux_uint16_is_non_negative WW(libc_MIN_UINT16)
+    mmux_uint16_is_non_negative WW(mmux_libc_MIN_UINT16)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uint16-1.1 () {
-    ! mmux_uint16_is_infinite WW(libc_MAX_UINT16)
+    ! mmux_uint16_is_infinite WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-infinite-uint16-1.2 () {
-    ! mmux_uint16_is_infinite WW(libc_MIN_UINT16)
+    ! mmux_uint16_is_infinite WW(mmux_libc_MIN_UINT16)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uint16-1.1 () {
-    ! mmux_uint16_is_nan WW(libc_MAX_UINT16)
+    ! mmux_uint16_is_nan WW(mmux_libc_MAX_UINT16)
 }
 function predicates-is-nan-uint16-1.2 () {
-    ! mmux_uint16_is_nan WW(libc_MIN_UINT16)
+    ! mmux_uint16_is_nan WW(mmux_libc_MIN_UINT16)
 }
 
 
@@ -1161,10 +1161,10 @@ function predicates-is-zero-sint32-1.1 () {
     mmux_sint32_is_zero 0
 }
 function predicates-is-zero-sint32-1.2 () {
-    ! mmux_sint32_is_zero WW(libc_MAX_SINT32)
+    ! mmux_sint32_is_zero WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-zero-sint32-1.3 () {
-    ! mmux_sint32_is_zero WW(libc_MIN_SINT32)
+    ! mmux_sint32_is_zero WW(mmux_libc_MIN_SINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1173,10 +1173,10 @@ function predicates-is-positive-sint32-1.1 () {
     ! mmux_sint32_is_positive 0
 }
 function predicates-is-positive-sint32-1.2 () {
-    mmux_sint32_is_positive WW(libc_MAX_SINT32)
+    mmux_sint32_is_positive WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-positive-sint32-1.3 () {
-    ! mmux_sint32_is_positive WW(libc_MIN_SINT32)
+    ! mmux_sint32_is_positive WW(mmux_libc_MIN_SINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1185,10 +1185,10 @@ function predicates-is-negative-sint32-1.1 () {
     ! mmux_sint32_is_negative 0
 }
 function predicates-is-negative-sint32-1.2 () {
-    ! mmux_sint32_is_negative WW(libc_MAX_SINT32)
+    ! mmux_sint32_is_negative WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-negative-sint32-1.3 () {
-    mmux_sint32_is_negative WW(libc_MIN_SINT32)
+    mmux_sint32_is_negative WW(mmux_libc_MIN_SINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1197,10 +1197,10 @@ function predicates-is-non-positive-sint32-1.1 () {
     mmux_sint32_is_non_positive 0
 }
 function predicates-is-non-positive-sint32-1.2 () {
-    ! mmux_sint32_is_non_positive WW(libc_MAX_SINT32)
+    ! mmux_sint32_is_non_positive WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-non-positive-sint32-1.3 () {
-    mmux_sint32_is_non_positive WW(libc_MIN_SINT32)
+    mmux_sint32_is_non_positive WW(mmux_libc_MIN_SINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1209,28 +1209,28 @@ function predicates-is-non-negative-sint32-1.1 () {
     mmux_sint32_is_non_negative 0
 }
 function predicates-is-non-negative-sint32-1.2 () {
-    mmux_sint32_is_non_negative WW(libc_MAX_SINT32)
+    mmux_sint32_is_non_negative WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-non-negative-sint32-1.3 () {
-    ! mmux_sint32_is_non_negative WW(libc_MIN_SINT32)
+    ! mmux_sint32_is_non_negative WW(mmux_libc_MIN_SINT32)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sint32-1.1 () {
-    ! mmux_sint32_is_infinite WW(libc_MAX_SINT32)
+    ! mmux_sint32_is_infinite WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-infinite-sint32-1.2 () {
-    ! mmux_sint32_is_infinite WW(libc_MIN_SINT32)
+    ! mmux_sint32_is_infinite WW(mmux_libc_MIN_SINT32)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sint32-1.1 () {
-    ! mmux_sint32_is_nan WW(libc_MAX_SINT32)
+    ! mmux_sint32_is_nan WW(mmux_libc_MAX_SINT32)
 }
 function predicates-is-nan-sint32-1.2 () {
-    ! mmux_sint32_is_nan WW(libc_MIN_SINT32)
+    ! mmux_sint32_is_nan WW(mmux_libc_MIN_SINT32)
 }
 
 
@@ -1240,10 +1240,10 @@ function predicates-is-zero-uint32-1.1 () {
     mmux_uint32_is_zero 0
 }
 function predicates-is-zero-uint32-1.2 () {
-    ! mmux_uint32_is_zero WW(libc_MAX_UINT32)
+    ! mmux_uint32_is_zero WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-zero-uint32-1.3 () {
-    mmux_uint32_is_zero WW(libc_MIN_UINT32)
+    mmux_uint32_is_zero WW(mmux_libc_MIN_UINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1252,10 +1252,10 @@ function predicates-is-positive-uint32-1.1 () {
     ! mmux_uint32_is_positive 0
 }
 function predicates-is-positive-uint32-1.2 () {
-    mmux_uint32_is_positive WW(libc_MAX_UINT32)
+    mmux_uint32_is_positive WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-positive-uint32-1.3 () {
-    ! mmux_uint32_is_positive WW(libc_MIN_UINT32)
+    ! mmux_uint32_is_positive WW(mmux_libc_MIN_UINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1264,10 +1264,10 @@ function predicates-is-negative-uint32-1.1 () {
     ! mmux_uint32_is_negative 0
 }
 function predicates-is-negative-uint32-1.2 () {
-    ! mmux_uint32_is_negative WW(libc_MAX_UINT32)
+    ! mmux_uint32_is_negative WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-negative-uint32-1.3 () {
-    ! mmux_uint32_is_negative WW(libc_MIN_UINT32)
+    ! mmux_uint32_is_negative WW(mmux_libc_MIN_UINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1276,10 +1276,10 @@ function predicates-is-non-positive-uint32-1.1 () {
     mmux_uint32_is_non_positive 0
 }
 function predicates-is-non-positive-uint32-1.2 () {
-    ! mmux_uint32_is_non_positive WW(libc_MAX_UINT32)
+    ! mmux_uint32_is_non_positive WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-non-positive-uint32-1.3 () {
-    mmux_uint32_is_non_positive WW(libc_MIN_UINT32)
+    mmux_uint32_is_non_positive WW(mmux_libc_MIN_UINT32)
 }
 
 ### ------------------------------------------------------------------------
@@ -1288,28 +1288,28 @@ function predicates-is-non-negative-uint32-1.1 () {
     mmux_uint32_is_non_negative 0
 }
 function predicates-is-non-negative-uint32-1.2 () {
-    mmux_uint32_is_non_negative WW(libc_MAX_UINT32)
+    mmux_uint32_is_non_negative WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-non-negative-uint32-1.3 () {
-    mmux_uint32_is_non_negative WW(libc_MIN_UINT32)
+    mmux_uint32_is_non_negative WW(mmux_libc_MIN_UINT32)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uint32-1.1 () {
-    ! mmux_uint32_is_infinite WW(libc_MAX_UINT32)
+    ! mmux_uint32_is_infinite WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-infinite-uint32-1.2 () {
-    ! mmux_uint32_is_infinite WW(libc_MIN_UINT32)
+    ! mmux_uint32_is_infinite WW(mmux_libc_MIN_UINT32)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uint32-1.1 () {
-    ! mmux_uint32_is_nan WW(libc_MAX_UINT32)
+    ! mmux_uint32_is_nan WW(mmux_libc_MAX_UINT32)
 }
 function predicates-is-nan-uint32-1.2 () {
-    ! mmux_uint32_is_nan WW(libc_MIN_UINT32)
+    ! mmux_uint32_is_nan WW(mmux_libc_MIN_UINT32)
 }
 
 
@@ -1319,10 +1319,10 @@ function predicates-is-zero-sint64-1.1 () {
     mmux_sint64_is_zero 0
 }
 function predicates-is-zero-sint64-1.2 () {
-    ! mmux_sint64_is_zero WW(libc_MAX_SINT64)
+    ! mmux_sint64_is_zero WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-zero-sint64-1.3 () {
-    ! mmux_sint64_is_zero WW(libc_MIN_SINT64)
+    ! mmux_sint64_is_zero WW(mmux_libc_MIN_SINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1331,10 +1331,10 @@ function predicates-is-positive-sint64-1.1 () {
     ! mmux_sint64_is_positive 0
 }
 function predicates-is-positive-sint64-1.2 () {
-    mmux_sint64_is_positive WW(libc_MAX_SINT64)
+    mmux_sint64_is_positive WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-positive-sint64-1.3 () {
-    ! mmux_sint64_is_positive WW(libc_MIN_SINT64)
+    ! mmux_sint64_is_positive WW(mmux_libc_MIN_SINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1343,10 +1343,10 @@ function predicates-is-negative-sint64-1.1 () {
     ! mmux_sint64_is_negative 0
 }
 function predicates-is-negative-sint64-1.2 () {
-    ! mmux_sint64_is_negative WW(libc_MAX_SINT64)
+    ! mmux_sint64_is_negative WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-negative-sint64-1.3 () {
-    mmux_sint64_is_negative WW(libc_MIN_SINT64)
+    mmux_sint64_is_negative WW(mmux_libc_MIN_SINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1355,10 +1355,10 @@ function predicates-is-non-positive-sint64-1.1 () {
     mmux_sint64_is_non_positive 0
 }
 function predicates-is-non-positive-sint64-1.2 () {
-    ! mmux_sint64_is_non_positive WW(libc_MAX_SINT64)
+    ! mmux_sint64_is_non_positive WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-non-positive-sint64-1.3 () {
-    mmux_sint64_is_non_positive WW(libc_MIN_SINT64)
+    mmux_sint64_is_non_positive WW(mmux_libc_MIN_SINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1367,28 +1367,28 @@ function predicates-is-non-negative-sint64-1.1 () {
     mmux_sint64_is_non_negative 0
 }
 function predicates-is-non-negative-sint64-1.2 () {
-    mmux_sint64_is_non_negative WW(libc_MAX_SINT64)
+    mmux_sint64_is_non_negative WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-non-negative-sint64-1.3 () {
-    ! mmux_sint64_is_non_negative WW(libc_MIN_SINT64)
+    ! mmux_sint64_is_non_negative WW(mmux_libc_MIN_SINT64)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sint64-1.1 () {
-    ! mmux_sint64_is_infinite WW(libc_MAX_SINT64)
+    ! mmux_sint64_is_infinite WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-infinite-sint64-1.2 () {
-    ! mmux_sint64_is_infinite WW(libc_MIN_SINT64)
+    ! mmux_sint64_is_infinite WW(mmux_libc_MIN_SINT64)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sint64-1.1 () {
-    ! mmux_sint64_is_nan WW(libc_MAX_SINT64)
+    ! mmux_sint64_is_nan WW(mmux_libc_MAX_SINT64)
 }
 function predicates-is-nan-sint64-1.2 () {
-    ! mmux_sint64_is_nan WW(libc_MIN_SINT64)
+    ! mmux_sint64_is_nan WW(mmux_libc_MIN_SINT64)
 }
 
 
@@ -1398,10 +1398,10 @@ function predicates-is-zero-uint64-1.1 () {
     mmux_uint64_is_zero 0
 }
 function predicates-is-zero-uint64-1.2 () {
-    ! mmux_uint64_is_zero WW(libc_MAX_UINT64)
+    ! mmux_uint64_is_zero WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-zero-uint64-1.3 () {
-    mmux_uint64_is_zero WW(libc_MIN_UINT64)
+    mmux_uint64_is_zero WW(mmux_libc_MIN_UINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1410,10 +1410,10 @@ function predicates-is-positive-uint64-1.1 () {
     ! mmux_uint64_is_positive 0
 }
 function predicates-is-positive-uint64-1.2 () {
-    mmux_uint64_is_positive WW(libc_MAX_UINT64)
+    mmux_uint64_is_positive WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-positive-uint64-1.3 () {
-    ! mmux_uint64_is_positive WW(libc_MIN_UINT64)
+    ! mmux_uint64_is_positive WW(mmux_libc_MIN_UINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1422,10 +1422,10 @@ function predicates-is-negative-uint64-1.1 () {
     ! mmux_uint64_is_negative 0
 }
 function predicates-is-negative-uint64-1.2 () {
-    ! mmux_uint64_is_negative WW(libc_MAX_UINT64)
+    ! mmux_uint64_is_negative WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-negative-uint64-1.3 () {
-    ! mmux_uint64_is_negative WW(libc_MIN_UINT64)
+    ! mmux_uint64_is_negative WW(mmux_libc_MIN_UINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1434,10 +1434,10 @@ function predicates-is-non-positive-uint64-1.1 () {
     mmux_uint64_is_non_positive 0
 }
 function predicates-is-non-positive-uint64-1.2 () {
-    ! mmux_uint64_is_non_positive WW(libc_MAX_UINT64)
+    ! mmux_uint64_is_non_positive WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-non-positive-uint64-1.3 () {
-    mmux_uint64_is_non_positive WW(libc_MIN_UINT64)
+    mmux_uint64_is_non_positive WW(mmux_libc_MIN_UINT64)
 }
 
 ### ------------------------------------------------------------------------
@@ -1446,28 +1446,28 @@ function predicates-is-non-negative-uint64-1.1 () {
     mmux_uint64_is_non_negative 0
 }
 function predicates-is-non-negative-uint64-1.2 () {
-    mmux_uint64_is_non_negative WW(libc_MAX_UINT64)
+    mmux_uint64_is_non_negative WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-non-negative-uint64-1.3 () {
-    mmux_uint64_is_non_negative WW(libc_MIN_UINT64)
+    mmux_uint64_is_non_negative WW(mmux_libc_MIN_UINT64)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uint64-1.1 () {
-    ! mmux_uint64_is_infinite WW(libc_MAX_UINT64)
+    ! mmux_uint64_is_infinite WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-infinite-uint64-1.2 () {
-    ! mmux_uint64_is_infinite WW(libc_MIN_UINT64)
+    ! mmux_uint64_is_infinite WW(mmux_libc_MIN_UINT64)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uint64-1.1 () {
-    ! mmux_uint64_is_nan WW(libc_MAX_UINT64)
+    ! mmux_uint64_is_nan WW(mmux_libc_MAX_UINT64)
 }
 function predicates-is-nan-uint64-1.2 () {
-    ! mmux_uint64_is_nan WW(libc_MIN_UINT64)
+    ! mmux_uint64_is_nan WW(mmux_libc_MIN_UINT64)
 }
 
 
@@ -1477,10 +1477,10 @@ function predicates-is-zero-sintmax-1.1 () {
     mmux_sintmax_is_zero 0
 }
 function predicates-is-zero-sintmax-1.2 () {
-    ! mmux_sintmax_is_zero WW(libc_MAX_SINTMAX)
+    ! mmux_sintmax_is_zero WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-zero-sintmax-1.3 () {
-    ! mmux_sintmax_is_zero WW(libc_MIN_SINTMAX)
+    ! mmux_sintmax_is_zero WW(mmux_libc_MIN_SINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1489,10 +1489,10 @@ function predicates-is-positive-sintmax-1.1 () {
     ! mmux_sintmax_is_positive 0
 }
 function predicates-is-positive-sintmax-1.2 () {
-    mmux_sintmax_is_positive WW(libc_MAX_SINTMAX)
+    mmux_sintmax_is_positive WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-positive-sintmax-1.3 () {
-    ! mmux_sintmax_is_positive WW(libc_MIN_SINTMAX)
+    ! mmux_sintmax_is_positive WW(mmux_libc_MIN_SINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1501,10 +1501,10 @@ function predicates-is-negative-sintmax-1.1 () {
     ! mmux_sintmax_is_negative 0
 }
 function predicates-is-negative-sintmax-1.2 () {
-    ! mmux_sintmax_is_negative WW(libc_MAX_SINTMAX)
+    ! mmux_sintmax_is_negative WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-negative-sintmax-1.3 () {
-    mmux_sintmax_is_negative WW(libc_MIN_SINTMAX)
+    mmux_sintmax_is_negative WW(mmux_libc_MIN_SINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1513,10 +1513,10 @@ function predicates-is-non-positive-sintmax-1.1 () {
     mmux_sintmax_is_non_positive 0
 }
 function predicates-is-non-positive-sintmax-1.2 () {
-    ! mmux_sintmax_is_non_positive WW(libc_MAX_SINTMAX)
+    ! mmux_sintmax_is_non_positive WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-non-positive-sintmax-1.3 () {
-    mmux_sintmax_is_non_positive WW(libc_MIN_SINTMAX)
+    mmux_sintmax_is_non_positive WW(mmux_libc_MIN_SINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1525,28 +1525,28 @@ function predicates-is-non-negative-sintmax-1.1 () {
     mmux_sintmax_is_non_negative 0
 }
 function predicates-is-non-negative-sintmax-1.2 () {
-    mmux_sintmax_is_non_negative WW(libc_MAX_SINTMAX)
+    mmux_sintmax_is_non_negative WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-non-negative-sintmax-1.3 () {
-    ! mmux_sintmax_is_non_negative WW(libc_MIN_SINTMAX)
+    ! mmux_sintmax_is_non_negative WW(mmux_libc_MIN_SINTMAX)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sintmax-1.1 () {
-    ! mmux_sintmax_is_infinite WW(libc_MAX_SINTMAX)
+    ! mmux_sintmax_is_infinite WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-infinite-sintmax-1.2 () {
-    ! mmux_sintmax_is_infinite WW(libc_MIN_SINTMAX)
+    ! mmux_sintmax_is_infinite WW(mmux_libc_MIN_SINTMAX)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sintmax-1.1 () {
-    ! mmux_sintmax_is_nan WW(libc_MAX_SINTMAX)
+    ! mmux_sintmax_is_nan WW(mmux_libc_MAX_SINTMAX)
 }
 function predicates-is-nan-sintmax-1.2 () {
-    ! mmux_sintmax_is_nan WW(libc_MIN_SINTMAX)
+    ! mmux_sintmax_is_nan WW(mmux_libc_MIN_SINTMAX)
 }
 
 
@@ -1556,10 +1556,10 @@ function predicates-is-zero-uintmax-1.1 () {
     mmux_uintmax_is_zero 0
 }
 function predicates-is-zero-uintmax-1.2 () {
-    ! mmux_uintmax_is_zero WW(libc_MAX_UINTMAX)
+    ! mmux_uintmax_is_zero WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-zero-uintmax-1.3 () {
-    mmux_uintmax_is_zero WW(libc_MIN_UINTMAX)
+    mmux_uintmax_is_zero WW(mmux_libc_MIN_UINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1568,10 +1568,10 @@ function predicates-is-positive-uintmax-1.1 () {
     ! mmux_uintmax_is_positive 0
 }
 function predicates-is-positive-uintmax-1.2 () {
-    mmux_uintmax_is_positive WW(libc_MAX_UINTMAX)
+    mmux_uintmax_is_positive WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-positive-uintmax-1.3 () {
-    ! mmux_uintmax_is_positive WW(libc_MIN_UINTMAX)
+    ! mmux_uintmax_is_positive WW(mmux_libc_MIN_UINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1580,10 +1580,10 @@ function predicates-is-negative-uintmax-1.1 () {
     ! mmux_uintmax_is_negative 0
 }
 function predicates-is-negative-uintmax-1.2 () {
-    ! mmux_uintmax_is_negative WW(libc_MAX_UINTMAX)
+    ! mmux_uintmax_is_negative WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-negative-uintmax-1.3 () {
-    ! mmux_uintmax_is_negative WW(libc_MIN_UINTMAX)
+    ! mmux_uintmax_is_negative WW(mmux_libc_MIN_UINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1592,10 +1592,10 @@ function predicates-is-non-positive-uintmax-1.1 () {
     mmux_uintmax_is_non_positive 0
 }
 function predicates-is-non-positive-uintmax-1.2 () {
-    ! mmux_uintmax_is_non_positive WW(libc_MAX_UINTMAX)
+    ! mmux_uintmax_is_non_positive WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-non-positive-uintmax-1.3 () {
-    mmux_uintmax_is_non_positive WW(libc_MIN_UINTMAX)
+    mmux_uintmax_is_non_positive WW(mmux_libc_MIN_UINTMAX)
 }
 
 ### ------------------------------------------------------------------------
@@ -1604,28 +1604,28 @@ function predicates-is-non-negative-uintmax-1.1 () {
     mmux_uintmax_is_non_negative 0
 }
 function predicates-is-non-negative-uintmax-1.2 () {
-    mmux_uintmax_is_non_negative WW(libc_MAX_UINTMAX)
+    mmux_uintmax_is_non_negative WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-non-negative-uintmax-1.3 () {
-    mmux_uintmax_is_non_negative WW(libc_MIN_UINTMAX)
+    mmux_uintmax_is_non_negative WW(mmux_libc_MIN_UINTMAX)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uintmax-1.1 () {
-    ! mmux_uintmax_is_infinite WW(libc_MAX_UINTMAX)
+    ! mmux_uintmax_is_infinite WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-infinite-uintmax-1.2 () {
-    ! mmux_uintmax_is_infinite WW(libc_MIN_UINTMAX)
+    ! mmux_uintmax_is_infinite WW(mmux_libc_MIN_UINTMAX)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uintmax-1.1 () {
-    ! mmux_uintmax_is_nan WW(libc_MAX_UINTMAX)
+    ! mmux_uintmax_is_nan WW(mmux_libc_MAX_UINTMAX)
 }
 function predicates-is-nan-uintmax-1.2 () {
-    ! mmux_uintmax_is_nan WW(libc_MIN_UINTMAX)
+    ! mmux_uintmax_is_nan WW(mmux_libc_MIN_UINTMAX)
 }
 
 
@@ -1635,10 +1635,10 @@ function predicates-is-zero-sintptr-1.1 () {
     mmux_sintptr_is_zero 0
 }
 function predicates-is-zero-sintptr-1.2 () {
-    ! mmux_sintptr_is_zero WW(libc_MAX_SINTPTR)
+    ! mmux_sintptr_is_zero WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-zero-sintptr-1.3 () {
-    ! mmux_sintptr_is_zero WW(libc_MIN_SINTPTR)
+    ! mmux_sintptr_is_zero WW(mmux_libc_MIN_SINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1647,10 +1647,10 @@ function predicates-is-positive-sintptr-1.1 () {
     ! mmux_sintptr_is_positive 0
 }
 function predicates-is-positive-sintptr-1.2 () {
-    mmux_sintptr_is_positive WW(libc_MAX_SINTPTR)
+    mmux_sintptr_is_positive WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-positive-sintptr-1.3 () {
-    ! mmux_sintptr_is_positive WW(libc_MIN_SINTPTR)
+    ! mmux_sintptr_is_positive WW(mmux_libc_MIN_SINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1659,10 +1659,10 @@ function predicates-is-negative-sintptr-1.1 () {
     ! mmux_sintptr_is_negative 0
 }
 function predicates-is-negative-sintptr-1.2 () {
-    ! mmux_sintptr_is_negative WW(libc_MAX_SINTPTR)
+    ! mmux_sintptr_is_negative WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-negative-sintptr-1.3 () {
-    mmux_sintptr_is_negative WW(libc_MIN_SINTPTR)
+    mmux_sintptr_is_negative WW(mmux_libc_MIN_SINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1671,10 +1671,10 @@ function predicates-is-non-positive-sintptr-1.1 () {
     mmux_sintptr_is_non_positive 0
 }
 function predicates-is-non-positive-sintptr-1.2 () {
-    ! mmux_sintptr_is_non_positive WW(libc_MAX_SINTPTR)
+    ! mmux_sintptr_is_non_positive WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-non-positive-sintptr-1.3 () {
-    mmux_sintptr_is_non_positive WW(libc_MIN_SINTPTR)
+    mmux_sintptr_is_non_positive WW(mmux_libc_MIN_SINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1683,28 +1683,28 @@ function predicates-is-non-negative-sintptr-1.1 () {
     mmux_sintptr_is_non_negative 0
 }
 function predicates-is-non-negative-sintptr-1.2 () {
-    mmux_sintptr_is_non_negative WW(libc_MAX_SINTPTR)
+    mmux_sintptr_is_non_negative WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-non-negative-sintptr-1.3 () {
-    ! mmux_sintptr_is_non_negative WW(libc_MIN_SINTPTR)
+    ! mmux_sintptr_is_non_negative WW(mmux_libc_MIN_SINTPTR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-sintptr-1.1 () {
-    ! mmux_sintptr_is_infinite WW(libc_MAX_SINTPTR)
+    ! mmux_sintptr_is_infinite WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-infinite-sintptr-1.2 () {
-    ! mmux_sintptr_is_infinite WW(libc_MIN_SINTPTR)
+    ! mmux_sintptr_is_infinite WW(mmux_libc_MIN_SINTPTR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-sintptr-1.1 () {
-    ! mmux_sintptr_is_nan WW(libc_MAX_SINTPTR)
+    ! mmux_sintptr_is_nan WW(mmux_libc_MAX_SINTPTR)
 }
 function predicates-is-nan-sintptr-1.2 () {
-    ! mmux_sintptr_is_nan WW(libc_MIN_SINTPTR)
+    ! mmux_sintptr_is_nan WW(mmux_libc_MIN_SINTPTR)
 }
 
 
@@ -1714,10 +1714,10 @@ function predicates-is-zero-uintptr-1.1 () {
     mmux_uintptr_is_zero 0
 }
 function predicates-is-zero-uintptr-1.2 () {
-    ! mmux_uintptr_is_zero WW(libc_MAX_UINTPTR)
+    ! mmux_uintptr_is_zero WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-zero-uintptr-1.3 () {
-    mmux_uintptr_is_zero WW(libc_MIN_UINTPTR)
+    mmux_uintptr_is_zero WW(mmux_libc_MIN_UINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1726,10 +1726,10 @@ function predicates-is-positive-uintptr-1.1 () {
     ! mmux_uintptr_is_positive 0
 }
 function predicates-is-positive-uintptr-1.2 () {
-    mmux_uintptr_is_positive WW(libc_MAX_UINTPTR)
+    mmux_uintptr_is_positive WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-positive-uintptr-1.3 () {
-    ! mmux_uintptr_is_positive WW(libc_MIN_UINTPTR)
+    ! mmux_uintptr_is_positive WW(mmux_libc_MIN_UINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1738,10 +1738,10 @@ function predicates-is-negative-uintptr-1.1 () {
     ! mmux_uintptr_is_negative 0
 }
 function predicates-is-negative-uintptr-1.2 () {
-    ! mmux_uintptr_is_negative WW(libc_MAX_UINTPTR)
+    ! mmux_uintptr_is_negative WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-negative-uintptr-1.3 () {
-    ! mmux_uintptr_is_negative WW(libc_MIN_UINTPTR)
+    ! mmux_uintptr_is_negative WW(mmux_libc_MIN_UINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1750,10 +1750,10 @@ function predicates-is-non-positive-uintptr-1.1 () {
     mmux_uintptr_is_non_positive 0
 }
 function predicates-is-non-positive-uintptr-1.2 () {
-    ! mmux_uintptr_is_non_positive WW(libc_MAX_UINTPTR)
+    ! mmux_uintptr_is_non_positive WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-non-positive-uintptr-1.3 () {
-    mmux_uintptr_is_non_positive WW(libc_MIN_UINTPTR)
+    mmux_uintptr_is_non_positive WW(mmux_libc_MIN_UINTPTR)
 }
 
 ### ------------------------------------------------------------------------
@@ -1762,28 +1762,28 @@ function predicates-is-non-negative-uintptr-1.1 () {
     mmux_uintptr_is_non_negative 0
 }
 function predicates-is-non-negative-uintptr-1.2 () {
-    mmux_uintptr_is_non_negative WW(libc_MAX_UINTPTR)
+    mmux_uintptr_is_non_negative WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-non-negative-uintptr-1.3 () {
-    mmux_uintptr_is_non_negative WW(libc_MIN_UINTPTR)
+    mmux_uintptr_is_non_negative WW(mmux_libc_MIN_UINTPTR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uintptr-1.1 () {
-    ! mmux_uintptr_is_infinite WW(libc_MAX_UINTPTR)
+    ! mmux_uintptr_is_infinite WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-infinite-uintptr-1.2 () {
-    ! mmux_uintptr_is_infinite WW(libc_MIN_UINTPTR)
+    ! mmux_uintptr_is_infinite WW(mmux_libc_MIN_UINTPTR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uintptr-1.1 () {
-    ! mmux_uintptr_is_nan WW(libc_MAX_UINTPTR)
+    ! mmux_uintptr_is_nan WW(mmux_libc_MAX_UINTPTR)
 }
 function predicates-is-nan-uintptr-1.2 () {
-    ! mmux_uintptr_is_nan WW(libc_MIN_UINTPTR)
+    ! mmux_uintptr_is_nan WW(mmux_libc_MIN_UINTPTR)
 }
 
 
@@ -1793,10 +1793,10 @@ function predicates-is-zero-ptrdiff-1.1 () {
     mmux_ptrdiff_is_zero 0
 }
 function predicates-is-zero-ptrdiff-1.2 () {
-    ! mmux_ptrdiff_is_zero WW(libc_MAX_PTRDIFF)
+    ! mmux_ptrdiff_is_zero WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-zero-ptrdiff-1.3 () {
-    ! mmux_ptrdiff_is_zero WW(libc_MIN_PTRDIFF)
+    ! mmux_ptrdiff_is_zero WW(mmux_libc_MIN_PTRDIFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1805,10 +1805,10 @@ function predicates-is-positive-ptrdiff-1.1 () {
     ! mmux_ptrdiff_is_positive 0
 }
 function predicates-is-positive-ptrdiff-1.2 () {
-    mmux_ptrdiff_is_positive WW(libc_MAX_PTRDIFF)
+    mmux_ptrdiff_is_positive WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-positive-ptrdiff-1.3 () {
-    ! mmux_ptrdiff_is_positive WW(libc_MIN_PTRDIFF)
+    ! mmux_ptrdiff_is_positive WW(mmux_libc_MIN_PTRDIFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1817,10 +1817,10 @@ function predicates-is-negative-ptrdiff-1.1 () {
     ! mmux_ptrdiff_is_negative 0
 }
 function predicates-is-negative-ptrdiff-1.2 () {
-    ! mmux_ptrdiff_is_negative WW(libc_MAX_PTRDIFF)
+    ! mmux_ptrdiff_is_negative WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-negative-ptrdiff-1.3 () {
-    mmux_ptrdiff_is_negative WW(libc_MIN_PTRDIFF)
+    mmux_ptrdiff_is_negative WW(mmux_libc_MIN_PTRDIFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1829,10 +1829,10 @@ function predicates-is-non-positive-ptrdiff-1.1 () {
     mmux_ptrdiff_is_non_positive 0
 }
 function predicates-is-non-positive-ptrdiff-1.2 () {
-    ! mmux_ptrdiff_is_non_positive WW(libc_MAX_PTRDIFF)
+    ! mmux_ptrdiff_is_non_positive WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-non-positive-ptrdiff-1.3 () {
-    mmux_ptrdiff_is_non_positive WW(libc_MIN_PTRDIFF)
+    mmux_ptrdiff_is_non_positive WW(mmux_libc_MIN_PTRDIFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1841,28 +1841,28 @@ function predicates-is-non-negative-ptrdiff-1.1 () {
     mmux_ptrdiff_is_non_negative 0
 }
 function predicates-is-non-negative-ptrdiff-1.2 () {
-    mmux_ptrdiff_is_non_negative WW(libc_MAX_PTRDIFF)
+    mmux_ptrdiff_is_non_negative WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-non-negative-ptrdiff-1.3 () {
-    ! mmux_ptrdiff_is_non_negative WW(libc_MIN_PTRDIFF)
+    ! mmux_ptrdiff_is_non_negative WW(mmux_libc_MIN_PTRDIFF)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-ptrdiff-1.1 () {
-    ! mmux_ptrdiff_is_infinite WW(libc_MAX_PTRDIFF)
+    ! mmux_ptrdiff_is_infinite WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-infinite-ptrdiff-1.2 () {
-    ! mmux_ptrdiff_is_infinite WW(libc_MIN_PTRDIFF)
+    ! mmux_ptrdiff_is_infinite WW(mmux_libc_MIN_PTRDIFF)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-ptrdiff-1.1 () {
-    ! mmux_ptrdiff_is_nan WW(libc_MAX_PTRDIFF)
+    ! mmux_ptrdiff_is_nan WW(mmux_libc_MAX_PTRDIFF)
 }
 function predicates-is-nan-ptrdiff-1.2 () {
-    ! mmux_ptrdiff_is_nan WW(libc_MIN_PTRDIFF)
+    ! mmux_ptrdiff_is_nan WW(mmux_libc_MIN_PTRDIFF)
 }
 
 
@@ -1872,10 +1872,10 @@ function predicates-is-zero-off-1.1 () {
     mmux_off_is_zero 0
 }
 function predicates-is-zero-off-1.2 () {
-    ! mmux_off_is_zero WW(libc_MAX_OFF)
+    ! mmux_off_is_zero WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-zero-off-1.3 () {
-    ! mmux_off_is_zero WW(libc_MIN_OFF)
+    ! mmux_off_is_zero WW(mmux_libc_MIN_OFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1884,10 +1884,10 @@ function predicates-is-positive-off-1.1 () {
     ! mmux_off_is_positive 0
 }
 function predicates-is-positive-off-1.2 () {
-    mmux_off_is_positive WW(libc_MAX_OFF)
+    mmux_off_is_positive WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-positive-off-1.3 () {
-    ! mmux_off_is_positive WW(libc_MIN_OFF)
+    ! mmux_off_is_positive WW(mmux_libc_MIN_OFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1896,10 +1896,10 @@ function predicates-is-negative-off-1.1 () {
     ! mmux_off_is_negative 0
 }
 function predicates-is-negative-off-1.2 () {
-    ! mmux_off_is_negative WW(libc_MAX_OFF)
+    ! mmux_off_is_negative WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-negative-off-1.3 () {
-    mmux_off_is_negative WW(libc_MIN_OFF)
+    mmux_off_is_negative WW(mmux_libc_MIN_OFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1908,10 +1908,10 @@ function predicates-is-non-positive-off-1.1 () {
     mmux_off_is_non_positive 0
 }
 function predicates-is-non-positive-off-1.2 () {
-    ! mmux_off_is_non_positive WW(libc_MAX_OFF)
+    ! mmux_off_is_non_positive WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-non-positive-off-1.3 () {
-    mmux_off_is_non_positive WW(libc_MIN_OFF)
+    mmux_off_is_non_positive WW(mmux_libc_MIN_OFF)
 }
 
 ### ------------------------------------------------------------------------
@@ -1920,28 +1920,28 @@ function predicates-is-non-negative-off-1.1 () {
     mmux_off_is_non_negative 0
 }
 function predicates-is-non-negative-off-1.2 () {
-    mmux_off_is_non_negative WW(libc_MAX_OFF)
+    mmux_off_is_non_negative WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-non-negative-off-1.3 () {
-    ! mmux_off_is_non_negative WW(libc_MIN_OFF)
+    ! mmux_off_is_non_negative WW(mmux_libc_MIN_OFF)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-off-1.1 () {
-    ! mmux_off_is_infinite WW(libc_MAX_OFF)
+    ! mmux_off_is_infinite WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-infinite-off-1.2 () {
-    ! mmux_off_is_infinite WW(libc_MIN_OFF)
+    ! mmux_off_is_infinite WW(mmux_libc_MIN_OFF)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-off-1.1 () {
-    ! mmux_off_is_nan WW(libc_MAX_OFF)
+    ! mmux_off_is_nan WW(mmux_libc_MAX_OFF)
 }
 function predicates-is-nan-off-1.2 () {
-    ! mmux_off_is_nan WW(libc_MIN_OFF)
+    ! mmux_off_is_nan WW(mmux_libc_MIN_OFF)
 }
 
 
@@ -1951,10 +1951,10 @@ function predicates-is-zero-pid-1.1 () {
     mmux_pid_is_zero 0
 }
 function predicates-is-zero-pid-1.2 () {
-    ! mmux_pid_is_zero WW(libc_MAX_PID)
+    ! mmux_pid_is_zero WW(mmux_libc_MAX_PID)
 }
 function predicates-is-zero-pid-1.3 () {
-    ! mmux_pid_is_zero WW(libc_MIN_PID)
+    ! mmux_pid_is_zero WW(mmux_libc_MIN_PID)
 }
 
 ### ------------------------------------------------------------------------
@@ -1963,10 +1963,10 @@ function predicates-is-positive-pid-1.1 () {
     ! mmux_pid_is_positive 0
 }
 function predicates-is-positive-pid-1.2 () {
-    mmux_pid_is_positive WW(libc_MAX_PID)
+    mmux_pid_is_positive WW(mmux_libc_MAX_PID)
 }
 function predicates-is-positive-pid-1.3 () {
-    ! mmux_pid_is_positive WW(libc_MIN_PID)
+    ! mmux_pid_is_positive WW(mmux_libc_MIN_PID)
 }
 
 ### ------------------------------------------------------------------------
@@ -1975,10 +1975,10 @@ function predicates-is-negative-pid-1.1 () {
     ! mmux_pid_is_negative 0
 }
 function predicates-is-negative-pid-1.2 () {
-    ! mmux_pid_is_negative WW(libc_MAX_PID)
+    ! mmux_pid_is_negative WW(mmux_libc_MAX_PID)
 }
 function predicates-is-negative-pid-1.3 () {
-    mmux_pid_is_negative WW(libc_MIN_PID)
+    mmux_pid_is_negative WW(mmux_libc_MIN_PID)
 }
 
 ### ------------------------------------------------------------------------
@@ -1987,10 +1987,10 @@ function predicates-is-non-positive-pid-1.1 () {
     mmux_pid_is_non_positive 0
 }
 function predicates-is-non-positive-pid-1.2 () {
-    ! mmux_pid_is_non_positive WW(libc_MAX_PID)
+    ! mmux_pid_is_non_positive WW(mmux_libc_MAX_PID)
 }
 function predicates-is-non-positive-pid-1.3 () {
-    mmux_pid_is_non_positive WW(libc_MIN_PID)
+    mmux_pid_is_non_positive WW(mmux_libc_MIN_PID)
 }
 
 ### ------------------------------------------------------------------------
@@ -1999,28 +1999,28 @@ function predicates-is-non-negative-pid-1.1 () {
     mmux_pid_is_non_negative 0
 }
 function predicates-is-non-negative-pid-1.2 () {
-    mmux_pid_is_non_negative WW(libc_MAX_PID)
+    mmux_pid_is_non_negative WW(mmux_libc_MAX_PID)
 }
 function predicates-is-non-negative-pid-1.3 () {
-    ! mmux_pid_is_non_negative WW(libc_MIN_PID)
+    ! mmux_pid_is_non_negative WW(mmux_libc_MIN_PID)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-pid-1.1 () {
-    ! mmux_pid_is_infinite WW(libc_MAX_PID)
+    ! mmux_pid_is_infinite WW(mmux_libc_MAX_PID)
 }
 function predicates-is-infinite-pid-1.2 () {
-    ! mmux_pid_is_infinite WW(libc_MIN_PID)
+    ! mmux_pid_is_infinite WW(mmux_libc_MIN_PID)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-pid-1.1 () {
-    ! mmux_pid_is_nan WW(libc_MAX_PID)
+    ! mmux_pid_is_nan WW(mmux_libc_MAX_PID)
 }
 function predicates-is-nan-pid-1.2 () {
-    ! mmux_pid_is_nan WW(libc_MIN_PID)
+    ! mmux_pid_is_nan WW(mmux_libc_MIN_PID)
 }
 
 
@@ -2030,10 +2030,10 @@ function predicates-is-zero-uid-1.1 () {
     mmux_uid_is_zero 0
 }
 function predicates-is-zero-uid-1.2 () {
-    ! mmux_uid_is_zero WW(libc_MAX_UID)
+    ! mmux_uid_is_zero WW(mmux_libc_MAX_UID)
 }
 function predicates-is-zero-uid-1.3 () {
-    mmux_uid_is_zero WW(libc_MIN_UID)
+    mmux_uid_is_zero WW(mmux_libc_MIN_UID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2042,10 +2042,10 @@ function predicates-is-positive-uid-1.1 () {
     ! mmux_uid_is_positive 0
 }
 function predicates-is-positive-uid-1.2 () {
-    mmux_uid_is_positive WW(libc_MAX_UID)
+    mmux_uid_is_positive WW(mmux_libc_MAX_UID)
 }
 function predicates-is-positive-uid-1.3 () {
-    ! mmux_uid_is_positive WW(libc_MIN_UID)
+    ! mmux_uid_is_positive WW(mmux_libc_MIN_UID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2054,10 +2054,10 @@ function predicates-is-negative-uid-1.1 () {
     ! mmux_uid_is_negative 0
 }
 function predicates-is-negative-uid-1.2 () {
-    ! mmux_uid_is_negative WW(libc_MAX_UID)
+    ! mmux_uid_is_negative WW(mmux_libc_MAX_UID)
 }
 function predicates-is-negative-uid-1.3 () {
-    ! mmux_uid_is_negative WW(libc_MIN_UID)
+    ! mmux_uid_is_negative WW(mmux_libc_MIN_UID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2066,10 +2066,10 @@ function predicates-is-non-positive-uid-1.1 () {
     mmux_uid_is_non_positive 0
 }
 function predicates-is-non-positive-uid-1.2 () {
-    ! mmux_uid_is_non_positive WW(libc_MAX_UID)
+    ! mmux_uid_is_non_positive WW(mmux_libc_MAX_UID)
 }
 function predicates-is-non-positive-uid-1.3 () {
-    mmux_uid_is_non_positive WW(libc_MIN_UID)
+    mmux_uid_is_non_positive WW(mmux_libc_MIN_UID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2078,28 +2078,28 @@ function predicates-is-non-negative-uid-1.1 () {
     mmux_uid_is_non_negative 0
 }
 function predicates-is-non-negative-uid-1.2 () {
-    mmux_uid_is_non_negative WW(libc_MAX_UID)
+    mmux_uid_is_non_negative WW(mmux_libc_MAX_UID)
 }
 function predicates-is-non-negative-uid-1.3 () {
-    mmux_uid_is_non_negative WW(libc_MIN_UID)
+    mmux_uid_is_non_negative WW(mmux_libc_MIN_UID)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-uid-1.1 () {
-    ! mmux_uid_is_infinite WW(libc_MAX_UID)
+    ! mmux_uid_is_infinite WW(mmux_libc_MAX_UID)
 }
 function predicates-is-infinite-uid-1.2 () {
-    ! mmux_uid_is_infinite WW(libc_MIN_UID)
+    ! mmux_uid_is_infinite WW(mmux_libc_MIN_UID)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-uid-1.1 () {
-    ! mmux_uid_is_nan WW(libc_MAX_UID)
+    ! mmux_uid_is_nan WW(mmux_libc_MAX_UID)
 }
 function predicates-is-nan-uid-1.2 () {
-    ! mmux_uid_is_nan WW(libc_MIN_UID)
+    ! mmux_uid_is_nan WW(mmux_libc_MIN_UID)
 }
 
 
@@ -2109,10 +2109,10 @@ function predicates-is-zero-gid-1.1 () {
     mmux_gid_is_zero 0
 }
 function predicates-is-zero-gid-1.2 () {
-    ! mmux_gid_is_zero WW(libc_MAX_GID)
+    ! mmux_gid_is_zero WW(mmux_libc_MAX_GID)
 }
 function predicates-is-zero-gid-1.3 () {
-    mmux_gid_is_zero WW(libc_MIN_GID)
+    mmux_gid_is_zero WW(mmux_libc_MIN_GID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2121,10 +2121,10 @@ function predicates-is-positive-gid-1.1 () {
     ! mmux_gid_is_positive 0
 }
 function predicates-is-positive-gid-1.2 () {
-    mmux_gid_is_positive WW(libc_MAX_GID)
+    mmux_gid_is_positive WW(mmux_libc_MAX_GID)
 }
 function predicates-is-positive-gid-1.3 () {
-    ! mmux_gid_is_positive WW(libc_MIN_GID)
+    ! mmux_gid_is_positive WW(mmux_libc_MIN_GID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2133,10 +2133,10 @@ function predicates-is-negative-gid-1.1 () {
     ! mmux_gid_is_negative 0
 }
 function predicates-is-negative-gid-1.2 () {
-    ! mmux_gid_is_negative WW(libc_MAX_GID)
+    ! mmux_gid_is_negative WW(mmux_libc_MAX_GID)
 }
 function predicates-is-negative-gid-1.3 () {
-    ! mmux_gid_is_negative WW(libc_MIN_GID)
+    ! mmux_gid_is_negative WW(mmux_libc_MIN_GID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2145,10 +2145,10 @@ function predicates-is-non-positive-gid-1.1 () {
     mmux_gid_is_non_positive 0
 }
 function predicates-is-non-positive-gid-1.2 () {
-    ! mmux_gid_is_non_positive WW(libc_MAX_GID)
+    ! mmux_gid_is_non_positive WW(mmux_libc_MAX_GID)
 }
 function predicates-is-non-positive-gid-1.3 () {
-    mmux_gid_is_non_positive WW(libc_MIN_GID)
+    mmux_gid_is_non_positive WW(mmux_libc_MIN_GID)
 }
 
 ### ------------------------------------------------------------------------
@@ -2157,28 +2157,28 @@ function predicates-is-non-negative-gid-1.1 () {
     mmux_gid_is_non_negative 0
 }
 function predicates-is-non-negative-gid-1.2 () {
-    mmux_gid_is_non_negative WW(libc_MAX_GID)
+    mmux_gid_is_non_negative WW(mmux_libc_MAX_GID)
 }
 function predicates-is-non-negative-gid-1.3 () {
-    mmux_gid_is_non_negative WW(libc_MIN_GID)
+    mmux_gid_is_non_negative WW(mmux_libc_MIN_GID)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-gid-1.1 () {
-    ! mmux_gid_is_infinite WW(libc_MAX_GID)
+    ! mmux_gid_is_infinite WW(mmux_libc_MAX_GID)
 }
 function predicates-is-infinite-gid-1.2 () {
-    ! mmux_gid_is_infinite WW(libc_MIN_GID)
+    ! mmux_gid_is_infinite WW(mmux_libc_MIN_GID)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-gid-1.1 () {
-    ! mmux_gid_is_nan WW(libc_MAX_GID)
+    ! mmux_gid_is_nan WW(mmux_libc_MAX_GID)
 }
 function predicates-is-nan-gid-1.2 () {
-    ! mmux_gid_is_nan WW(libc_MIN_GID)
+    ! mmux_gid_is_nan WW(mmux_libc_MIN_GID)
 }
 
 
@@ -2188,10 +2188,10 @@ function predicates-is-zero-wchar-1.1 () {
     mmux_wchar_is_zero 0
 }
 function predicates-is-zero-wchar-1.2 () {
-    ! mmux_wchar_is_zero WW(libc_MAX_WCHAR)
+    ! mmux_wchar_is_zero WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-zero-wchar-1.3 () {
-    ! mmux_wchar_is_zero WW(libc_MIN_WCHAR)
+    ! mmux_wchar_is_zero WW(mmux_libc_MIN_WCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -2200,10 +2200,10 @@ function predicates-is-positive-wchar-1.1 () {
     ! mmux_wchar_is_positive 0
 }
 function predicates-is-positive-wchar-1.2 () {
-    mmux_wchar_is_positive WW(libc_MAX_WCHAR)
+    mmux_wchar_is_positive WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-positive-wchar-1.3 () {
-    ! mmux_wchar_is_positive WW(libc_MIN_WCHAR)
+    ! mmux_wchar_is_positive WW(mmux_libc_MIN_WCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -2212,10 +2212,10 @@ function predicates-is-negative-wchar-1.1 () {
     ! mmux_wchar_is_negative 0
 }
 function predicates-is-negative-wchar-1.2 () {
-    ! mmux_wchar_is_negative WW(libc_MAX_WCHAR)
+    ! mmux_wchar_is_negative WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-negative-wchar-1.3 () {
-    mmux_wchar_is_negative WW(libc_MIN_WCHAR)
+    mmux_wchar_is_negative WW(mmux_libc_MIN_WCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -2224,10 +2224,10 @@ function predicates-is-non-positive-wchar-1.1 () {
     mmux_wchar_is_non_positive 0
 }
 function predicates-is-non-positive-wchar-1.2 () {
-    ! mmux_wchar_is_non_positive WW(libc_MAX_WCHAR)
+    ! mmux_wchar_is_non_positive WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-non-positive-wchar-1.3 () {
-    mmux_wchar_is_non_positive WW(libc_MIN_WCHAR)
+    mmux_wchar_is_non_positive WW(mmux_libc_MIN_WCHAR)
 }
 
 ### ------------------------------------------------------------------------
@@ -2236,28 +2236,28 @@ function predicates-is-non-negative-wchar-1.1 () {
     mmux_wchar_is_non_negative 0
 }
 function predicates-is-non-negative-wchar-1.2 () {
-    mmux_wchar_is_non_negative WW(libc_MAX_WCHAR)
+    mmux_wchar_is_non_negative WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-non-negative-wchar-1.3 () {
-    ! mmux_wchar_is_non_negative WW(libc_MIN_WCHAR)
+    ! mmux_wchar_is_non_negative WW(mmux_libc_MIN_WCHAR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-wchar-1.1 () {
-    ! mmux_wchar_is_infinite WW(libc_MAX_WCHAR)
+    ! mmux_wchar_is_infinite WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-infinite-wchar-1.2 () {
-    ! mmux_wchar_is_infinite WW(libc_MIN_WCHAR)
+    ! mmux_wchar_is_infinite WW(mmux_libc_MIN_WCHAR)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-wchar-1.1 () {
-    ! mmux_wchar_is_nan WW(libc_MAX_WCHAR)
+    ! mmux_wchar_is_nan WW(mmux_libc_MAX_WCHAR)
 }
 function predicates-is-nan-wchar-1.2 () {
-    ! mmux_wchar_is_nan WW(libc_MIN_WCHAR)
+    ! mmux_wchar_is_nan WW(mmux_libc_MIN_WCHAR)
 }
 
 
@@ -2267,10 +2267,10 @@ function predicates-is-zero-wint-1.1 () {
     mmux_wint_is_zero 0
 }
 function predicates-is-zero-wint-1.2 () {
-    ! mmux_wint_is_zero WW(libc_MAX_WINT)
+    ! mmux_wint_is_zero WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-zero-wint-1.3 () {
-    mmux_wint_is_zero WW(libc_MIN_WINT)
+    mmux_wint_is_zero WW(mmux_libc_MIN_WINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -2279,10 +2279,10 @@ function predicates-is-positive-wint-1.1 () {
     ! mmux_wint_is_positive 0
 }
 function predicates-is-positive-wint-1.2 () {
-    mmux_wint_is_positive WW(libc_MAX_WINT)
+    mmux_wint_is_positive WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-positive-wint-1.3 () {
-    ! mmux_wint_is_positive WW(libc_MIN_WINT)
+    ! mmux_wint_is_positive WW(mmux_libc_MIN_WINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -2291,10 +2291,10 @@ function predicates-is-negative-wint-1.1 () {
     ! mmux_wint_is_negative 0
 }
 function predicates-is-negative-wint-1.2 () {
-    ! mmux_wint_is_negative WW(libc_MAX_WINT)
+    ! mmux_wint_is_negative WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-negative-wint-1.3 () {
-    ! mmux_wint_is_negative WW(libc_MIN_WINT)
+    ! mmux_wint_is_negative WW(mmux_libc_MIN_WINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -2303,10 +2303,10 @@ function predicates-is-non-positive-wint-1.1 () {
     mmux_wint_is_non_positive 0
 }
 function predicates-is-non-positive-wint-1.2 () {
-    ! mmux_wint_is_non_positive WW(libc_MAX_WINT)
+    ! mmux_wint_is_non_positive WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-non-positive-wint-1.3 () {
-    mmux_wint_is_non_positive WW(libc_MIN_WINT)
+    mmux_wint_is_non_positive WW(mmux_libc_MIN_WINT)
 }
 
 ### ------------------------------------------------------------------------
@@ -2315,28 +2315,28 @@ function predicates-is-non-negative-wint-1.1 () {
     mmux_wint_is_non_negative 0
 }
 function predicates-is-non-negative-wint-1.2 () {
-    mmux_wint_is_non_negative WW(libc_MAX_WINT)
+    mmux_wint_is_non_negative WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-non-negative-wint-1.3 () {
-    mmux_wint_is_non_negative WW(libc_MIN_WINT)
+    mmux_wint_is_non_negative WW(mmux_libc_MIN_WINT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-wint-1.1 () {
-    ! mmux_wint_is_infinite WW(libc_MAX_WINT)
+    ! mmux_wint_is_infinite WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-infinite-wint-1.2 () {
-    ! mmux_wint_is_infinite WW(libc_MIN_WINT)
+    ! mmux_wint_is_infinite WW(mmux_libc_MIN_WINT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-wint-1.1 () {
-    ! mmux_wint_is_nan WW(libc_MAX_WINT)
+    ! mmux_wint_is_nan WW(mmux_libc_MAX_WINT)
 }
 function predicates-is-nan-wint-1.2 () {
-    ! mmux_wint_is_nan WW(libc_MIN_WINT)
+    ! mmux_wint_is_nan WW(mmux_libc_MIN_WINT)
 }
 
 
@@ -2346,10 +2346,10 @@ function predicates-is-zero-float-1.1 () {
     mmux_float_is_zero 0
 }
 function predicates-is-zero-float-1.2 () {
-    ! mmux_float_is_zero WW(libc_MAX_FLOAT)
+    ! mmux_float_is_zero WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-zero-float-1.3 () {
-    ! mmux_float_is_zero WW(libc_MIN_FLOAT)
+    ! mmux_float_is_zero WW(mmux_libc_MIN_FLOAT)
 }
 function predicates-is-zero-float-1.4 () {
     mmux_float_is_zero +0.0
@@ -2364,10 +2364,10 @@ function predicates-is-positive-float-1.1 () {
     mmux_float_is_positive 0
 }
 function predicates-is-positive-float-1.2 () {
-    mmux_float_is_positive WW(libc_MAX_FLOAT)
+    mmux_float_is_positive WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-positive-float-1.3 () {
-    ! mmux_float_is_positive WW(libc_MIN_FLOAT)
+    ! mmux_float_is_positive WW(mmux_libc_MIN_FLOAT)
 }
 function predicates-is-positive-float-1.4 () {
     mmux_float_is_positive +0.0
@@ -2382,10 +2382,10 @@ function predicates-is-negative-float-1.1 () {
     ! mmux_float_is_negative 0
 }
 function predicates-is-negative-float-1.2 () {
-    ! mmux_float_is_negative WW(libc_MAX_FLOAT)
+    ! mmux_float_is_negative WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-negative-float-1.3 () {
-    mmux_float_is_negative WW(libc_MIN_FLOAT)
+    mmux_float_is_negative WW(mmux_libc_MIN_FLOAT)
 }
 function predicates-is-negative-float-1.4 () {
     ! mmux_float_is_negative +0.0
@@ -2400,10 +2400,10 @@ function predicates-is-non-positive-float-1.1 () {
     mmux_float_is_non_positive 0
 }
 function predicates-is-non-positive-float-1.2 () {
-    ! mmux_float_is_non_positive WW(libc_MAX_FLOAT)
+    ! mmux_float_is_non_positive WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-non-positive-float-1.3 () {
-    mmux_float_is_non_positive WW(libc_MIN_FLOAT)
+    mmux_float_is_non_positive WW(mmux_libc_MIN_FLOAT)
 }
 function predicates-is-non-positive-float-1.4 () {
     mmux_float_is_non_positive +0.0
@@ -2418,19 +2418,19 @@ function predicates-is-non-negative-float-1.1 () {
     mmux_float_is_non_negative 0
 }
 function predicates-is-non-negative-float-1.2 () {
-    mmux_float_is_non_negative WW(libc_MAX_FLOAT)
+    mmux_float_is_non_negative WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-non-negative-float-1.3 () {
-    ! mmux_float_is_non_negative WW(libc_MIN_FLOAT)
+    ! mmux_float_is_non_negative WW(mmux_libc_MIN_FLOAT)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-float-1.1 () {
-    ! mmux_float_is_infinite WW(libc_MAX_FLOAT)
+    ! mmux_float_is_infinite WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-infinite-float-1.2 () {
-    ! mmux_float_is_infinite WW(libc_MIN_FLOAT)
+    ! mmux_float_is_infinite WW(mmux_libc_MIN_FLOAT)
 }
 function predicates-is-infinite-float-1.3 () {
     mmux_float_is_infinite '+inf'
@@ -2442,10 +2442,10 @@ function predicates-is-infinite-float-1.4 () {
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-float-1.1 () {
-    ! mmux_float_is_nan WW(libc_MAX_FLOAT)
+    ! mmux_float_is_nan WW(mmux_libc_MAX_FLOAT)
 }
 function predicates-is-nan-float-1.2 () {
-    ! mmux_float_is_nan WW(libc_MIN_FLOAT)
+    ! mmux_float_is_nan WW(mmux_libc_MIN_FLOAT)
 }
 function predicates-is-nan-float-1.3 () {
     mmux_float_is_nan 'nan'
@@ -2470,10 +2470,10 @@ function predicates-is-zero-double-1.1 () {
     mmux_double_is_zero 0
 }
 function predicates-is-zero-double-1.2 () {
-    ! mmux_double_is_zero WW(libc_MAX_DOUBLE)
+    ! mmux_double_is_zero WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-zero-double-1.3 () {
-    ! mmux_double_is_zero WW(libc_MIN_DOUBLE)
+    ! mmux_double_is_zero WW(mmux_libc_MIN_DOUBLE)
 }
 function predicates-is-zero-double-1.4 () {
     mmux_double_is_zero +0.0
@@ -2488,10 +2488,10 @@ function predicates-is-positive-double-1.1 () {
     mmux_double_is_positive 0
 }
 function predicates-is-positive-double-1.2 () {
-    mmux_double_is_positive WW(libc_MAX_DOUBLE)
+    mmux_double_is_positive WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-positive-double-1.3 () {
-    ! mmux_double_is_positive WW(libc_MIN_DOUBLE)
+    ! mmux_double_is_positive WW(mmux_libc_MIN_DOUBLE)
 }
 function predicates-is-positive-double-1.4 () {
     mmux_double_is_positive +0.0
@@ -2506,10 +2506,10 @@ function predicates-is-negative-double-1.1 () {
     ! mmux_double_is_negative 0
 }
 function predicates-is-negative-double-1.2 () {
-    ! mmux_double_is_negative WW(libc_MAX_DOUBLE)
+    ! mmux_double_is_negative WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-negative-double-1.3 () {
-    mmux_double_is_negative WW(libc_MIN_DOUBLE)
+    mmux_double_is_negative WW(mmux_libc_MIN_DOUBLE)
 }
 function predicates-is-negative-double-1.4 () {
     ! mmux_double_is_negative +0.0
@@ -2524,10 +2524,10 @@ function predicates-is-non-positive-double-1.1 () {
     mmux_double_is_non_positive 0
 }
 function predicates-is-non-positive-double-1.2 () {
-    ! mmux_double_is_non_positive WW(libc_MAX_DOUBLE)
+    ! mmux_double_is_non_positive WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-non-positive-double-1.3 () {
-    mmux_double_is_non_positive WW(libc_MIN_DOUBLE)
+    mmux_double_is_non_positive WW(mmux_libc_MIN_DOUBLE)
 }
 function predicates-is-non-positive-double-1.4 () {
     mmux_double_is_non_positive +0.0
@@ -2542,19 +2542,19 @@ function predicates-is-non-negative-double-1.1 () {
     mmux_double_is_non_negative 0
 }
 function predicates-is-non-negative-double-1.2 () {
-    mmux_double_is_non_negative WW(libc_MAX_DOUBLE)
+    mmux_double_is_non_negative WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-non-negative-double-1.3 () {
-    ! mmux_double_is_non_negative WW(libc_MIN_DOUBLE)
+    ! mmux_double_is_non_negative WW(mmux_libc_MIN_DOUBLE)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-double-1.1 () {
-    ! mmux_double_is_infinite WW(libc_MAX_DOUBLE)
+    ! mmux_double_is_infinite WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-infinite-double-1.2 () {
-    ! mmux_double_is_infinite WW(libc_MIN_DOUBLE)
+    ! mmux_double_is_infinite WW(mmux_libc_MIN_DOUBLE)
 }
 function predicates-is-infinite-double-1.3 () {
     mmux_double_is_infinite '+inf'
@@ -2566,10 +2566,10 @@ function predicates-is-infinite-double-1.4 () {
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-double-1.1 () {
-    ! mmux_double_is_nan WW(libc_MAX_DOUBLE)
+    ! mmux_double_is_nan WW(mmux_libc_MAX_DOUBLE)
 }
 function predicates-is-nan-double-1.2 () {
-    ! mmux_double_is_nan WW(libc_MIN_DOUBLE)
+    ! mmux_double_is_nan WW(mmux_libc_MIN_DOUBLE)
 }
 function predicates-is-nan-double-1.3 () {
     mmux_double_is_nan 'nan'
@@ -2594,10 +2594,10 @@ function predicates-is-zero-ldouble-1.1 () {
     mmux_ldouble_is_zero 0
 }
 function predicates-is-zero-ldouble-1.2 () {
-    ! mmux_ldouble_is_zero WW(libc_MAX_LDOUBLE)
+    ! mmux_ldouble_is_zero WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-zero-ldouble-1.3 () {
-    ! mmux_ldouble_is_zero WW(libc_MIN_LDOUBLE)
+    ! mmux_ldouble_is_zero WW(mmux_libc_MIN_LDOUBLE)
 }
 function predicates-is-zero-ldouble-1.4 () {
     mmux_ldouble_is_zero +0.0
@@ -2612,10 +2612,10 @@ function predicates-is-positive-ldouble-1.1 () {
     mmux_ldouble_is_positive 0
 }
 function predicates-is-positive-ldouble-1.2 () {
-    mmux_ldouble_is_positive WW(libc_MAX_LDOUBLE)
+    mmux_ldouble_is_positive WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-positive-ldouble-1.3 () {
-    ! mmux_ldouble_is_positive WW(libc_MIN_LDOUBLE)
+    ! mmux_ldouble_is_positive WW(mmux_libc_MIN_LDOUBLE)
 }
 function predicates-is-positive-ldouble-1.4 () {
     mmux_ldouble_is_positive +0.0
@@ -2630,10 +2630,10 @@ function predicates-is-negative-ldouble-1.1 () {
     ! mmux_ldouble_is_negative 0
 }
 function predicates-is-negative-ldouble-1.2 () {
-    ! mmux_ldouble_is_negative WW(libc_MAX_LDOUBLE)
+    ! mmux_ldouble_is_negative WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-negative-ldouble-1.3 () {
-    mmux_ldouble_is_negative WW(libc_MIN_LDOUBLE)
+    mmux_ldouble_is_negative WW(mmux_libc_MIN_LDOUBLE)
 }
 function predicates-is-negative-ldouble-1.4 () {
     ! mmux_ldouble_is_negative +0.0
@@ -2648,10 +2648,10 @@ function predicates-is-non-positive-ldouble-1.1 () {
     mmux_ldouble_is_non_positive 0
 }
 function predicates-is-non-positive-ldouble-1.2 () {
-    ! mmux_ldouble_is_non_positive WW(libc_MAX_LDOUBLE)
+    ! mmux_ldouble_is_non_positive WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-non-positive-ldouble-1.3 () {
-    mmux_ldouble_is_non_positive WW(libc_MIN_LDOUBLE)
+    mmux_ldouble_is_non_positive WW(mmux_libc_MIN_LDOUBLE)
 }
 function predicates-is-non-positive-ldouble-1.4 () {
     mmux_ldouble_is_non_positive +0.0
@@ -2666,19 +2666,19 @@ function predicates-is-non-negative-ldouble-1.1 () {
     mmux_ldouble_is_non_negative 0
 }
 function predicates-is-non-negative-ldouble-1.2 () {
-    mmux_ldouble_is_non_negative WW(libc_MAX_LDOUBLE)
+    mmux_ldouble_is_non_negative WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-non-negative-ldouble-1.3 () {
-    ! mmux_ldouble_is_non_negative WW(libc_MIN_LDOUBLE)
+    ! mmux_ldouble_is_non_negative WW(mmux_libc_MIN_LDOUBLE)
 }
 
 ### ------------------------------------------------------------------------
 
 function predicates-is-infinite-ldouble-1.1 () {
-    ! mmux_ldouble_is_infinite WW(libc_MAX_LDOUBLE)
+    ! mmux_ldouble_is_infinite WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-infinite-ldouble-1.2 () {
-    ! mmux_ldouble_is_infinite WW(libc_MIN_LDOUBLE)
+    ! mmux_ldouble_is_infinite WW(mmux_libc_MIN_LDOUBLE)
 }
 function predicates-is-infinite-ldouble-1.3 () {
     mmux_ldouble_is_infinite '+inf'
@@ -2690,10 +2690,10 @@ function predicates-is-infinite-ldouble-1.4 () {
 ### ------------------------------------------------------------------------
 
 function predicates-is-nan-ldouble-1.1 () {
-    ! mmux_ldouble_is_nan WW(libc_MAX_LDOUBLE)
+    ! mmux_ldouble_is_nan WW(mmux_libc_MAX_LDOUBLE)
 }
 function predicates-is-nan-ldouble-1.2 () {
-    ! mmux_ldouble_is_nan WW(libc_MIN_LDOUBLE)
+    ! mmux_ldouble_is_nan WW(mmux_libc_MIN_LDOUBLE)
 }
 function predicates-is-nan-ldouble-1.3 () {
     mmux_ldouble_is_nan 'nan'

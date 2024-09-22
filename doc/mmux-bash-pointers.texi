@@ -194,12 +194,12 @@ source /usr/local/share/bash/libmmux-bash-pointers.bash
 
 declare PTR VALUE
 
-libc_malloc PTR 1024
+mmux_libc_malloc PTR 1024
 @{
   pointer-set-sint $PTR 0 123
   pointer-ref-sint VALUE $PTR 0
 @}
-libc_free $PTR
+mmux_libc_free $PTR
 $VALUE  @result{} 123
 @end example
 
@@ -287,14 +287,14 @@ Bash variable is undefined; we can test this condition with @code{test -v}; to t
 underlying platform implements the type @code{signed long long int}, we can do:
 
 @example
-if test -v libc_SIZEOF_SLLONG
+if test -v mmux_libc_SIZEOF_SLLONG
 then # implemented
 else # not implemented
 fi
 @end example
 
 @macro MmuxDefineGlobalVarSizeof{NAME,TYPE}
-@defvar libc_SIZEOF_\NAME\
+@defvar mmux_libc_SIZEOF_\NAME\
 Global variable holding the size, measured in bytes, of the C language type @code{\TYPE\}.
 @end defvar
 
@@ -351,7 +351,7 @@ Bash variable is undefined; we can test this condition with @code{test -v}; to t
 underlying platform implements the type @code{signed long long int}, we can do:
 
 @example
-if test -v libc_MAX_SLLONG
+if test -v mmux_libc_MAX_SLLONG
 then # implemented
 else # not implemented
 fi
@@ -360,8 +360,8 @@ fi
 Notice that the C language type @objtype{double complex} has no maximum or minimum limit.
 
 @macro MmuxDefineGlobalVarLimits{NAME,TYPE}
-@defvar libc_MAX_\NAME\
-@defvarx libc_MIN_\NAME\
+@defvar mmux_libc_MAX_\NAME\
+@defvarx mmux_libc_MIN_\NAME\
 Global variables holding the maximum and minimum values of the C language type @code{\TYPE\}.
 @end defvar
 
@@ -418,14 +418,14 @@ corresponding Bash variable is undefined; we can test this condition with @code{
 the underlying platform implements the constant @code{ENOMEM}, we can do:
 
 @example
-if test -v libc_ENOMEM
+if test -v mmux_libc_ENOMEM
 then # implemented
 else # not implemented
 fi
 @end example
 
 @macro MmuxDefineGlobalVarErrno{NAME}
-@defvar libc_\NAME\
+@defvar mmux_libc_\NAME\
 Global variable holding the value of the C language constant @code{\NAME\}.
 @end defvar
 
@@ -573,13 +573,13 @@ Basically, to allocate new memory we should do:
 @example
 declare PTR
 
-if libc_malloc PTR 123
+if mmux_libc_malloc PTR 123
 then exit 1
 fi
 @{
   # do something
 @}
-libc_free $PTR
+mmux_libc_free $PTR
 @end example
 
 @noindent
@@ -589,15 +589,15 @@ shells; so the following will not work:
 @example
 declare PTR
 
-$(libc_malloc PTR 123)
-libc_free $PTR
+$(mmux_libc_malloc PTR 123)
+mmux_libc_free $PTR
 @end example
 
 @noindent
-because @func{libc_malloc} allocates memory in a subshell.
+because @func{mmux_libc_malloc} allocates memory in a subshell.
 
 
-@deffn Builtin libc_malloc @var{PTRVAR} @var{SIZE}
+@deffn Builtin mmux_libc_malloc @var{PTRVAR} @var{SIZE}
 Allocate a memory block using the standard @cfunc{malloc} function; if successful return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
 exact integer, itself representing the @code{errno} error code.
@@ -611,7 +611,7 @@ type @objtype{size_t}.
 @end deffn
 
 
-@deffn Builtin libc_calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
+@deffn Builtin mmux_libc_calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
 Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
 otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
 @code{errno} error code.
@@ -629,7 +629,7 @@ representing the size of each item the memory block has to contain; it must fit 
 @end deffn
 
 
-@deffn Builtin libc_realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
+@deffn Builtin mmux_libc_realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
 Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
 otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
 @code{errno} error code.
@@ -645,7 +645,7 @@ language type @objtype{size_t}.
 @end deffn
 
 
-@deffn Builtin libc_free @var{PTR}
+@deffn Builtin mmux_libc_free @var{PTR}
 Release a previously allocated memory block using the standard @cfunc{free} function; if successful
 return true, otherwise return false and set the shell variable @code{ERRNO} to an exact integer
 representing the @code{errno} error code.
@@ -666,7 +666,7 @@ The following builtins can fail if one of the arguments @var{PTR} is not a valid
 representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.
 
 
-@deffn Builtin libc_memset @var{PTR} @var{BYTE} @var{SIZE}
+@deffn Builtin mmux_libc_memset @var{PTR} @var{BYTE} @var{SIZE}
 Interface to the standard C language function @cfunc{memset}; if successful return true, otherwise
 return false and set the shell variable @code{ERRNO} to the string representation of an exact
 integer, itself representing an @code{errno} error code.
@@ -684,13 +684,13 @@ representing the number of bytes to set to @var{BYTE}; it must fit the C languag
 @example
 declare PTR SIZE=123
 
-libc_malloc PTR $SIZE
-libc_memset $PTR 1 $SIZE
+mmux_libc_malloc PTR $SIZE
+mmux_libc_memset $PTR 1 $SIZE
 @end example
 @end deffn
 
 
-@deffn Builtin libc_memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+@deffn Builtin mmux_libc_memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memcpy}; if successful return true, otherwise
 return false and set the shell variable @code{ERRNO} to the string representation of an exact
 integer, itself representing an @code{errno} error code.
@@ -707,15 +707,15 @@ representing the number of bytes to copy; it must fit the C language type @objty
 @example
 declare PTR_FROM PTR_TO SIZE=123
 
-libc_malloc PTR_FROM $SIZE
-libc_malloc PTR_TO   $SIZE
+mmux_libc_malloc PTR_FROM $SIZE
+mmux_libc_malloc PTR_TO   $SIZE
 
-libc_memcpy $PTR_TO $PTR_FROM $SIZE
+mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
 @end example
 @end deffn
 
 
-@deffn Builtin libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+@deffn Builtin mmux_libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memmove}; if successful return true, otherwise
 return false and set the shell variable @code{ERRNO} to the string representation of an exact
 integer, itself representing an @code{errno} error code.
@@ -732,10 +732,10 @@ representing the number of bytes to copy.
 @example
 declare PTR_FROM PTR_TO SIZE=123
 
-libc_malloc PTR_FROM $SIZE
-libc_malloc PTR_TO   $SIZE
+mmux_libc_malloc PTR_FROM $SIZE
+mmux_libc_malloc PTR_TO   $SIZE
 
-libc_memmove $PTR_TO $PTR_FROM $SIZE
+mmux_libc_memmove $PTR_TO $PTR_FROM $SIZE
 @end example
 @end deffn
 
@@ -750,12 +750,12 @@ memory blocks:
 @example
 declare PTR VALUE
 
-libc_malloc PTR 1024
+mmux_libc_malloc PTR 1024
 @{
   pointer-set-double $PTR 0 1.23
   pointer-ref-double VALUE $PTR 0
 @}
-libc_free $PTR
+mmux_libc_free $PTR
 @end example
 
 For all the following builtins, the argument:
@@ -839,12 +839,12 @@ memory blocks, handling them as arrays of a specified C type:
 @example
 declare PTR VALUE
 
-libc_malloc PTR $(( 55 * libc_SIZEOF_ULONG ))
+mmux_libc_malloc PTR $(( 55 * mmux_libc_SIZEOF_ULONG ))
 @{
   array-set-ulong $PTR 0 1234567890
   array-ref-ulong VALUE $PTR 0
 @}
-libc_free $PTR
+mmux_libc_free $PTR
 @end example
 
 For all the following builtins, the argument:
@@ -950,7 +950,7 @@ declare POINTER
 declare -i SIZE=5
 declare -a ARRY
 
-if ! libc_malloc POINTER $SIZE
+if ! mmux_libc_malloc POINTER $SIZE
 then exit 1
 fi
 
@@ -976,7 +976,7 @@ declare POINTER
 declare -i SIZE=5
 declare -a ARRY=(1 2 3 4 5)
 
-if ! libc_malloc POINTER $SIZE
+if ! mmux_libc_malloc POINTER $SIZE
 then exit 1
 fi
 
@@ -1007,7 +1007,7 @@ declare POINTER
 declare -i SIZE=5
 declare STRING
 
-if ! libc_malloc POINTER $SIZE
+if ! mmux_libc_malloc POINTER $SIZE
 then exit 1
 fi
 
@@ -1033,7 +1033,7 @@ declare POINTER
 declare -i SIZE=5
 declare -a STRING="12345"
 
-if ! libc_malloc POINTER $SIZE
+if ! mmux_libc_malloc POINTER $SIZE
 then exit 1
 fi
 
@@ -2357,14 +2357,14 @@ itself representing a standard @code{errno} code.
 @example
 declare PTR ERRNO=0 SYM
 
-libc_malloc PTR 'ciao'
+mmux_libc_malloc PTR 'ciao'
 mmux-bash-pointers-errno-to-string SYM $ERRNO
 $SYM    @result{} EINVAL
 @end example
 @end defvr
 
 
-@deffn Builtin libc_strerror @var{MSGVAR} @var{ERRNUM}
+@deffn Builtin mmux_libc_strerror @var{MSGVAR} @var{ERRNUM}
 Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
 representation of an exact integer, itself representing a valid value for @code{errno}; @var{ERRNUM}
 must fit the C language type @code{int}.
@@ -2372,8 +2372,8 @@ must fit the C language type @code{int}.
 @example
 declare MSG
 
-if test -v libc_EINVAL
-then libc_strerror MSG $libc_EINVAL
+if test -v mmux_libc_EINVAL
+then mmux_libc_strerror MSG $mmux_libc_EINVAL
 else MSG='EINVAL undefined'
 fi
 
@@ -2389,7 +2389,7 @@ successful return true, otherwise return false.
 @example
 declare SYM
 
-mmux-bash-pointers-errno-to-string SYM $libc_ENOMEM
+mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
 "$SYM"  @result{} ENOMEM
 @end example
 @end defun
@@ -2537,7 +2537,7 @@ is composed from a ``stem'': a single word representing the name of the type.  S
 are useful when using preprocessor macros to generate code.
 
 @macro MmuxDefineCAliasTypedef{STEM,TYPE}
-@deftp {Typedef} mmux_libc_\STEM\_t
+@deftp {Typedef} mmux_mmux_libc_\STEM\_t
 Type definition aliasing the standard C language type @code{\TYPE\}.
 @end deftp
 
@@ -2592,7 +2592,7 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @macro MmuxDefineCFunctionSizeof{STEM}
 @deftypefun int mmux_bash_pointers_sizeof_\STEM\ (void)
 Return a positive integer representing the size in bytes of the C language standard type
-@objtype{mmux_libc_\STEM\_t}.
+@objtype{mmux_mmux_libc_\STEM\_t}.
 @end deftypefun
 
 @end macro
@@ -2646,7 +2646,7 @@ Return a positive integer representing the size in bytes of the C language stand
 @macro MmuxDefineCFunctionPredicate{STEM}
 @deftypefun bool mmux_bash_pointers_string_\STEM\_p (char const * @var{str})
 Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a
-value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
+value of type @objtype{mmux_mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @end deftypefun
 
 @end macro
@@ -2759,14 +2759,14 @@ included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it ret
 
 
 @macro MmuxDefineCFunctionMinimum{STEM}
-@deftypefun mmux_clib_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
+@deftypefun mmux_libc_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
 @deftypefunx int mmux_bash_pointers_sprint_minimum_\STEM\ (char * @var{STR}, size_t @var{LEN})
 The first function returns the minimum value representable by the range of values of the type
-@objtype{mmux_clib_\STEM\_t}.
+@objtype{mmux_libc_\STEM\_t}.
 
 The second function writes in the buffer referenced by @var{STR} a string representation, in
 @asciiz{} format, of the minimum value representable by the range of values of the type
-@objtype{mmux_clib_\STEM\_t}; the buffer can contain at most @var{LEN} characters, terminating--zero
+@objtype{mmux_libc_\STEM\_t}; the buffer can contain at most @var{LEN} characters, terminating--zero
 included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it returns
 @code{EXECUTION_FAILURE}.
 @end deftypefun

@@ -34,9 +34,9 @@
  ** ----------------------------------------------------------------- */
 
 static int
-mmux_bash_pointers_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"strerror"
+#define MMUX_BUILTIN_NAME	"mmux_libc_strerror"
 {
   int		rv, errnum;
   char *	errmsg;
@@ -55,9 +55,9 @@ mmux_bash_pointers_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * ar
     return EXECUTION_SUCCESS;
   }
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_strerror]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_strerror]]],
     [[[(3 == argc)]]],
-    [[["strerror MSGVAR ERRNUM"]]],
+    [[["mmux_libc_strerror MSGVAR ERRNUM"]]],
     [[["Store in MSGVAR the error message corresponding to ERRNUM."]]])
 
 
@@ -70,9 +70,9 @@ m4_define([[[MMUX_DEFINE_ERRNO_CASE]]],[[[
 ]]])
 
 static int
-mmux_bash_pointers_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux-bash-pointers-errno-to-string"
+#define MMUX_BUILTIN_NAME	"mmux_libc_errno_to_string"
 {
   int		rv, errnum;
   char *	errsym;
@@ -229,9 +229,9 @@ mmux_bash_pointers_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  ch
     return EXECUTION_SUCCESS;
   }
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_errno_to_string]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_errno_to_string]]],
     [[[(3 == argc)]]],
-    [[["mmux-bash-pointers-errno-to-string SYMVAR ERRNUM"]]],
+    [[["mmux_libc_errno_to_string SYMVAR ERRNUM"]]],
     [[["Store in SYMVAR a string representation of the errno code ERRNUM."]]])
 
 /* end of file */
