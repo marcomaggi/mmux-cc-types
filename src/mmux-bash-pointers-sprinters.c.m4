@@ -33,7 +33,27 @@
  ** Type string printers: raw C standard types, no typedefs.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINT]]],[[[int
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINTER]]],[[[
+int
+mmux_bash_pointers_sprint_size_[[[$1]]] (mmux_libc_[[[$1]]]_t value)
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+  int		required_nbytes;
+
+  required_nbytes = snprintf(NULL, 0, $2, value);
+  if (0 > required_nbytes) {
+    return -1;
+  }
+
+  /* This return value DOES account for the terminating zero character. */
+  return ++required_nbytes;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
+	  __func__);
+  return -1;
+]]])}
+
+int
 mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, size_t len, mmux_libc_[[[$1]]]_t value)
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
@@ -51,22 +71,39 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   return EXECUTION_FAILURE;
 ]]])}]]])
 
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[["%hhd"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uchar]]],		[[["%hhu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sshort]]],		[[["%hd"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ushort]]],		[[["%hu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sint]]],		[[["%d"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uint]]],		[[["%u"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[slong]]],		[[["%ld"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ulong]]],		[[["%lu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sllong]]],		[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ullong]]],		[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[schar]]],		[[["%hhd"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[uchar]]],		[[["%hhu"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sshort]]],	[[["%hd"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ushort]]],	[[["%hu"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sint]]],		[[["%d"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[uint]]],		[[["%u"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[slong]]],		[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ulong]]],		[[["%lu"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[["%lA"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[["%LA"]]],  [[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[double]]],	[[["%lA"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ldouble]]],	[[["%LA"]]],  [[[HAVE_LONG_DOUBLE]]])
 
 /* ------------------------------------------------------------------ */
 
+int
+mmux_bash_pointers_sprint_size_pointer (mmux_libc_pointer_t value)
+{
+  if (value) {
+    int		required_nbytes;
+
+    required_nbytes = snprintf(NULL, 0, "%p", value);
+    if (0 > required_nbytes) {
+      return -1;
+    } else {
+      /* This return value DOES account for the terminating zero character. */
+      return ++required_nbytes;
+    }
+  } else {
+    return (1 + strlen("0x0"));
+  }
+}
 int
 mmux_bash_pointers_sprint_pointer (char * strptr, size_t len, mmux_libc_pointer_t value)
 /* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
@@ -85,6 +122,22 @@ mmux_bash_pointers_sprint_pointer (char * strptr, size_t len, mmux_libc_pointer_
     return EXECUTION_FAILURE;
   }
 }
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_sprint_size_float (mmux_libc_float_t value)
+{
+  int		required_nbytes;
+
+  required_nbytes = snprintf(NULL, 0, "%A", (double)value);
+  if (0 > required_nbytes) {
+    return -1;
+  } else {
+    /* This return value DOES account for the terminating zero character. */
+    return ++required_nbytes;
+  }
+}
 int
 mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
 /* This exists  because of the  explicit cast to "double";  without it: GCC  raises a
@@ -97,6 +150,23 @@ mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
     return EXECUTION_SUCCESS;
   } else {
     return EXECUTION_FAILURE;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_pointers_sprint_size_complex (mmux_libc_complex_t value)
+{
+  double	re = creal(value), im = cimag(value);
+  int		required_nbytes;
+
+  required_nbytes = snprintf(NULL, 0, "(%lA)+i*(%lA)", re, im);
+  if (0 > required_nbytes) {
+    return -1;
+  } else {
+    /* This return value DOES account for the terminating zero character. */
+    return ++required_nbytes;
   }
 }
 int
@@ -115,92 +185,30 @@ mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex val
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: C standard type int8.
- ** ----------------------------------------------------------------- */
-
-int
-mmux_bash_pointers_sprint_sint8 (char * strptr, size_t len, int8_t value)
-{
-  return mmux_bash_pointers_sprint_sint(strptr, len, (signed int)value);
-}
-int
-mmux_bash_pointers_sprint_uint8 (char * strptr, size_t len, uint8_t value)
-{
-  return mmux_bash_pointers_sprint_uint(strptr, len, (unsigned int)value);
-}
-
-
-/** --------------------------------------------------------------------
- ** Type string printers: C standard type int16.
- ** ----------------------------------------------------------------- */
-
-int
-mmux_bash_pointers_sprint_sint16 (char * strptr, size_t len, int16_t value)
-{
-  return mmux_bash_pointers_sprint_sint(strptr, len, (signed int)value);
-}
-int
-mmux_bash_pointers_sprint_uint16 (char * strptr, size_t len, uint16_t value)
-{
-  return mmux_bash_pointers_sprint_uint(strptr, len, (unsigned int)value);
-}
-
-
-/** --------------------------------------------------------------------
- ** Type string printers: C standard type int32.
- ** ----------------------------------------------------------------- */
-
-int
-mmux_bash_pointers_sprint_sint32 (char * strptr, size_t len, int32_t value)
-{
-  return mmux_bash_pointers_sprint_slong(strptr, len, (signed long int)value);
-}
-int
-mmux_bash_pointers_sprint_uint32 (char * strptr, size_t len, uint32_t value)
-{
-  return mmux_bash_pointers_sprint_ulong(strptr, len, (unsigned long int)value);
-}
-
-
-/** --------------------------------------------------------------------
- ** Type string printers: C standard type int64.
- ** ----------------------------------------------------------------- */
-
-int
-mmux_bash_pointers_sprint_sint64 (char * strptr, size_t len, int64_t value)
-{
-#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-  return mmux_bash_pointers_sprint_sllong(strptr, len, (signed long long int)value);
-#else
-  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return EXECUTION_FAILURE;
-#endif
-}
-int
-mmux_bash_pointers_sprint_uint64 (char * strptr, size_t len, uint64_t value)
-{
-#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-  return mmux_bash_pointers_sprint_ullong(strptr, len, (unsigned long long int)value);
-#else
-  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return EXECUTION_FAILURE;
-#endif
-}
-
-
-/** --------------------------------------------------------------------
  ** Other C language and Unix type string printers.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER]]],[[[
+int
+mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
+{
+  return mmux_bash_pointers_sprint_size_[[[]]]$2[[[]]](value);
+}
 int
 mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_$1_t value)
 {
   return mmux_bash_pointers_sprint_[[[]]]$2[[[]]](strptr, len, value);
 }
 ]]])
+
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint8]]],		[[[sint]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint8]]],		[[[uint]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint16]]],	[[[sint]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint16]]],	[[[uint]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint32]]],	[[[slong]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint32]]],	[[[ulong]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint64]]],	[[[sllong]]])
+MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint64]]],	[[[ullong]]])
 
 MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ssize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
 MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[usize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])

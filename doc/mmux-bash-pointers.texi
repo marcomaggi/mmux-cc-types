@@ -3104,22 +3104,31 @@ representations; to print a @objtype{mmux_libc_sint_t} string representation we 
 
 @example
 mmux_libc_sint_t        value = 123;
+int                     required_nbytes;
 
-#undef  LEN
-#define LEN     256     /* enough? */
-char    str[LEN];
-int     rv;
+required_nbytes = mmux_bash_pointers_sprint_size_sint(value);
+if (0 > required_nbytes) @{
+  /* error */
+@} else @{
+  char    str[required_nbytes];
+  int     rv;
 
-rv = mmux_bash_pointers_sprint_sint(str, LEN, value);
+  rv = mmux_bash_pointers_sprint_sint(str, required_nbytes, value);
+@}
 @end example
 
 
 @macro MmuxDefineCFunctionSprinter{STEM,TYPE}
 @deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, size_t @var{LEN}, \TYPE\ @var{VALUE})
-Generate a string representation of @var{VALUE} and store it, in @asciiz{} format, in the string
-referenced by @var{STRPTR}, which can hold at most @var{LEN} bytes (terminating zero included).
-When successful return @code{EXECUTION_SUCCESS}; otherwise leave @var{STRPTR} untouched and return
-@code{EXECUTION_FAILURE}.
+@deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (\TYPE\ @var{VALUE})
+The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
+@asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
+characters (terminating zero included).  When successful return @code{EXECUTION_SUCCESS}; otherwise
+leave @var{STRPTR} untouched and return @code{EXECUTION_FAILURE}.
+
+The @samp{sprint_size} function computes how many characters are needed to hold the string
+representation of @var{VALUE}.  When successful returns the number of characters, @strong{including
+the terminating zero}; otherwise return @samp{-1}.
 @end deftypefun
 
 @end macro
