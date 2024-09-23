@@ -207,6 +207,7 @@ $VALUE  @result{} 123
 @menu
 * overview install::            Installed files.
 * overview linking::            Linking code with the library.
+* overview stems::              Specifying C language types with their stem.
 @end menu
 
 @c page
@@ -238,6 +239,107 @@ we can write code that links to the shared library to reuse some of its faciliti
 @c page
 
 @include overview-linking.texi
+
+@c page
+@node overview stems
+@section Specifying C language types with their stem
+
+
+@cindex Type stems
+@cindex @code{pointer}, type stem
+@cindex @code{schar}, type stem
+@cindex @code{uchar}, type stem
+@cindex @code{sshort}, type stem
+@cindex @code{ushort}, type stem
+@cindex @code{sint}, type stem
+@cindex @code{uint}, type stem
+@cindex @code{slong}, type stem
+@cindex @code{ulong}, type stem
+@cindex @code{sllong}, type stem
+@cindex @code{ullong}, type stem
+@cindex @code{float}, type stem
+@cindex @code{double}, type stem
+@cindex @code{ldouble}, type stem
+@cindex @code{complex}, type stem
+
+@cindex @code{sint8}, type stem
+@cindex @code{uint8}, type stem
+@cindex @code{sint16}, type stem
+@cindex @code{uint16}, type stem
+@cindex @code{sint32}, type stem
+@cindex @code{uint32}, type stem
+@cindex @code{sint64}, type stem
+@cindex @code{uint64}, type stem
+
+@cindex @code{ssize}, type stem
+@cindex @code{usize}, type stem
+@cindex @code{sintmax}, type stem
+@cindex @code{uintmax}, type stem
+@cindex @code{sintptr}, type stem
+@cindex @code{uintptr}, type stem
+@cindex @code{mode}, type stem
+@cindex @code{off}, type stem
+@cindex @code{pid}, type stem
+@cindex @code{uid}, type stem
+@cindex @code{gid}, type stem
+@cindex @code{wchar}, type stem
+@cindex @code{wint}, type stem
+
+
+The following word definitions just alias the corresponding standard C language type; such uniform
+names are useful when using preprocessor macros to generate code.
+
+If @value{PACKAGE} supports a type: it blindly implements all the possible operations for it, even
+when it looks like an operation does not make much sense.  A type is a type.
+
+@macro MmuxDefineTypeStem{STEM,TYPE}
+@deftp {Type Stem} \STEM\
+Single--word specification of a C language type supported by this package.  It is an alias for the
+standard C language type @code{\TYPE\}.
+@end deftp
+
+@end macro
+
+
+@MmuxDefineTypeStem{pointer,void *}
+
+@MmuxDefineTypeStem{schar,signed char}
+@MmuxDefineTypeStem{uchar,unsigned char}
+@MmuxDefineTypeStem{sshort,signed short int}
+@MmuxDefineTypeStem{ushort,unsigned short int}
+@MmuxDefineTypeStem{sint,signed int}
+@MmuxDefineTypeStem{uint,unsigned int}
+@MmuxDefineTypeStem{slong,signed long}
+@MmuxDefineTypeStem{ulong,unsigned long}
+@MmuxDefineTypeStem{sllong,signed long long}
+@MmuxDefineTypeStem{ullong,unsigned long long}
+@MmuxDefineTypeStem{float,float}
+@MmuxDefineTypeStem{double,double}
+@MmuxDefineTypeStem{ldouble,long double}
+@MmuxDefineTypeStem{complex,double complex}
+
+@MmuxDefineTypeStem{sint8,int8_t}
+@MmuxDefineTypeStem{uint8,uint8_t}
+@MmuxDefineTypeStem{sint16,int16_t}
+@MmuxDefineTypeStem{uint16,uint16_t}
+@MmuxDefineTypeStem{sint32,int32_t}
+@MmuxDefineTypeStem{uint32,uint32_t}
+@MmuxDefineTypeStem{sint64,int64_t}
+@MmuxDefineTypeStem{uint64,uint64_t}
+
+@MmuxDefineTypeStem{ssize,ssize_t}
+@MmuxDefineTypeStem{usize,size_t}
+@MmuxDefineTypeStem{sintmax, intmax_t}
+@MmuxDefineTypeStem{uintmax, uintmax_t}
+@MmuxDefineTypeStem{sintptr, intptr_t}
+@MmuxDefineTypeStem{uintptr, uintptr_t}
+@MmuxDefineTypeStem{mode, mode_t}
+@MmuxDefineTypeStem{off, off_t}
+@MmuxDefineTypeStem{pid, pid_t}
+@MmuxDefineTypeStem{uid, uid_t}
+@MmuxDefineTypeStem{gid, gid_t}
+@MmuxDefineTypeStem{wchar, wchar_t}
+@MmuxDefineTypeStem{wint, wint_t}
 
 @c page
 @node variables
@@ -2644,7 +2746,7 @@ is composed from a ``stem'': a single word representing the name of the type.  S
 are useful when using preprocessor macros to generate code.
 
 @macro MmuxDefineCAliasTypedef{STEM,TYPE}
-@deftp {Typedef} mmux_mmux_libc_\STEM\_t
+@deftp {Typedef} mmux_libc_\STEM\_t
 Type definition aliasing the standard C language type @code{\TYPE\}.
 @end deftp
 
@@ -2699,7 +2801,7 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @macro MmuxDefineCFunctionSizeof{STEM}
 @deftypefun int mmux_bash_pointers_sizeof_\STEM\ (void)
 Return a positive integer representing the size in bytes of the C language standard type
-@objtype{mmux_mmux_libc_\STEM\_t}.
+@objtype{mmux_libc_\STEM\_t}.
 @end deftypefun
 
 @end macro
@@ -2753,7 +2855,7 @@ Return a positive integer representing the size in bytes of the C language stand
 @macro MmuxDefineCFunctionPredicate{STEM}
 @deftypefun bool mmux_bash_pointers_string_\STEM\_p (char const * @var{str})
 Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a
-value of type @objtype{mmux_mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
+value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @end deftypefun
 
 @end macro
