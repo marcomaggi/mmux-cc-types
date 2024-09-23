@@ -34,6 +34,10 @@
 #  include <config.h>
 #endif
 
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+#  define HAVE_SIGNED_LONG_LONG_INT	1
+#endif
+
 #include <mmux-bash-pointers.h>
 
 /* Enable everything GNU. */
