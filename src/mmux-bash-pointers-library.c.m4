@@ -59,19 +59,29 @@ mmux_bash_pointers_version_interface_age (void)
  ** Helpers.
  ** ----------------------------------------------------------------- */
 
-static void
+static int
 mmux_bash_pointers_create_global_sint_variable (char * name, int value)
 {
-  SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	64
-  char		str[LEN];
-  /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
-     I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
-  int		flags = att_integer;
+  int		requested_nbytes;
 
-  snprintf(str, LEN, "%d", value);
-  v = bind_global_variable(name, str, flags);
+  requested_nbytes = mmux_bash_pointers_sprint_size_sint(value);
+  if (0 > requested_nbytes) {
+    return EXECUTION_FAILURE;
+  } else {
+    SHELL_VAR *		v MMUX_BASH_POINTERS_UNUSED;
+    char		str[requested_nbytes];
+    /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
+       I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
+    int			rv, flags = att_integer;
+
+    rv = mmux_bash_pointers_sprint_sint(str, requested_nbytes, value);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_global_variable(name, str, flags);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
 }
 static void
 mmux_bash_pointers_create_global_string_variable (char const * name, char * p_value)
@@ -84,16 +94,25 @@ mmux_bash_pointers_create_global_string_variable (char const * name, char * p_va
 int
 mmux_bash_pointers_set_ERRNO (int errnum)
 {
-  SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-  /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
-     I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
-  int		flags = att_integer;
-#undef  LEN
-#define LEN	32
-  char	str[LEN];
+  int		requested_nbytes;
 
-  mmux_bash_pointers_sprint_sint(str, LEN, errnum);
-  v = bind_variable("ERRNO", str, flags);
+  requested_nbytes = mmux_bash_pointers_sprint_size_sint(errnum);
+  if (0 > requested_nbytes) {
+    return EXECUTION_FAILURE;
+  } else {
+    SHELL_VAR *		v MMUX_BASH_POINTERS_UNUSED;
+    char		str[requested_nbytes];
+    /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
+       I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
+    int			rv, flags = att_integer;
+
+    rv = mmux_bash_pointers_sprint_sint(str, requested_nbytes, errnum);
+    if (EXECUTION_SUCCESS == rv) {
+      v = bind_variable("ERRNO", str, flags);
+    } else {
+      return rv;
+    }
+  }
   return EXECUTION_SUCCESS;
 }
 
@@ -135,34 +154,41 @@ mmux_bash_pointers_print_complex (double complex data)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)m4_dnl
-m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],
-  [[[mmux_bash_pointers_create_global_sint_variable("mmux_libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])",m4_dnl
- mmux_bash_pointers_sizeof_[[[]]]mmux_tolower([[[$1]]])[[[]]]())]]])
+m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[
+  mmux_bash_pointers_create_global_sint_variable("mmux_libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])",
+                                                 mmux_bash_pointers_sizeof_$1());
+]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
-#undef  LEN
-#define LEN	1024
-  char	str[LEN];
+  mmux_libc_$1_t value = mmux_bash_pointers_maximum_$1();
+  int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
 
-  memset(str, '\0', LEN);
-  mmux_bash_pointers_sprint_maximum_[[[]]]mmux_tolower([[[$1]]])[[[]]](str, LEN);
-  if (0) { fprintf(stderr, "%s: maximum $1: %s\n", __func__, str); }
-  mmux_bash_pointers_create_global_string_variable("mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str);
+  if (0 > requested_nbytes) {
+    return EXECUTION_FAILURE;
+  } else {
+    char	str[requested_nbytes];
+
+    mmux_bash_pointers_sprint_maximum_$1(str, requested_nbytes);
+    mmux_bash_pointers_create_global_string_variable("mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str);
+  }
 }]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
-#undef  LEN
-#define LEN	1024
-  char	str[LEN];
+  mmux_libc_$1_t value = mmux_bash_pointers_minimum_$1();
+  int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
 
-  memset(str, '\0', LEN);
-  mmux_bash_pointers_sprint_minimum_[[[]]]mmux_tolower([[[$1]]])[[[]]](str, LEN);
-  if (0) { fprintf(stderr, "%s: minimum $1: %s\n", __func__, str); }
-  mmux_bash_pointers_create_global_string_variable("mmux_libc_MIN_[[[]]]mmux_toupper([[[$1]]])", str);
+  if (0 > requested_nbytes) {
+    return EXECUTION_FAILURE;
+  } else {
+    char	str[requested_nbytes];
+
+    mmux_bash_pointers_sprint_minimum_$1(str, requested_nbytes);
+    mmux_bash_pointers_create_global_string_variable("mmux_libc_MIN_[[[]]]mmux_toupper([[[$1]]])", str);
+  }
 }]]])
 
 /* ------------------------------------------------------------------ */
