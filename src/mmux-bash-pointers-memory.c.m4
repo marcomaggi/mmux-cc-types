@@ -50,17 +50,22 @@ mmux_libc_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   }
 
   if (ptr) {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	32
-    char	str[LEN];
-    int		flags = 0;
+    int		required_nbytes;
 
-    snprintf(str, LEN, "%p", ptr);
-    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
-       (Marco Maggi; Sep 9, 2024) */
-    v = bind_variable(argv[1], str, flags);
-    return EXECUTION_SUCCESS;
+    required_nbytes = mmux_bash_pointers_sprint_size_pointer(ptr);
+    if (0 > required_nbytes) {
+      return EXECUTION_FAILURE;
+    } else {
+      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+      char		str[required_nbytes];
+      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
+	 (Marco Maggi; Sep 9, 2024) */
+      int		flags = 0;
+
+      mmux_bash_pointers_sprint_pointer(str, required_nbytes, ptr);
+      v = bind_variable(argv[1], str, flags);
+      return EXECUTION_SUCCESS;
+    }
   } else {
     mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
@@ -95,17 +100,22 @@ mmux_libc_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   }
 
   if (ptr) {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	32
-    char	str[LEN];
-    int		flags = 0;
+    int		required_nbytes;
 
-    snprintf(str, LEN, "%p", ptr);
-    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
-       (Marco Maggi; Sep 9, 2024) */
-    v = bind_variable(argv[1], str, flags);
-    return EXECUTION_SUCCESS;
+    required_nbytes = mmux_bash_pointers_sprint_size_pointer(ptr);
+    if (0 > required_nbytes) {
+      return EXECUTION_FAILURE;
+    } else {
+      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+      char		str[required_nbytes];
+      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
+	 (Marco Maggi; Sep 9, 2024) */
+      int		flags = 0;
+
+      mmux_bash_pointers_sprint_pointer(str, required_nbytes, ptr);
+      v = bind_variable(argv[1], str, flags);
+      return EXECUTION_SUCCESS;
+    }
   } else {
     mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
@@ -134,18 +144,24 @@ mmux_libc_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   ptr = realloc(ptr, len);
-  if (ptr) {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	32
-    char	str[LEN];
-    int		flags = 0;
 
-    snprintf(str, LEN, "%p", ptr);
-    /* NOTE I  do not  know what FLAGS  is for,  but setting it  to zero  seems fine.
-       (Marco Maggi; Sep 9, 2024) */
-    v = bind_variable(argv[1], str, flags);
-    return EXECUTION_SUCCESS;
+  if (ptr) {
+    int		required_nbytes;
+
+    required_nbytes = mmux_bash_pointers_sprint_size_pointer(ptr);
+    if (0 > required_nbytes) {
+      return EXECUTION_FAILURE;
+    } else {
+      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+      char		str[required_nbytes];
+      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
+	 (Marco Maggi; Sep 9, 2024) */
+      int		flags = 0;
+
+      mmux_bash_pointers_sprint_pointer(str, required_nbytes, ptr);
+      v = bind_variable(argv[1], str, flags);
+      return EXECUTION_SUCCESS;
+    }
   } else {
     mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;

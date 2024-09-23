@@ -30,6 +30,74 @@
 
 
 /** --------------------------------------------------------------------
+ ** Helpers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+static int
+store_$1_result (char const * variable_name, mmux_libc_$1_t value)
+{
+  int		rv, required_nbytes;
+
+  required_nbytes = mmux_bash_pointers_sprint_size_$1(value);
+  if (0 > required_nbytes) {
+    return EXECUTION_FAILURE;
+  } else {
+    char		str[required_nbytes];
+
+    rv = mmux_bash_pointers_sprint_$1(str, required_nbytes, value);
+    if (EXECUTION_SUCCESS == rv) {
+      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+      v = bind_variable(variable_name, str, 0);
+    } else {
+      return rv;
+    }
+  }
+  return EXECUTION_SUCCESS;
+}
+]]])]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[pointer]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[schar]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uchar]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sshort]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ushort]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[slong]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ulong]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint8]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint8]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint16]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint16]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint64]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[usize]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ssize]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[sintmax]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uintmax]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sintptr]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uintptr]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ptrdiff]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[mode]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[off]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[pid]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uid]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[gid]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[wchar]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[wint]]])
+
+
+/** --------------------------------------------------------------------
  ** Bitwise AND builtins.
  ** ----------------------------------------------------------------- */
 
@@ -51,21 +119,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   for (int i = 3; i < argc; ++i) {
     ops[2] &= ops[i];
   }
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,ops[2]);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_$1_result (argv[1], ops[2]);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -135,20 +189,7 @@ mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[
   op_uintptr   &= mask;
   op          = (mmux_libc_pointer_t)op_uintptr;
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	64
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_pointer_result(argv[1], op);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_and]]],
     [[[(4 == argc)]]],
@@ -178,21 +219,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   for (int i = 3; i < argc; ++i) {
     ops[2] |= ops[i];
   }
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,ops[2]);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_$1_result (argv[1], ops[2]);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -263,16 +290,21 @@ mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[]
   op          = (mmux_libc_pointer_t)op_uintptr;
 
   {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	64
-    char	str[LEN];
+    int		required_nbytes;
 
-    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
+    required_nbytes = mmux_bash_pointers_sprint_size_pointer(op);
+    if (0 > required_nbytes) {
+      return EXECUTION_FAILURE;
     } else {
-      return rv;
+      char		str[required_nbytes];
+
+      rv = mmux_bash_pointers_sprint_pointer(str, required_nbytes, op);
+      if (EXECUTION_SUCCESS == rv) {
+	SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+	v = bind_variable(argv[1], str, 0);
+      } else {
+	return rv;
+      }
     }
   }
   return EXECUTION_SUCCESS;
@@ -305,21 +337,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   for (int i = 3; i < argc; ++i) {
     ops[2] ^= ops[i];
   }
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,ops[2]);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_$1_result (argv[1], ops[2]);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -390,20 +408,7 @@ mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[
   op_uintptr   ^= mask_uintptr;
   op            = (mmux_libc_pointer_t)op_uintptr;
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	64
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_pointer_result(argv[1], op);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_xor]]],
     [[[(4 == argc)]]],
@@ -429,21 +434,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   op = ~ op;
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_$1_result (argv[1], op);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -510,20 +501,7 @@ mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[
   op_uintptr  = ~ op_uintptr;
   op          = (mmux_libc_pointer_t)op_uintptr;
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	64
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_pointer_result(argv[1], op);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_not]]],
     [[[(3 == argc)]]],
@@ -553,21 +531,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   op <<= nbits;
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_$1_result (argv[1], op);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -638,20 +602,7 @@ mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[]
   op_uintptr <<= nbits;
   op           = (mmux_libc_pointer_t)op_uintptr;
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_pointer_result (argv[1], op);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shl]]],
     [[[(4 == argc)]]],
@@ -681,21 +632,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
 
   op >>= nbits;
-
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_$1_result(argv[1], op);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -766,20 +703,7 @@ mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[]
   op_uintptr >>= nbits;
   op           = (mmux_libc_pointer_t)op_uintptr;
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-
-    rv = mmux_bash_pointers_sprint_pointer(str,LEN,op);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable(argv[1], str, 0);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return store_pointer_result(argv[1], op);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shr]]],
     [[[(4 == argc)]]],
