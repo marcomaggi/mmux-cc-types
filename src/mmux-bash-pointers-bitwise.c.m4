@@ -39,7 +39,7 @@ mmux_$1_bitwise_and_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_and"
 {
-#if ($2)
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
@@ -66,11 +66,11 @@ mmux_$1_bitwise_and_main (int argc,  char * argv[])
     }
   }
   return EXECUTION_SUCCESS;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_and]]],
     [[[(3 <= argc)]]],
@@ -78,41 +78,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_and]]],
     [[["Compute the bitwise AND between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[schar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sshort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ushort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[slong]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ulong]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[schar]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uchar]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sshort]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ushort]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[slong]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ulong]]])
 MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint64]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint64]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint8]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint8]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint16]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint16]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint32]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint32]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sint64]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[usize]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ssize]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[usize]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ptrdiff]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[mode]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[off]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[pid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[gid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[wchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[wint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sintmax]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uintmax]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[sintptr]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uintptr]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[mode]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[off]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[pid]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[uid]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[gid]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[wchar]]])
+MMUX_BASH_DEFINE_BITWISE_AND_BUILTIN([[[wint]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -166,7 +166,7 @@ mmux_$1_bitwise_or_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_or"
 {
-#if ($2)
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
@@ -193,11 +193,11 @@ mmux_$1_bitwise_or_main (int argc,  char * argv[])
     }
   }
   return EXECUTION_SUCCESS;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_or]]],
     [[[(3 <= argc)]]],
@@ -205,41 +205,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_or]]],
     [[["Compute the bitwise OR between the operors OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[schar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sshort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ushort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[slong]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ulong]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[schar]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uchar]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sshort]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ushort]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[slong]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ulong]]])
 MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint64]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint64]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint8]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint8]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint16]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint16]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint32]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint32]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sint64]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[usize]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ssize]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[usize]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ptrdiff]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[mode]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[off]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[pid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[gid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[wchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[wint]]],			[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sintmax]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uintmax]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[sintptr]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uintptr]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[mode]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[off]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[pid]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[uid]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[gid]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[wchar]]])
+MMUX_BASH_DEFINE_BITWISE_OR_BUILTIN([[[wint]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -293,7 +293,7 @@ mmux_$1_bitwise_xor_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_xor"
 {
-#if ($2)
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
@@ -320,11 +320,11 @@ mmux_$1_bitwise_xor_main (int argc,  char * argv[])
     }
   }
   return EXECUTION_SUCCESS;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_xor]]],
     [[[(3 <= argc)]]],
@@ -332,41 +332,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_xor]]],
     [[["Compute the bitwise XOR between the operxors OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[schar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sshort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ushort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[slong]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ulong]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[schar]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uchar]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sshort]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ushort]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[slong]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ulong]]])
 MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint64]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint64]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint8]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint8]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint16]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint16]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint32]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint32]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sint64]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[usize]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ssize]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[usize]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ptrdiff]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[mode]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[off]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[pid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[gid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[wchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[wint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sintmax]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uintmax]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[sintptr]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uintptr]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[mode]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[off]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[pid]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[uid]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[gid]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[wchar]]])
+MMUX_BASH_DEFINE_BITWISE_XOR_BUILTIN([[[wint]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -421,7 +421,7 @@ mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_not"
 {
-#if ($2)
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	op;
   int			rv;
 
@@ -444,11 +444,11 @@ mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
     }
   }
   return EXECUTION_SUCCESS;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_not]]],
     [[[(3 == argc)]]],
@@ -456,41 +456,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_not]]],
     [[["Compute the bitwise NOT between of the opernot OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[schar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sshort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ushort]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[slong]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ulong]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[schar]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uchar]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sshort]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ushort]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[slong]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ulong]]])
 MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint8]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint16]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint32]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint64]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint64]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint8]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint8]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint16]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint16]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint32]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint32]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sint64]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[usize]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ssize]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[usize]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uintmax]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uintptr]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ptrdiff]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[mode]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[off]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[pid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[gid]]],			[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[wchar]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[wint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sintmax]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uintmax]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[sintptr]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uintptr]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[mode]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[off]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[pid]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[uid]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[gid]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[wchar]]])
+MMUX_BASH_DEFINE_BITWISE_NOT_BUILTIN([[[wint]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -541,7 +541,7 @@ mmux_$1_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_shl"
 {
-#if ($2)
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	op;
   mmux_libc_sint_t	nbits;
   int			rv;
@@ -568,11 +568,11 @@ mmux_$1_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
     }
   }
   return EXECUTION_SUCCESS;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_shl]]],
     [[[(4 == argc)]]],
@@ -580,41 +580,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_shl]]],
     [[["Compute the bitwise shl of OP, by NBITS, store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[schar]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uchar]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sshort]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ushort]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[slong]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ulong]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[schar]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uchar]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sshort]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ushort]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[slong]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ulong]]])
 MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint8]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint8]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint16]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint16]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint32]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint32]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint64]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint64]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint8]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint8]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint16]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint16]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint32]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint32]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sint64]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[usize]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ssize]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[usize]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sintmax]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uintmax]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sintptr]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uintptr]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ptrdiff]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[mode]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[off]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[pid]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uid]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[gid]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wchar]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sintmax]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uintmax]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[sintptr]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uintptr]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[mode]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[off]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[pid]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[uid]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[gid]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wchar]]])
+MMUX_BASH_DEFINE_BITWISE_SHL_BUILTIN([[[wint]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -669,7 +669,7 @@ mmux_$1_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_shr"
 {
-#if ($2)
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	op;
   mmux_libc_sint_t	nbits;
   int			rv;
@@ -696,11 +696,11 @@ mmux_$1_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
     }
   }
   return EXECUTION_SUCCESS;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_shr]]],
     [[[(4 == argc)]]],
@@ -708,41 +708,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_shr]]],
     [[["Compute the bitwise shr of OP, by NBITS, store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[schar]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uchar]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sshort]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ushort]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[slong]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ulong]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[schar]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uchar]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sshort]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ushort]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[slong]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ulong]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint8]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint8]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint16]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint16]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint32]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint32]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint64]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint64]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint8]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint8]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint16]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint16]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint32]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint32]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sint64]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[usize]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ssize]]],	[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[usize]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sintmax]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uintmax]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sintptr]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uintptr]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ptrdiff]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[mode]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[off]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[pid]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uid]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[gid]]],		[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wchar]]],	[[[1]]])
-MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wint]]],		[[[1]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sintmax]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uintmax]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[sintptr]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uintptr]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[mode]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[off]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[pid]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[uid]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[gid]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wchar]]])
+MMUX_BASH_DEFINE_BITWISE_SHR_BUILTIN([[[wint]]])
 
 /* ------------------------------------------------------------------ */
 
