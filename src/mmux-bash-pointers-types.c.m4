@@ -35,40 +35,40 @@
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS]]],[[[
 bool
-mmux_bash_pointers_string_[[[]]]$1[[[]]]_p (char const * s_arg)
+mmux_bash_pointers_string_$1_p (char const * s_arg)
 {
-  mmux_libc_[[[]]]$1[[[]]]_t	value;
+  mmux_libc_$1_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_[[[]]]$1[[[]]](&value, s_arg, NULL)) {
+  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
   }
 }
 int
-mmux_bash_pointers_sizeof_[[[]]]$1[[[]]] (void)
+mmux_bash_pointers_sizeof_$1 (void)
 {
-  return sizeof(mmux_libc_[[[]]]$1[[[]]]_t);
+  return sizeof(mmux_libc_$1_t);
 }
-mmux_libc_[[[]]]$1[[[]]]_t
-mmux_bash_pointers_maximum_[[[]]]$1[[[]]] (void)
+mmux_libc_$1_t
+mmux_bash_pointers_maximum_$1 (void)
 {
   return $2;
 }
-mmux_libc_[[[]]]$1[[[]]]_t
-mmux_bash_pointers_minimum_[[[]]]$1[[[]]] (void)
+mmux_libc_$1_t
+mmux_bash_pointers_minimum_$1 (void)
 {
   return $3;
 }
 int
-mmux_bash_pointers_sprint_maximum_[[[]]]$1[[[]]] (char * s, size_t l)
+mmux_bash_pointers_sprint_maximum_$1 (char * s, size_t l)
 {
-  return mmux_bash_pointers_sprint_[[[]]]$1[[[]]](s, l, $2);
+  return mmux_bash_pointers_sprint_$1(s, l, $2);
 }
 int
-mmux_bash_pointers_sprint_minimum_[[[]]]$1[[[]]](char * s, size_t l)
+mmux_bash_pointers_sprint_minimum_$1(char * s, size_t l)
 {
-  return mmux_bash_pointers_sprint_[[[]]]$1[[[]]](s, l, $3);
+  return mmux_bash_pointers_sprint_$1(s, l, $3);
 }
 ]]])
 
@@ -179,38 +179,38 @@ m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS]]],[[[
 bool
-mmux_bash_pointers_string_[[[]]]$1[[[]]]_p (char const * s_arg)
+mmux_bash_pointers_string_$1_p (char const * s_arg)
 {
-  mmux_libc_[[[]]]$1[[[]]]_t	value;
+  mmux_libc_$1_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_[[[]]]$1[[[]]](&value, s_arg, NULL)) {
+  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
   }
 }
   int
-  mmux_bash_pointers_sizeof_[[[]]]$1[[[]]] (void)
+  mmux_bash_pointers_sizeof_$1 (void)
   {
-    return sizeof(mmux_libc_[[[]]]$1[[[]]]_t);
+    return sizeof(mmux_libc_$1_t);
   }
-  mmux_libc_[[[]]]$1[[[]]]_t
-  mmux_bash_pointers_maximum_[[[]]]$1[[[]]] (void)
+  mmux_libc_$1_t
+  mmux_bash_pointers_maximum_$1 (void)
   {
     return mmux_bash_pointers_maximum_[[[]]]$2[[[]]] ();
   }
-  mmux_libc_[[[]]]$1[[[]]]_t
-  mmux_bash_pointers_minimum_[[[]]]$1[[[]]] (void)
+  mmux_libc_$1_t
+  mmux_bash_pointers_minimum_$1 (void)
   {
     return mmux_bash_pointers_minimum_[[[]]]$2[[[]]] ();
   }
   int
-  mmux_bash_pointers_sprint_maximum_[[[]]]$1[[[]]] (char * s, size_t l)
+  mmux_bash_pointers_sprint_maximum_$1 (char * s, size_t l)
   {
     return mmux_bash_pointers_sprint_maximum_[[[]]]$2[[[]]] (s,l);
   }
   int
-  mmux_bash_pointers_sprint_minimum_[[[]]]$1[[[]]] (char * s, size_t l)
+  mmux_bash_pointers_sprint_minimum_$1 (char * s, size_t l)
   {
     return mmux_bash_pointers_sprint_minimum_[[[]]]$2[[[]]] (s,l);
   }
