@@ -50,22 +50,7 @@ mmux_libc_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   }
 
   if (ptr) {
-    int		required_nbytes;
-
-    required_nbytes = mmux_bash_pointers_sprint_size_pointer(ptr);
-    if (0 > required_nbytes) {
-      return EXECUTION_FAILURE;
-    } else {
-      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-      char		str[required_nbytes];
-      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
-	 (Marco Maggi; Sep 9, 2024) */
-      int		flags = 0;
-
-      mmux_bash_pointers_sprint_pointer(str, required_nbytes, ptr);
-      v = bind_variable(argv[1], str, flags);
-      return EXECUTION_SUCCESS;
-    }
+    return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], ptr);
   } else {
     mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
@@ -100,22 +85,7 @@ mmux_libc_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   }
 
   if (ptr) {
-    int		required_nbytes;
-
-    required_nbytes = mmux_bash_pointers_sprint_size_pointer(ptr);
-    if (0 > required_nbytes) {
-      return EXECUTION_FAILURE;
-    } else {
-      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-      char		str[required_nbytes];
-      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
-	 (Marco Maggi; Sep 9, 2024) */
-      int		flags = 0;
-
-      mmux_bash_pointers_sprint_pointer(str, required_nbytes, ptr);
-      v = bind_variable(argv[1], str, flags);
-      return EXECUTION_SUCCESS;
-    }
+    return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], ptr);
   } else {
     mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;
@@ -146,22 +116,7 @@ mmux_libc_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   ptr = realloc(ptr, len);
 
   if (ptr) {
-    int		required_nbytes;
-
-    required_nbytes = mmux_bash_pointers_sprint_size_pointer(ptr);
-    if (0 > required_nbytes) {
-      return EXECUTION_FAILURE;
-    } else {
-      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-      char		str[required_nbytes];
-      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
-	 (Marco Maggi; Sep 9, 2024) */
-      int		flags = 0;
-
-      mmux_bash_pointers_sprint_pointer(str, required_nbytes, ptr);
-      v = bind_variable(argv[1], str, flags);
-      return EXECUTION_SUCCESS;
-    }
+    return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], ptr);
   } else {
     mmux_bash_pointers_set_ERRNO(errno);
     return EXECUTION_FAILURE;

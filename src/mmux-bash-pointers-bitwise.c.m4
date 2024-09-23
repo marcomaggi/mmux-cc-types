@@ -221,25 +221,7 @@ mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[]
   op_uintptr   |= mask;
   op          = (mmux_libc_pointer_t)op_uintptr;
 
-  {
-    int		required_nbytes;
-
-    required_nbytes = mmux_bash_pointers_sprint_size_pointer(op);
-    if (0 > required_nbytes) {
-      return EXECUTION_FAILURE;
-    } else {
-      char		str[required_nbytes];
-
-      rv = mmux_bash_pointers_sprint_pointer(str, required_nbytes, op);
-      if (EXECUTION_SUCCESS == rv) {
-	SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-	v = bind_variable(argv[1], str, 0);
-      } else {
-	return rv;
-      }
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], op);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_or]]],
     [[[(4 == argc)]]],

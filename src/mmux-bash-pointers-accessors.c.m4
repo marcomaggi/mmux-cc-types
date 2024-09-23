@@ -59,26 +59,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   value = *ptr_value;
 
-  {
-    int		requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
-    if (0 > requested_nbytes) {
-      return EXECUTION_FAILURE;
-    } else {
-      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-      char		str[requested_nbytes];
-      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
-	 (Marco Maggi; Sep 9, 2024) */
-      int		flags = 0;
-
-      rv = mmux_bash_pointers_sprint_$1(str,requested_nbytes,value);
-      if (EXECUTION_SUCCESS == rv) {
-	v = bind_variable(argv[1], str, flags);
-      } else {
-	return rv;
-      }
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], value);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -161,23 +142,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   ptr_value = (mmux_libc_$1_t *)ptr;
   value     = ptr_value[index];
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-#undef  LEN
-#define LEN	1024 /* This size has to be good for every type. Ha! Ha! */
-    char	str[LEN];
-    int		flags = 0;
-
-    rv = mmux_bash_pointers_sprint_$1(str,LEN,value);
-    if (EXECUTION_SUCCESS == rv) {
-      /* NOTE I  do not know what  FLAGS is for, but  setting it to zero  seems fine.
-	 (Marco Maggi; Sep 9, 2024) */
-      v = bind_variable(argv[1], str, flags);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], value);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
