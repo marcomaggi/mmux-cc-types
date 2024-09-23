@@ -177,13 +177,11 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char co
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_data, char const * s_arg, char const * caller_name)
+mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_data, char const * s_arg, char const * caller_name)
 {
-#if ($3)
+MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   int	rv;
 
-  /* NOTE I  know that to convert  integers there are functions  like "strtol()", but
-     let's not be picky.  (Marco Maggi; Sep 9, 2024) */
   rv = sscanf(s_arg, $2, p_data);
   if ((EOF != rv) && (1 == rv)) {
     return EXECUTION_SUCCESS;
@@ -193,16 +191,16 @@ mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_data, char const * s_arg, 
     }
     return EXECUTION_FAILURE;
   }
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[["%f"]]],	[[[1]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[["%lf"]]],	[[[1]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[["%f"]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[["%lf"]]])
 MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[["%Lf"]]],	[[[HAVE_LONG_DOUBLE]]])
 
 
@@ -212,7 +210,7 @@ MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[["%Lf"]]],	[[[HAVE_LONG_
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_dest, char const * s_source, char const * caller_name)
+mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_libc_sintmax_t	value;
   int			rv;

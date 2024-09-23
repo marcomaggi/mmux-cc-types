@@ -36,7 +36,7 @@
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINT]]],[[[int
 mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, size_t len, mmux_libc_[[[$1]]]_t value)
 {
-#if ($3)
+MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   size_t	to_be_written_chars;
 
   to_be_written_chars = snprintf(strptr, len, $2, value);
@@ -45,25 +45,24 @@ mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, size_t len, mmux_libc_[[[$1]]
   } else {
     return EXECUTION_FAILURE;
   }
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
-#endif
-}]]])
+]]])}]]])
 
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[["%hhd"]]], [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uchar]]],		[[["%hhu"]]], [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sshort]]],		[[["%hd"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ushort]]],		[[["%hu"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sint]]],		[[["%d"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uint]]],		[[["%u"]]],   [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[slong]]],		[[["%ld"]]],  [[[1]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ulong]]],		[[["%lu"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[schar]]],		[[["%hhd"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uchar]]],		[[["%hhu"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sshort]]],		[[["%hd"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ushort]]],		[[["%hu"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sint]]],		[[["%d"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[uint]]],		[[["%u"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[slong]]],		[[["%ld"]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ulong]]],		[[["%lu"]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[sllong]]],		[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ullong]]],		[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
 
-MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[["%lA"]]],  [[[1]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINT([[[double]]],		[[["%lA"]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINT([[[ldouble]]],		[[["%LA"]]],  [[[HAVE_LONG_DOUBLE]]])
 
 /* ------------------------------------------------------------------ */
@@ -197,7 +196,7 @@ mmux_bash_pointers_sprint_uint64 (char * strptr, size_t len, uint64_t value)
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER]]],[[[
 int
-mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_[[[$1]]]_t value)
+mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_$1_t value)
 {
   return mmux_bash_pointers_sprint_[[[]]]$2[[[]]](strptr, len, value);
 }
