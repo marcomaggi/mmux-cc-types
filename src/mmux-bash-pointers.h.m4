@@ -180,6 +180,7 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_[[[]]]$1[[[]
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, size_t l, mmux_libc_[[[]]]$1[[[]]]_t v)
        __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_[[[]]]$1[[[]]]_t v);
+mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value);
 ]]])
 
 m4_dnl $1 - type stem
