@@ -152,8 +152,32 @@ mmux_bash_pointers_private_decl regex_t mmux_bash_pointers_complex_rex;
 
 
 /** --------------------------------------------------------------------
- ** Function prototypes.
+ ** Inline functions.
  ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[
+MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+static inline mmux_libc_$1_part_t
+mmux_bash_pointers_$1_real_part (mmux_libc_$1_t Z)
+{
+  return $2(Z);
+}
+static inline mmux_libc_$1_part_t
+mmux_bash_pointers_$1_imag_part (mmux_libc_$1_t Z)
+{
+  return $3(Z);
+}
+static inline mmux_libc_$1_t
+mmux_bash_pointers_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+{
+  return (re + im * $4 _Complex_I);
+}
+]]])]]])
+
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf]]],  [[[crealf]]], [[[cimagf]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd]]],  [[[creal]]],  [[[cimag]]],  [[[(mmux_libc_complexd_t)]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexld]]], [[[creall]]], [[[cimagl]]], [[[(mmux_libc_complexld_t)]]],
+                                                  [[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------

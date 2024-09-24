@@ -38,9 +38,9 @@ function mmux_bash_pointers_library_load () {
     declare -g MMUX_BASH_POINTERS_REVISION=mmux_bash_pointers_VERSION_INTERFACE_REVISION
     declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
 
-    declare -ra STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complex sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
+    declare -ra STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complexf complexd complexld sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ra INTEGER_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
-    declare -ra FLOAT_STEMS=(float double ldouble complex)
+    declare -ra FLOAT_STEMS=(float double ldouble complexf complexd complexld)
     declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror errno_to_string)
 
     # The identifier of every defined builtin is stored in this array.
@@ -101,7 +101,7 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 
-	    for STEM in float double ldouble complex
+	    for STEM in float double ldouble complexf complexd complexld
 	    do
 		for ITEM in add sub mul div neg
 		do
@@ -157,7 +157,9 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 
-	    mmux_bash_pointers_library_define_builtin 'mmux_complex_equal'
+	    mmux_bash_pointers_library_define_builtin 'mmux_complexf_equal'
+	    mmux_bash_pointers_library_define_builtin 'mmux_complexd_equal'
+	    mmux_bash_pointers_library_define_builtin 'mmux_complexld_equal'
 	}
     fi
 }

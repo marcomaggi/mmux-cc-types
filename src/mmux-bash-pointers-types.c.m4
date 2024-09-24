@@ -153,22 +153,29 @@ mmux_bash_pointers_sprint_minimum_pointer (char * s, size_t l)
 
 /* ------------------------------------------------------------------ */
 
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS]]],[[[
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_bash_pointers_string_complex_p (char const * s_arg)
+mmux_bash_pointers_string_$1_p (char const * s_arg)
 {
-  double complex	value;
+  mmux_libc_$1_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_complex(&value, s_arg, NULL)) {
+  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
   }
 }
 int
-mmux_bash_pointers_sizeof_complex (void)
+mmux_bash_pointers_sizeof_$1 (void)
 {
-  return sizeof(mmux_libc_complex_t);
+  return sizeof(mmux_libc_$1_t);
 }
+]]])]]])
+
+MMUX_BASH_POINTERS_DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf]]])
+MMUX_BASH_POINTERS_DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexd]]])
+MMUX_BASH_POINTERS_DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------
@@ -271,8 +278,8 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[sint]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[uint]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[slong]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[ulong]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sllong]]],		[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[MMUX_HAVE_TYPE_SLLONG]]])
 
 MMUX_BASH_DEFINE_VALUE_STORER([[[sint8]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[uint8]]])
@@ -285,8 +292,10 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[uint64]]])
 
 MMUX_BASH_DEFINE_VALUE_STORER([[[float]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[double]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ldouble]]],		[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complex]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 MMUX_BASH_DEFINE_VALUE_STORER([[[usize]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[ssize]]])

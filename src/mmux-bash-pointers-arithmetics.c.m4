@@ -30,83 +30,8 @@
 
 
 /** --------------------------------------------------------------------
- ** Addition builtins.
+ ** Pointer arithmetics builtins.
  ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_DEFINE_ADDITION_BUILTIN]]],[[[
-static int
-mmux_$1_add_main (int argc,  char * argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_add"
-{
-MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
-  int			rv;
-
-  for (int i = 2; i < argc; ++i) {
-    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
-  }
-
-  for (int i = 3; i < argc; ++i) {
-    ops[2] += ops[i];
-  }
-
-  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], ops[2]);
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
-]]])
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
-    [[[(3 <= argc)]]],
-    [[["mmux_$1_add ROPVAR OP0 OP ..."]]],
-    [[["Compute the addition between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
-]]])
-
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[schar]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uchar]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sshort]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[ushort]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sint]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uint]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[slong]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[ulong]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
-
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[float]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[double]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[ldouble]]],	[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[complex]]])
-
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sint8]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uint8]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sint16]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uint16]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sint32]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uint32]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sint64]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uint64]]])
-
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[usize]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[ssize]]])
-
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sintmax]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uintmax]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[sintptr]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uintptr]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[mode]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[off]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[pid]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[uid]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[gid]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[wchar]]])
-MMUX_BASH_DEFINE_ADDITION_BUILTIN([[[wint]]])
-
-/* ------------------------------------------------------------------ */
 
 static int
 mmux_pointer_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
@@ -136,10 +61,42 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_add]]],
 
 
 /** --------------------------------------------------------------------
- ** Subtraction builtins.
+ ** Core arithmetics builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN]]],[[[
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN]]],[[[
+static int
+mmux_$1_add_main (int argc,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_$1_add"
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+  int			rv;
+
+  for (int i = 2; i < argc; ++i) {
+    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
+    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+  }
+
+  for (int i = 3; i < argc; ++i) {
+    ops[2] += ops[i];
+  }
+
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], ops[2]);
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
+    [[[(3 <= argc)]]],
+    [[["mmux_$1_add ROPVAR OP0 OP ..."]]],
+    [[["Compute the addition between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
 static int
 mmux_$1_sub_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -169,55 +126,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_sub]]],
     [[[(3 <= argc)]]],
     [[["mmux_$1_sub ROPVAR OP0 OP ..."]]],
     [[["Compute the subtraction between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
-]]])
 
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[schar]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uchar]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sshort]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[ushort]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sint]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uint]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[slong]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[ulong]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+/* ------------------------------------------------------------------ */
 
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[float]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[double]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[ldouble]]],		[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[complex]]])
-
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sint8]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uint8]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sint16]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uint16]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sint32]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uint32]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sint64]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uint64]]])
-
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[usize]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[ssize]]])
-
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sintmax]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uintmax]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[sintptr]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uintptr]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[mode]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[off]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[pid]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[uid]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[gid]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[wchar]]])
-MMUX_BASH_DEFINE_SUBTRACTION_BUILTIN([[[wint]]])
-
-
-/** --------------------------------------------------------------------
- ** Multiplication builtins.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN]]],[[[
 static int
 mmux_$1_mul_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -247,55 +158,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mul]]],
     [[[(3 <= argc)]]],
     [[["mmux_$1_mul ROPVAR OP0 OP ..."]]],
     [[["Compute the multiplication between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
-]]])
 
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[schar]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uchar]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sshort]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[ushort]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sint]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uint]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[slong]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[ulong]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+/* ------------------------------------------------------------------ */
 
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[float]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[double]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[ldouble]]],		[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[complex]]])
-
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sint8]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uint8]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sint16]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uint16]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sint32]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uint32]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sint64]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uint64]]])
-
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[usize]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[ssize]]])
-
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sintmax]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uintmax]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[sintptr]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uintptr]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[mode]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[off]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[pid]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[uid]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[gid]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[wchar]]])
-MMUX_BASH_DEFINE_MULTIPLICATION_BUILTIN([[[wint]]])
-
-
-/** --------------------------------------------------------------------
- ** Division builtins.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_DEFINE_DIVISION_BUILTIN]]],[[[
 static int
 mmux_$1_div_main (int argc,  char * argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -325,55 +190,85 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_div]]],
     [[[(3 <= argc)]]],
     [[["mmux_$1_div ROPVAR OP0 OP ..."]]],
     [[["Compute the division between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_$1_neg"
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  mmux_libc_$1_t	op;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op = -op;
+
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], op);
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
+    [[[(3 == argc)]]],
+    [[["mmux_$1_neg ROPVAR OP"]]],
+    [[["Compute the negation of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[schar]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uchar]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sshort]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[ushort]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sint]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uint]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[slong]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[ulong]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[schar]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uchar]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sshort]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ushort]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sint]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uint]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[slong]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ulong]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
 
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[float]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[double]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[ldouble]]],	[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[complex]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[double]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexd]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sint8]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uint8]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sint16]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uint16]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sint32]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uint32]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sint64]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uint64]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sint8]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uint8]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sint16]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uint16]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sint32]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uint32]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sint64]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[usize]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[ssize]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[usize]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sintmax]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uintmax]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[sintptr]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uintptr]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[mode]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[off]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[pid]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[uid]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[gid]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[wchar]]])
-MMUX_BASH_DEFINE_DIVISION_BUILTIN([[[wint]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sintmax]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uintmax]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sintptr]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uintptr]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[mode]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[off]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[pid]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uid]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[gid]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[wchar]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[wint]]])
 
 
 /** --------------------------------------------------------------------
  ** Remainder builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_DEFINE_REMAINDER_BUILTIN]]],[[[
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN]]],[[[
 static int
 mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -404,114 +299,40 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
     [[["Compute the remainder between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[schar]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uchar]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sshort]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ushort]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[slong]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ulong]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[schar]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uchar]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sshort]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[ushort]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sint]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uint]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[slong]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[ulong]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
 
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint8]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint8]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint16]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint16]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint32]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint32]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sint64]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uint64]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sint8]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uint8]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sint16]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uint16]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sint32]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uint32]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sint64]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uint64]]])
 
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[usize]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ssize]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[usize]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[ssize]]])
 
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sintmax]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uintmax]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[sintptr]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uintptr]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[mode]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[off]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[pid]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[uid]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[gid]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[wchar]]])
-MMUX_BASH_DEFINE_REMAINDER_BUILTIN([[[wint]]])
-
-
-/** --------------------------------------------------------------------
- ** Negation builtins.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_DEFINE_NEGATION_BUILTIN]]],[[[
-static int
-mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_neg"
-{
-MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
-  int			rv;
-
-  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
-
-  op = -op;
-
-  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], op);
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
-]]])
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
-    [[[(3 == argc)]]],
-    [[["mmux_$1_neg ROPVAR OP"]]],
-    [[["Compute the negation of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
-]]])
-
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[schar]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uchar]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sshort]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[ushort]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sint]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uint]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[slong]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[ulong]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sllong]]],		[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[ullong]]],		[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
-
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[float]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[double]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[ldouble]]],	[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[complex]]])
-
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sint8]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uint8]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sint16]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uint16]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sint32]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uint32]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sint64]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uint64]]])
-
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[usize]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[ssize]]])
-
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sintmax]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uintmax]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[sintptr]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uintptr]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[mode]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[off]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[pid]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[uid]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[gid]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[wchar]]])
-MMUX_BASH_DEFINE_NEGATION_BUILTIN([[[wint]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sintmax]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uintmax]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[sintptr]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uintptr]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[ptrdiff]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[mode]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[off]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[pid]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[uid]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[gid]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[wchar]]])
+MMUX_BASH_POINTERS_DEFINE_REMAINDER_BUILTIN([[[wint]]])
 
 /* end of file */

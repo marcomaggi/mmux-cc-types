@@ -260,7 +260,9 @@ we can write code that links to the shared library to reuse some of its faciliti
 @cindex @code{float}, type stem
 @cindex @code{double}, type stem
 @cindex @code{ldouble}, type stem
-@cindex @code{complex}, type stem
+@cindex @code{complexf}, type stem
+@cindex @code{complexd}, type stem
+@cindex @code{complexld}, type stem
 
 @cindex @code{sint8}, type stem
 @cindex @code{uint8}, type stem
@@ -316,7 +318,9 @@ standard C language type @code{\TYPE\}.
 @MmuxDefineTypeStem{float,float}
 @MmuxDefineTypeStem{double,double}
 @MmuxDefineTypeStem{ldouble,long double}
-@MmuxDefineTypeStem{complex,double complex}
+@MmuxDefineTypeStem{complexf,float complex}
+@MmuxDefineTypeStem{complexd,double complex}
+@MmuxDefineTypeStem{complexld,long double complex}
 
 @MmuxDefineTypeStem{sint8,int8_t}
 @MmuxDefineTypeStem{uint8,uint8_t}
@@ -460,7 +464,7 @@ else # not implemented
 fi
 @end example
 
-Notice that the C language type @objtype{double complex} has no maximum or minimum limit.
+Notice that the floating--point complex C language types have no maximum or minimum limit.
 
 @macro MmuxDefineGlobalVarLimits{NAME,TYPE}
 @defvar mmux_libc_MAX_\NAME\
@@ -485,7 +489,6 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{FLOAT, float}
 @MmuxDefineGlobalVarLimits{DOUBLE, double}
 @MmuxDefineGlobalVarLimits{LDOUBLE, long double}
-@c @MmuxDefineGlobalVarLimits{COMPLEX, double complex}
 
 @MmuxDefineGlobalVarLimits{SINT8, int8_t}
 @MmuxDefineGlobalVarLimits{UINT8, uint8_t}
@@ -885,51 +888,53 @@ the return value is false and the shell variable @code{ERRNO} is set to the stri
 an exact integer, itself representing an @code{errno} error code.
 
 
-@macro MmuxDefineAccessorMutator{STEM,TYPE}
+@macro MmuxDefineAccessorMutator{STEM}
 @deffn {Builtin Mutator} mmux_\STEM\_pointer_set @var{POINTER} @var{OFFSET} @var{VALUE}
 @deffnx {Builtin Accessor} mmux_\STEM\_pointer_ref @var{VALUEVAR} @var{POINTER} @var{OFFSET}
-Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
+Accessor and mutator for memory blocks operating on the C language type @code{\STEM\}.
 @end deffn
 
 @end macro
 
 @MmuxDefineAccessorMutator{pointer,void *}
 
-@MmuxDefineAccessorMutator{schar,signed char}
-@MmuxDefineAccessorMutator{uchar,unsigned char}
-@MmuxDefineAccessorMutator{sint,signed int}
-@MmuxDefineAccessorMutator{uint,unsigned int}
-@MmuxDefineAccessorMutator{sshort,signed short int}
-@MmuxDefineAccessorMutator{ushort,unsigned short int}
-@MmuxDefineAccessorMutator{slong,signed long}
-@MmuxDefineAccessorMutator{ulong,unsigned long}
-@MmuxDefineAccessorMutator{sllong,signed long long}
-@MmuxDefineAccessorMutator{ullong,unsigned long long}
-@MmuxDefineAccessorMutator{float,float}
-@MmuxDefineAccessorMutator{double,double}
-@MmuxDefineAccessorMutator{ldouble,long double}
-@MmuxDefineAccessorMutator{complex,double complex}
+@MmuxDefineAccessorMutator{schar}
+@MmuxDefineAccessorMutator{uchar}
+@MmuxDefineAccessorMutator{sint}
+@MmuxDefineAccessorMutator{uint}
+@MmuxDefineAccessorMutator{sshort}
+@MmuxDefineAccessorMutator{ushort}
+@MmuxDefineAccessorMutator{slong}
+@MmuxDefineAccessorMutator{ulong}
+@MmuxDefineAccessorMutator{sllong}
+@MmuxDefineAccessorMutator{ullong}
+@MmuxDefineAccessorMutator{float}
+@MmuxDefineAccessorMutator{double}
+@MmuxDefineAccessorMutator{ldouble}
+@MmuxDefineAccessorMutator{complexf}
+@MmuxDefineAccessorMutator{complexd}
+@MmuxDefineAccessorMutator{complexld}
 
-@MmuxDefineAccessorMutator{sint8,int8_t}
-@MmuxDefineAccessorMutator{uint8,uint8_t}
-@MmuxDefineAccessorMutator{sint16,int16_t}
-@MmuxDefineAccessorMutator{uint16,uint16_t}
-@MmuxDefineAccessorMutator{sint32,int32_t}
-@MmuxDefineAccessorMutator{uint32,uint32_t}
-@MmuxDefineAccessorMutator{sint64,int64_t}
-@MmuxDefineAccessorMutator{uint64,uint64_t}
+@MmuxDefineAccessorMutator{sint8}
+@MmuxDefineAccessorMutator{uint8}
+@MmuxDefineAccessorMutator{sint16}
+@MmuxDefineAccessorMutator{uint16}
+@MmuxDefineAccessorMutator{sint32}
+@MmuxDefineAccessorMutator{uint32}
+@MmuxDefineAccessorMutator{sint64}
+@MmuxDefineAccessorMutator{uint64}
 
-@MmuxDefineAccessorMutator{ssize,ssize_t}
-@MmuxDefineAccessorMutator{usize,size_t}
-@MmuxDefineAccessorMutator{sintmax, intmax_t}
-@MmuxDefineAccessorMutator{uintmax, uintmax_t}
-@MmuxDefineAccessorMutator{sintptr, intptr_t}
-@MmuxDefineAccessorMutator{uintptr, uintptr_t}
-@MmuxDefineAccessorMutator{mode, mode_t}
-@MmuxDefineAccessorMutator{off, off_t}
-@MmuxDefineAccessorMutator{pid, pid_t}
-@MmuxDefineAccessorMutator{uid, uid_t}
-@MmuxDefineAccessorMutator{gid, gid_t}
+@MmuxDefineAccessorMutator{ssize}
+@MmuxDefineAccessorMutator{usize}
+@MmuxDefineAccessorMutator{sintmax}
+@MmuxDefineAccessorMutator{uintmax}
+@MmuxDefineAccessorMutator{sintptr}
+@MmuxDefineAccessorMutator{uintptr}
+@MmuxDefineAccessorMutator{mode}
+@MmuxDefineAccessorMutator{off}
+@MmuxDefineAccessorMutator{pid}
+@MmuxDefineAccessorMutator{uid}
+@MmuxDefineAccessorMutator{gid}
 
 @c page
 @node arrays
@@ -975,51 +980,53 @@ the return value is false and the shell variable @code{ERRNO} is set to the stri
 an exact integer, itself representing an @code{errno} error code.
 
 
-@macro MmuxDefineArrayAccessorMutator{STEM,TYPE}
+@macro MmuxDefineArrayAccessorMutator{STEM}
 @deffn {Builtin Mutator} mmux_\STEM\_array_set @var{ARRAY} @var{INDEX} @var{VALUE}
 @deffnx {Builtin Accessor} mmux_\STEM\_array_ref @var{VALUEVAR} @var{ARRAY} @var{INDEX}
-Accessor and mutator for memory blocks operating on the C language type @code{\TYPE\}.
+Accessor and mutator for memory blocks operating on the C language type @code{\STEM\}.
 @end deffn
 
 @end macro
 
-@MmuxDefineArrayAccessorMutator{pointer,void *}
+@MmuxDefineArrayAccessorMutator{pointer}
 
-@MmuxDefineArrayAccessorMutator{schar,signed char}
-@MmuxDefineArrayAccessorMutator{uchar,unsigned char}
-@MmuxDefineArrayAccessorMutator{sshort,signed short int}
-@MmuxDefineArrayAccessorMutator{ushort,unsigned short int}
-@MmuxDefineArrayAccessorMutator{sint,signed int}
-@MmuxDefineArrayAccessorMutator{uint,unsigned int}
-@MmuxDefineArrayAccessorMutator{slong,signed long}
-@MmuxDefineArrayAccessorMutator{ulong,unsigned long}
-@MmuxDefineArrayAccessorMutator{sllong,signed long long}
-@MmuxDefineArrayAccessorMutator{ullong,unsigned long long}
-@MmuxDefineArrayAccessorMutator{float,float}
-@MmuxDefineArrayAccessorMutator{double,double}
-@MmuxDefineArrayAccessorMutator{ldouble,long double}
-@MmuxDefineArrayAccessorMutator{complex,double complex}
+@MmuxDefineArrayAccessorMutator{schar}
+@MmuxDefineArrayAccessorMutator{uchar}
+@MmuxDefineArrayAccessorMutator{sshort}
+@MmuxDefineArrayAccessorMutator{ushort}
+@MmuxDefineArrayAccessorMutator{sint}
+@MmuxDefineArrayAccessorMutator{uint}
+@MmuxDefineArrayAccessorMutator{slong}
+@MmuxDefineArrayAccessorMutator{ulong}
+@MmuxDefineArrayAccessorMutator{sllong}
+@MmuxDefineArrayAccessorMutator{ullong}
+@MmuxDefineArrayAccessorMutator{float}
+@MmuxDefineArrayAccessorMutator{double}
+@MmuxDefineArrayAccessorMutator{ldouble}
+@MmuxDefineArrayAccessorMutator{complexf}
+@MmuxDefineArrayAccessorMutator{complexd}
+@MmuxDefineArrayAccessorMutator{complexld}
 
-@MmuxDefineArrayAccessorMutator{sint8,int8_t}
-@MmuxDefineArrayAccessorMutator{uint8,uint8_t}
-@MmuxDefineArrayAccessorMutator{sint16,int16_t}
-@MmuxDefineArrayAccessorMutator{uint16,uint16_t}
-@MmuxDefineArrayAccessorMutator{sint32,int32_t}
-@MmuxDefineArrayAccessorMutator{uint32,uint32_t}
-@MmuxDefineArrayAccessorMutator{sint64,int64_t}
-@MmuxDefineArrayAccessorMutator{uint64,uint64_t}
+@MmuxDefineArrayAccessorMutator{sint8}
+@MmuxDefineArrayAccessorMutator{uint8}
+@MmuxDefineArrayAccessorMutator{sint16}
+@MmuxDefineArrayAccessorMutator{uint16}
+@MmuxDefineArrayAccessorMutator{sint32}
+@MmuxDefineArrayAccessorMutator{uint32}
+@MmuxDefineArrayAccessorMutator{sint64}
+@MmuxDefineArrayAccessorMutator{uint64}
 
-@MmuxDefineArrayAccessorMutator{ssize,ssize_t}
-@MmuxDefineArrayAccessorMutator{usize,size_t}
-@MmuxDefineArrayAccessorMutator{sintmax, intmax_t}
-@MmuxDefineArrayAccessorMutator{uintmax, uintmax_t}
-@MmuxDefineArrayAccessorMutator{sintptr, intptr_t}
-@MmuxDefineArrayAccessorMutator{uintptr, uintptr_t}
-@MmuxDefineArrayAccessorMutator{mode, mode_t}
-@MmuxDefineArrayAccessorMutator{off, off_t}
-@MmuxDefineArrayAccessorMutator{pid, pid_t}
-@MmuxDefineArrayAccessorMutator{uid, uid_t}
-@MmuxDefineArrayAccessorMutator{gid, gid_t}
+@MmuxDefineArrayAccessorMutator{ssize}
+@MmuxDefineArrayAccessorMutator{usize}
+@MmuxDefineArrayAccessorMutator{sintmax}
+@MmuxDefineArrayAccessorMutator{uintmax}
+@MmuxDefineArrayAccessorMutator{sintptr}
+@MmuxDefineArrayAccessorMutator{uintptr}
+@MmuxDefineArrayAccessorMutator{mode}
+@MmuxDefineArrayAccessorMutator{off}
+@MmuxDefineArrayAccessorMutator{pid}
+@MmuxDefineArrayAccessorMutator{uid}
+@MmuxDefineArrayAccessorMutator{gid}
 
 @c page
 @node conversions
@@ -1188,7 +1195,9 @@ return false.
 @MmuxDefineTypePredicateStringrepBuiltin{float}
 @MmuxDefineTypePredicateStringrepBuiltin{double}
 @MmuxDefineTypePredicateStringrepBuiltin{ldouble}
-@MmuxDefineTypePredicateStringrepBuiltin{complex}
+@MmuxDefineTypePredicateStringrepBuiltin{complexf}
+@MmuxDefineTypePredicateStringrepBuiltin{complexd}
+@MmuxDefineTypePredicateStringrepBuiltin{complexld}
 
 @MmuxDefineTypePredicateStringrepBuiltin{sint8}
 @MmuxDefineTypePredicateStringrepBuiltin{uint8}
@@ -1241,7 +1250,9 @@ zero number; otherwise return false.
 @MmuxDefineTypePredicateZeroBuiltin{float}
 @MmuxDefineTypePredicateZeroBuiltin{double}
 @MmuxDefineTypePredicateZeroBuiltin{ldouble}
-@MmuxDefineTypePredicateZeroBuiltin{complex}
+@MmuxDefineTypePredicateZeroBuiltin{complexf}
+@MmuxDefineTypePredicateZeroBuiltin{complexd}
+@MmuxDefineTypePredicateZeroBuiltin{complexld}
 
 @MmuxDefineTypePredicateZeroBuiltin{sint8}
 @MmuxDefineTypePredicateZeroBuiltin{uint8}
@@ -1294,9 +1305,10 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{float}
 @MmuxDefineTypePredicatePositiveBuiltin{double}
 @MmuxDefineTypePredicatePositiveBuiltin{ldouble}
-@MmuxDefineTypePredicatePositiveBuiltin{complex}
 
-@deffn Builtin mmux_complex_is_positive @var{OP}
+@deffn Builtin mmux_complexf_is_positive @var{OP}
+@deffnx Builtin mmux_complexd_is_positive @var{OP}
+@deffnx Builtin mmux_complexld_is_positive @var{OP}
 Always return false.
 @end deffn
 
@@ -1352,7 +1364,9 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{double}
 @MmuxDefineTypePredicateNegativeBuiltin{ldouble}
 
-@deffn Builtin mmux_complex_is_negative @var{OP}
+@deffn Builtin mmux_complexf_is_negative @var{OP}
+@deffnx Builtin mmux_complexd_is_negative @var{OP}
+@deffnx Builtin mmux_complexld_is_negative @var{OP}
 Always return false.
 @end deffn
 
@@ -1408,7 +1422,9 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{double}
 @MmuxDefineTypePredicateNonPositiveBuiltin{ldouble}
 
-@deffn Builtin mmux_complex_is_non_positive @var{OP}
+@deffn Builtin mmux_complexf_is_non_positive @var{OP}
+@deffnx Builtin mmux_complexd_is_non_positive @var{OP}
+@deffnx Builtin mmux_complexld_is_non_positive @var{OP}
 Always return false.
 @end deffn
 
@@ -1464,7 +1480,9 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{double}
 @MmuxDefineTypePredicateNonNegativeBuiltin{ldouble}
 
-@deffn Builtin mmux_complex_is_non_negative @var{OP}
+@deffn Builtin mmux_complexf_is_non_negative @var{OP}
+@deffnx Builtin mmux_complexd_is_non_negative @var{OP}
+@deffnx Builtin mmux_complexld_is_non_negative @var{OP}
 Always return false.
 @end deffn
 
@@ -1519,7 +1537,9 @@ not--a--number value; otherwise return false.
 @MmuxDefineTypePredicateNanBuiltin{float}
 @MmuxDefineTypePredicateNanBuiltin{double}
 @MmuxDefineTypePredicateNanBuiltin{ldouble}
-@MmuxDefineTypePredicateNanBuiltin{complex}
+@MmuxDefineTypePredicateNanBuiltin{complexf}
+@MmuxDefineTypePredicateNanBuiltin{complexd}
+@MmuxDefineTypePredicateNanBuiltin{complexld}
 
 @MmuxDefineTypePredicateNanBuiltin{sint8}
 @MmuxDefineTypePredicateNanBuiltin{uint8}
@@ -1572,7 +1592,9 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{float}
 @MmuxDefineTypePredicateInfiniteBuiltin{double}
 @MmuxDefineTypePredicateInfiniteBuiltin{ldouble}
-@MmuxDefineTypePredicateInfiniteBuiltin{complex}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexd}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexld}
 
 @MmuxDefineTypePredicateInfiniteBuiltin{sint8}
 @MmuxDefineTypePredicateInfiniteBuiltin{uint8}
@@ -1676,8 +1698,16 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonEqualBuiltin{double}
 @MmuxDefineTypeComparisonEqualBuiltin{ldouble}
 
-@deffn Builtin mmux_complex_equal @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between values of type @objtype{complex}.
+@deffn Builtin mmux_complexf_equal @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between values of type @objtype{complexf}.
+@end deffn
+
+@deffn Builtin mmux_complexd_equal @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between values of type @objtype{complexd}.
+@end deffn
+
+@deffn Builtin mmux_complexld_equal @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between values of type @objtype{complexld}.
 @end deffn
 
 @MmuxDefineTypeComparisonEqualBuiltin{sint8}
@@ -1777,7 +1807,9 @@ Perform the addition between values of type @code{\STEM\}.
 @MmuxDefineTypeAdditionBuiltin{float}
 @MmuxDefineTypeAdditionBuiltin{double}
 @MmuxDefineTypeAdditionBuiltin{ldouble}
-@MmuxDefineTypeAdditionBuiltin{complex}
+@MmuxDefineTypeAdditionBuiltin{complexf}
+@MmuxDefineTypeAdditionBuiltin{complexd}
+@MmuxDefineTypeAdditionBuiltin{complexld}
 
 @MmuxDefineTypeAdditionBuiltin{sint8}
 @MmuxDefineTypeAdditionBuiltin{uint8}
@@ -1845,7 +1877,9 @@ Perform the subtraction between values of type @code{\STEM\}.
 @MmuxDefineTypeSubtractionBuiltin{float}
 @MmuxDefineTypeSubtractionBuiltin{double}
 @MmuxDefineTypeSubtractionBuiltin{ldouble}
-@MmuxDefineTypeSubtractionBuiltin{complex}
+@MmuxDefineTypeSubtractionBuiltin{complexf}
+@MmuxDefineTypeSubtractionBuiltin{complexd}
+@MmuxDefineTypeSubtractionBuiltin{complexld}
 
 @MmuxDefineTypeSubtractionBuiltin{sint8}
 @MmuxDefineTypeSubtractionBuiltin{uint8}
@@ -1913,7 +1947,9 @@ Perform the multiplication between values of type @code{\STEM\}.
 @MmuxDefineTypeMultiplicationBuiltin{float}
 @MmuxDefineTypeMultiplicationBuiltin{double}
 @MmuxDefineTypeMultiplicationBuiltin{ldouble}
-@MmuxDefineTypeMultiplicationBuiltin{complex}
+@MmuxDefineTypeMultiplicationBuiltin{complexf}
+@MmuxDefineTypeMultiplicationBuiltin{complexd}
+@MmuxDefineTypeMultiplicationBuiltin{complexld}
 
 @MmuxDefineTypeMultiplicationBuiltin{sint8}
 @MmuxDefineTypeMultiplicationBuiltin{uint8}
@@ -1981,7 +2017,9 @@ Perform the division between values of type @code{\STEM\}.
 @MmuxDefineTypeDivisionBuiltin{float}
 @MmuxDefineTypeDivisionBuiltin{double}
 @MmuxDefineTypeDivisionBuiltin{ldouble}
-@MmuxDefineTypeDivisionBuiltin{complex}
+@MmuxDefineTypeDivisionBuiltin{complexf}
+@MmuxDefineTypeDivisionBuiltin{complexd}
+@MmuxDefineTypeDivisionBuiltin{complexld}
 
 @MmuxDefineTypeDivisionBuiltin{sint8}
 @MmuxDefineTypeDivisionBuiltin{uint8}
@@ -2108,7 +2146,9 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{float}
 @MmuxDefineTypeNegationBuiltin{double}
 @MmuxDefineTypeNegationBuiltin{ldouble}
-@MmuxDefineTypeNegationBuiltin{complex}
+@MmuxDefineTypeNegationBuiltin{complexf}
+@MmuxDefineTypeNegationBuiltin{complexd}
+@MmuxDefineTypeNegationBuiltin{complexld}
 
 @MmuxDefineTypeNegationBuiltin{sint8}
 @MmuxDefineTypeNegationBuiltin{uint8}
@@ -2715,7 +2755,9 @@ Return an integer representing the library interface current age.
 @cindex @code{float}, type stem
 @cindex @code{double}, type stem
 @cindex @code{ldouble}, type stem
-@cindex @code{complex}, type stem
+@cindex @code{complexf}, type stem
+@cindex @code{complexd}, type stem
+@cindex @code{complexld}, type stem
 
 @cindex @code{sint8}, type stem
 @cindex @code{uint8}, type stem
@@ -2768,7 +2810,9 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{float,float}
 @MmuxDefineCAliasTypedef{double,double}
 @MmuxDefineCAliasTypedef{ldouble,long double}
-@MmuxDefineCAliasTypedef{complex,double complex}
+@MmuxDefineCAliasTypedef{complexf,float complex}
+@MmuxDefineCAliasTypedef{complexd,double complex}
+@MmuxDefineCAliasTypedef{complexld,long double complex}
 
 @MmuxDefineCAliasTypedef{sint8,int8_t}
 @MmuxDefineCAliasTypedef{uint8,uint8_t}
@@ -2822,7 +2866,9 @@ Return a positive integer representing the size in bytes of the C language stand
 @MmuxDefineCFunctionSizeof{float}
 @MmuxDefineCFunctionSizeof{double}
 @MmuxDefineCFunctionSizeof{ldouble}
-@MmuxDefineCFunctionSizeof{complex}
+@MmuxDefineCFunctionSizeof{complexf}
+@MmuxDefineCFunctionSizeof{complexd}
+@MmuxDefineCFunctionSizeof{complexld}
 
 @MmuxDefineCFunctionSizeof{sint8}
 @MmuxDefineCFunctionSizeof{uint8}
@@ -2876,7 +2922,9 @@ value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{float}
 @MmuxDefineCFunctionPredicate{double}
 @MmuxDefineCFunctionPredicate{ldouble}
-@MmuxDefineCFunctionPredicate{complex}
+@MmuxDefineCFunctionPredicate{complexf}
+@MmuxDefineCFunctionPredicate{complexd}
+@MmuxDefineCFunctionPredicate{complexld}
 
 @MmuxDefineCFunctionPredicate{sint8}
 @MmuxDefineCFunctionPredicate{uint8}
@@ -2937,7 +2985,9 @@ included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it ret
 @MmuxDefineCFunctionMaximum{float}
 @MmuxDefineCFunctionMaximum{double}
 @MmuxDefineCFunctionMaximum{ldouble}
-@MmuxDefineCFunctionMaximum{complex}
+@MmuxDefineCFunctionMaximum{complexf}
+@MmuxDefineCFunctionMaximum{complexd}
+@MmuxDefineCFunctionMaximum{complexld}
 
 @MmuxDefineCFunctionMaximum{sint8}
 @MmuxDefineCFunctionMaximum{uint8}
@@ -2998,7 +3048,9 @@ included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it ret
 @MmuxDefineCFunctionMinimum{float}
 @MmuxDefineCFunctionMinimum{double}
 @MmuxDefineCFunctionMinimum{ldouble}
-@MmuxDefineCFunctionMinimum{complex}
+@MmuxDefineCFunctionMinimum{complexf}
+@MmuxDefineCFunctionMinimum{complexd}
+@MmuxDefineCFunctionMinimum{complexld}
 
 @MmuxDefineCFunctionMinimum{sint8}
 @MmuxDefineCFunctionMinimum{uint8}
@@ -3040,9 +3092,9 @@ rv = mmux_bash_pointers_parse_sint(&value, arg, "my-builtin");
 @end example
 
 
-@macro MmuxDefineCFunctionParser{STEM,TYPE}
+@macro MmuxDefineCFunctionParser{STEM}
 @deftypefun int mmux_bash_pointers_parse_\STEM\ (mmux_libc_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
-Parse a string which is meant to be the representation of a C language type @code{\TYPE\}; when
+Parse a string which is meant to be the representation of a C language type @objtype{\STEM\}; when
 successful store the result in the variable referenced by @var{PTR}, then return
 @code{EXECUTION_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{EXECUTION_FAILURE}.
 
@@ -3054,45 +3106,47 @@ requested the parsing operation, for example: the name of a builtin.
 @end macro
 
 
-@MmuxDefineCFunctionParser{pointer,void *}
+@MmuxDefineCFunctionParser{pointer}
 
-@MmuxDefineCFunctionParser{schar,signed char}
-@MmuxDefineCFunctionParser{uchar,unsigned char}
-@MmuxDefineCFunctionParser{sshort,signed short int}
-@MmuxDefineCFunctionParser{ushort,unsigned short int}
-@MmuxDefineCFunctionParser{sint,signed int}
-@MmuxDefineCFunctionParser{uint,unsigned int}
-@MmuxDefineCFunctionParser{slong,signed long}
-@MmuxDefineCFunctionParser{ulong,unsigned long}
-@MmuxDefineCFunctionParser{sllong,signed long long}
-@MmuxDefineCFunctionParser{ullong,unsigned long long}
-@MmuxDefineCFunctionParser{float,float}
-@MmuxDefineCFunctionParser{double,double}
-@MmuxDefineCFunctionParser{ldouble,long double}
-@MmuxDefineCFunctionParser{complex,double complex}
+@MmuxDefineCFunctionParser{schar}
+@MmuxDefineCFunctionParser{uchar}
+@MmuxDefineCFunctionParser{sshort}
+@MmuxDefineCFunctionParser{ushort}
+@MmuxDefineCFunctionParser{sint}
+@MmuxDefineCFunctionParser{uint}
+@MmuxDefineCFunctionParser{slong}
+@MmuxDefineCFunctionParser{ulong}
+@MmuxDefineCFunctionParser{sllong}
+@MmuxDefineCFunctionParser{ullong}
+@MmuxDefineCFunctionParser{float}
+@MmuxDefineCFunctionParser{double}
+@MmuxDefineCFunctionParser{ldouble}
+@MmuxDefineCFunctionParser{complexf}
+@MmuxDefineCFunctionParser{complexd}
+@MmuxDefineCFunctionParser{complexld}
 
-@MmuxDefineCFunctionParser{sint8,int8_t}
-@MmuxDefineCFunctionParser{uint8,uint8_t}
-@MmuxDefineCFunctionParser{sint16,int16_t}
-@MmuxDefineCFunctionParser{uint16,uint16_t}
-@MmuxDefineCFunctionParser{sint32,int32_t}
-@MmuxDefineCFunctionParser{uint32,uint32_t}
-@MmuxDefineCFunctionParser{sint64,int64_t}
-@MmuxDefineCFunctionParser{uint64,uint64_t}
+@MmuxDefineCFunctionParser{sint8}
+@MmuxDefineCFunctionParser{uint8}
+@MmuxDefineCFunctionParser{sint16}
+@MmuxDefineCFunctionParser{uint16}
+@MmuxDefineCFunctionParser{sint32}
+@MmuxDefineCFunctionParser{uint32}
+@MmuxDefineCFunctionParser{sint64}
+@MmuxDefineCFunctionParser{uint64}
 
-@MmuxDefineCFunctionParser{ssize,ssize_t}
-@MmuxDefineCFunctionParser{usize,size_t}
-@MmuxDefineCFunctionParser{sintmax, intmax_t}
-@MmuxDefineCFunctionParser{uintmax, uintmax_t}
-@MmuxDefineCFunctionParser{sintptr, intptr_t}
-@MmuxDefineCFunctionParser{uintptr, uintptr_t}
-@MmuxDefineCFunctionParser{mode, mode_t}
-@MmuxDefineCFunctionParser{off, off_t}
-@MmuxDefineCFunctionParser{pid, pid_t}
-@MmuxDefineCFunctionParser{uid, uid_t}
-@MmuxDefineCFunctionParser{gid, gid_t}
-@MmuxDefineCFunctionParser{wchar, wchar_t}
-@MmuxDefineCFunctionParser{wint, wint_t}
+@MmuxDefineCFunctionParser{ssize}
+@MmuxDefineCFunctionParser{usize}
+@MmuxDefineCFunctionParser{sintmax}
+@MmuxDefineCFunctionParser{uintmax}
+@MmuxDefineCFunctionParser{sintptr}
+@MmuxDefineCFunctionParser{uintptr}
+@MmuxDefineCFunctionParser{mode}
+@MmuxDefineCFunctionParser{off}
+@MmuxDefineCFunctionParser{pid}
+@MmuxDefineCFunctionParser{uid}
+@MmuxDefineCFunctionParser{gid}
+@MmuxDefineCFunctionParser{wchar}
+@MmuxDefineCFunctionParser{wint}
 
 @c page
 @node shared library sprinters
@@ -3118,9 +3172,9 @@ if (0 > required_nbytes) @{
 @end example
 
 
-@macro MmuxDefineCFunctionSprinter{STEM,TYPE}
-@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, size_t @var{LEN}, \TYPE\ @var{VALUE})
-@deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (\TYPE\ @var{VALUE})
+@macro MmuxDefineCFunctionSprinter{STEM}
+@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, size_t @var{LEN}, mmux_libc_\STEM\_t @var{VALUE})
+@deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (mmux_libc_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
 characters (terminating zero included).  When successful return @code{EXECUTION_SUCCESS}; otherwise
@@ -3134,45 +3188,47 @@ the terminating zero}; otherwise return @samp{-1}.
 @end macro
 
 
-@MmuxDefineCFunctionSprinter{pointer,void *}
+@MmuxDefineCFunctionSprinter{pointer}
 
-@MmuxDefineCFunctionSprinter{schar,signed char}
-@MmuxDefineCFunctionSprinter{uchar,unsigned char}
-@MmuxDefineCFunctionSprinter{sshort,signed short int}
-@MmuxDefineCFunctionSprinter{ushort,unsigned short int}
-@MmuxDefineCFunctionSprinter{sint,signed int}
-@MmuxDefineCFunctionSprinter{uint,unsigned int}
-@MmuxDefineCFunctionSprinter{slong,signed long}
-@MmuxDefineCFunctionSprinter{ulong,unsigned long}
-@MmuxDefineCFunctionSprinter{sllong,signed long long}
-@MmuxDefineCFunctionSprinter{ullong,unsigned long long}
-@MmuxDefineCFunctionSprinter{float,float}
-@MmuxDefineCFunctionSprinter{double,double}
-@MmuxDefineCFunctionSprinter{ldouble,long double}
-@MmuxDefineCFunctionSprinter{complex,double complex}
+@MmuxDefineCFunctionSprinter{schar}
+@MmuxDefineCFunctionSprinter{uchar}
+@MmuxDefineCFunctionSprinter{sshort}
+@MmuxDefineCFunctionSprinter{ushort}
+@MmuxDefineCFunctionSprinter{sint}
+@MmuxDefineCFunctionSprinter{uint}
+@MmuxDefineCFunctionSprinter{slong}
+@MmuxDefineCFunctionSprinter{ulong}
+@MmuxDefineCFunctionSprinter{sllong}
+@MmuxDefineCFunctionSprinter{ullong}
+@MmuxDefineCFunctionSprinter{float}
+@MmuxDefineCFunctionSprinter{double}
+@MmuxDefineCFunctionSprinter{ldouble}
+@MmuxDefineCFunctionSprinter{complexf}
+@MmuxDefineCFunctionSprinter{complexd}
+@MmuxDefineCFunctionSprinter{complexld}
 
-@MmuxDefineCFunctionSprinter{sint8,int8_t}
-@MmuxDefineCFunctionSprinter{uint8,uint8_t}
-@MmuxDefineCFunctionSprinter{sint16,int16_t}
-@MmuxDefineCFunctionSprinter{uint16,uint16_t}
-@MmuxDefineCFunctionSprinter{sint32,int32_t}
-@MmuxDefineCFunctionSprinter{uint32,uint32_t}
-@MmuxDefineCFunctionSprinter{sint64,int64_t}
-@MmuxDefineCFunctionSprinter{uint64,uint64_t}
+@MmuxDefineCFunctionSprinter{sint8}
+@MmuxDefineCFunctionSprinter{uint8}
+@MmuxDefineCFunctionSprinter{sint16}
+@MmuxDefineCFunctionSprinter{uint16}
+@MmuxDefineCFunctionSprinter{sint32}
+@MmuxDefineCFunctionSprinter{uint32}
+@MmuxDefineCFunctionSprinter{sint64}
+@MmuxDefineCFunctionSprinter{uint64}
 
-@MmuxDefineCFunctionSprinter{ssize,ssize_t}
-@MmuxDefineCFunctionSprinter{usize,size_t}
-@MmuxDefineCFunctionSprinter{sintmax, intmax_t}
-@MmuxDefineCFunctionSprinter{uintmax, uintmax_t}
-@MmuxDefineCFunctionSprinter{sintptr, intptr_t}
-@MmuxDefineCFunctionSprinter{uintptr, uintptr_t}
-@MmuxDefineCFunctionSprinter{mode, mode_t}
-@MmuxDefineCFunctionSprinter{off, off_t}
-@MmuxDefineCFunctionSprinter{pid, pid_t}
-@MmuxDefineCFunctionSprinter{uid, uid_t}
-@MmuxDefineCFunctionSprinter{gid, gid_t}
-@MmuxDefineCFunctionSprinter{wchar, wchar_t}
-@MmuxDefineCFunctionSprinter{wint, wint_t}
+@MmuxDefineCFunctionSprinter{ssize}
+@MmuxDefineCFunctionSprinter{usize}
+@MmuxDefineCFunctionSprinter{sintmax}
+@MmuxDefineCFunctionSprinter{uintmax}
+@MmuxDefineCFunctionSprinter{sintptr}
+@MmuxDefineCFunctionSprinter{uintptr}
+@MmuxDefineCFunctionSprinter{mode}
+@MmuxDefineCFunctionSprinter{off}
+@MmuxDefineCFunctionSprinter{pid}
+@MmuxDefineCFunctionSprinter{uid}
+@MmuxDefineCFunctionSprinter{gid}
+@MmuxDefineCFunctionSprinter{wchar}
+@MmuxDefineCFunctionSprinter{wint}
 
 @c page
 @node references

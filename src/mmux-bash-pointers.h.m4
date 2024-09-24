@@ -92,6 +92,23 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
+ ** Type definitions preprocessor symbols.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+#  define MMUX_HAVE_TYPE_SLLONG		1
+#endif
+
+#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
+#  define MMUX_HAVE_TYPE_ULLONG		1
+#endif
+
+#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
+#  define MMUX_HAVE_TYPE_LDOUBLE	1
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
@@ -105,13 +122,8 @@ typedef signed int			mmux_libc_sint_t;
 typedef unsigned int			mmux_libc_uint_t;
 typedef signed long			mmux_libc_slong_t;
 typedef unsigned long			mmux_libc_ulong_t;
-
-#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-typedef signed long long		mmux_libc_sllong_t;
-#endif
-#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-typedef unsigned long long int		mmux_libc_ullong_t;
-#endif
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[typedef signed long long	      mmux_libc_sllong_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[typedef unsigned long long int      mmux_libc_ullong_t;]]])
 
 typedef int8_t				mmux_libc_sint8_t;
 typedef uint8_t				mmux_libc_uint8_t;
@@ -124,16 +136,20 @@ typedef uint64_t			mmux_libc_uint64_t;
 
 typedef float				mmux_libc_float_t;
 typedef double				mmux_libc_double_t;
-#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-typedef long double			mmux_libc_ldouble_t;
-#endif
-typedef double complex			mmux_libc_complex_t;
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],[[[typedef long double		mmux_libc_ldouble_t;]]])
+typedef float complex			mmux_libc_complexf_t;
+typedef mmux_libc_float_t		mmux_libc_complexf_part_t;
+typedef double complex			mmux_libc_complexd_t;
+typedef mmux_libc_double_t		mmux_libc_complexd_part_t;
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],[[[
+typedef long double complex	mmux_libc_complexld_t;
+typedef mmux_libc_ldouble_t	mmux_libc_complexld_part_t;
+]]])
 
 m4_divert(-1)m4_dnl
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF]]],
-  [[[typedef mmux_libc_[[[]]]$2[[[]]]_t		mmux_libc_[[[]]]$1[[[]]]_t]]])
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF]]],[[[typedef mmux_libc_[[[]]]$2[[[]]]_t mmux_libc_[[[]]]$1[[[]]]_t]]])
 m4_divert(0)m4_dnl
 
 MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[ssize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]]);
@@ -206,19 +222,15 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint)
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint)
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(slong)
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ulong)
-#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sllong)
-#endif
-#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ullong)
-#endif
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sllong)]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ullong)]]])
 
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float)
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(double)
-#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ldouble)
-#endif
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complex]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ldouble)]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexd]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexld]]])
 
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint8)
 MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint8)
@@ -253,15 +265,6 @@ mmux_bash_pointers_decl char const *	mmux_bash_pointers_version_string		(void);
 mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_current	(void);
 mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_revision	(void);
 mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
-
-
-/** --------------------------------------------------------------------
- ** Type stdout printers.
- ** ----------------------------------------------------------------- */
-
-mmux_bash_pointers_decl int mmux_bash_pointers_print_pointer (void * data);
-mmux_bash_pointers_decl int mmux_bash_pointers_print_usize   (size_t data);
-mmux_bash_pointers_decl int mmux_bash_pointers_print_complex (double complex data);
 
 
 /** --------------------------------------------------------------------

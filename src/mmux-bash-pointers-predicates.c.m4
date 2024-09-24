@@ -126,15 +126,16 @@ MMUX_BASH_POINTERS_DEFINE_CORE_FLOAT_PREDICATES([[[ldouble]]],	[[[HAVE_LONG_DOUB
 
 /* ------------------------------------------------------------------ */
 
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 static inline bool
-mmux_complex_is_zero (mmux_libc_complex_t Z)
+mmux_$1_is_zero (mmux_libc_$1_t Z)
 {
-  double	re = creal(Z), im = cimag(Z);
+  mmux_libc_$2_t	re = creal(Z), im = cimag(Z);
 
-  return (mmux_double_is_zero(re) && mmux_double_is_zero(im))? true : false;
+  return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
 static inline bool
-mmux_complex_is_positive (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_positive (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
    Sep 22, 2024) */
@@ -142,7 +143,7 @@ mmux_complex_is_positive (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
   return false;
 }
 static inline bool
-mmux_complex_is_negative (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
    Sep 22, 2024) */
@@ -150,7 +151,7 @@ mmux_complex_is_negative (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
   return false;
 }
 static inline bool
-mmux_complex_is_non_positive (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_non_positive (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
    Sep 22, 2024) */
@@ -158,7 +159,7 @@ mmux_complex_is_non_positive (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
   return false;
 }
 static inline bool
-mmux_complex_is_non_negative (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_non_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
    Sep 22, 2024) */
@@ -166,19 +167,24 @@ mmux_complex_is_non_negative (mmux_libc_complex_t Z MMUX_BASH_POINTERS_UNUSED)
   return false;
 }
 static inline bool
-mmux_complex_is_nan (mmux_libc_complex_t Z)
+mmux_$1_is_nan (mmux_libc_$1_t Z)
 {
-  double	re = creal(Z), im = cimag(Z);
+  mmux_libc_$2_t	re = creal(Z), im = cimag(Z);
 
-  return (mmux_double_is_nan(re) || mmux_double_is_nan(im))? true : false;
+  return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
 }
 static inline bool
-mmux_complex_is_infinite (mmux_libc_complex_t Z)
+mmux_$1_is_infinite (mmux_libc_$1_t Z)
 {
-  double	re = creal(Z), im = cimag(Z);
+  mmux_libc_$2_t	re = creal(Z), im = cimag(Z);
 
-  return (mmux_double_is_infinite(re) || mmux_double_is_infinite(im))? true : false;
+  return (mmux_$2_is_infinite(re) || mmux_$2_is_infinite(im))? true : false;
 }
+]]])]]])
+
+MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES([[[complexf]]],	[[[float]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES([[[complexd]]],	[[[double]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES([[[complexld]]],	[[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------
@@ -364,13 +370,15 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[sint]]])
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[uint]]])
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[slong]]])
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[ulong]]])
-MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
 
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[float]]])
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[double]]])
-MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[ldouble]]],	[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[complex]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[complexf]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[complexd]]])
+MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[sint8]]])
 MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[uint8]]])
@@ -451,13 +459,15 @@ MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[sint]]])
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[uint]]])
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[slong]]])
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[ulong]]])
-MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[sllong]]],	[[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[ullong]]],	[[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
 
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[float]]])
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[double]]])
-MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[ldouble]]],	[[[HAVE_LONG_DOUBLE]]])
-MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[complex]]])
+MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[complexf]]])
+MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[complexd]]])
+MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[sint8]]])
 MMUX_BASH_POINTERS_DEFINE_ALL_ARITHMETIC_PREDICATES([[[uint8]]])

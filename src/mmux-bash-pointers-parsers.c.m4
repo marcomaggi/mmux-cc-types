@@ -34,7 +34,7 @@ regex_t mmux_bash_pointers_complex_rex;
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: signed and unsigned exact integers of the widest size.
+ ** Type parsers: signed exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
 int
@@ -103,6 +103,12 @@ mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_dest, char cons
   errno = 0; /* We consider the error consumed here. */
   return EXECUTION_FAILURE;
 }
+
+
+/** --------------------------------------------------------------------
+ ** Type parsers: unsigned exact integers of the widest size.
+ ** ----------------------------------------------------------------- */
+
 int
 mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char const * s_source,
 					   mmux_libc_uintmax_t target_max,
@@ -172,6 +178,121 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char co
 
 
 /** --------------------------------------------------------------------
+ ** Parsing complex numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER]]],[[[
+MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+static int parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const char * caller_name);
+
+int
+mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_value, const char * s_arg, const char * caller_name)
+{
+  int	len = strlen(s_arg);
+
+  if (len > 2048) {
+    fprintf(stderr, "%s: error: invalid argument, string too long (max 2048 chars): \"%s\"\n", caller_name, s_arg);
+    return EXECUTION_FAILURE;
+  } else {
+    int		rv;
+
+    rv = parse_$1_parentheses_format(p_value, s_arg, caller_name);
+    if (EXECUTION_SUCCESS == rv) {
+      return rv;
+    } else {
+      mmux_libc_$1_part_t	op_re;
+
+      rv = mmux_bash_pointers_parse_$2(&op_re, s_arg, caller_name);
+      if (EXECUTION_SUCCESS == rv) {
+	*p_value = mmux_bash_pointers_rectangular_$1(op_re, 0.0);
+	return EXECUTION_SUCCESS;
+      } else {
+	if (caller_name) {
+	  fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
+	}
+	return EXECUTION_FAILURE;
+      }
+    }
+  }
+}
+
+int
+parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const char * caller_name)
+/* Try to parse a complex number in the format: (1.2)+i*(3.4)
+
+   First use  a regular  expression to  extract the real  and imaginary  parts.  Then
+   parse the real part and the imaginary part separately. */
+{
+  mmux_libc_$1_part_t	op_re, op_im;
+  int			rv;
+  char			s_arg_re[1024];
+  char			s_arg_im[1024];
+  size_t		nmatch = 3;
+  regmatch_t		match[3];
+
+  rv = regexec(&mmux_bash_pointers_complex_rex, s_arg, nmatch, &(match[0]), 0);
+  if (rv) {
+    if (0) {
+      char	error_message[1024];
+
+      regerror(rv, &mmux_bash_pointers_complex_rex, error_message, 1024);
+      fprintf(stderr, "%s: error: invalid argument, expected complex number (%s): \"%s\"\n", caller_name, error_message, s_arg);
+    }
+    return EXECUTION_FAILURE;
+  }
+
+  /* Extract the first matching parentetical subexpression, which represents the real
+     part. */
+  {
+    int	i, imax = match[1].rm_eo - match[1].rm_so;
+
+    for (i=0; i < imax; ++i) {
+      s_arg_re[i] = s_arg[match[1].rm_so + i];
+    }
+    s_arg_re[imax] = '\0';
+  }
+
+  /* Extract  the second  matching parentetical  subexpression, which  represents the
+     imaginary part. */
+  {
+    int	i, imax = match[2].rm_eo - match[2].rm_so;
+
+    for (i=0; i < imax; ++i) {
+      s_arg_im[i] = s_arg[match[2].rm_so + i];
+    }
+    s_arg_im[imax] = '\0';
+  }
+
+  if (0) {
+    fprintf(stderr, "%s: scanned re='%s' im='%s'\n", __func__, s_arg_re, s_arg_im);
+  }
+
+  /* Parse the real part. */
+  {
+    rv = mmux_bash_pointers_parse_$2(&op_re, s_arg_re, caller_name);
+    if (EXECUTION_FAILURE == rv) { return rv; }
+  }
+
+  /* Parse the imaginary part. */
+  {
+    rv = mmux_bash_pointers_parse_$2(&op_im, s_arg_im, caller_name);
+    if (EXECUTION_FAILURE == rv) { return rv; }
+  }
+
+  /* Assemble the complex number. */
+  {
+    *p_value = mmux_bash_pointers_rectangular_$1(op_re, op_im);
+    return EXECUTION_SUCCESS;
+  }
+}
+]]])]]])
+
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER([[[complexf]]],	[[[float]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER([[[complexd]]],	[[[double]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER([[[complexld]]],	[[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+
+/** --------------------------------------------------------------------
  ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
@@ -201,7 +322,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
 MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[["%f"]]])
 MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[["%lf"]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[["%Lf"]]],	[[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[["%Lf"]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------
@@ -240,7 +361,7 @@ MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 int
 mmux_bash_pointers_parse_sllong (mmux_libc_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
-#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[
   mmux_libc_sllong_t	rv;
   char const *		s_source_beg;
   char *		s_source_end	= NULL;
@@ -291,16 +412,16 @@ mmux_bash_pointers_parse_sllong (mmux_libc_sllong_t * p_dest, char const * s_sou
   }
   errno = 0; /* We consider the error consumed here. */
   return EXECUTION_FAILURE;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
-#endif
+]]])
 }
 
 
 /** --------------------------------------------------------------------
- ** Type parsers: signed integers.
+ ** Type parsers: unsigned integers.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
@@ -337,7 +458,7 @@ MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 int
 mmux_bash_pointers_parse_ullong (mmux_libc_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {
-#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[
   mmux_libc_ullong_t	rv;
   char const *		s_source_beg;
   char *		s_source_end	= NULL;
@@ -388,119 +509,11 @@ mmux_bash_pointers_parse_ullong (mmux_libc_ullong_t * p_dest, char const * s_sou
   }
   errno = 0; /* We consider the error consumed here. */
   return EXECUTION_FAILURE;
-#else
+]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return EXECUTION_FAILURE;
-#endif
-}
-
-
-/** --------------------------------------------------------------------
- ** Parsing complex numbers in double format.
- ** ----------------------------------------------------------------- */
-
-static int parse_complex_parentheses_format (double complex * p_value, const char * s_arg, const char * caller_name);
-
-int
-mmux_bash_pointers_parse_complex (double complex * p_value, const char * s_arg, const char * caller_name)
-{
-  int	len = strlen(s_arg);
-
-  if (len > 2048) {
-    fprintf(stderr, "%s: error: invalid argument, string too long (max 2048 chars): \"%s\"\n", caller_name, s_arg);
-    return EXECUTION_FAILURE;
-  } else {
-    int		rv;
-
-    rv = parse_complex_parentheses_format(p_value, s_arg, caller_name);
-    if (EXECUTION_SUCCESS == rv) {
-      return rv;
-    } else {
-      double	op_re;
-
-      rv = mmux_bash_pointers_parse_double(&op_re, s_arg, caller_name);
-      if (EXECUTION_SUCCESS == rv) {
-	*p_value = op_re + 0.0 * ((double complex)_Complex_I);
-	return EXECUTION_SUCCESS;
-      } else {
-	if (caller_name) {
-	  fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
-	}
-	return EXECUTION_FAILURE;
-      }
-    }
-  }
-}
-
-int
-parse_complex_parentheses_format (double complex * p_value, const char * s_arg, const char * caller_name)
-/* Try to parse a complex number in the format: (1.2)+i*(3.4)
-
-   First use  a regular  expression to  extract the real  and imaginary  parts.  Then
-   parse the real part and the imaginary part separately. */
-{
-  double	op_re, op_im;
-  int		rv;
-  char		s_arg_re[1024];
-  char		s_arg_im[1024];
-  size_t	nmatch = 3;
-  regmatch_t	match[3];
-
-  rv = regexec(&mmux_bash_pointers_complex_rex, s_arg, nmatch, &(match[0]), 0);
-  if (rv) {
-    if (0) {
-      char	error_message[1024];
-
-      regerror(rv, &mmux_bash_pointers_complex_rex, error_message, 1024);
-      fprintf(stderr, "%s: error: invalid argument, expected complex number (%s): \"%s\"\n", caller_name, error_message, s_arg);
-    }
-    return EXECUTION_FAILURE;
-  }
-
-  /* Extract the first matching parentetical subexpression, which represents the real
-     part. */
-  {
-    int	i, imax = match[1].rm_eo - match[1].rm_so;
-
-    for (i=0; i < imax; ++i) {
-      s_arg_re[i] = s_arg[match[1].rm_so + i];
-    }
-    s_arg_re[imax] = '\0';
-  }
-
-  /* Extract  the second  matching parentetical  subexpression, which  represents the
-     imaginary part. */
-  {
-    int	i, imax = match[2].rm_eo - match[2].rm_so;
-
-    for (i=0; i < imax; ++i) {
-      s_arg_im[i] = s_arg[match[2].rm_so + i];
-    }
-    s_arg_im[imax] = '\0';
-  }
-
-  if (0) {
-    fprintf(stderr, "%s: scanned re='%s' im='%s'\n", __func__, s_arg_re, s_arg_im);
-  }
-
-  /* Parse the real part. */
-  {
-    rv = mmux_bash_pointers_parse_double(&op_re, s_arg_re, caller_name);
-    if (EXECUTION_FAILURE == rv) { return rv; }
-  }
-
-  /* Parse the imaginary part. */
-  {
-    rv = mmux_bash_pointers_parse_double(&op_im, s_arg_im, caller_name);
-    if (EXECUTION_FAILURE == rv) { return rv; }
-  }
-
-  /* Assemble the complex number. */
-  {
-    *p_value = op_re + op_im * ((double complex)_Complex_I);
-    return EXECUTION_SUCCESS;
-  }
+]]])
 }
 
 

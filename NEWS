@@ -16,11 +16,14 @@ Revision 0.1.0-devel.1
 
 * Added array accessors and mutators.
 
-* Added support for C language type "uintmax_t".
+* Added support for C language type: "uintmax_t", "float complex", "long
+  double complex".
 
 * Renamed nickname of "intmax_t" from "intmax" to "sintmax".
 
 * Renamed nickname of "intptr_t" from "intptr" to "sintptr".
+
+* Renamed nickname of "double complex" from "complex" to "complexd".
 
 * The following  standard types are handled  through their corresponding,
   equivalent,  signed  or  unsigned,   integer  type:  ssize_t,  size_t,

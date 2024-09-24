@@ -79,6 +79,7 @@ install-html-local:
 
 EXTRA_DIST	+= \
 	src/mmux-bash-pointers.h.m4		\
+	src/mmux-bash-pointers-internals.h.m4	\
 	src/mmux-bash-pointers-accessors.c.m4	\
 	src/mmux-bash-pointers-arithmetics.c.m4	\
 	src/mmux-bash-pointers-bitwise.c.m4	\
@@ -94,6 +95,7 @@ EXTRA_DIST	+= \
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers.h		\
+	src/mmux-bash-pointers-internals.h	\
 	src/mmux-bash-pointers-accessors.c	\
 	src/mmux-bash-pointers-arithmetics.c	\
 	src/mmux-bash-pointers-bitwise.c	\

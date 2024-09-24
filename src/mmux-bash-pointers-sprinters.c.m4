@@ -79,11 +79,11 @@ MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sint]]],		[[["%d"]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[uint]]],		[[["%u"]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[slong]]],		[[["%ld"]]])
 MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ulong]]],		[[["%lu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[HAVE_LONG_LONG_INT]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[HAVE_UNSIGNED_LONG_LONG_INT]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_HAVE_TYPE_ULLONG]]])
 
 MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[double]]],	[[["%lA"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ldouble]]],	[[["%LA"]]],  [[[HAVE_LONG_DOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ldouble]]],	[[["%LA"]]],  [[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -155,13 +155,16 @@ mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
 
 /* ------------------------------------------------------------------ */
 
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER]]],[[[
+MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
 int
-mmux_bash_pointers_sprint_size_complex (mmux_libc_complex_t value)
+mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 {
-  double	re = creal(value), im = cimag(value);
-  int		required_nbytes;
+  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
+  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
+  int			required_nbytes;
 
-  required_nbytes = snprintf(NULL, 0, "(%lA)+i*(%lA)", re, im);
+  required_nbytes = snprintf(NULL, 0, $2, $3 re, $3 im);
   if (0 > required_nbytes) {
     return -1;
   } else {
@@ -170,18 +173,24 @@ mmux_bash_pointers_sprint_size_complex (mmux_libc_complex_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_complex (char * strptr, size_t len, double complex value)
+mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_$1_t value)
 {
-  double	re = creal(value), im = cimag(value);
-  size_t	to_be_written_chars;
+  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
+  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
+  size_t		to_be_written_chars;
 
-  to_be_written_chars = snprintf(strptr, len, "(%lA)+i*(%lA)", re, im);
+  to_be_written_chars = snprintf(strptr, len, $2, $3 re, $3 im);
   if (len > to_be_written_chars) {
     return EXECUTION_SUCCESS;
   } else {
     return EXECUTION_FAILURE;
   }
 }
+]]])]]])
+
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER([[[complexf]]],	[[["(%A)+i*(%A)"]]],    [[[(mmux_libc_double_t)]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER([[[complexd]]],	[[["(%lA)+i*(%lA)"]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER([[[complexld]]],	[[["(%LA)+i*(%LA)"]]],, [[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------
