@@ -94,58 +94,7 @@ mmux_bash_pointers_create_global_string_variable (char const * name, char * p_va
 int
 mmux_bash_pointers_set_ERRNO (int errnum)
 {
-  int		requested_nbytes;
-
-  requested_nbytes = mmux_bash_pointers_sprint_size_sint(errnum);
-  if (0 > requested_nbytes) {
-    return EXECUTION_FAILURE;
-  } else {
-    SHELL_VAR *		v MMUX_BASH_POINTERS_UNUSED;
-    char		str[requested_nbytes];
-    /* NOTE I have found these "att_*"  flags in Bash's source code, file "variable.h";
-       I do not know if I am using them correctly (Marco Maggi; Sep 11, 2024) */
-    int			rv, flags = att_integer;
-
-    rv = mmux_bash_pointers_sprint_sint(str, requested_nbytes, errnum);
-    if (EXECUTION_SUCCESS == rv) {
-      v = bind_variable("ERRNO", str, flags);
-    } else {
-      return rv;
-    }
-  }
-  return EXECUTION_SUCCESS;
-}
-
-
-/** --------------------------------------------------------------------
- ** Type stdout printers.
- ** ----------------------------------------------------------------- */
-
-int
-mmux_bash_pointers_print_pointer (void * data)
-{
-  int	rv = printf("%p", data);
-  return (0 < rv)? EXECUTION_SUCCESS : EXECUTION_FAILURE;
-}
-int
-mmux_bash_pointers_print_usize (size_t data)
-{
-  int	rv = printf("%lu", data);
-  return (0 < rv)? EXECUTION_SUCCESS : EXECUTION_FAILURE;
-}
-int
-mmux_bash_pointers_print_complex (double complex data)
-{
-  double	data_re = creal(data), data_im = cimag(data);
-  int		rv;
-
-  if (0.0 == data_im) {
-    rv = printf("%lf", data_re);
-    return (0 < rv)? EXECUTION_SUCCESS : EXECUTION_FAILURE;
-  } else {
-    rv = printf("(%lf)+i*(%lf)", data_re, data_im);
-    return (0 < rv)? EXECUTION_SUCCESS : EXECUTION_FAILURE;
-  }
+  return mmux_bash_pointers_store_result_in_variable_sint("ERRNO", errnum);
 }
 
 
