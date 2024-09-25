@@ -278,6 +278,63 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(wint)
  ** Type predicate functions.
  ** ----------------------------------------------------------------- */
 
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+typedef bool mmux_type_predicate_$1_t (mmux_libc_$1_t X);
+
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_zero;
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_positive;
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_negative;
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_non_positive;
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_non_negative;
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_nan;
+mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_infinite;
+]]])]]])
+
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[pointer]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[schar]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uchar]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sshort]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[ushort]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sint]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uint]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[slong]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[ulong]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
+
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[float]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[double]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[complexf]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[complexd]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sint8]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uint8]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sint16]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uint16]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sint32]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uint32]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sint64]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uint64]]])
+
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[ssize]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[usize]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sintmax]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uintmax]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[sintptr]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uintptr]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[mode]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[off]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[pid]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[uid]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[gid]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[ptrdiff]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[wchar]]])
+MMUX_BASH_POINTERS_DEFINE_PREDICATE_PROTOS([[[wint]]])
+
+/* ------------------------------------------------------------------ */
+
 mmux_bash_pointers_decl bool mmux_float_equal_absmargin (mmux_libc_float_t op1, mmux_libc_float_t op2, mmux_libc_float_t margin);
 mmux_bash_pointers_decl bool mmux_float_equal_relepsilon (mmux_libc_float_t op1, mmux_libc_float_t op2, mmux_libc_float_t epsilon);
 mmux_bash_pointers_decl bool mmux_complexf_equal_absmargin (mmux_libc_complexf_t op1, mmux_libc_complexf_t op2, mmux_libc_complexf_t margin);

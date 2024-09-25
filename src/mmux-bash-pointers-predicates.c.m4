@@ -41,22 +41,12 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_FLOAT_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef bool mmux_core_predicate_$1_t (mmux_libc_$1_t X);
-
-static inline mmux_core_predicate_$1_t mmux_$1_is_zero;
-static inline mmux_core_predicate_$1_t mmux_$1_is_positive;
-static inline mmux_core_predicate_$1_t mmux_$1_is_negative;
-static inline mmux_core_predicate_$1_t mmux_$1_is_non_positive;
-static inline mmux_core_predicate_$1_t mmux_$1_is_non_negative;
-static inline mmux_core_predicate_$1_t mmux_$1_is_nan;
-static inline mmux_core_predicate_$1_t mmux_$1_is_infinite;
-
-static inline bool
+bool
 mmux_$1_is_zero (mmux_libc_$1_t X)
 {
   return (FP_ZERO == (fpclassify(X)))? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_positive (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -71,7 +61,7 @@ mmux_$1_is_positive (mmux_libc_$1_t X)
     return (MMUX_FLOAT_ZERO($1) < X)? true : false;
   }
 }
-static inline bool
+bool
 mmux_$1_is_negative (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -86,7 +76,7 @@ mmux_$1_is_negative (mmux_libc_$1_t X)
     return (MMUX_FLOAT_ZERO($1) > X)? true : false;
   }
 }
-static inline bool
+bool
 mmux_$1_is_non_positive (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -97,7 +87,7 @@ mmux_$1_is_non_positive (mmux_libc_$1_t X)
     return (MMUX_FLOAT_ZERO($1) > X)? true : false;
   }
 }
-static inline bool
+bool
 mmux_$1_is_non_negative (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -108,12 +98,12 @@ mmux_$1_is_non_negative (mmux_libc_$1_t X)
     return (MMUX_FLOAT_ZERO($1) < X)? true : false;
   }
 }
-static inline bool
+bool
 mmux_$1_is_nan (mmux_libc_$1_t X)
 {
   return (FP_NAN == (fpclassify(X)))? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_infinite (mmux_libc_$1_t X)
 {
   return (FP_INFINITE == (fpclassify(X)))? true : false;
@@ -127,14 +117,14 @@ MMUX_BASH_POINTERS_DEFINE_CORE_FLOAT_PREDICATES([[[ldouble]]],	[[[HAVE_LONG_DOUB
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-static inline bool
+bool
 mmux_$1_is_zero (mmux_libc_$1_t Z)
 {
   mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
 
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_positive (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
@@ -142,7 +132,7 @@ mmux_$1_is_positive (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
@@ -150,7 +140,7 @@ mmux_$1_is_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_non_positive (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
@@ -158,7 +148,7 @@ mmux_$1_is_non_positive (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_non_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 /* FIXME Is it better  like this, or if it is not defined?   The ideal solution would
    be to raise  an exception, but it  is not possible under GNU  Bash.  (Marco Maggi;
@@ -166,14 +156,14 @@ mmux_$1_is_non_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_nan (mmux_libc_$1_t Z)
 {
   mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
 
   return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_infinite (mmux_libc_$1_t Z)
 {
   mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
@@ -193,47 +183,37 @@ MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES([[[complexld]]],	[[[ldouble]]]
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_SIGNED_INTEGER_PREDICATES]]],[[[
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef bool mmux_core_predicate_$1_t (mmux_libc_$1_t X);
-
-static inline mmux_core_predicate_$1_t mmux_$1_is_zero;
-static inline mmux_core_predicate_$1_t mmux_$1_is_positive;
-static inline mmux_core_predicate_$1_t mmux_$1_is_negative;
-static inline mmux_core_predicate_$1_t mmux_$1_is_non_positive;
-static inline mmux_core_predicate_$1_t mmux_$1_is_non_negative;
-static inline mmux_core_predicate_$1_t mmux_$1_is_nan;
-static inline mmux_core_predicate_$1_t mmux_$1_is_infinite;
-
-static inline bool
+bool
 mmux_$1_is_zero (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) == X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_positive (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) < X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_negative (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) > X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_non_positive (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) >= X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_non_negative (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) <= X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_nan (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_infinite (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
@@ -267,47 +247,37 @@ MMUX_BASH_POINTERS_DEFINE_CORE_SIGNED_INTEGER_PREDICATES([[[wchar]]])
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_UNSIGNED_INTEGER_PREDICATES]]],[[[
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef bool mmux_core_predicate_$1_t (mmux_libc_$1_t X);
-
-static inline mmux_core_predicate_$1_t mmux_$1_is_zero;
-static inline mmux_core_predicate_$1_t mmux_$1_is_positive;
-static inline mmux_core_predicate_$1_t mmux_$1_is_negative;
-static inline mmux_core_predicate_$1_t mmux_$1_is_non_positive;
-static inline mmux_core_predicate_$1_t mmux_$1_is_non_negative;
-static inline mmux_core_predicate_$1_t mmux_$1_is_nan;
-static inline mmux_core_predicate_$1_t mmux_$1_is_infinite;
-
-static inline bool
+bool
 mmux_$1_is_zero (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) == X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_positive (mmux_libc_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) < X)? true : false;
 }
-static inline bool
+bool
 mmux_$1_is_negative (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_non_positive (mmux_libc_$1_t X)
 {
   return mmux_$1_is_zero(X);
 }
-static inline bool
+bool
 mmux_$1_is_non_negative (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return true;
 }
-static inline bool
+bool
 mmux_$1_is_nan (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
-static inline bool
+bool
 mmux_$1_is_infinite (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
