@@ -88,9 +88,9 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-library.c.m4		\
 	src/mmux-bash-pointers-memory.c.m4		\
 	src/mmux-bash-pointers-mutators.c.m4		\
-	src/mmux-bash-pointers-parsers.c.m4		\
+	src/mmux-bash-pointers-parser-functions.c.m4	\
 	src/mmux-bash-pointers-predicates.c.m4		\
-	src/mmux-bash-pointers-sprinters.c.m4		\
+	src/mmux-bash-pointers-sprint-functions.c.m4	\
 	src/mmux-bash-pointers-type-functions.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
@@ -104,9 +104,9 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-mutators.c		\
-	src/mmux-bash-pointers-parsers.c		\
+	src/mmux-bash-pointers-parser-functions.c	\
 	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-bash-pointers-sprinters.c		\
+	src/mmux-bash-pointers-sprint-functions.c	\
 	src/mmux-bash-pointers-type-functions.c
 
 MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES = \
@@ -140,9 +140,9 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-mutators.c		\
-	src/mmux-bash-pointers-parsers.c		\
+	src/mmux-bash-pointers-parser-functions.c	\
 	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-bash-pointers-sprinters.c		\
+	src/mmux-bash-pointers-sprint-functions.c	\
 	src/mmux-bash-pointers-type-functions.c
 
 .PHONY: library
