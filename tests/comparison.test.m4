@@ -1646,6 +1646,50 @@ function comparison-float-lesser-equal-1.5  () { ! mmux_float_lesser_equal '3.3'
 function comparison-float-lesser-equal-1.6  () {   mmux_float_lesser_equal '1.1' '1.1' ;}
 function comparison-float-lesser-equal-1.7  () {   mmux_float_lesser_equal '-3.3' '-2.2' '-2.2' ;}
 
+### ------------------------------------------------------------------------
+
+function comparison-float-equal-absmargin-1.1   () {   mmux_float_equal_absmargin '1.0' ;}
+function comparison-float-equal-absmargin-1.2   () {   mmux_float_equal_absmargin '1.0' '1.0' ;}
+function comparison-float-equal-absmargin-1.3   () {   mmux_float_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float-equal-absmargin-1.4   () { ! mmux_float_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float-equal-absmargin-1.5   () {   mmux_float_equal_absmargin '-9' '-9' ;}
+function comparison-float-equal-absmargin-1.6   () { ! mmux_float_equal_absmargin '-9' '-4' ;}
+
+function comparison-float-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT='0.1'
+    mmux_float_equal_absmargin '1.0' '1.02'
+}
+function comparison-float-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT='0.1'
+    ! mmux_float_equal_absmargin '1.0' '1.3'
+}
+function comparison-float-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT='1.0'
+    ! mmux_float_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float-equal-relepsilon-1.1   () {   mmux_float_equal_relepsilon '1.0' ;}
+function comparison-float-equal-relepsilon-1.2   () {   mmux_float_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float-equal-relepsilon-1.3   () {   mmux_float_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float-equal-relepsilon-1.4   () { ! mmux_float_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float-equal-relepsilon-1.5   () {   mmux_float_equal_relepsilon '-9' '-9' ;}
+function comparison-float-equal-relepsilon-1.6   () { ! mmux_float_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT='0.1'
+    mmux_float_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT='0.1'
+    ! mmux_float_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT='0.1'
+    ! mmux_float_equal_relepsilon '1.0' '3.0'
+}
+
 
 #### type variables: double
 
@@ -1695,6 +1739,50 @@ function comparison-double-lesser-equal-1.4  () { ! mmux_double_lesser_equal '3.
 function comparison-double-lesser-equal-1.5  () { ! mmux_double_lesser_equal '3.3' '9.9' '5.5' ;}
 function comparison-double-lesser-equal-1.6  () {   mmux_double_lesser_equal '1.1' '1.1' ;}
 function comparison-double-lesser-equal-1.7  () {   mmux_double_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-double-equal-absmargin-1.1   () {   mmux_double_equal_absmargin '1.0' ;}
+function comparison-double-equal-absmargin-1.2   () {   mmux_double_equal_absmargin '1.0' '1.0' ;}
+function comparison-double-equal-absmargin-1.3   () {   mmux_double_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-double-equal-absmargin-1.4   () { ! mmux_double_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-double-equal-absmargin-1.5   () {   mmux_double_equal_absmargin '-9' '-9' ;}
+function comparison-double-equal-absmargin-1.6   () { ! mmux_double_equal_absmargin '-9' '-4' ;}
+
+function comparison-double-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_DOUBLE='0.1'
+    mmux_double_equal_absmargin '1.0' '1.02'
+}
+function comparison-double-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_DOUBLE='0.1'
+    ! mmux_double_equal_absmargin '1.0' '1.3'
+}
+function comparison-double-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_DOUBLE='1.0'
+    ! mmux_double_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-double-equal-relepsilon-1.1   () {   mmux_double_equal_relepsilon '1.0' ;}
+function comparison-double-equal-relepsilon-1.2   () {   mmux_double_equal_relepsilon '1.0' '1.0' ;}
+function comparison-double-equal-relepsilon-1.3   () {   mmux_double_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-double-equal-relepsilon-1.4   () { ! mmux_double_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-double-equal-relepsilon-1.5   () {   mmux_double_equal_relepsilon '-9' '-9' ;}
+function comparison-double-equal-relepsilon-1.6   () { ! mmux_double_equal_relepsilon '-9' '-4' ;}
+
+function comparison-double-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_DOUBLE='0.1'
+    mmux_double_equal_relepsilon '1.0' '1.02'
+}
+function comparison-double-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_DOUBLE='0.1'
+    ! mmux_double_equal_relepsilon '1.0' '1.3'
+}
+function comparison-double-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_DOUBLE='0.1'
+    ! mmux_double_equal_relepsilon '1.0' '3.0'
+}
 
 
 #### type variables: ldouble
@@ -1746,14 +1834,218 @@ function comparison-ldouble-lesser-equal-1.5  () { ! mmux_ldouble_lesser_equal '
 function comparison-ldouble-lesser-equal-1.6  () {   mmux_ldouble_lesser_equal '1.1' '1.1' ;}
 function comparison-ldouble-lesser-equal-1.7  () {   mmux_ldouble_lesser_equal '-3.3' '-2.2' '-2.2' ;}
 
-
-#### type variables: complex
+### ------------------------------------------------------------------------
 
-function comparison-complex-equal-1.1         () {   mmux_complex_equal '(1.2)+i*(3.4)' ;}
-function comparison-complex-equal-1.2         () {   mmux_complex_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
-function comparison-complex-equal-1.3         () {   mmux_complex_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
-function comparison-complex-equal-1.4         () { ! mmux_complex_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
-function comparison-complex-equal-1.5         () { ! mmux_complex_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+function comparison-ldouble-equal-absmargin-1.1   () {   mmux_ldouble_equal_absmargin '1.0' ;}
+function comparison-ldouble-equal-absmargin-1.2   () {   mmux_ldouble_equal_absmargin '1.0' '1.0' ;}
+function comparison-ldouble-equal-absmargin-1.3   () {   mmux_ldouble_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-ldouble-equal-absmargin-1.4   () { ! mmux_ldouble_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-ldouble-equal-absmargin-1.5   () {   mmux_ldouble_equal_absmargin '-9' '-9' ;}
+function comparison-ldouble-equal-absmargin-1.6   () { ! mmux_ldouble_equal_absmargin '-9' '-4' ;}
+
+function comparison-ldouble-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_LDOUBLE='0.1'
+    mmux_ldouble_equal_absmargin '1.0' '1.02'
+}
+function comparison-ldouble-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_LDOUBLE='0.1'
+    ! mmux_ldouble_equal_absmargin '1.0' '1.3'
+}
+function comparison-ldouble-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_LDOUBLE='1.0'
+    ! mmux_ldouble_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-ldouble-equal-relepsilon-1.1   () {   mmux_ldouble_equal_relepsilon '1.0' ;}
+function comparison-ldouble-equal-relepsilon-1.2   () {   mmux_ldouble_equal_relepsilon '1.0' '1.0' ;}
+function comparison-ldouble-equal-relepsilon-1.3   () {   mmux_ldouble_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-ldouble-equal-relepsilon-1.4   () { ! mmux_ldouble_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-ldouble-equal-relepsilon-1.5   () {   mmux_ldouble_equal_relepsilon '-9' '-9' ;}
+function comparison-ldouble-equal-relepsilon-1.6   () { ! mmux_ldouble_equal_relepsilon '-9' '-4' ;}
+
+function comparison-ldouble-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_LDOUBLE='0.1'
+    mmux_ldouble_equal_relepsilon '1.0' '1.02'
+}
+function comparison-ldouble-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_LDOUBLE='0.1'
+    ! mmux_ldouble_equal_relepsilon '1.0' '1.3'
+}
+function comparison-ldouble-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_LDOUBLE='0.1'
+    ! mmux_ldouble_equal_relepsilon '1.0' '3.0'
+}
+
+
+#### type variables: complexf
+
+function comparison-complexf-equal-1.1         () {   mmux_complexf_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf-equal-1.2         () {   mmux_complexf_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf-equal-1.3         () {   mmux_complexf_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf-equal-1.4         () { ! mmux_complexf_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf-equal-1.5         () { ! mmux_complexf_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf-equal-absmargin-1.1   () {   mmux_complexf_equal_absmargin '1.0' ;}
+function comparison-complexf-equal-absmargin-1.2   () {   mmux_complexf_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf-equal-absmargin-1.3   () {   mmux_complexf_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf-equal-absmargin-1.4   () { ! mmux_complexf_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf-equal-absmargin-1.5   () {   mmux_complexf_equal_absmargin '-9' '-9' ;}
+function comparison-complexf-equal-absmargin-1.6   () { ! mmux_complexf_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF='0.1'
+    mmux_complexf_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF='0.1'
+    ! mmux_complexf_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF='1.0'
+    ! mmux_complexf_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF='(0.1)+i*(0.1)'
+    mmux_complexf_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF='(0.1)+i*(0.1)'
+    ! mmux_complexf_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF='(0.1)+i*(0.1)'
+    ! mmux_complexf_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf-equal-relepsilon-1.1   () {   mmux_complexf_equal_relepsilon '1.0' ;}
+function comparison-complexf-equal-relepsilon-1.2   () {   mmux_complexf_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf-equal-relepsilon-1.3   () {   mmux_complexf_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf-equal-relepsilon-1.4   () { ! mmux_complexf_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf-equal-relepsilon-1.5   () {   mmux_complexf_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf-equal-relepsilon-1.6   () { ! mmux_complexf_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF='0.1'
+    mmux_complexf_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF='0.1'
+    ! mmux_complexf_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF='0.1'
+    ! mmux_complexf_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF='(0.1)+i*(0.1)'
+    mmux_complexf_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF='(0.1)+i*(0.1)'
+    ! mmux_complexf_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF='(0.1)+i*(0.1)'
+    ! mmux_complexf_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+
+#### type variables: complexd
+
+function comparison-complexd-equal-1.1         () {   mmux_complexd_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexd-equal-1.2         () {   mmux_complexd_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd-equal-1.3         () {   mmux_complexd_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd-equal-1.4         () { ! mmux_complexd_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexd-equal-1.5         () { ! mmux_complexd_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd-equal-absmargin-1.1   () {   mmux_complexd_equal_absmargin '1.0' ;}
+function comparison-complexd-equal-absmargin-1.2   () {   mmux_complexd_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexd-equal-absmargin-1.3   () {   mmux_complexd_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexd-equal-absmargin-1.4   () { ! mmux_complexd_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexd-equal-absmargin-1.5   () {   mmux_complexd_equal_absmargin '-9' '-9' ;}
+function comparison-complexd-equal-absmargin-1.6   () { ! mmux_complexd_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexd-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD='0.1'
+    mmux_complexd_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexd-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD='0.1'
+    ! mmux_complexd_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexd-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD='1.0'
+    ! mmux_complexd_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexd-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD='(0.1)+i*(0.1)'
+    mmux_complexd_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD='(0.1)+i*(0.1)'
+    ! mmux_complexd_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD='(0.1)+i*(0.1)'
+    ! mmux_complexd_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+
+#### type variables: complexld
+
+function comparison-complexld-equal-1.1         () {   mmux_complexld_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexld-equal-1.2         () {   mmux_complexld_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexld-equal-1.3         () {   mmux_complexld_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexld-equal-1.4         () { ! mmux_complexld_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexld-equal-1.5         () { ! mmux_complexld_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexld-equal-absmargin-1.1   () {   mmux_complexld_equal_absmargin '1.0' ;}
+function comparison-complexld-equal-absmargin-1.2   () {   mmux_complexld_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexld-equal-absmargin-1.3   () {   mmux_complexld_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexld-equal-absmargin-1.4   () { ! mmux_complexld_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexld-equal-absmargin-1.5   () {   mmux_complexld_equal_absmargin '-9' '-9' ;}
+function comparison-complexld-equal-absmargin-1.6   () { ! mmux_complexld_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexld-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXLD='0.1'
+    mmux_complexld_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexld-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXLD='0.1'
+    ! mmux_complexld_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexld-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXLD='1.0'
+    ! mmux_complexld_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexld-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXLD='(0.1)+i*(0.1)'
+    mmux_complexld_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexld-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXLD='(0.1)+i*(0.1)'
+    ! mmux_complexld_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexld-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXLD='(0.1)+i*(0.1)'
+    ! mmux_complexld_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+
 
 #### let's go
 

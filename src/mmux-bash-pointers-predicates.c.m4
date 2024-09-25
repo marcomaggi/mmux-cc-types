@@ -130,7 +130,7 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_COMPLEX_PREDICATES]]],[[[MMUX_BASH_C
 static inline bool
 mmux_$1_is_zero (mmux_libc_$1_t Z)
 {
-  mmux_libc_$2_t	re = creal(Z), im = cimag(Z);
+  mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
 
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
@@ -169,14 +169,14 @@ mmux_$1_is_non_negative (mmux_libc_$1_t Z MMUX_BASH_POINTERS_UNUSED)
 static inline bool
 mmux_$1_is_nan (mmux_libc_$1_t Z)
 {
-  mmux_libc_$2_t	re = creal(Z), im = cimag(Z);
+  mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
 
   return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
 }
 static inline bool
 mmux_$1_is_infinite (mmux_libc_$1_t Z)
 {
-  mmux_libc_$2_t	re = creal(Z), im = cimag(Z);
+  mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
 
   return (mmux_$2_is_infinite(re) || mmux_$2_is_infinite(im))? true : false;
 }

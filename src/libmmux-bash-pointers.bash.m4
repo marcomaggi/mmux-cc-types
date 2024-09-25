@@ -150,16 +150,21 @@ function mmux_bash_pointers_library_load () {
 
 	    for STEM in float double ldouble
 	    do
-		for ITEM in equal greater lesser greater_equal lesser_equal
+		for ITEM in equal greater lesser greater_equal lesser_equal equal_absmargin equal_relepsilon
 		do
 		    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 		    mmux_bash_pointers_library_define_builtin "$NAME"
 		done
 	    done
 
-	    mmux_bash_pointers_library_define_builtin 'mmux_complexf_equal'
-	    mmux_bash_pointers_library_define_builtin 'mmux_complexd_equal'
-	    mmux_bash_pointers_library_define_builtin 'mmux_complexld_equal'
+	    for STEM in complexf complexd complexld
+	    do
+		for ITEM in equal equal_absmargin equal_relepsilon
+		do
+		    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
+		done
+	    done
 	}
     fi
 }

@@ -54,10 +54,10 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 ]]])}
 
 int
-mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, size_t len, mmux_libc_[[[$1]]]_t value)
+mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, int len, mmux_libc_[[[$1]]]_t value)
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  size_t	to_be_written_chars;
+  int		to_be_written_chars;
 
   to_be_written_chars = snprintf(strptr, len, $2, value);
   if (len > to_be_written_chars) {
@@ -105,11 +105,11 @@ mmux_bash_pointers_sprint_size_pointer (mmux_libc_pointer_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_pointer (char * strptr, size_t len, mmux_libc_pointer_t value)
+mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_libc_pointer_t value)
 /* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
    the template is "%p"; we want a proper number representation. */
 {
-  size_t	to_be_written_chars;
+  int		to_be_written_chars;
 
   if (value) {
     to_be_written_chars = snprintf(strptr, len, "%p", value);
@@ -139,11 +139,11 @@ mmux_bash_pointers_sprint_size_float (mmux_libc_float_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_float (char * strptr, size_t len, float value)
+mmux_bash_pointers_sprint_float (char * strptr, int len, float value)
 /* This exists  because of the  explicit cast to "double";  without it: GCC  raises a
    warning. */
 {
-  size_t	to_be_written_chars;
+  int		to_be_written_chars;
 
   to_be_written_chars = snprintf(strptr, len, "%A", (double)value);
   if (len > to_be_written_chars) {
@@ -173,11 +173,11 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_$1_t value)
+mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
 {
   mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
   mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
-  size_t		to_be_written_chars;
+  int			to_be_written_chars;
 
   to_be_written_chars = snprintf(strptr, len, $2, $3 re, $3 im);
   if (len > to_be_written_chars) {
@@ -204,7 +204,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
   return mmux_bash_pointers_sprint_size_[[[]]]$2[[[]]](value);
 }
 int
-mmux_bash_pointers_sprint_$1 (char * strptr, size_t len, mmux_libc_$1_t value)
+mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
 {
   return mmux_bash_pointers_sprint_[[[]]]$2[[[]]](strptr, len, value);
 }

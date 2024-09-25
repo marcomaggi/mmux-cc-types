@@ -995,32 +995,87 @@ function pointers-ldouble-1.3 () {
 }
 
 
-#### array accessors and mutators: complex
+#### array accessors and mutators: complexf
 
-function pointers-complex-1.1 () {
+function pointers-complexf-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR 1024 1
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
     {
-	mmux_complex_pointer_set $PTR 0 '(1.2)+i*(3.4)'
-	mmux_complex_pointer_ref VALUE $PTR 0
+	mmux_complexf_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complexf_pointer_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    dotest-equal '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function pointers-complexf-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    {
+	mmux_complexf_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexf_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexf_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+
+	mmux_complexf_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexf_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexf_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    dotest-equal     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function pointers-complexf-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    {
+	mmux_complexf_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexf_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexf_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_complexf_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexf_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexf_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    dotest-equal     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: complexd
+
+function pointers-complexd-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    {
+	mmux_complexd_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complexd_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
     dotest-equal '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' QQ(VALUE)
 }
-function pointers-complex-1.2 () {
+function pointers-complexd-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 1024 1
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
     {
-	mmux_complex_pointer_set $PTR  0 '(1.2)+i*(3.4)'
-	mmux_complex_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complex_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd_pointer_set $PTR 64 '(9.0)+i*(1.2)'
 
-	mmux_complex_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_complex_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
-	mmux_complex_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complexd_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -1028,25 +1083,80 @@ function pointers-complex-1.2 () {
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
 }
-function pointers-complex-1.3 () {
+function pointers-complexd-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 1024 1
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
     {
-	mmux_complex_pointer_set $PTR  0 '(1.2)+i*(3.4)'
-	mmux_complex_pointer_set $PTR  32 '(5.6)+i*(7.8)'
-	mmux_complex_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd_pointer_set $PTR  32 '(5.6)+i*(7.8)'
+	mmux_complexd_pointer_set $PTR 64 '(9.0)+i*(1.2)'
 	mmux_libc_realloc PTR $PTR 2048
-	mmux_complex_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_complex_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
-	mmux_complex_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complexd_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
     dotest-equal     '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: complexld
+
+function pointers-complexld-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    {
+	mmux_complexld_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complexld_pointer_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_complexld_equal '(1.2)+i*(3.4)' QQ(VALUE)
+}
+function pointers-complexld-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    {
+	mmux_complexld_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexld_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexld_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+
+	mmux_complexld_pointer_ref VALUE $PTR  0		;VALUES[0]=$VALUE
+	mmux_complexld_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexld_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexld_equal     '(1.2)+i*(3.4)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexld_equal '(5.6)+i*(7.8)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexld_equal '(9.0)+i*(1.2)' mbfl_slot_qref(VALUES,2)
+}
+function pointers-complexld-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    {
+	mmux_complexld_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexld_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexld_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_complexld_pointer_ref VALUE $PTR  0		;VALUES[0]=$VALUE
+	mmux_complexld_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexld_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexld_equal     '(1.2)+i*(3.4)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexld_equal '(5.6)+i*(7.8)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexld_equal '(9.0)+i*(1.2)' mbfl_slot_qref(VALUES,2)
 }
 
 

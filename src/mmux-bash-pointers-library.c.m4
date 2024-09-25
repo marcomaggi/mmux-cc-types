@@ -84,12 +84,13 @@ mmux_bash_pointers_create_global_sint_variable (char * name, int value)
   return EXECUTION_SUCCESS;
 }
 static void
-mmux_bash_pointers_create_global_string_variable (char const * name, char * p_value)
+mmux_bash_pointers_create_global_string_variable (char const * variable_name, char * const variable_value)
 {
   SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
   int		flags = 0;
 
-  v = bind_global_variable(name, p_value, flags);
+  if (0) { fprintf(stderr, "%s: defining variable: %s=%s\n", __func__, variable_name, variable_value); }
+  v = bind_global_variable(variable_name, variable_value, flags);
 }
 int
 mmux_bash_pointers_set_ERRNO (int errnum)
@@ -120,6 +121,7 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
     char	str[requested_nbytes];
 
     mmux_bash_pointers_sprint_maximum_$1(str, requested_nbytes);
+    if (0) { fprintf(stderr, "%s: maximum $1: %s=%s\n", __func__, "mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str); }
     mmux_bash_pointers_create_global_string_variable("mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str);
   }
 }]]])

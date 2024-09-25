@@ -92,6 +92,23 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
+ ** Version functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl char const *	mmux_bash_pointers_version_string		(void);
+mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_current	(void);
+mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_revision	(void);
+mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
+
+
+/** --------------------------------------------------------------------
+ ** Error handling functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum);
+
+
+/** --------------------------------------------------------------------
  ** Type definitions preprocessor symbols.
  ** ----------------------------------------------------------------- */
 
@@ -193,7 +210,7 @@ mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_[[[]]]$1[[[]]] (void)
      __attribute__((__const__));
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_[[[]]]$1[[[]]]_t * p, char const * s, char const * who)
        __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, size_t l, mmux_libc_[[[]]]$1[[[]]]_t v)
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_libc_[[[]]]$1[[[]]]_t v)
        __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_[[[]]]$1[[[]]]_t v);
 mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value);
@@ -258,20 +275,29 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(wint)
 
 
 /** --------------------------------------------------------------------
- ** Version functions.
+ ** Type predicate functions.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_pointers_decl char const *	mmux_bash_pointers_version_string		(void);
-mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_current	(void);
-mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_revision	(void);
-mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
+mmux_bash_pointers_decl bool mmux_float_equal_absmargin (mmux_libc_float_t op1, mmux_libc_float_t op2, mmux_libc_float_t margin);
+mmux_bash_pointers_decl bool mmux_float_equal_relepsilon (mmux_libc_float_t op1, mmux_libc_float_t op2, mmux_libc_float_t epsilon);
+mmux_bash_pointers_decl bool mmux_complexf_equal_absmargin (mmux_libc_complexf_t op1, mmux_libc_complexf_t op2, mmux_libc_complexf_t margin);
+mmux_bash_pointers_decl bool mmux_complexf_equal_relepsilon (mmux_libc_complexf_t op1, mmux_libc_complexf_t op2, mmux_libc_complexf_t epsilon);
 
-
-/** --------------------------------------------------------------------
- ** Error handling functions.
- ** ----------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum);
+mmux_bash_pointers_decl bool mmux_double_equal_absmargin (mmux_libc_double_t op1, mmux_libc_double_t op2, mmux_libc_double_t margin);
+mmux_bash_pointers_decl bool mmux_double_equal_relepsilon (mmux_libc_double_t op1, mmux_libc_double_t op2, mmux_libc_double_t epsilon);
+mmux_bash_pointers_decl bool mmux_complexd_equal_absmargin (mmux_libc_complexd_t op1, mmux_libc_complexd_t op2, mmux_libc_complexd_t margin);
+mmux_bash_pointers_decl bool mmux_complexd_equal_relepsilon (mmux_libc_complexd_t op1, mmux_libc_complexd_t op2, mmux_libc_complexd_t epsilon);
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],[[[
+mmux_bash_pointers_decl bool mmux_ldouble_equal_absmargin (mmux_libc_ldouble_t op1, mmux_libc_ldouble_t op2, mmux_libc_ldouble_t margin);
+mmux_bash_pointers_decl bool mmux_ldouble_equal_relepsilon (mmux_libc_ldouble_t op1, mmux_libc_ldouble_t op2, mmux_libc_ldouble_t epsilon);
+mmux_bash_pointers_decl bool mmux_complexld_equal_absmargin (mmux_libc_complexld_t op1, mmux_libc_complexld_t op2, mmux_libc_complexld_t margin);
+mmux_bash_pointers_decl bool mmux_complexld_equal_relepsilon (mmux_libc_complexld_t op1, mmux_libc_complexld_t op2, mmux_libc_complexld_t epsilon);
+]]])
 
 
 /** --------------------------------------------------------------------

@@ -400,53 +400,55 @@ else # not implemented
 fi
 @end example
 
-@macro MmuxDefineGlobalVarSizeof{NAME,TYPE}
+@macro MmuxDefineGlobalVarSizeof{NAME,STEM}
 @defvar mmux_libc_SIZEOF_\NAME\
-Global variable holding the size, measured in bytes, of the C language type @code{\TYPE\}.
+Global variable holding the size, measured in bytes, of the C language type with stem @code{\STEM\}.
 @end defvar
 
 @end macro
 
-@MmuxDefineGlobalVarSizeof{POINTER,void *}
+@MmuxDefineGlobalVarSizeof{POINTER,pointer}
 
-@MmuxDefineGlobalVarSizeof{SCHAR, signed char}
-@MmuxDefineGlobalVarSizeof{UCHAR, unsigned char}
-@MmuxDefineGlobalVarSizeof{SSHORT, signed short int}
-@MmuxDefineGlobalVarSizeof{USHORT, unsigned short int}
-@MmuxDefineGlobalVarSizeof{SINT, signed int}
-@MmuxDefineGlobalVarSizeof{UINT, unsigned int}
-@MmuxDefineGlobalVarSizeof{SLONG, signed long int}
-@MmuxDefineGlobalVarSizeof{ULONG, unsigned long int}
-@MmuxDefineGlobalVarSizeof{SLLONG, signed long long int}
-@MmuxDefineGlobalVarSizeof{ULLONG, unsigned long long int}
+@MmuxDefineGlobalVarSizeof{SCHAR, schar}
+@MmuxDefineGlobalVarSizeof{UCHAR, uchar}
+@MmuxDefineGlobalVarSizeof{SSHORT, sshort}
+@MmuxDefineGlobalVarSizeof{USHORT, ushort}
+@MmuxDefineGlobalVarSizeof{SINT, sint}
+@MmuxDefineGlobalVarSizeof{UINT, uint}
+@MmuxDefineGlobalVarSizeof{SLONG, slong}
+@MmuxDefineGlobalVarSizeof{ULONG, ulong}
+@MmuxDefineGlobalVarSizeof{SLLONG, sllong}
+@MmuxDefineGlobalVarSizeof{ULLONG, ullong}
 @MmuxDefineGlobalVarSizeof{FLOAT, float}
 @MmuxDefineGlobalVarSizeof{DOUBLE, double}
-@MmuxDefineGlobalVarSizeof{LDOUBLE, long double}
-@MmuxDefineGlobalVarSizeof{COMPLEX, double complex}
+@MmuxDefineGlobalVarSizeof{LDOUBLE, ldouble}
+@MmuxDefineGlobalVarSizeof{COMPLEXF, complexf}
+@MmuxDefineGlobalVarSizeof{COMPLEXD, complexd}
+@MmuxDefineGlobalVarSizeof{COMPLEXLD, complexld}
 
-@MmuxDefineGlobalVarSizeof{SINT8, int8_t}
-@MmuxDefineGlobalVarSizeof{UINT8, uint8_t}
-@MmuxDefineGlobalVarSizeof{SINT16, int16_t}
-@MmuxDefineGlobalVarSizeof{UINT16, uint16_t}
-@MmuxDefineGlobalVarSizeof{SINT32, int32_t}
-@MmuxDefineGlobalVarSizeof{UINT32, uint32_t}
-@MmuxDefineGlobalVarSizeof{SINT64, int64_t}
-@MmuxDefineGlobalVarSizeof{UINT64, uint64_t}
+@MmuxDefineGlobalVarSizeof{SINT8, sint8}
+@MmuxDefineGlobalVarSizeof{UINT8, uint8}
+@MmuxDefineGlobalVarSizeof{SINT16, sint16}
+@MmuxDefineGlobalVarSizeof{UINT16, uint16}
+@MmuxDefineGlobalVarSizeof{SINT32, sint32}
+@MmuxDefineGlobalVarSizeof{UINT32, uint32}
+@MmuxDefineGlobalVarSizeof{SINT64, sint64}
+@MmuxDefineGlobalVarSizeof{UINT64, uint64}
 
-@MmuxDefineGlobalVarSizeof{SSIZE, ssize_t}
-@MmuxDefineGlobalVarSizeof{USIZE, size_t}
-@MmuxDefineGlobalVarSizeof{SINTMAX, intmax_t}
-@MmuxDefineGlobalVarSizeof{UINTMAX, uintmax_t}
-@MmuxDefineGlobalVarSizeof{SINTPTR, intptr_t}
-@MmuxDefineGlobalVarSizeof{UINTPTR, uintptr_t}
-@MmuxDefineGlobalVarSizeof{PTRDIFF, ptrdiff_t}
-@MmuxDefineGlobalVarSizeof{MODE, mode_t}
-@MmuxDefineGlobalVarSizeof{OFF, off_t}
-@MmuxDefineGlobalVarSizeof{PID, pid_t}
-@MmuxDefineGlobalVarSizeof{UID, uid_t}
-@MmuxDefineGlobalVarSizeof{GID, gid_t}
-@MmuxDefineGlobalVarSizeof{WCHAR, wchar_t}
-@MmuxDefineGlobalVarSizeof{WINT, wint_t}
+@MmuxDefineGlobalVarSizeof{SSIZE, ssize}
+@MmuxDefineGlobalVarSizeof{USIZE, usize}
+@MmuxDefineGlobalVarSizeof{SINTMAX, sintmax}
+@MmuxDefineGlobalVarSizeof{UINTMAX, uintmax}
+@MmuxDefineGlobalVarSizeof{SINTPTR, sintptr}
+@MmuxDefineGlobalVarSizeof{UINTPTR, uintptr}
+@MmuxDefineGlobalVarSizeof{PTRDIFF, ptrdiff}
+@MmuxDefineGlobalVarSizeof{MODE, mode}
+@MmuxDefineGlobalVarSizeof{OFF, off}
+@MmuxDefineGlobalVarSizeof{PID, pid}
+@MmuxDefineGlobalVarSizeof{UID, uid}
+@MmuxDefineGlobalVarSizeof{GID, gid}
+@MmuxDefineGlobalVarSizeof{WCHAR, wchar}
+@MmuxDefineGlobalVarSizeof{WINT, wint}
 
 @c page
 @node variables limits
@@ -1624,6 +1626,16 @@ an infinite number; otherwise return false.
 @chapter Comparison builtins
 
 
+@menu
+* comparison exact::            Exact comparison builtins.
+* comparison approximate::      Approximate comparison builtins.
+@end menu
+
+@c page
+@node comparison exact
+@section Exact comparison builtins
+
+
 @gnu{} Bash already implements comparison operations for integer values, and such implementation
 might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for completeness, the
 comparison operations are implemented for every supported data type.
@@ -1671,7 +1683,7 @@ mandatory):
 @end itemize
 
 
-@macro MmuxDefineTypeComparisonEqualBuiltin{STEM}
+@macro MmuxDefineTypeComparisonExactBuiltin{STEM}
 @deffn Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_\STEM\_greater @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_\STEM\_lesser @varo{OP} @var{OP} @dots{}
@@ -1682,21 +1694,21 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 
 @end macro
 
-@MmuxDefineTypeComparisonEqualBuiltin{pointer}
+@MmuxDefineTypeComparisonExactBuiltin{pointer}
 
-@MmuxDefineTypeComparisonEqualBuiltin{schar}
-@MmuxDefineTypeComparisonEqualBuiltin{uchar}
-@MmuxDefineTypeComparisonEqualBuiltin{sshort}
-@MmuxDefineTypeComparisonEqualBuiltin{ushort}
-@MmuxDefineTypeComparisonEqualBuiltin{sint}
-@MmuxDefineTypeComparisonEqualBuiltin{uint}
-@MmuxDefineTypeComparisonEqualBuiltin{slong}
-@MmuxDefineTypeComparisonEqualBuiltin{ulong}
-@MmuxDefineTypeComparisonEqualBuiltin{sllong}
-@MmuxDefineTypeComparisonEqualBuiltin{ullong}
-@MmuxDefineTypeComparisonEqualBuiltin{float}
-@MmuxDefineTypeComparisonEqualBuiltin{double}
-@MmuxDefineTypeComparisonEqualBuiltin{ldouble}
+@MmuxDefineTypeComparisonExactBuiltin{schar}
+@MmuxDefineTypeComparisonExactBuiltin{uchar}
+@MmuxDefineTypeComparisonExactBuiltin{sshort}
+@MmuxDefineTypeComparisonExactBuiltin{ushort}
+@MmuxDefineTypeComparisonExactBuiltin{sint}
+@MmuxDefineTypeComparisonExactBuiltin{uint}
+@MmuxDefineTypeComparisonExactBuiltin{slong}
+@MmuxDefineTypeComparisonExactBuiltin{ulong}
+@MmuxDefineTypeComparisonExactBuiltin{sllong}
+@MmuxDefineTypeComparisonExactBuiltin{ullong}
+@MmuxDefineTypeComparisonExactBuiltin{float}
+@MmuxDefineTypeComparisonExactBuiltin{double}
+@MmuxDefineTypeComparisonExactBuiltin{ldouble}
 
 @deffn Builtin mmux_complexf_equal @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between values of type @objtype{complexf}.
@@ -1710,28 +1722,176 @@ Perform the comparison operations between values of type @objtype{complexd}.
 Perform the comparison operations between values of type @objtype{complexld}.
 @end deffn
 
-@MmuxDefineTypeComparisonEqualBuiltin{sint8}
-@MmuxDefineTypeComparisonEqualBuiltin{uint8}
-@MmuxDefineTypeComparisonEqualBuiltin{sint16}
-@MmuxDefineTypeComparisonEqualBuiltin{uint16}
-@MmuxDefineTypeComparisonEqualBuiltin{sint32}
-@MmuxDefineTypeComparisonEqualBuiltin{uint32}
-@MmuxDefineTypeComparisonEqualBuiltin{sint64}
-@MmuxDefineTypeComparisonEqualBuiltin{uint64}
+@MmuxDefineTypeComparisonExactBuiltin{sint8}
+@MmuxDefineTypeComparisonExactBuiltin{uint8}
+@MmuxDefineTypeComparisonExactBuiltin{sint16}
+@MmuxDefineTypeComparisonExactBuiltin{uint16}
+@MmuxDefineTypeComparisonExactBuiltin{sint32}
+@MmuxDefineTypeComparisonExactBuiltin{uint32}
+@MmuxDefineTypeComparisonExactBuiltin{sint64}
+@MmuxDefineTypeComparisonExactBuiltin{uint64}
 
-@MmuxDefineTypeComparisonEqualBuiltin{ssize}
-@MmuxDefineTypeComparisonEqualBuiltin{usize}
-@MmuxDefineTypeComparisonEqualBuiltin{sintmax}
-@MmuxDefineTypeComparisonEqualBuiltin{uintmax}
-@MmuxDefineTypeComparisonEqualBuiltin{sintptr}
-@MmuxDefineTypeComparisonEqualBuiltin{uintptr}
-@MmuxDefineTypeComparisonEqualBuiltin{mode}
-@MmuxDefineTypeComparisonEqualBuiltin{off}
-@MmuxDefineTypeComparisonEqualBuiltin{pid}
-@MmuxDefineTypeComparisonEqualBuiltin{uid}
-@MmuxDefineTypeComparisonEqualBuiltin{gid}
-@MmuxDefineTypeComparisonEqualBuiltin{wchar}
-@MmuxDefineTypeComparisonEqualBuiltin{wint}
+@MmuxDefineTypeComparisonExactBuiltin{ssize}
+@MmuxDefineTypeComparisonExactBuiltin{usize}
+@MmuxDefineTypeComparisonExactBuiltin{sintmax}
+@MmuxDefineTypeComparisonExactBuiltin{uintmax}
+@MmuxDefineTypeComparisonExactBuiltin{sintptr}
+@MmuxDefineTypeComparisonExactBuiltin{uintptr}
+@MmuxDefineTypeComparisonExactBuiltin{mode}
+@MmuxDefineTypeComparisonExactBuiltin{off}
+@MmuxDefineTypeComparisonExactBuiltin{pid}
+@MmuxDefineTypeComparisonExactBuiltin{uid}
+@MmuxDefineTypeComparisonExactBuiltin{gid}
+@MmuxDefineTypeComparisonExactBuiltin{wchar}
+@MmuxDefineTypeComparisonExactBuiltin{wint}
+
+@c page
+@node comparison approximate
+@section Approximate comparison builtins
+
+
+@menu
+* comparison approximate absmargin::  Absolute margin criterion.
+* comparison approximate relepsilon:: Relative epsilon criterion.
+@end menu
+
+@c page
+@node comparison approximate absmargin
+@subsection Absolute margin criterion
+
+
+To compare two floating--point numbers with the criterion of the absolute margin, we do:
+
+@example
+function doit () @{
+    declare -r ABSOLUTE_MARGIN_FLOAT='0.1'
+
+    mmux_float_equal_absmargin '1.0' '1.02'       @result{} 0
+    mmux_float_equal_absmargin '1.0' '1.3'        @result{} 1
+@}
+@end example
+
+
+@deffn Builtin mmux_float_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_double_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_ldouble_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexd_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexld_equal_absmargin @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between operands of the named type; when the comparison predicate
+is satisfied: return true; otherwise return false.
+
+The argument @varo{OP} is the only mandatory one; when only this argument is present: the return
+value is true.
+
+When multiple operands are present: @varo{OP} is compared with all the other operands in turn.  When
+comparing real numbers, the predicate is:
+
+@example
+abs(@varo{OP} - @var{OP}) <= abs(@var{MARGIN})
+@end example
+
+@noindent
+when comparing complex numbers, the predicate is:
+
+@example
+abs(@varo{OP_RE} - @var{OP_RE}) <= abs(@var{MARGIN_RE}) &&
+abs(@varo{OP_IM} - @var{OP_IM}) <= abs(@var{MARGIN_IM})
+@end example
+
+@noindent
+where: @var{MARGIN} is the value read from the shell variable @env{ABSOLUTE_MARGIN_STEM};
+@code{STEM} is the stem of the numerical type; @varo{OP_RE}, @var{OP_RE}, @var{MARGIN_RE} are the
+real parts; @varo{OP_IM}, @var{OP_IM}, @var{MARGIN_IM} are the imaginary parts.
+@end deffn
+
+
+@defvr {Shell Variable} ABSOLUTE_MARGIN_FLOAT
+@defvrx {Shell Variable} ABSOLUTE_MARGIN_DOUBLE
+@defvrx {Shell Variable} ABSOLUTE_MARGIN_LDOUBLE
+@defvrx {Shell Variable} ABSOLUTE_MARGIN_COMPLEXF
+@defvrx {Shell Variable} ABSOLUTE_MARGIN_COMPLEXD
+@defvrx {Shell Variable} ABSOLUTE_MARGIN_COMPLEXLD
+Shell variables used to select the margin for the equality with absolute margin builtins.  Each
+variable is used to select a margin for the named numerical type.
+
+For real numbers: the variable holds a real number being the margin.
+
+For complex numbers: the variable holds a complex number; its real part is the margin for comparison
+of real parts; its imaginary part is the margin for comparison of imaginary parts.
+
+When a shell variable is not set: the default margin for real numbers is @samp{1e-6}; the default
+margin for complex numbers is @samp{(1e-6)+i*(1e-6)}.
+@end defvr
+
+@c page
+@node comparison approximate relepsilon
+@subsection Relative epsilon criterion
+
+
+To compare two floating--point numbers with the criterion of the relative epsilon, we do:
+
+@example
+function doit () @{
+    declare -r RELATIVE_EPSILON_FLOAT='0.1'
+
+    mmux_float_equal_relepsilon '1.0' '1.02'       @result{} 0
+    mmux_float_equal_relepsilon '1.0' '1.3'        @result{} 1
+@}
+@end example
+
+
+@deffn Builtin mmux_float_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_double_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_ldouble_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexd_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexld_equal_relepsilon @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between operands of the named type; when the comparison predicate
+is satisfied: return true; otherwise return false.
+
+The argument @varo{OP} is the only mandatory one; when only this argument is present: the return
+value is true.
+
+When multiple operands are present: @varo{OP} is compared with all the other operands in turn.  When
+comparing real numbers, the predicate is:
+
+@example
+abs(@varo{OP} - @var{OP}) <= (@var{EPSILON} * max(abs(@varo{OP}), abs(@var{OP})))
+@end example
+
+@noindent
+when comparing complex numbers, the predicate is:
+
+@example
+abs(@varo{OP_RE} - @var{OP_RE}) <= (@var{EPSILON_RE} * max(abs(@varo{OP_RE}), abs(@var{OP_RE}))) &&
+abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * max(abs(@varo{OP_IM}), abs(@var{OP_IM})))
+@end example
+
+@noindent
+where: @var{EPSILON} is the value read from the shell variable @env{RELATIVE_EPSILON_STEM};
+@code{STEM} is the stem of the numerical type; @varo{OP_RE}, @var{OP_RE}, @var{EPSILON_RE} are the
+real parts; @varo{OP_IM}, @var{OP_IM}, @var{EPSILON_IM} are the imaginary parts.
+@end deffn
+
+
+@defvr {Shell Variable} RELATIVE_EPSILON_FLOAT
+@defvrx {Shell Variable} RELATIVE_EPSILON_DOUBLE
+@defvrx {Shell Variable} RELATIVE_EPSILON_LDOUBLE
+@defvrx {Shell Variable} RELATIVE_EPSILON_COMPLEXF
+@defvrx {Shell Variable} RELATIVE_EPSILON_COMPLEXD
+@defvrx {Shell Variable} RELATIVE_EPSILON_COMPLEXLD
+Shell variables used to select the epsilon for the equality with relative epsilon.  Each variable is
+used to select an epsilon for the named numerical type.
+
+For real numbers: the variable holds a real number being the epsilon.
+
+For complex numbers: the variable holds a complex number; its real part is the epsilon for
+comparison of real parts; its imaginary part is the epsilon for comparison of imaginary parts.
+
+When a shell variable is not set: the default epsilon for real numbers is @samp{1e-6}; the default
+epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
+@end defvr
 
 @c page
 @node arithmetics
@@ -3173,7 +3333,7 @@ if (0 > required_nbytes) @{
 
 
 @macro MmuxDefineCFunctionSprinter{STEM}
-@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, size_t @var{LEN}, mmux_libc_\STEM\_t @var{VALUE})
+@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, int @var{LEN}, mmux_libc_\STEM\_t @var{VALUE})
 @deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (mmux_libc_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}

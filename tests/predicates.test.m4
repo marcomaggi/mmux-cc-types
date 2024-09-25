@@ -2712,97 +2712,285 @@ function predicates-is-nan-ldouble-1.7 () {
 }
 
 
-#### type variables: complex
+#### type variables: complexf
 
-function predicates-is-zero-complex-1.1 () {
-    mmux_complex_is_zero '(0)+i*(0)'
+function predicates-is-zero-complexf-1.1 () {
+    mmux_complexf_is_zero '(0)+i*(0)'
 }
-function predicates-is-zero-complex-1.2 () {
-    ! mmux_complex_is_zero '(1.2)+i*(3.4)'
+function predicates-is-zero-complexf-1.2 () {
+    ! mmux_complexf_is_zero '(1.2)+i*(3.4)'
 }
-function predicates-is-zero-complex-1.3 () {
-    ! mmux_complex_is_zero '(0.0)+i*(3.4)'
+function predicates-is-zero-complexf-1.3 () {
+    ! mmux_complexf_is_zero '(0.0)+i*(3.4)'
 }
-function predicates-is-zero-complex-1.4 () {
-    ! mmux_complex_is_zero '(1.2)+i*(0.0)'
+function predicates-is-zero-complexf-1.4 () {
+    ! mmux_complexf_is_zero '(1.2)+i*(0.0)'
 }
-function predicates-is-zero-complex-1.5 () {
-    mmux_complex_is_zero '(0.0)+i*(0.0)'
+function predicates-is-zero-complexf-1.5 () {
+    mmux_complexf_is_zero '(0.0)+i*(0.0)'
 }
-function predicates-is-zero-complex-1.6 () {
-    mmux_complex_is_zero '(-0.0)+i*(+0.0)'
+function predicates-is-zero-complexf-1.6 () {
+    mmux_complexf_is_zero '(-0.0)+i*(+0.0)'
 }
-function predicates-is-zero-complex-1.7 () {
-    mmux_complex_is_zero '(-0.0)+i*(-0.0)'
+function predicates-is-zero-complexf-1.7 () {
+    mmux_complexf_is_zero '(-0.0)+i*(-0.0)'
 }
-function predicates-is-zero-complex-1.8 () {
-    mmux_complex_is_zero '(+0.0)+i*(-0.0)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-positive-complex-1.1 () {
-    ! mmux_complex_is_positive '(0)+i*(0)'
-}
-function predicates-is-positive-complex-1.2 () {
-    ! mmux_complex_is_positive '(1.2)+i*(3.4)'
+function predicates-is-zero-complexf-1.8 () {
+    mmux_complexf_is_zero '(+0.0)+i*(-0.0)'
 }
 
 ### ------------------------------------------------------------------------
 
-function predicates-is-negative-complex-1.1 () {
-    ! mmux_complex_is_negative '(0)+i*(0)'
+function predicates-is-positive-complexf-1.1 () {
+    ! mmux_complexf_is_positive '(0)+i*(0)'
 }
-function predicates-is-negative-complex-1.2 () {
-    ! mmux_complex_is_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-positive-complex-1.1 () {
-    ! mmux_complex_is_non_positive '(0)+i*(0)'
-}
-function predicates-is-non-positive-complex-1.2 () {
-    ! mmux_complex_is_non_positive '(1.2)+i*(3.4)'
+function predicates-is-positive-complexf-1.2 () {
+    ! mmux_complexf_is_positive '(1.2)+i*(3.4)'
 }
 
 ### ------------------------------------------------------------------------
 
-function predicates-is-non-negative-complex-1.1 () {
-    ! mmux_complex_is_non_negative '(0)+i*(0)'
+function predicates-is-negative-complexf-1.1 () {
+    ! mmux_complexf_is_negative '(0)+i*(0)'
 }
-function predicates-is-non-negative-complex-1.2 () {
-    ! mmux_complex_is_non_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-infinite-complex-1.1 () {
-    ! mmux_complex_is_infinite '(1.2)+i*(3.4)'
-}
-function predicates-is-infinite-complex-1.2 () {
-    mmux_complex_is_infinite '(+inf)+i*(3.4)'
-}
-function predicates-is-infinite-complex-1.3 () {
-    mmux_complex_is_infinite '(+inf)+i*(+inf)'
-}
-function predicates-is-infinite-complex-1.4 () {
-    mmux_complex_is_infinite '(1.2)+i*(+inf)'
+function predicates-is-negative-complexf-1.2 () {
+    ! mmux_complexf_is_negative '(1.2)+i*(3.4)'
 }
 
 ### ------------------------------------------------------------------------
 
-function predicates-is-nan-complex-1.1 () {
-    ! mmux_complex_is_nan '(1.2)+i*(3.4)'
+function predicates-is-non-positive-complexf-1.1 () {
+    ! mmux_complexf_is_non_positive '(0)+i*(0)'
 }
-function predicates-is-nan-complex-1.2 () {
-    mmux_complex_is_nan '(nan)+i*(3.4)'
+function predicates-is-non-positive-complexf-1.2 () {
+    ! mmux_complexf_is_non_positive '(1.2)+i*(3.4)'
 }
-function predicates-is-nan-complex-1.3 () {
-    mmux_complex_is_nan '(nan)+i*(nan)'
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-negative-complexf-1.1 () {
+    ! mmux_complexf_is_non_negative '(0)+i*(0)'
 }
-function predicates-is-nan-complex-1.4 () {
-    mmux_complex_is_nan '(1.2)+i*(nan)'
+function predicates-is-non-negative-complexf-1.2 () {
+    ! mmux_complexf_is_non_negative '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-infinite-complexf-1.1 () {
+    ! mmux_complexf_is_infinite '(1.2)+i*(3.4)'
+}
+function predicates-is-infinite-complexf-1.2 () {
+    mmux_complexf_is_infinite '(+inf)+i*(3.4)'
+}
+function predicates-is-infinite-complexf-1.3 () {
+    mmux_complexf_is_infinite '(+inf)+i*(+inf)'
+}
+function predicates-is-infinite-complexf-1.4 () {
+    mmux_complexf_is_infinite '(1.2)+i*(+inf)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-nan-complexf-1.1 () {
+    ! mmux_complexf_is_nan '(1.2)+i*(3.4)'
+}
+function predicates-is-nan-complexf-1.2 () {
+    mmux_complexf_is_nan '(nan)+i*(3.4)'
+}
+function predicates-is-nan-complexf-1.3 () {
+    mmux_complexf_is_nan '(nan)+i*(nan)'
+}
+function predicates-is-nan-complexf-1.4 () {
+    mmux_complexf_is_nan '(1.2)+i*(nan)'
+}
+
+
+#### type variables: complexd
+
+function predicates-is-zero-complexd-1.1 () {
+    mmux_complexd_is_zero '(0)+i*(0)'
+}
+function predicates-is-zero-complexd-1.2 () {
+    ! mmux_complexd_is_zero '(1.2)+i*(3.4)'
+}
+function predicates-is-zero-complexd-1.3 () {
+    ! mmux_complexd_is_zero '(0.0)+i*(3.4)'
+}
+function predicates-is-zero-complexd-1.4 () {
+    ! mmux_complexd_is_zero '(1.2)+i*(0.0)'
+}
+function predicates-is-zero-complexd-1.5 () {
+    mmux_complexd_is_zero '(0.0)+i*(0.0)'
+}
+function predicates-is-zero-complexd-1.6 () {
+    mmux_complexd_is_zero '(-0.0)+i*(+0.0)'
+}
+function predicates-is-zero-complexd-1.7 () {
+    mmux_complexd_is_zero '(-0.0)+i*(-0.0)'
+}
+function predicates-is-zero-complexd-1.8 () {
+    mmux_complexd_is_zero '(+0.0)+i*(-0.0)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-positive-complexd-1.1 () {
+    ! mmux_complexd_is_positive '(0)+i*(0)'
+}
+function predicates-is-positive-complexd-1.2 () {
+    ! mmux_complexd_is_positive '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-negative-complexd-1.1 () {
+    ! mmux_complexd_is_negative '(0)+i*(0)'
+}
+function predicates-is-negative-complexd-1.2 () {
+    ! mmux_complexd_is_negative '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-positive-complexd-1.1 () {
+    ! mmux_complexd_is_non_positive '(0)+i*(0)'
+}
+function predicates-is-non-positive-complexd-1.2 () {
+    ! mmux_complexd_is_non_positive '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-negative-complexd-1.1 () {
+    ! mmux_complexd_is_non_negative '(0)+i*(0)'
+}
+function predicates-is-non-negative-complexd-1.2 () {
+    ! mmux_complexd_is_non_negative '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-infinite-complexd-1.1 () {
+    ! mmux_complexd_is_infinite '(1.2)+i*(3.4)'
+}
+function predicates-is-infinite-complexd-1.2 () {
+    mmux_complexd_is_infinite '(+inf)+i*(3.4)'
+}
+function predicates-is-infinite-complexd-1.3 () {
+    mmux_complexd_is_infinite '(+inf)+i*(+inf)'
+}
+function predicates-is-infinite-complexd-1.4 () {
+    mmux_complexd_is_infinite '(1.2)+i*(+inf)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-nan-complexd-1.1 () {
+    ! mmux_complexd_is_nan '(1.2)+i*(3.4)'
+}
+function predicates-is-nan-complexd-1.2 () {
+    mmux_complexd_is_nan '(nan)+i*(3.4)'
+}
+function predicates-is-nan-complexd-1.3 () {
+    mmux_complexd_is_nan '(nan)+i*(nan)'
+}
+function predicates-is-nan-complexd-1.4 () {
+    mmux_complexd_is_nan '(1.2)+i*(nan)'
+}
+
+
+#### type variables: complexld
+
+function predicates-is-zero-complexld-1.1 () {
+    mmux_complexld_is_zero '(0)+i*(0)'
+}
+function predicates-is-zero-complexld-1.2 () {
+    ! mmux_complexld_is_zero '(1.2)+i*(3.4)'
+}
+function predicates-is-zero-complexld-1.3 () {
+    ! mmux_complexld_is_zero '(0.0)+i*(3.4)'
+}
+function predicates-is-zero-complexld-1.4 () {
+    ! mmux_complexld_is_zero '(1.2)+i*(0.0)'
+}
+function predicates-is-zero-complexld-1.5 () {
+    mmux_complexld_is_zero '(0.0)+i*(0.0)'
+}
+function predicates-is-zero-complexld-1.6 () {
+    mmux_complexld_is_zero '(-0.0)+i*(+0.0)'
+}
+function predicates-is-zero-complexld-1.7 () {
+    mmux_complexld_is_zero '(-0.0)+i*(-0.0)'
+}
+function predicates-is-zero-complexld-1.8 () {
+    mmux_complexld_is_zero '(+0.0)+i*(-0.0)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-positive-complexld-1.1 () {
+    ! mmux_complexld_is_positive '(0)+i*(0)'
+}
+function predicates-is-positive-complexld-1.2 () {
+    ! mmux_complexld_is_positive '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-negative-complexld-1.1 () {
+    ! mmux_complexld_is_negative '(0)+i*(0)'
+}
+function predicates-is-negative-complexld-1.2 () {
+    ! mmux_complexld_is_negative '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-positive-complexld-1.1 () {
+    ! mmux_complexld_is_non_positive '(0)+i*(0)'
+}
+function predicates-is-non-positive-complexld-1.2 () {
+    ! mmux_complexld_is_non_positive '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-negative-complexld-1.1 () {
+    ! mmux_complexld_is_non_negative '(0)+i*(0)'
+}
+function predicates-is-non-negative-complexld-1.2 () {
+    ! mmux_complexld_is_non_negative '(1.2)+i*(3.4)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-infinite-complexld-1.1 () {
+    ! mmux_complexld_is_infinite '(1.2)+i*(3.4)'
+}
+function predicates-is-infinite-complexld-1.2 () {
+    mmux_complexld_is_infinite '(+inf)+i*(3.4)'
+}
+function predicates-is-infinite-complexld-1.3 () {
+    mmux_complexld_is_infinite '(+inf)+i*(+inf)'
+}
+function predicates-is-infinite-complexld-1.4 () {
+    mmux_complexld_is_infinite '(1.2)+i*(+inf)'
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-nan-complexld-1.1 () {
+    ! mmux_complexld_is_nan '(1.2)+i*(3.4)'
+}
+function predicates-is-nan-complexld-1.2 () {
+    mmux_complexld_is_nan '(nan)+i*(3.4)'
+}
+function predicates-is-nan-complexld-1.3 () {
+    mmux_complexld_is_nan '(nan)+i*(nan)'
+}
+function predicates-is-nan-complexld-1.4 () {
+    mmux_complexld_is_nan '(1.2)+i*(nan)'
 }
 
 

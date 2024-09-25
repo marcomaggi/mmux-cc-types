@@ -49,6 +49,16 @@ mbfl_linker_source_library_by_stem(tests)
 source "$MMUX_LIBRARY"
 
 
+#### helpers and debugging
+
+if true
+then
+    printf 'mmux_libc_SIZEOF_COMPLEXF=%s\n'  WW(mmux_libc_SIZEOF_COMPLEXF)  >&2
+    printf 'mmux_libc_SIZEOF_COMPLEXD=%s\n'  WW(mmux_libc_SIZEOF_COMPLEXD)  >&2
+    printf 'mmux_libc_SIZEOF_COMPLEXLD=%s\n' WW(mmux_libc_SIZEOF_COMPLEXLD) >&2
+fi
+
+
 #### array accessors and mutators: pointer
 
 function arrays-pointer-1.1 () {
@@ -894,11 +904,11 @@ function arrays-ldouble-1.2 () {
     mmux_libc_calloc PTR 2048 1
     {
 	mmux_ldouble_array_set $PTR  0 1.23
-	mmux_ldouble_array_set $PTR 32 4.56
+	mmux_ldouble_array_set $PTR 4 4.56
 	mmux_ldouble_array_set $PTR 64 7.89
 
 	mmux_ldouble_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_ldouble_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_ldouble_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
@@ -914,11 +924,11 @@ function arrays-ldouble-1.3 () {
     mmux_libc_calloc PTR 2048 1
     {
 	mmux_ldouble_array_set $PTR  0 1.23
-	mmux_ldouble_array_set $PTR 32 4.56
+	mmux_ldouble_array_set $PTR 4 4.56
 	mmux_ldouble_array_set $PTR 64 7.89
 	mmux_libc_realloc PTR $PTR 2048
 	mmux_ldouble_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_ldouble_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_ldouble_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_ldouble_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
@@ -929,32 +939,87 @@ function arrays-ldouble-1.3 () {
 }
 
 
-#### array accessors and mutators: complex
+#### array accessors and mutators: complexf
 
-function arrays-complex-1.1 () {
+function arrays-complexf-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR 2048 1
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
     {
-	mmux_complex_array_set $PTR 0 '(1.2)+i*(3.4)'
-	mmux_complex_array_ref VALUE $PTR 0
+	mmux_complexf_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexf_array_ref VALUE $PTR 3
+    }
+    mmux_libc_free $PTR
+    dotest-equal '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function arrays-complexf-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    {
+	mmux_complexf_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexf_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexf_array_set $PTR 5 '(9.0)+i*(1.2)'
+
+	mmux_complexf_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexf_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexf_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    dotest-equal     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function arrays-complexf-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    {
+	mmux_complexf_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexf_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexf_array_set $PTR 5 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF))
+	mmux_complexf_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexf_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexf_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    dotest-equal     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	dotest-equal '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	dotest-equal '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: complexd
+
+function arrays-complexd-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    {
+	mmux_complexd_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd_array_ref VALUE $PTR 3
     }
     mmux_libc_free $PTR
     dotest-equal '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' QQ(VALUE)
 }
-function arrays-complex-1.2 () {
+function arrays-complexd-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 2048 1
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
     {
-	mmux_complex_array_set $PTR  0 '(1.2)+i*(3.4)'
-	mmux_complex_array_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complex_array_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd_array_set $PTR 5 '(9.0)+i*(1.2)'
 
-	mmux_complex_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_complex_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
-	mmux_complex_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complexd_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
@@ -962,25 +1027,80 @@ function arrays-complex-1.2 () {
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
 }
-function arrays-complex-1.3 () {
+function arrays-complexd-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 2048 1
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
     {
-	mmux_complex_array_set $PTR  0 '(1.2)+i*(3.4)'
-	mmux_complex_array_set $PTR  32 '(5.6)+i*(7.8)'
-	mmux_complex_array_set $PTR 64 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR 2048
-	mmux_complex_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_complex_array_ref VALUE $PTR 32		;VALUES[1]=$VALUE
-	mmux_complex_array_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+	mmux_complexd_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd_array_set $PTR 5 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR $(( 10 * WW(mmux_libc_SIZEOF_COMPLEXD) ))
+	mmux_complexd_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
     }
     mmux_libc_free $PTR
 
     dotest-equal     '(0X1.3333333333333P+0)+i*(0X1.B333333333333P+1)' mbfl_slot_qref(VALUES,0) &&
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
+}
+
+
+#### array accessors and mutators: complexld
+
+function arrays-complexld-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    {
+	mmux_complexld_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexld_array_ref VALUE $PTR 3
+    }
+    mmux_libc_free $PTR
+    mmux_complexld_equal '(1.2)+i*(3.4)' QQ(VALUE)
+}
+function arrays-complexld-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    {
+	mmux_complexld_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexld_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexld_array_set $PTR 5 '(9.0)+i*(1.2)'
+
+	mmux_complexld_array_ref VALUE $PTR 3	;VALUES[0]=$VALUE
+	mmux_complexld_array_ref VALUE $PTR 4	;VALUES[1]=$VALUE
+	mmux_complexld_array_ref VALUE $PTR 5	;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexld_equal     '(1.2)+i*(3.4)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexld_equal '(5.6)+i*(7.8)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexld_equal '(9.0)+i*(1.2)' mbfl_slot_qref(VALUES,2)
+}
+function arrays-complexld-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    {
+	mmux_complexld_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexld_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexld_array_set $PTR 5 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR $(( 10 * WW(mmux_libc_SIZEOF_COMPLEXLD) ))
+	mmux_complexld_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexld_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexld_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexld_equal     '(1.2)+i*(3.4)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexld_equal '(5.6)+i*(7.8)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexld_equal '(9.0)+i*(1.2)' mbfl_slot_qref(VALUES,2)
 }
 
 

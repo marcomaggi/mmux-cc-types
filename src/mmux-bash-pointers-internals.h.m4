@@ -142,6 +142,11 @@
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
+#undef  MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN
+#define MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN	1e-6
+
+#undef  MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON
+#define MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON	1e-6
 
 
 /** --------------------------------------------------------------------
