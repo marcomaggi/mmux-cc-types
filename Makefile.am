@@ -78,36 +78,36 @@ install-html-local:
 #### libraries
 
 EXTRA_DIST	+= \
-	src/mmux-bash-pointers.h.m4		\
-	src/mmux-bash-pointers-internals.h.m4	\
-	src/mmux-bash-pointers-accessors.c.m4	\
-	src/mmux-bash-pointers-arithmetics.c.m4	\
-	src/mmux-bash-pointers-bitwise.c.m4	\
-	src/mmux-bash-pointers-comparison.c.m4	\
-	src/mmux-bash-pointers-errors.c.m4	\
-	src/mmux-bash-pointers-library.c.m4	\
-	src/mmux-bash-pointers-memory.c.m4	\
-	src/mmux-bash-pointers-mutators.c.m4	\
-	src/mmux-bash-pointers-parsers.c.m4	\
-	src/mmux-bash-pointers-predicates.c.m4	\
-	src/mmux-bash-pointers-sprinters.c.m4	\
-	src/mmux-bash-pointers-types.c.m4
+	src/mmux-bash-pointers.h.m4			\
+	src/mmux-bash-pointers-internals.h.m4		\
+	src/mmux-bash-pointers-accessors.c.m4		\
+	src/mmux-bash-pointers-arithmetics.c.m4		\
+	src/mmux-bash-pointers-bitwise.c.m4		\
+	src/mmux-bash-pointers-comparison.c.m4		\
+	src/mmux-bash-pointers-errors.c.m4		\
+	src/mmux-bash-pointers-library.c.m4		\
+	src/mmux-bash-pointers-memory.c.m4		\
+	src/mmux-bash-pointers-mutators.c.m4		\
+	src/mmux-bash-pointers-parsers.c.m4		\
+	src/mmux-bash-pointers-predicates.c.m4		\
+	src/mmux-bash-pointers-sprinters.c.m4		\
+	src/mmux-bash-pointers-type-functions.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
-	src/mmux-bash-pointers.h		\
-	src/mmux-bash-pointers-internals.h	\
-	src/mmux-bash-pointers-accessors.c	\
-	src/mmux-bash-pointers-arithmetics.c	\
-	src/mmux-bash-pointers-bitwise.c	\
-	src/mmux-bash-pointers-comparison.c	\
-	src/mmux-bash-pointers-errors.c		\
-	src/mmux-bash-pointers-library.c	\
-	src/mmux-bash-pointers-memory.c		\
-	src/mmux-bash-pointers-mutators.c	\
-	src/mmux-bash-pointers-parsers.c	\
-	src/mmux-bash-pointers-predicates.c	\
-	src/mmux-bash-pointers-sprinters.c	\
-	src/mmux-bash-pointers-types.c
+	src/mmux-bash-pointers.h			\
+	src/mmux-bash-pointers-internals.h		\
+	src/mmux-bash-pointers-accessors.c		\
+	src/mmux-bash-pointers-arithmetics.c		\
+	src/mmux-bash-pointers-bitwise.c		\
+	src/mmux-bash-pointers-comparison.c		\
+	src/mmux-bash-pointers-errors.c			\
+	src/mmux-bash-pointers-library.c		\
+	src/mmux-bash-pointers-memory.c			\
+	src/mmux-bash-pointers-mutators.c		\
+	src/mmux-bash-pointers-parsers.c		\
+	src/mmux-bash-pointers-predicates.c		\
+	src/mmux-bash-pointers-sprinters.c		\
+	src/mmux-bash-pointers-type-functions.c
 
 MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES = \
 	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
@@ -129,21 +129,21 @@ lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
-libmmux_bash_pointers_la_SOURCES	=	\
-	src/mmux-bash-pointers.h		\
-	src/mmux-bash-pointers-internals.h	\
-	src/mmux-bash-pointers-accessors.c	\
-	src/mmux-bash-pointers-arithmetics.c	\
-	src/mmux-bash-pointers-bitwise.c	\
-	src/mmux-bash-pointers-comparison.c	\
-	src/mmux-bash-pointers-errors.c		\
-	src/mmux-bash-pointers-library.c	\
-	src/mmux-bash-pointers-memory.c		\
-	src/mmux-bash-pointers-mutators.c	\
-	src/mmux-bash-pointers-parsers.c	\
-	src/mmux-bash-pointers-predicates.c	\
-	src/mmux-bash-pointers-sprinters.c	\
-	src/mmux-bash-pointers-types.c
+libmmux_bash_pointers_la_SOURCES	= \
+	src/mmux-bash-pointers.h			\
+	src/mmux-bash-pointers-internals.h		\
+	src/mmux-bash-pointers-accessors.c		\
+	src/mmux-bash-pointers-arithmetics.c		\
+	src/mmux-bash-pointers-bitwise.c		\
+	src/mmux-bash-pointers-comparison.c		\
+	src/mmux-bash-pointers-errors.c			\
+	src/mmux-bash-pointers-library.c		\
+	src/mmux-bash-pointers-memory.c			\
+	src/mmux-bash-pointers-mutators.c		\
+	src/mmux-bash-pointers-parsers.c		\
+	src/mmux-bash-pointers-predicates.c		\
+	src/mmux-bash-pointers-sprinters.c		\
+	src/mmux-bash-pointers-type-functions.c
 
 .PHONY: library
 
