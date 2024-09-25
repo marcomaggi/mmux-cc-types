@@ -88,13 +88,13 @@ function mmux_bash_pointers_library_load () {
 	{
 	    mmux_bash_pointers_library_define_builtin 'mmux_pointer_add'
 
-	    declare -ra FLOAT_ARITHMETICS_OPS=(add sub mul div neg)
+	    declare -ra FLOAT_ARITHMETICS_OPS=(add sub mul div neg inv)
 
 	    # Here  we  start from  1,  so  we  skip "pointer"  which  does  not implement  all  the
 	    # arithmetics operations.
 	    for ((IDX=1; IDX < ${#INTEGER_STEMS[@]}; ++IDX))
 	    do
-		for ITEM in add sub mul div mod neg
+		for ITEM in add sub mul div mod neg inv
 		do
 		    printf -v NAME  'mmux_%s_%s' "${INTEGER_STEMS[$IDX]}" "$ITEM"
 		    mmux_bash_pointers_library_define_builtin "$NAME"
@@ -103,7 +103,7 @@ function mmux_bash_pointers_library_load () {
 
 	    for STEM in float double ldouble complexf complexd complexld
 	    do
-		for ITEM in add sub mul div neg
+		for ITEM in add sub mul div neg inv
 		do
 		    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
 		    mmux_bash_pointers_library_define_builtin "$NAME"

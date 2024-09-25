@@ -218,7 +218,37 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
     [[[(3 == argc)]]],
     [[["mmux_$1_neg ROPVAR OP"]]],
     [[["Compute the negation of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmux_$1_inv_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_$1_inv"
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  mmux_libc_$1_t	op;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+
+  op = 1 / op;
+
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], op);
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return EXECUTION_FAILURE;
 ]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_inv]]],
+    [[[(3 == argc)]]],
+    [[["mmux_$1_inv ROPVAR OP"]]],
+    [[["Compute the iverse of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+]]])
+
+/* ------------------------------------------------------------------ */
 
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[schar]]])
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uchar]]])

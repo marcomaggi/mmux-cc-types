@@ -486,8 +486,7 @@ m4_define([[[MMUX_MARGIN_VARNAME]]],[[["ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"]
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   mmux_libc_$1_t	margin = mmux_bash_pointers_rectangular_$1(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN,
-								      MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN);
-  SHELL_VAR *		margin_shell_variable;
+								   MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN);
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
@@ -495,12 +494,16 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
   }
 
-  margin_shell_variable = find_variable(MMUX_MARGIN_VARNAME);
-  if (margin_shell_variable && var_isset(margin_shell_variable)) {
-    rv = mmux_bash_pointers_parse_$1(&margin, value_cell(margin_shell_variable), MMUX_BUILTIN_NAME);
-    /* FIXME Should warn  that the error is in the  margin variable. (Marco Maggi;
-       Sep 25, 2024) */
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+  /* Read  the margin  from the  shell variable  "ABSOLUTE_MARGIN_STEM", if  any.  If
+     there is no such variable: just use the default value. */
+  {
+    char const *	margin_string;
+
+    rv = mmux_bash_pointers_get_shell_variable_string_value(&margin_string, MMUX_MARGIN_VARNAME, NULL);
+    if (EXECUTION_SUCCESS == rv) {
+      rv = mmux_bash_pointers_parse_$1(&margin, margin_string, MMUX_BUILTIN_NAME);
+      if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+    }
   }
 
   for (int i = 2; i < argc; ++i) {
@@ -540,8 +543,7 @@ m4_define([[[MMUX_EPSILON_VARNAME]]],[[["RELATIVE_EPSILON_[[[]]]mmux_toupper($1)
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   mmux_libc_$1_t	epsilon = mmux_bash_pointers_rectangular_$1(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON,
-								      MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON);
-  SHELL_VAR *		epsilon_shell_variable;
+								    MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON);
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
@@ -549,12 +551,16 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
   }
 
-  epsilon_shell_variable = find_variable(MMUX_EPSILON_VARNAME);
-  if (epsilon_shell_variable && var_isset(epsilon_shell_variable)) {
-    rv = mmux_bash_pointers_parse_$1(&epsilon, value_cell(epsilon_shell_variable), MMUX_BUILTIN_NAME);
-    /* FIXME Should warn  that the error is in the  epsilon variable. (Marco Maggi;
-       Sep 25, 2024) */
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+  /* Read the  epsilon from the  shell variable "ABSOLUTE_EPSILON_STEM", if  any.  If
+     there is no such variable: just use the default value. */
+  {
+    char const *	epsilon_string;
+
+    rv = mmux_bash_pointers_get_shell_variable_string_value(&epsilon_string, MMUX_EPSILON_VARNAME, NULL);
+    if (EXECUTION_SUCCESS == rv) {
+      rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
+      if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+    }
   }
 
   for (int i = 2; i < argc; ++i) {

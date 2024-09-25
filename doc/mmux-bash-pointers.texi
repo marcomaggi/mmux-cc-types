@@ -1909,6 +1909,7 @@ bitwise operations are implemented for every supported data type.
 * arithmetics division::        Division builtins.
 * arithmetics remainder::       Remainder builtins.
 * arithmetics negation::        Negation builtins.
+* arithmetics inversion::       Inversion builtins.
 @end menu
 
 @c page
@@ -2332,6 +2333,72 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{gid}
 @MmuxDefineTypeNegationBuiltin{wchar}
 @MmuxDefineTypeNegationBuiltin{wint}
+
+@c page
+@node arithmetics inversion
+@section Inversion builtins
+
+
+For the following builtins, the inversion operation is as follows:
+
+@example
+@var{ROP} = 1 / @var{OP}
+@end example
+
+All the builtins perform the inversion of the operand @var{OP}, then store a string representation of
+the result in the variable @var{ROPVAR}; when successful: return true, otherwise return false and
+set the shell variable @code{ERRNO} to the string representation of an exact integer, itself
+representing an @code{errno} error code.
+
+The argument @var{OP} must be a string representation of a value of the specific builtin type.
+
+
+@macro MmuxDefineTypeInversionBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_inv @var{ROPVAR} @var{OP}
+Perform the inversion of a value of type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeInversionBuiltin{schar}
+@MmuxDefineTypeInversionBuiltin{uchar}
+@MmuxDefineTypeInversionBuiltin{sshort}
+@MmuxDefineTypeInversionBuiltin{ushort}
+@MmuxDefineTypeInversionBuiltin{sint}
+@MmuxDefineTypeInversionBuiltin{uint}
+@MmuxDefineTypeInversionBuiltin{slong}
+@MmuxDefineTypeInversionBuiltin{ulong}
+@MmuxDefineTypeInversionBuiltin{sllong}
+@MmuxDefineTypeInversionBuiltin{ullong}
+@MmuxDefineTypeInversionBuiltin{float}
+@MmuxDefineTypeInversionBuiltin{double}
+@MmuxDefineTypeInversionBuiltin{ldouble}
+@MmuxDefineTypeInversionBuiltin{complexf}
+@MmuxDefineTypeInversionBuiltin{complexd}
+@MmuxDefineTypeInversionBuiltin{complexld}
+
+@MmuxDefineTypeInversionBuiltin{sint8}
+@MmuxDefineTypeInversionBuiltin{uint8}
+@MmuxDefineTypeInversionBuiltin{sint16}
+@MmuxDefineTypeInversionBuiltin{uint16}
+@MmuxDefineTypeInversionBuiltin{sint32}
+@MmuxDefineTypeInversionBuiltin{uint32}
+@MmuxDefineTypeInversionBuiltin{sint64}
+@MmuxDefineTypeInversionBuiltin{uint64}
+
+@MmuxDefineTypeInversionBuiltin{ssize}
+@MmuxDefineTypeInversionBuiltin{usize}
+@MmuxDefineTypeInversionBuiltin{sintmax}
+@MmuxDefineTypeInversionBuiltin{uintmax}
+@MmuxDefineTypeInversionBuiltin{sintptr}
+@MmuxDefineTypeInversionBuiltin{uintptr}
+@MmuxDefineTypeInversionBuiltin{mode}
+@MmuxDefineTypeInversionBuiltin{off}
+@MmuxDefineTypeInversionBuiltin{pid}
+@MmuxDefineTypeInversionBuiltin{uid}
+@MmuxDefineTypeInversionBuiltin{gid}
+@MmuxDefineTypeInversionBuiltin{wchar}
+@MmuxDefineTypeInversionBuiltin{wint}
 
 @c page
 @node bitwise
