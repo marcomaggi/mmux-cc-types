@@ -343,30 +343,17 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
   }
 
+  /* Read  the margin  from the  shell variable  "ABSOLUTE_MARGIN_STEM", if  any.  If
+     there is no such variable: just use the default value. */
   {
-    SHELL_VAR *		margin_shell_variable = find_variable(MMUX_MARGIN_VARNAME);
+    char const *	margin_string;
 
-    if (0) {
-      if (margin_shell_variable) {
-	fprintf(stderr, "%s: found margin shell variable: %s\n", __func__, MMUX_MARGIN_VARNAME);
-      } else {
-	fprintf(stderr, "%s: NOT found margin shell variable: %s\n", __func__, MMUX_MARGIN_VARNAME);
-      }
-    }
-
-    /* FIXME Should  also check that  the variable is not  an array?  Or  a function?
-       (Marco Maggi; Sep 25, 2024) */
-    if (margin_shell_variable && var_isset(margin_shell_variable)) {
-      char const * const	margin_asciiz = get_variable_value(margin_shell_variable);
-
-      rv = mmux_bash_pointers_parse_$1(&margin, margin_asciiz, MMUX_BUILTIN_NAME);
-      /* FIXME Should warn  that the error is in the  margin variable. (Marco Maggi;
-	 Sep 25, 2024) */
+    rv = mmux_bash_pointers_get_shell_variable_string_value(&margin_string, MMUX_MARGIN_VARNAME, NULL);
+    if (EXECUTION_SUCCESS == rv) {
+      rv = mmux_bash_pointers_parse_$1(&margin, margin_string, MMUX_BUILTIN_NAME);
       if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
     }
   }
-
-  if (0) { fprintf(stderr, "%s: margin=%Lf\n", __func__, (long double)margin); }
 
   for (int i = 2; i < argc; ++i) {
     if (! mmux_$1_equal_absmargin(ops[1], ops[i], margin)) {
@@ -412,25 +399,14 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
   }
 
+  /* Read the  epsilon from the  shell variable "ABSOLUTE_EPSILON_STEM", if  any.  If
+     there is no such variable: just use the default value. */
   {
-    SHELL_VAR *		epsilon_shell_variable = find_variable(MMUX_EPSILON_VARNAME);
+    char const *	epsilon_string;
 
-    if (0) {
-      if (epsilon_shell_variable) {
-	fprintf(stderr, "%s: found epsilon shell variable: %s\n", __func__, MMUX_EPSILON_VARNAME);
-      } else {
-	fprintf(stderr, "%s: NOT found epsilon shell variable: %s\n", __func__, MMUX_EPSILON_VARNAME);
-      }
-    }
-
-    /* FIXME Should  also check that  the variable is not  an array?  Or  a function?
-       (Marco Maggi; Sep 25, 2024) */
-    if (epsilon_shell_variable && var_isset(epsilon_shell_variable)) {
-      char const * const	epsilon_asciiz = get_variable_value(epsilon_shell_variable);
-
-      rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_asciiz, MMUX_BUILTIN_NAME);
-      /* FIXME Should warn  that the error is in the  epsilon variable. (Marco Maggi;
-	 Sep 25, 2024) */
+    rv = mmux_bash_pointers_get_shell_variable_string_value(&epsilon_string, MMUX_EPSILON_VARNAME, NULL);
+    if (EXECUTION_SUCCESS == rv) {
+      rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
       if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
     }
   }
