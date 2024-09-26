@@ -35,6 +35,16 @@
  ** ----------------------------------------------------------------- */
 
 int
+mmux_bash_pointers_store_string_in_variable (char const * variable_name, char const * const value)
+{
+  SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+  int		flags = 0;
+
+  v = bind_variable(variable_name, (char *)value, flags);
+  return EXECUTION_SUCCESS;
+}
+
+int
 mmux_bash_pointers_get_shell_variable_string_value (char const ** p_variable_value, char const * const variable_name,
 						    char const * const caller_name)
 {

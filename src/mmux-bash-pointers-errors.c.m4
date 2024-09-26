@@ -47,13 +47,7 @@ mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   errmsg = strerror(errnum);
   if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errmsg);}
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-    int		flags = 0;
-
-    v = bind_variable(argv[1], errmsg, flags);
-    return EXECUTION_SUCCESS;
-  }
+  return mmux_bash_pointers_store_string_in_variable(argv[1], errmsg);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_strerror]]],
     [[[(3 == argc)]]],
@@ -221,13 +215,7 @@ mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
     return EXECUTION_FAILURE;
   }
 
-  {
-    SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-    int		flags = 0;
-
-    v = bind_variable(argv[1], errsym, flags);
-    return EXECUTION_SUCCESS;
-  }
+  return mmux_bash_pointers_store_string_in_variable(argv[1], errsym);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_errno_to_string]]],
     [[[(3 == argc)]]],

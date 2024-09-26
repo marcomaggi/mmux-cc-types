@@ -264,13 +264,11 @@ mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux
 
     rv = mmux_bash_pointers_sprint_$1(str, required_nbytes, value);
     if (EXECUTION_SUCCESS == rv) {
-      SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
-      v = bind_variable(variable_name, str, 0);
+      return mmux_bash_pointers_store_string_in_variable(variable_name, str);
     } else {
       return rv;
     }
   }
-  return EXECUTION_SUCCESS;
 }
 ]]])]]])
 

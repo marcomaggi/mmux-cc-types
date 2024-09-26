@@ -361,6 +361,9 @@ mmux_bash_pointers_decl bool mmux_complexld_equal_relepsilon (mmux_libc_complexl
  ** Bash interface.
  ** ----------------------------------------------------------------- */
 
+mmux_bash_pointers_decl int mmux_bash_pointers_store_string_in_variable (char const * variable_name, char const * const value)
+  __attribute__((__nonnull__(1,2)));
+
 mmux_bash_pointers_decl int mmux_bash_pointers_get_shell_variable_string_value (char const ** p_variable_value,
 										char const * const variable_name,
 										char const * const caller_name)
