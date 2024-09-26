@@ -94,14 +94,14 @@ mmux_bash_pointers_parse_signed_integer (mmux_libc_sintmax_t * p_dest, char cons
   } else {
     /* Success! */
     *p_dest = rv;
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n", caller_name, target_type_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 }
 
 
@@ -166,14 +166,14 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char co
   } else {
     /* Success! */
     *p_dest = rv;
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n", caller_name, target_type_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 }
 
 
@@ -192,25 +192,25 @@ mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_value, const char * s_arg, const
 
   if (len > 2048) {
     fprintf(stderr, "%s: error: invalid argument, string too long (max 2048 chars): \"%s\"\n", caller_name, s_arg);
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   } else {
     int		rv;
 
     rv = parse_$1_parentheses_format(p_value, s_arg, caller_name);
-    if (EXECUTION_SUCCESS == rv) {
+    if (MMUX_SUCCESS == rv) {
       return rv;
     } else {
       mmux_libc_$1_part_t	op_re;
 
       rv = mmux_bash_pointers_parse_$2(&op_re, s_arg, caller_name);
-      if (EXECUTION_SUCCESS == rv) {
+      if (MMUX_SUCCESS == rv) {
 	*p_value = mmux_bash_pointers_rectangular_$1(op_re, 0.0);
-	return EXECUTION_SUCCESS;
+	return MMUX_SUCCESS;
       } else {
 	if (caller_name) {
 	  fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
 	}
-	return EXECUTION_FAILURE;
+	return MMUX_FAILURE;
       }
     }
   }
@@ -238,7 +238,7 @@ parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const
       regerror(rv, &mmux_bash_pointers_complex_rex, error_message, 1024);
       fprintf(stderr, "%s: error: invalid argument, expected complex number (%s): \"%s\"\n", caller_name, error_message, s_arg);
     }
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 
   /* Extract the first matching parentetical subexpression, which represents the real
@@ -270,19 +270,19 @@ parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const
   /* Parse the real part. */
   {
     rv = mmux_bash_pointers_parse_$2(&op_re, s_arg_re, caller_name);
-    if (EXECUTION_FAILURE == rv) { return rv; }
+    if (MMUX_FAILURE == rv) { return rv; }
   }
 
   /* Parse the imaginary part. */
   {
     rv = mmux_bash_pointers_parse_$2(&op_im, s_arg_im, caller_name);
-    if (EXECUTION_FAILURE == rv) { return rv; }
+    if (MMUX_FAILURE == rv) { return rv; }
   }
 
   /* Assemble the complex number. */
   {
     *p_value = mmux_bash_pointers_rectangular_$1(op_re, op_im);
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   }
 }
 ]]])]]])
@@ -305,17 +305,17 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   rv = sscanf(s_arg, $2, p_data);
   if ((EOF != rv) && (1 == rv)) {
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   } else {
     if (caller_name) {
       fprintf(stderr, "%s: error: invalid argument, expected \"$1\": \"%s\"\n", caller_name, s_arg);
     }
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 ]]])
@@ -339,7 +339,7 @@ mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_dest, char const * s_source, cha
   rv = mmux_bash_pointers_parse_signed_integer(&value, s_source,
 					       mmux_bash_pointers_minimum_$1(), mmux_bash_pointers_maximum_$1(),
 					       "$1", caller_name);
-  if (EXECUTION_SUCCESS == rv) {
+  if (MMUX_SUCCESS == rv) {
     *p_dest = (mmux_libc_$1_t)value;
   }
   return rv;
@@ -404,18 +404,18 @@ MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[
   } else {
     /* Success! */
     *p_dest = rv;
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"sllong\": \"%s\"\n", caller_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 
@@ -434,7 +434,7 @@ mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg,
   rv = mmux_bash_pointers_parse_unsigned_integer(&value, s_arg,
 						 (mmux_libc_uintmax_t) mmux_bash_pointers_maximum_$1(),
 						 "$1", caller_name);
-  if (EXECUTION_SUCCESS == rv) {
+  if (MMUX_SUCCESS == rv) {
     *p_value = (mmux_libc_$1_t)value;
   }
   return rv;
@@ -501,18 +501,18 @@ MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[
   } else {
     /* Success! */
     *p_dest = rv;
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"ullong\": \"%s\"\n", caller_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 

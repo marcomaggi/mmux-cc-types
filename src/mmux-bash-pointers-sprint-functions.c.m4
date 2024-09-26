@@ -65,14 +65,14 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
      byte. */
   to_be_written_chars = snprintf(strptr, len, $2, value);
   if (len > to_be_written_chars) {
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   } else {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])}]]])
 
 MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[schar]]],		[[["%hhd"]]])
@@ -125,9 +125,9 @@ mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_libc_pointer_t v
     to_be_written_chars = snprintf(strptr, len, "0x0");
   }
   if (len > to_be_written_chars) {
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   } else {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 }
 
@@ -159,9 +159,9 @@ mmux_bash_pointers_sprint_float (char * strptr, int len, float value)
      byte. */
   to_be_written_chars = snprintf(strptr, len, "%A", (double)value);
   if (len > to_be_written_chars) {
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   } else {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 }
 
@@ -197,9 +197,9 @@ mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
      byte. */
   to_be_written_chars = snprintf(strptr, len, $2, $3 re, $3 im);
   if (len > to_be_written_chars) {
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   } else {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 }
 ]]])]]])

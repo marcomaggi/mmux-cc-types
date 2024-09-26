@@ -66,11 +66,11 @@ mmux_bash_pointers_set_ERRNO (int errnum, char const * const caller_name)
 }
 
 
-/** --------------------------------------------------------------------
- ** Library initialisation.
- ** ----------------------------------------------------------------- */
-
 m4_divert(-1)m4_dnl
+m4_dnl --------------------------------------------------------------------
+m4_dnl Helper macros for library initialisation.
+m4_dnl --------------------------------------------------------------------
+
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[
   mmux_bash_create_global_sint_variable("mmux_libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])", mmux_bash_pointers_sizeof_$1(),
                                         MMUX_BUILTIN_NAME);
@@ -83,7 +83,7 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
   int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
 
   if (0 > requested_nbytes) {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   } else {
     char	str[requested_nbytes];
 
@@ -100,7 +100,7 @@ m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
   int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
 
   if (0 > requested_nbytes) {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   } else {
     char	str[requested_nbytes];
 
@@ -116,11 +116,15 @@ m4_define([[[MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$
 #endif
 ]]])
 
-/* ------------------------------------------------------------------ */
 m4_divert(0)m4_dnl
 
+
+/** --------------------------------------------------------------------
+ ** Library initialisation.
+ ** ----------------------------------------------------------------- */
+
 static int
-mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNUSED)
+mmux_bash_pointers_library_init_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_bash_pointers_library_init"
 {
@@ -142,7 +146,7 @@ mmux_bash_pointers_library_init_builtin (WORD_LIST * list MMUX_BASH_POINTERS_UNU
     int	rv = regcomp(&mmux_bash_pointers_complex_rex, "^(\\([^)]\\+\\))+i\\*(\\([^)]\\+\\))$", 0);
     if (rv) {
       fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
-      return EXECUTION_FAILURE;
+      return MMUX_FAILURE;
     }
   }
 
@@ -407,19 +411,11 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_LONG_DOUBLE]]],[[[MMUX_DEFINE_MINIMUM_VARIABL
     MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE([[[EOWNERDEAD]]]);
     MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE([[[ENOTRECOVERABLE]]]);
   }
-  return EXECUTION_SUCCESS;
+  return MMUX_SUCCESS;
 }
-static char * mmux_bash_pointers_library_init_doc[] = {
-  "Initialise the library.",
-  (char *)NULL
-};
-struct builtin mmux_bash_pointers_library_init_struct = {
-  .name		= "mmux_bash_pointers_library_init",	/* Builtin name */
-  .function	= mmux_bash_pointers_library_init_builtin,	/* Function implementing the builtin */
-  .flags	= BUILTIN_ENABLED,			/* Initial flags for builtin */
-  .long_doc	= mmux_bash_pointers_library_init_doc,	/* Array of long documentation strings. */
-  .short_doc	= "mmux_bash_pointers_library_init",	/* Usage synopsis; becomes short_doc */
-  .handle	= 0					/* Reserved for internal use */
-};
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_library_init]]],
+    [[[(1 == argc)]]],
+    [[["mmux_bash_pointers_library_init"]]],
+    [[["Initialise the library MMUX Bash Pointers."]]])
 
 /* end of file */

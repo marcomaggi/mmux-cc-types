@@ -35,7 +35,7 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[static int
-mmux_$1_is_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_is_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_is_string"
 {
@@ -46,7 +46,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_is_string]]],
@@ -106,7 +106,7 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_STRING_REP_PREDICATE([[[wint]]])
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_ARITHMETIC_PREDICATE]]],[[[
 static int
-mmux_$1_is_$3_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_is_$3_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_is_$3"
 {
@@ -115,17 +115,17 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&value, argv[1], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   if (mmux_$1_is_$3(value)) {
-    return EXECUTION_SUCCESS;
+    return MMUX_SUCCESS;
   } else {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_is_$3]]],

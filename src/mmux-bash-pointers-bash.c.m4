@@ -29,6 +29,75 @@
 
 #include "mmux-bash-pointers-internals.h"
 
+/* We  really need  to pay  attention to  the order  in which  we include  the files,
+   otherwise errors will ensue. */
+#include "bashtypes.h"
+#include "bashjmp.h"
+#include "builtins.h"
+#include "shell.h"
+#include "common.h"
+
+
+/** --------------------------------------------------------------------
+ ** Shell builtins interface.
+ ** ----------------------------------------------------------------- */
+
+mmux_rv_t
+mmux_bash_builtin_implementation_function (mmux_bash_word_list_t word_list,
+					   mmux_bash_builtin_validate_argc_t * validate_argc,
+                                           mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
+{
+  WORD_LIST *	list = (WORD_LIST *) word_list;
+  char **	argv;
+  int		argc;
+  int		rv;
+
+  argv = make_builtin_argv(list, &argc);
+  if (argv) {
+    if (validate_argc(argc)) {
+      rv = custom_implementation_function(argc, (char const * const *) argv);
+    } else {
+      builtin_usage();
+      rv = EX_USAGE;
+    }
+    free(argv);
+  } else {
+    fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
+    rv = EXECUTION_FAILURE;
+  }
+  return rv;
+}
+mmux_rv_t
+mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word_list,
+						      mmux_bash_builtin_validate_argc_t * validate_argc,
+						      mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
+{
+  WORD_LIST *	list = (WORD_LIST *) word_list;
+
+  if (no_options(list)) {
+    return (EX_USAGE);
+  } else {
+    char **	argv;
+    int		argc;
+    int		rv;
+
+    argv = make_builtin_argv(list, &argc);
+    if (argv) {
+      if (validate_argc(argc)) {
+	rv = custom_implementation_function(argc, (char const * const *) argv);
+      } else {
+	builtin_usage();
+	rv = EX_USAGE;
+      }
+      free(argv);
+    } else {
+      fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
+      rv = EXECUTION_FAILURE;
+    }
+    return rv;
+  }
+}
+
 
 /** --------------------------------------------------------------------
  ** Binding values to shell variables.

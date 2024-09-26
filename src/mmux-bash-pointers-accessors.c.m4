@@ -35,7 +35,7 @@
 
 m4_define([[[MMUX_BASH_DEFINE_POINTER_ACCESSOR]]],[[[
 static int
-mmux_$1_pointer_ref_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_pointer_ref_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_pointer_ref"
 {
@@ -48,10 +48,10 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_ptrdiff(&offset, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   ptr_byte  = ptr;
   ptr_byte += offset;
@@ -63,7 +63,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_ref]]],
@@ -74,7 +74,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_ref]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_array_ref_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_$1_array_ref_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_array_ref"
 {
@@ -86,10 +86,10 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_ptrdiff(&index, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   ptr_value = (mmux_libc_$1_t *)ptr;
   value     = ptr_value[index];
@@ -98,7 +98,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_array_ref]]],

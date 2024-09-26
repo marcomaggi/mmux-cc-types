@@ -97,6 +97,10 @@
 #  include <complex.h>
 #endif
 
+#ifdef HAVE_CTYPE_H
+#  include <ctype.h>
+#endif
+
 #ifdef HAVE_ERRNO_H
 #  include <errno.h>
 #endif
@@ -126,16 +130,6 @@
 #ifdef HAVE_REGEX_H
 #  include <regex.h>
 #endif
-
-/* ------------------------------------------------------------------ */
-
-/* We  really need  to pay  attention to  the order  in which  we include  the files,
-   otherwise errors will ensue. */
-#include "bashtypes.h"
-#include "bashjmp.h"
-#include "builtins.h"
-#include "shell.h"
-#include "common.h"
 
 
 /** --------------------------------------------------------------------

@@ -34,7 +34,7 @@
  ** ----------------------------------------------------------------- */
 
 static int
-mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_and"
 {
@@ -43,10 +43,10 @@ mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_uintptr(&mask, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op_uintptr    = (mmux_libc_uintptr_t)op;
   op_uintptr   &= mask;
@@ -62,7 +62,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_and]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_or"
 {
@@ -71,10 +71,10 @@ mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[]
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_uintptr(&mask, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op_uintptr    = (mmux_libc_uintptr_t)op;
   op_uintptr   |= mask;
@@ -90,7 +90,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_or]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_xor"
 {
@@ -99,10 +99,10 @@ mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_pointer(&mask, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op_uintptr    = (mmux_libc_uintptr_t)op;
   mask_uintptr  = (mmux_libc_uintptr_t)mask;
@@ -119,7 +119,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_xor]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_not"
 {
@@ -128,7 +128,7 @@ mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op_uintptr  = (mmux_libc_uintptr_t)op;
   op_uintptr  = ~ op_uintptr;
@@ -144,7 +144,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_not]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shl"
 {
@@ -154,10 +154,10 @@ mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[]
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op_uintptr   = (mmux_libc_uintptr_t)op;
   op_uintptr <<= nbits;
@@ -173,7 +173,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shl]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shr"
 {
@@ -183,10 +183,10 @@ mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[]
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op_uintptr   = (mmux_libc_uintptr_t)op;
   op_uintptr >>= nbits;
@@ -206,7 +206,7 @@ m4_dnl ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN]]],[[[
 static int
-mmux_$1_bitwise_$3_main (int argc,  char * argv[])
+mmux_$1_bitwise_$3_main (int argc,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_$3"
 {
@@ -216,7 +216,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   for (int i = 2; i < argc; ++i) {
     rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
   for (int i = 3; i < argc; ++i) {
@@ -226,7 +226,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_$3]]],
@@ -239,7 +239,7 @@ m4_dnl ------------------------------------------------------------
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN]]],[[[
 static int
-mmux_$1_bitwise_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_bitwise_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_$3"
 {
@@ -249,17 +249,17 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op $4= nbits;
   return mmux_bash_pointers_store_result_in_variable_$1 (argv[1], op);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_$3]]],
@@ -279,7 +279,7 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[xor]]],[[[^]]])
 
 static int
-mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char * argv[])
+mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_not"
 {
@@ -288,14 +288,14 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   op = ~ op;
   return mmux_bash_pointers_store_result_in_variable_$1 (argv[1], op);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_not]]],

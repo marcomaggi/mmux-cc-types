@@ -34,7 +34,7 @@
  ** ----------------------------------------------------------------- */
 
 static int
-mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_libc_strerror"
 {
@@ -42,7 +42,7 @@ mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
   char *	errmsg;
 
   rv = mmux_bash_pointers_parse_sint(&errnum, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (MMUX_SUCCESS != rv) { return rv; }
 
   errmsg = strerror(errnum);
   if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errmsg);}
@@ -64,7 +64,7 @@ m4_define([[[MMUX_DEFINE_ERRNO_CASE]]],[[[
 ]]])
 
 static int
-mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv[])
+mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_libc_errno_to_string"
 {
@@ -72,7 +72,7 @@ mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   char *	errsym;
 
   rv = mmux_bash_pointers_parse_sint(&errnum, argv[2], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { return rv; }
+  if (MMUX_SUCCESS != rv) { return rv; }
 
   errsym = strerror(errnum);
   if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errsym);}
@@ -212,7 +212,7 @@ mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char * argv
   MMUX_DEFINE_ERRNO_CASE([[[EOWNERDEAD]]])
   MMUX_DEFINE_ERRNO_CASE([[[ENOTRECOVERABLE]]])
   {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   }
 
   return mmux_bash_store_string_in_variable(argv[1], errsym, MMUX_BUILTIN_NAME);

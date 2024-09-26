@@ -41,58 +41,30 @@ m4_dnl function definitions
 m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language expression, between parentheses, about "argc": if true the number of argumets is correct
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_FUNCTION_NO_OPTIONS]]],[[[m4_dnl
-static int
-$1_builtin (WORD_LIST * list)
+static bool
+$1_validate_argc (int argc)
 {
-  if (no_options (list)) {
-    return (EX_USAGE);
-  } else {
-    char **	argv;
-    int		argc;
-    int		rv;
-
-    argv = make_builtin_argv(list, &argc);
-    if (argv) {
-      if $2 {
-        rv = $1_main(argc, argv);
-      } else {
-        builtin_usage();
-        rv = EX_USAGE;
-      }
-      free(argv);
-    } else {
-      fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
-      rv = EXECUTION_FAILURE;
-    }
-    return rv;
-  }
+  return ($2)? true : false;
+}
+static int
+$1_builtin (mmux_bash_word_list_t word_list)
+{
+  return (int) mmux_bash_builtin_implementation_function_no_options(word_list, $1_validate_argc, $1_main);
 }
 ]]])
 
 m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language expression, between parentheses, about "argc": if true the number of argumets is correct
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_FUNCTION]]],[[[m4_dnl
-static int
-$1_builtin (WORD_LIST * list)
+static bool
+$1_validate_argc (int argc)
 {
-  char **	argv;
-  int		argc;
-  int		rv;
-
-  argv = make_builtin_argv(list, &argc);
-  if (argv) {
-    if $2 {
-      rv = $1_main(argc, argv);
-    } else {
-      builtin_usage();
-      rv = EX_USAGE;
-    }
-    free(argv);
-  } else {
-    fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
-    rv = EXECUTION_FAILURE;
-  }
-  return rv;
+  return ($2)? true : false;
+}
+static int
+$1_builtin (mmux_bash_word_list_t word_list)
+{
+  return (int) mmux_bash_builtin_implementation_function(word_list, $1_validate_argc, $1_main);
 }
 ]]])
 
@@ -104,13 +76,13 @@ m4_dnl $2 - C language string representing the short documentation
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_STRUCT]]],[[[m4_dnl
 /* Bash will search for this struct  building the name "$1_struct" from the command
    line argument "$1" we have given to the "enable" builtin. */
-struct builtin $1_struct = {
+mmux_bash_struct_builtin_t $1_struct = {
   .name		= "$1",				/* Builtin name */
   .function	= $1_builtin,			/* Function implementing the builtin */
-  .flags	= BUILTIN_ENABLED,		/* Initial flags for builtin */
+  .flags	= MMUX_BUILTIN_ENABLED,		/* Initial flags for builtin */
   .long_doc	= $1_doc,			/* Array of long documentation strings. */
   .short_doc	= $2,				/* Usage synopsis; becomes short_doc */
-  .handle	= 0				/* Reserved for internal use */
+  .reserved0	= NULL				/* Reserved for Bash. */
 };
 ]]])
 

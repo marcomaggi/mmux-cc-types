@@ -228,7 +228,7 @@ mmux_complexld_equal_relepsilon (mmux_libc_complexld_t op1, mmux_libc_complexld_
 
 m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTIN]]],[[[
 static int
-mmux_$1_$2_main (int argc,  char * argv[])
+mmux_$1_$2_main (int argc,  char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_$2"
 {
@@ -238,19 +238,19 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
 
   for (int i = 1; i < argc; ++i) {
     rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
   for (int i = 1, j = 2; j < argc; ++i, ++j) {
     if (! mmux_$1_$2(ops[i], ops[j])) {
-      return EXECUTION_FAILURE;
+      return MMUX_FAILURE;
     }
   }
-  return EXECUTION_SUCCESS;
+  return MMUX_SUCCESS;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_$2]]],
@@ -319,7 +319,7 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
 
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS]]],[[[
 static int
-mmux_$1_equal_absmargin_main (int argc,  char * argv[])
+mmux_$1_equal_absmargin_main (int argc,  char const * const argv[])
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
@@ -340,7 +340,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
 
   for (int i = 1; i < argc; ++i) {
     rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
   /* Read  the margin  from the  shell variable  "ABSOLUTE_MARGIN_STEM", if  any.  If
@@ -349,22 +349,22 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     char const *	margin_string;
 
     rv = mmux_bash_get_shell_variable_string_value(&margin_string, MMUX_MARGIN_VARNAME, NULL);
-    if (EXECUTION_SUCCESS == rv) {
+    if (MMUX_SUCCESS == rv) {
       rv = mmux_bash_pointers_parse_$1(&margin, margin_string, MMUX_BUILTIN_NAME);
-      if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+      if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
 
   for (int i = 2; i < argc; ++i) {
     if (! mmux_$1_equal_absmargin(ops[1], ops[i], margin)) {
-      return EXECUTION_FAILURE;
+      return MMUX_FAILURE;
     }
   }
-  return EXECUTION_SUCCESS;
+  return MMUX_SUCCESS;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
@@ -375,7 +375,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_equal_relepsilon_main (int argc,  char * argv[])
+mmux_$1_equal_relepsilon_main (int argc,  char const * const argv[])
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
@@ -396,7 +396,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
 
   for (int i = 1; i < argc; ++i) {
     rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
   /* Read the  epsilon from the  shell variable "ABSOLUTE_EPSILON_STEM", if  any.  If
@@ -405,9 +405,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     char const *	epsilon_string;
 
     rv = mmux_bash_get_shell_variable_string_value(&epsilon_string, MMUX_EPSILON_VARNAME, NULL);
-    if (EXECUTION_SUCCESS == rv) {
+    if (MMUX_SUCCESS == rv) {
       rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
-      if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+      if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
 
@@ -415,14 +415,14 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
 
   for (int i = 2; i < argc; ++i) {
     if (! mmux_$1_equal_relepsilon(ops[1], ops[i], epsilon)) {
-      return EXECUTION_FAILURE;
+      return MMUX_FAILURE;
     }
   }
-  return EXECUTION_SUCCESS;
+  return MMUX_SUCCESS;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_relepsilon]]],
@@ -445,7 +445,7 @@ MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[ldouble]]],		[[[MMUX_HA
 
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS]]],[[[
 static int
-mmux_$1_equal_absmargin_main (int argc,  char * argv[])
+mmux_$1_equal_absmargin_main (int argc,  char const * const argv[])
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
@@ -467,7 +467,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
 
   for (int i = 1; i < argc; ++i) {
     rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
   /* Read  the margin  from the  shell variable  "ABSOLUTE_MARGIN_STEM", if  any.  If
@@ -476,22 +476,22 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     char const *	margin_string;
 
     rv = mmux_bash_get_shell_variable_string_value(&margin_string, MMUX_MARGIN_VARNAME, NULL);
-    if (EXECUTION_SUCCESS == rv) {
+    if (MMUX_SUCCESS == rv) {
       rv = mmux_bash_pointers_parse_$1(&margin, margin_string, MMUX_BUILTIN_NAME);
-      if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+      if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
 
   for (int i = 2; i < argc; ++i) {
     if (! mmux_$1_equal_absmargin(ops[1], ops[i], margin)) {
-      return EXECUTION_FAILURE;
+      return MMUX_FAILURE;
     }
   }
-  return EXECUTION_SUCCESS;
+  return MMUX_SUCCESS;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
@@ -502,7 +502,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_equal_relepsilon_main (int argc,  char * argv[])
+mmux_$1_equal_relepsilon_main (int argc,  char const * const argv[])
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
@@ -524,7 +524,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
 
   for (int i = 1; i < argc; ++i) {
     rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
-    if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
   /* Read the  epsilon from the  shell variable "ABSOLUTE_EPSILON_STEM", if  any.  If
@@ -533,22 +533,22 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
     char const *	epsilon_string;
 
     rv = mmux_bash_get_shell_variable_string_value(&epsilon_string, MMUX_EPSILON_VARNAME, NULL);
-    if (EXECUTION_SUCCESS == rv) {
+    if (MMUX_SUCCESS == rv) {
       rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
-      if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+      if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
 
   for (int i = 2; i < argc; ++i) {
     if (! mmux_$1_equal_relepsilon(ops[1], ops[i], epsilon)) {
-      return EXECUTION_FAILURE;
+      return MMUX_FAILURE;
     }
   }
-  return EXECUTION_SUCCESS;
+  return MMUX_SUCCESS;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
-  return EXECUTION_FAILURE;
+  return MMUX_FAILURE;
 ]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_relepsilon]]],

@@ -357,6 +357,50 @@ mmux_bash_pointers_decl bool mmux_complexld_equal_relepsilon (mmux_libc_complexl
  ** Bash interface.
  ** ----------------------------------------------------------------- */
 
+/* This definition  must match the  definition of "BUILTIN_ENABLED" in  Bash's header
+   file "builtins.h". */
+#undef  MMUX_BUILTIN_ENABLED
+#define MMUX_BUILTIN_ENABLED	0x01
+
+typedef enum {
+  MMUX_SUCCESS=0,
+  MMUX_FAILURE=1
+} mmux_rv_t;
+
+/* This is meatn to be an alias for Bash's "WORD_LIST". */
+typedef void *		mmux_bash_word_list_t;
+
+typedef bool mmux_bash_builtin_validate_argc_t                  (int argc);
+typedef int  mmux_bash_builtin_implementation_function_t        (mmux_bash_word_list_t word_list);
+typedef int  mmux_bash_builtin_custom_implementation_function_t (int argc, char const * const argv[]);
+
+/* This definition  must match the  definition of  "struct builtin" in  Bash's header
+   file "builtins.h". */
+struct mmux_bash_struct_builtin_tag_t {
+  char *					name;		/* The name that the user types. */
+  mmux_bash_builtin_implementation_function_t *	function;	/* The address of the invoked function. */
+  int						flags;		/* One of the #defines above. */
+  char * const *				long_doc;	/* NULL terminated array of strings. */
+  char const *					short_doc;	/* Short version of documentation. */
+  char *					reserved0;	/* Reserved for Bash. */
+};
+
+typedef struct mmux_bash_struct_builtin_tag_t	mmux_bash_struct_builtin_t;
+
+mmux_bash_pointers_decl mmux_rv_t mmux_bash_builtin_implementation_function
+  (mmux_bash_word_list_t word_list,
+   mmux_bash_builtin_validate_argc_t * validate_argc,
+   mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
+  __attribute__((__nonnull__(1,2,3)));
+
+mmux_bash_pointers_decl mmux_rv_t mmux_bash_builtin_implementation_function_no_options
+  (mmux_bash_word_list_t word_list,
+   mmux_bash_builtin_validate_argc_t * validate_argc,
+   mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
+  __attribute__((__nonnull__(1,2,3)));
+
+/* ------------------------------------------------------------------ */
+
 mmux_bash_pointers_decl int mmux_bash_store_string_in_variable        (char const * variable_name, char const * s_value,
 								       char const * caller_name)
   __attribute__((__nonnull__(1,2)));

@@ -45,7 +45,7 @@ mmux_bash_pointers_string_$1_p (char const * s_arg)
 {
   mmux_libc_$1_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
+  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
@@ -107,7 +107,7 @@ mmux_bash_pointers_string_pointer_p (char const * s_arg)
 {
   mmux_libc_pointer_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_pointer(&value, s_arg, NULL)) {
+  if (MMUX_SUCCESS == mmux_bash_pointers_parse_pointer(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
@@ -138,7 +138,7 @@ mmux_bash_pointers_string_$1_p (char const * s_arg)
 {
   mmux_libc_$1_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
+  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
@@ -168,7 +168,7 @@ mmux_bash_pointers_string_$1_p (char const * s_arg)
 {
   mmux_libc_$1_t	value;
 
-  if (EXECUTION_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
+  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
     return true;
   } else {
     return false;
@@ -220,12 +220,12 @@ mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux
 
   required_nbytes = mmux_bash_pointers_sprint_size_$1(value);
   if (0 > required_nbytes) {
-    return EXECUTION_FAILURE;
+    return MMUX_FAILURE;
   } else {
     char	s_value[required_nbytes];
 
     rv = mmux_bash_pointers_sprint_$1(s_value, required_nbytes, value);
-    if (EXECUTION_SUCCESS == rv) {
+    if (MMUX_SUCCESS == rv) {
       return mmux_bash_store_string_in_variable(variable_name, s_value, NULL);
     } else {
       return rv;

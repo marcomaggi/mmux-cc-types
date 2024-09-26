@@ -39,7 +39,7 @@ AC_DEFUN([MMUX_BASH_CHECK_COMMON_HEADERS],
   [AC_HEADER_ASSERT
    AC_HEADER_STDBOOL
    dnl AC_HEADER_SYS_WAIT
-   AC_CHECK_HEADERS([complex.h errno.h float.h limits.h math.h stddef.h wchar.h])])
+   AC_CHECK_HEADERS([complex.h ctype.h errno.h float.h limits.h math.h stddef.h wchar.h])])
 
 
 dnl MMUX_BASH_COMMON_INCLUDES_FOR_TESTS --
@@ -77,6 +77,10 @@ AC_INCLUDES_DEFAULT([
 
 #ifdef HAVE_COMPLEX_H
 #  include <complex.h>
+#endif
+
+#ifdef HAVE_CTYPE_H
+#  include <ctype.h>
 #endif
 
 #ifdef HAVE_ERRNO_H
