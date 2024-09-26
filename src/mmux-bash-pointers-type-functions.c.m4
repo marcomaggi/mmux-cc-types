@@ -260,11 +260,11 @@ mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux
   if (0 > required_nbytes) {
     return EXECUTION_FAILURE;
   } else {
-    char		str[required_nbytes];
+    char	s_value[required_nbytes];
 
-    rv = mmux_bash_pointers_sprint_$1(str, required_nbytes, value);
+    rv = mmux_bash_pointers_sprint_$1(s_value, required_nbytes, value);
     if (EXECUTION_SUCCESS == rv) {
-      return mmux_bash_pointers_store_string_in_variable(variable_name, str);
+      return mmux_bash_store_string_in_variable(variable_name, s_value, NULL);
     } else {
       return rv;
     }

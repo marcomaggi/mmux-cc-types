@@ -40,6 +40,8 @@ mmux_bash_pointers_sprint_size_[[[$1]]] (mmux_libc_[[[$1]]]_t value)
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   int		required_nbytes;
 
+  /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
+     returns the number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = snprintf(NULL, 0, $2, value);
   if (0 > required_nbytes) {
     return -1;
@@ -59,6 +61,8 @@ mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, int len, mmux_libc_[[[$1]]]_t
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   int		to_be_written_chars;
 
+  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
+     byte. */
   to_be_written_chars = snprintf(strptr, len, $2, value);
   if (len > to_be_written_chars) {
     return EXECUTION_SUCCESS;
@@ -93,6 +97,8 @@ mmux_bash_pointers_sprint_size_pointer (mmux_libc_pointer_t value)
   if (value) {
     int		required_nbytes;
 
+    /* According to  the documentation,  when the  output is  truncated: "snprintf()"
+       returns the number of required bytes, EXCLUDING the terminating null byte. */
     required_nbytes = snprintf(NULL, 0, "%p", value);
     if (0 > required_nbytes) {
       return -1;
@@ -111,6 +117,8 @@ mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_libc_pointer_t v
 {
   int		to_be_written_chars;
 
+  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
+     byte. */
   if (value) {
     to_be_written_chars = snprintf(strptr, len, "%p", value);
   } else {
@@ -130,6 +138,8 @@ mmux_bash_pointers_sprint_size_float (mmux_libc_float_t value)
 {
   int		required_nbytes;
 
+  /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
+     returns the number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = snprintf(NULL, 0, "%A", (double)value);
   if (0 > required_nbytes) {
     return -1;
@@ -145,6 +155,8 @@ mmux_bash_pointers_sprint_float (char * strptr, int len, float value)
 {
   int		to_be_written_chars;
 
+  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
+     byte. */
   to_be_written_chars = snprintf(strptr, len, "%A", (double)value);
   if (len > to_be_written_chars) {
     return EXECUTION_SUCCESS;
@@ -164,6 +176,8 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
   mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
   int			required_nbytes;
 
+  /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
+     returns the number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = snprintf(NULL, 0, $2, $3 re, $3 im);
   if (0 > required_nbytes) {
     return -1;
@@ -179,6 +193,8 @@ mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
   mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
   int			to_be_written_chars;
 
+  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
+     byte. */
   to_be_written_chars = snprintf(strptr, len, $2, $3 re, $3 im);
   if (len > to_be_written_chars) {
     return EXECUTION_SUCCESS;

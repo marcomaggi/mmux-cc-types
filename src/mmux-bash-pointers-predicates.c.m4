@@ -115,7 +115,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&value, argv[1], MMUX_BUILTIN_NAME);
-  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL); return rv; }
+  if (EXECUTION_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   if (mmux_$1_is_$3(value)) {
     return EXECUTION_SUCCESS;

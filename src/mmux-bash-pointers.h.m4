@@ -105,7 +105,7 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
  ** Error handling functions.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum);
+mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum, char const * caller_name);
 
 
 /** --------------------------------------------------------------------
@@ -361,12 +361,35 @@ mmux_bash_pointers_decl bool mmux_complexld_equal_relepsilon (mmux_libc_complexl
  ** Bash interface.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_pointers_decl int mmux_bash_pointers_store_string_in_variable (char const * variable_name, char const * const value)
+mmux_bash_pointers_decl int mmux_bash_store_string_in_variable        (char const * variable_name, char const * s_value,
+								       char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
-mmux_bash_pointers_decl int mmux_bash_pointers_get_shell_variable_string_value (char const ** p_variable_value,
-										char const * const variable_name,
-										char const * const caller_name)
+mmux_bash_pointers_decl int mmux_bash_store_string_in_global_variable (char const * variable_name, char const * s_value,
+								       char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_bash_pointers_decl int mmux_bash_store_sint_in_variable        (char const * variable_name, int value, char const * caller_name)
+  __attribute__((__nonnull__(1)));
+
+mmux_bash_pointers_decl int mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * caller_name)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_bash_pointers_decl int mmux_bash_create_global_string_variable (char const * variable_name, char const * s_value,
+								     char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_bash_pointers_decl int mmux_bash_create_global_sint_variable   (char const * variable_name, int value, char const * caller_name)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_bash_pointers_decl int mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char const * variable_name,
+								       char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
 

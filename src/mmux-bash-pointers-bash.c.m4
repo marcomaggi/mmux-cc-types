@@ -31,22 +31,149 @@
 
 
 /** --------------------------------------------------------------------
- ** Accessing shell variables.
+ ** Binding values to shell variables.
  ** ----------------------------------------------------------------- */
 
-int
-mmux_bash_pointers_store_string_in_variable (char const * variable_name, char const * const value)
+static int
+store_string_in_variable (char const * variable_name, char const * const s_value, char const * const caller_name, bool global_variable)
 {
-  SHELL_VAR *	v MMUX_BASH_POINTERS_UNUSED;
+  SHELL_VAR *	shell_variable MMUX_BASH_POINTERS_UNUSED;
   int		flags = 0;
 
-  v = bind_variable(variable_name, (char *)value, flags);
-  return EXECUTION_SUCCESS;
+  if (global_variable) {
+    shell_variable = bind_global_variable(variable_name, (char *)s_value, flags);
+  } else {
+    shell_variable = bind_variable(variable_name, (char *)s_value, flags);
+  }
+  if (shell_variable) {
+    return EXECUTION_SUCCESS;
+  } else {
+    if (caller_name) {
+      if (global_variable) {
+	fprintf(stderr, "%s: failed binding value to global shell variable: \"%s\"=\"%s\"\n", caller_name, variable_name, s_value);
+      } else {
+	fprintf(stderr, "%s: failed binding value to shell variable: \"%s\"=\"%s\"\n", caller_name, variable_name, s_value);
+      }
+    }
+    return EXECUTION_FAILURE;
+  }
+}
+int
+mmux_bash_store_string_in_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
+{
+  return store_string_in_variable(variable_name, s_value, caller_name, false);
+}
+int
+mmux_bash_store_string_in_global_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
+{
+  return store_string_in_variable(variable_name, s_value, caller_name, true);
+}
+
+/* ------------------------------------------------------------------ */
+
+static int
+store_sint_in_variable (char const * variable_name, int value, char const * const caller_name, bool global_variable)
+{
+  int	required_nbytes;
+
+  /* Compute the number of required characters, INCLUDING the terminating zero. */
+  {
+    /* According to  the documentation,  when the  output is  truncated: "snprintf()"
+       returns the number of required bytes, EXCLUDING the terminating null byte. */
+    required_nbytes = snprintf(NULL, 0, "%d", value);
+    if (0 > required_nbytes) {
+      return EXECUTION_FAILURE;
+    }
+    ++required_nbytes;
+  }
+
+  /* Convert the value to string then store it. */
+  {
+    char	s_value[required_nbytes];
+    int		to_be_written_chars;
+
+    /* According  to  the documentation:  "snprintf()"  writes  the terminating  null
+       byte. */
+    to_be_written_chars = snprintf(s_value, required_nbytes, "%d", value);
+    if (required_nbytes == (1+to_be_written_chars)) {
+      return store_string_in_variable(variable_name, s_value, caller_name, global_variable);
+    } else {
+      return EXECUTION_FAILURE;
+    }
+  }
 }
 
 int
-mmux_bash_pointers_get_shell_variable_string_value (char const ** p_variable_value, char const * const variable_name,
-						    char const * const caller_name)
+mmux_bash_store_sint_in_variable (char const * variable_name, int value, char const * const caller_name)
+{
+  return store_sint_in_variable(variable_name, value, caller_name, false);
+}
+int
+mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * const caller_name)
+{
+  return store_sint_in_variable(variable_name, value, caller_name, true);
+}
+
+/* ------------------------------------------------------------------ */
+
+int
+mmux_bash_create_global_string_variable (char const * const variable_name, char const * const s_value, char const * const caller_name)
+{
+  SHELL_VAR	* shell_variable = find_global_variable(variable_name);
+
+  if (NULL == shell_variable) {
+    return mmux_bash_store_string_in_global_variable(variable_name, s_value, caller_name);
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: failed creation of global variable, it already exists: \"%s\"\n", caller_name, variable_name);
+    }
+    return EXECUTION_FAILURE;
+  }
+}
+int
+mmux_bash_create_global_sint_variable (char const * const variable_name, int value, char const * const caller_name)
+{
+  int	required_nbytes;
+
+  /* Compute the number of required characters, INCLUDING the terminating zero. */
+  {
+    /* According to  the documentation,  when the  output is  truncated: "snprintf()"
+       returns the number of required bytes, EXCLUDING the terminating null byte. */
+    required_nbytes = snprintf(NULL, 0, "%d", value);
+    if (0 > required_nbytes) {
+      return EXECUTION_FAILURE;
+    }
+    ++required_nbytes;
+  }
+
+  /* Convert the value to string then store it. */
+  {
+    char	s_value[required_nbytes];
+    int		to_be_written_chars;
+
+    /* According  to  the documentation:  "snprintf()"  writes  the terminating  null
+       byte. */
+    to_be_written_chars = snprintf(s_value, required_nbytes, "%d", value);
+    if (required_nbytes == (1+to_be_written_chars)) {
+      return mmux_bash_create_global_string_variable(variable_name, s_value, caller_name);
+    } else {
+      if (caller_name) {
+	fprintf(stderr, "%s: failed creation of global sint variable, conversion error: \"%s\"=\"%d\"\n",
+		caller_name, variable_name, value);
+      }
+      return EXECUTION_FAILURE;
+    }
+  }
+}
+
+
+/** --------------------------------------------------------------------
+ ** Retrieving values from shell variables.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char const * const variable_name,
+					   char const * const caller_name)
 {
   SHELL_VAR *		shell_variable;
 
@@ -56,7 +183,7 @@ mmux_bash_pointers_get_shell_variable_string_value (char const ** p_variable_val
     return EXECUTION_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: failed access to variable: \"%s\"\n", caller_name, variable_name);
+      fprintf(stderr, "%s: error: failed access to shell variable: \"%s\"\n", caller_name, variable_name);
     }
     return EXECUTION_FAILURE;
   }
