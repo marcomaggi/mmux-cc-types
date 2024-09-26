@@ -59,6 +59,18 @@ AC_PATH_PROG([M4_PROGRAM],[m4])
 AC_PATH_PROG([BASH_PROGRAM],[/bin/bash],[/bin/bash],[:])
 MMUX_BASH_ENABLE_MBFL([v3.0.0])
 
+AC_DEFINE([_ISOC11_SOURCE],[1],[Enable the ISO C11 features.])
+
+# NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
+# needed for  the GNU C  Library to  make available the  "_FloatN" and "_FloatNx"  features.  (Marco
+# Maggi; Sep 26, 2024)
+AC_DEFINE([__STDC_WANT_IEC_60559_BFP_EXT__],   [1],[Define some standardised features.])
+AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
+AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
+
+AC_DEFINE([_GNU_SOURCE],[1],[Enable everything GNU (is this actually needed?).])
+AC_DEFINE([_POSIX_C_SOURCE],[200809L],[Enable latest(?) POSIX features.])
+
 AC_CACHE_SAVE
 
 
@@ -87,6 +99,14 @@ AC_TYPE_INTPTR_T
 
 # This defines both "uid_t" and "gid_t".
 AC_TYPE_UID_T
+
+AC_CHECK_FUNC([strtof32],   [AC_DEFINE([HAVE_FLOAT32],  [1],[Defined if _Float32 is implemented.])])
+AC_CHECK_FUNC([strtof64],   [AC_DEFINE([HAVE_FLOAT64],  [1],[Defined if _Float64 is implemented.])])
+AC_CHECK_FUNC([strtof128],  [AC_DEFINE([HAVE_FLOAT128], [1],[Defined if _Float128 is implemented.])])
+
+AC_CHECK_FUNC([strtof32x],  [AC_DEFINE([HAVE_FLOAT32X], [1],[Defined if _Float32x is implemented.])])
+AC_CHECK_FUNC([strtof64x],  [AC_DEFINE([HAVE_FLOAT64X], [1],[Defined if _Float64x is implemented.])])
+AC_CHECK_FUNC([strtof128x], [AC_DEFINE([HAVE_FLOAT128X],[1],[Defined if _Float128x is implemented.])])
 
 
 #### checks for library functions

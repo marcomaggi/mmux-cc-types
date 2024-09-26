@@ -30,24 +30,15 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
+/* Look  into "configure.ac"  and "config.h"  for  the definition  of C  preprocessor
+   symbols that enable  some standardised features.  For example:  whatever is needed
+   for  the GNU  C Library  to make  available the  "_FloatN" and  "_FloatNx" related
+   features.*/
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
 
-#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-#  define HAVE_SIGNED_LONG_LONG_INT	1
-#endif
-
 #include <mmux-bash-pointers.h>
-
-/* Enable everything GNU. */
-#define _GNU_SOURCE		1
-
-/* Enable latest POSIX features. */
-#undef _POSIX_C_SOURCE
-#define _POSIX_C_SOURCE		200809L
-
-/* ------------------------------------------------------------------ */
 
 #ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
@@ -148,33 +139,6 @@
  ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_private_decl regex_t mmux_bash_pointers_complex_rex;
-
-
-/** --------------------------------------------------------------------
- ** Inline functions.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-static inline mmux_libc_$1_t
-mmux_bash_pointers_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
-{
-  return $4(re, im);
-}
-static inline mmux_libc_$1_part_t
-mmux_bash_pointers_$1_real_part (mmux_libc_$1_t Z)
-{
-  return $2(Z);
-}
-static inline mmux_libc_$1_part_t
-mmux_bash_pointers_$1_imag_part (mmux_libc_$1_t Z)
-{
-  return $3(Z);
-}
-]]])]]])
-
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf]]],  [[[crealf]]], [[[cimagf]]], [[[CMPLXF]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd]]],  [[[creal]]],  [[[cimag]]],  [[[CMPLX]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexld]]], [[[creall]]], [[[cimagl]]], [[[CMPLXL]]], [[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------

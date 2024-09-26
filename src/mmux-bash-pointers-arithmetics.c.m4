@@ -66,7 +66,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_add]]],
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN]]],[[[
 static int
-mmux_$1_add_main (int argc,  char const * const argv[])
+mmux_$1_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_add"
 {
@@ -98,7 +98,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_sub_main (int argc,  char const * const argv[])
+mmux_$1_sub_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_sub"
 {
@@ -130,7 +130,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_sub]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_mul_main (int argc,  char const * const argv[])
+mmux_$1_mul_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_mul"
 {
@@ -162,7 +162,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mul]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_div_main (int argc,  char const * const argv[])
+mmux_$1_div_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_div"
 {
@@ -194,7 +194,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_div]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
+mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_neg"
 {
@@ -222,7 +222,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_inv_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
+mmux_$1_inv_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_inv"
 {
@@ -264,9 +264,26 @@ MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_TY
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float]]])
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[double]]])
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf]]])
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexd]]])
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[sint8]]])
 MMUX_BASH_POINTERS_DEFINE_CORE_ARITHMETICS_BUILTIN([[[uint8]]])

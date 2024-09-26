@@ -138,6 +138,15 @@ mmux_bash_pointers_sprint_size_float (mmux_libc_float_t value)
 {
   int		required_nbytes;
 
+#if 1
+  required_nbytes = strfromf(NULL, 0, "%A", value);
+  if (0 > required_nbytes) {
+    return -1;
+  } else {
+    /* This return value DOES account for the terminating zero character. */
+    return ++required_nbytes;
+  }
+#else
   /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
      returns the number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = snprintf(NULL, 0, "%A", (double)value);
@@ -147,6 +156,7 @@ mmux_bash_pointers_sprint_size_float (mmux_libc_float_t value)
     /* This return value DOES account for the terminating zero character. */
     return ++required_nbytes;
   }
+#endif
 }
 int
 mmux_bash_pointers_sprint_float (char * strptr, int len, float value)

@@ -181,7 +181,7 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char co
  ** Parsing complex numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER]]],[[[
+m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 static int parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const char * caller_name);
 
@@ -287,42 +287,56 @@ parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const
 }
 ]]])]]])
 
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER([[[complexf]]],	[[[float]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER([[[complexd]]],	[[[double]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_PARSER([[[complexld]]],	[[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_COMPLEX_PARSER([[[complexf]]],		[[[float]]])
+DEFINE_COMPLEX_PARSER([[[complexd]]],		[[[double]]])
+DEFINE_COMPLEX_PARSER([[[complexld]]],		[[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_COMPLEX_PARSER([[[complexf32]]],		[[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_COMPLEX_PARSER([[[complexf64]]],		[[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_COMPLEX_PARSER([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_COMPLEX_PARSER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_COMPLEX_PARSER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_COMPLEX_PARSER([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------
  ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER]]],[[[
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_data, char const * s_arg, char const * caller_name)
+mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  int	rv;
+  mmux_libc_$1_t	value;
+  char *		tailptr;
 
-  rv = sscanf(s_arg, $2, p_data);
-  if ((EOF != rv) && (1 == rv)) {
-    return MMUX_SUCCESS;
-  } else {
+  errno = 0;
+  value = $2(s_arg, &tailptr);
+  if (errno) {
     if (caller_name) {
       fprintf(stderr, "%s: error: invalid argument, expected \"$1\": \"%s\"\n", caller_name, s_arg);
     }
+    errno = 0; /* The error is consumed. */
     return MMUX_FAILURE;
+  } else {
+    *p_value = value;
+    return MMUX_SUCCESS;
   }
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return MMUX_FAILURE;
-]]])
 }
-]]])
+]]])]]])
 
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[["%f"]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[["%lf"]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[["%Lf"]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[[strtof]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[[strtod]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[[strtold]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float32]]],	[[[strtof32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float64]]],	[[[strtof64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float128]]],	[[[strtof128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float32x]]],	[[[strtof32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float64x]]],	[[[strtof64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float128x]]],	[[[strtof128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------

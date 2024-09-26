@@ -1308,12 +1308,6 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{double}
 @MmuxDefineTypePredicatePositiveBuiltin{ldouble}
 
-@deffn Builtin mmux_complexf_is_positive @var{OP}
-@deffnx Builtin mmux_complexd_is_positive @var{OP}
-@deffnx Builtin mmux_complexld_is_positive @var{OP}
-Always return false.
-@end deffn
-
 @MmuxDefineTypePredicatePositiveBuiltin{sint8}
 @MmuxDefineTypePredicatePositiveBuiltin{uint8}
 @MmuxDefineTypePredicatePositiveBuiltin{sint16}
@@ -1365,12 +1359,6 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{float}
 @MmuxDefineTypePredicateNegativeBuiltin{double}
 @MmuxDefineTypePredicateNegativeBuiltin{ldouble}
-
-@deffn Builtin mmux_complexf_is_negative @var{OP}
-@deffnx Builtin mmux_complexd_is_negative @var{OP}
-@deffnx Builtin mmux_complexld_is_negative @var{OP}
-Always return false.
-@end deffn
 
 @MmuxDefineTypePredicateNegativeBuiltin{sint8}
 @MmuxDefineTypePredicateNegativeBuiltin{uint8}
@@ -1424,12 +1412,6 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{double}
 @MmuxDefineTypePredicateNonPositiveBuiltin{ldouble}
 
-@deffn Builtin mmux_complexf_is_non_positive @var{OP}
-@deffnx Builtin mmux_complexd_is_non_positive @var{OP}
-@deffnx Builtin mmux_complexld_is_non_positive @var{OP}
-Always return false.
-@end deffn
-
 @MmuxDefineTypePredicateNonPositiveBuiltin{sint8}
 @MmuxDefineTypePredicateNonPositiveBuiltin{uint8}
 @MmuxDefineTypePredicateNonPositiveBuiltin{sint16}
@@ -1481,12 +1463,6 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{float}
 @MmuxDefineTypePredicateNonNegativeBuiltin{double}
 @MmuxDefineTypePredicateNonNegativeBuiltin{ldouble}
-
-@deffn Builtin mmux_complexf_is_non_negative @var{OP}
-@deffnx Builtin mmux_complexd_is_non_negative @var{OP}
-@deffnx Builtin mmux_complexld_is_non_negative @var{OP}
-Always return false.
-@end deffn
 
 @MmuxDefineTypePredicateNonNegativeBuiltin{sint8}
 @MmuxDefineTypePredicateNonNegativeBuiltin{uint8}

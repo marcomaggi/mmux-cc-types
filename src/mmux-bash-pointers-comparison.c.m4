@@ -73,6 +73,26 @@ MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[double]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexd]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
 MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint8]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint8]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint16]]])
@@ -97,10 +117,6 @@ MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uid]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[gid]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[wchar]]])
 MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
-
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexd]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
 
 /** --------------------------------------------------------------------
@@ -221,6 +237,47 @@ mmux_complexld_equal_relepsilon (mmux_libc_complexld_t op1, mmux_libc_complexld_
 }
 ]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],[[[
+static inline mmux_libc_float32_t mmux_fmaxf32 (mmux_libc_float32_t X, mmux_libc_float32_t Y) { return (X >= Y)? X : Y; }
+static inline mmux_libc_float32_t mmux_fabsf32 (mmux_libc_float32_t X) { return (mmux_float32_is_positive(X))? X : -X; }
+bool
+mmux_float32_equal_absmargin (mmux_libc_float32_t op1, mmux_libc_float32_t op2, mmux_libc_float32_t margin)
+{
+  return (mmux_fabsf32(op1 - op2) <= mmux_fabsf32(margin))? true : false;
+}
+bool
+mmux_float32_equal_relepsilon (mmux_libc_float32_t op1, mmux_libc_float32_t op2, mmux_libc_float32_t epsilon)
+{
+  return (mmux_fabsf32(op1 - op2) <= (epsilon * mmux_fmaxf32(mmux_fabsf32(op1), mmux_fabsf32(op2))))? true : false;
+}
+bool
+mmux_complexf32_equal_absmargin (mmux_libc_complexf32_t op1, mmux_libc_complexf32_t op2, mmux_libc_complexf32_t margin)
+{
+  mmux_libc_complexf32_part_t	re1 = mmux_bash_pointers_complexf32_real_part(op1);
+  mmux_libc_complexf32_part_t	im1 = mmux_bash_pointers_complexf32_imag_part(op1);
+  mmux_libc_complexf32_part_t	re2 = mmux_bash_pointers_complexf32_real_part(op2);
+  mmux_libc_complexf32_part_t	im2 = mmux_bash_pointers_complexf32_imag_part(op2);
+  mmux_libc_complexf32_part_t	ret = mmux_bash_pointers_complexf32_real_part(margin);
+  mmux_libc_complexf32_part_t	imt = mmux_bash_pointers_complexf32_imag_part(margin);
+
+  return (mmux_float32_equal_absmargin(re1, re2, ret) && mmux_float32_equal_absmargin(im1, im2, imt))? true : false;
+}
+bool
+mmux_complexf32_equal_relepsilon (mmux_libc_complexf32_t op1, mmux_libc_complexf32_t op2, mmux_libc_complexf32_t epsilon)
+{
+  mmux_libc_complexf32_part_t	re1 = mmux_bash_pointers_complexf32_real_part(op1);
+  mmux_libc_complexf32_part_t	im1 = mmux_bash_pointers_complexf32_imag_part(op1);
+  mmux_libc_complexf32_part_t	re2 = mmux_bash_pointers_complexf32_real_part(op2);
+  mmux_libc_complexf32_part_t	im2 = mmux_bash_pointers_complexf32_imag_part(op2);
+  mmux_libc_complexf32_part_t	ret = mmux_bash_pointers_complexf32_real_part(epsilon);
+  mmux_libc_complexf32_part_t	imt = mmux_bash_pointers_complexf32_imag_part(epsilon);
+
+  return (mmux_float32_equal_relepsilon(re1, re2, ret) && mmux_float32_equal_relepsilon(im1, im2, imt))? true : false;
+}
+]]])
+
 
 /** --------------------------------------------------------------------
  ** Comparison builtins.
@@ -228,7 +285,7 @@ mmux_complexld_equal_relepsilon (mmux_libc_complexld_t op1, mmux_libc_complexld_
 
 m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTIN]]],[[[
 static int
-mmux_$1_$2_main (int argc,  char const * const argv[])
+mmux_$1_$2_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_$2"
 {
@@ -283,9 +340,26 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ullong]]],			[[[MMUX_HAVE_TYPE_ULLONG]]]
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[double]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ldouble]]],			[[[MMUX_HAVE_TYPE_LDOUBLE]]])
-MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf]]],  [[[equal]]])
-MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexd]]],  [[[equal]]])
-MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexld]]], [[[equal]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float32]]],			[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float64]]],			[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float128]]],			[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float32x]]],			[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float64x]]],			[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float128x]]],			[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf]]],	[[[equal]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexd]]],	[[[equal]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexld]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf32]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf64]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf128]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf32x]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf64x]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf128x]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sint8]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uint8]]])
@@ -319,7 +393,7 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
 
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS]]],[[[
 static int
-mmux_$1_equal_absmargin_main (int argc,  char const * const argv[])
+mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
@@ -333,7 +407,7 @@ m4_dnl will leave the macro use not expanded.
 m4_define([[[MMUX_MARGIN_VARNAME]]],[[["ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"]]])
 
 {
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   mmux_libc_$1_t	margin = MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN;
   int			rv;
@@ -375,7 +449,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_equal_relepsilon_main (int argc,  char const * const argv[])
+mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
@@ -389,7 +463,7 @@ m4_dnl will leave the macro use not expanded.
 m4_define([[[MMUX_EPSILON_VARNAME]]],[[["RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"]]])
 
 {
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   mmux_libc_$1_t	epsilon = MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON;
   int			rv;
@@ -438,6 +512,14 @@ MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float]]])
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[double]]])
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float128x]]],		[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
 
 /** --------------------------------------------------------------------
  ** Approximate comparison builtins for complex floating-point numbers.
@@ -445,7 +527,7 @@ MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[ldouble]]],		[[[MMUX_HA
 
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS]]],[[[
 static int
-mmux_$1_equal_absmargin_main (int argc,  char const * const argv[])
+mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
@@ -459,7 +541,7 @@ m4_dnl will leave the macro use not expanded.
 m4_define([[[MMUX_MARGIN_VARNAME]]],[[["ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"]]])
 
 {
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   mmux_libc_$1_t	margin = mmux_bash_pointers_rectangular_$1(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN,
 								   MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN);
@@ -502,7 +584,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_equal_relepsilon_main (int argc,  char const * const argv[])
+mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
@@ -516,7 +598,7 @@ m4_dnl will leave the macro use not expanded.
 m4_define([[[MMUX_EPSILON_VARNAME]]],[[["RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"]]])
 
 {
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   mmux_libc_$1_t	epsilon = mmux_bash_pointers_rectangular_$1(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON,
 								    MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON);
@@ -563,5 +645,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_relepsilon]]],
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf]]])
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexd]]])
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 /* end of file */
