@@ -3183,15 +3183,8 @@ value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 
 @macro MmuxDefineCFunctionMaximum{STEM}
 @deftypefun mmux_clib_\STEM\_t mmux_bash_pointers_maximum_\STEM\ (void)
-@deftypefunx int mmux_bash_pointers_sprint_maximum_\STEM\ (char * @var{STR}, size_t @var{LEN})
-The first function returns the maximum value representable by the range of values of the type
+Return the maximum value representable by the range of values of the type
 @objtype{mmux_clib_\STEM\_t}.
-
-The second function writes in the buffer referenced by @var{STR} a string representation, in
-@asciiz{} format, of the maximum value representable by the range of values of the type
-@objtype{mmux_clib_\STEM\_t}; the buffer can contain at most @var{LEN} characters, terminating--zero
-included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it returns
-@code{EXECUTION_FAILURE}.
 @end deftypefun
 
 @end macro
@@ -3246,15 +3239,8 @@ included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it ret
 
 @macro MmuxDefineCFunctionMinimum{STEM}
 @deftypefun mmux_libc_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
-@deftypefunx int mmux_bash_pointers_sprint_minimum_\STEM\ (char * @var{STR}, size_t @var{LEN})
-The first function returns the minimum value representable by the range of values of the type
+Return the minimum value representable by the range of values of the type
 @objtype{mmux_libc_\STEM\_t}.
-
-The second function writes in the buffer referenced by @var{STR} a string representation, in
-@asciiz{} format, of the minimum value representable by the range of values of the type
-@objtype{mmux_libc_\STEM\_t}; the buffer can contain at most @var{LEN} characters, terminating--zero
-included.  When successful it returns @code{EXECUTION_SUCCESS}; otherwise it returns
-@code{EXECUTION_FAILURE}.
 @end deftypefun
 
 @end macro

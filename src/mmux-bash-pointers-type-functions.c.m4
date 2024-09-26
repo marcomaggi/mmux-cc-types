@@ -66,16 +66,6 @@ mmux_bash_pointers_minimum_$1 (void)
 {
   return $3;
 }
-int
-mmux_bash_pointers_sprint_maximum_$1 (char * s, size_t l)
-{
-  return mmux_bash_pointers_sprint_$1(s, l, $2);
-}
-int
-mmux_bash_pointers_sprint_minimum_$1(char * s, size_t l)
-{
-  return mmux_bash_pointers_sprint_$1(s, l, $3);
-}
 ]]])
 
 MMUX_BASH_POINTERS_DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
@@ -138,24 +128,6 @@ mmux_bash_pointers_maximum_pointer (void)
 {
   return (mmux_libc_pointer_t) mmux_bash_pointers_maximum_uintptr();
 }
-int
-mmux_bash_pointers_sprint_maximum_pointer (char * s, size_t l)
-{
-  return mmux_bash_pointers_sprint_pointer(s, l, mmux_bash_pointers_maximum_pointer());
-}
-int
-mmux_bash_pointers_sprint_minimum_pointer (char * s, size_t l)
-{
-  /* We want a proper number, not "(nul)" as the GNU C Library does. */
-  size_t	to_be_written_chars;
-
-  to_be_written_chars = snprintf(s, l, "%x", 0);
-  if (l > to_be_written_chars) {
-    return EXECUTION_SUCCESS;
-  } else {
-    return EXECUTION_FAILURE;
-  }
-}
 
 /* ------------------------------------------------------------------ */
 
@@ -216,16 +188,6 @@ mmux_bash_pointers_string_$1_p (char const * s_arg)
   mmux_bash_pointers_minimum_$1 (void)
   {
     return mmux_bash_pointers_minimum_[[[]]]$2[[[]]] ();
-  }
-  int
-  mmux_bash_pointers_sprint_maximum_$1 (char * s, size_t l)
-  {
-    return mmux_bash_pointers_sprint_maximum_[[[]]]$2[[[]]] (s,l);
-  }
-  int
-  mmux_bash_pointers_sprint_minimum_$1 (char * s, size_t l)
-  {
-    return mmux_bash_pointers_sprint_minimum_[[[]]]$2[[[]]] (s,l);
   }
 ]]])
 

@@ -223,10 +223,6 @@ mmux_bash_pointers_decl mmux_libc_[[[]]]$1[[[]]]_t mmux_bash_pointers_minimum_$1
      __attribute__((__const__));
 mmux_bash_pointers_decl mmux_libc_[[[]]]$1[[[]]]_t mmux_bash_pointers_maximum_$1 (void)
      __attribute__((__const__));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_maximum_$1 (char * s, size_t l)
-       __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_minimum_$1 (char * s, size_t l)
-       __attribute__((__nonnull__(1)));
 ]]])
 m4_divert(0)m4_dnl
 
