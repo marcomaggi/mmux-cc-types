@@ -92,6 +92,21 @@ AC_TYPE_LONG_LONG_INT
 AC_TYPE_UNSIGNED_LONG_LONG_INT
 AC_TYPE_LONG_DOUBLE
 
+AS_IF([test "x$ac_cv_type_long_long_int" = "xyes"],
+      [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[1])],
+      [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[0])])
+AC_SUBST([MMUX_HAVE_TYPE_SLLONG])
+
+AS_IF([test "x$ac_cv_type_unsigned_long_long_int" = "xyes"],
+      [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[1])],
+      [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[0])])
+AC_SUBST([MMUX_HAVE_TYPE_ULLONG])
+
+AS_IF([test "x$ac_cv_type_long_double"   = "xyes"],
+      [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],[1])],
+      [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],[0])])
+AC_SUBST([MMUX_HAVE_TYPE_LDOUBLE])
+
 AC_TYPE_INT8_T
 AC_TYPE_INT16_T
 AC_TYPE_INT32_T
@@ -112,13 +127,21 @@ AC_TYPE_INTPTR_T
 # This defines both "uid_t" and "gid_t".
 AC_TYPE_UID_T
 
-AC_CHECK_FUNC([strtof32],   [AC_DEFINE([HAVE_FLOAT32],  [1],[Defined if _Float32 is implemented.])])
-AC_CHECK_FUNC([strtof64],   [AC_DEFINE([HAVE_FLOAT64],  [1],[Defined if _Float64 is implemented.])])
-AC_CHECK_FUNC([strtof128],  [AC_DEFINE([HAVE_FLOAT128], [1],[Defined if _Float128 is implemented.])])
+AC_CHECK_FUNC([strtof32],   [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32], [1])], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32], [0])])
+AC_CHECK_FUNC([strtof64],   [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64], [1])], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64], [0])])
+AC_CHECK_FUNC([strtof128],  [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],[1])], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],[0])])
 
-AC_CHECK_FUNC([strtof32x],  [AC_DEFINE([HAVE_FLOAT32X], [1],[Defined if _Float32x is implemented.])])
-AC_CHECK_FUNC([strtof64x],  [AC_DEFINE([HAVE_FLOAT64X], [1],[Defined if _Float64x is implemented.])])
-AC_CHECK_FUNC([strtof128x], [AC_DEFINE([HAVE_FLOAT128X],[1],[Defined if _Float128x is implemented.])])
+AC_CHECK_FUNC([strtof32x],  [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X], [1])], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X], [0])])
+AC_CHECK_FUNC([strtof64x],  [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X], [1])], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X], [0])])
+AC_CHECK_FUNC([strtof128x], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],[1])], [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],[0])])
+
+AC_SUBST([MMUX_HAVE_TYPE_FLOAT32])
+AC_SUBST([MMUX_HAVE_TYPE_FLOAT64])
+AC_SUBST([MMUX_HAVE_TYPE_FLOAT128])
+
+AC_SUBST([MMUX_HAVE_TYPE_FLOAT32X])
+AC_SUBST([MMUX_HAVE_TYPE_FLOAT64X])
+AC_SUBST([MMUX_HAVE_TYPE_FLOAT128X])
 
 
 #### checks for library functions
@@ -163,6 +186,7 @@ AC_CACHE_SAVE
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
+  [src/mmux-bash-pointers-config.h]
   [src/config.m4]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])

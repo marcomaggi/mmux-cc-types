@@ -229,9 +229,10 @@ library, actually implementing the builtins, is installed under @code{$libdir}; 
 @noindent
 the shared library is automatically loaded by the shell library.
 
-A C language header file is also installed under @code{$includedir}, for example:
+C language header files are also installed under @code{$includedir}, for example:
 
 @center @file{/usr/local/include/libmmux-bash-pointers.h}
+@center @file{/usr/local/include/libmmux-bash-pointers-config.h}
 
 @noindent
 we can write code that links to the shared library to reuse some of its facilities.
@@ -3208,9 +3209,10 @@ mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
 @center @file{libmmux-bash-pointers.so}
 
 @noindent
-and a C language header:
+and C language headers:
 
 @center @file{libmmux-bash-pointers.h}
+@center @file{libmmux-bash-pointers-config.h}
 
 @noindent
 we can write code that links to the shared library to reuse some of its facilities.  @ref{overview
@@ -3233,24 +3235,39 @@ linking} for details.
 @appendixsec How to configure a package to link the shared library
 
 
-It happens that some rare platform may not implement the C language types @code{long long} and
-@code{long double}.  When writing a package that interfaces with the shared library, we must define
-preprocessor symbols to specify if a type is implemented:
+It happens that some rare platform may not implement the C language types @objtype{signed long long
+int}, @objtype{unsigned long long int} and @code{long double}; more platforms may not implement the
+extension types @code{_FloatN} and @code{_FloatNx}, which usually are:
 
 @example
-#define HAVE_LONG_LONG_INT              1
-#define HAVE_UNSIGNED_LONG_LONG         1
-#define HAVE_LONG_DOUBLE                1
+_Float32
+_Float64
+_Float128
+_Float32x
+_Float64x
+_Float128x
 @end example
 
 @noindent
-when using the @gnu{} Autotools, we can put the following code in @file{configure.ac}:
+these types are supported by @value{PACKAGE}.
+
+At configuration type: @value{PACKAGE} tries to determine if these types are supported and defines
+the following symbols in its header files:
 
 @example
-AC_TYPE_LONG_LONG_INT
-AC_TYPE_UNSIGNED_LONG_LONG_INT
-AC_TYPE_LONG_DOUBLE
+#define MMUX_HAVE_TYPE_SLLONG           1
+#define MMUX_HAVE_TYPE_ULLONG           1
+#define MMUX_HAVE_TYPE_LDOUBLE          1
+#define MMUX_HAVE_TYPE_FLOAT32          1
+#define MMUX_HAVE_TYPE_FLOAT64          1
+#define MMUX_HAVE_TYPE_FLOAT128         1
+#define MMUX_HAVE_TYPE_FLOAT32X         1
+#define MMUX_HAVE_TYPE_FLOAT64X         1
+#define MMUX_HAVE_TYPE_FLOAT128X        1
 @end example
+
+@noindent
+if a C preprocessor symbol is defined and set to @samp{1}: the corresponding type is supported.
 
 @c page
 @node shared library version
@@ -3302,9 +3319,26 @@ Return an integer representing the library interface current age.
 @cindex @code{float}, type stem
 @cindex @code{double}, type stem
 @cindex @code{ldouble}, type stem
+
+@cindex @code{float32}, type stem
+@cindex @code{float64}, type stem
+@cindex @code{float128}, type stem
+
+@cindex @code{float32x}, type stem
+@cindex @code{float64x}, type stem
+@cindex @code{float128x}, type stem
+
 @cindex @code{complexf}, type stem
 @cindex @code{complexd}, type stem
 @cindex @code{complexld}, type stem
+
+@cindex @code{complexf32}, type stem
+@cindex @code{complexf64}, type stem
+@cindex @code{complexf128}, type stem
+
+@cindex @code{complexf32x}, type stem
+@cindex @code{complexf64x}, type stem
+@cindex @code{complexf128x}, type stem
 
 @cindex @code{sint8}, type stem
 @cindex @code{uint8}, type stem
@@ -3357,9 +3391,26 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{float,float}
 @MmuxDefineCAliasTypedef{double,double}
 @MmuxDefineCAliasTypedef{ldouble,long double}
+
+@MmuxDefineCAliasTypedef{float32, _Float32}
+@MmuxDefineCAliasTypedef{float64, _Float64}
+@MmuxDefineCAliasTypedef{float128, _Float128}
+
+@MmuxDefineCAliasTypedef{float32x, _Float32x}
+@MmuxDefineCAliasTypedef{float64x, _Float64x}
+@MmuxDefineCAliasTypedef{float128x, _Float128x}
+
 @MmuxDefineCAliasTypedef{complexf,float complex}
 @MmuxDefineCAliasTypedef{complexd,double complex}
 @MmuxDefineCAliasTypedef{complexld,long double complex}
+
+@MmuxDefineCAliasTypedef{complexf32, _Float32 complex}
+@MmuxDefineCAliasTypedef{complexf64, _Float64 complex}
+@MmuxDefineCAliasTypedef{complexf128, _Float128 complex}
+
+@MmuxDefineCAliasTypedef{complexf32x, _Float32x complex}
+@MmuxDefineCAliasTypedef{complexf64x, _Float64x complex}
+@MmuxDefineCAliasTypedef{complexf128x, _Float128x complex}
 
 @MmuxDefineCAliasTypedef{sint8,int8_t}
 @MmuxDefineCAliasTypedef{uint8,uint8_t}
@@ -3413,9 +3464,26 @@ Return a positive integer representing the size in bytes of the C language stand
 @MmuxDefineCFunctionSizeof{float}
 @MmuxDefineCFunctionSizeof{double}
 @MmuxDefineCFunctionSizeof{ldouble}
+
+@MmuxDefineCFunctionSizeof{float32}
+@MmuxDefineCFunctionSizeof{float64}
+@MmuxDefineCFunctionSizeof{float128}
+
+@MmuxDefineCFunctionSizeof{float32x}
+@MmuxDefineCFunctionSizeof{float64x}
+@MmuxDefineCFunctionSizeof{float128x}
+
 @MmuxDefineCFunctionSizeof{complexf}
 @MmuxDefineCFunctionSizeof{complexd}
 @MmuxDefineCFunctionSizeof{complexld}
+
+@MmuxDefineCFunctionSizeof{complexf32}
+@MmuxDefineCFunctionSizeof{complexf64}
+@MmuxDefineCFunctionSizeof{complexf128}
+
+@MmuxDefineCFunctionSizeof{complexf32x}
+@MmuxDefineCFunctionSizeof{complexf64x}
+@MmuxDefineCFunctionSizeof{complexf128x}
 
 @MmuxDefineCFunctionSizeof{sint8}
 @MmuxDefineCFunctionSizeof{uint8}
@@ -3446,7 +3514,7 @@ Return a positive integer representing the size in bytes of the C language stand
 
 
 @macro MmuxDefineCFunctionPredicate{STEM}
-@deftypefun bool mmux_bash_pointers_string_\STEM\_p (char const * @var{str})
+@deftypefun bool mmux_bash_pointers_string_is_\STEM\ (char const * @var{str})
 Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a
 value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @end deftypefun
@@ -3469,9 +3537,26 @@ value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{float}
 @MmuxDefineCFunctionPredicate{double}
 @MmuxDefineCFunctionPredicate{ldouble}
+
+@MmuxDefineCFunctionPredicate{float32}
+@MmuxDefineCFunctionPredicate{float64}
+@MmuxDefineCFunctionPredicate{float128}
+
+@MmuxDefineCFunctionPredicate{float32x}
+@MmuxDefineCFunctionPredicate{float64x}
+@MmuxDefineCFunctionPredicate{float128x}
+
 @MmuxDefineCFunctionPredicate{complexf}
 @MmuxDefineCFunctionPredicate{complexd}
 @MmuxDefineCFunctionPredicate{complexld}
+
+@MmuxDefineCFunctionPredicate{complexf32}
+@MmuxDefineCFunctionPredicate{complexf64}
+@MmuxDefineCFunctionPredicate{complexf128}
+
+@MmuxDefineCFunctionPredicate{complexf32x}
+@MmuxDefineCFunctionPredicate{complexf64x}
+@MmuxDefineCFunctionPredicate{complexf128x}
 
 @MmuxDefineCFunctionPredicate{sint8}
 @MmuxDefineCFunctionPredicate{uint8}
@@ -3525,9 +3610,14 @@ Return the maximum value representable by the range of values of the type
 @MmuxDefineCFunctionMaximum{float}
 @MmuxDefineCFunctionMaximum{double}
 @MmuxDefineCFunctionMaximum{ldouble}
-@MmuxDefineCFunctionMaximum{complexf}
-@MmuxDefineCFunctionMaximum{complexd}
-@MmuxDefineCFunctionMaximum{complexld}
+
+@MmuxDefineCFunctionMaximum{float32}
+@MmuxDefineCFunctionMaximum{float64}
+@MmuxDefineCFunctionMaximum{float128}
+
+@MmuxDefineCFunctionMaximum{float32x}
+@MmuxDefineCFunctionMaximum{float64x}
+@MmuxDefineCFunctionMaximum{float128x}
 
 @MmuxDefineCFunctionMaximum{sint8}
 @MmuxDefineCFunctionMaximum{uint8}
@@ -3581,9 +3671,14 @@ Return the minimum value representable by the range of values of the type
 @MmuxDefineCFunctionMinimum{float}
 @MmuxDefineCFunctionMinimum{double}
 @MmuxDefineCFunctionMinimum{ldouble}
-@MmuxDefineCFunctionMinimum{complexf}
-@MmuxDefineCFunctionMinimum{complexd}
-@MmuxDefineCFunctionMinimum{complexld}
+
+@MmuxDefineCFunctionMinimum{float32}
+@MmuxDefineCFunctionMinimum{float64}
+@MmuxDefineCFunctionMinimum{float128}
+
+@MmuxDefineCFunctionMinimum{float32x}
+@MmuxDefineCFunctionMinimum{float64x}
+@MmuxDefineCFunctionMinimum{float128x}
 
 @MmuxDefineCFunctionMinimum{sint8}
 @MmuxDefineCFunctionMinimum{uint8}
@@ -3654,9 +3749,26 @@ requested the parsing operation, for example: the name of a builtin.
 @MmuxDefineCFunctionParser{float}
 @MmuxDefineCFunctionParser{double}
 @MmuxDefineCFunctionParser{ldouble}
+
+@MmuxDefineCFunctionParser{float32}
+@MmuxDefineCFunctionParser{float64}
+@MmuxDefineCFunctionParser{float128}
+
+@MmuxDefineCFunctionParser{float32x}
+@MmuxDefineCFunctionParser{float64x}
+@MmuxDefineCFunctionParser{float128x}
+
 @MmuxDefineCFunctionParser{complexf}
 @MmuxDefineCFunctionParser{complexd}
 @MmuxDefineCFunctionParser{complexld}
+
+@MmuxDefineCFunctionParser{complexf32}
+@MmuxDefineCFunctionParser{complexf64}
+@MmuxDefineCFunctionParser{complexf128}
+
+@MmuxDefineCFunctionParser{complexf32x}
+@MmuxDefineCFunctionParser{complexf64x}
+@MmuxDefineCFunctionParser{complexf128x}
 
 @MmuxDefineCFunctionParser{sint8}
 @MmuxDefineCFunctionParser{uint8}
@@ -3736,9 +3848,26 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{float}
 @MmuxDefineCFunctionSprinter{double}
 @MmuxDefineCFunctionSprinter{ldouble}
+
+@MmuxDefineCFunctionSprinter{float32}
+@MmuxDefineCFunctionSprinter{float64}
+@MmuxDefineCFunctionSprinter{float128}
+
+@MmuxDefineCFunctionSprinter{float32x}
+@MmuxDefineCFunctionSprinter{float64x}
+@MmuxDefineCFunctionSprinter{float128x}
+
 @MmuxDefineCFunctionSprinter{complexf}
 @MmuxDefineCFunctionSprinter{complexd}
 @MmuxDefineCFunctionSprinter{complexld}
+
+@MmuxDefineCFunctionSprinter{complexf32}
+@MmuxDefineCFunctionSprinter{complexf64}
+@MmuxDefineCFunctionSprinter{complexf128}
+
+@MmuxDefineCFunctionSprinter{complexf32x}
+@MmuxDefineCFunctionSprinter{complexf64x}
+@MmuxDefineCFunctionSprinter{complexf128x}
 
 @MmuxDefineCFunctionSprinter{sint8}
 @MmuxDefineCFunctionSprinter{uint8}

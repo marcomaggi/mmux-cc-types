@@ -1,0 +1,56 @@
+/*
+  Part of: MMUX Bash Pointers
+  Contents: public configuration header file
+  Date: Sep 27, 2024
+
+  Abstract
+
+	This is the  public configuration header file of the  library; it is included
+	in the main public header file.
+
+  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+
+  This program is free  software: you can redistribute it and/or  modify it under the
+  terms of the  GNU Lesser General Public  License as published by  the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later version.
+
+  This program  is distributed in the  hope that it  will be useful, but  WITHOUT ANY
+  WARRANTY; without  even the implied  warranty of  MERCHANTABILITY or FITNESS  FOR A
+  PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public License along with
+  this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#ifndef MMUX_BASH_POINTERS_CONFIG_H
+#define MMUX_BASH_POINTERS_CONFIG_H 1
+
+#undef  MMUX_BASH_POINTERS_VERSION_INTERFACE_CURRENT
+#define MMUX_BASH_POINTERS_VERSION_INTERFACE_CURRENT	@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
+#undef  MMUX_BASH_POINTERS_VERSION_INTERFACE_REVISION
+#define MMUX_BASH_POINTERS_VERSION_INTERFACE_REVISION	@mmux_bash_pointers_VERSION_INTERFACE_REVISION@
+#undef  MMUX_BASH_POINTERS_VERSION_INTERFACE_AGE
+#define MMUX_BASH_POINTERS_VERSION_INTERFACE_AGE	@mmux_bash_pointers_VERSION_INTERFACE_AGE@
+
+#undef  MMUX_HAVE_TYPE_SLLONG
+#define MMUX_HAVE_TYPE_SLLONG		@MMUX_HAVE_TYPE_SLLONG@
+#undef  MMUX_HAVE_TYPE_ULLONG
+#define MMUX_HAVE_TYPE_ULLONG		@MMUX_HAVE_TYPE_ULLONG@
+#undef  MMUX_HAVE_TYPE_LDOUBLE
+#define MMUX_HAVE_TYPE_LDOUBLE		@MMUX_HAVE_TYPE_LDOUBLE@
+#undef  MMUX_HAVE_TYPE_FLOAT32
+#define MMUX_HAVE_TYPE_FLOAT32		@MMUX_HAVE_TYPE_FLOAT32@
+#undef  MMUX_HAVE_TYPE_FLOAT64
+#define MMUX_HAVE_TYPE_FLOAT64		@MMUX_HAVE_TYPE_FLOAT64@
+#undef  MMUX_HAVE_TYPE_FLOAT128
+#define MMUX_HAVE_TYPE_FLOAT128		@MMUX_HAVE_TYPE_FLOAT128@
+#undef  MMUX_HAVE_TYPE_FLOAT32X
+#define MMUX_HAVE_TYPE_FLOAT32X		@MMUX_HAVE_TYPE_FLOAT32X@
+#undef  MMUX_HAVE_TYPE_FLOAT64X
+#define MMUX_HAVE_TYPE_FLOAT64X		@MMUX_HAVE_TYPE_FLOAT64X@
+#undef  MMUX_HAVE_TYPE_FLOAT128X
+#define MMUX_HAVE_TYPE_FLOAT128X	@MMUX_HAVE_TYPE_FLOAT128X@
+
+#endif /* MMUX_BASH_POINTERS_CONFIG_H */
+
+/* end of file */

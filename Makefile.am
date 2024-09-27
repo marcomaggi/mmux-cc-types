@@ -111,7 +111,8 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-sprint-functions.c	\
 	src/mmux-bash-pointers-type-functions.c
 
-MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES = \
+# NOTE Load first "libmmux-bash-builtins.m4" and then "config.m4" !!!
+MMUX_BASH_POINTERS_M4_LIBS = \
 	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
 	$(builddir)/src/config.m4
 
@@ -125,7 +126,7 @@ mmux_bash_pointers_AGE			= @mmux_bash_pointers_VERSION_INTERFACE_AGE@
 mmux_bash_pointers_LINKER_VERSION	= \
 	-version-info $(mmux_bash_pointers_CURRENT):$(mmux_bash_pointers_REVISION):$(mmux_bash_pointers_AGE)
 
-include_HEADERS				= src/mmux-bash-pointers.h
+include_HEADERS				= src/mmux-bash-pointers.h src/mmux-bash-pointers-config.h
 
 lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
@@ -133,6 +134,7 @@ libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
 libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers.h			\
+	src/mmux-bash-pointers-config.h			\
 	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-accessors.c		\
 	src/mmux-bash-pointers-arithmetics.c		\
@@ -152,13 +154,13 @@ libmmux_bash_pointers_la_SOURCES	= \
 
 library: libmmux-bash-pointers.la
 
-src/%.h: src/%.h.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES) $< >$@
+src/%.h: src/%.h.m4 $(MMUX_BASH_POINTERS_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_M4_LIBS) $< >$@
 
-src/%.c: src/%.c.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES) $< >$@
+src/%.c: src/%.c.m4 $(MMUX_BASH_POINTERS_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_M4_LIBS) $< >$@
 
-src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h
+src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
 
 ## ------------------------------------------------------------------------
 
@@ -168,8 +170,8 @@ CLEANFILES		+= src/libmmux-bash-pointers.bash
 mmuxbashlib_DATA	= src/libmmux-bash-pointers.bash
 mmuxbashlibdir		= $(datadir)/bash
 
-src/%.bash: src/%.bash.m4 $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_BUILT_SOURCES_PREREQUISITES) $< >$@
+src/%.bash: src/%.bash.m4 $(MMUX_BASH_POINTERS_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_M4_LIBS) $< >$@
 
 
 #### tests

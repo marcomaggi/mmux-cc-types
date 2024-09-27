@@ -1879,6 +1879,600 @@ function comparison-ldouble-equal-relepsilon-2.3 () {
 }
 
 
+#### type variables: float32
+
+if test -v mmux_libc_SIZEOF_FLOAT32
+then
+
+function comparison-float32-equal-1.1         () {   mmux_float32_equal '1.0' ;}
+function comparison-float32-equal-1.2         () {   mmux_float32_equal '1.0' '1.0' ;}
+function comparison-float32-equal-1.3         () {   mmux_float32_equal '1.0' '1.0' '1.0' ;}
+function comparison-float32-equal-1.4         () { ! mmux_float32_equal '9' '1.1' '1.0' ;}
+function comparison-float32-equal-1.5         () {   mmux_float32_equal '-9' '-9' ;}
+function comparison-float32-equal-1.6         () { ! mmux_float32_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32-greater-1.1       () {   mmux_float32_greater '9.0' ;}
+function comparison-float32-greater-1.2       () {   mmux_float32_greater '9.0' '8.0' ;}
+function comparison-float32-greater-1.3       () {   mmux_float32_greater '9.0' '8.0' '7.0' ;}
+function comparison-float32-greater-1.4       () { ! mmux_float32_greater '1.1' '3.3' ;}
+function comparison-float32-greater-1.5       () { ! mmux_float32_greater '9.9' '3.3' '5.5' ;}
+function comparison-float32-greater-1.6       () { ! mmux_float32_greater '1.1' '1.1' ;}
+function comparison-float32-greater-1.7       () {   mmux_float32_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32-lesser-1.1        ()  {   mmux_float32_lesser '9.0' ;}
+function comparison-float32-lesser-1.2        ()  {   mmux_float32_lesser '8.0' '9.0' ;}
+function comparison-float32-lesser-1.3        ()  {   mmux_float32_lesser '7.0' '8.0' '9.0' ;}
+function comparison-float32-lesser-1.4        ()  { ! mmux_float32_lesser '3.3' '1.1' ;}
+function comparison-float32-lesser-1.5        ()  { ! mmux_float32_lesser '3.3' '9.9' '5.5' ;}
+function comparison-float32-lesser-1.6        ()  { ! mmux_float32_lesser '1.1' '1.1' ;}
+function comparison-float32-lesser-1.7        ()  { ! mmux_float32_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32-greater-equal-1.1 () {   mmux_float32_greater_equal '9.0' ;}
+function comparison-float32-greater-equal-1.2 () {   mmux_float32_greater_equal '9.0' '8.0' ;}
+function comparison-float32-greater-equal-1.3 () {   mmux_float32_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-float32-greater-equal-1.4 () { ! mmux_float32_greater_equal '1.1' '3.3' ;}
+function comparison-float32-greater-equal-1.5 () { ! mmux_float32_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-float32-greater-equal-1.6 () {   mmux_float32_greater_equal '1.1' '1.1' ;}
+function comparison-float32-greater-equal-1.7 () {   mmux_float32_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32-lesser-equal-1.1  () {   mmux_float32_lesser_equal '9.0' ;}
+function comparison-float32-lesser-equal-1.2  () {   mmux_float32_lesser_equal '8.0' '9.0' ;}
+function comparison-float32-lesser-equal-1.3  () {   mmux_float32_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-float32-lesser-equal-1.4  () { ! mmux_float32_lesser_equal '3.3' '1.1' ;}
+function comparison-float32-lesser-equal-1.5  () { ! mmux_float32_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-float32-lesser-equal-1.6  () {   mmux_float32_lesser_equal '1.1' '1.1' ;}
+function comparison-float32-lesser-equal-1.7  () {   mmux_float32_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32-equal-absmargin-1.1   () {   mmux_float32_equal_absmargin '1.0' ;}
+function comparison-float32-equal-absmargin-1.2   () {   mmux_float32_equal_absmargin '1.0' '1.0' ;}
+function comparison-float32-equal-absmargin-1.3   () {   mmux_float32_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float32-equal-absmargin-1.4   () { ! mmux_float32_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float32-equal-absmargin-1.5   () {   mmux_float32_equal_absmargin '-9' '-9' ;}
+function comparison-float32-equal-absmargin-1.6   () { ! mmux_float32_equal_absmargin '-9' '-4' ;}
+
+function comparison-float32-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT32='0.1'
+    mmux_float32_equal_absmargin '1.0' '1.02'
+}
+function comparison-float32-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT32='0.1'
+    ! mmux_float32_equal_absmargin '1.0' '1.3'
+}
+function comparison-float32-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT32='1.0'
+    ! mmux_float32_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32-equal-relepsilon-1.1   () {   mmux_float32_equal_relepsilon '1.0' ;}
+function comparison-float32-equal-relepsilon-1.2   () {   mmux_float32_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float32-equal-relepsilon-1.3   () {   mmux_float32_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float32-equal-relepsilon-1.4   () { ! mmux_float32_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float32-equal-relepsilon-1.5   () {   mmux_float32_equal_relepsilon '-9' '-9' ;}
+function comparison-float32-equal-relepsilon-1.6   () { ! mmux_float32_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float32-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT32='0.1'
+    mmux_float32_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float32-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT32='0.1'
+    ! mmux_float32_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float32-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT32='0.1'
+    ! mmux_float32_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: float64
+
+if test -v mmux_libc_SIZEOF_FLOAT64
+then
+
+function comparison-float64-equal-1.1         () {   mmux_float64_equal '1.0' ;}
+function comparison-float64-equal-1.2         () {   mmux_float64_equal '1.0' '1.0' ;}
+function comparison-float64-equal-1.3         () {   mmux_float64_equal '1.0' '1.0' '1.0' ;}
+function comparison-float64-equal-1.4         () { ! mmux_float64_equal '9' '1.1' '1.0' ;}
+function comparison-float64-equal-1.5         () {   mmux_float64_equal '-9' '-9' ;}
+function comparison-float64-equal-1.6         () { ! mmux_float64_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64-greater-1.1       () {   mmux_float64_greater '9.0' ;}
+function comparison-float64-greater-1.2       () {   mmux_float64_greater '9.0' '8.0' ;}
+function comparison-float64-greater-1.3       () {   mmux_float64_greater '9.0' '8.0' '7.0' ;}
+function comparison-float64-greater-1.4       () { ! mmux_float64_greater '1.1' '3.3' ;}
+function comparison-float64-greater-1.5       () { ! mmux_float64_greater '9.9' '3.3' '5.5' ;}
+function comparison-float64-greater-1.6       () { ! mmux_float64_greater '1.1' '1.1' ;}
+function comparison-float64-greater-1.7       () {   mmux_float64_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64-lesser-1.1        ()  {   mmux_float64_lesser '9.0' ;}
+function comparison-float64-lesser-1.2        ()  {   mmux_float64_lesser '8.0' '9.0' ;}
+function comparison-float64-lesser-1.3        ()  {   mmux_float64_lesser '7.0' '8.0' '9.0' ;}
+function comparison-float64-lesser-1.4        ()  { ! mmux_float64_lesser '3.3' '1.1' ;}
+function comparison-float64-lesser-1.5        ()  { ! mmux_float64_lesser '3.3' '9.9' '5.5' ;}
+function comparison-float64-lesser-1.6        ()  { ! mmux_float64_lesser '1.1' '1.1' ;}
+function comparison-float64-lesser-1.7        ()  { ! mmux_float64_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64-greater-equal-1.1 () {   mmux_float64_greater_equal '9.0' ;}
+function comparison-float64-greater-equal-1.2 () {   mmux_float64_greater_equal '9.0' '8.0' ;}
+function comparison-float64-greater-equal-1.3 () {   mmux_float64_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-float64-greater-equal-1.4 () { ! mmux_float64_greater_equal '1.1' '3.3' ;}
+function comparison-float64-greater-equal-1.5 () { ! mmux_float64_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-float64-greater-equal-1.6 () {   mmux_float64_greater_equal '1.1' '1.1' ;}
+function comparison-float64-greater-equal-1.7 () {   mmux_float64_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64-lesser-equal-1.1  () {   mmux_float64_lesser_equal '9.0' ;}
+function comparison-float64-lesser-equal-1.2  () {   mmux_float64_lesser_equal '8.0' '9.0' ;}
+function comparison-float64-lesser-equal-1.3  () {   mmux_float64_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-float64-lesser-equal-1.4  () { ! mmux_float64_lesser_equal '3.3' '1.1' ;}
+function comparison-float64-lesser-equal-1.5  () { ! mmux_float64_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-float64-lesser-equal-1.6  () {   mmux_float64_lesser_equal '1.1' '1.1' ;}
+function comparison-float64-lesser-equal-1.7  () {   mmux_float64_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64-equal-absmargin-1.1   () {   mmux_float64_equal_absmargin '1.0' ;}
+function comparison-float64-equal-absmargin-1.2   () {   mmux_float64_equal_absmargin '1.0' '1.0' ;}
+function comparison-float64-equal-absmargin-1.3   () {   mmux_float64_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float64-equal-absmargin-1.4   () { ! mmux_float64_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float64-equal-absmargin-1.5   () {   mmux_float64_equal_absmargin '-9' '-9' ;}
+function comparison-float64-equal-absmargin-1.6   () { ! mmux_float64_equal_absmargin '-9' '-4' ;}
+
+function comparison-float64-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT64='0.1'
+    mmux_float64_equal_absmargin '1.0' '1.02'
+}
+function comparison-float64-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT64='0.1'
+    ! mmux_float64_equal_absmargin '1.0' '1.3'
+}
+function comparison-float64-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT64='1.0'
+    ! mmux_float64_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64-equal-relepsilon-1.1   () {   mmux_float64_equal_relepsilon '1.0' ;}
+function comparison-float64-equal-relepsilon-1.2   () {   mmux_float64_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float64-equal-relepsilon-1.3   () {   mmux_float64_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float64-equal-relepsilon-1.4   () { ! mmux_float64_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float64-equal-relepsilon-1.5   () {   mmux_float64_equal_relepsilon '-9' '-9' ;}
+function comparison-float64-equal-relepsilon-1.6   () { ! mmux_float64_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float64-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT64='0.1'
+    mmux_float64_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float64-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT64='0.1'
+    ! mmux_float64_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float64-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT64='0.1'
+    ! mmux_float64_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: float128
+
+if test -v mmux_libc_SIZEOF_FLOAT128
+then
+
+function comparison-float128-equal-1.1         () {   mmux_float128_equal '1.0' ;}
+function comparison-float128-equal-1.2         () {   mmux_float128_equal '1.0' '1.0' ;}
+function comparison-float128-equal-1.3         () {   mmux_float128_equal '1.0' '1.0' '1.0' ;}
+function comparison-float128-equal-1.4         () { ! mmux_float128_equal '9' '1.1' '1.0' ;}
+function comparison-float128-equal-1.5         () {   mmux_float128_equal '-9' '-9' ;}
+function comparison-float128-equal-1.6         () { ! mmux_float128_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128-greater-1.1       () {   mmux_float128_greater '9.0' ;}
+function comparison-float128-greater-1.2       () {   mmux_float128_greater '9.0' '8.0' ;}
+function comparison-float128-greater-1.3       () {   mmux_float128_greater '9.0' '8.0' '7.0' ;}
+function comparison-float128-greater-1.4       () { ! mmux_float128_greater '1.1' '3.3' ;}
+function comparison-float128-greater-1.5       () { ! mmux_float128_greater '9.9' '3.3' '5.5' ;}
+function comparison-float128-greater-1.6       () { ! mmux_float128_greater '1.1' '1.1' ;}
+function comparison-float128-greater-1.7       () {   mmux_float128_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128-lesser-1.1        ()  {   mmux_float128_lesser '9.0' ;}
+function comparison-float128-lesser-1.2        ()  {   mmux_float128_lesser '8.0' '9.0' ;}
+function comparison-float128-lesser-1.3        ()  {   mmux_float128_lesser '7.0' '8.0' '9.0' ;}
+function comparison-float128-lesser-1.4        ()  { ! mmux_float128_lesser '3.3' '1.1' ;}
+function comparison-float128-lesser-1.5        ()  { ! mmux_float128_lesser '3.3' '9.9' '5.5' ;}
+function comparison-float128-lesser-1.6        ()  { ! mmux_float128_lesser '1.1' '1.1' ;}
+function comparison-float128-lesser-1.7        ()  { ! mmux_float128_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128-greater-equal-1.1 () {   mmux_float128_greater_equal '9.0' ;}
+function comparison-float128-greater-equal-1.2 () {   mmux_float128_greater_equal '9.0' '8.0' ;}
+function comparison-float128-greater-equal-1.3 () {   mmux_float128_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-float128-greater-equal-1.4 () { ! mmux_float128_greater_equal '1.1' '3.3' ;}
+function comparison-float128-greater-equal-1.5 () { ! mmux_float128_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-float128-greater-equal-1.6 () {   mmux_float128_greater_equal '1.1' '1.1' ;}
+function comparison-float128-greater-equal-1.7 () {   mmux_float128_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128-lesser-equal-1.1  () {   mmux_float128_lesser_equal '9.0' ;}
+function comparison-float128-lesser-equal-1.2  () {   mmux_float128_lesser_equal '8.0' '9.0' ;}
+function comparison-float128-lesser-equal-1.3  () {   mmux_float128_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-float128-lesser-equal-1.4  () { ! mmux_float128_lesser_equal '3.3' '1.1' ;}
+function comparison-float128-lesser-equal-1.5  () { ! mmux_float128_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-float128-lesser-equal-1.6  () {   mmux_float128_lesser_equal '1.1' '1.1' ;}
+function comparison-float128-lesser-equal-1.7  () {   mmux_float128_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128-equal-absmargin-1.1   () {   mmux_float128_equal_absmargin '1.0' ;}
+function comparison-float128-equal-absmargin-1.2   () {   mmux_float128_equal_absmargin '1.0' '1.0' ;}
+function comparison-float128-equal-absmargin-1.3   () {   mmux_float128_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float128-equal-absmargin-1.4   () { ! mmux_float128_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float128-equal-absmargin-1.5   () {   mmux_float128_equal_absmargin '-9' '-9' ;}
+function comparison-float128-equal-absmargin-1.6   () { ! mmux_float128_equal_absmargin '-9' '-4' ;}
+
+function comparison-float128-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT128='0.1'
+    mmux_float128_equal_absmargin '1.0' '1.02'
+}
+function comparison-float128-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT128='0.1'
+    ! mmux_float128_equal_absmargin '1.0' '1.3'
+}
+function comparison-float128-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT128='1.0'
+    ! mmux_float128_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128-equal-relepsilon-1.1   () {   mmux_float128_equal_relepsilon '1.0' ;}
+function comparison-float128-equal-relepsilon-1.2   () {   mmux_float128_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float128-equal-relepsilon-1.3   () {   mmux_float128_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float128-equal-relepsilon-1.4   () { ! mmux_float128_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float128-equal-relepsilon-1.5   () {   mmux_float128_equal_relepsilon '-9' '-9' ;}
+function comparison-float128-equal-relepsilon-1.6   () { ! mmux_float128_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float128-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT128='0.1'
+    mmux_float128_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float128-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT128='0.1'
+    ! mmux_float128_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float128-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT128='0.1'
+    ! mmux_float128_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: float32x
+
+if test -v mmux_libc_SIZEOF_FLOAT32X
+then
+
+function comparison-float32x-equal-1.1         () {   mmux_float32x_equal '1.0' ;}
+function comparison-float32x-equal-1.2         () {   mmux_float32x_equal '1.0' '1.0' ;}
+function comparison-float32x-equal-1.3         () {   mmux_float32x_equal '1.0' '1.0' '1.0' ;}
+function comparison-float32x-equal-1.4         () { ! mmux_float32x_equal '9' '1.1' '1.0' ;}
+function comparison-float32x-equal-1.5         () {   mmux_float32x_equal '-9' '-9' ;}
+function comparison-float32x-equal-1.6         () { ! mmux_float32x_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32x-greater-1.1       () {   mmux_float32x_greater '9.0' ;}
+function comparison-float32x-greater-1.2       () {   mmux_float32x_greater '9.0' '8.0' ;}
+function comparison-float32x-greater-1.3       () {   mmux_float32x_greater '9.0' '8.0' '7.0' ;}
+function comparison-float32x-greater-1.4       () { ! mmux_float32x_greater '1.1' '3.3' ;}
+function comparison-float32x-greater-1.5       () { ! mmux_float32x_greater '9.9' '3.3' '5.5' ;}
+function comparison-float32x-greater-1.6       () { ! mmux_float32x_greater '1.1' '1.1' ;}
+function comparison-float32x-greater-1.7       () {   mmux_float32x_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32x-lesser-1.1        ()  {   mmux_float32x_lesser '9.0' ;}
+function comparison-float32x-lesser-1.2        ()  {   mmux_float32x_lesser '8.0' '9.0' ;}
+function comparison-float32x-lesser-1.3        ()  {   mmux_float32x_lesser '7.0' '8.0' '9.0' ;}
+function comparison-float32x-lesser-1.4        ()  { ! mmux_float32x_lesser '3.3' '1.1' ;}
+function comparison-float32x-lesser-1.5        ()  { ! mmux_float32x_lesser '3.3' '9.9' '5.5' ;}
+function comparison-float32x-lesser-1.6        ()  { ! mmux_float32x_lesser '1.1' '1.1' ;}
+function comparison-float32x-lesser-1.7        ()  { ! mmux_float32x_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32x-greater-equal-1.1 () {   mmux_float32x_greater_equal '9.0' ;}
+function comparison-float32x-greater-equal-1.2 () {   mmux_float32x_greater_equal '9.0' '8.0' ;}
+function comparison-float32x-greater-equal-1.3 () {   mmux_float32x_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-float32x-greater-equal-1.4 () { ! mmux_float32x_greater_equal '1.1' '3.3' ;}
+function comparison-float32x-greater-equal-1.5 () { ! mmux_float32x_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-float32x-greater-equal-1.6 () {   mmux_float32x_greater_equal '1.1' '1.1' ;}
+function comparison-float32x-greater-equal-1.7 () {   mmux_float32x_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32x-lesser-equal-1.1  () {   mmux_float32x_lesser_equal '9.0' ;}
+function comparison-float32x-lesser-equal-1.2  () {   mmux_float32x_lesser_equal '8.0' '9.0' ;}
+function comparison-float32x-lesser-equal-1.3  () {   mmux_float32x_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-float32x-lesser-equal-1.4  () { ! mmux_float32x_lesser_equal '3.3' '1.1' ;}
+function comparison-float32x-lesser-equal-1.5  () { ! mmux_float32x_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-float32x-lesser-equal-1.6  () {   mmux_float32x_lesser_equal '1.1' '1.1' ;}
+function comparison-float32x-lesser-equal-1.7  () {   mmux_float32x_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32x-equal-absmargin-1.1   () {   mmux_float32x_equal_absmargin '1.0' ;}
+function comparison-float32x-equal-absmargin-1.2   () {   mmux_float32x_equal_absmargin '1.0' '1.0' ;}
+function comparison-float32x-equal-absmargin-1.3   () {   mmux_float32x_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float32x-equal-absmargin-1.4   () { ! mmux_float32x_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float32x-equal-absmargin-1.5   () {   mmux_float32x_equal_absmargin '-9' '-9' ;}
+function comparison-float32x-equal-absmargin-1.6   () { ! mmux_float32x_equal_absmargin '-9' '-4' ;}
+
+function comparison-float32x-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT32X='0.1'
+    mmux_float32x_equal_absmargin '1.0' '1.02'
+}
+function comparison-float32x-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT32X='0.1'
+    ! mmux_float32x_equal_absmargin '1.0' '1.3'
+}
+function comparison-float32x-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT32X='1.0'
+    ! mmux_float32x_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float32x-equal-relepsilon-1.1   () {   mmux_float32x_equal_relepsilon '1.0' ;}
+function comparison-float32x-equal-relepsilon-1.2   () {   mmux_float32x_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float32x-equal-relepsilon-1.3   () {   mmux_float32x_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float32x-equal-relepsilon-1.4   () { ! mmux_float32x_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float32x-equal-relepsilon-1.5   () {   mmux_float32x_equal_relepsilon '-9' '-9' ;}
+function comparison-float32x-equal-relepsilon-1.6   () { ! mmux_float32x_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float32x-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT32X='0.1'
+    mmux_float32x_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float32x-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT32X='0.1'
+    ! mmux_float32x_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float32x-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT32X='0.1'
+    ! mmux_float32x_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: float64x
+
+if test -v mmux_libc_SIZEOF_FLOAT64X
+then
+
+function comparison-float64x-equal-1.1         () {   mmux_float64x_equal '1.0' ;}
+function comparison-float64x-equal-1.2         () {   mmux_float64x_equal '1.0' '1.0' ;}
+function comparison-float64x-equal-1.3         () {   mmux_float64x_equal '1.0' '1.0' '1.0' ;}
+function comparison-float64x-equal-1.4         () { ! mmux_float64x_equal '9' '1.1' '1.0' ;}
+function comparison-float64x-equal-1.5         () {   mmux_float64x_equal '-9' '-9' ;}
+function comparison-float64x-equal-1.6         () { ! mmux_float64x_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64x-greater-1.1       () {   mmux_float64x_greater '9.0' ;}
+function comparison-float64x-greater-1.2       () {   mmux_float64x_greater '9.0' '8.0' ;}
+function comparison-float64x-greater-1.3       () {   mmux_float64x_greater '9.0' '8.0' '7.0' ;}
+function comparison-float64x-greater-1.4       () { ! mmux_float64x_greater '1.1' '3.3' ;}
+function comparison-float64x-greater-1.5       () { ! mmux_float64x_greater '9.9' '3.3' '5.5' ;}
+function comparison-float64x-greater-1.6       () { ! mmux_float64x_greater '1.1' '1.1' ;}
+function comparison-float64x-greater-1.7       () {   mmux_float64x_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64x-lesser-1.1        ()  {   mmux_float64x_lesser '9.0' ;}
+function comparison-float64x-lesser-1.2        ()  {   mmux_float64x_lesser '8.0' '9.0' ;}
+function comparison-float64x-lesser-1.3        ()  {   mmux_float64x_lesser '7.0' '8.0' '9.0' ;}
+function comparison-float64x-lesser-1.4        ()  { ! mmux_float64x_lesser '3.3' '1.1' ;}
+function comparison-float64x-lesser-1.5        ()  { ! mmux_float64x_lesser '3.3' '9.9' '5.5' ;}
+function comparison-float64x-lesser-1.6        ()  { ! mmux_float64x_lesser '1.1' '1.1' ;}
+function comparison-float64x-lesser-1.7        ()  { ! mmux_float64x_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64x-greater-equal-1.1 () {   mmux_float64x_greater_equal '9.0' ;}
+function comparison-float64x-greater-equal-1.2 () {   mmux_float64x_greater_equal '9.0' '8.0' ;}
+function comparison-float64x-greater-equal-1.3 () {   mmux_float64x_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-float64x-greater-equal-1.4 () { ! mmux_float64x_greater_equal '1.1' '3.3' ;}
+function comparison-float64x-greater-equal-1.5 () { ! mmux_float64x_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-float64x-greater-equal-1.6 () {   mmux_float64x_greater_equal '1.1' '1.1' ;}
+function comparison-float64x-greater-equal-1.7 () {   mmux_float64x_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64x-lesser-equal-1.1  () {   mmux_float64x_lesser_equal '9.0' ;}
+function comparison-float64x-lesser-equal-1.2  () {   mmux_float64x_lesser_equal '8.0' '9.0' ;}
+function comparison-float64x-lesser-equal-1.3  () {   mmux_float64x_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-float64x-lesser-equal-1.4  () { ! mmux_float64x_lesser_equal '3.3' '1.1' ;}
+function comparison-float64x-lesser-equal-1.5  () { ! mmux_float64x_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-float64x-lesser-equal-1.6  () {   mmux_float64x_lesser_equal '1.1' '1.1' ;}
+function comparison-float64x-lesser-equal-1.7  () {   mmux_float64x_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64x-equal-absmargin-1.1   () {   mmux_float64x_equal_absmargin '1.0' ;}
+function comparison-float64x-equal-absmargin-1.2   () {   mmux_float64x_equal_absmargin '1.0' '1.0' ;}
+function comparison-float64x-equal-absmargin-1.3   () {   mmux_float64x_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float64x-equal-absmargin-1.4   () { ! mmux_float64x_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float64x-equal-absmargin-1.5   () {   mmux_float64x_equal_absmargin '-9' '-9' ;}
+function comparison-float64x-equal-absmargin-1.6   () { ! mmux_float64x_equal_absmargin '-9' '-4' ;}
+
+function comparison-float64x-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT64X='0.1'
+    mmux_float64x_equal_absmargin '1.0' '1.02'
+}
+function comparison-float64x-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT64X='0.1'
+    ! mmux_float64x_equal_absmargin '1.0' '1.3'
+}
+function comparison-float64x-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT64X='1.0'
+    ! mmux_float64x_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float64x-equal-relepsilon-1.1   () {   mmux_float64x_equal_relepsilon '1.0' ;}
+function comparison-float64x-equal-relepsilon-1.2   () {   mmux_float64x_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float64x-equal-relepsilon-1.3   () {   mmux_float64x_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float64x-equal-relepsilon-1.4   () { ! mmux_float64x_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float64x-equal-relepsilon-1.5   () {   mmux_float64x_equal_relepsilon '-9' '-9' ;}
+function comparison-float64x-equal-relepsilon-1.6   () { ! mmux_float64x_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float64x-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT64X='0.1'
+    mmux_float64x_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float64x-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT64X='0.1'
+    ! mmux_float64x_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float64x-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT64X='0.1'
+    ! mmux_float64x_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: float128x
+
+if test -v mmux_libc_SIZEOF_FLOAT128X
+then
+
+function comparison-float128x-equal-1.1         () {   mmux_float128x_equal '1.0' ;}
+function comparison-float128x-equal-1.2         () {   mmux_float128x_equal '1.0' '1.0' ;}
+function comparison-float128x-equal-1.3         () {   mmux_float128x_equal '1.0' '1.0' '1.0' ;}
+function comparison-float128x-equal-1.4         () { ! mmux_float128x_equal '9' '1.1' '1.0' ;}
+function comparison-float128x-equal-1.5         () {   mmux_float128x_equal '-9' '-9' ;}
+function comparison-float128x-equal-1.6         () { ! mmux_float128x_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128x-greater-1.1       () {   mmux_float128x_greater '9.0' ;}
+function comparison-float128x-greater-1.2       () {   mmux_float128x_greater '9.0' '8.0' ;}
+function comparison-float128x-greater-1.3       () {   mmux_float128x_greater '9.0' '8.0' '7.0' ;}
+function comparison-float128x-greater-1.4       () { ! mmux_float128x_greater '1.1' '3.3' ;}
+function comparison-float128x-greater-1.5       () { ! mmux_float128x_greater '9.9' '3.3' '5.5' ;}
+function comparison-float128x-greater-1.6       () { ! mmux_float128x_greater '1.1' '1.1' ;}
+function comparison-float128x-greater-1.7       () {   mmux_float128x_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128x-lesser-1.1        ()  {   mmux_float128x_lesser '9.0' ;}
+function comparison-float128x-lesser-1.2        ()  {   mmux_float128x_lesser '8.0' '9.0' ;}
+function comparison-float128x-lesser-1.3        ()  {   mmux_float128x_lesser '7.0' '8.0' '9.0' ;}
+function comparison-float128x-lesser-1.4        ()  { ! mmux_float128x_lesser '3.3' '1.1' ;}
+function comparison-float128x-lesser-1.5        ()  { ! mmux_float128x_lesser '3.3' '9.9' '5.5' ;}
+function comparison-float128x-lesser-1.6        ()  { ! mmux_float128x_lesser '1.1' '1.1' ;}
+function comparison-float128x-lesser-1.7        ()  { ! mmux_float128x_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128x-greater-equal-1.1 () {   mmux_float128x_greater_equal '9.0' ;}
+function comparison-float128x-greater-equal-1.2 () {   mmux_float128x_greater_equal '9.0' '8.0' ;}
+function comparison-float128x-greater-equal-1.3 () {   mmux_float128x_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-float128x-greater-equal-1.4 () { ! mmux_float128x_greater_equal '1.1' '3.3' ;}
+function comparison-float128x-greater-equal-1.5 () { ! mmux_float128x_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-float128x-greater-equal-1.6 () {   mmux_float128x_greater_equal '1.1' '1.1' ;}
+function comparison-float128x-greater-equal-1.7 () {   mmux_float128x_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128x-lesser-equal-1.1  () {   mmux_float128x_lesser_equal '9.0' ;}
+function comparison-float128x-lesser-equal-1.2  () {   mmux_float128x_lesser_equal '8.0' '9.0' ;}
+function comparison-float128x-lesser-equal-1.3  () {   mmux_float128x_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-float128x-lesser-equal-1.4  () { ! mmux_float128x_lesser_equal '3.3' '1.1' ;}
+function comparison-float128x-lesser-equal-1.5  () { ! mmux_float128x_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-float128x-lesser-equal-1.6  () {   mmux_float128x_lesser_equal '1.1' '1.1' ;}
+function comparison-float128x-lesser-equal-1.7  () {   mmux_float128x_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128x-equal-absmargin-1.1   () {   mmux_float128x_equal_absmargin '1.0' ;}
+function comparison-float128x-equal-absmargin-1.2   () {   mmux_float128x_equal_absmargin '1.0' '1.0' ;}
+function comparison-float128x-equal-absmargin-1.3   () {   mmux_float128x_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-float128x-equal-absmargin-1.4   () { ! mmux_float128x_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-float128x-equal-absmargin-1.5   () {   mmux_float128x_equal_absmargin '-9' '-9' ;}
+function comparison-float128x-equal-absmargin-1.6   () { ! mmux_float128x_equal_absmargin '-9' '-4' ;}
+
+function comparison-float128x-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT128X='0.1'
+    mmux_float128x_equal_absmargin '1.0' '1.02'
+}
+function comparison-float128x-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT128X='0.1'
+    ! mmux_float128x_equal_absmargin '1.0' '1.3'
+}
+function comparison-float128x-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_FLOAT128X='1.0'
+    ! mmux_float128x_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-float128x-equal-relepsilon-1.1   () {   mmux_float128x_equal_relepsilon '1.0' ;}
+function comparison-float128x-equal-relepsilon-1.2   () {   mmux_float128x_equal_relepsilon '1.0' '1.0' ;}
+function comparison-float128x-equal-relepsilon-1.3   () {   mmux_float128x_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-float128x-equal-relepsilon-1.4   () { ! mmux_float128x_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-float128x-equal-relepsilon-1.5   () {   mmux_float128x_equal_relepsilon '-9' '-9' ;}
+function comparison-float128x-equal-relepsilon-1.6   () { ! mmux_float128x_equal_relepsilon '-9' '-4' ;}
+
+function comparison-float128x-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_FLOAT128X='0.1'
+    mmux_float128x_equal_relepsilon '1.0' '1.02'
+}
+function comparison-float128x-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_FLOAT128X='0.1'
+    ! mmux_float128x_equal_relepsilon '1.0' '1.3'
+}
+function comparison-float128x-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_FLOAT128X='0.1'
+    ! mmux_float128x_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
 #### type variables: complexf
 
 function comparison-complexf-equal-1.1         () {   mmux_complexf_equal '(1.2)+i*(3.4)' ;}
@@ -2045,6 +2639,510 @@ function comparison-complexld-equal-absmargin-3.3 () {
     ! mmux_complexld_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
+
+
+#### type variables: complexf32
+
+if test -v mmux_libc_SIZEOF_FLOAT32
+then
+
+function comparison-complexf32-equal-1.1         () {   mmux_complexf32_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf32-equal-1.2         () {   mmux_complexf32_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf32-equal-1.3         () {   mmux_complexf32_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf32-equal-1.4         () { ! mmux_complexf32_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf32-equal-1.5         () { ! mmux_complexf32_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf32-equal-absmargin-1.1   () {   mmux_complexf32_equal_absmargin '1.0' ;}
+function comparison-complexf32-equal-absmargin-1.2   () {   mmux_complexf32_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf32-equal-absmargin-1.3   () {   mmux_complexf32_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf32-equal-absmargin-1.4   () { ! mmux_complexf32_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf32-equal-absmargin-1.5   () {   mmux_complexf32_equal_absmargin '-9' '-9' ;}
+function comparison-complexf32-equal-absmargin-1.6   () { ! mmux_complexf32_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf32-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32='0.1'
+    mmux_complexf32_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf32-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32='0.1'
+    ! mmux_complexf32_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf32-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32='1.0'
+    ! mmux_complexf32_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf32-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32='(0.1)+i*(0.1)'
+    mmux_complexf32_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf32-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32='(0.1)+i*(0.1)'
+    ! mmux_complexf32_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf32-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32='(0.1)+i*(0.1)'
+    ! mmux_complexf32_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf32-equal-relepsilon-1.1   () {   mmux_complexf32_equal_relepsilon '1.0' ;}
+function comparison-complexf32-equal-relepsilon-1.2   () {   mmux_complexf32_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf32-equal-relepsilon-1.3   () {   mmux_complexf32_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf32-equal-relepsilon-1.4   () { ! mmux_complexf32_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf32-equal-relepsilon-1.5   () {   mmux_complexf32_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf32-equal-relepsilon-1.6   () { ! mmux_complexf32_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf32-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32='0.1'
+    mmux_complexf32_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf32-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32='0.1'
+    ! mmux_complexf32_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf32-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32='0.1'
+    ! mmux_complexf32_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf32-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32='(0.1)+i*(0.1)'
+    mmux_complexf32_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf32-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32='(0.1)+i*(0.1)'
+    ! mmux_complexf32_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf32-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32='(0.1)+i*(0.1)'
+    ! mmux_complexf32_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexf32x
+
+if test -v mmux_libc_SIZEOF_FLOAT32X
+then
+
+function comparison-complexf32x-equal-1.1         () {   mmux_complexf32x_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf32x-equal-1.2         () {   mmux_complexf32x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf32x-equal-1.3         () {   mmux_complexf32x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf32x-equal-1.4         () { ! mmux_complexf32x_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf32x-equal-1.5         () { ! mmux_complexf32x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf32x-equal-absmargin-1.1   () {   mmux_complexf32x_equal_absmargin '1.0' ;}
+function comparison-complexf32x-equal-absmargin-1.2   () {   mmux_complexf32x_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf32x-equal-absmargin-1.3   () {   mmux_complexf32x_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf32x-equal-absmargin-1.4   () { ! mmux_complexf32x_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf32x-equal-absmargin-1.5   () {   mmux_complexf32x_equal_absmargin '-9' '-9' ;}
+function comparison-complexf32x-equal-absmargin-1.6   () { ! mmux_complexf32x_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf32x-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='0.1'
+    mmux_complexf32x_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf32x-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='0.1'
+    ! mmux_complexf32x_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf32x-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='1.0'
+    ! mmux_complexf32x_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf32x-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='(0.1)+i*(0.1)'
+    mmux_complexf32x_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf32x-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='(0.1)+i*(0.1)'
+    ! mmux_complexf32x_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf32x-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='(0.1)+i*(0.1)'
+    ! mmux_complexf32x_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf32x-equal-relepsilon-1.1   () {   mmux_complexf32x_equal_relepsilon '1.0' ;}
+function comparison-complexf32x-equal-relepsilon-1.2   () {   mmux_complexf32x_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf32x-equal-relepsilon-1.3   () {   mmux_complexf32x_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf32x-equal-relepsilon-1.4   () { ! mmux_complexf32x_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf32x-equal-relepsilon-1.5   () {   mmux_complexf32x_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf32x-equal-relepsilon-1.6   () { ! mmux_complexf32x_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf32x-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32x='0.1'
+    mmux_complexf32x_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf32x-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32x='0.1'
+    ! mmux_complexf32x_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf32x-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32x='0.1'
+    ! mmux_complexf32x_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf32x-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32x='(0.1)+i*(0.1)'
+    mmux_complexf32x_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf32x-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32x='(0.1)+i*(0.1)'
+    ! mmux_complexf32x_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf32x-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF32x='(0.1)+i*(0.1)'
+    ! mmux_complexf32x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexf64
+
+if test -v mmux_libc_SIZEOF_FLOAT64
+then
+
+function comparison-complexf64-equal-1.1         () {   mmux_complexf64_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf64-equal-1.2         () {   mmux_complexf64_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf64-equal-1.3         () {   mmux_complexf64_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf64-equal-1.4         () { ! mmux_complexf64_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf64-equal-1.5         () { ! mmux_complexf64_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf64-equal-absmargin-1.1   () {   mmux_complexf64_equal_absmargin '1.0' ;}
+function comparison-complexf64-equal-absmargin-1.2   () {   mmux_complexf64_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf64-equal-absmargin-1.3   () {   mmux_complexf64_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf64-equal-absmargin-1.4   () { ! mmux_complexf64_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf64-equal-absmargin-1.5   () {   mmux_complexf64_equal_absmargin '-9' '-9' ;}
+function comparison-complexf64-equal-absmargin-1.6   () { ! mmux_complexf64_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf64-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64='0.1'
+    mmux_complexf64_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf64-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64='0.1'
+    ! mmux_complexf64_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf64-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64='1.0'
+    ! mmux_complexf64_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf64-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64='(0.1)+i*(0.1)'
+    mmux_complexf64_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf64-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64='(0.1)+i*(0.1)'
+    ! mmux_complexf64_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf64-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64='(0.1)+i*(0.1)'
+    ! mmux_complexf64_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf64-equal-relepsilon-1.1   () {   mmux_complexf64_equal_relepsilon '1.0' ;}
+function comparison-complexf64-equal-relepsilon-1.2   () {   mmux_complexf64_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf64-equal-relepsilon-1.3   () {   mmux_complexf64_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf64-equal-relepsilon-1.4   () { ! mmux_complexf64_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf64-equal-relepsilon-1.5   () {   mmux_complexf64_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf64-equal-relepsilon-1.6   () { ! mmux_complexf64_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf64-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64='0.1'
+    mmux_complexf64_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf64-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64='0.1'
+    ! mmux_complexf64_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf64-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64='0.1'
+    ! mmux_complexf64_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf64-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64='(0.1)+i*(0.1)'
+    mmux_complexf64_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf64-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64='(0.1)+i*(0.1)'
+    ! mmux_complexf64_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf64-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64='(0.1)+i*(0.1)'
+    ! mmux_complexf64_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexf64x
+
+if test -v mmux_libc_SIZEOF_FLOAT64X
+then
+
+function comparison-complexf64x-equal-1.1         () {   mmux_complexf64x_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf64x-equal-1.2         () {   mmux_complexf64x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf64x-equal-1.3         () {   mmux_complexf64x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf64x-equal-1.4         () { ! mmux_complexf64x_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf64x-equal-1.5         () { ! mmux_complexf64x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf64x-equal-absmargin-1.1   () {   mmux_complexf64x_equal_absmargin '1.0' ;}
+function comparison-complexf64x-equal-absmargin-1.2   () {   mmux_complexf64x_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf64x-equal-absmargin-1.3   () {   mmux_complexf64x_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf64x-equal-absmargin-1.4   () { ! mmux_complexf64x_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf64x-equal-absmargin-1.5   () {   mmux_complexf64x_equal_absmargin '-9' '-9' ;}
+function comparison-complexf64x-equal-absmargin-1.6   () { ! mmux_complexf64x_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf64x-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='0.1'
+    mmux_complexf64x_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf64x-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='0.1'
+    ! mmux_complexf64x_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf64x-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='1.0'
+    ! mmux_complexf64x_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf64x-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='(0.1)+i*(0.1)'
+    mmux_complexf64x_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf64x-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='(0.1)+i*(0.1)'
+    ! mmux_complexf64x_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf64x-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='(0.1)+i*(0.1)'
+    ! mmux_complexf64x_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf64x-equal-relepsilon-1.1   () {   mmux_complexf64x_equal_relepsilon '1.0' ;}
+function comparison-complexf64x-equal-relepsilon-1.2   () {   mmux_complexf64x_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf64x-equal-relepsilon-1.3   () {   mmux_complexf64x_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf64x-equal-relepsilon-1.4   () { ! mmux_complexf64x_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf64x-equal-relepsilon-1.5   () {   mmux_complexf64x_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf64x-equal-relepsilon-1.6   () { ! mmux_complexf64x_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf64x-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64x='0.1'
+    mmux_complexf64x_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf64x-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64x='0.1'
+    ! mmux_complexf64x_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf64x-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64x='0.1'
+    ! mmux_complexf64x_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf64x-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64x='(0.1)+i*(0.1)'
+    mmux_complexf64x_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf64x-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64x='(0.1)+i*(0.1)'
+    ! mmux_complexf64x_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf64x-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF64x='(0.1)+i*(0.1)'
+    ! mmux_complexf64x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexf128
+
+if test -v mmux_libc_SIZEOF_FLOAT128
+then
+
+function comparison-complexf128-equal-1.1         () {   mmux_complexf128_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf128-equal-1.2         () {   mmux_complexf128_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf128-equal-1.3         () {   mmux_complexf128_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf128-equal-1.4         () { ! mmux_complexf128_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf128-equal-1.5         () { ! mmux_complexf128_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf128-equal-absmargin-1.1   () {   mmux_complexf128_equal_absmargin '1.0' ;}
+function comparison-complexf128-equal-absmargin-1.2   () {   mmux_complexf128_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf128-equal-absmargin-1.3   () {   mmux_complexf128_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf128-equal-absmargin-1.4   () { ! mmux_complexf128_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf128-equal-absmargin-1.5   () {   mmux_complexf128_equal_absmargin '-9' '-9' ;}
+function comparison-complexf128-equal-absmargin-1.6   () { ! mmux_complexf128_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf128-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128='0.1'
+    mmux_complexf128_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf128-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128='0.1'
+    ! mmux_complexf128_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf128-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128='1.0'
+    ! mmux_complexf128_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf128-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128='(0.1)+i*(0.1)'
+    mmux_complexf128_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf128-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128='(0.1)+i*(0.1)'
+    ! mmux_complexf128_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf128-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128='(0.1)+i*(0.1)'
+    ! mmux_complexf128_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf128-equal-relepsilon-1.1   () {   mmux_complexf128_equal_relepsilon '1.0' ;}
+function comparison-complexf128-equal-relepsilon-1.2   () {   mmux_complexf128_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf128-equal-relepsilon-1.3   () {   mmux_complexf128_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf128-equal-relepsilon-1.4   () { ! mmux_complexf128_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf128-equal-relepsilon-1.5   () {   mmux_complexf128_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf128-equal-relepsilon-1.6   () { ! mmux_complexf128_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf128-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128='0.1'
+    mmux_complexf128_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf128-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128='0.1'
+    ! mmux_complexf128_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf128-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128='0.1'
+    ! mmux_complexf128_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf128-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128='(0.1)+i*(0.1)'
+    mmux_complexf128_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf128-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128='(0.1)+i*(0.1)'
+    ! mmux_complexf128_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf128-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128='(0.1)+i*(0.1)'
+    ! mmux_complexf128_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexf128x
+
+if test -v mmux_libc_SIZEOF_FLOAT128X
+then
+
+function comparison-complexf128x-equal-1.1         () {   mmux_complexf128x_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexf128x-equal-1.2         () {   mmux_complexf128x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf128x-equal-1.3         () {   mmux_complexf128x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexf128x-equal-1.4         () { ! mmux_complexf128x_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexf128x-equal-1.5         () { ! mmux_complexf128x_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf128x-equal-absmargin-1.1   () {   mmux_complexf128x_equal_absmargin '1.0' ;}
+function comparison-complexf128x-equal-absmargin-1.2   () {   mmux_complexf128x_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexf128x-equal-absmargin-1.3   () {   mmux_complexf128x_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexf128x-equal-absmargin-1.4   () { ! mmux_complexf128x_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexf128x-equal-absmargin-1.5   () {   mmux_complexf128x_equal_absmargin '-9' '-9' ;}
+function comparison-complexf128x-equal-absmargin-1.6   () { ! mmux_complexf128x_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexf128x-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='0.1'
+    mmux_complexf128x_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexf128x-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='0.1'
+    ! mmux_complexf128x_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexf128x-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='1.0'
+    ! mmux_complexf128x_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexf128x-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='(0.1)+i*(0.1)'
+    mmux_complexf128x_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf128x-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='(0.1)+i*(0.1)'
+    ! mmux_complexf128x_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf128x-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='(0.1)+i*(0.1)'
+    ! mmux_complexf128x_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexf128x-equal-relepsilon-1.1   () {   mmux_complexf128x_equal_relepsilon '1.0' ;}
+function comparison-complexf128x-equal-relepsilon-1.2   () {   mmux_complexf128x_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexf128x-equal-relepsilon-1.3   () {   mmux_complexf128x_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexf128x-equal-relepsilon-1.4   () { ! mmux_complexf128x_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexf128x-equal-relepsilon-1.5   () {   mmux_complexf128x_equal_relepsilon '-9' '-9' ;}
+function comparison-complexf128x-equal-relepsilon-1.6   () { ! mmux_complexf128x_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexf128x-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128x='0.1'
+    mmux_complexf128x_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexf128x-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128x='0.1'
+    ! mmux_complexf128x_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexf128x-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128x='0.1'
+    ! mmux_complexf128x_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexf128x-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128x='(0.1)+i*(0.1)'
+    mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexf128x-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128x='(0.1)+i*(0.1)'
+    ! mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexf128x-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXF128x='(0.1)+i*(0.1)'
+    ! mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
 
 
 #### let's go

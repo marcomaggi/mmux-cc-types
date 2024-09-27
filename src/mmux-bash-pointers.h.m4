@@ -85,6 +85,7 @@ extern "C" {
  ** Headers.
  ** ----------------------------------------------------------------- */
 
+#include <mmux-bash-pointers-config.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <inttypes.h>
@@ -106,56 +107,6 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
  ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum, char const * caller_name);
-
-
-/** --------------------------------------------------------------------
- ** Type definitions preprocessor symbols.
- ** ----------------------------------------------------------------- */
-
-#if ((defined HAVE_LONG_LONG_INT) && (1 == HAVE_LONG_LONG_INT))
-#  undef  MMUX_HAVE_TYPE_SLLONG
-#  define MMUX_HAVE_TYPE_SLLONG		1
-#endif
-
-#if ((defined HAVE_UNSIGNED_LONG_LONG_INT) && (1 == HAVE_UNSIGNED_LONG_LONG_INT))
-#  undef  MMUX_HAVE_TYPE_ULLONG
-#  define MMUX_HAVE_TYPE_ULLONG		1
-#endif
-
-#if ((defined HAVE_LONG_DOUBLE) && (1 == HAVE_LONG_DOUBLE))
-#  undef  MMUX_HAVE_TYPE_LDOUBLE
-#  define MMUX_HAVE_TYPE_LDOUBLE	1
-#endif
-
-#if ((defined HAVE_FLOAT32) && (1 == HAVE_FLOAT32))
-#  undef  MMUX_HAVE_TYPE_FLOAT32
-#  define MMUX_HAVE_TYPE_FLOAT32	1
-#endif
-
-#if ((defined HAVE_FLOAT64) && (1 == HAVE_FLOAT64))
-#  undef  MMUX_HAVE_TYPE_FLOAT64
-#  define MMUX_HAVE_TYPE_FLOAT64	1
-#endif
-
-#if ((defined HAVE_FLOAT128) && (1 == HAVE_FLOAT128))
-#  undef  MMUX_HAVE_TYPE_FLOAT128
-#  define MMUX_HAVE_TYPE_FLOAT128	1
-#endif
-
-#if ((defined HAVE_FLOAT32X) && (1 == HAVE_FLOAT32X))
-#  undef  MMUX_HAVE_TYPE_FLOAT32X
-#  define MMUX_HAVE_TYPE_FLOAT32X	1
-#endif
-
-#if ((defined HAVE_FLOAT64X) && (1 == HAVE_FLOAT64X))
-#  undef  MMUX_HAVE_TYPE_FLOAT64X
-#  define MMUX_HAVE_TYPE_FLOAT64X	1
-#endif
-
-#if ((defined HAVE_FLOAT128X) && (1 == HAVE_FLOAT128X))
-#  undef  MMUX_HAVE_TYPE_FLOAT128X
-#  define MMUX_HAVE_TYPE_FLOAT128X	1
-#endif
 
 
 /** --------------------------------------------------------------------
@@ -233,26 +184,26 @@ __extension__ typedef _Float128x complex	mmux_libc_complexf128x_t;
 typedef mmux_libc_float128x_t	mmux_libc_complexf128x_part_t;
 ]]])
 
-m4_divert(-1)m4_dnl
+/* ------------------------------------------------------------------ */
+
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF]]],[[[typedef mmux_libc_[[[]]]$2[[[]]]_t mmux_libc_[[[]]]$1[[[]]]_t]]])
-m4_divert(0)m4_dnl
+m4_define([[[DEFINE_ALIAS_TYPEDEF]]],[[[typedef mmux_libc_[[[]]]$2[[[]]]_t mmux_libc_[[[]]]$1[[[]]]_t]]])
 
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[ssize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[usize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[sintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[uintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[sintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[uintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[mode]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[off]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[pid]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[uid]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[gid]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[ptrdiff]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[wchar]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]]);
-MMUX_BASH_POINTERS_DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]]);
+DEFINE_ALIAS_TYPEDEF([[[ssize]]],	MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE);
+DEFINE_ALIAS_TYPEDEF([[[usize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]]);
+DEFINE_ALIAS_TYPEDEF([[[sintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]]);
+DEFINE_ALIAS_TYPEDEF([[[uintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]]);
+DEFINE_ALIAS_TYPEDEF([[[sintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]]);
+DEFINE_ALIAS_TYPEDEF([[[uintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]]);
+DEFINE_ALIAS_TYPEDEF([[[mode]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]]);
+DEFINE_ALIAS_TYPEDEF([[[off]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]]);
+DEFINE_ALIAS_TYPEDEF([[[pid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]]);
+DEFINE_ALIAS_TYPEDEF([[[uid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]]);
+DEFINE_ALIAS_TYPEDEF([[[gid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]]);
+DEFINE_ALIAS_TYPEDEF([[[ptrdiff]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]]);
+DEFINE_ALIAS_TYPEDEF([[[wchar]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]]);
+DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]]);
 
 
 /** --------------------------------------------------------------------
