@@ -964,9 +964,26 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 @MmuxDefineAccessorMutator{float}
 @MmuxDefineAccessorMutator{double}
 @MmuxDefineAccessorMutator{ldouble}
+
+@MmuxDefineAccessorMutator{float32}
+@MmuxDefineAccessorMutator{float64}
+@MmuxDefineAccessorMutator{float128}
+
+@MmuxDefineAccessorMutator{float32x}
+@MmuxDefineAccessorMutator{float64x}
+@MmuxDefineAccessorMutator{float128x}
+
 @MmuxDefineAccessorMutator{complexf}
 @MmuxDefineAccessorMutator{complexd}
 @MmuxDefineAccessorMutator{complexld}
+
+@MmuxDefineAccessorMutator{complexf32}
+@MmuxDefineAccessorMutator{complexf64}
+@MmuxDefineAccessorMutator{complexf128}
+
+@MmuxDefineAccessorMutator{complexf32x}
+@MmuxDefineAccessorMutator{complexf64x}
+@MmuxDefineAccessorMutator{complexf128x}
 
 @MmuxDefineAccessorMutator{sint8}
 @MmuxDefineAccessorMutator{uint8}
@@ -1056,9 +1073,26 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 @MmuxDefineArrayAccessorMutator{float}
 @MmuxDefineArrayAccessorMutator{double}
 @MmuxDefineArrayAccessorMutator{ldouble}
+
+@MmuxDefineArrayAccessorMutator{float32}
+@MmuxDefineArrayAccessorMutator{float64}
+@MmuxDefineArrayAccessorMutator{float128}
+
+@MmuxDefineArrayAccessorMutator{float32x}
+@MmuxDefineArrayAccessorMutator{float64x}
+@MmuxDefineArrayAccessorMutator{float128x}
+
 @MmuxDefineArrayAccessorMutator{complexf}
 @MmuxDefineArrayAccessorMutator{complexd}
 @MmuxDefineArrayAccessorMutator{complexld}
+
+@MmuxDefineArrayAccessorMutator{complexf32}
+@MmuxDefineArrayAccessorMutator{complexf64}
+@MmuxDefineArrayAccessorMutator{complexf128}
+
+@MmuxDefineArrayAccessorMutator{complexf32x}
+@MmuxDefineArrayAccessorMutator{complexf64x}
+@MmuxDefineArrayAccessorMutator{complexf128x}
 
 @MmuxDefineArrayAccessorMutator{sint8}
 @MmuxDefineArrayAccessorMutator{uint8}
@@ -1248,9 +1282,26 @@ return false.
 @MmuxDefineTypePredicateStringrepBuiltin{float}
 @MmuxDefineTypePredicateStringrepBuiltin{double}
 @MmuxDefineTypePredicateStringrepBuiltin{ldouble}
+
+@MmuxDefineTypePredicateStringrepBuiltin{float32}
+@MmuxDefineTypePredicateStringrepBuiltin{float64}
+@MmuxDefineTypePredicateStringrepBuiltin{float128}
+
+@MmuxDefineTypePredicateStringrepBuiltin{float32x}
+@MmuxDefineTypePredicateStringrepBuiltin{float64x}
+@MmuxDefineTypePredicateStringrepBuiltin{float128x}
+
 @MmuxDefineTypePredicateStringrepBuiltin{complexf}
 @MmuxDefineTypePredicateStringrepBuiltin{complexd}
 @MmuxDefineTypePredicateStringrepBuiltin{complexld}
+
+@MmuxDefineTypePredicateStringrepBuiltin{complexf32}
+@MmuxDefineTypePredicateStringrepBuiltin{complexf64}
+@MmuxDefineTypePredicateStringrepBuiltin{complexf128}
+
+@MmuxDefineTypePredicateStringrepBuiltin{complexf32x}
+@MmuxDefineTypePredicateStringrepBuiltin{complexf64x}
+@MmuxDefineTypePredicateStringrepBuiltin{complexf128x}
 
 @MmuxDefineTypePredicateStringrepBuiltin{sint8}
 @MmuxDefineTypePredicateStringrepBuiltin{uint8}
@@ -1303,9 +1354,26 @@ zero number; otherwise return false.
 @MmuxDefineTypePredicateZeroBuiltin{float}
 @MmuxDefineTypePredicateZeroBuiltin{double}
 @MmuxDefineTypePredicateZeroBuiltin{ldouble}
+
+@MmuxDefineTypePredicateZeroBuiltin{float32}
+@MmuxDefineTypePredicateZeroBuiltin{float64}
+@MmuxDefineTypePredicateZeroBuiltin{float128}
+
+@MmuxDefineTypePredicateZeroBuiltin{float32x}
+@MmuxDefineTypePredicateZeroBuiltin{float64x}
+@MmuxDefineTypePredicateZeroBuiltin{float128x}
+
 @MmuxDefineTypePredicateZeroBuiltin{complexf}
 @MmuxDefineTypePredicateZeroBuiltin{complexd}
 @MmuxDefineTypePredicateZeroBuiltin{complexld}
+
+@MmuxDefineTypePredicateZeroBuiltin{complexf32}
+@MmuxDefineTypePredicateZeroBuiltin{complexf64}
+@MmuxDefineTypePredicateZeroBuiltin{complexf128}
+
+@MmuxDefineTypePredicateZeroBuiltin{complexf32x}
+@MmuxDefineTypePredicateZeroBuiltin{complexf64x}
+@MmuxDefineTypePredicateZeroBuiltin{complexf128x}
 
 @MmuxDefineTypePredicateZeroBuiltin{sint8}
 @MmuxDefineTypePredicateZeroBuiltin{uint8}
@@ -1355,9 +1423,18 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{ulong}
 @MmuxDefineTypePredicatePositiveBuiltin{sllong}
 @MmuxDefineTypePredicatePositiveBuiltin{ullong}
+
 @MmuxDefineTypePredicatePositiveBuiltin{float}
 @MmuxDefineTypePredicatePositiveBuiltin{double}
 @MmuxDefineTypePredicatePositiveBuiltin{ldouble}
+
+@MmuxDefineTypePredicatePositiveBuiltin{float32}
+@MmuxDefineTypePredicatePositiveBuiltin{float64}
+@MmuxDefineTypePredicatePositiveBuiltin{float128}
+
+@MmuxDefineTypePredicatePositiveBuiltin{float32x}
+@MmuxDefineTypePredicatePositiveBuiltin{float64x}
+@MmuxDefineTypePredicatePositiveBuiltin{float128x}
 
 @MmuxDefineTypePredicatePositiveBuiltin{sint8}
 @MmuxDefineTypePredicatePositiveBuiltin{uint8}
@@ -1407,9 +1484,26 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{ulong}
 @MmuxDefineTypePredicateNegativeBuiltin{sllong}
 @MmuxDefineTypePredicateNegativeBuiltin{ullong}
+
 @MmuxDefineTypePredicateNegativeBuiltin{float}
 @MmuxDefineTypePredicateNegativeBuiltin{double}
 @MmuxDefineTypePredicateNegativeBuiltin{ldouble}
+
+@MmuxDefineTypePredicateNegativeBuiltin{float32}
+@MmuxDefineTypePredicateNegativeBuiltin{float64}
+@MmuxDefineTypePredicateNegativeBuiltin{float128}
+
+@MmuxDefineTypePredicateNegativeBuiltin{float32x}
+@MmuxDefineTypePredicateNegativeBuiltin{float64x}
+@MmuxDefineTypePredicateNegativeBuiltin{float128x}
+
+@MmuxDefineTypePredicateNegativeBuiltin{float32}
+@MmuxDefineTypePredicateNegativeBuiltin{float64}
+@MmuxDefineTypePredicateNegativeBuiltin{float128}
+
+@MmuxDefineTypePredicateNegativeBuiltin{float32x}
+@MmuxDefineTypePredicateNegativeBuiltin{float64x}
+@MmuxDefineTypePredicateNegativeBuiltin{float128x}
 
 @MmuxDefineTypePredicateNegativeBuiltin{sint8}
 @MmuxDefineTypePredicateNegativeBuiltin{uint8}
@@ -1463,6 +1557,14 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{double}
 @MmuxDefineTypePredicateNonPositiveBuiltin{ldouble}
 
+@MmuxDefineTypePredicateNonPositiveBuiltin{float32}
+@MmuxDefineTypePredicateNonPositiveBuiltin{float64}
+@MmuxDefineTypePredicateNonPositiveBuiltin{float128}
+
+@MmuxDefineTypePredicateNonPositiveBuiltin{float32x}
+@MmuxDefineTypePredicateNonPositiveBuiltin{float64x}
+@MmuxDefineTypePredicateNonPositiveBuiltin{float128x}
+
 @MmuxDefineTypePredicateNonPositiveBuiltin{sint8}
 @MmuxDefineTypePredicateNonPositiveBuiltin{uint8}
 @MmuxDefineTypePredicateNonPositiveBuiltin{sint16}
@@ -1515,6 +1617,14 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{double}
 @MmuxDefineTypePredicateNonNegativeBuiltin{ldouble}
 
+@MmuxDefineTypePredicateNonNegativeBuiltin{float32}
+@MmuxDefineTypePredicateNonNegativeBuiltin{float64}
+@MmuxDefineTypePredicateNonNegativeBuiltin{float128}
+
+@MmuxDefineTypePredicateNonNegativeBuiltin{float32x}
+@MmuxDefineTypePredicateNonNegativeBuiltin{float64x}
+@MmuxDefineTypePredicateNonNegativeBuiltin{float128x}
+
 @MmuxDefineTypePredicateNonNegativeBuiltin{sint8}
 @MmuxDefineTypePredicateNonNegativeBuiltin{uint8}
 @MmuxDefineTypePredicateNonNegativeBuiltin{sint16}
@@ -1566,9 +1676,26 @@ not--a--number value; otherwise return false.
 @MmuxDefineTypePredicateNanBuiltin{float}
 @MmuxDefineTypePredicateNanBuiltin{double}
 @MmuxDefineTypePredicateNanBuiltin{ldouble}
+
+@MmuxDefineTypePredicateNanBuiltin{float32}
+@MmuxDefineTypePredicateNanBuiltin{float64}
+@MmuxDefineTypePredicateNanBuiltin{float128}
+
+@MmuxDefineTypePredicateNanBuiltin{float32x}
+@MmuxDefineTypePredicateNanBuiltin{float64x}
+@MmuxDefineTypePredicateNanBuiltin{float128x}
+
 @MmuxDefineTypePredicateNanBuiltin{complexf}
 @MmuxDefineTypePredicateNanBuiltin{complexd}
 @MmuxDefineTypePredicateNanBuiltin{complexld}
+
+@MmuxDefineTypePredicateNanBuiltin{complexf32}
+@MmuxDefineTypePredicateNanBuiltin{complexf64}
+@MmuxDefineTypePredicateNanBuiltin{complexf128}
+
+@MmuxDefineTypePredicateNanBuiltin{complexf32x}
+@MmuxDefineTypePredicateNanBuiltin{complexf64x}
+@MmuxDefineTypePredicateNanBuiltin{complexf128x}
 
 @MmuxDefineTypePredicateNanBuiltin{sint8}
 @MmuxDefineTypePredicateNanBuiltin{uint8}
@@ -1621,9 +1748,26 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{float}
 @MmuxDefineTypePredicateInfiniteBuiltin{double}
 @MmuxDefineTypePredicateInfiniteBuiltin{ldouble}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{float32}
+@MmuxDefineTypePredicateInfiniteBuiltin{float64}
+@MmuxDefineTypePredicateInfiniteBuiltin{float128}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{float32x}
+@MmuxDefineTypePredicateInfiniteBuiltin{float64x}
+@MmuxDefineTypePredicateInfiniteBuiltin{float128x}
+
 @MmuxDefineTypePredicateInfiniteBuiltin{complexf}
 @MmuxDefineTypePredicateInfiniteBuiltin{complexd}
 @MmuxDefineTypePredicateInfiniteBuiltin{complexld}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf32}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf64}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf128}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf32x}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf64x}
+@MmuxDefineTypePredicateInfiniteBuiltin{complexf128x}
 
 @MmuxDefineTypePredicateInfiniteBuiltin{sint8}
 @MmuxDefineTypePredicateInfiniteBuiltin{uint8}
@@ -1721,6 +1865,17 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 
 @end macro
 
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineTypeComparisonExactComplexBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
+Perform the comparison operations between values of type @objtype{\STEM\}.
+@end deffn
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
 @MmuxDefineTypeComparisonExactBuiltin{pointer}
 
 @MmuxDefineTypeComparisonExactBuiltin{schar}
@@ -1737,17 +1892,25 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonExactBuiltin{double}
 @MmuxDefineTypeComparisonExactBuiltin{ldouble}
 
-@deffn Builtin mmux_complexf_equal @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between values of type @objtype{complexf}.
-@end deffn
+@MmuxDefineTypeComparisonExactBuiltin{float32}
+@MmuxDefineTypeComparisonExactBuiltin{float64}
+@MmuxDefineTypeComparisonExactBuiltin{float128}
 
-@deffn Builtin mmux_complexd_equal @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between values of type @objtype{complexd}.
-@end deffn
+@MmuxDefineTypeComparisonExactBuiltin{float32x}
+@MmuxDefineTypeComparisonExactBuiltin{float64x}
+@MmuxDefineTypeComparisonExactBuiltin{float128x}
 
-@deffn Builtin mmux_complexld_equal @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between values of type @objtype{complexld}.
-@end deffn
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf}
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexd}
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexld}
+
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf32}
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf64}
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf128}
+
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf32x}
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf64x}
+@MmuxDefineTypeComparisonExactComplexBuiltin{complexf128x}
 
 @MmuxDefineTypeComparisonExactBuiltin{sint8}
 @MmuxDefineTypeComparisonExactBuiltin{uint8}
@@ -1805,6 +1968,18 @@ function doit () @{
 @deffnx Builtin mmux_complexf_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexd_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexld_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float128_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float32x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float64x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float128x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf128_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf32x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf64x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf128x_equal_absmargin @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between operands of the named type; when the comparison predicate
 is satisfied: return true; otherwise return false.
 
@@ -1833,12 +2008,24 @@ real parts; @varo{OP_IM}, @var{OP_IM}, @var{MARGIN_IM} are the imaginary parts.
 @end deffn
 
 
-@defvr {Shell Variable} ABSOLUTE_MARGIN_FLOAT
-@defvrx {Shell Variable} ABSOLUTE_MARGIN_DOUBLE
-@defvrx {Shell Variable} ABSOLUTE_MARGIN_LDOUBLE
-@defvrx {Shell Variable} ABSOLUTE_MARGIN_COMPLEXF
-@defvrx {Shell Variable} ABSOLUTE_MARGIN_COMPLEXD
-@defvrx {Shell Variable} ABSOLUTE_MARGIN_COMPLEXLD
+@defvar ABSOLUTE_MARGIN_FLOAT
+@defvarx ABSOLUTE_MARGIN_DOUBLE
+@defvarx ABSOLUTE_MARGIN_LDOUBLE
+@defvarx ABSOLUTE_MARGIN_COMPLEXF
+@defvarx ABSOLUTE_MARGIN_COMPLEXD
+@defvarx ABSOLUTE_MARGIN_COMPLEXLD
+@defvarx ABSOLUTE_MARGIN_FLOAT32
+@defvarx ABSOLUTE_MARGIN_FLOAT64
+@defvarx ABSOLUTE_MARGIN_FLOAT128
+@defvarx ABSOLUTE_MARGIN_FLOAT32X
+@defvarx ABSOLUTE_MARGIN_FLOAT64X
+@defvarx ABSOLUTE_MARGIN_FLOAT128X
+@defvarx ABSOLUTE_MARGIN_COMPLEXF32
+@defvarx ABSOLUTE_MARGIN_COMPLEXF64
+@defvarx ABSOLUTE_MARGIN_COMPLEXF128
+@defvarx ABSOLUTE_MARGIN_COMPLEXF32X
+@defvarx ABSOLUTE_MARGIN_COMPLEXF64X
+@defvarx ABSOLUTE_MARGIN_COMPLEXF128X
 Shell variables used to select the margin for the equality with absolute margin builtins.  Each
 variable is used to select a margin for the named numerical type.
 
@@ -1849,7 +2036,7 @@ of real parts; its imaginary part is the margin for comparison of imaginary part
 
 When a shell variable is not set: the default margin for real numbers is @samp{1e-6}; the default
 margin for complex numbers is @samp{(1e-6)+i*(1e-6)}.
-@end defvr
+@end defvar
 
 @c page
 @node comparison approximate relepsilon
@@ -1874,6 +2061,18 @@ function doit () @{
 @deffnx Builtin mmux_complexf_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexd_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexld_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float128_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_float128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf128_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_complexf128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between operands of the named type; when the comparison predicate
 is satisfied: return true; otherwise return false.
 
@@ -1902,12 +2101,24 @@ real parts; @varo{OP_IM}, @var{OP_IM}, @var{EPSILON_IM} are the imaginary parts.
 @end deffn
 
 
-@defvr {Shell Variable} RELATIVE_EPSILON_FLOAT
-@defvrx {Shell Variable} RELATIVE_EPSILON_DOUBLE
-@defvrx {Shell Variable} RELATIVE_EPSILON_LDOUBLE
-@defvrx {Shell Variable} RELATIVE_EPSILON_COMPLEXF
-@defvrx {Shell Variable} RELATIVE_EPSILON_COMPLEXD
-@defvrx {Shell Variable} RELATIVE_EPSILON_COMPLEXLD
+@defvar RELATIVE_EPSILON_FLOAT
+@defvarx RELATIVE_EPSILON_DOUBLE
+@defvarx RELATIVE_EPSILON_LDOUBLE
+@defvarx RELATIVE_EPSILON_COMPLEXF
+@defvarx RELATIVE_EPSILON_COMPLEXD
+@defvarx RELATIVE_EPSILON_COMPLEXLD
+@defvarx RELATIVE_EPSILON_FLOAT32
+@defvarx RELATIVE_EPSILON_FLOAT64
+@defvarx RELATIVE_EPSILON_FLOAT128
+@defvarx RELATIVE_EPSILON_FLOAT32X
+@defvarx RELATIVE_EPSILON_FLOAT64X
+@defvarx RELATIVE_EPSILON_FLOAT128X
+@defvarx RELATIVE_EPSILON_COMPLEXF32
+@defvarx RELATIVE_EPSILON_COMPLEXF64
+@defvarx RELATIVE_EPSILON_COMPLEXF128
+@defvarx RELATIVE_EPSILON_COMPLEXF32X
+@defvarx RELATIVE_EPSILON_COMPLEXF64X
+@defvarx RELATIVE_EPSILON_COMPLEXF128X
 Shell variables used to select the epsilon for the equality with relative epsilon.  Each variable is
 used to select an epsilon for the named numerical type.
 
@@ -1918,7 +2129,7 @@ comparison of real parts; its imaginary part is the epsilon for comparison of im
 
 When a shell variable is not set: the default epsilon for real numbers is @samp{1e-6}; the default
 epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
-@end defvr
+@end defvar
 
 @c page
 @node arithmetics
