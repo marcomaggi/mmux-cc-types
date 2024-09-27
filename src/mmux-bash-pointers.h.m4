@@ -295,89 +295,112 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_libc
  ** Type functions prototypes.
  ** ----------------------------------------------------------------- */
 
-m4_divert(-1)m4_dnl
-m4_dnl $1 - type stem
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN]]],[[[m4_dnl
-mmux_bash_pointers_decl bool mmux_bash_pointers_string_[[[]]]$1[[[]]]_p (char const * s_arg);
-mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_[[[]]]$1[[[]]] (void)
-     __attribute__((__const__));
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_[[[]]]$1[[[]]]_t * p, char const * s, char const * who)
-       __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_libc_[[[]]]$1[[[]]]_t v)
-       __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_[[[]]]$1[[[]]]_t v);
+m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+typedef mmux_libc_$1_t mmux_type_unary_operation_$1_t   (mmux_libc_$1_t X);
+typedef mmux_libc_$1_t mmux_type_binary_operation_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
+typedef mmux_libc_$1_t mmux_type_ternary_operation_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
+typedef bool           mmux_type_unary_predicate_$1_t   (mmux_libc_$1_t X);
+typedef bool           mmux_type_binary_predicate_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
+typedef bool           mmux_type_ternary_predicate_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
+
+mmux_bash_pointers_decl bool mmux_bash_pointers_string_is_$1 (char const * s_value);
+mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_$1 (void)
+  __attribute__((__const__));
+mmux_bash_pointers_decl mmux_libc_$1_t mmux_bash_pointers_minimum_$1 (void)
+  __attribute__((__const__));
+mmux_bash_pointers_decl mmux_libc_$1_t mmux_bash_pointers_maximum_$1 (void)
+  __attribute__((__const__));
+
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_$1_t * p_value, char const * s_value, char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_libc_$1_t value)
+  __attribute__((__nonnull__(1)));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t v);
 mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value);
-]]])
+]]])]]])
 
-m4_dnl $1 - type stem
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES]]],[[[m4_dnl
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[$1]]])
-mmux_bash_pointers_decl mmux_libc_[[[]]]$1[[[]]]_t mmux_bash_pointers_minimum_$1 (void)
-     __attribute__((__const__));
-mmux_bash_pointers_decl mmux_libc_[[[]]]$1[[[]]]_t mmux_bash_pointers_maximum_$1 (void)
-     __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
+/* ------------------------------------------------------------------ */
 
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(pointer)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(schar)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uchar)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sshort)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ushort)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(slong)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ulong)
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sllong)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ullong)]]])
+m4_define([[[DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+typedef mmux_libc_$1_t mmux_type_unary_operation_$1_t   (mmux_libc_$1_t X);
+typedef mmux_libc_$1_t mmux_type_binary_operation_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
+typedef mmux_libc_$1_t mmux_type_ternary_operation_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
+typedef bool           mmux_type_unary_predicate_$1_t   (mmux_libc_$1_t X);
+typedef bool           mmux_type_binary_predicate_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
+typedef bool           mmux_type_ternary_predicate_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
 
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(double)
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ldouble)]]])
+mmux_bash_pointers_decl bool mmux_bash_pointers_string_$1_p (char const * s_arg);
+mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_$1 (void)
+  __attribute__((__const__));
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_$1_t * p, char const * s, char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_libc_$1_t v)
+  __attribute__((__nonnull__(1)));
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t v);
+mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value);
+]]])]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float32)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float64)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float128)]]])
+/* ------------------------------------------------------------------ */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float32x)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float64x)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(float128x)]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[pointer]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[schar]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uchar]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sshort]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ushort]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sint]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uint]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[slong]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ulong]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sllong]]],		[[[MMUX_HAVE_TYPE_SLLONG]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ullong]]],		[[[MMUX_HAVE_TYPE_ULLONG]]])
 
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf]]])
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexd]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexld]]])]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[double]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf32]]])]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf64]]])]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf128]]])]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf32x]]])]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf64x]]])]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES_NO_MAXMIN([[[complexf128x]]])]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint8)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint8)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint16)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint16)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint32)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint32)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sint64)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uint64)
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexd]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ssize)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(usize)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sintmax)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uintmax)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(sintptr)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uintptr)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(mode)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(off)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(pid)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(uid)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(gid)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(ptrdiff)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(wchar)
-MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(wint)
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sint8]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uint8]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sint16]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uint16]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sint32]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uint32]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sint64]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uint64]]])
+
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ssize]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[usize]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sintmax]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uintmax]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sintptr]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uintptr]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[mode]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[off]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[pid]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uid]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[gid]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ptrdiff]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[wchar]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
@@ -385,9 +408,9 @@ MMUX_BASH_POINTERS_DEFINE_TYPE_FUNCTION_PROTOTYPES(wint)
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_bash_pointers_decl mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X);
-mmux_bash_pointers_decl mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-mmux_bash_pointers_decl mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y);
+mmux_bash_pointers_decl mmux_type_unary_operation_$1_t	mmux_$1_abs;
+mmux_bash_pointers_decl mmux_type_binary_operation_$1_t	mmux_$1_max;
+mmux_bash_pointers_decl mmux_type_binary_operation_$1_t mmux_$1_min;
 ]]])]]])
 
 DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float]]])
@@ -408,33 +431,25 @@ DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT12
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef bool mmux_type_predicate_$1_t        (mmux_libc_$1_t X);
-typedef bool mmux_type_compar_predicate_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_zero;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_nan;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_infinite;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_positive;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_negative;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_non_positive;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_non_negative;
-
-mmux_bash_pointers_decl mmux_type_compar_predicate_$1_t mmux_$1_equal;
-mmux_bash_pointers_decl mmux_type_compar_predicate_$1_t mmux_$1_greater;
-mmux_bash_pointers_decl mmux_type_compar_predicate_$1_t mmux_$1_lesser;
-mmux_bash_pointers_decl mmux_type_compar_predicate_$1_t mmux_$1_greater_equal;
-mmux_bash_pointers_decl mmux_type_compar_predicate_$1_t mmux_$1_lesser_equal;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_zero;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_nan;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_infinite;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_positive;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_negative;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_non_positive;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_non_negative;
+mmux_bash_pointers_decl mmux_type_binary_predicate_$1_t mmux_$1_equal;
+mmux_bash_pointers_decl mmux_type_binary_predicate_$1_t mmux_$1_greater;
+mmux_bash_pointers_decl mmux_type_binary_predicate_$1_t mmux_$1_lesser;
+mmux_bash_pointers_decl mmux_type_binary_predicate_$1_t mmux_$1_greater_equal;
+mmux_bash_pointers_decl mmux_type_binary_predicate_$1_t mmux_$1_lesser_equal;
 ]]])]]])
 
 m4_define([[[DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef bool mmux_type_predicate_$1_t        (mmux_libc_$1_t X);
-typedef bool mmux_type_compar_predicate_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_zero;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_nan;
-mmux_bash_pointers_decl mmux_type_predicate_$1_t mmux_$1_is_infinite;
-
-mmux_bash_pointers_decl mmux_type_compar_predicate_$1_t mmux_$1_equal;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_zero;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_nan;
+mmux_bash_pointers_decl mmux_type_unary_predicate_$1_t  mmux_$1_is_infinite;
+mmux_bash_pointers_decl mmux_type_binary_predicate_$1_t mmux_$1_equal;
 ]]])]]])
 
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[pointer]]])
@@ -500,10 +515,10 @@ DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[wint]]])
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-mmux_bash_pointers_decl bool mmux_$1_equal_absmargin  (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t margin);
-mmux_bash_pointers_decl bool mmux_$1_equal_relepsilon (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t epsilon);
-mmux_bash_pointers_decl bool mmux_$2_equal_absmargin  (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t margin);
-mmux_bash_pointers_decl bool mmux_$2_equal_relepsilon (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t epsilon);
+mmux_bash_pointers_decl mmux_type_ternary_predicate_$1_t mmux_$1_equal_absmargin;
+mmux_bash_pointers_decl mmux_type_ternary_predicate_$1_t mmux_$1_equal_relepsilon;
+mmux_bash_pointers_decl mmux_type_ternary_predicate_$2_t mmux_$2_equal_absmargin;
+mmux_bash_pointers_decl mmux_type_ternary_predicate_$2_t mmux_$2_equal_relepsilon;
 ]]])]]])
 
 DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float]]],	[[[complexf]]])
