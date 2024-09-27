@@ -260,9 +260,26 @@ we can write code that links to the shared library to reuse some of its faciliti
 @cindex @code{float}, type stem
 @cindex @code{double}, type stem
 @cindex @code{ldouble}, type stem
+
+@cindex @code{float32}, type stem
+@cindex @code{float64}, type stem
+@cindex @code{float128}, type stem
+
+@cindex @code{float32x}, type stem
+@cindex @code{float64x}, type stem
+@cindex @code{float128x}, type stem
+
 @cindex @code{complexf}, type stem
 @cindex @code{complexd}, type stem
 @cindex @code{complexld}, type stem
+
+@cindex @code{complexf32}, type stem
+@cindex @code{complexf64}, type stem
+@cindex @code{complexf128}, type stem
+
+@cindex @code{complexf32x}, type stem
+@cindex @code{complexf64x}, type stem
+@cindex @code{complexf128x}, type stem
 
 @cindex @code{sint8}, type stem
 @cindex @code{uint8}, type stem
@@ -318,9 +335,26 @@ standard C language type @code{\TYPE\}.
 @MmuxDefineTypeStem{float,float}
 @MmuxDefineTypeStem{double,double}
 @MmuxDefineTypeStem{ldouble,long double}
+
+@MmuxDefineTypeStem{float32, _Float32}
+@MmuxDefineTypeStem{float64, _Float64}
+@MmuxDefineTypeStem{float128, _Float128}
+
+@MmuxDefineTypeStem{float32x, _Float32x}
+@MmuxDefineTypeStem{float64x, _Float64x}
+@MmuxDefineTypeStem{float128x, _Float128x}
+
 @MmuxDefineTypeStem{complexf,float complex}
 @MmuxDefineTypeStem{complexd,double complex}
 @MmuxDefineTypeStem{complexld,long double complex}
+
+@MmuxDefineTypeStem{complexf32, _Float32 complex}
+@MmuxDefineTypeStem{complexf64, _Float64 complex}
+@MmuxDefineTypeStem{complexf128, _Float128 complex}
+
+@MmuxDefineTypeStem{complexf32x, _Float32 complex}
+@MmuxDefineTypeStem{complexf64x, _Float64x complex}
+@MmuxDefineTypeStem{complexf128x, _Float128x complex}
 
 @MmuxDefineTypeStem{sint8,int8_t}
 @MmuxDefineTypeStem{uint8,uint8_t}
@@ -422,9 +456,26 @@ Global variable holding the size, measured in bytes, of the C language type with
 @MmuxDefineGlobalVarSizeof{FLOAT, float}
 @MmuxDefineGlobalVarSizeof{DOUBLE, double}
 @MmuxDefineGlobalVarSizeof{LDOUBLE, ldouble}
+
+@MmuxDefineGlobalVarSizeof{FLOAT32, float32}
+@MmuxDefineGlobalVarSizeof{FLOAT64, float64}
+@MmuxDefineGlobalVarSizeof{FLOAT128, float128}
+
+@MmuxDefineGlobalVarSizeof{FLOAT32X, float32x}
+@MmuxDefineGlobalVarSizeof{FLOAT64X, float64x}
+@MmuxDefineGlobalVarSizeof{FLOAT128X, float128x}
+
 @MmuxDefineGlobalVarSizeof{COMPLEXF, complexf}
 @MmuxDefineGlobalVarSizeof{COMPLEXD, complexd}
 @MmuxDefineGlobalVarSizeof{COMPLEXLD, complexld}
+
+@MmuxDefineGlobalVarSizeof{COMPLEXF32, complexf32}
+@MmuxDefineGlobalVarSizeof{COMPLEXF64, complexf64}
+@MmuxDefineGlobalVarSizeof{COMPLEXF128, complexf128}
+
+@MmuxDefineGlobalVarSizeof{COMPLEXF32X, complexf32x}
+@MmuxDefineGlobalVarSizeof{COMPLEXF64X, complexf64x}
+@MmuxDefineGlobalVarSizeof{COMPLEXF128X, complexf128x}
 
 @MmuxDefineGlobalVarSizeof{SINT8, sint8}
 @MmuxDefineGlobalVarSizeof{UINT8, uint8}
@@ -456,17 +507,8 @@ Global variable holding the size, measured in bytes, of the C language type with
 
 
 If a C language type referenced by one of the following variables is undefined: the corresponding
-Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
-underlying platform implements the type @code{signed long long int}, we can do:
-
-@example
-if test -v mmux_libc_MAX_SLLONG
-then # implemented
-else # not implemented
-fi
-@end example
-
-Notice that the floating--point complex C language types have no maximum or minimum limit.
+Bash variable is undefined.  Notice that the floating--point complex C language types have neither
+maximum nor minimum limits.
 
 @macro MmuxDefineGlobalVarLimits{NAME,TYPE}
 @defvar mmux_libc_MAX_\NAME\
@@ -488,9 +530,18 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{ULONG, unsigned long int}
 @MmuxDefineGlobalVarLimits{SLLONG, signed long long int}
 @MmuxDefineGlobalVarLimits{ULLONG, unsigned long long int}
+
 @MmuxDefineGlobalVarLimits{FLOAT, float}
 @MmuxDefineGlobalVarLimits{DOUBLE, double}
 @MmuxDefineGlobalVarLimits{LDOUBLE, long double}
+
+@MmuxDefineGlobalVarLimits{FLOAT32, float32}
+@MmuxDefineGlobalVarLimits{FLOAT64, float64}
+@MmuxDefineGlobalVarLimits{FLOAT128, float128}
+
+@MmuxDefineGlobalVarLimits{FLOAT32X, float32x}
+@MmuxDefineGlobalVarLimits{FLOAT64X, float64x}
+@MmuxDefineGlobalVarLimits{FLOAT128X, float128x}
 
 @MmuxDefineGlobalVarLimits{SINT8, int8_t}
 @MmuxDefineGlobalVarLimits{UINT8, uint8_t}
@@ -898,7 +949,7 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 
 @end macro
 
-@MmuxDefineAccessorMutator{pointer,void *}
+@MmuxDefineAccessorMutator{pointer}
 
 @MmuxDefineAccessorMutator{schar}
 @MmuxDefineAccessorMutator{uchar}
