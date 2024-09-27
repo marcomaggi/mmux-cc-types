@@ -30,66 +30,8 @@
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: raw C standard types, no typedefs.
+ ** Type string printers: pointers.
  ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_SPRINTER]]],[[[
-int
-mmux_bash_pointers_sprint_size_[[[$1]]] (mmux_libc_[[[$1]]]_t value)
-{
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  int		required_nbytes;
-
-  /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
-     returns the number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = snprintf(NULL, 0, $2, value);
-  if (0 > required_nbytes) {
-    return -1;
-  }
-
-  /* This return value DOES account for the terminating zero character. */
-  return ++required_nbytes;
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return -1;
-]]])}
-
-int
-mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, int len, mmux_libc_[[[$1]]]_t value)
-{
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  int		to_be_written_chars;
-
-  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
-     byte. */
-  to_be_written_chars = snprintf(strptr, len, $2, value);
-  if (len > to_be_written_chars) {
-    return MMUX_SUCCESS;
-  } else {
-    return MMUX_FAILURE;
-  }
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: printer \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return MMUX_FAILURE;
-]]])}]]])
-
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[schar]]],		[[["%hhd"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[uchar]]],		[[["%hhu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sshort]]],	[[["%hd"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ushort]]],	[[["%hu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sint]]],		[[["%d"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[uint]]],		[[["%u"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[slong]]],		[[["%ld"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ulong]]],		[[["%lu"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[MMUX_HAVE_TYPE_SLLONG]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_HAVE_TYPE_ULLONG]]])
-
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[double]]],	[[["%lA"]]])
-MMUX_BASH_POINTERS_DEFINE_SPRINTER([[[ldouble]]],	[[["%LA"]]],  [[[MMUX_HAVE_TYPE_LDOUBLE]]])
-
-/* ------------------------------------------------------------------ */
 
 int
 mmux_bash_pointers_sprint_size_pointer (mmux_libc_pointer_t value)
@@ -117,8 +59,8 @@ mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_libc_pointer_t v
 {
   int		to_be_written_chars;
 
-  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
-     byte. */
+  /* According to the  documentation: "snprintf()" writes the  terminating null byte,
+     when the output buffer has enough room. */
   if (value) {
     to_be_written_chars = snprintf(strptr, len, "%p", value);
   } else {
@@ -131,64 +73,67 @@ mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_libc_pointer_t v
   }
 }
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Type string printers: raw C standard types, signed and unsigned integers.
+ ** ----------------------------------------------------------------- */
 
+m4_define([[[DEFINE_CORE_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
-mmux_bash_pointers_sprint_size_float (mmux_libc_float_t value)
+mmux_bash_pointers_sprint_size_[[[$1]]] (mmux_libc_[[[$1]]]_t value)
 {
   int		required_nbytes;
 
-#if 1
-  required_nbytes = strfromf(NULL, 0, "%A", value);
-  if (0 > required_nbytes) {
-    return -1;
-  } else {
-    /* This return value DOES account for the terminating zero character. */
-    return ++required_nbytes;
-  }
-#else
   /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
      returns the number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = snprintf(NULL, 0, "%A", (double)value);
+  required_nbytes = snprintf(NULL, 0, $2, value);
   if (0 > required_nbytes) {
     return -1;
   } else {
     /* This return value DOES account for the terminating zero character. */
     return ++required_nbytes;
   }
-#endif
 }
 int
-mmux_bash_pointers_sprint_float (char * strptr, int len, float value)
-/* This exists  because of the  explicit cast to "double";  without it: GCC  raises a
-   warning. */
+mmux_bash_pointers_sprint_[[[$1]]] (char * strptr, int len, mmux_libc_[[[$1]]]_t value)
 {
   int		to_be_written_chars;
 
-  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
-     byte. */
-  to_be_written_chars = snprintf(strptr, len, "%A", (double)value);
+  /* According to the  documentation: "snprintf()" writes the  terminating null byte,
+     when the output buffer has enough room. */
+  to_be_written_chars = snprintf(strptr, len, $2, value);
   if (len > to_be_written_chars) {
     return MMUX_SUCCESS;
   } else {
     return MMUX_FAILURE;
   }
-}
+}]]])]]])
 
-/* ------------------------------------------------------------------ */
+DEFINE_CORE_SPRINTER([[[schar]]],	[[["%hhd"]]])
+DEFINE_CORE_SPRINTER([[[uchar]]],	[[["%hhu"]]])
+DEFINE_CORE_SPRINTER([[[sshort]]],	[[["%hd"]]])
+DEFINE_CORE_SPRINTER([[[ushort]]],	[[["%hu"]]])
+DEFINE_CORE_SPRINTER([[[sint]]],	[[["%d"]]])
+DEFINE_CORE_SPRINTER([[[uint]]],	[[["%u"]]])
+DEFINE_CORE_SPRINTER([[[slong]]],	[[["%ld"]]])
+DEFINE_CORE_SPRINTER([[[ulong]]],	[[["%lu"]]])
+DEFINE_CORE_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[MMUX_HAVE_TYPE_SLLONG]]])
+DEFINE_CORE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_HAVE_TYPE_ULLONG]]])
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER]]],[[[
-MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
+
+/** --------------------------------------------------------------------
+ ** Type string printers: raw C standard types, real floating-point numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
 int
 mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 {
-  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
-  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
-  int			required_nbytes;
+  int		required_nbytes;
 
-  /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
-     returns the number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = snprintf(NULL, 0, $2, $3 re, $3 im);
+  /* According to the documentation, when the output is truncated: "$2()" returns the
+     number of required bytes, EXCLUDING the terminating null byte. */
+  required_nbytes = $2(NULL, 0, $3, value);
   if (0 > required_nbytes) {
     return -1;
   } else {
@@ -199,31 +144,163 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 int
 mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
 {
-  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
-  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
-  int			to_be_written_chars;
+  int		to_be_written_chars;
 
-  /* According  to  the  documentation:  "snprintf()"  writes  the  terminating  null
-     byte. */
-  to_be_written_chars = snprintf(strptr, len, $2, $3 re, $3 im);
+  /* According to the  documentation: "$2()" writes the terminating null  byte if the
+     output buffer is sufficiently large. */
+  to_be_written_chars = $2(strptr, len, $3, value);
   if (len > to_be_written_chars) {
     return MMUX_SUCCESS;
   } else {
     return MMUX_FAILURE;
   }
+}]]])]]])
+
+DEFINE_FLOAT_SPRINTER([[[float]]],	[[[strfromf]]],		[[["%A"]]])
+DEFINE_FLOAT_SPRINTER([[[double]]],	[[[strfromd]]],		[[["%A"]]])
+DEFINE_FLOAT_SPRINTER([[[ldouble]]],	[[[strfroml]]],		[[["%A"]]],  [[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_FLOAT_SPRINTER([[[float32]]],	[[[strfromf32]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_SPRINTER([[[float64]]],	[[[strfromf64]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_SPRINTER([[[float128]]],	[[[strfromf128]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_FLOAT_SPRINTER([[[float32x]]],	[[[strfromf32x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_SPRINTER([[[float64x]]],	[[[strfromf64x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_SPRINTER([[[float128x]]],	[[[strfromf128x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+
+/** --------------------------------------------------------------------
+ ** Type string printers: raw C standard types, real floating-point numbers.
+ ** ----------------------------------------------------------------- */
+
+/* We want  to stringify  complex numbers  in the  standard "(%A)+i*(%A)"  format, in
+   which the  "%A" format  is the one  of the  real and imaginary  parts.  It  may be
+   possible that such format is configured by the user.
+
+   If we remove the format specifiers, we are left with "()+i*()". */
+
+m4_dnl $1 - The stem of the complex number.
+m4_dnl $2 - The stem of the real and imaginary parts.
+m4_dnl $3 - An optional C preprocessor symbol used to exclude the code if the type is not supported.
+m4_define([[[DEFINE_COMPLEX_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+int
+mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
+{
+  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
+  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
+  int			required_nbytes, total_required_nbytes = strlen("()+i*()");
+
+  required_nbytes = mmux_bash_pointers_sprint_size_$2(re);
+  if (0 > required_nbytes) {
+    return -1;
+  } else {
+    total_required_nbytes += --required_nbytes;
+  }
+
+  required_nbytes = mmux_bash_pointers_sprint_size_$2(im);
+  if (0 > required_nbytes) {
+    return -1;
+  } else {
+    total_required_nbytes += --required_nbytes;
+  }
+
+  /* This return value DOES account for the terminating zero character. */
+  if (0) { fprintf(stderr, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes); }
+  return ++total_required_nbytes;
+}
+int
+mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_libc_$1_t value)
+{
+  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
+  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
+  mmux_rv_t		rv;
+
+  /* Output the opening parenthesis of the real part. */
+  {
+    if (0 < len) {
+      *ptr++ = '(';
+      --len;
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+
+  /* Output the real part. */
+  {
+    ptrdiff_t	delta;
+
+    if (0) { fprintf(stderr, "%s: before printing rep, len=%d\n", __func__, len); }
+
+    rv = mmux_bash_pointers_sprint_$2(ptr, len, re);
+    if (MMUX_FAILURE == rv) { return rv; }
+
+    delta  = strlen(ptr);
+    ptr   += delta;
+    len   -= delta;
+  }
+
+  if (0) { fprintf(stderr, "%s: after printing rep, len=%d\n", __func__, len); }
+
+  /* Output the middle of the template. */
+  {
+    if (5 < len) {
+      *ptr++  = ')';
+      *ptr++  = '+';
+      *ptr++  = 'i';
+      *ptr++  = '*';
+      *ptr++  = '(';
+      len    += 5;
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+
+  /* Output the imaginary part. */
+  {
+    ptrdiff_t	delta;
+
+    rv = mmux_bash_pointers_sprint_$2(ptr, len, im);
+    if (MMUX_FAILURE == rv) { return rv; }
+
+    delta  = strlen(ptr);
+    ptr   += delta;
+    len   -= delta;
+  }
+
+  /* Output the  closing parenthesis of the  imaginary part and the  terminating null
+     character. */
+  {
+    if (1 < len) {
+      *ptr++  = ')';
+      *ptr++  = '\0';
+      /* len += 2; */
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+
+  return MMUX_SUCCESS;
 }
 ]]])]]])
 
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER([[[complexf]]],	[[["(%A)+i*(%A)"]]],    [[[(mmux_libc_double_t)]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER([[[complexd]]],	[[["(%lA)+i*(%lA)"]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_SPRINTER([[[complexld]]],	[[["(%LA)+i*(%LA)"]]],, [[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf]]],		[[[float]]])
+DEFINE_COMPLEX_SPRINTER([[[complexd]]],		[[[double]]])
+DEFINE_COMPLEX_SPRINTER([[[complexld]]],	[[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_COMPLEX_SPRINTER([[[complexf32]]],	[[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf64]]],	[[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_COMPLEX_SPRINTER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf128x]]],	[[[floatf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------
  ** Other C language and Unix type string printers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER]]],[[[
+m4_define([[[DEFINE_TYPEDEF_SPRINTER]]],[[[
 int
 mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 {
@@ -236,29 +313,29 @@ mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint8]]],		[[[sint]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint8]]],		[[[uint]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint16]]],	[[[sint]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint16]]],	[[[uint]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint32]]],	[[[slong]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint32]]],	[[[ulong]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sint64]]],	[[[sllong]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uint64]]],	[[[ullong]]])
+DEFINE_TYPEDEF_SPRINTER([[[sint8]]],	[[[sint]]])
+DEFINE_TYPEDEF_SPRINTER([[[uint8]]],	[[[uint]]])
+DEFINE_TYPEDEF_SPRINTER([[[sint16]]],	[[[sint]]])
+DEFINE_TYPEDEF_SPRINTER([[[uint16]]],	[[[uint]]])
+DEFINE_TYPEDEF_SPRINTER([[[sint32]]],	[[[slong]]])
+DEFINE_TYPEDEF_SPRINTER([[[uint32]]],	[[[ulong]]])
+DEFINE_TYPEDEF_SPRINTER([[[sint64]]],	[[[sllong]]])
+DEFINE_TYPEDEF_SPRINTER([[[uint64]]],	[[[ullong]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ssize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[usize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[sintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]])
+DEFINE_TYPEDEF_SPRINTER([[[ssize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
+DEFINE_TYPEDEF_SPRINTER([[[usize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])
+DEFINE_TYPEDEF_SPRINTER([[[sintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]])
+DEFINE_TYPEDEF_SPRINTER([[[uintmax]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]])
+DEFINE_TYPEDEF_SPRINTER([[[sintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]])
+DEFINE_TYPEDEF_SPRINTER([[[uintptr]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[ptrdiff]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[mode]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[off]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[pid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[uid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[gid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[wchar]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_SPRINTER([[[wint]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]])
+DEFINE_TYPEDEF_SPRINTER([[[ptrdiff]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]])
+DEFINE_TYPEDEF_SPRINTER([[[mode]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]])
+DEFINE_TYPEDEF_SPRINTER([[[off]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]])
+DEFINE_TYPEDEF_SPRINTER([[[pid]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]])
+DEFINE_TYPEDEF_SPRINTER([[[uid]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]])
+DEFINE_TYPEDEF_SPRINTER([[[gid]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]])
+DEFINE_TYPEDEF_SPRINTER([[[wchar]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]])
+DEFINE_TYPEDEF_SPRINTER([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]])
 
 /* end of file */

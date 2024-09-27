@@ -2741,42 +2741,6 @@ function predicates-is-zero-complexf-1.8 () {
 
 ### ------------------------------------------------------------------------
 
-function predicates-is-positive-complexf-1.1 () {
-    ! mmux_complexf_is_positive '(0)+i*(0)'
-}
-function predicates-is-positive-complexf-1.2 () {
-    ! mmux_complexf_is_positive '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-negative-complexf-1.1 () {
-    ! mmux_complexf_is_negative '(0)+i*(0)'
-}
-function predicates-is-negative-complexf-1.2 () {
-    ! mmux_complexf_is_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-positive-complexf-1.1 () {
-    ! mmux_complexf_is_non_positive '(0)+i*(0)'
-}
-function predicates-is-non-positive-complexf-1.2 () {
-    ! mmux_complexf_is_non_positive '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-negative-complexf-1.1 () {
-    ! mmux_complexf_is_non_negative '(0)+i*(0)'
-}
-function predicates-is-non-negative-complexf-1.2 () {
-    ! mmux_complexf_is_non_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
 function predicates-is-infinite-complexf-1.1 () {
     ! mmux_complexf_is_infinite '(1.2)+i*(3.4)'
 }
@@ -2835,42 +2799,6 @@ function predicates-is-zero-complexd-1.8 () {
 
 ### ------------------------------------------------------------------------
 
-function predicates-is-positive-complexd-1.1 () {
-    ! mmux_complexd_is_positive '(0)+i*(0)'
-}
-function predicates-is-positive-complexd-1.2 () {
-    ! mmux_complexd_is_positive '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-negative-complexd-1.1 () {
-    ! mmux_complexd_is_negative '(0)+i*(0)'
-}
-function predicates-is-negative-complexd-1.2 () {
-    ! mmux_complexd_is_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-positive-complexd-1.1 () {
-    ! mmux_complexd_is_non_positive '(0)+i*(0)'
-}
-function predicates-is-non-positive-complexd-1.2 () {
-    ! mmux_complexd_is_non_positive '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-negative-complexd-1.1 () {
-    ! mmux_complexd_is_non_negative '(0)+i*(0)'
-}
-function predicates-is-non-negative-complexd-1.2 () {
-    ! mmux_complexd_is_non_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
 function predicates-is-infinite-complexd-1.1 () {
     ! mmux_complexd_is_infinite '(1.2)+i*(3.4)'
 }
@@ -2925,42 +2853,6 @@ function predicates-is-zero-complexld-1.7 () {
 }
 function predicates-is-zero-complexld-1.8 () {
     mmux_complexld_is_zero '(+0.0)+i*(-0.0)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-positive-complexld-1.1 () {
-    ! mmux_complexld_is_positive '(0)+i*(0)'
-}
-function predicates-is-positive-complexld-1.2 () {
-    ! mmux_complexld_is_positive '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-negative-complexld-1.1 () {
-    ! mmux_complexld_is_negative '(0)+i*(0)'
-}
-function predicates-is-negative-complexld-1.2 () {
-    ! mmux_complexld_is_negative '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-positive-complexld-1.1 () {
-    ! mmux_complexld_is_non_positive '(0)+i*(0)'
-}
-function predicates-is-non-positive-complexld-1.2 () {
-    ! mmux_complexld_is_non_positive '(1.2)+i*(3.4)'
-}
-
-### ------------------------------------------------------------------------
-
-function predicates-is-non-negative-complexld-1.1 () {
-    ! mmux_complexld_is_non_negative '(0)+i*(0)'
-}
-function predicates-is-non-negative-complexld-1.2 () {
-    ! mmux_complexld_is_non_negative '(1.2)+i*(3.4)'
 }
 
 ### ------------------------------------------------------------------------

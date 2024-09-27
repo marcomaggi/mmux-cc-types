@@ -181,8 +181,7 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char co
  ** Parsing complex numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[
-MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 static int parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const char * caller_name);
 
 int
@@ -304,7 +303,7 @@ DEFINE_COMPLEX_PARSER([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_TYPE_FLO
  ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
 mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
@@ -326,24 +325,24 @@ mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_value, char const * s_arg, char 
 }
 ]]])]]])
 
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float]]],	[[[strtof]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[double]]],	[[[strtod]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[ldouble]]],	[[[strtold]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_FLOAT_PARSER([[[float]]],	[[[strtof]]])
+DEFINE_FLOAT_PARSER([[[double]]],	[[[strtod]]])
+DEFINE_FLOAT_PARSER([[[ldouble]]],	[[[strtold]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float32]]],	[[[strtof32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float64]]],	[[[strtof64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float128]]],	[[[strtof128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_FLOAT_PARSER([[[float32]]],	[[[strtof32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_PARSER([[[float64]]],	[[[strtof64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_PARSER([[[float128]]],	[[[strtof128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float32x]]],	[[[strtof32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float64x]]],	[[[strtof64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-MMUX_BASH_POINTERS_DEFINE_FLOAT_PARSER([[[float128x]]],	[[[strtof128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_FLOAT_PARSER([[[float32x]]],	[[[strtof32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_PARSER([[[float64x]]],	[[[strtof64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_PARSER([[[float128x]]],	[[[strtof128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------
  ** Type parsers: signed integers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER]]],[[[
+m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[
 int
 mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_dest, char const * s_source, char const * caller_name)
 {
@@ -360,22 +359,22 @@ mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_dest, char const * s_source, cha
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[schar]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sshort]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[slong]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[schar]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sshort]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sint]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[slong]]])
 
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint8]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint16]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint32]]])
-MMUX_BASH_POINTERS_DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sint8]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sint16]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sint32]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[
 int
 mmux_bash_pointers_parse_sllong (mmux_libc_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[
   mmux_libc_sllong_t	rv;
   char const *		s_source_beg;
   char *		s_source_end	= NULL;
@@ -426,19 +425,14 @@ MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[
   }
   errno = 0; /* We consider the error consumed here. */
   return MMUX_FAILURE;
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return MMUX_FAILURE;
-]]])
-}
+}]]])
 
 
 /** --------------------------------------------------------------------
  ** Type parsers: unsigned integers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
+m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
 int
 mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg, char const * caller_name)
 {
@@ -455,24 +449,24 @@ mmux_bash_pointers_parse_$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg,
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[pointer]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[pointer]]])
 
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uchar]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ushort]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[ulong]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[uchar]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[ushort]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[uint]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[ulong]]])
 
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint8]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint16]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint32]]])
-MMUX_BASH_POINTERS_DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[uint8]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[uint16]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[uint32]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[
 int
 mmux_bash_pointers_parse_ullong (mmux_libc_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[
   mmux_libc_ullong_t	rv;
   char const *		s_source_beg;
   char *		s_source_end	= NULL;
@@ -523,19 +517,14 @@ MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[
   }
   errno = 0; /* We consider the error consumed here. */
   return MMUX_FAILURE;
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: parsing function \"%s\" not implemented because underlying C language type not available.\n",
-	  __func__);
-  return MMUX_FAILURE;
-]]])
-}
+}]]])
 
 
 /** --------------------------------------------------------------------
  ** Other C language and Unix type parsers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER]]],[[[
+m4_define([[[DEFINE_TYPEDEF_PARSER]]],[[[
 int
 mmux_bash_pointers_parse_[[[]]]$1 (mmux_libc_[[[$1]]]_t * p_value, char const * s_arg, char const * caller_name)
 {
@@ -543,20 +532,20 @@ mmux_bash_pointers_parse_[[[]]]$1 (mmux_libc_[[[$1]]]_t * p_value, char const * 
 }
 ]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[ssize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[usize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[sintmax]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uintmax]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[sintptr]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uintptr]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]])
+DEFINE_TYPEDEF_PARSER([[[ssize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE]]])
+DEFINE_TYPEDEF_PARSER([[[usize]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]])
+DEFINE_TYPEDEF_PARSER([[[sintmax]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX]]])
+DEFINE_TYPEDEF_PARSER([[[uintmax]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX]]])
+DEFINE_TYPEDEF_PARSER([[[sintptr]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR]]])
+DEFINE_TYPEDEF_PARSER([[[uintptr]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR]]])
 
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[ptrdiff]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[mode]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[off]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[pid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[uid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[gid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[wchar]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]])
-MMUX_BASH_POINTERS_DEFINE_SUBTYPE_PARSER([[[wint]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]])
+DEFINE_TYPEDEF_PARSER([[[ptrdiff]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF]]])
+DEFINE_TYPEDEF_PARSER([[[mode]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_MODE]]])
+DEFINE_TYPEDEF_PARSER([[[off]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_OFF]]])
+DEFINE_TYPEDEF_PARSER([[[pid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_PID]]])
+DEFINE_TYPEDEF_PARSER([[[uid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_UID]]])
+DEFINE_TYPEDEF_PARSER([[[gid]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_GID]]])
+DEFINE_TYPEDEF_PARSER([[[wchar]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR]]])
+DEFINE_TYPEDEF_PARSER([[[wint]]],		[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]])
 
 /* end of file */

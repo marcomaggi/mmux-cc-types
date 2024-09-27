@@ -38,9 +38,11 @@ function mmux_bash_pointers_library_load () {
     declare -g MMUX_BASH_POINTERS_REVISION=mmux_bash_pointers_VERSION_INTERFACE_REVISION
     declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
 
-    declare -ra STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble complexf complexd complexld sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
+    declare -ra STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong float double ldouble float32 float64 float128 float32x float64x float128x complexf complexd complexld complexf32 complexf64 complexf128 complexf32x complexf64x complexf128x sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
     declare -ra INTEGER_STEMS=(pointer schar uchar sshort ushort sint uint slong ulong sllong ullong sint8 uint8 sint16 uint16 sint32 uint32 sint64 uint64 ssize usize sintmax uintmax sintptr uintptr ptrdiff mode off pid uid gid wchar wint)
-    declare -ra FLOAT_STEMS=(float double ldouble complexf complexd complexld)
+    declare -ra FLOAT_STEMS=(float double ldouble float32 float64 float128 float32x float64x float128x complexf complexd complexld complexf32 complexf64 complexf128 complexf32x complexf64x complexf128x)
+    declare -ra REAL_FLOAT_STEMS=(float double ldouble float32 float64 float128 float32x float64x float128x)
+    declare -ra COMPLEX_FLOAT_STEMS=(complexf complexd complexld complexf32 complexf64 complexf128 complexf32x complexf64x complexf128x)
     declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror errno_to_string)
 
     # The identifier of every defined builtin is stored in this array.
@@ -101,7 +103,7 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 
-	    for STEM in float double ldouble complexf complexd complexld
+	    for STEM in "${FLOAT_STEMS[@]}"
 	    do
 		for ITEM in add sub mul div neg inv
 		do
@@ -125,13 +127,38 @@ function mmux_bash_pointers_library_load () {
 
 	# Predicates builtins.
 	{
-	    for ((IDX=0; IDX < ${#STEMS[@]}; ++IDX))
+	    declare -n SOME_STEMS=INTEGER_STEMS
+	    for ((IDX=0; IDX < ${#SOME_STEMS[@]}; ++IDX))
 	    do
-		printf -v NAME  'mmux_%s_is_string' "${STEMS[$IDX]}"
+		printf -v NAME  'mmux_%s_is_string' "${SOME_STEMS[$IDX]}"
 		mmux_bash_pointers_library_define_builtin "$NAME"
 		for ITEM in zero positive negative non_positive non_negative nan infinite
 		do
-		    printf -v NAME  'mmux_%s_is_%s' "${STEMS[$IDX]}" "$ITEM"
+		    printf -v NAME  'mmux_%s_is_%s' "${SOME_STEMS[$IDX]}" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
+		done
+	    done
+
+	    declare -n SOME_STEMS=REAL_FLOAT_STEMS
+	    for ((IDX=0; IDX < ${#SOME_STEMS[@]}; ++IDX))
+	    do
+		printf -v NAME  'mmux_%s_is_string' "${SOME_STEMS[$IDX]}"
+		mmux_bash_pointers_library_define_builtin "$NAME"
+		for ITEM in zero positive negative non_positive non_negative nan infinite
+		do
+		    printf -v NAME  'mmux_%s_is_%s' "${SOME_STEMS[$IDX]}" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
+		done
+	    done
+
+	    declare -n SOME_STEMS=COMPLEX_FLOAT_STEMS
+	    for ((IDX=0; IDX < ${#SOME_STEMS[@]}; ++IDX))
+	    do
+		printf -v NAME  'mmux_%s_is_string' "${SOME_STEMS[$IDX]}"
+		mmux_bash_pointers_library_define_builtin "$NAME"
+		for ITEM in zero nan infinite
+		do
+		    printf -v NAME  'mmux_%s_is_%s' "${SOME_STEMS[$IDX]}" "$ITEM"
 		    mmux_bash_pointers_library_define_builtin "$NAME"
 		done
 	    done
@@ -148,7 +175,7 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 
-	    for STEM in float double ldouble
+	    for STEM in float double ldouble float32 float64 float128 float32x float64x float128x
 	    do
 		for ITEM in equal greater lesser greater_equal lesser_equal equal_absmargin equal_relepsilon
 		do
@@ -157,7 +184,7 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 
-	    for STEM in complexf complexd complexld
+	    for STEM in complexf complexd complexld complexf32 complexf64 complexf128 complexf32x complexf64x complexf128x
 	    do
 		for ITEM in equal equal_absmargin equal_relepsilon
 		do
