@@ -35,9 +35,9 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[static int
-mmux_$1_is_string_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
+mmux_string_is_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_is_string"
+#define MMUX_BUILTIN_NAME	"mmux_string_is_$1"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_libc_$1_t	data;
@@ -49,9 +49,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_is_string]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_string_is_$1]]],
     [[[(2 == argc)]]],
-    [[["mmux_$1_is_string STRING_REP"]]],
+    [[["mmux_string_is_$1 STRING_REP"]]],
     [[["Return true if STRING_REP is a valid string representation for the C language type."]]])
 ]]])
 
@@ -64,15 +64,15 @@ DEFINE_TYPE_STRING_REP_PREDICATE([[[sint]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[uint]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[slong]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[ulong]]])
-DEFINE_TYPE_STRING_REP_PREDICATE([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
-DEFINE_TYPE_STRING_REP_PREDICATE([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[sllong]]],		[[[MMUX_HAVE_TYPE_SLLONG]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[ullong]]],		[[[MMUX_HAVE_TYPE_ULLONG]]])
 
 DEFINE_TYPE_STRING_REP_PREDICATE([[[float]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[double]]])
-DEFINE_TYPE_STRING_REP_PREDICATE([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_TYPE_STRING_REP_PREDICATE([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_TYPE_STRING_REP_PREDICATE([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
 DEFINE_TYPE_STRING_REP_PREDICATE([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])

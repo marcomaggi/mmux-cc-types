@@ -1175,7 +1175,7 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 
 
 @macro MmuxDefineTypePredicateStringrepBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_string @var{STRING_REP}
+@deffn Builtin mmux_string_is_\STEM\ @var{STRING_REP}
 Return true if @var{STRING_REP} is a valid string representation for the C language type; otherwise
 return false.
 @end deffn

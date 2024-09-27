@@ -34,21 +34,40 @@
 #undef  MMUX_INTEGER_ZERO
 #define MMUX_INTEGER_ZERO(STEM)		((mmux_libc_ ## STEM ## _t)0)
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],[[[__extension__ static const _Float32   mmux_libc_maximum_float32=FLT32_MAX;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]],[[[__extension__ static const _Float64   mmux_libc_maximum_float64=FLT64_MAX;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]],[[[__extension__ static const _Float128 mmux_libc_maximum_float128=FLT128_MAX;]]])
+
+/** --------------------------------------------------------------------
+ ** Some maximum/minimum values whose definition is not(?) documented by the GNU C Library.
+ ** ----------------------------------------------------------------- */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],[[[__extension__ static const _Float32   mmux_libc_minimum_float32=-(mmux_libc_maximum_float32);]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]],[[[__extension__ static const _Float64   mmux_libc_minimum_float64=-(mmux_libc_maximum_float64);]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]],[[[__extension__ static const _Float128 mmux_libc_minimum_float128=-(mmux_libc_maximum_float128);]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],[[[
+__extension__ static const _Float32   mmux_libc_maximum_float32=FLT32_MAX;
+__extension__ static const _Float32   mmux_libc_minimum_float32=-(mmux_libc_maximum_float32);
+]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[__extension__ static const _Float32x  mmux_libc_maximum_float32x=FLT32X_MAX;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[__extension__ static const _Float64x  mmux_libc_maximum_float64x=FLT64X_MAX;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[__extension__ static const _Float128x mmux_libc_maximum_float128x=FLT128X_MAX;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]],[[[
+__extension__ static const _Float64   mmux_libc_maximum_float64=FLT64_MAX;
+__extension__ static const _Float64   mmux_libc_minimum_float64=-(mmux_libc_maximum_float64);
+]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[__extension__ static const _Float32x  mmux_libc_minimum_float32x=-(mmux_libc_maximum_float32x);]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[__extension__ static const _Float64x  mmux_libc_minimum_float64x=-(mmux_libc_maximum_float64);]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[__extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_maximum_float128x);]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]],[[[
+__extension__ static const _Float128 mmux_libc_maximum_float128=FLT128_MAX;
+__extension__ static const _Float128 mmux_libc_minimum_float128=-(mmux_libc_maximum_float128);
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[
+__extension__ static const _Float32x  mmux_libc_maximum_float32x=FLT32X_MAX;
+__extension__ static const _Float32x  mmux_libc_minimum_float32x=-(mmux_libc_maximum_float32x);
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[
+__extension__ static const _Float64x  mmux_libc_maximum_float64x=FLT64X_MAX;
+__extension__ static const _Float64x  mmux_libc_minimum_float64x=-(mmux_libc_maximum_float64);
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[
+__extension__ static const _Float128x mmux_libc_maximum_float128x=FLT128X_MAX;
+__extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_maximum_float128x);
+]]])
 
 
 /** --------------------------------------------------------------------
@@ -87,16 +106,20 @@ DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]], [[[cimagf12
 
 
 /** --------------------------------------------------------------------
- ** Standard low-level type functions: string validation, minimum, maximum, sprint, parse.
+ ** Real type functions: string validation, minimum, maximum, sizeof.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS]]],[[[
+m4_dnl $1 - Stem of the type.
+m4_dnl $2 - C language expression evaluating to the maximum value.
+m4_dnl $3 - C language expression evaluating to the minimum value.
+m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
+m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
 bool
-mmux_bash_pointers_string_$1_p (char const * s_arg)
+mmux_bash_pointers_string_is_$1 (char const * s_value)
 {
   mmux_libc_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
+  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
     return true;
   } else {
     return false;
@@ -117,90 +140,58 @@ mmux_bash_pointers_minimum_$1 (void)
 {
   return $3;
 }
-]]])
+]]])]]])
 
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sshort,	SHRT_MAX,	SHRT_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(ushort,	USHRT_MAX,	0)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sint,	INT_MAX,	INT_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(uint,	UINT_MAX,	0)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(slong,	LONG_MAX,	LONG_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(ulong,	ULONG_MAX,	0)
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sllong,	LLONG_MAX,	LLONG_MIN)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(ullong,	ULLONG_MAX,	0)]]])
+DEFINE_REAL_TYPE_FUNCTIONS([[[pointer]]],
+			   [[[(mmux_libc_pointer_t)mmux_bash_pointers_maximum_uintptr()]]],
+			   [[[(mmux_libc_pointer_t)mmux_bash_pointers_minimum_uintptr()]]])
+
+DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sshort,	SHRT_MAX,	SHRT_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(ushort,	USHRT_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint,	INT_MAX,	INT_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint,	UINT_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(slong,	LONG_MAX,	LONG_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(ulong,	ULONG_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sllong,	LLONG_MAX,	LLONG_MIN,	[[[MMUX_HAVE_TYPE_SLLONG]]])
+DEFINE_REAL_TYPE_FUNCTIONS(ullong,	ULLONG_MAX,	0,		[[[MMUX_HAVE_TYPE_ULLONG]]])
 
 /* FIXME Should we do something to make available the "_MIN" constants defined by the
    C language standard?  (Marco Maggi; Sep 18, 2024) */
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float,	FLT_MAX,	-FLT_MAX)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(double,	DBL_MAX,	-DBL_MAX)
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(ldouble,	LDBL_MAX,	-LDBL_MAX)]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float,	FLT_MAX,	-FLT_MAX)
+DEFINE_REAL_TYPE_FUNCTIONS(double,	DBL_MAX,	-DBL_MAX)
+DEFINE_REAL_TYPE_FUNCTIONS(ldouble,	LDBL_MAX,	-LDBL_MAX,	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float32, mmux_libc_maximum_float32, mmux_libc_minimum_float32)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float64, mmux_libc_maximum_float64, mmux_libc_minimum_float64)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float128,mmux_libc_maximum_float128, mmux_libc_minimum_float128)]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float32, mmux_libc_maximum_float32, mmux_libc_minimum_float32, [[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float64, mmux_libc_maximum_float64, mmux_libc_minimum_float64, [[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float128,mmux_libc_maximum_float128, mmux_libc_minimum_float128, [[[MMUX_HAVE_TYPE_FLOAT128]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float32x, mmux_libc_maximum_float32x, mmux_libc_minimum_float32x)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float64x, mmux_libc_maximum_float64x, mmux_libc_minimum_float64x)]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],
-[[[DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(float128x,mmux_libc_maximum_float128x, mmux_libc_minimum_float128x)]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float32x, mmux_libc_maximum_float32x, mmux_libc_minimum_float32x, [[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float64x, mmux_libc_maximum_float64x, mmux_libc_minimum_float64x, [[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_REAL_TYPE_FUNCTIONS(float128x,mmux_libc_maximum_float128x, mmux_libc_minimum_float128x, [[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sint8,	INT8_MAX,	INT8_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(uint8,	UINT8_MAX,	0)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sint16,	INT16_MAX,	INT16_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(uint16,	UINT16_MAX,	0)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sint32,	INT32_MAX,	INT32_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(uint32,	UINT32_MAX,	0)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(sint64,	INT64_MAX,	INT64_MIN)
-DEFINE_STANDARD_LOW_LEVEL_TYPE_FUNCTIONS(uint64,	UINT64_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint8,	INT8_MAX,	INT8_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint8,	UINT8_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint16,	INT16_MAX,	INT16_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint16,	UINT16_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint32,	INT32_MAX,	INT32_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint32,	UINT32_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint64,	INT64_MAX,	INT64_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint64,	UINT64_MAX,	0)
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Complex type functions: string validation, sizeof.
+ ** ----------------------------------------------------------------- */
 
+m4_define([[[DEFINE_COMPLEX_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_bash_pointers_string_pointer_p (char const * s_arg)
-{
-  mmux_libc_pointer_t	value;
-
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_pointer(&value, s_arg, NULL)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-int
-mmux_bash_pointers_sizeof_pointer (void)
-{
-  return sizeof(mmux_libc_pointer_t);
-}
-mmux_libc_pointer_t
-mmux_bash_pointers_minimum_pointer (void)
-{
-  return (mmux_libc_pointer_t)mmux_bash_pointers_minimum_uintptr();
-}
-mmux_libc_pointer_t
-mmux_bash_pointers_maximum_pointer (void)
-{
-  return (mmux_libc_pointer_t) mmux_bash_pointers_maximum_uintptr();
-}
-
-/* ------------------------------------------------------------------ */
-
-m4_define([[[DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS]]],[[[
-MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-bool
-mmux_bash_pointers_string_$1_p (char const * s_arg)
+mmux_bash_pointers_string_is_$1 (char const * s_value)
 {
   mmux_libc_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
+  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
     return true;
   } else {
     return false;
@@ -213,76 +204,69 @@ mmux_bash_pointers_sizeof_$1 (void)
 }
 ]]])]]])
 
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf]]])
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexd]]])
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexd]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_STANDARD_LOW_LEVEL_COMPLEX_TYPE_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------
- ** Standard high-level type functions: string validation, minimum, maximum, sprint, parse.
+ ** Typedef type functions: string validation, minimum, maximum, sizeof.
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
-m4_define([[[DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS]]],[[[
+m4_define([[[DEFINE_TYPEDEF_TYPE_FUNCTIONS]]],[[[
 bool
-mmux_bash_pointers_string_$1_p (char const * s_arg)
+mmux_bash_pointers_string_is_$1 (char const * s_value)
 {
-  mmux_libc_$1_t	value;
-
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_arg, NULL)) {
-    return true;
-  } else {
-    return false;
-  }
+  return mmux_bash_pointers_string_is_[[[]]]$2[[[]]](s_value);
 }
-  int
-  mmux_bash_pointers_sizeof_$1 (void)
-  {
-    return sizeof(mmux_libc_$1_t);
-  }
-  mmux_libc_$1_t
-  mmux_bash_pointers_maximum_$1 (void)
-  {
-    return mmux_bash_pointers_maximum_[[[]]]$2[[[]]] ();
-  }
-  mmux_libc_$1_t
-  mmux_bash_pointers_minimum_$1 (void)
-  {
-    return mmux_bash_pointers_minimum_[[[]]]$2[[[]]] ();
-  }
+int
+mmux_bash_pointers_sizeof_$1 (void)
+{
+  return sizeof(mmux_libc_$1_t);
+}
+mmux_libc_$1_t
+mmux_bash_pointers_maximum_$1 (void)
+{
+  return mmux_bash_pointers_maximum_[[[]]]$2[[[]]] ();
+}
+mmux_libc_$1_t
+mmux_bash_pointers_minimum_$1 (void)
+{
+  return mmux_bash_pointers_minimum_[[[]]]$2[[[]]] ();
+}
 ]]])
 
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(ssize,	MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(usize,	MMUX_BASH_POINTERS_STEM_ALIAS_USIZE)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(sintmax,	MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(uintmax,	MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(sintptr,	MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(uintptr,	MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(mode,	MMUX_BASH_POINTERS_STEM_ALIAS_MODE)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(off,	MMUX_BASH_POINTERS_STEM_ALIAS_OFF)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(pid,	MMUX_BASH_POINTERS_STEM_ALIAS_PID)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(uid,	MMUX_BASH_POINTERS_STEM_ALIAS_UID)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(gid,	MMUX_BASH_POINTERS_STEM_ALIAS_GID)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(ptrdiff,	MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(wchar,	MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR)
-DEFINE_STANDARD_HIGH_LEVEL_TYPE_FUNCTIONS(wint,	MMUX_BASH_POINTERS_STEM_ALIAS_WINT)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(ssize,	MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(usize,	MMUX_BASH_POINTERS_STEM_ALIAS_USIZE)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(sintmax,	MMUX_BASH_POINTERS_STEM_ALIAS_SINTMAX)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(uintmax,	MMUX_BASH_POINTERS_STEM_ALIAS_UINTMAX)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(sintptr,	MMUX_BASH_POINTERS_STEM_ALIAS_SINTPTR)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(uintptr,	MMUX_BASH_POINTERS_STEM_ALIAS_UINTPTR)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(mode,	MMUX_BASH_POINTERS_STEM_ALIAS_MODE)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(off,	MMUX_BASH_POINTERS_STEM_ALIAS_OFF)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(pid,	MMUX_BASH_POINTERS_STEM_ALIAS_PID)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(uid,	MMUX_BASH_POINTERS_STEM_ALIAS_UID)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(gid,	MMUX_BASH_POINTERS_STEM_ALIAS_GID)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(ptrdiff,	MMUX_BASH_POINTERS_STEM_ALIAS_PTRDIFF)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(wchar,	MMUX_BASH_POINTERS_STEM_ALIAS_WCHAR)
+DEFINE_TYPEDEF_TYPE_FUNCTIONS(wint,	MMUX_BASH_POINTERS_STEM_ALIAS_WINT)
 
 
 /** --------------------------------------------------------------------
  ** Store result value in result variable.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[
-MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 int
 mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value)
 {
@@ -329,9 +313,26 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[uint64]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[float]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[double]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float128x]]],		[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
 MMUX_BASH_DEFINE_VALUE_STORER([[[complexf]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[complexd]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 MMUX_BASH_DEFINE_VALUE_STORER([[[usize]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[ssize]]])
@@ -348,7 +349,6 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[uid]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[gid]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[wchar]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[wint]]])
-
 
 
 /** --------------------------------------------------------------------
@@ -604,5 +604,172 @@ DEFINE_UNSIGNED_INTEGER_PREDICATES([[[mode]]])
 DEFINE_UNSIGNED_INTEGER_PREDICATES([[[uid]]])
 DEFINE_UNSIGNED_INTEGER_PREDICATES([[[gid]]])
 DEFINE_UNSIGNED_INTEGER_PREDICATES([[[wint]]])
+
+
+/** --------------------------------------------------------------------
+ ** Comparison core functions.
+ ** ----------------------------------------------------------------- */
+
+#undef  DECL
+#define DECL		__attribute__((__const__))
+
+m4_define([[[MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+DECL bool mmux_$1_equal         (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 == op2)? true : false; }
+]]])]]])
+
+m4_define([[[MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >  op2)? true : false; }
+DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <  op2)? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >= op2)? true : false; }
+DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <= op2)? true : false; }
+]]])]]])
+
+m4_define([[[MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
+DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (        isless(op1,op2))? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
+DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
+]]])]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[pointer]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[schar]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uchar]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sshort]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ushort]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[slong]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ulong]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[double]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexd]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint8]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint8]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint16]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint16]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint32]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint32]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint64]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint64]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[usize]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ssize]]])
+
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sintmax]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uintmax]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sintptr]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uintptr]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ptrdiff]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[mode]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[off]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[pid]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uid]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[gid]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[wchar]]])
+MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
+
+
+/** --------------------------------------------------------------------
+ ** More type functions.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+inline mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X)                   { return $2(X); }
+inline mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $3(X, Y); }
+inline mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $4(X, Y); }
+]]])]]])
+
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float]]],	[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[double]]],	[[[fabs]]],     [[[fmax]]],      [[[fmin]]])
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[ldouble]]],	[[[fabsl]]],    [[[fmaxl]]],     [[[fminl]]],    [[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32]]],	[[[fabsf32]]],  [[[fmaxf32]]],   [[[fminf32]]],  [[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64]]],	[[[fabsf64]]],  [[[fmaxf64]]],   [[[fminf64]]],  [[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128]]],	[[[fabsf128]]], [[[fmaxf128]]],  [[[fminf128]]], [[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32x]]],	[[[fabsf32x]]], [[[fmaxf32x]]],  [[[fminf32x]]], [[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64x]]],	[[[fabsf64x]]], [[[fmaxf64x]]],  [[[fminf64x]]], [[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fminf128x]]],[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+
+/** --------------------------------------------------------------------
+ ** Approximate comparison functions for floating-point numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+bool
+mmux_$1_equal_absmargin (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t margin)
+{
+  return (mmux_$1_abs(op1 - op2) <= mmux_$1_abs(margin))? true : false;
+}
+bool
+mmux_$1_equal_relepsilon (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t epsilon)
+{
+  return (mmux_$1_abs(op1 - op2) <= (epsilon * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
+}
+bool
+mmux_$2_equal_absmargin (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t margin)
+{
+  mmux_libc_$2_part_t	re1 = mmux_bash_pointers_$2_real_part(op1);
+  mmux_libc_$2_part_t	im1 = mmux_bash_pointers_$2_imag_part(op1);
+  mmux_libc_$2_part_t	re2 = mmux_bash_pointers_$2_real_part(op2);
+  mmux_libc_$2_part_t	im2 = mmux_bash_pointers_$2_imag_part(op2);
+  mmux_libc_$2_part_t	ret = mmux_bash_pointers_$2_real_part(margin);
+  mmux_libc_$2_part_t	imt = mmux_bash_pointers_$2_imag_part(margin);
+
+  return (mmux_$1_equal_absmargin(re1, re2, ret) && mmux_$1_equal_absmargin(im1, im2, imt))? true : false;
+}
+bool
+mmux_$2_equal_relepsilon (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t epsilon)
+{
+  mmux_libc_$2_part_t	re1 = mmux_bash_pointers_$2_real_part(op1);
+  mmux_libc_$2_part_t	im1 = mmux_bash_pointers_$2_imag_part(op1);
+  mmux_libc_$2_part_t	re2 = mmux_bash_pointers_$2_real_part(op2);
+  mmux_libc_$2_part_t	im2 = mmux_bash_pointers_$2_imag_part(op2);
+  mmux_libc_$2_part_t	ret = mmux_bash_pointers_$2_real_part(epsilon);
+  mmux_libc_$2_part_t	imt = mmux_bash_pointers_$2_imag_part(epsilon);
+
+  return (mmux_$1_equal_relepsilon(re1, re2, ret) && mmux_$1_equal_relepsilon(im1, im2, imt))? true : false;
+}
+]]])]]])
+
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float]]],	[[[complexf]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[double]]],	[[[complexd]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[ldouble]]],	[[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float32]]],	[[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float64]]],	[[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float128]]],	[[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float32x]]],	[[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float64x]]],	[[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float128x]]],	[[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 /* end of file */

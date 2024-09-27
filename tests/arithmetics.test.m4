@@ -2958,6 +2958,9 @@ function arithmetics-double-inv-1.2 () {
 
 #### type variables: ldouble
 
+if test -v mmux_libc_SIZEOF_LDOUBLE
+then
+
 function arithmetics-ldouble-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
@@ -3070,6 +3073,722 @@ function arithmetics-ldouble-inv-1.2 () {
     mmux_ldouble_inv ROP QQ(OP)
     mmux_ldouble_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+
+fi
+
+
+#### type variables: float32
+
+if test -v mmux_libc_SIZEOF_FLOAT32
+then
+
+function arithmetics-float32-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32_add ROP QQ(OP)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_float32_add ROP QQ(OP0) QQ(OP1)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_float32_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32_sub ROP QQ(OP)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_float32_sub ROP QQ(OP0) QQ(OP1)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_float32_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32_mul ROP QQ(OP)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_float32_mul ROP QQ(OP0) QQ(OP1)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_float32_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32_div ROP QQ(OP)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_float32_div ROP QQ(OP0) QQ(OP1)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-div-1.3 () {
+    declare ROP OP0=500 OP1=2 OP2=5
+    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+
+    mmux_float32_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_float32_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32_inv ROP QQ(OP)
+    mmux_float32_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0.1'
+
+    mmux_float32_inv ROP QQ(OP)
+    mmux_float32_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+fi
+
+
+#### type variables: float64
+
+if test -v mmux_libc_SIZEOF_FLOAT64
+then
+
+function arithmetics-float64-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64_add ROP QQ(OP)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_float64_add ROP QQ(OP0) QQ(OP1)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_float64_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64_sub ROP QQ(OP)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_float64_sub ROP QQ(OP0) QQ(OP1)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_float64_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64_mul ROP QQ(OP)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_float64_mul ROP QQ(OP0) QQ(OP1)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_float64_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64_div ROP QQ(OP)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_float64_div ROP QQ(OP0) QQ(OP1)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-div-1.3 () {
+    declare ROP OP0=500 OP1=2 OP2=5
+    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+
+    mmux_float64_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_float64_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64_inv ROP QQ(OP)
+    mmux_float64_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0.1'
+
+    mmux_float64_inv ROP QQ(OP)
+    mmux_float64_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+fi
+
+
+#### type variables: float128
+
+if test -v mmux_libc_SIZEOF_FLOAT128
+then
+
+function arithmetics-float128-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128_add ROP QQ(OP)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_float128_add ROP QQ(OP0) QQ(OP1)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_float128_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128_sub ROP QQ(OP)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_float128_sub ROP QQ(OP0) QQ(OP1)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_float128_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128_mul ROP QQ(OP)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_float128_mul ROP QQ(OP0) QQ(OP1)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_float128_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128_div ROP QQ(OP)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_float128_div ROP QQ(OP0) QQ(OP1)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-div-1.3 () {
+    declare ROP OP0=500 OP1=2 OP2=5
+    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+
+    mmux_float128_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_float128_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128_inv ROP QQ(OP)
+    mmux_float128_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0.1'
+
+    mmux_float128_inv ROP QQ(OP)
+    mmux_float128_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+fi
+
+
+#### type variables: float32x
+
+if test -v mmux_libc_SIZEOF_FLOAT32X
+then
+
+function arithmetics-float32x-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32x_add ROP QQ(OP)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_float32x_add ROP QQ(OP0) QQ(OP1)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_float32x_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32x-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32x_sub ROP QQ(OP)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_float32x_sub ROP QQ(OP0) QQ(OP1)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_float32x_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32x-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32x_mul ROP QQ(OP)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_float32x_mul ROP QQ(OP0) QQ(OP1)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_float32x_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32x-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32x_div ROP QQ(OP)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_float32x_div ROP QQ(OP0) QQ(OP1)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-div-1.3 () {
+    declare ROP OP0=500 OP1=2 OP2=5
+    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+
+    mmux_float32x_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_float32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float32x-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float32x_inv ROP QQ(OP)
+    mmux_float32x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float32x-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0.1'
+
+    mmux_float32x_inv ROP QQ(OP)
+    mmux_float32x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+fi
+
+
+#### type variables: float64x
+
+if test -v mmux_libc_SIZEOF_FLOAT64X
+then
+
+function arithmetics-float64x-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64x_add ROP QQ(OP)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_float64x_add ROP QQ(OP0) QQ(OP1)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_float64x_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64x-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64x_sub ROP QQ(OP)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_float64x_sub ROP QQ(OP0) QQ(OP1)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_float64x_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64x-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64x_mul ROP QQ(OP)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_float64x_mul ROP QQ(OP0) QQ(OP1)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_float64x_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64x-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64x_div ROP QQ(OP)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_float64x_div ROP QQ(OP0) QQ(OP1)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-div-1.3 () {
+    declare ROP OP0=500 OP1=2 OP2=5
+    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+
+    mmux_float64x_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_float64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float64x-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float64x_inv ROP QQ(OP)
+    mmux_float64x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float64x-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0.1'
+
+    mmux_float64x_inv ROP QQ(OP)
+    mmux_float64x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+fi
+
+
+#### type variables: float128x
+
+if test -v mmux_libc_SIZEOF_FLOAT128X
+then
+
+function arithmetics-float128x-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128x_add ROP QQ(OP)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_float128x_add ROP QQ(OP0) QQ(OP1)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_float128x_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128x-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128x_sub ROP QQ(OP)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_float128x_sub ROP QQ(OP0) QQ(OP1)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_float128x_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128x-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128x_mul ROP QQ(OP)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_float128x_mul ROP QQ(OP0) QQ(OP1)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_float128x_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128x-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128x_div ROP QQ(OP)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_float128x_div ROP QQ(OP0) QQ(OP1)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-div-1.3 () {
+    declare ROP OP0=500 OP1=2 OP2=5
+    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+
+    mmux_float128x_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    mmux_float128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-float128x-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_float128x_inv ROP QQ(OP)
+    mmux_float128x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-float128x-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0.1'
+
+    mmux_float128x_inv ROP QQ(OP)
+    mmux_float128x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+fi
 
 
 #### type variables: complexf
