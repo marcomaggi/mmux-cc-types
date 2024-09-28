@@ -196,7 +196,7 @@ mmux_$1_inv (mmux_libc_$1_t A)
   mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
   mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
   mmux_libc_$1_part_t	D   = Are * Are + Aim * Aim;
-  mmux_libc_$1_part_t	Cre = - Are / D;
+  mmux_libc_$1_part_t	Cre = + Are / D;
   mmux_libc_$1_part_t	Cim = - Aim / D;
 
   return mmux_rectangular_$1 (Cre, Cim);

@@ -1364,6 +1364,126 @@ function arrays-decimal32-1.3 () {
 fi
 
 
+#### array accessors and mutators: decimal64
+
+if test -v mmux_libc_SIZEOF_DECIMAL64
+then
+
+function arrays-decimal64-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal64_array_set $PTR 0 1.23
+	mmux_decimal64_array_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_decimal64_equal_relepsilon 0X1.3AE148P+0 QQ(VALUE)
+}
+function arrays-decimal64-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal64_array_set $PTR  0 1.23
+	mmux_decimal64_array_set $PTR  8 4.56
+	mmux_decimal64_array_set $PTR 16 7.89
+
+	mmux_decimal64_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_decimal64_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_decimal64_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_decimal64_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal64_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal64_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+}
+function arrays-decimal64-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal64_array_set $PTR  0 1.23
+	mmux_decimal64_array_set $PTR  8 4.56
+	mmux_decimal64_array_set $PTR 16 7.89
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_decimal64_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_decimal64_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_decimal64_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_decimal64_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal64_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal64_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
+#### array accessors and mutators: decimal128
+
+if test -v mmux_libc_SIZEOF_DECIMAL128
+then
+
+function arrays-decimal128-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal128_array_set $PTR 0 1.23
+	mmux_decimal128_array_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_decimal128_equal_relepsilon 0X1.3AE148P+0 QQ(VALUE)
+}
+function arrays-decimal128-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal128_array_set $PTR  0 1.23
+	mmux_decimal128_array_set $PTR  8 4.56
+	mmux_decimal128_array_set $PTR 16 7.89
+
+	mmux_decimal128_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_decimal128_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_decimal128_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_decimal128_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal128_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal128_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+}
+function arrays-decimal128-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal128_array_set $PTR  0 1.23
+	mmux_decimal128_array_set $PTR  8 4.56
+	mmux_decimal128_array_set $PTR 16 7.89
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_decimal128_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_decimal128_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_decimal128_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_decimal128_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal128_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal128_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
 #### array accessors and mutators: complexf
 
 function arrays-complexf-1.1 () {
@@ -1893,6 +2013,186 @@ function arrays-complexf128x-1.3 () {
 
 fi
 
+
+
+#### array accessors and mutators: complexd32
+
+if test -v mmux_libc_SIZEOF_COMPLEXD32
+then
+
+function arrays-complexd32-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    {
+	mmux_complexd32_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd32_array_ref VALUE $PTR 3
+    }
+    mmux_libc_free $PTR
+    mmux_complexd32_equal_relepsilon '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function arrays-complexd32-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    {
+	mmux_complexd32_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd32_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd32_array_set $PTR 5 '(9.0)+i*(1.2)'
+
+	mmux_complexd32_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd32_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd32_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd32_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function arrays-complexd32-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    {
+	mmux_complexd32_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd32_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd32_array_set $PTR 5 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXD32))
+	mmux_complexd32_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd32_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd32_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd32_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
+#### array accessors and mutators: complexd64
+
+if test -v mmux_libc_SIZEOF_COMPLEXD64
+then
+
+function arrays-complexd64-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    {
+	mmux_complexd64_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd64_array_ref VALUE $PTR 3
+    }
+    mmux_libc_free $PTR
+    mmux_complexd64_equal_relepsilon '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function arrays-complexd64-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    {
+	mmux_complexd64_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd64_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd64_array_set $PTR 5 '(9.0)+i*(1.2)'
+
+	mmux_complexd64_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd64_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd64_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd64_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function arrays-complexd64-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    {
+	mmux_complexd64_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd64_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd64_array_set $PTR 5 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXD64))
+	mmux_complexd64_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd64_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd64_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd64_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
+#### array accessors and mutators: complexd128
+
+if test -v mmux_libc_SIZEOF_COMPLEXD128
+then
+
+function arrays-complexd128-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    {
+	mmux_complexd128_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd128_array_ref VALUE $PTR 3
+    }
+    mmux_libc_free $PTR
+    mmux_complexd128_equal_relepsilon '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function arrays-complexd128-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    {
+	mmux_complexd128_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd128_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd128_array_set $PTR 5 '(9.0)+i*(1.2)'
+
+	mmux_complexd128_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd128_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd128_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd128_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function arrays-complexd128-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    {
+	mmux_complexd128_array_set $PTR 3 '(1.2)+i*(3.4)'
+	mmux_complexd128_array_set $PTR 4 '(5.6)+i*(7.8)'
+	mmux_complexd128_array_set $PTR 5 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXD128))
+	mmux_complexd128_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
+	mmux_complexd128_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
+	mmux_complexd128_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd128_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+fi
 
 
 #### array accessors and mutators: sint8
