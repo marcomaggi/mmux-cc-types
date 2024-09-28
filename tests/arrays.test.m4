@@ -1304,6 +1304,66 @@ function arrays-float128x-1.3 () {
 fi
 
 
+#### array accessors and mutators: decimal32
+
+if test -v mmux_libc_SIZEOF_DECIMAL32
+then
+
+function arrays-decimal32-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal32_array_set $PTR 0 1.23
+	mmux_decimal32_array_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_decimal32_equal_relepsilon 0X1.3AE148P+0 QQ(VALUE)
+}
+function arrays-decimal32-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal32_array_set $PTR  0 1.23
+	mmux_decimal32_array_set $PTR  8 4.56
+	mmux_decimal32_array_set $PTR 16 7.89
+
+	mmux_decimal32_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_decimal32_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_decimal32_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_decimal32_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal32_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal32_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+}
+function arrays-decimal32-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR 1024 1
+    {
+	mmux_decimal32_array_set $PTR  0 1.23
+	mmux_decimal32_array_set $PTR  8 4.56
+	mmux_decimal32_array_set $PTR 16 7.89
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_decimal32_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_decimal32_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
+	mmux_decimal32_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_decimal32_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal32_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal32_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
 #### array accessors and mutators: complexf
 
 function arrays-complexf-1.1 () {

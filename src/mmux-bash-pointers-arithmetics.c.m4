@@ -177,8 +177,8 @@ mmux_$1_div (mmux_libc_$1_t A, mmux_libc_$1_t B)
   mmux_libc_$1_part_t	Bre = mmux_$1_real_part (B);
   mmux_libc_$1_part_t	Bim = mmux_$1_imag_part (B);
   mmux_libc_$1_part_t	D   = Bre * Bre + Bim * Bim;
-  mmux_libc_$1_part_t	Cre = (Are * Bre - Aim * Bim) / D;
-  mmux_libc_$1_part_t	Cim = (Are * Bim + Bre * Aim) / D;
+  mmux_libc_$1_part_t	Cre = (Are * Bre - Aim * (-Bim)) / D;
+  mmux_libc_$1_part_t	Cim = (Are * (-Bim) + Bre * Aim) / D;
 
   return mmux_rectangular_$1 (Cre, Cim);
 }

@@ -44,9 +44,11 @@ function mmux_bash_pointers_library_load () {
 					      uintmax uintptr mode pid wint)
     declare -ra INTEGER_STEMS=("${SIGNED_INTEGER_STEMS[@]}" "${UNSIGNED_INTEGER_STEMS[@]}")
 
-    declare -ra REAL_FLOAT_STEMS=(float double ldouble float32 float64 float128 float32x float64x float128x)
+    declare -ra REAL_FLOAT_STEMS=(float double ldouble float32 float64 float128 float32x float64x float128x \
+					decimal32 decimal64 decimal128)
     declare -ra COMPLEX_FLOAT_STEMS=(complexf complexd complexld complexf32 complexf64 complexf128 \
-					      complexf32x complexf64x complexf128x)
+					      complexf32x complexf64x complexf128x \
+					      complexd32 complexd64 complexd128)
     declare -ra FLOAT_STEMS=("${REAL_FLOAT_STEMS[@]}" "${COMPLEX_FLOAT_STEMS[@]}")
 
     declare -ga MMUX_BASH_POINTERS_REAL_STEMS=('pointer' "${INTEGER_STEMS[@]}" "${REAL_FLOAT_STEMS[@]}")
