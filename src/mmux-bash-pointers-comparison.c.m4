@@ -144,18 +144,10 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS]]],[[[
 static int
 mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
-
-m4_dnl This is an m4 macro, rather than a CPP definition, because we need to use the
-m4_dnl toupper macro; m4 interprets "#" characters as comments, so the following:
-m4_dnl
-m4_dnl    #define NAME        mmux_toupper($1)
-m4_dnl
-m4_dnl will leave the macro use not expanded.
-m4_define([[[MMUX_MARGIN_VARNAME]]],[[["ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"]]])
-
+#undef  MMUX_MARGIN_VARNAME
+#define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -200,18 +192,10 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 
 static int
 mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
-
-m4_dnl This is an m4 macro, rather than a CPP definition, because we need to use the
-m4_dnl toupper macro; m4 interprets "#" characters as comments, so the following:
-m4_dnl
-m4_dnl    #define NAME        mmux_toupper($1)
-m4_dnl
-m4_dnl will leave the macro use not expanded.
-m4_define([[[MMUX_EPSILON_VARNAME]]],[[["RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"]]])
-
+#undef  MMUX_EPSILON_VARNAME
+#define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -253,9 +237,6 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_relepsilon]]],
     [[[(2 <= argc)]]],
     [[["mmux_$1_equal_relepsilon OP0 OP ..."]]],
     [[["Compute the comparison between the operands OP."]]])
-
-/* ------------------------------------------------------------------ */
-
 ]]])
 
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float]]])
@@ -278,18 +259,10 @@ MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[float128x]]],		[[[MMUX_
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS]]],[[[
 static int
 mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
-
-m4_dnl This is an m4 macro, rather than a CPP definition, because we need to use the
-m4_dnl toupper macro; m4 interprets "#" characters as comments, so the following:
-m4_dnl
-m4_dnl    #define NAME        mmux_toupper($1)
-m4_dnl
-m4_dnl will leave the macro use not expanded.
-m4_define([[[MMUX_MARGIN_VARNAME]]],[[["ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"]]])
-
+#undef  MMUX_MARGIN_VARNAME
+#define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -335,18 +308,10 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 
 static int
 mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
-
-m4_dnl This is an m4 macro, rather than a CPP definition, because we need to use the
-m4_dnl toupper macro; m4 interprets "#" characters as comments, so the following:
-m4_dnl
-m4_dnl    #define NAME        mmux_toupper($1)
-m4_dnl
-m4_dnl will leave the macro use not expanded.
-m4_define([[[MMUX_EPSILON_VARNAME]]],[[["RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"]]])
-
+#undef  MMUX_EPSILON_VARNAME
+#define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -387,9 +352,6 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_relepsilon]]],
     [[[(2 <= argc)]]],
     [[["mmux_$1_equal_relepsilon OP0 OP ..."]]],
     [[["Compute the comparison between the operands OP."]]])
-
-/* ------------------------------------------------------------------ */
-
 ]]])
 
 MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS([[[complexf]]])

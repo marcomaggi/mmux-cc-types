@@ -1787,6 +1787,9 @@ function comparison-double-equal-relepsilon-2.3 () {
 
 #### type variables: ldouble
 
+if test -v mmux_libc_SIZEOF_LDOUBLE
+then
+
 function comparison-ldouble-equal-1.1         () {   mmux_ldouble_equal '1.0' ;}
 function comparison-ldouble-equal-1.2         () {   mmux_ldouble_equal '1.0' '1.0' ;}
 function comparison-ldouble-equal-1.3         () {   mmux_ldouble_equal '1.0' '1.0' '1.0' ;}
@@ -1877,6 +1880,8 @@ function comparison-ldouble-equal-relepsilon-2.3 () {
     declare -r RELATIVE_EPSILON_LDOUBLE='0.1'
     ! mmux_ldouble_equal_relepsilon '1.0' '3.0'
 }
+
+fi
 
 
 #### type variables: float32
@@ -2598,6 +2603,9 @@ function comparison-complexd-equal-absmargin-3.3 () {
 
 #### type variables: complexld
 
+if test -v mmux_libc_SIZEOF_LDOUBLE
+then
+
 function comparison-complexld-equal-1.1         () {   mmux_complexld_equal '(1.2)+i*(3.4)' ;}
 function comparison-complexld-equal-1.2         () {   mmux_complexld_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
 function comparison-complexld-equal-1.3         () {   mmux_complexld_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
@@ -2639,6 +2647,7 @@ function comparison-complexld-equal-absmargin-3.3 () {
     ! mmux_complexld_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
+fi
 
 
 #### type variables: complexf32
@@ -2746,28 +2755,28 @@ function comparison-complexf32x-equal-absmargin-1.5   () {   mmux_complexf32x_eq
 function comparison-complexf32x-equal-absmargin-1.6   () { ! mmux_complexf32x_equal_absmargin '-9' '-4' ;}
 
 function comparison-complexf32x-equal-absmargin-2.1 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='0.1'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32X='0.1'
     mmux_complexf32x_equal_absmargin '1.0' '1.02'
 }
 function comparison-complexf32x-equal-absmargin-2.2 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='0.1'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32X='0.1'
     ! mmux_complexf32x_equal_absmargin '1.0' '1.3'
 }
 function comparison-complexf32x-equal-absmargin-2.3 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='1.0'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32X='1.0'
     ! mmux_complexf32x_equal_absmargin '1.0' '3.0'
 }
 
 function comparison-complexf32x-equal-absmargin-3.1 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32X='(0.1)+i*(0.1)'
     mmux_complexf32x_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
 }
 function comparison-complexf32x-equal-absmargin-3.2 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32X='(0.1)+i*(0.1)'
     ! mmux_complexf32x_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
 }
 function comparison-complexf32x-equal-absmargin-3.3 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF32x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF32X='(0.1)+i*(0.1)'
     ! mmux_complexf32x_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
@@ -2781,28 +2790,28 @@ function comparison-complexf32x-equal-relepsilon-1.5   () {   mmux_complexf32x_e
 function comparison-complexf32x-equal-relepsilon-1.6   () { ! mmux_complexf32x_equal_relepsilon '-9' '-4' ;}
 
 function comparison-complexf32x-equal-relepsilon-2.1 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF32x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF32X='0.1'
     mmux_complexf32x_equal_relepsilon '1.0' '1.02'
 }
 function comparison-complexf32x-equal-relepsilon-2.2 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF32x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF32X='0.1'
     ! mmux_complexf32x_equal_relepsilon '1.0' '1.3'
 }
 function comparison-complexf32x-equal-relepsilon-2.3 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF32x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF32X='0.1'
     ! mmux_complexf32x_equal_relepsilon '1.0' '3.0'
 }
 
 function comparison-complexf32x-equal-relepsilon-3.1 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF32x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF32X='(0.1)+i*(0.1)'
     mmux_complexf32x_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
 }
 function comparison-complexf32x-equal-relepsilon-3.2 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF32x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF32X='(0.1)+i*(0.1)'
     ! mmux_complexf32x_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
 }
 function comparison-complexf32x-equal-relepsilon-3.3 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF32x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF32X='(0.1)+i*(0.1)'
     ! mmux_complexf32x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
@@ -2914,28 +2923,28 @@ function comparison-complexf64x-equal-absmargin-1.5   () {   mmux_complexf64x_eq
 function comparison-complexf64x-equal-absmargin-1.6   () { ! mmux_complexf64x_equal_absmargin '-9' '-4' ;}
 
 function comparison-complexf64x-equal-absmargin-2.1 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='0.1'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64X='0.1'
     mmux_complexf64x_equal_absmargin '1.0' '1.02'
 }
 function comparison-complexf64x-equal-absmargin-2.2 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='0.1'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64X='0.1'
     ! mmux_complexf64x_equal_absmargin '1.0' '1.3'
 }
 function comparison-complexf64x-equal-absmargin-2.3 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='1.0'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64X='1.0'
     ! mmux_complexf64x_equal_absmargin '1.0' '3.0'
 }
 
 function comparison-complexf64x-equal-absmargin-3.1 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64X='(0.1)+i*(0.1)'
     mmux_complexf64x_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
 }
 function comparison-complexf64x-equal-absmargin-3.2 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64X='(0.1)+i*(0.1)'
     ! mmux_complexf64x_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
 }
 function comparison-complexf64x-equal-absmargin-3.3 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF64x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF64X='(0.1)+i*(0.1)'
     ! mmux_complexf64x_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
@@ -2949,28 +2958,28 @@ function comparison-complexf64x-equal-relepsilon-1.5   () {   mmux_complexf64x_e
 function comparison-complexf64x-equal-relepsilon-1.6   () { ! mmux_complexf64x_equal_relepsilon '-9' '-4' ;}
 
 function comparison-complexf64x-equal-relepsilon-2.1 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF64x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF64X='0.1'
     mmux_complexf64x_equal_relepsilon '1.0' '1.02'
 }
 function comparison-complexf64x-equal-relepsilon-2.2 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF64x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF64X='0.1'
     ! mmux_complexf64x_equal_relepsilon '1.0' '1.3'
 }
 function comparison-complexf64x-equal-relepsilon-2.3 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF64x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF64X='0.1'
     ! mmux_complexf64x_equal_relepsilon '1.0' '3.0'
 }
 
 function comparison-complexf64x-equal-relepsilon-3.1 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF64x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF64X='(0.1)+i*(0.1)'
     mmux_complexf64x_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
 }
 function comparison-complexf64x-equal-relepsilon-3.2 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF64x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF64X='(0.1)+i*(0.1)'
     ! mmux_complexf64x_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
 }
 function comparison-complexf64x-equal-relepsilon-3.3 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF64x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF64X='(0.1)+i*(0.1)'
     ! mmux_complexf64x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
@@ -3082,28 +3091,28 @@ function comparison-complexf128x-equal-absmargin-1.5   () {   mmux_complexf128x_
 function comparison-complexf128x-equal-absmargin-1.6   () { ! mmux_complexf128x_equal_absmargin '-9' '-4' ;}
 
 function comparison-complexf128x-equal-absmargin-2.1 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='0.1'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128X='0.1'
     mmux_complexf128x_equal_absmargin '1.0' '1.02'
 }
 function comparison-complexf128x-equal-absmargin-2.2 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='0.1'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128X='0.1'
     ! mmux_complexf128x_equal_absmargin '1.0' '1.3'
 }
 function comparison-complexf128x-equal-absmargin-2.3 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='1.0'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128X='1.0'
     ! mmux_complexf128x_equal_absmargin '1.0' '3.0'
 }
 
 function comparison-complexf128x-equal-absmargin-3.1 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128X='(0.1)+i*(0.1)'
     mmux_complexf128x_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
 }
 function comparison-complexf128x-equal-absmargin-3.2 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128X='(0.1)+i*(0.1)'
     ! mmux_complexf128x_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
 }
 function comparison-complexf128x-equal-absmargin-3.3 () {
-    declare -r ABSOLUTE_MARGIN_COMPLEXF128x='(0.1)+i*(0.1)'
+    declare -r ABSOLUTE_MARGIN_COMPLEXF128X='(0.1)+i*(0.1)'
     ! mmux_complexf128x_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
@@ -3117,28 +3126,28 @@ function comparison-complexf128x-equal-relepsilon-1.5   () {   mmux_complexf128x
 function comparison-complexf128x-equal-relepsilon-1.6   () { ! mmux_complexf128x_equal_relepsilon '-9' '-4' ;}
 
 function comparison-complexf128x-equal-relepsilon-2.1 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF128x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF128X='0.1'
     mmux_complexf128x_equal_relepsilon '1.0' '1.02'
 }
 function comparison-complexf128x-equal-relepsilon-2.2 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF128x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF128X='0.1'
     ! mmux_complexf128x_equal_relepsilon '1.0' '1.3'
 }
 function comparison-complexf128x-equal-relepsilon-2.3 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF128x='0.1'
+    declare -r RELATIVE_EPSILON_COMPLEXF128X='0.1'
     ! mmux_complexf128x_equal_relepsilon '1.0' '3.0'
 }
 
 function comparison-complexf128x-equal-relepsilon-3.1 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF128x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF128X='(0.1)+i*(0.1)'
     mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
 }
 function comparison-complexf128x-equal-relepsilon-3.2 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF128x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF128X='(0.1)+i*(0.1)'
     ! mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
 }
 function comparison-complexf128x-equal-relepsilon-3.3 () {
-    declare -r RELATIVE_EPSILON_COMPLEXF128x='(0.1)+i*(0.1)'
+    declare -r RELATIVE_EPSILON_COMPLEXF128X='(0.1)+i*(0.1)'
     ! mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 

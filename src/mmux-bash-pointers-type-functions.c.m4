@@ -727,6 +727,7 @@ m4_define([[[DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_COND
 bool
 mmux_$1_equal_absmargin (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t margin)
 {
+  if (0) { fprintf(stderr, "%s: op1=%Lf op2=%Lf margin=%Lf\n", __func__, (long double)op1, (long double)op2, (long double)margin); }
   return (mmux_$1_abs(op1 - op2) <= mmux_$1_abs(margin))? true : false;
 }
 bool
@@ -744,6 +745,8 @@ mmux_$2_equal_absmargin (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t 
   mmux_libc_$2_part_t	ret = mmux_bash_pointers_$2_real_part(margin);
   mmux_libc_$2_part_t	imt = mmux_bash_pointers_$2_imag_part(margin);
 
+  if (0) { fprintf(stderr, "%s: re1=%Lf re1=%Lf ret=%Lf\n", __func__, (long double)re1, (long double)re2, (long double)ret); }
+  if (0) { fprintf(stderr, "%s: im1=%Lf im2=%Lf imt=%Lf\n", __func__, (long double)im1, (long double)im2, (long double)imt); }
   return (mmux_$1_equal_absmargin(re1, re2, ret) && mmux_$1_equal_absmargin(im1, im2, imt))? true : false;
 }
 bool

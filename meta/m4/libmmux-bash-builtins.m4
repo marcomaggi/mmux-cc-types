@@ -28,6 +28,7 @@ m4_dnl
 m4_dnl preamble
 
 m4_changequote(`[[[', `]]]')
+m4_changecom([[[/*]]],[[[*/]]])
 
 
 m4_dnl helpers

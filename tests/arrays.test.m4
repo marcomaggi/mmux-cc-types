@@ -886,6 +886,9 @@ function arrays-double-1.3 () {
 
 #### array accessors and mutators: ldouble
 
+if test -v mmux_libc_SIZEOF_LDOUBLE
+then
+
 function arrays-ldouble-1.1 () {
     declare PTR VALUE
 
@@ -937,6 +940,8 @@ function arrays-ldouble-1.3 () {
 	dotest-equal '0X9.1EB851EB851EB85P-1' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '0XF.C7AE147AE147AE1P-1' mbfl_slot_qref(VALUES,2)
 }
+
+fi
 
 
 #### array accessors and mutators: float32
