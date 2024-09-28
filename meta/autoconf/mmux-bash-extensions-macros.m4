@@ -524,8 +524,10 @@ dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DEC
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD32".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL32],
-  [AC_CHECK_TYPE([_Decimal32])
-   AS_IF([test "x$ac_cv_type__Decimal32"        = "xyes"],
+  [AC_REQUIRE([MMUX_CHECK_TYPE_LDOUBLE])
+   AC_CHECK_TYPE([_Decimal32])
+   AS_IF([test "x$ac_cv_type__Decimal32"        = "xyes" -a \
+               "x$MMUX_HAVE_TYPE_LDOUBLE"       = "x1"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [0])
@@ -553,8 +555,10 @@ dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DEC
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD64".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL64],
-  [AC_CHECK_TYPE([_Decimal64])
-   AS_IF([test "x$ac_cv_type__Decimal64"        = "xyes"],
+  [AC_REQUIRE([MMUX_CHECK_TYPE_LDOUBLE])
+   AC_CHECK_TYPE([_Decimal64])
+   AS_IF([test "x$ac_cv_type__Decimal64"        = "xyes" -a \
+               "x$MMUX_HAVE_TYPE_LDOUBLE"       = "x1"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [0])
@@ -582,8 +586,10 @@ dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DEC
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD128".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL128],
-  [AC_CHECK_TYPE([_Decimal128])
-   AS_IF([test "x$ac_cv_type__Decimal128"        = "xyes"],
+  [AC_REQUIRE([MMUX_CHECK_TYPE_LDOUBLE])
+   AC_CHECK_TYPE([_Decimal128])
+   AS_IF([test "x$ac_cv_type__Decimal128"       = "xyes" -a \
+               "x$MMUX_HAVE_TYPE_LDOUBLE"       = "x1"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [0])
