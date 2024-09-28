@@ -62,14 +62,14 @@ MMUX_BASH_ENABLE_MBFL([v3.0.0])
 AC_DEFINE([_ISOC11_SOURCE],[1],[Enable the ISO C11 features.])
 
 # NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
-# needed for  the GNU C  Library to  make available the  "_FloatN" and "_FloatNx"  features.  (Marco
-# Maggi; Sep 26, 2024)
+# needed for the GNU C Compiler and the GNU C Library to make available the "_FloatN" and "_FloatNx"
+# features.  (Marco Maggi; Sep 26, 2024)
 AC_DEFINE([__STDC_WANT_IEC_60559_BFP_EXT__],   [1],[Define some standardised features.])
 AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
 AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
 
 # NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
-# needed for the GNU C Library to  make available the "_DecimalN" and "_DecimalNx" features.  (Marco
+# needed for the GNU C Compiler to make available the "_DecimalN" and "_DecimalNx" features.  (Marco
 # Maggi; Sep 26, 2024)
 AC_DEFINE([__STDC_WANT_IEC_60559_DFP_EXT__],   [1],[Define some standardised features.])
 AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])

@@ -2478,6 +2478,303 @@ function comparison-float128x-equal-relepsilon-2.3 () {
 fi
 
 
+#### type variables: decimal32
+
+if test -v mmux_libc_SIZEOF_DECIMAL32
+then
+
+function comparison-decimal32-equal-1.1         () {   mmux_decimal32_equal '1.0' ;}
+function comparison-decimal32-equal-1.2         () {   mmux_decimal32_equal '1.0' '1.0' ;}
+function comparison-decimal32-equal-1.3         () {   mmux_decimal32_equal '1.0' '1.0' '1.0' ;}
+function comparison-decimal32-equal-1.4         () { ! mmux_decimal32_equal '9' '1.1' '1.0' ;}
+function comparison-decimal32-equal-1.5         () {   mmux_decimal32_equal '-9' '-9' ;}
+function comparison-decimal32-equal-1.6         () { ! mmux_decimal32_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal32-greater-1.1       () {   mmux_decimal32_greater '9.0' ;}
+function comparison-decimal32-greater-1.2       () {   mmux_decimal32_greater '9.0' '8.0' ;}
+function comparison-decimal32-greater-1.3       () {   mmux_decimal32_greater '9.0' '8.0' '7.0' ;}
+function comparison-decimal32-greater-1.4       () { ! mmux_decimal32_greater '1.1' '3.3' ;}
+function comparison-decimal32-greater-1.5       () { ! mmux_decimal32_greater '9.9' '3.3' '5.5' ;}
+function comparison-decimal32-greater-1.6       () { ! mmux_decimal32_greater '1.1' '1.1' ;}
+function comparison-decimal32-greater-1.7       () {   mmux_decimal32_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal32-lesser-1.1        ()  {   mmux_decimal32_lesser '9.0' ;}
+function comparison-decimal32-lesser-1.2        ()  {   mmux_decimal32_lesser '8.0' '9.0' ;}
+function comparison-decimal32-lesser-1.3        ()  {   mmux_decimal32_lesser '7.0' '8.0' '9.0' ;}
+function comparison-decimal32-lesser-1.4        ()  { ! mmux_decimal32_lesser '3.3' '1.1' ;}
+function comparison-decimal32-lesser-1.5        ()  { ! mmux_decimal32_lesser '3.3' '9.9' '5.5' ;}
+function comparison-decimal32-lesser-1.6        ()  { ! mmux_decimal32_lesser '1.1' '1.1' ;}
+function comparison-decimal32-lesser-1.7        ()  { ! mmux_decimal32_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal32-greater-equal-1.1 () {   mmux_decimal32_greater_equal '9.0' ;}
+function comparison-decimal32-greater-equal-1.2 () {   mmux_decimal32_greater_equal '9.0' '8.0' ;}
+function comparison-decimal32-greater-equal-1.3 () {   mmux_decimal32_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-decimal32-greater-equal-1.4 () { ! mmux_decimal32_greater_equal '1.1' '3.3' ;}
+function comparison-decimal32-greater-equal-1.5 () { ! mmux_decimal32_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-decimal32-greater-equal-1.6 () {   mmux_decimal32_greater_equal '1.1' '1.1' ;}
+function comparison-decimal32-greater-equal-1.7 () {   mmux_decimal32_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal32-lesser-equal-1.1  () {   mmux_decimal32_lesser_equal '9.0' ;}
+function comparison-decimal32-lesser-equal-1.2  () {   mmux_decimal32_lesser_equal '8.0' '9.0' ;}
+function comparison-decimal32-lesser-equal-1.3  () {   mmux_decimal32_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-decimal32-lesser-equal-1.4  () { ! mmux_decimal32_lesser_equal '3.3' '1.1' ;}
+function comparison-decimal32-lesser-equal-1.5  () { ! mmux_decimal32_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-decimal32-lesser-equal-1.6  () {   mmux_decimal32_lesser_equal '1.1' '1.1' ;}
+function comparison-decimal32-lesser-equal-1.7  () {   mmux_decimal32_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal32-equal-absmargin-1.1   () {   mmux_decimal32_equal_absmargin '1.0' ;}
+function comparison-decimal32-equal-absmargin-1.2   () {   mmux_decimal32_equal_absmargin '1.0' '1.0' ;}
+function comparison-decimal32-equal-absmargin-1.3   () {   mmux_decimal32_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-decimal32-equal-absmargin-1.4   () { ! mmux_decimal32_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-decimal32-equal-absmargin-1.5   () {   mmux_decimal32_equal_absmargin '-9' '-9' ;}
+function comparison-decimal32-equal-absmargin-1.6   () { ! mmux_decimal32_equal_absmargin '-9' '-4' ;}
+
+function comparison-decimal32-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL32='0.1'
+    mmux_decimal32_equal_absmargin '1.0' '1.02'
+}
+function comparison-decimal32-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL32='0.1'
+    ! mmux_decimal32_equal_absmargin '1.0' '1.3'
+}
+function comparison-decimal32-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL32='1.0'
+    ! mmux_decimal32_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal32-equal-relepsilon-1.1   () {   mmux_decimal32_equal_relepsilon '1.0' ;}
+function comparison-decimal32-equal-relepsilon-1.2   () {   mmux_decimal32_equal_relepsilon '1.0' '1.0' ;}
+function comparison-decimal32-equal-relepsilon-1.3   () {   mmux_decimal32_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-decimal32-equal-relepsilon-1.4   () { ! mmux_decimal32_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-decimal32-equal-relepsilon-1.5   () {   mmux_decimal32_equal_relepsilon '-9' '-9' ;}
+function comparison-decimal32-equal-relepsilon-1.6   () { ! mmux_decimal32_equal_relepsilon '-9' '-4' ;}
+
+function comparison-decimal32-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_DECIMAL32='0.1'
+    mmux_decimal32_equal_relepsilon '1.0' '1.02'
+}
+function comparison-decimal32-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_DECIMAL32='0.1'
+    ! mmux_decimal32_equal_relepsilon '1.0' '1.3'
+}
+function comparison-decimal32-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_DECIMAL32='0.1'
+    ! mmux_decimal32_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: decimal64
+
+if test -v mmux_libc_SIZEOF_DECIMAL64
+then
+
+function comparison-decimal64-equal-1.1         () {   mmux_decimal64_equal '1.0' ;}
+function comparison-decimal64-equal-1.2         () {   mmux_decimal64_equal '1.0' '1.0' ;}
+function comparison-decimal64-equal-1.3         () {   mmux_decimal64_equal '1.0' '1.0' '1.0' ;}
+function comparison-decimal64-equal-1.4         () { ! mmux_decimal64_equal '9' '1.1' '1.0' ;}
+function comparison-decimal64-equal-1.5         () {   mmux_decimal64_equal '-9' '-9' ;}
+function comparison-decimal64-equal-1.6         () { ! mmux_decimal64_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal64-greater-1.1       () {   mmux_decimal64_greater '9.0' ;}
+function comparison-decimal64-greater-1.2       () {   mmux_decimal64_greater '9.0' '8.0' ;}
+function comparison-decimal64-greater-1.3       () {   mmux_decimal64_greater '9.0' '8.0' '7.0' ;}
+function comparison-decimal64-greater-1.4       () { ! mmux_decimal64_greater '1.1' '3.3' ;}
+function comparison-decimal64-greater-1.5       () { ! mmux_decimal64_greater '9.9' '3.3' '5.5' ;}
+function comparison-decimal64-greater-1.6       () { ! mmux_decimal64_greater '1.1' '1.1' ;}
+function comparison-decimal64-greater-1.7       () {   mmux_decimal64_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal64-lesser-1.1        ()  {   mmux_decimal64_lesser '9.0' ;}
+function comparison-decimal64-lesser-1.2        ()  {   mmux_decimal64_lesser '8.0' '9.0' ;}
+function comparison-decimal64-lesser-1.3        ()  {   mmux_decimal64_lesser '7.0' '8.0' '9.0' ;}
+function comparison-decimal64-lesser-1.4        ()  { ! mmux_decimal64_lesser '3.3' '1.1' ;}
+function comparison-decimal64-lesser-1.5        ()  { ! mmux_decimal64_lesser '3.3' '9.9' '5.5' ;}
+function comparison-decimal64-lesser-1.6        ()  { ! mmux_decimal64_lesser '1.1' '1.1' ;}
+function comparison-decimal64-lesser-1.7        ()  { ! mmux_decimal64_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal64-greater-equal-1.1 () {   mmux_decimal64_greater_equal '9.0' ;}
+function comparison-decimal64-greater-equal-1.2 () {   mmux_decimal64_greater_equal '9.0' '8.0' ;}
+function comparison-decimal64-greater-equal-1.3 () {   mmux_decimal64_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-decimal64-greater-equal-1.4 () { ! mmux_decimal64_greater_equal '1.1' '3.3' ;}
+function comparison-decimal64-greater-equal-1.5 () { ! mmux_decimal64_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-decimal64-greater-equal-1.6 () {   mmux_decimal64_greater_equal '1.1' '1.1' ;}
+function comparison-decimal64-greater-equal-1.7 () {   mmux_decimal64_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal64-lesser-equal-1.1  () {   mmux_decimal64_lesser_equal '9.0' ;}
+function comparison-decimal64-lesser-equal-1.2  () {   mmux_decimal64_lesser_equal '8.0' '9.0' ;}
+function comparison-decimal64-lesser-equal-1.3  () {   mmux_decimal64_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-decimal64-lesser-equal-1.4  () { ! mmux_decimal64_lesser_equal '3.3' '1.1' ;}
+function comparison-decimal64-lesser-equal-1.5  () { ! mmux_decimal64_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-decimal64-lesser-equal-1.6  () {   mmux_decimal64_lesser_equal '1.1' '1.1' ;}
+function comparison-decimal64-lesser-equal-1.7  () {   mmux_decimal64_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal64-equal-absmargin-1.1   () {   mmux_decimal64_equal_absmargin '1.0' ;}
+function comparison-decimal64-equal-absmargin-1.2   () {   mmux_decimal64_equal_absmargin '1.0' '1.0' ;}
+function comparison-decimal64-equal-absmargin-1.3   () {   mmux_decimal64_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-decimal64-equal-absmargin-1.4   () { ! mmux_decimal64_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-decimal64-equal-absmargin-1.5   () {   mmux_decimal64_equal_absmargin '-9' '-9' ;}
+function comparison-decimal64-equal-absmargin-1.6   () { ! mmux_decimal64_equal_absmargin '-9' '-4' ;}
+
+function comparison-decimal64-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL64='0.1'
+    mmux_decimal64_equal_absmargin '1.0' '1.02'
+}
+function comparison-decimal64-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL64='0.1'
+    ! mmux_decimal64_equal_absmargin '1.0' '1.3'
+}
+function comparison-decimal64-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL64='1.0'
+    ! mmux_decimal64_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal64-equal-relepsilon-1.1   () {   mmux_decimal64_equal_relepsilon '1.0' ;}
+function comparison-decimal64-equal-relepsilon-1.2   () {   mmux_decimal64_equal_relepsilon '1.0' '1.0' ;}
+function comparison-decimal64-equal-relepsilon-1.3   () {   mmux_decimal64_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-decimal64-equal-relepsilon-1.4   () { ! mmux_decimal64_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-decimal64-equal-relepsilon-1.5   () {   mmux_decimal64_equal_relepsilon '-9' '-9' ;}
+function comparison-decimal64-equal-relepsilon-1.6   () { ! mmux_decimal64_equal_relepsilon '-9' '-4' ;}
+
+function comparison-decimal64-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_DECIMAL64='0.1'
+    mmux_decimal64_equal_relepsilon '1.0' '1.02'
+}
+function comparison-decimal64-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_DECIMAL64='0.1'
+    ! mmux_decimal64_equal_relepsilon '1.0' '1.3'
+}
+function comparison-decimal64-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_DECIMAL64='0.1'
+    ! mmux_decimal64_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
+#### type variables: decimal128
+
+if test -v mmux_libc_SIZEOF_DECIMAL128
+then
+
+function comparison-decimal128-equal-1.1         () {   mmux_decimal128_equal '1.0' ;}
+function comparison-decimal128-equal-1.2         () {   mmux_decimal128_equal '1.0' '1.0' ;}
+function comparison-decimal128-equal-1.3         () {   mmux_decimal128_equal '1.0' '1.0' '1.0' ;}
+function comparison-decimal128-equal-1.4         () { ! mmux_decimal128_equal '9' '1.1' '1.0' ;}
+function comparison-decimal128-equal-1.5         () {   mmux_decimal128_equal '-9' '-9' ;}
+function comparison-decimal128-equal-1.6         () { ! mmux_decimal128_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal128-greater-1.1       () {   mmux_decimal128_greater '9.0' ;}
+function comparison-decimal128-greater-1.2       () {   mmux_decimal128_greater '9.0' '8.0' ;}
+function comparison-decimal128-greater-1.3       () {   mmux_decimal128_greater '9.0' '8.0' '7.0' ;}
+function comparison-decimal128-greater-1.4       () { ! mmux_decimal128_greater '1.1' '3.3' ;}
+function comparison-decimal128-greater-1.5       () { ! mmux_decimal128_greater '9.9' '3.3' '5.5' ;}
+function comparison-decimal128-greater-1.6       () { ! mmux_decimal128_greater '1.1' '1.1' ;}
+function comparison-decimal128-greater-1.7       () {   mmux_decimal128_greater '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal128-lesser-1.1        ()  {   mmux_decimal128_lesser '9.0' ;}
+function comparison-decimal128-lesser-1.2        ()  {   mmux_decimal128_lesser '8.0' '9.0' ;}
+function comparison-decimal128-lesser-1.3        ()  {   mmux_decimal128_lesser '7.0' '8.0' '9.0' ;}
+function comparison-decimal128-lesser-1.4        ()  { ! mmux_decimal128_lesser '3.3' '1.1' ;}
+function comparison-decimal128-lesser-1.5        ()  { ! mmux_decimal128_lesser '3.3' '9.9' '5.5' ;}
+function comparison-decimal128-lesser-1.6        ()  { ! mmux_decimal128_lesser '1.1' '1.1' ;}
+function comparison-decimal128-lesser-1.7        ()  { ! mmux_decimal128_lesser '-1.1' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal128-greater-equal-1.1 () {   mmux_decimal128_greater_equal '9.0' ;}
+function comparison-decimal128-greater-equal-1.2 () {   mmux_decimal128_greater_equal '9.0' '8.0' ;}
+function comparison-decimal128-greater-equal-1.3 () {   mmux_decimal128_greater_equal '9.0' '8.0' '7.0' ;}
+function comparison-decimal128-greater-equal-1.4 () { ! mmux_decimal128_greater_equal '1.1' '3.3' ;}
+function comparison-decimal128-greater-equal-1.5 () { ! mmux_decimal128_greater_equal '9.9' '3.3' '5.5' ;}
+function comparison-decimal128-greater-equal-1.6 () {   mmux_decimal128_greater_equal '1.1' '1.1' ;}
+function comparison-decimal128-greater-equal-1.7 () {   mmux_decimal128_greater_equal '-2.2' '-3.3' '-3.3' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal128-lesser-equal-1.1  () {   mmux_decimal128_lesser_equal '9.0' ;}
+function comparison-decimal128-lesser-equal-1.2  () {   mmux_decimal128_lesser_equal '8.0' '9.0' ;}
+function comparison-decimal128-lesser-equal-1.3  () {   mmux_decimal128_lesser_equal '7.0' '8.0' '9.0' ;}
+function comparison-decimal128-lesser-equal-1.4  () { ! mmux_decimal128_lesser_equal '3.3' '1.1' ;}
+function comparison-decimal128-lesser-equal-1.5  () { ! mmux_decimal128_lesser_equal '3.3' '9.9' '5.5' ;}
+function comparison-decimal128-lesser-equal-1.6  () {   mmux_decimal128_lesser_equal '1.1' '1.1' ;}
+function comparison-decimal128-lesser-equal-1.7  () {   mmux_decimal128_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal128-equal-absmargin-1.1   () {   mmux_decimal128_equal_absmargin '1.0' ;}
+function comparison-decimal128-equal-absmargin-1.2   () {   mmux_decimal128_equal_absmargin '1.0' '1.0' ;}
+function comparison-decimal128-equal-absmargin-1.3   () {   mmux_decimal128_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-decimal128-equal-absmargin-1.4   () { ! mmux_decimal128_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-decimal128-equal-absmargin-1.5   () {   mmux_decimal128_equal_absmargin '-9' '-9' ;}
+function comparison-decimal128-equal-absmargin-1.6   () { ! mmux_decimal128_equal_absmargin '-9' '-4' ;}
+
+function comparison-decimal128-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL128='0.1'
+    mmux_decimal128_equal_absmargin '1.0' '1.02'
+}
+function comparison-decimal128-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL128='0.1'
+    ! mmux_decimal128_equal_absmargin '1.0' '1.3'
+}
+function comparison-decimal128-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_DECIMAL128='1.0'
+    ! mmux_decimal128_equal_absmargin '1.0' '3.0'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-decimal128-equal-relepsilon-1.1   () {   mmux_decimal128_equal_relepsilon '1.0' ;}
+function comparison-decimal128-equal-relepsilon-1.2   () {   mmux_decimal128_equal_relepsilon '1.0' '1.0' ;}
+function comparison-decimal128-equal-relepsilon-1.3   () {   mmux_decimal128_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-decimal128-equal-relepsilon-1.4   () { ! mmux_decimal128_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-decimal128-equal-relepsilon-1.5   () {   mmux_decimal128_equal_relepsilon '-9' '-9' ;}
+function comparison-decimal128-equal-relepsilon-1.6   () { ! mmux_decimal128_equal_relepsilon '-9' '-4' ;}
+
+function comparison-decimal128-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_DECIMAL128='0.1'
+    mmux_decimal128_equal_relepsilon '1.0' '1.02'
+}
+function comparison-decimal128-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_DECIMAL128='0.1'
+    ! mmux_decimal128_equal_relepsilon '1.0' '1.3'
+}
+function comparison-decimal128-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_DECIMAL128='0.1'
+    ! mmux_decimal128_equal_relepsilon '1.0' '3.0'
+}
+
+fi
+
+
 #### type variables: complexf
 
 function comparison-complexf-equal-1.1         () {   mmux_complexf_equal '(1.2)+i*(3.4)' ;}
@@ -3149,6 +3446,258 @@ function comparison-complexf128x-equal-relepsilon-3.2 () {
 function comparison-complexf128x-equal-relepsilon-3.3 () {
     declare -r RELATIVE_EPSILON_COMPLEXF128X='(0.1)+i*(0.1)'
     ! mmux_complexf128x_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexd32
+
+if test -v mmux_libc_SIZEOF_COMPLEXD32
+then
+
+function comparison-complexd32-equal-1.1         () {   mmux_complexd32_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexd32-equal-1.2         () {   mmux_complexd32_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd32-equal-1.3         () {   mmux_complexd32_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd32-equal-1.4         () { ! mmux_complexd32_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexd32-equal-1.5         () { ! mmux_complexd32_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd32-equal-absmargin-1.1   () {   mmux_complexd32_equal_absmargin '1.0' ;}
+function comparison-complexd32-equal-absmargin-1.2   () {   mmux_complexd32_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexd32-equal-absmargin-1.3   () {   mmux_complexd32_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexd32-equal-absmargin-1.4   () { ! mmux_complexd32_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexd32-equal-absmargin-1.5   () {   mmux_complexd32_equal_absmargin '-9' '-9' ;}
+function comparison-complexd32-equal-absmargin-1.6   () { ! mmux_complexd32_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexd32-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD32='0.1'
+    mmux_complexd32_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexd32-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD32='0.1'
+    ! mmux_complexd32_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexd32-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD32='1.0'
+    ! mmux_complexd32_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexd32-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD32='(0.1)+i*(0.1)'
+    mmux_complexd32_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd32-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD32='(0.1)+i*(0.1)'
+    ! mmux_complexd32_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd32-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD32='(0.1)+i*(0.1)'
+    ! mmux_complexd32_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd32-equal-relepsilon-1.1   () {   mmux_complexd32_equal_relepsilon '1.0' ;}
+function comparison-complexd32-equal-relepsilon-1.2   () {   mmux_complexd32_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexd32-equal-relepsilon-1.3   () {   mmux_complexd32_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexd32-equal-relepsilon-1.4   () { ! mmux_complexd32_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexd32-equal-relepsilon-1.5   () {   mmux_complexd32_equal_relepsilon '-9' '-9' ;}
+function comparison-complexd32-equal-relepsilon-1.6   () { ! mmux_complexd32_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexd32-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD32='0.1'
+    mmux_complexd32_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexd32-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD32='0.1'
+    ! mmux_complexd32_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexd32-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD32='0.1'
+    ! mmux_complexd32_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexd32-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD32='(0.1)+i*(0.1)'
+    mmux_complexd32_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd32-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD32='(0.1)+i*(0.1)'
+    ! mmux_complexd32_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd32-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD32='(0.1)+i*(0.1)'
+    ! mmux_complexd32_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexd64
+
+if test -v mmux_libc_SIZEOF_COMPLEXD64
+then
+
+function comparison-complexd64-equal-1.1         () {   mmux_complexd64_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexd64-equal-1.2         () {   mmux_complexd64_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd64-equal-1.3         () {   mmux_complexd64_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd64-equal-1.4         () { ! mmux_complexd64_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexd64-equal-1.5         () { ! mmux_complexd64_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd64-equal-absmargin-1.1   () {   mmux_complexd64_equal_absmargin '1.0' ;}
+function comparison-complexd64-equal-absmargin-1.2   () {   mmux_complexd64_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexd64-equal-absmargin-1.3   () {   mmux_complexd64_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexd64-equal-absmargin-1.4   () { ! mmux_complexd64_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexd64-equal-absmargin-1.5   () {   mmux_complexd64_equal_absmargin '-9' '-9' ;}
+function comparison-complexd64-equal-absmargin-1.6   () { ! mmux_complexd64_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexd64-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD64='0.1'
+    mmux_complexd64_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexd64-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD64='0.1'
+    ! mmux_complexd64_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexd64-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD64='1.0'
+    ! mmux_complexd64_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexd64-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD64='(0.1)+i*(0.1)'
+    mmux_complexd64_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd64-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD64='(0.1)+i*(0.1)'
+    ! mmux_complexd64_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd64-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD64='(0.1)+i*(0.1)'
+    ! mmux_complexd64_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd64-equal-relepsilon-1.1   () {   mmux_complexd64_equal_relepsilon '1.0' ;}
+function comparison-complexd64-equal-relepsilon-1.2   () {   mmux_complexd64_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexd64-equal-relepsilon-1.3   () {   mmux_complexd64_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexd64-equal-relepsilon-1.4   () { ! mmux_complexd64_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexd64-equal-relepsilon-1.5   () {   mmux_complexd64_equal_relepsilon '-9' '-9' ;}
+function comparison-complexd64-equal-relepsilon-1.6   () { ! mmux_complexd64_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexd64-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD64='0.1'
+    mmux_complexd64_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexd64-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD64='0.1'
+    ! mmux_complexd64_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexd64-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD64='0.1'
+    ! mmux_complexd64_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexd64-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD64='(0.1)+i*(0.1)'
+    mmux_complexd64_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd64-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD64='(0.1)+i*(0.1)'
+    ! mmux_complexd64_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd64-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD64='(0.1)+i*(0.1)'
+    ! mmux_complexd64_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+fi
+
+
+#### type variables: complexd128
+
+if test -v mmux_libc_SIZEOF_COMPLEXD128
+then
+
+function comparison-complexd128-equal-1.1         () {   mmux_complexd128_equal '(1.2)+i*(3.4)' ;}
+function comparison-complexd128-equal-1.2         () {   mmux_complexd128_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd128-equal-1.3         () {   mmux_complexd128_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
+function comparison-complexd128-equal-1.4         () { ! mmux_complexd128_equal '(1.2)+i*(3.4)' '(1.2)+i*(9.9)' ;}
+function comparison-complexd128-equal-1.5         () { ! mmux_complexd128_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(9.9)';}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd128-equal-absmargin-1.1   () {   mmux_complexd128_equal_absmargin '1.0' ;}
+function comparison-complexd128-equal-absmargin-1.2   () {   mmux_complexd128_equal_absmargin '1.0' '1.0' ;}
+function comparison-complexd128-equal-absmargin-1.3   () {   mmux_complexd128_equal_absmargin '1.0' '1.0' '1.0' ;}
+function comparison-complexd128-equal-absmargin-1.4   () { ! mmux_complexd128_equal_absmargin '9' '1.1' '1.0' ;}
+function comparison-complexd128-equal-absmargin-1.5   () {   mmux_complexd128_equal_absmargin '-9' '-9' ;}
+function comparison-complexd128-equal-absmargin-1.6   () { ! mmux_complexd128_equal_absmargin '-9' '-4' ;}
+
+function comparison-complexd128-equal-absmargin-2.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD128='0.1'
+    mmux_complexd128_equal_absmargin '1.0' '1.02'
+}
+function comparison-complexd128-equal-absmargin-2.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD128='0.1'
+    ! mmux_complexd128_equal_absmargin '1.0' '1.3'
+}
+function comparison-complexd128-equal-absmargin-2.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD128='1.0'
+    ! mmux_complexd128_equal_absmargin '1.0' '3.0'
+}
+
+function comparison-complexd128-equal-absmargin-3.1 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD128='(0.1)+i*(0.1)'
+    mmux_complexd128_equal_absmargin '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd128-equal-absmargin-3.2 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD128='(0.1)+i*(0.1)'
+    ! mmux_complexd128_equal_absmargin '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd128-equal-absmargin-3.3 () {
+    declare -r ABSOLUTE_MARGIN_COMPLEXD128='(0.1)+i*(0.1)'
+    ! mmux_complexd128_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-complexd128-equal-relepsilon-1.1   () {   mmux_complexd128_equal_relepsilon '1.0' ;}
+function comparison-complexd128-equal-relepsilon-1.2   () {   mmux_complexd128_equal_relepsilon '1.0' '1.0' ;}
+function comparison-complexd128-equal-relepsilon-1.3   () {   mmux_complexd128_equal_relepsilon '1.0' '1.0' '1.0' ;}
+function comparison-complexd128-equal-relepsilon-1.4   () { ! mmux_complexd128_equal_relepsilon '9' '1.1' '1.0' ;}
+function comparison-complexd128-equal-relepsilon-1.5   () {   mmux_complexd128_equal_relepsilon '-9' '-9' ;}
+function comparison-complexd128-equal-relepsilon-1.6   () { ! mmux_complexd128_equal_relepsilon '-9' '-4' ;}
+
+function comparison-complexd128-equal-relepsilon-2.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD128='0.1'
+    mmux_complexd128_equal_relepsilon '1.0' '1.02'
+}
+function comparison-complexd128-equal-relepsilon-2.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD128='0.1'
+    ! mmux_complexd128_equal_relepsilon '1.0' '1.3'
+}
+function comparison-complexd128-equal-relepsilon-2.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD128='0.1'
+    ! mmux_complexd128_equal_relepsilon '1.0' '3.0'
+}
+
+function comparison-complexd128-equal-relepsilon-3.1 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD128='(0.1)+i*(0.1)'
+    mmux_complexd128_equal_relepsilon '(1.2)+i*(3.4)' '(1.201)+i*(3.401)'
+}
+function comparison-complexd128-equal-relepsilon-3.2 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD128='(0.1)+i*(0.1)'
+    ! mmux_complexd128_equal_relepsilon '(1.2)+i*(3.4)' '(1.9)+i*(3.4)'
+}
+function comparison-complexd128-equal-relepsilon-3.3 () {
+    declare -r RELATIVE_EPSILON_COMPLEXD128='(0.1)+i*(0.1)'
+    ! mmux_complexd128_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
 fi

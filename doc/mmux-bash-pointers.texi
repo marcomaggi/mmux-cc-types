@@ -207,6 +207,7 @@ $VALUE  @result{} 123
 @menu
 * overview install::            Installed files.
 * overview linking::            Linking code with the library.
+* overview decimal::            Support for the @objtype{_DecimalN} types.
 * overview stems::              Specifying C language types with their stem.
 @end menu
 
@@ -240,6 +241,17 @@ we can write code that links to the shared library to reuse some of its faciliti
 @c page
 
 @include overview-linking.texi
+
+@c page
+@node overview decimal
+@section Support for the @objtype{_DecimalN} types
+
+
+Support for the @objtype{_DecimalN} types is enabled if availability of such types is detected at
+package--configuration time.  Such support is ``fake'': some of the juicier functions are
+implemented by converting the @objtype{_DecimalN} type to @objtype{long double} as needed.  One
+could say that this defeats the purpose of using @objtype{_DecimalN}, but it's like that, and that's
+the way it is.
 
 @c page
 @node overview stems
@@ -3262,8 +3274,8 @@ _Float64x complex
 _Float128x complex
 @end example
 
-At configuration--time: @value{PACKAGE} tries to determine if these types are supported and it
-defines the following symbols in its header files.
+At package--configuration time: @value{PACKAGE} tries to determine if these types are supported and
+it defines the following symbols in its header files.
 
 @macro MmuxDefineCppSymbolHaveType{CPPSTEM}
 @defvr {C Preprocessor Symbol} MMUX_HAVE_TYPE_\CPPSTEM\

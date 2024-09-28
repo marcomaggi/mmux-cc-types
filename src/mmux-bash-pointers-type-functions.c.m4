@@ -70,18 +70,21 @@ __extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_ma
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],[[[
+/* Should we do something with "DEC32_MIN" defined by GCC? */
 __extension__ static const _Decimal32   mmux_libc_maximum_decimal32=DEC32_MAX;
-__extension__ static const _Decimal32   mmux_libc_minimum_decimal32=DEC32_MIN;
+__extension__ static const _Decimal32   mmux_libc_minimum_decimal32=-(mmux_libc_maximum_decimal32);
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],[[[
+/* Should we do something with "DEC64_MIN" defined by GCC? */
 __extension__ static const _Decimal64   mmux_libc_maximum_decimal64=DEC64_MAX;
-__extension__ static const _Decimal64   mmux_libc_minimum_decimal64=DEC64_MIN;
+__extension__ static const _Decimal64   mmux_libc_minimum_decimal64=-(mmux_libc_maximum_decimal64);
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]],[[[
+/* Should we do something with "DEC128_MIN" defined by GCC? */
 __extension__ static const _Decimal128 mmux_libc_maximum_decimal128=DEC128_MAX;
-__extension__ static const _Decimal128 mmux_libc_minimum_decimal128=DEC128_MIN;
+__extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_maximum_decimal128);
 ]]])
 
 
@@ -568,7 +571,11 @@ mmux_$1_is_nan (mmux_libc_$1_t X)
 bool
 mmux_$1_is_infinite (mmux_libc_$1_t X)
 {
+#if (1)
+  return ((mmux_libc_maximum_$1 >= X) && (X >= mmux_libc_minimum_$1))? false : true;
+#else
   return mmux_ldouble_is_infinite((mmux_libc_ldouble_t)(X));
+#endif
 }
 bool
 mmux_$1_is_positive (mmux_libc_$1_t X)

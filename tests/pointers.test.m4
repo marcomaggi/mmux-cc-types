@@ -1810,6 +1810,411 @@ function pointers-float128x-1.3 () {
 fi
 
 
+#### array accessors and mutators: decimal32
+
+if test -v mmux_libc_SIZEOF_DECIMAL32
+then
+
+function pointers-decimal32-1.1 () {
+    declare PTR VALUE
+    declare -ri NITEMS=99
+    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_DECIMAL32))
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL32)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	mmux_decimal32_equal_absmargin '0X1.3AE148P+0' QQ(VALUE)
+    }
+    mbfl_location_leave
+}
+function pointers-decimal32-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+    declare -ri NITEMS=99 NITEMS2=333
+    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL32))
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL32)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX2) '7.89'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX1)
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX2)
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
+
+	mmux_decimal32_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal32_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal32_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+    }
+    mbfl_location_leave
+}
+function pointers-decimal32-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+    declare -ri NITEMS=99 NITEMS2=333
+    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL32))
+    mbfl_declare_varref(ID)
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL32)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX2) '7.89'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX1)
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal32_pointer_ref VALUE WW(PTR) WW(INDEX2)
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
+
+	mmux_decimal32_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal32_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal32_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+    }
+    mbfl_location_leave
+}
+
+fi
+
+
+#### array accessors and mutators: decimal64
+
+if test -v mmux_libc_SIZEOF_DECIMAL64
+then
+
+function pointers-decimal64-1.1 () {
+    declare PTR VALUE
+    declare -ri NITEMS=99
+    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_DECIMAL64))
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL64)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	mmux_decimal64_equal_absmargin '0X1.3AE148P+0' QQ(VALUE)
+    }
+    mbfl_location_leave
+}
+function pointers-decimal64-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+    declare -ri NITEMS=99 NITEMS2=333
+    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL64))
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL64)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX2) '7.89'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX1)
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX2)
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
+
+	mmux_decimal64_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal64_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal64_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+    }
+    mbfl_location_leave
+}
+function pointers-decimal64-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+    declare -ri NITEMS=99 NITEMS2=333
+    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL64))
+    mbfl_declare_varref(ID)
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL64)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX2) '7.89'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX1)
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal64_pointer_ref VALUE WW(PTR) WW(INDEX2)
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
+
+	mmux_decimal64_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal64_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal64_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+    }
+    mbfl_location_leave
+}
+
+fi
+
+
+#### array accessors and mutators: decimal128
+
+if test -v mmux_libc_SIZEOF_DECIMAL128
+then
+
+function pointers-decimal128-1.1 () {
+    declare PTR VALUE
+    declare -ri NITEMS=99
+    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_DECIMAL128))
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL128)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	mmux_decimal128_equal_absmargin '0X1.3AE148P+0' QQ(VALUE)
+    }
+    mbfl_location_leave
+}
+function pointers-decimal128-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+    declare -ri NITEMS=99 NITEMS2=333
+    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL128))
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL128)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX2) '7.89'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX1)
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX2)
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
+
+	mmux_decimal128_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal128_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal128_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+    }
+    mbfl_location_leave
+}
+function pointers-decimal128-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+    declare -ri NITEMS=99 NITEMS2=333
+    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL128))
+    mbfl_declare_varref(ID)
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL128)
+	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	then mbfl_location_leave_then_return_failure
+	fi
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX2) '7.89'
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX0)
+	then VALUES[0]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX1)
+	then VALUES[1]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+	if mmux_decimal128_pointer_ref VALUE WW(PTR) WW(INDEX2)
+	then VALUES[2]=$VALUE
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
+
+	mmux_decimal128_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal128_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal128_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+    }
+    mbfl_location_leave
+}
+
+fi
+
+
 #### array accessors and mutators: complexf
 
 function pointers-complexf-1.1 () {
@@ -2335,6 +2740,186 @@ function pointers-complexf128x-1.3 () {
     mmux_complexf128x_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
 	mmux_complexf128x_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
 	mmux_complexf128x_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
+#### array accessors and mutators: complexd32
+
+if test -v mmux_libc_SIZEOF_COMPLEXD32
+then
+
+function pointers-complexd32-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    {
+	mmux_complexd32_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complexd32_pointer_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_complexd32_equal_absmargin '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function pointers-complexd32-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    {
+	mmux_complexd32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd32_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+
+	mmux_complexd32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd32_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd32_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd32_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function pointers-complexd32-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    {
+	mmux_complexd32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd32_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_complexd32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd32_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd32_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd32_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
+#### array accessors and mutators: complexd64
+
+if test -v mmux_libc_SIZEOF_COMPLEXD64
+then
+
+function pointers-complexd64-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    {
+	mmux_complexd64_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complexd64_pointer_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_complexd64_equal_absmargin '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function pointers-complexd64-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    {
+	mmux_complexd64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd64_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+
+	mmux_complexd64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd64_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd64_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd64_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function pointers-complexd64-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    {
+	mmux_complexd64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd64_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_complexd64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd64_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd64_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd64_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+
+fi
+
+
+#### array accessors and mutators: complexd128
+
+if test -v mmux_libc_SIZEOF_COMPLEXD128
+then
+
+function pointers-complexd128-1.1 () {
+    declare PTR VALUE
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    {
+	mmux_complexd128_pointer_set $PTR 0 '(1.2)+i*(3.4)'
+	mmux_complexd128_pointer_ref VALUE $PTR 0
+    }
+    mmux_libc_free $PTR
+    mmux_complexd128_equal_absmargin '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+}
+function pointers-complexd128-1.2 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    {
+	mmux_complexd128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd128_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+
+	mmux_complexd128_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd128_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd128_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd128_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+}
+function pointers-complexd128-1.3 () {
+    declare PTR VALUE
+    declare -a VALUES
+
+    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    {
+	mmux_complexd128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
+	mmux_complexd128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
+	mmux_complexd128_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_libc_realloc PTR $PTR 2048
+	mmux_complexd128_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
+	mmux_complexd128_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
+	mmux_complexd128_pointer_ref VALUE $PTR 64		;VALUES[2]=$VALUE
+    }
+    mmux_libc_free $PTR
+
+    mmux_complexd128_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
 }
 
 fi
