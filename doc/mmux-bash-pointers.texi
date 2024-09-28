@@ -3249,25 +3249,45 @@ _Float128x
 @end example
 
 @noindent
-these types are supported by @value{PACKAGE}.
-
-At configuration type: @value{PACKAGE} tries to determine if these types are supported and defines
-the following symbols in its header files:
+these types are supported by @value{PACKAGE}.  This package assumes that: if the real
+floating--point types are supported, the corresponding complex floating--point types are also
+supported; so the following types are supported:
 
 @example
-#define MMUX_HAVE_TYPE_SLLONG           1
-#define MMUX_HAVE_TYPE_ULLONG           1
-#define MMUX_HAVE_TYPE_LDOUBLE          1
-#define MMUX_HAVE_TYPE_FLOAT32          1
-#define MMUX_HAVE_TYPE_FLOAT64          1
-#define MMUX_HAVE_TYPE_FLOAT128         1
-#define MMUX_HAVE_TYPE_FLOAT32X         1
-#define MMUX_HAVE_TYPE_FLOAT64X         1
-#define MMUX_HAVE_TYPE_FLOAT128X        1
+_Float32 complex
+_Float64 complex
+_Float128 complex
+_Float32x complex
+_Float64x complex
+_Float128x complex
 @end example
 
-@noindent
-if a C preprocessor symbol is defined and set to @samp{1}: the corresponding type is supported.
+At configuration--time: @value{PACKAGE} tries to determine if these types are supported and it
+defines the following symbols in its header files.
+
+@macro MmuxDefineCppSymbolHaveType{CPPSTEM}
+@defvr {C Preprocessor Symbol} MMUX_HAVE_TYPE_\CPPSTEM\
+If this preprocessor symbol is defined and its use expands to @samp{1}: the corresponding C language
+type is supported.
+@end defvr
+
+@end macro
+
+@MmuxDefineCppSymbolHaveType{SLLONG}
+@MmuxDefineCppSymbolHaveType{ULLONG}
+@MmuxDefineCppSymbolHaveType{LDOUBLE}
+@MmuxDefineCppSymbolHaveType{FLOAT32}
+@MmuxDefineCppSymbolHaveType{FLOAT64}
+@MmuxDefineCppSymbolHaveType{FLOAT128}
+@MmuxDefineCppSymbolHaveType{FLOAT32X}
+@MmuxDefineCppSymbolHaveType{FLOAT64X}
+@MmuxDefineCppSymbolHaveType{FLOAT128X}
+@MmuxDefineCppSymbolHaveType{COMPLEXF32}
+@MmuxDefineCppSymbolHaveType{COMPLEXF64}
+@MmuxDefineCppSymbolHaveType{COMPLEXF128}
+@MmuxDefineCppSymbolHaveType{COMPLEXF32X}
+@MmuxDefineCppSymbolHaveType{COMPLEXF64X}
+@MmuxDefineCppSymbolHaveType{COMPLEXF128X}
 
 @c page
 @node shared library version

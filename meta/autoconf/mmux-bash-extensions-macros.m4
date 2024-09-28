@@ -252,8 +252,12 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the  underlying platform supports the  standard C language type  "_Float32".  If it
-dnl     does: define the C language preprocessor  symbol "MMUX_HAVE_TYPE_FLOAT32" to "1"; define the
-dnl     GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT32" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT32";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXF32";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT32";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF32".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_FLOAT32],
   [AC_CHECK_TYPE([_Float32])
@@ -272,10 +276,14 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT32],
             -a "x$ac_cv_func_fminf32"           = "xyes"        \
             -a "x$ac_cv_func_crealf32"          = "xyes"        \
             -a "x$ac_cv_func_cimagf32"          = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32], [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32], [0])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT32],[$MMUX_HAVE_TYPE_FLOAT32],[Defined to 1 if the platform supports _Float32.])
-   AC_SUBST([MMUX_HAVE_TYPE_FLOAT32])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32],    [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32],    [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT32],   [$MMUX_HAVE_TYPE_FLOAT32],    [Defined to 1 if the platform supports _Float32.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXF32],[$MMUX_HAVE_TYPE_COMPLEXF32], [Defined to 1 if the platform supports _Float32 complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_FLOAT32])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF32])])
 
 
 dnl MMUX_CHECK_TYPE_FLOAT64 --
@@ -287,8 +295,12 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the  underlying platform supports the  standard C language type  "_Float64".  If it
-dnl     does: define the C language preprocessor  symbol "MMUX_HAVE_TYPE_FLOAT64" to "1"; define the
-dnl     GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT64" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT64";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXF64";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT64";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF64".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_FLOAT64],
   [AC_CHECK_TYPE([_Float64])
@@ -307,10 +319,14 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT64],
             -a "x$ac_cv_func_fminf64"           = "xyes"        \
             -a "x$ac_cv_func_crealf64"          = "xyes"        \
             -a "x$ac_cv_func_cimagf64"          = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64], [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64], [0])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT64],[$MMUX_HAVE_TYPE_FLOAT64],[Defined to 1 if the platform supports _Float64.])
-   AC_SUBST([MMUX_HAVE_TYPE_FLOAT64])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64],    [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64],    [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT64],   [$MMUX_HAVE_TYPE_FLOAT64],    [Defined to 1 if the platform supports _Float64.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXF64],[$MMUX_HAVE_TYPE_COMPLEXF64], [Defined to 1 if the platform supports _Float64 complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_FLOAT64])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF64])])
 
 
 dnl MMUX_CHECK_TYPE_FLOAT128 --
@@ -322,8 +338,12 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the underlying  platform supports the standard C language  type "_Float128".  If it
-dnl     does: define the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT128" to "1"; define the
-dnl     GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT128" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT128";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXF128";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT128";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF128".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_FLOAT128],
   [AC_CHECK_TYPE([_Float128])
@@ -342,10 +362,14 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT128],
             -a "x$ac_cv_func_fminf128"          = "xyes"        \
             -a "x$ac_cv_func_crealf128"         = "xyes"        \
             -a "x$ac_cv_func_cimagf128"         = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128], [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128], [0])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT128],[$MMUX_HAVE_TYPE_FLOAT128],[Defined to 1 if the platform supports _Float128.])
-   AC_SUBST([MMUX_HAVE_TYPE_FLOAT128])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],    [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],    [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT128],   [$MMUX_HAVE_TYPE_FLOAT128],    [Defined to 1 if the platform supports _Float128.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXF128],[$MMUX_HAVE_TYPE_COMPLEXF128], [Defined to 1 if the platform supports _Float128 complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_FLOAT128])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF128])])
 
 
 dnl MMUX_CHECK_TYPE_FLOAT32X --
@@ -357,8 +381,12 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the underlying  platform supports the standard C language  type "_Float32x".  If it
-dnl     does: define the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT32X" to "1"; define the
-dnl     GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT32X" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT32X";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXF32X";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT32X";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF32X".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_FLOAT32X],
   [AC_CHECK_TYPE([_Float32x])
@@ -377,10 +405,14 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT32X],
             -a "x$ac_cv_func_fminf32x"          = "xyes"        \
             -a "x$ac_cv_func_crealf32x"         = "xyes"        \
             -a "x$ac_cv_func_cimagf32x"         = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X], [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X], [0])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT32X],[$MMUX_HAVE_TYPE_FLOAT32X],[Defined to 1 if the platform supports _Float32x.])
-   AC_SUBST([MMUX_HAVE_TYPE_FLOAT32X])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X],    [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32X], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X],    [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32X], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT32X],   [$MMUX_HAVE_TYPE_FLOAT32X],    [Defined to 1 if the platform supports _Float32x.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXF32X],[$MMUX_HAVE_TYPE_COMPLEXF32X], [Defined to 1 if the platform supports _Float32x complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_FLOAT32X])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF32X])])
 
 
 dnl MMUX_CHECK_TYPE_FLOAT64X --
@@ -392,8 +424,12 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the underlying  platform supports the standard C language  type "_Float64x".  If it
-dnl     does: define the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT64X" to "1"; define the
-dnl     GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT64X" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT64X";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXF64X";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT64X";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF64X".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_FLOAT64X],
   [AC_CHECK_TYPE([_Float64x])
@@ -412,10 +448,14 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT64X],
             -a "x$ac_cv_func_fminf64x"          = "xyes"        \
             -a "x$ac_cv_func_crealf64x"         = "xyes"        \
             -a "x$ac_cv_func_cimagf64x"         = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X], [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X], [0])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT64X],[$MMUX_HAVE_TYPE_FLOAT64X],[Defined to 1 if the platform supports _Float64x.])
-   AC_SUBST([MMUX_HAVE_TYPE_FLOAT64X])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X],    [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64X], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X],    [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64X], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT64X],   [$MMUX_HAVE_TYPE_FLOAT64X],    [Defined to 1 if the platform supports _Float64x.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXF64X],[$MMUX_HAVE_TYPE_COMPLEXF64X], [Defined to 1 if the platform supports _Float64x complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_FLOAT64X])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF64X])])
 
 
 dnl MMUX_CHECK_TYPE_FLOAT128X --
@@ -427,8 +467,12 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the underlying platform supports the  standard C language type "_Float128x".  If it
-dnl     does: define  the C language  preprocessor symbol "MMUX_HAVE_TYPE_FLOAT128X" to  "1"; define
-dnl     the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT128X" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_FLOAT128X";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXF128X";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_FLOAT128X";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF128X".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_FLOAT128X],
   [AC_CHECK_TYPE([_Float128x])
@@ -447,10 +491,14 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT128X],
             -a "x$ac_cv_func_fminf128x"         = "xyes"        \
             -a "x$ac_cv_func_crealf128x"        = "xyes"        \
             -a "x$ac_cv_func_cimagf128x"        = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X], [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X], [0])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT128X],[$MMUX_HAVE_TYPE_FLOAT128X],[Defined to 1 if the platform supports _Float128x.])
-   AC_SUBST([MMUX_HAVE_TYPE_FLOAT128X])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],    [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128X], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],    [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128X], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT128X],   [$MMUX_HAVE_TYPE_FLOAT128X],    [Defined to 1 if the platform supports _Float128x.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXF128X],[$MMUX_HAVE_TYPE_COMPLEXF128X], [Defined to 1 if the platform supports _Float128x complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_FLOAT128X])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF128X])])
 
 
 dnl MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF --
