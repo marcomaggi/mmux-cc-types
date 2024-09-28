@@ -86,6 +86,59 @@ __extension__ static const _Decimal128 mmux_libc_minimum_decimal128=DEC128_MIN;
 
 
 /** --------------------------------------------------------------------
+ ** Implementation of functions not implemented by the C compiler or the C library.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],[[[
+mmux_libc_decimal32_t
+mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
+{
+  mmux_libc_ldouble_t	rv = strtold(input_string, tailptr);
+  return (mmux_libc_decimal32_t)rv;
+}
+int
+mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal32_t value)
+{
+  mmux_libc_ldouble_t	ldvalue = (mmux_libc_ldouble_t) value;
+
+  return strfroml(s_value, size, format, ldvalue);
+}
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],[[[
+mmux_libc_decimal64_t
+mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
+{
+  mmux_libc_ldouble_t	rv = strtold(input_string, tailptr);
+  return (mmux_libc_decimal64_t)rv;
+}
+int
+mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal64_t value)
+{
+  mmux_libc_ldouble_t	ldvalue = (mmux_libc_ldouble_t) value;
+
+  return strfroml(s_value, size, format, ldvalue);
+}
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]],[[[
+mmux_libc_decimal128_t
+mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
+{
+  mmux_libc_ldouble_t	rv = strtold(input_string, tailptr);
+  return (mmux_libc_decimal128_t)rv;
+}
+int
+mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal128_t value)
+{
+  mmux_libc_ldouble_t	ldvalue = (mmux_libc_ldouble_t) value;
+
+  return strfroml(s_value, size, format, ldvalue);
+}
+]]])
+
+
+/** --------------------------------------------------------------------
  ** Complex basic functions.
  ** ----------------------------------------------------------------- */
 
@@ -752,87 +805,110 @@ DEFINE_UNSIGNED_INTEGER_PREDICATES([[[wint]]])
 #undef  DECL
 #define DECL		__attribute__((__const__))
 
-m4_define([[[MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 DECL bool mmux_$1_equal         (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 == op2)? true : false; }
 ]]])]]])
 
-m4_define([[[MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+m4_define([[[DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+DECL bool mmux_$1_equal         (mmux_libc_$1_t op1, mmux_libc_$1_t op2)
+{
+  return ((op1.re == op2.re) && (op1.im == op2.im))? true : false;
+}
+]]])]]])
+
+m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
 DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >  op2)? true : false; }
 DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <  op2)? true : false; }
 DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >= op2)? true : false; }
 DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <= op2)? true : false; }
 ]]])]]])
 
-m4_define([[[MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+m4_define([[[DEFINE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
 DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
 DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (        isless(op1,op2))? true : false; }
 DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
 DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
 ]]])]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[pointer]]])
+m4_define([[[DEFINE_COMPARISON_DECIMAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >  op2)? true : false; }
+DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <  op2)? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >= op2)? true : false; }
+DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <= op2)? true : false; }
+]]])]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[schar]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uchar]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sshort]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ushort]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[slong]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ulong]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[pointer]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[double]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[schar]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uchar]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sshort]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[ushort]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sint]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uint]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[slong]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[ulong]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sllong]]],		[[[MMUX_HAVE_TYPE_SLLONG]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[ullong]]],		[[[MMUX_HAVE_TYPE_ULLONG]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[double]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_FLOAT_FUNCTIONS([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexd]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float128x]]],		[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPARISON_DECIMAL_FUNCTIONS([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_COMPARISON_DECIMAL_FUNCTIONS([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_COMPARISON_DECIMAL_FUNCTIONS([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexd]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint8]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint8]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint16]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint16]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint32]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint32]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sint64]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uint64]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128]]],		[[[MMUX_HAVE_TYPE_COMPLEXF128]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[usize]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ssize]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
 
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sintmax]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uintmax]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[sintptr]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uintptr]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[ptrdiff]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[mode]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[off]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[pid]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[uid]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[gid]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[wchar]]])
-MMUX_BASH_DEFINE_CORE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
+DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS([[[complexd32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS([[[complexd64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
+
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sint8]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uint8]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sint16]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uint16]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sint32]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uint32]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sint64]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uint64]]])
+
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[usize]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[ssize]]])
+
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sintmax]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uintmax]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sintptr]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uintptr]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[ptrdiff]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[mode]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[off]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[pid]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uid]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[gid]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[wchar]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
@@ -856,6 +932,23 @@ DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128]]],	[[[fabsf128]]], [[[fmaxf12
 DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32x]]],	[[[fabsf32x]]], [[[fmaxf32x]]],  [[[fminf32x]]], [[[MMUX_HAVE_TYPE_FLOAT32X]]])
 DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64x]]],	[[[fabsf64x]]], [[[fmaxf64x]]],  [[[fminf64x]]], [[[MMUX_HAVE_TYPE_FLOAT64X]]])
 DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fminf128x]]],[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+m4_define([[[DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+inline mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X)
+{
+  return (mmux_$1_is_positive(X))? X : (- X);
+}
+inline mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y) {
+  return (mmux_$1_greater(X, Y))? X : Y;
+}
+inline mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y) {
+  return (mmux_$1_greater(X, Y))? Y : X;
+}
+]]])]]])
+
+DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
@@ -913,5 +1006,9 @@ DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float128]]],	[[[complexf128]]]
 DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float32x]]],	[[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
 DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float64x]]],	[[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
 DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float128x]]],	[[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[decimal32]]],	[[[complexd32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[decimal64]]],	[[[complexd64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[decimal128]]],[[[complexd128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
 /* end of file */

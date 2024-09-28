@@ -236,6 +236,32 @@ DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]]);
 
 
 /** --------------------------------------------------------------------
+ ** Prototypes of functions not implemented by the C compiler or the C library.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],[[[
+mmux_bash_pointers_decl mmux_libc_decimal32_t mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
+  __attribute__((__nonnull__(1,2)));
+mmux_bash_pointers_decl int mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal32_t value)
+  __attribute__((__nonnull__(3)));
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],[[[
+mmux_libc_decimal64_t mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
+  __attribute__((__nonnull__(1,2)));
+mmux_bash_pointers_decl int mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal64_t value)
+  __attribute__((__nonnull__(3)));
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]],[[[
+mmux_libc_decimal128_t mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
+  __attribute__((__nonnull__(1,2)));
+mmux_bash_pointers_decl int mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal128_t value)
+  __attribute__((__nonnull__(3)));
+]]])
+
+
+/** --------------------------------------------------------------------
  ** Complex basic functions.
  ** ----------------------------------------------------------------- */
 

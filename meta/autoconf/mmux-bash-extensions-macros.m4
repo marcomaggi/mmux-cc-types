@@ -233,14 +233,20 @@ dnl
 dnl Description:
 dnl
 dnl     Check if the underlying platform supports the standard C language type "long double".  If it
-dnl     does: define the C language preprocessor symbol "MMUX_HAVE_TYPE_LDOUBLE" to "1".
+dnl     does:
+dnl
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_LDOUBLE";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXLD".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_LDOUBLE],
   [AC_TYPE_LONG_DOUBLE
    AS_IF([test "x$ac_cv_type_long_double"   = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],[1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],[0])])
-   AC_SUBST([MMUX_HAVE_TYPE_LDOUBLE])])
+         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],  [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXLD],[1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],  [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXLD],[0])])
+   AC_SUBST([MMUX_HAVE_TYPE_LDOUBLE])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXLD])])
 
 
 dnl MMUX_CHECK_TYPE_FLOAT32 --

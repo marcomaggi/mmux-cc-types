@@ -168,6 +168,10 @@ DEFINE_FLOAT_SPRINTER([[[float32x]]],	[[[strfromf32x]]],	[[["%A"]]],  [[[MMUX_HA
 DEFINE_FLOAT_SPRINTER([[[float64x]]],	[[[strfromf64x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT64X]]])
 DEFINE_FLOAT_SPRINTER([[[float128x]]],	[[[strfromf128x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
+DEFINE_FLOAT_SPRINTER([[[decimal32]]],	[[[mmux_strfromd32]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_SPRINTER([[[decimal64]]],	[[[mmux_strfromd64]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
 
 /** --------------------------------------------------------------------
  ** Type string printers: raw C standard types, real floating-point numbers.
@@ -287,13 +291,17 @@ DEFINE_COMPLEX_SPRINTER([[[complexf]]],		[[[float]]])
 DEFINE_COMPLEX_SPRINTER([[[complexd]]],		[[[double]]])
 DEFINE_COMPLEX_SPRINTER([[[complexld]]],	[[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_COMPLEX_SPRINTER([[[complexf32]]],	[[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf64]]],	[[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf32]]],	[[[float32]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf64]]],	[[[float64]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_COMPLEXF128]]])
 
-DEFINE_COMPLEX_SPRINTER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf128x]]],	[[[floatf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+DEFINE_COMPLEX_SPRINTER([[[complexf128x]]],	[[[floatf128x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
+
+DEFINE_COMPLEX_SPRINTER([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_SPRINTER([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_SPRINTER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
