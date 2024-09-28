@@ -4249,6 +4249,9 @@ function arithmetics-complexd-inv-1.3 () {
 
 #### type variables: complexld
 
+if test -v mmux_libc_SIZEOF_LDOUBLE
+then
+
 function arithmetics-complexld-add-1.1.1 () {
     declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
@@ -4469,6 +4472,8 @@ function arithmetics-complexld-inv-1.3 () {
     mmux_complexld_inv ROP QQ(OP)
     mmux_complexld_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
+
+fi
 
 
 #### type variables: complexf32

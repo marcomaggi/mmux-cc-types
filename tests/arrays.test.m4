@@ -51,7 +51,7 @@ source "$MMUX_LIBRARY"
 
 #### helpers and debugging
 
-if true
+if false
 then
     printf 'mmux_libc_SIZEOF_COMPLEXF=%s\n'  WW(mmux_libc_SIZEOF_COMPLEXF)  >&2
     printf 'mmux_libc_SIZEOF_COMPLEXD=%s\n'  WW(mmux_libc_SIZEOF_COMPLEXD)  >&2
@@ -1416,6 +1416,9 @@ function arrays-complexd-1.3 () {
 
 #### array accessors and mutators: complexld
 
+if test -v mmux_libc_SIZEOF_COMPLEXLD
+then
+
 function arrays-complexld-1.1 () {
     declare PTR VALUE
 
@@ -1467,6 +1470,8 @@ function arrays-complexld-1.3 () {
 	mmux_complexld_equal '(5.6)+i*(7.8)' mbfl_slot_qref(VALUES,1) &&
 	mmux_complexld_equal '(9.0)+i*(1.2)' mbfl_slot_qref(VALUES,2)
 }
+
+fi
 
 
 #### array accessors and mutators: complexf32

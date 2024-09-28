@@ -2603,7 +2603,7 @@ function comparison-complexd-equal-absmargin-3.3 () {
 
 #### type variables: complexld
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_libc_SIZEOF_COMPLEXLD
 then
 
 function comparison-complexld-equal-1.1         () {   mmux_complexld_equal '(1.2)+i*(3.4)' ;}
