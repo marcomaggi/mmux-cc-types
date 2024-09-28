@@ -68,6 +68,13 @@ AC_DEFINE([__STDC_WANT_IEC_60559_BFP_EXT__],   [1],[Define some standardised fea
 AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
 AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
 
+# NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
+# needed for the GNU C Library to  make available the "_DecimalN" and "_DecimalNx" features.  (Marco
+# Maggi; Sep 26, 2024)
+AC_DEFINE([__STDC_WANT_IEC_60559_DFP_EXT__],   [1],[Define some standardised features.])
+AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
+AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
+
 AC_DEFINE([_GNU_SOURCE],[1],[Enable everything GNU (is this actually needed?).])
 AC_DEFINE([_POSIX_C_SOURCE],[200809L],[Enable latest(?) POSIX features.])
 
@@ -118,6 +125,10 @@ MMUX_CHECK_TYPE_FLOAT128
 MMUX_CHECK_TYPE_FLOAT32X
 MMUX_CHECK_TYPE_FLOAT64X
 MMUX_CHECK_TYPE_FLOAT128X
+
+MMUX_CHECK_TYPE_DECIMAL32
+MMUX_CHECK_TYPE_DECIMAL64
+MMUX_CHECK_TYPE_DECIMAL128
 
 
 #### checks for library functions

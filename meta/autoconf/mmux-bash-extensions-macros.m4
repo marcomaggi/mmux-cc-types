@@ -501,6 +501,93 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT128X],
    AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF128X])])
 
 
+dnl MMUX_CHECK_TYPE_DECIMAL32 --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_CHECK_TYPE_DECIMAL32
+dnl
+dnl Description:
+dnl
+dnl     Check if the underlying platform supports the  standard C language type "_Decimal32".  If it
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_DECIMAL32";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXD32";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DECIMAL32";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD32".
+dnl
+AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL32],
+  [AC_CHECK_TYPE([_Decimal32])
+   AS_IF([test "x$ac_cv_type__Decimal32"        = "xyes"],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_DECIMAL32],  [$MMUX_HAVE_TYPE_DECIMAL32],  [Defined to 1 if the platform supports _Decimal32.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXD32], [$MMUX_HAVE_TYPE_COMPLEXD32], [Defined to 1 if the platform supports _Decimal32 complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_DECIMAL32])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXD32])])
+
+
+dnl MMUX_CHECK_TYPE_DECIMAL64 --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_CHECK_TYPE_DECIMAL64
+dnl
+dnl Description:
+dnl
+dnl     Check if the underlying platform supports the  standard C language type "_Decimal64".  If it
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_DECIMAL64";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXD64";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DECIMAL64";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD64".
+dnl
+AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL64],
+  [AC_CHECK_TYPE([_Decimal64])
+   AS_IF([test "x$ac_cv_type__Decimal64"        = "xyes"],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_DECIMAL64],  [$MMUX_HAVE_TYPE_DECIMAL64],  [Defined to 1 if the platform supports _Decimal64.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXD64], [$MMUX_HAVE_TYPE_COMPLEXD64], [Defined to 1 if the platform supports _Decimal64 complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_DECIMAL64])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXD64])])
+
+
+dnl MMUX_CHECK_TYPE_DECIMAL128 --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_CHECK_TYPE_DECIMAL128
+dnl
+dnl Description:
+dnl
+dnl     Check if the underlying platform supports the  standard C language type "_Decimal128".  If it
+dnl     does:
+dnl
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_DECIMAL128";
+dnl     * define to "1" the C language preprocessor symbol "MMUX_HAVE_TYPE_COMPLEXD128";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DECIMAL128";
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD128".
+dnl
+AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL128],
+  [AC_CHECK_TYPE([_Decimal128])
+   AS_IF([test "x$ac_cv_type__Decimal128"        = "xyes"],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [1])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [1])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [0])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_DECIMAL128],  [$MMUX_HAVE_TYPE_DECIMAL128],  [Defined to 1 if the platform supports _Decimal128.])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXD128], [$MMUX_HAVE_TYPE_COMPLEXD128], [Defined to 1 if the platform supports _Decimal128 complex.])
+   AC_SUBST([MMUX_HAVE_TYPE_DECIMAL128])
+   AC_SUBST([MMUX_HAVE_TYPE_COMPLEXD128])])
+
+
 dnl MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF --
 dnl
 dnl Synopsis:

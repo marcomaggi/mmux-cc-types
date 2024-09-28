@@ -203,7 +203,7 @@ mmux_bash_pointers_parse_$1 (mmux_libc_$1_t * p_value, const char * s_arg, const
 
       rv = mmux_bash_pointers_parse_$2(&op_re, s_arg, caller_name);
       if (MMUX_SUCCESS == rv) {
-	*p_value = mmux_bash_pointers_rectangular_$1(op_re, 0.0);
+	*p_value = mmux_rectangular_$1(op_re, 0.0);
 	return MMUX_SUCCESS;
       } else {
 	if (caller_name) {
@@ -280,7 +280,7 @@ parse_$1_parentheses_format (mmux_libc_$1_t * p_value, const char * s_arg, const
 
   /* Assemble the complex number. */
   {
-    *p_value = mmux_bash_pointers_rectangular_$1(op_re, op_im);
+    *p_value = mmux_rectangular_$1(op_re, op_im);
     return MMUX_SUCCESS;
   }
 }

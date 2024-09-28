@@ -69,6 +69,21 @@ __extension__ static const _Float128x mmux_libc_maximum_float128x=FLT128X_MAX;
 __extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_maximum_float128x);
 ]]])
 
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],[[[
+__extension__ static const _Decimal32   mmux_libc_maximum_decimal32=DEC32_MAX;
+__extension__ static const _Decimal32   mmux_libc_minimum_decimal32=DEC32_MIN;
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],[[[
+__extension__ static const _Decimal64   mmux_libc_maximum_decimal64=DEC64_MAX;
+__extension__ static const _Decimal64   mmux_libc_minimum_decimal64=DEC64_MIN;
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]],[[[
+__extension__ static const _Decimal128 mmux_libc_maximum_decimal128=DEC128_MAX;
+__extension__ static const _Decimal128 mmux_libc_minimum_decimal128=DEC128_MIN;
+]]])
+
 
 /** --------------------------------------------------------------------
  ** Complex basic functions.
@@ -76,17 +91,17 @@ __extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_ma
 
 m4_define([[[DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
 mmux_libc_$1_t
-mmux_bash_pointers_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+mmux_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
 {
   return $4(re, im);
 }
 mmux_libc_$1_part_t
-mmux_bash_pointers_$1_real_part (mmux_libc_$1_t Z)
+mmux_$1_real_part (mmux_libc_$1_t Z)
 {
   return $2(Z);
 }
 mmux_libc_$1_part_t
-mmux_bash_pointers_$1_imag_part (mmux_libc_$1_t Z)
+mmux_$1_imag_part (mmux_libc_$1_t Z)
 {
   return $3(Z);
 }
@@ -96,13 +111,41 @@ DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf]]],  [[[crealf]]], [[[cimagf]]], [[[C
 DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd]]],  [[[creal]]],  [[[cimag]]],  [[[CMPLX]]])
 DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexld]]], [[[creall]]], [[[cimagl]]], [[[CMPLXL]]], [[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf32]]],  [[[crealf32]]],  [[[cimagf32]]],  [[[CMPLXF32]]],  [[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf64]]],  [[[crealf64]]],  [[[cimagf64]]],  [[[CMPLXF64]]],  [[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf128]]], [[[crealf128]]], [[[cimagf128]]], [[[CMPLXF128]]], [[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf32]]],  [[[crealf32]]],  [[[cimagf32]]],  [[[CMPLXF32]]],  [[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf64]]],  [[[crealf64]]],  [[[cimagf64]]],  [[[CMPLXF64]]],  [[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf128]]], [[[crealf128]]], [[[cimagf128]]], [[[CMPLXF128]]], [[[MMUX_HAVE_TYPE_COMPLEXF128]]])
 
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf32x]]],  [[[crealf32x]]],  [[[cimagf32x]]],  [[[CMPLXF32X]]],  [[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf64x]]],  [[[crealf64x]]],  [[[cimagf64x]]],  [[[CMPLXF64X]]],  [[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]], [[[cimagf128x]]], [[[CMPLXF128X]]], [[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf32x]]],  [[[crealf32x]]],  [[[cimagf32x]]],  [[[CMPLXF32X]]],  [[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf64x]]],  [[[crealf64x]]],  [[[cimagf64x]]],  [[[CMPLXF64X]]],  [[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]], [[[cimagf128x]]], [[[CMPLXF128X]]], [[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_libc_$1_t
+mmux_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+{
+  mmux_libc_$1_t	Z = {
+    .re	= re,
+    .im	= im
+  };
+  return Z;
+}
+mmux_libc_$1_part_t
+mmux_$1_real_part (mmux_libc_$1_t Z)
+{
+  return Z.re;
+}
+mmux_libc_$1_part_t
+mmux_$1_imag_part (mmux_libc_$1_t Z)
+{
+  return Z.im;
+}
+]]])]]])
+
+DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS([[[complexd32]]],  [[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS([[[complexd64]]],  [[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS([[[complexd128]]], [[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -171,6 +214,10 @@ DEFINE_REAL_TYPE_FUNCTIONS(float32x, mmux_libc_maximum_float32x, mmux_libc_minim
 DEFINE_REAL_TYPE_FUNCTIONS(float64x, mmux_libc_maximum_float64x, mmux_libc_minimum_float64x, [[[MMUX_HAVE_TYPE_FLOAT64X]]])
 DEFINE_REAL_TYPE_FUNCTIONS(float128x,mmux_libc_maximum_float128x, mmux_libc_minimum_float128x, [[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
+DEFINE_REAL_TYPE_FUNCTIONS(decimal32, mmux_libc_maximum_decimal32, mmux_libc_minimum_decimal32, [[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_REAL_TYPE_FUNCTIONS(decimal64, mmux_libc_maximum_decimal64, mmux_libc_minimum_decimal64, [[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_REAL_TYPE_FUNCTIONS(decimal128,mmux_libc_maximum_decimal128, mmux_libc_minimum_decimal128, [[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
 DEFINE_REAL_TYPE_FUNCTIONS(sint8,	INT8_MAX,	INT8_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uint8,	UINT8_MAX,	0)
 DEFINE_REAL_TYPE_FUNCTIONS(sint16,	INT16_MAX,	INT16_MIN)
@@ -208,13 +255,17 @@ DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf]]])
 DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexd]]])
 DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf32]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf64]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128]]])
 
-DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
+
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexd32]]],		[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexd64]]],		[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_TYPE_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -322,17 +373,25 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[float128x]]],		[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
+MMUX_BASH_DEFINE_VALUE_STORER([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
 MMUX_BASH_DEFINE_VALUE_STORER([[[complexf]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[complexd]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128]]])
 
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd32]]],		[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd64]]],		[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 MMUX_BASH_DEFINE_VALUE_STORER([[[usize]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[ssize]]])
@@ -439,6 +498,53 @@ DEFINE_FLOAT_PREDICATES([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------
+ ** Core C language predicates: decimal floating-point real numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_DECIMAL_FLOAT_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+bool
+mmux_$1_is_zero (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_zero((mmux_libc_ldouble_t)(X));
+}
+bool
+mmux_$1_is_nan (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_nan((mmux_libc_ldouble_t)(X));
+}
+bool
+mmux_$1_is_infinite (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_infinite((mmux_libc_ldouble_t)(X));
+}
+bool
+mmux_$1_is_positive (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_positive((mmux_libc_ldouble_t)(X));
+}
+bool
+mmux_$1_is_negative (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_negative((mmux_libc_ldouble_t)(X));
+}
+bool
+mmux_$1_is_non_positive (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_non_positive((mmux_libc_ldouble_t)(X));
+}
+bool
+mmux_$1_is_non_negative (mmux_libc_$1_t X)
+{
+  return mmux_ldouble_is_non_negative((mmux_libc_ldouble_t)(X));
+}
+]]])]]])
+
+DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
+
+/** --------------------------------------------------------------------
  ** Core C language predicates: floating-point complex numbers.
  ** ----------------------------------------------------------------- */
 
@@ -446,21 +552,21 @@ m4_define([[[DEFINE_COMPLEX_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]]
 bool
 mmux_$1_is_zero (mmux_libc_$1_t Z)
 {
-  mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
 bool
 mmux_$1_is_nan (mmux_libc_$1_t Z)
 {
-  mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
 }
 bool
 mmux_$1_is_infinite (mmux_libc_$1_t Z)
 {
-  mmux_libc_$1_part_t	re = creal(Z), im = cimag(Z);
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_infinite(re) || mmux_$2_is_infinite(im))? true : false;
 }
@@ -477,6 +583,39 @@ DEFINE_COMPLEX_PREDICATES([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_
 DEFINE_COMPLEX_PREDICATES([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
 DEFINE_COMPLEX_PREDICATES([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
 DEFINE_COMPLEX_PREDICATES([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+
+/** --------------------------------------------------------------------
+ ** Core C language predicates: decimal floating-point complex numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_DECIMAL_COMPLEX_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+bool
+mmux_$1_is_zero (mmux_libc_$1_t Z)
+{
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
+
+  return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
+}
+bool
+mmux_$1_is_nan (mmux_libc_$1_t Z)
+{
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
+
+  return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
+}
+bool
+mmux_$1_is_infinite (mmux_libc_$1_t Z)
+{
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
+
+  return (mmux_$2_is_infinite(re) || mmux_$2_is_infinite(im))? true : false;
+}
+]]])]]])
+
+DEFINE_DECIMAL_COMPLEX_PREDICATES([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_DECIMAL_COMPLEX_PREDICATES([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_DECIMAL_COMPLEX_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -738,12 +877,12 @@ mmux_$1_equal_relepsilon (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t
 bool
 mmux_$2_equal_absmargin (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t margin)
 {
-  mmux_libc_$2_part_t	re1 = mmux_bash_pointers_$2_real_part(op1);
-  mmux_libc_$2_part_t	im1 = mmux_bash_pointers_$2_imag_part(op1);
-  mmux_libc_$2_part_t	re2 = mmux_bash_pointers_$2_real_part(op2);
-  mmux_libc_$2_part_t	im2 = mmux_bash_pointers_$2_imag_part(op2);
-  mmux_libc_$2_part_t	ret = mmux_bash_pointers_$2_real_part(margin);
-  mmux_libc_$2_part_t	imt = mmux_bash_pointers_$2_imag_part(margin);
+  mmux_libc_$2_part_t	re1 = mmux_$2_real_part(op1);
+  mmux_libc_$2_part_t	im1 = mmux_$2_imag_part(op1);
+  mmux_libc_$2_part_t	re2 = mmux_$2_real_part(op2);
+  mmux_libc_$2_part_t	im2 = mmux_$2_imag_part(op2);
+  mmux_libc_$2_part_t	ret = mmux_$2_real_part(margin);
+  mmux_libc_$2_part_t	imt = mmux_$2_imag_part(margin);
 
   if (0) { fprintf(stderr, "%s: re1=%Lf re1=%Lf ret=%Lf\n", __func__, (long double)re1, (long double)re2, (long double)ret); }
   if (0) { fprintf(stderr, "%s: im1=%Lf im2=%Lf imt=%Lf\n", __func__, (long double)im1, (long double)im2, (long double)imt); }
@@ -752,12 +891,12 @@ mmux_$2_equal_absmargin (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t 
 bool
 mmux_$2_equal_relepsilon (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t epsilon)
 {
-  mmux_libc_$2_part_t	re1 = mmux_bash_pointers_$2_real_part(op1);
-  mmux_libc_$2_part_t	im1 = mmux_bash_pointers_$2_imag_part(op1);
-  mmux_libc_$2_part_t	re2 = mmux_bash_pointers_$2_real_part(op2);
-  mmux_libc_$2_part_t	im2 = mmux_bash_pointers_$2_imag_part(op2);
-  mmux_libc_$2_part_t	ret = mmux_bash_pointers_$2_real_part(epsilon);
-  mmux_libc_$2_part_t	imt = mmux_bash_pointers_$2_imag_part(epsilon);
+  mmux_libc_$2_part_t	re1 = mmux_$2_real_part(op1);
+  mmux_libc_$2_part_t	im1 = mmux_$2_imag_part(op1);
+  mmux_libc_$2_part_t	re2 = mmux_$2_real_part(op2);
+  mmux_libc_$2_part_t	im2 = mmux_$2_imag_part(op2);
+  mmux_libc_$2_part_t	ret = mmux_$2_real_part(epsilon);
+  mmux_libc_$2_part_t	imt = mmux_$2_imag_part(epsilon);
 
   return (mmux_$1_equal_relepsilon(re1, re2, ret) && mmux_$1_equal_relepsilon(im1, im2, imt))? true : false;
 }

@@ -186,8 +186,8 @@ m4_define([[[DEFINE_COMPLEX_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[
 int
 mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 {
-  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
-  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(value);
+  mmux_libc_$1_part_t	im = mmux_$1_imag_part(value);
   int			required_nbytes, total_required_nbytes = strlen("()+i*()");
 
   required_nbytes = mmux_bash_pointers_sprint_size_$2(re);
@@ -211,8 +211,8 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 int
 mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_libc_$1_t value)
 {
-  mmux_libc_$1_part_t	re = mmux_bash_pointers_$1_real_part(value);
-  mmux_libc_$1_part_t	im = mmux_bash_pointers_$1_imag_part(value);
+  mmux_libc_$1_part_t	re = mmux_$1_real_part(value);
+  mmux_libc_$1_part_t	im = mmux_$1_imag_part(value);
   mmux_rv_t		rv;
 
   /* Output the opening parenthesis of the real part. */
