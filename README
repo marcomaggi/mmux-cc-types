@@ -39,8 +39,14 @@ library.
     libc_free $PTR
     $VALUE => 123
 
-  The package  targets POSIX  systems.  Only  for testing:  this package
-depends on the external package MBFL (at least version v3.0.0-devel.9).
+  The package targets POSIX systems.
+
+  To  support  the  decimal  floating-point  numeric  types  _Decimal32,
+_Decimal64,  _Decimal128, this  package relies  on the  external package
+"libdfp" (see Resources).
+
+  Only for  testing: this package  depends on the external  package MBFL
+(at least version v3.0.0-devel.9).
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
 systems; it requires GNU Automake at least version 1.17; it requires GNU
@@ -176,6 +182,10 @@ the documentation is available online:
 the package MBFL is available online:
 
 		 <https://github.com/marcomaggi/mbfl/>
+
+the package "libdfp" is available online:
+
+		   <https://github.com/libdfp/libdfp>
 
 the GNU Project software can be found here:
 

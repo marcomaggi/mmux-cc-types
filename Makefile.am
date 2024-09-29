@@ -75,6 +75,22 @@ install-html-local:
 	$(INSTALL) -m 0444 $(builddir)/doc/mmux-bash-pointers.html/mmux-bash-pointers.css "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
 
 
+#### support library for _DecimalN
+
+EXTRA_DIST	+= src/mmux-bash-pointers-libdfp.c.m4
+MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES	= src/mmux-bash-pointers-libdfp.c
+
+BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
+CLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
+DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
+
+noinst_LTLIBRARIES			= libmmux-bash-pointers-libdfp.la
+libmmux_bash_pointers_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS) -I$(builddir)/src
+libmmux_bash_pointers_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
+libmmux_bash_pointers_libdfp_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS) $(LIBDFP_LIBS)
+libmmux_bash_pointers_libdfp_la_SOURCES	= src/mmux-bash-pointers-libdfp.c
+
+
 #### libraries
 
 EXTRA_DIST	+= \
@@ -132,6 +148,7 @@ lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
+libmmux_bash_pointers_la_LIBADD		= libmmux-bash-pointers-libdfp.la
 libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h			\

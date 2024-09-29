@@ -507,6 +507,31 @@ AC_DEFUN([MMUX_CHECK_TYPE_FLOAT128X],
    AC_SUBST([MMUX_HAVE_TYPE_COMPLEXF128X])])
 
 
+dnl MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY
+dnl
+dnl Description:
+dnl
+dnl     Check  the  availability of  a  Decimal  Floating Point  C  Library  implementing the  usual
+dnl     functions for the decimal floating-point  number types: _Decimal32, _Decimal64, _Decimal128.
+dnl     If the library is found:
+dnl
+dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF128X".
+dnl
+AC_DEFUN([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY],
+  [PKG_CHECK_MODULES([LIBDFP],[libdfp],,[AC_MSG_WARN([package libdfp not found])])
+dnl AC_CHECK_LIB([dfp],[strtod32])
+   AS_IF([test -n "$pkg_cv_LIBDFP_LIBS"],
+         [AS_VAR_SET([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],[1])],
+         [AS_VAR_SET([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],[0])])
+   AC_DEFINE_UNQUOTED([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],[$MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],
+                      [Defined to 1 if a Decimal Floating Point C Library is available.])
+   AC_SUBST([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY])])
+
+
 dnl MMUX_CHECK_TYPE_DECIMAL32 --
 dnl
 dnl Synopsis:
@@ -524,10 +549,9 @@ dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DEC
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD32".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL32],
-  [AC_REQUIRE([MMUX_CHECK_TYPE_LDOUBLE])
+  [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal32])
-   AS_IF([test "x$ac_cv_type__Decimal32"        = "xyes" -a \
-               "x$MMUX_HAVE_TYPE_LDOUBLE"       = "x1"],
+   AS_IF([test "x$ac_cv_type__Decimal32" = "xyes"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [0])
@@ -555,10 +579,9 @@ dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DEC
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD64".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL64],
-  [AC_REQUIRE([MMUX_CHECK_TYPE_LDOUBLE])
+  [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal64])
-   AS_IF([test "x$ac_cv_type__Decimal64"        = "xyes" -a \
-               "x$MMUX_HAVE_TYPE_LDOUBLE"       = "x1"],
+   AS_IF([test "x$ac_cv_type__Decimal64" = "xyes"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [0])
@@ -586,10 +609,9 @@ dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_DEC
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXD128".
 dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL128],
-  [AC_REQUIRE([MMUX_CHECK_TYPE_LDOUBLE])
+  [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal128])
-   AS_IF([test "x$ac_cv_type__Decimal128"       = "xyes" -a \
-               "x$MMUX_HAVE_TYPE_LDOUBLE"       = "x1"],
+   AS_IF([test "x$ac_cv_type__Decimal128" = "xyes"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [0])

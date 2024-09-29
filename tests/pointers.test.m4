@@ -1827,7 +1827,7 @@ function pointers-decimal32-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.230000'
 	then mbfl_location_leave_then_return_failure
 	fi
 
@@ -1835,7 +1835,8 @@ function pointers-decimal32-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux_decimal32_equal_absmargin '0X1.3AE148P+0' QQ(VALUE)
+	dotest-debug  WW(mmux_libc_SIZEOF_DECIMAL32) '1.230000' WW(VALUE)
+	mmux_decimal32_equal_absmargin '1.230000' QQ(VALUE)
     }
     mbfl_location_leave
 }
@@ -1881,9 +1882,9 @@ function pointers-decimal32-1.2 () {
 
 	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
 
-	mmux_decimal32_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
-	    mmux_decimal32_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
-	    mmux_decimal32_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+	mmux_decimal32_equal_absmargin     '1.230000' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal32_equal_absmargin '4.560000' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal32_equal_absmargin '7.890000' mbfl_slot_qref(VALUES,2)
     }
     mbfl_location_leave
 }
@@ -1905,10 +1906,10 @@ function pointers-decimal32-1.3 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX0) '1.230000'
 	then mbfl_location_leave_then_return_failure
 	fi
-	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX1) '4.560000'
 	then mbfl_location_leave_then_return_failure
 	fi
 	if ! mmux_decimal32_pointer_set WW(PTR) WW(INDEX2) '7.89'
@@ -1935,9 +1936,9 @@ function pointers-decimal32-1.3 () {
 
 	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
 
-	mmux_decimal32_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
-	    mmux_decimal32_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
-	    mmux_decimal32_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+	mmux_decimal32_equal_absmargin     '1.230000' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal32_equal_absmargin '4.560000' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal32_equal_absmargin '7.890000' mbfl_slot_qref(VALUES,2)
     }
     mbfl_location_leave
 }
@@ -1962,7 +1963,7 @@ function pointers-decimal64-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.230000'
 	then mbfl_location_leave_then_return_failure
 	fi
 
@@ -1970,7 +1971,8 @@ function pointers-decimal64-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux_decimal64_equal_absmargin '0X1.3AE148P+0' QQ(VALUE)
+	dotest-debug  WW(mmux_libc_SIZEOF_DECIMAL64) '1.230000' WW(VALUE)
+	mmux_decimal64_equal_absmargin '1.230000' QQ(VALUE)
     }
     mbfl_location_leave
 }
@@ -2016,9 +2018,9 @@ function pointers-decimal64-1.2 () {
 
 	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
 
-	mmux_decimal64_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
-	    mmux_decimal64_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
-	    mmux_decimal64_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+	mmux_decimal64_equal_absmargin     '1.230000' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal64_equal_absmargin '4.560000' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal64_equal_absmargin '7.890000' mbfl_slot_qref(VALUES,2)
     }
     mbfl_location_leave
 }
@@ -2040,10 +2042,10 @@ function pointers-decimal64-1.3 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX0) '1.230000'
 	then mbfl_location_leave_then_return_failure
 	fi
-	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX1) '4.560000'
 	then mbfl_location_leave_then_return_failure
 	fi
 	if ! mmux_decimal64_pointer_set WW(PTR) WW(INDEX2) '7.89'
@@ -2070,9 +2072,9 @@ function pointers-decimal64-1.3 () {
 
 	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
 
-	mmux_decimal64_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
-	    mmux_decimal64_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
-	    mmux_decimal64_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+	mmux_decimal64_equal_absmargin     '1.230000' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal64_equal_absmargin '4.560000' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal64_equal_absmargin '7.890000' mbfl_slot_qref(VALUES,2)
     }
     mbfl_location_leave
 }
@@ -2097,7 +2099,7 @@ function pointers-decimal128-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.230000'
 	then mbfl_location_leave_then_return_failure
 	fi
 
@@ -2105,7 +2107,8 @@ function pointers-decimal128-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux_decimal128_equal_absmargin '0X1.3AE148P+0' QQ(VALUE)
+	dotest-debug  WW(mmux_libc_SIZEOF_DECIMAL128) '1.230000' WW(VALUE)
+	mmux_decimal128_equal_absmargin '1.230000' QQ(VALUE)
     }
     mbfl_location_leave
 }
@@ -2151,9 +2154,9 @@ function pointers-decimal128-1.2 () {
 
 	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
 
-	mmux_decimal128_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
-	    mmux_decimal128_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
-	    mmux_decimal128_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+	mmux_decimal128_equal_absmargin     '1.230000' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal128_equal_absmargin '4.560000' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal128_equal_absmargin '7.890000' mbfl_slot_qref(VALUES,2)
     }
     mbfl_location_leave
 }
@@ -2175,10 +2178,10 @@ function pointers-decimal128-1.3 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.23'
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX0) '1.230000'
 	then mbfl_location_leave_then_return_failure
 	fi
-	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX1) '4.56'
+	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX1) '4.560000'
 	then mbfl_location_leave_then_return_failure
 	fi
 	if ! mmux_decimal128_pointer_set WW(PTR) WW(INDEX2) '7.89'
@@ -2205,9 +2208,9 @@ function pointers-decimal128-1.3 () {
 
 	dotest-debug expected=0X1.3AE148P+0 got=mbfl_slot_qref(VALUES,0)
 
-	mmux_decimal128_equal_absmargin     '0X1.3AE148P+0' mbfl_slot_qref(VALUES,0) &&
-	    mmux_decimal128_equal_absmargin '0X1.23D70AP+2' mbfl_slot_qref(VALUES,1) &&
-	    mmux_decimal128_equal_absmargin '0X1.F8F5C2P+2' mbfl_slot_qref(VALUES,2)
+	mmux_decimal128_equal_absmargin     '1.230000' mbfl_slot_qref(VALUES,0) &&
+	    mmux_decimal128_equal_absmargin '4.560000' mbfl_slot_qref(VALUES,1) &&
+	    mmux_decimal128_equal_absmargin '7.890000' mbfl_slot_qref(VALUES,2)
     }
     mbfl_location_leave
 }
@@ -2753,23 +2756,23 @@ then
 function pointers-complexd32-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD32)
     {
 	mmux_complexd32_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd32_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
-    mmux_complexd32_equal_absmargin '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+    mmux_complexd32_equal_absmargin '(1.20000)+i*(3.40000)' QQ(VALUE)
 }
 function pointers-complexd32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD32)
     {
 	mmux_complexd32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complexd32_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd32_pointer_set $PTR 64 '(9.00000)+i*(1.20000)'
 
 	mmux_complexd32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
 	mmux_complexd32_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
@@ -2777,19 +2780,19 @@ function pointers-complexd32-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd32_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd32_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd32_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd32_equal_absmargin     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_absmargin '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_absmargin '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 function pointers-complexd32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD32)
     {
 	mmux_complexd32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complexd32_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd32_pointer_set $PTR 64 '(9.00000)+i*(1.20000)'
 	mmux_libc_realloc PTR $PTR 2048
 	mmux_complexd32_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
 	mmux_complexd32_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
@@ -2797,9 +2800,9 @@ function pointers-complexd32-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd32_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd32_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd32_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd32_equal_absmargin     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_absmargin '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_absmargin '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -2813,23 +2816,23 @@ then
 function pointers-complexd64-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD64)
     {
 	mmux_complexd64_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd64_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
-    mmux_complexd64_equal_absmargin '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+    mmux_complexd64_equal_absmargin '(1.20000)+i*(3.40000)' QQ(VALUE)
 }
 function pointers-complexd64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD64)
     {
 	mmux_complexd64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complexd64_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd64_pointer_set $PTR 64 '(9.00000)+i*(1.20000)'
 
 	mmux_complexd64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
 	mmux_complexd64_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
@@ -2837,19 +2840,19 @@ function pointers-complexd64-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd64_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd64_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd64_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd64_equal_absmargin     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_absmargin '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_absmargin '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 function pointers-complexd64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD64)
     {
 	mmux_complexd64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complexd64_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd64_pointer_set $PTR 64 '(9.00000)+i*(1.20000)'
 	mmux_libc_realloc PTR $PTR 2048
 	mmux_complexd64_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
 	mmux_complexd64_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
@@ -2857,9 +2860,9 @@ function pointers-complexd64-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd64_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd64_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd64_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd64_equal_absmargin     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_absmargin '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_absmargin '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -2873,23 +2876,23 @@ then
 function pointers-complexd128-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD128)
     {
 	mmux_complexd128_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd128_pointer_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
-    mmux_complexd128_equal_absmargin '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+    mmux_complexd128_equal_absmargin '(1.20000)+i*(3.40000)' QQ(VALUE)
 }
 function pointers-complexd128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD128)
     {
 	mmux_complexd128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complexd128_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd128_pointer_set $PTR 64 '(9.00000)+i*(1.20000)'
 
 	mmux_complexd128_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
 	mmux_complexd128_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
@@ -2897,19 +2900,19 @@ function pointers-complexd128-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd128_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd128_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd128_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd128_equal_absmargin     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_absmargin '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_absmargin '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 function pointers-complexd128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD128)
     {
 	mmux_complexd128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
-	mmux_complexd128_pointer_set $PTR 64 '(9.0)+i*(1.2)'
+	mmux_complexd128_pointer_set $PTR 64 '(9.00000)+i*(1.20000)'
 	mmux_libc_realloc PTR $PTR 2048
 	mmux_complexd128_pointer_ref VALUE $PTR 0		;VALUES[0]=$VALUE
 	mmux_complexd128_pointer_ref VALUE $PTR 32		;VALUES[1]=$VALUE
@@ -2917,9 +2920,9 @@ function pointers-complexd128-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd128_equal_absmargin     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd128_equal_absmargin '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd128_equal_absmargin '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd128_equal_absmargin     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_absmargin '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_absmargin '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 
 fi

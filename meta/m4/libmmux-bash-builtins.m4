@@ -138,10 +138,10 @@ m4_dnl $2 - The body of code.
 m4_dnl $3 - The alternative of code.
 m4_define([[[MMUX_BASH_CONDITIONAL_CODE]]],[[[m4_ifelse([[[$1]]],,[[[$2]]],[[[m4_dnl
 #if ((defined $1) && (1 == $1))
-$2 m4_dnl
+$2
 m4_ifelse([[[$3]]],,,[[[m4_dnl
 #else
-$3 m4_dnl
+$3
 ]]])
 #endif
 ]]])]]])

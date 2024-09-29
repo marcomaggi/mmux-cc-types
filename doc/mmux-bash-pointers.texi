@@ -248,10 +248,8 @@ we can write code that links to the shared library to reuse some of its faciliti
 
 
 Support for the @objtype{_DecimalN} types is enabled if availability of such types is detected at
-package--configuration time.  Such support is ``fake'': some of the juicier functions are
-implemented by converting the @objtype{_DecimalN} type to @objtype{long double} as needed.  One
-could say that this defeats the purpose of using @objtype{_DecimalN}, but it's like that, and that's
-the way it is.
+package--configuration time.  This package relies on the availability of the external package
+@code{libdfp}.
 
 @c page
 @node overview stems
@@ -3942,6 +3940,10 @@ development takes place at:
 the package @mbfl{} is available online:
 
 @center @url{http://github.com/marcomaggi/mbfl/}
+
+the package @code{libdfp} is available online:
+
+@center @url{https://github.com/libdfp/libdfp}
 
 @c page
 @node concept index

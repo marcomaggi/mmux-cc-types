@@ -4265,7 +4265,7 @@ function arithmetics-complexf-mul-1.2.1 () {
 function arithmetics-complexf-mul-1.2.2 () {
     declare ROP OP0=$A OP1=$B
     declare EXPECTED_ROP=$A_mul_B
-    declare ABSOLUTE_DIFFERENCE_TOLERANCE_COMPLEXF='(1e-4)+i*(1e-4)'
+    declare ABSOLUTE_MARGIN_COMPLEXF='(1e-4)+i*(1e-4)'
 
     mmux_complexf_mul ROP WW(OP0) WW(OP1)
     dotest-unset-debug
@@ -4283,7 +4283,7 @@ function arithmetics-complexf-mul-1.3.1 () {
 function arithmetics-complexf-mul-1.3.2 () {
     declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
     declare EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
-    declare ABSOLUTE_DIFFERENCE_TOLERANCE_COMPLEXF='(1e-4)+i*(1e-4)'
+    declare ABSOLUTE_MARGIN_COMPLEXF='(1e-4)+i*(1e-4)'
 
     mmux_complexf_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
     dotest-unset-debug
@@ -4606,7 +4606,7 @@ function arithmetics-complexd-inv-1.3 () {
 
 #### type variables: complexld
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_libc_SIZEOF_COMPLEXLD
 then
 
 function arithmetics-complexld-add-1.1.1 () {
@@ -4838,98 +4838,203 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXF32
 then
 
-function arithmetics-complexf32-add-1.1 () {
-    declare ROP OP=1
+#### type variables: complexf32
+
+function arithmetics-complexf32-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf32_add ROP QQ(OP)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_add ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-add-1.2 () {
+function arithmetics-complexf32-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf32_add ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexf32_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_add ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexf32-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexf32_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_add ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexf32-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexf32-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexf32_sub ROP QQ(OP)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexf32-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexf32_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexf32-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexf32_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf32-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf32-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf32_mul ROP QQ(OP)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_sub ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-mul-1.2 () {
+function arithmetics-complexf32-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf32_sub ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexf32_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexf32_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexf32_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexf32_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf32-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexf32_mul ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf32_mul ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexf32_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexf32-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_mul_B
 
-    mmux_complexf32_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexf32_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+
+    mmux_complexf32_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf32-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf32-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf32_div ROP QQ(OP)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_div ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexf32-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexf32_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_div ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexf32-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexf32_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexf32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32_div ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexf32_div ROP WW(OP0) WW(OP1)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexf32_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexf32_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf32-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexf32_neg ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexf32_neg ROP WW(OP)
+    mmux_complexf32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -4948,6 +5053,13 @@ function arithmetics-complexf32-inv-1.2 () {
     mmux_complexf32_inv ROP QQ(OP)
     mmux_complexf32_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+function arithmetics-complexf32-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexf32_inv ROP QQ(OP)
+    mmux_complexf32_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
 
 fi
 
@@ -4957,98 +5069,203 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXF64
 then
 
-function arithmetics-complexf64-add-1.1 () {
-    declare ROP OP=1
+#### type variables: complexf64
+
+function arithmetics-complexf64-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf64_add ROP QQ(OP)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_add ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-add-1.2 () {
+function arithmetics-complexf64-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf64_add ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexf64_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_add ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexf64-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexf64_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_add ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexf64-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexf64-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexf64_sub ROP QQ(OP)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexf64-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexf64_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexf64-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexf64_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf64-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf64-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf64_mul ROP QQ(OP)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_sub ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-mul-1.2 () {
+function arithmetics-complexf64-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf64_sub ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexf64_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexf64_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexf64_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexf64_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf64-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexf64_mul ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf64_mul ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexf64_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexf64-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_mul_B
 
-    mmux_complexf64_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexf64_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+
+    mmux_complexf64_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf64-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf64-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf64_div ROP QQ(OP)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_div ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexf64-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexf64_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_div ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexf64-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexf64_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexf64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64_div ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexf64_div ROP WW(OP0) WW(OP1)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexf64_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexf64_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf64-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexf64_neg ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexf64_neg ROP WW(OP)
+    mmux_complexf64_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5067,6 +5284,13 @@ function arithmetics-complexf64-inv-1.2 () {
     mmux_complexf64_inv ROP QQ(OP)
     mmux_complexf64_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+function arithmetics-complexf64-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexf64_inv ROP QQ(OP)
+    mmux_complexf64_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
 
 fi
 
@@ -5076,98 +5300,203 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXF128
 then
 
-function arithmetics-complexf128-add-1.1 () {
-    declare ROP OP=1
+#### type variables: complexf128
+
+function arithmetics-complexf128-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf128_add ROP QQ(OP)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_add ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-add-1.2 () {
+function arithmetics-complexf128-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf128_add ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexf128_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_add ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexf128-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexf128_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_add ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexf128-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexf128-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexf128_sub ROP QQ(OP)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexf128-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexf128_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexf128-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexf128_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf128-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf128-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf128_mul ROP QQ(OP)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_sub ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-mul-1.2 () {
+function arithmetics-complexf128-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf128_sub ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexf128_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexf128_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexf128_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexf128_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf128-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexf128_mul ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf128_mul ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexf128_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexf128-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_mul_B
 
-    mmux_complexf128_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexf128_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+
+    mmux_complexf128_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf128-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf128-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf128_div ROP QQ(OP)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_div ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexf128-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexf128_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_div ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexf128-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexf128_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexf128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128_div ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexf128_div ROP WW(OP0) WW(OP1)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexf128_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexf128_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf128-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexf128_neg ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexf128_neg ROP WW(OP)
+    mmux_complexf128_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5186,6 +5515,13 @@ function arithmetics-complexf128-inv-1.2 () {
     mmux_complexf128_inv ROP QQ(OP)
     mmux_complexf128_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+function arithmetics-complexf128-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexf128_inv ROP QQ(OP)
+    mmux_complexf128_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
 
 fi
 
@@ -5195,98 +5531,203 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXF32X
 then
 
-function arithmetics-complexf32x-add-1.1 () {
-    declare ROP OP=1
+#### type variables: complexf32x
+
+function arithmetics-complexf32x-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf32x_add ROP QQ(OP)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_add ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-add-1.2 () {
+function arithmetics-complexf32x-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf32x_add ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexf32x_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_add ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexf32x-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexf32x_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_add ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexf32x-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexf32x-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexf32x_sub ROP QQ(OP)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexf32x-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexf32x_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexf32x-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexf32x_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf32x-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf32x-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf32x_mul ROP QQ(OP)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_sub ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-mul-1.2 () {
+function arithmetics-complexf32x-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf32x_sub ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexf32x_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexf32x_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexf32x_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexf32x_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf32x-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexf32x_mul ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf32x_mul ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexf32x_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexf32x-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_mul_B
 
-    mmux_complexf32x_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexf32x_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+
+    mmux_complexf32x_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf32x-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf32x-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf32x_div ROP QQ(OP)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_div ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexf32x-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexf32x_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_div ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf32x-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexf32x-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexf32x_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexf32x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf32x_div ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexf32x_div ROP WW(OP0) WW(OP1)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexf32x_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexf32x_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf32x-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexf32x_neg ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf32x-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexf32x_neg ROP WW(OP)
+    mmux_complexf32x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5305,6 +5746,13 @@ function arithmetics-complexf32x-inv-1.2 () {
     mmux_complexf32x_inv ROP QQ(OP)
     mmux_complexf32x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+function arithmetics-complexf32x-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexf32x_inv ROP QQ(OP)
+    mmux_complexf32x_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
 
 fi
 
@@ -5314,98 +5762,203 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXF64X
 then
 
-function arithmetics-complexf64x-add-1.1 () {
-    declare ROP OP=1
+#### type variables: complexf64x
+
+function arithmetics-complexf64x-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf64x_add ROP QQ(OP)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_add ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-add-1.2 () {
+function arithmetics-complexf64x-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf64x_add ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexf64x_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_add ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexf64x-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexf64x_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_add ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexf64x-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexf64x-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexf64x_sub ROP QQ(OP)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexf64x-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexf64x_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexf64x-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexf64x_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf64x-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf64x-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf64x_mul ROP QQ(OP)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_sub ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-mul-1.2 () {
+function arithmetics-complexf64x-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf64x_sub ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexf64x_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexf64x_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexf64x_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexf64x_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf64x-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexf64x_mul ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf64x_mul ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexf64x_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexf64x-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_mul_B
 
-    mmux_complexf64x_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexf64x_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+
+    mmux_complexf64x_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf64x-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf64x-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf64x_div ROP QQ(OP)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_div ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexf64x-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexf64x_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_div ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf64x-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexf64x-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexf64x_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexf64x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf64x_div ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexf64x_div ROP WW(OP0) WW(OP1)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexf64x_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexf64x_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf64x-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexf64x_neg ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf64x-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexf64x_neg ROP WW(OP)
+    mmux_complexf64x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5424,6 +5977,13 @@ function arithmetics-complexf64x-inv-1.2 () {
     mmux_complexf64x_inv ROP QQ(OP)
     mmux_complexf64x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+function arithmetics-complexf64x-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexf64x_inv ROP QQ(OP)
+    mmux_complexf64x_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
 
 fi
 
@@ -5433,98 +5993,203 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXF128X
 then
 
-function arithmetics-complexf128x-add-1.1 () {
-    declare ROP OP=1
+#### type variables: complexf128x
+
+function arithmetics-complexf128x-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf128x_add ROP QQ(OP)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_add ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-add-1.2 () {
+function arithmetics-complexf128x-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf128x_add ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexf128x_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_add ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexf128x-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexf128x_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_add ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexf128x-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexf128x-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexf128x_sub ROP QQ(OP)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexf128x-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexf128x_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexf128x-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexf128x_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf128x-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf128x-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf128x_mul ROP QQ(OP)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_sub ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-mul-1.2 () {
+function arithmetics-complexf128x-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf128x_sub ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexf128x_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexf128x_sub ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexf128x_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexf128x_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf128x-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexf128x_mul ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexf128x_mul ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexf128x_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexf128x-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_mul_B
 
-    mmux_complexf128x_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_mul ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexf128x_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+
+    mmux_complexf128x_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexf128x-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexf128x-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexf128x_div ROP QQ(OP)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_div ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexf128x-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexf128x_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_div ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexf128x-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexf128x-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexf128x_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexf128x_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexf128x_div ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexf128x_div ROP WW(OP0) WW(OP1)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexf128x_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexf128x_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexf128x-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexf128x_neg ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexf128x-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexf128x_neg ROP WW(OP)
+    mmux_complexf128x_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5543,6 +6208,13 @@ function arithmetics-complexf128x-inv-1.2 () {
     mmux_complexf128x_inv ROP QQ(OP)
     mmux_complexf128x_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
 }
+function arithmetics-complexf128x-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexf128x_inv ROP QQ(OP)
+    mmux_complexf128x_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
 
 fi
 
@@ -5552,98 +6224,213 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXD32
 then
 
-function arithmetics-complexd32-add-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd32-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd32_add ROP QQ(OP)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_add ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-add-1.2 () {
+function arithmetics-complexd32-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd32_add ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexd32_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_add ROP WW(OP0) WW(OP1)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexd32-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexd32_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_add ROP WW(OP0) WW(OP1)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexd32-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexd32-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexd32_sub ROP QQ(OP)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexd32-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexd32_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexd32-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexd32_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexd32-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd32-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd32_mul ROP QQ(OP)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_sub ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-mul-1.2 () {
+function arithmetics-complexd32-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd32_sub ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexd32_sub ROP WW(OP0) WW(OP1)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexd32_sub ROP WW(OP0) WW(OP1)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexd32_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexd32_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexd32-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexd32_mul ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd32_mul ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexd32_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_mul ROP WW(OP0) WW(OP1)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexd32-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare EXPECTED_ROP=$A_mul_B
+    declare ABSOLUTE_MARGIN_COMPLEXD32='(1e-4)+i*(1e-4)'
 
-    mmux_complexd32_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_mul ROP WW(OP0) WW(OP1)
+    dotest-unset-debug
+    mmux_complexd32_add EXPECTED_ROP WW(EXPECTED_ROP)
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexd32_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+    declare ABSOLUTE_MARGIN_COMPLEXD32='(1)+i*(1)'
+
+    mmux_complexd32_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    dotest-unset-debug
+    mmux_complexd32_add EXPECTED_ROP WW(EXPECTED_ROP)
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexd32-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd32-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd32_div ROP QQ(OP)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_div ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexd32-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexd32_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_div ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd32-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexd32-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexd32_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexd32_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_div ROP WW(OP0) WW(OP1)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexd32_div ROP WW(OP0) WW(OP1)
+    dotest-unset-debug
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexd32_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexd32_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    dotest-unset-debug
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexd32-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexd32_neg ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd32-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexd32_neg ROP WW(OP)
+    mmux_complexd32_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5653,14 +6440,21 @@ function arithmetics-complexd32-inv-1.1 () {
     declare -r EXPECTED_ROP='1'
 
     mmux_complexd32_inv ROP QQ(OP)
-    mmux_complexd32_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-complexd32-inv-1.2 () {
     declare ROP OP=10
     declare -r EXPECTED_ROP='0.1'
 
     mmux_complexd32_inv ROP QQ(OP)
-    mmux_complexd32_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd32_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-complexd32-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexd32_inv ROP QQ(OP)
+    mmux_complexd32_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 
 fi
@@ -5671,98 +6465,213 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXD64
 then
 
-function arithmetics-complexd64-add-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd64-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd64_add ROP QQ(OP)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_add ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-add-1.2 () {
+function arithmetics-complexd64-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd64_add ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexd64_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_add ROP WW(OP0) WW(OP1)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexd64-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexd64_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_add ROP WW(OP0) WW(OP1)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexd64-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexd64-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexd64_sub ROP QQ(OP)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexd64-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexd64_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexd64-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexd64_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexd64-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd64-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd64_mul ROP QQ(OP)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_sub ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-mul-1.2 () {
+function arithmetics-complexd64-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd64_sub ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexd64_sub ROP WW(OP0) WW(OP1)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexd64_sub ROP WW(OP0) WW(OP1)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexd64_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexd64_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexd64-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexd64_mul ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd64_mul ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexd64_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_mul ROP WW(OP0) WW(OP1)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexd64-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare EXPECTED_ROP=$A_mul_B
+    declare ABSOLUTE_MARGIN_COMPLEXD64='(1e-4)+i*(1e-4)'
 
-    mmux_complexd64_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_mul ROP WW(OP0) WW(OP1)
+    dotest-unset-debug
+    mmux_complexd64_add EXPECTED_ROP WW(EXPECTED_ROP)
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexd64_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+    declare ABSOLUTE_MARGIN_COMPLEXD64='(1e-4)+i*(1e-4)'
+
+    mmux_complexd64_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    dotest-unset-debug
+    mmux_complexd64_add EXPECTED_ROP WW(EXPECTED_ROP)
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexd64-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd64-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd64_div ROP QQ(OP)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_div ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexd64-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexd64_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_div ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd64-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexd64-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexd64_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexd64_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_div ROP WW(OP0) WW(OP1)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexd64_div ROP WW(OP0) WW(OP1)
+    dotest-unset-debug
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexd64_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexd64_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    dotest-unset-debug
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexd64-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexd64_neg ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd64-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexd64_neg ROP WW(OP)
+    mmux_complexd64_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5772,14 +6681,21 @@ function arithmetics-complexd64-inv-1.1 () {
     declare -r EXPECTED_ROP='1'
 
     mmux_complexd64_inv ROP QQ(OP)
-    mmux_complexd64_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-complexd64-inv-1.2 () {
     declare ROP OP=10
     declare -r EXPECTED_ROP='0.1'
 
     mmux_complexd64_inv ROP QQ(OP)
-    mmux_complexd64_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd64_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-complexd64-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexd64_inv ROP QQ(OP)
+    mmux_complexd64_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 
 fi
@@ -5790,98 +6706,213 @@ fi
 if test -v mmux_libc_SIZEOF_COMPLEXD128
 then
 
-function arithmetics-complexd128-add-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd128-add-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd128_add ROP QQ(OP)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_add ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-add-1.2 () {
+function arithmetics-complexd128-add-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd128_add ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-add-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 + 2))
 
-    mmux_complexd128_add ROP QQ(OP0) QQ(OP1)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_add ROP WW(OP0) WW(OP1)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-add-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+function arithmetics-complexd128-add-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_add_B
+    declare DEBUG_EXPECTED_ROP
 
-    mmux_complexd128_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_add ROP WW(OP0) WW(OP1)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
+function arithmetics-complexd128-add-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7))
 
-### ------------------------------------------------------------------------
-
-function arithmetics-complexd128-sub-1.1 () {
-    declare ROP OP=1
-    declare -r EXPECTED_ROP='1'
-
-    mmux_complexd128_sub ROP QQ(OP)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-sub-1.2 () {
-    declare ROP OP0=100 OP1=2
-    declare -r EXPECTED_ROP=$((100 - 2))
+function arithmetics-complexd128-add-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_add_B_add_C_add_D_add_E
 
-    mmux_complexd128_sub ROP QQ(OP0) QQ(OP1)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
-}
-function arithmetics-complexd128-sub-1.3 () {
-    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
-
-    mmux_complexd128_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_add ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexd128-mul-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd128-sub-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd128_mul ROP QQ(OP)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_sub ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-mul-1.2 () {
+function arithmetics-complexd128-sub-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd128_sub ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-sub-1.2.1 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 - 2))
+
+    mmux_complexd128_sub ROP WW(OP0) WW(OP1)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-sub-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_sub_B
+
+    mmux_complexd128_sub ROP WW(OP0) WW(OP1)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-sub-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 - 2 - 3 - 5 - 7))
+
+    mmux_complexd128_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-sub-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_sub_B_sub_C_sub_D_sub_E
+
+    mmux_complexd128_sub ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexd128-mul-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='1'
+
+    mmux_complexd128_mul ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-mul-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
+
+    mmux_complexd128_mul ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-mul-1.2.1 () {
     declare ROP OP0=1 OP1=2
     declare -r EXPECTED_ROP=$((1 * 2))
 
-    mmux_complexd128_mul ROP QQ(OP0) QQ(OP1)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_mul ROP WW(OP0) WW(OP1)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-mul-1.3 () {
-    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
-    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+function arithmetics-complexd128-mul-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare EXPECTED_ROP=$A_mul_B
+    declare ABSOLUTE_MARGIN_COMPLEXD128='(1e-4)+i*(1e-4)'
 
-    mmux_complexd128_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_mul ROP WW(OP0) WW(OP1)
+    dotest-unset-debug
+    mmux_complexd128_add EXPECTED_ROP WW(EXPECTED_ROP)
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-mul-1.3.1 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7))
+
+    mmux_complexd128_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-mul-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare EXPECTED_ROP=$A_mul_B_mul_C_mul_D_mul_E
+    declare ABSOLUTE_MARGIN_COMPLEXD128='(1e-4)+i*(1e-4)'
+
+    mmux_complexd128_mul ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    dotest-unset-debug
+    mmux_complexd128_add EXPECTED_ROP WW(EXPECTED_ROP)
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
 
-function arithmetics-complexd128-div-1.1 () {
-    declare ROP OP=1
+function arithmetics-complexd128-div-1.1.1 () {
+    declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
 
-    mmux_complexd128_div ROP QQ(OP)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_div ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-div-1.2 () {
-    declare ROP OP0=10 OP1=2
-    declare -r EXPECTED_ROP=$((10 / 2))
+function arithmetics-complexd128-div-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$A
 
-    mmux_complexd128_div ROP QQ(OP0) QQ(OP1)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_div ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
-function arithmetics-complexd128-div-1.3 () {
-    declare ROP OP0=500 OP1=2 OP2=5
-    declare -r EXPECTED_ROP=$(( 500 / 2 / 5))
+function arithmetics-complexd128-div-1.2.1 () {
+    declare ROP OP0=10 OP1=5
+    declare -r EXPECTED_ROP=$((10 / 5))
 
-    mmux_complexd128_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
-    mmux_complexd128_equal QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_div ROP WW(OP0) WW(OP1)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-div-1.2.2 () {
+    declare ROP OP0=$A OP1=$B
+    declare -r EXPECTED_ROP=$A_div_B
+
+    mmux_complexd128_div ROP WW(OP0) WW(OP1)
+    dotest-unset-debug
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-div-1.3.1 () {
+    declare ROP OP1=2 OP2=3 OP3=5 OP4=7
+    declare OP0=$((10 * WW(OP1) * WW(OP2) * WW(OP3) * WW(OP4)))
+    declare -r EXPECTED_ROP='10'
+
+    mmux_complexd128_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-div-1.3.2 () {
+    declare ROP OP0=$A OP1=$B OP2=$C OP3=$D OP4=$E
+    declare -r EXPECTED_ROP=$A_div_B_div_C_div_D_div_E
+
+    mmux_complexd128_div ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4)
+    dotest-unset-debug
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-complexd128-neg-1.1.1 () {
+    declare ROP OP='1'
+    declare -r EXPECTED_ROP='-1'
+
+    mmux_complexd128_neg ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
+}
+function arithmetics-complexd128-neg-1.1.2 () {
+    declare ROP OP=$A
+    declare -r EXPECTED_ROP=$neg_A
+
+    mmux_complexd128_neg ROP WW(OP)
+    mmux_complexd128_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
 ### ------------------------------------------------------------------------
@@ -5891,14 +6922,21 @@ function arithmetics-complexd128-inv-1.1 () {
     declare -r EXPECTED_ROP='1'
 
     mmux_complexd128_inv ROP QQ(OP)
-    mmux_complexd128_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 function arithmetics-complexd128-inv-1.2 () {
     declare ROP OP=10
     declare -r EXPECTED_ROP='0.1'
 
     mmux_complexd128_inv ROP QQ(OP)
-    mmux_complexd128_equal_relepsilon QQ(EXPECTED_ROP) QQ(ROP)
+    mmux_complexd128_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-complexd128-inv-1.3 () {
+    declare ROP OP=$A
+    declare EXPECTED_ROP=$inv_A
+
+    mmux_complexd128_inv ROP QQ(OP)
+    mmux_complexd128_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 
 fi

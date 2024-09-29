@@ -74,6 +74,7 @@ AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised fea
 AC_DEFINE([__STDC_WANT_IEC_60559_DFP_EXT__],   [1],[Define some standardised features.])
 AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
 AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
+dnl AC_DEFINE([__STDC_WANT_DEC_FP__],[1],[Required to enable decimal floating-point numeric types.])
 
 AC_DEFINE([_GNU_SOURCE],[1],[Enable everything GNU (is this actually needed?).])
 AC_DEFINE([_POSIX_C_SOURCE],[200809L],[Enable latest(?) POSIX features.])
@@ -89,6 +90,7 @@ MMUX_CHECK_PKG_CONFIG_MACROS
 PKG_CHECK_MODULES([BASH],[bash],,[AC_MSG_WARN([package GNU Bash not found])])
 
 AC_SEARCH_LIBS(cos, m,, [AC_MSG_ERROR([Cannot find libm])])
+MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY
 
 AC_CACHE_SAVE
 

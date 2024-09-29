@@ -1318,7 +1318,7 @@ function arrays-decimal32-1.1 () {
 	mmux_decimal32_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
-    mmux_decimal32_equal_relepsilon 0X1.3AE148P+0 QQ(VALUE)
+    mmux_decimal32_equal_relepsilon '1.230000' QQ(VALUE)
 }
 function arrays-decimal32-1.2 () {
     declare PTR VALUE
@@ -1336,9 +1336,9 @@ function arrays-decimal32-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_decimal32_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
-	mmux_decimal32_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
-	mmux_decimal32_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+    mmux_decimal32_equal_relepsilon '1.230000' mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal32_equal_relepsilon '4.560000' mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal32_equal_relepsilon '7.890000' mbfl_slot_qref(VALUES,2)
 }
 function arrays-decimal32-1.3 () {
     declare PTR VALUE
@@ -1356,9 +1356,9 @@ function arrays-decimal32-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_decimal32_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
-	mmux_decimal32_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
-	mmux_decimal32_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+    mmux_decimal32_equal_relepsilon '1.230000' mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal32_equal_relepsilon '4.560000' mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal32_equal_relepsilon '7.890000' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -1378,7 +1378,7 @@ function arrays-decimal64-1.1 () {
 	mmux_decimal64_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
-    mmux_decimal64_equal_relepsilon 0X1.3AE148P+0 QQ(VALUE)
+    mmux_decimal64_equal_relepsilon '1.230000' QQ(VALUE)
 }
 function arrays-decimal64-1.2 () {
     declare PTR VALUE
@@ -1396,9 +1396,9 @@ function arrays-decimal64-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_decimal64_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
-	mmux_decimal64_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
-	mmux_decimal64_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+    mmux_decimal64_equal_relepsilon '1.230000' mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal64_equal_relepsilon '4.560000' mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal64_equal_relepsilon '7.890000' mbfl_slot_qref(VALUES,2)
 }
 function arrays-decimal64-1.3 () {
     declare PTR VALUE
@@ -1416,9 +1416,9 @@ function arrays-decimal64-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_decimal64_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
-	mmux_decimal64_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
-	mmux_decimal64_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+    mmux_decimal64_equal_relepsilon '1.230000' mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal64_equal_relepsilon '4.560000' mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal64_equal_relepsilon '7.890000' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -1438,7 +1438,7 @@ function arrays-decimal128-1.1 () {
 	mmux_decimal128_array_ref VALUE $PTR 0
     }
     mmux_libc_free $PTR
-    mmux_decimal128_equal_relepsilon 0X1.3AE148P+0 QQ(VALUE)
+    mmux_decimal128_equal_relepsilon '1.230000' QQ(VALUE)
 }
 function arrays-decimal128-1.2 () {
     declare PTR VALUE
@@ -1456,9 +1456,9 @@ function arrays-decimal128-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_decimal128_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
-	mmux_decimal128_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
-	mmux_decimal128_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+    mmux_decimal128_equal_relepsilon '1.230000' mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal128_equal_relepsilon '4.560000' mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal128_equal_relepsilon '7.890000' mbfl_slot_qref(VALUES,2)
 }
 function arrays-decimal128-1.3 () {
     declare PTR VALUE
@@ -1476,9 +1476,9 @@ function arrays-decimal128-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_decimal128_equal_relepsilon 0X1.3AE148P+0 mbfl_slot_qref(VALUES,0) &&
-	mmux_decimal128_equal_relepsilon 0X1.23D70AP+2 mbfl_slot_qref(VALUES,1) &&
-	mmux_decimal128_equal_relepsilon 0X1.F8F5C2P+2 mbfl_slot_qref(VALUES,2)
+    mmux_decimal128_equal_relepsilon '1.230000' mbfl_slot_qref(VALUES,0) &&
+	mmux_decimal128_equal_relepsilon '4.560000' mbfl_slot_qref(VALUES,1) &&
+	mmux_decimal128_equal_relepsilon '7.890000' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -2029,7 +2029,7 @@ function arrays-complexd32-1.1 () {
 	mmux_complexd32_array_ref VALUE $PTR 3
     }
     mmux_libc_free $PTR
-    mmux_complexd32_equal_relepsilon '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+    mmux_complexd32_equal_relepsilon '(1.20000)+i*(3.40000)' QQ(VALUE)
 }
 function arrays-complexd32-1.2 () {
     declare PTR VALUE
@@ -2047,9 +2047,9 @@ function arrays-complexd32-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd32_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd32_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd32_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd32_equal_relepsilon     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_relepsilon '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_relepsilon '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 function arrays-complexd32-1.3 () {
     declare PTR VALUE
@@ -2067,9 +2067,9 @@ function arrays-complexd32-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd32_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd32_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd32_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd32_equal_relepsilon     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd32_equal_relepsilon '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd32_equal_relepsilon '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -2089,7 +2089,7 @@ function arrays-complexd64-1.1 () {
 	mmux_complexd64_array_ref VALUE $PTR 3
     }
     mmux_libc_free $PTR
-    mmux_complexd64_equal_relepsilon '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+    mmux_complexd64_equal_relepsilon '(1.20000)+i*(3.40000)' QQ(VALUE)
 }
 function arrays-complexd64-1.2 () {
     declare PTR VALUE
@@ -2107,9 +2107,9 @@ function arrays-complexd64-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd64_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd64_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd64_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd64_equal_relepsilon     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_relepsilon '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_relepsilon '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 function arrays-complexd64-1.3 () {
     declare PTR VALUE
@@ -2127,9 +2127,9 @@ function arrays-complexd64-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd64_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd64_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd64_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd64_equal_relepsilon     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd64_equal_relepsilon '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd64_equal_relepsilon '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 
 fi
@@ -2149,7 +2149,7 @@ function arrays-complexd128-1.1 () {
 	mmux_complexd128_array_ref VALUE $PTR 3
     }
     mmux_libc_free $PTR
-    mmux_complexd128_equal_relepsilon '(0X1.333334P+0)+i*(0X1.B33334P+1)' QQ(VALUE)
+    mmux_complexd128_equal_relepsilon '(1.20000)+i*(3.40000)' QQ(VALUE)
 }
 function arrays-complexd128-1.2 () {
     declare PTR VALUE
@@ -2167,9 +2167,9 @@ function arrays-complexd128-1.2 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd128_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd128_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd128_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd128_equal_relepsilon     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_relepsilon '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_relepsilon '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 function arrays-complexd128-1.3 () {
     declare PTR VALUE
@@ -2187,9 +2187,9 @@ function arrays-complexd128-1.3 () {
     }
     mmux_libc_free $PTR
 
-    mmux_complexd128_equal_relepsilon     '(0X1.333334P+0)+i*(0X1.B33334P+1)' mbfl_slot_qref(VALUES,0) &&
-	mmux_complexd128_equal_relepsilon '(0X1.666666P+2)+i*(0X1.F33334P+2)' mbfl_slot_qref(VALUES,1) &&
-	mmux_complexd128_equal_relepsilon '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
+    mmux_complexd128_equal_relepsilon     '(1.20000)+i*(3.40000)' mbfl_slot_qref(VALUES,0) &&
+	mmux_complexd128_equal_relepsilon '(5.60000)+i*(7.80000)' mbfl_slot_qref(VALUES,1) &&
+	mmux_complexd128_equal_relepsilon '(9.00000)+i*(1.20000)' mbfl_slot_qref(VALUES,2)
 }
 
 fi

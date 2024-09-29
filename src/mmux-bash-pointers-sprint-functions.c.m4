@@ -168,9 +168,9 @@ DEFINE_FLOAT_SPRINTER([[[float32x]]],	[[[strfromf32x]]],	[[["%A"]]],  [[[MMUX_HA
 DEFINE_FLOAT_SPRINTER([[[float64x]]],	[[[strfromf64x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT64X]]])
 DEFINE_FLOAT_SPRINTER([[[float128x]]],	[[[strfromf128x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
-DEFINE_FLOAT_SPRINTER([[[decimal32]]],	[[[mmux_strfromd32]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_DECIMAL32]]])
-DEFINE_FLOAT_SPRINTER([[[decimal64]]],	[[[mmux_strfromd64]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_DECIMAL64]]])
-DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_DECIMAL128]]])
+DEFINE_FLOAT_SPRINTER([[[decimal32]]],	[[[mmux_strfromd32]]],	[[["%f"]]],  [[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_SPRINTER([[[decimal64]]],	[[[mmux_strfromd64]]],	[[["%f"]]],  [[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[["%f"]]],  [[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
