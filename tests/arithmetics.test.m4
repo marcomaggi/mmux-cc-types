@@ -214,6 +214,26 @@ function arithmetics-schar-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-schar-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_schar_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-schar-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_schar_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: uchar
 
@@ -348,6 +368,26 @@ function arithmetics-uchar-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-uchar-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_uchar_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-uchar-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_uchar_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: sshort
 
@@ -479,6 +519,26 @@ function arithmetics-sshort-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_sshort_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sshort-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sshort_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sshort-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sshort_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -633,6 +693,26 @@ function arithmetics-sint-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-sint-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sint_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sint_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: slong
 
@@ -764,6 +844,26 @@ function arithmetics-slong-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_slong_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-slong-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_slong_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-slong-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_slong_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -901,6 +1001,26 @@ function arithmetics-sllong-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-sllong-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sllong_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sllong-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sllong_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: sint8
 
@@ -1032,6 +1152,26 @@ function arithmetics-sint8-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_sint8_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint8-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sint8_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint8-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sint8_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1169,6 +1309,26 @@ function arithmetics-sint16-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-sint16-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sint16_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint16-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sint16_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: sint32
 
@@ -1300,6 +1460,26 @@ function arithmetics-sint32-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_sint32_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint32-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sint32_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint32-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sint32_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1437,6 +1617,26 @@ function arithmetics-sint64-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-sint64-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sint64_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sint64-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sint64_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: sintmax
 
@@ -1568,6 +1768,26 @@ function arithmetics-sintmax-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_sintmax_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sintmax-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sintmax_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sintmax-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sintmax_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1705,6 +1925,26 @@ function arithmetics-sintptr-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-sintptr-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_sintptr_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-sintptr-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_sintptr_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: ptrdiff
 
@@ -1836,6 +2076,26 @@ function arithmetics-ptrdiff-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_ptrdiff_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-ptrdiff-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_ptrdiff_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-ptrdiff-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_ptrdiff_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -1973,6 +2233,26 @@ function arithmetics-off-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-off-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_off_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-off-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_off_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: mode
 
@@ -2094,6 +2374,26 @@ function arithmetics-mode-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_mode_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-mode-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_mode_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-mode-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_mode_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2231,6 +2531,26 @@ function arithmetics-pid-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-pid-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_pid_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-pid-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_pid_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: uid
 
@@ -2352,6 +2672,26 @@ function arithmetics-uid-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_uid_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-uid-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_uid_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-uid-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_uid_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
@@ -2479,6 +2819,26 @@ function arithmetics-gid-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-gid-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_gid_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-gid-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_gid_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: wchar
 
@@ -2603,6 +2963,26 @@ function arithmetics-wchar-inv-1.2 () {
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+### ------------------------------------------------------------------------
+
+function arithmetics-wchar-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_wchar_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wchar-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_wchar_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
 
 #### type variables: wint
 
@@ -2724,6 +3104,26 @@ function arithmetics-wint-inv-1.2 () {
     declare -r EXPECTED_ROP='0'
 
     mmux_wint_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wint-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_wint_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-wint-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_wint_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
 

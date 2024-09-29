@@ -502,7 +502,7 @@ DEFINE_CORE_ARITHMETICS_BUILTIN([[[wint]]])
  ** Remainder builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_REMAINDER_BUILTIN]]],[[[
+m4_define([[[DEFINE_FOR_INTEGERS_BUILTIN]]],[[[
 static int
 mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
 #undef  MMUX_BUILTIN_NAME
@@ -513,14 +513,18 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op1, argv[2], MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { goto error; }
 
   rv = mmux_bash_pointers_parse_$1(&op2, argv[3], MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  if (MMUX_SUCCESS != rv) { goto error; }
 
   op1 = op1 % op2;
 
   return mmux_bash_pointers_store_result_in_variable_$1(argv[1], op1);
+
+error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return rv;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
@@ -531,42 +535,105 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
     [[[(4 == argc)]]],
     [[["mmux_$1_mod ROPVAR OP0 OP"]]],
     [[["Compute the remainder between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmux_$1_incr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_$1_incr"
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  mmux_libc_$1_t	op;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != rv) { goto error; }
+
+  ++op;
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], op);
+
+error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return rv;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_incr]]],
+    [[[(3 == argc)]]],
+    [[["mmux_$1_incr ROPVAR OP"]]],
+    [[["Increment by one the value OP, store the result in ROPVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
+static int
+mmux_$1_decr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_$1_decr"
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  mmux_libc_$1_t	op;
+  int			rv;
+
+  rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != rv) { goto error; }
+
+  --op;
+  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], op);
+
+error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return rv;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_decr]]],
+    [[[(3 == argc)]]],
+    [[["mmux_$1_decr ROPVAR OP"]]],
+    [[["Decrement by one the value OP, store the result in ROPVAR."]]])
+
 ]]])
 
-DEFINE_REMAINDER_BUILTIN([[[schar]]])
-DEFINE_REMAINDER_BUILTIN([[[uchar]]])
-DEFINE_REMAINDER_BUILTIN([[[sshort]]])
-DEFINE_REMAINDER_BUILTIN([[[ushort]]])
-DEFINE_REMAINDER_BUILTIN([[[sint]]])
-DEFINE_REMAINDER_BUILTIN([[[uint]]])
-DEFINE_REMAINDER_BUILTIN([[[slong]]])
-DEFINE_REMAINDER_BUILTIN([[[ulong]]])
-DEFINE_REMAINDER_BUILTIN([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
-DEFINE_REMAINDER_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[schar]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uchar]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sshort]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[ushort]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sint]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uint]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[slong]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[ulong]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sllong]]],	[[[MMUX_HAVE_TYPE_SLLONG]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_TYPE_ULLONG]]])
 
-DEFINE_REMAINDER_BUILTIN([[[sint8]]])
-DEFINE_REMAINDER_BUILTIN([[[uint8]]])
-DEFINE_REMAINDER_BUILTIN([[[sint16]]])
-DEFINE_REMAINDER_BUILTIN([[[uint16]]])
-DEFINE_REMAINDER_BUILTIN([[[sint32]]])
-DEFINE_REMAINDER_BUILTIN([[[uint32]]])
-DEFINE_REMAINDER_BUILTIN([[[sint64]]])
-DEFINE_REMAINDER_BUILTIN([[[uint64]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sint8]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uint8]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sint16]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uint16]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sint32]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uint32]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sint64]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uint64]]])
 
-DEFINE_REMAINDER_BUILTIN([[[usize]]])
-DEFINE_REMAINDER_BUILTIN([[[ssize]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[usize]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[ssize]]])
 
-DEFINE_REMAINDER_BUILTIN([[[sintmax]]])
-DEFINE_REMAINDER_BUILTIN([[[uintmax]]])
-DEFINE_REMAINDER_BUILTIN([[[sintptr]]])
-DEFINE_REMAINDER_BUILTIN([[[uintptr]]])
-DEFINE_REMAINDER_BUILTIN([[[ptrdiff]]])
-DEFINE_REMAINDER_BUILTIN([[[mode]]])
-DEFINE_REMAINDER_BUILTIN([[[off]]])
-DEFINE_REMAINDER_BUILTIN([[[pid]]])
-DEFINE_REMAINDER_BUILTIN([[[uid]]])
-DEFINE_REMAINDER_BUILTIN([[[gid]]])
-DEFINE_REMAINDER_BUILTIN([[[wchar]]])
-DEFINE_REMAINDER_BUILTIN([[[wint]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sintmax]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uintmax]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[sintptr]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uintptr]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[ptrdiff]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[mode]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[off]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[pid]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[uid]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[gid]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[wchar]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[wint]]])
 
 /* end of file */

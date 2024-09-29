@@ -104,7 +104,7 @@ function mmux_bash_pointers_library_load () {
 
 	    for STEM in "${INTEGER_STEMS[@]}"
 	    do
-		for ITEM in add sub mul div mod neg inv
+		for ITEM in add sub mul div mod neg inv incr decr
 		do
 		    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 		    mmux_bash_pointers_library_define_builtin "$NAME"

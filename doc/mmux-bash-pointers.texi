@@ -2284,6 +2284,7 @@ bitwise operations are implemented for every supported data type.
 * arithmetics remainder::       Remainder builtins.
 * arithmetics negation::        Negation builtins.
 * arithmetics inversion::       Inversion builtins.
+* arithmetics incrdecr::        Increment and decrement builtins.
 @end menu
 
 @c page
@@ -2903,6 +2904,53 @@ Perform the inversion of a value of type @code{\STEM\}.
 @MmuxDefineTypeInversionBuiltin{gid}
 @MmuxDefineTypeInversionBuiltin{wchar}
 @MmuxDefineTypeInversionBuiltin{wint}
+
+@c page
+@node arithmetics incrdecr
+@section Increment and decrement builtins
+
+
+@macro MmuxDefineTypeIncrdecrBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_incr @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_decr @var{ROPVAR} @var{OP}
+Increment or decrement @var{OP}, store the result in the shell variable @var{ROPVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeIncrdecrBuiltin{schar}
+@MmuxDefineTypeIncrdecrBuiltin{uchar}
+@MmuxDefineTypeIncrdecrBuiltin{sshort}
+@MmuxDefineTypeIncrdecrBuiltin{ushort}
+@MmuxDefineTypeIncrdecrBuiltin{sint}
+@MmuxDefineTypeIncrdecrBuiltin{uint}
+@MmuxDefineTypeIncrdecrBuiltin{slong}
+@MmuxDefineTypeIncrdecrBuiltin{ulong}
+@MmuxDefineTypeIncrdecrBuiltin{sllong}
+@MmuxDefineTypeIncrdecrBuiltin{ullong}
+
+@MmuxDefineTypeIncrdecrBuiltin{sint8}
+@MmuxDefineTypeIncrdecrBuiltin{uint8}
+@MmuxDefineTypeIncrdecrBuiltin{sint16}
+@MmuxDefineTypeIncrdecrBuiltin{uint16}
+@MmuxDefineTypeIncrdecrBuiltin{sint32}
+@MmuxDefineTypeIncrdecrBuiltin{uint32}
+@MmuxDefineTypeIncrdecrBuiltin{sint64}
+@MmuxDefineTypeIncrdecrBuiltin{uint64}
+
+@MmuxDefineTypeIncrdecrBuiltin{ssize}
+@MmuxDefineTypeIncrdecrBuiltin{usize}
+@MmuxDefineTypeIncrdecrBuiltin{sintmax}
+@MmuxDefineTypeIncrdecrBuiltin{uintmax}
+@MmuxDefineTypeIncrdecrBuiltin{sintptr}
+@MmuxDefineTypeIncrdecrBuiltin{uintptr}
+@MmuxDefineTypeIncrdecrBuiltin{mode}
+@MmuxDefineTypeIncrdecrBuiltin{off}
+@MmuxDefineTypeIncrdecrBuiltin{pid}
+@MmuxDefineTypeIncrdecrBuiltin{uid}
+@MmuxDefineTypeIncrdecrBuiltin{gid}
+@MmuxDefineTypeIncrdecrBuiltin{wchar}
+@MmuxDefineTypeIncrdecrBuiltin{wint}
 
 @c page
 @node complex
