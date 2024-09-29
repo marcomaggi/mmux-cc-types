@@ -24,9 +24,11 @@ General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ])
+
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_MACRO_DIR([meta/autotools])
 AC_CONFIG_AUX_DIR([meta/autotools])
+AC_USE_SYSTEM_EXTENSIONS
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -61,23 +63,25 @@ MMUX_BASH_ENABLE_MBFL([v3.0.0])
 
 AC_DEFINE([_ISOC11_SOURCE],[1],[Enable the ISO C11 features.])
 
-# NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
-# needed for the GNU C Compiler and the GNU C Library to make available the "_FloatN" and "_FloatNx"
-# features.  (Marco Maggi; Sep 26, 2024)
-AC_DEFINE([__STDC_WANT_IEC_60559_BFP_EXT__],   [1],[Define some standardised features.])
-AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
-AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
-
-# NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
-# needed for the GNU C Compiler to make available the "_DecimalN" and "_DecimalNx" features.  (Marco
-# Maggi; Sep 26, 2024)
-AC_DEFINE([__STDC_WANT_IEC_60559_DFP_EXT__],   [1],[Define some standardised features.])
-AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
-AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
-dnl AC_DEFINE([__STDC_WANT_DEC_FP__],[1],[Required to enable decimal floating-point numeric types.])
-
-AC_DEFINE([_GNU_SOURCE],[1],[Enable everything GNU (is this actually needed?).])
-AC_DEFINE([_POSIX_C_SOURCE],[200809L],[Enable latest(?) POSIX features.])
+dnl The following is commented out because AC_USE_SYSTEM_EXTENSIONS should just do all the work.
+dnl
+dnl # NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
+dnl # needed for the GNU C Compiler and the GNU C Library to make available the "_FloatN" and "_FloatNx"
+dnl # features.  (Marco Maggi; Sep 26, 2024)
+dnl AC_DEFINE([__STDC_WANT_IEC_60559_BFP_EXT__],   [1],[Define some standardised features.])
+dnl AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
+dnl AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
+dnl
+dnl # NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
+dnl # needed for the GNU C Compiler to make available the "_DecimalN" and "_DecimalNx" features.  (Marco
+dnl # Maggi; Sep 26, 2024)
+dnl AC_DEFINE([__STDC_WANT_IEC_60559_DFP_EXT__],   [1],[Define some standardised features.])
+dnl AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
+dnl AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
+dnl dnl AC_DEFINE([__STDC_WANT_DEC_FP__],[1],[Required to enable decimal floating-point numeric types.])
+dnl
+dnl AC_DEFINE([_GNU_SOURCE],[1],[Enable everything GNU (is this actually needed?).])
+dnl AC_DEFINE([_POSIX_C_SOURCE],[200809L],[Enable latest(?) POSIX features.])
 
 AC_CACHE_SAVE
 

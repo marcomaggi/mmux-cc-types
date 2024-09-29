@@ -551,7 +551,17 @@ dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL32],
   [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal32])
-   AS_IF([test "x$ac_cv_type__Decimal32" = "xyes"],
+   dnl AC_CHECK_FUNC([strtod32])
+   dnl AC_CHECK_FUNC([strfromd32])
+   dnl AC_CHECK_FUNC([fabsd32])
+   dnl AC_CHECK_FUNC([fmaxd32])
+   dnl AC_CHECK_FUNC([fmind32])
+   AS_IF([test "x$ac_cv_type__Decimal32"        = "xyes"],
+            dnl -a "x$ac_cv_func_strtod32"          = "xyes"        \
+            dnl -a "x$ac_cv_func_strfromd32"        = "xyes"        \
+            dnl -a "x$ac_cv_func_fabsd32"           = "xyes"        \
+            dnl -a "x$ac_cv_func_fmaxd32"           = "xyes"        \
+            dnl -a "x$ac_cv_func_fmind32"           = "xyes"
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [0])
