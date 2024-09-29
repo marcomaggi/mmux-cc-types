@@ -280,6 +280,10 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{float64x}, type stem
 @cindex @code{float128x}, type stem
 
+@cindex @code{decimal32}, type stem
+@cindex @code{decimal64}, type stem
+@cindex @code{decimal128}, type stem
+
 @cindex @code{complexf}, type stem
 @cindex @code{complexd}, type stem
 @cindex @code{complexld}, type stem
@@ -354,6 +358,10 @@ standard C language type @code{\TYPE\}.
 @MmuxDefineTypeStem{float32x, _Float32x}
 @MmuxDefineTypeStem{float64x, _Float64x}
 @MmuxDefineTypeStem{float128x, _Float128x}
+
+@MmuxDefineTypeStem{decimal32, _Decimal32}
+@MmuxDefineTypeStem{decimal64, _Decimal64}
+@MmuxDefineTypeStem{decimal128, _Decimal128}
 
 @MmuxDefineTypeStem{complexf,float complex}
 @MmuxDefineTypeStem{complexd,double complex}
@@ -476,6 +484,10 @@ Global variable holding the size, measured in bytes, of the C language type with
 @MmuxDefineGlobalVarSizeof{FLOAT64X, float64x}
 @MmuxDefineGlobalVarSizeof{FLOAT128X, float128x}
 
+@MmuxDefineGlobalVarSizeof{DECIMAL32, decimal32}
+@MmuxDefineGlobalVarSizeof{DECIMAL64, decimal64}
+@MmuxDefineGlobalVarSizeof{DECIMAL128, decimal128}
+
 @MmuxDefineGlobalVarSizeof{COMPLEXF, complexf}
 @MmuxDefineGlobalVarSizeof{COMPLEXD, complexd}
 @MmuxDefineGlobalVarSizeof{COMPLEXLD, complexld}
@@ -553,6 +565,10 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{FLOAT32X, float32x}
 @MmuxDefineGlobalVarLimits{FLOAT64X, float64x}
 @MmuxDefineGlobalVarLimits{FLOAT128X, float128x}
+
+@MmuxDefineGlobalVarLimits{DECIMAL32, decimal32}
+@MmuxDefineGlobalVarLimits{DECIMAL64, decimal64}
+@MmuxDefineGlobalVarLimits{DECIMAL128, decimal128}
 
 @MmuxDefineGlobalVarLimits{SINT8, int8_t}
 @MmuxDefineGlobalVarLimits{UINT8, uint8_t}
@@ -984,6 +1000,10 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 @MmuxDefineAccessorMutator{float64x}
 @MmuxDefineAccessorMutator{float128x}
 
+@MmuxDefineAccessorMutator{decimal32}
+@MmuxDefineAccessorMutator{decimal64}
+@MmuxDefineAccessorMutator{decimal128}
+
 @MmuxDefineAccessorMutator{complexf}
 @MmuxDefineAccessorMutator{complexd}
 @MmuxDefineAccessorMutator{complexld}
@@ -1092,6 +1112,10 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 @MmuxDefineArrayAccessorMutator{float32x}
 @MmuxDefineArrayAccessorMutator{float64x}
 @MmuxDefineArrayAccessorMutator{float128x}
+
+@MmuxDefineArrayAccessorMutator{decimal32}
+@MmuxDefineArrayAccessorMutator{decimal64}
+@MmuxDefineArrayAccessorMutator{decimal128}
 
 @MmuxDefineArrayAccessorMutator{complexf}
 @MmuxDefineArrayAccessorMutator{complexd}
@@ -1302,6 +1326,10 @@ return false.
 @MmuxDefineTypePredicateStringrepBuiltin{float64x}
 @MmuxDefineTypePredicateStringrepBuiltin{float128x}
 
+@MmuxDefineTypePredicateStringrepBuiltin{decimal32}
+@MmuxDefineTypePredicateStringrepBuiltin{decimal64}
+@MmuxDefineTypePredicateStringrepBuiltin{decimal128}
+
 @MmuxDefineTypePredicateStringrepBuiltin{complexf}
 @MmuxDefineTypePredicateStringrepBuiltin{complexd}
 @MmuxDefineTypePredicateStringrepBuiltin{complexld}
@@ -1373,6 +1401,10 @@ zero number; otherwise return false.
 @MmuxDefineTypePredicateZeroBuiltin{float32x}
 @MmuxDefineTypePredicateZeroBuiltin{float64x}
 @MmuxDefineTypePredicateZeroBuiltin{float128x}
+
+@MmuxDefineTypePredicateZeroBuiltin{decimal32}
+@MmuxDefineTypePredicateZeroBuiltin{decimal64}
+@MmuxDefineTypePredicateZeroBuiltin{decimal128}
 
 @MmuxDefineTypePredicateZeroBuiltin{complexf}
 @MmuxDefineTypePredicateZeroBuiltin{complexd}
@@ -1447,6 +1479,10 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{float64x}
 @MmuxDefineTypePredicatePositiveBuiltin{float128x}
 
+@MmuxDefineTypePredicatePositiveBuiltin{decimal32}
+@MmuxDefineTypePredicatePositiveBuiltin{decimal64}
+@MmuxDefineTypePredicatePositiveBuiltin{decimal128}
+
 @MmuxDefineTypePredicatePositiveBuiltin{sint8}
 @MmuxDefineTypePredicatePositiveBuiltin{uint8}
 @MmuxDefineTypePredicatePositiveBuiltin{sint16}
@@ -1516,6 +1552,10 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{float64x}
 @MmuxDefineTypePredicateNegativeBuiltin{float128x}
 
+@MmuxDefineTypePredicateNegativeBuiltin{decimal32}
+@MmuxDefineTypePredicateNegativeBuiltin{decimal64}
+@MmuxDefineTypePredicateNegativeBuiltin{decimal128}
+
 @MmuxDefineTypePredicateNegativeBuiltin{sint8}
 @MmuxDefineTypePredicateNegativeBuiltin{uint8}
 @MmuxDefineTypePredicateNegativeBuiltin{sint16}
@@ -1575,6 +1615,10 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{float32x}
 @MmuxDefineTypePredicateNonPositiveBuiltin{float64x}
 @MmuxDefineTypePredicateNonPositiveBuiltin{float128x}
+
+@MmuxDefineTypePredicateNonPositiveBuiltin{decimal32}
+@MmuxDefineTypePredicateNonPositiveBuiltin{decimal64}
+@MmuxDefineTypePredicateNonPositiveBuiltin{decimal128}
 
 @MmuxDefineTypePredicateNonPositiveBuiltin{sint8}
 @MmuxDefineTypePredicateNonPositiveBuiltin{uint8}
@@ -1636,6 +1680,10 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{float64x}
 @MmuxDefineTypePredicateNonNegativeBuiltin{float128x}
 
+@MmuxDefineTypePredicateNonNegativeBuiltin{decimal32}
+@MmuxDefineTypePredicateNonNegativeBuiltin{decimal64}
+@MmuxDefineTypePredicateNonNegativeBuiltin{decimal128}
+
 @MmuxDefineTypePredicateNonNegativeBuiltin{sint8}
 @MmuxDefineTypePredicateNonNegativeBuiltin{uint8}
 @MmuxDefineTypePredicateNonNegativeBuiltin{sint16}
@@ -1695,6 +1743,10 @@ not--a--number value; otherwise return false.
 @MmuxDefineTypePredicateNanBuiltin{float32x}
 @MmuxDefineTypePredicateNanBuiltin{float64x}
 @MmuxDefineTypePredicateNanBuiltin{float128x}
+
+@MmuxDefineTypePredicateNanBuiltin{decimal32}
+@MmuxDefineTypePredicateNanBuiltin{decimal64}
+@MmuxDefineTypePredicateNanBuiltin{decimal128}
 
 @MmuxDefineTypePredicateNanBuiltin{complexf}
 @MmuxDefineTypePredicateNanBuiltin{complexd}
@@ -1767,6 +1819,10 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{float32x}
 @MmuxDefineTypePredicateInfiniteBuiltin{float64x}
 @MmuxDefineTypePredicateInfiniteBuiltin{float128x}
+
+@MmuxDefineTypePredicateInfiniteBuiltin{decimal32}
+@MmuxDefineTypePredicateInfiniteBuiltin{decimal64}
+@MmuxDefineTypePredicateInfiniteBuiltin{decimal128}
 
 @MmuxDefineTypePredicateInfiniteBuiltin{complexf}
 @MmuxDefineTypePredicateInfiniteBuiltin{complexd}
@@ -1911,6 +1967,10 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonExactBuiltin{float64x}
 @MmuxDefineTypeComparisonExactBuiltin{float128x}
 
+@MmuxDefineTypeComparisonExactBuiltin{decimal32}
+@MmuxDefineTypeComparisonExactBuiltin{decimal64}
+@MmuxDefineTypeComparisonExactBuiltin{decimal128}
+
 @MmuxDefineTypeComparisonExactComplexBuiltin{complexf}
 @MmuxDefineTypeComparisonExactComplexBuiltin{complexd}
 @MmuxDefineTypeComparisonExactComplexBuiltin{complexld}
@@ -1985,6 +2045,9 @@ function doit () @{
 @deffnx Builtin mmux_float32x_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_float64x_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_float128x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_decimal32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_decimal64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_decimal128_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexf32_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexf64_equal_absmargin @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexf128_equal_absmargin @varo{OP} @var{OP} @dots{}
@@ -2031,6 +2094,9 @@ real parts; @varo{OP_IM}, @var{OP_IM}, @var{MARGIN_IM} are the imaginary parts.
 @defvarx ABSOLUTE_MARGIN_FLOAT32X
 @defvarx ABSOLUTE_MARGIN_FLOAT64X
 @defvarx ABSOLUTE_MARGIN_FLOAT128X
+@defvarx ABSOLUTE_MARGIN_DECIMAL32
+@defvarx ABSOLUTE_MARGIN_DECIMAL64
+@defvarx ABSOLUTE_MARGIN_DECIMAL128
 @defvarx ABSOLUTE_MARGIN_COMPLEXF32
 @defvarx ABSOLUTE_MARGIN_COMPLEXF64
 @defvarx ABSOLUTE_MARGIN_COMPLEXF128
@@ -2078,6 +2144,9 @@ function doit () @{
 @deffnx Builtin mmux_float32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_float64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_float128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_decimal32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_decimal64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_decimal128_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexf32_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexf64_equal_relepsilon @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_complexf128_equal_relepsilon @varo{OP} @var{OP} @dots{}
@@ -2124,6 +2193,9 @@ real parts; @varo{OP_IM}, @var{OP_IM}, @var{EPSILON_IM} are the imaginary parts.
 @defvarx RELATIVE_EPSILON_FLOAT32X
 @defvarx RELATIVE_EPSILON_FLOAT64X
 @defvarx RELATIVE_EPSILON_FLOAT128X
+@defvarx RELATIVE_EPSILON_DECIMAL32
+@defvarx RELATIVE_EPSILON_DECIMAL64
+@defvarx RELATIVE_EPSILON_DECIMAL128
 @defvarx RELATIVE_EPSILON_COMPLEXF32
 @defvarx RELATIVE_EPSILON_COMPLEXF64
 @defvarx RELATIVE_EPSILON_COMPLEXF128
@@ -2226,6 +2298,10 @@ Perform the addition between values of type @code{\STEM\}.
 @MmuxDefineTypeAdditionBuiltin{float64x}
 @MmuxDefineTypeAdditionBuiltin{float128x}
 
+@MmuxDefineTypeAdditionBuiltin{decimal32}
+@MmuxDefineTypeAdditionBuiltin{decimal64}
+@MmuxDefineTypeAdditionBuiltin{decimal128}
+
 @MmuxDefineTypeAdditionBuiltin{complexf}
 @MmuxDefineTypeAdditionBuiltin{complexd}
 @MmuxDefineTypeAdditionBuiltin{complexld}
@@ -2321,6 +2397,10 @@ Perform the subtraction between values of type @code{\STEM\}.
 @MmuxDefineTypeSubtractionBuiltin{complexf64}
 @MmuxDefineTypeSubtractionBuiltin{complexf128}
 
+@MmuxDefineTypeSubtractionBuiltin{decimal32}
+@MmuxDefineTypeSubtractionBuiltin{decimal64}
+@MmuxDefineTypeSubtractionBuiltin{decimal128}
+
 @MmuxDefineTypeSubtractionBuiltin{sint8}
 @MmuxDefineTypeSubtractionBuiltin{uint8}
 @MmuxDefineTypeSubtractionBuiltin{sint16}
@@ -2395,6 +2475,10 @@ Perform the multiplication between values of type @code{\STEM\}.
 @MmuxDefineTypeMultiplicationBuiltin{float32x}
 @MmuxDefineTypeMultiplicationBuiltin{float64x}
 @MmuxDefineTypeMultiplicationBuiltin{float128x}
+
+@MmuxDefineTypeMultiplicationBuiltin{decimal32}
+@MmuxDefineTypeMultiplicationBuiltin{decimal64}
+@MmuxDefineTypeMultiplicationBuiltin{decimal128}
 
 @MmuxDefineTypeMultiplicationBuiltin{complexf}
 @MmuxDefineTypeMultiplicationBuiltin{complexd}
@@ -2478,6 +2562,10 @@ Perform the division between values of type @code{\STEM\}.
 @MmuxDefineTypeDivisionBuiltin{float32x}
 @MmuxDefineTypeDivisionBuiltin{float64x}
 @MmuxDefineTypeDivisionBuiltin{float128x}
+
+@MmuxDefineTypeDivisionBuiltin{decimal32}
+@MmuxDefineTypeDivisionBuiltin{decimal64}
+@MmuxDefineTypeDivisionBuiltin{decimal128}
 
 @MmuxDefineTypeDivisionBuiltin{complexf}
 @MmuxDefineTypeDivisionBuiltin{complexd}
@@ -2621,6 +2709,10 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{float64x}
 @MmuxDefineTypeNegationBuiltin{float128x}
 
+@MmuxDefineTypeNegationBuiltin{decimal32}
+@MmuxDefineTypeNegationBuiltin{decimal64}
+@MmuxDefineTypeNegationBuiltin{decimal128}
+
 @MmuxDefineTypeNegationBuiltin{complexf}
 @MmuxDefineTypeNegationBuiltin{complexd}
 @MmuxDefineTypeNegationBuiltin{complexld}
@@ -2703,6 +2795,10 @@ Perform the inversion of a value of type @code{\STEM\}.
 @MmuxDefineTypeInversionBuiltin{complexf}
 @MmuxDefineTypeInversionBuiltin{complexd}
 @MmuxDefineTypeInversionBuiltin{complexld}
+
+@MmuxDefineTypeInversionBuiltin{decimal32}
+@MmuxDefineTypeInversionBuiltin{decimal64}
+@MmuxDefineTypeInversionBuiltin{decimal128}
 
 @MmuxDefineTypeInversionBuiltin{complexf32}
 @MmuxDefineTypeInversionBuiltin{complexf64}
@@ -3246,8 +3342,8 @@ linking} for details.
 
 
 It happens that some rare platform may not implement the C language types @objtype{signed long long
-int}, @objtype{unsigned long long int} and @code{long double}; more platforms may not implement the
-extension types @code{_FloatN} and @code{_FloatNx}, which usually are:
+int}, @objtype{unsigned long long int} and @objtype{long double}; more platforms may not implement
+the extension types @objtype{_FloatN} and @objtype{_FloatNx}, which usually are:
 
 @example
 _Float32
@@ -3259,9 +3355,19 @@ _Float128x
 @end example
 
 @noindent
-these types are supported by @value{PACKAGE}.  This package assumes that: if the real
-floating--point types are supported, the corresponding complex floating--point types are also
-supported; so the following types are supported:
+even more platforms may not implement the extension types @objtype{_DecimalN}, which usually are:
+
+@example
+_Decimal32
+_Decimal64
+_Decimal128
+@end example
+
+@noindent
+these types are supported by @value{PACKAGE}.
+
+This package assumes that: if the real floating--point types are supported, the corresponding
+complex floating--point types are also supported; so the following types are supported:
 
 @example
 _Float32 complex
@@ -3271,6 +3377,9 @@ _Float32x complex
 _Float64x complex
 _Float128x complex
 @end example
+
+This package implements complex floating--point numbers whose real and imaginary parts are
+@objtype{_DecimalN} numbers through a custom data structure.
 
 At package--configuration time: @value{PACKAGE} tries to determine if these types are supported and
 it defines the following symbols in its header files.
@@ -3292,12 +3401,18 @@ type is supported.
 @MmuxDefineCppSymbolHaveType{FLOAT32X}
 @MmuxDefineCppSymbolHaveType{FLOAT64X}
 @MmuxDefineCppSymbolHaveType{FLOAT128X}
+@MmuxDefineCppSymbolHaveType{DECIMAL32}
+@MmuxDefineCppSymbolHaveType{DECIMAL64}
+@MmuxDefineCppSymbolHaveType{DECIMAL128}
 @MmuxDefineCppSymbolHaveType{COMPLEXF32}
 @MmuxDefineCppSymbolHaveType{COMPLEXF64}
 @MmuxDefineCppSymbolHaveType{COMPLEXF128}
 @MmuxDefineCppSymbolHaveType{COMPLEXF32X}
 @MmuxDefineCppSymbolHaveType{COMPLEXF64X}
 @MmuxDefineCppSymbolHaveType{COMPLEXF128X}
+@MmuxDefineCppSymbolHaveType{COMPLEXD32}
+@MmuxDefineCppSymbolHaveType{COMPLEXD64}
+@MmuxDefineCppSymbolHaveType{COMPLEXD128}
 
 @c page
 @node shared library version
@@ -3358,6 +3473,10 @@ Return an integer representing the library interface current age.
 @cindex @code{float64x}, type stem
 @cindex @code{float128x}, type stem
 
+@cindex @code{decimal32}, type stem
+@cindex @code{decimal64}, type stem
+@cindex @code{decimal128}, type stem
+
 @cindex @code{complexf}, type stem
 @cindex @code{complexd}, type stem
 @cindex @code{complexld}, type stem
@@ -3394,13 +3513,13 @@ Return an integer representing the library interface current age.
 @cindex @code{wint}, type stem
 
 
-The following type definitions just alias the corresponding standard C language type; the type name
-is composed from a ``stem'': a single word representing the name of the type.  Such uniform names
-are useful when using preprocessor macros to generate code.
+The following type definitions just alias the corresponding C language type; the type name is
+composed from a ``stem'': a single word representing the name of the type.  Such uniform names are
+useful when using preprocessor macros to generate code.
 
 @macro MmuxDefineCAliasTypedef{STEM,TYPE}
 @deftp {Typedef} mmux_libc_\STEM\_t
-Type definition aliasing the standard C language type @code{\TYPE\}.
+Type definition aliasing the C language type @code{\TYPE\}.
 @end deftp
 
 @end macro
@@ -3429,6 +3548,10 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{float32x, _Float32x}
 @MmuxDefineCAliasTypedef{float64x, _Float64x}
 @MmuxDefineCAliasTypedef{float128x, _Float128x}
+
+@MmuxDefineCAliasTypedef{decimal32, _Decimal32}
+@MmuxDefineCAliasTypedef{decimal64, _Decimal64}
+@MmuxDefineCAliasTypedef{decimal128, _Decimal128}
 
 @MmuxDefineCAliasTypedef{complexf,float complex}
 @MmuxDefineCAliasTypedef{complexd,double complex}
@@ -3472,7 +3595,7 @@ Type definition aliasing the standard C language type @code{\TYPE\}.
 
 @macro MmuxDefineCFunctionSizeof{STEM}
 @deftypefun int mmux_bash_pointers_sizeof_\STEM\ (void)
-Return a positive integer representing the size in bytes of the C language standard type
+Return a positive integer representing the size in bytes of the C language type
 @objtype{mmux_libc_\STEM\_t}.
 @end deftypefun
 
@@ -3502,6 +3625,10 @@ Return a positive integer representing the size in bytes of the C language stand
 @MmuxDefineCFunctionSizeof{float32x}
 @MmuxDefineCFunctionSizeof{float64x}
 @MmuxDefineCFunctionSizeof{float128x}
+
+@MmuxDefineCFunctionSizeof{decimal32}
+@MmuxDefineCFunctionSizeof{decimal64}
+@MmuxDefineCFunctionSizeof{decimal128}
 
 @MmuxDefineCFunctionSizeof{complexf}
 @MmuxDefineCFunctionSizeof{complexd}
@@ -3576,6 +3703,10 @@ value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{float64x}
 @MmuxDefineCFunctionPredicate{float128x}
 
+@MmuxDefineCFunctionPredicate{decimal32}
+@MmuxDefineCFunctionPredicate{decimal64}
+@MmuxDefineCFunctionPredicate{decimal128}
+
 @MmuxDefineCFunctionPredicate{complexf}
 @MmuxDefineCFunctionPredicate{complexd}
 @MmuxDefineCFunctionPredicate{complexld}
@@ -3649,6 +3780,10 @@ Return the maximum value representable by the range of values of the type
 @MmuxDefineCFunctionMaximum{float64x}
 @MmuxDefineCFunctionMaximum{float128x}
 
+@MmuxDefineCFunctionMaximum{decimal32}
+@MmuxDefineCFunctionMaximum{decimal64}
+@MmuxDefineCFunctionMaximum{decimal128}
+
 @MmuxDefineCFunctionMaximum{sint8}
 @MmuxDefineCFunctionMaximum{uint8}
 @MmuxDefineCFunctionMaximum{sint16}
@@ -3709,6 +3844,10 @@ Return the minimum value representable by the range of values of the type
 @MmuxDefineCFunctionMinimum{float32x}
 @MmuxDefineCFunctionMinimum{float64x}
 @MmuxDefineCFunctionMinimum{float128x}
+
+@MmuxDefineCFunctionMinimum{decimal32}
+@MmuxDefineCFunctionMinimum{decimal64}
+@MmuxDefineCFunctionMinimum{decimal128}
 
 @MmuxDefineCFunctionMinimum{sint8}
 @MmuxDefineCFunctionMinimum{uint8}
@@ -3788,6 +3927,10 @@ requested the parsing operation, for example: the name of a builtin.
 @MmuxDefineCFunctionParser{float64x}
 @MmuxDefineCFunctionParser{float128x}
 
+@MmuxDefineCFunctionParser{decimal32}
+@MmuxDefineCFunctionParser{decimal64}
+@MmuxDefineCFunctionParser{decimal128}
+
 @MmuxDefineCFunctionParser{complexf}
 @MmuxDefineCFunctionParser{complexd}
 @MmuxDefineCFunctionParser{complexld}
@@ -3828,8 +3971,8 @@ requested the parsing operation, for example: the name of a builtin.
 @appendixsec Printing string representations of C language types
 
 
-Type string printers convert binary representations of standard C language values to string
-representations; to print a @objtype{mmux_libc_sint_t} string representation we do:
+Type string printers convert binary representations of C language values to string representations;
+to print a @objtype{mmux_libc_sint_t} string representation we do:
 
 @example
 mmux_libc_sint_t        value = 123;
@@ -3886,6 +4029,10 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{float32x}
 @MmuxDefineCFunctionSprinter{float64x}
 @MmuxDefineCFunctionSprinter{float128x}
+
+@MmuxDefineCFunctionSprinter{decimal32}
+@MmuxDefineCFunctionSprinter{decimal64}
+@MmuxDefineCFunctionSprinter{decimal128}
 
 @MmuxDefineCFunctionSprinter{complexf}
 @MmuxDefineCFunctionSprinter{complexd}
