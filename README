@@ -50,7 +50,7 @@ _Decimal64,  _Decimal128, this  package relies  on the  external package
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
 systems;  only to  build from  a  repository checkout:  it requires  the
-latest (at  the times of this  writing) releases and no  testing is done
+latest (at  the time of  this writing) releases  and no testing  is done
 with the older releases:
 
 * GNU Automake at least version 1.17;
