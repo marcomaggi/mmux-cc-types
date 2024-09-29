@@ -87,7 +87,7 @@ DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
 noinst_LTLIBRARIES			= libmmux-bash-pointers-libdfp.la
 libmmux_bash_pointers_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
-libmmux_bash_pointers_libdfp_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS) $(LIBDFP_LIBS)
+libmmux_bash_pointers_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
 libmmux_bash_pointers_libdfp_la_SOURCES	= src/mmux-bash-pointers-libdfp.c
 
 

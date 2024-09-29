@@ -49,9 +49,17 @@ _Decimal64,  _Decimal128, this  package relies  on the  external package
 (at least version v3.0.0-devel.9).
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
-systems; it requires GNU Automake at least version 1.17; it requires GNU
-Autoconf at least  version 2.72.  The package relies  on "pkg-config" to
-find the dependencies installed on the system.
+systems;  only to  build from  a  repository checkout:  it requires  the
+latest (at  the times of this  writing) releases and no  testing is done
+with the older releases:
+
+* GNU Automake at least version 1.17;
+* GNU Autoconf at least version 2.72;
+* GNU Libtool at least version 2.4.7;
+
+the new  packages of today  will be the  old packages of  tomorrow.  The
+package relies on "pkg-config" to find the dependencies installed on the
+system.
 
 
 2. License
