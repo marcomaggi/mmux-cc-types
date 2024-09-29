@@ -3649,6 +3649,21 @@ Type definition aliasing the C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{complexd64, mmux_libc_complexd64_t}
 @MmuxDefineCAliasTypedef{complexd128, mmux_libc_complexd128_t}
 
+@deftp {Typedef} mmux_libc_complexd32_t
+Non--standard type definition representing a complex floating--point number whose real and imaginary
+parts are values of type @objtype{mmux_libc_decimal32_t}.
+@end deftp
+
+@deftp {Typedef} mmux_libc_complexd64_t
+Non--standard type definition representing a complex floating--point number whose real and imaginary
+parts are values of type @objtype{mmux_libc_decimal64_t}.
+@end deftp
+
+@deftp {Typedef} mmux_libc_complexd128_t
+Non--standard type definition representing a complex floating--point number whose real and imaginary
+parts are values of type @objtype{mmux_libc_decimal128_t}.
+@end deftp
+
 @MmuxDefineCAliasTypedef{sint8,int8_t}
 @MmuxDefineCAliasTypedef{uint8,uint8_t}
 @MmuxDefineCAliasTypedef{sint16,int16_t}
