@@ -33,7 +33,7 @@ Revision 0.1.0-devel.1
   mode_t, uid_t, gid_t.
 
 * Added predicate builtins to validate  the string representation of the
-  supported C language types.
+  supported C language types.  Added a lot of other builtins.
 
 * Added  support for  _FloatN, _FloatNx,  _DecimalN.  For  _DecimalN the
   external package libdfp is needed.
