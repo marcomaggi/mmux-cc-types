@@ -76,6 +76,17 @@ install-html-local:
 
 
 #### support library for _DecimalN
+#
+# This support  library exists because  "libdfp" is a crazy  beast: it
+# defines  header files  with the  same filenames  of the  stancdard C
+# header files, then tries to load them all.
+#
+# The command line  options needed to do this can  mess with the other
+# code.  So everything "libdfp" is confined into this support library.
+#
+# Also  we really  want  to compile  this code  (and  only this  code)
+# without the "-pedantic" flag.
+#
 
 EXTRA_DIST	+= src/mmux-bash-pointers-libdfp.c.m4
 MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES	= src/mmux-bash-pointers-libdfp.c
