@@ -119,6 +119,15 @@ function mmux_bash_pointers_library_load () {
 		    mmux_bash_pointers_library_define_builtin "$NAME"
 		done
 	    done
+
+	    for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
+	    do
+		for ITEM in make_rectangular real_part imag_part abs arg conj
+		do
+		    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
+		    mmux_bash_pointers_library_define_builtin "$NAME"
+		done
+	    done
 	}
 
 	# Bitwise builtins.
