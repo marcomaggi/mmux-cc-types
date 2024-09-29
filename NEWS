@@ -10,7 +10,9 @@ Revision 0.1.0-devel.1
 * Renamed all the identifiers.
 
 * Updated to require GNU Automake at least version 1.17 and GNU Autoconf
-  at least version 2.72.
+  at least version  2.72 and GNU Libtool at least  version 2.4.7.  (Note
+  from the maintainer: I want to toy with the latest releases; it's like
+  that, and that's the way it is.)
 
 * Added "unalias" usages to remove aliases when unloading the library.
 
@@ -32,6 +34,9 @@ Revision 0.1.0-devel.1
 
 * Added predicate builtins to validate  the string representation of the
   supported C language types.
+
+* Added  support for  _FloatN, _FloatNx,  _DecimalN.  For  _DecimalN the
+  external package libdfp is needed.
 
 
 Revision 0.1.0-devel.0
