@@ -97,26 +97,80 @@ typedef mmux_libc_decimal128_t	mmux_libc_complexd128_part_t;
 
 
 /** --------------------------------------------------------------------
- ** Real decimal floating-point numbers Predicates.
+ ** Some complex number type functions: string_is, sizeof, make_rectangular, real part, imag part, abs, arg, conj.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_DECIMAL_FLOAT_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-bool
+m4_dnl $1 - type stem
+m4_dnl $2 - atan2 function
+m4_dnl $3 - conditional code C preprocessor symbol
+m4_define([[[DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+__attribute__((__const__)) int
+mmux_bash_pointers_sizeof_$1 (void)
+{
+  return sizeof(mmux_libc_$1_t);
+}
+__attribute__((__const__)) mmux_libc_$1_t
+mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+{
+  mmux_libc_$1_t	Z = {
+    .re	= re,
+    .im	= im
+  };
+  return Z;
+}
+__attribute__((__const__)) mmux_libc_$1_part_t
+mmux_$1_real_part (mmux_libc_$1_t Z)
+{
+  return Z.re;
+}
+__attribute__((__const__)) mmux_libc_$1_part_t
+mmux_$1_imag_part (mmux_libc_$1_t Z)
+{
+  return Z.im;
+}
+__attribute__((__const__)) mmux_libc_$1_part_t
+mmux_$1_abs (mmux_libc_$1_t Z)
+{
+  return sqrt(Z.re * Z.re + Z.im * Z.im);
+}
+__attribute__((__const__)) mmux_libc_$1_part_t
+mmux_$1_arg (mmux_libc_$1_t Z)
+{
+  return $2(Z.im, Z.re);
+}
+__attribute__((__const__)) mmux_libc_$1_t
+mmux_$1_conj (mmux_libc_$1_t Z)
+{
+  return mmux_$1_make_rectangular(Z.re, - Z.im);
+}
+]]])]]])
+
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd32]]],  [[[atan2d32]]],  [[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd64]]],  [[[atan2d64]]],  [[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd128]]], [[[atan2d128]]], [[[MMUX_HAVE_TYPE_COMPLEXD128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Real decimal floating-point number predicates.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_REAL_DECIMAL_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+__attribute__((__const__)) bool
 mmux_$1_is_zero (mmux_libc_$1_t X)
 {
   return (FP_ZERO == (fpclassify(X)))? true : false;
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_nan (mmux_libc_$1_t X)
 {
   return (FP_NAN == (fpclassify(X)))? true : false;
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_infinite (mmux_libc_$1_t X)
 {
   return (FP_INFINITE == (fpclassify(X)))? true : false;
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_positive (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -131,7 +185,7 @@ mmux_$1_is_positive (mmux_libc_$1_t X)
     return (((mmux_libc_$1_t)0) < X)? true : false;
   }
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_negative (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -146,7 +200,7 @@ mmux_$1_is_negative (mmux_libc_$1_t X)
     return (((mmux_libc_$1_t)0) > X)? true : false;
   }
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_non_positive (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -157,7 +211,7 @@ mmux_$1_is_non_positive (mmux_libc_$1_t X)
     return (((mmux_libc_$1_t)0) > X)? true : false;
   }
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_non_negative (mmux_libc_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
@@ -170,62 +224,31 @@ mmux_$1_is_non_negative (mmux_libc_$1_t X)
 }
 ]]])]]])
 
-DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
-DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
-DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]]])
-
-
-/** --------------------------------------------------------------------
- ** Complex decimal basic functions.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_libc_$1_t
-mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
-{
-  mmux_libc_$1_t	Z = {
-    .re	= re,
-    .im	= im
-  };
-  return Z;
-}
-mmux_libc_$1_part_t
-mmux_$1_real_part (mmux_libc_$1_t Z)
-{
-  return Z.re;
-}
-mmux_libc_$1_part_t
-mmux_$1_imag_part (mmux_libc_$1_t Z)
-{
-  return Z.im;
-}
-]]])]]])
-
-DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS([[[complexd32]]],  [[[MMUX_HAVE_TYPE_COMPLEXD32]]])
-DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS([[[complexd64]]],  [[[MMUX_HAVE_TYPE_COMPLEXD64]]])
-DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS([[[complexd128]]], [[[MMUX_HAVE_TYPE_COMPLEXD128]]])
+DEFINE_REAL_DECIMAL_PREDICATES([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_PREDICATES([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_PREDICATES([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
  ** Complex decimal floating-point numbers Predicates.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_DECIMAL_COMPLEX_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-bool
+m4_define([[[DEFINE_COMPLEX_DECIMAL_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+__attribute__((__const__)) bool
 mmux_$1_is_zero (mmux_libc_$1_t Z)
 {
   mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_nan (mmux_libc_$1_t Z)
 {
   mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_is_infinite (mmux_libc_$1_t Z)
 {
   mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
@@ -234,16 +257,16 @@ mmux_$1_is_infinite (mmux_libc_$1_t Z)
 }
 ]]])]]])
 
-DEFINE_DECIMAL_COMPLEX_PREDICATES([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
-DEFINE_DECIMAL_COMPLEX_PREDICATES([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
-DEFINE_DECIMAL_COMPLEX_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
  ** Comparison functions.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_COMPARISON_DECIMAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_REAL_DECIMAL_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool mmux_$1_equal         (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 == op2)? true : false; }
 bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
 bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (        isless(op1,op2))? true : false; }
@@ -251,66 +274,51 @@ bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (is
 bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
 ]]])]]])
 
-DEFINE_COMPARISON_DECIMAL_FUNCTIONS([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
-DEFINE_COMPARISON_DECIMAL_FUNCTIONS([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
-DEFINE_COMPARISON_DECIMAL_FUNCTIONS([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal32]]],		[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal64]]],		[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-bool mmux_$1_equal         (mmux_libc_$1_t op1, mmux_libc_$1_t op2)
+m4_define([[[DEFINE_COMPLEX_DECIMAL_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+bool mmux_$1_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2)
 {
   return ((op1.re == op2.re) && (op1.im == op2.im))? true : false;
 }
 ]]])]]])
 
-DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS([[[complexd32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
-DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS([[[complexd64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
-DEFINE_COMPARISON_COMPLEXD_EQUAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd32]]],	[[[MMUX_HAVE_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd64]]],	[[[MMUX_HAVE_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD128]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-inline mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X)                   { return $2(X); }
-inline mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $3(X, Y); }
-inline mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $4(X, Y); }
+mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X)                   { return $2(X); }
+mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $3(X, Y); }
+mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $4(X, Y); }
 ]]])]]])
 
 DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[fabsd32]]],[[[fmaxd32]]],[[[fmind32]]], [[[MMUX_HAVE_TYPE_DECIMAL32]]])
 DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal64]]],	[[[fabsd64]]],[[[fmaxd64]]],[[[fmind64]]], [[[MMUX_HAVE_TYPE_DECIMAL64]]])
 DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal128]]],	[[[fabsd128]]],[[[fmaxd128]]],[[[fmind128]]], [[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
-
-m4_dnl m4_define([[[DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-m4_dnl inline mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X)
-m4_dnl {
-m4_dnl   return (mmux_$1_is_positive(X))? X : (- X);
-m4_dnl }
-m4_dnl inline mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y) {
-m4_dnl   return (mmux_$1_greater(X, Y))? X : Y;
-m4_dnl }
-m4_dnl inline mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y) {
-m4_dnl   return (mmux_$1_greater(X, Y))? Y : X;
-m4_dnl }
-m4_dnl ]]])]]])
-m4_dnl
-m4_dnl DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
-m4_dnl DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
-m4_dnl DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
-
 
 /** --------------------------------------------------------------------
  ** Approximate comparison functions for floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-bool
+m4_dnl $1 - real type stem
+m4_dnl $2 - complex type stem
+m4_dnl $3 - conditional code C preprocessor symbol
+m4_define([[[DEFINE_DECIMAL_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+__attribute__((__const__)) bool
 mmux_$1_equal_absmargin (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t margin)
 {
   if (0) { fprintf(stderr, "%s: op1=%Lf op2=%Lf margin=%Lf\n", __func__, (long double)op1, (long double)op2, (long double)margin); }
   return (mmux_$1_abs(op1 - op2) <= mmux_$1_abs(margin))? true : false;
 }
-bool
+__attribute__((__const__)) bool
 mmux_$1_equal_relepsilon (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t epsilon)
 {
   return (mmux_$1_abs(op1 - op2) <= (epsilon * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
@@ -343,49 +351,35 @@ mmux_$2_equal_relepsilon (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t
 }
 ]]])]]])
 
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[decimal32]]],	[[[complexd32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[decimal64]]],	[[[complexd64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[decimal128]]],[[[complexd128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal32]]],	[[[complexd32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal64]]],	[[[complexd64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal128]]],	[[[complexd128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
  ** Parsers and sprinters.
  ** ----------------------------------------------------------------- */
 
-_Decimal32
-mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
+m4_dnl $1 - real type stem
+m4_dnl $2 - strfrom function
+m4_dnl $3 - strto function
+m4_dnl $4 - conditional code C preprocessor symbol
+m4_define([[[DEFINE_REAL_DECIMAL_STRFROM_STRTO]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
+int
+mmux_$2 (char * s_output_value, size_t size, char const * restrict format, mmux_libc_$1_t input_value)
 {
-  if (0) { fprintf(stderr, "%s: enter, input_string=%s\n", __func__, input_string); }
-  return strtod32(input_string, tailptr);
+  return $2(s_output_value, size, format, input_value);
 }
-_Decimal64
-mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
+mmux_libc_$1_t
+mmux_$3 (char const * restrict s_input_value, char ** restrict tailptr)
 {
-  return strtod64(input_string, tailptr);
+  return $3(s_input_value, tailptr);
 }
-_Decimal128
-mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
-{
-  return strtod128(input_string, tailptr);
-}
+]]])]]])
 
-/* ------------------------------------------------------------------ */
-
-int
-mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, _Decimal32 value)
-{
-  return strfromd32(s_value, size, format, value);
-}
-int
-mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, _Decimal64 value)
-{
-  return strfromd64(s_value, size, format, value);
-}
-int
-mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, _Decimal128 value)
-{
-  return strfromd128(s_value, size, format, value);
-}
+DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal32]]],	[[[strfromd32]]],  [[[strtod32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal64]]],	[[[strfromd64]]],  [[[strtod64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------

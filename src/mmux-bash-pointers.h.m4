@@ -269,6 +269,9 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS]]],[[[MMUX_BASH_COND
 mmux_bash_pointers_decl mmux_libc_$1_t      mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im);
 mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_real_part (mmux_libc_$1_t Z);
 mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_imag_part (mmux_libc_$1_t Z);
+mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_abs  (mmux_libc_$1_t Z);
+mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_arg  (mmux_libc_$1_t Z);
+mmux_bash_pointers_decl mmux_libc_$1_t      mmux_$1_conj (mmux_libc_$1_t Z);
 ]]])]]])
 
 MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexf]]])
