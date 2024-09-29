@@ -143,7 +143,7 @@ mmux_$1_add (mmux_libc_$1_t A, mmux_libc_$1_t B)
   mmux_libc_$1_part_t	Cre = Are + Bre;
   mmux_libc_$1_part_t	Cim = Aim + Bim;
 
-  return mmux_rectangular_$1 (Cre, Cim);
+  return mmux_$1_make_rectangular (Cre, Cim);
 }
 __attribute__((__const__)) static inline mmux_libc_$1_t
 mmux_$1_sub (mmux_libc_$1_t A, mmux_libc_$1_t B)
@@ -155,7 +155,7 @@ mmux_$1_sub (mmux_libc_$1_t A, mmux_libc_$1_t B)
   mmux_libc_$1_part_t	Cre = Are - Bre;
   mmux_libc_$1_part_t	Cim = Aim - Bim;
 
-  return mmux_rectangular_$1 (Cre, Cim);
+  return mmux_$1_make_rectangular (Cre, Cim);
 }
 __attribute__((__const__)) static inline mmux_libc_$1_t
 mmux_$1_mul (mmux_libc_$1_t A, mmux_libc_$1_t B)
@@ -167,7 +167,7 @@ mmux_$1_mul (mmux_libc_$1_t A, mmux_libc_$1_t B)
   mmux_libc_$1_part_t	Cre = (Are * Bre - Aim * Bim);
   mmux_libc_$1_part_t	Cim = (Are * Bim + Bre * Aim);
 
-  return mmux_rectangular_$1 (Cre, Cim);
+  return mmux_$1_make_rectangular (Cre, Cim);
 }
 __attribute__((__const__)) static inline mmux_libc_$1_t
 mmux_$1_div (mmux_libc_$1_t A, mmux_libc_$1_t B)
@@ -180,7 +180,7 @@ mmux_$1_div (mmux_libc_$1_t A, mmux_libc_$1_t B)
   mmux_libc_$1_part_t	Cre = (Are * Bre + Aim * Bim) / D;
   mmux_libc_$1_part_t	Cim = (Aim * Bre - Are * Bim) / D;
 
-  return mmux_rectangular_$1 (Cre, Cim);
+  return mmux_$1_make_rectangular (Cre, Cim);
 }
 __attribute__((__const__)) static inline mmux_libc_$1_t
 mmux_$1_neg (mmux_libc_$1_t A)
@@ -188,7 +188,7 @@ mmux_$1_neg (mmux_libc_$1_t A)
   mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
   mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
 
-  return mmux_rectangular_$1 (-Are, -Aim);
+  return mmux_$1_make_rectangular (-Are, -Aim);
 }
 __attribute__((__const__)) static inline mmux_libc_$1_t
 mmux_$1_inv (mmux_libc_$1_t A)
@@ -199,7 +199,7 @@ mmux_$1_inv (mmux_libc_$1_t A)
   mmux_libc_$1_part_t	Cre = + Are / D;
   mmux_libc_$1_part_t	Cim = - Aim / D;
 
-  return mmux_rectangular_$1 (Cre, Cim);
+  return mmux_$1_make_rectangular (Cre, Cim);
 }
 ]]])]]])
 

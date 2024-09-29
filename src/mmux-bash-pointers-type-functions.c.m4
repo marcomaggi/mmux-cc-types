@@ -94,7 +94,7 @@ __extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_
 
 m4_define([[[DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
 mmux_libc_$1_t
-mmux_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
 {
   return $4(re, im);
 }

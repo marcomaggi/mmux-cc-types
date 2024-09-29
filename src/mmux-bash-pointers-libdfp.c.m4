@@ -181,7 +181,7 @@ DEFINE_DECIMAL_FLOAT_PREDICATES([[[decimal128]]],		[[[MMUX_HAVE_TYPE_DECIMAL128]
 
 m4_define([[[DEFINE_COMPLEX_DECIMAL_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_libc_$1_t
-mmux_rectangular_$1 (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
 {
   mmux_libc_$1_t	Z = {
     .re	= re,
