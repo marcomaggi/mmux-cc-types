@@ -572,7 +572,39 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[decimal128]]],	[[[complexd128]]],
 
 
 /** --------------------------------------------------------------------
- ** Bash interface.
+ ** Selecting printf output format for floating point numbers.
+ ** ----------------------------------------------------------------- */
+
+#undef  MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN
+#define MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN		8
+
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_bash_pointers_decl char mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
+
+mmux_bash_pointers_decl int mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
+  __attribute__((__nonnull__(1)));
+
+]]])]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[double]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
+
+/** --------------------------------------------------------------------
+ ** GNU Bash interface.
  ** ----------------------------------------------------------------- */
 
 /* This definition  must match the  definition of "BUILTIN_ENABLED" in  Bash's header

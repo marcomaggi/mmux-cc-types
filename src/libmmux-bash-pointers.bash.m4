@@ -198,6 +198,15 @@ function mmux_bash_pointers_library_load () {
 		done
 	    done
 	}
+
+	# Output format selection.
+	{
+	    for STEM in "${REAL_FLOAT_STEMS[@]}"
+	    do
+		printf -v NAME 'mmux_%s_set_format' "$STEM"
+		mmux_bash_pointers_library_define_builtin "$NAME"
+	    done
+	}
     fi
 }
 

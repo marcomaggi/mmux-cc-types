@@ -216,6 +216,7 @@ EXTRA_DIST		+= \
 	tests/conversion.test.m4		\
 	tests/errors.test.m4			\
 	tests/memory.test.m4			\
+	tests/output-formats.test.m4		\
 	tests/pointers.test.m4			\
 	tests/predicates.test.m4		\
 	tests/types.test.m4			\
@@ -230,6 +231,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/conversion.test			\
 	tests/errors.test			\
 	tests/memory.test			\
+	tests/output-formats.test		\
 	tests/pointers.test			\
 	tests/predicates.test			\
 	tests/types.test			\

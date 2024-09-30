@@ -150,6 +150,15 @@ mmux_bash_pointers_library_init_main (int argc MMUX_BASH_POINTERS_UNUSED,  char 
     }
   }
 
+  /* Initialise the sprinters module. */
+  {
+    int	rv = mmux_bash_pointers_init_sprint_module ();
+    if (rv) {
+      fprintf(stderr, "MMUX Bash Pointers: internal error: initialising floating-point numbers output format module\n");
+      return MMUX_FAILURE;
+    }
+  }
+
   /* These constants are defined by the Standard C Library; we make them available as
      global shell variables. */
   {

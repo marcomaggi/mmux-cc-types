@@ -28,6 +28,189 @@
 
 #include "mmux-bash-pointers-internals.h"
 
+/* This  regular   expression  is  used   to  validate  the  format   specifiers  for
+   floating-point numbers.  */
+static regex_t mmux_bash_pointers_float_format_rex;
+
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+#undef  MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]mmux_toupper([[[$1]]])
+#define MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]mmux_toupper([[[$1]]])	[[[$2]]]
+
+char	mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
+]]])]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]],	[[["%A"]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[double]]],	[[["%A"]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[ldouble]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32x]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64x]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128x]]],	[[["%A"]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal32]]],	[[["%f"]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal64]]],	[[["%f"]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal128]]],	[[["%f"]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Initialisation.
+ ** ----------------------------------------------------------------- */
+
+int
+mmux_bash_pointers_init_sprint_module (void)
+{
+  /* Compile the POSIX  regular expression required to parse  the string representing
+     the output format of floating-point numbers. */
+  int rv = regcomp(&mmux_bash_pointers_float_format_rex, "^%[+-\\#\\'\\ ]*[0-9]*\\.\\?[0-9]*l\\?[feEgGaA]$", REG_NOSUB);
+  if (rv) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
+    return MMUX_FAILURE;
+  }
+
+  m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  mmux_$1_set_output_format(MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]mmux_toupper([[[$1]]]), "MMUX Bash Pointers");
+  ]]])]]])
+
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[double]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
+  return MMUX_SUCCESS;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Selecting printf output format for floating-pont numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+int
+mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
+{
+  int	new_result_format_len = strlen(new_result_format);
+
+  if (new_result_format_len > MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN) {
+    if (caller_name) {
+      fprintf(stderr, "%s: error setting new float format, string too long (maxlen=%d): %s\n",
+	      caller_name, MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN, new_result_format);
+    }
+    return MMUX_FAILURE;
+  }
+
+  if (0) {
+    fprintf(stderr, "%s: setting new float format: %s\n", __func__, new_result_format);
+  }
+
+  /* Validate the format string. */
+  {
+    int		rv;
+
+    rv = regexec(&mmux_bash_pointers_float_format_rex, new_result_format, 0, NULL, 0);
+    if (rv) {
+      char	error_message[1024];
+
+      regerror(rv, &mmux_bash_pointers_float_format_rex, error_message, 1024);
+      if (caller_name) {
+	fprintf(stderr, "%s: error: invalid argument, expected float format (%s): \"%s\"\n",
+		caller_name, error_message, new_result_format);
+      }
+      return MMUX_FAILURE;
+    }
+  }
+
+  /* We tell "strncpy()"  to copy the from  buffer and fill everything  else with nul
+     bytes.  See the documentation of "strncpy()". */
+  strncpy(mmux_bash_pointers_output_format_$1, new_result_format, MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
+  if (0) {
+    fprintf(stderr, "%s: float format is now: %s\n", __func__, mmux_bash_pointers_output_format_$1);
+  }
+  return MMUX_SUCCESS;
+}
+
+]]])]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[double]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN]]],[[[
+static int
+mmux_$1_set_format_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_$1_set_format"
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  /* If  requested:  store the  old  format  string into  a  variable  whose name  is
+     specified as second argument. */
+  if (3 == argc) {
+    int		rv;
+
+    rv = mmux_bash_store_string_in_variable(argv[2], mmux_bash_pointers_output_format_$1, MMUX_BUILTIN_NAME);
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+  }
+
+  if (0) { printf("%s: old format: \"%s\"\n", __func__, mmux_bash_pointers_output_format_$1); }
+  if (0) { printf("%s: new format: \"%s\"\n", __func__, argv[1]); }
+
+  return mmux_$1_set_output_format(argv[1], MMUX_BUILTIN_NAME);
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_set_format]]],
+    [[[((3 == argc) || (2 == argc))]]],
+    [[["mmux_$1_set_format FORMAT_STRING [OLD_FORMAT_VARNAME]"]]],
+    [[["Configure the output format for floating-point numbers of type \"$1\"."]]])
+]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[double]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[decimal32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[decimal64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
+
 
 /** --------------------------------------------------------------------
  ** Type string printers: pointers.
@@ -125,7 +308,7 @@ DEFINE_CORE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_HAVE_TYPE_ULLONG]]])
  ** Type string printers: raw C standard types, real floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
+m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
 mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 {
@@ -133,7 +316,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 
   /* According to the documentation, when the output is truncated: "$2()" returns the
      number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = $2(NULL, 0, $3, value);
+  required_nbytes = $2(NULL, 0, mmux_bash_pointers_output_format_$1, value);
   if (0 > required_nbytes) {
     return -1;
   } else {
@@ -146,9 +329,11 @@ mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
 {
   int		to_be_written_chars;
 
+  if (0) { fprintf(stderr, "%s: len=%d\n", __func__, len); }
+
   /* According to the  documentation: "$2()" writes the terminating null  byte if the
      output buffer is sufficiently large. */
-  to_be_written_chars = $2(strptr, len, $3, value);
+  to_be_written_chars = $2(strptr, len, mmux_bash_pointers_output_format_$1, value);
   if (len > to_be_written_chars) {
     return MMUX_SUCCESS;
   } else {
@@ -156,21 +341,21 @@ mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
   }
 }]]])]]])
 
-DEFINE_FLOAT_SPRINTER([[[float]]],	[[[strfromf]]],		[[["%A"]]])
-DEFINE_FLOAT_SPRINTER([[[double]]],	[[[strfromd]]],		[[["%A"]]])
-DEFINE_FLOAT_SPRINTER([[[ldouble]]],	[[[strfroml]]],		[[["%A"]]],  [[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_FLOAT_SPRINTER([[[float]]],	[[[strfromf]]])
+DEFINE_FLOAT_SPRINTER([[[double]]],	[[[strfromd]]])
+DEFINE_FLOAT_SPRINTER([[[ldouble]]],	[[[strfroml]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_FLOAT_SPRINTER([[[float32]]],	[[[strfromf32]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_FLOAT_SPRINTER([[[float64]]],	[[[strfromf64]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_FLOAT_SPRINTER([[[float128]]],	[[[strfromf128]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_FLOAT_SPRINTER([[[float32]]],	[[[strfromf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_FLOAT_SPRINTER([[[float64]]],	[[[strfromf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_FLOAT_SPRINTER([[[float128]]],	[[[strfromf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
 
-DEFINE_FLOAT_SPRINTER([[[float32x]]],	[[[strfromf32x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_FLOAT_SPRINTER([[[float64x]]],	[[[strfromf64x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_FLOAT_SPRINTER([[[float128x]]],	[[[strfromf128x]]],	[[["%A"]]],  [[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_FLOAT_SPRINTER([[[float32x]]],	[[[strfromf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_SPRINTER([[[float64x]]],	[[[strfromf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_SPRINTER([[[float128x]]],	[[[strfromf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
 
-DEFINE_FLOAT_SPRINTER([[[decimal32]]],	[[[mmux_strfromd32]]],	[[["%f"]]],  [[[MMUX_HAVE_TYPE_DECIMAL32]]])
-DEFINE_FLOAT_SPRINTER([[[decimal64]]],	[[[mmux_strfromd64]]],	[[["%f"]]],  [[[MMUX_HAVE_TYPE_DECIMAL64]]])
-DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[["%f"]]],  [[[MMUX_HAVE_TYPE_DECIMAL128]]])
+DEFINE_FLOAT_SPRINTER([[[decimal32]]],	[[[mmux_strfromd32]]],	[[[MMUX_HAVE_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_SPRINTER([[[decimal64]]],	[[[mmux_strfromd64]]],	[[[MMUX_HAVE_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
