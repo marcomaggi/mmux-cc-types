@@ -163,7 +163,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * complex::                     Basic complex number builtins.
 * bitwise::                     Bitwise operation builtins.
 * errors::                      Handling errors.
-* format::                      Selecting the printing format.
+* formats::                     Input and output formats.
 
 Appendices
 
@@ -3641,8 +3641,17 @@ mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
 @end defun
 
 @c page
-@node format
-@chapter Selecting the printing format
+@node formats
+@chapter Input and output formats
+
+
+@menu
+* formats float::               Selecting the printing format for floating--point numbers.
+@end menu
+
+@c page
+@node formats float
+@section Selecting the printing format for floating--point numbers
 
 
 To select an output format for the result of operations, we do:
@@ -3674,14 +3683,12 @@ mmux_double_set_format "$OLD_FORMAT"
 "$OP"   @result{} 1.234568e+02
 @end example
 
-Given that the string representation of exact integers is an acceptable format for floating--point
-numbers: we can use the formatting capabilities implemented for floating--point numbers to format
-exact integers.
+The string representation of exact integers is an acceptable format for floating--point numbers: we
+can use the formatting capabilities implemented for floating--point numbers to format exact
+integers.
 
-@quotation
-@strong{NOTE} We should be careful @strong{not} to select a field width of zero; that is, to avoid
-formats like @samp{%0e}.
-@end quotation
+String representations of complex floating--point numbers are composed using the format selected for
+the corresponding real floating--point type.
 
 For the following builtins:
 
@@ -3697,33 +3704,37 @@ store the old output format, so that: it is possible to temporarily select a new
 restore the old one.
 @end itemize
 
+@quotation
+@strong{NOTE} We should be careful @strong{not} to select a field width of zero; that is, to avoid
+formats like @samp{%0e}.
+@end quotation
 
-@macro MmuxSelectOutputFormatBuiltin{STEM}
+
+@macro MmuxSelectOutputFormatBuiltin{STEM,DEFAULT_FORMAT}
 @deffn Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
 @deffnx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
 Select a new output format for string representations of floating--point numbers of type
-@objtype{\STEM\}.
-
+@objtype{\STEM\}.  The default format is @samp{\DEFAULT_FORMAT\}.
 @end deffn
 
 @end macro
 
 
-@MmuxSelectOutputFormatBuiltin{float}
-@MmuxSelectOutputFormatBuiltin{double}
-@MmuxSelectOutputFormatBuiltin{ldouble}
+@MmuxSelectOutputFormatBuiltin{float, %A}
+@MmuxSelectOutputFormatBuiltin{double, %A}
+@MmuxSelectOutputFormatBuiltin{ldouble, %A}
 
-@MmuxSelectOutputFormatBuiltin{float32}
-@MmuxSelectOutputFormatBuiltin{float64}
-@MmuxSelectOutputFormatBuiltin{float128}
+@MmuxSelectOutputFormatBuiltin{float32, %A}
+@MmuxSelectOutputFormatBuiltin{float64, %A}
+@MmuxSelectOutputFormatBuiltin{float128, %A}
 
-@MmuxSelectOutputFormatBuiltin{float32x}
-@MmuxSelectOutputFormatBuiltin{float64x}
-@MmuxSelectOutputFormatBuiltin{float128x}
+@MmuxSelectOutputFormatBuiltin{float32x, %A}
+@MmuxSelectOutputFormatBuiltin{float64x, %A}
+@MmuxSelectOutputFormatBuiltin{float128x, %A}
 
-@MmuxSelectOutputFormatBuiltin{decimal32}
-@MmuxSelectOutputFormatBuiltin{decimal64}
-@MmuxSelectOutputFormatBuiltin{decimal128}
+@MmuxSelectOutputFormatBuiltin{decimal32, %f}
+@MmuxSelectOutputFormatBuiltin{decimal64, %f}
+@MmuxSelectOutputFormatBuiltin{decimal128, %f}
 
 @c page
 @c ------------------------------------------------------------
