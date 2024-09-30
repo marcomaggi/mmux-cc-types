@@ -116,6 +116,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-errors.c.m4		\
 	src/mmux-bash-pointers-library.c.m4		\
 	src/mmux-bash-pointers-memory.c.m4		\
+	src/mmux-bash-pointers-misc-builtins.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4		\
 	src/mmux-bash-pointers-parser-functions.c.m4	\
 	src/mmux-bash-pointers-predicates.c.m4		\
@@ -134,6 +135,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-memory.c			\
+	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-parser-functions.c	\
 	src/mmux-bash-pointers-predicates.c		\
@@ -175,6 +177,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-memory.c			\
+	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-parser-functions.c	\
 	src/mmux-bash-pointers-predicates.c		\
