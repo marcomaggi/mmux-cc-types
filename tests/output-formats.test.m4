@@ -111,6 +111,7 @@ function output-formats-double-1.2 () {
     {
 	if mmux_double_set_format '%f' OLD_FORMAT
 	then mbfl_location_handler "mmux_double_set_format WW(OLD_FORMAT)"
+	else mbfl_location_leave_then_return_failure
 	fi
 	mmux_double_add ROP WW(OP)
     }
@@ -127,12 +128,79 @@ function output-formats-double-1.3 () {
     {
 	if mmux_double_set_format '%.2f' OLD_FORMAT
 	then mbfl_location_handler "mmux_double_set_format WW(OLD_FORMAT)"
+	else mbfl_location_leave_then_return_failure
 	fi
 	mmux_double_add ROP WW(OP)
     }
     mbfl_location_leave
 
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+### examples for the documentation
+
+function output-formats-double-2.1 () {
+    declare ROP OP='123.4567890' OLD_FORMAT
+    #                        012345
+    declare -r EXPECTED_ROP='1.234568e+02'
+
+    mbfl_location_enter
+    {
+	if mmux_double_set_format '%e' OLD_FORMAT
+	then mbfl_location_handler "mmux_double_set_format WW(OLD_FORMAT)"
+	else mbfl_location_leave_then_return_failure
+	fi
+	mmux_double_add ROP WW(OP)
+    }
+    mbfl_location_leave
+
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function output-formats-double-2.2 () {
+    declare OLD_FORMAT ROP OP1='123.4' OP2='567.8'
+    declare -r EXPECTED_ROP='6.912000e+02'
+
+    mbfl_location_enter
+    {
+	if mmux_double_set_format '%e' OLD_FORMAT
+	then mbfl_location_handler "mmux_double_set_format WW(OLD_FORMAT)"
+	else mbfl_location_leave_then_return_failure
+	fi
+	mmux_double_add ROP WW(OP1) WW(OP2)
+    }
+    mbfl_location_leave
+
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function output-formats-double-2.3 () {
+    declare OLD_FORMAT ROPA ROPB OP1='12340000' OP2='56780000'
+    declare -r EXPECTED_ROPA='69120000' EXPECTED_ROPB='69120000'
+
+    dotest-set-debug
+
+    mbfl_location_enter
+    {
+	if mmux_double_set_format '%0e' OLD_FORMAT
+	then mbfl_location_handler "mmux_double_set_format WW(OLD_FORMAT)"
+	else
+	    printf '%s:error in format\n' "$FUNCNAME" >&2
+	    mbfl_location_leave_then_return_failure
+	fi
+
+	mmux_sintmax_add ROPA WW(OP1) WW(OP2)
+	dotest-debug WW(ROPA) WW(OP1) WW(OP2)
+	mmux_double_add  ROPB WW(ROPA)
+	dotest-debug WW(ROPB) WW(ROPA)
+    }
+    mbfl_location_leave
+
+
+    dotest-debug WW(EXPECTED_ROPB) WW(ROPB)
+
+    dotest-equal     WW(EXPECTED_ROPA) WW(ROPA) &&
+	dotest-equal WW(EXPECTED_ROPB) WW(ROPB)
 }
 
 

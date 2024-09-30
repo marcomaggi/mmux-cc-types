@@ -163,6 +163,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * complex::                     Basic complex number builtins.
 * bitwise::                     Bitwise operation builtins.
 * errors::                      Handling errors.
+* format::                      Selecting the printing format.
 
 Appendices
 
@@ -2866,13 +2867,13 @@ Perform the inversion of a value of type @code{\STEM\}.
 @MmuxDefineTypeInversionBuiltin{float64x}
 @MmuxDefineTypeInversionBuiltin{float128x}
 
-@MmuxDefineTypeInversionBuiltin{complexf}
-@MmuxDefineTypeInversionBuiltin{complexd}
-@MmuxDefineTypeInversionBuiltin{complexld}
-
 @MmuxDefineTypeInversionBuiltin{decimal32}
 @MmuxDefineTypeInversionBuiltin{decimal64}
 @MmuxDefineTypeInversionBuiltin{decimal128}
+
+@MmuxDefineTypeInversionBuiltin{complexf}
+@MmuxDefineTypeInversionBuiltin{complexd}
+@MmuxDefineTypeInversionBuiltin{complexld}
 
 @MmuxDefineTypeInversionBuiltin{complexf32}
 @MmuxDefineTypeInversionBuiltin{complexf64}
@@ -3638,6 +3639,91 @@ mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
 "$SYM"  @result{} ENOMEM
 @end example
 @end defun
+
+@c page
+@node format
+@chapter Selecting the printing format
+
+
+To select an output format for the result of operations, we do:
+
+@example
+declare OLD_FORMAT ROP OP1='123.4' OP2='567.8'
+
+mmux_double_set_format '%g' OLD_FORMAT
+@{
+    mmux_double_add ROP "$OP1" "$OP2"
+@}
+mmux_double_set_format "$OLD_FORMAT"
+
+"$ROP"  @result{} 6.912000e+02
+@end example
+
+Remembering that when the @samp{add} functions are called with a single operand they just return
+that operand, if we want to reformat a number we do:
+
+@example
+declare OLD_FORMAT OP='123.4567890'
+
+mmux_double_set_format '%g' OLD_FORMAT
+@{
+    mmux_double_add OP "$OP"
+@}
+mmux_double_set_format "$OLD_FORMAT"
+
+"$OP"   @result{} 1.234568e+02
+@end example
+
+Given that the string representation of exact integers is an acceptable format for floating--point
+numbers: we can use the formatting capabilities implemented for floating--point numbers to format
+exact integers.
+
+@quotation
+@strong{NOTE} We should be careful @strong{not} to select a field width of zero; that is, to avoid
+formats like @samp{%0e}.
+@end quotation
+
+For the following builtins:
+
+@itemize
+@item
+The argument @var{OUTPUT_FORMAT} must be a string compatible with the @cfunc{printf} format
+selection for floating--point numbers.  Each supported type may have limitations in the available
+format.
+
+@item
+The optional argument @var{OLD_FORMAT_VAR} must be a shell variable name in which the builtin will
+store the old output format, so that: it is possible to temporarily select a new format, then
+restore the old one.
+@end itemize
+
+
+@macro MmuxSelectOutputFormatBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
+@deffnx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
+Select a new output format for string representations of floating--point numbers of type
+@objtype{\STEM\}.
+
+@end deffn
+
+@end macro
+
+
+@MmuxSelectOutputFormatBuiltin{float}
+@MmuxSelectOutputFormatBuiltin{double}
+@MmuxSelectOutputFormatBuiltin{ldouble}
+
+@MmuxSelectOutputFormatBuiltin{float32}
+@MmuxSelectOutputFormatBuiltin{float64}
+@MmuxSelectOutputFormatBuiltin{float128}
+
+@MmuxSelectOutputFormatBuiltin{float32x}
+@MmuxSelectOutputFormatBuiltin{float64x}
+@MmuxSelectOutputFormatBuiltin{float128x}
+
+@MmuxSelectOutputFormatBuiltin{decimal32}
+@MmuxSelectOutputFormatBuiltin{decimal64}
+@MmuxSelectOutputFormatBuiltin{decimal128}
 
 @c page
 @c ------------------------------------------------------------
