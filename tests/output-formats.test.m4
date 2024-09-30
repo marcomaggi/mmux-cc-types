@@ -176,13 +176,13 @@ function output-formats-double-2.2 () {
 }
 function output-formats-double-2.3 () {
     declare OLD_FORMAT ROPA ROPB OP1='12340000' OP2='56780000'
-    declare -r EXPECTED_ROPA='69120000' EXPECTED_ROPB='69120000'
+    declare -r EXPECTED_ROPA='69120000' EXPECTED_ROPB='7e+07'
 
-    dotest-set-debug
+    dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_double_set_format '%0e' OLD_FORMAT
+	if mmux_double_set_format '%.0e' OLD_FORMAT
 	then mbfl_location_handler "mmux_double_set_format WW(OLD_FORMAT)"
 	else
 	    printf '%s:error in format\n' "$FUNCNAME" >&2

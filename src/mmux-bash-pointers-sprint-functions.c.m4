@@ -314,7 +314,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
 {
   int		required_nbytes;
 
-  if (1) {
+  if (0) {
     fprintf(stderr, "%s: enter %s value=%Lf format=\"%s\"\n",
 	    __func__, "$2",
 	    (long double)value, mmux_bash_pointers_output_format_$1);
@@ -324,7 +324,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t value)
      number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = $2(NULL, 0, mmux_bash_pointers_output_format_$1, value);
 
-  if (1) { fprintf(stderr, "%s: %s required_nbytes=%d\n", __func__, "$2", required_nbytes); }
+  if (0) { fprintf(stderr, "%s: %s required_nbytes=%d\n", __func__, "$2", required_nbytes); }
 
   if (0 > required_nbytes) {
     return -1;
@@ -338,7 +338,7 @@ mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_libc_$1_t value)
 {
   int		to_be_written_chars;
 
-  if (1) { fprintf(stderr, "%s: enter len=%d, value=%Lf\n", __func__, len, (long double)value); }
+  if (0) { fprintf(stderr, "%s: enter len=%d, value=%Lf\n", __func__, len, (long double)value); }
 
   /* According to the  documentation: "$2()" writes the terminating null  byte if the
      output buffer is sufficiently large. */
