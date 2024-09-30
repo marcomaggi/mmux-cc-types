@@ -521,6 +521,12 @@ dnl     If the library is found:
 dnl
 dnl     * define to "1" the GNU Autoconf substitution symbol "MMUX_HAVE_TYPE_COMPLEXF128X".
 dnl
+dnl     * set  the variable "MMUX_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"  to the list of  linker flags
+dnl     required to link with the library;
+dnl
+dnl     *  set the  variable "MMUX_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"  to the  list of  compiler
+dnl     flags required to compile with the library.
+dnl
 AC_DEFUN([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY],
   [PKG_CHECK_MODULES([LIBDFP],[libdfp],,[AC_MSG_WARN([package libdfp not found])])
 dnl AC_CHECK_LIB([dfp],[strtod32])
@@ -529,7 +535,9 @@ dnl AC_CHECK_LIB([dfp],[strtod32])
          [AS_VAR_SET([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],[0])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],[$MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY],
                       [Defined to 1 if a Decimal Floating Point C Library is available.])
-   AC_SUBST([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY])])
+   AC_SUBST([MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY])
+   AS_VAR_SET([MMUX_DECIMAL_FLOATING_POINT_LIBRARY_LIBS],[$LIBDFP_LIBS])
+   AS_VAR_SET([MMUX_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS],[$LIBDFP_CFLAGS])])
 
 
 dnl MMUX_CHECK_TYPE_DECIMAL32 --
@@ -551,17 +559,27 @@ dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL32],
   [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal32])
-   dnl AC_CHECK_FUNC([strtod32])
-   dnl AC_CHECK_FUNC([strfromd32])
-   dnl AC_CHECK_FUNC([fabsd32])
-   dnl AC_CHECK_FUNC([fmaxd32])
-   dnl AC_CHECK_FUNC([fmind32])
-   AS_IF([test "x$ac_cv_type__Decimal32"        = "xyes"],
-            dnl -a "x$ac_cv_func_strtod32"          = "xyes"        \
-            dnl -a "x$ac_cv_func_strfromd32"        = "xyes"        \
-            dnl -a "x$ac_cv_func_fabsd32"           = "xyes"        \
-            dnl -a "x$ac_cv_func_fmaxd32"           = "xyes"        \
-            dnl -a "x$ac_cv_func_fmind32"           = "xyes"
+   mmux_OLD_CFLAGS=$CFLAGS
+   CFLAGS="$CFLAGS $MMUX_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"
+   {
+     mmux_OLD_LIBS=$LIBS
+     LIBS="$LIBS $MMUX_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"
+     {
+       AC_CHECK_FUNC([strtod32])
+       AC_CHECK_FUNC([strfromd32])
+       AC_CHECK_FUNC([fabsd32])
+       AC_CHECK_FUNC([fmaxd32])
+       AC_CHECK_FUNC([fmind32])
+     }
+     LIBS=$mmux_OLDLIBS
+   }
+   CFLAGS=$mmux_OLDCFLAGS
+   AS_IF([test "x$ac_cv_type__Decimal32"   = "xyes"  \
+            -a "x$ac_cv_func_strtod32"     = "xyes"  \
+            -a "x$ac_cv_func_strfromd32"   = "xyes"  \
+            -a "x$ac_cv_func_fabsd32"      = "xyes"  \
+            -a "x$ac_cv_func_fmaxd32"      = "xyes"  \
+            -a "x$ac_cv_func_fmind32"      = "xyes"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [0])
@@ -591,7 +609,27 @@ dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL64],
   [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal64])
-   AS_IF([test "x$ac_cv_type__Decimal64" = "xyes"],
+   mmux_OLD_CFLAGS=$CFLAGS
+   CFLAGS="$CFLAGS $MMUX_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"
+   {
+     mmux_OLD_LIBS=$LIBS
+     LIBS="$LIBS $MMUX_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"
+     {
+       AC_CHECK_FUNC([strtod64])
+       AC_CHECK_FUNC([strfromd64])
+       AC_CHECK_FUNC([fabsd64])
+       AC_CHECK_FUNC([fmaxd64])
+       AC_CHECK_FUNC([fmind64])
+     }
+     LIBS=$mmux_OLDLIBS
+   }
+   CFLAGS=$mmux_OLDCFLAGS
+   AS_IF([test "x$ac_cv_type__Decimal64"   = "xyes"  \
+            -a "x$ac_cv_func_strtod64"     = "xyes"  \
+            -a "x$ac_cv_func_strfromd64"   = "xyes"  \
+            -a "x$ac_cv_func_fabsd64"      = "xyes"  \
+            -a "x$ac_cv_func_fmaxd64"      = "xyes"  \
+            -a "x$ac_cv_func_fmind64"      = "xyes"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [0])
@@ -621,7 +659,27 @@ dnl
 AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL128],
   [AC_REQUIRE([MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY])
    AC_CHECK_TYPE([_Decimal128])
-   AS_IF([test "x$ac_cv_type__Decimal128" = "xyes"],
+   mmux_OLD_CFLAGS=$CFLAGS
+   CFLAGS="$CFLAGS $MMUX_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"
+   {
+     mmux_OLD_LIBS=$LIBS
+     LIBS="$LIBS $MMUX_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"
+     {
+       AC_CHECK_FUNC([strtod128])
+       AC_CHECK_FUNC([strfromd128])
+       AC_CHECK_FUNC([fabsd128])
+       AC_CHECK_FUNC([fmaxd128])
+       AC_CHECK_FUNC([fmind128])
+     }
+     LIBS=$mmux_OLDLIBS
+   }
+   CFLAGS=$mmux_OLDCFLAGS
+   AS_IF([test "x$ac_cv_type__Decimal128"  = "xyes"  \
+            -a "x$ac_cv_func_strtod128"    = "xyes"  \
+            -a "x$ac_cv_func_strfromd128"  = "xyes"  \
+            -a "x$ac_cv_func_fabsd128"     = "xyes"  \
+            -a "x$ac_cv_func_fmaxd128"     = "xyes"  \
+            -a "x$ac_cv_func_fmind128"     = "xyes"],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [1])
           AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [1])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [0])
