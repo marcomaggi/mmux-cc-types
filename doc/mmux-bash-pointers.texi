@@ -4052,6 +4052,30 @@ fi
 @end example
 @end deffn
 
+
+@deffn Builtin mmux_libc_dup @var{FDVAR} @var{OLD_FD}
+Interface to the standard C function @cfunc{dup}.  When successful: return true; otherwise set the
+shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
+
+The argument @var{FDVAR} must be the name of a shell variable in which the return value of
+@cfunc{dup} will be stored.
+
+The argument @var{OLD_FD} must be the string representation of a file descriptor.
+@end deffn
+
+
+@deffn Builtin mmux_libc_dup2 @var{RVAR} @var{OLD_FD} @var{NEW_FD}
+Interface to the standard C function @cfunc{dup2}.  When successful: return true; otherwise set the
+shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
+
+The argument @var{rDVAR} must be the name of a shell variable in which the return value of
+@cfunc{dup} will be stored.
+
+The argument @var{OLD_FD} must be the string representation of a file descriptor.
+
+The argument @var{NEW_FD} must be the string representation of a file descriptor.
+@end deffn
+
 @c page
 @c ------------------------------------------------------------
 @c Appendices.

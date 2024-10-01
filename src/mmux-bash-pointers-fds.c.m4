@@ -31,36 +31,36 @@
 m4_dnl $1 - name of the target variable
 m4_dnl $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_POINTER]]],[[[{
-  int  rv = mmux_bash_pointers_parse_pointer(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { goto argument_parse_error; }
+  int  mmux_retval = mmux_bash_pointers_parse_pointer(&$1, $2, MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
 }]]])
 
 m4_dnl $1 - name of the target variable
 m4_dnl $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_SINT]]],[[[{
-  int  rv = mmux_bash_pointers_parse_sint(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { goto argument_parse_error; }
+  int  mmux_retval = mmux_bash_pointers_parse_sint(&$1, $2, MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
 }]]])
 
 m4_dnl $1 - name of the target variable
 m4_dnl $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_MODE]]],[[[{
-  int  rv = mmux_bash_pointers_parse_mode(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { goto argument_parse_error; }
+  int  mmux_retval = mmux_bash_pointers_parse_mode(&$1, $2, MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
 }]]])
 
 m4_dnl $1 - name of the target variable
 m4_dnl $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_USIZE]]],[[[{
-  int  rv = mmux_bash_pointers_parse_usize(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { goto argument_parse_error; }
+  int  mmux_retval = mmux_bash_pointers_parse_usize(&$1, $2, MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
 }]]])
 
 m4_dnl $1 - name of the target variable
 m4_dnl $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_OFF]]],[[[{
-  int  rv = mmux_bash_pointers_parse_off(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != rv) { goto argument_parse_error; }
+  int  mmux_retval = mmux_bash_pointers_parse_off(&$1, $2, MMUX_BUILTIN_NAME);
+  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
 }]]])
 
 
@@ -285,5 +285,63 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_lseek]]],
     [[[(5 == argc)]]],
     [[["mmux_libc_lseek OFFVAR FD OFFSET WHENCE"]]],
     [[["Change the file position of FD of OFFSET from WHENCE, store in OFFVAR the resulting file position."]]])
+
+
+static int
+mmux_libc_dup_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_libc_dup"
+{
+  int	fd;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]], [[[argv[2]]]]);
+
+  {
+    fd = dup(fd);
+    if (-1 != fd) {
+      return mmux_bash_pointers_store_result_in_variable_sint(argv[1], fd, MMUX_BUILTIN_NAME);
+    } else {
+      return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+    }
+  }
+
+ argument_parse_error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup]]],
+    [[[(3 == argc)]]],
+    [[["mmux_libc_dup FDVAR FD"]]],
+    [[["Duplicate the file descriptor FD, store the result in FDVAR."]]])
+
+
+static int
+mmux_libc_dup2_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_libc_dup2"
+{
+  int	rv, old_fd, new_fd;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[old_fd]]], [[[argv[2]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[new_fd]]], [[[argv[3]]]]);
+
+  {
+    rv = dup2(old_fd, new_fd);
+    if (-1 != rv) {
+      return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+    } else {
+      return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+    }
+  }
+
+ argument_parse_error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup2]]],
+    [[[(4 == argc)]]],
+    [[["mmux_libc_dup2 RVAR OLD_FD NEW_FD"]]],
+    [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD, store the result in RVAR."]]])
+
 
 /* end of file */
