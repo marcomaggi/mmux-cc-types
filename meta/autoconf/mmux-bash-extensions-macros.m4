@@ -87,6 +87,10 @@ AC_INCLUDES_DEFAULT([
 #  include <errno.h>
 #endif
 
+#ifdef HAVE_FCNTL_H
+#  include <fcntl.h>
+#endif
+
 #ifdef HAVE_FLOAT_H
 #  include <float.h>
 #endif

@@ -107,6 +107,7 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
  ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_consume_errno (char const * const caller_name);
 
 
 /** --------------------------------------------------------------------
