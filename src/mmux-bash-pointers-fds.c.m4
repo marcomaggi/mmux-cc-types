@@ -344,4 +344,160 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup2]]],
     [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD, store the result in RVAR."]]])
 
 
+
+static int
+mmux_libc_fcntl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_libc_fcntl"
+{
+  int	fd, command;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[command]]],	[[[argv[3]]]]);
+
+  switch (command) {
+#if ((defined MMUX_HAVE_F_DUPFD) && (1 == MMUX_HAVE_F_DUPFD))
+  case F_DUPFD:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv, new_fd;
+
+	MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[new_fd]]],	[[[argv[4]]]]);
+	rv = fcntl(fd, command, new_fd);
+	if (-1 != rv) {
+	  return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETFD) && (1 == MMUX_HAVE_F_GETFD))
+  case F_GETFD:
+    {
+      if (4 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv;
+
+	rv = fcntl(fd, command);
+	if (-1 != rv) {
+	  return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETFL) && (1 == MMUX_HAVE_F_GETFL))
+  case F_GETFL:
+    {
+      if (4 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv;
+
+	rv = fcntl(fd, command);
+	if (-1 != rv) {
+	  return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETLK) && (1 == MMUX_HAVE_F_GETLK))
+  case F_GETLK:
+    {
+      goto argument_parse_error;
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETOWN) && (1 == MMUX_HAVE_F_GETOWN))
+  case F_GETOWN:
+    {
+      goto argument_parse_error;
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETFD) && (1 == MMUX_HAVE_F_SETFD))
+  case F_SETFD:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv, flags;
+
+	MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],	[[[argv[4]]]]);
+
+	rv = fcntl(fd, command, flags);
+	if (-1 != rv) {
+	  return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETFL) && (1 == MMUX_HAVE_F_SETFL))
+  case F_SETFL:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv, flags;
+
+	MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],	[[[argv[4]]]]);
+
+	rv = fcntl(fd, command, flags);
+	if (-1 != rv) {
+	  return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETLKW) && (1 == MMUX_HAVE_F_SETLKW))
+  case F_SETLKW:
+    {
+      goto argument_parse_error;
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETLK) && (1 == MMUX_HAVE_F_SETLK))
+  case F_SETLK:
+    {
+      goto argument_parse_error;
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETOWN) && (1 == MMUX_HAVE_F_SETOWN))
+  case F_SETOWN:
+    {
+      goto argument_parse_error;
+    }
+    break;
+#endif
+  default:
+    fprintf(stderr, "%s: error: invalid command parameter \"%s\"\n", MMUX_BUILTIN_NAME, argv[3]);
+    goto argument_parse_error;
+  }
+
+ argument_parse_error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_fcntl]]],
+    [[[(4 <= argc)]]],
+    [[["mmux_libc_fcntl RVAR FD COMMAND ARG ..."]]],
+    [[["Call fcntl with the given arguments, store the result in RVAR."]]])
+
 /* end of file */

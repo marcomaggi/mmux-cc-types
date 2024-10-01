@@ -98,6 +98,13 @@ mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word
   }
 }
 
+int
+mmux_bash_builtin_wrong_num_of_args (void)
+{
+  builtin_usage();
+  return EX_USAGE;
+}
+
 
 /** --------------------------------------------------------------------
  ** Binding values to shell variables.

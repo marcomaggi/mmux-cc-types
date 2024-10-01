@@ -652,6 +652,8 @@ mmux_bash_pointers_decl mmux_rv_t mmux_bash_builtin_implementation_function_no_o
    mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
   __attribute__((__nonnull__(1,2,3)));
 
+mmux_bash_pointers_decl int mmux_bash_builtin_wrong_num_of_args (void);
+
 /* ------------------------------------------------------------------ */
 
 mmux_bash_pointers_decl int mmux_bash_store_string_in_variable        (char const * variable_name, char const * s_value,

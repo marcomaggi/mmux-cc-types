@@ -66,7 +66,7 @@ function file-descriptors-open-close-1.1 () {
 	dotest-debug mmux_libc_O_EXCL=WW(mmux_libc_O_EXCL)
 	dotest-debug FLAGS=WW(FLAGS)
 
-	if ! mmux_libc_open FD QQ(FILENAME) $FLAGS $MODE
+	if ! mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
 	then
 	    mbfl_declare_varref(MSG)
 	    mmux_libc_strerror _(MSG) $ERRNO
@@ -97,7 +97,7 @@ function file-descriptors-read-write-1.1 () {
 	declare -r FILENAME=$(dotest-mkfile 'name.ext')
 	mbfl_location_handler dotest-clean-files
 
-	if mmux_libc_open FD QQ(FILENAME) $FLAGS $MODE
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
 	then mbfl_location_handler "mmux_libc_close $FD"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -156,7 +156,7 @@ function file-descriptors-dup-1.1 () {
 	declare -r FILENAME=$(dotest-mkfile 'name.ext')
 	mbfl_location_handler dotest-clean-files
 
-	if mmux_libc_open FD QQ(FILENAME) $FLAGS $MODE
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
 	then mbfl_location_handler "mmux_libc_close $FD" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -212,7 +212,7 @@ function file-descriptors-dup2-1.1 () {
 	declare -r FILENAME=$(dotest-mkfile 'name.ext')
 	mbfl_location_handler dotest-clean-files
 
-	if mmux_libc_open FD QQ(FILENAME) $FLAGS $MODE
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
 	then mbfl_location_handler "mmux_libc_close $FD" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -252,6 +252,173 @@ function file-descriptors-dup2-1.1 () {
     }
     mbfl_location_leave
 }
+
+
+#### fcntl
+
+function file-descriptors-fcntl-F_DUPFD-1.1 () {
+    mbfl_location_enter
+    {
+	declare -i rv FD DONE OFFSET SIZE=5
+	declare BUFFER
+	mbfl_declare_index_array_varref(RESULT)
+	mbfl_declare_index_array_varref(ORIGIN_DATA,(11 22 33 44 55))
+	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	mbfl_declare_varref(ID)
+
+	declare -r FILENAME=$(dotest-mkfile 'name.ext')
+	mbfl_location_handler dotest-clean-files
+
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
+	then mbfl_location_handler "mmux_libc_close $FD" _(ID)
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if mmux_libc_malloc BUFFER $SIZE
+	then mbfl_location_handler "mmux_libc_free $BUFFER"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	mmux-bash-pointers-memory-from-array WW(BUFFER) _(ORIGIN_DATA) WW(SIZE)
+
+	if ! mmux_libc_pwrite DONE $FD $BUFFER $SIZE 0
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	# I'm so dirty...
+	NEW_FD=$(( FD + 1 ))
+
+	if mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_DUPFD) WW(NEW_FD)
+	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_close WW(FD)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_libc_pread DONE $FD $BUFFER $SIZE 0
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	mmux-bash-pointers-array-from-memory _(RESULT) WW(BUFFER) WW(SIZE)
+	#mbfl_array_dump _(RESULT) RESULT
+
+	dotest-equal $SIZE $DONE && \
+	    dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \
+	    dotest-equal 22 mbfl_slot_qref(RESULT, 1) && \
+	    dotest-equal 33 mbfl_slot_qref(RESULT, 2) && \
+	    dotest-equal 44 mbfl_slot_qref(RESULT, 3) && \
+	    dotest-equal 55 mbfl_slot_qref(RESULT, 4)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+if test -v mmux_libc_F_GETFD -a -v mmux_libc_F_SETFD -a -v mmux_libc_FD_CLOEXEC
+then
+
+function file-descriptors-fcntl-F_GETFD-1.1 () {
+    dotest-unset-debug
+    mbfl_location_enter
+    {
+	declare -i FD RV ERRNO=0
+	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	mbfl_location_handler dotest-clean-files
+
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
+	then mbfl_location_handler "mmux_libc_close $FD"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug opened
+
+	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_SETFD) WW(mmux_libc_FD_CLOEXEC)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug setted
+
+	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_GETFD)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug getted
+
+	dotest-equal WW(mmux_libc_FD_CLOEXEC) WW(RV)
+    }
+    mbfl_location_leave
+}
+
+fi
+
+### ------------------------------------------------------------------------
+
+if test -v mmux_libc_F_GETFL -a -v mmux_libc_F_SETFL -a -v mmux_libc_FD_CLOEXEC
+then
+
+function file-descriptors-fcntl-F_GETFL-1.1 () {
+    dotest-unset-debug
+    mbfl_location_enter
+    {
+	declare -i FD RV ERRNO=0
+	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	mbfl_location_handler dotest-clean-files
+
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
+	then mbfl_location_handler "mmux_libc_close $FD"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug opened
+
+	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_GETFL)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug getted
+	dotest-equal WW(mmux_libc_O_RDWR) $(( WW(RV) & WW(mmux_libc_O_RDWR) ))
+    }
+    mbfl_location_leave
+}
+
+function file-descriptors-fcntl-F_GETFL-1.2 () {
+    dotest-unset-debug
+    mbfl_location_enter
+    {
+	declare -i FD RV ERRNO=0
+	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	mbfl_location_handler dotest-clean-files
+
+	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
+	then mbfl_location_handler "mmux_libc_close $FD"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug opened
+
+	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_SETFL) WW(mmux_libc_O_APPEND)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug setted
+
+	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_GETFL)
+	then mbfl_location_leave_then_return_failure
+	fi
+
+	dotest-debug getted
+	dotest-equal WW(mmux_libc_O_RDWR) $(( WW(RV) & WW(mmux_libc_O_RDWR) ))
+    }
+    mbfl_location_leave
+}
+
+fi
 
 
 #### let's go

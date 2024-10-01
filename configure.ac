@@ -198,7 +198,8 @@ AC_CACHE_SAVE
 ## ioctl action selection
 MMUX_CONSTANT_TESTS([F_DUPFD F_GETFD F_GETFL F_GETLK
      F_GETOWN F_SETFD F_SETFL F_SETLKW F_SETLK F_SETOWN
-     F_RDLCK F_UNLCK F_WRLCK])
+     F_RDLCK F_UNLCK F_WRLCK
+     FD_CLOEXEC])
 AC_CACHE_SAVE
 
 ## miscellaneous file-related constants
