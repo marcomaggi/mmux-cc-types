@@ -3954,22 +3954,29 @@ the number of bytes to read from memory and write to the file descriptor; it mus
 the type @objtype{usize}.
 
 @example
-declare -i DONE ERRNO FD=$(gimme-an-fd)
+declare -i ERRNO; # to be used in case of error
 declare -i ITEM_SIZE=$mmux_libc_SIZEOF_SINT32 ITEM_COUNT=123
-declare -i OCTET_SIZE=$(( ITEM_SIZE * ITEM_COUNT ))
 declare BUFFER
 
 if ! mmux_libc_calloc BUFFER $ITEM_COUNT $ITEM_SIZE
 then # error
 fi
 
-mmux_sint32_array_set $BUFFER 0 '123'
-mmux_sint32_array_set $BUFFER 1 '456'
-# ...
+@{
+    mmux_sint32_array_set $BUFFER 0 '123'
+    mmux_sint32_array_set $BUFFER 1 '456'
+    # ...
+@}
 
-if ! mmux_libc_write DONE $FD $BUFFER $OCTET_SIZE
-then # error
-fi
+@{
+    declare -i FD=$(gimme-an-fd)
+    declare -i OCTET_SIZE=$(( ITEM_SIZE * ITEM_COUNT ))
+    declare -i DONE
+
+    if ! mmux_libc_write DONE $FD $BUFFER $OCTET_SIZE
+    then # error
+    fi
+@}
 @end example
 @end deffn
 
