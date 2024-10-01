@@ -56,7 +56,7 @@ function mmux_bash_pointers_library_load () {
     declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}")
 
     declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror errno_to_string \
-				      open close read write pread pwrite lseek dup dup2 fcntl)
+				      open close read write pread pwrite lseek dup dup2 fcntl ioctl)
 
     # The identifier of every defined builtin is stored in this array.
     declare -ga MMUX_BASH_POINTERS_DEFINED_BUILTINS

@@ -116,6 +116,10 @@
 #  include <stdbool.h>
 #endif
 
+#ifdef HAVE_SYS_IOCTL_H
+#  include <sys/ioctl.h>
+#endif
+
 #ifdef HAVE_WCHAR_H
 #  include <wchar.h>
 #endif

@@ -500,4 +500,50 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_fcntl]]],
     [[["mmux_libc_fcntl RVAR FD COMMAND ARG ..."]]],
     [[["Call fcntl with the given arguments, store the result in RVAR."]]])
 
+
+static int
+mmux_libc_ioctl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"mmux_libc_ioctl"
+{
+  int	fd, command;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[command]]],	[[[argv[3]]]]);
+
+  switch (command) {
+#if ((defined MMUX_HAVE_SIOCATMARK) && (1 == MMUX_HAVE_SIOCATMARK))
+  case SIOCATMARK:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv, atmark;
+
+	rv = ioctl(fd, command, &atmark);
+	if (-1 != rv) {
+	  mmux_bash_pointers_store_result_in_variable_sint(argv[4], atmark, MMUX_BUILTIN_NAME);
+	  return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
+	}
+      }
+    }
+    break;
+#endif
+  default:
+    fprintf(stderr, "%s: error: invalid command parameter \"%s\"\n", MMUX_BUILTIN_NAME, argv[3]);
+    goto argument_parse_error;
+  }
+
+ argument_parse_error:
+  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
+  return MMUX_FAILURE;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_ioctl]]],
+    [[[(4 <= argc)]]],
+    [[["mmux_libc_ioctl RVAR FD COMMAND ARG ..."]]],
+    [[["Call ioctl with the given arguments, store the result in RVAR."]]])
+
+
 /* end of file */
