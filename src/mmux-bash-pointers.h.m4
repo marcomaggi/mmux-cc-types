@@ -615,6 +615,11 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_HAVE_TYPE_D
 #undef  MMUX_BUILTIN_ENABLED
 #define MMUX_BUILTIN_ENABLED	0x01
 
+/* This definition must  match the definition of "ARRAYREF_BUILTIN"  in Bash's header
+   file "builtins.h". */
+#undef  MMUX_ARRAYREF_BUILTIN
+#define MMUX_ARRAYREF_BUILTIN	0x80
+
 typedef enum {
   MMUX_SUCCESS=0,
   MMUX_FAILURE=1

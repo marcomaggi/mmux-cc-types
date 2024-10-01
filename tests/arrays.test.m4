@@ -82,9 +82,10 @@ function arrays-pointer-1.2 () {
 	mmux_pointer_array_set $PTR  8 '0x34'
 	mmux_pointer_array_set $PTR 16 '0x56'
 
-	mmux_pointer_array_ref VALUE $PTR 0		;VALUES[0]=$VALUE
-	mmux_pointer_array_ref VALUE $PTR 8		;VALUES[1]=$VALUE
-	mmux_pointer_array_ref VALUE $PTR 16		;VALUES[2]=$VALUE
+	mmux_pointer_array_ref mbfl_slot_spec(VALUES,0) $PTR 0
+	mmux_pointer_array_ref mbfl_slot_spec(VALUES,1)  $PTR 8
+	mmux_pointer_array_ref mbfl_slot_spec(VALUES,2) $PTR 16
+	#mbfl_array_dump VALUES VALUES
     }
     mmux_libc_free $PTR
 

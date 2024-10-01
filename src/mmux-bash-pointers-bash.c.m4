@@ -121,7 +121,7 @@ store_string_in_variable (char const * variable_name, char const * const s_value
   if (global_variable) {
     shell_variable = bind_global_variable(variable_name, (char *)s_value, flags);
   } else {
-    shell_variable = bind_variable(variable_name, (char *)s_value, flags);
+    shell_variable = builtin_bind_variable((char *)variable_name, (char *)s_value, flags);
   }
 
   if (0) { fprintf(stderr, "%s: result of binding %p\n", __func__, (void*)shell_variable); }

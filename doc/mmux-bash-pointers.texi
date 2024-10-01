@@ -3928,10 +3928,10 @@ declare BUFFER
 @}
 
 @{
-    declare A B
+    declare -a VALUES
 
-    mmux_sint32_array_ref A $BUFFER 0
-    mmux_sint32_array_ref B $BUFFER 1
+    mmux_sint32_array_ref 'VALUES[0]' $BUFFER 0
+    mmux_sint32_array_ref 'VALUES[1]' $BUFFER 1
 @}
 @end example
 @end deffn
