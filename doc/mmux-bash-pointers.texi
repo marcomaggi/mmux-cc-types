@@ -3225,11 +3225,11 @@ formats like @samp{%0e}.
 @end quotation
 
 
-@macro MmuxSelectOutputFormatBuiltin{STEM,DEFAULT_FORMAT}
+@macro MmuxSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
 @deffn Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
 @deffnx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
 Select a new output format for string representations of floating--point numbers of type
-@objtype{\STEM\}.  The default format is @samp{\DEFAULT_FORMAT\}.
+@objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
 @end deffn
 
 @end macro
