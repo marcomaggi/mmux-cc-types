@@ -342,7 +342,7 @@ DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD12
 
 m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 int
-mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value)
+mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value, char const * caller_name)
 {
   int		rv, required_nbytes;
 
@@ -354,7 +354,7 @@ mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux
 
     rv = mmux_bash_pointers_sprint_$1(s_value, required_nbytes, value);
     if (MMUX_SUCCESS == rv) {
-      return mmux_bash_store_string_in_variable(variable_name, s_value, NULL);
+      return mmux_bash_store_string_in_variable(variable_name, s_value, caller_name);
     } else {
       return rv;
     }

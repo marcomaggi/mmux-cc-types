@@ -330,7 +330,8 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_$1_t * p_val
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_libc_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t v);
-mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value);
+mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value,
+									    char const * caller_name);
 ]]])]]])
 
 /* ------------------------------------------------------------------ */
@@ -351,7 +352,8 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_$1_t * p, ch
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_libc_$1_t v)
   __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t v);
-mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value);
+mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value,
+									    char const * caller_name);
 ]]])]]])
 
 /* ------------------------------------------------------------------ */

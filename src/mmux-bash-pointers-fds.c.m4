@@ -80,7 +80,7 @@ mmux_libc_open_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv
   {
     int		rv = open(argv[2], flags, mode);
     if (-1 != rv) {
-      return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv);
+      return mmux_bash_pointers_store_result_in_variable_sint(argv[1], rv, MMUX_BUILTIN_NAME);
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
     }
@@ -140,7 +140,7 @@ mmux_libc_read_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv
   {
     ssize_t	done = read(fd, buffer, size);
     if (-1 != done) {
-      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done);
+      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done, MMUX_BUILTIN_NAME);
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
     }
@@ -172,7 +172,7 @@ mmux_libc_write_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const arg
   {
     ssize_t	done = write(fd, buffer, size);
     if (-1 != done) {
-      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done);
+      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done, MMUX_BUILTIN_NAME);
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
     }
@@ -206,7 +206,7 @@ mmux_libc_pread_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const arg
   {
     ssize_t	done = pread(fd, buffer, size, offset);
     if (-1 != done) {
-      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done);
+      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done, MMUX_BUILTIN_NAME);
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
     }
@@ -240,7 +240,7 @@ mmux_libc_pwrite_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const ar
   {
     ssize_t	done = pwrite(fd, buffer, size, offset);
     if (-1 != done) {
-      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done);
+      return mmux_bash_pointers_store_result_in_variable_ssize(argv[1], done, MMUX_BUILTIN_NAME);
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
     }
@@ -271,7 +271,7 @@ mmux_libc_lseek_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const arg
   {
     offset = lseek(fd, offset, whence);
     if (-1 != offset) {
-      return mmux_bash_pointers_store_result_in_variable_off(argv[1], offset);
+      return mmux_bash_pointers_store_result_in_variable_off(argv[1], offset, MMUX_BUILTIN_NAME);
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BUILTIN_NAME);
     }
