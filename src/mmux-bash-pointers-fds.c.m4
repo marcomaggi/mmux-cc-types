@@ -193,10 +193,10 @@ mmux_libc_pread_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const arg
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_libc_pread"
 {
-  int		fd;
-  void *	buffer;
-  size_t	size;
-  off_t		offset;
+  int			fd;
+  void *		buffer;
+  size_t		size;
+  mmux_libc_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER([[[buffer]]],	[[[argv[3]]]]);
@@ -227,10 +227,10 @@ mmux_libc_pwrite_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const ar
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_libc_pwrite"
 {
-  int		fd;
-  void *	buffer;
-  size_t	size;
-  off_t		offset;
+  int			fd;
+  void *		buffer;
+  size_t		size;
+  mmux_libc_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER([[[buffer]]],	[[[argv[3]]]]);
@@ -261,8 +261,8 @@ mmux_libc_lseek_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const arg
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_libc_lseek"
 {
-  int		fd, whence;
-  off_t		offset;
+  int			fd, whence;
+  mmux_libc_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
   MMUX_BASH_PARSE_BUILTIN_ARG_OFF([[[offset]]],		[[[argv[3]]]]);
