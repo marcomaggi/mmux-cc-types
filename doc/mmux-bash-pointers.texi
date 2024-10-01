@@ -152,18 +152,10 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 @menu
 * overview::                    Overview of the package.
 * variables::                   Global variables.
-* memory::                      Standard memory allocation.
-* operations::                  Standard memory operations.
-* pointers::                    Memory block accessors and mutators.
-* arrays::                      Memory arrays accessors and mutators.
-* conversions::                 Converting data to and from memory blocks.
-* predicates::                  Type predicates.
-* comparison::                  Comparison builtins.
-* arithmetics::                 Arithmetics operation builtins.
-* complex::                     Basic complex number builtins.
-* bitwise::                     Bitwise operation builtins.
+* types::                       Interface to supported data types.
+* memory::                      Raw memory operations.
 * errors::                      Handling errors.
-* formats::                     Input and output formats.
+* fds::                         Core file descriptor operations.
 
 Appendices
 
@@ -421,6 +413,7 @@ underlying C language platform.
 * variables sizeof::            C language type sizes.
 * variables limits::            C language type maximum and minimum values.
 * variables errno::             Values of @code{errno}.
+* variables system::            Values of system constants.
 @end menu
 
 @c page
@@ -764,556 +757,126 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarErrno{ENOTRECOVERABLE}
 
 @c page
-@node memory
-@chapter Standard memory allocation
+@node variables system
+@section Values of system constants
 
 
-Basically, to allocate new memory we should do:
+If a C language constant referenced by one of the following variables is undefined: the
+corresponding Bash variable is undefined; we can test this condition with @code{test -v}; to test if
+the underlying platform implements the constant @code{O_EXEC}, we can do:
 
 @example
-declare PTR
-
-if mmux_libc_malloc PTR 123
-then exit 1
+if test -v mmux_libc_O_EXEC
+then # implemented
+else # not implemented
 fi
-@{
-  # do something
-@}
-mmux_libc_free $PTR
 @end example
 
-@noindent
-we must remember that if we execute code in a subshell: the pointers will not be valid across
-shells; so the following will not work:
-
-@example
-declare PTR
-
-$(mmux_libc_malloc PTR 123)
-mmux_libc_free $PTR
-@end example
-
-@noindent
-because @func{mmux_libc_malloc} allocates memory in a subshell.
-
-
-@deffn Builtin mmux_libc_malloc @var{PTRVAR} @var{SIZE}
-Allocate a memory block using the standard @cfunc{malloc} function; if successful return true,
-otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
-exact integer, itself representing the @code{errno} error code.
-
-The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
-representation of the pointer to the newly allocated block.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer, itself
-representing the requested number of bytes in the newly allocated block; it must fit the C language
-type @objtype{size_t}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
-Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
-otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
-@code{errno} error code.
-
-The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
-representation of the pointer to the newly allocated block.
-
-The argument @var{ITEM_COUNT} must be the string representation of an exact, positive, integer,
-itself representing the number of items the memory block has to contain; it must fit the C language
-type @objtype{size_t}.
-
-The argument @var{ITEM_SIZE} must be the string representation of an exact, positive, integer, itself
-representing the size of each item the memory block has to contain; it must fit the C language type
-@objtype{size_t}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
-Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
-otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
-@code{errno} error code.
-
-The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
-representation of the pointer to the newly allocated block.
-
-The argument @var{OLDPTR} must be the string representation of the old memory pointer.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer, itself
-representing the newly requested number of bytes in the newly allocated block; it must fit the C
-language type @objtype{size_t}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_free @var{PTR}
-Release a previously allocated memory block using the standard @cfunc{free} function; if successful
-return true, otherwise return false and set the shell variable @code{ERRNO} to an exact integer
-representing the @code{errno} error code.
-
-The argument @var{PTR} must be the string representation of a memory pointer referencing a
-previously allocated block.
-
-Notice that this builtin can fail if the argument @var{PTR} is not a valid pointer string
-representation; in this case the error code is @samp{EINVAL}.
-@end deffn
-
-@c page
-@node operations
-@chapter Standard memory operations
-
-
-The following builtins can fail if one of the arguments @var{PTR} is not a valid pointer string
-representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.
-
-
-@deffn Builtin mmux_libc_memset @var{PTR} @var{BYTE} @var{SIZE}
-Interface to the standard C language function @cfunc{memset}; if successful return true, otherwise
-return false and set the shell variable @code{ERRNO} to the string representation of an exact
-integer, itself representing an @code{errno} error code.
-
-The argument @var{PTR} must be the string representation of a pointer referencing a previously
-allocated memory block.
-
-The argument @var{BYTE} must be the string representation of an exact, positive, integer itself
-representing the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to set to @var{BYTE}; it must fit the C language type
-@objtype{size_t}.
-
-@example
-declare PTR SIZE=123
-
-mmux_libc_malloc PTR $SIZE
-mmux_libc_memset $PTR 1 $SIZE
-@end example
-@end deffn
-
-
-@deffn Builtin mmux_libc_memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
-Interface to the standard C language function @cfunc{memcpy}; if successful return true, otherwise
-return false and set the shell variable @code{ERRNO} to the string representation of an exact
-integer, itself representing an @code{errno} error code.
-
-The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the destination of the copy operation.
-
-The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the source of the copy operation.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare PTR_FROM PTR_TO SIZE=123
-
-mmux_libc_malloc PTR_FROM $SIZE
-mmux_libc_malloc PTR_TO   $SIZE
-
-mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
-@end example
-@end deffn
-
-
-@deffn Builtin mmux_libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
-Interface to the standard C language function @cfunc{memmove}; if successful return true, otherwise
-return false and set the shell variable @code{ERRNO} to the string representation of an exact
-integer, itself representing an @code{errno} error code.
-
-The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the destination of the copy operation.
-
-The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the source of the copy operation.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy.
-
-@example
-declare PTR_FROM PTR_TO SIZE=123
-
-mmux_libc_malloc PTR_FROM $SIZE
-mmux_libc_malloc PTR_TO   $SIZE
-
-mmux_libc_memmove $PTR_TO $PTR_FROM $SIZE
-@end example
-@end deffn
-
-@c page
-@node pointers
-@chapter Memory block accessors and mutators
-
-
-If we allocate memory using the standard C library functions, we can poke and peek values in the
-memory blocks:
-
-@example
-declare PTR VALUE
-
-mmux_libc_malloc PTR 1024
-@{
-  mmux_double_pointer_set $PTR 0 1.23
-  mmux_double_pointer_ref VALUE $PTR 0
-@}
-mmux_libc_free $PTR
-@end example
-
-For all the following builtins, the argument:
-
-@table @var
-@item POINTER
-must be the string representation of a memory pointer referencing a previously allocated block;
-
-@item OFFSET
-must be the string representation of an exact, non--negative integer, compatible with the C language
-type @code{size_t}, itself representing an offset from @var{POINTER} @strong{measured in bytes};
-
-@item VALUE
-must be the string representation of a number, compatible with a C language type of the specific
-mutator: such number is stored by the mutators at @var{OFFSET} from @var{POINTER};
-
-@item VALUEVAR
-must be a string representing the name of a shell variable: it is used by the accessors to store the
-value extracted at @var{OFFSET} from @var{POINTER}.
-@end table
-
-For all the following builtins: if the operation is successful, the return value is true; otherwise
-the return value is false and the shell variable @code{ERRNO} is set to the string representation of
-an exact integer, itself representing an @code{errno} error code.
-
-
-@macro MmuxDefineAccessorMutator{STEM}
-@deffn {Builtin Mutator} mmux_\STEM\_pointer_set @var{POINTER} @var{OFFSET} @var{VALUE}
-@deffnx {Builtin Accessor} mmux_\STEM\_pointer_ref @var{VALUEVAR} @var{POINTER} @var{OFFSET}
-Accessor and mutator for memory blocks operating on the C language type @code{\STEM\}.
-@end deffn
+@macro MmuxDefineGlobalVarSystemConstant{NAME}
+@defvar mmux_libc_\NAME\
+Global variable holding the value of the C language constant @code{\NAME\}.
+@end defvar
 
 @end macro
 
-@MmuxDefineAccessorMutator{pointer}
-
-@MmuxDefineAccessorMutator{schar}
-@MmuxDefineAccessorMutator{uchar}
-@MmuxDefineAccessorMutator{sint}
-@MmuxDefineAccessorMutator{uint}
-@MmuxDefineAccessorMutator{sshort}
-@MmuxDefineAccessorMutator{ushort}
-@MmuxDefineAccessorMutator{slong}
-@MmuxDefineAccessorMutator{ulong}
-@MmuxDefineAccessorMutator{sllong}
-@MmuxDefineAccessorMutator{ullong}
-@MmuxDefineAccessorMutator{float}
-@MmuxDefineAccessorMutator{double}
-@MmuxDefineAccessorMutator{ldouble}
-
-@MmuxDefineAccessorMutator{float32}
-@MmuxDefineAccessorMutator{float64}
-@MmuxDefineAccessorMutator{float128}
-
-@MmuxDefineAccessorMutator{float32x}
-@MmuxDefineAccessorMutator{float64x}
-@MmuxDefineAccessorMutator{float128x}
-
-@MmuxDefineAccessorMutator{decimal32}
-@MmuxDefineAccessorMutator{decimal64}
-@MmuxDefineAccessorMutator{decimal128}
-
-@MmuxDefineAccessorMutator{complexf}
-@MmuxDefineAccessorMutator{complexd}
-@MmuxDefineAccessorMutator{complexld}
-
-@MmuxDefineAccessorMutator{complexf32}
-@MmuxDefineAccessorMutator{complexf64}
-@MmuxDefineAccessorMutator{complexf128}
-
-@MmuxDefineAccessorMutator{complexf32x}
-@MmuxDefineAccessorMutator{complexf64x}
-@MmuxDefineAccessorMutator{complexf128x}
-
-@MmuxDefineAccessorMutator{complexd32}
-@MmuxDefineAccessorMutator{complexd64}
-@MmuxDefineAccessorMutator{complexd128}
-
-@MmuxDefineAccessorMutator{sint8}
-@MmuxDefineAccessorMutator{uint8}
-@MmuxDefineAccessorMutator{sint16}
-@MmuxDefineAccessorMutator{uint16}
-@MmuxDefineAccessorMutator{sint32}
-@MmuxDefineAccessorMutator{uint32}
-@MmuxDefineAccessorMutator{sint64}
-@MmuxDefineAccessorMutator{uint64}
-
-@MmuxDefineAccessorMutator{ssize}
-@MmuxDefineAccessorMutator{usize}
-@MmuxDefineAccessorMutator{sintmax}
-@MmuxDefineAccessorMutator{uintmax}
-@MmuxDefineAccessorMutator{sintptr}
-@MmuxDefineAccessorMutator{uintptr}
-@MmuxDefineAccessorMutator{mode}
-@MmuxDefineAccessorMutator{off}
-@MmuxDefineAccessorMutator{pid}
-@MmuxDefineAccessorMutator{uid}
-@MmuxDefineAccessorMutator{gid}
-
-@c page
-@node arrays
-@chapter Memory arrays accessors and mutators
-
-
-If we allocate memory using the standard C library functions, we can poke and peek values in the
-memory blocks, handling them as arrays of a specified C type:
-
-@example
-declare PTR VALUE
-
-mmux_libc_malloc PTR $(( 55 * mmux_libc_SIZEOF_ULONG ))
-@{
-  mmux_ulong_array_set $PTR 0 1234567890
-  mmux_ulong_array_ref VALUE $PTR 0
-@}
-mmux_libc_free $PTR
-@end example
-
-For all the following builtins, the argument:
-
-@table @var
-@item ARRAY
-must be the string representation of a memory pointer referencing a previously allocated block; the
-block is to be interpreted as an array of a specified C type;
-
-@item INDEX
-must be the string representation of an exact, non--negative integer, compatible with the C language
-type @code{size_t}, itself representing an index in @var{ARRAY};
-
-@item VALUE
-must be the string representation of a number, compatible with a C language type of the specific
-mutator: it is stored by the mutators at @var{INDEX} in @var{ARRAY};
-
-@item VALUEVAR
-must be a string representing the name of a shell variable: it is used by the accessors to store the
-value extracted at @var{INDEX} from @var{ARRAY}.
-@end table
-
-For all the following builtins: if the operation is successful, the return value is true; otherwise
-the return value is false and the shell variable @code{ERRNO} is set to the string representation of
-an exact integer, itself representing an @code{errno} error code.
-
-
-@macro MmuxDefineArrayAccessorMutator{STEM}
-@deffn {Builtin Mutator} mmux_\STEM\_array_set @var{ARRAY} @var{INDEX} @var{VALUE}
-@deffnx {Builtin Accessor} mmux_\STEM\_array_ref @var{VALUEVAR} @var{ARRAY} @var{INDEX}
-Accessor and mutator for memory blocks operating on the C language type @code{\STEM\}.
-@end deffn
-
-@end macro
-
-@MmuxDefineArrayAccessorMutator{pointer}
-
-@MmuxDefineArrayAccessorMutator{schar}
-@MmuxDefineArrayAccessorMutator{uchar}
-@MmuxDefineArrayAccessorMutator{sshort}
-@MmuxDefineArrayAccessorMutator{ushort}
-@MmuxDefineArrayAccessorMutator{sint}
-@MmuxDefineArrayAccessorMutator{uint}
-@MmuxDefineArrayAccessorMutator{slong}
-@MmuxDefineArrayAccessorMutator{ulong}
-@MmuxDefineArrayAccessorMutator{sllong}
-@MmuxDefineArrayAccessorMutator{ullong}
-@MmuxDefineArrayAccessorMutator{float}
-@MmuxDefineArrayAccessorMutator{double}
-@MmuxDefineArrayAccessorMutator{ldouble}
-
-@MmuxDefineArrayAccessorMutator{float32}
-@MmuxDefineArrayAccessorMutator{float64}
-@MmuxDefineArrayAccessorMutator{float128}
-
-@MmuxDefineArrayAccessorMutator{float32x}
-@MmuxDefineArrayAccessorMutator{float64x}
-@MmuxDefineArrayAccessorMutator{float128x}
-
-@MmuxDefineArrayAccessorMutator{decimal32}
-@MmuxDefineArrayAccessorMutator{decimal64}
-@MmuxDefineArrayAccessorMutator{decimal128}
-
-@MmuxDefineArrayAccessorMutator{complexf}
-@MmuxDefineArrayAccessorMutator{complexd}
-@MmuxDefineArrayAccessorMutator{complexld}
-
-@MmuxDefineArrayAccessorMutator{complexf32}
-@MmuxDefineArrayAccessorMutator{complexf64}
-@MmuxDefineArrayAccessorMutator{complexf128}
-
-@MmuxDefineArrayAccessorMutator{complexf32x}
-@MmuxDefineArrayAccessorMutator{complexf64x}
-@MmuxDefineArrayAccessorMutator{complexf128x}
-
-@MmuxDefineArrayAccessorMutator{complexd32}
-@MmuxDefineArrayAccessorMutator{complexd64}
-@MmuxDefineArrayAccessorMutator{complexd128}
-
-@MmuxDefineArrayAccessorMutator{sint8}
-@MmuxDefineArrayAccessorMutator{uint8}
-@MmuxDefineArrayAccessorMutator{sint16}
-@MmuxDefineArrayAccessorMutator{uint16}
-@MmuxDefineArrayAccessorMutator{sint32}
-@MmuxDefineArrayAccessorMutator{uint32}
-@MmuxDefineArrayAccessorMutator{sint64}
-@MmuxDefineArrayAccessorMutator{uint64}
-
-@MmuxDefineArrayAccessorMutator{ssize}
-@MmuxDefineArrayAccessorMutator{usize}
-@MmuxDefineArrayAccessorMutator{sintmax}
-@MmuxDefineArrayAccessorMutator{uintmax}
-@MmuxDefineArrayAccessorMutator{sintptr}
-@MmuxDefineArrayAccessorMutator{uintptr}
-@MmuxDefineArrayAccessorMutator{mode}
-@MmuxDefineArrayAccessorMutator{off}
-@MmuxDefineArrayAccessorMutator{pid}
-@MmuxDefineArrayAccessorMutator{uid}
-@MmuxDefineArrayAccessorMutator{gid}
+@MmuxDefineGlobalVarSystemConstant{EOF}
+@MmuxDefineGlobalVarSystemConstant{F_DUPFD}
+@MmuxDefineGlobalVarSystemConstant{F_GETFD}
+@MmuxDefineGlobalVarSystemConstant{F_GETFL}
+@MmuxDefineGlobalVarSystemConstant{F_GETLK}
+@MmuxDefineGlobalVarSystemConstant{F_GETOWN}
+@MmuxDefineGlobalVarSystemConstant{F_OK}
+@MmuxDefineGlobalVarSystemConstant{F_RDLCK}
+@MmuxDefineGlobalVarSystemConstant{F_SETFD}
+@MmuxDefineGlobalVarSystemConstant{F_SETFL}
+@MmuxDefineGlobalVarSystemConstant{F_SETLK}
+@MmuxDefineGlobalVarSystemConstant{F_SETLKW}
+@MmuxDefineGlobalVarSystemConstant{F_SETOWN}
+@MmuxDefineGlobalVarSystemConstant{F_UNLCK}
+@MmuxDefineGlobalVarSystemConstant{F_WRLCK}
+@MmuxDefineGlobalVarSystemConstant{O_ACCMODE}
+@MmuxDefineGlobalVarSystemConstant{O_APPEND}
+@MmuxDefineGlobalVarSystemConstant{O_ASYNC}
+@MmuxDefineGlobalVarSystemConstant{O_CLOEXEC}
+@MmuxDefineGlobalVarSystemConstant{O_CREAT}
+@MmuxDefineGlobalVarSystemConstant{O_DIRECT}
+@MmuxDefineGlobalVarSystemConstant{O_DIRECTORY}
+@MmuxDefineGlobalVarSystemConstant{O_EXCL}
+@MmuxDefineGlobalVarSystemConstant{O_EXEC}
+@MmuxDefineGlobalVarSystemConstant{O_EXLOCK}
+@MmuxDefineGlobalVarSystemConstant{O_FSYNC}
+@MmuxDefineGlobalVarSystemConstant{O_IGNORE_CTTY}
+@MmuxDefineGlobalVarSystemConstant{O_LARGEFILE}
+@MmuxDefineGlobalVarSystemConstant{O_NDELAY}
+@MmuxDefineGlobalVarSystemConstant{O_NOATIME}
+@MmuxDefineGlobalVarSystemConstant{O_NOCTTY}
+@MmuxDefineGlobalVarSystemConstant{O_NOFOLLOW}
+@MmuxDefineGlobalVarSystemConstant{O_NOLINK}
+@MmuxDefineGlobalVarSystemConstant{O_NONBLOCK}
+@MmuxDefineGlobalVarSystemConstant{O_NOTRANS}
+@MmuxDefineGlobalVarSystemConstant{O_RDONLY}
+@MmuxDefineGlobalVarSystemConstant{O_RDWR}
+@MmuxDefineGlobalVarSystemConstant{O_READ}
+@MmuxDefineGlobalVarSystemConstant{O_SHLOCK}
+@MmuxDefineGlobalVarSystemConstant{O_SYNC}
+@MmuxDefineGlobalVarSystemConstant{O_TRUNC}
+@MmuxDefineGlobalVarSystemConstant{O_WRITE}
+@MmuxDefineGlobalVarSystemConstant{O_WRONLY}
+@MmuxDefineGlobalVarSystemConstant{R_OK}
+@MmuxDefineGlobalVarSystemConstant{SEEK_CUR}
+@MmuxDefineGlobalVarSystemConstant{SEEK_END}
+@MmuxDefineGlobalVarSystemConstant{SEEK_SET}
+@MmuxDefineGlobalVarSystemConstant{S_IRGRP}
+@MmuxDefineGlobalVarSystemConstant{S_IROTH}
+@MmuxDefineGlobalVarSystemConstant{S_IRUSR}
+@MmuxDefineGlobalVarSystemConstant{S_IRWXG}
+@MmuxDefineGlobalVarSystemConstant{S_IRWXO}
+@MmuxDefineGlobalVarSystemConstant{S_IRWXU}
+@MmuxDefineGlobalVarSystemConstant{S_ISGID}
+@MmuxDefineGlobalVarSystemConstant{S_ISUID}
+@MmuxDefineGlobalVarSystemConstant{S_ISVTX}
+@MmuxDefineGlobalVarSystemConstant{S_IWGRP}
+@MmuxDefineGlobalVarSystemConstant{S_IWOTH}
+@MmuxDefineGlobalVarSystemConstant{S_IWUSR}
+@MmuxDefineGlobalVarSystemConstant{S_IXGRP}
+@MmuxDefineGlobalVarSystemConstant{S_IXOTH}
+@MmuxDefineGlobalVarSystemConstant{S_IXUSR}
+@MmuxDefineGlobalVarSystemConstant{W_OK}
+@MmuxDefineGlobalVarSystemConstant{X_OK}
 
 @c page
-@node conversions
-@chapter Converting data to and from memory blocks
+@node types
+@chapter Interface to supported data types
 
 
 @menu
-* conversions arrays::          Converting data to and from index arrays.
-* conversions strings::         Converting data to and from strings.
+* types predicates::            Type predicates.
+* types comparison::            Comparison builtins.
+* types arithmetics::           Arithmetics operation builtins.
+* types complex::               Basic complex number builtins.
+* types bitwise::               Bitwise operation builtins.
+* types formats::               Input and output formats.
 @end menu
 
 @c page
-@node conversions arrays
-@section Converting data to and from index arrays
-
-
-@defun mmux-bash-pointers-array-from-memory @var{ARRY_TO} @var{PTR_FROM} @var{SIZE}
-Copy byte by byte data from a memory block into a Bash index array.
-
-The argument @var{ARRY_TO} must be a string representing the name of a Bash index array; this
-function stores in this array the bytes from the memory block, starting from index zero.
-
-The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the source of the copy operation.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare POINTER
-declare -i SIZE=5
-declare -a ARRY
-
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
-
-mmux-bash-pointers-array-from-memory ARRY $POINTER $SIZE
-@end example
-@end defun
-
-
-@defun mmux-bash-pointers-memory-from-array @var{PTR_TO} @var{ARRY_FROM} @var{SIZE}
-Copy byte by byte data from a Bash index array into a memory block.
-
-The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the target of the copy operation.
-
-The argument @var{ARRY_FROM} must be a string representing the name of a Bash index array; this
-function reads from this array the bytes to store in the memory block, starting from index zero.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare POINTER
-declare -i SIZE=5
-declare -a ARRY=(1 2 3 4 5)
-
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
-
-mmux-bash-pointers-memory-from-array $POINTER ARRY $SIZE
-@end example
-@end defun
-
-@c page
-@node conversions strings
-@section Converting data to and from strings
-
-
-@defun mmux-bash-pointers-string-from-memory @var{STRINGVAR_TO} @var{PTR_FROM} @var{SIZE}
-Copy byte by byte data from a memory block into a Bash string.
-
-The argument @var{STRINGVAR_TO} must be a string representing a Bash variable name; this function
-stores in this variable a string built with the bytes from the memory block, starting from index
-zero.
-
-The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the source of the copy operation.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare POINTER
-declare -i SIZE=5
-declare STRING
-
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
-
-mmux-bash-pointers-string-from-memory STRING $POINTER $SIZE
-@end example
-@end defun
-
-
-@defun mmux-bash-pointers-memory-from-string @var{PTR_TO} @var{STRING_FROM} @var{SIZE}
-Copy byte by byte data from a Bash string into a memory block.
-
-The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the target of the copy operation.
-
-The argument @var{STRING_FROM} must be a string; this function reads from this strings the bytes to
-store in the memory block, starting from index zero.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare POINTER
-declare -i SIZE=5
-declare -a STRING="12345"
-
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
-
-mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
-@end example
-@end defun
-
-@c page
-@node predicates
-@chapter Type predicates
+@node types predicates
+@section Type predicates
 
 
 @menu
-* predicates stringrep::        String representation predicates.
-* predicates zero::             Zero number predicates.
-* predicates positive::         Positive number predicates.
-* predicates negative::         Negative number predicates.
-* predicates non-positive::     Non-positive number predicates.
-* predicates non-negative::     Non-negative number predicates.
-* predicates nan::              Not-a-number predicates.
-* predicates infinite::         Infinite number predicates.
+* types predicates stringrep::        String representation predicates.
+* types predicates zero::             Zero number predicates.
+* types predicates positive::         Positive number predicates.
+* types predicates negative::         Negative number predicates.
+* types predicates non-positive::     Non-positive number predicates.
+* types predicates non-negative::     Non-negative number predicates.
+* types predicates nan::              Not-a-number predicates.
+* types predicates infinite::         Infinite number predicates.
 @end menu
 
 @c page
-@node predicates stringrep
-@section String representation predicates
+@node types predicates stringrep
+@subsection String representation predicates
 
 
 @macro MmuxDefineTypePredicateStringrepBuiltin{STEM}
@@ -1392,8 +955,8 @@ return false.
 @MmuxDefineTypePredicateStringrepBuiltin{wint}
 
 @c page
-@node predicates zero
-@section Zero number predicates
+@node types predicates zero
+@subsection Zero number predicates
 
 
 @macro MmuxDefineTypePredicateZeroBuiltin{STEM}
@@ -1472,8 +1035,8 @@ zero number; otherwise return false.
 @MmuxDefineTypePredicateZeroBuiltin{wint}
 
 @c page
-@node predicates positive
-@section Positive number predicates
+@node types predicates positive
+@subsection Positive number predicates
 
 
 @macro MmuxDefineTypePredicatePositiveBuiltin{STEM}
@@ -1537,8 +1100,8 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{wint}
 
 @c page
-@node predicates negative
-@section Negative number predicates
+@node types predicates negative
+@subsection Negative number predicates
 
 
 @macro MmuxDefineTypePredicateNegativeBuiltin{STEM}
@@ -1610,8 +1173,8 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{wint}
 
 @c page
-@node predicates non-positive
-@section Non--positive number predicates
+@node types predicates non-positive
+@subsection Non--positive number predicates
 
 
 @macro MmuxDefineTypePredicateNonPositiveBuiltin{STEM}
@@ -1674,8 +1237,8 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{wint}
 
 @c page
-@node predicates non-negative
-@section Non--negative number predicates
+@node types predicates non-negative
+@subsection Non--negative number predicates
 
 
 @macro MmuxDefineTypePredicateNonNegativeBuiltin{STEM}
@@ -1738,8 +1301,8 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{wint}
 
 @c page
-@node predicates nan
-@section Not--a--number predicates
+@node types predicates nan
+@subsection Not--a--number predicates
 
 
 @macro MmuxDefineTypePredicateNanBuiltin{STEM}
@@ -1818,8 +1381,8 @@ not--a--number value; otherwise return false.
 @MmuxDefineTypePredicateNanBuiltin{wint}
 
 @c page
-@node predicates infinite
-@section Infinite number predicates
+@node types predicates infinite
+@subsection Infinite number predicates
 
 
 @macro MmuxDefineTypePredicateInfiniteBuiltin{STEM}
@@ -1898,18 +1461,18 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{wint}
 
 @c page
-@node comparison
-@chapter Comparison builtins
+@node types comparison
+@section Comparison builtins
 
 
 @menu
-* comparison exact::            Exact comparison builtins.
-* comparison approximate::      Approximate comparison builtins.
+* types comparison exact::            Exact comparison builtins.
+* types comparison approximate::      Approximate comparison builtins.
 @end menu
 
 @c page
-@node comparison exact
-@section Exact comparison builtins
+@node types comparison exact
+@subsection Exact comparison builtins
 
 
 @gnu{} Bash already implements comparison operations for integer values, and such implementation
@@ -2049,18 +1612,18 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonExactBuiltin{wint}
 
 @c page
-@node comparison approximate
-@section Approximate comparison builtins
+@node types comparison approximate
+@subsection Approximate comparison builtins
 
 
 @menu
-* comparison approximate absmargin::  Absolute margin criterion.
-* comparison approximate relepsilon:: Relative epsilon criterion.
+* types comparison approximate absmargin::  Absolute margin criterion.
+* types comparison approximate relepsilon:: Relative epsilon criterion.
 @end menu
 
 @c page
-@node comparison approximate absmargin
-@subsection Absolute margin criterion
+@node types comparison approximate absmargin
+@subsubsection Absolute margin criterion
 
 
 To compare two floating--point numbers with the criterion of the absolute margin, we do:
@@ -2160,12 +1723,12 @@ For complex numbers: the variable holds a complex number; its real part is the m
 of real parts; its imaginary part is the margin for comparison of imaginary parts.
 
 When a shell variable is not set: the default margin for real numbers is @samp{1e-6}; the default
-margin for complex numbers is @samp{(1e-6)+i*(1e-6)}.
+margin for complex numbers is @samp{(1e-6)+i* types(1e-6)}.
 @end defvar
 
 @c page
-@node comparison approximate relepsilon
-@subsection Relative epsilon criterion
+@node types comparison approximate relepsilon
+@subsubsection Relative epsilon criterion
 
 
 To compare two floating--point numbers with the criterion of the relative epsilon, we do:
@@ -2214,15 +1777,15 @@ When multiple operands are present: @varo{OP} is compared with all the other ope
 comparing real numbers, the predicate is:
 
 @example
-abs(@varo{OP} - @var{OP}) <= (@var{EPSILON} * max(abs(@varo{OP}), abs(@var{OP})))
+abs(@varo{OP} - @var{OP}) <= (@var{EPSILON} * types max(abs(@varo{OP}), abs(@var{OP})))
 @end example
 
 @noindent
 when comparing complex numbers, the predicate is:
 
 @example
-abs(@varo{OP_RE} - @var{OP_RE}) <= (@var{EPSILON_RE} * max(abs(@varo{OP_RE}), abs(@var{OP_RE}))) &&
-abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * max(abs(@varo{OP_IM}), abs(@var{OP_IM})))
+abs(@varo{OP_RE} - @var{OP_RE}) <= (@var{EPSILON_RE} * types max(abs(@varo{OP_RE}), abs(@var{OP_RE}))) &&
+abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * types max(abs(@varo{OP_IM}), abs(@var{OP_IM})))
 @end example
 
 @noindent
@@ -2265,12 +1828,12 @@ For complex numbers: the variable holds a complex number; its real part is the e
 comparison of real parts; its imaginary part is the epsilon for comparison of imaginary parts.
 
 When a shell variable is not set: the default epsilon for real numbers is @samp{1e-6}; the default
-epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
+epsilon for complex numbers is @samp{(1e-6)+i* types(1e-6)}.
 @end defvar
 
 @c page
-@node arithmetics
-@chapter Arithmetics operation builtins
+@node types arithmetics
+@section Arithmetics operation builtins
 
 
 @gnu{} Bash already implements arithmetics operations for integer values, and such implementation
@@ -2278,19 +1841,19 @@ might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for
 bitwise operations are implemented for every supported data type.
 
 @menu
-* arithmetics addition::        Addition builtins.
-* arithmetics subtraction::     Subtraction builtins.
-* arithmetics multiplication::  Multiplication builtins.
-* arithmetics division::        Division builtins.
-* arithmetics remainder::       Remainder builtins.
-* arithmetics negation::        Negation builtins.
-* arithmetics inversion::       Inversion builtins.
-* arithmetics incrdecr::        Increment and decrement builtins.
+* types arithmetics addition::        Addition builtins.
+* types arithmetics subtraction::     Subtraction builtins.
+* types arithmetics multiplication::  Multiplication builtins.
+* types arithmetics division::        Division builtins.
+* types arithmetics remainder::       Remainder builtins.
+* types arithmetics negation::        Negation builtins.
+* types arithmetics inversion::       Inversion builtins.
+* types arithmetics incrdecr::        Increment and decrement builtins.
 @end menu
 
 @c page
-@node arithmetics addition
-@section Addition builtins
+@node types arithmetics addition
+@subsection Addition builtins
 
 
 @deffn Builtin mmux_pointer_add @var{PTRVAR} @var{PTR} @var{DELTA}
@@ -2397,8 +1960,8 @@ Perform the addition between values of type @code{\STEM\}.
 @MmuxDefineTypeAdditionBuiltin{wint}
 
 @c page
-@node arithmetics subtraction
-@section Subtraction builtins
+@node types arithmetics subtraction
+@subsection Subtraction builtins
 
 
 For the following builtins, the subtraction operation is as follows:
@@ -2488,14 +2051,14 @@ Perform the subtraction between values of type @code{\STEM\}.
 @MmuxDefineTypeSubtractionBuiltin{wint}
 
 @c page
-@node arithmetics multiplication
-@section Multiplication builtins
+@node types arithmetics multiplication
+@subsection Multiplication builtins
 
 
 For the following builtins, the multiplication operation is as follows:
 
 @example
-@var{ROP} = @varo{OP} * @var{OP} * @dots{}
+@var{ROP} = @varo{OP} * types @var{OP} * types @dots{}
 @end example
 
 @noindent
@@ -2579,14 +2142,14 @@ Perform the multiplication between values of type @code{\STEM\}.
 @MmuxDefineTypeMultiplicationBuiltin{wint}
 
 @c page
-@node arithmetics division
-@section Division builtins
+@node types arithmetics division
+@subsection Division builtins
 
 
 For the following builtins, the division operation is as follows:
 
 @example
-@var{ROP} = @varo{OP} * @var{OP} * @dots{}
+@var{ROP} = @varo{OP} * types @var{OP} * types @dots{}
 @end example
 
 @noindent
@@ -2670,8 +2233,8 @@ Perform the division between values of type @code{\STEM\}.
 @MmuxDefineTypeDivisionBuiltin{wint}
 
 @c page
-@node arithmetics remainder
-@section Remainder builtins
+@node types arithmetics remainder
+@subsection Remainder builtins
 
 
 For the following builtins, the remainder operation is as follows:
@@ -2730,8 +2293,8 @@ Perform the remainder between values of type @code{\STEM\}.
 @MmuxDefineTypeRemainderBuiltin{wint}
 
 @c page
-@node arithmetics negation
-@section Negation builtins
+@node types arithmetics negation
+@subsection Negation builtins
 
 
 For the following builtins, the negation operation is as follows:
@@ -2820,8 +2383,8 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{wint}
 
 @c page
-@node arithmetics inversion
-@section Inversion builtins
+@node types arithmetics inversion
+@subsection Inversion builtins
 
 
 For the following builtins, the inversion operation is as follows:
@@ -2907,8 +2470,8 @@ Perform the inversion of a value of type @code{\STEM\}.
 @MmuxDefineTypeInversionBuiltin{wint}
 
 @c page
-@node arithmetics incrdecr
-@section Increment and decrement builtins
+@node types arithmetics incrdecr
+@subsection Increment and decrement builtins
 
 
 @macro MmuxDefineTypeIncrdecrBuiltin{STEM}
@@ -2954,21 +2517,21 @@ Increment or decrement @var{OP}, store the result in the shell variable @var{ROP
 @MmuxDefineTypeIncrdecrBuiltin{wint}
 
 @c page
-@node complex
-@chapter Basic complex number builtins
+@node types complex
+@section Basic complex number builtins
 
 
 @menu
-* complex make::                Constructing complex numbers.
-* complex parts::               Extracting the real and imaginary parts.
-* complex abs::                 Computing the absolute value.
-* complex arg::                 Computing the argument value.
-* complex conj::                Computing the complex conjugate value.
+* types complex make::          Constructing complex numbers.
+* types complex parts::         Extracting the real and imaginary parts.
+* types complex abs::           Computing the absolute value.
+* types complex arg::           Computing the argument value.
+* types complex conj::          Computing the complex conjugate value.
 @end menu
 
 @c page
-@node complex make
-@section Constructing complex numbers
+@node types complex make
+@subsection Constructing complex numbers
 
 
 To construct a complex number from its real and imaginary parts, we do:
@@ -2977,7 +2540,7 @@ To construct a complex number from its real and imaginary parts, we do:
 declare ROP
 
 mmux_complexd_make_rectangular ROP '1.2' '3.4'
-"$ROP"  @result{} (1.2)+i*(3.4)
+"$ROP"  @result{} (1.2)+i* types(3.4)
 @end example
 
 
@@ -3008,14 +2571,14 @@ in the shell variable @var{ROPVAR}.
 @MmuxDefineComplexMakeRectangularBuiltin{complexd128, decimal128}
 
 @c page
-@node complex parts
-@section Extracting the real and imaginary parts
+@node types complex parts
+@subsection Extracting the real and imaginary parts
 
 
 To extract the real and imaginary parts of a complex number, we do:
 
 @example
-declare Z='(1.2)+i*(3.4)' REP IMP
+declare Z='(1.2)+i* types(3.4)' REP IMP
 
 mmux_complexd_real_part REP "$Z"
 mmux_complexd_real_part IMP "$Z"
@@ -3051,14 +2614,14 @@ variable @var{REPVAR} or @var{IMPVAR}.
 @MmuxDefineComplexRealImagPartBuiltin{complexd128, decimal128}
 
 @c page
-@node complex abs
-@section Computing the absolute value
+@node types complex abs
+@subsection Computing the absolute value
 
 
 To compute the absolute value of a complex number, we do:
 
 @example
-declare Z='(1.2)+i*(3.4)' A
+declare Z='(1.2)+i* types(3.4)' A
 
 mmux_complexd_abs A "$Z"
 "$A"    @result{} 3.605551275463989
@@ -3091,14 +2654,14 @@ Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the
 @MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
 
 @c page
-@node complex arg
-@section Computing the argument value
+@node types complex arg
+@subsection Computing the argument value
 
 
 To compute the argument value of a complex number, we do:
 
 @example
-declare Z='(1.2)+i*(3.4)' A
+declare Z='(1.2)+i* types(3.4)' A
 
 mmux_complexd_arg A "$Z"
 "$A"    @result{} 1.231503712340852
@@ -3131,17 +2694,17 @@ Extract the argument value, which will be of type @objtype{\REALSTEM\}, from the
 @MmuxDefineComplexArgBuiltin{complexd128, decimal128}
 
 @c page
-@node complex conj
-@section Computing the complex conjugate value
+@node types complex conj
+@subsection Computing the complex conjugate value
 
 
 To compute the complex conjugate value of a complex number, we do:
 
 @example
-declare Z='(1.2)+i*(3.4)' W
+declare Z='(1.2)+i* types(3.4)' W
 
 mmux_complexd_conj W "$Z"
-"$W"    @result{} (1.2)+i*(-3.4)
+"$W"    @result{} (1.2)+i* types(-3.4)
 @end example
 
 
@@ -3171,8 +2734,8 @@ variable @var{CONJVAR}.
 @MmuxDefineComplexConjBuiltin{complexd128, decimal128}
 
 @c page
-@node bitwise
-@chapter Bitwise operation builtins
+@node types bitwise
+@section Bitwise operation builtins
 
 
 @gnu{} Bash already implements bitwise operations for integer values, and such implementation might
@@ -3180,17 +2743,17 @@ be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for compl
 operations are implemented for every supported data type.
 
 @menu
-* bitwise and::                 Bitwise AND operation.
-* bitwise or::                  Bitwise OR operation.
-* bitwise xor::                 Bitwise XOR operation.
-* bitwise not::                 Bitwise NOT operation.
-* bitwise shl::                 Bitwise shift--left operation.
-* bitwise shr::                 Bitwise shift--right operation.
+* types bitwise and::           Bitwise AND operation.
+* types bitwise or::            Bitwise OR operation.
+* types bitwise xor::           Bitwise XOR operation.
+* types bitwise not::           Bitwise NOT operation.
+* types bitwise shl::           Bitwise shift--left operation.
+* types bitwise shr::           Bitwise shift--right operation.
 @end menu
 
 @c page
-@node bitwise and
-@section Bitwise AND operation
+@node types bitwise and
+@subsection Bitwise AND operation
 
 
 @deffn Builtin mmux_pointer_bitwise_and @var{PTRVAR} @var{PTR} @var{MASK}
@@ -3264,8 +2827,8 @@ Perform the bitwise AND operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseAndBuiltin{wint}
 
 @c page
-@node bitwise or
-@section Bitwise OR operation
+@node types bitwise or
+@subsection Bitwise OR operation
 
 
 @deffn Builtin mmux_pointer_bitwise_or @var{PTRVAR} @var{PTR} @var{MASK}
@@ -3339,8 +2902,8 @@ Perform the bitwise OR operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseOrBuiltin{wint}
 
 @c page
-@node bitwise xor
-@section Bitwise XOR operation
+@node types bitwise xor
+@subsection Bitwise XOR operation
 
 
 @deffn Builtin mmux_pointer_bitwise_xor @var{PTRVAR} @var{PTR} @var{MASK}
@@ -3414,8 +2977,8 @@ Perform the bitwise XOR operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseXorBuiltin{wint}
 
 @c page
-@node bitwise not
-@section Bitwise NOT operation
+@node types bitwise not
+@subsection Bitwise NOT operation
 
 
 @deffn Builtin mmux_pointer_bitwise_not @var{PTRVAR} @var{PTR}
@@ -3483,8 +3046,8 @@ Perform the bitwise NOT operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseNotBuiltin{wint}
 
 @c page
-@node bitwise shl
-@section Bitwise shift--left operation
+@node types bitwise shl
+@subsection Bitwise shift--left operation
 
 
 All the following builtins perform the bitwise shift--left operation on a value @var{OP}, shifting
@@ -3537,8 +3100,8 @@ Perform the bitwise shift--left operation on an operand of type \STEM\.
 @MmuxDefineTypeBitwiseShlBuiltin{wint}
 
 @c page
-@node bitwise shr
-@section Bitwise shift--right operation
+@node types bitwise shr
+@subsection Bitwise shift--right operation
 
 
 All the following builtins perform the bitwise shift--right operation on a value @var{OP}, shifting
@@ -3591,67 +3154,17 @@ Perform the bitwise shift--right operation on an operand of type \STEM\.
 @MmuxDefineTypeBitwiseShrBuiltin{wint}
 
 @c page
-@node errors
-@chapter Handling errors
-
-
-@defvr {Shell Variable} ERRNO
-If an error occurs in the call to a builtin that interfaces a Standard C Library function: the
-builtin will set the shell variable @env{ERRNO} to the string representation of an exact integer,
-itself representing a standard @code{errno} code.
-
-@example
-declare PTR ERRNO=0 SYM
-
-mmux_libc_malloc PTR 'ciao'
-mmux-bash-pointers-errno-to-string SYM $ERRNO
-$SYM    @result{} EINVAL
-@end example
-@end defvr
-
-
-@deffn Builtin mmux_libc_strerror @var{MSGVAR} @var{ERRNUM}
-Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
-representation of an exact integer, itself representing a valid value for @code{errno}; @var{ERRNUM}
-must fit the C language type @code{int}.
-
-@example
-declare MSG
-
-if test -v mmux_libc_EINVAL
-then mmux_libc_strerror MSG $mmux_libc_EINVAL
-else MSG='EINVAL undefined'
-fi
-
-"$MSG"  @result{} Invalid argument
-@end example
-@end deffn
-
-
-@defun mmux-bash-pointers-errno-to-string @var{SYMVAR} @var{ERRNUM}
-Store in @var{SYMVAR} a string representation of the @code{errno} code @var{ERRNUM}.  When
-successful return true, otherwise return false.
-
-@example
-declare SYM
-
-mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
-"$SYM"  @result{} ENOMEM
-@end example
-@end defun
-
-@c page
-@node formats
-@chapter Input and output formats
+@node types formats
+@section Input and output formats
 
 
 @menu
-* formats float::               Selecting the printing format for floating--point numbers.
+* types formats float::         Selecting the printing format for floating--point numbers.
 @end menu
 
 @c page
-@node formats float
-@section Selecting the printing format for floating--point numbers
+@node types formats float
+@subsection Selecting the printing format for floating--point numbers
 
 
 To select an output format for the result of operations, we do:
@@ -3735,6 +3248,635 @@ Select a new output format for string representations of floating--point numbers
 @MmuxSelectOutputFormatBuiltin{decimal32, %f}
 @MmuxSelectOutputFormatBuiltin{decimal64, %f}
 @MmuxSelectOutputFormatBuiltin{decimal128, %f}
+
+@c page
+@node memory
+@chapter Raw memory operations
+
+
+@menu
+* memory alloc::                Standard memory allocation.
+* memory operations::           Standard memory operations.
+* memory pointers::             Memory block accessors and mutators.
+* memory arrays::               Memory arrays accessors and mutators.
+* memory conversions::          Converting data to and from memory blocks.
+@end menu
+
+@c page
+@node memory alloc
+@section Standard memory allocation
+
+
+Basically, to allocate new memory we should do:
+
+@example
+declare PTR
+
+if mmux_libc_malloc PTR 123
+then exit 1
+fi
+@{
+  # do something
+@}
+mmux_libc_free $PTR
+@end example
+
+@noindent
+we must remember that if we execute code in a subshell: the pointers will not be valid across
+shells; so the following will not work:
+
+@example
+declare PTR
+
+$(mmux_libc_malloc PTR 123)
+mmux_libc_free $PTR
+@end example
+
+@noindent
+because @func{mmux_libc_malloc} allocates memory in a subshell.
+
+
+@deffn Builtin mmux_libc_malloc @var{PTRVAR} @var{SIZE}
+Allocate a memory block using the standard @cfunc{malloc} function; if successful return true,
+otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
+exact integer, itself representing the @code{errno} error code.
+
+The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
+representation of the pointer to the newly allocated block.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer, itself
+representing the requested number of bytes in the newly allocated block; it must fit the C language
+type @objtype{size_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_calloc @var{PTRVAR} @var{ITEM_COUNT} @var{ITEM_SIZE}
+Allocate a memory block using the standard @cfunc{calloc} function; if successful return true,
+otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
+@code{errno} error code.
+
+The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
+representation of the pointer to the newly allocated block.
+
+The argument @var{ITEM_COUNT} must be the string representation of an exact, positive, integer,
+itself representing the number of items the memory block has to contain; it must fit the C language
+type @objtype{size_t}.
+
+The argument @var{ITEM_SIZE} must be the string representation of an exact, positive, integer, itself
+representing the size of each item the memory block has to contain; it must fit the C language type
+@objtype{size_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_realloc @var{PTRVAR} @var{OLDPTR} @var{NEWSIZE}
+Reallocate a memory block using the standard @cfunc{realloc} function; if successful return true,
+otherwise return false and set the shell variable @code{ERRNO} to an exact integer representing the
+@code{errno} error code.
+
+The argument @var{PTRVAR} must be the name of a variable in which this builtin will store a string
+representation of the pointer to the newly allocated block.
+
+The argument @var{OLDPTR} must be the string representation of the old memory pointer.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer, itself
+representing the newly requested number of bytes in the newly allocated block; it must fit the C
+language type @objtype{size_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_free @var{PTR}
+Release a previously allocated memory block using the standard @cfunc{free} function; if successful
+return true, otherwise return false and set the shell variable @code{ERRNO} to an exact integer
+representing the @code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a memory pointer referencing a
+previously allocated block.
+
+Notice that this builtin can fail if the argument @var{PTR} is not a valid pointer string
+representation; in this case the error code is @samp{EINVAL}.
+@end deffn
+
+@c page
+@node memory operations
+@section Standard memory operations
+
+
+The following builtins can fail if one of the arguments @var{PTR} is not a valid pointer string
+representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.
+
+
+@deffn Builtin mmux_libc_memset @var{PTR} @var{BYTE} @var{SIZE}
+Interface to the standard C language function @cfunc{memset}; if successful return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
+
+The argument @var{PTR} must be the string representation of a pointer referencing a previously
+allocated memory block.
+
+The argument @var{BYTE} must be the string representation of an exact, positive, integer itself
+representing the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to set to @var{BYTE}; it must fit the C language type
+@objtype{size_t}.
+
+@example
+declare PTR SIZE=123
+
+mmux_libc_malloc PTR $SIZE
+mmux_libc_memset $PTR 1 $SIZE
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_memcpy @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+Interface to the standard C language function @cfunc{memcpy}; if successful return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the destination of the copy operation.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare PTR_FROM PTR_TO SIZE=123
+
+mmux_libc_malloc PTR_FROM $SIZE
+mmux_libc_malloc PTR_TO   $SIZE
+
+mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+Interface to the standard C language function @cfunc{memmove}; if successful return true, otherwise
+return false and set the shell variable @code{ERRNO} to the string representation of an exact
+integer, itself representing an @code{errno} error code.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the destination of the copy operation.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy.
+
+@example
+declare PTR_FROM PTR_TO SIZE=123
+
+mmux_libc_malloc PTR_FROM $SIZE
+mmux_libc_malloc PTR_TO   $SIZE
+
+mmux_libc_memmove $PTR_TO $PTR_FROM $SIZE
+@end example
+@end deffn
+
+@c page
+@node memory pointers
+@section Memory block accessors and mutators
+
+
+If we allocate memory using the standard C library functions, we can poke and peek values in the
+memory blocks:
+
+@example
+declare PTR VALUE
+
+mmux_libc_malloc PTR 1024
+@{
+  mmux_double_pointer_set $PTR 0 1.23
+  mmux_double_pointer_ref VALUE $PTR 0
+@}
+mmux_libc_free $PTR
+@end example
+
+For all the following builtins, the argument:
+
+@table @var
+@item POINTER
+must be the string representation of a memory pointer referencing a previously allocated block;
+
+@item OFFSET
+must be the string representation of an exact, non--negative integer, compatible with the C language
+type @code{size_t}, itself representing an offset from @var{POINTER} @strong{measured in bytes};
+
+@item VALUE
+must be the string representation of a number, compatible with a C language type of the specific
+mutator: such number is stored by the mutators at @var{OFFSET} from @var{POINTER};
+
+@item VALUEVAR
+must be a string representing the name of a shell variable: it is used by the accessors to store the
+value extracted at @var{OFFSET} from @var{POINTER}.
+@end table
+
+For all the following builtins: if the operation is successful, the return value is true; otherwise
+the return value is false and the shell variable @code{ERRNO} is set to the string representation of
+an exact integer, itself representing an @code{errno} error code.
+
+
+@macro MmuxDefineAccessorMutator{STEM}
+@deffn {Builtin Mutator} mmux_\STEM\_pointer_set @var{POINTER} @var{OFFSET} @var{VALUE}
+@deffnx {Builtin Accessor} mmux_\STEM\_pointer_ref @var{VALUEVAR} @var{POINTER} @var{OFFSET}
+Accessor and mutator for memory blocks operating on the C language type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineAccessorMutator{pointer}
+
+@MmuxDefineAccessorMutator{schar}
+@MmuxDefineAccessorMutator{uchar}
+@MmuxDefineAccessorMutator{sint}
+@MmuxDefineAccessorMutator{uint}
+@MmuxDefineAccessorMutator{sshort}
+@MmuxDefineAccessorMutator{ushort}
+@MmuxDefineAccessorMutator{slong}
+@MmuxDefineAccessorMutator{ulong}
+@MmuxDefineAccessorMutator{sllong}
+@MmuxDefineAccessorMutator{ullong}
+@MmuxDefineAccessorMutator{float}
+@MmuxDefineAccessorMutator{double}
+@MmuxDefineAccessorMutator{ldouble}
+
+@MmuxDefineAccessorMutator{float32}
+@MmuxDefineAccessorMutator{float64}
+@MmuxDefineAccessorMutator{float128}
+
+@MmuxDefineAccessorMutator{float32x}
+@MmuxDefineAccessorMutator{float64x}
+@MmuxDefineAccessorMutator{float128x}
+
+@MmuxDefineAccessorMutator{decimal32}
+@MmuxDefineAccessorMutator{decimal64}
+@MmuxDefineAccessorMutator{decimal128}
+
+@MmuxDefineAccessorMutator{complexf}
+@MmuxDefineAccessorMutator{complexd}
+@MmuxDefineAccessorMutator{complexld}
+
+@MmuxDefineAccessorMutator{complexf32}
+@MmuxDefineAccessorMutator{complexf64}
+@MmuxDefineAccessorMutator{complexf128}
+
+@MmuxDefineAccessorMutator{complexf32x}
+@MmuxDefineAccessorMutator{complexf64x}
+@MmuxDefineAccessorMutator{complexf128x}
+
+@MmuxDefineAccessorMutator{complexd32}
+@MmuxDefineAccessorMutator{complexd64}
+@MmuxDefineAccessorMutator{complexd128}
+
+@MmuxDefineAccessorMutator{sint8}
+@MmuxDefineAccessorMutator{uint8}
+@MmuxDefineAccessorMutator{sint16}
+@MmuxDefineAccessorMutator{uint16}
+@MmuxDefineAccessorMutator{sint32}
+@MmuxDefineAccessorMutator{uint32}
+@MmuxDefineAccessorMutator{sint64}
+@MmuxDefineAccessorMutator{uint64}
+
+@MmuxDefineAccessorMutator{ssize}
+@MmuxDefineAccessorMutator{usize}
+@MmuxDefineAccessorMutator{sintmax}
+@MmuxDefineAccessorMutator{uintmax}
+@MmuxDefineAccessorMutator{sintptr}
+@MmuxDefineAccessorMutator{uintptr}
+@MmuxDefineAccessorMutator{mode}
+@MmuxDefineAccessorMutator{off}
+@MmuxDefineAccessorMutator{pid}
+@MmuxDefineAccessorMutator{uid}
+@MmuxDefineAccessorMutator{gid}
+
+@c page
+@node memory arrays
+@section Memory arrays accessors and mutators
+
+
+If we allocate memory using the standard C library functions, we can poke and peek values in the
+memory blocks, handling them as arrays of a specified C type:
+
+@example
+declare PTR VALUE
+
+mmux_libc_malloc PTR $(( 55 * mmux_libc_SIZEOF_ULONG ))
+@{
+  mmux_ulong_array_set $PTR 0 1234567890
+  mmux_ulong_array_ref VALUE $PTR 0
+@}
+mmux_libc_free $PTR
+@end example
+
+For all the following builtins, the argument:
+
+@table @var
+@item ARRAY
+must be the string representation of a memory pointer referencing a previously allocated block; the
+block is to be interpreted as an array of a specified C type;
+
+@item INDEX
+must be the string representation of an exact, non--negative integer, compatible with the C language
+type @code{size_t}, itself representing an index in @var{ARRAY};
+
+@item VALUE
+must be the string representation of a number, compatible with a C language type of the specific
+mutator: it is stored by the mutators at @var{INDEX} in @var{ARRAY};
+
+@item VALUEVAR
+must be a string representing the name of a shell variable: it is used by the accessors to store the
+value extracted at @var{INDEX} from @var{ARRAY}.
+@end table
+
+For all the following builtins: if the operation is successful, the return value is true; otherwise
+the return value is false and the shell variable @code{ERRNO} is set to the string representation of
+an exact integer, itself representing an @code{errno} error code.
+
+
+@macro MmuxDefineArrayAccessorMutator{STEM}
+@deffn {Builtin Mutator} mmux_\STEM\_array_set @var{ARRAY} @var{INDEX} @var{VALUE}
+@deffnx {Builtin Accessor} mmux_\STEM\_array_ref @var{VALUEVAR} @var{ARRAY} @var{INDEX}
+Accessor and mutator for memory blocks operating on the C language type @code{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineArrayAccessorMutator{pointer}
+
+@MmuxDefineArrayAccessorMutator{schar}
+@MmuxDefineArrayAccessorMutator{uchar}
+@MmuxDefineArrayAccessorMutator{sshort}
+@MmuxDefineArrayAccessorMutator{ushort}
+@MmuxDefineArrayAccessorMutator{sint}
+@MmuxDefineArrayAccessorMutator{uint}
+@MmuxDefineArrayAccessorMutator{slong}
+@MmuxDefineArrayAccessorMutator{ulong}
+@MmuxDefineArrayAccessorMutator{sllong}
+@MmuxDefineArrayAccessorMutator{ullong}
+@MmuxDefineArrayAccessorMutator{float}
+@MmuxDefineArrayAccessorMutator{double}
+@MmuxDefineArrayAccessorMutator{ldouble}
+
+@MmuxDefineArrayAccessorMutator{float32}
+@MmuxDefineArrayAccessorMutator{float64}
+@MmuxDefineArrayAccessorMutator{float128}
+
+@MmuxDefineArrayAccessorMutator{float32x}
+@MmuxDefineArrayAccessorMutator{float64x}
+@MmuxDefineArrayAccessorMutator{float128x}
+
+@MmuxDefineArrayAccessorMutator{decimal32}
+@MmuxDefineArrayAccessorMutator{decimal64}
+@MmuxDefineArrayAccessorMutator{decimal128}
+
+@MmuxDefineArrayAccessorMutator{complexf}
+@MmuxDefineArrayAccessorMutator{complexd}
+@MmuxDefineArrayAccessorMutator{complexld}
+
+@MmuxDefineArrayAccessorMutator{complexf32}
+@MmuxDefineArrayAccessorMutator{complexf64}
+@MmuxDefineArrayAccessorMutator{complexf128}
+
+@MmuxDefineArrayAccessorMutator{complexf32x}
+@MmuxDefineArrayAccessorMutator{complexf64x}
+@MmuxDefineArrayAccessorMutator{complexf128x}
+
+@MmuxDefineArrayAccessorMutator{complexd32}
+@MmuxDefineArrayAccessorMutator{complexd64}
+@MmuxDefineArrayAccessorMutator{complexd128}
+
+@MmuxDefineArrayAccessorMutator{sint8}
+@MmuxDefineArrayAccessorMutator{uint8}
+@MmuxDefineArrayAccessorMutator{sint16}
+@MmuxDefineArrayAccessorMutator{uint16}
+@MmuxDefineArrayAccessorMutator{sint32}
+@MmuxDefineArrayAccessorMutator{uint32}
+@MmuxDefineArrayAccessorMutator{sint64}
+@MmuxDefineArrayAccessorMutator{uint64}
+
+@MmuxDefineArrayAccessorMutator{ssize}
+@MmuxDefineArrayAccessorMutator{usize}
+@MmuxDefineArrayAccessorMutator{sintmax}
+@MmuxDefineArrayAccessorMutator{uintmax}
+@MmuxDefineArrayAccessorMutator{sintptr}
+@MmuxDefineArrayAccessorMutator{uintptr}
+@MmuxDefineArrayAccessorMutator{mode}
+@MmuxDefineArrayAccessorMutator{off}
+@MmuxDefineArrayAccessorMutator{pid}
+@MmuxDefineArrayAccessorMutator{uid}
+@MmuxDefineArrayAccessorMutator{gid}
+
+@c page
+@node memory conversions
+@section Converting data to and from memory blocks
+
+
+@menu
+* memory conversions arrays::   Converting data to and from index arrays.
+* memory conversions strings::  Converting data to and from strings.
+@end menu
+
+@c page
+@node memory conversions arrays
+@subsection Converting data to and from index arrays
+
+
+@defun mmux-bash-pointers-array-from-memory @var{ARRY_TO} @var{PTR_FROM} @var{SIZE}
+Copy byte by byte data from a memory block into a Bash index array.
+
+The argument @var{ARRY_TO} must be a string representing the name of a Bash index array; this
+function stores in this array the bytes from the memory block, starting from index zero.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare -a ARRY
+
+if ! mmux_libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-array-from-memory ARRY $POINTER $SIZE
+@end example
+@end defun
+
+
+@defun mmux-bash-pointers-memory-from-array @var{PTR_TO} @var{ARRY_FROM} @var{SIZE}
+Copy byte by byte data from a Bash index array into a memory block.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the target of the copy operation.
+
+The argument @var{ARRY_FROM} must be a string representing the name of a Bash index array; this
+function reads from this array the bytes to store in the memory block, starting from index zero.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare -a ARRY=(1 2 3 4 5)
+
+if ! mmux_libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-memory-from-array $POINTER ARRY $SIZE
+@end example
+@end defun
+
+@c page
+@node memory conversions strings
+@subsection Converting data to and from strings
+
+
+@defun mmux-bash-pointers-string-from-memory @var{STRINGVAR_TO} @var{PTR_FROM} @var{SIZE}
+Copy byte by byte data from a memory block into a Bash string.
+
+The argument @var{STRINGVAR_TO} must be a string representing a Bash variable name; this function
+stores in this variable a string built with the bytes from the memory block, starting from index
+zero.
+
+The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the source of the copy operation.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare STRING
+
+if ! mmux_libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-string-from-memory STRING $POINTER $SIZE
+@end example
+@end defun
+
+
+@defun mmux-bash-pointers-memory-from-string @var{PTR_TO} @var{STRING_FROM} @var{SIZE}
+Copy byte by byte data from a Bash string into a memory block.
+
+The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
+allocated memory block; the referenced memory is the target of the copy operation.
+
+The argument @var{STRING_FROM} must be a string; this function reads from this strings the bytes to
+store in the memory block, starting from index zero.
+
+The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
+representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
+
+@example
+declare POINTER
+declare -i SIZE=5
+declare -a STRING="12345"
+
+if ! mmux_libc_malloc POINTER $SIZE
+then exit 1
+fi
+
+mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
+@end example
+@end defun
+
+@c page
+@node errors
+@chapter Handling errors
+
+
+@defvr {Shell Variable} ERRNO
+If an error occurs in the call to a builtin that interfaces a Standard C Library function: the
+builtin will set the shell variable @env{ERRNO} to the string representation of an exact integer,
+itself representing a standard @code{errno} code.
+
+@example
+declare PTR ERRNO=0 SYM
+
+mmux_libc_malloc PTR 'ciao'
+mmux-bash-pointers-errno-to-string SYM $ERRNO
+$SYM    @result{} EINVAL
+@end example
+@end defvr
+
+
+@deffn Builtin mmux_libc_strerror @var{MSGVAR} @var{ERRNUM}
+Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
+representation of an exact integer, itself representing a valid value for @code{errno}; @var{ERRNUM}
+must fit the C language type @code{int}.
+
+@example
+declare MSG
+
+if test -v mmux_libc_EINVAL
+then mmux_libc_strerror MSG $mmux_libc_EINVAL
+else MSG='EINVAL undefined'
+fi
+
+"$MSG"  @result{} Invalid argument
+@end example
+@end deffn
+
+
+@defun mmux-bash-pointers-errno-to-string @var{SYMVAR} @var{ERRNUM}
+Store in @var{SYMVAR} a string representation of the @code{errno} code @var{ERRNUM}.  When
+successful return true, otherwise return false.
+
+@example
+declare SYM
+
+mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
+"$SYM"  @result{} ENOMEM
+@end example
+@end defun
+
+@c page
+@node fds
+@chapter Core file descriptor operations
+
+
+@deffn Builtin mmux_libc_open @var{FDVAR} @var{FILENAME} @var{FLAGS}
+@deffnx Builtin mmux_libc_open @var{FDVAR} @var{FILENAME} @var{FLAGS} @var{MODE}
+Interface to the standard C function @cfunc{open}.  When successful: return true; otherwise set the
+shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
+
+The argument @var{FDVAR} must be a string representing a shell variable name; when the operation is
+successful: a string representing the new file descriptor is stored in the variable.
+
+The argument @var{FILENAME} must be a string representing the file pathname.
+
+The argument @var{FLAGS} must be a string representing the exact integer resulting from the bitwise
+OR combination of the flags supported by the standard function.
+
+The optional argument @var{MODE} must a string representing the exact integer resulting from the
+bitwise OR combination of the mode flags supported by the standard function; when not present it
+defaults to @samp{0}.
+
+@example
+declare FILENAME='/path/to/name.ext'
+declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i FD ERRNO
+
+if ! mmuc_libc_open FD "$FILENAME" $FLAGS $MODE
+then # handle the error
+fi
+@end example
+@end deffn
 
 @c page
 @c ------------------------------------------------------------
