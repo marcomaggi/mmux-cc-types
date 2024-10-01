@@ -109,11 +109,16 @@ store_string_in_variable (char const * variable_name, char const * const s_value
   SHELL_VAR *	shell_variable MMUX_BASH_POINTERS_UNUSED;
   int		flags = 0;
 
+  if (0) { fprintf(stderr, "%s: variable_name=%s s_value=%s (who=%s)\n", __func__, variable_name, s_value, caller_name); }
+
   if (global_variable) {
     shell_variable = bind_global_variable(variable_name, (char *)s_value, flags);
   } else {
     shell_variable = bind_variable(variable_name, (char *)s_value, flags);
   }
+
+  if (0) { fprintf(stderr, "%s: result of binding %p\n", __func__, shell_variable); }
+
   if (shell_variable) {
     return EXECUTION_SUCCESS;
   } else {
