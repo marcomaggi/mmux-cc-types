@@ -28,41 +28,6 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-m4_dnl $1 - name of the target variable
-m4_dnl $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_POINTER]]],[[[{
-  int  mmux_retval = mmux_bash_pointers_parse_pointer(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
-}]]])
-
-m4_dnl $1 - name of the target variable
-m4_dnl $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_SINT]]],[[[{
-  int  mmux_retval = mmux_bash_pointers_parse_sint(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
-}]]])
-
-m4_dnl $1 - name of the target variable
-m4_dnl $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_MODE]]],[[[{
-  int  mmux_retval = mmux_bash_pointers_parse_mode(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
-}]]])
-
-m4_dnl $1 - name of the target variable
-m4_dnl $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_USIZE]]],[[[{
-  int  mmux_retval = mmux_bash_pointers_parse_usize(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
-}]]])
-
-m4_dnl $1 - name of the target variable
-m4_dnl $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_OFF]]],[[[{
-  int  mmux_retval = mmux_bash_pointers_parse_off(&$1, $2, MMUX_BUILTIN_NAME);
-  if (MMUX_SUCCESS != mmux_retval) { goto argument_parse_error; }
-}]]])
-
 
 static int
 mmux_libc_open_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
