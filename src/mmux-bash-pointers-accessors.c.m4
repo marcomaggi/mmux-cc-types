@@ -61,7 +61,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   return mmux_bash_pointers_store_result_in_variable_$1(argv[1], value, MMUX_BUILTIN_NAME);
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -96,7 +96,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   return mmux_bash_pointers_store_result_in_variable_$1(argv[1], value, MMUX_BUILTIN_NAME);
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])

@@ -60,7 +60,7 @@ error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -92,7 +92,7 @@ error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -124,7 +124,7 @@ error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -156,7 +156,7 @@ error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -188,7 +188,7 @@ error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -219,7 +219,7 @@ error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])

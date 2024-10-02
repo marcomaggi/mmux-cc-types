@@ -55,7 +55,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   }
   return MMUX_SUCCESS;
 ]]],[[[m4_dnl
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -186,7 +186,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   }
   return MMUX_SUCCESS;
 ]]],[[[m4_dnl
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -236,7 +236,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   }
   return MMUX_SUCCESS;
 ]]],[[[m4_dnl
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -306,7 +306,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   }
   return MMUX_SUCCESS;
 ]]],[[[m4_dnl
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -355,7 +355,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   }
   return MMUX_SUCCESS;
 ]]],[[[m4_dnl
-  fprintf(stderr, "MMUX Bash Pointers: error: accessor \"%s\" not implemented because underlying C language type not available.\n",
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME);
   return MMUX_FAILURE;
 ]]])
