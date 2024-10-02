@@ -20,35 +20,6 @@ dnl Boston, MA 02111-1307 USA.
 dnl
 
 
-dnl MMUX_BASH_ENABLE_MBFL --
-dnl
-dnl Synopsis:
-dnl
-dnl     MMUX_BASH_ENABLE_MBFL([MBFL_REQUIRED_VERSION])
-dnl
-dnl Parameters:
-dnl
-dnl     $1 - Mandatory semantic version specification requiring a version of MBFL.
-dnl
-dnl Description:
-dnl
-dnl     Add to  "configure" the  command line option  "--enable-mbfl" to enble  use of  the external
-dnl     package MBFL for testing.  The default is to enable it.
-dnl
-dnl Usage example:
-dnl
-dnl     MMUX_BASH_ENABLE_MBFL([v3.0.0])
-dnl
-AC_DEFUN([MMUX_BASH_ENABLE_MBFL],
-  [AC_ARG_ENABLE([mbfl],
-     [AS_HELP_STRING([--enable-mbfl],[enable using MBFL for testing (default: yes)])],
-     [AS_VAR_SET([MMUX_ENABLED_MBFL],[$enableval])],
-     [AS_VAR_SET([MMUX_ENABLED_MBFL],[yes])])
-   AS_IF([test "x$MMUX_ENABLED_MBFL" = 'xyes'],
-         [MBFL_SETUP(v3.0.0)])
-   AM_CONDITIONAL([MMUX_BASH_TESTING_ENABLED],[test "x$MMUX_ENABLED_MBFL" = 'xyes'])])
-
-
 dnl MMUX_BASH_CHECK_COMMON_HEADERS --
 dnl
 dnl Synopsis:
@@ -150,7 +121,7 @@ dnl MMUX_CHECK_C_LANGUAGE_TYPES_CORE --
 dnl
 dnl Synopsis:
 dnl
-dnl     MMUX_CHECK_C_LANGUAGE_TYPES
+dnl     MMUX_CHECK_C_LANGUAGE_TYPES_CORE
 dnl
 dnl Description:
 dnl
@@ -733,18 +704,129 @@ AC_DEFUN([MMUX_CHECK_TYPE_DECIMAL128],
    AC_SUBST([MMUX_HAVE_TYPE_COMPLEXD128])])
 
 
-dnl MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF --
+dnl MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_CORE --
 dnl
 dnl Synopsis:
 dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF(STEM, TYPEDEF, INCLUDES)
+dnl     MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_CORE
+dnl
+dnl Description:
+dnl
+dnl     Determine the size, measured  in bytes, of all the standard C language  types; only the core
+dnl     types  are checked  (int, long,  int32_t, ...),  none of  the feature-specific  typedefs are
+dnl     checked (size_t, pid_t, ...).
+dnl
+AC_DEFUN([MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_CORE],
+  [AX_REQUIRE_DEFINED([MMUX_BASH_COMMON_INCLUDES_FOR_TESTS])
+   AC_REQUIRE([MMUX_BASH_CHECK_COMMON_HEADERS])
+   AC_REQUIRE([AC_TYPE_INT8_T])
+   AC_REQUIRE([AC_TYPE_INT16_T])
+   AC_REQUIRE([AC_TYPE_INT32_T])
+   AC_REQUIRE([AC_TYPE_INT64_T])
+   AC_REQUIRE([AC_TYPE_UINT8_T])
+   AC_REQUIRE([AC_TYPE_UINT16_T])
+   AC_REQUIRE([AC_TYPE_UINT32_T])
+   AC_REQUIRE([AC_TYPE_UINT64_T])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([POINTER],    [void *])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SCHAR],      [signed char])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UCHAR],      [unsigned char])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SSHORT],     [signed short int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([USHORT],     [unsigned short int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT],       [signed int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT],       [unsigned int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SLONG],      [signed long int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([ULONG],      [unsigned long int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SLLONG],     [signed long long int])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([ULLONG],     [unsigned long long int])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([FLOAT],      [float])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([DOUBLE],     [double])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([LDOUBLE],    [long double])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([COMPLEX],    [double complex])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT8],      [int8_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT8],      [uint8_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT16],     [int16_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT16],     [uint16_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT32],     [int32_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT32],     [uint32_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT64],     [int64_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT64],     [uint64_t])])
+
+
+dnl MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_FEATURES --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_FEATURES
+dnl
+dnl Description:
+dnl
+dnl     Determine the  size, measured in bytes,  of all the supported  standard, feature-specific, C
+dnl     language  types  (size_t,  pid_t,  ...).   It   also  determines  aliases  that  match  each
+dnl     feature-specific type with the raw type; for example:  we expect "size_t" to be an alias for
+dnl     "unsigned long" or something like that.
+dnl
+AC_DEFUN([MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_FEATURES],
+  [AX_REQUIRE_DEFINED([MMUX_BASH_COMMON_INCLUDES_FOR_TESTS])
+   AC_REQUIRE([MMUX_BASH_CHECK_COMMON_HEADERS])
+   AC_REQUIRE([MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_CORE])
+   AC_REQUIRE([AC_TYPE_MODE_T])
+   AC_REQUIRE([AC_TYPE_OFF_T])
+   AC_REQUIRE([AC_TYPE_PID_T])
+   AC_REQUIRE([AC_TYPE_SIZE_T])
+   AC_REQUIRE([AC_TYPE_SSIZE_T])
+   AC_REQUIRE([AC_TYPE_INTMAX_T])
+   AC_REQUIRE([AC_TYPE_INTPTR_T])
+   AC_REQUIRE([AC_TYPE_UID_T])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SSIZE],      [ssize_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([USIZE],      [size_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINTMAX],    [intmax_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINTMAX],    [uintmax_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINTPTR],    [intptr_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINTPTR],    [uintptr_t])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([PTRDIFF],    [ptrdiff_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([MODE],       [mode_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([OFF],        [off_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UID],        [uid_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([PID],        [pid_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([GID],        [gid_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([WCHAR],      [wchar_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([WINT],       [wint_t])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([SSIZE],        [ssize_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([SINTMAX],      [intmax_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([SINTPTR],      [intptr_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([OFF],          [off_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([PID],          [pid_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([PTRDIFF],      [ptrdiff_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([WCHAR],        [wchar_t])
+
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([USIZE],      [size_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([UINTMAX],    [uintmax_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([UINTPTR],    [uintptr_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([MODE],       [mode_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([UID],        [uid_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([GID],        [gid_t])
+   MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([WINT],       [wint_t])])
+
+
+dnl MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF(STEM, TYPEDEF, INCLUDES)
 dnl
 dnl Parameters:
 dnl
-dnl $1 - The custom type stem, used to define output names.
-dnl $2 - The custom type name, usually a C language "typedef".
-dnl $3 - Optional C language preprocessor directives to include header files;
-dnl      defaults to MMUX_BASH_COMMON_INCLUDES_FOR_TESTS.
+dnl     $1 - The custom type stem, used to define output names.
+dnl     $2 - The custom type name, usually a C language "typedef".
+dnl     $3 - Optional  C language  preprocessor  directives to  include header  files; defaults  to
+dnl          MMUX_BASH_COMMON_INCLUDES_FOR_TESTS.
 dnl
 dnl Description:
 dnl
@@ -761,22 +843,23 @@ dnl     prefer this macros.
 dnl
 dnl Usage example:
 dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF(SSIZE, ssize_t)
+dnl     MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF(SSIZE, ssize_t)
 dnl
-dnl determine the size of the standard C language type  "ssize_t"; we expect it to be 4 or 8.  Usage
-dnl example results:
+dnl     determine the size  of the standard C  language type "ssize_t"; we  expect it to be  4 or 8.
+dnl     Usage example results:
 dnl
-dnl mmux_cv_sizeof_ssize
+dnl     mmux_cv_sizeof_ssize
 dnl
-dnl     Cached shell variable representing the result of  the test: the size measured in bytes.  The
-dnl     stem "ssize" is the result of converting the parameter STEM to lower case.
+dnl             Cached shell  variable representing  the result  of the test:  the size  measured in
+dnl             bytes.  The  stem "ssize" is  the result of converting  the parameter STEM  to lower
+dnl             case.
 dnl
-dnl MMUX_BASH_TYPE_SIZEOF_SSIZE
+dnl     MMUX_BASH_TYPE_SIZEOF_SSIZE
 dnl
-dnl     C language preprocessor  symbol which will expand  to the size measured in  bytes.  The stem
-dnl     "SSIZE" is the result of converting the parameter STEM to upper case.
+dnl             C language preprocessor symbol which will expand to the size measured in bytes.  The
+dnl             stem "SSIZE" is the result of converting the parameter STEM to upper case.
 dnl
-AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF],
+AC_DEFUN([MMUX_BASH_DETERMINE_C_LANGUAGE_TYPE_SIZEOF],
   [AC_CACHE_CHECK([the size in bytes of the C language type '$2'],
      [mmux_cv_sizeof_[]m4_tolower($1)],
      [AC_COMPUTE_INT([mmux_cv_sizeof_[]m4_tolower($1)],
@@ -788,90 +871,11 @@ AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF],
                       [The size measured in bytes of '$2'.])])
 
 
-dnl MMUX_BASH_TYPE_DETERMINE_RAW_STANDARD_C_LANGUAGE_TYPES_SIZEOF --
+dnl MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE --
 dnl
 dnl Synopsis:
 dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_RAW_STANDARD_C_LANGUAGE_TYPES_SIZEOF
-dnl
-dnl Description:
-dnl
-dnl     Use  the macro  "MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF()" to  determine the  size,
-dnl     measured in  bytes, of all  the standard C  language types; only  the raw types  are checked
-dnl     (int, long, ...), none of the typedefs are checked (size_t, pid_t, ...).
-dnl
-dnl     Using this macro is  a prerequisite to inspect custom types defined  by C language libraries
-dnl     we are interfacing with GNU Bash.
-dnl
-AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_RAW_STANDARD_C_LANGUAGE_TYPES_SIZEOF],
-  [AX_REQUIRE_DEFINED([MMUX_BASH_COMMON_INCLUDES_FOR_TESTS])
-   AC_REQUIRE([MMUX_BASH_CHECK_COMMON_HEADERS])
-
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([POINTER],    [void *])
-
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SCHAR],      [signed char])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UCHAR],      [unsigned char])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SSHORT],     [signed short int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([USHORT],     [unsigned short int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT],       [signed int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT],       [unsigned int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SLONG],      [signed long int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([ULONG],      [unsigned long int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SLLONG],     [signed long long int])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([ULLONG],     [unsigned long long int])
-
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([FLOAT],      [float])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([DOUBLE],     [double])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([LDOUBLE],    [long double])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([COMPLEX],    [double complex])
-
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT8],      [int8_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT8],      [uint8_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT16],     [int16_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT16],     [uint16_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT32],     [int32_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT32],     [uint32_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINT64],     [int64_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINT64],     [uint64_t])])
-
-
-dnl MMUX_BASH_TYPE_DETERMINE_TYPEDEF_STANDARD_C_LANGUAGE_TYPES_SIZEOF --
-dnl
-dnl Synopsis:
-dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_TYPEDEF_STANDARD_C_LANGUAGE_TYPES_SIZEOF
-dnl
-dnl Description:
-dnl
-dnl     Use  the macro  "MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF()" to  determine the  size,
-dnl     measured in bytes, of some of the standard C language types defined as typedefs of raw typs.
-dnl
-AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_TYPEDEF_STANDARD_C_LANGUAGE_TYPES_SIZEOF],
-  [AX_REQUIRE_DEFINED([MMUX_BASH_COMMON_INCLUDES_FOR_TESTS])
-   AC_REQUIRE([MMUX_BASH_CHECK_COMMON_HEADERS])
-
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SSIZE],      [ssize_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([USIZE],      [size_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINTMAX],    [intmax_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINTMAX],    [uintmax_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([SINTPTR],    [intptr_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UINTPTR],    [uintptr_t])
-
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([PTRDIFF],    [ptrdiff_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([MODE],       [mode_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([OFF],        [off_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([UID],        [uid_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([PID],        [pid_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([GID],        [gid_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([WCHAR],      [wchar_t])
-   MMUX_BASH_TYPE_DETERMINE_C_LANGUAGE_TYPE_SIZEOF([WINT],       [wint_t])])
-
-
-dnl MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS --
-dnl
-dnl Synopsis:
-dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS(STEM, TYPEDEF)
+dnl     MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE(STEM, TYPEDEF)
 dnl
 dnl Parameters:
 dnl
@@ -898,7 +902,7 @@ dnl             MMUX_BASH_TYPE_DETERMINE_SIZEOF(STEM, TYPEDEF)
 dnl
 dnl Usage example:
 dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([SSIZE],[ssize_t])
+dnl     MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([SSIZE],[ssize_t])
 dnl
 dnl determine the standard  C language type of which  the exact signed integer type  "ssize_t" is an
 dnl alias; we expect the alias to be "sint" or "slong".  Usage example results:
@@ -914,8 +918,8 @@ dnl
 dnl     Substitution symbol which expands into the standard stem.  The stem "SSIZE" is the result of
 dnl     converting the parameter STEM to upper case.
 dnl
-AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS],
-  [AC_REQUIRE([MMUX_BASH_TYPE_DETERMINE_RAW_STANDARD_C_LANGUAGE_TYPES_SIZEOF])
+AC_DEFUN([MMUX_BASH_DETERMINE_C_LANGUAGE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE],
+  [AC_REQUIRE([MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_CORE])
    AC_CACHE_CHECK([the standard exact signed integer type alias of the custom exact signed integer '$2' (size=$mmux_cv_sizeof_[]m4_tolower($1))],
      [mmux_cv_type_stem_alias_of_[]m4_tolower($1)],
      [AS_CASE([$mmux_cv_sizeof_[]m4_tolower($1)],
@@ -952,11 +956,11 @@ AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS],
    AC_SUBST(MMUX_BASH_TYPE_STANDARD_STEM_ALIAS_OF_[]m4_toupper($1),[$mmux_cv_type_stem_alias_of_[]m4_tolower($1)])])
 
 
-dnl MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS --
+dnl MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE --
 dnl
 dnl Synopsis:
 dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS(STEM, TYPEDEF)
+dnl     MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE(STEM, TYPEDEF)
 dnl
 dnl Parameters:
 dnl
@@ -983,7 +987,7 @@ dnl             MMUX_BASH_TYPE_DETERMINE_SIZEOF(STEM, TYPEDEF)
 dnl
 dnl Usage example:
 dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([USIZE],[size_t])
+dnl     MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([USIZE],[size_t])
 dnl
 dnl determine the standard C  language type of which the exact unsigned integer  type "size_t" is an
 dnl alias; we expect the alias to be "uint" or "ulong".  Usage example results:
@@ -999,8 +1003,8 @@ dnl
 dnl     Substitution symbol which expands into the standard stem.  The stem "USIZE" is the result of
 dnl     converting the parameter STEM to upper case.
 dnl
-AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS],
-  [AC_REQUIRE([MMUX_BASH_TYPE_DETERMINE_RAW_STANDARD_C_LANGUAGE_TYPES_SIZEOF])
+AC_DEFUN([MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE],
+  [AC_REQUIRE([MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_CORE])
    AC_CACHE_CHECK([the standard exact signed integer type alias of the custom exact signed integer '$2' (size=$mmux_cv_sizeof_[]m4_tolower($1))],
      [mmux_cv_type_stem_alias_of_[]m4_tolower($1)],
      [AS_CASE([$mmux_cv_sizeof_[]m4_tolower($1)],
@@ -1035,47 +1039,6 @@ AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS],
         dnl There is no stadard alias.  This should not happen.
         [AC_MSG_ERROR([unable to determine exact signed integer standard C language type alias of '$2'])])])
    AC_SUBST(MMUX_BASH_TYPE_STANDARD_STEM_ALIAS_OF_[]m4_toupper($1),[$mmux_cv_type_stem_alias_of_[]m4_tolower($1)])])
-
-
-dnl MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_INTEGER_ALIASES --
-dnl
-dnl Synopsis:
-dnl
-dnl     MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_INTEGER_ALIASES
-dnl
-dnl Description:
-dnl
-dnl     Use the macros:
-dnl
-dnl             MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS
-dnl             MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS
-dnl
-dnl     to inspect  some of the standard  C language types defined  in terms of typedefs  of the raw
-dnl     types (size_t, pid_t, ...) and determine the stem of the raw type having the same signedness
-dnl     and size measured in bytes.
-dnl
-dnl     For example: we expecte  "ssize_t" to be an alias for "signed int"  or "signed long int", so
-dnl     the stem of the alias is "sint" or "slong".
-dnl
-AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_INTEGER_ALIASES],
-  [AC_REQUIRE([MMUX_BASH_TYPE_DETERMINE_RAW_STANDARD_C_LANGUAGE_TYPES_SIZEOF])
-   AC_REQUIRE([MMUX_BASH_TYPE_DETERMINE_TYPEDEF_STANDARD_C_LANGUAGE_TYPES_SIZEOF])
-
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([SSIZE],        [ssize_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([SINTMAX],      [intmax_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([SINTPTR],      [intptr_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([OFF],          [off_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([PID],          [pid_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([PTRDIFF],      [ptrdiff_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_SIGNED_INTEGER_ALIAS([WCHAR],        [wchar_t])
-
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([USIZE],      [size_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([UINTMAX],    [uintmax_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([UINTPTR],    [uintptr_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([MODE],       [mode_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([UID],        [uid_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([GID],        [gid_t])
-   MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([WINT],       [wint_t])])
 
 
 dnl MMUX_DEFINE_VALUEOF_TEST --
