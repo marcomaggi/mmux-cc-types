@@ -20,6 +20,35 @@ dnl Boston, MA 02111-1307 USA.
 dnl
 
 
+dnl MMUX_BASH_ENABLE_MBFL --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_BASH_ENABLE_MBFL([MBFL_REQUIRED_VERSION])
+dnl
+dnl Parameters:
+dnl
+dnl     $1 - Mandatory semantic version specification requiring a version of MBFL.
+dnl
+dnl Description:
+dnl
+dnl     Add to  "configure" the  command line option  "--enable-mbfl" to enble  use of  the external
+dnl     package MBFL for testing.  The default is to enable it.
+dnl
+dnl Usage example:
+dnl
+dnl     MMUX_BASH_ENABLE_MBFL([v3.0.0])
+dnl
+AC_DEFUN([MMUX_BASH_ENABLE_MBFL],
+  [AC_ARG_ENABLE([mbfl],
+     [AS_HELP_STRING([--enable-mbfl],[enable using MBFL for testing (default: yes)])],
+     [AS_VAR_SET([MMUX_ENABLED_MBFL],[$enableval])],
+     [AS_VAR_SET([MMUX_ENABLED_MBFL],[yes])])
+   AS_IF([test "x$MMUX_ENABLED_MBFL" = 'xyes'],
+         [MBFL_SETUP(v3.0.0)])
+   AM_CONDITIONAL([MMUX_BASH_TESTING_ENABLED],[test "x$MMUX_ENABLED_MBFL" = 'xyes'])])
+
+
 dnl MMUX_BASH_CHECK_COMMON_HEADERS --
 dnl
 dnl Synopsis:
@@ -117,79 +146,87 @@ AC_INCLUDES_DEFAULT([
 ])])
 
 
-dnl MMUX_DEFINE_VALUEOF_TEST --
+dnl MMUX_CHECK_C_LANGUAGE_TYPES_CORE --
 dnl
 dnl Synopsis:
 dnl
-dnl     MMUX_DEFINE_VALUEOF_TEST(STEM, EXPRESSION, INCLUDES)
-dnl
-dnl Parameters:
-dnl
-dnl     $1 - Mandatory uppercase stem used to generate output variables and C preprocessor symbols.
-dnl     $2 - Mandatory C language expression which, executed in a C program, returns the constant.
-dnl     $3 - Optional include directives for the C language preprocessor.
+dnl     MMUX_CHECK_C_LANGUAGE_TYPES
 dnl
 dnl Description:
 dnl
-dnl     Determine the value of a C language constant expression returning an exact integer.
+dnl     Check the availability of all the supported C language types.
 dnl
-dnl Usage example:
+dnl     Even if we test for types that the package does not use: it does not hurt anyone.
 dnl
-dnl     MMUX_DEFINE_VALUEOF_TEST([EINVAL], [EINVAL])
-dnl
-dnl determine the existence and value of the "errno" constant "EINVAL"; results:
-dnl
-dnl mmux_cv_valueof_EINVAL
-dnl
-dnl     A shell variable used  to cache the result.  If the symbol "EINVAL"  exists: the shell value
-dnl     is the value of the constant itself.  If the symbol "EINVAL" does not exist: the shell value
-dnl     is the string "MMUX_META_VALUE_UNDEFINED".
-dnl
-dnl MMUX_HAVE_EINVAL
-dnl
-dnl     A C language  preprocessor symbol.  If the symbol "EINVAL"  exists: the preprocessor symbols
-dnl     is defined to  be "1".  If the symbol  "EINVAL" does not exist: the  preprocessor symbols is
-dnl     defined to be "0".
-dnl
-AC_DEFUN([MMUX_DEFINE_VALUEOF_TEST],
-  [AC_CACHE_CHECK([the value of '$2'],
-     [mmux_cv_valueof_$1],
-     [AC_COMPUTE_INT([mmux_cv_valueof_$1], [$2], [$3],
-        [AS_VAR_SET([mmux_cv_valueof_$1],[MMUX_META_VALUE_UNDEFINED])])])
-    AS_IF([test "x$mmux_cv_valueof_$1" = xMMUX_META_VALUE_UNDEFINED],
-          [AS_VAR_SET([MMUX_HAVE_$1],[0])],
-          [AS_VAR_SET([MMUX_HAVE_$1],[1])])
-    AC_DEFINE_UNQUOTED([MMUX_HAVE_$1],   [$MMUX_HAVE_$1],[The value $1 of errno is defined.])
-    AC_DEFINE_UNQUOTED([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1],[The value $1 of errno.])])
+AC_DEFUN([MMUX_CHECK_C_LANGUAGE_TYPES_CORE],
+  [MMUX_CHECK_TYPE_SLLONG
+   MMUX_CHECK_TYPE_ULLONG
+   MMUX_CHECK_TYPE_LDOUBLE
+
+   AC_TYPE_INT8_T
+   AC_TYPE_INT16_T
+   AC_TYPE_INT32_T
+   AC_TYPE_INT64_T
+   AC_TYPE_UINT8_T
+   AC_TYPE_UINT16_T
+   AC_TYPE_UINT32_T
+   AC_TYPE_UINT64_T
+
+   AC_TYPE_MODE_T
+   AC_TYPE_OFF_T
+   AC_TYPE_PID_T
+   AC_TYPE_SIZE_T
+   AC_TYPE_SSIZE_T
+   AC_TYPE_INTMAX_T
+   AC_TYPE_INTPTR_T
+
+   # This defines both "uid_t" and "gid_t".
+   AC_TYPE_UID_T])
 
 
-dnl MMUX_BASH_ENABLE_MBFL --
+dnl MMUX_CHECK_C_LANGUAGE_TYPES_EXTENSION_FLOAT --
 dnl
 dnl Synopsis:
 dnl
-dnl     MMUX_BASH_ENABLE_MBFL([MBFL_REQUIRED_VERSION])
-dnl
-dnl Parameters:
-dnl
-dnl     $1 - Mandatory semantic version specification requiring a version of MBFL.
+dnl     MMUX_CHECK_C_LANGUAGE_TYPES_EXTENSION_FLOAT
 dnl
 dnl Description:
 dnl
-dnl     Add to  "configure" the  command line option  "--enable-mbfl" to enble  use of  the external
-dnl     package MBFL for testing.  The default is to enable it.
+dnl     Check  the availability  of all  the supported  C language  types "_FloatN"  and "_FloatNx".
+dnl     These types should not require an external library.
 dnl
-dnl Usage example:
+AC_DEFUN([MMUX_CHECK_C_LANGUAGE_TYPES_EXTENSION_FLOAT],
+  [MMUX_CHECK_TYPE_FLOAT32
+   MMUX_CHECK_TYPE_FLOAT64
+   MMUX_CHECK_TYPE_FLOAT128
+   MMUX_CHECK_TYPE_FLOAT32X
+   MMUX_CHECK_TYPE_FLOAT64X
+   MMUX_CHECK_TYPE_FLOAT128X])
+
+
+dnl MMUX_CHECK_C_LANGUAGE_TYPES_EXTENSION_DECIMAL_FLOAT --
 dnl
-dnl     MMUX_BASH_ENABLE_MBFL([v3.0.0])
+dnl Synopsis:
 dnl
-AC_DEFUN([MMUX_BASH_ENABLE_MBFL],
-  [AC_ARG_ENABLE([mbfl],
-     [AS_HELP_STRING([--enable-mbfl],[enable using MBFL for testing (default: yes)])],
-     [AS_VAR_SET([MMUX_ENABLED_MBFL],[$enableval])],
-     [AS_VAR_SET([MMUX_ENABLED_MBFL],[yes])])
-   AS_IF([test "x$MMUX_ENABLED_MBFL" = 'xyes'],
-         [MBFL_SETUP(v3.0.0)])
-   AM_CONDITIONAL([MMUX_BASH_TESTING_ENABLED],[test "x$MMUX_ENABLED_MBFL" = 'xyes'])])
+dnl     MMUX_CHECK_C_LANGUAGE_TYPES_EXTENSION_DECIMAL_FLOAT
+dnl
+dnl Description:
+dnl
+dnl     Check the availability of all the supported C language types "_DecimalN".
+dnl
+dnl     At the  time of  this writing (Oct  2, 2024)  support for these  types probably  requires an
+dnl     external library, so the macro:
+dnl
+dnl             MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY
+dnl
+dnl     should be  used to search  for such library.   All the macros used  to check for  a specific
+dnl     "_DecimalN" type should "AC_REQUIRE" such macro, so we do not do it here.
+dnl
+AC_DEFUN([MMUX_CHECK_C_LANGUAGE_TYPES_EXTENSION_DECIMAL_FLOAT],
+  [MMUX_CHECK_TYPE_DECIMAL32
+   MMUX_CHECK_TYPE_DECIMAL64
+   MMUX_CHECK_TYPE_DECIMAL128])
+
 
 
 dnl MMUX_CHECK_TYPE_SLLONG --
@@ -210,6 +247,7 @@ AC_DEFUN([MMUX_CHECK_TYPE_SLLONG],
          [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[0])])
    AC_SUBST([MMUX_HAVE_TYPE_SLLONG])])
 
+
 dnl MMUX_CHECK_TYPE_ULLONG --
 dnl
 dnl Synopsis:
@@ -228,6 +266,7 @@ AC_DEFUN([MMUX_CHECK_TYPE_ULLONG],
          [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[0])])
    AC_SUBST([MMUX_HAVE_TYPE_ULLONG])])
 
+
 dnl MMUX_CHECK_TYPE_LDOUBLE --
 dnl
 dnl Synopsis:
@@ -1037,6 +1076,52 @@ AC_DEFUN([MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_INTEGER_ALIASES],
    MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([UID],        [uid_t])
    MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([GID],        [gid_t])
    MMUX_BASH_TYPE_DETERMINE_CUSTOM_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS([WINT],       [wint_t])])
+
+
+dnl MMUX_DEFINE_VALUEOF_TEST --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_DEFINE_VALUEOF_TEST(STEM, EXPRESSION, INCLUDES)
+dnl
+dnl Parameters:
+dnl
+dnl     $1 - Mandatory uppercase stem used to generate output variables and C preprocessor symbols.
+dnl     $2 - Mandatory C language expression which, executed in a C program, returns the constant.
+dnl     $3 - Optional include directives for the C language preprocessor.
+dnl
+dnl Description:
+dnl
+dnl     Determine the value of a C language constant expression returning an exact integer.
+dnl
+dnl Usage example:
+dnl
+dnl     MMUX_DEFINE_VALUEOF_TEST([EINVAL], [EINVAL])
+dnl
+dnl determine the existence and value of the "errno" constant "EINVAL"; results:
+dnl
+dnl mmux_cv_valueof_EINVAL
+dnl
+dnl     A shell variable used  to cache the result.  If the symbol "EINVAL"  exists: the shell value
+dnl     is the value of the constant itself.  If the symbol "EINVAL" does not exist: the shell value
+dnl     is the string "MMUX_META_VALUE_UNDEFINED".
+dnl
+dnl MMUX_HAVE_EINVAL
+dnl
+dnl     A C language  preprocessor symbol.  If the symbol "EINVAL"  exists: the preprocessor symbols
+dnl     is defined to  be "1".  If the symbol  "EINVAL" does not exist: the  preprocessor symbols is
+dnl     defined to be "0".
+dnl
+AC_DEFUN([MMUX_DEFINE_VALUEOF_TEST],
+  [AC_CACHE_CHECK([the value of '$2'],
+     [mmux_cv_valueof_$1],
+     [AC_COMPUTE_INT([mmux_cv_valueof_$1], [$2], [$3],
+        [AS_VAR_SET([mmux_cv_valueof_$1],[MMUX_META_VALUE_UNDEFINED])])])
+    AS_IF([test "x$mmux_cv_valueof_$1" = xMMUX_META_VALUE_UNDEFINED],
+          [AS_VAR_SET([MMUX_HAVE_$1],[0])],
+          [AS_VAR_SET([MMUX_HAVE_$1],[1])])
+    AC_DEFINE_UNQUOTED([MMUX_HAVE_$1],   [$MMUX_HAVE_$1],[The value $1 of errno is defined.])
+    AC_DEFINE_UNQUOTED([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1],[The value $1 of errno.])])
 
 
 dnl let's go
