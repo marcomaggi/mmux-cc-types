@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/memory.bash ; less tests/memory.log
+#!#		$ make all check TESTS=tests/memory.test ; less tests/memory.log
 #!#
 #!#	that will select these tests.
 #!#

@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/arithmetics.bash ; less tests/arithmetics.log
+#!#		$ make all check TESTS=tests/arithmetics.test ; less tests/arithmetics.log
 #!#
 #!#	that will select these tests.
 #!#

@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/bitwise.bash ; less tests/bitwise.log
+#!#		$ make all check TESTS=tests/bitwise.test ; less tests/bitwise.log
 #!#
 #!#	that will select these tests.
 #!#

@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/predicates.bash ; less tests/predicates.log
+#!#		$ make all check TESTS=tests/predicates.test ; less tests/predicates.log
 #!#
 #!#	that will select these tests.
 #!#

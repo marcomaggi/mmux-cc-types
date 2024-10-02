@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/pointers.bash ; less tests/pointers.log
+#!#		$ make all check TESTS=tests/pointers.test ; less tests/pointers.log
 #!#
 #!#	that will select these tests.
 #!#

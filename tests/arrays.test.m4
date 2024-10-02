@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/arrays.bash ; less tests/arrays.log
+#!#		$ make all check TESTS=tests/arrays.test ; less tests/arrays.log
 #!#
 #!#	that will select these tests.
 #!#

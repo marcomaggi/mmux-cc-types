@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/version.bash ; less tests/version.log
+#!#		$ make all check TESTS=tests/version.test ; less tests/version.log
 #!#
 #!#	that will select these tests.
 #!#

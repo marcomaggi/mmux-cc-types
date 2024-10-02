@@ -7,7 +7,7 @@
 #!#
 #!#	This file must be executed with one among:
 #!#
-#!#		$ make all check TESTS=tests/conversion.bash ; less tests/conversion.log
+#!#		$ make all check TESTS=tests/conversion.test ; less tests/conversion.log
 #!#
 #!#	that will select these tests.
 #!#
