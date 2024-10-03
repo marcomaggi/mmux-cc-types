@@ -337,6 +337,15 @@ function mmux-bash-pointers-memory-from-string () {
     done
 }
 
+#page
+#### misc functions
+
+function mmux_bash_pointers_builtin_p () {
+    declare NAME=${1:?"missing mandatory parameter NAME in call to '$FUNCNAME'"}
+
+    test 'builtin' = "$(type -t $NAME)"
+}
+
 ### end of file
 # Local Variables:
 # mode: sh
