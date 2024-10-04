@@ -40,7 +40,7 @@ mmux_string_is_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const a
 #define MMUX_BUILTIN_NAME	"mmux_string_is_$1"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	data;
+  mmux_$1_t	data;
 
   return mmux_bash_pointers_parse_$1(&data, argv[1], MMUX_BUILTIN_NAME);
 ]]],[[[
@@ -136,7 +136,7 @@ mmux_$1_is_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[
 #define MMUX_BUILTIN_NAME	"mmux_$1_is_$3"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
-  mmux_libc_$1_t	value;
+  mmux_$1_t	value;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&value, argv[1], MMUX_BUILTIN_NAME);

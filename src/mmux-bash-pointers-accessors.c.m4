@@ -42,9 +42,9 @@ mmux_$1_pointer_ref_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *		ptr;
   uint8_t *		ptr_byte;
-  mmux_libc_$1_t *	ptr_value;
+  mmux_$1_t *	ptr_value;
   ptrdiff_t		offset;
-  mmux_libc_$1_t	value;
+  mmux_$1_t	value;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
@@ -55,7 +55,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   ptr_byte  = ptr;
   ptr_byte += offset;
-  ptr_value = (mmux_libc_$1_t *)ptr_byte;
+  ptr_value = (mmux_$1_t *)ptr_byte;
 
   value = *ptr_value;
 
@@ -80,9 +80,9 @@ mmux_$1_array_ref_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const a
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *		ptr;
-  mmux_libc_$1_t *	ptr_value;
+  mmux_$1_t *	ptr_value;
   ptrdiff_t		index;
-  mmux_libc_$1_t	value;
+  mmux_$1_t	value;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&ptr, argv[2], MMUX_BUILTIN_NAME);
@@ -91,7 +91,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   rv = mmux_bash_pointers_parse_ptrdiff(&index, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  ptr_value = (mmux_libc_$1_t *)ptr;
+  ptr_value = (mmux_$1_t *)ptr;
   value     = ptr_value[index];
 
   return mmux_bash_pointers_store_result_in_variable_$1(argv[1], value, MMUX_BUILTIN_NAME);

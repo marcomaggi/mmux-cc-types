@@ -91,7 +91,7 @@ function bitwise-pointer-xor-1.1 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-pointer-not-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_POINTER
+    declare ROP OP=$mmux_pointer_MAX
     declare EXPECTED_ROP=0x0
 
     mmux_pointer_bitwise_not ROP WW(OP)
@@ -100,8 +100,8 @@ function bitwise-pointer-not-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-pointer-not-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_POINTER
-    declare EXPECTED_ROP=$mmux_libc_MAX_POINTER
+    declare ROP OP=$mmux_pointer_MIN
+    declare EXPECTED_ROP=$mmux_pointer_MAX
 
     mmux_pointer_bitwise_not ROP WW(OP)
     dotest-unset-debug
@@ -318,7 +318,7 @@ function bitwise-uchar-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uchar-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UCHAR
+    declare ROP OP=$mmux_uchar_MAX
     declare EXPECTED_ROP=0
 
     mmux_uchar_bitwise_not ROP WW(OP)
@@ -327,8 +327,8 @@ function bitwise-not-uchar-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uchar-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UCHAR
-    declare EXPECTED_ROP=$mmux_libc_MAX_UCHAR
+    declare ROP OP=$mmux_uchar_MIN
+    declare EXPECTED_ROP=$mmux_uchar_MAX
 
     mmux_uchar_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -543,7 +543,7 @@ function bitwise-ushort-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-ushort-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_USHORT
+    declare ROP OP=$mmux_ushort_MAX
     declare EXPECTED_ROP=0
 
     mmux_ushort_bitwise_not ROP WW(OP)
@@ -552,8 +552,8 @@ function bitwise-not-ushort-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-ushort-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_USHORT
-    declare EXPECTED_ROP=$mmux_libc_MAX_USHORT
+    declare ROP OP=$mmux_ushort_MIN
+    declare EXPECTED_ROP=$mmux_ushort_MAX
 
     mmux_ushort_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -768,7 +768,7 @@ function bitwise-uint-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINT
+    declare ROP OP=$mmux_uint_MAX
     declare EXPECTED_ROP=0
 
     mmux_uint_bitwise_not ROP WW(OP)
@@ -777,8 +777,8 @@ function bitwise-not-uint-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uint-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINT
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINT
+    declare ROP OP=$mmux_uint_MIN
+    declare EXPECTED_ROP=$mmux_uint_MAX
 
     mmux_uint_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -884,8 +884,8 @@ function bitwise-slong-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-slong-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_SLONG
-    declare EXPECTED_ROP=$mmux_libc_MIN_SLONG
+    declare ROP OP=$mmux_slong_MAX
+    declare EXPECTED_ROP=$mmux_slong_MIN
 
     mmux_slong_bitwise_not ROP WW(OP)
     dotest-unset-debug
@@ -893,8 +893,8 @@ function bitwise-not-slong-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-slong-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_SLONG
-    declare EXPECTED_ROP=$mmux_libc_MAX_SLONG
+    declare ROP OP=$mmux_slong_MIN
+    declare EXPECTED_ROP=$mmux_slong_MAX
 
     mmux_slong_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1000,7 +1000,7 @@ function bitwise-ulong-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-ulong-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_ULONG
+    declare ROP OP=$mmux_ulong_MAX
     declare EXPECTED_ROP=0
 
     mmux_ulong_bitwise_not ROP WW(OP)
@@ -1009,8 +1009,8 @@ function bitwise-not-ulong-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-ulong-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_ULONG
-    declare EXPECTED_ROP=$mmux_libc_MAX_ULONG
+    declare ROP OP=$mmux_ulong_MIN
+    declare EXPECTED_ROP=$mmux_ulong_MAX
 
     mmux_ulong_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1225,7 +1225,7 @@ function bitwise-ullong-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-ullong-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_ULLONG
+    declare ROP OP=$mmux_ullong_MAX
     declare EXPECTED_ROP=0
 
     mmux_ullong_bitwise_not ROP WW(OP)
@@ -1234,8 +1234,8 @@ function bitwise-not-ullong-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-ullong-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_ULLONG
-    declare EXPECTED_ROP=$mmux_libc_MAX_ULLONG
+    declare ROP OP=$mmux_ullong_MIN
+    declare EXPECTED_ROP=$mmux_ullong_MAX
 
     mmux_ullong_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1450,7 +1450,7 @@ function bitwise-uint8-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint8-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINT8
+    declare ROP OP=$mmux_uint8_MAX
     declare EXPECTED_ROP=0
 
     mmux_uint8_bitwise_not ROP WW(OP)
@@ -1459,8 +1459,8 @@ function bitwise-not-uint8-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uint8-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINT8
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINT8
+    declare ROP OP=$mmux_uint8_MIN
+    declare EXPECTED_ROP=$mmux_uint8_MAX
 
     mmux_uint8_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1676,7 +1676,7 @@ function bitwise-uint16-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint16-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINT16
+    declare ROP OP=$mmux_uint16_MAX
     declare EXPECTED_ROP=0
 
     mmux_uint16_bitwise_not ROP WW(OP)
@@ -1685,8 +1685,8 @@ function bitwise-not-uint16-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uint16-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINT16
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINT16
+    declare ROP OP=$mmux_uint16_MIN
+    declare EXPECTED_ROP=$mmux_uint16_MAX
 
     mmux_uint16_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -1902,7 +1902,7 @@ function bitwise-uint32-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint32-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINT32
+    declare ROP OP=$mmux_uint32_MAX
     declare EXPECTED_ROP=0
 
     mmux_uint32_bitwise_not ROP WW(OP)
@@ -1911,8 +1911,8 @@ function bitwise-not-uint32-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uint32-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINT32
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINT32
+    declare ROP OP=$mmux_uint32_MIN
+    declare EXPECTED_ROP=$mmux_uint32_MAX
 
     mmux_uint32_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2127,7 +2127,7 @@ function bitwise-uint64-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uint64-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINT64
+    declare ROP OP=$mmux_uint64_MAX
     declare EXPECTED_ROP=0
 
     mmux_uint64_bitwise_not ROP WW(OP)
@@ -2136,8 +2136,8 @@ function bitwise-not-uint64-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uint64-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINT64
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINT64
+    declare ROP OP=$mmux_uint64_MIN
+    declare EXPECTED_ROP=$mmux_uint64_MAX
 
     mmux_uint64_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2352,7 +2352,7 @@ function bitwise-uintmax-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uintmax-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINTMAX
+    declare ROP OP=$mmux_uintmax_MAX
     declare EXPECTED_ROP=0
 
     mmux_uintmax_bitwise_not ROP WW(OP)
@@ -2361,8 +2361,8 @@ function bitwise-not-uintmax-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uintmax-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINTMAX
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINTMAX
+    declare ROP OP=$mmux_uintmax_MIN
+    declare EXPECTED_ROP=$mmux_uintmax_MAX
 
     mmux_uintmax_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2578,7 +2578,7 @@ function bitwise-uintptr-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uintptr-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UINTPTR
+    declare ROP OP=$mmux_uintptr_MAX
     declare EXPECTED_ROP=0
 
     mmux_uintptr_bitwise_not ROP WW(OP)
@@ -2587,8 +2587,8 @@ function bitwise-not-uintptr-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uintptr-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UINTPTR
-    declare EXPECTED_ROP=$mmux_libc_MAX_UINTPTR
+    declare ROP OP=$mmux_uintptr_MIN
+    declare EXPECTED_ROP=$mmux_uintptr_MAX
 
     mmux_uintptr_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -2803,7 +2803,7 @@ function bitwise-usize-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-usize-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_USIZE
+    declare ROP OP=$mmux_usize_MAX
     declare EXPECTED_ROP=0
 
     mmux_usize_bitwise_not ROP WW(OP)
@@ -2812,8 +2812,8 @@ function bitwise-not-usize-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-usize-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_USIZE
-    declare EXPECTED_ROP=$mmux_libc_MAX_USIZE
+    declare ROP OP=$mmux_usize_MIN
+    declare EXPECTED_ROP=$mmux_usize_MAX
 
     mmux_usize_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -3138,7 +3138,7 @@ function bitwise-mode-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-mode-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_MODE
+    declare ROP OP=$mmux_mode_MAX
     declare EXPECTED_ROP=0
 
     mmux_mode_bitwise_not ROP WW(OP)
@@ -3147,8 +3147,8 @@ function bitwise-not-mode-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-mode-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_MODE
-    declare EXPECTED_ROP=$mmux_libc_MAX_MODE
+    declare ROP OP=$mmux_mode_MIN
+    declare EXPECTED_ROP=$mmux_mode_MAX
 
     mmux_mode_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -3363,7 +3363,7 @@ function bitwise-uid-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-uid-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_UID
+    declare ROP OP=$mmux_uid_MAX
     declare EXPECTED_ROP=0
 
     mmux_uid_bitwise_not ROP WW(OP)
@@ -3372,8 +3372,8 @@ function bitwise-not-uid-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-uid-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_UID
-    declare EXPECTED_ROP=$mmux_libc_MAX_UID
+    declare ROP OP=$mmux_uid_MIN
+    declare EXPECTED_ROP=$mmux_uid_MAX
 
     mmux_uid_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -3479,7 +3479,7 @@ function bitwise-gid-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-gid-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_GID
+    declare ROP OP=$mmux_gid_MAX
     declare EXPECTED_ROP=0
 
     mmux_gid_bitwise_not ROP WW(OP)
@@ -3488,8 +3488,8 @@ function bitwise-not-gid-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-gid-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_GID
-    declare EXPECTED_ROP=$mmux_libc_MAX_GID
+    declare ROP OP=$mmux_gid_MIN
+    declare EXPECTED_ROP=$mmux_gid_MAX
 
     mmux_gid_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
@@ -3705,7 +3705,7 @@ function bitwise-wint-xor-1.3 () {
 ### ------------------------------------------------------------------------
 
 function bitwise-not-wint-1.1 () {
-    declare ROP OP=$mmux_libc_MAX_WINT
+    declare ROP OP=$mmux_wint_MAX
     declare EXPECTED_ROP=0
 
     mmux_wint_bitwise_not ROP WW(OP)
@@ -3714,8 +3714,8 @@ function bitwise-not-wint-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 function bitwise-not-wint-1.2 () {
-    declare ROP OP=$mmux_libc_MIN_WINT
-    declare EXPECTED_ROP=$mmux_libc_MAX_WINT
+    declare ROP OP=$mmux_wint_MIN
+    declare EXPECTED_ROP=$mmux_wint_MAX
 
     mmux_wint_bitwise_not ROP WW(OP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)

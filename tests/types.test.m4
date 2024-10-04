@@ -66,20 +66,18 @@ dotest-set-debug
 
 for STEM in "${MMUX_BASH_POINTERS_REAL_STEMS[@]}"
 do
-    UPPER_STEM=$(mbfl_string_toupper WW(STEM))
-
-    eval "if test -v mmux_libc_SIZEOF_${UPPER_STEM} ; then
+    eval "if test -v mmux_${STEM}_SIZEOF ; then
 function types-sizeof-${STEM}-1.1 () {
-    dotest-debug mmux_libc_SIZEOF_${UPPER_STEM}=\"\$mmux_libc_SIZEOF_${UPPER_STEM}\"
-    test -v mmux_libc_SIZEOF_${UPPER_STEM} && mmux_string_is_uint \"\$mmux_libc_SIZEOF_${UPPER_STEM}\"
+    dotest-debug mmux_${STEM}_SIZEOF=\"\${mmux_${STEM}_SIZEOF:?}\"
+    test -v mmux_${STEM}_SIZEOF && mmux_string_is_uint \"\${mmux_${STEM}_SIZEOF:?}\"
 }
 function types-maximum-${STEM}-1.2 () {
-    dotest-debug mmux_libc_MAX_${UPPER_STEM}=\\\"\$mmux_libc_MAX_${UPPER_STEM}\\\"
-    test -v mmux_libc_MAX_${UPPER_STEM} && mmux_string_is_${STEM} \"\$mmux_libc_MAX_${UPPER_STEM}\"
+    dotest-debug mmux_${STEM}_MAX=\\\"\${mmux_${STEM}_MAX:?}\\\"
+    test -v mmux_${STEM}_MAX && mmux_string_is_${STEM} \"\${mmux_${STEM}_MAX:?}\"
 }
 function types-maximum-${STEM}-1.3 () {
-    dotest-debug mmux_libc_MIN_${UPPER_STEM}=\\\"\$mmux_libc_MIN_${UPPER_STEM}\\\"
-    test -v mmux_libc_MIN_${UPPER_STEM} && mmux_string_is_${STEM} \"\$mmux_libc_MIN_${UPPER_STEM}\"
+    dotest-debug mmux_${STEM}_MIN=\\\"\${mmux_${STEM}_MIN:?}\\\"
+    test -v mmux_${STEM}_MIN && mmux_string_is_${STEM} \"\${mmux_${STEM}_MIN:?}\"
 }
 fi"
 done
@@ -89,12 +87,10 @@ done
 
 for STEM in "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}"
 do
-    UPPER_STEM=$(mbfl_string_toupper WW(STEM))
-
-    eval "if test -v mmux_libc_SIZEOF_${UPPER_STEM} ; then
+    eval "if test -v mmux_${STEM}_SIZEOF ; then
 function types-sizeof-${STEM}-1.1 () {
-    dotest-debug mmux_libc_SIZEOF_${UPPER_STEM}=\"\$mmux_libc_SIZEOF_${UPPER_STEM}\"
-    test -v mmux_libc_SIZEOF_${UPPER_STEM} && mmux_string_is_uint \"\$mmux_libc_SIZEOF_${UPPER_STEM}\"
+    dotest-debug mmux_${STEM}_SIZEOF=\"\$mmux_${STEM}_SIZEOF\"
+    test -v mmux_${STEM}_SIZEOF && mmux_string_is_uint \"\$mmux_${STEM}_SIZEOF\"
 }
 fi"
 done

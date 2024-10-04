@@ -53,9 +53,9 @@ source "$MMUX_LIBRARY"
 
 if false
 then
-    printf 'mmux_libc_SIZEOF_COMPLEXF=%s\n'  WW(mmux_libc_SIZEOF_COMPLEXF)  >&2
-    printf 'mmux_libc_SIZEOF_COMPLEXD=%s\n'  WW(mmux_libc_SIZEOF_COMPLEXD)  >&2
-    printf 'mmux_libc_SIZEOF_COMPLEXLD=%s\n' WW(mmux_libc_SIZEOF_COMPLEXLD) >&2
+    printf 'mmux_complexf_SIZEOF=%s\n'  WW(mmux_complexf_SIZEOF)  >&2
+    printf 'mmux_complexd_SIZEOF=%s\n'  WW(mmux_complexd_SIZEOF)  >&2
+    printf 'mmux_complexld_SIZEOF=%s\n' WW(mmux_complexld_SIZEOF) >&2
 fi
 
 
@@ -887,7 +887,7 @@ function arrays-double-1.3 () {
 
 #### array accessors and mutators: ldouble
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_ldouble_SIZEOF
 then
 
 function arrays-ldouble-1.1 () {
@@ -947,7 +947,7 @@ fi
 
 #### array accessors and mutators: float32
 
-if test -v mmux_libc_SIZEOF_FLOAT32
+if test -v mmux_float32_SIZEOF
 then
 
 function arrays-float32-1.1 () {
@@ -1007,7 +1007,7 @@ fi
 
 #### array accessors and mutators: float64
 
-if test -v mmux_libc_SIZEOF_FLOAT64
+if test -v mmux_float64_SIZEOF
 then
 
 function arrays-float64-1.1 () {
@@ -1067,7 +1067,7 @@ fi
 
 #### array accessors and mutators: float128
 
-if test -v mmux_libc_SIZEOF_FLOAT128
+if test -v mmux_float128_SIZEOF
 then
 
 function arrays-float128-1.1 () {
@@ -1127,7 +1127,7 @@ fi
 
 #### array accessors and mutators: float32x
 
-if test -v mmux_libc_SIZEOF_FLOAT32X
+if test -v mmux_float32x_SIZEOF
 then
 
 function arrays-float32x-1.1 () {
@@ -1187,7 +1187,7 @@ fi
 
 #### array accessors and mutators: float64x
 
-if test -v mmux_libc_SIZEOF_FLOAT64X
+if test -v mmux_float64x_SIZEOF
 then
 
 function arrays-float64x-1.1 () {
@@ -1247,7 +1247,7 @@ fi
 
 #### array accessors and mutators: float128x
 
-if test -v mmux_libc_SIZEOF_FLOAT128X
+if test -v mmux_float128x_SIZEOF
 then
 
 function arrays-float128x-1.1 () {
@@ -1307,7 +1307,7 @@ fi
 
 #### array accessors and mutators: decimal32
 
-if test -v mmux_libc_SIZEOF_DECIMAL32
+if test -v mmux_decimal32_SIZEOF
 then
 
 function arrays-decimal32-1.1 () {
@@ -1367,7 +1367,7 @@ fi
 
 #### array accessors and mutators: decimal64
 
-if test -v mmux_libc_SIZEOF_DECIMAL64
+if test -v mmux_decimal64_SIZEOF
 then
 
 function arrays-decimal64-1.1 () {
@@ -1427,7 +1427,7 @@ fi
 
 #### array accessors and mutators: decimal128
 
-if test -v mmux_libc_SIZEOF_DECIMAL128
+if test -v mmux_decimal128_SIZEOF
 then
 
 function arrays-decimal128-1.1 () {
@@ -1490,7 +1490,7 @@ fi
 function arrays-complexf-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    mmux_libc_calloc PTR WW(mmux_complexf_SIZEOF) 10
     {
 	mmux_complexf_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf_array_ref VALUE $PTR 3
@@ -1502,7 +1502,7 @@ function arrays-complexf-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    mmux_libc_calloc PTR WW(mmux_complexf_SIZEOF) 10
     {
 	mmux_complexf_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1522,12 +1522,12 @@ function arrays-complexf-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    mmux_libc_calloc PTR WW(mmux_complexf_SIZEOF) 10
     {
 	mmux_complexf_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf_SIZEOF))
 	mmux_complexf_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1545,7 +1545,7 @@ function arrays-complexf-1.3 () {
 function arrays-complexd-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    mmux_libc_calloc PTR WW(mmux_complexd_SIZEOF) 10
     {
 	mmux_complexd_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd_array_ref VALUE $PTR 3
@@ -1557,7 +1557,7 @@ function arrays-complexd-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    mmux_libc_calloc PTR WW(mmux_complexd_SIZEOF) 10
     {
 	mmux_complexd_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1577,12 +1577,12 @@ function arrays-complexd-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    mmux_libc_calloc PTR WW(mmux_complexd_SIZEOF) 10
     {
 	mmux_complexd_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexd_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * WW(mmux_libc_SIZEOF_COMPLEXD) ))
+	mmux_libc_realloc PTR $PTR $(( 10 * WW(mmux_complexd_SIZEOF) ))
 	mmux_complexd_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexd_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexd_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1597,13 +1597,13 @@ function arrays-complexd-1.3 () {
 
 #### array accessors and mutators: complexld
 
-if test -v mmux_libc_SIZEOF_COMPLEXLD
+if test -v mmux_complexld_SIZEOF
 then
 
 function arrays-complexld-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    mmux_libc_calloc PTR WW(mmux_complexld_SIZEOF) 10
     {
 	mmux_complexld_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexld_array_ref VALUE $PTR 3
@@ -1615,7 +1615,7 @@ function arrays-complexld-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    mmux_libc_calloc PTR WW(mmux_complexld_SIZEOF) 10
     {
 	mmux_complexld_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexld_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1635,12 +1635,12 @@ function arrays-complexld-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    mmux_libc_calloc PTR WW(mmux_complexld_SIZEOF) 10
     {
 	mmux_complexld_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexld_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexld_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * WW(mmux_libc_SIZEOF_COMPLEXLD) ))
+	mmux_libc_realloc PTR $PTR $(( 10 * WW(mmux_complexld_SIZEOF) ))
 	mmux_complexld_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexld_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexld_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1657,13 +1657,13 @@ fi
 
 #### array accessors and mutators: complexf32
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32
+if test -v mmux_complexf32_SIZEOF
 then
 
 function arrays-complexf32-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32_SIZEOF) 10
     {
 	mmux_complexf32_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf32_array_ref VALUE $PTR 3
@@ -1675,7 +1675,7 @@ function arrays-complexf32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32_SIZEOF) 10
     {
 	mmux_complexf32_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf32_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1695,12 +1695,12 @@ function arrays-complexf32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32_SIZEOF) 10
     {
 	mmux_complexf32_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf32_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf32_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF32))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf32_SIZEOF))
 	mmux_complexf32_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf32_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf32_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1717,13 +1717,13 @@ fi
 
 #### array accessors and mutators: complexf64
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64
+if test -v mmux_complexf64_SIZEOF
 then
 
 function arrays-complexf64-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64_SIZEOF) 10
     {
 	mmux_complexf64_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf64_array_ref VALUE $PTR 3
@@ -1735,7 +1735,7 @@ function arrays-complexf64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64_SIZEOF) 10
     {
 	mmux_complexf64_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf64_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1755,12 +1755,12 @@ function arrays-complexf64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64_SIZEOF) 10
     {
 	mmux_complexf64_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf64_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf64_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF64))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf64_SIZEOF))
 	mmux_complexf64_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf64_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf64_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1777,13 +1777,13 @@ fi
 
 #### array accessors and mutators: complexf128
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128
+if test -v mmux_complexf128_SIZEOF
 then
 
 function arrays-complexf128-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128_SIZEOF) 10
     {
 	mmux_complexf128_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf128_array_ref VALUE $PTR 3
@@ -1795,7 +1795,7 @@ function arrays-complexf128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128_SIZEOF) 10
     {
 	mmux_complexf128_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf128_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1815,12 +1815,12 @@ function arrays-complexf128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128_SIZEOF) 10
     {
 	mmux_complexf128_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf128_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf128_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF128))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf128_SIZEOF))
 	mmux_complexf128_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf128_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf128_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1837,13 +1837,13 @@ fi
 
 #### array accessors and mutators: complexf32x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32X
+if test -v mmux_complexf32x_SIZEOF
 then
 
 function arrays-complexf32x-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32x_SIZEOF) 10
     {
 	mmux_complexf32x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf32x_array_ref VALUE $PTR 3
@@ -1855,7 +1855,7 @@ function arrays-complexf32x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32x_SIZEOF) 10
     {
 	mmux_complexf32x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf32x_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1875,12 +1875,12 @@ function arrays-complexf32x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32x_SIZEOF) 10
     {
 	mmux_complexf32x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf32x_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf32x_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF32X))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf32x_SIZEOF))
 	mmux_complexf32x_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf32x_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf32x_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1897,13 +1897,13 @@ fi
 
 #### array accessors and mutators: complexf64x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64X
+if test -v mmux_complexf64x_SIZEOF
 then
 
 function arrays-complexf64x-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64x_SIZEOF) 10
     {
 	mmux_complexf64x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf64x_array_ref VALUE $PTR 3
@@ -1915,7 +1915,7 @@ function arrays-complexf64x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64x_SIZEOF) 10
     {
 	mmux_complexf64x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf64x_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1935,12 +1935,12 @@ function arrays-complexf64x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64x_SIZEOF) 10
     {
 	mmux_complexf64x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf64x_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf64x_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF64X))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf64x_SIZEOF))
 	mmux_complexf64x_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf64x_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf64x_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -1957,13 +1957,13 @@ fi
 
 #### array accessors and mutators: complexf128x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128X
+if test -v mmux_complexf128x_SIZEOF
 then
 
 function arrays-complexf128x-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128x_SIZEOF) 10
     {
 	mmux_complexf128x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf128x_array_ref VALUE $PTR 3
@@ -1975,7 +1975,7 @@ function arrays-complexf128x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128x_SIZEOF) 10
     {
 	mmux_complexf128x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf128x_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -1995,12 +1995,12 @@ function arrays-complexf128x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128x_SIZEOF) 10
     {
 	mmux_complexf128x_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexf128x_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexf128x_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXF128X))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexf128x_SIZEOF))
 	mmux_complexf128x_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexf128x_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexf128x_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -2018,13 +2018,13 @@ fi
 
 #### array accessors and mutators: complexd32
 
-if test -v mmux_libc_SIZEOF_COMPLEXD32
+if test -v mmux_complexd32_SIZEOF
 then
 
 function arrays-complexd32-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    mmux_libc_calloc PTR WW(mmux_complexd32_SIZEOF) 10
     {
 	mmux_complexd32_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd32_array_ref VALUE $PTR 3
@@ -2036,7 +2036,7 @@ function arrays-complexd32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    mmux_libc_calloc PTR WW(mmux_complexd32_SIZEOF) 10
     {
 	mmux_complexd32_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd32_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -2056,12 +2056,12 @@ function arrays-complexd32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD32) 10
+    mmux_libc_calloc PTR WW(mmux_complexd32_SIZEOF) 10
     {
 	mmux_complexd32_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd32_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexd32_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXD32))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexd32_SIZEOF))
 	mmux_complexd32_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexd32_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexd32_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -2078,13 +2078,13 @@ fi
 
 #### array accessors and mutators: complexd64
 
-if test -v mmux_libc_SIZEOF_COMPLEXD64
+if test -v mmux_complexd64_SIZEOF
 then
 
 function arrays-complexd64-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    mmux_libc_calloc PTR WW(mmux_complexd64_SIZEOF) 10
     {
 	mmux_complexd64_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd64_array_ref VALUE $PTR 3
@@ -2096,7 +2096,7 @@ function arrays-complexd64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    mmux_libc_calloc PTR WW(mmux_complexd64_SIZEOF) 10
     {
 	mmux_complexd64_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd64_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -2116,12 +2116,12 @@ function arrays-complexd64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD64) 10
+    mmux_libc_calloc PTR WW(mmux_complexd64_SIZEOF) 10
     {
 	mmux_complexd64_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd64_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexd64_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXD64))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexd64_SIZEOF))
 	mmux_complexd64_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexd64_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexd64_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE
@@ -2138,13 +2138,13 @@ fi
 
 #### array accessors and mutators: complexd128
 
-if test -v mmux_libc_SIZEOF_COMPLEXD128
+if test -v mmux_complexd128_SIZEOF
 then
 
 function arrays-complexd128-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    mmux_libc_calloc PTR WW(mmux_complexd128_SIZEOF) 10
     {
 	mmux_complexd128_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd128_array_ref VALUE $PTR 3
@@ -2156,7 +2156,7 @@ function arrays-complexd128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    mmux_libc_calloc PTR WW(mmux_complexd128_SIZEOF) 10
     {
 	mmux_complexd128_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd128_array_set $PTR 4 '(5.6)+i*(7.8)'
@@ -2176,12 +2176,12 @@ function arrays-complexd128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD128) 10
+    mmux_libc_calloc PTR WW(mmux_complexd128_SIZEOF) 10
     {
 	mmux_complexd128_array_set $PTR 3 '(1.2)+i*(3.4)'
 	mmux_complexd128_array_set $PTR 4 '(5.6)+i*(7.8)'
 	mmux_complexd128_array_set $PTR 5 '(9.0)+i*(1.2)'
-	mmux_libc_realloc PTR $PTR $(( 10 * mmux_libc_SIZEOF_COMPLEXD128))
+	mmux_libc_realloc PTR $PTR $(( 10 * mmux_complexd128_SIZEOF))
 	mmux_complexd128_array_ref VALUE $PTR 3		;VALUES[0]=$VALUE
 	mmux_complexd128_array_ref VALUE $PTR 4		;VALUES[1]=$VALUE
 	mmux_complexd128_array_ref VALUE $PTR 5		;VALUES[2]=$VALUE

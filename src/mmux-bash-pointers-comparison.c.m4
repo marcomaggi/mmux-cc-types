@@ -40,7 +40,7 @@ mmux_$1_$2_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] M
 #define MMUX_BUILTIN_NAME	"mmux_$1_$2"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
-  mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
+  mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
@@ -158,8 +158,8 @@ mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * c
 #define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-  mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
-  mmux_libc_$1_t	margin = MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN;
+  mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
+  mmux_$1_t	margin = MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN;
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
@@ -206,8 +206,8 @@ mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
 #define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-  mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
-  mmux_libc_$1_t	epsilon = MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON;
+  mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
+  mmux_$1_t	epsilon = MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON;
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
@@ -277,8 +277,8 @@ mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * c
 #define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-  mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
-  mmux_libc_$1_t	margin = mmux_$1_make_rectangular(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN,
+  mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
+  mmux_$1_t	margin = mmux_$1_make_rectangular(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN,
 								   MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN);
   int			rv;
 
@@ -326,8 +326,8 @@ mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * 
 #define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-  mmux_libc_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
-  mmux_libc_$1_t	epsilon = mmux_$1_make_rectangular(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON,
+  mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
+  mmux_$1_t	epsilon = mmux_$1_make_rectangular(MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON,
 						      MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON);
   int			rv;
 

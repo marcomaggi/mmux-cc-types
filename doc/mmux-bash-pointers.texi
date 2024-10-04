@@ -450,86 +450,86 @@ Bash variable is undefined; we can test this condition with @code{test -v}; to t
 underlying platform implements the type @code{signed long long int}, we can do:
 
 @example
-if test -v mmux_libc_SIZEOF_SLLONG
+if test -v mmux_sllong_SIZEOF
 then # implemented
 else # not implemented
 fi
 @end example
 
-@macro MmuxDefineGlobalVarSizeof{NAME,STEM}
-@defvar mmux_libc_SIZEOF_\NAME\
+@macro MmuxDefineGlobalVarSizeof{STEM}
+@defvar mmux_\STEM\_SIZEOF
 Global variable holding the size, measured in bytes, of the C language type with stem @code{\STEM\}.
 @end defvar
 
 @end macro
 
-@MmuxDefineGlobalVarSizeof{POINTER,pointer}
+@MmuxDefineGlobalVarSizeof{pointer}
 
-@MmuxDefineGlobalVarSizeof{SCHAR, schar}
-@MmuxDefineGlobalVarSizeof{UCHAR, uchar}
-@MmuxDefineGlobalVarSizeof{SSHORT, sshort}
-@MmuxDefineGlobalVarSizeof{USHORT, ushort}
-@MmuxDefineGlobalVarSizeof{SINT, sint}
-@MmuxDefineGlobalVarSizeof{UINT, uint}
-@MmuxDefineGlobalVarSizeof{SLONG, slong}
-@MmuxDefineGlobalVarSizeof{ULONG, ulong}
-@MmuxDefineGlobalVarSizeof{SLLONG, sllong}
-@MmuxDefineGlobalVarSizeof{ULLONG, ullong}
-@MmuxDefineGlobalVarSizeof{FLOAT, float}
-@MmuxDefineGlobalVarSizeof{DOUBLE, double}
-@MmuxDefineGlobalVarSizeof{LDOUBLE, ldouble}
+@MmuxDefineGlobalVarSizeof{schar}
+@MmuxDefineGlobalVarSizeof{uchar}
+@MmuxDefineGlobalVarSizeof{sshort}
+@MmuxDefineGlobalVarSizeof{ushort}
+@MmuxDefineGlobalVarSizeof{sint}
+@MmuxDefineGlobalVarSizeof{uint}
+@MmuxDefineGlobalVarSizeof{slong}
+@MmuxDefineGlobalVarSizeof{ulong}
+@MmuxDefineGlobalVarSizeof{sllong}
+@MmuxDefineGlobalVarSizeof{ullong}
+@MmuxDefineGlobalVarSizeof{float}
+@MmuxDefineGlobalVarSizeof{double}
+@MmuxDefineGlobalVarSizeof{ldouble}
 
-@MmuxDefineGlobalVarSizeof{FLOAT32, float32}
-@MmuxDefineGlobalVarSizeof{FLOAT64, float64}
-@MmuxDefineGlobalVarSizeof{FLOAT128, float128}
+@MmuxDefineGlobalVarSizeof{float32}
+@MmuxDefineGlobalVarSizeof{float64}
+@MmuxDefineGlobalVarSizeof{float128}
 
-@MmuxDefineGlobalVarSizeof{FLOAT32X, float32x}
-@MmuxDefineGlobalVarSizeof{FLOAT64X, float64x}
-@MmuxDefineGlobalVarSizeof{FLOAT128X, float128x}
+@MmuxDefineGlobalVarSizeof{float32x}
+@MmuxDefineGlobalVarSizeof{float64x}
+@MmuxDefineGlobalVarSizeof{float128x}
 
-@MmuxDefineGlobalVarSizeof{DECIMAL32, decimal32}
-@MmuxDefineGlobalVarSizeof{DECIMAL64, decimal64}
-@MmuxDefineGlobalVarSizeof{DECIMAL128, decimal128}
+@MmuxDefineGlobalVarSizeof{decimal32}
+@MmuxDefineGlobalVarSizeof{decimal64}
+@MmuxDefineGlobalVarSizeof{decimal128}
 
-@MmuxDefineGlobalVarSizeof{COMPLEXF, complexf}
-@MmuxDefineGlobalVarSizeof{COMPLEXD, complexd}
-@MmuxDefineGlobalVarSizeof{COMPLEXLD, complexld}
+@MmuxDefineGlobalVarSizeof{complexf}
+@MmuxDefineGlobalVarSizeof{complexd}
+@MmuxDefineGlobalVarSizeof{complexld}
 
-@MmuxDefineGlobalVarSizeof{COMPLEXF32, complexf32}
-@MmuxDefineGlobalVarSizeof{COMPLEXF64, complexf64}
-@MmuxDefineGlobalVarSizeof{COMPLEXF128, complexf128}
+@MmuxDefineGlobalVarSizeof{complexf32}
+@MmuxDefineGlobalVarSizeof{complexf64}
+@MmuxDefineGlobalVarSizeof{complexf128}
 
-@MmuxDefineGlobalVarSizeof{COMPLEXF32X, complexf32x}
-@MmuxDefineGlobalVarSizeof{COMPLEXF64X, complexf64x}
-@MmuxDefineGlobalVarSizeof{COMPLEXF128X, complexf128x}
+@MmuxDefineGlobalVarSizeof{complexf32x}
+@MmuxDefineGlobalVarSizeof{complexf64x}
+@MmuxDefineGlobalVarSizeof{complexf128x}
 
-@MmuxDefineGlobalVarSizeof{COMPLEXD32, complexd32}
-@MmuxDefineGlobalVarSizeof{COMPLEXD64, complexd64}
-@MmuxDefineGlobalVarSizeof{COMPLEXD128, complexd128}
+@MmuxDefineGlobalVarSizeof{complexd32}
+@MmuxDefineGlobalVarSizeof{complexd64}
+@MmuxDefineGlobalVarSizeof{complexd128}
 
-@MmuxDefineGlobalVarSizeof{SINT8, sint8}
-@MmuxDefineGlobalVarSizeof{UINT8, uint8}
-@MmuxDefineGlobalVarSizeof{SINT16, sint16}
-@MmuxDefineGlobalVarSizeof{UINT16, uint16}
-@MmuxDefineGlobalVarSizeof{SINT32, sint32}
-@MmuxDefineGlobalVarSizeof{UINT32, uint32}
-@MmuxDefineGlobalVarSizeof{SINT64, sint64}
-@MmuxDefineGlobalVarSizeof{UINT64, uint64}
+@MmuxDefineGlobalVarSizeof{sint8}
+@MmuxDefineGlobalVarSizeof{uint8}
+@MmuxDefineGlobalVarSizeof{sint16}
+@MmuxDefineGlobalVarSizeof{uint16}
+@MmuxDefineGlobalVarSizeof{sint32}
+@MmuxDefineGlobalVarSizeof{uint32}
+@MmuxDefineGlobalVarSizeof{sint64}
+@MmuxDefineGlobalVarSizeof{uint64}
 
-@MmuxDefineGlobalVarSizeof{SSIZE, ssize}
-@MmuxDefineGlobalVarSizeof{USIZE, usize}
-@MmuxDefineGlobalVarSizeof{SINTMAX, sintmax}
-@MmuxDefineGlobalVarSizeof{UINTMAX, uintmax}
-@MmuxDefineGlobalVarSizeof{SINTPTR, sintptr}
-@MmuxDefineGlobalVarSizeof{UINTPTR, uintptr}
-@MmuxDefineGlobalVarSizeof{PTRDIFF, ptrdiff}
-@MmuxDefineGlobalVarSizeof{MODE, mode}
-@MmuxDefineGlobalVarSizeof{OFF, off}
-@MmuxDefineGlobalVarSizeof{PID, pid}
-@MmuxDefineGlobalVarSizeof{UID, uid}
-@MmuxDefineGlobalVarSizeof{GID, gid}
-@MmuxDefineGlobalVarSizeof{WCHAR, wchar}
-@MmuxDefineGlobalVarSizeof{WINT, wint}
+@MmuxDefineGlobalVarSizeof{ssize}
+@MmuxDefineGlobalVarSizeof{usize}
+@MmuxDefineGlobalVarSizeof{sintmax}
+@MmuxDefineGlobalVarSizeof{uintmax}
+@MmuxDefineGlobalVarSizeof{sintptr}
+@MmuxDefineGlobalVarSizeof{uintptr}
+@MmuxDefineGlobalVarSizeof{ptrdiff}
+@MmuxDefineGlobalVarSizeof{mode}
+@MmuxDefineGlobalVarSizeof{off}
+@MmuxDefineGlobalVarSizeof{pid}
+@MmuxDefineGlobalVarSizeof{uid}
+@MmuxDefineGlobalVarSizeof{gid}
+@MmuxDefineGlobalVarSizeof{wchar}
+@MmuxDefineGlobalVarSizeof{wint}
 
 @c page
 @node variables limits
@@ -540,66 +540,77 @@ If a C language type referenced by one of the following variables is undefined: 
 Bash variable is undefined.  Notice that the floating--point complex C language types have neither
 maximum nor minimum limits.
 
-@macro MmuxDefineGlobalVarLimits{NAME,TYPE}
-@defvar mmux_libc_MAX_\NAME\
-@defvarx mmux_libc_MIN_\NAME\
-Global variables holding the maximum and minimum values of the C language type @code{\TYPE\}.
+Some of the following variables hold the minimum value representable by a C language real number
+type; this is true even for floating--point numbers: the value is the minimum negative representable
+value.  This is different from the standard C language constants like @code{FLT_MIN},
+@code{DBL_MIN}, @code{LDBL_MIN}, which represent some sort of minimum representable positive value.
+
+For the unsigned number types: the minimum value is zero.
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineGlobalVarLimits{STEM,TYPE}
+@defvar mmux_\STEM\_MAX
+@defvarx mmux_\STEM\_MIN
+Global variables holding the maximum and minimum values of the C language type @objtype{mmux_\STEM\_t}.
 @end defvar
 
 @end macro
 
-@MmuxDefineGlobalVarLimits{POINTER,void *}
+@c ------------------------------------------------------------------------
 
-@MmuxDefineGlobalVarLimits{SCHAR, signed char}
-@MmuxDefineGlobalVarLimits{UCHAR, unsigned char}
-@MmuxDefineGlobalVarLimits{SSHORT, signed short int}
-@MmuxDefineGlobalVarLimits{USHORT, unsigned short int}
-@MmuxDefineGlobalVarLimits{SINT, signed int}
-@MmuxDefineGlobalVarLimits{UINT, unsigned int}
-@MmuxDefineGlobalVarLimits{SLONG, signed long int}
-@MmuxDefineGlobalVarLimits{ULONG, unsigned long int}
-@MmuxDefineGlobalVarLimits{SLLONG, signed long long int}
-@MmuxDefineGlobalVarLimits{ULLONG, unsigned long long int}
+@MmuxDefineGlobalVarLimits{pointer}
 
-@MmuxDefineGlobalVarLimits{FLOAT, float}
-@MmuxDefineGlobalVarLimits{DOUBLE, double}
-@MmuxDefineGlobalVarLimits{LDOUBLE, long double}
+@MmuxDefineGlobalVarLimits{schar}
+@MmuxDefineGlobalVarLimits{uchar}
+@MmuxDefineGlobalVarLimits{sshort}
+@MmuxDefineGlobalVarLimits{ushort}
+@MmuxDefineGlobalVarLimits{sint}
+@MmuxDefineGlobalVarLimits{uint}
+@MmuxDefineGlobalVarLimits{slong}
+@MmuxDefineGlobalVarLimits{ulong}
+@MmuxDefineGlobalVarLimits{sllong}
+@MmuxDefineGlobalVarLimits{ullong}
 
-@MmuxDefineGlobalVarLimits{FLOAT32, float32}
-@MmuxDefineGlobalVarLimits{FLOAT64, float64}
-@MmuxDefineGlobalVarLimits{FLOAT128, float128}
+@MmuxDefineGlobalVarLimits{float}
+@MmuxDefineGlobalVarLimits{double}
+@MmuxDefineGlobalVarLimits{ldouble}
 
-@MmuxDefineGlobalVarLimits{FLOAT32X, float32x}
-@MmuxDefineGlobalVarLimits{FLOAT64X, float64x}
-@MmuxDefineGlobalVarLimits{FLOAT128X, float128x}
+@MmuxDefineGlobalVarLimits{float32}
+@MmuxDefineGlobalVarLimits{float64}
+@MmuxDefineGlobalVarLimits{float128}
 
-@MmuxDefineGlobalVarLimits{DECIMAL32, decimal32}
-@MmuxDefineGlobalVarLimits{DECIMAL64, decimal64}
-@MmuxDefineGlobalVarLimits{DECIMAL128, decimal128}
+@MmuxDefineGlobalVarLimits{float32x}
+@MmuxDefineGlobalVarLimits{float64x}
+@MmuxDefineGlobalVarLimits{float128x}
 
-@MmuxDefineGlobalVarLimits{SINT8, int8_t}
-@MmuxDefineGlobalVarLimits{UINT8, uint8_t}
-@MmuxDefineGlobalVarLimits{SINT16, int16_t}
-@MmuxDefineGlobalVarLimits{UINT16, uint16_t}
-@MmuxDefineGlobalVarLimits{SINT32, int32_t}
-@MmuxDefineGlobalVarLimits{UINT32, uint32_t}
-@MmuxDefineGlobalVarLimits{SINT64, int64_t}
-@MmuxDefineGlobalVarLimits{UINT64, uint64_t}
+@MmuxDefineGlobalVarLimits{decimal32}
+@MmuxDefineGlobalVarLimits{decimal64}
+@MmuxDefineGlobalVarLimits{decimal128}
 
-@MmuxDefineGlobalVarLimits{SSIZE, ssize_t}
-@MmuxDefineGlobalVarLimits{USIZE, size_t}
-@MmuxDefineGlobalVarLimits{SINTMAX, intmax_t}
-@MmuxDefineGlobalVarLimits{UINTMAX, uintmax_t}
-@MmuxDefineGlobalVarLimits{SINTPTR, intptr_t}
-@MmuxDefineGlobalVarLimits{UINTPTR, uintptr_t}
-@MmuxDefineGlobalVarLimits{PTRDIFF, ptrdiff_t}
-@MmuxDefineGlobalVarLimits{MODE, mode_t}
-@MmuxDefineGlobalVarLimits{OFF, off_t}
-@MmuxDefineGlobalVarLimits{PID, pid_t}
-@MmuxDefineGlobalVarLimits{UID, uid_t}
-@MmuxDefineGlobalVarLimits{GID, gid_t}
-@MmuxDefineGlobalVarLimits{WCHAR, wchar_t}
-@MmuxDefineGlobalVarLimits{WINT, wint_t}
+@MmuxDefineGlobalVarLimits{sint8}
+@MmuxDefineGlobalVarLimits{uint8}
+@MmuxDefineGlobalVarLimits{sint16}
+@MmuxDefineGlobalVarLimits{uint16}
+@MmuxDefineGlobalVarLimits{sint32}
+@MmuxDefineGlobalVarLimits{uint32}
+@MmuxDefineGlobalVarLimits{sint64}
+@MmuxDefineGlobalVarLimits{uint64}
+
+@MmuxDefineGlobalVarLimits{ssize}
+@MmuxDefineGlobalVarLimits{usize}
+@MmuxDefineGlobalVarLimits{sintmax}
+@MmuxDefineGlobalVarLimits{uintmax}
+@MmuxDefineGlobalVarLimits{sintptr}
+@MmuxDefineGlobalVarLimits{uintptr}
+@MmuxDefineGlobalVarLimits{ptrdiff}
+@MmuxDefineGlobalVarLimits{mode}
+@MmuxDefineGlobalVarLimits{off}
+@MmuxDefineGlobalVarLimits{pid}
+@MmuxDefineGlobalVarLimits{uid}
+@MmuxDefineGlobalVarLimits{gid}
+@MmuxDefineGlobalVarLimits{wchar}
+@MmuxDefineGlobalVarLimits{wint}
 
 @c page
 @node variables errno
@@ -3567,7 +3578,7 @@ memory blocks, handling them as arrays of a specified C type:
 @example
 declare PTR VALUE
 
-mmux_libc_malloc PTR $(( 55 * mmux_libc_SIZEOF_ULONG ))
+mmux_libc_malloc PTR $(( 55 * mmux_ulong_SIZEOF ))
 @{
   mmux_ulong_array_set $PTR 0 1234567890
   mmux_ulong_array_ref VALUE $PTR 0
@@ -3907,7 +3918,7 @@ the type @objtype{usize}.
 
 @example
 declare -i ERRNO; # to be used in case of error
-declare -i ITEM_SIZE=$mmux_libc_SIZEOF_SINT32
+declare -i ITEM_SIZE=$mmux_sint32_SIZEOF
 declare -i ITEM_COUNT=123
 declare BUFFER
 
@@ -3955,7 +3966,7 @@ the type @objtype{usize}.
 
 @example
 declare -i ERRNO; # to be used in case of error
-declare -i ITEM_SIZE=$mmux_libc_SIZEOF_SINT32 ITEM_COUNT=123
+declare -i ITEM_SIZE=$mmux_sint32_SIZEOF ITEM_COUNT=123
 declare BUFFER
 
 if ! mmux_libc_calloc BUFFER $ITEM_COUNT $ITEM_SIZE
@@ -4301,12 +4312,21 @@ composed from a ``stem'': a single word representing the name of the type.  Such
 useful when using preprocessor macros to generate code.
 
 @macro MmuxDefineCAliasTypedef{STEM,TYPE}
-@deftp {Typedef} mmux_libc_\STEM\_t
-Type definition aliasing the C language type @code{\TYPE\}.
+@deftp {Typedef} mmux_\STEM\_t
+Type definition aliasing the C language type @objtype{\TYPE\}.
 @end deftp
 
 @end macro
 
+@macro MmuxDefineCAliasTypedefPart{COMPLEXSTEM,PARTSTEM}
+@deftp {Typedef} mmux_\COMPLEXSTEM\_part_t
+Type definition aliasing the C language type @objtype{mmux_\PARTSTEM\_t}, representing the real and
+imaginary parts type of @objtype{mmux_\COMPLEXSTEM\_t}.
+@end deftp
+
+@end macro
+
+@c ------------------------------------------------------------------------
 
 @MmuxDefineCAliasTypedef{pointer,void *}
 
@@ -4348,23 +4368,19 @@ Type definition aliasing the C language type @code{\TYPE\}.
 @MmuxDefineCAliasTypedef{complexf64x, _Float64x complex}
 @MmuxDefineCAliasTypedef{complexf128x, _Float128x complex}
 
-@MmuxDefineCAliasTypedef{complexd32, mmux_libc_complexd32_t}
-@MmuxDefineCAliasTypedef{complexd64, mmux_libc_complexd64_t}
-@MmuxDefineCAliasTypedef{complexd128, mmux_libc_complexd128_t}
-
-@deftp {Typedef} mmux_libc_complexd32_t
+@deftp {Typedef} mmux_complexd32_t
 Non--standard type definition representing a complex floating--point number whose real and imaginary
-parts are values of type @objtype{mmux_libc_decimal32_t}.
+parts are values of type @objtype{mmux_decimal32_t}.
 @end deftp
 
-@deftp {Typedef} mmux_libc_complexd64_t
+@deftp {Typedef} mmux_complexd64_t
 Non--standard type definition representing a complex floating--point number whose real and imaginary
-parts are values of type @objtype{mmux_libc_decimal64_t}.
+parts are values of type @objtype{mmux_decimal64_t}.
 @end deftp
 
-@deftp {Typedef} mmux_libc_complexd128_t
+@deftp {Typedef} mmux_complexd128_t
 Non--standard type definition representing a complex floating--point number whose real and imaginary
-parts are values of type @objtype{mmux_libc_decimal128_t}.
+parts are values of type @objtype{mmux_decimal128_t}.
 @end deftp
 
 @MmuxDefineCAliasTypedef{sint8,int8_t}
@@ -4390,6 +4406,23 @@ parts are values of type @objtype{mmux_libc_decimal128_t}.
 @MmuxDefineCAliasTypedef{wchar, wchar_t}
 @MmuxDefineCAliasTypedef{wint, wint_t}
 
+
+@MmuxDefineCAliasTypedefPart{complexf,float}
+@MmuxDefineCAliasTypedefPart{complexd,double}
+@MmuxDefineCAliasTypedefPart{complexld,ldouble}
+
+@MmuxDefineCAliasTypedefPart{complexf32, float32}
+@MmuxDefineCAliasTypedefPart{complexf64, float64}
+@MmuxDefineCAliasTypedefPart{complexf128, float128}
+
+@MmuxDefineCAliasTypedefPart{complexf32x, float32x}
+@MmuxDefineCAliasTypedefPart{complexf64x, float64x}
+@MmuxDefineCAliasTypedefPart{complexf128x, float128x}
+
+@MmuxDefineCAliasTypedefPart{complexd32, decimal32}
+@MmuxDefineCAliasTypedefPart{complexd64, decimal64}
+@MmuxDefineCAliasTypedefPart{complexd128, decimal128}
+
 @c page
 @node shared library sizeof
 @appendixsec Type size measured in bytes
@@ -4398,7 +4431,7 @@ parts are values of type @objtype{mmux_libc_decimal128_t}.
 @macro MmuxDefineCFunctionSizeof{STEM}
 @deftypefun int mmux_bash_pointers_sizeof_\STEM\ (void)
 Return a positive integer representing the size in bytes of the C language type
-@objtype{mmux_libc_\STEM\_t}.
+@objtype{mmux_\STEM\_t}.
 @end deftypefun
 
 @end macro
@@ -4479,7 +4512,7 @@ Return a positive integer representing the size in bytes of the C language type
 @macro MmuxDefineCFunctionPredicate{STEM}
 @deftypefun bool mmux_bash_pointers_string_is_\STEM\ (char const * @var{str})
 Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a
-value of type @objtype{mmux_libc_\STEM\_t}; otherwise return @cfalse{}.
+value of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @end deftypefun
 
 @end macro
@@ -4622,10 +4655,16 @@ Return the maximum value representable by the range of values of the type
 @appendixsec Type representations of minimum values
 
 
+The following functions return the minimum value representable by a C language real number type;
+this is true even for floating--point numbers: the returned value is the minimum negative
+representable value.  This is different from the standard C language constants like @code{FLT_MIN},
+@code{DBL_MIN}, @code{LDBL_MIN}, which represent some sort of minimum representable positive value.
+
+
 @macro MmuxDefineCFunctionMinimum{STEM}
-@deftypefun mmux_libc_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
+@deftypefun mmux_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
 Return the minimum value representable by the range of values of the type
-@objtype{mmux_libc_\STEM\_t}.
+@objtype{mmux_\STEM\_t}.
 @end deftypefun
 
 @end macro
@@ -4692,7 +4731,7 @@ representation we do:
 
 @example
 char const *            arg = "123";
-mmux_libc_sint_t        value;
+mmux_sint_t        value;
 int                     rv;
 
 rv = mmux_bash_pointers_parse_sint(&value, arg, "my-builtin");
@@ -4700,7 +4739,7 @@ rv = mmux_bash_pointers_parse_sint(&value, arg, "my-builtin");
 
 
 @macro MmuxDefineCFunctionParser{STEM}
-@deftypefun int mmux_bash_pointers_parse_\STEM\ (mmux_libc_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
+@deftypefun int mmux_bash_pointers_parse_\STEM\ (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
 Parse a string which is meant to be the representation of a C language type @objtype{\STEM\}; when
 successful store the result in the variable referenced by @var{PTR}, then return
 @code{EXECUTION_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{EXECUTION_FAILURE}.
@@ -4786,11 +4825,11 @@ requested the parsing operation, for example: the name of a builtin.
 
 
 Type string printers convert binary representations of C language values to string representations;
-to print a @objtype{mmux_libc_sint_t} string representation we do:
+to print a @objtype{mmux_sint_t} string representation we do:
 
 @example
-mmux_libc_sint_t        value = 123;
-int                     required_nbytes;
+mmux_sint_t     value = 123;
+int             required_nbytes;
 
 required_nbytes = mmux_bash_pointers_sprint_size_sint(value);
 if (0 > required_nbytes) @{
@@ -4805,8 +4844,8 @@ if (0 > required_nbytes) @{
 
 
 @macro MmuxDefineCFunctionSprinter{STEM}
-@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, int @var{LEN}, mmux_libc_\STEM\_t @var{VALUE})
-@deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (mmux_libc_\STEM\_t @var{VALUE})
+@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, int @var{LEN}, mmux_\STEM\_t @var{VALUE})
+@deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (mmux_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
 characters (terminating zero included).  When successful return @code{EXECUTION_SUCCESS}; otherwise

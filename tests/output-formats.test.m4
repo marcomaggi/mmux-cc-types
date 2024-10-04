@@ -206,7 +206,7 @@ function output-formats-double-2.3 () {
 
 #### type variables: ldouble
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_ldouble_SIZEOF
 then
 
 function output-formats-ldouble-1.1 () {
@@ -254,7 +254,7 @@ fi
 
 #### type variables: float32
 
-if test -v mmux_libc_SIZEOF_FLOAT32
+if test -v mmux_float32_SIZEOF
 then
 
 function output-formats-float32-1.1 () {
@@ -302,7 +302,7 @@ fi
 
 #### type variables: float64
 
-if test -v mmux_libc_SIZEOF_FLOAT64
+if test -v mmux_float64_SIZEOF
 then
 
 function output-formats-float64-1.1 () {
@@ -350,7 +350,7 @@ fi
 
 #### type variables: float128
 
-if test -v mmux_libc_SIZEOF_FLOAT128
+if test -v mmux_float128_SIZEOF
 then
 
 function output-formats-float128-1.1 () {
@@ -398,7 +398,7 @@ fi
 
 #### type variables: float32x
 
-if test -v mmux_libc_SIZEOF_FLOAT32X
+if test -v mmux_float32x_SIZEOF
 then
 
 function output-formats-float32x-1.1 () {
@@ -446,7 +446,7 @@ fi
 
 #### type variables: float64x
 
-if test -v mmux_libc_SIZEOF_FLOAT64X
+if test -v mmux_float64x_SIZEOF
 then
 
 function output-formats-float64x-1.1 () {
@@ -494,7 +494,7 @@ fi
 
 #### type variables: float128x
 
-if test -v mmux_libc_SIZEOF_FLOAT128X
+if test -v mmux_float128x_SIZEOF
 then
 
 function output-formats-float128x-1.1 () {
@@ -542,7 +542,7 @@ fi
 
 #### type variables: decimal32
 
-if test -v mmux_libc_SIZEOF_DECIMAL32
+if test -v mmux_decimal32_SIZEOF
 then
 
 function output-formats-decimal32-1.1 () {
@@ -590,7 +590,7 @@ fi
 
 #### type variables: decimal64
 
-if test -v mmux_libc_SIZEOF_DECIMAL64
+if test -v mmux_decimal64_SIZEOF
 then
 
 function output-formats-decimal64-1.1 () {
@@ -638,7 +638,7 @@ fi
 
 #### type variables: decimal128
 
-if test -v mmux_libc_SIZEOF_DECIMAL128
+if test -v mmux_decimal128_SIZEOF
 then
 
 function output-formats-decimal128-1.1 () {

@@ -345,7 +345,7 @@ function arithmetics-uchar-mod-1.1 () {
 
 function arithmetics-uchar-neg-1.1 () {
     declare ROP OP=1
-    declare -r EXPECTED_ROP=$mmux_libc_MAX_UCHAR
+    declare -r EXPECTED_ROP=$mmux_uchar_MAX
 
     mmux_uchar_neg ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
@@ -3358,7 +3358,7 @@ function arithmetics-double-inv-1.2 () {
 
 #### type variables: ldouble
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_ldouble_SIZEOF
 then
 
 function arithmetics-ldouble-add-1.1 () {
@@ -3479,7 +3479,7 @@ fi
 
 #### type variables: float32
 
-if test -v mmux_libc_SIZEOF_FLOAT32
+if test -v mmux_float32_SIZEOF
 then
 
 function arithmetics-float32-add-1.1 () {
@@ -3598,7 +3598,7 @@ fi
 
 #### type variables: float64
 
-if test -v mmux_libc_SIZEOF_FLOAT64
+if test -v mmux_float64_SIZEOF
 then
 
 function arithmetics-float64-add-1.1 () {
@@ -3717,7 +3717,7 @@ fi
 
 #### type variables: float128
 
-if test -v mmux_libc_SIZEOF_FLOAT128
+if test -v mmux_float128_SIZEOF
 then
 
 function arithmetics-float128-add-1.1 () {
@@ -3836,7 +3836,7 @@ fi
 
 #### type variables: float32x
 
-if test -v mmux_libc_SIZEOF_FLOAT32X
+if test -v mmux_float32x_SIZEOF
 then
 
 function arithmetics-float32x-add-1.1 () {
@@ -3955,7 +3955,7 @@ fi
 
 #### type variables: float64x
 
-if test -v mmux_libc_SIZEOF_FLOAT64X
+if test -v mmux_float64x_SIZEOF
 then
 
 function arithmetics-float64x-add-1.1 () {
@@ -4074,7 +4074,7 @@ fi
 
 #### type variables: float128x
 
-if test -v mmux_libc_SIZEOF_FLOAT128X
+if test -v mmux_float128x_SIZEOF
 then
 
 function arithmetics-float128x-add-1.1 () {
@@ -4193,7 +4193,7 @@ fi
 
 #### type variables: decimal32
 
-if test -v mmux_libc_SIZEOF_DECIMAL32
+if test -v mmux_decimal32_SIZEOF
 then
 
 function arithmetics-decimal32-add-1.1 () {
@@ -4312,7 +4312,7 @@ fi
 
 #### type variables: decimal64
 
-if test -v mmux_libc_SIZEOF_DECIMAL64
+if test -v mmux_decimal64_SIZEOF
 then
 
 function arithmetics-decimal64-add-1.1 () {
@@ -4431,7 +4431,7 @@ fi
 
 #### type variables: decimal128
 
-if test -v mmux_libc_SIZEOF_DECIMAL128
+if test -v mmux_decimal128_SIZEOF
 then
 
 function arithmetics-decimal128-add-1.1 () {
@@ -5006,7 +5006,7 @@ function arithmetics-complexd-inv-1.3 () {
 
 #### type variables: complexld
 
-if test -v mmux_libc_SIZEOF_COMPLEXLD
+if test -v mmux_complexld_SIZEOF
 then
 
 function arithmetics-complexld-add-1.1.1 () {
@@ -5235,7 +5235,7 @@ fi
 
 #### type variables: complexf32
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32
+if test -v mmux_complexf32_SIZEOF
 then
 
 #### type variables: complexf32
@@ -5466,7 +5466,7 @@ fi
 
 #### type variables: complexf64
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64
+if test -v mmux_complexf64_SIZEOF
 then
 
 #### type variables: complexf64
@@ -5697,7 +5697,7 @@ fi
 
 #### type variables: complexf128
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128
+if test -v mmux_complexf128_SIZEOF
 then
 
 #### type variables: complexf128
@@ -5928,7 +5928,7 @@ fi
 
 #### type variables: complexf32x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32X
+if test -v mmux_complexf32x_SIZEOF
 then
 
 #### type variables: complexf32x
@@ -6159,7 +6159,7 @@ fi
 
 #### type variables: complexf64x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64X
+if test -v mmux_complexf64x_SIZEOF
 then
 
 #### type variables: complexf64x
@@ -6390,7 +6390,7 @@ fi
 
 #### type variables: complexf128x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128X
+if test -v mmux_complexf128x_SIZEOF
 then
 
 #### type variables: complexf128x
@@ -6621,7 +6621,7 @@ fi
 
 #### type variables: complexd32
 
-if test -v mmux_libc_SIZEOF_COMPLEXD32
+if test -v mmux_complexd32_SIZEOF
 then
 
 function arithmetics-complexd32-add-1.1.1 () {
@@ -6862,7 +6862,7 @@ fi
 
 #### type variables: complexd64
 
-if test -v mmux_libc_SIZEOF_COMPLEXD64
+if test -v mmux_complexd64_SIZEOF
 then
 
 function arithmetics-complexd64-add-1.1.1 () {
@@ -7103,7 +7103,7 @@ fi
 
 #### type variables: complexd128
 
-if test -v mmux_libc_SIZEOF_COMPLEXD128
+if test -v mmux_complexd128_SIZEOF
 then
 
 function arithmetics-complexd128-add-1.1.1 () {

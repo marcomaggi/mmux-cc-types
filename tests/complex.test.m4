@@ -333,7 +333,7 @@ function complex-complexd-conj-1.2 () {
 
 #### type variables: complexld
 
-if test -v mmux_libc_SIZEOF_COMPLEXLD
+if test -v mmux_complexld_SIZEOF
 then
 
 function complex-complexld-make-rectangular-1.1 () {
@@ -465,7 +465,7 @@ fi
 
 #### type variables: complexf32
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32
+if test -v mmux_complexf32_SIZEOF
 then
 
 function complex-complexf32-make-rectangular-1.1 () {
@@ -597,7 +597,7 @@ fi
 
 #### type variables: complexf64
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64
+if test -v mmux_complexf64_SIZEOF
 then
 
 function complex-complexf64-make-rectangular-1.1 () {
@@ -729,7 +729,7 @@ fi
 
 #### type variables: complexf128
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128
+if test -v mmux_complexf128_SIZEOF
 then
 
 function complex-complexf128-make-rectangular-1.1 () {
@@ -861,7 +861,7 @@ fi
 
 #### type variables: complexf32x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32X
+if test -v mmux_complexf32x_SIZEOF
 then
 
 function complex-complexf32x-make-rectangular-1.1 () {
@@ -993,7 +993,7 @@ fi
 
 #### type variables: complexf64x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64X
+if test -v mmux_complexf64x_SIZEOF
 then
 
 function complex-complexf64x-make-rectangular-1.1 () {
@@ -1125,7 +1125,7 @@ fi
 
 #### type variables: complexf128x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128X
+if test -v mmux_complexf128x_SIZEOF
 then
 
 function complex-complexf128x-make-rectangular-1.1 () {
@@ -1257,7 +1257,7 @@ fi
 
 #### type variables: complexd32
 
-if test -v mmux_libc_SIZEOF_COMPLEXD32
+if test -v mmux_complexd32_SIZEOF
 then
 
 function complex-complexd32-make-rectangular-1.1 () {
@@ -1392,7 +1392,7 @@ fi
 
 #### type variables: complexd64
 
-if test -v mmux_libc_SIZEOF_COMPLEXD64
+if test -v mmux_complexd64_SIZEOF
 then
 
 function complex-complexd64-make-rectangular-1.1 () {
@@ -1524,7 +1524,7 @@ fi
 
 #### type variables: complexd128
 
-if test -v mmux_libc_SIZEOF_COMPLEXD128
+if test -v mmux_complexd128_SIZEOF
 then
 
 function complex-complexd128-make-rectangular-1.1 () {

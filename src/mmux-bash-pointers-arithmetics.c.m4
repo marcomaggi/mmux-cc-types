@@ -34,35 +34,35 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_add (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
 {
   return A + B;
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_sub (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
 {
   return A - B;
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_mul (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
 {
   return A * B;
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_div (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
 {
   return A / B;
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_neg (mmux_libc_$1_t A)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_neg (mmux_$1_t A)
 {
   return (- A);
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_inv (mmux_libc_$1_t A)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_inv (mmux_$1_t A)
 {
-  return (((mmux_libc_$1_t)1) / A);
+  return (((mmux_$1_t)1) / A);
 }
 ]]])]]])
 
@@ -133,71 +133,71 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wint]]])
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_add (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_libc_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_libc_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_libc_$1_part_t	Cre = Are + Bre;
-  mmux_libc_$1_part_t	Cim = Aim + Bim;
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	Cre = Are + Bre;
+  mmux_$1_part_t	Cim = Aim + Bim;
 
   return mmux_$1_make_rectangular (Cre, Cim);
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_sub (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_libc_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_libc_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_libc_$1_part_t	Cre = Are - Bre;
-  mmux_libc_$1_part_t	Cim = Aim - Bim;
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	Cre = Are - Bre;
+  mmux_$1_part_t	Cim = Aim - Bim;
 
   return mmux_$1_make_rectangular (Cre, Cim);
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_mul (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_libc_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_libc_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_libc_$1_part_t	Cre = (Are * Bre - Aim * Bim);
-  mmux_libc_$1_part_t	Cim = (Are * Bim + Bre * Aim);
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	Cre = (Are * Bre - Aim * Bim);
+  mmux_$1_part_t	Cim = (Are * Bim + Bre * Aim);
 
   return mmux_$1_make_rectangular (Cre, Cim);
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_div (mmux_libc_$1_t A, mmux_libc_$1_t B)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_libc_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_libc_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_libc_$1_part_t	D   = Bre * Bre + Bim * Bim;
-  mmux_libc_$1_part_t	Cre = (Are * Bre + Aim * Bim) / D;
-  mmux_libc_$1_part_t	Cim = (Aim * Bre - Are * Bim) / D;
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	D   = Bre * Bre + Bim * Bim;
+  mmux_$1_part_t	Cre = (Are * Bre + Aim * Bim) / D;
+  mmux_$1_part_t	Cim = (Aim * Bre - Are * Bim) / D;
 
   return mmux_$1_make_rectangular (Cre, Cim);
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_neg (mmux_libc_$1_t A)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_neg (mmux_$1_t A)
 {
-  mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
 
   return mmux_$1_make_rectangular (-Are, -Aim);
 }
-__attribute__((__const__)) static inline mmux_libc_$1_t
-mmux_$1_inv (mmux_libc_$1_t A)
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_inv (mmux_$1_t A)
 {
-  mmux_libc_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_libc_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_libc_$1_part_t	D   = Are * Are + Aim * Aim;
-  mmux_libc_$1_part_t	Cre = + Are / D;
-  mmux_libc_$1_part_t	Cim = - Aim / D;
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	D   = Are * Are + Aim * Aim;
+  mmux_$1_part_t	Cre = + Are / D;
+  mmux_$1_part_t	Cim = - Aim / D;
 
   return mmux_$1_make_rectangular (Cre, Cim);
 }
@@ -217,10 +217,10 @@ mmux_pointer_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const a
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_add"
 {
-  mmux_libc_pointer_t	op;
-  mmux_libc_uint8_t *	op_octets;
-  mmux_libc_uint8_t *	rop_octets;
-  mmux_libc_ptrdiff_t	delta;
+  mmux_pointer_t	op;
+  mmux_uint8_t *	op_octets;
+  mmux_uint8_t *	rop_octets;
+  mmux_ptrdiff_t	delta;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -229,7 +229,7 @@ mmux_pointer_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const a
   rv = mmux_bash_pointers_parse_ptrdiff(&delta, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_octets  = (mmux_libc_uint8_t *)op;
+  op_octets  = (mmux_uint8_t *)op;
   rop_octets = op_octets + delta;
   return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], rop_octets, MMUX_BUILTIN_NAME);
 }
@@ -250,7 +250,7 @@ mmux_$1_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[]
 #define MMUX_BUILTIN_NAME	"mmux_$1_add"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+  mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
   for (int i = 2; i < argc; ++i) {
@@ -282,7 +282,7 @@ mmux_$1_sub_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[]
 #define MMUX_BUILTIN_NAME	"mmux_$1_sub"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+  mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
   for (int i = 2; i < argc; ++i) {
@@ -314,7 +314,7 @@ mmux_$1_mul_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] 
 #define MMUX_BUILTIN_NAME	"mmux_$1_mul"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+  mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
   for (int i = 2; i < argc; ++i) {
@@ -346,7 +346,7 @@ mmux_$1_div_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] 
 #define MMUX_BUILTIN_NAME	"mmux_$1_div"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+  mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
   for (int i = 2; i < argc; ++i) {
@@ -378,7 +378,7 @@ mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] 
 #define MMUX_BUILTIN_NAME	"mmux_$1_neg"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
+  mmux_$1_t	op;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -406,7 +406,7 @@ mmux_$1_inv_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] 
 #define MMUX_BUILTIN_NAME	"mmux_$1_inv"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
+  mmux_$1_t	op;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -509,7 +509,7 @@ mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
 #define MMUX_BUILTIN_NAME	"mmux_$1_mod"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op1, op2;
+  mmux_$1_t	op1, op2;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op1, argv[2], MMUX_BUILTIN_NAME);
@@ -544,7 +544,7 @@ mmux_$1_incr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[]
 #define MMUX_BUILTIN_NAME	"mmux_$1_incr"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
+  mmux_$1_t	op;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -575,7 +575,7 @@ mmux_$1_decr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[]
 #define MMUX_BUILTIN_NAME	"mmux_$1_decr"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
+  mmux_$1_t	op;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);

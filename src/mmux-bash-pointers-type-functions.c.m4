@@ -28,11 +28,8 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-#undef  MMUX_FLOAT_ZERO
-#define MMUX_FLOAT_ZERO(STEM)		((mmux_libc_ ## STEM ## _t)0.0)
-
-#undef  MMUX_INTEGER_ZERO
-#define MMUX_INTEGER_ZERO(STEM)		((mmux_libc_ ## STEM ## _t)0)
+m4_define([[[MMUX_FLOAT_ZERO]]],  [[[((mmux_$1_t)0.0)]]])
+m4_define([[[MMUX_INTEGER_ZERO]]],[[[((mmux_$1_t)0)]]])
 
 
 /** --------------------------------------------------------------------
@@ -100,7 +97,7 @@ m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]
 bool
 mmux_bash_pointers_string_is_$1 (char const * s_value)
 {
-  mmux_libc_$1_t	value;
+  mmux_$1_t	value;
 
   if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
     return true;
@@ -111,14 +108,14 @@ mmux_bash_pointers_string_is_$1 (char const * s_value)
 int
 mmux_bash_pointers_sizeof_$1 (void)
 {
-  return sizeof(mmux_libc_$1_t);
+  return sizeof(mmux_$1_t);
 }
-mmux_libc_$1_t
+mmux_$1_t
 mmux_bash_pointers_maximum_$1 (void)
 {
   return $2;
 }
-mmux_libc_$1_t
+mmux_$1_t
 mmux_bash_pointers_minimum_$1 (void)
 {
   return $3;
@@ -126,8 +123,8 @@ mmux_bash_pointers_minimum_$1 (void)
 ]]])]]])
 
 DEFINE_REAL_TYPE_FUNCTIONS([[[pointer]]],
-			   [[[(mmux_libc_pointer_t)mmux_bash_pointers_maximum_uintptr()]]],
-			   [[[(mmux_libc_pointer_t)mmux_bash_pointers_minimum_uintptr()]]])
+			   [[[(mmux_pointer_t)mmux_bash_pointers_maximum_uintptr()]]],
+			   [[[(mmux_pointer_t)mmux_bash_pointers_minimum_uintptr()]]])
 
 DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)
@@ -180,14 +177,14 @@ mmux_bash_pointers_string_is_$1 (char const * s_value)
 int
 mmux_bash_pointers_sizeof_$1 (void)
 {
-  return sizeof(mmux_libc_$1_t);
+  return sizeof(mmux_$1_t);
 }
-mmux_libc_$1_t
+mmux_$1_t
 mmux_bash_pointers_maximum_$1 (void)
 {
   return mmux_bash_pointers_maximum_[[[]]]$2[[[]]] ();
 }
-mmux_libc_$1_t
+mmux_$1_t
 mmux_bash_pointers_minimum_$1 (void)
 {
   return mmux_bash_pointers_minimum_[[[]]]$2[[[]]] ();
@@ -227,7 +224,7 @@ m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$9]]],
 bool
 mmux_bash_pointers_string_is_$1 (char const * s_value)
 {
-  mmux_libc_$1_t	value;
+  mmux_$1_t	value;
 
   if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
     return true;
@@ -238,35 +235,35 @@ mmux_bash_pointers_string_is_$1 (char const * s_value)
 int
 mmux_bash_pointers_sizeof_$1 (void)
 {
-  return sizeof(mmux_libc_$1_t);
+  return sizeof(mmux_$1_t);
 }
-mmux_libc_$1_t
-mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im)
+mmux_$1_t
+mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
 {
   return $4(re, im);
 }
-mmux_libc_$1_part_t
-mmux_$1_real_part (mmux_libc_$1_t Z)
+mmux_$1_part_t
+mmux_$1_real_part (mmux_$1_t Z)
 {
   return $2(Z);
 }
-mmux_libc_$1_part_t
-mmux_$1_imag_part (mmux_libc_$1_t Z)
+mmux_$1_part_t
+mmux_$1_imag_part (mmux_$1_t Z)
 {
   return $3(Z);
 }
-inline mmux_libc_$1_part_t
-mmux_$1_abs (mmux_libc_$1_t Z)
+inline mmux_$1_part_t
+mmux_$1_abs (mmux_$1_t Z)
 {
   return sqrt($2(Z) * $2(Z) + $3(Z) * $3(Z));
 }
-inline mmux_libc_$1_part_t
-mmux_$1_arg (mmux_libc_$1_t Z)
+inline mmux_$1_part_t
+mmux_$1_arg (mmux_$1_t Z)
 {
   return $8($3(Z), $2(Z));
 }
-inline mmux_libc_$1_t
-mmux_$1_conj (mmux_libc_$1_t Z)
+inline mmux_$1_t
+mmux_$1_conj (mmux_$1_t Z)
 {
   return mmux_$1_make_rectangular($2(Z), - $3(Z));
 }
@@ -321,7 +318,7 @@ m4_define([[[DEFINE_COMPLEX_DECIMAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([
 bool
 mmux_bash_pointers_string_is_$1 (char const * s_value)
 {
-  mmux_libc_$1_t	value;
+  mmux_$1_t	value;
 
   if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
     return true;
@@ -342,7 +339,7 @@ DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD12
 
 m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 int
-mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value, char const * caller_name)
+mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_$1_t value, char const * caller_name)
 {
   int		rv, required_nbytes;
 
@@ -439,37 +436,37 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[wint]]])
 
 m4_define([[[DEFINE_SIGNED_INTEGER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_is_zero (mmux_libc_$1_t X)
+mmux_$1_is_zero (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) == X)? true : false;
 }
 bool
-mmux_$1_is_positive (mmux_libc_$1_t X)
+mmux_$1_is_positive (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) < X)? true : false;
 }
 bool
-mmux_$1_is_negative (mmux_libc_$1_t X)
+mmux_$1_is_negative (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) > X)? true : false;
 }
 bool
-mmux_$1_is_non_positive (mmux_libc_$1_t X)
+mmux_$1_is_non_positive (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) >= X)? true : false;
 }
 bool
-mmux_$1_is_non_negative (mmux_libc_$1_t X)
+mmux_$1_is_non_negative (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) <= X)? true : false;
 }
 bool
-mmux_$1_is_nan (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_nan (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
 bool
-mmux_$1_is_infinite (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_infinite (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
@@ -502,37 +499,37 @@ DEFINE_SIGNED_INTEGER_PREDICATES([[[wchar]]])
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_is_zero (mmux_libc_$1_t X)
+mmux_$1_is_zero (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) == X)? true : false;
 }
 bool
-mmux_$1_is_positive (mmux_libc_$1_t X)
+mmux_$1_is_positive (mmux_$1_t X)
 {
   return (MMUX_INTEGER_ZERO($1) < X)? true : false;
 }
 bool
-mmux_$1_is_negative (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_negative (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
 bool
-mmux_$1_is_non_positive (mmux_libc_$1_t X)
+mmux_$1_is_non_positive (mmux_$1_t X)
 {
   return mmux_$1_is_zero(X);
 }
 bool
-mmux_$1_is_non_negative (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_non_negative (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return true;
 }
 bool
-mmux_$1_is_nan (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_nan (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
 bool
-mmux_$1_is_infinite (mmux_libc_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_infinite (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
 {
   return false;
 }
@@ -566,22 +563,22 @@ DEFINE_UNSIGNED_INTEGER_PREDICATES([[[wint]]])
 
 m4_define([[[DEFINE_REAL_FLOAT_NUMBER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_is_zero (mmux_libc_$1_t X)
+mmux_$1_is_zero (mmux_$1_t X)
 {
   return (FP_ZERO == (fpclassify(X)))? true : false;
 }
 bool
-mmux_$1_is_nan (mmux_libc_$1_t X)
+mmux_$1_is_nan (mmux_$1_t X)
 {
   return (FP_NAN == (fpclassify(X)))? true : false;
 }
 bool
-mmux_$1_is_infinite (mmux_libc_$1_t X)
+mmux_$1_is_infinite (mmux_$1_t X)
 {
   return (FP_INFINITE == (fpclassify(X)))? true : false;
 }
 bool
-mmux_$1_is_positive (mmux_libc_$1_t X)
+mmux_$1_is_positive (mmux_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
     return false;
@@ -596,7 +593,7 @@ mmux_$1_is_positive (mmux_libc_$1_t X)
   }
 }
 bool
-mmux_$1_is_negative (mmux_libc_$1_t X)
+mmux_$1_is_negative (mmux_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
     return false;
@@ -611,7 +608,7 @@ mmux_$1_is_negative (mmux_libc_$1_t X)
   }
 }
 bool
-mmux_$1_is_non_positive (mmux_libc_$1_t X)
+mmux_$1_is_non_positive (mmux_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
     return false;
@@ -622,7 +619,7 @@ mmux_$1_is_non_positive (mmux_libc_$1_t X)
   }
 }
 bool
-mmux_$1_is_non_negative (mmux_libc_$1_t X)
+mmux_$1_is_non_negative (mmux_$1_t X)
 {
   if (mmux_$1_is_nan(X)) {
     return false;
@@ -653,23 +650,23 @@ DEFINE_REAL_FLOAT_NUMBER_PREDICATES([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X
 
 m4_define([[[DEFINE_COMPLEX_NUMBER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 bool
-mmux_$1_is_zero (mmux_libc_$1_t Z)
+mmux_$1_is_zero (mmux_$1_t Z)
 {
-  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
+  mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
 bool
-mmux_$1_is_nan (mmux_libc_$1_t Z)
+mmux_$1_is_nan (mmux_$1_t Z)
 {
-  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
+  mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
 }
 bool
-mmux_$1_is_infinite (mmux_libc_$1_t Z)
+mmux_$1_is_infinite (mmux_$1_t Z)
 {
-  mmux_libc_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
+  mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_infinite(re) || mmux_$2_is_infinite(im))? true : false;
 }
@@ -696,23 +693,23 @@ DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HA
 #define DECL		__attribute__((__const__))
 
 m4_define([[[DEFINE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-DECL bool mmux_$1_equal         (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 == op2)? true : false; }
+DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == op2)? true : false; }
 ]]])]]])
 
 m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
-DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >  op2)? true : false; }
-DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <  op2)? true : false; }
-DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 >= op2)? true : false; }
-DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (op1 <= op2)? true : false; }
+DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (op1 >  op2)? true : false; }
+DECL bool mmux_$1_lesser        (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <  op2)? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (op1 >= op2)? true : false; }
+DECL bool mmux_$1_lesser_equal  (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <= op2)? true : false; }
 ]]])]]])
 
 m4_define([[[DEFINE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
-DECL bool mmux_$1_greater       (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
-DECL bool mmux_$1_lesser        (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (        isless(op1,op2))? true : false; }
-DECL bool mmux_$1_greater_equal (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
-DECL bool mmux_$1_lesser_equal  (mmux_libc_$1_t op1, mmux_libc_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
+DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
+DECL bool mmux_$1_lesser        (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1,op2))? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
+DECL bool mmux_$1_lesser_equal  (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
 ]]])]]])
 
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[pointer]]])
@@ -783,9 +780,9 @@ DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-inline mmux_libc_$1_t mmux_$1_abs (mmux_libc_$1_t X)                   { return $2(X); }
-inline mmux_libc_$1_t mmux_$1_max (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $3(X, Y); }
-inline mmux_libc_$1_t mmux_$1_min (mmux_libc_$1_t X, mmux_libc_$1_t Y) { return $4(X, Y); }
+inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)                   { return $2(X); }
+inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
+inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
 ]]])]]])
 
 DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float]]],	[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
@@ -807,39 +804,39 @@ DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[fabsf128x]]],[[[fmaxf1
 
 m4_define([[[DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 bool
-mmux_$1_equal_absmargin (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t margin)
+mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
   if (0) { fprintf(stderr, "%s: op1=%Lf op2=%Lf margin=%Lf\n", __func__, (long double)op1, (long double)op2, (long double)margin); }
   return (mmux_$1_abs(op1 - op2) <= mmux_$1_abs(margin))? true : false;
 }
 bool
-mmux_$1_equal_relepsilon (mmux_libc_$1_t op1, mmux_libc_$1_t op2, mmux_libc_$1_t epsilon)
+mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
 {
   return (mmux_$1_abs(op1 - op2) <= (epsilon * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
 }
 bool
-mmux_$2_equal_absmargin (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t margin)
+mmux_$2_equal_absmargin (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t margin)
 {
-  mmux_libc_$2_part_t	re1 = mmux_$2_real_part(op1);
-  mmux_libc_$2_part_t	im1 = mmux_$2_imag_part(op1);
-  mmux_libc_$2_part_t	re2 = mmux_$2_real_part(op2);
-  mmux_libc_$2_part_t	im2 = mmux_$2_imag_part(op2);
-  mmux_libc_$2_part_t	ret = mmux_$2_real_part(margin);
-  mmux_libc_$2_part_t	imt = mmux_$2_imag_part(margin);
+  mmux_$2_part_t	re1 = mmux_$2_real_part(op1);
+  mmux_$2_part_t	im1 = mmux_$2_imag_part(op1);
+  mmux_$2_part_t	re2 = mmux_$2_real_part(op2);
+  mmux_$2_part_t	im2 = mmux_$2_imag_part(op2);
+  mmux_$2_part_t	ret = mmux_$2_real_part(margin);
+  mmux_$2_part_t	imt = mmux_$2_imag_part(margin);
 
   if (0) { fprintf(stderr, "%s: re1=%Lf re1=%Lf ret=%Lf\n", __func__, (long double)re1, (long double)re2, (long double)ret); }
   if (0) { fprintf(stderr, "%s: im1=%Lf im2=%Lf imt=%Lf\n", __func__, (long double)im1, (long double)im2, (long double)imt); }
   return (mmux_$1_equal_absmargin(re1, re2, ret) && mmux_$1_equal_absmargin(im1, im2, imt))? true : false;
 }
 bool
-mmux_$2_equal_relepsilon (mmux_libc_$2_t op1, mmux_libc_$2_t op2, mmux_libc_$2_t epsilon)
+mmux_$2_equal_relepsilon (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t epsilon)
 {
-  mmux_libc_$2_part_t	re1 = mmux_$2_real_part(op1);
-  mmux_libc_$2_part_t	im1 = mmux_$2_imag_part(op1);
-  mmux_libc_$2_part_t	re2 = mmux_$2_real_part(op2);
-  mmux_libc_$2_part_t	im2 = mmux_$2_imag_part(op2);
-  mmux_libc_$2_part_t	ret = mmux_$2_real_part(epsilon);
-  mmux_libc_$2_part_t	imt = mmux_$2_imag_part(epsilon);
+  mmux_$2_part_t	re1 = mmux_$2_real_part(op1);
+  mmux_$2_part_t	im1 = mmux_$2_imag_part(op1);
+  mmux_$2_part_t	re2 = mmux_$2_real_part(op2);
+  mmux_$2_part_t	im2 = mmux_$2_imag_part(op2);
+  mmux_$2_part_t	ret = mmux_$2_real_part(epsilon);
+  mmux_$2_part_t	imt = mmux_$2_imag_part(epsilon);
 
   return (mmux_$1_equal_relepsilon(re1, re2, ret) && mmux_$1_equal_relepsilon(im1, im2, imt))? true : false;
 }

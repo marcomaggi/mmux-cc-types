@@ -38,8 +38,8 @@ mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_and"
 {
-  mmux_libc_pointer_t	op;
-  mmux_libc_uintptr_t	op_uintptr, mask;
+  mmux_pointer_t	op;
+  mmux_uintptr_t	op_uintptr, mask;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -48,9 +48,9 @@ mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
   rv = mmux_bash_pointers_parse_uintptr(&mask, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_uintptr    = (mmux_libc_uintptr_t)op;
+  op_uintptr    = (mmux_uintptr_t)op;
   op_uintptr   &= mask;
-  op          = (mmux_libc_pointer_t)op_uintptr;
+  op          = (mmux_pointer_t)op_uintptr;
 
   return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], op, MMUX_BUILTIN_NAME);
 }
@@ -66,8 +66,8 @@ mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_or"
 {
-  mmux_libc_pointer_t	op;
-  mmux_libc_uintptr_t	op_uintptr, mask;
+  mmux_pointer_t	op;
+  mmux_uintptr_t	op_uintptr, mask;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -76,9 +76,9 @@ mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * 
   rv = mmux_bash_pointers_parse_uintptr(&mask, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_uintptr    = (mmux_libc_uintptr_t)op;
+  op_uintptr    = (mmux_uintptr_t)op;
   op_uintptr   |= mask;
-  op          = (mmux_libc_pointer_t)op_uintptr;
+  op          = (mmux_pointer_t)op_uintptr;
 
   return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], op, MMUX_BUILTIN_NAME);
 }
@@ -94,8 +94,8 @@ mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_xor"
 {
-  mmux_libc_pointer_t	op, mask;
-  mmux_libc_uintptr_t	op_uintptr, mask_uintptr;
+  mmux_pointer_t	op, mask;
+  mmux_uintptr_t	op_uintptr, mask_uintptr;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -104,10 +104,10 @@ mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
   rv = mmux_bash_pointers_parse_pointer(&mask, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_uintptr    = (mmux_libc_uintptr_t)op;
-  mask_uintptr  = (mmux_libc_uintptr_t)mask;
+  op_uintptr    = (mmux_uintptr_t)op;
+  mask_uintptr  = (mmux_uintptr_t)mask;
   op_uintptr   ^= mask_uintptr;
-  op            = (mmux_libc_pointer_t)op_uintptr;
+  op            = (mmux_pointer_t)op_uintptr;
 
   return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], op, MMUX_BUILTIN_NAME);
 }
@@ -123,16 +123,16 @@ mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_not"
 {
-  mmux_libc_pointer_t	op;
-  mmux_libc_uintptr_t	op_uintptr;
+  mmux_pointer_t	op;
+  mmux_uintptr_t	op_uintptr;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_uintptr  = (mmux_libc_uintptr_t)op;
+  op_uintptr  = (mmux_uintptr_t)op;
   op_uintptr  = ~ op_uintptr;
-  op          = (mmux_libc_pointer_t)op_uintptr;
+  op          = (mmux_pointer_t)op_uintptr;
 
   return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], op, MMUX_BUILTIN_NAME);
 }
@@ -148,9 +148,9 @@ mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shl"
 {
-  mmux_libc_pointer_t	op;
-  mmux_libc_uintptr_t	op_uintptr;
-  mmux_libc_sint_t	nbits;
+  mmux_pointer_t	op;
+  mmux_uintptr_t	op_uintptr;
+  mmux_sint_t	nbits;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -159,9 +159,9 @@ mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * 
   rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_uintptr   = (mmux_libc_uintptr_t)op;
+  op_uintptr   = (mmux_uintptr_t)op;
   op_uintptr <<= nbits;
-  op           = (mmux_libc_pointer_t)op_uintptr;
+  op           = (mmux_pointer_t)op_uintptr;
 
   return mmux_bash_pointers_store_result_in_variable_pointer (argv[1], op, MMUX_BUILTIN_NAME);
 }
@@ -177,9 +177,9 @@ mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * 
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shr"
 {
-  mmux_libc_pointer_t	op;
-  mmux_libc_uintptr_t	op_uintptr;
-  mmux_libc_sint_t	nbits;
+  mmux_pointer_t	op;
+  mmux_uintptr_t	op_uintptr;
+  mmux_sint_t	nbits;
   int			rv;
 
   rv = mmux_bash_pointers_parse_pointer(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -188,9 +188,9 @@ mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * 
   rv = mmux_bash_pointers_parse_sint(&nbits, argv[3], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
-  op_uintptr   = (mmux_libc_uintptr_t)op;
+  op_uintptr   = (mmux_uintptr_t)op;
   op_uintptr >>= nbits;
-  op           = (mmux_libc_pointer_t)op_uintptr;
+  op           = (mmux_pointer_t)op_uintptr;
 
   return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], op, MMUX_BUILTIN_NAME);
 }
@@ -211,7 +211,7 @@ mmux_$1_bitwise_$3_main (int argc,  char const * const argv[])
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_$3"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+  mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
   int			rv;
 
   for (int i = 2; i < argc; ++i) {
@@ -244,8 +244,8 @@ mmux_$1_bitwise_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const 
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_$3"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
-  mmux_libc_sint_t	nbits;
+  mmux_$1_t	op;
+  mmux_sint_t	nbits;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);
@@ -284,7 +284,7 @@ mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const
 #define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_not"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_libc_$1_t	op;
+  mmux_$1_t	op;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&op, argv[2], MMUX_BUILTIN_NAME);

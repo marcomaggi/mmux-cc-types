@@ -231,17 +231,17 @@ function mmux_bash_pointers_library_unload () {
 
     for STEM in "${MMUX_BASH_POINTERS_REAL_STEMS[@]}"
     do
-	printf -v NAME 'mmux_libc_SIZEOF_%s' "$STEM"
+	printf -v NAME 'mmux_%s_SIZEOF' "$STEM"
 	unset  -v "$NAME"
-	printf -v NAME 'mmux_libc_MAX_%s' "$STEM"
+	printf -v NAME 'mmux_%s_MAX' "$STEM"
 	unset  -v "$NAME"
-	printf -v NAME 'mmux_libc_MIN_%s' "$STEM"
+	printf -v NAME 'mmux_%s_MIN' "$STEM"
 	unset  -v "$NAME"
     done
 
     for STEM in "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}"
     do
-	printf -v NAME 'mmux_libc_SIZEOF_%s' "$STEM"
+	printf -v NAME 'mmux_%s_SIZEOF' "$STEM"
 	unset  -v "$NAME"
     done
 }

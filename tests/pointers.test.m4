@@ -46,7 +46,7 @@ mbfl_embed_library(__LIBMBFL_LINKER__)
 mbfl_linker_source_library_by_stem(core)
 mbfl_linker_source_library_by_stem(tests)
 
-source "$MMUX_LIBRARY"
+source WW(MMUX_LIBRARY)
 
 
 #### array accessors and mutators: pointer
@@ -55,16 +55,16 @@ function pointers-pointer-1.1 () {
     declare PTR VALUE
 
     dotest-unset-debug
-    dotest-debug max pointer value ${mmux_libc_MAX_POINTER}
+    dotest-debug max pointer value ${mmux_pointer_MAX}
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR $((32 * ${mmux_libc_SIZEOF_POINTER:?})) 1
+	if mmux_libc_calloc PTR $((32 * ${mmux_pointer_SIZEOF:?})) 1
 	then mbfl_location_handler "mmux_libc_free $PTR"
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_pointer_pointer_set $PTR 0 "${mmux_libc_MAX_POINTER:?}"
+	if ! mmux_pointer_pointer_set $PTR 0 "${mmux_pointer_MAX:?}"
 	then mbfl_location_leave_then_return_failure
 	fi
 	if ! mmux_pointer_pointer_ref VALUE $PTR 0
@@ -72,7 +72,7 @@ function pointers-pointer-1.1 () {
 	fi
     }
     mbfl_location_leave
-    dotest-equal "${mmux_libc_MAX_POINTER:?}" QQ(VALUE)
+    dotest-equal "${mmux_pointer_MAX:?}" QQ(VALUE)
 }
 function pointers-pointer-1.2 () {
     declare PTR VALUE
@@ -80,7 +80,7 @@ function pointers-pointer-1.2 () {
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR $((32 * ${mmux_libc_SIZEOF_POINTER:?})) 1
+	if mmux_libc_calloc PTR $((32 * ${mmux_pointer_SIZEOF:?})) 1
 	then mbfl_location_handler "mmux_libc_free $PTR"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -126,7 +126,7 @@ function pointers-pointer-1.3 () {
     {
 	mbfl_declare_varref(ID)
 
-	if mmux_libc_calloc PTR $((32 * ${mmux_libc_SIZEOF_POINTER:?})) 1
+	if mmux_libc_calloc PTR $((32 * ${mmux_pointer_SIZEOF:?})) 1
 	then mbfl_location_handler "mmux_libc_free $PTR" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -141,7 +141,7 @@ function pointers-pointer-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR $PTR $((64 * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR $PTR $((64 * ${mmux_pointer_SIZEOF:?}))
 	then
 	    dotest-debug removing handler QQ(ID)
 	    mbfl_location_remove_handler_by_id QQ(ID)
@@ -942,7 +942,7 @@ function pointers-double-1.3 () {
 
 #### array accessors and mutators: ldouble
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_ldouble_SIZEOF
 then
 
 function pointers-ldouble-1.1 () {
@@ -1002,17 +1002,17 @@ fi
 
 #### array accessors and mutators: float32
 
-if test -v mmux_libc_SIZEOF_FLOAT32
+if test -v mmux_float32_SIZEOF
 then
 
 function pointers-float32-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_FLOAT32))
+    declare -ri INDEX0=$((17 * mmux_float32_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT32)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float32_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1033,15 +1033,15 @@ function pointers-float32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT32))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT32))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT32))
+    declare -ri INDEX0=$((0 * mmux_float32_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float32_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float32_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT32)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float32_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1081,16 +1081,16 @@ function pointers-float32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT32))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT32))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT32))
+    declare -ri INDEX0=$((0 * mmux_float32_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float32_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float32_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT32)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float32_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1105,7 +1105,7 @@ function pointers-float32-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1137,17 +1137,17 @@ fi
 
 #### array accessors and mutators: float64
 
-if test -v mmux_libc_SIZEOF_FLOAT64
+if test -v mmux_float64_SIZEOF
 then
 
 function pointers-float64-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_FLOAT64))
+    declare -ri INDEX0=$((17 * mmux_float64_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT64)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float64_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1168,15 +1168,15 @@ function pointers-float64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT64))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT64))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT64))
+    declare -ri INDEX0=$((0 * mmux_float64_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float64_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float64_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT64)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float64_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1216,16 +1216,16 @@ function pointers-float64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT64))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT64))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT64))
+    declare -ri INDEX0=$((0 * mmux_float64_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float64_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float64_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT64)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float64_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1240,7 +1240,7 @@ function pointers-float64-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1272,17 +1272,17 @@ fi
 
 #### array accessors and mutators: float128
 
-if test -v mmux_libc_SIZEOF_FLOAT128
+if test -v mmux_float128_SIZEOF
 then
 
 function pointers-float128-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_FLOAT128))
+    declare -ri INDEX0=$((17 * mmux_float128_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT128)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float128_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1303,15 +1303,15 @@ function pointers-float128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT128))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT128))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT128))
+    declare -ri INDEX0=$((0 * mmux_float128_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float128_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float128_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT128)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float128_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1351,16 +1351,16 @@ function pointers-float128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT128))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT128))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT128))
+    declare -ri INDEX0=$((0 * mmux_float128_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float128_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float128_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT128)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float128_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1375,7 +1375,7 @@ function pointers-float128-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1407,17 +1407,17 @@ fi
 
 #### array accessors and mutators: float32x
 
-if test -v mmux_libc_SIZEOF_FLOAT32X
+if test -v mmux_float32x_SIZEOF
 then
 
 function pointers-float32x-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_FLOAT32X))
+    declare -ri INDEX0=$((17 * mmux_float32x_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT32X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float32x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1438,15 +1438,15 @@ function pointers-float32x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT32X))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT32X))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT32X))
+    declare -ri INDEX0=$((0 * mmux_float32x_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float32x_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float32x_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT32X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float32x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1486,16 +1486,16 @@ function pointers-float32x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT32X))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT32X))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT32X))
+    declare -ri INDEX0=$((0 * mmux_float32x_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float32x_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float32x_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT32X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float32x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1510,7 +1510,7 @@ function pointers-float32x-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1542,17 +1542,17 @@ fi
 
 #### array accessors and mutators: float64x
 
-if test -v mmux_libc_SIZEOF_FLOAT64X
+if test -v mmux_float64x_SIZEOF
 then
 
 function pointers-float64x-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_FLOAT64X))
+    declare -ri INDEX0=$((17 * mmux_float64x_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT64X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float64x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1573,15 +1573,15 @@ function pointers-float64x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT64X))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT64X))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT64X))
+    declare -ri INDEX0=$((0 * mmux_float64x_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float64x_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float64x_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT64X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float64x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1621,16 +1621,16 @@ function pointers-float64x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT64X))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT64X))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT64X))
+    declare -ri INDEX0=$((0 * mmux_float64x_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float64x_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float64x_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT64X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float64x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1645,7 +1645,7 @@ function pointers-float64x-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1677,17 +1677,17 @@ fi
 
 #### array accessors and mutators: float128x
 
-if test -v mmux_libc_SIZEOF_FLOAT128X
+if test -v mmux_float128x_SIZEOF
 then
 
 function pointers-float128x-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_FLOAT128X))
+    declare -ri INDEX0=$((17 * mmux_float128x_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT128X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float128x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1708,15 +1708,15 @@ function pointers-float128x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT128X))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT128X))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT128X))
+    declare -ri INDEX0=$((0 * mmux_float128x_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float128x_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float128x_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT128X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float128x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1756,16 +1756,16 @@ function pointers-float128x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_FLOAT128X))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_FLOAT128X))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_FLOAT128X))
+    declare -ri INDEX0=$((0 * mmux_float128x_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_float128x_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_float128x_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_FLOAT128X)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_float128x_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1780,7 +1780,7 @@ function pointers-float128x-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1812,17 +1812,17 @@ fi
 
 #### array accessors and mutators: decimal32
 
-if test -v mmux_libc_SIZEOF_DECIMAL32
+if test -v mmux_decimal32_SIZEOF
 then
 
 function pointers-decimal32-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX0=$((17 * mmux_decimal32_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL32)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal32_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1835,7 +1835,7 @@ function pointers-decimal32-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	dotest-debug  WW(mmux_libc_SIZEOF_DECIMAL32) '1.230000' WW(VALUE)
+	dotest-debug  WW(mmux_decimal32_SIZEOF) '1.230000' WW(VALUE)
 	mmux_decimal32_equal_absmargin '1.230000' QQ(VALUE)
     }
     mbfl_location_leave
@@ -1844,15 +1844,15 @@ function pointers-decimal32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL32))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL32))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX0=$((0 * mmux_decimal32_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_decimal32_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_decimal32_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL32)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal32_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1892,16 +1892,16 @@ function pointers-decimal32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL32))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL32))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL32))
+    declare -ri INDEX0=$((0 * mmux_decimal32_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_decimal32_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_decimal32_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL32)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal32_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1916,7 +1916,7 @@ function pointers-decimal32-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1948,17 +1948,17 @@ fi
 
 #### array accessors and mutators: decimal64
 
-if test -v mmux_libc_SIZEOF_DECIMAL64
+if test -v mmux_decimal64_SIZEOF
 then
 
 function pointers-decimal64-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX0=$((17 * mmux_decimal64_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL64)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal64_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -1971,7 +1971,7 @@ function pointers-decimal64-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	dotest-debug  WW(mmux_libc_SIZEOF_DECIMAL64) '1.230000' WW(VALUE)
+	dotest-debug  WW(mmux_decimal64_SIZEOF) '1.230000' WW(VALUE)
 	mmux_decimal64_equal_absmargin '1.230000' QQ(VALUE)
     }
     mbfl_location_leave
@@ -1980,15 +1980,15 @@ function pointers-decimal64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL64))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL64))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX0=$((0 * mmux_decimal64_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_decimal64_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_decimal64_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL64)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal64_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2028,16 +2028,16 @@ function pointers-decimal64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL64))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL64))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL64))
+    declare -ri INDEX0=$((0 * mmux_decimal64_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_decimal64_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_decimal64_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL64)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal64_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2052,7 +2052,7 @@ function pointers-decimal64-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2084,17 +2084,17 @@ fi
 
 #### array accessors and mutators: decimal128
 
-if test -v mmux_libc_SIZEOF_DECIMAL128
+if test -v mmux_decimal128_SIZEOF
 then
 
 function pointers-decimal128-1.1 () {
     declare PTR VALUE
     declare -ri NITEMS=99
-    declare -ri INDEX0=$((17 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX0=$((17 * mmux_decimal128_SIZEOF))
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL128)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal128_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2107,7 +2107,7 @@ function pointers-decimal128-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	dotest-debug  WW(mmux_libc_SIZEOF_DECIMAL128) '1.230000' WW(VALUE)
+	dotest-debug  WW(mmux_decimal128_SIZEOF) '1.230000' WW(VALUE)
 	mmux_decimal128_equal_absmargin '1.230000' QQ(VALUE)
     }
     mbfl_location_leave
@@ -2116,15 +2116,15 @@ function pointers-decimal128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL128))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL128))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX0=$((0 * mmux_decimal128_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_decimal128_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_decimal128_SIZEOF))
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL128)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal128_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2164,16 +2164,16 @@ function pointers-decimal128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
     declare -ri NITEMS=99 NITEMS2=333
-    declare -ri INDEX0=$((0 * mmux_libc_SIZEOF_DECIMAL128))
-    declare -ri INDEX1=$((3 * mmux_libc_SIZEOF_DECIMAL128))
-    declare -ri INDEX2=$((5 * mmux_libc_SIZEOF_DECIMAL128))
+    declare -ri INDEX0=$((0 * mmux_decimal128_SIZEOF))
+    declare -ri INDEX1=$((3 * mmux_decimal128_SIZEOF))
+    declare -ri INDEX2=$((5 * mmux_decimal128_SIZEOF))
     mbfl_declare_varref(ID)
 
     dotest-unset-debug
 
     mbfl_location_enter
     {
-	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_libc_SIZEOF_DECIMAL128)
+	if mmux_libc_calloc PTR WW(NITEMS) WW(mmux_decimal128_SIZEOF)
 	then mbfl_location_handler "mmux_libc_free WW(PTR)" _(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2188,7 +2188,7 @@ function pointers-decimal128-1.3 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_libc_SIZEOF_POINTER:?}))
+	if mmux_libc_realloc PTR WW(PTR) $((WW(NITEMS2) * ${mmux_pointer_SIZEOF:?}))
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_free WW(PTR)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -2223,7 +2223,7 @@ fi
 function pointers-complexf-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    mmux_libc_calloc PTR WW(mmux_complexf_SIZEOF) 10
     {
 	mmux_complexf_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf_pointer_ref VALUE $PTR 0
@@ -2235,7 +2235,7 @@ function pointers-complexf-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    mmux_libc_calloc PTR WW(mmux_complexf_SIZEOF) 10
     {
 	mmux_complexf_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2255,7 +2255,7 @@ function pointers-complexf-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF) 10
+    mmux_libc_calloc PTR WW(mmux_complexf_SIZEOF) 10
     {
 	mmux_complexf_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2278,7 +2278,7 @@ function pointers-complexf-1.3 () {
 function pointers-complexd-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    mmux_libc_calloc PTR WW(mmux_complexd_SIZEOF) 10
     {
 	mmux_complexd_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd_pointer_ref VALUE $PTR 0
@@ -2290,7 +2290,7 @@ function pointers-complexd-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    mmux_libc_calloc PTR WW(mmux_complexd_SIZEOF) 10
     {
 	mmux_complexd_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2310,7 +2310,7 @@ function pointers-complexd-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXD) 10
+    mmux_libc_calloc PTR WW(mmux_complexd_SIZEOF) 10
     {
 	mmux_complexd_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd_pointer_set $PTR  32 '(5.6)+i*(7.8)'
@@ -2330,13 +2330,13 @@ function pointers-complexd-1.3 () {
 
 #### array accessors and mutators: complexld
 
-if test -v mmux_libc_SIZEOF_COMPLEXLD
+if test -v mmux_complexld_SIZEOF
 then
 
 function pointers-complexld-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    mmux_libc_calloc PTR WW(mmux_complexld_SIZEOF) 10
     {
 	mmux_complexld_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexld_pointer_ref VALUE $PTR 0
@@ -2348,7 +2348,7 @@ function pointers-complexld-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    mmux_libc_calloc PTR WW(mmux_complexld_SIZEOF) 10
     {
 	mmux_complexld_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexld_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2368,7 +2368,7 @@ function pointers-complexld-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXLD) 10
+    mmux_libc_calloc PTR WW(mmux_complexld_SIZEOF) 10
     {
 	mmux_complexld_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexld_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2390,13 +2390,13 @@ fi
 
 #### array accessors and mutators: complexf32
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32
+if test -v mmux_complexf32_SIZEOF
 then
 
 function pointers-complexf32-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32_SIZEOF) 10
     {
 	mmux_complexf32_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf32_pointer_ref VALUE $PTR 0
@@ -2408,7 +2408,7 @@ function pointers-complexf32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32_SIZEOF) 10
     {
 	mmux_complexf32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2428,7 +2428,7 @@ function pointers-complexf32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32_SIZEOF) 10
     {
 	mmux_complexf32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2450,13 +2450,13 @@ fi
 
 #### array accessors and mutators: complexf64
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64
+if test -v mmux_complexf64_SIZEOF
 then
 
 function pointers-complexf64-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64_SIZEOF) 10
     {
 	mmux_complexf64_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf64_pointer_ref VALUE $PTR 0
@@ -2468,7 +2468,7 @@ function pointers-complexf64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64_SIZEOF) 10
     {
 	mmux_complexf64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2488,7 +2488,7 @@ function pointers-complexf64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64_SIZEOF) 10
     {
 	mmux_complexf64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2510,13 +2510,13 @@ fi
 
 #### array accessors and mutators: complexf128
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128
+if test -v mmux_complexf128_SIZEOF
 then
 
 function pointers-complexf128-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128_SIZEOF) 10
     {
 	mmux_complexf128_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf128_pointer_ref VALUE $PTR 0
@@ -2528,7 +2528,7 @@ function pointers-complexf128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128_SIZEOF) 10
     {
 	mmux_complexf128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2548,7 +2548,7 @@ function pointers-complexf128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128_SIZEOF) 10
     {
 	mmux_complexf128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2570,13 +2570,13 @@ fi
 
 #### array accessors and mutators: complexf32x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF32X
+if test -v mmux_complexf32x_SIZEOF
 then
 
 function pointers-complexf32x-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32x_SIZEOF) 10
     {
 	mmux_complexf32x_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf32x_pointer_ref VALUE $PTR 0
@@ -2588,7 +2588,7 @@ function pointers-complexf32x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32x_SIZEOF) 10
     {
 	mmux_complexf32x_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf32x_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2608,7 +2608,7 @@ function pointers-complexf32x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF32X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf32x_SIZEOF) 10
     {
 	mmux_complexf32x_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf32x_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2630,13 +2630,13 @@ fi
 
 #### array accessors and mutators: complexf64x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF64X
+if test -v mmux_complexf64x_SIZEOF
 then
 
 function pointers-complexf64x-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64x_SIZEOF) 10
     {
 	mmux_complexf64x_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf64x_pointer_ref VALUE $PTR 0
@@ -2648,7 +2648,7 @@ function pointers-complexf64x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64x_SIZEOF) 10
     {
 	mmux_complexf64x_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf64x_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2668,7 +2668,7 @@ function pointers-complexf64x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF64X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf64x_SIZEOF) 10
     {
 	mmux_complexf64x_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf64x_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2690,13 +2690,13 @@ fi
 
 #### array accessors and mutators: complexf128x
 
-if test -v mmux_libc_SIZEOF_COMPLEXF128X
+if test -v mmux_complexf128x_SIZEOF
 then
 
 function pointers-complexf128x-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128x_SIZEOF) 10
     {
 	mmux_complexf128x_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexf128x_pointer_ref VALUE $PTR 0
@@ -2708,7 +2708,7 @@ function pointers-complexf128x-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128x_SIZEOF) 10
     {
 	mmux_complexf128x_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf128x_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2728,7 +2728,7 @@ function pointers-complexf128x-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR WW(mmux_libc_SIZEOF_COMPLEXF128X) 10
+    mmux_libc_calloc PTR WW(mmux_complexf128x_SIZEOF) 10
     {
 	mmux_complexf128x_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexf128x_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2750,13 +2750,13 @@ fi
 
 #### array accessors and mutators: complexd32
 
-if test -v mmux_libc_SIZEOF_COMPLEXD32
+if test -v mmux_complexd32_SIZEOF
 then
 
 function pointers-complexd32-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD32)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd32_SIZEOF)
     {
 	mmux_complexd32_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd32_pointer_ref VALUE $PTR 0
@@ -2768,7 +2768,7 @@ function pointers-complexd32-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD32)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd32_SIZEOF)
     {
 	mmux_complexd32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2788,7 +2788,7 @@ function pointers-complexd32-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD32)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd32_SIZEOF)
     {
 	mmux_complexd32_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd32_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2810,13 +2810,13 @@ fi
 
 #### array accessors and mutators: complexd64
 
-if test -v mmux_libc_SIZEOF_COMPLEXD64
+if test -v mmux_complexd64_SIZEOF
 then
 
 function pointers-complexd64-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD64)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd64_SIZEOF)
     {
 	mmux_complexd64_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd64_pointer_ref VALUE $PTR 0
@@ -2828,7 +2828,7 @@ function pointers-complexd64-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD64)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd64_SIZEOF)
     {
 	mmux_complexd64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2848,7 +2848,7 @@ function pointers-complexd64-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD64)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd64_SIZEOF)
     {
 	mmux_complexd64_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd64_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2870,13 +2870,13 @@ fi
 
 #### array accessors and mutators: complexd128
 
-if test -v mmux_libc_SIZEOF_COMPLEXD128
+if test -v mmux_complexd128_SIZEOF
 then
 
 function pointers-complexd128-1.1 () {
     declare PTR VALUE
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD128)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd128_SIZEOF)
     {
 	mmux_complexd128_pointer_set $PTR 0 '(1.2)+i*(3.4)'
 	mmux_complexd128_pointer_ref VALUE $PTR 0
@@ -2888,7 +2888,7 @@ function pointers-complexd128-1.2 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD128)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd128_SIZEOF)
     {
 	mmux_complexd128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd128_pointer_set $PTR 32 '(5.6)+i*(7.8)'
@@ -2908,7 +2908,7 @@ function pointers-complexd128-1.3 () {
     declare PTR VALUE
     declare -a VALUES
 
-    mmux_libc_calloc PTR 10 WW(mmux_libc_SIZEOF_COMPLEXD128)
+    mmux_libc_calloc PTR 10 WW(mmux_complexd128_SIZEOF)
     {
 	mmux_complexd128_pointer_set $PTR  0 '(1.2)+i*(3.4)'
 	mmux_complexd128_pointer_set $PTR 32 '(5.6)+i*(7.8)'

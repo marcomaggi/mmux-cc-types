@@ -1787,7 +1787,7 @@ function comparison-double-equal-relepsilon-2.3 () {
 
 #### type variables: ldouble
 
-if test -v mmux_libc_SIZEOF_LDOUBLE
+if test -v mmux_ldouble_SIZEOF
 then
 
 function comparison-ldouble-equal-1.1         () {   mmux_ldouble_equal '1.0' ;}
@@ -1886,7 +1886,7 @@ fi
 
 #### type variables: float32
 
-if test -v mmux_libc_SIZEOF_FLOAT32
+if test -v mmux_float32_SIZEOF
 then
 
 function comparison-float32-equal-1.1         () {   mmux_float32_equal '1.0' ;}
@@ -1985,7 +1985,7 @@ fi
 
 #### type variables: float64
 
-if test -v mmux_libc_SIZEOF_FLOAT64
+if test -v mmux_float64_SIZEOF
 then
 
 function comparison-float64-equal-1.1         () {   mmux_float64_equal '1.0' ;}
@@ -2084,7 +2084,7 @@ fi
 
 #### type variables: float128
 
-if test -v mmux_libc_SIZEOF_FLOAT128
+if test -v mmux_float128_SIZEOF
 then
 
 function comparison-float128-equal-1.1         () {   mmux_float128_equal '1.0' ;}
@@ -2183,7 +2183,7 @@ fi
 
 #### type variables: float32x
 
-if test -v mmux_libc_SIZEOF_FLOAT32X
+if test -v mmux_float32x_SIZEOF
 then
 
 function comparison-float32x-equal-1.1         () {   mmux_float32x_equal '1.0' ;}
@@ -2282,7 +2282,7 @@ fi
 
 #### type variables: float64x
 
-if test -v mmux_libc_SIZEOF_FLOAT64X
+if test -v mmux_float64x_SIZEOF
 then
 
 function comparison-float64x-equal-1.1         () {   mmux_float64x_equal '1.0' ;}
@@ -2381,7 +2381,7 @@ fi
 
 #### type variables: float128x
 
-if test -v mmux_libc_SIZEOF_FLOAT128X
+if test -v mmux_float128x_SIZEOF
 then
 
 function comparison-float128x-equal-1.1         () {   mmux_float128x_equal '1.0' ;}
@@ -2480,7 +2480,7 @@ fi
 
 #### type variables: decimal32
 
-if test -v mmux_libc_SIZEOF_DECIMAL32
+if test -v mmux_decimal32_SIZEOF
 then
 
 function comparison-decimal32-equal-1.1         () {   mmux_decimal32_equal '1.0' ;}
@@ -2579,7 +2579,7 @@ fi
 
 #### type variables: decimal64
 
-if test -v mmux_libc_SIZEOF_DECIMAL64
+if test -v mmux_decimal64_SIZEOF
 then
 
 function comparison-decimal64-equal-1.1         () {   mmux_decimal64_equal '1.0' ;}
@@ -2678,7 +2678,7 @@ fi
 
 #### type variables: decimal128
 
-if test -v mmux_libc_SIZEOF_DECIMAL128
+if test -v mmux_decimal128_SIZEOF
 then
 
 function comparison-decimal128-equal-1.1         () {   mmux_decimal128_equal '1.0' ;}
@@ -2900,7 +2900,7 @@ function comparison-complexd-equal-absmargin-3.3 () {
 
 #### type variables: complexld
 
-if test -v mmux_libc_SIZEOF_COMPLEXLD
+if test -v mmux_complexld_SIZEOF
 then
 
 function comparison-complexld-equal-1.1         () {   mmux_complexld_equal '(1.2)+i*(3.4)' ;}
@@ -2949,7 +2949,7 @@ fi
 
 #### type variables: complexf32
 
-if test -v mmux_libc_SIZEOF_FLOAT32
+if test -v mmux_float32_SIZEOF
 then
 
 function comparison-complexf32-equal-1.1         () {   mmux_complexf32_equal '(1.2)+i*(3.4)' ;}
@@ -3033,7 +3033,7 @@ fi
 
 #### type variables: complexf32x
 
-if test -v mmux_libc_SIZEOF_FLOAT32X
+if test -v mmux_float32x_SIZEOF
 then
 
 function comparison-complexf32x-equal-1.1         () {   mmux_complexf32x_equal '(1.2)+i*(3.4)' ;}
@@ -3117,7 +3117,7 @@ fi
 
 #### type variables: complexf64
 
-if test -v mmux_libc_SIZEOF_FLOAT64
+if test -v mmux_float64_SIZEOF
 then
 
 function comparison-complexf64-equal-1.1         () {   mmux_complexf64_equal '(1.2)+i*(3.4)' ;}
@@ -3201,7 +3201,7 @@ fi
 
 #### type variables: complexf64x
 
-if test -v mmux_libc_SIZEOF_FLOAT64X
+if test -v mmux_float64x_SIZEOF
 then
 
 function comparison-complexf64x-equal-1.1         () {   mmux_complexf64x_equal '(1.2)+i*(3.4)' ;}
@@ -3285,7 +3285,7 @@ fi
 
 #### type variables: complexf128
 
-if test -v mmux_libc_SIZEOF_FLOAT128
+if test -v mmux_float128_SIZEOF
 then
 
 function comparison-complexf128-equal-1.1         () {   mmux_complexf128_equal '(1.2)+i*(3.4)' ;}
@@ -3369,7 +3369,7 @@ fi
 
 #### type variables: complexf128x
 
-if test -v mmux_libc_SIZEOF_FLOAT128X
+if test -v mmux_float128x_SIZEOF
 then
 
 function comparison-complexf128x-equal-1.1         () {   mmux_complexf128x_equal '(1.2)+i*(3.4)' ;}
@@ -3453,7 +3453,7 @@ fi
 
 #### type variables: complexd32
 
-if test -v mmux_libc_SIZEOF_COMPLEXD32
+if test -v mmux_complexd32_SIZEOF
 then
 
 function comparison-complexd32-equal-1.1         () {   mmux_complexd32_equal '(1.2)+i*(3.4)' ;}
@@ -3537,7 +3537,7 @@ fi
 
 #### type variables: complexd64
 
-if test -v mmux_libc_SIZEOF_COMPLEXD64
+if test -v mmux_complexd64_SIZEOF
 then
 
 function comparison-complexd64-equal-1.1         () {   mmux_complexd64_equal '(1.2)+i*(3.4)' ;}
@@ -3621,7 +3621,7 @@ fi
 
 #### type variables: complexd128
 
-if test -v mmux_libc_SIZEOF_COMPLEXD128
+if test -v mmux_complexd128_SIZEOF
 then
 
 function comparison-complexd128-equal-1.1         () {   mmux_complexd128_equal '(1.2)+i*(3.4)' ;}

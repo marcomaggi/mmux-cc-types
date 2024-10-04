@@ -79,14 +79,14 @@ m4_dnl Helper macros for library initialisation.
 m4_dnl --------------------------------------------------------------------
 
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[
-  mmux_bash_create_global_sint_variable("mmux_libc_SIZEOF_[[[]]]mmux_toupper([[[$1]]])", mmux_bash_pointers_sizeof_$1(),
+  mmux_bash_create_global_sint_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_SIZEOF", mmux_bash_pointers_sizeof_$1(),
                                         MMUX_BUILTIN_NAME);
 ]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
-  mmux_libc_$1_t value = mmux_bash_pointers_maximum_$1();
+  mmux_$1_t value = mmux_bash_pointers_maximum_$1();
   int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
 
   if (0 > requested_nbytes) {
@@ -95,15 +95,14 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
     char	str[requested_nbytes];
 
     mmux_bash_pointers_sprint_$1(str, requested_nbytes, value);
-    if (0) { fprintf(stderr, "%s: maximum $1: %s=%s\n", __func__, "mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str); }
-    mmux_bash_create_global_string_variable("mmux_libc_MAX_[[[]]]mmux_toupper([[[$1]]])", str, MMUX_BUILTIN_NAME);
+    mmux_bash_create_global_string_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_MAX", str, MMUX_BUILTIN_NAME);
   }
 }]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
-  mmux_libc_$1_t value = mmux_bash_pointers_minimum_$1();
+  mmux_$1_t value = mmux_bash_pointers_minimum_$1();
   int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
 
   if (0 > requested_nbytes) {
@@ -112,7 +111,7 @@ m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
     char	str[requested_nbytes];
 
     mmux_bash_pointers_sprint_$1(str, requested_nbytes, value);
-    mmux_bash_create_global_string_variable("mmux_libc_MIN_[[[]]]mmux_toupper([[[$1]]])", str, MMUX_BUILTIN_NAME);
+    mmux_bash_create_global_string_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_MIN", str, MMUX_BUILTIN_NAME);
   }
 }]]])
 

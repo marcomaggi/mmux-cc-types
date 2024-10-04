@@ -43,8 +43,8 @@ mmux_$1_make_rectangular_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const *
 #define MMUX_BUILTIN_NAME	"mmux_$1_make_rectangular"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  mmux_libc_$2_t	rep, imp;
-  mmux_libc_$1_t	Z;
+  mmux_$2_t	rep, imp;
+  mmux_$1_t	Z;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$2(&rep, argv[2], MMUX_BUILTIN_NAME);
@@ -78,8 +78,8 @@ mmux_$1_real_part_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const 
 #define MMUX_BUILTIN_NAME	"mmux_$1_real_part"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  mmux_libc_$2_t	part;
-  mmux_libc_$1_t	Z;
+  mmux_$2_t	part;
+  mmux_$1_t	Z;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&Z, argv[2], MMUX_BUILTIN_NAME);
@@ -110,8 +110,8 @@ mmux_$1_imag_part_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const 
 #define MMUX_BUILTIN_NAME	"mmux_$1_imag_part"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  mmux_libc_$2_t	part;
-  mmux_libc_$1_t	Z;
+  mmux_$2_t	part;
+  mmux_$1_t	Z;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&Z, argv[2], MMUX_BUILTIN_NAME);
@@ -142,8 +142,8 @@ mmux_$1_abs_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[]
 #define MMUX_BUILTIN_NAME	"mmux_$1_abs"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  mmux_libc_$2_t	part;
-  mmux_libc_$1_t	Z;
+  mmux_$2_t	part;
+  mmux_$1_t	Z;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&Z, argv[2], MMUX_BUILTIN_NAME);
@@ -174,8 +174,8 @@ mmux_$1_arg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[]
 #define MMUX_BUILTIN_NAME	"mmux_$1_arg"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  mmux_libc_$2_t	part;
-  mmux_libc_$1_t	Z;
+  mmux_$2_t	part;
+  mmux_$1_t	Z;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&Z, argv[2], MMUX_BUILTIN_NAME);
@@ -206,7 +206,7 @@ mmux_$1_conj_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[
 #define MMUX_BUILTIN_NAME	"mmux_$1_conj"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-  mmux_libc_$1_t	Z, Zconj;
+  mmux_$1_t	Z, Zconj;
   int			rv;
 
   rv = mmux_bash_pointers_parse_$1(&Z, argv[2], MMUX_BUILTIN_NAME);

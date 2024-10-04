@@ -115,110 +115,110 @@ mmux_bash_pointers_decl int mmux_bash_pointers_consume_errno (char const * const
  ** ----------------------------------------------------------------- */
 
 /* These definitions can be useful when expanding macros. */
-typedef void *				mmux_libc_pointer_t;
-typedef signed char			mmux_libc_schar_t;
-typedef unsigned char			mmux_libc_uchar_t;
-typedef signed short int		mmux_libc_sshort_t;
-typedef unsigned short int		mmux_libc_ushort_t;
-typedef signed int			mmux_libc_sint_t;
-typedef unsigned int			mmux_libc_uint_t;
-typedef signed long			mmux_libc_slong_t;
-typedef unsigned long			mmux_libc_ulong_t;
+typedef void *				mmux_pointer_t;
+typedef signed char			mmux_schar_t;
+typedef unsigned char			mmux_uchar_t;
+typedef signed short int		mmux_sshort_t;
+typedef unsigned short int		mmux_ushort_t;
+typedef signed int			mmux_sint_t;
+typedef unsigned int			mmux_uint_t;
+typedef signed long			mmux_slong_t;
+typedef unsigned long			mmux_ulong_t;
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],
-[[[typedef signed long long	      mmux_libc_sllong_t;]]])
+[[[typedef signed long long	      mmux_sllong_t;]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],
-[[[typedef unsigned long long int      mmux_libc_ullong_t;]]])
+[[[typedef unsigned long long int      mmux_ullong_t;]]])
 
-typedef int8_t				mmux_libc_sint8_t;
-typedef uint8_t				mmux_libc_uint8_t;
-typedef int16_t				mmux_libc_sint16_t;
-typedef uint16_t			mmux_libc_uint16_t;
-typedef int32_t				mmux_libc_sint32_t;
-typedef uint32_t			mmux_libc_uint32_t;
-typedef int64_t				mmux_libc_sint64_t;
-typedef uint64_t			mmux_libc_uint64_t;
+typedef int8_t				mmux_sint8_t;
+typedef uint8_t				mmux_uint8_t;
+typedef int16_t				mmux_sint16_t;
+typedef uint16_t			mmux_uint16_t;
+typedef int32_t				mmux_sint32_t;
+typedef uint32_t			mmux_uint32_t;
+typedef int64_t				mmux_sint64_t;
+typedef uint64_t			mmux_uint64_t;
 
-typedef float				mmux_libc_float_t;
-typedef double				mmux_libc_double_t;
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],  [[[typedef long double		mmux_libc_ldouble_t;]]])
+typedef float				mmux_float_t;
+typedef double				mmux_double_t;
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],  [[[typedef long double		mmux_ldouble_t;]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],  [[[__extension__ typedef _Float32	mmux_libc_float32_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]],  [[[__extension__ typedef _Float64	mmux_libc_float64_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]], [[[__extension__ typedef _Float128	mmux_libc_float128_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32]]],  [[[__extension__ typedef _Float32	mmux_float32_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64]]],  [[[__extension__ typedef _Float64	mmux_float64_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128]]], [[[__extension__ typedef _Float128	mmux_float128_t;]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[__extension__ typedef _Float32x	mmux_libc_float32x_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[__extension__ typedef _Float64x	mmux_libc_float64x_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[__extension__ typedef _Float128x	mmux_libc_float128x_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT32X]]], [[[__extension__ typedef _Float32x	mmux_float32x_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT64X]]], [[[__extension__ typedef _Float64x	mmux_float64x_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_FLOAT128X]]],[[[__extension__ typedef _Float128x	mmux_float128x_t;]]])
 
-typedef float complex			mmux_libc_complexf_t;
-typedef mmux_libc_float_t		mmux_libc_complexf_part_t;
-typedef double complex			mmux_libc_complexd_t;
-typedef mmux_libc_double_t		mmux_libc_complexd_part_t;
+typedef float complex			mmux_complexf_t;
+typedef mmux_float_t		mmux_complexf_part_t;
+typedef double complex			mmux_complexd_t;
+typedef mmux_double_t		mmux_complexd_part_t;
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_LDOUBLE]]],[[[
-typedef long double complex	mmux_libc_complexld_t;
-typedef mmux_libc_ldouble_t	mmux_libc_complexld_part_t;
+typedef long double complex	mmux_complexld_t;
+typedef mmux_ldouble_t	mmux_complexld_part_t;
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXF32]]],[[[
-__extension__ typedef _Float32x complex		mmux_libc_complexf32_t;
-typedef mmux_libc_float32_t			mmux_libc_complexf32_part_t;
+__extension__ typedef _Float32x complex		mmux_complexf32_t;
+typedef mmux_float32_t			mmux_complexf32_part_t;
 ]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXF64]]],[[[
-__extension__ typedef _Float64x complex		mmux_libc_complexf64_t;
-typedef mmux_libc_float64_t			mmux_libc_complexf64_part_t;
+__extension__ typedef _Float64x complex		mmux_complexf64_t;
+typedef mmux_float64_t			mmux_complexf64_part_t;
 ]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXF128]]],[[[
-__extension__ typedef _Float128 complex		mmux_libc_complexf128_t;
-typedef mmux_libc_float128_t			mmux_libc_complexf128_part_t;
+__extension__ typedef _Float128 complex		mmux_complexf128_t;
+typedef mmux_float128_t			mmux_complexf128_part_t;
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXF32X]]],[[[
-__extension__ typedef _Float32x complex	mmux_libc_complexf32x_t;
-typedef mmux_libc_float32x_t	mmux_libc_complexf32x_part_t;
+__extension__ typedef _Float32x complex	mmux_complexf32x_t;
+typedef mmux_float32x_t	mmux_complexf32x_part_t;
 ]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXF64X]]],[[[
-__extension__ typedef _Float64x complex	mmux_libc_complexf64x_t;
-typedef mmux_libc_float64x_t	mmux_libc_complexf64x_part_t;
+__extension__ typedef _Float64x complex	mmux_complexf64x_t;
+typedef mmux_float64x_t	mmux_complexf64x_part_t;
 ]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXF128X]]],[[[
-__extension__ typedef _Float128x complex	mmux_libc_complexf128x_t;
-typedef mmux_libc_float128x_t	mmux_libc_complexf128x_part_t;
+__extension__ typedef _Float128x complex	mmux_complexf128x_t;
+typedef mmux_float128x_t	mmux_complexf128x_part_t;
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_libc_decimal32_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_libc_decimal64_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_libc_decimal128_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXD32]]],  [[[
-struct mmux_libc_complexd32_tag_t {
-  mmux_libc_decimal32_t		re;
-  mmux_libc_decimal32_t		im;
+struct mmux_complexd32_tag_t {
+  mmux_decimal32_t		re;
+  mmux_decimal32_t		im;
 };
-typedef struct mmux_libc_complexd32_tag_t mmux_libc_complexd32_t;
-typedef mmux_libc_decimal32_t	mmux_libc_complexd32_part_t;
+typedef struct mmux_complexd32_tag_t mmux_complexd32_t;
+typedef mmux_decimal32_t	mmux_complexd32_part_t;
 ]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXD64]]],  [[[
-struct mmux_libc_complexd64_tag_t {
-  mmux_libc_decimal64_t		re;
-  mmux_libc_decimal64_t		im;
+struct mmux_complexd64_tag_t {
+  mmux_decimal64_t		re;
+  mmux_decimal64_t		im;
 };
-typedef struct mmux_libc_complexd64_tag_t mmux_libc_complexd64_t;
-typedef mmux_libc_decimal64_t	mmux_libc_complexd64_part_t;
+typedef struct mmux_complexd64_tag_t mmux_complexd64_t;
+typedef mmux_decimal64_t	mmux_complexd64_part_t;
 ]]])
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_COMPLEXD128]]], [[[
-struct mmux_libc_complexd128_tag_t {
-  mmux_libc_decimal128_t	re;
-  mmux_libc_decimal128_t	im;
+struct mmux_complexd128_tag_t {
+  mmux_decimal128_t	re;
+  mmux_decimal128_t	im;
 };
-typedef struct mmux_libc_complexd128_tag_t mmux_libc_complexd128_t;
-typedef mmux_libc_decimal128_t	mmux_libc_complexd128_part_t;
+typedef struct mmux_complexd128_tag_t mmux_complexd128_t;
+typedef mmux_decimal128_t	mmux_complexd128_part_t;
 ]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
-m4_define([[[DEFINE_ALIAS_TYPEDEF]]],[[[typedef mmux_libc_[[[]]]$2[[[]]]_t mmux_libc_[[[]]]$1[[[]]]_t]]])
+m4_define([[[DEFINE_ALIAS_TYPEDEF]]],[[[typedef mmux_[[[]]]$2[[[]]]_t mmux_[[[]]]$1[[[]]]_t]]])
 
 DEFINE_ALIAS_TYPEDEF([[[ssize]]],	MMUX_BASH_POINTERS_STEM_ALIAS_SSIZE);
 DEFINE_ALIAS_TYPEDEF([[[usize]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_USIZE]]]);
@@ -241,23 +241,23 @@ DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_BASH_POINTERS_STEM_ALIAS_WINT]]]);
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL32]]],[[[
-mmux_bash_pointers_decl mmux_libc_decimal32_t mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
+mmux_bash_pointers_decl mmux_decimal32_t mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal32_t value)
+mmux_bash_pointers_decl int mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, mmux_decimal32_t value)
   __attribute__((__nonnull__(3)));
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL64]]],[[[
-mmux_bash_pointers_decl mmux_libc_decimal64_t mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
+mmux_bash_pointers_decl mmux_decimal64_t mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal64_t value)
+mmux_bash_pointers_decl int mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, mmux_decimal64_t value)
   __attribute__((__nonnull__(3)));
 ]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_DECIMAL128]]],[[[
-mmux_bash_pointers_decl mmux_libc_decimal128_t mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
+mmux_bash_pointers_decl mmux_decimal128_t mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, mmux_libc_decimal128_t value)
+mmux_bash_pointers_decl int mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, mmux_decimal128_t value)
   __attribute__((__nonnull__(3)));
 ]]])
 
@@ -267,12 +267,12 @@ mmux_bash_pointers_decl int mmux_strfromd128 (char * s_value, size_t size, char 
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_bash_pointers_decl mmux_libc_$1_t      mmux_$1_make_rectangular (mmux_libc_$1_part_t re, mmux_libc_$1_part_t im);
-mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_real_part (mmux_libc_$1_t Z);
-mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_imag_part (mmux_libc_$1_t Z);
-mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_abs  (mmux_libc_$1_t Z);
-mmux_bash_pointers_decl mmux_libc_$1_part_t mmux_$1_arg  (mmux_libc_$1_t Z);
-mmux_bash_pointers_decl mmux_libc_$1_t      mmux_$1_conj (mmux_libc_$1_t Z);
+mmux_bash_pointers_decl mmux_$1_t      mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im);
+mmux_bash_pointers_decl mmux_$1_part_t mmux_$1_real_part (mmux_$1_t Z);
+mmux_bash_pointers_decl mmux_$1_part_t mmux_$1_imag_part (mmux_$1_t Z);
+mmux_bash_pointers_decl mmux_$1_part_t mmux_$1_abs  (mmux_$1_t Z);
+mmux_bash_pointers_decl mmux_$1_part_t mmux_$1_arg  (mmux_$1_t Z);
+mmux_bash_pointers_decl mmux_$1_t      mmux_$1_conj (mmux_$1_t Z);
 ]]])]]])
 
 MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexf]]])
@@ -296,12 +296,12 @@ MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexd128]]],	[[[MMUX_HAVE_T
  ** Special parser functions.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_signed_integer   (mmux_libc_sintmax_t * p_dest, char const * s_source,
-								       mmux_libc_sintmax_t target_min, mmux_libc_sintmax_t target_max,
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_signed_integer   (mmux_sintmax_t * p_dest, char const * s_source,
+								       mmux_sintmax_t target_min, mmux_sintmax_t target_max,
 								       char const * target_type_name, char const * caller_name);
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_libc_uintmax_t * p_dest, char const * s_source,
-								       mmux_libc_uintmax_t target_max,
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
+								       mmux_uintmax_t target_max,
 								       char const * target_type_name, char const * caller_name);
 
 
@@ -310,49 +310,49 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_libc
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef mmux_libc_$1_t mmux_type_unary_operation_$1_t   (mmux_libc_$1_t X);
-typedef mmux_libc_$1_t mmux_type_binary_operation_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-typedef mmux_libc_$1_t mmux_type_ternary_operation_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
-typedef bool           mmux_type_unary_predicate_$1_t   (mmux_libc_$1_t X);
-typedef bool           mmux_type_binary_predicate_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-typedef bool           mmux_type_ternary_predicate_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
+typedef mmux_$1_t mmux_type_unary_operation_$1_t   (mmux_$1_t X);
+typedef mmux_$1_t mmux_type_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef mmux_$1_t mmux_type_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+typedef bool           mmux_type_unary_predicate_$1_t   (mmux_$1_t X);
+typedef bool           mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef bool           mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
 mmux_bash_pointers_decl bool mmux_bash_pointers_string_is_$1 (char const * s_value);
 mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_$1 (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl mmux_libc_$1_t mmux_bash_pointers_minimum_$1 (void)
+mmux_bash_pointers_decl mmux_$1_t mmux_bash_pointers_minimum_$1 (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl mmux_libc_$1_t mmux_bash_pointers_maximum_$1 (void)
+mmux_bash_pointers_decl mmux_$1_t mmux_bash_pointers_maximum_$1 (void)
   __attribute__((__const__));
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_$1_t * p_value, char const * s_value, char const * caller_name)
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_libc_$1_t value)
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t v);
-mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value,
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_$1_t v);
+mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_$1_t value,
 									    char const * caller_name);
 ]]])]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef mmux_libc_$1_t mmux_type_unary_operation_$1_t   (mmux_libc_$1_t X);
-typedef mmux_libc_$1_t mmux_type_binary_operation_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-typedef mmux_libc_$1_t mmux_type_ternary_operation_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
-typedef bool           mmux_type_unary_predicate_$1_t   (mmux_libc_$1_t X);
-typedef bool           mmux_type_binary_predicate_$1_t  (mmux_libc_$1_t X, mmux_libc_$1_t Y);
-typedef bool           mmux_type_ternary_predicate_$1_t (mmux_libc_$1_t X, mmux_libc_$1_t Y, mmux_libc_$1_t Z);
+typedef mmux_$1_t mmux_type_unary_operation_$1_t   (mmux_$1_t X);
+typedef mmux_$1_t mmux_type_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef mmux_$1_t mmux_type_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+typedef bool           mmux_type_unary_predicate_$1_t   (mmux_$1_t X);
+typedef bool           mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef bool           mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
 mmux_bash_pointers_decl bool mmux_bash_pointers_string_$1_p (char const * s_arg);
 mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_$1 (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_libc_$1_t * p, char const * s, char const * caller_name)
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_$1_t * p, char const * s, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_libc_$1_t v)
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_$1_t v)
   __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_libc_$1_t v);
-mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_libc_$1_t value,
+mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_$1_t v);
+mmux_bash_pointers_decl int mmux_bash_pointers_store_result_in_variable_$1 (char const * variable_name, mmux_$1_t value,
 									    char const * caller_name);
 ]]])]]])
 
