@@ -156,6 +156,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * memory::                      Raw memory operations.
 * errors::                      Handling errors.
 * fds::                         Core file descriptor operations.
+* misc::                        Miscellaneous features.
 
 Appendices
 
@@ -4086,6 +4087,30 @@ The argument @var{OLD_FD} must be the string representation of a file descriptor
 
 The argument @var{NEW_FD} must be the string representation of a file descriptor.
 @end deffn
+
+@c page
+@node misc
+@chapter Miscellaneous features
+
+
+@defun mmux_bash_pointers_builtin_p @var{NAME}
+Return true if @var{NAME} is the identifier of an existing builtin; otherwise return false.  We can
+use this function to test if a shell library implements a builtin whose availability depends on the
+underlying platform.
+
+For example, the package @mmux{} Bash @acronym{MPFR} implements the builtin
+@code{mpfr_set_decimal128} only if the underlying platform implements the C language type
+@objtype{_Decimal128} and all the involved libraries were compiled with support for such type.  So
+we can do:
+
+@example
+if mmux_bash_pointers_builtin_p mpfr_set_decimal128
+then # builtin implemented
+else # builtin not implemented
+fi
+@end example
+@end defun
+
 
 @c page
 @c ------------------------------------------------------------
