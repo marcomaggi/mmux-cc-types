@@ -4149,6 +4149,7 @@ linking} for details.
 * shared library minimum::      Type representations of minimum values.
 * shared library parsers::      Parsing string representations of C language types.
 * shared library sprinters::    Printing string representations of C language types.
+* shared library bindings::     Binding values to variables.
 @end menu
 
 @c page
@@ -4767,7 +4768,7 @@ rv = mmux_bash_pointers_parse_sint(&value, arg, "my-builtin");
 @deftypefun int mmux_bash_pointers_parse_\STEM\ (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
 Parse a string which is meant to be the representation of a C language type @objtype{\STEM\}; when
 successful store the result in the variable referenced by @var{PTR}, then return
-@code{EXECUTION_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{EXECUTION_FAILURE}.
+@code{MMUX_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{MMUX_FAILURE}.
 
 In case of failure: if @var{CALLER_NAME} is not @cnull{}, print on @stderr{} a message describing
 the parsing error; @var{CALLER_NAME} must reference an @asciiz{} string representing the entity that
@@ -4873,8 +4874,8 @@ if (0 > required_nbytes) @{
 @deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (mmux_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
-characters (terminating zero included).  When successful return @code{EXECUTION_SUCCESS}; otherwise
-leave @var{STRPTR} untouched and return @code{EXECUTION_FAILURE}.
+characters (terminating zero included).  When successful return @code{MMUX_SUCCESS}; otherwise
+leave @var{STRPTR} untouched and return @code{MMUX_FAILURE}.
 
 The @samp{sprint_size} function computes how many characters are needed to hold the string
 representation of @var{VALUE}.  When successful returns the number of characters, @strong{including
@@ -4950,6 +4951,91 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{gid}
 @MmuxDefineCFunctionSprinter{wchar}
 @MmuxDefineCFunctionSprinter{wint}
+
+@c page
+@node shared library bindings
+@appendixsec Binding values to variables
+
+
+@macro MmuxDefineCFunctionBindToVariable{STEM}
+@deftypefun int mmux_bash_pointers_bind_to_variable_\STEM\ (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+
+When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
+@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
+builtin.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineCFunctionBindToVariable{pointer}
+
+@MmuxDefineCFunctionBindToVariable{schar}
+@MmuxDefineCFunctionBindToVariable{uchar}
+@MmuxDefineCFunctionBindToVariable{sshort}
+@MmuxDefineCFunctionBindToVariable{ushort}
+@MmuxDefineCFunctionBindToVariable{sint}
+@MmuxDefineCFunctionBindToVariable{uint}
+@MmuxDefineCFunctionBindToVariable{slong}
+@MmuxDefineCFunctionBindToVariable{ulong}
+@MmuxDefineCFunctionBindToVariable{sllong}
+@MmuxDefineCFunctionBindToVariable{ullong}
+@MmuxDefineCFunctionBindToVariable{float}
+@MmuxDefineCFunctionBindToVariable{double}
+@MmuxDefineCFunctionBindToVariable{ldouble}
+
+@MmuxDefineCFunctionBindToVariable{float32}
+@MmuxDefineCFunctionBindToVariable{float64}
+@MmuxDefineCFunctionBindToVariable{float128}
+
+@MmuxDefineCFunctionBindToVariable{float32x}
+@MmuxDefineCFunctionBindToVariable{float64x}
+@MmuxDefineCFunctionBindToVariable{float128x}
+
+@MmuxDefineCFunctionBindToVariable{decimal32}
+@MmuxDefineCFunctionBindToVariable{decimal64}
+@MmuxDefineCFunctionBindToVariable{decimal128}
+
+@MmuxDefineCFunctionBindToVariable{complexf}
+@MmuxDefineCFunctionBindToVariable{complexd}
+@MmuxDefineCFunctionBindToVariable{complexld}
+
+@MmuxDefineCFunctionBindToVariable{complexf32}
+@MmuxDefineCFunctionBindToVariable{complexf64}
+@MmuxDefineCFunctionBindToVariable{complexf128}
+
+@MmuxDefineCFunctionBindToVariable{complexf32x}
+@MmuxDefineCFunctionBindToVariable{complexf64x}
+@MmuxDefineCFunctionBindToVariable{complexf128x}
+
+@MmuxDefineCFunctionBindToVariable{complexd32}
+@MmuxDefineCFunctionBindToVariable{complexd64}
+@MmuxDefineCFunctionBindToVariable{complexd128}
+
+@MmuxDefineCFunctionBindToVariable{sint8}
+@MmuxDefineCFunctionBindToVariable{uint8}
+@MmuxDefineCFunctionBindToVariable{sint16}
+@MmuxDefineCFunctionBindToVariable{uint16}
+@MmuxDefineCFunctionBindToVariable{sint32}
+@MmuxDefineCFunctionBindToVariable{uint32}
+@MmuxDefineCFunctionBindToVariable{sint64}
+@MmuxDefineCFunctionBindToVariable{uint64}
+
+@MmuxDefineCFunctionBindToVariable{ssize}
+@MmuxDefineCFunctionBindToVariable{usize}
+@MmuxDefineCFunctionBindToVariable{sintmax}
+@MmuxDefineCFunctionBindToVariable{uintmax}
+@MmuxDefineCFunctionBindToVariable{sintptr}
+@MmuxDefineCFunctionBindToVariable{uintptr}
+@MmuxDefineCFunctionBindToVariable{mode}
+@MmuxDefineCFunctionBindToVariable{off}
+@MmuxDefineCFunctionBindToVariable{pid}
+@MmuxDefineCFunctionBindToVariable{uid}
+@MmuxDefineCFunctionBindToVariable{gid}
+@MmuxDefineCFunctionBindToVariable{wchar}
+@MmuxDefineCFunctionBindToVariable{wint}
 
 @c page
 @node references

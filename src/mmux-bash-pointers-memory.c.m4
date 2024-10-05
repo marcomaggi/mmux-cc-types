@@ -50,7 +50,7 @@ mmux_libc_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const a
   }
 
   if (ptr) {
-    return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], ptr, MMUX_BUILTIN_NAME);
+    return mmux_bash_pointers_bind_to_variable_pointer(argv[1], ptr, MMUX_BUILTIN_NAME);
   } else {
     mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME);
     return MMUX_FAILURE;
@@ -85,7 +85,7 @@ mmux_libc_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const a
   }
 
   if (ptr) {
-    return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], ptr, MMUX_BUILTIN_NAME);
+    return mmux_bash_pointers_bind_to_variable_pointer(argv[1], ptr, MMUX_BUILTIN_NAME);
   } else {
     mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME);
     return MMUX_FAILURE;
@@ -116,7 +116,7 @@ mmux_libc_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const 
   ptr = realloc(ptr, len);
 
   if (ptr) {
-    return mmux_bash_pointers_store_result_in_variable_pointer(argv[1], ptr, MMUX_BUILTIN_NAME);
+    return mmux_bash_pointers_bind_to_variable_pointer(argv[1], ptr, MMUX_BUILTIN_NAME);
   } else {
     mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME);
     return MMUX_FAILURE;

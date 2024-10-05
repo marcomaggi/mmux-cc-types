@@ -55,7 +55,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   Z = mmux_$1_make_rectangular(rep, imp);
 
-  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], Z, MMUX_BUILTIN_NAME);
+  return mmux_bash_pointers_bind_to_variable_$1(argv[1], Z, MMUX_BUILTIN_NAME);
 error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
@@ -87,7 +87,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   part = mmux_$1_real_part(Z);
 
-  return mmux_bash_pointers_store_result_in_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
+  return mmux_bash_pointers_bind_to_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
 error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
@@ -119,7 +119,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   part = mmux_$1_imag_part(Z);
 
-  return mmux_bash_pointers_store_result_in_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
+  return mmux_bash_pointers_bind_to_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
 error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
@@ -151,7 +151,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   part = mmux_$1_abs(Z);
 
-  return mmux_bash_pointers_store_result_in_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
+  return mmux_bash_pointers_bind_to_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
 error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
@@ -183,7 +183,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   part = mmux_$1_arg(Z);
 
-  return mmux_bash_pointers_store_result_in_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
+  return mmux_bash_pointers_bind_to_variable_$2(argv[1], part, MMUX_BUILTIN_NAME);
 error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
@@ -214,7 +214,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   Zconj = mmux_$1_conj(Z);
 
-  return mmux_bash_pointers_store_result_in_variable_$1(argv[1], Zconj, MMUX_BUILTIN_NAME);
+  return mmux_bash_pointers_bind_to_variable_$1(argv[1], Zconj, MMUX_BUILTIN_NAME);
 error:
   mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME);
   return rv;
