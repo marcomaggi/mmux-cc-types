@@ -6,18 +6,42 @@ dnl LICENSE
 dnl
 dnl Copyright (c) 2024 Marco Maggi <mrc.mgg@gmail.com>
 dnl
-dnl This is  free software;  you can redistribute  it and/or modify  it under  the terms of  the GNU
-dnl Lesser General Public License  as published by the Free Software  Foundation; either version 3.0
-dnl of the License, or (at your option) any later version.
+dnl This program is free  software: you can redistribute it and/or modify it  under the terms of the
+dnl GNU General Public License as published by the Free Software Foundation, either version 3 of the
+dnl License, or (at your option) any later version.
 dnl
-dnl This library  is distributed  in the  hope that  it will  be useful,  but WITHOUT  ANY WARRANTY;
+dnl This program  is distributed  in the  hope that  it will  be useful,  but WITHOUT  ANY WARRANTY;
 dnl without even the implied  warranty of MERCHANTABILITY or FITNESS FOR  A PARTICULAR PURPOSE.  See
-dnl the GNU Lesser General Public License for more details.
+dnl the GNU General Public License for more details.
 dnl
-dnl You  should have  received a  copy of  the GNU  Lesser General  Public License  along with  this
-dnl library;  if not,  write to  the Free  Software Foundation,  Inc., 59  Temple Place,  Suite 330,
-dnl Boston, MA 02111-1307 USA.
+dnl You should have received  a copy of the GNU General Public License  along with this program.  If
+dnl not, see <http://www.gnu.org/licenses/>.
 dnl
+
+
+dnl MMUX_BASH_SAVE_VARIABLE --
+dnl
+dnl Synopsis:
+dnl
+dnl     MMUX_BASH_SAVE_VARIABLE([VARNAME],[BODY])
+dnl
+dnl Parameters:
+dnl
+dnl     $1 - The name of the variable to save.
+dnl     $2 - The body to evaluate while the variable has been saved.
+dnl
+dnl Description:
+dnl
+dnl     Save the value of a shell variable while evaluating  a body of code.  Uses of this macro can
+dnl     be nested, but not for the same variable.
+dnl
+dnl             MMUX_BASH_SAVE_VARIABLE([LIBS],
+dnl               [AS_VAR_APPEND([LIBS],[" -lmylib"])
+dnl                ...])
+dnl
+AC_DEFUN([MMUX_BASH_SAVE_VARIABLE],[mmux_OLD_$1=$[]$1
+$2
+$1=$[]mmux_OLD_$1])
 
 
 dnl MMUX_BASH_CHECK_COMMON_HEADERS --
@@ -1083,8 +1107,9 @@ AC_DEFUN([MMUX_DEFINE_VALUEOF_TEST],
     AS_IF([test "x$mmux_cv_valueof_$1" = xMMUX_META_VALUE_UNDEFINED],
           [AS_VAR_SET([MMUX_HAVE_$1],[0])],
           [AS_VAR_SET([MMUX_HAVE_$1],[1])])
-    AC_DEFINE_UNQUOTED([MMUX_HAVE_$1],   [$MMUX_HAVE_$1],[The value $1 of errno is defined.])
-    AC_DEFINE_UNQUOTED([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1],[The value $1 of errno.])])
+    AC_DEFINE_UNQUOTED([MMUX_HAVE_$1],   [$MMUX_HAVE_$1],[The constant value $1 is defined.])
+    AC_DEFINE_UNQUOTED([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1],[The constant value $1.])
+    AC_SUBST([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1])])
 
 
 dnl let's go

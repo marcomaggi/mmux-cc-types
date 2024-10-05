@@ -97,6 +97,40 @@ MMUX_CHECK_DECIMAL_FLOATING_POINT_C_LIBRARY
 
 MBFL_SETUP_FOR_TESTING([v3.0.0])
 
+m4_define([MMUX_BASH_INCLUDE_FILES],[
+#ifdef HAVE_BASHTYPES_H
+#  include <bashtypes.h>
+#endif
+
+#ifdef HAVE_BASHJMP_H
+#  include <bashjmp.h>
+#endif
+
+#ifdef HAVE_BUILTINS_H
+#  include <builtins.h>
+#endif
+
+#ifdef HAVE_SHELL_H
+#  include <shell.h>
+#endif
+
+#ifdef HAVE_COMMON_H
+#  include <common.h>
+#endif
+])
+
+AC_DEFUN([MMUX_BASH_CONSTANT_TEST],[MMUX_DEFINE_VALUEOF_TEST([$1],[$1],[MMUX_BASH_INCLUDE_FILES])])
+AC_DEFUN([MMUX_BASH_CONSTANT_TESTS],[m4_map_args_w($1,[MMUX_BASH_CONSTANT_TEST(],[)])])
+
+MMUX_BASH_SAVE_VARIABLE([CFLAGS],
+  [AS_VAR_APPEND([CFLAGS],[" $BASH_CFLAGS"])
+   MMUX_BASH_SAVE_VARIABLE([LIBS],
+     [AS_VAR_APPEND([CFLAGS],[" $BASH_LIBS"])
+      AC_CHECK_HEADERS([bashtypes.h bashjmp.h builtins.h shell.h common.h],,
+        [AC_MSG_ERROR([unable to find all the GNU Bash header files])],
+        [MMUX_BASH_INCLUDE_FILES])
+      MMUX_BASH_CONSTANT_TESTS([BUILTIN_ENABLED])])])
+
 AC_CACHE_SAVE
 
 
@@ -133,7 +167,7 @@ MMUX_ERRNO_TESTS([EPERM ENOENT ESRCH EINTR EIO ENXIO E2BIG ENOEXEC EBADF ECHILD 
 AC_CACHE_SAVE
 
 
-#### inspecting errno constants
+#### inspecting constants
 
 AC_DEFUN([MMUX_CONSTANT_TEST],[MMUX_DEFINE_VALUEOF_TEST([$1],[$1],MMUX_BASH_COMMON_INCLUDES_FOR_TESTS)])
 AC_DEFUN([MMUX_CONSTANT_TESTS],[m4_map_args_w($1,[MMUX_CONSTANT_TEST(],[)])])

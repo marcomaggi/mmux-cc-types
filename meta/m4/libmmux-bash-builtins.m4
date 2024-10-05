@@ -79,7 +79,7 @@ m4_define([[[MMUX_BASH_DEFINE_BUILTIN_STRUCT]]],[[[m4_dnl
 mmux_bash_struct_builtin_t $1_struct = {
   .name		= "$1",				/* Builtin name */
   .function	= $1_builtin,			/* Function implementing the builtin */
-  .flags	= MMUX_BUILTIN_ENABLED | MMUX_ARRAYREF_BUILTIN,		/* Initial flags for builtin */
+  .flags	= MMUX_BUILTIN_ENABLED,		/* Initial flags for builtin */
   .long_doc	= $1_doc,			/* Array of long documentation strings. */
   .short_doc	= $2,				/* Usage synopsis; becomes short_doc */
   .reserved0	= NULL				/* Reserved for Bash. */
