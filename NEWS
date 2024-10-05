@@ -7,6 +7,8 @@
 Revision 0.1.0-devel.1
 ----------------------
 
+* Changed the licence to GNU GPL v3 or later.
+
 * Renamed all the identifiers.
 
 * Updated to require GNU Automake at least version 1.17 and GNU Autoconf

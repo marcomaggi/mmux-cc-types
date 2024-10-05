@@ -93,7 +93,7 @@ a shell script  which is meant to  be sourced in a Bash  session or script.
 This package makes raw memory pointers available in shell scripts; it also interfaces some basic
 functions from the C language @posix{} standard library.  The package targets @posix{} platforms.
 
-This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
+This package is distributed under the terms of the @gnu{} General Public License (@lgpl{}).
 
 Development of this package takes place at:
 
@@ -160,7 +160,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 
 Appendices
 
-* Package License::             GNU Lesser General Public License.
+* Package License::             GNU General Public License.
 * Documentation License::       GNU Free Documentation License.
 * shared library::              Using the shared library.
 * references::                  Bibliography and references.
@@ -4117,7 +4117,7 @@ fi
 @c Appendices.
 @c ------------------------------------------------------------
 
-@include lgpl-3.0.texi
+@include gpl-3.0.texi
 @include fdl-1.3.texi
 
 @c page

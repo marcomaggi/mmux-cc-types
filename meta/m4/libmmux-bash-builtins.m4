@@ -11,17 +11,16 @@ m4_dnl		functions for GNU Bash builtings implementation.
 m4_dnl
 m4_dnl Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
 m4_dnl
-m4_dnl This is free software; you can redistribute  it and/or modify it under the terms of
-m4_dnl the GNU Lesser General Public License as published by the Free Software Foundation;
-m4_dnl either version 3.0 of the License, or (at your option) any later version.
+m4_dnl This program is free  software: you can redistribute it and/or  modify it under the
+m4_dnl terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
+m4_dnl Foundation, either version 3 of the License, or (at your option) any later version.
 m4_dnl
-m4_dnl This library  is distributed in the  hope that it  will be useful, but  WITHOUT ANY
+m4_dnl This program  is distributed in the  hope that it  will be useful, but  WITHOUT ANY
 m4_dnl WARRANTY; without  even the implied  warranty of  MERCHANTABILITY or FITNESS  FOR A
-m4_dnl PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+m4_dnl PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 m4_dnl
-m4_dnl You should have received a copy of the GNU Lesser General Public License along with
-m4_dnl this library; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
-m4_dnl Suite 330, Boston, MA 02111-1307 USA.
+m4_dnl You should have received  a copy of the GNU General Public  License along with this
+m4_dnl program.  If not, see <http://www.gnu.org/licenses/>.
 m4_dnl
 
 
