@@ -4142,6 +4142,7 @@ linking} for details.
 @menu
 * shared library config::       How to configure a package to link the shared library.
 * shared library version::      Version functions.
+* shared library retvals::      Return values of C language functions.
 * shared library typedefs::     Type definitions.
 * shared library sizeof::       Type size measured in bytes.
 * shared library predicates::   Type predicates for string representations.
@@ -4259,6 +4260,25 @@ Return an integer representing the library interface current revision number.
 @deftypefun int mmux_bash_pointers_version_interface_age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
+
+@c page
+@node shared library retvals
+@appendixsec Return values of C language functions
+
+
+@deftp {Typedef} mmux_rv_t
+Type of constant values used as return value by C language functions.
+@end deftp
+
+
+@deftypevr {Constant} mmux_rv_t MMUX_SUCCESS
+Return value used to signal a successful function call.
+@end deftypevr
+
+
+@deftypevr {Constant} mmux_rv_t MMUX_FAILURE
+Return value used to signal a failed function call.
+@end deftypevr
 
 @c page
 @node shared library typedefs
