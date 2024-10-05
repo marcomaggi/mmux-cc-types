@@ -105,7 +105,7 @@ m4_dnl $2 - atan2 function
 m4_dnl $3 - conditional code C preprocessor symbol
 m4_define([[[DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 __attribute__((__const__)) int
-mmux_bash_pointers_sizeof_$1 (void)
+mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
 }

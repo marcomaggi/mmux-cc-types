@@ -296,9 +296,9 @@ MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexd128]]],	[[[MMUX_HAVE_T
  ** Special parser functions.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_signed_integer   (mmux_sintmax_t * p_dest, char const * s_source,
-								       mmux_sintmax_t target_min, mmux_sintmax_t target_max,
-								       char const * target_type_name, char const * caller_name);
+mmux_bash_pointers_decl int mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
+								     mmux_sintmax_t target_min, mmux_sintmax_t target_max,
+								     char const * target_type_name, char const * caller_name);
 
 mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
 								       mmux_uintmax_t target_max,
@@ -317,20 +317,20 @@ typedef bool           mmux_type_unary_predicate_$1_t   (mmux_$1_t X);
 typedef bool           mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef bool           mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
-mmux_bash_pointers_decl bool mmux_bash_pointers_string_is_$1 (char const * s_value);
-mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_$1 (void)
+mmux_bash_pointers_decl bool mmux_string_is_$1 (char const * s_value);
+mmux_bash_pointers_decl int mmux_$1_sizeof (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl mmux_$1_t mmux_bash_pointers_minimum_$1 (void)
+mmux_bash_pointers_decl mmux_$1_t mmux_$1_minimum (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl mmux_$1_t mmux_bash_pointers_maximum_$1 (void)
+mmux_bash_pointers_decl mmux_$1_t mmux_$1_maximum (void)
   __attribute__((__const__));
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
+mmux_bash_pointers_decl int mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_$1_t value)
+mmux_bash_pointers_decl int mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_$1_t v);
-mmux_bash_pointers_decl int mmux_bash_pointers_bind_to_variable_$1 (char const * variable_name, mmux_$1_t value,
+mmux_bash_pointers_decl int mmux_$1_sprint_size (mmux_$1_t v);
+mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value,
 									    char const * caller_name);
 ]]])]]])
 
@@ -345,14 +345,14 @@ typedef bool           mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t 
 typedef bool           mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
 mmux_bash_pointers_decl bool mmux_bash_pointers_string_$1_p (char const * s_arg);
-mmux_bash_pointers_decl int mmux_bash_pointers_sizeof_$1 (void)
+mmux_bash_pointers_decl int mmux_$1_sizeof (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_$1  (mmux_$1_t * p, char const * s, char const * caller_name)
+mmux_bash_pointers_decl int mmux_$1_parse  (mmux_$1_t * p, char const * s, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_$1 (char * s, int l, mmux_$1_t v)
+mmux_bash_pointers_decl int mmux_$1_sprint (char * s, int l, mmux_$1_t v)
   __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_bash_pointers_sprint_size_$1 (mmux_$1_t v);
-mmux_bash_pointers_decl int mmux_bash_pointers_bind_to_variable_$1 (char const * variable_name, mmux_$1_t value,
+mmux_bash_pointers_decl int mmux_$1_sprint_size (mmux_$1_t v);
+mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value,
 									    char const * caller_name);
 ]]])]]])
 

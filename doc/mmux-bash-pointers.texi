@@ -4475,7 +4475,7 @@ parts are values of type @objtype{mmux_decimal128_t}.
 
 
 @macro MmuxDefineCFunctionSizeof{STEM}
-@deftypefun int mmux_bash_pointers_sizeof_\STEM\ (void)
+@deftypefun int mmux_\STEM\_sizeof (void)
 Return a positive integer representing the size in bytes of the C language type
 @objtype{mmux_\STEM\_t}.
 @end deftypefun
@@ -4556,7 +4556,7 @@ Return a positive integer representing the size in bytes of the C language type
 
 
 @macro MmuxDefineCFunctionPredicate{STEM}
-@deftypefun bool mmux_bash_pointers_string_is_\STEM\ (char const * @var{str})
+@deftypefun bool mmux_string_is_\STEM\ (char const * @var{str})
 Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a
 value of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @end deftypefun
@@ -4637,9 +4637,8 @@ value of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 
 
 @macro MmuxDefineCFunctionMaximum{STEM}
-@deftypefun mmux_clib_\STEM\_t mmux_bash_pointers_maximum_\STEM\ (void)
-Return the maximum value representable by the range of values of the type
-@objtype{mmux_clib_\STEM\_t}.
+@deftypefun mmux_\STEM\_t mmux_\STEM\_maximum (void)
+Return the maximum value representable by the range of values of the type @objtype{mmux_\STEM\_t}.
 @end deftypefun
 
 @end macro
@@ -4708,7 +4707,7 @@ representable value.  This is different from the standard C language constants l
 
 
 @macro MmuxDefineCFunctionMinimum{STEM}
-@deftypefun mmux_\STEM\_t mmux_bash_pointers_minimum_\STEM\ (void)
+@deftypefun mmux_\STEM\_t mmux_\STEM\_minimum (void)
 Return the minimum value representable by the range of values of the type
 @objtype{mmux_\STEM\_t}.
 @end deftypefun
@@ -4780,12 +4779,12 @@ char const *            arg = "123";
 mmux_sint_t        value;
 int                     rv;
 
-rv = mmux_bash_pointers_parse_sint(&value, arg, "my-builtin");
+rv = mmux_sint_parse(&value, arg, "my-builtin");
 @end example
 
 
 @macro MmuxDefineCFunctionParser{STEM}
-@deftypefun int mmux_bash_pointers_parse_\STEM\ (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
+@deftypefun int mmux_\STEM\_parse (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
 Parse a string which is meant to be the representation of a C language type @objtype{\STEM\}; when
 successful store the result in the variable referenced by @var{PTR}, then return
 @code{MMUX_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{MMUX_FAILURE}.
@@ -4877,21 +4876,21 @@ to print a @objtype{mmux_sint_t} string representation we do:
 mmux_sint_t     value = 123;
 int             required_nbytes;
 
-required_nbytes = mmux_bash_pointers_sprint_size_sint(value);
+required_nbytes = mmux_sint_sprint_size(value);
 if (0 > required_nbytes) @{
   /* error */
 @} else @{
   char    str[required_nbytes];
   int     rv;
 
-  rv = mmux_bash_pointers_sprint_sint(str, required_nbytes, value);
+  rv = mmux_sint_sprint(str, required_nbytes, value);
 @}
 @end example
 
 
 @macro MmuxDefineCFunctionSprinter{STEM}
-@deftypefun int mmux_bash_pointers_sprint_\STEM\ (char * @var{STRPTR}, int @var{LEN}, mmux_\STEM\_t @var{VALUE})
-@deftypefunx int mmux_bash_pointers_sprint_size_\STEM\ (mmux_\STEM\_t @var{VALUE})
+@deftypefun int mmux_\STEM\_sprint (char * @var{STRPTR}, int @var{LEN}, mmux_\STEM\_t @var{VALUE})
+@deftypefunx int mmux_\STEM\_sprint_size (mmux_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
 characters (terminating zero included).  When successful return @code{MMUX_SUCCESS}; otherwise
@@ -4978,7 +4977,7 @@ the terminating zero}; otherwise return @samp{-1}.
 
 
 @macro MmuxDefineCFunctionBindToVariable{STEM}
-@deftypefun int mmux_bash_pointers_bind_to_variable_\STEM\ (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
+@deftypefun int mmux_\STEM\_bind_to_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
 

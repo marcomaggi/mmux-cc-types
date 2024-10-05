@@ -44,7 +44,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
-    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
+    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME);
     if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
@@ -163,7 +163,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
-    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
+    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME);
     if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
@@ -174,7 +174,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 
     rv = mmux_bash_get_shell_variable_string_value(&margin_string, MMUX_MARGIN_VARNAME, NULL);
     if (MMUX_SUCCESS == rv) {
-      rv = mmux_bash_pointers_parse_$1(&margin, margin_string, MMUX_BUILTIN_NAME);
+      rv = mmux_$1_parse(&margin, margin_string, MMUX_BUILTIN_NAME);
       if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
@@ -211,7 +211,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
-    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
+    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME);
     if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
@@ -222,7 +222,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 
     rv = mmux_bash_get_shell_variable_string_value(&epsilon_string, MMUX_EPSILON_VARNAME, NULL);
     if (MMUX_SUCCESS == rv) {
-      rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
+      rv = mmux_$1_parse(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
       if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
@@ -283,7 +283,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
-    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
+    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME);
     if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
@@ -294,7 +294,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 
     rv = mmux_bash_get_shell_variable_string_value(&margin_string, MMUX_MARGIN_VARNAME, NULL);
     if (MMUX_SUCCESS == rv) {
-      rv = mmux_bash_pointers_parse_$1(&margin, margin_string, MMUX_BUILTIN_NAME);
+      rv = mmux_$1_parse(&margin, margin_string, MMUX_BUILTIN_NAME);
       if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }
@@ -332,7 +332,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   int			rv;
 
   for (int i = 1; i < argc; ++i) {
-    rv = mmux_bash_pointers_parse_$1(&ops[i], argv[i], MMUX_BUILTIN_NAME);
+    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME);
     if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
   }
 
@@ -343,7 +343,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 
     rv = mmux_bash_get_shell_variable_string_value(&epsilon_string, MMUX_EPSILON_VARNAME, NULL);
     if (MMUX_SUCCESS == rv) {
-      rv = mmux_bash_pointers_parse_$1(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
+      rv = mmux_$1_parse(&epsilon, epsilon_string, MMUX_BUILTIN_NAME);
       if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
     }
   }

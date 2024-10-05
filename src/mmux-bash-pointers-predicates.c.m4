@@ -42,7 +42,7 @@ mmux_string_is_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const a
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	data;
 
-  return mmux_bash_pointers_parse_$1(&data, argv[1], MMUX_BUILTIN_NAME);
+  return mmux_$1_parse(&data, argv[1], MMUX_BUILTIN_NAME);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
@@ -139,7 +139,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   mmux_$1_t	value;
   int			rv;
 
-  rv = mmux_bash_pointers_parse_$1(&value, argv[1], MMUX_BUILTIN_NAME);
+  rv = mmux_$1_parse(&value, argv[1], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
 
   if (mmux_$1_is_$3(value)) {

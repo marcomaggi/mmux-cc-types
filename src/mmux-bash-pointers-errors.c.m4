@@ -41,7 +41,7 @@ mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const
   int		rv, errnum;
   char *	errmsg;
 
-  rv = mmux_bash_pointers_parse_sint(&errnum, argv[2], MMUX_BUILTIN_NAME);
+  rv = mmux_sint_parse(&errnum, argv[2], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   errmsg = strerror(errnum);
@@ -71,7 +71,7 @@ mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const 
   int		rv, errnum;
   char *	errsym;
 
-  rv = mmux_bash_pointers_parse_sint(&errnum, argv[2], MMUX_BUILTIN_NAME);
+  rv = mmux_sint_parse(&errnum, argv[2], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   errsym = strerror(errnum);

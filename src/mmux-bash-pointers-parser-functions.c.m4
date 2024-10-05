@@ -81,12 +81,12 @@ mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s
     /* Parsing  error:  there   must  be  no  characters  after   the  number  string
        representation. */
     goto parsing_error;
-  } else if ((mmux_bash_pointers_minimum_sintmax() != target_min) && (rv < target_min)) {
+  } else if ((mmux_sintmax_minimum() != target_min) && (rv < target_min)) {
     /* Parsing error: the  source string is a fine representable  number according to
        the  parser  function, but  the  resulting  number  is  out of  the  requested
        range. */
     goto parsing_error;
-  } else if ((mmux_bash_pointers_maximum_sintmax() != target_max) && (target_max < rv)) {
+  } else if ((mmux_sintmax_maximum() != target_max) && (target_max < rv)) {
     /* Parsing error: the  source string is a fine representable  number according to
        the  parser  function, but  the  resulting  number  is  out of  the  requested
        range. */
@@ -120,7 +120,7 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const *
   int			base            = 0;
   size_t		len		= strlen(s_source);
 
-  if (0) { fprintf(stderr, "%s: uintmax=%lu, target_max=%lu\n", __func__, mmux_bash_pointers_maximum_uintmax(), target_max); }
+  if (0) { fprintf(stderr, "%s: uintmax=%lu, target_max=%lu\n", __func__, mmux_uintmax_maximum(), target_max); }
 
   if (0 == len) {
     /* Parsing error: empty strings are not valid number representations. */
@@ -157,7 +157,7 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const *
        representation. */
     if (0) { fprintf(stderr, "%s: parsing error: additional chars after number\n", __func__); }
     goto parsing_error;
-  } else if ((mmux_bash_pointers_maximum_uintmax() != target_max) && (target_max < rv)) {
+  } else if ((mmux_uintmax_maximum() != target_max) && (target_max < rv)) {
     /* Parsing error: the  source string is a fine representable  number according to
        the  parser  function, but  the  resulting  number  is  out of  the  requested
        range. */
@@ -185,7 +185,7 @@ m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 static int parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
 
 int
-mmux_bash_pointers_parse_$1 (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
+mmux_$1_parse (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
 {
   int	len = strlen(s_arg);
 
@@ -201,7 +201,7 @@ mmux_bash_pointers_parse_$1 (mmux_$1_t * p_value, const char * s_arg, const char
     } else {
       mmux_$1_part_t	op_re;
 
-      rv = mmux_bash_pointers_parse_$2(&op_re, s_arg, caller_name);
+      rv = mmux_$2_parse(&op_re, s_arg, caller_name);
       if (MMUX_SUCCESS == rv) {
 	*p_value = mmux_$1_make_rectangular(op_re, 0.0);
 	return MMUX_SUCCESS;
@@ -268,13 +268,13 @@ parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char
 
   /* Parse the real part. */
   {
-    rv = mmux_bash_pointers_parse_$2(&op_re, s_arg_re, caller_name);
+    rv = mmux_$2_parse(&op_re, s_arg_re, caller_name);
     if (MMUX_FAILURE == rv) { return rv; }
   }
 
   /* Parse the imaginary part. */
   {
-    rv = mmux_bash_pointers_parse_$2(&op_im, s_arg_im, caller_name);
+    rv = mmux_$2_parse(&op_im, s_arg_im, caller_name);
     if (MMUX_FAILURE == rv) { return rv; }
   }
 
@@ -309,7 +309,7 @@ DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_TYPE_COM
 
 m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
 {
   mmux_$1_t	value;
   char *		tailptr;
@@ -352,13 +352,13 @@ DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_HAVE_TYPE_DE
 
 m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_$1_t * p_dest, char const * s_source, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_sintmax_t	value;
   int			rv;
 
   rv = mmux_bash_pointers_parse_signed_integer(&value, s_source,
-					       mmux_bash_pointers_minimum_$1(), mmux_bash_pointers_maximum_$1(),
+					       mmux_$1_minimum(), mmux_$1_maximum(),
 					       "$1", caller_name);
   if (MMUX_SUCCESS == rv) {
     *p_dest = (mmux_$1_t)value;
@@ -381,7 +381,7 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_SLLONG]]],[[[
 int
-mmux_bash_pointers_parse_sllong (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
+mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_sllong_t	rv;
   char const *		s_source_beg;
@@ -442,13 +442,13 @@ mmux_bash_pointers_parse_sllong (mmux_sllong_t * p_dest, char const * s_source, 
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
   mmux_uintmax_t	value;
   int			rv;
 
   rv = mmux_bash_pointers_parse_unsigned_integer(&value, s_arg,
-						 (mmux_uintmax_t) mmux_bash_pointers_maximum_$1(),
+						 (mmux_uintmax_t) mmux_$1_maximum(),
 						 "$1", caller_name);
   if (MMUX_SUCCESS == rv) {
     *p_value = (mmux_$1_t)value;
@@ -473,7 +473,7 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_TYPE_ULLONG]]],[[[
 int
-mmux_bash_pointers_parse_ullong (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
+mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_ullong_t	rv;
   char const *		s_source_beg;
@@ -534,9 +534,9 @@ mmux_bash_pointers_parse_ullong (mmux_ullong_t * p_dest, char const * s_source, 
 
 m4_define([[[DEFINE_TYPEDEF_PARSER]]],[[[
 int
-mmux_bash_pointers_parse_$1 (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
-  return mmux_bash_pointers_parse_[[[]]]$2()[[[]]](p_value, s_arg, caller_name);
+  return mmux_[[[]]]$2[[[]]]_parse(p_value, s_arg, caller_name);
 }
 ]]])
 

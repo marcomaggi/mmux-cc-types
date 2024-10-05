@@ -167,7 +167,7 @@ DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal128]]],	[[[MMUX_HAVE_TYPE_D
  ** ----------------------------------------------------------------- */
 
 int
-mmux_bash_pointers_sprint_size_pointer (mmux_pointer_t value)
+mmux_pointer_sprint_size (mmux_pointer_t value)
 {
   if (value) {
     int		required_nbytes;
@@ -186,7 +186,7 @@ mmux_bash_pointers_sprint_size_pointer (mmux_pointer_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_pointer_t value)
+mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
 /* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
    the template is "%p"; we want a proper number representation. */
 {
@@ -213,7 +213,7 @@ mmux_bash_pointers_sprint_pointer (char * strptr, int len, mmux_pointer_t value)
 
 m4_define([[[DEFINE_CORE_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
-mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
+mmux_$1_sprint_size (mmux_$1_t value)
 {
   int		required_nbytes;
 
@@ -228,7 +228,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_$1_t value)
+mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
 
@@ -260,7 +260,7 @@ DEFINE_CORE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_HAVE_TYPE_ULLONG]]])
 
 m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
-mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
+mmux_$1_sprint_size (mmux_$1_t value)
 {
   int		required_nbytes;
 
@@ -284,7 +284,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
   }
 }
 int
-mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_$1_t value)
+mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
 
@@ -332,20 +332,20 @@ m4_dnl $2 - The stem of the real and imaginary parts.
 m4_dnl $3 - An optional C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_COMPLEX_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 int
-mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
+mmux_$1_sprint_size (mmux_$1_t value)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(value);
   mmux_$1_part_t	im = mmux_$1_imag_part(value);
   int			required_nbytes, total_required_nbytes = strlen("()+i*()");
 
-  required_nbytes = mmux_bash_pointers_sprint_size_$2(re);
+  required_nbytes = mmux_$2_sprint_size(re);
   if (0 > required_nbytes) {
     return -1;
   } else {
     total_required_nbytes += --required_nbytes;
   }
 
-  required_nbytes = mmux_bash_pointers_sprint_size_$2(im);
+  required_nbytes = mmux_$2_sprint_size(im);
   if (0 > required_nbytes) {
     return -1;
   } else {
@@ -357,7 +357,7 @@ mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
   return ++total_required_nbytes;
 }
 int
-mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_$1_t value)
+mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(value);
   mmux_$1_part_t	im = mmux_$1_imag_part(value);
@@ -379,7 +379,7 @@ mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_$1_t value)
 
     if (0) { fprintf(stderr, "%s: before printing rep, len=%d\n", __func__, len); }
 
-    rv = mmux_bash_pointers_sprint_$2(ptr, len, re);
+    rv = mmux_$2_sprint(ptr, len, re);
     if (MMUX_FAILURE == rv) { return rv; }
 
     delta  = strlen(ptr);
@@ -407,7 +407,7 @@ mmux_bash_pointers_sprint_$1 (char * ptr, int len, mmux_$1_t value)
   {
     ptrdiff_t	delta;
 
-    rv = mmux_bash_pointers_sprint_$2(ptr, len, im);
+    rv = mmux_$2_sprint(ptr, len, im);
     if (MMUX_FAILURE == rv) { return rv; }
 
     delta  = strlen(ptr);
@@ -454,14 +454,14 @@ DEFINE_COMPLEX_SPRINTER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_TYPE_C
 
 m4_define([[[DEFINE_TYPEDEF_SPRINTER]]],[[[
 int
-mmux_bash_pointers_sprint_size_$1 (mmux_$1_t value)
+mmux_$1_sprint_size (mmux_$1_t value)
 {
-  return mmux_bash_pointers_sprint_size_[[[]]]$2[[[]]](value);
+  return mmux_[[[]]]$2[[[]]]_sprint_size(value);
 }
 int
-mmux_bash_pointers_sprint_$1 (char * strptr, int len, mmux_$1_t value)
+mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
-  return mmux_bash_pointers_sprint_[[[]]]$2[[[]]](strptr, len, value);
+  return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, value);
 }
 ]]])
 

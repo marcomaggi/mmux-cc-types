@@ -95,36 +95,36 @@ m4_dnl $3 - C language expression evaluating to the minimum value.
 m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
 bool
-mmux_bash_pointers_string_is_$1 (char const * s_value)
+mmux_string_is_$1 (char const * s_value)
 {
   mmux_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
+  if (MMUX_SUCCESS == mmux_$1_parse(&value, s_value, NULL)) {
     return true;
   } else {
     return false;
   }
 }
 int
-mmux_bash_pointers_sizeof_$1 (void)
+mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
 }
 mmux_$1_t
-mmux_bash_pointers_maximum_$1 (void)
+mmux_$1_maximum (void)
 {
   return $2;
 }
 mmux_$1_t
-mmux_bash_pointers_minimum_$1 (void)
+mmux_$1_minimum (void)
 {
   return $3;
 }
 ]]])]]])
 
 DEFINE_REAL_TYPE_FUNCTIONS([[[pointer]]],
-			   [[[(mmux_pointer_t)mmux_bash_pointers_maximum_uintptr()]]],
-			   [[[(mmux_pointer_t)mmux_bash_pointers_minimum_uintptr()]]])
+			   [[[(mmux_pointer_t)mmux_uintptr_maximum()]]],
+			   [[[(mmux_pointer_t)mmux_uintptr_minimum()]]])
 
 DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)
@@ -170,24 +170,24 @@ m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
 m4_define([[[DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS]]],[[[
 bool
-mmux_bash_pointers_string_is_$1 (char const * s_value)
+mmux_string_is_$1 (char const * s_value)
 {
-  return mmux_bash_pointers_string_is_[[[]]]$2[[[]]](s_value);
+  return mmux_string_is_$2(s_value);
 }
 int
-mmux_bash_pointers_sizeof_$1 (void)
+mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
 }
 mmux_$1_t
-mmux_bash_pointers_maximum_$1 (void)
+mmux_$1_maximum (void)
 {
-  return mmux_bash_pointers_maximum_[[[]]]$2[[[]]] ();
+  return mmux_$2_maximum ();
 }
 mmux_$1_t
-mmux_bash_pointers_minimum_$1 (void)
+mmux_$1_minimum (void)
 {
-  return mmux_bash_pointers_minimum_[[[]]]$2[[[]]] ();
+  return mmux_$2_minimum ();
 }
 ]]])
 
@@ -222,18 +222,18 @@ m4_dnl $8 - atan2 function
 m4_dnl $9 - C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$9]]],[[[
 bool
-mmux_bash_pointers_string_is_$1 (char const * s_value)
+mmux_string_is_$1 (char const * s_value)
 {
   mmux_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
+  if (MMUX_SUCCESS == mmux_$1_parse(&value, s_value, NULL)) {
     return true;
   } else {
     return false;
   }
 }
 int
-mmux_bash_pointers_sizeof_$1 (void)
+mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
 }
@@ -316,11 +316,11 @@ DEFINE_COMPLEX_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]],[[[cimagf128x]]],[
 
 m4_define([[[DEFINE_COMPLEX_DECIMAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
 bool
-mmux_bash_pointers_string_is_$1 (char const * s_value)
+mmux_string_is_$1 (char const * s_value)
 {
   mmux_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_bash_pointers_parse_$1(&value, s_value, NULL)) {
+  if (MMUX_SUCCESS == mmux_$1_parse(&value, s_value, NULL)) {
     return true;
   } else {
     return false;
@@ -339,17 +339,17 @@ DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_TYPE_COMPLEXD12
 
 m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 int
-mmux_bash_pointers_bind_to_variable_$1 (char const * variable_name, mmux_$1_t value, char const * caller_name)
+mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * caller_name)
 {
   int		rv, required_nbytes;
 
-  required_nbytes = mmux_bash_pointers_sprint_size_$1(value);
+  required_nbytes = mmux_$1_sprint_size(value);
   if (0 > required_nbytes) {
     return MMUX_FAILURE;
   } else {
     char	s_value[required_nbytes];
 
-    rv = mmux_bash_pointers_sprint_$1(s_value, required_nbytes, value);
+    rv = mmux_$1_sprint(s_value, required_nbytes, value);
     if (MMUX_SUCCESS == rv) {
       return mmux_bash_store_string_in_variable(variable_name, s_value, caller_name);
     } else {

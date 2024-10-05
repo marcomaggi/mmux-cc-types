@@ -79,22 +79,22 @@ m4_dnl Helper macros for library initialisation.
 m4_dnl --------------------------------------------------------------------
 
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[
-  mmux_bash_create_global_sint_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_SIZEOF", mmux_bash_pointers_sizeof_$1(),
+  mmux_bash_create_global_sint_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_SIZEOF", mmux_$1_sizeof(),
                                         MMUX_BUILTIN_NAME);
 ]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
-  mmux_$1_t value = mmux_bash_pointers_maximum_$1();
-  int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
+  mmux_$1_t value = mmux_$1_maximum();
+  int requested_nbytes = mmux_$1_sprint_size(value);
 
   if (0 > requested_nbytes) {
     return MMUX_FAILURE;
   } else {
     char	str[requested_nbytes];
 
-    mmux_bash_pointers_sprint_$1(str, requested_nbytes, value);
+    mmux_$1_sprint(str, requested_nbytes, value);
     mmux_bash_create_global_string_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_MAX", str, MMUX_BUILTIN_NAME);
   }
 }]]])
@@ -102,15 +102,15 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[{
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[{
-  mmux_$1_t value = mmux_bash_pointers_minimum_$1();
-  int requested_nbytes = mmux_bash_pointers_sprint_size_$1(value);
+  mmux_$1_t value = mmux_$1_minimum();
+  int requested_nbytes = mmux_$1_sprint_size(value);
 
   if (0 > requested_nbytes) {
     return MMUX_FAILURE;
   } else {
     char	str[requested_nbytes];
 
-    mmux_bash_pointers_sprint_$1(str, requested_nbytes, value);
+    mmux_$1_sprint(str, requested_nbytes, value);
     mmux_bash_create_global_string_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_MIN", str, MMUX_BUILTIN_NAME);
   }
 }]]])
