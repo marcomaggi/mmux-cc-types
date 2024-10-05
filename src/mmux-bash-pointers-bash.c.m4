@@ -31,11 +31,21 @@
 
 /* We  really need  to pay  attention to  the order  in which  we include  the files,
    otherwise errors will ensue. */
-#include "bashtypes.h"
-#include "bashjmp.h"
-#include "builtins.h"
-#include "shell.h"
-#include "common.h"
+#ifdef HAVE_BASHTYPES_H
+#  include "bashtypes.h"
+#endif
+#ifdef HAVE_BASHJMP_H
+#  include "bashjmp.h"
+#endif
+#ifdef HAVE_BUILTINS_H
+#  include "builtins.h"
+#endif
+#ifdef HAVE_SHELL_H
+#  include "shell.h"
+#endif
+#ifdef HAVE_COMMON_H
+#  include "common.h"
+#endif
 
 
 /** --------------------------------------------------------------------
