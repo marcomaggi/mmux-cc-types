@@ -80,7 +80,7 @@ dnl     tests.
 dnl
 dnl Usage example:
 dnl
-dnl     MMUX_DEFINE_VALUEOF_TEST([SIZEOF_MY_TYPE], [sizeof(my_type_t)],
+dnl     MMUX_DETERMINE_VALUEOF([SIZEOF_MY_TYPE], [sizeof(my_type_t)],
 dnl       [MMUX_BASH_COMMON_INCLUDES_FOR_TESTS])
 dnl
 m4_define([MMUX_BASH_COMMON_INCLUDES_FOR_TESTS],[
@@ -1063,53 +1063,6 @@ AC_DEFUN([MMUX_BASH_DETERMINE_C_LANGUAGE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE]
         dnl There is no stadard alias.  This should not happen.
         [AC_MSG_ERROR([unable to determine exact signed integer standard C language type alias of '$2'])])])
    AC_SUBST(MMUX_BASH_TYPE_STANDARD_STEM_ALIAS_OF_[]m4_toupper($1),[$mmux_cv_type_stem_alias_of_[]m4_tolower($1)])])
-
-
-dnl MMUX_DEFINE_VALUEOF_TEST --
-dnl
-dnl Synopsis:
-dnl
-dnl     MMUX_DEFINE_VALUEOF_TEST(STEM, EXPRESSION, INCLUDES)
-dnl
-dnl Parameters:
-dnl
-dnl     $1 - Mandatory uppercase stem used to generate output variables and C preprocessor symbols.
-dnl     $2 - Mandatory C language expression which, executed in a C program, returns the constant.
-dnl     $3 - Optional include directives for the C language preprocessor.
-dnl
-dnl Description:
-dnl
-dnl     Determine the value of a C language constant expression returning an exact integer.
-dnl
-dnl Usage example:
-dnl
-dnl     MMUX_DEFINE_VALUEOF_TEST([EINVAL], [EINVAL])
-dnl
-dnl determine the existence and value of the "errno" constant "EINVAL"; results:
-dnl
-dnl mmux_cv_valueof_EINVAL
-dnl
-dnl     A shell variable used  to cache the result.  If the symbol "EINVAL"  exists: the shell value
-dnl     is the value of the constant itself.  If the symbol "EINVAL" does not exist: the shell value
-dnl     is the string "MMUX_META_VALUE_UNDEFINED".
-dnl
-dnl MMUX_HAVE_EINVAL
-dnl
-dnl     A C language  preprocessor symbol.  If the symbol "EINVAL"  exists: the preprocessor symbols
-dnl     is defined to  be "1".  If the symbol  "EINVAL" does not exist: the  preprocessor symbols is
-dnl     defined to be "0".
-dnl
-AC_DEFUN([MMUX_DEFINE_VALUEOF_TEST],
-  [AC_CACHE_CHECK([the value of '$2'],
-     [mmux_cv_valueof_$1],
-     [AC_COMPUTE_INT([mmux_cv_valueof_$1], [$2], [$3],
-        [AS_VAR_SET([mmux_cv_valueof_$1],[MMUX_META_VALUE_UNDEFINED])])])
-    AS_IF([test "x$mmux_cv_valueof_$1" = xMMUX_META_VALUE_UNDEFINED],
-          [AS_VAR_SET([MMUX_HAVE_$1],[0])],
-          [AS_VAR_SET([MMUX_HAVE_$1],[1])])
-    AC_DEFINE_UNQUOTED([MMUX_HAVE_$1],   [$MMUX_HAVE_$1],[The constant value $1 is defined.])
-    AC_DEFINE_UNQUOTED([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1],[The constant value $1.])
-    AC_SUBST([MMUX_VALUEOF_$1],[$mmux_cv_valueof_$1])])
 
 
 dnl let's go

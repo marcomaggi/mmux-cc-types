@@ -60,28 +60,6 @@ AC_CHECK_HEADERS([fcntl.h] [regex.h] [sys/ioctl.h])
 AC_PATH_PROG([M4_PROGRAM],[m4])
 AC_PATH_PROG([BASH_PROGRAM],[/bin/bash],[/bin/bash],[:])
 
-AC_DEFINE([_ISOC11_SOURCE],[1],[Enable the ISO C11 features.])
-
-dnl The following is commented out because AC_USE_SYSTEM_EXTENSIONS should just do all the work.
-dnl
-dnl # NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
-dnl # needed for the GNU C Compiler and the GNU C Library to make available the "_FloatN" and "_FloatNx"
-dnl # features.  (Marco Maggi; Sep 26, 2024)
-dnl AC_DEFINE([__STDC_WANT_IEC_60559_BFP_EXT__],   [1],[Define some standardised features.])
-dnl AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
-dnl AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
-dnl
-dnl # NOTE I am  an ignorant bull; I know  nothing; I understand nothing.  Apparently  defining these is
-dnl # needed for the GNU C Compiler to make available the "_DecimalN" and "_DecimalNx" features.  (Marco
-dnl # Maggi; Sep 26, 2024)
-dnl AC_DEFINE([__STDC_WANT_IEC_60559_DFP_EXT__],   [1],[Define some standardised features.])
-dnl AC_DEFINE([__STDC_WANT_IEC_60559_FUNCS_EXT__], [1],[Define some standardised features.])
-dnl AC_DEFINE([__STDC_WANT_IEC_60559_TYPES_EXT__], [1],[Define some standardised features.])
-dnl dnl AC_DEFINE([__STDC_WANT_DEC_FP__],[1],[Required to enable decimal floating-point numeric types.])
-dnl
-dnl AC_DEFINE([_GNU_SOURCE],[1],[Enable everything GNU (is this actually needed?).])
-dnl AC_DEFINE([_POSIX_C_SOURCE],[200809L],[Enable latest(?) POSIX features.])
-
 AC_CACHE_SAVE
 
 
@@ -119,7 +97,7 @@ m4_define([MMUX_BASH_INCLUDE_FILES],[
 #endif
 ])
 
-AC_DEFUN([MMUX_BASH_CONSTANT_TEST],[MMUX_DEFINE_VALUEOF_TEST([$1],[$1],[MMUX_BASH_INCLUDE_FILES])])
+AC_DEFUN([MMUX_BASH_CONSTANT_TEST],[MMUX_CC_DETERMINE_VALUEOF([$1],[$1],[MMUX_BASH_INCLUDE_FILES])])
 AC_DEFUN([MMUX_BASH_CONSTANT_TESTS],[m4_map_args_w($1,[MMUX_BASH_CONSTANT_TEST(],[)])])
 
 MMUX_BASH_SAVE_VARIABLE([CFLAGS],
@@ -146,7 +124,7 @@ MMUX_BASH_INSPECT_STANDARD_C_LANGUAGE_TYPES_FEATURES
 
 #### inspecting errno constants
 
-AC_DEFUN([MMUX_ERRNO_TEST],[MMUX_DEFINE_VALUEOF_TEST([$1],[$1],MMUX_BASH_COMMON_INCLUDES_FOR_TESTS)])
+AC_DEFUN([MMUX_ERRNO_TEST],[MMUX_CC_DETERMINE_VALUEOF([$1],[$1],MMUX_BASH_COMMON_INCLUDES_FOR_TESTS)])
 AC_DEFUN([MMUX_ERRNO_TESTS],[m4_map_args_w($1,[MMUX_ERRNO_TEST(],[)])])
 
 MMUX_ERRNO_TESTS([EPERM ENOENT ESRCH EINTR EIO ENXIO E2BIG ENOEXEC EBADF ECHILD EAGAIN ENOMEM
@@ -169,7 +147,7 @@ AC_CACHE_SAVE
 
 #### inspecting constants
 
-AC_DEFUN([MMUX_CONSTANT_TEST],[MMUX_DEFINE_VALUEOF_TEST([$1],[$1],MMUX_BASH_COMMON_INCLUDES_FOR_TESTS)])
+AC_DEFUN([MMUX_CONSTANT_TEST],[MMUX_CC_DETERMINE_VALUEOF([$1],[$1],MMUX_BASH_COMMON_INCLUDES_FOR_TESTS)])
 AC_DEFUN([MMUX_CONSTANT_TESTS],[m4_map_args_w($1,[MMUX_CONSTANT_TEST(],[)])])
 
 ## seek whence arguments
