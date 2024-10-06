@@ -278,20 +278,26 @@ AC_DEFUN([MMUX_LIBTOOL_LIBRARY_VERSIONS],
 
 # Synopsis:
 #
-#   MMUX_AUTOCONF_ENABLE_OPTION(UPCASE_OPNAME, COMMAND_LINE_OPTION, DEFAULT, CHECKING_OPTION_MESSAGE, ENABLE_OPTION_MESSAGE)
+#       MMUX_AUTOCONF_ENABLE_OPTION(UPCASE_OPNAME, COMMAND_LINE_OPTION, DEFAULT, CHECKING_OPTION_MESSAGE, ENABLE_OPTION_MESSAGE)
 #
 # Parameters:
 #
-#   $1 - upper case option name
-#   $2 - command line option name "--enable-$2"
-#   $3 - default (yes, no)
-#   $4 - text for the "checking option... " message
-#   $5 - text for the "enable option... " message
+#       $1 - upper case option name
+#       $2 - command line option name "--enable-$2"
+#       $3 - default (yes, no)
+#       $4 - text for the "checking option... " message
+#       $5 - text for the "enable option... " message
 #
 # Description:
 #
 #       Wrapper  for  AC_ARG_ENABLE  which  adds  verbose messages  and  defines  a  shell  variable
 #       "mmux_enable_$1" set to "yes" or "no".
+#
+# Usage example:
+#
+#               MMUX_AUTOCONF_ENABLE_OPTION([CC_TYPE_SLLONG], [mmux-cc-type-sllong], [yes],
+#                 [whether to enable MMUX support for the C language type 'sllong'],
+#                 [enables MMUX support for the C language type 'sllong'])
 #
 AC_DEFUN([MMUX_AUTOCONF_ENABLE_OPTION],
   [AS_VAR_SET(mmux_enable_$1,$3)
@@ -309,17 +315,17 @@ AC_DEFUN([MMUX_AUTOCONF_ENABLE_OPTION],
 
 # Synopsis:
 #
-#     MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([VARNAME],[BODY])
+#       MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([VARNAME],[BODY])
 #
 # Parameters:
 #
-#     $1 - The name of the variable to save.
-#     $2 - The body to evaluate while the variable has been saved.
+#       $1 - The name of the variable to save.
+#       $2 - The body to evaluate while the variable has been saved.
 #
 # Description:
 #
-#     Save the value of a shell variable while evaluating  a body of code.  Uses of this macro can
-#     be nested, but not for the same variable.
+#       Save the value of a shell variable while evaluating  a body of code.  Uses of this macro can
+#       be nested, but not for the same variable.
 #
 #             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
 #               [AS_VAR_APPEND([LIBS],[" -lmylib"])
@@ -1067,13 +1073,17 @@ AC_DEFUN([MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT],
 #     int".  If it does: define the C language preprocessor symbol "MMUX_HAVE_CC_TYPE_SLLONG" to "1".
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_SLLONG],
-  [AC_TYPE_LONG_LONG_INT
-   AC_MSG_CHECKING([for MMUX supporting 'signed long long int'])
-   AS_IF([test mmux_is_yes([ac_cv_type_long_long_int])],
-         [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[1])
-          AC_MSG_RESULT([yes])],
-         [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[0])
-          AC_MSG_RESULT([no])])
+  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[0])
+   MMUX_AUTOCONF_ENABLE_OPTION([CC_TYPE_SLLONG], [mmux-cc-type-sllong], [yes],
+     [whether to enable MMUX support for the C language type 'sllong'],
+     [enables MMUX support for the C language type 'sllong'])
+   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_SLLONG])],
+     [AC_TYPE_LONG_LONG_INT
+      AC_MSG_CHECKING([for MMUX supporting 'signed long long int'])
+      AS_IF([test mmux_is_yes([ac_cv_type_long_long_int])],
+            [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[1])
+             AC_MSG_RESULT([yes])],
+            [AC_MSG_RESULT([no])])])
    AC_SUBST([MMUX_HAVE_CC_TYPE_SLLONG])])
 
 

@@ -504,7 +504,7 @@ DEFINE_CORE_ARITHMETICS_BUILTIN([[[wint]]])
 
 m4_define([[[DEFINE_FOR_INTEGERS_BUILTIN]]],[[[
 static int
-mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_mod"
 {
@@ -539,7 +539,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_incr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+mmux_$1_incr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_incr"
 {
@@ -570,7 +570,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_incr]]],
 /* ------------------------------------------------------------------ */
 
 static int
-mmux_$1_decr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
+mmux_$1_decr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME
 #define MMUX_BUILTIN_NAME	"mmux_$1_decr"
 {
