@@ -26,6 +26,12 @@
 #
 
 
+#### helpers
+
+m4_define([mmux_is_yes],["x$[]$1" = "xyes"])
+m4_define([mmux_is_no], ["x$[]$1" = "xno"])
+
+
 # Synopsis
 #
 #       MMUX_PKG_VERSIONS([MAJOR_VERSION], [MINOR_VERSION], [PATCH_LEVEL], [PRERELEASE_TAG], [BUILD_METADATA])
@@ -1062,9 +1068,12 @@ AC_DEFUN([MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_SLLONG],
   [AC_TYPE_LONG_LONG_INT
-   AS_IF([test "x$ac_cv_type_long_long_int" = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[0])])
+   AC_MSG_CHECKING([for MMUX supporting 'signed long long int'])
+   AS_IF([test mmux_is_yes([ac_cv_type_long_long_int])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_SLLONG],[0])
+          AC_MSG_RESULT([no])])
    AC_SUBST([MMUX_HAVE_TYPE_SLLONG])])
 
 
@@ -1079,9 +1088,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_SLLONG],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_ULLONG],
   [AC_TYPE_UNSIGNED_LONG_LONG_INT
-   AS_IF([test "x$ac_cv_type_unsigned_long_long_int" = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[0])])
+   AC_MSG_CHECKING([for MMUX supporting 'unsigned long long int'])
+   AS_IF([test mmux_is_yes([ac_cv_type_unsigned_long_long_int])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_ULLONG],[0])
+          AC_MSG_RESULT([no])])
    AC_SUBST([MMUX_HAVE_TYPE_ULLONG])])
 
 
@@ -1098,9 +1110,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_ULLONG],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_LDOUBLE],
   [AC_TYPE_LONG_DOUBLE
-   AS_IF([test "x$ac_cv_type_long_double"   = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],  [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],  [0])])
+   AC_MSG_CHECKING([for MMUX supporting 'long double'])
+   AS_IF([test mmux_is_yes([ac_cv_type_long_double])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],  [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_LDOUBLE],  [0])
+          AC_MSG_RESULT([no])])
    AC_SUBST([MMUX_HAVE_TYPE_LDOUBLE])])
 
 
@@ -1125,16 +1140,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32],
    AC_CHECK_FUNC([fminf32])
    AC_CHECK_FUNC([crealf32])
    AC_CHECK_FUNC([cimagf32])
-   AS_IF([test "x$ac_cv_type__Float32"          = "xyes"        \
-            -a "x$ac_cv_func_strtof32"          = "xyes"        \
-            -a "x$ac_cv_func_strfromf32"        = "xyes"        \
-            -a "x$ac_cv_func_fabsf32"           = "xyes"        \
-            -a "x$ac_cv_func_fmaxf32"           = "xyes"        \
-            -a "x$ac_cv_func_fminf32"           = "xyes"        \
-            -a "x$ac_cv_func_crealf32"          = "xyes"        \
-            -a "x$ac_cv_func_cimagf32"          = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32],    [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32],    [0])])
+   AC_MSG_CHECKING([for MMUX supporting '_Float32'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Float32])       \
+            -a mmux_is_yes([ac_cv_func_strtof32])       \
+            -a mmux_is_yes([ac_cv_func_strfromf32])     \
+            -a mmux_is_yes([ac_cv_func_fabsf32])        \
+            -a mmux_is_yes([ac_cv_func_fmaxf32])        \
+            -a mmux_is_yes([ac_cv_func_fminf32])        \
+            -a mmux_is_yes([ac_cv_func_crealf32])       \
+            -a mmux_is_yes([ac_cv_func_cimagf32])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32],    [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32],    [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT32],   [$MMUX_HAVE_TYPE_FLOAT32],    [Defined to 1 if the platform supports _Float32.])
    AC_SUBST([MMUX_HAVE_TYPE_FLOAT32])])
 
@@ -1160,16 +1178,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64],
    AC_CHECK_FUNC([fminf64])
    AC_CHECK_FUNC([crealf64])
    AC_CHECK_FUNC([cimagf64])
-   AS_IF([test "x$ac_cv_type__Float64"          = "xyes"        \
-            -a "x$ac_cv_func_strtof64"          = "xyes"        \
-            -a "x$ac_cv_func_strfromf64"        = "xyes"        \
-            -a "x$ac_cv_func_fabsf64"           = "xyes"        \
-            -a "x$ac_cv_func_fmaxf64"           = "xyes"        \
-            -a "x$ac_cv_func_fminf64"           = "xyes"        \
-            -a "x$ac_cv_func_crealf64"          = "xyes"        \
-            -a "x$ac_cv_func_cimagf64"          = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64],    [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64],    [0])])
+   AC_MSG_CHECKING([for MMUX supporting '_Float64'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Float64])       \
+            -a mmux_is_yes([ac_cv_func_strtof64])       \
+            -a mmux_is_yes([ac_cv_func_strfromf64])     \
+            -a mmux_is_yes([ac_cv_func_fabsf64])        \
+            -a mmux_is_yes([ac_cv_func_fmaxf64])        \
+            -a mmux_is_yes([ac_cv_func_fminf64])        \
+            -a mmux_is_yes([ac_cv_func_crealf64])       \
+            -a mmux_is_yes([ac_cv_func_cimagf64])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64],    [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64],    [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT64],   [$MMUX_HAVE_TYPE_FLOAT64],    [Defined to 1 if the platform supports _Float64.])
    AC_SUBST([MMUX_HAVE_TYPE_FLOAT64])])
 
@@ -1195,16 +1216,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128],
    AC_CHECK_FUNC([fminf128])
    AC_CHECK_FUNC([crealf128])
    AC_CHECK_FUNC([cimagf128])
-   AS_IF([test "x$ac_cv_type__Float128"         = "xyes"        \
-            -a "x$ac_cv_func_strtof128"         = "xyes"        \
-            -a "x$ac_cv_func_strfromf128"       = "xyes"        \
-            -a "x$ac_cv_func_fabsf128"          = "xyes"        \
-            -a "x$ac_cv_func_fmaxf128"          = "xyes"        \
-            -a "x$ac_cv_func_fminf128"          = "xyes"        \
-            -a "x$ac_cv_func_crealf128"         = "xyes"        \
-            -a "x$ac_cv_func_cimagf128"         = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],    [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],    [0])])
+   AC_MSG_CHECKING([for MMUX supporting '_Float128'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Float128])      \
+            -a mmux_is_yes([ac_cv_func_strtof128])      \
+            -a mmux_is_yes([ac_cv_func_strfromf128])    \
+            -a mmux_is_yes([ac_cv_func_fabsf128])       \
+            -a mmux_is_yes([ac_cv_func_fmaxf128])       \
+            -a mmux_is_yes([ac_cv_func_fminf128])       \
+            -a mmux_is_yes([ac_cv_func_crealf128])      \
+            -a mmux_is_yes([ac_cv_func_cimagf128])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],    [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128],    [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT128],   [$MMUX_HAVE_TYPE_FLOAT128],    [Defined to 1 if the platform supports _Float128.])
    AC_SUBST([MMUX_HAVE_TYPE_FLOAT128])])
 
@@ -1230,16 +1254,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32X],
    AC_CHECK_FUNC([fminf32x])
    AC_CHECK_FUNC([crealf32x])
    AC_CHECK_FUNC([cimagf32x])
-   AS_IF([test "x$ac_cv_type__Float32x"         = "xyes"        \
-            -a "x$ac_cv_func_strtof32x"         = "xyes"        \
-            -a "x$ac_cv_func_strfromf32x"       = "xyes"        \
-            -a "x$ac_cv_func_fabsf32x"          = "xyes"        \
-            -a "x$ac_cv_func_fmaxf32x"          = "xyes"        \
-            -a "x$ac_cv_func_fminf32x"          = "xyes"        \
-            -a "x$ac_cv_func_crealf32x"         = "xyes"        \
-            -a "x$ac_cv_func_cimagf32x"         = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X],    [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X],    [0])])
+   AC_MSG_CHECKING([for MMUX supporting '_Float32x'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Float32x])      \
+            -a mmux_is_yes([ac_cv_func_strtof32x])      \
+            -a mmux_is_yes([ac_cv_func_strfromf32x])    \
+            -a mmux_is_yes([ac_cv_func_fabsf32x])       \
+            -a mmux_is_yes([ac_cv_func_fmaxf32x])       \
+            -a mmux_is_yes([ac_cv_func_fminf32x])       \
+            -a mmux_is_yes([ac_cv_func_crealf32x])      \
+            -a mmux_is_yes([ac_cv_func_cimagf32x])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X],    [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT32X],    [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT32X],   [$MMUX_HAVE_TYPE_FLOAT32X],    [Defined to 1 if the platform supports _Float32x.])
    AC_SUBST([MMUX_HAVE_TYPE_FLOAT32X])])
 
@@ -1265,16 +1292,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64X],
    AC_CHECK_FUNC([fminf64x])
    AC_CHECK_FUNC([crealf64x])
    AC_CHECK_FUNC([cimagf64x])
-   AS_IF([test "x$ac_cv_type__Float64x"         = "xyes"        \
-            -a "x$ac_cv_func_strtof64x"         = "xyes"        \
-            -a "x$ac_cv_func_strfromf64x"       = "xyes"        \
-            -a "x$ac_cv_func_fabsf64x"          = "xyes"        \
-            -a "x$ac_cv_func_fmaxf64x"          = "xyes"        \
-            -a "x$ac_cv_func_fminf64x"          = "xyes"        \
-            -a "x$ac_cv_func_crealf64x"         = "xyes"        \
-            -a "x$ac_cv_func_cimagf64x"         = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X],    [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X],    [0])])
+   AC_MSG_CHECKING([for MMUX supporting '_Float64x'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Float64x])      \
+            -a mmux_is_yes([ac_cv_func_strtof64x])      \
+            -a mmux_is_yes([ac_cv_func_strfromf64x])    \
+            -a mmux_is_yes([ac_cv_func_fabsf64x])       \
+            -a mmux_is_yes([ac_cv_func_fmaxf64x])       \
+            -a mmux_is_yes([ac_cv_func_fminf64x])       \
+            -a mmux_is_yes([ac_cv_func_crealf64x])      \
+            -a mmux_is_yes([ac_cv_func_cimagf64x])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X],    [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT64X],    [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT64X],   [$MMUX_HAVE_TYPE_FLOAT64X],    [Defined to 1 if the platform supports _Float64x.])
    AC_SUBST([MMUX_HAVE_TYPE_FLOAT64X])])
 
@@ -1300,16 +1330,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128X],
    AC_CHECK_FUNC([fminf128x])
    AC_CHECK_FUNC([crealf128x])
    AC_CHECK_FUNC([cimagf128x])
-   AS_IF([test "x$ac_cv_type__Float128x"        = "xyes"        \
-            -a "x$ac_cv_func_strtof128x"        = "xyes"        \
-            -a "x$ac_cv_func_strfromf128x"      = "xyes"        \
-            -a "x$ac_cv_func_fabsf128x"         = "xyes"        \
-            -a "x$ac_cv_func_fmaxf128x"         = "xyes"        \
-            -a "x$ac_cv_func_fminf128x"         = "xyes"        \
-            -a "x$ac_cv_func_crealf128x"        = "xyes"        \
-            -a "x$ac_cv_func_cimagf128x"        = "xyes"],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],    [1])],
-         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],    [0])])
+   AC_MSG_CHECKING([for MMUX supporting '_Float128x'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Float128x])     \
+            -a mmux_is_yes([ac_cv_func_strtof128x])     \
+            -a mmux_is_yes([ac_cv_func_strfromf128x])   \
+            -a mmux_is_yes([ac_cv_func_fabsf128x])      \
+            -a mmux_is_yes([ac_cv_func_fmaxf128x])      \
+            -a mmux_is_yes([ac_cv_func_fminf128x])      \
+            -a mmux_is_yes([ac_cv_func_crealf128x])     \
+            -a mmux_is_yes([ac_cv_func_cimagf128x])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],    [1])
+          AC_MSG_RESULT([yes])],
+         [AS_VAR_SET([MMUX_HAVE_TYPE_FLOAT128X],    [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_FLOAT128X],   [$MMUX_HAVE_TYPE_FLOAT128X],    [Defined to 1 if the platform supports _Float128x.])
    AC_SUBST([MMUX_HAVE_TYPE_FLOAT128X])])
 
@@ -1371,16 +1404,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
          AC_CHECK_FUNC([fabsd32])
          AC_CHECK_FUNC([fmaxd32])
          AC_CHECK_FUNC([fmind32])])])
-   AS_IF([test "x$ac_cv_type__Decimal32"   = "xyes"  \
-            -a "x$ac_cv_func_strtod32"     = "xyes"  \
-            -a "x$ac_cv_func_strfromd32"   = "xyes"  \
-            -a "x$ac_cv_func_fabsd32"      = "xyes"  \
-            -a "x$ac_cv_func_fmaxd32"      = "xyes"  \
-            -a "x$ac_cv_func_fmind32"      = "xyes"],
+   AC_MSG_CHECKING([for MMUX supporting '_Decimal32'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Decimal32])  \
+            -a mmux_is_yes([ac_cv_func_strtod32])  \
+            -a mmux_is_yes([ac_cv_func_strfromd32])  \
+            -a mmux_is_yes([ac_cv_func_fabsd32])  \
+            -a mmux_is_yes([ac_cv_func_fmaxd32])  \
+            -a mmux_is_yes([ac_cv_func_fmind32])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [1])
-          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])],
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [1])
+          AC_MSG_RESULT([yes])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL32],  [0])
-          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [0])])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD32], [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_DECIMAL32],  [$MMUX_HAVE_TYPE_DECIMAL32],
      [Defined to 1 if the platform supports _Decimal32.])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXD32], [$MMUX_HAVE_TYPE_COMPLEXD32],
@@ -1415,16 +1451,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
          AC_CHECK_FUNC([fabsd64])
          AC_CHECK_FUNC([fmaxd64])
          AC_CHECK_FUNC([fmind64])])])
-   AS_IF([test "x$ac_cv_type__Decimal64"   = "xyes"  \
-            -a "x$ac_cv_func_strtod64"     = "xyes"  \
-            -a "x$ac_cv_func_strfromd64"   = "xyes"  \
-            -a "x$ac_cv_func_fabsd64"      = "xyes"  \
-            -a "x$ac_cv_func_fmaxd64"      = "xyes"  \
-            -a "x$ac_cv_func_fmind64"      = "xyes"],
+   AC_MSG_CHECKING([for MMUX supporting '_Decimal64'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Decimal64])  \
+            -a mmux_is_yes([ac_cv_func_strtod64])  \
+            -a mmux_is_yes([ac_cv_func_strfromd64])  \
+            -a mmux_is_yes([ac_cv_func_fabsd64])  \
+            -a mmux_is_yes([ac_cv_func_fmaxd64])  \
+            -a mmux_is_yes([ac_cv_func_fmind64])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [1])
-          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [1])],
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [1])
+          AC_MSG_RESULT([yes])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL64],  [0])
-          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [0])])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD64], [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_DECIMAL64],  [$MMUX_HAVE_TYPE_DECIMAL64],
      [Defined to 1 if the platform supports _Decimal64.])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXD64], [$MMUX_HAVE_TYPE_COMPLEXD64],
@@ -1459,16 +1498,19 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL128],
          AC_CHECK_FUNC([fabsd128])
          AC_CHECK_FUNC([fmaxd128])
          AC_CHECK_FUNC([fmind128])])])
-   AS_IF([test "x$ac_cv_type__Decimal128"  = "xyes"  \
-            -a "x$ac_cv_func_strtod128"    = "xyes"  \
-            -a "x$ac_cv_func_strfromd128"  = "xyes"  \
-            -a "x$ac_cv_func_fabsd128"     = "xyes"  \
-            -a "x$ac_cv_func_fmaxd128"     = "xyes"  \
-            -a "x$ac_cv_func_fmind128"     = "xyes"],
+   AC_MSG_CHECKING([for MMUX supporting '_Decimal128'])
+   AS_IF([test mmux_is_yes([ac_cv_type__Decimal128])  \
+            -a mmux_is_yes([ac_cv_func_strtod128])  \
+            -a mmux_is_yes([ac_cv_func_strfromd128])  \
+            -a mmux_is_yes([ac_cv_func_fabsd128])  \
+            -a mmux_is_yes([ac_cv_func_fmaxd128])  \
+            -a mmux_is_yes([ac_cv_func_fmind128])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [1])
-          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [1])],
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [1])
+          AC_MSG_RESULT([yes])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_DECIMAL128],  [0])
-          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [0])])
+          AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD128], [0])
+          AC_MSG_RESULT([no])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_DECIMAL128],  [$MMUX_HAVE_TYPE_DECIMAL128],
      [Defined to 1 if the platform supports _Decimal128.])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_TYPE_COMPLEXD128], [$MMUX_HAVE_TYPE_COMPLEXD128],
@@ -1500,13 +1542,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF],
    AC_CHECK_FUNC([conjf])
    AC_CHECK_FUNC([atan2f])
    AC_MSG_CHECKING([for MMUX supporting 'float complex'])
-   AS_IF([test "x$ac_cv_type_float_complex"             = "xyes"        \
-            -a "x$ac_cv_have_decl_CMPLXF"               = "xyes"        \
-            -a "x$ac_cv_func_crealf"                    = "xyes"        \
-            -a "x$ac_cv_func_cimagf"                    = "xyes"        \
-            -a "x$ac_cv_func_cabsf"                     = "xyes"        \
-            -a "x$ac_cv_func_conjf"                     = "xyes"        \
-            -a "x$ac_cv_func_atan2f"                    = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type_float_complex])          \
+            -a mmux_is_yes([ac_cv_have_decl_CMPLXF])            \
+            -a mmux_is_yes([ac_cv_func_crealf])                 \
+            -a mmux_is_yes([ac_cv_func_cimagf])                 \
+            -a mmux_is_yes([ac_cv_func_cabsf])                  \
+            -a mmux_is_yes([ac_cv_func_conjf])                  \
+            -a mmux_is_yes([ac_cv_func_atan2f])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF], [1])
           AC_MSG_RESULT([yes])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF], [0])
@@ -1538,13 +1580,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD],
    AC_CHECK_FUNC([conj])
    AC_CHECK_FUNC([atan2])
    AC_MSG_CHECKING([for MMUX supporting 'double complex'])
-   AS_IF([test "x$ac_cv_type_double_complex"            = "xyes"        \
-            -a "x$ac_cv_have_decl_CMPLX"                = "xyes"        \
-            -a "x$ac_cv_func_creal"                     = "xyes"        \
-            -a "x$ac_cv_func_cimag"                     = "xyes"        \
-            -a "x$ac_cv_func_cabs"                      = "xyes"        \
-            -a "x$ac_cv_func_conj"                      = "xyes"        \
-            -a "x$ac_cv_func_atan2"                     = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type_double_complex])         \
+            -a mmux_is_yes([ac_cv_have_decl_CMPLX])             \
+            -a mmux_is_yes([ac_cv_func_creal])                  \
+            -a mmux_is_yes([ac_cv_func_cimag])                  \
+            -a mmux_is_yes([ac_cv_func_cabs])                   \
+            -a mmux_is_yes([ac_cv_func_conj])                   \
+            -a mmux_is_yes([ac_cv_func_atan2])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD], [1])
           AC_MSG_RESULT([yes])],
          [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXD], [0])
@@ -1567,7 +1609,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_LDOUBLE])
-   AS_IF([test "x$ac_cv_type_long_double" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type_long_double])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([long double complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXL],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1578,13 +1620,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
           AC_CHECK_FUNC([conjl])
           AC_CHECK_FUNC([atan2l])
           AC_MSG_CHECKING([for MMUX supporting 'long double complex'])
-          AS_IF([test "x$ac_cv_type_long_double_complex"        = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXL"                = "xyes"        \
-                   -a "x$ac_cv_func_creall"                     = "xyes"        \
-                   -a "x$ac_cv_func_cimagl"                     = "xyes"        \
-                   -a "x$ac_cv_func_cabsl"                      = "xyes"        \
-                   -a "x$ac_cv_func_conjl"                      = "xyes"        \
-                   -a "x$ac_cv_func_atan2l"                     = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type_long_double_complex])     \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXL])             \
+                   -a mmux_is_yes([ac_cv_func_creall])                  \
+                   -a mmux_is_yes([ac_cv_func_cimagl])                  \
+                   -a mmux_is_yes([ac_cv_func_cabsl])                   \
+                   -a mmux_is_yes([ac_cv_func_conjl])                   \
+                   -a mmux_is_yes([ac_cv_func_atan2l])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXLD], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXLD], [0])
@@ -1611,7 +1653,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT32])
-   AS_IF([test "x$ac_cv_type__Float32" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type__Float32])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([_Float32 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXF32],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1622,13 +1664,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
           AC_CHECK_FUNC([conjf32])
           AC_CHECK_FUNC([atan2f32])
           AC_MSG_CHECKING([for MMUX supporting '_Float32 complex'])
-          AS_IF([test "x$ac_cv_type__Float32_complex"           = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXF32"              = "xyes"        \
-                   -a "x$ac_cv_func_crealf32"                   = "xyes"        \
-                   -a "x$ac_cv_func_cimagf32"                   = "xyes"        \
-                   -a "x$ac_cv_func_cabsf32"                    = "xyes"        \
-                   -a "x$ac_cv_func_conjf32"                    = "xyes"        \
-                   -a "x$ac_cv_func_atan2f32"                   = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type__Float32_complex])        \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF32])           \
+                   -a mmux_is_yes([ac_cv_func_crealf32])                \
+                   -a mmux_is_yes([ac_cv_func_cimagf32])                \
+                   -a mmux_is_yes([ac_cv_func_cabsf32])                 \
+                   -a mmux_is_yes([ac_cv_func_conjf32])                 \
+                   -a mmux_is_yes([ac_cv_func_atan2f32])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32], [0])
@@ -1655,7 +1697,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT64])
-   AS_IF([test "x$ac_cv_type__Float64" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type__Float64])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([_Float64 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXF64],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1666,13 +1708,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
           AC_CHECK_FUNC([conjf64])
           AC_CHECK_FUNC([atan2f64])
           AC_MSG_CHECKING([for MMUX supporting '_Float64 complex'])
-          AS_IF([test "x$ac_cv_type__Float64_complex"           = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXF64"              = "xyes"        \
-                   -a "x$ac_cv_func_crealf64"                   = "xyes"        \
-                   -a "x$ac_cv_func_cimagf64"                   = "xyes"        \
-                   -a "x$ac_cv_func_cabsf64"                    = "xyes"        \
-                   -a "x$ac_cv_func_conjf64"                    = "xyes"        \
-                   -a "x$ac_cv_func_atan2f64"                   = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type__Float64_complex])        \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF64])           \
+                   -a mmux_is_yes([ac_cv_func_crealf64])                \
+                   -a mmux_is_yes([ac_cv_func_cimagf64])                \
+                   -a mmux_is_yes([ac_cv_func_cabsf64])                 \
+                   -a mmux_is_yes([ac_cv_func_conjf64])                 \
+                   -a mmux_is_yes([ac_cv_func_atan2f64])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64], [0])
@@ -1699,7 +1741,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT128])
-   AS_IF([test "x$ac_cv_type__Float128" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type__Float128])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([_Float128 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXF128],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1710,13 +1752,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
           AC_CHECK_FUNC([conjf128])
           AC_CHECK_FUNC([atan2f128])
           AC_MSG_CHECKING([for MMUX supporting '_Float128 complex'])
-          AS_IF([test "x$ac_cv_type__Float128_complex"          = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXF128"             = "xyes"        \
-                   -a "x$ac_cv_func_crealf128"                  = "xyes"        \
-                   -a "x$ac_cv_func_cimagf128"                  = "xyes"        \
-                   -a "x$ac_cv_func_cabsf128"                   = "xyes"        \
-                   -a "x$ac_cv_func_conjf128"                   = "xyes"        \
-                   -a "x$ac_cv_func_atan2f128"                  = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type__Float128_complex])       \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF128])          \
+                   -a mmux_is_yes([ac_cv_func_crealf128])               \
+                   -a mmux_is_yes([ac_cv_func_cimagf128])               \
+                   -a mmux_is_yes([ac_cv_func_cabsf128])                \
+                   -a mmux_is_yes([ac_cv_func_conjf128])                \
+                   -a mmux_is_yes([ac_cv_func_atan2f128])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128], [0])
@@ -1743,7 +1785,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT32X])
-   AS_IF([test "x$ac_cv_type__Float32x" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type__Float32x])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([_Float32x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXF32X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1754,13 +1796,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
           AC_CHECK_FUNC([conjf32x])
           AC_CHECK_FUNC([atan2f32x])
           AC_MSG_CHECKING([for MMUX supporting '_Float32x complex'])
-          AS_IF([test "x$ac_cv_type__Float32x_complex"          = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXF32X"             = "xyes"        \
-                   -a "x$ac_cv_func_crealf32x"                  = "xyes"        \
-                   -a "x$ac_cv_func_cimagf32x"                  = "xyes"        \
-                   -a "x$ac_cv_func_cabsf32x"                   = "xyes"        \
-                   -a "x$ac_cv_func_conjf32x"                   = "xyes"        \
-                   -a "x$ac_cv_func_atan2f32x"                  = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type__Float32x_complex])       \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF32X])          \
+                   -a mmux_is_yes([ac_cv_func_crealf32x])               \
+                   -a mmux_is_yes([ac_cv_func_cimagf32x])               \
+                   -a mmux_is_yes([ac_cv_func_cabsf32x])                \
+                   -a mmux_is_yes([ac_cv_func_conjf32x])                \
+                   -a mmux_is_yes([ac_cv_func_atan2f32x])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32X], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF32X], [0])
@@ -1787,7 +1829,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT64X])
-   AS_IF([test "x$ac_cv_type__Float64x" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type__Float64x])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([_Float64x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXF64X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1798,13 +1840,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
           AC_CHECK_FUNC([conjf64x])
           AC_CHECK_FUNC([atan2f64x])
           AC_MSG_CHECKING([for MMUX supporting '_Float64x complex'])
-          AS_IF([test "x$ac_cv_type__Float64x_complex"          = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXF64X"             = "xyes"        \
-                   -a "x$ac_cv_func_crealf64x"                  = "xyes"        \
-                   -a "x$ac_cv_func_cimagf64x"                  = "xyes"        \
-                   -a "x$ac_cv_func_cabsf64x"                   = "xyes"        \
-                   -a "x$ac_cv_func_conjf64x"                   = "xyes"        \
-                   -a "x$ac_cv_func_atan2f64x"                  = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type__Float64x_complex])       \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF64X])          \
+                   -a mmux_is_yes([ac_cv_func_crealf64x])               \
+                   -a mmux_is_yes([ac_cv_func_cimagf64x])               \
+                   -a mmux_is_yes([ac_cv_func_cabsf64x])                \
+                   -a mmux_is_yes([ac_cv_func_conjf64x])                \
+                   -a mmux_is_yes([ac_cv_func_atan2f64x])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64X], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF64X], [0])
@@ -1821,7 +1863,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
 #
 #     MMUX_CC_CHECK_TYPE_COMPLEXF128X
 #
-# Description:
+# DESCRIPTION:
 #
 #     Check if the underlying platform supports the standard C language type "_Float128x complex".  If
 #     it does:
@@ -1831,7 +1873,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128X],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT128X])
-   AS_IF([test "x$ac_cv_type__Float128x" = "xyes"],
+   AS_IF([test mmux_is_yes([ac_cv_type__Float128x])],
          [AC_CHECK_HEADER([complex.h])
           AC_CHECK_TYPE([_Float128x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
           AC_CHECK_DECL([CMPLXF128X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
@@ -1842,13 +1884,13 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128X],
           AC_CHECK_FUNC([conjf128x])
           AC_CHECK_FUNC([atan2f128x])
           AC_MSG_CHECKING([for MMUX supporting '_Float128x complex'])
-          AS_IF([test "x$ac_cv_type__Float128x_complex"         = "xyes"        \
-                   -a "x$ac_cv_have_decl_CMPLXF128X"            = "xyes"        \
-                   -a "x$ac_cv_func_crealf128x"                 = "xyes"        \
-                   -a "x$ac_cv_func_cimagf128x"                 = "xyes"        \
-                   -a "x$ac_cv_func_cabsf128x"                  = "xyes"        \
-                   -a "x$ac_cv_func_conjf128x"                  = "xyes"        \
-                   -a "x$ac_cv_func_atan2f128x"                 = "xyes"],
+          AS_IF([test mmux_is_yes([ac_cv_type__Float128x_complex])      \
+                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF128X])         \
+                   -a mmux_is_yes([ac_cv_func_crealf128x])              \
+                   -a mmux_is_yes([ac_cv_func_cimagf128x])              \
+                   -a mmux_is_yes([ac_cv_func_cabsf128x])               \
+                   -a mmux_is_yes([ac_cv_func_conjf128x])               \
+                   -a mmux_is_yes([ac_cv_func_atan2f128x])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128X], [1])
                  AC_MSG_RESULT([yes])],
                 [AS_VAR_SET([MMUX_HAVE_TYPE_COMPLEXF128X], [0])
