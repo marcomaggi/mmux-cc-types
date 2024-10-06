@@ -154,7 +154,7 @@ typedef float complex			mmux_complexf_t;
 typedef mmux_float_t		mmux_complexf_part_t;
 typedef double complex			mmux_complexd_t;
 typedef mmux_double_t		mmux_complexd_part_t;
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],[[[
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]],[[[
 typedef long double complex	mmux_complexld_t;
 typedef mmux_ldouble_t	mmux_complexld_part_t;
 ]]])
@@ -277,7 +277,7 @@ mmux_bash_pointers_decl mmux_$1_t      mmux_$1_conj (mmux_$1_t Z);
 
 MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexf]]])
 MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexd]]])
-MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
 
 MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
 MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
@@ -388,7 +388,7 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL12
 
 DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf]]])
 DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexd]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexld]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexld]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
 
 DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
 DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
