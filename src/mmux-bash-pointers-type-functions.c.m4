@@ -676,13 +676,13 @@ DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf]]],	[[[float]]])
 DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexd]]],	[[[double]]])
 DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexld]]],	[[[ldouble]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf32]]],	[[[float32]]],		[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf64]]],	[[[float64]]],		[[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf32]]],	[[[float32]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf64]]],	[[[float64]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_TYPE_COMPLEXF128]]])
 
-DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
 
 
 /** --------------------------------------------------------------------
@@ -802,7 +802,9 @@ DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[fabsf128x]]],[[[fmaxf1
  ** Approximate comparison functions for floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_dnl $1 - complex type stem
+m4_dnl $2 - preprocessor symbol for conditional definition
+m4_define([[[DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
@@ -814,44 +816,68 @@ mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
 {
   return (mmux_$1_abs(op1 - op2) <= (epsilon * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
 }
+]]])]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_dnl $1 - complex type stem
+m4_dnl $2 - real part type stem
+m4_dnl $3 - preprocessor symbol for conditional definition
+m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 bool
-mmux_$2_equal_absmargin (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t margin)
+mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
-  mmux_$2_part_t	re1 = mmux_$2_real_part(op1);
-  mmux_$2_part_t	im1 = mmux_$2_imag_part(op1);
-  mmux_$2_part_t	re2 = mmux_$2_real_part(op2);
-  mmux_$2_part_t	im2 = mmux_$2_imag_part(op2);
-  mmux_$2_part_t	ret = mmux_$2_real_part(margin);
-  mmux_$2_part_t	imt = mmux_$2_imag_part(margin);
+  mmux_$1_part_t	re1 = mmux_$1_real_part(op1);
+  mmux_$1_part_t	im1 = mmux_$1_imag_part(op1);
+  mmux_$1_part_t	re2 = mmux_$1_real_part(op2);
+  mmux_$1_part_t	im2 = mmux_$1_imag_part(op2);
+  mmux_$1_part_t	ret = mmux_$1_real_part(margin);
+  mmux_$1_part_t	imt = mmux_$1_imag_part(margin);
 
   if (0) { fprintf(stderr, "%s: re1=%Lf re1=%Lf ret=%Lf\n", __func__, (long double)re1, (long double)re2, (long double)ret); }
   if (0) { fprintf(stderr, "%s: im1=%Lf im2=%Lf imt=%Lf\n", __func__, (long double)im1, (long double)im2, (long double)imt); }
-  return (mmux_$1_equal_absmargin(re1, re2, ret) && mmux_$1_equal_absmargin(im1, im2, imt))? true : false;
+  return (mmux_$2_equal_absmargin(re1, re2, ret) && mmux_$2_equal_absmargin(im1, im2, imt))? true : false;
 }
 bool
-mmux_$2_equal_relepsilon (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t epsilon)
+mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
 {
-  mmux_$2_part_t	re1 = mmux_$2_real_part(op1);
-  mmux_$2_part_t	im1 = mmux_$2_imag_part(op1);
-  mmux_$2_part_t	re2 = mmux_$2_real_part(op2);
-  mmux_$2_part_t	im2 = mmux_$2_imag_part(op2);
-  mmux_$2_part_t	ret = mmux_$2_real_part(epsilon);
-  mmux_$2_part_t	imt = mmux_$2_imag_part(epsilon);
+  mmux_$1_part_t	re1 = mmux_$1_real_part(op1);
+  mmux_$1_part_t	im1 = mmux_$1_imag_part(op1);
+  mmux_$1_part_t	re2 = mmux_$1_real_part(op2);
+  mmux_$1_part_t	im2 = mmux_$1_imag_part(op2);
+  mmux_$1_part_t	ret = mmux_$1_real_part(epsilon);
+  mmux_$1_part_t	imt = mmux_$1_imag_part(epsilon);
 
-  return (mmux_$1_equal_relepsilon(re1, re2, ret) && mmux_$1_equal_relepsilon(im1, im2, imt))? true : false;
+  return (mmux_$2_equal_relepsilon(re1, re2, ret) && mmux_$2_equal_relepsilon(im1, im2, imt))? true : false;
 }
 ]]])]]])
 
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float]]],	[[[complexf]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[double]]],	[[[complexd]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[ldouble]]],	[[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+/* ------------------------------------------------------------------ */
 
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float32]]],	[[[complexf32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float64]]],	[[[complexf64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float128]]],	[[[complexf128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[double]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[ldouble]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
 
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float32x]]],	[[[complexf32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float64x]]],	[[[complexf64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
-DEFINE_TYPE_FUNCTIONS_FLOAT_APPROX_COMPARISONS([[[float128x]]],	[[[complexf128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float32]]],	[[[MMUX_HAVE_TYPE_FLOAT32]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float64]]],	[[[MMUX_HAVE_TYPE_FLOAT64]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float128]]],	[[[MMUX_HAVE_TYPE_FLOAT128]]])
+
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float32x]]],	[[[MMUX_HAVE_TYPE_FLOAT32X]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float64x]]],	[[[MMUX_HAVE_TYPE_FLOAT64X]]])
+DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[float128x]]],	[[[MMUX_HAVE_TYPE_FLOAT128X]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf]]],    [[[float]]])
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexd]]],    [[[double]]])
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexld]]],   [[[ldouble]]],	[[[MMUX_HAVE_TYPE_COMPLEXLD]]])
+
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf32]]],  [[[float32]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf64]]],  [[[float64]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf128]]], [[[float128]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128]]])
+
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf32x]]], [[[float32x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32X]]])
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf64x]]], [[[float64x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64X]]])
+DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf128x]]],[[[float128x]]],	[[[MMUX_HAVE_TYPE_COMPLEXF128X]]])
 
 /* end of file */

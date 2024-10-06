@@ -85,7 +85,7 @@ DEFINE_TYPE_STRING_REP_PREDICATE([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]
 
 DEFINE_TYPE_STRING_REP_PREDICATE([[[complexf]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[complexd]]])
-DEFINE_TYPE_STRING_REP_PREDICATE([[[complexld]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[complexld]]],	[[[MMUX_HAVE_TYPE_COMPLEXLD]]])
 
 DEFINE_TYPE_STRING_REP_PREDICATE([[[complexf32]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[complexf64]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
@@ -159,11 +159,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_is_$3]]],
     [[["Return true if OP is a valid representation of a $2 value for the C language type \"$1\"."]]])
 ]]])
 
+/* ------------------------------------------------------------------ */
+
 m4_define([[[DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED]]],[[[
 DEFINE_ARITHMETIC_PREDICATE([[[$1]]],	[[[zero]]],		[[[zero]]],	      [[[$2]]])
 DEFINE_ARITHMETIC_PREDICATE([[[$1]]],	[[[nan]]],		[[[nan]]],	      [[[$2]]])
 DEFINE_ARITHMETIC_PREDICATE([[[$1]]],	[[[infinite]]],		[[[infinite]]],	      [[[$2]]])
 ]]])
+
+/* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_ALL_ARITHMETIC_PREDICATES]]],[[[
 DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[$1]]],[[[$2]]])
@@ -172,6 +176,8 @@ DEFINE_ARITHMETIC_PREDICATE([[[$1]]],	[[[negative]]],		[[[negative]]],	      [[[
 DEFINE_ARITHMETIC_PREDICATE([[[$1]]],	[[[non-positive]]],	[[[non_positive]]],   [[[$2]]])
 DEFINE_ARITHMETIC_PREDICATE([[[$1]]],	[[[non-negative]]],	[[[non_negative]]],   [[[$2]]])
 ]]])
+
+/* ------------------------------------------------------------------ */
 
 DEFINE_ALL_ARITHMETIC_PREDICATES([[[pointer]]])
 DEFINE_ALL_ARITHMETIC_PREDICATES([[[schar]]])
@@ -203,7 +209,7 @@ DEFINE_ALL_ARITHMETIC_PREDICATES([[[decimal128]]],	[[[MMUX_HAVE_TYPE_DECIMAL128]
 
 DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[complexf]]])
 DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[complexd]]])
-DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[complexld]]],		[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[complexld]]],		[[[MMUX_HAVE_TYPE_COMPLEXLD]]])
 
 DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[complexf32]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
 DEFINE_ALL_ARITHMETIC_PREDICATES_FOR_NONSIGNED([[[complexf64]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64]]])

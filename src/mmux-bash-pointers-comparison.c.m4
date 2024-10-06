@@ -33,6 +33,9 @@
  ** Comparison builtins.
  ** ----------------------------------------------------------------- */
 
+m4_dnl $1 - the type stem
+m4_dnl $2 - the function stem
+m4_dnl $3 - preprocessor symbol for conditional definition
 m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTIN]]],[[[
 static int
 mmux_$1_$2_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
@@ -66,6 +69,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_$2]]],
     [[["Compute the comparison between the operands OP."]]])
 ]]])
 
+m4_dnl $1 - the type stem
+m4_dnl $2 - preprocessor symbol for conditional definition
 m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTINS]]],[[[
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[equal]]],		[[[$2]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[greater]]],		[[[$2]]])
@@ -105,7 +110,7 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[decimal128]]],			[[[MMUX_HAVE_TYPE_DECIM
 
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf]]],	[[[equal]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexd]]],	[[[equal]]])
-MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexld]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_LDOUBLE]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexld]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_COMPLEXLD]]])
 
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf32]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_COMPLEXF32]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[complexf64]]],	[[[equal]]],	[[[MMUX_HAVE_TYPE_COMPLEXF64]]])
