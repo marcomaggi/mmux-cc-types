@@ -1547,6 +1547,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF],
             -a mmux_is_yes([ac_cv_func_crealf])                 \
             -a mmux_is_yes([ac_cv_func_cimagf])                 \
             -a mmux_is_yes([ac_cv_func_cabsf])                  \
+            -a mmux_is_yes([ac_cv_func_cargf])                  \
             -a mmux_is_yes([ac_cv_func_conjf])                  \
             -a mmux_is_yes([ac_cv_func_atan2f])],
          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF], [1])
@@ -1585,6 +1586,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD],
             -a mmux_is_yes([ac_cv_func_creal])                  \
             -a mmux_is_yes([ac_cv_func_cimag])                  \
             -a mmux_is_yes([ac_cv_func_cabs])                   \
+            -a mmux_is_yes([ac_cv_func_carg])                   \
             -a mmux_is_yes([ac_cv_func_conj])                   \
             -a mmux_is_yes([ac_cv_func_atan2])],
          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD], [1])
@@ -1625,6 +1627,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
                    -a mmux_is_yes([ac_cv_func_creall])                  \
                    -a mmux_is_yes([ac_cv_func_cimagl])                  \
                    -a mmux_is_yes([ac_cv_func_cabsl])                   \
+                   -a mmux_is_yes([ac_cv_func_cargl])                   \
                    -a mmux_is_yes([ac_cv_func_conjl])                   \
                    -a mmux_is_yes([ac_cv_func_atan2l])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [1])
@@ -1669,6 +1672,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
                    -a mmux_is_yes([ac_cv_func_crealf32])                \
                    -a mmux_is_yes([ac_cv_func_cimagf32])                \
                    -a mmux_is_yes([ac_cv_func_cabsf32])                 \
+                   -a mmux_is_yes([ac_cv_func_cargf32])                 \
                    -a mmux_is_yes([ac_cv_func_conjf32])                 \
                    -a mmux_is_yes([ac_cv_func_atan2f32])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [1])
@@ -1713,6 +1717,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
                    -a mmux_is_yes([ac_cv_func_crealf64])                \
                    -a mmux_is_yes([ac_cv_func_cimagf64])                \
                    -a mmux_is_yes([ac_cv_func_cabsf64])                 \
+                   -a mmux_is_yes([ac_cv_func_cargf64])                 \
                    -a mmux_is_yes([ac_cv_func_conjf64])                 \
                    -a mmux_is_yes([ac_cv_func_atan2f64])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [1])
@@ -1757,6 +1762,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
                    -a mmux_is_yes([ac_cv_func_crealf128])               \
                    -a mmux_is_yes([ac_cv_func_cimagf128])               \
                    -a mmux_is_yes([ac_cv_func_cabsf128])                \
+                   -a mmux_is_yes([ac_cv_func_cargf128])                \
                    -a mmux_is_yes([ac_cv_func_conjf128])                \
                    -a mmux_is_yes([ac_cv_func_atan2f128])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [1])
@@ -1801,6 +1807,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
                    -a mmux_is_yes([ac_cv_func_crealf32x])               \
                    -a mmux_is_yes([ac_cv_func_cimagf32x])               \
                    -a mmux_is_yes([ac_cv_func_cabsf32x])                \
+                   -a mmux_is_yes([ac_cv_func_cargf32x])                \
                    -a mmux_is_yes([ac_cv_func_conjf32x])                \
                    -a mmux_is_yes([ac_cv_func_atan2f32x])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [1])
@@ -1845,6 +1852,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
                    -a mmux_is_yes([ac_cv_func_crealf64x])               \
                    -a mmux_is_yes([ac_cv_func_cimagf64x])               \
                    -a mmux_is_yes([ac_cv_func_cabsf64x])                \
+                   -a mmux_is_yes([ac_cv_func_cargf64x])                \
                    -a mmux_is_yes([ac_cv_func_conjf64x])                \
                    -a mmux_is_yes([ac_cv_func_atan2f64x])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [1])
@@ -1889,6 +1897,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128X],
                    -a mmux_is_yes([ac_cv_func_crealf128x])              \
                    -a mmux_is_yes([ac_cv_func_cimagf128x])              \
                    -a mmux_is_yes([ac_cv_func_cabsf128x])               \
+                   -a mmux_is_yes([ac_cv_func_cargf128x])               \
                    -a mmux_is_yes([ac_cv_func_conjf128x])               \
                    -a mmux_is_yes([ac_cv_func_atan2f128x])],
                 [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [1])
