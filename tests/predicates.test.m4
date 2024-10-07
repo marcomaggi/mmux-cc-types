@@ -676,6 +676,9 @@ function predicates-is-nan-ulong-1.2 () {
 
 #### type variables: sllong
 
+if test -v mmux_sllong_SIZEOF
+then
+
 function predicates-is-zero-sllong-1.1 () {
     mmux_sllong_is_zero 0
 }
@@ -752,8 +755,13 @@ function predicates-is-nan-sllong-1.2 () {
     ! mmux_sllong_is_nan WW(mmux_sllong_MIN)
 }
 
+fi
+
 
 #### type variables: ullong
+
+if test -v mmux_ullong_SIZEOF
+then
 
 function predicates-is-zero-ullong-1.1 () {
     mmux_ullong_is_zero 0
@@ -830,6 +838,8 @@ function predicates-is-nan-ullong-1.1 () {
 function predicates-is-nan-ullong-1.2 () {
     ! mmux_ullong_is_nan WW(mmux_ullong_MIN)
 }
+
+fi
 
 
 #### type variables: sint8
@@ -2583,6 +2593,9 @@ function predicates-is-nan-double-1.7 () {
 
 #### type variables: ldouble
 
+if test -v mmux_ldouble_SIZEOF
+then
+
 function predicates-is-zero-ldouble-1.1 () {
     mmux_ldouble_is_zero 0
 }
@@ -2703,6 +2716,8 @@ function predicates-is-nan-ldouble-1.6 () {
 function predicates-is-nan-ldouble-1.7 () {
     mmux_ldouble_is_nan '-nan.0'
 }
+
+fi
 
 
 #### type variables: float32
@@ -3870,6 +3885,9 @@ fi
 
 #### type variables: complexf
 
+if test -v mmux_complexf_SIZEOF
+then
+
 function predicates-is-zero-complexf-1.1 () {
     mmux_complexf_is_zero '(0)+i*(0)'
 }
@@ -3925,8 +3943,13 @@ function predicates-is-nan-complexf-1.4 () {
     mmux_complexf_is_nan '(1.2)+i*(nan)'
 }
 
+fi
+
 
 #### type variables: complexd
+
+if test -v mmux_complexd_SIZEOF
+then
 
 function predicates-is-zero-complexd-1.1 () {
     mmux_complexd_is_zero '(0)+i*(0)'
@@ -3982,6 +4005,8 @@ function predicates-is-nan-complexd-1.3 () {
 function predicates-is-nan-complexd-1.4 () {
     mmux_complexd_is_nan '(1.2)+i*(nan)'
 }
+
+fi
 
 
 #### type variables: complexld

@@ -550,6 +550,9 @@ function arrays-ulong-1.3 () {
 
 #### array accessors and mutators: sllong
 
+if test -v mmux_sllong_SIZEOF
+then
+
 function arrays-sllong-1.1 () {
     declare PTR VALUE
 
@@ -602,8 +605,13 @@ function arrays-sllong-1.3 () {
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
 
+fi
+
 
 #### array accessors and mutators: ullong
+
+if test -v mmux_ullong_SIZEOF
+then
 
 function arrays-ullong-1.1 () {
     declare PTR VALUE
@@ -656,6 +664,8 @@ function arrays-ullong-1.3 () {
 	dotest-equal 456 mbfl_slot_qref(VALUES,1) &&
 	dotest-equal 789 mbfl_slot_qref(VALUES,2)
 }
+
+fi
 
 
 #### array accessors and mutators: ssize
@@ -1480,6 +1490,9 @@ fi
 
 #### array accessors and mutators: complexf
 
+if test -v mmux_complexf_SIZEOF
+then
+
 function arrays-complexf-1.1 () {
     declare PTR VALUE
 
@@ -1532,8 +1545,13 @@ function arrays-complexf-1.3 () {
 	dotest-equal '(0X1.2P+3)+i*(0X1.333334P+0)'      mbfl_slot_qref(VALUES,2)
 }
 
+fi
+
 
 #### array accessors and mutators: complexd
+
+if test -v mmux_complexd_SIZEOF
+then
 
 function arrays-complexd-1.1 () {
     declare PTR VALUE
@@ -1586,6 +1604,8 @@ function arrays-complexd-1.3 () {
 	dotest-equal '(0X1.6666666666666P+2)+i*(0X1.F333333333333P+2)' mbfl_slot_qref(VALUES,1) &&
 	dotest-equal '(0X1.2P+3)+i*(0X1.3333333333333P+0)'             mbfl_slot_qref(VALUES,2)
 }
+
+fi
 
 
 #### array accessors and mutators: complexld

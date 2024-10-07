@@ -72,6 +72,9 @@ declare -r A_conj='(1.200000000000000)+i*(-3.400000000000000)'
 
 #### type variables: complexf
 
+if test -v mmux_complexf_SIZEOF
+then
+
 function complex-complexf-make-rectangular-1.1 () {
     declare ROP REP=WW(A_rep) IMP=WW(A_imp)
     declare -r EXPECTED_ROP=WW(A)
@@ -196,8 +199,13 @@ function complex-complexf-conj-1.2 () {
     mmux_complexf_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
 
+fi
+
 
 #### type variables: complexd
+
+if test -v mmux_complexd_SIZEOF
+then
 
 function complex-complexd-make-rectangular-1.1 () {
     declare ROP REP=WW(A_rep) IMP=WW(A_imp)
@@ -322,6 +330,8 @@ function complex-complexd-conj-1.2 () {
     mmux_complexd_conj ROP WW(OP)
     mmux_complexd_equal_absmargin WW(EXPECTED_ROP) WW(ROP)
 }
+
+fi
 
 
 #### type variables: complexld

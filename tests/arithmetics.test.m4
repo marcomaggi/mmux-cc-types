@@ -4548,6 +4548,9 @@ fi
 
 #### type variables: complexf
 
+if test -v mmux_complexf_SIZEOF
+then
+
 function arithmetics-complexf-add-1.1.1 () {
     declare ROP OP='1'
     declare -r EXPECTED_ROP='1'
@@ -4777,8 +4780,13 @@ function arithmetics-complexf-inv-1.3 () {
     mmux_complexf_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
 
+fi
+
 
 #### type variables: complexd
+
+if test -v mmux_complexd_SIZEOF
+then
 
 function arithmetics-complexd-add-1.1.1 () {
     declare ROP OP='1'
@@ -5000,6 +5008,8 @@ function arithmetics-complexd-inv-1.3 () {
     mmux_complexd_inv ROP QQ(OP)
     mmux_complexd_equal_absmargin QQ(EXPECTED_ROP) QQ(ROP)
 }
+
+fi
 
 
 #### type variables: complexld

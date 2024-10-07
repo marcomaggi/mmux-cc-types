@@ -464,6 +464,9 @@ function comparison-ulong-lesser-equal-1.6  () {   mmux_ulong_lesser_equal '11' 
 
 #### type variables: sllong
 
+if test -v mmux_sllong_SIZEOF
+then
+
 function comparison-sllong-equal-1.1         () {   mmux_sllong_equal '10' ;}
 function comparison-sllong-equal-1.2         () {   mmux_sllong_equal '10' '10' ;}
 function comparison-sllong-equal-1.3         () {   mmux_sllong_equal '10' '10' '10' ;}
@@ -511,8 +514,13 @@ function comparison-sllong-lesser-equal-1.5  () { ! mmux_sllong_lesser_equal '33
 function comparison-sllong-lesser-equal-1.6  () {   mmux_sllong_lesser_equal '11' '11' ;}
 function comparison-sllong-lesser-equal-1.7  () {   mmux_sllong_lesser_equal '-33' '-22' '-22' ;}
 
+fi
+
 
 #### type variables: ullong
+
+if test -v mmux_ullong_SIZEOF
+then
 
 function comparison-ullong-equal-1.1         () {   mmux_ullong_equal '10' ;}
 function comparison-ullong-equal-1.2         () {   mmux_ullong_equal '10' '10' ;}
@@ -554,6 +562,8 @@ function comparison-ullong-lesser-equal-1.3  () {   mmux_ullong_lesser_equal '70
 function comparison-ullong-lesser-equal-1.4  () { ! mmux_ullong_lesser_equal '33' '11' ;}
 function comparison-ullong-lesser-equal-1.5  () { ! mmux_ullong_lesser_equal '33' '99' '55' ;}
 function comparison-ullong-lesser-equal-1.6  () {   mmux_ullong_lesser_equal '11' '11' ;}
+
+fi
 
 
 #### type variables: sint8
@@ -2770,6 +2780,9 @@ fi
 
 #### type variables: complexf
 
+if test -v mmux_complexf_SIZEOF
+then
+
 function comparison-complexf-equal-1.1         () {   mmux_complexf_equal '(1.2)+i*(3.4)' ;}
 function comparison-complexf-equal-1.2         () {   mmux_complexf_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
 function comparison-complexf-equal-1.3         () {   mmux_complexf_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
@@ -2846,8 +2859,13 @@ function comparison-complexf-equal-relepsilon-3.3 () {
     ! mmux_complexf_equal_relepsilon '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
 
+fi
+
 
 #### type variables: complexd
+
+if test -v mmux_complexd_SIZEOF
+then
 
 function comparison-complexd-equal-1.1         () {   mmux_complexd_equal '(1.2)+i*(3.4)' ;}
 function comparison-complexd-equal-1.2         () {   mmux_complexd_equal '(1.2)+i*(3.4)' '(1.2)+i*(3.4)' ;}
@@ -2889,6 +2907,8 @@ function comparison-complexd-equal-absmargin-3.3 () {
     declare -r ABSOLUTE_MARGIN_COMPLEXD='(0.1)+i*(0.1)'
     ! mmux_complexd_equal_absmargin '(1.2)+i*(3.4)' '(1.2)+i*(3.9)'
 }
+
+fi
 
 
 #### type variables: complexld

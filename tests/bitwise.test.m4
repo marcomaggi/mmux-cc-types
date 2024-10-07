@@ -1036,6 +1036,9 @@ function bitwise-ulong-shr-1.1 () {
 
 #### bitwise operations for type: sllong
 
+if test -v mmux_sllong_SIZEOF
+then
+
 function bitwise-sllong-and-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
@@ -1142,8 +1145,13 @@ function bitwise-sllong-shr-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+fi
+
 
 #### bitwise operations for type: ullong
+
+if test -v mmux_ullong_SIZEOF
+then
 
 function bitwise-ullong-and-1.1 () {
     declare ROP OP=1
@@ -1257,6 +1265,8 @@ function bitwise-ullong-shr-1.1 () {
     dotest-debug ROP=WW(ROP)
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
+
+fi
 
 
 #### bitwise operations for type: sint8

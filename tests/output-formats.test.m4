@@ -679,6 +679,9 @@ fi
 
 #### type variables: complexd
 
+if test -v mmux_complexd_SIZEOF
+then
+
 function output-formats-complexd-1.1 () {
     declare ROP OP='(123.4567890)+i*(789.0123456)' OLD_FORMAT
     declare -r EXPECTED_ROP='(123.4567890)+i*(789.0123456)'
@@ -717,6 +720,8 @@ function output-formats-complexd-1.3 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+
+fi
 
 
 #### let's go
