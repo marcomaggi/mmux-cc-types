@@ -28,8 +28,6 @@
 
 #include <mmux-bash-pointers-config.h>
 
-#if ((defined MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY) && (1 == MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY))
-
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -380,12 +378,5 @@ mmux_$3 (char const * restrict s_input_value, char ** restrict tailptr)
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal32]]],	[[[strfromd32]]],  [[[strtod32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal64]]],	[[[strfromd64]]],  [[[strtod64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
-
-
-/** --------------------------------------------------------------------
- ** Done.
- ** ----------------------------------------------------------------- */
-
-#endif /* ((defined MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY) && (1 == MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY)) */
 
 /* end of file */
