@@ -31,12 +31,12 @@ library.
 
     declare PTR VALUE
 
-    libc_malloc PTR 1024
+    mmux_libc_malloc PTR 1024
     {
-      pointer-set-sint $PTR 0 123
-      pointer-ref-sint VALUE $PTR 0
+      mmux_sint_pointer_set $PTR 0 123
+      mmux_sint_pointer_ref VALUE $PTR 0
     }
-    libc_free $PTR
+    mmux_libc_free $PTR
     $VALUE => 123
 
   The package targets POSIX systems.
