@@ -89,6 +89,8 @@ install-html-local:
 #
 
 EXTRA_DIST	+= src/mmux-bash-pointers-libdfp.c.m4
+
+if WANT_LIBDFP
 MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES	= src/mmux-bash-pointers-libdfp.c
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
@@ -100,6 +102,8 @@ libmmux_bash_pointers_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
 libmmux_bash_pointers_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
 libmmux_bash_pointers_libdfp_la_SOURCES	= src/mmux-bash-pointers-libdfp.c
+
+endif
 
 
 #### libraries
@@ -165,7 +169,9 @@ lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
+if WANT_LIBDFP
 libmmux_bash_pointers_la_LIBADD		= libmmux-bash-pointers-libdfp.la
+endif
 libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h			\
