@@ -37,8 +37,8 @@
 
 /* This definition  must match the  definition of "BUILTIN_ENABLED" in  Bash's header
    file "builtins.h". */
-#undef  MMUX_BUILTIN_ENABLED
-#define MMUX_BUILTIN_ENABLED			@MMUX_VALUEOF_BUILTIN_ENABLED@
+#undef  MMUX_BASH_BUILTIN_ENABLED
+#define MMUX_BASH_BUILTIN_ENABLED		@MMUX_VALUEOF_BUILTIN_ENABLED@
 
 #undef  MMUX_HAVE_CC_TYPE_SLLONG
 #define MMUX_HAVE_CC_TYPE_SLLONG		@MMUX_HAVE_CC_TYPE_SLLONG@
