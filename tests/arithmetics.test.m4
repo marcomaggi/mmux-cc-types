@@ -863,6 +863,9 @@ function arithmetics-slong-decr-1.1 () {
 
 #### type variables: sllong
 
+if test -v mmux_sllong_SIZEOF
+then
+
 function arithmetics-sllong-add-1.1 () {
     declare ROP OP=1
     declare -r EXPECTED_ROP='1'
@@ -1013,6 +1016,8 @@ function arithmetics-sllong-decr-1.1 () {
     mmux_sllong_decr ROP QQ(OP)
     dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
 }
+
+fi
 
 
 #### type variables: sint8

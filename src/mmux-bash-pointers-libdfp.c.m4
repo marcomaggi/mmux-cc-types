@@ -28,7 +28,7 @@
 
 #include <mmux-bash-pointers-config.h>
 
-#if ((defined MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY) && (1 == MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY))
+#if ((defined MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY) && (1 == MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY))
 
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
@@ -104,7 +104,7 @@ m4_dnl $1 - type stem
 m4_dnl $2 - atan2 function
 m4_dnl $3 - conditional code C preprocessor symbol
 m4_define([[[DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-__attribute__((__const__)) int
+int
 mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
@@ -386,6 +386,6 @@ DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod
  ** Done.
  ** ----------------------------------------------------------------- */
 
-#endif /* ((defined MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY) && (1 == MMUX_HAVE_DECIMAL_FLOATING_POINT_C_LIBRARY)) */
+#endif /* ((defined MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY) && (1 == MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY)) */
 
 /* end of file */

@@ -309,54 +309,47 @@ mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_uint
  ** Type functions prototypes.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_dnl $1 - type stem
+m4_define([[[DEFINE_TYPE_PROTOS_ALL_NUMBERS]]],[[[m4_dnl
 typedef mmux_$1_t mmux_type_unary_operation_$1_t   (mmux_$1_t X);
 typedef mmux_$1_t mmux_type_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef mmux_$1_t mmux_type_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-typedef bool           mmux_type_unary_predicate_$1_t   (mmux_$1_t X);
-typedef bool           mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
-typedef bool           mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+typedef bool      mmux_type_unary_predicate_$1_t   (mmux_$1_t X);
+typedef bool      mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef bool      mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
 mmux_bash_pointers_decl bool mmux_string_is_$1 (char const * s_value);
 mmux_bash_pointers_decl int mmux_$1_sizeof (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl mmux_$1_t mmux_$1_minimum (void)
-  __attribute__((__const__));
-mmux_bash_pointers_decl mmux_$1_t mmux_$1_maximum (void)
-  __attribute__((__const__));
-
 mmux_bash_pointers_decl int mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 mmux_bash_pointers_decl int mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_$1_sprint_size (mmux_$1_t v);
-mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value,
-									    char const * caller_name);
-]]])]]])
+mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * caller_name);
+]]])
 
-/* ------------------------------------------------------------------ */
+m4_dnl ----------------------------------------------------------------
 
-m4_define([[[DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-typedef mmux_$1_t mmux_type_unary_operation_$1_t   (mmux_$1_t X);
-typedef mmux_$1_t mmux_type_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
-typedef mmux_$1_t mmux_type_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-typedef bool           mmux_type_unary_predicate_$1_t   (mmux_$1_t X);
-typedef bool           mmux_type_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
-typedef bool           mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-
-mmux_bash_pointers_decl bool mmux_bash_pointers_string_$1_p (char const * s_arg);
-mmux_bash_pointers_decl int mmux_$1_sizeof (void)
+m4_dnl $1 - type stem
+m4_dnl $2 - C preprocessor symbol for conditional code
+m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
+DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
+mmux_bash_pointers_decl mmux_$1_t mmux_$1_minimum (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl int mmux_$1_parse  (mmux_$1_t * p, char const * s, char const * caller_name)
-  __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_$1_sprint (char * s, int l, mmux_$1_t v)
-  __attribute__((__nonnull__(1)));
-mmux_bash_pointers_decl int mmux_$1_sprint_size (mmux_$1_t v);
-mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value,
-									    char const * caller_name);
+mmux_bash_pointers_decl mmux_$1_t mmux_$1_maximum (void)
+  __attribute__((__const__));
 ]]])]]])
 
-/* ------------------------------------------------------------------ */
+m4_dnl ----------------------------------------------------------------
+
+m4_dnl $1 - type stem
+m4_dnl $2 - C preprocessor symbol for conditional code
+m4_define([[[DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
+]]])]]])
+
+m4_dnl ----------------------------------------------------------------
 
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[pointer]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[schar]]])
