@@ -28,13 +28,73 @@
 
 #### helpers
 
-m4_define([mmux_is_yes],["x$[]$1" = "xyes"])
-m4_define([mmux_is_no], ["x$[]$1" = "xno"])
+m4_define([mmux_is_yes],        ["x$[]$1" = "xyes"])
+m4_define([mmux_is_no],         ["x$[]$1" = "xno"])
+m4_define([mmux_is_one],        ["x$[]$1" = "x1"])
+m4_define([mmux_is_zero],       ["x$[]$1" = "x0"])
+m4_define([mmux_is_empty],      ["x$[]$1" = "x"])
 
-m4_define([mmux_is_one],  ["x$[]$1" = "x1"])
-m4_define([mmux_is_zero], ["x$[]$1" = "x0"])
+m4_define([mmux_test_variable_is_yes],   [AS_IF([test mmux_is_yes([$1])],[$2])])
+m4_define([mmux_test_variable_is_no],    [AS_IF([test mmux_is_no([$1])],[$2])])
+m4_define([mmux_test_variable_is_one],   [AS_IF([test mmux_is_one([$1])],[$2])])
+m4_define([mmux_test_variable_is_zero],  [AS_IF([test mmux_is_zero([$1])],[$2])])
+m4_define([mmux_test_variable_is_empty], [AS_IF([test mmux_is_empty([$1])],[$2])])
 
-m4_define([mmux_is_empty],    ["x$[]$1" = "x"])
+# Synopsis:
+#
+#       MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([VARNAME],[BODY])
+#
+# Parameters:
+#
+#       $1 - The name of the variable to save.
+#       $2 - The body to evaluate while the variable has been saved.
+#
+# Description:
+#
+#       Save the value of a shell variable while evaluating  a body of code.  Uses of this macro can
+#       be nested, but not for the same variable.
+#
+#             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
+#               [AS_VAR_APPEND([LIBS],[" -lmylib"])
+#                ...])
+#
+m4_define([MMUX_AUTOCONF_SAVE_SHELL_VARIABLE],[AS_VAR_SET([mmux_OLD_$1],[$[]$1])
+$2
+AS_VAR_SET([$1],[$[]mmux_OLD_$1])])
+
+# Synopsis:
+#
+#       MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([VARNAME],[DOCUMENTATION],[BODY])
+#
+# Parameters:
+#
+#       $1 - The name of the configuration variable.
+#       $2 - The documentation of the variable.
+#       $3 - The body to evaluate.
+#
+# Description:
+#
+#       Always define a configuration variable, by default  setting it to '0'.  Then evaluate a body
+#       of code,  which is  supposed to set  the variable to  '1' if  some condition is  true.  Then
+#       always define:
+#
+#       1. a C language preprocessor macro with the same name of the variable;
+#
+#       2. a GNU Autoconf substitution symbol with the same name of the variable.
+#
+# Usage example:
+#
+#       MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_SLLONG],
+#         [Always defined, set to 1 if MMUX support for type 'signed long long int' is enabled.],
+#         [...])
+#
+#       the name of the configuration variable is "MMUX_HAVE_CC_TYPE_SLLONG".
+#
+m4_define([MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE],
+  [AS_VAR_SET([$1],[0])
+   $3
+   AC_DEFINE_UNQUOTED([$1],[$$1],[$2])
+   AC_SUBST([$1])])
 
 
 # Synopsis
@@ -227,15 +287,15 @@ AC_DEFUN([MMUX_CHECK_TARGET_OS],
      [AS_VAR_SET([MMUX_ON_DARWIN],[1])
       AC_MSG_NOTICE([detected OS: DARWIN])])
 
-   AM_CONDITIONAL([ON_LINUX], [test "x$MMUX_ON_LINUX"  = x1])
-   AM_CONDITIONAL([ON_BSD],   [test "x$MMUX_ON_BSD"    = x1])
-   AM_CONDITIONAL([ON_CYGWIN],[test "x$MMUX_ON_CYGWIN" = x1])
-   AM_CONDITIONAL([ON_DARWIN],[test "x$MMUX_ON_DARWIN" = x1])
+   AM_CONDITIONAL([ON_LINUX], [mmux_test_variable_is_one([MMUX_ON_LINUX])])
+   AM_CONDITIONAL([ON_BSD],   [mmux_test_variable_is_one([MMUX_ON_BSD])])
+   AM_CONDITIONAL([ON_CYGWIN],[mmux_test_variable_is_one([MMUX_ON_CYGWIN])])
+   AM_CONDITIONAL([ON_DARWIN],[mmux_test_variable_is_one([MMUX_ON_DARWIN])])
 
-   AC_SUBST([MMUX_ON_LINUX], [$MMUX_ON_LINUX])
-   AC_SUBST([MMUX_ON_BSD],   [$MMUX_ON_BSD])
-   AC_SUBST([MMUX_ON_CYGWIN],[$MMUX_ON_CYGWIN])
-   AC_SUBST([MMUX_ON_DARWIN],[$MMUX_ON_DARWIN])
+   AC_SUBST([MMUX_ON_LINUX])
+   AC_SUBST([MMUX_ON_BSD])
+   AC_SUBST([MMUX_ON_CYGWIN])
+   AC_SUBST([MMUX_ON_DARWIN])
 
    AC_DEFINE_UNQUOTED([MMUX_ON_LINUX], [$MMUX_ON_LINUX],  [True if the underlying platform is GNU+Linux])
    AC_DEFINE_UNQUOTED([MMUX_ON_BSD],   [$MMUX_ON_BSD],    [True if the underlying platform is BSD])
@@ -261,9 +321,9 @@ AC_DEFUN([MMUX_CHECK_TARGET_OS],
 #       versioning" in the GNU Libtool Info documentation.
 #
 AC_DEFUN([MMUX_LIBTOOL_LIBRARY_VERSIONS],
-  [$1_VERSION_INTERFACE_CURRENT=$2
-   $1_VERSION_INTERFACE_REVISION=$3
-   $1_VERSION_INTERFACE_AGE=$4
+  [AS_VAR_SET([$1_VERSION_INTERFACE_CURRENT],[$2])
+   AS_VAR_SET([$1_VERSION_INTERFACE_REVISION],[$3])
+   AS_VAR_SET([$1_VERSION_INTERFACE_AGE],[$4])
    AC_DEFINE_UNQUOTED([$1_VERSION_INTERFACE_CURRENT],
      [$$1_VERSION_INTERFACE_CURRENT],
      [current interface number])
@@ -313,8 +373,8 @@ AC_DEFUN([MMUX_AUTOCONF_ENABLE_OPTION],
      [AS_HELP_STRING([--enable-$2],
         [$5 (default is '$3')])],
      [AS_CASE([$enableval],
-        [yes],[mmux_enable_$1=yes],
-        [no], [mmux_enable_$1=no],
+        [yes],[AS_VAR_SET([mmux_enable_$1],[yes])],
+        [no], [AS_VAR_SET([mmux_enable_$1],[no])],
         [AC_MSG_ERROR([bad value $enableval for --enable-$2])])],
      [AS_VAR_SET(mmux_enable_$1,$3)])
    AC_MSG_RESULT([$mmux_enable_$1])])
@@ -348,29 +408,6 @@ AC_DEFUN([MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION],
 
 # Synopsis:
 #
-#       MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([VARNAME],[BODY])
-#
-# Parameters:
-#
-#       $1 - The name of the variable to save.
-#       $2 - The body to evaluate while the variable has been saved.
-#
-# Description:
-#
-#       Save the value of a shell variable while evaluating  a body of code.  Uses of this macro can
-#       be nested, but not for the same variable.
-#
-#             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-#               [AS_VAR_APPEND([LIBS],[" -lmylib"])
-#                ...])
-#
-AC_DEFUN([MMUX_AUTOCONF_SAVE_SHELL_VARIABLE],[mmux_OLD_$1=$[]$1
-$2
-$1=$[]mmux_OLD_$1])
-
-
-# Synopsis:
-#
 #       MMUX_CHECK_PKG_CONFIG_MACROS
 #
 # Description:
@@ -380,7 +417,7 @@ $1=$[]mmux_OLD_$1])
 #
 AC_DEFUN([MMUX_CHECK_PKG_CONFIG_MACROS],
   [AC_MSG_CHECKING([availability of pkg-config m4 macros])
-   AS_IF([test m4_ifdef([PKG_CHECK_MODULES],[yes],[no]) == yes],
+   AS_IF([test m4_ifdef([PKG_CHECK_MODULES],[yes],[no]) = yes],
      [AC_MSG_RESULT([yes])],
      [AC_MSG_RESULT([no])
       AC_MSG_ERROR([pkg-config is required.  See pkg-config.freedesktop.org])])])
@@ -1114,18 +1151,16 @@ AC_DEFUN([MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_SLLONG],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([sllong])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_SLLONG])],
-         [AC_TYPE_LONG_LONG_INT
-          AC_MSG_CHECKING([for MMUX supporting 'signed long long int'])
-          AS_IF([test mmux_is_yes([ac_cv_type_long_long_int])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_SLLONG],[$MMUX_HAVE_CC_TYPE_SLLONG],
-     [Always defined, set to 1 if MMUX support for type 'signed long long int' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_SLLONG])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_SLLONG],
+     [Always defined, set to 1 if MMUX support for type 'signed long long int' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([sllong])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_SLLONG])],
+            [AC_TYPE_LONG_LONG_INT
+             AC_MSG_CHECKING([for MMUX supporting 'signed long long int'])
+             AS_IF([mmux_test_variable_is_yes([ac_cv_type_long_long_int],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_SLLONG],[1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])])
 
 
 # Synopsis:
@@ -1146,18 +1181,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_SLLONG],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_ULLONG],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_ULLONG],[0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([ullong])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_ULLONG])],
-         [AC_TYPE_UNSIGNED_LONG_LONG_INT
-          AC_MSG_CHECKING([for MMUX supporting 'unsigned long long int'])
-          AS_IF([test mmux_is_yes([ac_cv_type_unsigned_long_long_int])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_ULLONG],[1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_ULLONG],[$MMUX_HAVE_CC_TYPE_ULLONG],
-     [Always defined, set to 1 if MMUX support for type 'unsigned long long int' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_ULLONG])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_ULLONG],
+     [Always defined, set to 1 if MMUX support for type 'unsigned long long int' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([ullong])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_ULLONG])],
+            [AC_TYPE_UNSIGNED_LONG_LONG_INT
+             AC_MSG_CHECKING([for MMUX supporting 'unsigned long long int'])
+             AS_IF([test mmux_is_yes([ac_cv_type_unsigned_long_long_int])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_ULLONG],[1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1178,18 +1211,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_ULLONG],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_LDOUBLE],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_LDOUBLE],  [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([ldouble])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_LDOUBLE])],
-         [AC_TYPE_LONG_DOUBLE
-          AC_MSG_CHECKING([for MMUX supporting 'long double'])
-          AS_IF([test mmux_is_yes([ac_cv_type_long_double])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_LDOUBLE],  [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_LDOUBLE],[$MMUX_HAVE_CC_TYPE_LDOUBLE],
-     [Always defined, set to 1 if MMUX support for type 'long double' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_LDOUBLE])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_LDOUBLE],
+     [Always defined, set to 1 if MMUX support for type 'long double' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([ldouble])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_LDOUBLE])],
+            [AC_TYPE_LONG_DOUBLE
+             AC_MSG_CHECKING([for MMUX supporting 'long double'])
+             AS_IF([test mmux_is_yes([ac_cv_type_long_double])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_LDOUBLE], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1209,28 +1240,26 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_LDOUBLE],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float32])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_FLOAT32])],
-         [AC_CHECK_TYPE([_Float32])
-          AC_CHECK_FUNC([strtof32])
-          AC_CHECK_FUNC([strfromf32])
-          AC_CHECK_FUNC([fabsf32])
-          AC_CHECK_FUNC([fmaxf32])
-          AC_CHECK_FUNC([fminf32])
-          AC_MSG_CHECKING([for MMUX supporting '_Float32'])
-          AS_IF([test mmux_is_yes([ac_cv_type__Float32])       \
-                   -a mmux_is_yes([ac_cv_func_strtof32])       \
-                   -a mmux_is_yes([ac_cv_func_strfromf32])     \
-                   -a mmux_is_yes([ac_cv_func_fabsf32])        \
-                   -a mmux_is_yes([ac_cv_func_fmaxf32])        \
-                   -a mmux_is_yes([ac_cv_func_fminf32])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_FLOAT32], [$MMUX_HAVE_CC_TYPE_FLOAT32],
-     [Always defined, set to 1 if MMUX support for type '_Float32' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_FLOAT32])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_FLOAT32],
+     [Always defined, set to 1 if MMUX support for type '_Float32' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float32])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_FLOAT32])],
+            [AC_CHECK_TYPE([_Float32])
+             AC_CHECK_FUNC([strtof32])
+             AC_CHECK_FUNC([strfromf32])
+             AC_CHECK_FUNC([fabsf32])
+             AC_CHECK_FUNC([fmaxf32])
+             AC_CHECK_FUNC([fminf32])
+             AC_MSG_CHECKING([for MMUX supporting '_Float32'])
+             AS_IF([test mmux_is_yes([ac_cv_type__Float32])       \
+                      -a mmux_is_yes([ac_cv_func_strtof32])       \
+                      -a mmux_is_yes([ac_cv_func_strfromf32])     \
+                      -a mmux_is_yes([ac_cv_func_fabsf32])        \
+                      -a mmux_is_yes([ac_cv_func_fmaxf32])        \
+                      -a mmux_is_yes([ac_cv_func_fminf32])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1250,28 +1279,26 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float64])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_FLOAT64])],
-         [AC_CHECK_TYPE([_Float64])
-          AC_CHECK_FUNC([strtof64])
-          AC_CHECK_FUNC([strfromf64])
-          AC_CHECK_FUNC([fabsf64])
-          AC_CHECK_FUNC([fmaxf64])
-          AC_CHECK_FUNC([fminf64])
-          AC_MSG_CHECKING([for MMUX supporting '_Float64'])
-          AS_IF([test mmux_is_yes([ac_cv_type__Float64])       \
-                   -a mmux_is_yes([ac_cv_func_strtof64])       \
-                   -a mmux_is_yes([ac_cv_func_strfromf64])     \
-                   -a mmux_is_yes([ac_cv_func_fabsf64])        \
-                   -a mmux_is_yes([ac_cv_func_fmaxf64])        \
-                   -a mmux_is_yes([ac_cv_func_fminf64])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_FLOAT64], [$MMUX_HAVE_CC_TYPE_FLOAT64],
-     [Always defined, set to 1 if MMUX support for type '_Float64' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_FLOAT64])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_FLOAT64],
+     [Always defined, set to 1 if MMUX support for type '_Float64' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float64])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_FLOAT64])],
+            [AC_CHECK_TYPE([_Float64])
+             AC_CHECK_FUNC([strtof64])
+             AC_CHECK_FUNC([strfromf64])
+             AC_CHECK_FUNC([fabsf64])
+             AC_CHECK_FUNC([fmaxf64])
+             AC_CHECK_FUNC([fminf64])
+             AC_MSG_CHECKING([for MMUX supporting '_Float64'])
+             AS_IF([test mmux_is_yes([ac_cv_type__Float64])       \
+                      -a mmux_is_yes([ac_cv_func_strtof64])       \
+                      -a mmux_is_yes([ac_cv_func_strfromf64])     \
+                      -a mmux_is_yes([ac_cv_func_fabsf64])        \
+                      -a mmux_is_yes([ac_cv_func_fmaxf64])        \
+                      -a mmux_is_yes([ac_cv_func_fminf64])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1291,28 +1318,26 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float128])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_FLOAT128])],
-         [AC_CHECK_TYPE([_Float128])
-          AC_CHECK_FUNC([strtof128])
-          AC_CHECK_FUNC([strfromf128])
-          AC_CHECK_FUNC([fabsf128])
-          AC_CHECK_FUNC([fmaxf128])
-          AC_CHECK_FUNC([fminf128])
-          AC_MSG_CHECKING([for MMUX supporting '_Float128'])
-          AS_IF([test mmux_is_yes([ac_cv_type__Float128])       \
-                   -a mmux_is_yes([ac_cv_func_strtof128])       \
-                   -a mmux_is_yes([ac_cv_func_strfromf128])     \
-                   -a mmux_is_yes([ac_cv_func_fabsf128])        \
-                   -a mmux_is_yes([ac_cv_func_fmaxf128])        \
-                   -a mmux_is_yes([ac_cv_func_fminf128])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_FLOAT128], [$MMUX_HAVE_CC_TYPE_FLOAT128],
-     [Always defined, set to 1 if MMUX support for type '_Float128' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_FLOAT128])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_FLOAT128],
+     [Always defined, set to 1 if MMUX support for type '_Float128' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float128])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_FLOAT128])],
+            [AC_CHECK_TYPE([_Float128])
+             AC_CHECK_FUNC([strtof128])
+             AC_CHECK_FUNC([strfromf128])
+             AC_CHECK_FUNC([fabsf128])
+             AC_CHECK_FUNC([fmaxf128])
+             AC_CHECK_FUNC([fminf128])
+             AC_MSG_CHECKING([for MMUX supporting '_Float128'])
+             AS_IF([test mmux_is_yes([ac_cv_type__Float128])       \
+                      -a mmux_is_yes([ac_cv_func_strtof128])       \
+                      -a mmux_is_yes([ac_cv_func_strfromf128])     \
+                      -a mmux_is_yes([ac_cv_func_fabsf128])        \
+                      -a mmux_is_yes([ac_cv_func_fmaxf128])        \
+                      -a mmux_is_yes([ac_cv_func_fminf128])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1332,28 +1357,26 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32X],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32X], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float32x])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_FLOAT32X])],
-         [AC_CHECK_TYPE([_Float32x])
-          AC_CHECK_FUNC([strtof32x])
-          AC_CHECK_FUNC([strfromf32x])
-          AC_CHECK_FUNC([fabsf32x])
-          AC_CHECK_FUNC([fmaxf32x])
-          AC_CHECK_FUNC([fminf32x])
-          AC_MSG_CHECKING([for MMUX supporting '_Float32x'])
-          AS_IF([test mmux_is_yes([ac_cv_type__Float32x])       \
-                   -a mmux_is_yes([ac_cv_func_strtof32x])       \
-                   -a mmux_is_yes([ac_cv_func_strfromf32x])     \
-                   -a mmux_is_yes([ac_cv_func_fabsf32x])        \
-                   -a mmux_is_yes([ac_cv_func_fmaxf32x])        \
-                   -a mmux_is_yes([ac_cv_func_fminf32x])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32X], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_FLOAT32X], [$MMUX_HAVE_CC_TYPE_FLOAT32X],
-     [Always defined, set to 1 if MMUX support for type '_Float32x' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_FLOAT32X])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_FLOAT32X],
+     [Always defined, set to 1 if MMUX support for type '_Float32x' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float32x])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_FLOAT32X])],
+            [AC_CHECK_TYPE([_Float32x])
+             AC_CHECK_FUNC([strtof32x])
+             AC_CHECK_FUNC([strfromf32x])
+             AC_CHECK_FUNC([fabsf32x])
+             AC_CHECK_FUNC([fmaxf32x])
+             AC_CHECK_FUNC([fminf32x])
+             AC_MSG_CHECKING([for MMUX supporting '_Float32x'])
+             AS_IF([test mmux_is_yes([ac_cv_type__Float32x])       \
+                      -a mmux_is_yes([ac_cv_func_strtof32x])       \
+                      -a mmux_is_yes([ac_cv_func_strfromf32x])     \
+                      -a mmux_is_yes([ac_cv_func_fabsf32x])        \
+                      -a mmux_is_yes([ac_cv_func_fmaxf32x])        \
+                      -a mmux_is_yes([ac_cv_func_fminf32x])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32X], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1373,28 +1396,26 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32X],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64X],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64X], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float64x])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_FLOAT64X])],
-         [AC_CHECK_TYPE([_Float64x])
-          AC_CHECK_FUNC([strtof64x])
-          AC_CHECK_FUNC([strfromf64x])
-          AC_CHECK_FUNC([fabsf64x])
-          AC_CHECK_FUNC([fmaxf64x])
-          AC_CHECK_FUNC([fminf64x])
-          AC_MSG_CHECKING([for MMUX supporting '_Float64x'])
-          AS_IF([test mmux_is_yes([ac_cv_type__Float64x])       \
-                   -a mmux_is_yes([ac_cv_func_strtof64x])       \
-                   -a mmux_is_yes([ac_cv_func_strfromf64x])     \
-                   -a mmux_is_yes([ac_cv_func_fabsf64x])        \
-                   -a mmux_is_yes([ac_cv_func_fmaxf64x])        \
-                   -a mmux_is_yes([ac_cv_func_fminf64x])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64X], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_FLOAT64X], [$MMUX_HAVE_CC_TYPE_FLOAT64X],
-     [Always defined, set to 1 if MMUX support for type '_Float64x' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_FLOAT64X])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_FLOAT64X],
+     [Always defined, set to 1 if MMUX support for type '_Float64x' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float64x])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_FLOAT64X])],
+            [AC_CHECK_TYPE([_Float64x])
+             AC_CHECK_FUNC([strtof64x])
+             AC_CHECK_FUNC([strfromf64x])
+             AC_CHECK_FUNC([fabsf64x])
+             AC_CHECK_FUNC([fmaxf64x])
+             AC_CHECK_FUNC([fminf64x])
+             AC_MSG_CHECKING([for MMUX supporting '_Float64x'])
+             AS_IF([test mmux_is_yes([ac_cv_type__Float64x])       \
+                      -a mmux_is_yes([ac_cv_func_strtof64x])       \
+                      -a mmux_is_yes([ac_cv_func_strfromf64x])     \
+                      -a mmux_is_yes([ac_cv_func_fabsf64x])        \
+                      -a mmux_is_yes([ac_cv_func_fmaxf64x])        \
+                      -a mmux_is_yes([ac_cv_func_fminf64x])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64X], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1414,28 +1435,26 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64X],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128X],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128X], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float128x])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_FLOAT128X])],
-         [AC_CHECK_TYPE([_Float128x])
-          AC_CHECK_FUNC([strtof128x])
-          AC_CHECK_FUNC([strfromf128x])
-          AC_CHECK_FUNC([fabsf128x])
-          AC_CHECK_FUNC([fmaxf128x])
-          AC_CHECK_FUNC([fminf128x])
-          AC_MSG_CHECKING([for MMUX supporting '_Float128x'])
-          AS_IF([test mmux_is_yes([ac_cv_type__Float128x])       \
-                   -a mmux_is_yes([ac_cv_func_strtof128x])       \
-                   -a mmux_is_yes([ac_cv_func_strfromf128x])     \
-                   -a mmux_is_yes([ac_cv_func_fabsf128x])        \
-                   -a mmux_is_yes([ac_cv_func_fmaxf128x])        \
-                   -a mmux_is_yes([ac_cv_func_fminf128x])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128X], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_FLOAT128X], [$MMUX_HAVE_CC_TYPE_FLOAT128X],
-     [Always defined, set to 1 if MMUX support for type '_Float128x' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_FLOAT128X])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_FLOAT128X],
+     [Always defined, set to 1 if MMUX support for type '_Float128x' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([float128x])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_FLOAT128X])],
+            [AC_CHECK_TYPE([_Float128x])
+             AC_CHECK_FUNC([strtof128x])
+             AC_CHECK_FUNC([strfromf128x])
+             AC_CHECK_FUNC([fabsf128x])
+             AC_CHECK_FUNC([fmaxf128x])
+             AC_CHECK_FUNC([fminf128x])
+             AC_MSG_CHECKING([for MMUX supporting '_Float128x'])
+             AS_IF([test mmux_is_yes([ac_cv_type__Float128x])       \
+                      -a mmux_is_yes([ac_cv_func_strtof128x])       \
+                      -a mmux_is_yes([ac_cv_func_strfromf128x])     \
+                      -a mmux_is_yes([ac_cv_func_fabsf128x])        \
+                      -a mmux_is_yes([ac_cv_func_fmaxf128x])        \
+                      -a mmux_is_yes([ac_cv_func_fminf128x])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128X], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1448,26 +1467,29 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128X],
 #     for the _DecimalN  floating-point number types: _Decimal32,  _Decimal64, _Decimal128.
 #
 #     Support for these types could one future day  be available in the Standard C Library, like the
-#     GNU C Library.  This macro assumes that the external package "libdfp" is needed.
+#     GNU C Library.  This macro assumes that the  external package "libdfp" is needed, but it tries
+#     to shield the rest of the package from this knowledge.
 #
-#     If the facilities are available:
-#
-#     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY
-#               C language preprocessor symbol; always defined; set it is set to 1.
+#     Results:
 #
 #     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY
-#               GNU Autoconf substitution symbol; by default defined to expand to 0; expands to 1.
+#               C language preprocessor symbol; always defined; by default set to 0; set to 1 if the
+#               facilities are available.
+#
+#     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY
+#               GNU Autoconf substitution symbol; by default defined to expand to 0; expands to 1 if
+#               the facilities are available.
 #
 #     WANT_LIBDFP
-#               GNU Automake conditional symbol; enabled.
+#               GNU Automake conditional symbol; enabled when the facilities are available.
 #
 #     MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS
-#               GNU Autoconf shell variable; by default set to empty; set to the linker flags needed
-#               to include the library.
+#               GNU  Autoconf shell  variable; by  default  set to  empty; when  the facilities  are
+#               available: set to the linker flags needed to include the library.
 #
 #     MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS
-#               GNU Autoconf  shell variable;  by default set  to empty; set  to the  compiler flags
-#               needed to include the library.
+#               GNU  Autoconf shell  variable; by  default  set to  empty; when  the facilities  are
+#               available: set to the compiler flags needed to include the library.
 #
 AC_DEFUN([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY],
   [AS_VAR_SET([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],[0])
@@ -1476,18 +1498,18 @@ AC_DEFUN([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY],
    MMUX_AUTOCONF_ENABLE_OPTION([CC_DECIMAL_FLOATING_POINT_LIBRARY], [cc-decimal-floating-point], [yes],
      [whether to enable MMUX support for the C language decimal floating-point library],
      [enables MMUX support for the C language decimal floating-point library])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+   AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
      [PKG_CHECK_MODULES([LIBDFP],[libdfp],,[AC_MSG_WARN([package libdfp not found])])
       AS_IF([test ! mmux_is_empty([pkg_cv_LIBDFP_LIBS])],
             [AS_VAR_SET([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],[1])],
             [])])
    AC_MSG_CHECKING([for MMUX supporting decimal floating-point library])
-   AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+   AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
          [AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS],   [$LIBDFP_LIBS])
           AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS], [$LIBDFP_CFLAGS])
           AC_MSG_RESULT([yes])],
          [AC_MSG_RESULT([no])])
-   AM_CONDITIONAL([WANT_LIBDFP], [test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])])
+   AM_CONDITIONAL([WANT_LIBDFP],[mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])])
    AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],[$MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],
      [Always defined, set to 1 if MMUX support for '_DecimalN' floating-point numbers is available.])
    AC_SUBST([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])])
@@ -1511,34 +1533,33 @@ AC_DEFUN([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
   [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL32], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal32])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL32]) -a \
-               mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AC_CHECK_TYPE([_Decimal32])
-          MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
-            [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
-             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-               [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
-                AC_CHECK_FUNC([strtod32])
-                AC_CHECK_FUNC([strfromd32])
-                AC_CHECK_FUNC([fabsd32])
-                AC_CHECK_FUNC([fmaxd32])
-                AC_CHECK_FUNC([fmind32])])])
-          AS_IF([test mmux_is_yes([ac_cv_type__Decimal32])      \
-                   -a mmux_is_yes([ac_cv_func_strtod32])        \
-                   -a mmux_is_yes([ac_cv_func_strfromd32])      \
-                   -a mmux_is_yes([ac_cv_func_fabsd32])         \
-                   -a mmux_is_yes([ac_cv_func_fmaxd32])         \
-                   -a mmux_is_yes([ac_cv_func_fmind32])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL32], [1])])])
-   AC_MSG_CHECKING([for MMUX supporting '_Decimal32'])
-   AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_DECIMAL32])],
-         [AC_MSG_RESULT([yes])],
-         [AC_MSG_RESULT([no])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_DECIMAL32], [$MMUX_HAVE_CC_TYPE_DECIMAL32],
-     [Always defined, set to 1 if MMUX support for type '_Decimal32' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_DECIMAL32])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_DECIMAL32],
+     [Always defined, set to 1 if MMUX support for type '_Decimal32' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal32])
+      AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL32]) -a \
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+            [AC_CHECK_TYPE([_Decimal32])
+             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
+               [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
+                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
+                  [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
+                   AC_CHECK_FUNC([strtod32])
+                   AC_CHECK_FUNC([strfromd32])
+                   AC_CHECK_FUNC([fabsd32])
+                   AC_CHECK_FUNC([fmaxd32])
+                   AC_CHECK_FUNC([fmind32])])])
+             AS_IF([test mmux_is_yes([ac_cv_type__Decimal32])      \
+                      -a mmux_is_yes([ac_cv_func_strtod32])        \
+                      -a mmux_is_yes([ac_cv_func_strfromd32])      \
+                      -a mmux_is_yes([ac_cv_func_fabsd32])         \
+                      -a mmux_is_yes([ac_cv_func_fmaxd32])         \
+                      -a mmux_is_yes([ac_cv_func_fmind32])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL32], [1])])])
+      AC_MSG_CHECKING([for MMUX supporting '_Decimal32'])
+      AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_DECIMAL32])],
+            [AC_MSG_RESULT([yes])],
+            [AC_MSG_RESULT([no])])
+            ])])
 
 
 # Synopsis:
@@ -1559,34 +1580,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
   [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL64], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal64])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL64]) -a \
-               mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AC_CHECK_TYPE([_Decimal64])
-          MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
-            [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
-             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-               [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
-                AC_CHECK_FUNC([strtod64])
-                AC_CHECK_FUNC([strfromd64])
-                AC_CHECK_FUNC([fabsd64])
-                AC_CHECK_FUNC([fmaxd64])
-                AC_CHECK_FUNC([fmind64])])])
-          AS_IF([test mmux_is_yes([ac_cv_type__Decimal64])      \
-                   -a mmux_is_yes([ac_cv_func_strtod64])        \
-                   -a mmux_is_yes([ac_cv_func_strfromd64])      \
-                   -a mmux_is_yes([ac_cv_func_fabsd64])         \
-                   -a mmux_is_yes([ac_cv_func_fmaxd64])         \
-                   -a mmux_is_yes([ac_cv_func_fmind64])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL64], [1])])])
-   AC_MSG_CHECKING([for MMUX supporting '_Decimal64'])
-   AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_DECIMAL64])],
-         [AC_MSG_RESULT([yes])],
-         [AC_MSG_RESULT([no])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_DECIMAL64], [$MMUX_HAVE_CC_TYPE_DECIMAL64],
-     [Always defined, set to 1 if MMUX support for type '_Decimal64' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_DECIMAL64])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_DECIMAL64],
+     [Always defined, set to 1 if MMUX support for type '_Decimal64' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal64])
+      AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL64]) -a \
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+            [AC_CHECK_TYPE([_Decimal64])
+             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
+               [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
+                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
+                  [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
+                   AC_CHECK_FUNC([strtod64])
+                   AC_CHECK_FUNC([strfromd64])
+                   AC_CHECK_FUNC([fabsd64])
+                   AC_CHECK_FUNC([fmaxd64])
+                   AC_CHECK_FUNC([fmind64])])])
+             AS_IF([test mmux_is_yes([ac_cv_type__Decimal64])      \
+                      -a mmux_is_yes([ac_cv_func_strtod64])        \
+                      -a mmux_is_yes([ac_cv_func_strfromd64])      \
+                      -a mmux_is_yes([ac_cv_func_fabsd64])         \
+                      -a mmux_is_yes([ac_cv_func_fmaxd64])         \
+                      -a mmux_is_yes([ac_cv_func_fmind64])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL64], [1])])])
+      AC_MSG_CHECKING([for MMUX supporting '_Decimal64'])
+      AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_DECIMAL64])],
+            [AC_MSG_RESULT([yes])],
+            [AC_MSG_RESULT([no])])
+            ])])
 
 
 # Synopsis:
@@ -1607,34 +1627,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL128],
   [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL128], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal128])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL128]) -a \
-               mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AC_CHECK_TYPE([_Decimal128])
-          MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
-            [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
-             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-               [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
-                AC_CHECK_FUNC([strtod128])
-                AC_CHECK_FUNC([strfromd128])
-                AC_CHECK_FUNC([fabsd128])
-                AC_CHECK_FUNC([fmaxd128])
-                AC_CHECK_FUNC([fmind128])])])
-          AS_IF([test mmux_is_yes([ac_cv_type__Decimal128])      \
-                   -a mmux_is_yes([ac_cv_func_strtod128])        \
-                   -a mmux_is_yes([ac_cv_func_strfromd128])      \
-                   -a mmux_is_yes([ac_cv_func_fabsd128])         \
-                   -a mmux_is_yes([ac_cv_func_fmaxd128])         \
-                   -a mmux_is_yes([ac_cv_func_fmind128])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL128], [1])])])
-   AC_MSG_CHECKING([for MMUX supporting '_Decimal128'])
-   AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_DECIMAL128])],
-         [AC_MSG_RESULT([yes])],
-         [AC_MSG_RESULT([no])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_DECIMAL128], [$MMUX_HAVE_CC_TYPE_DECIMAL128],
-     [Always defined, set to 1 if MMUX support for type '_Decimal128' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_DECIMAL128])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_DECIMAL128],
+     [Always defined, set to 1 if MMUX support for type '_Decimal128' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal128])
+      AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL128]) -a \
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+            [AC_CHECK_TYPE([_Decimal128])
+             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
+               [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
+                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
+                  [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
+                   AC_CHECK_FUNC([strtod128])
+                   AC_CHECK_FUNC([strfromd128])
+                   AC_CHECK_FUNC([fabsd128])
+                   AC_CHECK_FUNC([fmaxd128])
+                   AC_CHECK_FUNC([fmind128])])])
+             AS_IF([test mmux_is_yes([ac_cv_type__Decimal128])      \
+                      -a mmux_is_yes([ac_cv_func_strtod128])        \
+                      -a mmux_is_yes([ac_cv_func_strfromd128])      \
+                      -a mmux_is_yes([ac_cv_func_fabsd128])         \
+                      -a mmux_is_yes([ac_cv_func_fmaxd128])         \
+                      -a mmux_is_yes([ac_cv_func_fmind128])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL128], [1])])])
+      AC_MSG_CHECKING([for MMUX supporting '_Decimal128'])
+      AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_DECIMAL128])],
+            [AC_MSG_RESULT([yes])],
+            [AC_MSG_RESULT([no])])
+            ])])
 
 
 # Synopsis:
@@ -1655,31 +1674,29 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL128],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF])],
-         [AC_CHECK_HEADER([complex.h])
-          AC_CHECK_TYPE([float complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-          AC_CHECK_DECL([CMPLXF],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-          AC_CHECK_FUNC([crealf])
-          AC_CHECK_FUNC([cimagf])
-          AC_CHECK_FUNC([cabsf])
-          AC_CHECK_FUNC([cargf])
-          AC_CHECK_FUNC([conjf])
-          AC_MSG_CHECKING([for MMUX supporting 'float complex'])
-          AS_IF([test mmux_is_yes([ac_cv_type_float_complex])          \
-                   -a mmux_is_yes([ac_cv_have_decl_CMPLXF])            \
-                   -a mmux_is_yes([ac_cv_func_crealf])                 \
-                   -a mmux_is_yes([ac_cv_func_cimagf])                 \
-                   -a mmux_is_yes([ac_cv_func_cabsf])                  \
-                   -a mmux_is_yes([ac_cv_func_cargf])                  \
-                   -a mmux_is_yes([ac_cv_func_conjf])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF],[$MMUX_HAVE_CC_TYPE_COMPLEXF],
-     [Always defined, set to 1 if MMUX support for type 'float complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF],
+     [Always defined, set to 1 if MMUX support for type 'float complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF])],
+            [AC_CHECK_HEADER([complex.h])
+             AC_CHECK_TYPE([float complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+             AC_CHECK_DECL([CMPLXF],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+             AC_CHECK_FUNC([crealf])
+             AC_CHECK_FUNC([cimagf])
+             AC_CHECK_FUNC([cabsf])
+             AC_CHECK_FUNC([cargf])
+             AC_CHECK_FUNC([conjf])
+             AC_MSG_CHECKING([for MMUX supporting 'float complex'])
+             AS_IF([test mmux_is_yes([ac_cv_type_float_complex])          \
+                      -a mmux_is_yes([ac_cv_have_decl_CMPLXF])            \
+                      -a mmux_is_yes([ac_cv_func_crealf])                 \
+                      -a mmux_is_yes([ac_cv_func_cimagf])                 \
+                      -a mmux_is_yes([ac_cv_func_cabsf])                  \
+                      -a mmux_is_yes([ac_cv_func_cargf])                  \
+                      -a mmux_is_yes([ac_cv_func_conjf])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1700,31 +1717,29 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD],
-  [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD])],
-         [AC_CHECK_HEADER([complex.h])
-          AC_CHECK_TYPE([double complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-          AC_CHECK_DECL([CMPLX],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-          AC_CHECK_FUNC([creal])
-          AC_CHECK_FUNC([cimag])
-          AC_CHECK_FUNC([cabs])
-          AC_CHECK_FUNC([carg])
-          AC_CHECK_FUNC([conj])
-          AC_MSG_CHECKING([for MMUX supporting 'double complex'])
-          AS_IF([test mmux_is_yes([ac_cv_type_double_complex])         \
-                   -a mmux_is_yes([ac_cv_have_decl_CMPLX])             \
-                   -a mmux_is_yes([ac_cv_func_creal])                  \
-                   -a mmux_is_yes([ac_cv_func_cimag])                  \
-                   -a mmux_is_yes([ac_cv_func_cabs])                   \
-                   -a mmux_is_yes([ac_cv_func_carg])                   \
-                   -a mmux_is_yes([ac_cv_func_conj])],
-                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD], [1])
-                 AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXD],[$MMUX_HAVE_CC_TYPE_COMPLEXD],
-     [Always defined, set to 1 if MMUX support for type 'double complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXD])])
+  [MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD],
+     [Always defined, set to 1 if MMUX support for type 'double complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXD])],
+            [AC_CHECK_HEADER([complex.h])
+             AC_CHECK_TYPE([double complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+             AC_CHECK_DECL([CMPLX],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+             AC_CHECK_FUNC([creal])
+             AC_CHECK_FUNC([cimag])
+             AC_CHECK_FUNC([cabs])
+             AC_CHECK_FUNC([carg])
+             AC_CHECK_FUNC([conj])
+             AC_MSG_CHECKING([for MMUX supporting 'double complex'])
+             AS_IF([test mmux_is_yes([ac_cv_type_double_complex])         \
+                      -a mmux_is_yes([ac_cv_have_decl_CMPLX])             \
+                      -a mmux_is_yes([ac_cv_func_creal])                  \
+                      -a mmux_is_yes([ac_cv_func_cimag])                  \
+                      -a mmux_is_yes([ac_cv_func_cabs])                   \
+                      -a mmux_is_yes([ac_cv_func_carg])                   \
+                      -a mmux_is_yes([ac_cv_func_conj])],
+                   [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD], [1])
+                    AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1746,35 +1761,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_LDOUBLE])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexld])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXLD])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_LDOUBLE])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([long double complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXL],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([creall])
-                 AC_CHECK_FUNC([cimagl])
-                 AC_CHECK_FUNC([cabsl])
-                 AC_CHECK_FUNC([cargl])
-                 AC_CHECK_FUNC([conjl])
-                 AC_MSG_CHECKING([for MMUX supporting 'long double complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type_long_double_complex])     \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXL])             \
-                          -a mmux_is_yes([ac_cv_func_creall])                  \
-                          -a mmux_is_yes([ac_cv_func_cimagl])                  \
-                          -a mmux_is_yes([ac_cv_func_cabsl])                   \
-                          -a mmux_is_yes([ac_cv_func_cargl])                   \
-                          -a mmux_is_yes([ac_cv_func_conjl])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for long double complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXLD],[$MMUX_HAVE_CC_TYPE_COMPLEXLD],
-     [Always defined, set to 1 if MMUX support for type 'long double complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXLD])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXLD],
+     [Always defined, set to 1 if MMUX support for type 'long double complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexld])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXLD])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_LDOUBLE])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([long double complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXL],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([creall])
+                    AC_CHECK_FUNC([cimagl])
+                    AC_CHECK_FUNC([cabsl])
+                    AC_CHECK_FUNC([cargl])
+                    AC_CHECK_FUNC([conjl])
+                    AC_MSG_CHECKING([for MMUX supporting 'long double complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type_long_double_complex])     \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXL])             \
+                             -a mmux_is_yes([ac_cv_func_creall])                  \
+                             -a mmux_is_yes([ac_cv_func_cimagl])                  \
+                             -a mmux_is_yes([ac_cv_func_cabsl])                   \
+                             -a mmux_is_yes([ac_cv_func_cargl])                   \
+                             -a mmux_is_yes([ac_cv_func_conjl])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for long double complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1796,35 +1809,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT32])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf32])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF32])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_FLOAT32])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([_Float32 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXF32],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([crealf32])
-                 AC_CHECK_FUNC([cimagf32])
-                 AC_CHECK_FUNC([cabsf32])
-                 AC_CHECK_FUNC([cargf32])
-                 AC_CHECK_FUNC([conjf32])
-                 AC_MSG_CHECKING([for MMUX supporting '_Float32 complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type__Float32_complex])        \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXF32])           \
-                          -a mmux_is_yes([ac_cv_func_crealf32])                \
-                          -a mmux_is_yes([ac_cv_func_cimagf32])                \
-                          -a mmux_is_yes([ac_cv_func_cabsf32])                 \
-                          -a mmux_is_yes([ac_cv_func_cargf32])                 \
-                          -a mmux_is_yes([ac_cv_func_conjf32])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for _Float32 complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF32],[$MMUX_HAVE_CC_TYPE_COMPLEXF32],
-     [Always defined, set to 1 if MMUX support for type '_Float32 complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF32])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF32],
+     [Always defined, set to 1 if MMUX support for type '_Float32 complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf32])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF32])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_FLOAT32])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([_Float32 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXF32],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([crealf32])
+                    AC_CHECK_FUNC([cimagf32])
+                    AC_CHECK_FUNC([cabsf32])
+                    AC_CHECK_FUNC([cargf32])
+                    AC_CHECK_FUNC([conjf32])
+                    AC_MSG_CHECKING([for MMUX supporting '_Float32 complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type__Float32_complex])        \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXF32])           \
+                             -a mmux_is_yes([ac_cv_func_crealf32])                \
+                             -a mmux_is_yes([ac_cv_func_cimagf32])                \
+                             -a mmux_is_yes([ac_cv_func_cabsf32])                 \
+                             -a mmux_is_yes([ac_cv_func_cargf32])                 \
+                             -a mmux_is_yes([ac_cv_func_conjf32])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for _Float32 complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1846,35 +1857,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT64])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf64])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF64])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_FLOAT64])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([_Float64 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXF64],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([crealf64])
-                 AC_CHECK_FUNC([cimagf64])
-                 AC_CHECK_FUNC([cabsf64])
-                 AC_CHECK_FUNC([cargf64])
-                 AC_CHECK_FUNC([conjf64])
-                 AC_MSG_CHECKING([for MMUX supporting '_Float64 complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type__Float64_complex])        \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXF64])           \
-                          -a mmux_is_yes([ac_cv_func_crealf64])                \
-                          -a mmux_is_yes([ac_cv_func_cimagf64])                \
-                          -a mmux_is_yes([ac_cv_func_cabsf64])                 \
-                          -a mmux_is_yes([ac_cv_func_cargf64])                 \
-                          -a mmux_is_yes([ac_cv_func_conjf64])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for _Float64 complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF64],[$MMUX_HAVE_CC_TYPE_COMPLEXF64],
-     [Always defined, set to 1 if MMUX support for type '_Float64 complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF64])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF64],
+     [Always defined, set to 1 if MMUX support for type '_Float64 complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf64])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF64])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_FLOAT64])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([_Float64 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXF64],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([crealf64])
+                    AC_CHECK_FUNC([cimagf64])
+                    AC_CHECK_FUNC([cabsf64])
+                    AC_CHECK_FUNC([cargf64])
+                    AC_CHECK_FUNC([conjf64])
+                    AC_MSG_CHECKING([for MMUX supporting '_Float64 complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type__Float64_complex])        \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXF64])           \
+                             -a mmux_is_yes([ac_cv_func_crealf64])                \
+                             -a mmux_is_yes([ac_cv_func_cimagf64])                \
+                             -a mmux_is_yes([ac_cv_func_cabsf64])                 \
+                             -a mmux_is_yes([ac_cv_func_cargf64])                 \
+                             -a mmux_is_yes([ac_cv_func_conjf64])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for _Float64 complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1896,35 +1905,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT128])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf128])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF128])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_FLOAT128])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([_Float128 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXF128],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([crealf128])
-                 AC_CHECK_FUNC([cimagf128])
-                 AC_CHECK_FUNC([cabsf128])
-                 AC_CHECK_FUNC([cargf128])
-                 AC_CHECK_FUNC([conjf128])
-                 AC_MSG_CHECKING([for MMUX supporting '_Float128 complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type__Float128_complex])        \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXF128])           \
-                          -a mmux_is_yes([ac_cv_func_crealf128])                \
-                          -a mmux_is_yes([ac_cv_func_cimagf128])                \
-                          -a mmux_is_yes([ac_cv_func_cabsf128])                 \
-                          -a mmux_is_yes([ac_cv_func_cargf128])                 \
-                          -a mmux_is_yes([ac_cv_func_conjf128])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for _Float128 complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF128],[$MMUX_HAVE_CC_TYPE_COMPLEXF128],
-     [Always defined, set to 1 if MMUX support for type '_Float128 complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF128])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF128],
+     [Always defined, set to 1 if MMUX support for type '_Float128 complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf128])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF128])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_FLOAT128])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([_Float128 complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXF128],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([crealf128])
+                    AC_CHECK_FUNC([cimagf128])
+                    AC_CHECK_FUNC([cabsf128])
+                    AC_CHECK_FUNC([cargf128])
+                    AC_CHECK_FUNC([conjf128])
+                    AC_MSG_CHECKING([for MMUX supporting '_Float128 complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type__Float128_complex])        \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXF128])           \
+                             -a mmux_is_yes([ac_cv_func_crealf128])                \
+                             -a mmux_is_yes([ac_cv_func_cimagf128])                \
+                             -a mmux_is_yes([ac_cv_func_cabsf128])                 \
+                             -a mmux_is_yes([ac_cv_func_cargf128])                 \
+                             -a mmux_is_yes([ac_cv_func_conjf128])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for _Float128 complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1946,35 +1953,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT32X])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf32x])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF32X])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_FLOAT32X])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([_Float32x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXF32X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([crealf32x])
-                 AC_CHECK_FUNC([cimagf32x])
-                 AC_CHECK_FUNC([cabsf32x])
-                 AC_CHECK_FUNC([cargf32x])
-                 AC_CHECK_FUNC([conjf32x])
-                 AC_MSG_CHECKING([for MMUX supporting '_Float32x complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type__Float32x_complex])        \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXF32X])           \
-                          -a mmux_is_yes([ac_cv_func_crealf32x])                \
-                          -a mmux_is_yes([ac_cv_func_cimagf32x])                \
-                          -a mmux_is_yes([ac_cv_func_cabsf32x])                 \
-                          -a mmux_is_yes([ac_cv_func_cargf32x])                 \
-                          -a mmux_is_yes([ac_cv_func_conjf32x])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for _Float32x complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF32X],[$MMUX_HAVE_CC_TYPE_COMPLEXF32X],
-     [Always defined, set to 1 if MMUX support for type '_Float32x complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF32X])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF32X],
+     [Always defined, set to 1 if MMUX support for type '_Float32x complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf32x])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF32X])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_FLOAT32X])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([_Float32x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXF32X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([crealf32x])
+                    AC_CHECK_FUNC([cimagf32x])
+                    AC_CHECK_FUNC([cabsf32x])
+                    AC_CHECK_FUNC([cargf32x])
+                    AC_CHECK_FUNC([conjf32x])
+                    AC_MSG_CHECKING([for MMUX supporting '_Float32x complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type__Float32x_complex])        \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXF32X])           \
+                             -a mmux_is_yes([ac_cv_func_crealf32x])                \
+                             -a mmux_is_yes([ac_cv_func_cimagf32x])                \
+                             -a mmux_is_yes([ac_cv_func_cabsf32x])                 \
+                             -a mmux_is_yes([ac_cv_func_cargf32x])                 \
+                             -a mmux_is_yes([ac_cv_func_conjf32x])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for _Float32x complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -1996,35 +2001,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT64X])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf64x])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF64X])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_FLOAT64X])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([_Float64x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXF64X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([crealf64x])
-                 AC_CHECK_FUNC([cimagf64x])
-                 AC_CHECK_FUNC([cabsf64x])
-                 AC_CHECK_FUNC([cargf64x])
-                 AC_CHECK_FUNC([conjf64x])
-                 AC_MSG_CHECKING([for MMUX supporting '_Float64x complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type__Float64x_complex])        \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXF64X])           \
-                          -a mmux_is_yes([ac_cv_func_crealf64x])                \
-                          -a mmux_is_yes([ac_cv_func_cimagf64x])                \
-                          -a mmux_is_yes([ac_cv_func_cabsf64x])                 \
-                          -a mmux_is_yes([ac_cv_func_cargf64x])                 \
-                          -a mmux_is_yes([ac_cv_func_conjf64x])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for _Float64x complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF64X],[$MMUX_HAVE_CC_TYPE_COMPLEXF64X],
-     [Always defined, set to 1 if MMUX support for type '_Float64x complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF64X])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF64X],
+     [Always defined, set to 1 if MMUX support for type '_Float64x complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf64x])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF64X])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_FLOAT64X])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([_Float64x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXF64X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([crealf64x])
+                    AC_CHECK_FUNC([cimagf64x])
+                    AC_CHECK_FUNC([cabsf64x])
+                    AC_CHECK_FUNC([cargf64x])
+                    AC_CHECK_FUNC([conjf64x])
+                    AC_MSG_CHECKING([for MMUX supporting '_Float64x complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type__Float64x_complex])        \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXF64X])           \
+                             -a mmux_is_yes([ac_cv_func_crealf64x])                \
+                             -a mmux_is_yes([ac_cv_func_cimagf64x])                \
+                             -a mmux_is_yes([ac_cv_func_cabsf64x])                 \
+                             -a mmux_is_yes([ac_cv_func_cargf64x])                 \
+                             -a mmux_is_yes([ac_cv_func_conjf64x])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for _Float64x complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -2046,35 +2049,33 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128X],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_FLOAT128X])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf128x])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXF128X])],
-         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_FLOAT128X])],
-                [AC_CHECK_HEADER([complex.h])
-                 AC_CHECK_TYPE([_Float128x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_DECL([CMPLXF128X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
-                 AC_CHECK_FUNC([crealf128x])
-                 AC_CHECK_FUNC([cimagf128x])
-                 AC_CHECK_FUNC([cabsf128x])
-                 AC_CHECK_FUNC([cargf128x])
-                 AC_CHECK_FUNC([conjf128x])
-                 AC_MSG_CHECKING([for MMUX supporting '_Float128x complex'])
-                 AS_IF([test mmux_is_yes([ac_cv_type__Float128x_complex])        \
-                          -a mmux_is_yes([ac_cv_have_decl_CMPLXF128X])           \
-                          -a mmux_is_yes([ac_cv_func_crealf128x])                \
-                          -a mmux_is_yes([ac_cv_func_cimagf128x])                \
-                          -a mmux_is_yes([ac_cv_func_cabsf128x])                 \
-                          -a mmux_is_yes([ac_cv_func_cargf128x])                 \
-                          -a mmux_is_yes([ac_cv_func_conjf128x])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [1])
-                        AC_MSG_RESULT([yes])],
-                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [0])
-                        AC_MSG_RESULT([no])])],
-                [AC_MSG_CHECKING([for _Float128x complex])
-                 AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXF128X],[$MMUX_HAVE_CC_TYPE_COMPLEXF128X],
-     [Always defined, set to 1 if MMUX support for type '_Float128x complex' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXF128X])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXF128X],
+     [Always defined, set to 1 if MMUX support for type '_Float128x complex' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexf128x])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_TYPE_COMPLEXF128X])],
+            [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_FLOAT128X])],
+                   [AC_CHECK_HEADER([complex.h])
+                    AC_CHECK_TYPE([_Float128x complex],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_DECL([CMPLXF128X],[],[],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])
+                    AC_CHECK_FUNC([crealf128x])
+                    AC_CHECK_FUNC([cimagf128x])
+                    AC_CHECK_FUNC([cabsf128x])
+                    AC_CHECK_FUNC([cargf128x])
+                    AC_CHECK_FUNC([conjf128x])
+                    AC_MSG_CHECKING([for MMUX supporting '_Float128x complex'])
+                    AS_IF([test mmux_is_yes([ac_cv_type__Float128x_complex])        \
+                             -a mmux_is_yes([ac_cv_have_decl_CMPLXF128X])           \
+                             -a mmux_is_yes([ac_cv_func_crealf128x])                \
+                             -a mmux_is_yes([ac_cv_func_cimagf128x])                \
+                             -a mmux_is_yes([ac_cv_func_cabsf128x])                 \
+                             -a mmux_is_yes([ac_cv_func_cargf128x])                 \
+                             -a mmux_is_yes([ac_cv_func_conjf128x])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [1])
+                           AC_MSG_RESULT([yes])],
+                          [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [0])
+                           AC_MSG_RESULT([no])])],
+                   [AC_MSG_CHECKING([for _Float128x complex])
+                    AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -2095,18 +2096,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128X],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD32],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_DECIMAL32])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD32], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd32])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD32]) -a \
-               mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD32], [$MMUX_HAVE_CC_TYPE_DECIMAL32])
-          AC_MSG_CHECKING([for MMUX supporting 'complexd32'])
-          AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD32])],
-                [AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXD32], [$MMUX_HAVE_CC_TYPE_COMPLEXD32],
-     [Always defined, set to 1 if MMUX support for type 'complexd32' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXD32])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD32],
+     [Always defined, set to 1 if MMUX support for type 'complexd32' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd32])
+      AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD32]) -a \
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+            [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD32], [$MMUX_HAVE_CC_TYPE_DECIMAL32])
+             AC_MSG_CHECKING([for MMUX supporting 'complexd32'])
+             AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD32])],
+                   [AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -2127,18 +2126,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD32],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD64],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_DECIMAL64])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD64], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd64])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD64]) -a \
-               mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD64], [$MMUX_HAVE_CC_TYPE_DECIMAL64])
-          AC_MSG_CHECKING([for MMUX supporting 'complexd64'])
-          AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD64])],
-                [AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXD64], [$MMUX_HAVE_CC_TYPE_COMPLEXD64],
-     [Always defined, set to 1 if MMUX support for type 'complexd64' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXD64])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD64],
+     [Always defined, set to 1 if MMUX support for type 'complexd64' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd64])
+      AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD64]) -a \
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+            [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD64], [$MMUX_HAVE_CC_TYPE_DECIMAL64])
+             AC_MSG_CHECKING([for MMUX supporting 'complexd64'])
+             AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD64])],
+                   [AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 # Synopsis:
@@ -2159,18 +2156,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD64],
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD128],
   [AC_REQUIRE([MMUX_CC_CHECK_TYPE_DECIMAL128])
-   AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD128], [0])
-   MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd128])
-   AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD128]) -a \
-               mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD128], [$MMUX_HAVE_CC_TYPE_DECIMAL128])
-          AC_MSG_CHECKING([for MMUX supporting 'complexd128'])
-          AS_IF([test mmux_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD128])],
-                [AC_MSG_RESULT([yes])],
-                [AC_MSG_RESULT([no])])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_TYPE_COMPLEXD128], [$MMUX_HAVE_CC_TYPE_COMPLEXD128],
-     [Always defined, set to 1 if MMUX support for type 'complexd128' is enabled.])
-   AC_SUBST([MMUX_HAVE_CC_TYPE_COMPLEXD128])])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD128],
+     [Always defined, set to 1 if MMUX support for type 'complexd128' is enabled.],
+     [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd128])
+      AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD128]) -a \
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+            [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD128], [$MMUX_HAVE_CC_TYPE_DECIMAL128])
+             AC_MSG_CHECKING([for MMUX supporting 'complexd128'])
+             AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD128])],
+                   [AC_MSG_RESULT([yes])],
+                   [AC_MSG_RESULT([no])])])])])
 
 
 #### let's go
