@@ -549,7 +549,7 @@ AC_DEFUN([MMUX_LANG_C11],[
   AX_REQUIRE_DEFINED([AX_GCC_VERSION])
   AC_REQUIRE([AX_IS_RELEASE])
 
-  AC_PROG_CC_C99
+  AC_PROG_CC
   AX_CHECK_COMPILE_FLAG([-std=c11],
     [AX_APPEND_FLAG([-std=c11], [CC])],
     [AC_MSG_ERROR([*** Compiler does not support -std=c11])],
