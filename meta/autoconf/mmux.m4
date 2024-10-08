@@ -1599,10 +1599,10 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
      [Always defined, set to 1 if MMUX support for type '_Decimal32' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION_WITH_BODY([decimal32],
         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
-               [AC_CHECK_TYPE([_Decimal32])
-                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
+               [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
                   [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS"],
-                     [AC_CHECK_FUNC([strtod32])
+                     [AC_CHECK_TYPE([_Decimal32])
+                      AC_CHECK_FUNC([strtod32])
                       AC_CHECK_FUNC([strfromd32])
                       AC_CHECK_FUNC([fabsd32])
                       AC_CHECK_FUNC([fmaxd32])
@@ -1639,10 +1639,10 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
      [Always defined, set to 1 if MMUX support for type '_Decimal64' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION_WITH_BODY([decimal64],
         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
-               [AC_CHECK_TYPE([_Decimal64])
-                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
+               [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
                   [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS"],
-                     [AC_CHECK_FUNC([strtod64])
+                     [AC_CHECK_TYPE([_Decimal64])
+                      AC_CHECK_FUNC([strtod64])
                       AC_CHECK_FUNC([strfromd64])
                       AC_CHECK_FUNC([fabsd64])
                       AC_CHECK_FUNC([fmaxd64])
@@ -1679,10 +1679,10 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL128],
      [Always defined, set to 1 if MMUX support for type '_Decimal128' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION_WITH_BODY([decimal128],
         [AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
-               [AC_CHECK_TYPE([_Decimal128])
-                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
+               [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
                   [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS"],
-                     [AC_CHECK_FUNC([strtod128])
+                     [AC_CHECK_TYPE([_Decimal128])
+                      AC_CHECK_FUNC([strtod128])
                       AC_CHECK_FUNC([strfromd128])
                       AC_CHECK_FUNC([fabsd128])
                       AC_CHECK_FUNC([fmaxd128])
@@ -2101,7 +2101,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD32],
    MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD32],
      [Always defined, set to 1 if MMUX support for type 'complexd32' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION_WITH_BODY([complexd32],
-        [AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
+        [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD32], [$MMUX_HAVE_CC_TYPE_DECIMAL32])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexd32],[complexd32])])])])
 
@@ -2127,7 +2127,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD64],
    MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD64],
      [Always defined, set to 1 if MMUX support for type 'complexd64' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION_WITH_BODY([complexd64],
-        [AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
+        [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD64], [$MMUX_HAVE_CC_TYPE_DECIMAL64])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexd64],[complexd64])])])])
 
@@ -2153,7 +2153,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD128],
    MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_COMPLEXD128],
      [Always defined, set to 1 if MMUX support for type 'complexd128' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION_WITH_BODY([complexd128],
-        [AS_IF([test mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
+        [AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD128], [$MMUX_HAVE_CC_TYPE_DECIMAL128])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexd128],[complexd128])])])])
 
