@@ -108,7 +108,7 @@ MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
       AC_CHECK_HEADERS([bashtypes.h bashjmp.h builtins.h shell.h common.h],,
         [AC_MSG_ERROR([unable to find all the GNU Bash header files])],
         [MMUX_BASH_INCLUDE_FILES])
-      MMUX_BASH_CONSTANT_TESTS([BUILTIN_ENABLED])])])
+      MMUX_BASH_CONSTANT_TESTS([BUILTIN_ENABLED EXECUTION_SUCCESS EXECUTION_FAILURE EX_USAGE])])])
 
 AC_CACHE_SAVE
 

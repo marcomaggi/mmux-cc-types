@@ -68,12 +68,12 @@ mmux_bash_builtin_implementation_function (mmux_bash_word_list_t word_list,
       rv = custom_implementation_function(argc, (char const * const *) argv);
     } else {
       builtin_usage();
-      rv = EX_USAGE;
+      rv = MMUX_BASH_EX_USAGE;
     }
     free(argv);
   } else {
     fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
-    rv = EXECUTION_FAILURE;
+    rv = MMUX_BASH_EXECUTION_FAILURE;
   }
   return rv;
 }
@@ -85,7 +85,7 @@ mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word
   WORD_LIST *	list = (WORD_LIST *) word_list;
 
   if (no_options(list)) {
-    return (EX_USAGE);
+    return (MMUX_BASH_EX_USAGE);
   } else {
     char **	argv;
     int		argc;
@@ -97,12 +97,12 @@ mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word
 	rv = custom_implementation_function(argc, (char const * const *) argv);
       } else {
 	builtin_usage();
-	rv = EX_USAGE;
+	rv = MMUX_BASH_EX_USAGE;
       }
       free(argv);
     } else {
       fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
-      rv = EXECUTION_FAILURE;
+      rv = MMUX_BASH_EXECUTION_FAILURE;
     }
     return rv;
   }
@@ -112,7 +112,7 @@ int
 mmux_bash_builtin_wrong_num_of_args (void)
 {
   builtin_usage();
-  return EX_USAGE;
+  return MMUX_BASH_EX_USAGE;
 }
 
 
@@ -137,7 +137,7 @@ store_string_in_variable (char const * variable_name, char const * const s_value
   if (0) { fprintf(stderr, "%s: result of binding %p\n", __func__, (void*)shell_variable); }
 
   if (shell_variable) {
-    return EXECUTION_SUCCESS;
+    return MMUX_BASH_EXECUTION_SUCCESS;
   } else {
     if (caller_name) {
       if (global_variable) {
@@ -146,7 +146,7 @@ store_string_in_variable (char const * variable_name, char const * const s_value
 	fprintf(stderr, "%s: failed binding value to shell variable: \"%s\"=\"%s\"\n", caller_name, variable_name, s_value);
       }
     }
-    return EXECUTION_FAILURE;
+    return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
 int
@@ -173,7 +173,7 @@ store_sint_in_variable (char const * variable_name, int value, char const * cons
        returns the number of required bytes, EXCLUDING the terminating null byte. */
     required_nbytes = snprintf(NULL, 0, "%d", value);
     if (0 > required_nbytes) {
-      return EXECUTION_FAILURE;
+      return MMUX_BASH_EXECUTION_FAILURE;
     }
     ++required_nbytes;
   }
@@ -189,7 +189,7 @@ store_sint_in_variable (char const * variable_name, int value, char const * cons
     if (required_nbytes == (1+to_be_written_chars)) {
       return store_string_in_variable(variable_name, s_value, caller_name, global_variable);
     } else {
-      return EXECUTION_FAILURE;
+      return MMUX_BASH_EXECUTION_FAILURE;
     }
   }
 }
@@ -218,7 +218,7 @@ mmux_bash_create_global_string_variable (char const * const variable_name, char 
     if (caller_name) {
       fprintf(stderr, "%s: failed creation of global variable, it already exists: \"%s\"\n", caller_name, variable_name);
     }
-    return EXECUTION_FAILURE;
+    return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
 int
@@ -232,7 +232,7 @@ mmux_bash_create_global_sint_variable (char const * const variable_name, int val
        returns the number of required bytes, EXCLUDING the terminating null byte. */
     required_nbytes = snprintf(NULL, 0, "%d", value);
     if (0 > required_nbytes) {
-      return EXECUTION_FAILURE;
+      return MMUX_BASH_EXECUTION_FAILURE;
     }
     ++required_nbytes;
   }
@@ -252,7 +252,7 @@ mmux_bash_create_global_sint_variable (char const * const variable_name, int val
 	fprintf(stderr, "%s: failed creation of global sint variable, conversion error: \"%s\"=\"%d\"\n",
 		caller_name, variable_name, value);
       }
-      return EXECUTION_FAILURE;
+      return MMUX_BASH_EXECUTION_FAILURE;
     }
   }
 }
@@ -271,12 +271,12 @@ mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char 
   shell_variable = find_variable(variable_name);
   if (shell_variable && var_isset(shell_variable)) {
     *p_variable_value = value_cell(shell_variable);
-    return EXECUTION_SUCCESS;
+    return MMUX_BASH_EXECUTION_SUCCESS;
   } else {
     if (caller_name) {
       fprintf(stderr, "%s: error: failed access to shell variable: \"%s\"\n", caller_name, variable_name);
     }
-    return EXECUTION_FAILURE;
+    return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
 

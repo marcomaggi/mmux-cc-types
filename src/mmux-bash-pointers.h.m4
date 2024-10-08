@@ -620,8 +620,8 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYP
  ** ----------------------------------------------------------------- */
 
 typedef enum {
-  MMUX_SUCCESS=0,
-  MMUX_FAILURE=1
+  MMUX_SUCCESS=MMUX_BASH_EXECUTION_SUCCESS,
+  MMUX_FAILURE=MMUX_BASH_EXECUTION_FAILURE
 } mmux_rv_t;
 
 /* This is meatn to be an alias for Bash's "WORD_LIST". */
