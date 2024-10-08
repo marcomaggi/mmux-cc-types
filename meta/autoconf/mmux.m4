@@ -33,13 +33,21 @@ m4_define([mmux_is_no],         ["x$[]$1" = "xno"])
 m4_define([mmux_is_one],        ["x$[]$1" = "x1"])
 m4_define([mmux_is_zero],       ["x$[]$1" = "x0"])
 m4_define([mmux_is_empty],      ["x$[]$1" = "x"])
+m4_define([mmux_is_not_empty],  ["x$[]$1" != "x"])
 
 m4_define([mmux_test_variable_is_yes],       [test mmux_is_yes([$1])])
 m4_define([mmux_test_variable_is_no],        [test mmux_is_no([$1])])
 m4_define([mmux_test_variable_is_one],       [test mmux_is_one([$1])])
 m4_define([mmux_test_variable_is_zero],      [test mmux_is_zero([$1])])
 m4_define([mmux_test_variable_is_empty],     [test mmux_is_empty([$1])])
-m4_define([mmux_test_variable_is_not_empty], [test ! mmux_is_empty([$1])])
+m4_define([mmux_test_variable_is_not_empty], [test mmux_is_not_empty([$1])])
+
+m4_define([mmux_test_variables_are_yes],        [test m4_map_sep([mmux_is_yes],[ -a ],$@)])
+m4_define([mmux_test_variables_are_no],         [test m4_map_sep([mmux_is_no],[ -a ],$@)])
+m4_define([mmux_test_variables_are_one],        [test m4_map_sep([mmux_is_one],[ -a ],$@)])
+m4_define([mmux_test_variables_are_zero],       [test m4_map_sep([mmux_is_zero],[ -a ],$@)])
+m4_define([mmux_test_variables_are_empty],      [test m4_map_sep([mmux_is_empty],[ -a ],$@)])
+m4_define([mmux_test_variables_are_not_empty],  [test m4_map_sep([mmux_is_not_empty],[ -a ],$@)])
 
 # Synopsis:
 #
@@ -1331,12 +1339,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32],
          AC_CHECK_FUNC([fabsf32])
          AC_CHECK_FUNC([fmaxf32])
          AC_CHECK_FUNC([fminf32])
-         AS_IF([test mmux_is_yes([ac_cv_type__Float32])       \
-                  -a mmux_is_yes([ac_cv_func_strtof32])       \
-                  -a mmux_is_yes([ac_cv_func_strfromf32])     \
-                  -a mmux_is_yes([ac_cv_func_fabsf32])        \
-                  -a mmux_is_yes([ac_cv_func_fmaxf32])        \
-                  -a mmux_is_yes([ac_cv_func_fminf32])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_type__Float32,
+                                             ac_cv_func_strtof32,
+                                             ac_cv_func_strfromf32,
+                                             ac_cv_func_fabsf32,
+                                             ac_cv_func_fmaxf32,
+                                             ac_cv_func_fminf32])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([float32],[_Float32])])])])
 
@@ -1367,12 +1375,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64],
          AC_CHECK_FUNC([fabsf64])
          AC_CHECK_FUNC([fmaxf64])
          AC_CHECK_FUNC([fminf64])
-         AS_IF([test mmux_is_yes([ac_cv_type__Float64])       \
-                  -a mmux_is_yes([ac_cv_func_strtof64])       \
-                  -a mmux_is_yes([ac_cv_func_strfromf64])     \
-                  -a mmux_is_yes([ac_cv_func_fabsf64])        \
-                  -a mmux_is_yes([ac_cv_func_fmaxf64])        \
-                  -a mmux_is_yes([ac_cv_func_fminf64])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_type__Float64,
+                                             ac_cv_func_strtof64,
+                                             ac_cv_func_strfromf64,
+                                             ac_cv_func_fabsf64,
+                                             ac_cv_func_fmaxf64,
+                                             ac_cv_func_fminf64])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([float64],[_Float64])])])])
 
@@ -1403,12 +1411,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128],
          AC_CHECK_FUNC([fabsf128])
          AC_CHECK_FUNC([fmaxf128])
          AC_CHECK_FUNC([fminf128])
-         AS_IF([test mmux_is_yes([ac_cv_type__Float128])       \
-                  -a mmux_is_yes([ac_cv_func_strtof128])       \
-                  -a mmux_is_yes([ac_cv_func_strfromf128])     \
-                  -a mmux_is_yes([ac_cv_func_fabsf128])        \
-                  -a mmux_is_yes([ac_cv_func_fmaxf128])        \
-                  -a mmux_is_yes([ac_cv_func_fminf128])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_type__Float128,
+                                             ac_cv_func_strtof128,
+                                             ac_cv_func_strfromf128,
+                                             ac_cv_func_fabsf128,
+                                             ac_cv_func_fmaxf128,
+                                             ac_cv_func_fminf128])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([float128],[_Float128])])])])
 
@@ -1439,12 +1447,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT32X],
          AC_CHECK_FUNC([fabsf32x])
          AC_CHECK_FUNC([fmaxf32x])
          AC_CHECK_FUNC([fminf32x])
-         AS_IF([test mmux_is_yes([ac_cv_type__Float32x])       \
-                  -a mmux_is_yes([ac_cv_func_strtof32x])       \
-                  -a mmux_is_yes([ac_cv_func_strfromf32x])     \
-                  -a mmux_is_yes([ac_cv_func_fabsf32x])        \
-                  -a mmux_is_yes([ac_cv_func_fmaxf32x])        \
-                  -a mmux_is_yes([ac_cv_func_fminf32x])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_type__Float32x,
+                                             ac_cv_func_strtof32x,
+                                             ac_cv_func_strfromf32x,
+                                             ac_cv_func_fabsf32x,
+                                             ac_cv_func_fmaxf32x,
+                                             ac_cv_func_fminf32x])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT32X], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([float32x],[_Float32x])])])])
 
@@ -1475,12 +1483,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT64X],
          AC_CHECK_FUNC([fabsf64x])
          AC_CHECK_FUNC([fmaxf64x])
          AC_CHECK_FUNC([fminf64x])
-         AS_IF([test mmux_is_yes([ac_cv_type__Float64x])       \
-                  -a mmux_is_yes([ac_cv_func_strtof64x])       \
-                  -a mmux_is_yes([ac_cv_func_strfromf64x])     \
-                  -a mmux_is_yes([ac_cv_func_fabsf64x])        \
-                  -a mmux_is_yes([ac_cv_func_fmaxf64x])        \
-                  -a mmux_is_yes([ac_cv_func_fminf64x])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_type__Float64x,
+                                             ac_cv_func_strtof64x,
+                                             ac_cv_func_strfromf64x,
+                                             ac_cv_func_fabsf64x,
+                                             ac_cv_func_fmaxf64x,
+                                             ac_cv_func_fminf64x])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT64X], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([float64x],[_Float64x])])])])
 
@@ -1511,12 +1519,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128X],
          AC_CHECK_FUNC([fabsf128x])
          AC_CHECK_FUNC([fmaxf128x])
          AC_CHECK_FUNC([fminf128x])
-         AS_IF([test mmux_is_yes([ac_cv_type__Float128x])       \
-                  -a mmux_is_yes([ac_cv_func_strtof128x])       \
-                  -a mmux_is_yes([ac_cv_func_strfromf128x])     \
-                  -a mmux_is_yes([ac_cv_func_fabsf128x])        \
-                  -a mmux_is_yes([ac_cv_func_fmaxf128x])        \
-                  -a mmux_is_yes([ac_cv_func_fminf128x])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_type__Float128x,
+                                             ac_cv_func_strtof128x,
+                                             ac_cv_func_strfromf128x,
+                                             ac_cv_func_fabsf128x,
+                                             ac_cv_func_fmaxf128x,
+                                             ac_cv_func_fminf128x])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_FLOAT128X], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([float128x],[_Float128x])])])])
 
@@ -1607,12 +1615,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
                       AC_CHECK_FUNC([fabsd32])
                       AC_CHECK_FUNC([fmaxd32])
                       AC_CHECK_FUNC([fmind32])])])
-                AS_IF([test mmux_is_yes([ac_cv_type__Decimal32])      \
-                         -a mmux_is_yes([ac_cv_func_strtod32])        \
-                         -a mmux_is_yes([ac_cv_func_strfromd32])      \
-                         -a mmux_is_yes([ac_cv_func_fabsd32])         \
-                         -a mmux_is_yes([ac_cv_func_fmaxd32])         \
-                         -a mmux_is_yes([ac_cv_func_fmind32])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_type__Decimal32,
+                                                    ac_cv_func_strtod32,
+                                                    ac_cv_func_strfromd32,
+                                                    ac_cv_func_fabsd32,
+                                                    ac_cv_func_fmaxd32,
+                                                    ac_cv_func_fmind32])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL32], [1])])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([decimal32],[_Decimal32])])])
 
@@ -1647,12 +1655,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
                       AC_CHECK_FUNC([fabsd64])
                       AC_CHECK_FUNC([fmaxd64])
                       AC_CHECK_FUNC([fmind64])])])
-                AS_IF([test mmux_is_yes([ac_cv_type__Decimal64])      \
-                         -a mmux_is_yes([ac_cv_func_strtod64])        \
-                         -a mmux_is_yes([ac_cv_func_strfromd64])      \
-                         -a mmux_is_yes([ac_cv_func_fabsd64])         \
-                         -a mmux_is_yes([ac_cv_func_fmaxd64])         \
-                         -a mmux_is_yes([ac_cv_func_fmind64])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_type__Decimal64,
+                                                    ac_cv_func_strtod64,
+                                                    ac_cv_func_strfromd64,
+                                                    ac_cv_func_fabsd64,
+                                                    ac_cv_func_fmaxd64,
+                                                    ac_cv_func_fmind64])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL64], [1])])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([decimal64],[_Decimal64])])])
 
@@ -1687,12 +1695,12 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL128],
                       AC_CHECK_FUNC([fabsd128])
                       AC_CHECK_FUNC([fmaxd128])
                       AC_CHECK_FUNC([fmind128])])])
-                AS_IF([test mmux_is_yes([ac_cv_type__Decimal128])      \
-                         -a mmux_is_yes([ac_cv_func_strtod128])        \
-                         -a mmux_is_yes([ac_cv_func_strfromd128])      \
-                         -a mmux_is_yes([ac_cv_func_fabsd128])         \
-                         -a mmux_is_yes([ac_cv_func_fmaxd128])         \
-                         -a mmux_is_yes([ac_cv_func_fmind128])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_type__Decimal128,
+                                                    ac_cv_func_strtod128,
+                                                    ac_cv_func_strfromd128,
+                                                    ac_cv_func_fabsd128,
+                                                    ac_cv_func_fmaxd128,
+                                                    ac_cv_func_fmind128])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_DECIMAL128], [1])])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([decimal128],[_Decimal128])])])
 
@@ -1726,14 +1734,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF],
          AC_CHECK_FUNC([cabsf])
          AC_CHECK_FUNC([cargf])
          AC_CHECK_FUNC([conjf])
-         AS_IF([test mmux_is_yes([ac_cv_header_complex_h])            \
-                  -a mmux_is_yes([ac_cv_type_float_complex])          \
-                  -a mmux_is_yes([ac_cv_have_decl_CMPLXF])            \
-                  -a mmux_is_yes([ac_cv_func_crealf])                 \
-                  -a mmux_is_yes([ac_cv_func_cimagf])                 \
-                  -a mmux_is_yes([ac_cv_func_cabsf])                  \
-                  -a mmux_is_yes([ac_cv_func_cargf])                  \
-                  -a mmux_is_yes([ac_cv_func_conjf])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                             ac_cv_type_float_complex,
+                                             ac_cv_have_decl_CMPLXF,
+                                             ac_cv_func_crealf,
+                                             ac_cv_func_cimagf,
+                                             ac_cv_func_cabsf,
+                                             ac_cv_func_cargf,
+                                             ac_cv_func_conjf])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf],[float complex])])])])
 
@@ -1767,14 +1775,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD],
          AC_CHECK_FUNC([cabs])
          AC_CHECK_FUNC([carg])
          AC_CHECK_FUNC([conj])
-         AS_IF([test mmux_is_yes([ac_cv_header_complex_h])            \
-                  -a mmux_is_yes([ac_cv_type_double_complex])         \
-                  -a mmux_is_yes([ac_cv_have_decl_CMPLX])             \
-                  -a mmux_is_yes([ac_cv_func_creal])                  \
-                  -a mmux_is_yes([ac_cv_func_cimag])                  \
-                  -a mmux_is_yes([ac_cv_func_cabs])                   \
-                  -a mmux_is_yes([ac_cv_func_carg])                   \
-                  -a mmux_is_yes([ac_cv_func_conj])],
+         AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                             ac_cv_type_double_complex,
+                                             ac_cv_have_decl_CMPLX,
+                                             ac_cv_func_creal,
+                                             ac_cv_func_cimag,
+                                             ac_cv_func_cabs,
+                                             ac_cv_func_carg,
+                                             ac_cv_func_conj])],
                [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD], [1])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexd],[double complex])])])])
 
@@ -1810,14 +1818,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXLD],
                 AC_CHECK_FUNC([cabsl])
                 AC_CHECK_FUNC([cargl])
                 AC_CHECK_FUNC([conjl])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])             \
-                         -a mmux_is_yes([ac_cv_type_long_double_complex])     \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXL])             \
-                         -a mmux_is_yes([ac_cv_func_creall])                  \
-                         -a mmux_is_yes([ac_cv_func_cimagl])                  \
-                         -a mmux_is_yes([ac_cv_func_cabsl])                   \
-                         -a mmux_is_yes([ac_cv_func_cargl])                   \
-                         -a mmux_is_yes([ac_cv_func_conjl])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type_long_double_complex,
+                                                    ac_cv_have_decl_CMPLXL,
+                                                    ac_cv_func_creall,
+                                                    ac_cv_func_cimagl,
+                                                    ac_cv_func_cabsl,
+                                                    ac_cv_func_cargl,
+                                                    ac_cv_func_conjl])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXLD], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexld],[long double complex])])])])
 
@@ -1853,14 +1861,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32],
                 AC_CHECK_FUNC([cabsf32])
                 AC_CHECK_FUNC([cargf32])
                 AC_CHECK_FUNC([conjf32])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])             \
-                         -a mmux_is_yes([ac_cv_type__Float32_complex])        \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXF32])           \
-                         -a mmux_is_yes([ac_cv_func_crealf32])                \
-                         -a mmux_is_yes([ac_cv_func_cimagf32])                \
-                         -a mmux_is_yes([ac_cv_func_cabsf32])                 \
-                         -a mmux_is_yes([ac_cv_func_cargf32])                 \
-                         -a mmux_is_yes([ac_cv_func_conjf32])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type__Float32_complex,
+                                                    ac_cv_have_decl_CMPLXF32,
+                                                    ac_cv_func_crealf32,
+                                                    ac_cv_func_cimagf32,
+                                                    ac_cv_func_cabsf32,
+                                                    ac_cv_func_cargf32,
+                                                    ac_cv_func_conjf32])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf32],[_Float32 complex])])])])
 
@@ -1896,14 +1904,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64],
                 AC_CHECK_FUNC([cabsf64])
                 AC_CHECK_FUNC([cargf64])
                 AC_CHECK_FUNC([conjf64])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])             \
-                         -a mmux_is_yes([ac_cv_type__Float64_complex])        \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXF64])           \
-                         -a mmux_is_yes([ac_cv_func_crealf64])                \
-                         -a mmux_is_yes([ac_cv_func_cimagf64])                \
-                         -a mmux_is_yes([ac_cv_func_cabsf64])                 \
-                         -a mmux_is_yes([ac_cv_func_cargf64])                 \
-                         -a mmux_is_yes([ac_cv_func_conjf64])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type__Float64_complex,
+                                                    ac_cv_have_decl_CMPLXF64,
+                                                    ac_cv_func_crealf64,
+                                                    ac_cv_func_cimagf64,
+                                                    ac_cv_func_cabsf64,
+                                                    ac_cv_func_cargf64,
+                                                    ac_cv_func_conjf64])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf64],[_Float64 complex])])])])
 
@@ -1939,14 +1947,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128],
                 AC_CHECK_FUNC([cabsf128])
                 AC_CHECK_FUNC([cargf128])
                 AC_CHECK_FUNC([conjf128])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])              \
-                         -a mmux_is_yes([ac_cv_type__Float128_complex])        \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXF128])           \
-                         -a mmux_is_yes([ac_cv_func_crealf128])                \
-                         -a mmux_is_yes([ac_cv_func_cimagf128])                \
-                         -a mmux_is_yes([ac_cv_func_cabsf128])                 \
-                         -a mmux_is_yes([ac_cv_func_cargf128])                 \
-                         -a mmux_is_yes([ac_cv_func_conjf128])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type__Float128_complex,
+                                                    ac_cv_have_decl_CMPLXF128,
+                                                    ac_cv_func_crealf128,
+                                                    ac_cv_func_cimagf128,
+                                                    ac_cv_func_cabsf128,
+                                                    ac_cv_func_cargf128,
+                                                    ac_cv_func_conjf128])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf128],[_Float128 complex])])])])
 
@@ -1982,14 +1990,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF32X],
                 AC_CHECK_FUNC([cabsf32x])
                 AC_CHECK_FUNC([cargf32x])
                 AC_CHECK_FUNC([conjf32x])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])              \
-                         -a mmux_is_yes([ac_cv_type__Float32x_complex])        \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXF32X])           \
-                         -a mmux_is_yes([ac_cv_func_crealf32x])                \
-                         -a mmux_is_yes([ac_cv_func_cimagf32x])                \
-                         -a mmux_is_yes([ac_cv_func_cabsf32x])                 \
-                         -a mmux_is_yes([ac_cv_func_cargf32x])                 \
-                         -a mmux_is_yes([ac_cv_func_conjf32x])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type__Float32x_complex,
+                                                    ac_cv_have_decl_CMPLXF32X,
+                                                    ac_cv_func_crealf32x,
+                                                    ac_cv_func_cimagf32x,
+                                                    ac_cv_func_cabsf32x,
+                                                    ac_cv_func_cargf32x,
+                                                    ac_cv_func_conjf32x])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF32X], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf32x],[_Float32x complex])])])])
 
@@ -2025,14 +2033,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF64X],
                 AC_CHECK_FUNC([cabsf64x])
                 AC_CHECK_FUNC([cargf64x])
                 AC_CHECK_FUNC([conjf64x])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])              \
-                         -a mmux_is_yes([ac_cv_type__Float64x_complex])        \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXF64X])           \
-                         -a mmux_is_yes([ac_cv_func_crealf64x])                \
-                         -a mmux_is_yes([ac_cv_func_cimagf64x])                \
-                         -a mmux_is_yes([ac_cv_func_cabsf64x])                 \
-                         -a mmux_is_yes([ac_cv_func_cargf64x])                 \
-                         -a mmux_is_yes([ac_cv_func_conjf64x])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type__Float64x_complex,
+                                                    ac_cv_have_decl_CMPLXF64X,
+                                                    ac_cv_func_crealf64x,
+                                                    ac_cv_func_cimagf64x,
+                                                    ac_cv_func_cabsf64x,
+                                                    ac_cv_func_cargf64x,
+                                                    ac_cv_func_conjf64x])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF64X], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf64x],[_Float64x complex])])])])
 
@@ -2068,14 +2076,14 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXF128X],
                 AC_CHECK_FUNC([cabsf128x])
                 AC_CHECK_FUNC([cargf128x])
                 AC_CHECK_FUNC([conjf128x])
-                AS_IF([test mmux_is_yes([ac_cv_header_complex_h])               \
-                         -a mmux_is_yes([ac_cv_type__Float128x_complex])        \
-                         -a mmux_is_yes([ac_cv_have_decl_CMPLXF128X])           \
-                         -a mmux_is_yes([ac_cv_func_crealf128x])                \
-                         -a mmux_is_yes([ac_cv_func_cimagf128x])                \
-                         -a mmux_is_yes([ac_cv_func_cabsf128x])                 \
-                         -a mmux_is_yes([ac_cv_func_cargf128x])                 \
-                         -a mmux_is_yes([ac_cv_func_conjf128x])],
+                AS_IF([mmux_test_variables_are_yes([ac_cv_header_complex_h,
+                                                    ac_cv_type__Float128x_complex,
+                                                    ac_cv_have_decl_CMPLXF128X,
+                                                    ac_cv_func_crealf128x,
+                                                    ac_cv_func_cimagf128x,
+                                                    ac_cv_func_cabsf128x,
+                                                    ac_cv_func_cargf128x,
+                                                    ac_cv_func_conjf128x])],
                       [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXF128X], [1])])])
          MMUX_CC_TYPE_SUPPORT_MSG_CHECKING([complexf128x],[_Float128x complex])])])])
 
