@@ -39,6 +39,7 @@ m4_define([mmux_test_variable_is_no],    [AS_IF([test mmux_is_no([$1])],[$2])])
 m4_define([mmux_test_variable_is_one],   [AS_IF([test mmux_is_one([$1])],[$2])])
 m4_define([mmux_test_variable_is_zero],  [AS_IF([test mmux_is_zero([$1])],[$2])])
 m4_define([mmux_test_variable_is_empty], [AS_IF([test mmux_is_empty([$1])],[$2])])
+m4_define([mmux_test_variable_is_not_empty], [AS_IF([test ! mmux_is_empty([$1])],[$2])])
 
 # Synopsis:
 #
@@ -61,6 +62,32 @@ m4_define([mmux_test_variable_is_empty], [AS_IF([test mmux_is_empty([$1])],[$2])
 m4_define([MMUX_AUTOCONF_SAVE_SHELL_VARIABLE],[AS_VAR_SET([mmux_OLD_$1],[$[]$1])
 $2
 AS_VAR_SET([$1],[$[]mmux_OLD_$1])])
+
+# Synopsis:
+#
+#       MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([VARNAME],[WHAT_TO_APPEND],[BODY])
+#
+# Parameters:
+#
+#       $1 - The name of the variable to save.
+#       $2 - a double-quoted string that has to be appended to the variable while evaluating the body
+#       $3 - The body to evaluate while the variable has been saved.
+#
+# Description:
+#
+#       Save the value of a shell variable while evaluating  a body of code.  Uses of this macro can
+#       be nested, but not for the same variable.  While the body is evaluated: a string is appended
+#       to the previous value of the variable; this is a common situation with "LIBS" and "CFLAGS".
+#
+# Usage examples:
+#
+#       MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" -lmylib"],[...])
+#       MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" -I/include/mylib"],[...])
+#
+m4_define([MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING],
+  [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([$1],
+     [AS_VAR_APPEND([$1],[$2])
+      $3])])
 
 # Synopsis:
 #
@@ -1120,7 +1147,7 @@ AC_DEFUN([MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_FLOAT],
 #     Check the availability of all the supported C language types "_DecimalN".
 #
 AC_DEFUN([MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT],
-  [MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY
+  [MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_FACILITIES
 
    MMUX_CC_CHECK_TYPE_DECIMAL32
    MMUX_CC_CHECK_TYPE_DECIMAL64
@@ -1459,7 +1486,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128X],
 
 # Synopsis:
 #
-#     MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY
+#     MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_FACILITIES
 #
 # Description:
 #
@@ -1472,47 +1499,45 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_FLOAT128X],
 #
 #     Results:
 #
-#     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY
+#     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES
 #               C language preprocessor symbol; always defined; by default set to 0; set to 1 if the
 #               facilities are available.
 #
-#     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY
+#     MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES
 #               GNU Autoconf substitution symbol; by default defined to expand to 0; expands to 1 if
 #               the facilities are available.
 #
 #     WANT_LIBDFP
 #               GNU Automake conditional symbol; enabled when the facilities are available.
 #
-#     MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS
+#     MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS
 #               GNU  Autoconf shell  variable; by  default  set to  empty; when  the facilities  are
 #               available: set to the linker flags needed to include the library.
 #
-#     MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS
+#     MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS
 #               GNU  Autoconf shell  variable; by  default  set to  empty; when  the facilities  are
 #               available: set to the compiler flags needed to include the library.
 #
-AC_DEFUN([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY],
-  [AS_VAR_SET([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],[0])
-   AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS])
-   AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS])
-   MMUX_AUTOCONF_ENABLE_OPTION([CC_DECIMAL_FLOATING_POINT_LIBRARY], [cc-decimal-floating-point], [yes],
-     [whether to enable MMUX support for the C language decimal floating-point library],
-     [enables MMUX support for the C language decimal floating-point library])
-   AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-     [PKG_CHECK_MODULES([LIBDFP],[libdfp],,[AC_MSG_WARN([package libdfp not found])])
-      AS_IF([test ! mmux_is_empty([pkg_cv_LIBDFP_LIBS])],
-            [AS_VAR_SET([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],[1])],
-            [])])
-   AC_MSG_CHECKING([for MMUX supporting decimal floating-point library])
-   AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
-         [AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS],   [$LIBDFP_LIBS])
-          AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS], [$LIBDFP_CFLAGS])
-          AC_MSG_RESULT([yes])],
-         [AC_MSG_RESULT([no])])
-   AM_CONDITIONAL([WANT_LIBDFP],[mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])])
-   AC_DEFINE_UNQUOTED([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],[$MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY],
-     [Always defined, set to 1 if MMUX support for '_DecimalN' floating-point numbers is available.])
-   AC_SUBST([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])])
+AC_DEFUN([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_FACILITIES],
+  [AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS])
+   AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS])
+   MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES],
+     [Always defined, set to 1 if MMUX support for '_DecimalN' floating-point numbers is available.],
+     [MMUX_AUTOCONF_ENABLE_OPTION([CC_DECIMAL_FLOATING_POINT_FACILITIES], [cc-decimal-floating-point], [yes],
+        [whether to enable MMUX support for the C language decimal floating-point library],
+        [enables MMUX support for the C language decimal floating-point library])
+      AS_IF([mmux_test_variable_is_yes([mmux_enable_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
+        [PKG_CHECK_MODULES([LIBDFP],[libdfp],,[AC_MSG_WARN([package libdfp not found])])
+         AS_IF([mmux_test_variable_is_not_empty([pkg_cv_LIBDFP_LIBS])],
+               [AS_VAR_SET([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES],[1])],
+               [])])
+      AC_MSG_CHECKING([for MMUX supporting decimal floating-point library])
+      AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
+            [AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS],   [$LIBDFP_LIBS])
+             AS_VAR_SET([MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS], [$LIBDFP_CFLAGS])
+             AC_MSG_RESULT([yes])],
+            [AC_MSG_RESULT([no])])])
+   AM_CONDITIONAL([WANT_LIBDFP],[mmux_test_variable_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])])])
 
 
 # Synopsis:
@@ -1532,18 +1557,16 @@ AC_DEFUN([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
-  [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY])
+  [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_FACILITIES])
    MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_DECIMAL32],
      [Always defined, set to 1 if MMUX support for type '_Decimal32' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal32])
       AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL32]) -a \
-                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
             [AC_CHECK_TYPE([_Decimal32])
-             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
-               [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
-                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-                  [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
-                   AC_CHECK_FUNC([strtod32])
+             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
+               [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS"],
+                  [AC_CHECK_FUNC([strtod32])
                    AC_CHECK_FUNC([strfromd32])
                    AC_CHECK_FUNC([fabsd32])
                    AC_CHECK_FUNC([fmaxd32])
@@ -1579,18 +1602,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL32],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
-  [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY])
+  [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_FACILITIES])
    MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_DECIMAL64],
      [Always defined, set to 1 if MMUX support for type '_Decimal64' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal64])
       AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL64]) -a \
-                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
             [AC_CHECK_TYPE([_Decimal64])
-             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
-               [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
-                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-                  [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
-                   AC_CHECK_FUNC([strtod64])
+             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
+               [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS"],
+                  [AC_CHECK_FUNC([strtod64])
                    AC_CHECK_FUNC([strfromd64])
                    AC_CHECK_FUNC([fabsd64])
                    AC_CHECK_FUNC([fmaxd64])
@@ -1626,18 +1647,16 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL64],
 #               otherwise it is set to 0.
 #
 AC_DEFUN([MMUX_CC_CHECK_TYPE_DECIMAL128],
-  [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_LIBRARY])
+  [AC_REQUIRE([MMUX_CC_CHECK_DECIMAL_FLOATING_POINT_FACILITIES])
    MMUX_DEFINE_OMNIBUS_CONFIG_VARIABLE([MMUX_HAVE_CC_TYPE_DECIMAL128],
      [Always defined, set to 1 if MMUX support for type '_Decimal128' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([decimal128])
       AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_DECIMAL128]) -a \
-                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
             [AC_CHECK_TYPE([_Decimal128])
-             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([CFLAGS],
-               [AS_VAR_APPEND([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_CFLAGS"])
-                MMUX_AUTOCONF_SAVE_SHELL_VARIABLE([LIBS],
-                  [AS_VAR_APPEND([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_LIBRARY_LIBS"])
-                   AC_CHECK_FUNC([strtod128])
+             MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_CFLAGS"],
+               [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $MMUX_CC_DECIMAL_FLOATING_POINT_FACILITIES_LIBS"],
+                  [AC_CHECK_FUNC([strtod128])
                    AC_CHECK_FUNC([strfromd128])
                    AC_CHECK_FUNC([fabsd128])
                    AC_CHECK_FUNC([fmaxd128])
@@ -2100,7 +2119,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD32],
      [Always defined, set to 1 if MMUX support for type 'complexd32' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd32])
       AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD32]) -a \
-                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
             [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD32], [$MMUX_HAVE_CC_TYPE_DECIMAL32])
              AC_MSG_CHECKING([for MMUX supporting 'complexd32'])
              AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD32])],
@@ -2130,7 +2149,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD64],
      [Always defined, set to 1 if MMUX support for type 'complexd64' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd64])
       AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD64]) -a \
-                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
             [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD64], [$MMUX_HAVE_CC_TYPE_DECIMAL64])
              AC_MSG_CHECKING([for MMUX supporting 'complexd64'])
              AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD64])],
@@ -2160,7 +2179,7 @@ AC_DEFUN([MMUX_CC_CHECK_TYPE_COMPLEXD128],
      [Always defined, set to 1 if MMUX support for type 'complexd128' is enabled.],
      [MMUX_AUTOCONF_DEFINE_CC_TYPE_ENABLE_OPTION([complexd128])
       AS_IF([test mmux_is_yes([mmux_enable_CC_TYPE_COMPLEXD128]) -a \
-                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_LIBRARY])],
+                  mmux_is_one([MMUX_HAVE_CC_DECIMAL_FLOATING_POINT_FACILITIES])],
             [AS_VAR_SET([MMUX_HAVE_CC_TYPE_COMPLEXD128], [$MMUX_HAVE_CC_TYPE_DECIMAL128])
              AC_MSG_CHECKING([for MMUX supporting 'complexd128'])
              AS_IF([mmux_test_variable_is_one([MMUX_HAVE_CC_TYPE_COMPLEXD128])],
