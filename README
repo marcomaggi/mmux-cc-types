@@ -20,12 +20,12 @@ Topics
 ---------------
 
 This package  implements additional  builtin commands  for the  GNU Bash
-shell; to  do so  it installs a  C language library  and a  shell script
+shell; to do  so it installs a  C11 language library and  a shell script
 which is meant to be sourced in a Bash session or script.
 
   This package makes raw memory  pointers available in shell scripts; it
-also interfaces some basic functions  from the C language POSIX standard
-library.
+also  interfaces  some  basic  functions from  the  C11  language  POSIX
+standard library.
 
     source /usr/local/share/bash/libmmux-bash-pointers.bash
 

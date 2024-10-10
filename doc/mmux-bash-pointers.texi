@@ -86,9 +86,9 @@
 
 @copying
 
-This  document  describes  version  @value{VERSION}   of  @value{PACKAGE},  a  package  implementing
-additional builtin commands for the @gnu{} Bash shell; to do so it installs a C language library and
-a shell script  which is meant to  be sourced in a Bash  session or script.
+This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
+additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language library
+and a shell script which is meant to be sourced in a Bash session or script.
 
 This package makes raw memory pointers available in shell scripts; it also interfaces some basic
 functions from the C language @posix{} standard library.  The package targets @posix{} platforms.
@@ -180,8 +180,8 @@ Indexes
 
 
 This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
-additional builtin commands for the @gnu{} Bash shell; to do so it installs a C language library and
-a shell script which is meant to be sourced in a Bash session or script.
+additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language library
+and a shell script which is meant to be sourced in a Bash session or script.
 
 This package makes raw memory pointers available in shell scripts:
 
