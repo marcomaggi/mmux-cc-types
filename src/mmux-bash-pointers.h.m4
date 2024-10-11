@@ -320,10 +320,10 @@ mmux_bash_pointers_decl int mmux_$1_sizeof (void)
   __attribute__((__const__));
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * who)
   __attribute__((__nonnull__(1,2)));
-mmux_bash_pointers_decl int mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_$1_sprint_size (mmux_$1_t v);
-mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * who);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * who);
 ]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -590,7 +590,7 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_T
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_bash_pointers_decl char mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
 
-mmux_bash_pointers_decl int mmux_$1_set_output_format (char const * const new_result_format, char const * const who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_set_output_format (char const * const new_result_format, char const * const who)
   __attribute__((__nonnull__(1)));
 
 ]]])]]])
@@ -652,35 +652,35 @@ mmux_bash_pointers_decl int mmux_bash_builtin_wrong_num_of_args (void);
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl int mmux_bash_store_string_in_variable        (char const * variable_name, char const * s_value,
-								       char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_variable (char const * variable_name, char const * s_value,
+									   char const * who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_bash_pointers_decl int mmux_bash_store_string_in_global_variable (char const * variable_name, char const * s_value,
-								       char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_global_variable (char const * variable_name, char const * s_value,
+										  char const * who)
   __attribute__((__nonnull__(1,2)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl int mmux_bash_store_sint_in_variable        (char const * variable_name, int value, char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_sint_in_variable (char const * variable_name, int value, char const * who)
   __attribute__((__nonnull__(1)));
 
-mmux_bash_pointers_decl int mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * who)
   __attribute__((__nonnull__(1)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl int mmux_bash_create_global_string_variable (char const * variable_name, char const * s_value,
-								     char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_create_global_string_variable (char const * variable_name, char const * s_value,
+										char const * who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_bash_pointers_decl int mmux_bash_create_global_sint_variable   (char const * variable_name, int value, char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_create_global_sint_variable   (char const * variable_name, int value, char const * who)
   __attribute__((__nonnull__(1)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl int mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char const * variable_name,
-								       char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char const * variable_name,
+										  char const * who)
   __attribute__((__nonnull__(1,2)));
 
 

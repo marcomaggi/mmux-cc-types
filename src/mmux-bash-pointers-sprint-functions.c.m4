@@ -100,7 +100,7 @@ mmux_bash_pointers_init_sprint_module (void)
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-int
+mmux_bash_rv_t
 mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
 {
   int	new_result_format_len = strlen(new_result_format);
@@ -185,7 +185,7 @@ mmux_pointer_sprint_size (mmux_pointer_t value)
     return (1 + strlen("0x0"));
   }
 }
-int
+mmux_bash_rv_t
 mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
 /* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
    the template is "%p"; we want a proper number representation. */
@@ -227,7 +227,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
     return ++required_nbytes;
   }
 }
-int
+mmux_bash_rv_t
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
@@ -283,7 +283,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
     return ++required_nbytes;
   }
 }
-int
+mmux_bash_rv_t
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
@@ -356,7 +356,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
   if (0) { fprintf(stderr, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes); }
   return ++total_required_nbytes;
 }
-int
+mmux_bash_rv_t
 mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(value);
@@ -458,7 +458,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
 {
   return mmux_[[[]]]$2[[[]]]_sprint_size(value);
 }
-int
+mmux_bash_rv_t
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, value);

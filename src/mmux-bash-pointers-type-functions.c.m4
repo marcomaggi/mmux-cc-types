@@ -338,7 +338,7 @@ DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEX
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-int
+mmux_bash_rv_t
 mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * caller_name)
 {
   int		rv, required_nbytes;

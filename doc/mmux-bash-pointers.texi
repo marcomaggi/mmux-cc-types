@@ -4795,7 +4795,7 @@ rv = mmux_sint_parse(&value, arg, "my-builtin");
 
 
 @macro MmuxDefineCFunctionParser{STEM}
-@deftypefun int mmux_\STEM\_parse (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
+@deftypefun mmux_bash_rv_t mmux_\STEM\_parse (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{CALLER_NAME})
 Parse a string which is meant to be the representation of a C language type @objtype{\STEM\}; when
 successful store the result in the variable referenced by @var{PTR}, then return
 @code{MMUX_SUCCESS}; otherwise leave @var{PTR} untouched and return @code{MMUX_FAILURE}.
@@ -4900,7 +4900,7 @@ if (0 > required_nbytes) @{
 
 
 @macro MmuxDefineCFunctionSprinter{STEM}
-@deftypefun int mmux_\STEM\_sprint (char * @var{STRPTR}, int @var{LEN}, mmux_\STEM\_t @var{VALUE})
+@deftypefun mmux_bash_rv_t mmux_\STEM\_sprint (char * @var{STRPTR}, int @var{LEN}, mmux_\STEM\_t @var{VALUE})
 @deftypefunx int mmux_\STEM\_sprint_size (mmux_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
@@ -4988,7 +4988,7 @@ the terminating zero}; otherwise return @samp{-1}.
 
 
 @macro MmuxDefineCFunctionBindToVariable{STEM}
-@deftypefun int mmux_\STEM\_bind_to_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
+@deftypefun mmux_bash_rv_t mmux_\STEM\_bind_to_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
 

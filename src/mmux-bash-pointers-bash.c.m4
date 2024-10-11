@@ -120,7 +120,7 @@ mmux_bash_builtin_wrong_num_of_args (void)
  ** Binding values to shell variables.
  ** ----------------------------------------------------------------- */
 
-static int
+static mmux_bash_rv_t
 store_string_in_variable (char const * variable_name, char const * const s_value, char const * const caller_name, bool global_variable)
 {
   SHELL_VAR *	shell_variable MMUX_BASH_POINTERS_UNUSED;
@@ -149,12 +149,12 @@ store_string_in_variable (char const * variable_name, char const * const s_value
     return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
-int
+mmux_bash_rv_t
 mmux_bash_store_string_in_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
 {
   return store_string_in_variable(variable_name, s_value, caller_name, false);
 }
-int
+mmux_bash_rv_t
 mmux_bash_store_string_in_global_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
 {
   return store_string_in_variable(variable_name, s_value, caller_name, true);
@@ -162,7 +162,7 @@ mmux_bash_store_string_in_global_variable (char const * variable_name, char cons
 
 /* ------------------------------------------------------------------ */
 
-static int
+static mmux_bash_rv_t
 store_sint_in_variable (char const * variable_name, int value, char const * const caller_name, bool global_variable)
 {
   int	required_nbytes;
@@ -194,12 +194,12 @@ store_sint_in_variable (char const * variable_name, int value, char const * cons
   }
 }
 
-int
+mmux_bash_rv_t
 mmux_bash_store_sint_in_variable (char const * variable_name, int value, char const * const caller_name)
 {
   return store_sint_in_variable(variable_name, value, caller_name, false);
 }
-int
+mmux_bash_rv_t
 mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * const caller_name)
 {
   return store_sint_in_variable(variable_name, value, caller_name, true);
@@ -207,7 +207,7 @@ mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, 
 
 /* ------------------------------------------------------------------ */
 
-int
+mmux_bash_rv_t
 mmux_bash_create_global_string_variable (char const * const variable_name, char const * const s_value, char const * const caller_name)
 {
   SHELL_VAR	* shell_variable = find_global_variable(variable_name);
@@ -221,7 +221,7 @@ mmux_bash_create_global_string_variable (char const * const variable_name, char 
     return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
-int
+mmux_bash_rv_t
 mmux_bash_create_global_sint_variable (char const * const variable_name, int value, char const * const caller_name)
 {
   int	required_nbytes;
@@ -262,7 +262,7 @@ mmux_bash_create_global_sint_variable (char const * const variable_name, int val
  ** Retrieving values from shell variables.
  ** ----------------------------------------------------------------- */
 
-int
+mmux_bash_rv_t
 mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char const * const variable_name,
 					   char const * const caller_name)
 {
