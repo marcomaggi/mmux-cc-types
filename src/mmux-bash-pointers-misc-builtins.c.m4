@@ -42,17 +42,17 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   if (3 == argc) {
     int		rv;
 
-    rv = mmux_bash_store_string_in_variable(argv[2], mmux_bash_pointers_output_format_$1, MMUX_BUILTIN_NAME);
-    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
+    rv = mmux_bash_store_string_in_variable(argv[2], mmux_bash_pointers_output_format_$1, MMUX_BUILTIN_NAME_STR);
+    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
   }
 
   if (0) { printf("%s: old format: \"%s\"\n", __func__, mmux_bash_pointers_output_format_$1); }
   if (0) { printf("%s: new format: \"%s\"\n", __func__, argv[1]); }
 
-  return mmux_$1_set_output_format(argv[1], MMUX_BUILTIN_NAME);
+  return mmux_$1_set_output_format(argv[1], MMUX_BUILTIN_NAME_STR);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME);
+	  MMUX_BUILTIN_NAME_STR);
   return MMUX_FAILURE;
 ]]])
 }

@@ -38,13 +38,13 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strerror]]])
   int		rv, errnum;
   char *	errmsg;
 
-  rv = mmux_sint_parse(&errnum, argv[2], MMUX_BUILTIN_NAME);
+  rv = mmux_sint_parse(&errnum, argv[2], MMUX_BUILTIN_NAME_STR);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   errmsg = strerror(errnum);
   if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errmsg);}
 
-  return mmux_bash_store_string_in_variable(argv[1], errmsg, MMUX_BUILTIN_NAME);
+  return mmux_bash_store_string_in_variable(argv[1], errmsg, MMUX_BUILTIN_NAME_STR);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_strerror]]],
     [[[(3 == argc)]]],
@@ -65,7 +65,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_errno_to_string]]])
   int		rv, errnum;
   char *	errsym;
 
-  rv = mmux_sint_parse(&errnum, argv[2], MMUX_BUILTIN_NAME);
+  rv = mmux_sint_parse(&errnum, argv[2], MMUX_BUILTIN_NAME_STR);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   errsym = strerror(errnum);
@@ -209,7 +209,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_errno_to_string]]])
     return MMUX_FAILURE;
   }
 
-  return mmux_bash_store_string_in_variable(argv[1], errsym, MMUX_BUILTIN_NAME);
+  return mmux_bash_store_string_in_variable(argv[1], errsym, MMUX_BUILTIN_NAME_STR);
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_errno_to_string]]],
     [[[(3 == argc)]]],
