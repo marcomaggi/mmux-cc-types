@@ -2,14 +2,25 @@
 
 ACLOCAL_AMFLAGS		= -I meta/autotools
 AUTOMAKE_OPTIONS	= foreign
-EXTRA_DIST		= INSTALL meta/slackware/slack-desc.in
-EXTRA_DIST		+= meta/m4/libmmux-bash-builtins.m4 src/config.m4.in
+EXTRA_DIST		= INSTALL
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
-AM_CPPFLAGS		= -I$(srcdir)/src
+AM_CPPFLAGS		= -I$(srcdir)/src -I$(builddir)/src
 CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
+
+## ------------------------------------------------------------------------
+
+MMUX_BASH_M4_MACROS	= \
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4		\
+	$(top_srcdir)/src/config.m4.in
+EXTRA_DIST		+= $(MMUX_BASH_M4_MACROS)
+
+# NOTE Load first "libmmux-bash-builtins.m4" and then "config.m4" !!!
+MMUX_BASH_M4_LIBS = \
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
+	$(builddir)/src/config.m4
 
 ## --------------------------------------------------------------------
 
@@ -98,7 +109,7 @@ CLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
 DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
 
 noinst_LTLIBRARIES			= libmmux-bash-pointers-libdfp.la
-libmmux_bash_pointers_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS) -I$(builddir)/src
+libmmux_bash_pointers_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS)
 libmmux_bash_pointers_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
 libmmux_bash_pointers_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
 libmmux_bash_pointers_libdfp_la_SOURCES	= src/mmux-bash-pointers-libdfp.c
@@ -147,11 +158,6 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-sprint-functions.c	\
 	src/mmux-bash-pointers-type-functions.c
 
-# NOTE Load first "libmmux-bash-builtins.m4" and then "config.m4" !!!
-MMUX_BASH_POINTERS_M4_LIBS = \
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
-	$(builddir)/src/config.m4
-
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -196,11 +202,11 @@ libmmux_bash_pointers_la_SOURCES	= \
 
 library: libmmux-bash-pointers.la
 
-src/%.h: src/%.h.m4 $(MMUX_BASH_POINTERS_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_M4_LIBS) $< >$@
+src/%.h: src/%.h.m4 $(MMUX_BASH_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_M4_LIBS) $< >$@
 
-src/%.c: src/%.c.m4 $(MMUX_BASH_POINTERS_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_M4_LIBS) $< >$@
+src/%.c: src/%.c.m4 $(MMUX_BASH_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_M4_LIBS) $< >$@
 
 src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
 
@@ -212,8 +218,8 @@ CLEANFILES		+= src/libmmux-bash-pointers.bash
 mmuxbashlib_DATA	= src/libmmux-bash-pointers.bash
 mmuxbashlibdir		= $(datadir)/bash
 
-src/%.bash: src/%.bash.m4 $(MMUX_BASH_POINTERS_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_POINTERS_M4_LIBS) $< >$@
+src/%.bash: src/%.bash.m4 $(MMUX_BASH_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_M4_LIBS) $< >$@
 
 
 #### tests

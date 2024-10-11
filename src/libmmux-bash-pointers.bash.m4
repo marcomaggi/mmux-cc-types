@@ -33,7 +33,8 @@ function mmux_bash_pointers_library_load () {
     # mutating these  variables: I have  settled on accepting that  they are not  read-only.  (Marco
     # Maggi; Sep 12, 2024)
     #
-    declare -g MMUX_BASH_POINTERS_LIBRARY=libmmux-bash-pointers.so
+    declare -g MMUX_BASH_POINTERS_SHARED_LIBRARY=libmmux-bash-pointers.so
+    declare -g MMUX_BASH_POINTERS_SHELL_LIBRARY=libmmux-bash-pointers.bash
     declare -g MMUX_BASH_POINTERS_CURRENT=mmux_bash_pointers_VERSION_INTERFACE_CURRENT
     declare -g MMUX_BASH_POINTERS_REVISION=mmux_bash_pointers_VERSION_INTERFACE_REVISION
     declare -g MMUX_BASH_POINTERS_AGE=mmux_bash_pointers_VERSION_INTERFACE_AGE
@@ -218,7 +219,8 @@ function mmux_bash_pointers_library_unload () {
     mmux_bash_pointers_library_undefine_all_builtins
 
     unset -v \
-	  MMUX_BASH_POINTERS_LIBRARY \
+	  MMUX_BASH_POINTERS_SHARED_LIBRARY \
+	  MMUX_BASH_POINTERS_SHELL_LIBRARY \
 	  MMUX_BASH_POINTERS_CURRENT \
 	  MMUX_BASH_POINTERS_REVISION \
 	  MMUX_BASH_POINTERS_AGE \
@@ -254,7 +256,7 @@ function mmux_bash_pointers_library_define_builtin () {
     declare ALIAS_NAME=$2
     MMUX_BASH_POINTERS_DEFINED_BUILTINS[${#MMUX_BASH_POINTERS_DEFINED_BUILTINS[@]}]=${BUILTIN_NAME:?}
 
-    enable -f "${MMUX_BASH_POINTERS_LIBRARY:?}" "${BUILTIN_NAME:?}"
+    enable -f "${MMUX_BASH_POINTERS_SHARED_LIBRARY:?}" "${BUILTIN_NAME:?}"
     if test -n "$ALIAS_NAME"
     then
 	alias "${ALIAS_NAME:?}"="${BUILTIN_NAME:?}"
