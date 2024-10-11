@@ -42,14 +42,14 @@ m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language expression, between parentheses, about "argc": if true the number of argumets is correct
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_FUNCTION_NO_OPTIONS]]],[[[m4_dnl
 static bool
-$1_validate_argc (int argc)
+[[[]]]$1[[[]]]_validate_argc (int argc)
 {
   return ($2)? true : false;
 }
 static mmux_bash_rv_t
-$1_builtin (mmux_bash_word_list_t word_list)
+[[[]]]$1[[[]]]_builtin (mmux_bash_word_list_t word_list)
 {
-  return (int)mmux_bash_builtin_implementation_function_no_options(word_list, $1_validate_argc, $1_main);
+  return (int)mmux_bash_builtin_implementation_function_no_options(word_list, [[[]]]$1[[[]]]_validate_argc, [[[]]]$1[[[]]]_main);
 }
 ]]])
 
@@ -57,22 +57,23 @@ m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language expression, between parentheses, about "argc": if true the number of argumets is correct
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_FUNCTION]]],[[[m4_dnl
 static bool
-$1_validate_argc (int argc)
+[[[]]]$1[[[]]]_validate_argc (int argc)
 {
   return ($2)? true : false;
 }
 static mmux_bash_rv_t
-$1_builtin (mmux_bash_word_list_t word_list)
+[[[]]]$1[[[]]]_builtin (mmux_bash_word_list_t word_list)
 {
-  return (int) mmux_bash_builtin_implementation_function(word_list, $1_validate_argc, $1_main);
+  return (int) mmux_bash_builtin_implementation_function(word_list, [[[]]]$1[[[]]]_validate_argc, [[[]]]$1[[[]]]_main);
 }
 ]]])
 
 m4_dnl $1 - builtin and implementation-function name
 m4_define([[[MMUX_BASH_BUILTIN_MAIN]]],[[[static mmux_bash_rv_t
-$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
+[[[]]]$1[[[]]]_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
 #undef  MMUX_BUILTIN_NAME_STR
 #define MMUX_BUILTIN_NAME_STR	"$1"
+m4_define([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],[[[$1]]])m4_dnl
 ]]])
 
 
@@ -81,13 +82,13 @@ m4_dnl data structures
 m4_dnl $1 - bulitin identifier
 m4_dnl $2 - C language string representing the short documentation
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_STRUCT]]],[[[m4_dnl
-/* Bash will search for this struct  building the name "$1_struct" from the command
-   line argument "$1" we have given to the "enable" builtin. */
-mmux_bash_struct_builtin_t $1_struct = {
-  .name		= "$1",				/* Builtin name */
-  .function	= $1_builtin,			/* Function implementing the builtin */
+/* Bash will search for this struct  building the name "[[[]]]$1[[[]]]_struct" from the command
+   line argument "[[[]]]$1[[[]]]" we have given to the "enable" builtin. */
+mmux_bash_struct_builtin_t [[[]]]$1[[[]]]_struct = {
+  .name		= "[[[]]]$1[[[]]]",		/* Builtin name */
+  .function	= [[[]]]$1[[[]]]_builtin,	/* Function implementing the builtin */
   .flags	= MMUX_BASH_BUILTIN_ENABLED,	/* Initial flags for builtin */
-  .long_doc	= $1_doc,			/* Array of long documentation strings. */
+  .long_doc	= [[[]]]$1[[[]]]_doc,		/* Array of long documentation strings. */
   .short_doc	= $2,				/* Usage synopsis; becomes short_doc */
   .reserved0	= NULL				/* Reserved for Bash. */
 };
@@ -98,7 +99,7 @@ m4_dnl $2 - C language string representing a single-line long documentation
 m4_define([[[MMUX_BASH_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE]]],[[[m4_dnl
 /* A NULL-terminated array of ASCIIZ strings representing the lines of the
    builtin long documentation. */
-static char * $1_doc[] = {
+static char * [[[]]]$1[[[]]]_doc[] = {
   $2,
   (char *)NULL
 };

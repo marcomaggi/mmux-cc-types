@@ -230,9 +230,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_add]]])
   rop_octets = op_octets + delta;
   return mmux_pointer_bind_to_variable(argv[1], rop_octets, MMUX_BUILTIN_NAME_STR);
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_add]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_pointer_add ROPVAR PTR DELTA"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR PTR DELTA"]]],
     [[["Increment the pointer PTR by the signed integer DELTA, store the result in PTRVAR."]]])
 
 
@@ -262,9 +262,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 <= argc)]]],
-    [[["mmux_$1_add ROPVAR OP0 OP ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP0 OP ..."]]],
     [[["Compute the addition between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -291,9 +291,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_sub]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 <= argc)]]],
-    [[["mmux_$1_sub ROPVAR OP0 OP ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP0 OP ..."]]],
     [[["Compute the subtraction between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -320,9 +320,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mul]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 <= argc)]]],
-    [[["mmux_$1_mul ROPVAR OP0 OP ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP0 OP ..."]]],
     [[["Compute the multiplication between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -349,9 +349,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_div]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 <= argc)]]],
-    [[["mmux_$1_div ROPVAR OP0 OP ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP0 OP ..."]]],
     [[["Compute the division between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -374,9 +374,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_$1_neg ROPVAR OP"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP"]]],
     [[["Compute the negation of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -399,9 +399,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_inv]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_$1_inv ROPVAR OP"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP"]]],
     [[["Compute the iverse of the operand OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -505,9 +505,9 @@ error:
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_$1_mod ROPVAR OP0 OP"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP0 OP"]]],
     [[["Compute the remainder between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -533,9 +533,9 @@ error:
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_incr]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_$1_incr ROPVAR OP"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP"]]],
     [[["Increment by one the value OP, store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -561,9 +561,9 @@ error:
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_decr]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_$1_decr ROPVAR OP"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP"]]],
     [[["Decrement by one the value OP, store the result in ROPVAR."]]])
 
 ]]])
