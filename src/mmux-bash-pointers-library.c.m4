@@ -59,15 +59,15 @@ mmux_bash_pointers_version_interface_age (void)
  ** Error handling.
  ** ----------------------------------------------------------------- */
 
-int
-mmux_bash_pointers_set_ERRNO (int errnum, char const * const caller_name)
+mmux_bash_rv_t
+mmux_bash_pointers_set_ERRNO (int errnum, char const * const who)
 {
-  return mmux_bash_store_sint_in_variable("ERRNO", errnum, caller_name);
+  return mmux_bash_store_sint_in_variable("ERRNO", errnum, who);
 }
-int
-mmux_bash_pointers_consume_errno (char const * const caller_name)
+mmux_bash_rv_t
+mmux_bash_pointers_consume_errno (char const * const who)
 {
-  mmux_bash_pointers_set_ERRNO(errno, caller_name);
+  mmux_bash_pointers_set_ERRNO(errno, who);
   errno = 0;
   return MMUX_FAILURE;
 }
@@ -80,7 +80,7 @@ m4_dnl --------------------------------------------------------------------
 
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   if (0) { fprintf(stderr, "%s: sizeof %s\n", __func__, "$1"); }
-  mmux_bash_create_global_sint_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_SIZEOF", mmux_$1_sizeof(),
+  mmux_bash_create_global_sint_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_SIZEOF", mmux_$1_sizeof(),
                                         MMUX_BUILTIN_NAME);
 ]]])]]])
 
@@ -96,7 +96,7 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2
     char	str[requested_nbytes];
 
     mmux_$1_sprint(str, requested_nbytes, value);
-    mmux_bash_create_global_string_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_MAX", str, MMUX_BUILTIN_NAME);
+    mmux_bash_create_global_string_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_MAX", str, MMUX_BUILTIN_NAME);
   }
 }]]])]]])
 
@@ -112,7 +112,7 @@ m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2
     char	str[requested_nbytes];
 
     mmux_$1_sprint(str, requested_nbytes, value);
-    mmux_bash_create_global_string_variable("mmux_[[[]]]mmux_tolower([[[$1]]])[[[]]]_MIN", str, MMUX_BUILTIN_NAME);
+    mmux_bash_create_global_string_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_MIN", str, MMUX_BUILTIN_NAME);
   }
 }]]])]]])
 
@@ -135,10 +135,7 @@ m4_divert(0)m4_dnl
  ** Library initialisation.
  ** ----------------------------------------------------------------- */
 
-static int
-mmux_bash_pointers_library_init_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_bash_pointers_library_init"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
 {
   /* Compile the POSIX regular expression required to parse the string representation
    * of complex numbers.

@@ -33,8 +33,8 @@
 static regex_t mmux_bash_pointers_float_format_rex;
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-#undef  MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]mmux_toupper([[[$1]]])
-#define MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]mmux_toupper([[[$1]]])	[[[$2]]]
+#undef  MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])
+#define MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])	[[[$2]]]
 
 char	mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
 ]]])]]])
@@ -72,7 +72,7 @@ mmux_bash_pointers_init_sprint_module (void)
   }
 
   m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_$1_set_output_format(MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]mmux_toupper([[[$1]]]), "MMUX Bash Pointers");
+  mmux_$1_set_output_format(MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]]), "MMUX Bash Pointers");
   ]]])]]])
 
   INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]])
@@ -361,7 +361,7 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(value);
   mmux_$1_part_t	im = mmux_$1_imag_part(value);
-  mmux_rv_t		rv;
+  mmux_bash_rv_t	rv;
 
   /* Output the opening parenthesis of the real part. */
   {

@@ -33,10 +33,7 @@
  ** Pointer bitwise operations.
  ** ----------------------------------------------------------------- */
 
-static int
-mmux_pointer_bitwise_and_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_and"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_and]]])
 {
   mmux_pointer_t	op;
   mmux_uintptr_t	op_uintptr, mask;
@@ -61,10 +58,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_and]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_pointer_bitwise_or_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_or"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_or]]])
 {
   mmux_pointer_t	op;
   mmux_uintptr_t	op_uintptr, mask;
@@ -89,10 +83,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_or]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_pointer_bitwise_xor_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_xor"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_xor]]])
 {
   mmux_pointer_t	op, mask;
   mmux_uintptr_t	op_uintptr, mask_uintptr;
@@ -118,10 +109,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_xor]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_pointer_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_not"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_not]]])
 {
   mmux_pointer_t	op;
   mmux_uintptr_t	op_uintptr;
@@ -143,10 +131,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_not]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_pointer_bitwise_shl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shl"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shl]]])
 {
   mmux_pointer_t	op;
   mmux_uintptr_t	op_uintptr;
@@ -172,10 +157,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shl]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_pointer_bitwise_shr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_bitwise_shr"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shr]]])
 {
   mmux_pointer_t	op;
   mmux_uintptr_t	op_uintptr;
@@ -204,11 +186,7 @@ m4_dnl --------------------------------------------------------------------
 m4_dnl Core bitwise builtins constructors.
 m4_dnl ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN]]],[[[
-static int
-mmux_$1_bitwise_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_$3"
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_$3]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -232,21 +210,17 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_$3]]],
     [[[(3 <= argc)]]],
     [[["mmux_$1_bitwise_$3 ROPVAR OP0 OP ..."]]],
-    [[["Compute the bitwise mmux_toupper($3) between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
+    [[["Compute the bitwise MMUX_M4_TOUPPER($3) between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
 m4_dnl ------------------------------------------------------------
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN]]],[[[
-static int
-mmux_$1_bitwise_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_$3"
+m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_$3]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
   mmux_sint_t	nbits;
-  int			rv;
+  int		rv;
 
   rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME);
   if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME); return rv; }
@@ -278,10 +252,7 @@ MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[or]]], [[[|]]])
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[xor]]],[[[^]]])
 
-static int
-mmux_$1_bitwise_not_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_bitwise_not"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_not]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;

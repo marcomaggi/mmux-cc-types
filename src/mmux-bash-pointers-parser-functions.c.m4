@@ -37,7 +37,7 @@ regex_t mmux_bash_pointers_complex_rex;
  ** Type parsers: signed exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
-int
+mmux_bash_rv_t
 mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
 					 mmux_sintmax_t target_min, mmux_sintmax_t target_max,
 					 char const * target_type_name, char const * caller_name)
@@ -109,7 +109,7 @@ mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s
  ** Type parsers: unsigned exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
-int
+mmux_bash_rv_t
 mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
 					   mmux_uintmax_t target_max,
 					   char const * target_type_name, char const * caller_name)
@@ -182,9 +182,9 @@ mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const *
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-static int parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
+static mmux_bash_rv_t parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
 
-int
+mmux_bash_rv_t
 mmux_$1_parse (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
 {
   int	len = strlen(s_arg);
@@ -215,7 +215,7 @@ mmux_$1_parse (mmux_$1_t * p_value, const char * s_arg, const char * caller_name
   }
 }
 
-int
+mmux_bash_rv_t
 parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
 /* Try to parse a complex number in the format: (1.2)+i*(3.4)
 
@@ -308,7 +308,7 @@ DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-int
+mmux_bash_rv_t
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
 {
   mmux_$1_t	value;
@@ -351,7 +351,7 @@ DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_HAVE_CC_TYPE
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[
-int
+mmux_bash_rv_t
 mmux_$1_parse (mmux_$1_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_sintmax_t	value;
@@ -380,7 +380,7 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[
-int
+mmux_bash_rv_t
 mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_sllong_t	rv;
@@ -441,7 +441,7 @@ mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * c
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
-int
+mmux_bash_rv_t
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
   mmux_uintmax_t	value;
@@ -472,7 +472,7 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[
-int
+mmux_bash_rv_t
 mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_ullong_t	rv;
@@ -533,7 +533,7 @@ mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * c
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPEDEF_PARSER]]],[[[
-int
+mmux_bash_rv_t
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
   return mmux_[[[]]]$2[[[]]]_parse(p_value, s_arg, caller_name);

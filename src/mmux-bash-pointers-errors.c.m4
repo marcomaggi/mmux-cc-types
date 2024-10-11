@@ -33,10 +33,7 @@
  ** Standard error management.
  ** ----------------------------------------------------------------- */
 
-static int
-mmux_libc_strerror_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_strerror"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strerror]]])
 {
   int		rv, errnum;
   char *	errmsg;
@@ -63,10 +60,7 @@ m4_define([[[MMUX_DEFINE_ERRNO_CASE]]],[[[
 #endif
 ]]])
 
-static int
-mmux_libc_errno_to_string_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_errno_to_string"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_errno_to_string]]])
 {
   int		rv, errnum;
   char *	errsym;

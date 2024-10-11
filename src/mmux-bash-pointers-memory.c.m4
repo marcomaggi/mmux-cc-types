@@ -33,10 +33,7 @@
  ** Standard memory management.
  ** ----------------------------------------------------------------- */
 
-static int
-mmux_libc_malloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_malloc"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_malloc]]])
 {
   void *	ptr;
   size_t	len;
@@ -63,10 +60,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_malloc]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_libc_calloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_calloc"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_calloc]]])
 {
   void *	ptr;
   size_t	item_count;
@@ -98,10 +92,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_calloc]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_libc_realloc_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_realloc"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_realloc]]])
 {
   void *	ptr;
   size_t	len;
@@ -129,10 +120,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_realloc]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_libc_free_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_free"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_free]]])
 {
   void *	ptr;
   int		rv;
@@ -156,10 +144,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_free]]],
  ** Standard memory operations.
  ** ----------------------------------------------------------------- */
 
-static int
-mmux_libc_memset_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_memset"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memset]]])
 {
   void *	ptr;
   unsigned char	c;
@@ -188,10 +173,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memset]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_libc_memcpy_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_memcpy"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcpy]]])
 {
   void *	ptr_from;
   void *	ptr_to;
@@ -217,10 +199,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memcpy]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_libc_memmove_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_memmove"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memmove]]])
 {
   void *	ptr_from;
   void *	ptr_to;

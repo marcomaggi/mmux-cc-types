@@ -52,7 +52,7 @@
  ** Shell builtins interface.
  ** ----------------------------------------------------------------- */
 
-mmux_rv_t
+mmux_bash_rv_t
 mmux_bash_builtin_implementation_function (mmux_bash_word_list_t word_list,
 					   mmux_bash_builtin_validate_argc_t * validate_argc,
                                            mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
@@ -77,7 +77,7 @@ mmux_bash_builtin_implementation_function (mmux_bash_word_list_t word_list,
   }
   return rv;
 }
-mmux_rv_t
+mmux_bash_rv_t
 mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word_list,
 						      mmux_bash_builtin_validate_argc_t * validate_argc,
 						      mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)

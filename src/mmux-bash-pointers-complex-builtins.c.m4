@@ -37,10 +37,7 @@ m4_dnl $1 - complex number stem
 m4_dnl $2 - stem of real and imaginary parts
 m4_dnl $3 - conditional inclusion C preprocessor symbol
 m4_define([[[DEFINE_CORE_COMPLEX_BUILTINS]]],[[[
-static int
-mmux_$1_make_rectangular_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_make_rectangular"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_make_rectangular]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$2_t	rep, imp;
@@ -72,10 +69,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_make_rectangular]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_real_part_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_real_part"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_real_part]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$2_t	part;
@@ -104,10 +98,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_real_part]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_imag_part_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_imag_part"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_imag_part]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$2_t	part;
@@ -136,10 +127,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_imag_part]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_abs_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_abs"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_abs]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$2_t	part;
@@ -168,10 +156,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_abs]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_arg_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_arg"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_arg]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$2_t	part;
@@ -200,10 +185,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_arg]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_conj_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_conj"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_conj]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$1_t	Z, Zconj;

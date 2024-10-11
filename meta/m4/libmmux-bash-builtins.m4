@@ -32,8 +32,8 @@ m4_changecom([[[/*]]],[[[*/]]])
 
 m4_dnl helpers
 
-m4_define([[[mmux_toupper]]],[[[m4_translit([[[$1]]],[[[abcdefghijklmnopqrstuvwxyz]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]])]]])
-m4_define([[[mmux_tolower]]],[[[m4_translit([[[$1]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]],[[[abcdefghijklmnopqrstuvwxyz]]])]]])
+m4_define([[[MMUX_M4_TOUPPER]]],[[[m4_translit([[[$1]]],[[[abcdefghijklmnopqrstuvwxyz]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]])]]])
+m4_define([[[MMUX_M4_TOLOWER]]],[[[m4_translit([[[$1]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]],[[[abcdefghijklmnopqrstuvwxyz]]])]]])
 
 
 m4_dnl function definitions
@@ -46,10 +46,10 @@ $1_validate_argc (int argc)
 {
   return ($2)? true : false;
 }
-static int
+static mmux_bash_rv_t
 $1_builtin (mmux_bash_word_list_t word_list)
 {
-  return (int) mmux_bash_builtin_implementation_function_no_options(word_list, $1_validate_argc, $1_main);
+  return (int)mmux_bash_builtin_implementation_function_no_options(word_list, $1_validate_argc, $1_main);
 }
 ]]])
 
@@ -61,11 +61,18 @@ $1_validate_argc (int argc)
 {
   return ($2)? true : false;
 }
-static int
+static mmux_bash_rv_t
 $1_builtin (mmux_bash_word_list_t word_list)
 {
   return (int) mmux_bash_builtin_implementation_function(word_list, $1_validate_argc, $1_main);
 }
+]]])
+
+m4_dnl $1 - builtin and implementation-function name
+m4_define([[[MMUX_BASH_BUILTIN_MAIN]]],[[[static mmux_bash_rv_t
+$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
+#undef  MMUX_BUILTIN_NAME
+#define MMUX_BUILTIN_NAME	"$1"
 ]]])
 
 

@@ -212,10 +212,7 @@ DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TY
  ** Pointer arithmetics builtins.
  ** ----------------------------------------------------------------- */
 
-static int
-mmux_pointer_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_pointer_add"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_add]]])
 {
   mmux_pointer_t	op;
   mmux_uint8_t *	op_octets;
@@ -243,11 +240,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_add]]],
  ** Core arithmetics builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_CORE_ARITHMETICS_BUILTIN]]],[[[
-static int
-mmux_$1_add_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_add"
+m4_define([[[DEFINE_CORE_ARITHMETICS_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_add]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -276,10 +269,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_add]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_sub_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_sub"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_sub]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -308,10 +298,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_sub]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_mul_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_mul"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_mul]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -340,10 +327,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mul]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_div_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_div"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_div]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -372,10 +356,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_div]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_neg_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_neg"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_neg]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
@@ -400,10 +381,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_neg]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_inv_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_inv"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_inv]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
@@ -502,11 +480,7 @@ DEFINE_CORE_ARITHMETICS_BUILTIN([[[wint]]])
  ** Remainder builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FOR_INTEGERS_BUILTIN]]],[[[
-static int
-mmux_$1_mod_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_mod"
+m4_define([[[DEFINE_FOR_INTEGERS_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_mod]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op1, op2;
@@ -538,10 +512,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_mod]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_incr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_incr"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_incr]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
@@ -569,10 +540,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_incr]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_decr_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_decr"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_decr]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;

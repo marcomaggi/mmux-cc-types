@@ -36,15 +36,11 @@
 m4_dnl $1 - the type stem
 m4_dnl $2 - the function stem
 m4_dnl $3 - preprocessor symbol for conditional definition
-m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTIN]]],[[[
-static int
-mmux_$1_$2_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_$2"
+m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_$2]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
-  int			rv;
+  int		rv;
 
   for (int i = 1; i < argc; ++i) {
     rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME);
@@ -154,13 +150,9 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
  ** Approximate comparison builtins for real floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS]]],[[[
-static int
-mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
+m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_equal_absmargin]]])
 #undef  MMUX_MARGIN_VARNAME
-#define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"
+#define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]MMUX_M4_TOUPPER($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -203,12 +195,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_equal_relepsilon]]])
 #undef  MMUX_EPSILON_VARNAME
-#define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"
+#define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]MMUX_M4_TOUPPER($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -274,12 +263,9 @@ MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_REAL_BUILTINS([[[decimal128]]],		[[[MMUX
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_DEFINE_APPROXIMATE_COMPARISON_COMPLEX_BUILTINS]]],[[[
-static int
-mmux_$1_equal_absmargin_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_equal_absmargin"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_equal_absmargin]]])
 #undef  MMUX_MARGIN_VARNAME
-#define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]mmux_toupper($1)"
+#define MMUX_MARGIN_VARNAME	"ABSOLUTE_MARGIN_[[[]]]MMUX_M4_TOUPPER($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */
@@ -323,12 +309,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_equal_absmargin]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_equal_relepsilon_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_equal_relepsilon"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_equal_relepsilon]]])
 #undef  MMUX_EPSILON_VARNAME
-#define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]mmux_toupper($1)"
+#define MMUX_EPSILON_VARNAME	"RELATIVE_EPSILON_[[[]]]MMUX_M4_TOUPPER($1)"
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   mmux_$1_t	ops[argc]; /* we allocate one more of these, not a problem */

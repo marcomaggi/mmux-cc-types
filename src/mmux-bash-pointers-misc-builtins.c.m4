@@ -34,10 +34,7 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN]]],[[[
-static int
-mmux_$1_set_format_main (int argc MMUX_BASH_POINTERS_UNUSED,  char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_set_format"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_set_format]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   /* If  requested:  store the  old  format  string into  a  variable  whose name  is

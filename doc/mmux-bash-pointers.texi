@@ -4151,6 +4151,7 @@ linking} for details.
 * shared library parsers::      Parsing string representations of C language types.
 * shared library sprinters::    Printing string representations of C language types.
 * shared library bindings::     Binding values to variables.
+* shared library errors::       Handling errors.
 @end menu
 
 @c page
@@ -4276,17 +4277,17 @@ Return an integer representing the library interface current age.
 @appendixsec Return values of C language functions
 
 
-@deftp {Typedef} mmux_rv_t
+@deftp {Typedef} mmux_bash_rv_t
 Type of constant values used as return value by C language functions.
 @end deftp
 
 
-@deftypevr {Constant} mmux_rv_t MMUX_SUCCESS
+@deftypevr {Constant} mmux_bash_rv_t MMUX_SUCCESS
 Return value used to signal a successful function call.
 @end deftypevr
 
 
-@deftypevr {Constant} mmux_rv_t MMUX_FAILURE
+@deftypevr {Constant} mmux_bash_rv_t MMUX_FAILURE
 Return value used to signal a failed function call.
 @end deftypevr
 
@@ -5065,6 +5066,27 @@ builtin.
 @MmuxDefineCFunctionBindToVariable{gid}
 @MmuxDefineCFunctionBindToVariable{wchar}
 @MmuxDefineCFunctionBindToVariable{wint}
+
+@c page
+@node shared library errors
+@appendixsec Handling errors
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_pointers_set_ERRNO (int @var{errnum}, char const * @var{who})
+Set the shell variable @env{ERRNO} to a string representation of @var{errnum}.  When successful
+return @samp{MMUX_SUCCESS}, otherwise return @samp{MMUX_FAILURE}.
+
+If an error occurs and @var{who} is not @cnull{}: print an error message to @stderr{}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * @var{who})
+Call @cfunc{mmux_bash_pointers_set_ERRNO} to deal with the current value of the standard
+@code{errno}; the set @code{errno} itself to zero.  When successful return @samp{MMUX_SUCCESS},
+otherwise return @samp{MMUX_FAILURE}.
+
+If an error occurs and @var{who} is not @cnull{}: print an error message to @stderr{}.
+@end deftypefun
 
 @c page
 @node references

@@ -29,10 +29,7 @@
 #include "mmux-bash-pointers-internals.h"
 
 
-static int
-mmux_libc_open_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_open"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_open]]])
 {
   int			flags;
   mode_t		mode = 0;
@@ -59,10 +56,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_open]]],
     [[["Open a file, store the file descriptor in FDVAR."]]])
 
 
-static int
-mmux_libc_close_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_close"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_close]]])
 {
   int	fd;
 
@@ -85,10 +79,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_close]]],
     [[["Close a file descriptor."]]])
 
 
-static int
-mmux_libc_read_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_read"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_read]]])
 {
   int		fd;
   void *	buffer;
@@ -115,10 +106,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_read]]],
     [[["Read SIZE bytes from FD and store them in BUFFER, store in DONEVAR the number of bytes read."]]])
 
 
-static int
-mmux_libc_write_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_write"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_write]]])
 {
   int		fd;
   void *	buffer;
@@ -145,10 +133,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_write]]],
     [[["Write SIZE bytes to FD from BUFFER, store in DONEVAR the number of bytes written."]]])
 
 
-static int
-mmux_libc_pread_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_pread"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pread]]])
 {
   int			fd;
   void *		buffer;
@@ -177,10 +162,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_pread]]],
     [[["Read SIZE bytes from FD, at OFFSET from the current position, and store them in BUFFER, store in DONEVAR the number of bytes read."]]])
 
 
-static int
-mmux_libc_pwrite_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_pwrite"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwrite]]])
 {
   int			fd;
   void *		buffer;
@@ -209,10 +191,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_pwrite]]],
     [[["Write SIZE bytes to FD, at OFFSET from the current position, from BUFFER, store in DONEVAR the number of bytes written."]]])
 
 
-static int
-mmux_libc_lseek_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_lseek"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lseek]]])
 {
   int			fd, whence;
   mmux_off_t	offset;
@@ -238,10 +217,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_lseek]]],
     [[["Change the file position of FD of OFFSET from WHENCE, store in OFFVAR the resulting file position."]]])
 
 
-static int
-mmux_libc_dup_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_dup"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup]]])
 {
   int	fd;
 
@@ -264,10 +240,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup]]],
     [[["Duplicate the file descriptor FD, store the result in FDVAR."]]])
 
 
-static int
-mmux_libc_dup2_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_dup2"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup2]]])
 {
   int	rv, old_fd, new_fd;
 
@@ -292,10 +265,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup2]]],
 
 
 
-static int
-mmux_libc_fcntl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_fcntl"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 {
   int	fd, command;
 
@@ -446,10 +416,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_fcntl]]],
     [[["Call fcntl with the given arguments, store the result in RVAR."]]])
 
 
-static int
-mmux_libc_ioctl_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[])
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_libc_ioctl"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
 {
   int	fd, command;
 

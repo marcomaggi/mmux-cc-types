@@ -33,11 +33,7 @@
  ** Type accessors: pointers to C standard types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_POINTER_ACCESSOR]]],[[[
-static int
-mmux_$1_pointer_ref_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_pointer_ref"
+m4_define([[[DEFINE_POINTER_ACCESSOR]]],[[[MMUX_BASH_BUILTIN_MAIN(mmux_$1_pointer_ref)
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *		ptr;
@@ -73,10 +69,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_ref]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_array_ref_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_array_ref"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_array_ref]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *		ptr;

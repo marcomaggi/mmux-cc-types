@@ -34,10 +34,7 @@
  ** Type predicate builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[static int
-mmux_string_is_$1_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_string_is_$1"
+m4_define([[[DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_string_is_$1]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	data;
@@ -129,11 +126,7 @@ DEFINE_TYPE_STRING_REP_PREDICATE([[[wint]]])
  ** Arithmetic predicate builtins: zero, positive, negative, non-positive, non-negative, nan, infinite.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_ARITHMETIC_PREDICATE]]],[[[
-static int
-mmux_$1_is_$3_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_is_$3"
+m4_define([[[DEFINE_ARITHMETIC_PREDICATE]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_is_$3]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   mmux_$1_t	value;

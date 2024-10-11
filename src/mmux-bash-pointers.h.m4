@@ -103,16 +103,13 @@ mmux_bash_pointers_decl int		mmux_bash_pointers_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
- ** Error handling functions.
- ** ----------------------------------------------------------------- */
-
-mmux_bash_pointers_decl int mmux_bash_pointers_set_ERRNO (int errnum, char const * caller_name);
-mmux_bash_pointers_decl int mmux_bash_pointers_consume_errno (char const * const caller_name);
-
-
-/** --------------------------------------------------------------------
  ** Type definitions.
  ** ----------------------------------------------------------------- */
+
+typedef enum {
+  MMUX_SUCCESS=MMUX_BASH_EXECUTION_SUCCESS,
+  MMUX_FAILURE=MMUX_BASH_EXECUTION_FAILURE
+} mmux_bash_rv_t;
 
 /* These definitions can be useful when expanding macros. */
 typedef void *				mmux_pointer_t;
@@ -296,13 +293,13 @@ MMUX_BASH_POINTERS_DEFINE_COMPLEX_BASIC_PROTOS([[[complexd128]]],	[[[MMUX_HAVE_C
  ** Special parser functions.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
-								     mmux_sintmax_t target_min, mmux_sintmax_t target_max,
-								     char const * target_type_name, char const * caller_name);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
+										mmux_sintmax_t target_min, mmux_sintmax_t target_max,
+										char const * target_type_name, char const * who);
 
-mmux_bash_pointers_decl int mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
-								       mmux_uintmax_t target_max,
-								       char const * target_type_name, char const * caller_name);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
+										  mmux_uintmax_t target_max,
+										  char const * target_type_name, char const * who);
 
 
 /** --------------------------------------------------------------------
@@ -321,12 +318,12 @@ typedef bool      mmux_type_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mm
 mmux_bash_pointers_decl bool mmux_string_is_$1 (char const * s_value);
 mmux_bash_pointers_decl int mmux_$1_sizeof (void)
   __attribute__((__const__));
-mmux_bash_pointers_decl int mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * who)
   __attribute__((__nonnull__(1,2)));
 mmux_bash_pointers_decl int mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_bash_pointers_decl int mmux_$1_sprint_size (mmux_$1_t v);
-mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * caller_name);
+mmux_bash_pointers_decl int mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * who);
 ]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -593,7 +590,7 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_T
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_bash_pointers_decl char mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
 
-mmux_bash_pointers_decl int mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
+mmux_bash_pointers_decl int mmux_$1_set_output_format (char const * const new_result_format, char const * const who)
   __attribute__((__nonnull__(1)));
 
 ]]])]]])
@@ -619,17 +616,12 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYP
  ** GNU Bash interface.
  ** ----------------------------------------------------------------- */
 
-typedef enum {
-  MMUX_SUCCESS=MMUX_BASH_EXECUTION_SUCCESS,
-  MMUX_FAILURE=MMUX_BASH_EXECUTION_FAILURE
-} mmux_rv_t;
-
 /* This is meatn to be an alias for Bash's "WORD_LIST". */
 typedef void *		mmux_bash_word_list_t;
 
-typedef bool mmux_bash_builtin_validate_argc_t                  (int argc);
-typedef int  mmux_bash_builtin_implementation_function_t        (mmux_bash_word_list_t word_list);
-typedef int  mmux_bash_builtin_custom_implementation_function_t (int argc, char const * const argv[]);
+typedef bool mmux_bash_builtin_validate_argc_t (int argc);
+typedef mmux_bash_rv_t mmux_bash_builtin_implementation_function_t        (mmux_bash_word_list_t word_list);
+typedef mmux_bash_rv_t mmux_bash_builtin_custom_implementation_function_t (int argc, char const * const argv[]);
 
 /* This definition  must match the  definition of  "struct builtin" in  Bash's header
    file "builtins.h". */
@@ -644,13 +636,13 @@ struct mmux_bash_struct_builtin_tag_t {
 
 typedef struct mmux_bash_struct_builtin_tag_t	mmux_bash_struct_builtin_t;
 
-mmux_bash_pointers_decl mmux_rv_t mmux_bash_builtin_implementation_function
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_builtin_implementation_function
   (mmux_bash_word_list_t word_list,
    mmux_bash_builtin_validate_argc_t * validate_argc,
    mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
   __attribute__((__nonnull__(1,2,3)));
 
-mmux_bash_pointers_decl mmux_rv_t mmux_bash_builtin_implementation_function_no_options
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_builtin_implementation_function_no_options
   (mmux_bash_word_list_t word_list,
    mmux_bash_builtin_validate_argc_t * validate_argc,
    mmux_bash_builtin_custom_implementation_function_t * custom_implementation_function)
@@ -661,35 +653,43 @@ mmux_bash_pointers_decl int mmux_bash_builtin_wrong_num_of_args (void);
 /* ------------------------------------------------------------------ */
 
 mmux_bash_pointers_decl int mmux_bash_store_string_in_variable        (char const * variable_name, char const * s_value,
-								       char const * caller_name)
+								       char const * who)
   __attribute__((__nonnull__(1,2)));
 
 mmux_bash_pointers_decl int mmux_bash_store_string_in_global_variable (char const * variable_name, char const * s_value,
-								       char const * caller_name)
+								       char const * who)
   __attribute__((__nonnull__(1,2)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl int mmux_bash_store_sint_in_variable        (char const * variable_name, int value, char const * caller_name)
+mmux_bash_pointers_decl int mmux_bash_store_sint_in_variable        (char const * variable_name, int value, char const * who)
   __attribute__((__nonnull__(1)));
 
-mmux_bash_pointers_decl int mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * caller_name)
+mmux_bash_pointers_decl int mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * who)
   __attribute__((__nonnull__(1)));
 
 /* ------------------------------------------------------------------ */
 
 mmux_bash_pointers_decl int mmux_bash_create_global_string_variable (char const * variable_name, char const * s_value,
-								     char const * caller_name)
+								     char const * who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_bash_pointers_decl int mmux_bash_create_global_sint_variable   (char const * variable_name, int value, char const * caller_name)
+mmux_bash_pointers_decl int mmux_bash_create_global_sint_variable   (char const * variable_name, int value, char const * who)
   __attribute__((__nonnull__(1)));
 
 /* ------------------------------------------------------------------ */
 
 mmux_bash_pointers_decl int mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char const * variable_name,
-								       char const * caller_name)
+								       char const * who)
   __attribute__((__nonnull__(1,2)));
+
+
+/** --------------------------------------------------------------------
+ ** Error handling functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_set_ERRNO (int errnum, char const * who);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * const who);
 
 
 /** --------------------------------------------------------------------

@@ -34,10 +34,7 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[MMUX_BASH_DEFINE_POINTER_MUTATOR]]],[[[
-static int
-mmux_$1_pointer_set_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_pointer_set"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_pointer_set]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *		ptr;
@@ -75,10 +72,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_set]]],
 
 /* ------------------------------------------------------------------ */
 
-static int
-mmux_$1_array_set_main (int argc MMUX_BASH_POINTERS_UNUSED, char const * const argv[] MMUX_BASH_POINTERS_UNUSED)
-#undef  MMUX_BUILTIN_NAME
-#define MMUX_BUILTIN_NAME	"mmux_$1_array_set"
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_array_set]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *		ptr;
