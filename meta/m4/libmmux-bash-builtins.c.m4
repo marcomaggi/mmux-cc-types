@@ -35,6 +35,10 @@ m4_dnl helpers
 m4_define([[[MMUX_M4_TOUPPER]]],[[[m4_translit([[[$1]]],[[[abcdefghijklmnopqrstuvwxyz]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]])]]])
 m4_define([[[MMUX_M4_TOLOWER]]],[[[m4_translit([[[$1]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]],[[[abcdefghijklmnopqrstuvwxyz]]])]]])
 
+m4_define([[[QQ]]],[[["${$1}"]]])
+m4_define([[[WW]]],[[["${$1:?}"]]])
+m4_define([[[RR]]],[[[${$1:?}]]])
+
 
 m4_dnl function definitions
 

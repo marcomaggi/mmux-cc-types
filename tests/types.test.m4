@@ -38,19 +38,8 @@ MBFL_DEFINE_UNDERSCORE_MACRO_FOR_SLOTS
 mbfl_embed_library(__LIBMBFL_LINKER__)
 mbfl_linker_source_library_by_stem(core)
 mbfl_linker_source_library_by_stem(tests)
-
-source "$MMUX_LIBRARY"
-
-function mbfl_string_is_integer_number () {
-    # We want to accept an empty parameter and return unsuccessfully when given.
-    mbfl_optional_parameter(ADDRESS, 1)
-    local -r REX='^[+-]?[0-9]+$'
-
-    if [[ $ADDRESS =~ $REX ]]
-    then return 0
-    else return 1
-    fi
-}
+mbfl_linker_source_library_by_stem(mmux-bash-packages)
+mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 dotest-set-debug
 
@@ -92,7 +81,7 @@ done
 #### let's go
 
 function types-unload-library () {
-    mmux_bash_pointers_library_unload
+    mmux_package_unload_from_descriptor MMUX_BASH_POINTERS_PACKAGE
 }
 
 dotest types-

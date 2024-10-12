@@ -1,0 +1,194 @@
+#!/bin/bash
+#
+# Part of: MMUX Bash Pointers
+# Contents: core library
+# Date: Oct 12, 2024
+#
+# Abstract
+#
+#	Run this script to output a list of builtin names.
+#
+# Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify it under the terms of the GNU
+# General Public  License as  published by  the Free Software  Foundation, either  version 3  of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that  it will be useful, but WITHOUT ANY WARRANTY; without
+# even the  implied warranty of MERCHANTABILITY  or FITNESS FOR  A PARTICULAR PURPOSE.  See  the GNU
+# General Public License for more details.
+#
+# You should  have received a copy  of the GNU General  Public License along with  this program.  If
+# not, see <http://www.gnu.org/licenses/>.
+#
+
+declare -ra SIGNED_INTEGER_STEMS=(schar sshort sint slong sllong sint8 sint16 sint32 sint64 ssize \
+					sintmax sintptr ptrdiff off uid gid wchar)
+declare -ra UNSIGNED_INTEGER_STEMS=(uchar ushort uint ulong ullong uint8 uint16 uint32 uint64 usize \
+					  uintmax uintptr mode pid wint)
+declare -ra INTEGER_STEMS=("${SIGNED_INTEGER_STEMS[@]}" "${UNSIGNED_INTEGER_STEMS[@]}")
+
+declare -ra REAL_FLOAT_STEMS=(float double ldouble float32 float64 float128 float32x float64x float128x \
+				    decimal32 decimal64 decimal128)
+declare -ra COMPLEX_FLOAT_STEMS=(complexf complexd complexld complexf32 complexf64 complexf128 \
+					  complexf32x complexf64x complexf128x \
+					  complexd32 complexd64 complexd128)
+declare -ra FLOAT_STEMS=("${REAL_FLOAT_STEMS[@]}" "${COMPLEX_FLOAT_STEMS[@]}")
+
+declare -ga MMUX_BASH_POINTERS_REAL_STEMS=('pointer' "${INTEGER_STEMS[@]}" "${REAL_FLOAT_STEMS[@]}")
+declare -ga MMUX_BASH_POINTERS_COMPLEX_STEMS=("${COMPLEX_FLOAT_STEMS[@]}")
+declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}")
+
+declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror errno_to_string \
+				  open close read write pread pwrite lseek dup dup2 fcntl ioctl)
+
+declare -i IDX=
+
+function print_builtin_name () {
+    declare NAME=${1:?"missing parameter 1 name of bulitin in call to '$FUNCNAME'"}
+
+    printf 'MMUX_BASH_POINTERS_PACKAGE[BUILTIN_%d]=%s\n' ${IDX:?} "${NAME:?}"
+    let ++IDX
+}
+
+print_builtin_name 'mmux_bash_pointers_library_init'
+
+
+declare -i IDX JDX
+declare NAME ALIAS ITEM STEM
+
+for ITEM in "${LIBC_BUILTINS[@]}"
+do
+    printf -v NAME 'mmux_libc_%s' "$ITEM"
+    print_builtin_name "$NAME"
+done
+
+for STEM in "${MMUX_BASH_POINTERS_STEMS[@]}"
+do
+    printf -v NAME 'mmux_%s_pointer_set' "$STEM"
+    print_builtin_name "$NAME"
+
+    printf -v NAME 'mmux_%s_array_set'   "$STEM"
+    print_builtin_name "$NAME"
+
+    printf -v NAME 'mmux_%s_pointer_ref' "$STEM"
+    print_builtin_name "$NAME"
+
+    printf -v NAME 'mmux_%s_array_ref' "$STEM"
+    print_builtin_name "$NAME"
+done
+
+# Arithmetics builtins.
+{
+    print_builtin_name 'mmux_pointer_add'
+
+    for STEM in "${INTEGER_STEMS[@]}"
+    do
+	for ITEM in add sub mul div mod neg inv incr decr
+	do
+	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+
+    for STEM in "${FLOAT_STEMS[@]}"
+    do
+	for ITEM in add sub mul div neg inv
+	do
+	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+
+    for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
+    do
+	for ITEM in make_rectangular real_part imag_part abs arg conj
+	do
+	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+}
+
+# Bitwise builtins.
+{
+    for STEM in 'pointer' "${INTEGER_STEMS[@]}"
+    do
+	for ITEM in and or xor not shl shr
+	do
+	    printf -v NAME 'mmux_%s_bitwise_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+}
+
+# Predicates builtins.
+{
+    for STEM in "${MMUX_BASH_POINTERS_STEMS[@]}"
+    do
+	printf -v NAME 'mmux_string_is_%s' "$STEM"
+	print_builtin_name "$NAME"
+    done
+
+    for STEM in 'pointer' "${INTEGER_STEMS[@]}" "${REAL_FLOAT_STEMS[@]}"
+    do
+	for ITEM in zero positive negative non_positive non_negative nan infinite
+	do
+	    printf -v NAME  'mmux_%s_is_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+
+    for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
+    do
+	for ITEM in zero nan infinite
+	do
+	    printf -v NAME 'mmux_%s_is_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+}
+
+# Comparison builtins.
+{
+    for STEM in 'pointer' "${INTEGER_STEMS[@]}"
+    do
+	for ITEM in equal greater lesser greater_equal lesser_equal
+	do
+	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+
+    for STEM in "${REAL_FLOAT_STEMS[@]}"
+    do
+	for ITEM in equal greater lesser greater_equal lesser_equal equal_absmargin equal_relepsilon
+	do
+	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+
+    for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
+    do
+	for ITEM in equal equal_absmargin equal_relepsilon
+	do
+	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+}
+
+# Output format selection.
+{
+    for STEM in "${REAL_FLOAT_STEMS[@]}"
+    do
+	printf -v NAME 'mmux_%s_set_format' "$STEM"
+	print_builtin_name "$NAME"
+    done
+}
+
+### end of file
+# Local Variables:
+# mode: sh
+# End:

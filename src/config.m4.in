@@ -28,6 +28,7 @@ m4_dnl before loading this one.
 m4_dnl
 m4_dnl m4_changequote(`[[[', `]]]')
 
+m4_define([[[mmux_bash_pointers_SEMANTIC_VERSION]]],           [[[@MMUX_PKG_SEMANTIC_VERSION@]]])
 m4_define([[[mmux_bash_pointers_VERSION_INTERFACE_CURRENT]]],  [[[@mmux_bash_pointers_VERSION_INTERFACE_CURRENT@]]])
 m4_define([[[mmux_bash_pointers_VERSION_INTERFACE_REVISION]]], [[[@mmux_bash_pointers_VERSION_INTERFACE_REVISION@]]])
 m4_define([[[mmux_bash_pointers_VERSION_INTERFACE_AGE]]],      [[[@mmux_bash_pointers_VERSION_INTERFACE_AGE@]]])

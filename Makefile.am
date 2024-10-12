@@ -12,14 +12,25 @@ BUILT_SOURCES		=
 
 ## ------------------------------------------------------------------------
 
-MMUX_BASH_M4_MACROS	= \
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4		\
+MMUX_M4_MACROS	= \
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.c.m4	\
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.bash.m4	\
 	$(top_srcdir)/src/config.m4.in
-EXTRA_DIST		+= $(MMUX_BASH_M4_MACROS)
 
-# NOTE Load first "libmmux-bash-builtins.m4" and then "config.m4" !!!
+EXTRA_DIST	+= $(MMUX_M4_MACROS)
+
+# These are used to preprocess C language files with extension ".c.m4".
+#
+# NOTE Load first "libmmux-bash-builtins.c.m4" and then "config.m4" !!!
+MMUX_CC_M4_LIBS = \
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.c.m4	\
+	$(builddir)/src/config.m4
+
+# These are used to GNU Bash files with extension ".c.m4".
+#
+# NOTE Load first "libmmux-bash-builtins.bash.m4" and then "config.m4" !!!
 MMUX_BASH_M4_LIBS = \
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.m4	\
+	$(top_srcdir)/meta/m4/libmmux-bash-builtins.bash.m4	\
 	$(builddir)/src/config.m4
 
 ## --------------------------------------------------------------------
@@ -84,6 +95,31 @@ html-local: doc/mmux-bash-pointers.html/mmux-bash-pointers.css
 install-html-local:
 	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
 	$(INSTALL) -m 0444 $(builddir)/doc/mmux-bash-pointers.html/mmux-bash-pointers.css "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
+
+
+#### shell libraries
+
+EXTRA_DIST		+= \
+	src/libmmux-bash-packages.bash.m4			\
+	src/libmmux-bash-pointers.bash.m4			\
+	$(top_srcdir)/meta/scripts/print-builtin-names.bash
+
+MMUX_BASH_SHELL_LIBFILES	= \
+	src/libmmux-bash-packages.bash		\
+	src/libmmux-bash-pointers.bash
+
+BUILT_SOURCES		+= $(MMUX_BASH_SHELL_LIBFILES)
+CLEANFILES		+= $(MMUX_BASH_SHELL_LIBFILES) src/mmux-bash-pointers-builtin-definitions.bash
+mmuxbashlib_DATA	=  $(MMUX_BASH_SHELL_LIBFILES)
+mmuxbashlibdir		= $(datadir)/bash
+
+src/%.bash: src/%.bash.m4 $(MMUX_BASH_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins --include=$(builddir)/src $(MMUX_BASH_M4_LIBS) $< >$@
+
+src/mmux-bash-pointers-builtin-definitions.bash: $(top_srcdir)/meta/scripts/print-builtin-names.bash
+	$(BASH_PROGRAM) $< >$@
+
+src/libmmux-bash-pointers.bash: src/mmux-bash-pointers-builtin-definitions.bash
 
 
 #### support library for _DecimalN
@@ -202,24 +238,13 @@ libmmux_bash_pointers_la_SOURCES	= \
 
 library: libmmux-bash-pointers.la
 
-src/%.h: src/%.h.m4 $(MMUX_BASH_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_M4_LIBS) $< >$@
+src/%.h: src/%.h.m4 $(MMUX_CC_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_CC_M4_LIBS) $< >$@
 
-src/%.c: src/%.c.m4 $(MMUX_BASH_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_M4_LIBS) $< >$@
+src/%.c: src/%.c.m4 $(MMUX_CC_M4_LIBS)
+	$(M4_PROGRAM) --prefix-builtins $(MMUX_CC_M4_LIBS) $< >$@
 
 src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
-
-## ------------------------------------------------------------------------
-
-EXTRA_DIST		+= src/libmmux-bash-pointers.bash.m4
-BUILT_SOURCES		+= src/libmmux-bash-pointers.bash
-CLEANFILES		+= src/libmmux-bash-pointers.bash
-mmuxbashlib_DATA	= src/libmmux-bash-pointers.bash
-mmuxbashlibdir		= $(datadir)/bash
-
-src/%.bash: src/%.bash.m4 $(MMUX_BASH_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_BASH_M4_LIBS) $< >$@
 
 
 #### tests
@@ -265,7 +290,6 @@ MMUX_CHECK_BUILT_TESTS	= \
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)
 check_SCRIPTS		= $(MMUX_CHECK_BUILT_TESTS)
 CLEANFILES		+= $(MMUX_CHECK_BUILT_TESTS)
-MMUX_LIBRARY		= $(builddir)/src/libmmux-bash-pointers.bash
 
 ## --------------------------------------------------------------------
 
@@ -281,12 +305,15 @@ MBFL_TESTS_ENV		= MBFL_LIBRARY_PATH=$(builddir)/src/share/mbfl; export MBFL_LIBR
 MBFL_TESTS_ENV		+= TMPDIR=$(PWD)/tmp; export TMPDIR;
 MBFL_TESTS_ENV		+= testsdir=$(builddir)/tests; export testsdir;
 MBFL_TESTS_ENV		+= TESTMATCH=$(TESTMATCH); export TESTMATCH;
-MBFL_TESTS_ENV		+= export MMUX_LIBRARY=$(MMUX_LIBRARY);
+MBFL_TESTS_ENV		+= export MBFL_LIBRARY_PATH=$(builddir)/src:$(MBFL_LIBRARY_PATH)
 MBFL_TESTS_ENV		+= export LD_LIBRARY_PATH=$(builddir)/.libs/:$(LD_LIBRARY_PATH);
 MBFL_TESTS_COMPILE	= $(MBFL_TESTS_ENV) $(MBFLPP_PROG_RUN)
 MBFL_TESTS_FLAGS	= $(MBFLPP_GENERAL_FLAGS)
 
-MBFL_TESTS_PREREQUISITES= $(MMUX_LIBRARY) libmmux-bash-pointers.la
+MBFL_TESTS_PREREQUISITES= \
+	libmmux-bash-pointers.la			\
+	$(builddir)/src/libmmux-bash-packages.bash	\
+	$(builddir)/src/libmmux-bash-pointers.bash
 
 # Read "Parallel Test Harness" in the documentation of GNU Automake to
 # understand how to use this interface for "make check".
@@ -316,7 +343,7 @@ if WANT_MBFL_TESTING_ENABLED
 MBFL_ICHECK_ENV	 = PATH=$(DESTDIR)$(bindir):$$PATH; export PATH;
 MBFL_ICHECK_ENV	+= TMPDIR=$(PWD)/tmp; export TMPDIR;
 MBFL_ICHECK_ENV	+= testsdir=$(builddir)/tests; export testsdir;
-MBFL_ICHECK_ENV	+= export MMUX_LIBRARY=$(DESTDIR)$(mmuxbashlibdir)/libmmux-bash-pointers.bash
+MBFL_ICHECK_ENV	+= export MBFL_LIBRARY_PATH=$(DESTDIR)$(mmuxbashlibdir):$(MBFL_LIBRARY_PATH)
 MBFL_ICHECK_ENV	+= export LD_LIBRARY_PATH=$(DESTDIR)$(libdir):$(LD_LIBRARY_PATH)
 MBFL_ICHECK_RUN	 = $(BASH_PROGRAM) $(MBFL_ICHECK_FLAGS)
 

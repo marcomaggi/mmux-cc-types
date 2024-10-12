@@ -163,6 +163,7 @@ Appendices
 * Package License::             GNU General Public License.
 * Documentation License::       GNU Free Documentation License.
 * shared library::              Using the shared library.
+* packages library::            Package handling library.
 * references::                  Bibliography and references.
 
 Indexes
@@ -427,17 +428,17 @@ explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool vers
 Libtool's versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@defvr {Shell Variable} MMUX_BASH_POINTERS_CURRENT
+@defvr {Shell Variable} MMUX_BASH_POINTERS_PACKAGE[INTERFACE_VERSION_CURRENT]
 An integer representing the library interface current number.
 @end defvr
 
 
-@defvr {Shell Variable} MMUX_BASH_POINTERS_REVISION
+@defvr {Shell Variable} MMUX_BASH_POINTERS_PACKAGE[INTERFACE_VERSION_REVISION]
 An integer representing the library interface current revision number.
 @end defvr
 
 
-@defvr {Shell Variable} MMUX_BASH_POINTERS_AGE
+@defvr {Shell Variable} MMUX_BASH_POINTERS_PACKAGE[INTERFACE_VERSION_AGE]
 An integer representing the library interface current age.
 @end defvr
 
@@ -5087,6 +5088,177 @@ otherwise return @samp{MMUX_FAILURE}.
 
 If an error occurs and @var{who} is not @cnull{}: print an error message to @stderr{}.
 @end deftypefun
+
+@c page
+@node packages library
+@appendix Package handling library
+
+
+@value{PACKAGE} installs a library to handle @gnu{} Bash packages; it is sort of primitive in its
+version @samp{0}.  The shell library is:
+
+@center @file{libmmux-bash-packages.bash}
+
+@noindent
+and it is installed under @code{$datadir/bash}.
+
+Use of this package management library is mandatory to load @file{libmmux-bash-pointers.bash}, but
+not really required by other shell libraries, including those depending on
+@file{libmmux-bash-pointers.bash} itself.
+
+@menu
+* packages library overview::   Overview of the library.
+* packages library descriptor:: Package descriptor.
+* packages library loading::    Loading a package.
+* packages library unloading::  Unloading a package.
+@end menu
+
+@c page
+@node packages library overview
+@appendixsec Overview of the library
+
+
+In general, to load a shell library we could just source its file, using the @code{source} builtin;
+the library code itself can perform initialisation operations like defining global variables,
+functions and enabling loadable builtins.  And this is fine.
+
+What happens if a library implements a builtin only if a feature is available on the underlying
+platform?  For example, some systems implement the standard C language type @objtype{_Float64},
+others do not; a Bash extension might implement builtins that operate on that data type only if the
+type is available.  Trying to enable an unimplemented builtin will result in @code{enable} printing
+an error message; do we want to see that error message?  Or is it fine if the builtin is not
+available and we do not want to see any error message?  Does the shell library have to know the list
+of implemented and bulitins, with the not implemented ones removed?
+
+This and other situations suggest it is good to have a library whose purpose is to, somehow,
+systematise loading packages.  This is what @file{libmmux-bash-packages.bash} is for.
+
+@c page
+@node packages library descriptor
+@appendixsec Package descriptor
+
+
+Packages adopting the @mmux{} Bash infrastructure are described by a shell global associative array;
+for example @value{PACKAGE} defines an array @env{MMUX_BASH_POINTERS_PACKAGE} in its shell library
+@file{libmmux-bash-pointers.bash}.
+
+Packages adopting the @mmux{} Bash infrastructure are meant to follow interface version numbering as
+established by the @gnu{} Autotools.  For an explanation of interface numbers as managed by @gnu{}
+Libtool @xref{Libtool versioning, interface, Libtool's versioning system, libtool, Shared library
+support for @gnu{}}.
+
+
+The following are the expected array elements.
+
+@table @samp{}
+@item PACKAGING_VERSION
+Mandatory.  Specifies the version of the packaging system, the one implemented by the library
+@file{libmmux-bash-packages.bash} itself.  At present only version @samp{0} is defined.
+
+@item PACKAGE_NAME
+Mandatory.  A free format string representing the name of the package; for example
+``@value{PACKAGE}''.
+
+@item SEMANTIC_VERSION
+Mandatory.  The semantic version specification for the package; for example @samp{v1.0.0-devel.1}.
+
+@item INTERFACE_VERSION_CURRENT
+Mandatory.  A string representing a non--negative exact integer specifying the current interface
+version number implemented by the package.
+
+@item INTERFACE_VERSION_REVISION
+Mandatory.  A string representing a non--negative exact integer specifying the revision interface
+version number implemented by the package.
+
+@item INTERFACE_VERSION_AGE
+Mandatory.  A string representing a non--negative exact integer specifying the age interface version
+number implemented by the package.
+
+@item SHARED_LIBRARY
+Optional, but see @samp{BUILTIN_0}.  A string representing the filename of a shared library
+installed on the system; a library that implements loadable builtins; for example
+@file{libmmux-bash-pointers.so}.  A package can implement loadable builtins, but it is not
+mandatory.
+
+@item SHELL_LIBRARY
+Optional.  A string representing the filename of the shell library installed on the system; the one
+that implements the loading and unloading of the package; the one that defines the package
+descriptor itself.  For example @file{libmmux-bash-pointers.bash}.
+
+@item PACKAGE_AFTER_LOADING_HOOK
+Optional.  An evaluatable identifier (function, alias, builtin); it is evaluated, without arguments,
+after the package has been loaded.
+
+@item PACKAGE_BEFORE_UNLOADING_HOOK
+Optional.  An evaluatable identifier; it is evaluated, without arguments, before the package is
+unloaded.
+
+@item BUILTIN_0
+@itemx BUILTIN_1
+@itemx @dots{}
+@itemx BUILTIN_N
+Builtin identifiers; if @samp{BUILTIN_0} exists: at least one bulitin must be loaded and enabled
+from the shared library selected by the key @samp{SHARED_LIBRARY}, whose presence becomes mandatory.
+
+When a library is loaded through this descriptor: the builtins are loaded and enabled from the
+shared library starting from @samp{BUILTIN_0}.
+
+@item ENABLED_BUILTIN_0
+@itemx ENABLED_BUILTIN_1
+@itemx @dots{}
+@itemx ENABLED_BUILTIN_N
+Undefinable.  A library loader should add these elements to list the builtins that are enabled; so
+that, later, these elements might be used to disable them.  A library unloader should disable these
+builtins starting from @samp{ENABLED_BUILTIN_0}, then unset the key from the array.
+@end table
+
+@c page
+@node packages library loading
+@appendixsec Loading a package
+
+
+Loading a package means to load a shell script in the current shell session and, if defined, to
+enable loadable builtins from a shared library.
+
+
+@defun mmux_package_load_from_descriptor @var{DESCRIPTOR_ARRAYNAME}
+Do what is needed to load the package whose descriptor is the shell associative array
+@var{DESCRIPTOR_ARRAYNAME}.
+
+If the descriptor has a key @samp{BUILTIN_0}: the package requires loading a shared library to
+enable builtins; the shared library file name is meant to be in the descriptor itself at key
+@samp{SHARED_LIBRARY}.  Use the @code{enable} builtin to load bulitins from the shared library using
+the identifiers from the descriptor pairs with keys @samp{BUILTIN_0}, @samp{BUILTIN_1}, @dots{}
+
+Then if the descriptor has a key @samp{PACKAGE_AFTER_LOADING_HOOK}, associated to an identifier:
+evaluate that identifier to initialise the package after loading.
+@end defun
+
+@c page
+@node packages library unloading
+@appendixsec Unloading a package
+
+
+Unloading a package means to remove from a shell session everything a package has added: variables,
+functions, builtins, aliases.  It might not be always possible.
+
+
+@defun mmux_package_unload_from_descriptor @var{DESCRIPTOR_ARRAYNAME}
+Do what is needed to unload the package whose descriptor is the shell associative array
+@var{DESCRIPTOR_ARRAYNAME}.
+
+Then if the descriptor has a key @samp{PACKAGE_BEFORE_UNLOADING_HOOK}, associated to an identifier:
+evaluate that identifier to finalise the package before unloading.  The hook is supposed to remove
+variables, functions and aliases.
+
+If the descriptor has a key @samp{ENABLED_BUILTIN_0}: the package required loading a shared library
+to enable builtins; the shared library file name is meant to be in the descriptor itself at key
+@samp{SHARED_LIBRARY}.  Use the @code{enable} builtin to disable bulitins from the shared library
+using the identifiers from the descriptor pairs with keys @samp{ENABLED_BUILTIN_0},
+@samp{ENABLED_BUILTIN_1}, @dots{}
+
+If all the enabled builtins are disabled: the shared library should be closed.
+@end defun
 
 @c page
 @node references

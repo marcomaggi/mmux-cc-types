@@ -38,20 +38,20 @@ MBFL_DEFINE_UNDERSCORE_MACRO_FOR_SLOTS
 mbfl_embed_library(__LIBMBFL_LINKER__)
 mbfl_linker_source_library_by_stem(core)
 mbfl_linker_source_library_by_stem(tests)
-
-source "$MMUX_LIBRARY"
+mbfl_linker_source_library_by_stem(mmux-bash-packages)
+mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 
 #### version numbers
 
 function version-1.1 () {
-    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_CURRENT)
+    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_PACKAGE,INTERFACE_VERSION_CURRENT)
 }
 function version-1.2 () {
-    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_REVISION)
+    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_PACKAGE,INTERFACE_VERSION_REVISION)
 }
 function version-1.3 () {
-    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_AGE)
+    mbfl_string_is_digit QQ(MMUX_BASH_POINTERS_PACKAGE,INTERFACE_VERSION_AGE)
 }
 
 
