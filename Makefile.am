@@ -260,6 +260,7 @@ EXTRA_DIST		+= \
 	tests/file-descriptors.test.m4		\
 	tests/memory.test.m4			\
 	tests/output-formats.test.m4		\
+	tests/packages.test.m4			\
 	tests/pointers.test.m4			\
 	tests/predicates.test.m4		\
 	tests/types.test.m4			\
@@ -282,6 +283,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/file-descriptors.test		\
 	tests/memory.test			\
 	tests/output-formats.test		\
+	tests/packages.test			\
 	tests/pointers.test			\
 	tests/predicates.test			\
 	tests/types.test			\

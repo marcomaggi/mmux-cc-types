@@ -85,12 +85,11 @@
 @c ------------------------------------------------------------
 
 @copying
-
 This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
-additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language library
-and a shell script which is meant to be sourced in a Bash session or script.
+additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language shared
+library and shell scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
-This package makes raw memory pointers available in shell scripts; it also interfaces some basic
+This package makes raw memory pointers available to the shell; it also interfaces some basic
 functions from the C language @posix{} standard library.  The package targets @posix{} platforms.
 
 This package is distributed under the terms of the @gnu{} General Public License (@lgpl{}).
@@ -151,7 +150,8 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 
 @menu
 * overview::                    Overview of the package.
-* variables::                   Global variables.
+* descriptor::                  Package descriptors.
+* constants::                   Values of system constants.
 * types::                       Interface to supported data types.
 * memory::                      Raw memory operations.
 * errors::                      Handling errors.
@@ -163,7 +163,7 @@ Appendices
 * Package License::             GNU General Public License.
 * Documentation License::       GNU Free Documentation License.
 * shared library::              Using the shared library.
-* packages library::            Package handling library.
+* packages::                    Package handling library.
 * references::                  Bibliography and references.
 
 Indexes
@@ -181,13 +181,14 @@ Indexes
 
 
 This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
-additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language library
-and a shell script which is meant to be sourced in a Bash session or script.
+additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language shared
+library and shell scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
-This package makes raw memory pointers available in shell scripts:
+This package makes raw memory pointers available to the shell:
 
 @example
-source /usr/local/share/bash/libmmux-bash-pointers.bash
+source libmmux-bash-packages.bash
+source libmmux-bash-pointers.bash
 
 declare PTR VALUE
 
@@ -202,9 +203,10 @@ $VALUE  @result{} 123
 
 @menu
 * overview install::            Installed files.
-* overview linking::            Linking code with the library.
+* overview usage::              How to use the shell libraries.
 * overview decimal::            Support for the @objtype{_DecimalN} types.
 * overview stems::              Specifying C language types with their stem.
+* overview linking::            Linking code with the shared library.
 @end menu
 
 @c page
@@ -212,31 +214,66 @@ $VALUE  @result{} 123
 @section Installed files
 
 
-@value{PACKAGE} installs a shell script, a ``shell library'', under @code{$datavar/bash}; for
+@value{PACKAGE} installs shell scripts, ``shell libraries'', under @code{$datavar/bash}; for
 example:
 
-@center @file{/usr/local/share/bash/libmmux-bash-pointers.bash}
+@example
+/usr/local/share/bash/libmmux-bash-packages.bash
+/usr/local/share/bash/libmmux-bash-pointers.bash
+@end example
 
 @noindent
 to use the builtins, we have to load the shell library using Bash's builtin @code{source}.  A shared
 library, actually implementing the builtins, is installed under @code{$libdir}; for example:
 
-@center @file{/usr/local/lib64/libmmux-bash-pointers.so}
+@example
+/usr/local/lib64/libmmux-bash-pointers.so
+@end example
 
 @noindent
 the shared library is automatically loaded by the shell library.
 
 C language header files are also installed under @code{$includedir}, for example:
 
-@center @file{/usr/local/include/libmmux-bash-pointers.h}
-@center @file{/usr/local/include/libmmux-bash-pointers-config.h}
+@example
+/usr/local/include/libmmux-bash-pointers.h
+/usr/local/include/libmmux-bash-pointers-config.h
+@end example
 
 @noindent
 we can write code that links to the shared library to reuse some of its facilities.
 
 @c page
+@node overview usage
+@section How to use the shell libraries
 
-@include overview-linking.texi
+
+The package @value{PACKAGE} adheres to the requirements of the @mmux{} Bash Packages Infrastructure,
+@ref{packages, @mmux{} Bash Packages Infrastructure}.
+
+To use the shell libraries we have to first load @file{libmmux-bash-packages.bash} and then to load
+@file{libmmux-bash-pointers.bash}.  If we have configured the environment to let @code{source} find
+the libraries in their installation directory, we do:
+
+@example
+source libmmux-bash-packages.bash
+source libmmux-bash-pointers.bash
+@end example
+
+@noindent
+otherwise we can specify the full installation pathname:
+
+@example
+source /usr/local/share/bash/libmmux-bash-packages.bash
+source /usr/local/share/bash/libmmux-bash-pointers.bash
+@end example
+
+@noindent
+nothing else is required for basic operations.
+
+@gnu{} Bash expects shared libraries implementing loadable builtins to be installed in one of the
+usual places, so that the builtin @code{enable} can find them.  If needed, on Unix systems: we can
+configure the search path using the system environment variable @env{LD_LIBRARY_PATH}.
 
 @c page
 @node overview decimal
@@ -375,9 +412,25 @@ language type @code{\TYPE\}.
 @MmuxDefineTypeStem{complexf64x, _Float64x complex}
 @MmuxDefineTypeStem{complexf128x, _Float128x complex}
 
-@MmuxDefineTypeStem{complexd32, _Decimal32 complex}
-@MmuxDefineTypeStem{complexd64, _Decimal64 complex}
-@MmuxDefineTypeStem{complexd128, _Decimal128 complex}
+@deftp {Type Stem} complexd32
+Single--word specification of a C language type supported by this package.  It is an alias for a
+non--standard C language type implementing complex floating--point numbers having
+@objtype{_Decimal32} values as real and imaginary parts.
+@end deftp
+
+
+@deftp {Type Stem} complexd64
+Single--word specification of a C language type supported by this package.  It is an alias for a
+non--standard C language type implementing complex floating--point numbers having
+@objtype{_Decimal64} values as real and imaginary parts.
+@end deftp
+
+
+@deftp {Type Stem} complexd128
+Single--word specification of a C language type supported by this package.  It is an alias for a
+non--standard C language type implementing complex floating--point numbers having
+@objtype{_Decimal128} values as real and imaginary parts.
+@end deftp
 
 @MmuxDefineTypeStem{sint8,int8_t}
 @MmuxDefineTypeStem{uint8,uint8_t}
@@ -403,375 +456,36 @@ language type @code{\TYPE\}.
 @MmuxDefineTypeStem{wint, wint_t}
 
 @c page
-@node variables
-@chapter Global variables
 
-
-The shell library installed by @value{PACKAGE} defines global variables to allow inspection of the
-underlying C language platform.
-
-@menu
-* variables version::           Version variables.
-* variables sizeof::            C language type sizes.
-* variables limits::            C language type maximum and minimum values.
-* variables errno::             Values of @code{errno}.
-* variables system::            Values of system constants.
-@end menu
+@include overview-linking.texi
 
 @c page
-@node variables version
-@section Version variables
+@node descriptor
+@chapter Package descriptors
 
 
-The installed libraries follow version numbering as established by the @gnu{} Autotools.  For an
-explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool versioning, interface,
-Libtool's versioning system, libtool, Shared library support for @gnu{}}.
+@cindex Package descriptor for @value{PACKAGE}
 
 
-@defvr {Shell Variable} MMUX_BASH_POINTERS_PACKAGE[INTERFACE_VERSION_CURRENT]
-An integer representing the library interface current number.
-@end defvr
+@value{PACKAGE} adheres to the requirements of the @mmux{} Bash Packages Infrastructure,
+@ref{packages, @mmux{} Bash Packages Infrastructure}.  As such the library
+@file{libmmux-bash-pointers.bash} defines a package descriptor holding basic informations about the
+exported @api{}.
+
+The @api{} follows version numbering as established by the @gnu{} Autotools.  For an explanation of
+interface numbers as managed by @gnu{} Libtool @xref{Libtool versioning, interface, Libtool's
+versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@defvr {Shell Variable} MMUX_BASH_POINTERS_PACKAGE[INTERFACE_VERSION_REVISION]
-An integer representing the library interface current revision number.
-@end defvr
+@defvr {Shell Array} MMUX_BASH_POINTERS_PACKAGE
+An associative shell array representing informations about the package.
 
-
-@defvr {Shell Variable} MMUX_BASH_POINTERS_PACKAGE[INTERFACE_VERSION_AGE]
-An integer representing the library interface current age.
+For details on the defined keys @ref{packages descriptor, Package descriptor}.
 @end defvr
 
 @c page
-@node variables sizeof
-@section C language type sizes
-
-
-If a C language type referenced by one of the following variables is undefined: the corresponding
-Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
-underlying platform implements the type @code{signed long long int}, we can do:
-
-@example
-if test -v mmux_sllong_SIZEOF
-then # implemented
-else # not implemented
-fi
-@end example
-
-@macro MmuxDefineGlobalVarSizeof{STEM}
-@defvar mmux_\STEM\_SIZEOF
-Global variable holding the size, measured in bytes, of the C language type with stem @code{\STEM\}.
-@end defvar
-
-@end macro
-
-@MmuxDefineGlobalVarSizeof{pointer}
-
-@MmuxDefineGlobalVarSizeof{schar}
-@MmuxDefineGlobalVarSizeof{uchar}
-@MmuxDefineGlobalVarSizeof{sshort}
-@MmuxDefineGlobalVarSizeof{ushort}
-@MmuxDefineGlobalVarSizeof{sint}
-@MmuxDefineGlobalVarSizeof{uint}
-@MmuxDefineGlobalVarSizeof{slong}
-@MmuxDefineGlobalVarSizeof{ulong}
-@MmuxDefineGlobalVarSizeof{sllong}
-@MmuxDefineGlobalVarSizeof{ullong}
-@MmuxDefineGlobalVarSizeof{float}
-@MmuxDefineGlobalVarSizeof{double}
-@MmuxDefineGlobalVarSizeof{ldouble}
-
-@MmuxDefineGlobalVarSizeof{float32}
-@MmuxDefineGlobalVarSizeof{float64}
-@MmuxDefineGlobalVarSizeof{float128}
-
-@MmuxDefineGlobalVarSizeof{float32x}
-@MmuxDefineGlobalVarSizeof{float64x}
-@MmuxDefineGlobalVarSizeof{float128x}
-
-@MmuxDefineGlobalVarSizeof{decimal32}
-@MmuxDefineGlobalVarSizeof{decimal64}
-@MmuxDefineGlobalVarSizeof{decimal128}
-
-@MmuxDefineGlobalVarSizeof{complexf}
-@MmuxDefineGlobalVarSizeof{complexd}
-@MmuxDefineGlobalVarSizeof{complexld}
-
-@MmuxDefineGlobalVarSizeof{complexf32}
-@MmuxDefineGlobalVarSizeof{complexf64}
-@MmuxDefineGlobalVarSizeof{complexf128}
-
-@MmuxDefineGlobalVarSizeof{complexf32x}
-@MmuxDefineGlobalVarSizeof{complexf64x}
-@MmuxDefineGlobalVarSizeof{complexf128x}
-
-@MmuxDefineGlobalVarSizeof{complexd32}
-@MmuxDefineGlobalVarSizeof{complexd64}
-@MmuxDefineGlobalVarSizeof{complexd128}
-
-@MmuxDefineGlobalVarSizeof{sint8}
-@MmuxDefineGlobalVarSizeof{uint8}
-@MmuxDefineGlobalVarSizeof{sint16}
-@MmuxDefineGlobalVarSizeof{uint16}
-@MmuxDefineGlobalVarSizeof{sint32}
-@MmuxDefineGlobalVarSizeof{uint32}
-@MmuxDefineGlobalVarSizeof{sint64}
-@MmuxDefineGlobalVarSizeof{uint64}
-
-@MmuxDefineGlobalVarSizeof{ssize}
-@MmuxDefineGlobalVarSizeof{usize}
-@MmuxDefineGlobalVarSizeof{sintmax}
-@MmuxDefineGlobalVarSizeof{uintmax}
-@MmuxDefineGlobalVarSizeof{sintptr}
-@MmuxDefineGlobalVarSizeof{uintptr}
-@MmuxDefineGlobalVarSizeof{ptrdiff}
-@MmuxDefineGlobalVarSizeof{mode}
-@MmuxDefineGlobalVarSizeof{off}
-@MmuxDefineGlobalVarSizeof{pid}
-@MmuxDefineGlobalVarSizeof{uid}
-@MmuxDefineGlobalVarSizeof{gid}
-@MmuxDefineGlobalVarSizeof{wchar}
-@MmuxDefineGlobalVarSizeof{wint}
-
-@c page
-@node variables limits
-@section C language type maximum and minimum values
-
-
-If a C language type referenced by one of the following variables is undefined: the corresponding
-Bash variable is undefined.  Notice that the floating--point complex C language types have neither
-maximum nor minimum limits.
-
-Some of the following variables hold the minimum value representable by a C language real number
-type; this is true even for floating--point numbers: the value is the minimum negative representable
-value.  This is different from the standard C language constants like @code{FLT_MIN},
-@code{DBL_MIN}, @code{LDBL_MIN}, which represent some sort of minimum representable positive value.
-
-For the unsigned number types: the minimum value is zero.
-
-@c ------------------------------------------------------------------------
-
-@macro MmuxDefineGlobalVarLimits{STEM,TYPE}
-@defvar mmux_\STEM\_MAX
-@defvarx mmux_\STEM\_MIN
-Global variables holding the maximum and minimum values of the C language type @objtype{mmux_\STEM\_t}.
-@end defvar
-
-@end macro
-
-@c ------------------------------------------------------------------------
-
-@MmuxDefineGlobalVarLimits{pointer}
-
-@MmuxDefineGlobalVarLimits{schar}
-@MmuxDefineGlobalVarLimits{uchar}
-@MmuxDefineGlobalVarLimits{sshort}
-@MmuxDefineGlobalVarLimits{ushort}
-@MmuxDefineGlobalVarLimits{sint}
-@MmuxDefineGlobalVarLimits{uint}
-@MmuxDefineGlobalVarLimits{slong}
-@MmuxDefineGlobalVarLimits{ulong}
-@MmuxDefineGlobalVarLimits{sllong}
-@MmuxDefineGlobalVarLimits{ullong}
-
-@MmuxDefineGlobalVarLimits{float}
-@MmuxDefineGlobalVarLimits{double}
-@MmuxDefineGlobalVarLimits{ldouble}
-
-@MmuxDefineGlobalVarLimits{float32}
-@MmuxDefineGlobalVarLimits{float64}
-@MmuxDefineGlobalVarLimits{float128}
-
-@MmuxDefineGlobalVarLimits{float32x}
-@MmuxDefineGlobalVarLimits{float64x}
-@MmuxDefineGlobalVarLimits{float128x}
-
-@MmuxDefineGlobalVarLimits{decimal32}
-@MmuxDefineGlobalVarLimits{decimal64}
-@MmuxDefineGlobalVarLimits{decimal128}
-
-@MmuxDefineGlobalVarLimits{sint8}
-@MmuxDefineGlobalVarLimits{uint8}
-@MmuxDefineGlobalVarLimits{sint16}
-@MmuxDefineGlobalVarLimits{uint16}
-@MmuxDefineGlobalVarLimits{sint32}
-@MmuxDefineGlobalVarLimits{uint32}
-@MmuxDefineGlobalVarLimits{sint64}
-@MmuxDefineGlobalVarLimits{uint64}
-
-@MmuxDefineGlobalVarLimits{ssize}
-@MmuxDefineGlobalVarLimits{usize}
-@MmuxDefineGlobalVarLimits{sintmax}
-@MmuxDefineGlobalVarLimits{uintmax}
-@MmuxDefineGlobalVarLimits{sintptr}
-@MmuxDefineGlobalVarLimits{uintptr}
-@MmuxDefineGlobalVarLimits{ptrdiff}
-@MmuxDefineGlobalVarLimits{mode}
-@MmuxDefineGlobalVarLimits{off}
-@MmuxDefineGlobalVarLimits{pid}
-@MmuxDefineGlobalVarLimits{uid}
-@MmuxDefineGlobalVarLimits{gid}
-@MmuxDefineGlobalVarLimits{wchar}
-@MmuxDefineGlobalVarLimits{wint}
-
-@c page
-@node variables errno
-@section Values of @code{errno}
-
-
-If a C language constant referenced by one of the following variables is undefined: the
-corresponding Bash variable is undefined; we can test this condition with @code{test -v}; to test if
-the underlying platform implements the constant @code{ENOMEM}, we can do:
-
-@example
-if test -v mmux_libc_ENOMEM
-then # implemented
-else # not implemented
-fi
-@end example
-
-@macro MmuxDefineGlobalVarErrno{NAME}
-@defvar mmux_libc_\NAME\
-Global variable holding the value of the C language constant @code{\NAME\}.
-@end defvar
-
-@end macro
-
-@MmuxDefineGlobalVarErrno{EPERM}
-@MmuxDefineGlobalVarErrno{ENOENT}
-@MmuxDefineGlobalVarErrno{ESRCH}
-@MmuxDefineGlobalVarErrno{EINTR}
-@MmuxDefineGlobalVarErrno{EIO}
-@MmuxDefineGlobalVarErrno{ENXIO}
-@MmuxDefineGlobalVarErrno{E2BIG}
-@MmuxDefineGlobalVarErrno{ENOEXEC}
-@MmuxDefineGlobalVarErrno{EBADF}
-@MmuxDefineGlobalVarErrno{ECHILD}
-@MmuxDefineGlobalVarErrno{EAGAIN}
-@MmuxDefineGlobalVarErrno{ENOMEM}
-@MmuxDefineGlobalVarErrno{EACCES}
-@MmuxDefineGlobalVarErrno{EFAULT}
-@MmuxDefineGlobalVarErrno{ENOTBLK}
-@MmuxDefineGlobalVarErrno{EBUSY}
-@MmuxDefineGlobalVarErrno{EEXIST}
-@MmuxDefineGlobalVarErrno{EXDEV}
-@MmuxDefineGlobalVarErrno{ENODEV}
-@MmuxDefineGlobalVarErrno{ENOTDIR}
-@MmuxDefineGlobalVarErrno{EISDIR}
-@MmuxDefineGlobalVarErrno{EINVAL}
-@MmuxDefineGlobalVarErrno{ENFILE}
-@MmuxDefineGlobalVarErrno{EMFILE}
-@MmuxDefineGlobalVarErrno{ENOTTY}
-@MmuxDefineGlobalVarErrno{ETXTBSY}
-@MmuxDefineGlobalVarErrno{EFBIG}
-@MmuxDefineGlobalVarErrno{ENOSPC}
-@MmuxDefineGlobalVarErrno{ESPIPE}
-@MmuxDefineGlobalVarErrno{EROFS}
-@MmuxDefineGlobalVarErrno{EMLINK}
-@MmuxDefineGlobalVarErrno{EPIPE}
-@MmuxDefineGlobalVarErrno{EDOM}
-@MmuxDefineGlobalVarErrno{ERANGE}
-@MmuxDefineGlobalVarErrno{EDEADLK}
-@MmuxDefineGlobalVarErrno{ENAMETOOLONG}
-@MmuxDefineGlobalVarErrno{ENOLCK}
-@MmuxDefineGlobalVarErrno{ENOSYS}
-@MmuxDefineGlobalVarErrno{ENOTEMPTY}
-@MmuxDefineGlobalVarErrno{ELOOP}
-@MmuxDefineGlobalVarErrno{EWOULDBLOCK}
-@MmuxDefineGlobalVarErrno{ENOMSG}
-@MmuxDefineGlobalVarErrno{EIDRM}
-@MmuxDefineGlobalVarErrno{ECHRNG}
-@MmuxDefineGlobalVarErrno{EL2NSYNC}
-@MmuxDefineGlobalVarErrno{EL3HLT}
-@MmuxDefineGlobalVarErrno{EL3RST}
-@MmuxDefineGlobalVarErrno{ELNRNG}
-@MmuxDefineGlobalVarErrno{EUNATCH}
-@MmuxDefineGlobalVarErrno{ENOCSI}
-@MmuxDefineGlobalVarErrno{EL2HLT}
-@MmuxDefineGlobalVarErrno{EBADE}
-@MmuxDefineGlobalVarErrno{EBADR}
-@MmuxDefineGlobalVarErrno{EXFULL}
-@MmuxDefineGlobalVarErrno{ENOANO}
-@MmuxDefineGlobalVarErrno{EBADRQC}
-@MmuxDefineGlobalVarErrno{EBADSLT}
-@MmuxDefineGlobalVarErrno{EDEADLOCK}
-@MmuxDefineGlobalVarErrno{EBFONT}
-@MmuxDefineGlobalVarErrno{ENOSTR}
-@MmuxDefineGlobalVarErrno{ENODATA}
-@MmuxDefineGlobalVarErrno{ETIME}
-@MmuxDefineGlobalVarErrno{ENOSR}
-@MmuxDefineGlobalVarErrno{ENONET}
-@MmuxDefineGlobalVarErrno{ENOPKG}
-@MmuxDefineGlobalVarErrno{EREMOTE}
-@MmuxDefineGlobalVarErrno{ENOLINK}
-@MmuxDefineGlobalVarErrno{EADV}
-@MmuxDefineGlobalVarErrno{ESRMNT}
-@MmuxDefineGlobalVarErrno{ECOMM}
-@MmuxDefineGlobalVarErrno{EPROTO}
-@MmuxDefineGlobalVarErrno{EMULTIHOP}
-@MmuxDefineGlobalVarErrno{EDOTDOT}
-@MmuxDefineGlobalVarErrno{EBADMSG}
-@MmuxDefineGlobalVarErrno{EOVERFLOW}
-@MmuxDefineGlobalVarErrno{ENOTUNIQ}
-@MmuxDefineGlobalVarErrno{EBADFD}
-@MmuxDefineGlobalVarErrno{EREMCHG}
-@MmuxDefineGlobalVarErrno{ELIBACC}
-@MmuxDefineGlobalVarErrno{ELIBBAD}
-@MmuxDefineGlobalVarErrno{ELIBSCN}
-@MmuxDefineGlobalVarErrno{ELIBMAX}
-@MmuxDefineGlobalVarErrno{ELIBEXEC}
-@MmuxDefineGlobalVarErrno{EILSEQ}
-@MmuxDefineGlobalVarErrno{ERESTART}
-@MmuxDefineGlobalVarErrno{ESTRPIPE}
-@MmuxDefineGlobalVarErrno{EUSERS}
-@MmuxDefineGlobalVarErrno{ENOTSOCK}
-@MmuxDefineGlobalVarErrno{EDESTADDRREQ}
-@MmuxDefineGlobalVarErrno{EMSGSIZE}
-@MmuxDefineGlobalVarErrno{EPROTOTYPE}
-@MmuxDefineGlobalVarErrno{ENOPROTOOPT}
-@MmuxDefineGlobalVarErrno{EPROTONOSUPPORT}
-@MmuxDefineGlobalVarErrno{ESOCKTNOSUPPORT}
-@MmuxDefineGlobalVarErrno{EOPNOTSUPP}
-@MmuxDefineGlobalVarErrno{EPFNOSUPPORT}
-@MmuxDefineGlobalVarErrno{EAFNOSUPPORT}
-@MmuxDefineGlobalVarErrno{EADDRINUSE}
-@MmuxDefineGlobalVarErrno{EADDRNOTAVAIL}
-@MmuxDefineGlobalVarErrno{ENETDOWN}
-@MmuxDefineGlobalVarErrno{ENETUNREACH}
-@MmuxDefineGlobalVarErrno{ENETRESET}
-@MmuxDefineGlobalVarErrno{ECONNABORTED}
-@MmuxDefineGlobalVarErrno{ECONNRESET}
-@MmuxDefineGlobalVarErrno{ENOBUFS}
-@MmuxDefineGlobalVarErrno{EISCONN}
-@MmuxDefineGlobalVarErrno{ENOTCONN}
-@MmuxDefineGlobalVarErrno{ESHUTDOWN}
-@MmuxDefineGlobalVarErrno{ETOOMANYREFS}
-@MmuxDefineGlobalVarErrno{ETIMEDOUT}
-@MmuxDefineGlobalVarErrno{ECONNREFUSED}
-@MmuxDefineGlobalVarErrno{EHOSTDOWN}
-@MmuxDefineGlobalVarErrno{EHOSTUNREACH}
-@MmuxDefineGlobalVarErrno{EALREADY}
-@MmuxDefineGlobalVarErrno{EINPROGRESS}
-@MmuxDefineGlobalVarErrno{ESTALE}
-@MmuxDefineGlobalVarErrno{EUCLEAN}
-@MmuxDefineGlobalVarErrno{ENOTNAM}
-@MmuxDefineGlobalVarErrno{ENAVAIL}
-@MmuxDefineGlobalVarErrno{EISNAM}
-@MmuxDefineGlobalVarErrno{EREMOTEIO}
-@MmuxDefineGlobalVarErrno{EDQUOT}
-@MmuxDefineGlobalVarErrno{ENOMEDIUM}
-@MmuxDefineGlobalVarErrno{EMEDIUMTYPE}
-@MmuxDefineGlobalVarErrno{ECANCELED}
-@MmuxDefineGlobalVarErrno{ENOKEY}
-@MmuxDefineGlobalVarErrno{EKEYEXPIRED}
-@MmuxDefineGlobalVarErrno{EKEYREVOKED}
-@MmuxDefineGlobalVarErrno{EKEYREJECTED}
-@MmuxDefineGlobalVarErrno{EOWNERDEAD}
-@MmuxDefineGlobalVarErrno{ENOTRECOVERABLE}
-
-@c page
-@node variables system
-@section Values of system constants
+@node constants
+@chapter Values of system constants
 
 
 If a C language constant referenced by one of the following variables is undefined: the
@@ -865,6 +579,8 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 
 
 @menu
+* types sizeof::                C language type sizes.
+* types limits::                C language type maximum and minimum values.
 * types predicates::            Type predicates.
 * types comparison::            Comparison builtins.
 * types arithmetics::           Arithmetics operation builtins.
@@ -872,6 +588,178 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 * types bitwise::               Bitwise operation builtins.
 * types formats::               Input and output formats.
 @end menu
+
+@c page
+@node types sizeof
+@section C language type sizes
+
+
+If a C language type referenced by one of the following variables is undefined: the corresponding
+Bash variable is undefined; we can test this condition with @code{test -v}; to test if the
+underlying platform implements the type @code{signed long long int}, we can do:
+
+@example
+if test -v mmux_sllong_SIZEOF
+then # implemented
+else # not implemented
+fi
+@end example
+
+@macro MmuxDefineGlobalVarSizeof{STEM}
+@defvar mmux_\STEM\_SIZEOF
+Global variable holding the size, measured in bytes, of the C language type with stem @code{\STEM\}.
+@end defvar
+
+@end macro
+
+@MmuxDefineGlobalVarSizeof{pointer}
+
+@MmuxDefineGlobalVarSizeof{schar}
+@MmuxDefineGlobalVarSizeof{uchar}
+@MmuxDefineGlobalVarSizeof{sshort}
+@MmuxDefineGlobalVarSizeof{ushort}
+@MmuxDefineGlobalVarSizeof{sint}
+@MmuxDefineGlobalVarSizeof{uint}
+@MmuxDefineGlobalVarSizeof{slong}
+@MmuxDefineGlobalVarSizeof{ulong}
+@MmuxDefineGlobalVarSizeof{sllong}
+@MmuxDefineGlobalVarSizeof{ullong}
+@MmuxDefineGlobalVarSizeof{float}
+@MmuxDefineGlobalVarSizeof{double}
+@MmuxDefineGlobalVarSizeof{ldouble}
+
+@MmuxDefineGlobalVarSizeof{float32}
+@MmuxDefineGlobalVarSizeof{float64}
+@MmuxDefineGlobalVarSizeof{float128}
+
+@MmuxDefineGlobalVarSizeof{float32x}
+@MmuxDefineGlobalVarSizeof{float64x}
+@MmuxDefineGlobalVarSizeof{float128x}
+
+@MmuxDefineGlobalVarSizeof{decimal32}
+@MmuxDefineGlobalVarSizeof{decimal64}
+@MmuxDefineGlobalVarSizeof{decimal128}
+
+@MmuxDefineGlobalVarSizeof{complexf}
+@MmuxDefineGlobalVarSizeof{complexd}
+@MmuxDefineGlobalVarSizeof{complexld}
+
+@MmuxDefineGlobalVarSizeof{complexf32}
+@MmuxDefineGlobalVarSizeof{complexf64}
+@MmuxDefineGlobalVarSizeof{complexf128}
+
+@MmuxDefineGlobalVarSizeof{complexf32x}
+@MmuxDefineGlobalVarSizeof{complexf64x}
+@MmuxDefineGlobalVarSizeof{complexf128x}
+
+@MmuxDefineGlobalVarSizeof{complexd32}
+@MmuxDefineGlobalVarSizeof{complexd64}
+@MmuxDefineGlobalVarSizeof{complexd128}
+
+@MmuxDefineGlobalVarSizeof{sint8}
+@MmuxDefineGlobalVarSizeof{uint8}
+@MmuxDefineGlobalVarSizeof{sint16}
+@MmuxDefineGlobalVarSizeof{uint16}
+@MmuxDefineGlobalVarSizeof{sint32}
+@MmuxDefineGlobalVarSizeof{uint32}
+@MmuxDefineGlobalVarSizeof{sint64}
+@MmuxDefineGlobalVarSizeof{uint64}
+
+@MmuxDefineGlobalVarSizeof{ssize}
+@MmuxDefineGlobalVarSizeof{usize}
+@MmuxDefineGlobalVarSizeof{sintmax}
+@MmuxDefineGlobalVarSizeof{uintmax}
+@MmuxDefineGlobalVarSizeof{sintptr}
+@MmuxDefineGlobalVarSizeof{uintptr}
+@MmuxDefineGlobalVarSizeof{ptrdiff}
+@MmuxDefineGlobalVarSizeof{mode}
+@MmuxDefineGlobalVarSizeof{off}
+@MmuxDefineGlobalVarSizeof{pid}
+@MmuxDefineGlobalVarSizeof{uid}
+@MmuxDefineGlobalVarSizeof{gid}
+@MmuxDefineGlobalVarSizeof{wchar}
+@MmuxDefineGlobalVarSizeof{wint}
+
+@c page
+@node types limits
+@section C language type maximum and minimum values
+
+
+If a C language type referenced by one of the following variables is undefined: the corresponding
+Bash variable is undefined.  Notice that the floating--point complex C language types have neither
+maximum nor minimum limits.
+
+Some of the following variables hold the minimum value representable by a C language real number
+type; this is true even for floating--point numbers: the value is the minimum negative representable
+value.  This is different from the standard C language constants like @code{FLT_MIN},
+@code{DBL_MIN}, @code{LDBL_MIN}, which represent some sort of minimum representable positive value.
+
+For the unsigned number types: the minimum value is zero.
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineGlobalVarLimits{STEM,TYPE}
+@defvar mmux_\STEM\_MAX
+@defvarx mmux_\STEM\_MIN
+Global variables holding the maximum and minimum values of the C language type @objtype{mmux_\STEM\_t}.
+@end defvar
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineGlobalVarLimits{pointer}
+
+@MmuxDefineGlobalVarLimits{schar}
+@MmuxDefineGlobalVarLimits{uchar}
+@MmuxDefineGlobalVarLimits{sshort}
+@MmuxDefineGlobalVarLimits{ushort}
+@MmuxDefineGlobalVarLimits{sint}
+@MmuxDefineGlobalVarLimits{uint}
+@MmuxDefineGlobalVarLimits{slong}
+@MmuxDefineGlobalVarLimits{ulong}
+@MmuxDefineGlobalVarLimits{sllong}
+@MmuxDefineGlobalVarLimits{ullong}
+
+@MmuxDefineGlobalVarLimits{float}
+@MmuxDefineGlobalVarLimits{double}
+@MmuxDefineGlobalVarLimits{ldouble}
+
+@MmuxDefineGlobalVarLimits{float32}
+@MmuxDefineGlobalVarLimits{float64}
+@MmuxDefineGlobalVarLimits{float128}
+
+@MmuxDefineGlobalVarLimits{float32x}
+@MmuxDefineGlobalVarLimits{float64x}
+@MmuxDefineGlobalVarLimits{float128x}
+
+@MmuxDefineGlobalVarLimits{decimal32}
+@MmuxDefineGlobalVarLimits{decimal64}
+@MmuxDefineGlobalVarLimits{decimal128}
+
+@MmuxDefineGlobalVarLimits{sint8}
+@MmuxDefineGlobalVarLimits{uint8}
+@MmuxDefineGlobalVarLimits{sint16}
+@MmuxDefineGlobalVarLimits{uint16}
+@MmuxDefineGlobalVarLimits{sint32}
+@MmuxDefineGlobalVarLimits{uint32}
+@MmuxDefineGlobalVarLimits{sint64}
+@MmuxDefineGlobalVarLimits{uint64}
+
+@MmuxDefineGlobalVarLimits{ssize}
+@MmuxDefineGlobalVarLimits{usize}
+@MmuxDefineGlobalVarLimits{sintmax}
+@MmuxDefineGlobalVarLimits{uintmax}
+@MmuxDefineGlobalVarLimits{sintptr}
+@MmuxDefineGlobalVarLimits{uintptr}
+@MmuxDefineGlobalVarLimits{ptrdiff}
+@MmuxDefineGlobalVarLimits{mode}
+@MmuxDefineGlobalVarLimits{off}
+@MmuxDefineGlobalVarLimits{pid}
+@MmuxDefineGlobalVarLimits{uid}
+@MmuxDefineGlobalVarLimits{gid}
+@MmuxDefineGlobalVarLimits{wchar}
+@MmuxDefineGlobalVarLimits{wint}
 
 @c page
 @node types predicates
@@ -3814,6 +3702,16 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @chapter Handling errors
 
 
+@menu
+* errors builtins::             Builtin handling errors.
+* errors errno::                Values of @code{errno}.
+@end menu
+
+@c page
+@node errors builtins
+@section Builtin handling errors
+
+
 @defvr {Shell Variable} ERRNO
 If an error occurs in the call to a builtin that interfaces a Standard C Library function: the
 builtin will set the shell variable @env{ERRNO} to the string representation of an exact integer,
@@ -3858,6 +3756,161 @@ mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
 "$SYM"  @result{} ENOMEM
 @end example
 @end defun
+
+@c page
+@node errors errno
+@section Values of @code{errno}
+
+
+If a C language constant referenced by one of the following variables is undefined: the
+corresponding Bash variable is undefined; we can test this condition with @code{test -v}; to test if
+the underlying platform implements the constant @code{ENOMEM}, we can do:
+
+@example
+if test -v mmux_libc_ENOMEM
+then # implemented
+else # not implemented
+fi
+@end example
+
+@macro MmuxDefineGlobalVarErrno{NAME}
+@defvar mmux_libc_\NAME\
+Global variable holding the value of the C language constant @code{\NAME\}.
+@end defvar
+
+@end macro
+
+@MmuxDefineGlobalVarErrno{EPERM}
+@MmuxDefineGlobalVarErrno{ENOENT}
+@MmuxDefineGlobalVarErrno{ESRCH}
+@MmuxDefineGlobalVarErrno{EINTR}
+@MmuxDefineGlobalVarErrno{EIO}
+@MmuxDefineGlobalVarErrno{ENXIO}
+@MmuxDefineGlobalVarErrno{E2BIG}
+@MmuxDefineGlobalVarErrno{ENOEXEC}
+@MmuxDefineGlobalVarErrno{EBADF}
+@MmuxDefineGlobalVarErrno{ECHILD}
+@MmuxDefineGlobalVarErrno{EAGAIN}
+@MmuxDefineGlobalVarErrno{ENOMEM}
+@MmuxDefineGlobalVarErrno{EACCES}
+@MmuxDefineGlobalVarErrno{EFAULT}
+@MmuxDefineGlobalVarErrno{ENOTBLK}
+@MmuxDefineGlobalVarErrno{EBUSY}
+@MmuxDefineGlobalVarErrno{EEXIST}
+@MmuxDefineGlobalVarErrno{EXDEV}
+@MmuxDefineGlobalVarErrno{ENODEV}
+@MmuxDefineGlobalVarErrno{ENOTDIR}
+@MmuxDefineGlobalVarErrno{EISDIR}
+@MmuxDefineGlobalVarErrno{EINVAL}
+@MmuxDefineGlobalVarErrno{ENFILE}
+@MmuxDefineGlobalVarErrno{EMFILE}
+@MmuxDefineGlobalVarErrno{ENOTTY}
+@MmuxDefineGlobalVarErrno{ETXTBSY}
+@MmuxDefineGlobalVarErrno{EFBIG}
+@MmuxDefineGlobalVarErrno{ENOSPC}
+@MmuxDefineGlobalVarErrno{ESPIPE}
+@MmuxDefineGlobalVarErrno{EROFS}
+@MmuxDefineGlobalVarErrno{EMLINK}
+@MmuxDefineGlobalVarErrno{EPIPE}
+@MmuxDefineGlobalVarErrno{EDOM}
+@MmuxDefineGlobalVarErrno{ERANGE}
+@MmuxDefineGlobalVarErrno{EDEADLK}
+@MmuxDefineGlobalVarErrno{ENAMETOOLONG}
+@MmuxDefineGlobalVarErrno{ENOLCK}
+@MmuxDefineGlobalVarErrno{ENOSYS}
+@MmuxDefineGlobalVarErrno{ENOTEMPTY}
+@MmuxDefineGlobalVarErrno{ELOOP}
+@MmuxDefineGlobalVarErrno{EWOULDBLOCK}
+@MmuxDefineGlobalVarErrno{ENOMSG}
+@MmuxDefineGlobalVarErrno{EIDRM}
+@MmuxDefineGlobalVarErrno{ECHRNG}
+@MmuxDefineGlobalVarErrno{EL2NSYNC}
+@MmuxDefineGlobalVarErrno{EL3HLT}
+@MmuxDefineGlobalVarErrno{EL3RST}
+@MmuxDefineGlobalVarErrno{ELNRNG}
+@MmuxDefineGlobalVarErrno{EUNATCH}
+@MmuxDefineGlobalVarErrno{ENOCSI}
+@MmuxDefineGlobalVarErrno{EL2HLT}
+@MmuxDefineGlobalVarErrno{EBADE}
+@MmuxDefineGlobalVarErrno{EBADR}
+@MmuxDefineGlobalVarErrno{EXFULL}
+@MmuxDefineGlobalVarErrno{ENOANO}
+@MmuxDefineGlobalVarErrno{EBADRQC}
+@MmuxDefineGlobalVarErrno{EBADSLT}
+@MmuxDefineGlobalVarErrno{EDEADLOCK}
+@MmuxDefineGlobalVarErrno{EBFONT}
+@MmuxDefineGlobalVarErrno{ENOSTR}
+@MmuxDefineGlobalVarErrno{ENODATA}
+@MmuxDefineGlobalVarErrno{ETIME}
+@MmuxDefineGlobalVarErrno{ENOSR}
+@MmuxDefineGlobalVarErrno{ENONET}
+@MmuxDefineGlobalVarErrno{ENOPKG}
+@MmuxDefineGlobalVarErrno{EREMOTE}
+@MmuxDefineGlobalVarErrno{ENOLINK}
+@MmuxDefineGlobalVarErrno{EADV}
+@MmuxDefineGlobalVarErrno{ESRMNT}
+@MmuxDefineGlobalVarErrno{ECOMM}
+@MmuxDefineGlobalVarErrno{EPROTO}
+@MmuxDefineGlobalVarErrno{EMULTIHOP}
+@MmuxDefineGlobalVarErrno{EDOTDOT}
+@MmuxDefineGlobalVarErrno{EBADMSG}
+@MmuxDefineGlobalVarErrno{EOVERFLOW}
+@MmuxDefineGlobalVarErrno{ENOTUNIQ}
+@MmuxDefineGlobalVarErrno{EBADFD}
+@MmuxDefineGlobalVarErrno{EREMCHG}
+@MmuxDefineGlobalVarErrno{ELIBACC}
+@MmuxDefineGlobalVarErrno{ELIBBAD}
+@MmuxDefineGlobalVarErrno{ELIBSCN}
+@MmuxDefineGlobalVarErrno{ELIBMAX}
+@MmuxDefineGlobalVarErrno{ELIBEXEC}
+@MmuxDefineGlobalVarErrno{EILSEQ}
+@MmuxDefineGlobalVarErrno{ERESTART}
+@MmuxDefineGlobalVarErrno{ESTRPIPE}
+@MmuxDefineGlobalVarErrno{EUSERS}
+@MmuxDefineGlobalVarErrno{ENOTSOCK}
+@MmuxDefineGlobalVarErrno{EDESTADDRREQ}
+@MmuxDefineGlobalVarErrno{EMSGSIZE}
+@MmuxDefineGlobalVarErrno{EPROTOTYPE}
+@MmuxDefineGlobalVarErrno{ENOPROTOOPT}
+@MmuxDefineGlobalVarErrno{EPROTONOSUPPORT}
+@MmuxDefineGlobalVarErrno{ESOCKTNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EOPNOTSUPP}
+@MmuxDefineGlobalVarErrno{EPFNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EAFNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EADDRINUSE}
+@MmuxDefineGlobalVarErrno{EADDRNOTAVAIL}
+@MmuxDefineGlobalVarErrno{ENETDOWN}
+@MmuxDefineGlobalVarErrno{ENETUNREACH}
+@MmuxDefineGlobalVarErrno{ENETRESET}
+@MmuxDefineGlobalVarErrno{ECONNABORTED}
+@MmuxDefineGlobalVarErrno{ECONNRESET}
+@MmuxDefineGlobalVarErrno{ENOBUFS}
+@MmuxDefineGlobalVarErrno{EISCONN}
+@MmuxDefineGlobalVarErrno{ENOTCONN}
+@MmuxDefineGlobalVarErrno{ESHUTDOWN}
+@MmuxDefineGlobalVarErrno{ETOOMANYREFS}
+@MmuxDefineGlobalVarErrno{ETIMEDOUT}
+@MmuxDefineGlobalVarErrno{ECONNREFUSED}
+@MmuxDefineGlobalVarErrno{EHOSTDOWN}
+@MmuxDefineGlobalVarErrno{EHOSTUNREACH}
+@MmuxDefineGlobalVarErrno{EALREADY}
+@MmuxDefineGlobalVarErrno{EINPROGRESS}
+@MmuxDefineGlobalVarErrno{ESTALE}
+@MmuxDefineGlobalVarErrno{EUCLEAN}
+@MmuxDefineGlobalVarErrno{ENOTNAM}
+@MmuxDefineGlobalVarErrno{ENAVAIL}
+@MmuxDefineGlobalVarErrno{EISNAM}
+@MmuxDefineGlobalVarErrno{EREMOTEIO}
+@MmuxDefineGlobalVarErrno{EDQUOT}
+@MmuxDefineGlobalVarErrno{ENOMEDIUM}
+@MmuxDefineGlobalVarErrno{EMEDIUMTYPE}
+@MmuxDefineGlobalVarErrno{ECANCELED}
+@MmuxDefineGlobalVarErrno{ENOKEY}
+@MmuxDefineGlobalVarErrno{EKEYEXPIRED}
+@MmuxDefineGlobalVarErrno{EKEYREVOKED}
+@MmuxDefineGlobalVarErrno{EKEYREJECTED}
+@MmuxDefineGlobalVarErrno{EOWNERDEAD}
+@MmuxDefineGlobalVarErrno{ENOTRECOVERABLE}
 
 @c page
 @node fds
@@ -5090,12 +5143,16 @@ If an error occurs and @var{who} is not @cnull{}: print an error message to @std
 @end deftypefun
 
 @c page
-@node packages library
-@appendix Package handling library
+@node packages
+@appendix @mmux{} Bash Packages Infrastructure
 
 
-@value{PACKAGE} installs a library to handle @gnu{} Bash packages; it is sort of primitive in its
-version @samp{0}.  The shell library is:
+@cindex @mmux{} Bash Packages Infrastructure
+
+
+@value{PACKAGE} installs a shell library to handle @gnu{} Bash packages; choices were made to define
+what it means that a package uses the @mmux{} Bash Packaging Infrastructure; it is sort of primitive
+in its version @samp{0}.  The shell library is:
 
 @center @file{libmmux-bash-packages.bash}
 
@@ -5107,34 +5164,73 @@ not really required by other shell libraries, including those depending on
 @file{libmmux-bash-pointers.bash} itself.
 
 @menu
-* packages library overview::   Overview of the library.
-* packages library descriptor:: Package descriptor.
-* packages library loading::    Loading a package.
-* packages library unloading::  Unloading a package.
+* packages overview::   Overview of the library.
+* packages descriptor:: Package descriptor.
+* packages loading::    Loading a package.
+* packages unloading::  Unloading a package.
 @end menu
 
 @c page
-@node packages library overview
+@node packages overview
 @appendixsec Overview of the library
 
 
+The @mmux{} Bash Packaging Infrastructure defines the following concepts:
+
+@table @dfn
+@item shared library
+It is a C11 language library compiled into binary code and installed as a shared object; it is meant
+to implement loadable @gnu{} Bash builtins.
+
+@item shell package
+It is a set of features collected into an Application Programming Interface; the package and the
+@api{} are given a version specification.
+
+@item shell library
+It is a file containing @gnu{} Bash source code; a shell library might implement one or more shell
+packages; a shell library might require a shared library from which to load builtins.
+@end table
+
 In general, to load a shell library we could just source its file, using the @code{source} builtin;
 the library code itself can perform initialisation operations like defining global variables,
-functions and enabling loadable builtins.  And this is fine.
+functions and enabling loadable builtins.  There are situations in which it is convenient to
+systematise part of of this work.
 
-What happens if a library implements a builtin only if a feature is available on the underlying
-platform?  For example, some systems implement the standard C language type @objtype{_Float64},
-others do not; a Bash extension might implement builtins that operate on that data type only if the
-type is available.  Trying to enable an unimplemented builtin will result in @code{enable} printing
-an error message; do we want to see that error message?  Or is it fine if the builtin is not
-available and we do not want to see any error message?  Does the shell library have to know the list
-of implemented and bulitins, with the not implemented ones removed?
+@mmux{} Bash Packaging Infrastructure version @samp{0} provides, through the shell library
+@file{libmmux-bash-packages.bash}, a way to organise and manage:
 
-This and other situations suggest it is good to have a library whose purpose is to, somehow,
-systematise loading packages.  This is what @file{libmmux-bash-packages.bash} is for.
+@itemize
+@item
+Installed packages version specification.
+
+@item
+Installed packages' @api{} version specification.
+
+@item
+Loading of builtins from a shared library.
+@end itemize
+
+@noindent
+the infrastructure does @strong{not} provide:
+
+@itemize
+@item
+Searching a file system for the location of installed packages to load at run--time.
+
+@item
+Package dependency management.
+@end itemize
+
+To use @file{libmmux-bash-packages.bash} we have to source it @strong{before} other shell libraries
+that use it:
+
+@example
+source libmmux-bash-packages.bash
+source libmmux-bash-pointers.bash
+@end example
 
 @c page
-@node packages library descriptor
+@node packages descriptor
 @appendixsec Package descriptor
 
 
@@ -5181,7 +5277,7 @@ installed on the system; a library that implements loadable builtins; for exampl
 mandatory.
 
 @item SHELL_LIBRARY
-Optional.  A string representing the filename of the shell library installed on the system; the one
+Mandatory.  A string representing the filename of the shell library installed on the system; the one
 that implements the loading and unloading of the package; the one that defines the package
 descriptor itself.  For example @file{libmmux-bash-pointers.bash}.
 
@@ -5213,7 +5309,7 @@ builtins starting from @samp{ENABLED_BUILTIN_0}, then unset the key from the arr
 @end table
 
 @c page
-@node packages library loading
+@node packages loading
 @appendixsec Loading a package
 
 
@@ -5221,7 +5317,7 @@ Loading a package means to load a shell script in the current shell session and,
 enable loadable builtins from a shared library.
 
 
-@defun mmux_package_load_from_descriptor @var{DESCRIPTOR_ARRAYNAME}
+@defun mmux_package_load_by_descriptor @var{DESCRIPTOR_ARRAYNAME}
 Do what is needed to load the package whose descriptor is the shell associative array
 @var{DESCRIPTOR_ARRAYNAME}.
 
@@ -5235,7 +5331,7 @@ evaluate that identifier to initialise the package after loading.
 @end defun
 
 @c page
-@node packages library unloading
+@node packages unloading
 @appendixsec Unloading a package
 
 
@@ -5243,7 +5339,7 @@ Unloading a package means to remove from a shell session everything a package ha
 functions, builtins, aliases.  It might not be always possible.
 
 
-@defun mmux_package_unload_from_descriptor @var{DESCRIPTOR_ARRAYNAME}
+@defun mmux_package_unload_by_descriptor @var{DESCRIPTOR_ARRAYNAME}
 Do what is needed to unload the package whose descriptor is the shell associative array
 @var{DESCRIPTOR_ARRAYNAME}.
 
