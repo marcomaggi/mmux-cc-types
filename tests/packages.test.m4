@@ -49,6 +49,8 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 function packages-unload-library-1.0 () {
     {
+	mmux_package_descriptor_is_registered_as_provided MMUX_BASH_POINTERS_PACKAGE
+    } && {
 	mmux_package_load_by_descriptor MMUX_BASH_POINTERS_PACKAGE
     } && {
 	type -t 'mmux_bash_pointers_library_after_loading_hook' | \

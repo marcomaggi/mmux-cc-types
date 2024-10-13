@@ -5164,10 +5164,12 @@ not really required by other shell libraries, including those depending on
 @file{libmmux-bash-pointers.bash} itself.
 
 @menu
-* packages overview::   Overview of the library.
-* packages descriptor:: Package descriptor.
-* packages loading::    Loading a package.
-* packages unloading::  Unloading a package.
+* packages overview::           Overview of the library.
+* packages descriptor::         Package descriptor.
+* packages registry::           Registry of descriptors.
+* packages providing::          Providing a package.
+* packages loading::            Loading a package.
+* packages unloading::          Unloading a package.
 @end menu
 
 @c page
@@ -5246,7 +5248,7 @@ support for @gnu{}}.
 
 The following are the expected array elements.
 
-@table @samp{}
+@table @samp
 @item PACKAGING_VERSION
 Mandatory.  Specifies the version of the packaging system, the one implemented by the library
 @file{libmmux-bash-packages.bash} itself.  At present only version @samp{0} is defined.
@@ -5307,6 +5309,108 @@ Undefinable.  A library loader should add these elements to list the builtins th
 that, later, these elements might be used to disable them.  A library unloader should disable these
 builtins starting from @samp{ENABLED_BUILTIN_0}, then unset the key from the array.
 @end table
+
+@c page
+@node packages registry
+@appendixsec Registry of descriptors
+
+
+A registry is maintained to keep track of the state of packages.  The functions of
+@file{libmmux-bash-packages.bash} register a package descriptor changing its state as appropriate
+while loading and unloading the package itself.  A package can be in the following states:
+
+@table @code
+@item provided
+The source code has been sourced, but the package is not loaded.  This is the initial state after a
+package has been successfully provided with a call to @func{mmux_package_provide_by_descriptor}.
+This is the final state after a package has been successfully unloaded with a call to
+@func{mmux_package_unload_by_descriptor}.
+
+@item loaded
+The source code has been sourced, and the package has been successfully loaded; which means that the
+after loading hook, if any, has been successfully evaluated.  This is the final state after a
+package has been successfully loaded with a call to @func{mmux_package_load_by_descriptor}.
+
+@item broken
+The source code has been sourced, but an error occurred while loading or unloading the package; it
+is safe to consider the package in an internally inconsistent state.
+@end table
+
+
+The argument @var{DESCRIPTOR_ARRAYNAME} is the name of the associative array representing a package
+descriptor; for the library @file{libmmux-bash-pointers.bash} it is
+@env{MMUX_BASH_POINTERS_PACKAGE}.
+
+
+@defun mmux_package_forget_descriptor @var{DESCRIPTOR_ARRAYNAME}
+Remove from the registry a previously registered package descriptor.
+@end defun
+
+
+@defun mmux_package_register_descriptor_as_provided @var{DESCRIPTOR_ARRAYNAME}
+Register a package descriptor giving it the state of @samp{provided}.
+@end defun
+
+
+@defun mmux_package_register_descriptor_as_loaded @var{DESCRIPTOR_ARRAYNAME}
+Register a package descriptor giving it the state of @samp{loaded}.
+@end defun
+
+
+@defun mmux_package_register_descriptor_as_broken @var{DESCRIPTOR_ARRAYNAME}
+Register a package descriptor giving it the state of @samp{broken}.
+@end defun
+
+
+@defun mmux_package_descriptor_is_registered @var{DESCRIPTOR_ARRAYNAME}
+Return true if a package descriptor has been registered, no matter its state; otherwise return
+false.
+@end defun
+
+
+@defun mmux_package_descriptor_is_registered_as_provided @var{DESCRIPTOR_ARRAYNAME}
+Return true if a package descriptor has been registered and its state is @samp{provided}; otherwise
+return false.
+@end defun
+
+
+@defun mmux_package_descriptor_is_registered_as_loaded @var{DESCRIPTOR_ARRAYNAME}
+Return true if a package descriptor has been registered and its state is @samp{loaded}; otherwise
+return false.
+@end defun
+
+
+@defun mmux_package_descriptor_is_registered_as_broken @var{DESCRIPTOR_ARRAYNAME}
+Return true if a package descriptor has been registered and its state is @samp{broken}; otherwise
+return false.
+@end defun
+
+@c page
+@node packages providing
+@appendixsec Providing a package
+
+
+When the code of a package adhering to the @mmux{} Bash Packaging Infrastructure is sourced: it
+should announce itself by signalling that some package is provided.  So in the source code of
+@file{libmmux-bash-pointers.bash} there is the top--level code:
+
+@example
+mmux_package_provide_by_descriptor MMUX_BASH_POINTERS_PACKAGE
+@end example
+
+
+@defun mmux_package_provide_by_descriptor @var{DESCRIPTOR_ARRAYNAME}
+Register a new package descriptor as provided.
+
+If the configuration option ``load when provide'' is enabled: load the package immediately by
+applying @func{mmux_package_load_by_descriptor} to @var{DESCRIPTOR_ARRAYNAME}.
+@end defun
+
+
+@defun mmux_package_enable_load_when_provide
+@defunx mmux_package_disable_load_when_provide
+Enable or disable the configuration option ``load when provide''.  The default is: enabled.
+@end defun
 
 @c page
 @node packages loading

@@ -33,10 +33,23 @@ declare -gA MMUX_BASH_PACKAGES_PACKAGE=([PACKAGING_VERSION]='0'
 					[SHELL_LIBRARY]='libmmux-bash-packages.bash')
 
 #page
+#### helpers
+
+alias mmux_package_return_failure='return 1'
+alias mmux_package_return_success='return 0'
+function mmux_package_exit_because_error_loading_package () {
+    exit 100
+}
+
+#page
 #### package registry
 
 declare -gA MMUX_BASH_PACKAGES_REGISTRY
 
+function mmux_package_forget_descriptor () {
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
+    unset -v SS(MMUX_BASH_PACKAGES_REGISTRY,WW(mmux_p_PACKAGE_DESCRIPTOR_NAME))
+}
 function mmux_package_register_descriptor_as_provided () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
     MMUX_BASH_PACKAGES_REGISTRY[WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)]='provided'
@@ -45,9 +58,9 @@ function mmux_package_register_descriptor_as_loaded () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
     MMUX_BASH_PACKAGES_REGISTRY[WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)]='loaded'
 }
-function mmux_package_forget_descriptor () {
+function mmux_package_register_descriptor_as_broken () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
-    unset -v SS(MMUX_BASH_PACKAGES_REGISTRY,WW(mmux_p_PACKAGE_DESCRIPTOR_NAME))
+    MMUX_BASH_PACKAGES_REGISTRY[WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)]='broken'
 }
 function mmux_package_descriptor_is_registered () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
@@ -62,6 +75,11 @@ function mmux_package_descriptor_is_registered_as_loaded () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
     test -v SS(MMUX_BASH_PACKAGES_REGISTRY,WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)) -a \
 	 'loaded' = WW(MMUX_BASH_PACKAGES_REGISTRY,RR(mmux_p_PACKAGE_DESCRIPTOR_NAME))
+}
+function mmux_package_descriptor_is_registered_as_broken () {
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
+    test -v SS(MMUX_BASH_PACKAGES_REGISTRY,WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)) -a \
+	 'broken' = WW(MMUX_BASH_PACKAGES_REGISTRY,RR(mmux_p_PACKAGE_DESCRIPTOR_NAME))
 }
 
 #page
@@ -78,7 +96,7 @@ function mmux_package_provide_by_descriptor () {
 	if mmux_package_descriptor_is_registered WW(PACKAGE_DESCRIPTOR_NAME)
 	then
 	    mmux_package_print_warning_message 'attempting to provide an already provided package: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
-	    return 1
+	    mmux_package_return_failure
 	else mmux_package_register_descriptor_as_provided WW(PACKAGE_DESCRIPTOR_NAME)
 	fi
     }
@@ -144,7 +162,7 @@ function mmux_package_load_by_descriptor () {
     }
 
     if ! mmux_package_run_descriptor_after_loading_hook WW(PACKAGE_DESCRIPTOR_NAME)
-    then return 1
+    then mmux_package_return_failure
     fi
 
     mmux_package_register_descriptor_as_loaded WW(PACKAGE_DESCRIPTOR_NAME)
@@ -157,11 +175,13 @@ function mmux_package_run_descriptor_after_loading_hook () {
     then
 	declare -n mmux_p_AFTER_LOADING_HOOK=SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGE_AFTER_LOADING_HOOK)
 
-	mmux_package_print_debug_message 'evaluating after loading hook: "%s"' WW(mmux_p_AFTER_LOADING_HOOK)
-	if ! WW(mmux_p_AFTER_LOADING_HOOK)
-	then
-	    mmux_package_print_verbose_message 'failed package after loading hook: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
-	    return 1
+	mmux_package_print_debug_message 'evaluating after-loading hook: "%s"' WW(mmux_p_AFTER_LOADING_HOOK)
+	if WW(mmux_p_AFTER_LOADING_HOOK)
+	then mmux_package_register_descriptor_as_loaded WW(PACKAGE_DESCRIPTOR_NAME)
+	else
+	    mmux_package_register_descriptor_as_broken WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_print_verbose_message 'failed after-loading hook: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_return_failure
 	fi
     fi
 }
@@ -177,7 +197,7 @@ function mmux_package_unload_by_descriptor () {
     mmux_package_print_debug_message 'unloading package by descriptor: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
 
     if ! mmux_package_run_descriptor_before_unloading_hook WW(PACKAGE_DESCRIPTOR_NAME)
-    then return 1
+    then mmux_package_return_failure
     fi
 
     {
@@ -204,11 +224,13 @@ function mmux_package_run_descriptor_before_unloading_hook () {
     then
 	declare -n mmux_p_BEFORE_UNLOADING_HOOK=SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGE_BEFORE_UNLOADING_HOOK)
 
-	mmux_package_print_debug_message 'evaluating after loading hook: "%s"' WW(mmux_p_BEFORE_UNLOADING_HOOK)
-	if ! WW(mmux_p_BEFORE_UNLOADING_HOOK)
-	then
-	    mmux_package_print_verbose_message 'failed package before unloading hook: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
-	    return 1
+	mmux_package_print_debug_message 'evaluating before-unloading hook: "%s"' WW(mmux_p_BEFORE_UNLOADING_HOOK)
+	if WW(mmux_p_BEFORE_UNLOADING_HOOK)
+	then mmux_package_register_descriptor_as_loaded WW(PACKAGE_DESCRIPTOR_NAME)
+	else
+	    mmux_package_register_descriptor_as_broken WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_print_verbose_message 'failed before-unloading hook: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_return_failure
 	fi
     fi
 }
@@ -221,10 +243,10 @@ function mmux_package_string_is_identifier () {
     declare -r REX='^[a-zA-Z0-9_][a-zA-Z0-9_\.\+\-]*$'
 
     if test -z QQ(STRING)
-    then return 1
+    then mmux_package_return_failure
     elif [[ WW(STRING) =~ RR(REX) ]]
-    then return 0
-    else return 1
+    then mmux_package_return_success
+    else mmux_package_return_failure
     fi
 }
 function mmux_package_string_is_shell_library_filename () {
@@ -232,10 +254,10 @@ function mmux_package_string_is_shell_library_filename () {
     declare -r REX='^lib[a-zA-Z0-9_][a-zA-Z0-9_\.\+\-]*\.bash$'
 
     if test -z QQ(STRING)
-    then return 1
+    then mmux_package_return_failure
     elif [[ WW(STRING) =~ RR(REX) ]]
-    then return 0
-    else return 1
+    then mmux_package_return_success
+    else mmux_package_return_failure
     fi
 }
 
@@ -306,7 +328,7 @@ function mmux_package_print_debug_message () {
 }
 
 #page
-#### helpers
+#### more helpers
 
 # Return  true  if  a  package  descriptor  declares itself  as  adhering  to  MMUX  Bash  Packaging
 # Infrastructure version 0; otherwise exit with error status.
@@ -320,9 +342,6 @@ function mmux_package_check_packaging_version () {
 	mmux_package_print_error_message 'invalid package descriptor, or wrong packaging version: "%s"' WW(1)
 	mmux_package_exit_because_error_loading_package
     fi
-}
-function mmux_package_exit_because_error_loading_package () {
-    exit 100
 }
 
 #page

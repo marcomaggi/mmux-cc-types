@@ -162,14 +162,14 @@ function mmux_bash_pointers_library_before_unloading_hook () {
 	  MMUX_BASH_POINTERS_COMPLEX_STEMS		\
 	  MMUX_BASH_POINTERS_STEMS
 
-     unset -f \
-	   mmux-bash-pointers-array-from-memory			\
-	   mmux-bash-pointers-memory-from-array			\
-	   mmux-bash-pointers-string-from-memory		\
-	   mmux-bash-pointers-memory-from-string		\
-	   mmux_bash_pointers_builtin_p				\
-	   mmux_bash_pointers_library_after_loading_hook	\
-	   mmux_bash_pointers_library_before_unloading_hook
+    unset -f \
+	  mmux-bash-pointers-array-from-memory			\
+	  mmux-bash-pointers-memory-from-array			\
+	  mmux-bash-pointers-string-from-memory			\
+	  mmux-bash-pointers-memory-from-string			\
+	  mmux_bash_pointers_builtin_p				\
+	  mmux_bash_pointers_library_after_loading_hook		\
+	  mmux_bash_pointers_library_before_unloading_hook
 }
 
 #page
