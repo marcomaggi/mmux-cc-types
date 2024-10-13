@@ -119,57 +119,85 @@ function mmux_package_disable_load_when_provide () {
 #### loading packages
 
 function mmux_package_load_by_descriptor () {
-    declare -r PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
-    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(PACKAGE_DESCRIPTOR_NAME)
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    mmux_package_check_packaging_version WW(PACKAGE_DESCRIPTOR_NAME)
-    mmux_package_print_debug_message 'loading package by descriptor: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_print_debug_message 'loading package by descriptor: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    # Check if there  are builtins to enable; if there  are: there must also be a  shared library to
-    # enabled them from.
-    if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,BUILTIN_0) -a -n QQ(mmux_p_PACKAGE_DESCRIPTOR,BUILTIN_0)
+    if mmux_p_package_check_descriptor_has_builtins_to_enable WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     then
-	if ! test -v SS(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) -a -n QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY)
+	if ! mmux_p_package_check_descriptor_has_shared_library WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	then
 	    mmux_package_print_error_message 'package descriptor "%s" has builtins but no shared library specification' \
-					     WW(PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_exit_because_error_loading_package
+					     WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_return_failure
+	fi
+	if ! mmux_p_package_enable_builtins WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	then
+	    mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_return_failure
 	fi
     fi
 
-    {
-	declare BUILTIN_NAME
-	declare -i IDX
-
-	for ((IDX=0; ; ++IDX))
-	do
-	    if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,BUILTIN_$IDX)
-	    then
-		BUILTIN_NAME=RR(mmux_p_PACKAGE_DESCRIPTOR,BUILTIN_$IDX)
-		if mmux_package_debug_mode_is_enabled
-		then
-		    if ! mmux_package_string_is_identifier WW(BUILTIN_NAME)
-		    then
-			mmux_package_print_error_message 'invalid builtin name: "%s"' WW(BUILTIN_NAME)
-			break
-		    fi
-		fi
-		enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(BUILTIN_NAME)
-		mmux_p_PACKAGE_DESCRIPTOR[ENABLED_BUILTIN_$IDX]=RR(BUILTIN_NAME)
-	    else break
-	    fi
-	done
-    }
-
-    if ! mmux_package_run_descriptor_after_loading_hook WW(PACKAGE_DESCRIPTOR_NAME)
-    then mmux_package_return_failure
+    if ! mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then
+	mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_return_failure
     fi
 
-    mmux_package_register_descriptor_as_loaded WW(PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_register_descriptor_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 }
+function mmux_p_package_check_descriptor_has_builtins_to_enable () {
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    test -v SS(mmux_p_PACKAGE_DESCRIPTOR,BUILTIN_0) -a -n QQ(mmux_p_PACKAGE_DESCRIPTOR,BUILTIN_0)
+}
+function mmux_p_package_check_descriptor_has_shared_library () {
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    test -v SS(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) -a -n QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY)
+}
+
+function mmux_p_package_enable_builtins () {
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    declare mmux_p_BUILTIN_NAME mmux_p_KEY
+    declare -i mmux_p_IDX
+
+    for ((mmux_p_IDX=0; ; ++mmux_p_IDX))
+    do
+	mmux_p_KEY=BUILTIN_$mmux_p_IDX
+	if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,WW(mmux_p_KEY))
+	then
+	    mmux_p_BUILTIN_NAME=RR(mmux_p_PACKAGE_DESCRIPTOR,WW(mmux_p_KEY))
+	    if mmux_package_debug_mode_is_enabled
+	    then
+		if ! mmux_package_string_is_identifier WW(mmux_p_BUILTIN_NAME)
+		then
+		    mmux_package_print_error_message 'invalid builtin name: "%s"' WW(mmux_p_BUILTIN_NAME)
+		    continue
+		fi
+	    fi
+	    if mmux_package_ignore_enable_builtin_errors_is_enabled
+	    then
+		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME) &>/dev/null
+		then SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$mmux_p_IDX)=RR(mmux_p_BUILTIN_NAME)
+		fi
+	    else
+		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME)
+		then SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$mmux_p_IDX)=RR(mmux_p_BUILTIN_NAME)
+		else mmux_package_return_failure
+		fi
+	    fi
+	else break
+	fi
+    done
+    mmux_package_return_success
+}
+
 function mmux_package_run_descriptor_after_loading_hook () {
-    declare -r PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
-    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(PACKAGE_DESCRIPTOR_NAME)
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
     if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGE_AFTER_LOADING_HOOK)
     then
@@ -177,48 +205,56 @@ function mmux_package_run_descriptor_after_loading_hook () {
 
 	mmux_package_print_debug_message 'evaluating after-loading hook: "%s"' WW(mmux_p_AFTER_LOADING_HOOK)
 	if WW(mmux_p_AFTER_LOADING_HOOK)
-	then mmux_package_register_descriptor_as_loaded WW(PACKAGE_DESCRIPTOR_NAME)
+	then mmux_package_register_descriptor_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	else
-	    mmux_package_register_descriptor_as_broken WW(PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_print_verbose_message 'failed after-loading hook: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_print_verbose_message 'failed after-loading hook: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	    mmux_package_return_failure
 	fi
     fi
+}
+
+function mmux_package_enable_ignore_enable_builtin_errors () {
+    function mmux_package_ignore_enable_builtin_errors_is_enabled () { true; }
+}
+function mmux_package_disable_ignore_enable_builtin_errors () {
+    function mmux_package_ignore_enable_builtin_errors_is_enabled () { false; }
 }
 
 #page
 #### unloading
 
 function mmux_package_unload_by_descriptor () {
-    declare -r PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
-    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(PACKAGE_DESCRIPTOR_NAME)
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    mmux_package_check_packaging_version WW(PACKAGE_DESCRIPTOR_NAME)
-    mmux_package_print_debug_message 'unloading package by descriptor: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_print_debug_message 'unloading package by descriptor: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    if ! mmux_package_run_descriptor_before_unloading_hook WW(PACKAGE_DESCRIPTOR_NAME)
+    if ! mmux_package_run_descriptor_before_unloading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     then mmux_package_return_failure
     fi
 
     {
-	declare BUILTIN_NAME
+	declare BUILTIN_NAME KEY
 	declare -i IDX
 
 	for ((IDX=0; ; ++IDX))
 	do
-	    if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$IDX)
+	    KEY=ENABLED_BUILTIN_$IDX
+	    if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,WW(KEY))
 	    then
-		BUILTIN_NAME=RR(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$IDX)
+		BUILTIN_NAME=RR(mmux_p_PACKAGE_DESCRIPTOR,WW(KEY))
 		enable -d WW(BUILTIN_NAME)
-		unset -v SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$IDX)
+		unset -v SS(mmux_p_PACKAGE_DESCRIPTOR,WW(KEY))
 	    else break
 	    fi
 	done
     }
 }
 function mmux_package_run_descriptor_before_unloading_hook () {
-    declare -r PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
-    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(PACKAGE_DESCRIPTOR_NAME)
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
     if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGE_BEFORE_UNLOADING_HOOK)
     then
@@ -226,10 +262,10 @@ function mmux_package_run_descriptor_before_unloading_hook () {
 
 	mmux_package_print_debug_message 'evaluating before-unloading hook: "%s"' WW(mmux_p_BEFORE_UNLOADING_HOOK)
 	if WW(mmux_p_BEFORE_UNLOADING_HOOK)
-	then mmux_package_register_descriptor_as_loaded WW(PACKAGE_DESCRIPTOR_NAME)
+	then mmux_package_register_descriptor_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	else
-	    mmux_package_register_descriptor_as_broken WW(PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_print_verbose_message 'failed before-unloading hook: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_print_verbose_message 'failed before-unloading hook: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	    mmux_package_return_failure
 	fi
     fi
@@ -350,6 +386,7 @@ function mmux_package_check_packaging_version () {
 mmux_package_disable_verbose_mode
 mmux_package_disable_debug_mode
 mmux_package_enable_load_when_provide
+mmux_package_disable_ignore_enable_builtin_errors
 mmux_package_provide_by_descriptor MMUX_BASH_PACKAGES_PACKAGE
 
 ### end of file
