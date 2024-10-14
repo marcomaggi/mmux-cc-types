@@ -370,12 +370,13 @@ function mmux_package_print_debug_message () {
 # Infrastructure version 0; otherwise exit with error status.
 #
 function mmux_package_check_packaging_version () {
-    declare -n mmux_p_PACKAGE_DESCRIPTOR=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
     if ! test -v  SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGING_VERSION)	\
 	 -a '0' = RR(mmux_p_PACKAGE_DESCRIPTOR,PACKAGING_VERSION)
     then
-	mmux_package_print_error_message 'invalid package descriptor, or wrong packaging version: "%s"' WW(1)
+	mmux_package_print_error_message 'invalid package descriptor, or wrong packaging version: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	mmux_package_exit_because_error_loading_package
     fi
 }
