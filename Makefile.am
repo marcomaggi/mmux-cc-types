@@ -276,6 +276,7 @@ EXTRA_DIST		+= \
 	tests/packages.test.m4			\
 	tests/pointers.test.m4			\
 	tests/predicates.test.m4		\
+	tests/structs.test.m4			\
 	tests/types.test.m4			\
 	tests/version.test.m4
 
@@ -299,6 +300,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/packages.test			\
 	tests/pointers.test			\
 	tests/predicates.test			\
+	tests/structs.test			\
 	tests/types.test			\
 	tests/version.test
 
