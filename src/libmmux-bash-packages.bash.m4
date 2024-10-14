@@ -94,22 +94,17 @@ function mmux_package_provide_by_descriptor () {
     mmux_package_print_debug_message 'providing package: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    # Register the new descriptor.
-    {
-	if mmux_package_descriptor_is_registered WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	then
-	    mmux_package_print_error_message 'attempting to provide an already provided package: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_return_failure
-	else mmux_package_register_descriptor_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	fi
-    }
+    if mmux_package_descriptor_is_registered WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then
+	mmux_package_print_error_message 'attempting to provide an already provided package: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_return_failure
+    else mmux_package_register_descriptor_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    fi
 
-    # If requested load the package right now.
-    {
-	if mmux_package_option_load_when_provide_is_enabled
-	then mmux_package_load_by_descriptor WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	fi
-    }
+    if mmux_package_option_load_when_provide_is_enabled
+    then mmux_package_load_by_descriptor WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    else mmux_package_return_success
+    fi
 }
 function mmux_package_option_enable_load_when_provide () {
     function mmux_package_option_load_when_provide_is_enabled () { true; }
@@ -144,10 +139,7 @@ function mmux_package_load_by_descriptor () {
     elif ! mmux_p_package_enable_builtins WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     then false
 
-    elif ! mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-    then false
-
-    else true
+    else mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     fi || {
 	mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	mmux_package_return_failure
@@ -183,13 +175,13 @@ function mmux_p_package_enable_builtins () {
 		    continue
 		fi
 	    fi
-	    if mmux_package_ignore_enable_builtin_errors_is_enabled
+	    if mmux_package_option_ignore_enable_builtin_errors_is_enabled
 	    then
 		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME) &>/dev/null
 		then SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$mmux_p_IDX)=RR(mmux_p_BUILTIN_NAME)
 		fi
 	    else
-		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME)
+		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME) &>&2
 		then SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$mmux_p_IDX)=RR(mmux_p_BUILTIN_NAME)
 		else mmux_package_return_failure
 		fi
@@ -220,10 +212,10 @@ function mmux_package_run_descriptor_after_loading_hook () {
 }
 
 function mmux_package_option_enable_ignore_enable_builtin_errors () {
-    function mmux_package_ignore_enable_builtin_errors_is_enabled () { true; }
+    function mmux_package_option_ignore_enable_builtin_errors_is_enabled () { true; }
 }
 function mmux_package_option_disable_ignore_enable_builtin_errors () {
-    function mmux_package_ignore_enable_builtin_errors_is_enabled () { false; }
+    function mmux_package_option_ignore_enable_builtin_errors_is_enabled () { false; }
 }
 
 #page

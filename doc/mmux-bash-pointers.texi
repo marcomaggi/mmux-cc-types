@@ -5486,7 +5486,7 @@ It is an error to provide an already registered descriptor; if a descriptor with
 @var{DESCRIPTOR_ARRAYNAME} is already registered (no matter its state): an error message is printed
 on @stderr{} and the return value is false.  To replace a descriptor we have to first forget it,
 @ref{mmux_package_forget_descriptor} for details; this is required if, for example, we want to
-resource a shell library.
+re--source a shell library.
 
 If the configuration option ``load when provide'' is enabled: load the package immediately by
 applying @func{mmux_package_load_by_descriptor} to @var{DESCRIPTOR_ARRAYNAME}.
@@ -5517,20 +5517,54 @@ Do what is needed to load the package whose descriptor is the shell associative 
 @var{DESCRIPTOR_ARRAYNAME}.  When successful return true; otherwise return false.
 
 It is an error to load a shell package whose descriptor is not registered; if a descriptor with name
-@var{DESCRIPTOR_ARRAYNAME} is not registered: an error message is printed on @stderr{} and the
-return value is false.
+@var{DESCRIPTOR_ARRAYNAME} is not registered: an error message is printed on @stderr{}; the function
+call returns immediately with status false.
 
 It is an error to load a descriptor not in @samp{provided} state; if a descriptor with name
 @var{DESCRIPTOR_ARRAYNAME} is already registered, and its state is not @samp{provided}: an error
-message is printed on @stderr{} and the return value is false.
+message is printed on @stderr{}; the function call returns immediately with status false.
 
 If the descriptor has a key @samp{BUILTIN_0}: the package requires loading a shared library to
 enable builtins; the shared library file name is meant to be in the descriptor itself at key
-@samp{SHARED_LIBRARY}.  Use the @code{enable} builtin to load bulitins from the shared library using
-the identifiers from the descriptor pairs with keys @samp{BUILTIN_0}, @samp{BUILTIN_1}, @dots{}
+@samp{SHARED_LIBRARY}.
 
-Then if the descriptor has a key @samp{PACKAGE_AFTER_LOADING_HOOK}, associated to an identifier:
-evaluate that identifier to initialise the package after loading.
+It is an error if the descriptor has a key @samp{BUILTIN_0} but the key @samp{SHARED_LIBRARY} does
+not exist or is not associated to a valid shared library name; in case of this error: the package is
+registered as @samp{broken}; an error message is printed on @stderr{}; the function call returns
+immediately with status false.
+
+Use the @MmuxBuiltin{enable} builtin to load bulitins from the shared library using the identifiers
+from the descriptor pairs with keys @samp{BUILTIN_0}, @samp{BUILTIN_1}, @dots{}
+
+If an error occurs while enabling a loadable builtin:
+
+@itemize
+@item
+If the option ``ignore enable builtin errors'' is enabled: the error message printed by
+@MmuxBuiltin{enable} is redirected to @file{/dev/null} and the error ignored.
+
+@item
+If the option ``ignore enable builtin errors'' is disabled: the error message printed by
+@MmuxBuiltin{enable} is redirected to @stderr{}; the package is registered as @samp{broken}; the
+function call returns immediately with status false.
+@end itemize
+
+Finally if the descriptor has a key @samp{PACKAGE_AFTER_LOADING_HOOK}, associated to an identifier:
+evaluate that identifier to initialise the package after loading.  The return status of the function
+call is the return status of the the after--loading hook.
+@end defun
+
+
+@defun mmux_package_option_enable_ignore_enable_builtin_errors
+@defunx mmux_package_option_disable_ignore_enable_builtin_errors
+Enable or disable the configuration option ``ignore enable builtin errors''.  The default is: option
+disabled.
+@end defun
+
+
+@defun mmux_package_option_ignore_enable_builtin_errors_is_enabled
+Return true if the configuration option ``ignore enable builtin errors'' is enabled; otherwise
+return false.
 @end defun
 
 @c page

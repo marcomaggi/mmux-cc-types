@@ -23,7 +23,7 @@ MBFLPP_PROG_RUN		= $(MBFLPP_PROG_ENV) $(MBFLPP) $(MBFLPP_PROG_FLAGS) $(MBFLPP_FL
 
 ## ------------------------------------------------------------------------
 
-MMUX_M4_FLAGS		=  --synclines --prefix-builtins --include=$(srcdir)/src/m4/
+MMUX_M4_FLAGS		=  $(M4FLAGS) --prefix-builtins --include=$(srcdir)/src/m4/
 MMUX_M4_FLAGS		+= --include=$(builddir)/src/ --include=$(builddir)/src/m4
 
 MMUX_M4_MACROS		= \

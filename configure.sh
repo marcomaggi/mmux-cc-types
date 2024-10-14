@@ -18,6 +18,7 @@ fi
     --prefix="${prefix}"			\
     --libdir="${libdir}"                        \
     CFLAGS='-O3'				\
+    M4FLAGS='--synclines'			\
     "$@"
 
 ### end of file
