@@ -208,7 +208,7 @@ AS_VAR_IF(with_emacs,'yes',
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
   [src/mmux-bash-pointers-config.h]
-  [src/config.m4]
+  [src/m4/config.m4]
   [doc/mmux-version.texi]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])

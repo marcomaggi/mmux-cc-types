@@ -5,37 +5,65 @@ AUTOMAKE_OPTIONS	= foreign
 EXTRA_DIST		= INSTALL
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
-AM_CPPFLAGS		= -I$(srcdir)/src -I$(builddir)/src
+AM_CPPFLAGS		= -I$(srcdir)/src/ -I$(builddir)/src/
 CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
 
-## ------------------------------------------------------------------------
-
-MMUX_M4_MACROS	= \
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.c.m4	\
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.bash.m4	\
-	$(top_srcdir)/src/config.m4.in
-
-EXTRA_DIST	+= $(MMUX_M4_MACROS)
-
-# These are used to preprocess C language files with extension ".c.m4".
-#
-# NOTE Load first "libmmux-bash-builtins.c.m4" and then "config.m4" !!!
-MMUX_CC_M4_LIBS = \
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.c.m4	\
-	$(builddir)/src/config.m4
-
-# These are used to GNU Bash files with extension ".c.m4".
-#
-# NOTE Load first "libmmux-bash-builtins.bash.m4" and then "config.m4" !!!
-MMUX_BASH_M4_LIBS = \
-	$(top_srcdir)/meta/m4/libmmux-bash-builtins.bash.m4	\
-	$(builddir)/src/config.m4
-
 ## --------------------------------------------------------------------
 
 nodist_pkgconfig_DATA	= meta/scripts/mmux-bash-pointers.pc
+
+## ------------------------------------------------------------------------
+
+MBFLPP_PROG_FLAGS	= --bash-program="$(BASH_PROGRAM)" --define=__MBFL_LIBDIR__=$(MBFL_LIBDIR)
+MBFLPP_PROG_FLAGS	+= --define=__LIBMBFL_LINKER__=$(MBFL_LIBMBFL_LINKER) --add-bash
+MBFLPP_PROG_ENV		= MBFL_LIBRARY_PATH=$(builddir)/src/share/mbfl; export MBFL_LIBRARY_PATH;
+MBFLPP_PROG_RUN		= $(MBFLPP_PROG_ENV) $(MBFLPP) $(MBFLPP_PROG_FLAGS) $(MBFLPP_FLAGS)
+
+## ------------------------------------------------------------------------
+
+MMUX_M4_FLAGS		=  --synclines --prefix-builtins --include=$(srcdir)/src/m4/
+MMUX_M4_FLAGS		+= --include=$(builddir)/src/ --include=$(builddir)/src/m4
+
+MMUX_M4_MACROS		= \
+	$(top_srcdir)/src/m4/macros-for-cc.m4	\
+	$(top_srcdir)/src/m4/macros-for-bash.m4	\
+	$(top_srcdir)/src/m4/config.m4.in
+
+EXTRA_DIST		+= $(MMUX_M4_MACROS)
+
+# These  are  used  to  preprocess C  language  files  with  extension
+# ".c.m4".  Do not change the order of inclusion!!!
+#
+MMUX_M4_CC_MACROS	= \
+	$(top_srcdir)/src/m4/macros-for-cc.m4	\
+	$(builddir)/src/m4/config.m4
+
+# These  are  used  to  preprocess   GNU  Bash  files  with  extension
+# ".bash.m4".  Do not change the order of inclusion!!!
+#
+MMUX_M4_BASH_MACROS	= \
+	$(top_srcdir)/src/m4/macros-for-bash.m4	\
+	$(builddir)/src/m4/config.m4
+
+
+#### Automake dirstamp files
+
+MMUX_AM_DIRSTAMP_FILES	= \
+	src/m4/$(am__dirstamp)	\
+	tests/$(am__dirstamp)
+
+BUILT_SOURCES		+= $(MMUX_AM_DIRSTAMP_FILES)
+DISTCLEANFILES		+= $(MMUX_AM_DIRSTAMP_FILES)
+
+src/m4/$(am__dirstamp):
+	@$(MKDIR_P) src/m4/
+	@: > $(@)
+
+tests/$(am__dirstamp):
+	@$(MKDIR_P) tests/
+	@: > $(@)
 
 
 #### support for GNU Emacs
@@ -44,30 +72,6 @@ if WANT_EMACS
 sharelispdir		= $(datadir)/emacs/site-lisp
 dist_sharelisp_LISP	= src/emacs/mmux-bash-packages.el
 endif
-
-
-#### MBFL stuff
-
-AM_MBFLPP_FLAGS		= --bash-program="$(BASH_PROGRAM)" --define=__MBFL_LIBDIR__=$(MBFL_LIBDIR) --define=__LIBMBFL_LINKER__=$(MBFL_LIBMBFL_LINKER)
-MBFLPP_PROG_FLAGS	= $(AM_MBFLPP_FLAGS) --add-bash
-
-# We must make sure that these end with a semicolon.
-MBFLPP_PROG_ENV		= MBFL_LIBRARY_PATH=$(builddir)/src/share/mbfl; export MBFL_LIBRARY_PATH;
-
-MBFLPP_PROG_RUN		= $(MBFLPP_PROG_ENV) $(MBFLPP) $(MBFLPP_PROG_FLAGS) $(MBFLPP_FLAGS)
-
-
-#### Automake dirstamp files
-
-MMUX_AM_DIRSTAMP_FILES	= \
-	tests/$(am__dirstamp)
-
-BUILT_SOURCES		+= $(MMUX_AM_DIRSTAMP_FILES)
-DISTCLEANFILES		+= $(MMUX_AM_DIRSTAMP_FILES)
-
-tests/$(am__dirstamp):
-	@$(MKDIR_P) tests/
-	@: > $(@)
 
 
 #### documentation
@@ -113,22 +117,22 @@ EXTRA_DIST		+= \
 	src/libmmux-bash-pointers.bash.m4			\
 	$(top_srcdir)/meta/scripts/print-builtin-names.bash
 
-MMUX_BASH_SHELL_LIBFILES	= \
+MMUX_SHELL_LIBFILES	 = \
 	src/libmmux-bash-packages.bash		\
 	src/libmmux-bash-pointers.bash
 
-BUILT_SOURCES		+= $(MMUX_BASH_SHELL_LIBFILES)
-CLEANFILES		+= $(MMUX_BASH_SHELL_LIBFILES) src/mmux-bash-pointers-builtin-definitions.bash
-mmuxbashlib_DATA	=  $(MMUX_BASH_SHELL_LIBFILES)
-mmuxbashlibdir		= $(datadir)/bash
-
-src/%.bash: src/%.bash.m4 $(MMUX_BASH_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins --include=$(builddir)/src $(MMUX_BASH_M4_LIBS) $< >$@
+BUILT_SOURCES		+= src/mmux-bash-pointers-builtin-definitions.bash
+CLEANFILES		+= $(MMUX_SHELL_LIBFILES)
+mmuxbashlib_DATA	=  $(MMUX_SHELL_LIBFILES)
+mmuxbashlibdir		=  $(datadir)/bash
 
 src/mmux-bash-pointers-builtin-definitions.bash: $(top_srcdir)/meta/scripts/print-builtin-names.bash
 	$(BASH_PROGRAM) $< >$@
 
 src/libmmux-bash-pointers.bash: src/mmux-bash-pointers-builtin-definitions.bash
+
+src/libmmux-bash-%.bash: src/libmmux-bash-%.bash.m4 $(MMUX_M4_BASH_MACROS)
+	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_BASH_MACROS) $< >$@
 
 
 #### support library for _DecimalN
@@ -247,11 +251,11 @@ libmmux_bash_pointers_la_SOURCES	= \
 
 library: libmmux-bash-pointers.la
 
-src/%.h: src/%.h.m4 $(MMUX_CC_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_CC_M4_LIBS) $< >$@
+src/%.h: src/%.h.m4 $(MMUX_M4_CC_MACROS)
+	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
-src/%.c: src/%.c.m4 $(MMUX_CC_M4_LIBS)
-	$(M4_PROGRAM) --prefix-builtins $(MMUX_CC_M4_LIBS) $< >$@
+src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
+	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
 src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
 

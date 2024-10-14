@@ -23,8 +23,8 @@ m4_dnl You should have received  a copy of the GNU General Public  License along
 m4_dnl program.  If not, see <http://www.gnu.org/licenses/>.
 m4_dnl
 
-m4_dnl This is  already set in  "libmmux-bash-builtins.m4"; we  need to load  that library
-m4_dnl before loading this one.
+m4_dnl This must have been already  set is already set in "libmmux-bash-builtins.m4";
+m4_dnl we need to load that library before loading this one.
 m4_dnl
 m4_dnl m4_changequote(`[[[', `]]]')
 
