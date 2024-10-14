@@ -5171,6 +5171,7 @@ not really required by other shell libraries, including those depending on
 
 @menu
 * packages overview::           Overview of the library.
+* packages conventions::        Conventions used in this documentation.
 * packages descriptor::         Package descriptor.
 * packages registry::           Registry of descriptors.
 * packages providing::          Providing a package.
@@ -5276,6 +5277,19 @@ is unloaded.
 @end table
 
 @c page
+@node packages conventions
+@appendixsec Conventions used in this documentation
+
+
+The following naming conventions for builtin and function parameters are used in this documentation:
+
+@table @var
+@item DESCRIPTOR_ARRAYNAME
+It is the name of the associative array representing a package descriptor.  For the library
+@file{libmmux-bash-pointers.bash} it is @env{MMUX_BASH_POINTERS_PACKAGE}.
+@end table
+
+@c page
 @node packages descriptor
 @appendixsec Package descriptor
 
@@ -5372,15 +5386,20 @@ while loading and unloading the package itself.  A package can be in the followi
 
 @table @code
 @item provided
-The source code has been sourced, but the package is not loaded.  This is the initial state after a
-package has been successfully provided with a call to @func{mmux_package_provide_by_descriptor}.
+The source code has been sourced, but the package is not loaded.
+
+This is the initial state after a package has been successfully provided with a call to
+@func{mmux_package_provide_by_descriptor}.
+
 This is the final state after a package has been successfully unloaded with a call to
 @func{mmux_package_unload_by_descriptor}.
 
 @item loaded
 The source code has been sourced, and the package has been successfully loaded; which means that the
-after loading hook, if any, has been successfully evaluated.  This is the final state after a
-package has been successfully loaded with a call to @func{mmux_package_load_by_descriptor}.
+after--loading hook, if any, has been successfully evaluated.
+
+This is the final state after a package has been successfully loaded with a call to
+@func{mmux_package_load_by_descriptor}.
 
 @item broken
 The source code has been sourced, but an error occurred while loading or unloading the package; it
@@ -5388,9 +5407,7 @@ is safe to consider the package in an internally inconsistent state.
 @end table
 
 
-The argument @var{DESCRIPTOR_ARRAYNAME} is the name of the associative array representing a package
-descriptor; for the library @file{libmmux-bash-pointers.bash} it is
-@env{MMUX_BASH_POINTERS_PACKAGE}.
+@ref{packages conventions, Conventions used in this documentation}.
 
 
 @anchor{mmux_package_forget_descriptor}
@@ -5450,6 +5467,8 @@ should announce itself by signalling that some package is provided.  So in the s
 @example
 mmux_package_provide_by_descriptor MMUX_BASH_POINTERS_PACKAGE
 @end example
+
+@ref{packages conventions, Conventions used in this documentation}.
 
 
 @defun mmux_package_provide_by_descriptor @var{DESCRIPTOR_ARRAYNAME}
