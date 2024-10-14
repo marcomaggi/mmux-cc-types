@@ -79,15 +79,19 @@
 @end macro
 @end ifnotinfo
 
+@macro MmuxBuiltin{NAME}
+@code{NAME}
+@end macro
+
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
 @c ------------------------------------------------------------
 
 @copying
-This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
-additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language shared
-library and shell scripts which are meant to be sourced in a @gnu{} Bash session or script.
+This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing loadable
+builtins for the @gnu{} Bash shell; to do so it installs a C11 language shared library and shell
+scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
 This package makes raw memory pointers available to the shell; it also interfaces some basic
 functions from the C language @posix{} standard library.  The package targets @posix{} platforms.
@@ -180,9 +184,9 @@ Indexes
 @chapter Overview of the package
 
 
-This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing
-additional builtin commands for the @gnu{} Bash shell; to do so it installs a C11 language shared
-library and shell scripts which are meant to be sourced in a @gnu{} Bash session or script.
+This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing loadable
+builtins for the @gnu{} Bash shell; to do so it installs a C11 language shared library and shell
+scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
 This package makes raw memory pointers available to the shell:
 
@@ -477,8 +481,8 @@ interface numbers as managed by @gnu{} Libtool @xref{Libtool versioning, interfa
 versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@defvr {Shell Array} MMUX_BASH_POINTERS_PACKAGE
-An associative shell array representing informations about the package.
+@defvr {Associative Shell Array} MMUX_BASH_POINTERS_PACKAGE
+A descriptor representing informations about the package.
 
 For details on the defined keys @ref{packages descriptor, Package descriptor}.
 @end defvr
@@ -5157,11 +5161,12 @@ in its version @samp{0}.  The shell library is:
 @center @file{libmmux-bash-packages.bash}
 
 @noindent
-and it is installed under @code{$datadir/bash}.
+and it is installed under @code{$datadir/bash}.  This library must be sourced before sourcing other
+libraries that use it.
 
 Use of this package management library is mandatory to load @file{libmmux-bash-pointers.bash}, but
 not really required by other shell libraries, including those depending on
-@file{libmmux-bash-pointers.bash} itself.
+@file{libmmux-bash-pointers.bash} itself, unless otherwise documented.
 
 @menu
 * packages overview::           Overview of the library.
@@ -5189,8 +5194,8 @@ It is a set of features collected into an Application Programming Interface; the
 @api{} are given a version specification.
 
 @item shell library
-It is a file containing @gnu{} Bash source code; a shell library might implement one or more shell
-packages; a shell library might require a shared library from which to load builtins.
+It is a file containing @gnu{} Bash source code; a shell library might implement zero, one or more
+shell packages; a shell library might require a shared library from which to load builtins.
 @end table
 
 In general, to load a shell library we could just source its file, using the @code{source} builtin;
@@ -5217,7 +5222,7 @@ the infrastructure does @strong{not} provide:
 
 @itemize
 @item
-Searching a file system for the location of installed packages to load at run--time.
+Searching a file system for the location of installed libraries or packages to load at run--time.
 
 @item
 Package dependency management.
@@ -5227,9 +5232,47 @@ To use @file{libmmux-bash-packages.bash} we have to source it @strong{before} ot
 that use it:
 
 @example
+#!/bin/bash
+
 source libmmux-bash-packages.bash
 source libmmux-bash-pointers.bash
+
+...
+### end of file
 @end example
+
+@noindent
+before loading other libraries we might want to configure the behaviour of the package manager:
+
+@example
+#!/bin/bash
+
+source libmmux-bash-packages.bash
+
+mmux_package_enable_debug_mode
+source libmmux-bash-pointers.bash
+mmux_package_disable_debug_mode
+
+source libmmux-bash-spiffy-stuff.bash
+...
+### end of file
+@end example
+
+To comply with the @mmux{} Bash Packaging Infrastructure a shell library defines:
+
+@table @asis
+@item package descriptor
+Mandatory.  An associative shell array holding informations about a package, @ref{packages
+descriptor, Package descriptor}.
+
+@item after--loading hook
+Optional.  An evaluatable identifier (alias, function, builtin) that is evaluated after a package
+has been loaded.
+
+@item before--unloading hook
+Optional.  An evaluatable identifier (alias, function, builtin) that is evaluated before a package
+is unloaded.
+@end table
 
 @c page
 @node packages descriptor

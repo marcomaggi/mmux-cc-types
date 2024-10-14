@@ -19,15 +19,16 @@ Topics
 1. Introduction
 ---------------
 
-This package  implements additional  builtin commands  for the  GNU Bash
-shell; to do  so it installs a  C11 language library and  a shell script
-which is meant to be sourced in a Bash session or script.
+This package implements loadable builtins for  the GNU Bash shell; to do
+so it installs a C11 language library  and a shell script which is meant
+to be sourced in a GNU Bash session or script.
 
   This package makes raw memory  pointers available in shell scripts; it
 also  interfaces  some  basic  functions from  the  C11  language  POSIX
 standard library.
 
-    source /usr/local/share/bash/libmmux-bash-pointers.bash
+    source libmmux-bash-packages.bash
+    source libmmux-bash-pointers.bash
 
     declare PTR VALUE
 
