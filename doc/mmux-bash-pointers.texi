@@ -5,6 +5,7 @@
 @c %**end of header
 
 @include version.texi
+@include mmux-version.texi
 @include macros.texi
 
 @c page
@@ -89,7 +90,7 @@
 @c ------------------------------------------------------------
 
 @copying
-This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing loadable
+This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a package implementing loadable
 builtins for the @gnu{} Bash shell; to do so it installs a C11 language shared library and shell
 scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
@@ -121,7 +122,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 
 @titlepage
 @title @value{TITLE}
-@subtitle Revision @value{VERSION}
+@subtitle Revision @value{MmuxPkgSemanticVersion}
 @author @value{AUTHOR} @value{AUTHOR_EMAIL}
 @page
 @vskip 0pt plus 1filll
@@ -184,7 +185,7 @@ Indexes
 @chapter Overview of the package
 
 
-This document describes version @value{VERSION} of @value{PACKAGE}, a package implementing loadable
+This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a package implementing loadable
 builtins for the @gnu{} Bash shell; to do so it installs a C11 language shared library and shell
 scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
@@ -5288,8 +5289,7 @@ established by the @gnu{} Autotools.  For an explanation of interface numbers as
 Libtool @xref{Libtool versioning, interface, Libtool's versioning system, libtool, Shared library
 support for @gnu{}}.
 
-
-The following are the expected array elements.
+The following are the expected array keys.
 
 @table @samp
 @item PACKAGING_VERSION
@@ -5301,19 +5301,26 @@ Mandatory.  A free format string representing the name of the package; for examp
 ``@value{PACKAGE}''.
 
 @item SEMANTIC_VERSION
-Mandatory.  The semantic version specification for the package; for example @samp{v1.0.0-devel.1}.
+Mandatory.  The semantic version specification for the package; this can be the version
+specification of the distribution of shell libraries that define the package.
+
+For example, the distribution package @value{PACKAGE} installs the shell library
+@file{libmmux-bash-pointers.bash} which defines the shell package @env{MMUX_BASH_POINTERS_PACKAGE};
+the distribution package @value{PACKAGE} has version @value{MmuxPkgSemanticVersion}.
 
 @item INTERFACE_VERSION_CURRENT
-Mandatory.  A string representing a non--negative exact integer specifying the current interface
+Mandatory.  A string representing a non--negative exact integer specifying the current @api{}
 version number implemented by the package.
 
 @item INTERFACE_VERSION_REVISION
-Mandatory.  A string representing a non--negative exact integer specifying the revision interface
-version number implemented by the package.
+Mandatory.  A string representing a non--negative exact integer specifying the revision of the
+@api{} version number implemented by the package; it means the package implements revision
+@samp{REVISION} of the interface @samp{CURRENT}.
 
 @item INTERFACE_VERSION_AGE
-Mandatory.  A string representing a non--negative exact integer specifying the age interface version
-number implemented by the package.
+Mandatory.  A string representing a non--negative exact integer specifying the age of the @api{}
+version number implemented by the package; it means the package implements all the @api{} versions
+from version @samp{(CURRENT - AGE)} included to version @samp{CURRENT} included.
 
 @item SHARED_LIBRARY
 Optional, but see @samp{BUILTIN_0}.  A string representing the filename of a shared library
@@ -5338,18 +5345,19 @@ unloaded.
 @itemx BUILTIN_1
 @itemx @dots{}
 @itemx BUILTIN_N
-Builtin identifiers; if @samp{BUILTIN_0} exists: at least one bulitin must be loaded and enabled
-from the shared library selected by the key @samp{SHARED_LIBRARY}, whose presence becomes mandatory.
+Loadable builtin identifiers; if @samp{BUILTIN_0} exists: at least one bulitin must be loaded and
+enabled from the shared library selected by the key @samp{SHARED_LIBRARY}, whose presence becomes
+mandatory.
 
-When a library is loaded through this descriptor: the builtins are loaded and enabled from the
+When a package is loaded through this descriptor: the builtins are loaded and enabled from the
 shared library starting from @samp{BUILTIN_0}.
 
 @item ENABLED_BUILTIN_0
 @itemx ENABLED_BUILTIN_1
 @itemx @dots{}
 @itemx ENABLED_BUILTIN_N
-Undefinable.  A library loader should add these elements to list the builtins that are enabled; so
-that, later, these elements might be used to disable them.  A library unloader should disable these
+Undefinable.  A package loader should add these elements to list the builtins that are enabled; so
+that, later, these elements might be used to disable them.  A package unloader should disable these
 builtins starting from @samp{ENABLED_BUILTIN_0}, then unset the keys from the array.
 @end table
 

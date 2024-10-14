@@ -83,6 +83,7 @@ info_TEXINFOS		= doc/mmux-bash-pointers.texi
 doc_mmux_bash_pointers_TEXINFOS	= \
 	doc/macros.texi			\
 	doc/overview-linking.texi	\
+	doc/mmux-version.texi		\
 	doc/gpl-3.0.texi		\
 	doc/fdl-1.3.texi
 
