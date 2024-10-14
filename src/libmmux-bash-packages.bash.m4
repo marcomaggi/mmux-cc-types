@@ -122,29 +122,33 @@ function mmux_package_load_by_descriptor () {
 
     mmux_package_print_debug_message 'loading package by descriptor: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    if ! mmux_package_descriptor_is_registered_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-    then
-	mmux_package_print_error_message 'attempting to load a package not provided before: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
-	mmux_package_return_failure
+    {
+	if ! mmux_package_descriptor_is_registered_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	then
+	    mmux_package_print_error_message 'attempting to load a package not provided before: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_return_failure
 
-    elif ! mmux_p_package_check_descriptor_has_builtins_to_enable WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-    then true
+	elif ! mmux_p_package_check_descriptor_has_builtins_to_enable WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	then true
 
-    elif ! mmux_p_package_check_descriptor_has_shared_library WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-    then
-	mmux_package_print_error_message 'package descriptor "%s" has builtins but no shared library specification' \
-					 WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	false
+	elif ! mmux_p_package_check_descriptor_has_shared_library WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	then
+	    mmux_package_print_error_message 'package descriptor "%s" has builtins but no shared library specification' \
+					     WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    false
 
-    elif ! mmux_p_package_enable_builtins WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-    then false
+	elif ! mmux_p_package_enable_builtins WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	then false
 
-    else mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-    fi || {
+	fi && if ! mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	then false
+
+	else mmux_package_register_descriptor_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	fi
+    } || {
 	mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	mmux_package_return_failure
     }
-    mmux_package_register_descriptor_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 }
 function mmux_p_package_check_descriptor_has_builtins_to_enable () {
     declare -n mmux_p_PACKAGE_DESCRIPTOR=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
@@ -155,6 +159,8 @@ function mmux_p_package_check_descriptor_has_shared_library () {
     test -v SS(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) -a -n QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY)
 }
 
+# This function is callable even when there are no loadable bulitins to enable.
+#
 function mmux_p_package_enable_builtins () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
     declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
@@ -181,7 +187,7 @@ function mmux_p_package_enable_builtins () {
 		then SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$mmux_p_IDX)=RR(mmux_p_BUILTIN_NAME)
 		fi
 	    else
-		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME) &>&2
+		if enable -f QQ(mmux_p_PACKAGE_DESCRIPTOR,SHARED_LIBRARY) WW(mmux_p_BUILTIN_NAME) >&2
 		then SS(mmux_p_PACKAGE_DESCRIPTOR,ENABLED_BUILTIN_$mmux_p_IDX)=RR(mmux_p_BUILTIN_NAME)
 		else mmux_package_return_failure
 		fi
