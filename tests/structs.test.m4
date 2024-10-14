@@ -45,11 +45,11 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 #### version numbers
 
 function structs-1.1 () {
-    declare -i STRUCT_SIZE=$(( mmux_sint_SIZEOF + mmux_double_SIZEOF + mmux_pointer_SIZEOF ))
     # Offsets of fields: sint A, double B, pointer C.
     declare -i OFFSET_A=0
-    declare -i OFFSET_B=RR(mmux_sint_SIZEOF)
-    declare -i OFFSET_C=$(( mmux_sint_SIZEOF + mmux_double_SIZEOF ))
+    declare -i OFFSET_B=$((    OFFSET_A + mmux_sint_SIZEOF    ))
+    declare -i OFFSET_C=$((    OFFSET_B + mmux_double_SIZEOF  ))
+    declare -i STRUCT_SIZE=$(( OFFSET_C + mmux_pointer_SIZEOF ))
 
     dotest-unset-debug
     dotest-debug RR(STRUCT_SIZE)
