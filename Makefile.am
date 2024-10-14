@@ -122,7 +122,7 @@ MMUX_SHELL_LIBFILES	 = \
 	src/libmmux-bash-pointers.bash
 
 BUILT_SOURCES		+= src/mmux-bash-pointers-builtin-definitions.bash
-CLEANFILES		+= $(MMUX_SHELL_LIBFILES)
+CLEANFILES		+= $(MMUX_SHELL_LIBFILES) src/mmux-bash-pointers-builtin-definitions.bash
 mmuxbashlib_DATA	=  $(MMUX_SHELL_LIBFILES)
 mmuxbashlibdir		=  $(datadir)/bash
 
