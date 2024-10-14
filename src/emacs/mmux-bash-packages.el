@@ -64,13 +64,13 @@
        "mmux_package_register_descriptor_as_loaded"
        "mmux_package_register_descriptor_as_provided"
        ;;
-       "mmux_package_disable_load_when_provide"
-       "mmux_package_enable_load_when_provide"
-       "mmux_package_load_when_provide_is_enabled"
+       "mmux_package_option_disable_load_when_provide"
+       "mmux_package_option_enable_load_when_provide"
+       "mmux_package_option_load_when_provide_is_enabled"
        "mmux_package_provide_by_descriptor"
        ;;
-       "mmux_package_disable_ignore_enable_builtin_errors"
-       "mmux_package_enable_ignore_enable_builtin_errors"
+       "mmux_package_option_disable_ignore_enable_builtin_errors"
+       "mmux_package_option_enable_ignore_enable_builtin_errors"
        "mmux_package_ignore_enable_builtin_errors_is_enabled"
        "mmux_package_load_by_descriptor"
        "mmux_package_run_descriptor_after_loading_hook"
@@ -83,17 +83,16 @@
        "mmux_package_string_is_identifier"
        "mmux_package_string_is_shell_library_filename"
        ;;
-       "mmux_package_debug_mode_is_enabled"
-       "mmux_package_debug_mode_is_enabled"
-       "mmux_package_disable_debug_mode"
-       "mmux_package_disable_verbose_mode"
-       "mmux_package_enable_debug_mode"
-       "mmux_package_enable_verbose_mode"
+       "mmux_package_option_debug_mode_is_enabled"
+       "mmux_package_option_disable_debug_mode"
+       "mmux_package_option_disable_verbose_mode"
+       "mmux_package_option_enable_debug_mode"
+       "mmux_package_option_enable_verbose_mode"
+       "mmux_package_option_verbose_mode_is_enabled"
        "mmux_package_print_debug_message"
        "mmux_package_print_error_message"
        "mmux_package_print_verbose_message"
        "mmux_package_print_warning_message"
-       "mmux_package_verbose_mode_is_enabled"
        )
      'symbols)))
 

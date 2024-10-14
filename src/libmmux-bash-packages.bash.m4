@@ -53,14 +53,17 @@ function mmux_package_forget_descriptor () {
 function mmux_package_register_descriptor_as_provided () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
     MMUX_BASH_PACKAGES_REGISTRY[WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)]='provided'
+    mmux_package_return_success
 }
 function mmux_package_register_descriptor_as_loaded () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
     MMUX_BASH_PACKAGES_REGISTRY[WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)]='loaded'
+    mmux_package_return_success
 }
 function mmux_package_register_descriptor_as_broken () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
     MMUX_BASH_PACKAGES_REGISTRY[WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)]='broken'
+    mmux_package_return_success
 }
 function mmux_package_descriptor_is_registered () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR_NAME in call to '$FUNCNAME'"}
@@ -86,33 +89,33 @@ function mmux_package_descriptor_is_registered_as_broken () {
 #### providing a package
 
 function mmux_package_provide_by_descriptor () {
-    declare -r PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
+    declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
 
-    mmux_package_check_packaging_version WW(PACKAGE_DESCRIPTOR_NAME)
-    mmux_package_print_debug_message 'providing package: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_print_debug_message 'providing package: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
     # Register the new descriptor.
     {
-	if mmux_package_descriptor_is_registered WW(PACKAGE_DESCRIPTOR_NAME)
+	if mmux_package_descriptor_is_registered WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	then
-	    mmux_package_print_warning_message 'attempting to provide an already provided package: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	    mmux_package_print_error_message 'attempting to provide an already provided package: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	    mmux_package_return_failure
-	else mmux_package_register_descriptor_as_provided WW(PACKAGE_DESCRIPTOR_NAME)
+	else mmux_package_register_descriptor_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	fi
     }
 
     # If requested load the package right now.
     {
-	if mmux_package_load_when_provide_is_enabled
-	then mmux_package_load_by_descriptor WW(PACKAGE_DESCRIPTOR_NAME)
+	if mmux_package_option_load_when_provide_is_enabled
+	then mmux_package_load_by_descriptor WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	fi
     }
 }
-function mmux_package_enable_load_when_provide () {
-    function mmux_package_load_when_provide_is_enabled () { true; }
+function mmux_package_option_enable_load_when_provide () {
+    function mmux_package_option_load_when_provide_is_enabled () { true; }
 }
-function mmux_package_disable_load_when_provide () {
-    function mmux_package_load_when_provide_is_enabled () { false; }
+function mmux_package_option_disable_load_when_provide () {
+    function mmux_package_option_load_when_provide_is_enabled () { false; }
 }
 
 #page
@@ -122,31 +125,33 @@ function mmux_package_load_by_descriptor () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
     declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     mmux_package_print_debug_message 'loading package by descriptor: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    if mmux_p_package_check_descriptor_has_builtins_to_enable WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    if ! mmux_package_descriptor_is_registered_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     then
-	if ! mmux_p_package_check_descriptor_has_shared_library WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	then
-	    mmux_package_print_error_message 'package descriptor "%s" has builtins but no shared library specification' \
-					     WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_return_failure
-	fi
-	if ! mmux_p_package_enable_builtins WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	then
-	    mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
-	    mmux_package_return_failure
-	fi
-    fi
+	mmux_package_print_error_message 'attempting to load a package not provided before: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_return_failure
 
-    if ! mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    elif ! mmux_p_package_check_descriptor_has_builtins_to_enable WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then true
+
+    elif ! mmux_p_package_check_descriptor_has_shared_library WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     then
+	mmux_package_print_error_message 'package descriptor "%s" has builtins but no shared library specification' \
+					 WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	false
+
+    elif ! mmux_p_package_enable_builtins WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then false
+
+    elif ! mmux_package_run_descriptor_after_loading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then false
+
+    else true
+    fi || {
 	mmux_package_register_descriptor_as_broken WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	mmux_package_return_failure
-    fi
-
+    }
     mmux_package_register_descriptor_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 }
 function mmux_p_package_check_descriptor_has_builtins_to_enable () {
@@ -170,7 +175,7 @@ function mmux_p_package_enable_builtins () {
 	if test -v SS(mmux_p_PACKAGE_DESCRIPTOR,WW(mmux_p_KEY))
 	then
 	    mmux_p_BUILTIN_NAME=RR(mmux_p_PACKAGE_DESCRIPTOR,WW(mmux_p_KEY))
-	    if mmux_package_debug_mode_is_enabled
+	    if mmux_package_option_debug_mode_is_enabled
 	    then
 		if ! mmux_package_string_is_identifier WW(mmux_p_BUILTIN_NAME)
 		then
@@ -214,10 +219,10 @@ function mmux_package_run_descriptor_after_loading_hook () {
     fi
 }
 
-function mmux_package_enable_ignore_enable_builtin_errors () {
+function mmux_package_option_enable_ignore_enable_builtin_errors () {
     function mmux_package_ignore_enable_builtin_errors_is_enabled () { true; }
 }
-function mmux_package_disable_ignore_enable_builtin_errors () {
+function mmux_package_option_disable_ignore_enable_builtin_errors () {
     function mmux_package_ignore_enable_builtin_errors_is_enabled () { false; }
 }
 
@@ -228,8 +233,13 @@ function mmux_package_unload_by_descriptor () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
     declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     mmux_package_print_debug_message 'unloading package by descriptor: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+
+    if ! mmux_package_descriptor_is_registered_as_loaded WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then
+	mmux_package_print_error_message 'attempting to unload a package not loaded before: "%s"' WW(PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_return_failure
+    fi
 
     if ! mmux_package_run_descriptor_before_unloading_hook WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
     then mmux_package_return_failure
@@ -251,6 +261,8 @@ function mmux_package_unload_by_descriptor () {
 	    fi
 	done
     }
+
+    mmux_package_register_descriptor_as_provided WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 }
 function mmux_package_run_descriptor_before_unloading_hook () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
@@ -323,14 +335,14 @@ function mmux_package_print_warning_message () {
 
 ### ------------------------------------------------------------------------
 
-function mmux_package_enable_verbose_mode () {
-    function mmux_package_verbose_mode_is_enabled () { true; }
+function mmux_package_option_enable_verbose_mode () {
+    function mmux_package_option_verbose_mode_is_enabled () { true; }
 }
-function mmux_package_disable_verbose_mode () {
-    function mmux_package_verbose_mode_is_enabled () { false; }
+function mmux_package_option_disable_verbose_mode () {
+    function mmux_package_option_verbose_mode_is_enabled () { false; }
 }
 function mmux_package_print_verbose_message () {
-    if mmux_package_verbose_mode_is_enabled
+    if mmux_package_option_verbose_mode_is_enabled
     then
 	declare -r TEMPLATE=${1:?"missing parameter 1 TEMPLATE in call to '$FUNCNAME'"}
 	shift 1
@@ -344,14 +356,14 @@ function mmux_package_print_verbose_message () {
 
 ### ------------------------------------------------------------------------
 
-function mmux_package_enable_debug_mode () {
-    function mmux_package_debug_mode_is_enabled () { true; }
+function mmux_package_option_enable_debug_mode () {
+    function mmux_package_option_debug_mode_is_enabled () { true; }
 }
-function mmux_package_disable_debug_mode () {
-    function mmux_package_debug_mode_is_enabled () { false; }
+function mmux_package_option_disable_debug_mode () {
+    function mmux_package_option_debug_mode_is_enabled () { false; }
 }
 function mmux_package_print_debug_message () {
-    if mmux_package_debug_mode_is_enabled
+    if mmux_package_option_debug_mode_is_enabled
     then
 	declare -r TEMPLATE=${1:?"missing parameter 1 TEMPLATE in call to '$FUNCNAME'"}
 	shift 1
@@ -373,10 +385,23 @@ function mmux_package_check_packaging_version () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=${1:?"missing parameter 1 PACKAGE_DESCRIPTOR in call to '$FUNCNAME'"}
     declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    if ! test -v  SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGING_VERSION)	\
-	 -a '0' = RR(mmux_p_PACKAGE_DESCRIPTOR,PACKAGING_VERSION)
+    # Having a PACKAGING_VERSION is mandatory.
+    if ! test -v SS(mmux_p_PACKAGE_DESCRIPTOR,PACKAGING_VERSION)
     then
-	mmux_package_print_error_message 'invalid package descriptor, or wrong packaging version: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_print_error_message 'missing PACKAGING_VERSION in package descriptor: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_exit_because_error_loading_package
+    fi
+
+    declare -ri mmux_p_CURRENT=RR(MMUX_BASH_PACKAGES_PACKAGE,INTERFACE_VERSION_CURRENT)
+    declare -ri mmux_p_AGE=RR(MMUX_BASH_PACKAGES_PACKAGE,INTERFACE_VERSION_AGE)
+    declare -ri mmux_p_MAX_VERSION=RR(mmux_p_CURRENT)
+    declare -ri mmux_p_MIN_VERSION=$(( WW(mmux_p_CURRENT) - WW(mmux_p_AGE) ))
+    declare -ri mmux_p_REQUIRED_VERSION=RR(mmux_p_PACKAGE_DESCRIPTOR,PACKAGING_VERSION)
+
+    if (( ( mmux_p_MIN_VERSION <= mmux_p_REQUIRED_VERSION ) && ( mmux_p_REQUIRED_VERSION <= mmux_p_MAX_VERSION ) ))
+    then mmux_package_return_success
+    else
+	mmux_package_print_error_message 'unsupported packaging API version: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 	mmux_package_exit_because_error_loading_package
     fi
 }
@@ -384,10 +409,10 @@ function mmux_package_check_packaging_version () {
 #page
 #### let's go
 
-mmux_package_disable_verbose_mode
-mmux_package_disable_debug_mode
-mmux_package_enable_load_when_provide
-mmux_package_disable_ignore_enable_builtin_errors
+mmux_package_option_disable_verbose_mode
+mmux_package_option_disable_debug_mode
+mmux_package_option_enable_load_when_provide
+mmux_package_option_disable_ignore_enable_builtin_errors
 mmux_package_provide_by_descriptor MMUX_BASH_PACKAGES_PACKAGE
 
 ### end of file

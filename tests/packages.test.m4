@@ -39,9 +39,9 @@ mbfl_embed_library(__LIBMBFL_LINKER__)
 mbfl_linker_source_library_by_stem(core)
 mbfl_linker_source_library_by_stem(tests)
 mbfl_linker_source_library_by_stem(mmux-bash-packages)
-mmux_package_enable_debug_mode
-mmux_package_enable_verbose_mode
-mmux_package_disable_load_when_provide
+mmux_package_option_enable_debug_mode
+mmux_package_option_enable_verbose_mode
+mmux_package_option_disable_load_when_provide
 mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 
@@ -50,8 +50,10 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 function packages-unload-library-1.0 () {
     {
 	mmux_package_descriptor_is_registered_as_provided MMUX_BASH_POINTERS_PACKAGE
+	dotest-equal 0 $? 'mmux-bash-pointers package is provided'
     } && {
-	mmux_package_load_by_descriptor MMUX_BASH_POINTERS_PACKAGE
+	mmux_package_descriptor_is_registered_as_provided MMUX_BASH_POINTERS_PACKAGE
+	dotest-equal 0 $? 'mmux-bash-pointers is registered as provided'
     } && {
 	type -t 'mmux_bash_pointers_library_after_loading_hook' | \
 	    dotest-output 'function' 'expected the after loading hook to exists'
@@ -59,13 +61,23 @@ function packages-unload-library-1.0 () {
 	type -t 'mmux_bash_pointers_library_before_unloading_hook' | \
 	    dotest-output 'function' 'expected the before unloading hook to exists'
     } && {
+	mmux_package_load_by_descriptor MMUX_BASH_POINTERS_PACKAGE
+	dotest-equal 0 $? 'mmux-bash-pointers loaded successfully'
+    } && {
+	mmux_package_descriptor_is_registered_as_loaded MMUX_BASH_POINTERS_PACKAGE
+	dotest-equal 0 $? 'mmux-bash-pointers is registered as loaded'
+    } && {
 	mmux_package_unload_by_descriptor MMUX_BASH_POINTERS_PACKAGE
+	dotest-equal 0 $? 'mmux-bash-pointers unloaded successfully'
+    } && {
+	mmux_package_descriptor_is_registered_as_provided MMUX_BASH_POINTERS_PACKAGE
+	dotest-equal 0 $? 'mmux-bash-pointers is registered as provided'
     } && {
 	type -t 'mmux_bash_pointers_library_after_loading_hook' | \
-	    dotest-output '' 'expected the after loading hook NOT to exists after unloading package'
+	    dotest-output '' 'expected the after-loading hook NOT to exists after unloading package'
     } && {
 	type -t 'mmux_bash_pointers_library_before_unloading_hook' | \
-	    dotest-output '' 'expected the before unloading hook NOT to exists after unloadeing package'
+	    dotest-output '' 'expected the before-unloading hook NOT to exists after unloadeing package'
     }
 }
 
