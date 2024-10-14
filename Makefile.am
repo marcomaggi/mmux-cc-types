@@ -38,6 +38,14 @@ MMUX_BASH_M4_LIBS = \
 nodist_pkgconfig_DATA	= meta/scripts/mmux-bash-pointers.pc
 
 
+#### support for GNU Emacs
+
+if WANT_EMACS
+sharelispdir		= $(datadir)/emacs/site-lisp
+dist_sharelisp_LISP	= src/emacs/mmux-bash-packages.el
+endif
+
+
 #### MBFL stuff
 
 AM_MBFLPP_FLAGS		= --bash-program="$(BASH_PROGRAM)" --define=__MBFL_LIBDIR__=$(MBFL_LIBDIR) --define=__LIBMBFL_LINKER__=$(MBFL_LIBMBFL_LINKER)

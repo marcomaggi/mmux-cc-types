@@ -310,12 +310,12 @@ function mmux_package_print_error_message () {
 	printf '\n'
     } >&2
 }
-function mmux_package_print_error_message () {
+function mmux_package_print_warning_message () {
     declare -r TEMPLATE=${1:?"missing parameter 1 TEMPLATE in call to '$FUNCNAME'"}
     shift 1
 
     {
-	printf 'MMUX Package Manager: error: '
+	printf 'MMUX Package Manager: warning: '
 	printf QQ(TEMPLATE) "$@"
 	printf '\n'
     } >&2

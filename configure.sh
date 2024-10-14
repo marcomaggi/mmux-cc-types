@@ -14,6 +14,7 @@ fi
     --config-cache				\
     --cache-file=./config.cache			\
     --enable-maintainer-mode                    \
+    --with-emacs				\
     --prefix="${prefix}"			\
     --libdir="${libdir}"                        \
     CFLAGS='-O3'				\

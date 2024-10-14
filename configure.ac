@@ -189,6 +189,20 @@ MMUX_CONSTANT_TESTS([EOF])
 AC_CACHE_SAVE
 
 
+#### external packages
+
+AC_ARG_WITH([emacs],
+  AS_HELP_STRING([--with-emacs],[enable installation of GNU Emacs module]),
+  [true],[with_emacs=no])
+AC_MSG_CHECKING([whether GNU Emacs module will be installed])
+AS_VAR_IF(with_emacs,'yes',
+  [AC_MSG_RESULT([yes])],
+  [AC_MSG_RESULT([no])])
+AM_CONDITIONAL([WANT_EMACS],[test x$with_emacs = xyes])
+AS_VAR_IF(with_emacs,'yes',
+  [AM_PATH_LISPDIR])
+
+
 #### finish
 
 AC_CONFIG_HEADERS([config.h])
