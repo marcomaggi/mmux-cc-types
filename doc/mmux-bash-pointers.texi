@@ -3075,6 +3075,10 @@ Perform the bitwise shift--right operation on an operand of type \STEM\.
 @subsection Selecting the printing format for floating--point numbers
 
 
+@cindex Printing format for floating--point numbers
+@cindex Formatting floating--point numbers
+
+
 To select an output format for the result of operations, we do:
 
 @example
@@ -3089,18 +3093,12 @@ mmux_double_set_format "$OLD_FORMAT"
 "$ROP"  @result{} 6.912000e+02
 @end example
 
-Remembering that when the @samp{add} functions are called with a single operand they just return
-that operand, if we want to reformat a number we do:
+If we just want to reformat a number we do:
 
 @example
-declare OLD_FORMAT OP='123.4567890'
+declare OP='123.4567890'
 
-mmux_double_set_format '%g' OLD_FORMAT
-@{
-    mmux_double_add OP "$OP"
-@}
-mmux_double_set_format "$OLD_FORMAT"
-
+mmux_double_reformat OP '%g' "$OP"
 "$OP"   @result{} 1.234568e+02
 @end example
 
@@ -3131,31 +3129,58 @@ formats like @samp{%0e}.
 @end quotation
 
 
-@macro MmuxSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
+@c ------------------------------------------------------------------------
+
+@macro MmuxRealSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
 @deffn Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
 @deffnx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
+@deffnx Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
 Select a new output format for string representations of floating--point numbers of type
 @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
 @end deffn
 
 @end macro
 
+@MmuxRealSelectOutputFormatBuiltin{float, %A}
+@MmuxRealSelectOutputFormatBuiltin{double, %A}
+@MmuxRealSelectOutputFormatBuiltin{ldouble, %A}
 
-@MmuxSelectOutputFormatBuiltin{float, %A}
-@MmuxSelectOutputFormatBuiltin{double, %A}
-@MmuxSelectOutputFormatBuiltin{ldouble, %A}
+@MmuxRealSelectOutputFormatBuiltin{float32, %A}
+@MmuxRealSelectOutputFormatBuiltin{float64, %A}
+@MmuxRealSelectOutputFormatBuiltin{float128, %A}
 
-@MmuxSelectOutputFormatBuiltin{float32, %A}
-@MmuxSelectOutputFormatBuiltin{float64, %A}
-@MmuxSelectOutputFormatBuiltin{float128, %A}
+@MmuxRealSelectOutputFormatBuiltin{float32x, %A}
+@MmuxRealSelectOutputFormatBuiltin{float64x, %A}
+@MmuxRealSelectOutputFormatBuiltin{float128x, %A}
 
-@MmuxSelectOutputFormatBuiltin{float32x, %A}
-@MmuxSelectOutputFormatBuiltin{float64x, %A}
-@MmuxSelectOutputFormatBuiltin{float128x, %A}
+@MmuxRealSelectOutputFormatBuiltin{decimal32, %f}
+@MmuxRealSelectOutputFormatBuiltin{decimal64, %f}
+@MmuxRealSelectOutputFormatBuiltin{decimal128, %f}
 
-@MmuxSelectOutputFormatBuiltin{decimal32, %f}
-@MmuxSelectOutputFormatBuiltin{decimal64, %f}
-@MmuxSelectOutputFormatBuiltin{decimal128, %f}
+@c ------------------------------------------------------------------------
+
+@macro MmuxComplexReformatBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
+Reformat a complex floating--point number of type @objtype{\STEM\}.
+@end deffn
+
+@end macro
+
+@MmuxComplexReformatBuiltin{complexf}
+@MmuxComplexReformatBuiltin{complexd}
+@MmuxComplexReformatBuiltin{complexld}
+
+@MmuxComplexReformatBuiltin{complexf32}
+@MmuxComplexReformatBuiltin{complexf64}
+@MmuxComplexReformatBuiltin{complexf128}
+
+@MmuxComplexReformatBuiltin{complexf32x}
+@MmuxComplexReformatBuiltin{complexf64x}
+@MmuxComplexReformatBuiltin{complexf128x}
+
+@MmuxComplexReformatBuiltin{complexf32}
+@MmuxComplexReformatBuiltin{complexd64}
+@MmuxComplexReformatBuiltin{complexd128}
 
 @c page
 @node memory
