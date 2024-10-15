@@ -57,43 +57,50 @@ function structs-1.1 () {
     mbfl_declare_varref(PTR)
 
     function ref_A () {
-	declare -n RESULT=RR(1)
-	declare    PTR=RR(2)
+	mbfl_mandatory_nameref_parameter(RESULT, 1, result variable)
+	mbfl_mandatory_parameter(PTR, 2, pointer to struct)
 	mmux_sint_pointer_ref RESULT WW(PTR) WW(OFFSET_A)
     }
     function ref_B () {
-	declare -n RESULT=RR(1)
-	declare    PTR=RR(2)
-	declare OLD_FORMAT
-	mmux_double_set_format "%f" OLD_FORMAT
+	mbfl_mandatory_nameref_parameter(RESULT, 1, result variable)
+	mbfl_mandatory_parameter(PTR, 2, pointer to struct)
 	mmux_double_pointer_ref RESULT WW(PTR) WW(OFFSET_B)
-	mmux_double_set_format WW(OLD_FORMAT)
     }
     function ref_C () {
-	declare -n RESULT=RR(1)
-	declare    PTR=RR(2)
+	mbfl_mandatory_nameref_parameter(RESULT, 1, result variable)
+	mbfl_mandatory_parameter(PTR, 2, pointer to struct)
 	mmux_pointer_pointer_ref RESULT WW(PTR) WW(OFFSET_C)
     }
 
     function set_A () {
-	declare PTR=RR(1)
-	declare VALUE=RR(2)
+	mbfl_mandatory_parameter(PTR, 1, pointer to struct)
+	mbfl_mandatory_parameter(VALUE, 2, field value)
 	mmux_sint_pointer_set WW(PTR) WW(OFFSET_A) WW(VALUE)
     }
     function set_B () {
-	declare PTR=RR(1)
-	declare VALUE=RR(2)
+	mbfl_mandatory_parameter(PTR, 1, pointer to struct)
+	mbfl_mandatory_parameter(VALUE, 2, field value)
 	mmux_double_pointer_set WW(PTR) WW(OFFSET_B) WW(VALUE)
     }
     function set_C () {
-	declare PTR=RR(1)
-	declare VALUE=RR(2)
+	mbfl_mandatory_parameter(PTR, 1, pointer to struct)
+	mbfl_mandatory_parameter(VALUE, 2, field value)
 	mmux_pointer_pointer_set WW(PTR) WW(OFFSET_C) WW(VALUE)
+    }
+
+    function constructor () {
+	mbfl_mandatory_parameter(PTR, 1, pointer to struct)
+	mbfl_mandatory_parameter(A,   2, value of field A)
+	mbfl_mandatory_parameter(B,   3, value of field B)
+	mbfl_mandatory_parameter(C,   4, value of field C)
+	set_A WW(PTR) WW(A)
+	set_B WW(PTR) WW(B)
+	set_C WW(PTR) WW(C)
     }
 
     mbfl_location_enter
     {
-	mbfl_location_handler 'unset -f set_A set_B set_C ref_A ref_B ref_C'
+	mbfl_location_handler 'unset -f set_A set_B set_C ref_A ref_B ref_C constructor'
 
 	if mmux_libc_malloc _(PTR) WW(STRUCT_SIZE)
 	then mbfl_location_handler "mmux_libc_free RR(PTR)"
@@ -103,13 +110,13 @@ function structs-1.1 () {
 	declare EXPECTED_RESULT_A='123' EXPECTED_RESULT_B='1.230000' EXPECTED_RESULT_C='0x789'
 	declare RESULT_A RESULT_B RESULT_C
 
-	set_A WW(PTR) WW(EXPECTED_RESULT_A)
-	set_B WW(PTR) WW(EXPECTED_RESULT_B)
-	set_C WW(PTR) WW(EXPECTED_RESULT_C)
+	constructor WW(PTR) WW(EXPECTED_RESULT_A) WW(EXPECTED_RESULT_B) WW(EXPECTED_RESULT_C)
 
 	ref_A RESULT_A WW(PTR)
 	ref_B RESULT_B WW(PTR)
 	ref_C RESULT_C WW(PTR)
+
+	mmux_double_reformat RESULT_B '%f' WW(RESULT_B)
 
 	dotest-equal	 WW(EXPECTED_RESULT_A) WW(RESULT_A) &&
 	    dotest-equal WW(EXPECTED_RESULT_B) WW(RESULT_B) &&
@@ -117,7 +124,6 @@ function structs-1.1 () {
     }
     mbfl_location_leave
 }
-
 
 
 #### let's go
