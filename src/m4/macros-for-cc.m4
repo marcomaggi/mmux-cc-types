@@ -503,6 +503,32 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF128]]],[[[{
 
 # $1 - name of the target variable
 # $2 - expression evaluating to the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF32X]]],[[[{
+  int  mmux_retval = mmux_complexf32x_parse(&$1, $2, MMUX_BUILTIN_NAME_STR);
+  if (MMUX_SUCCESS != mmux_retval) { goto mmux_error_parsing_builtin_argument; }
+}]]])
+# --------------------------------------------------------------------
+
+# $1 - name of the target variable
+# $2 - expression evaluating to the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF64X]]],[[[{
+  int  mmux_retval = mmux_complexf64x_parse(&$1, $2, MMUX_BUILTIN_NAME_STR);
+  if (MMUX_SUCCESS != mmux_retval) { goto mmux_error_parsing_builtin_argument; }
+}]]])
+
+# --------------------------------------------------------------------
+
+# $1 - name of the target variable
+# $2 - expression evaluating to the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF128X]]],[[[{
+  int  mmux_retval = mmux_complexf128x_parse(&$1, $2, MMUX_BUILTIN_NAME_STR);
+  if (MMUX_SUCCESS != mmux_retval) { goto mmux_error_parsing_builtin_argument; }
+}]]])
+
+# --------------------------------------------------------------------
+
+# $1 - name of the target variable
+# $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXD32]]],[[[{
   int  mmux_retval = mmux_complexd32_parse(&$1, $2, MMUX_BUILTIN_NAME_STR);
   if (MMUX_SUCCESS != mmux_retval) { goto mmux_error_parsing_builtin_argument; }
