@@ -5588,9 +5588,11 @@ If the option ``ignore enable builtin errors'' is disabled: the error message pr
 function call returns immediately with status false.
 @end itemize
 
-Finally if the descriptor has a key @samp{PACKAGE_AFTER_LOADING_HOOK}, associated to an identifier:
-evaluate that identifier to initialise the package after loading.  The return status of the function
-call is the return status of the the after--loading hook.
+If the descriptor has a key @samp{PACKAGE_AFTER_LOADING_HOOK}, associated to an identifier: evaluate
+that identifier to initialise the package after loading.  If an error occurs: register the package
+as @samp{broken}; return false.
+
+Finally register the package with state @samp{loaded}, then return true.
 @end defun
 
 
@@ -5601,9 +5603,56 @@ disabled.
 @end defun
 
 
+The following functions are made available in case there is the need to implement a custom package
+loader.
+
+
 @defun mmux_package_option_ignore_enable_builtin_errors_is_enabled
 Return true if the configuration option ``ignore enable builtin errors'' is enabled; otherwise
 return false.
+@end defun
+
+
+@defun mmux_package_descriptor_has_builtins_to_enable @var{DESCRIPTOR_ARRAYNAME}
+Return true if the package descriptor lists builtins to enable; otherwise return false.
+@end defun
+
+
+@defun mmux_package_descriptor_has_shared_library @var{DESCRIPTOR_ARRAYNAME}
+Return true if the package descriptor specifies a shared library from which builtins can be loaded;
+otherwise return false.
+@end defun
+
+
+@defun mmux_package_enable_builtins @var{DESCRIPTOR_ARRAYNAME}
+If the package descriptor lists builtins to enable: load them from the shared library and enable
+them.  When successful return true; otherwise return false.
+
+This function does @strong{not} change the registered state of the descriptor.
+
+This function must be called only if: the descriptor lists builtins to enable; the descriptor
+specifies a shared library.
+
+If an error occurs while enabling a loadable builtin:
+
+@itemize
+@item
+If the option ``ignore enable builtin errors'' is enabled: the error message printed by
+@MmuxBuiltin{enable} is redirected to @file{/dev/null} and the error ignored.
+
+@item
+If the option ``ignore enable builtin errors'' is disabled: the error message printed by
+@MmuxBuiltin{enable} is redirected to @stderr{}; the function call returns immediately with status
+false.
+@end itemize
+@end defun
+
+
+@defun mmux_package_run_descriptor_after_loading_hook @var{DESCRIPTOR_ARRAYNAME}
+If the package descriptor specifies an after--loading hook: evaluate it; otherwise do nothing.  When
+successful return true; otherwise return false.
+
+This function does @strong{not} change the registered state of the descriptor.
 @end defun
 
 @c page
@@ -5612,7 +5661,7 @@ return false.
 
 
 Unloading a package means to remove from a shell session everything a package has added: variables,
-functions, builtins, aliases.  It might not be always possible.
+functions, builtins, aliases, @MmuxBuiltin{trap} commands.  It might not always be possible.
 
 
 @defun mmux_package_unload_by_descriptor @var{DESCRIPTOR_ARRAYNAME}
@@ -5627,17 +5676,43 @@ It is an error to unload a descriptor not in @samp{loaded} state; if a descripto
 @var{DESCRIPTOR_ARRAYNAME} is already registered, and its state is not @samp{loaded}: an error
 message is printed on @stderr{} and the return value is false.
 
-Then if the descriptor has a key @samp{PACKAGE_BEFORE_UNLOADING_HOOK}, associated to an identifier:
-evaluate that identifier to finalise the package before unloading.  The hook is supposed to remove
-variables, functions and aliases.
+If the descriptor has a key @samp{PACKAGE_BEFORE_UNLOADING_HOOK}, associated to an identifier:
+evaluate that identifier to finalise the package before unloading.  If an error occurs: the package
+is registered as @samp{broken}; the function call returns immediately with status false.
 
 If the descriptor has a key @samp{ENABLED_BUILTIN_0}: the package required loading a shared library
 to enable builtins; the shared library file name is meant to be in the descriptor itself at key
 @samp{SHARED_LIBRARY}.  Use the @code{enable} builtin to disable bulitins from the shared library
 using the identifiers from the descriptor pairs with keys @samp{ENABLED_BUILTIN_0},
-@samp{ENABLED_BUILTIN_1}, @dots{}
+@samp{ENABLED_BUILTIN_1}, @dots{} When all the enabled builtins are disabled: the shared library
+should be closed.  If an error occurs disabling builtins: register the package as @samp{broken};
+return false.
 
-If all the enabled builtins are disabled: the shared library should be closed.
+Finally register the package as @samp{unloaded}, then return true.
+@end defun
+
+
+The following functions are made available in case there is the need to implement a custom package
+unloader.
+
+
+@defun mmux_package_run_descriptor_before_unloading_hook @var{DESCRIPTOR_ARRAYNAME}
+If the package descriptor specifies an before--unloading hook: evaluate it; otherwise do nothing.
+When successful return true; otherwise return false.
+
+This function does @strong{not} change the registered state of the descriptor.
+@end defun
+
+
+@defun mmux_package_descriptor_has_builtins_to_disable @var{DESCRIPTOR_ARRAYNAME}
+Return true if the package descriptor lists builtins to disable; otherwise return false.
+@end defun
+
+
+@defun mmux_package_disable_builtins @var{DESCRIPTOR_ARRAYNAME}
+Disable previously enabled builtins.  When successful return true; otherwise return false.
+
+This function does @strong{not} change the registered state of the descriptor.
 @end defun
 
 @c page

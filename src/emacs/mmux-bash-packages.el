@@ -68,15 +68,22 @@
        "mmux_package_option_enable_load_when_provide"
        "mmux_package_option_load_when_provide_is_enabled"
        "mmux_package_provide_by_descriptor"
-       ;;
-       "mmux_package_option_disable_ignore_enable_builtin_errors"
-       "mmux_package_option_enable_ignore_enable_builtin_errors"
+
+       ;; loading
+       "mmux_package_descriptor_has_builtins_to_enable"
+       "mmux_package_descriptor_has_shared_library"
+       "mmux_package_enable_builtins"
        "mmux_package_ignore_enable_builtin_errors_is_enabled"
        "mmux_package_load_by_descriptor"
+       "mmux_package_option_disable_ignore_enable_builtin_errors"
+       "mmux_package_option_enable_ignore_enable_builtin_errors"
        "mmux_package_run_descriptor_after_loading_hook"
-       ;;
-       "mmux_package_unload_by_descriptor"
+
+       ;; unloading
+       "mmux_package_descriptor_has_builtins_to_disable"
+       "mmux_package_disable_builtins"
        "mmux_package_run_descriptor_before_unloading_hook"
+       "mmux_package_unload_by_descriptor"
        ;;
        "mmux_package_check_packaging_version"
        ;;

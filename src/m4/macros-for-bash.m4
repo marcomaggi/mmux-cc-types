@@ -44,6 +44,10 @@ m4_define([[[SS]]],[[[m4_ifelse($#,2,$1[$2],
   [[[m4_errprint(m4___program__:m4___file__:m4___line__: wrong number of arguments in ss use ($#): $@
 )]]])]]])
 
+m4_define([[[PP]]],[[[m4_ifelse($#,2,${$1:?"missing parameter $1 $2 in call to '$FUNCNAME'"},
+  [[[m4_errprint(m4___program__:m4___file__:m4___line__: wrong number of arguments in ss use ($#): $@
+)]]])]]])
+
 # end of file
 # Local Variables:
 # mode: m4
