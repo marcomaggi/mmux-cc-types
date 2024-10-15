@@ -3093,6 +3093,15 @@ mmux_double_set_format "$OLD_FORMAT"
 "$ROP"  @result{} 6.912000e+02
 @end example
 
+To query the currently selected output format for the result of operations:
+
+@example
+declare CURRENT_FORMAT
+
+mmux_double_ref_format CURRENT_FORMAT
+"$CURRENT_FORMAT"       @result{} "%A"
+@end example
+
 If we just want to reformat a number we do:
 
 @example
@@ -3121,6 +3130,10 @@ format.
 The optional argument @var{OLD_FORMAT_VAR} must be a shell variable name in which the builtin will
 store the old output format, so that: it is possible to temporarily select a new format, then
 restore the old one.
+
+@item
+The argument @var{CURRENT_FORMAT_VAR} must be a shell variable name in which the builtin will store
+the currently selected output format.
 @end itemize
 
 @quotation
@@ -3134,8 +3147,9 @@ formats like @samp{%0e}.
 @macro MmuxRealSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
 @deffn Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
 @deffnx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
+@deffnx Builtin mmux_\STEM\_ref_format @var{CURRENT_FORMAT_VAR}
 @deffnx Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
-Select a new output format for string representations of floating--point numbers of type
+Select or retrieve the format for string representations of floating--point numbers of type
 @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
 @end deffn
 

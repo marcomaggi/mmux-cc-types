@@ -183,7 +183,7 @@ done
 {
     for STEM in "${REAL_FLOAT_STEMS[@]}"
     do
-	for ITEM in set_format reformat
+	for ITEM in set_format ref_format reformat
 	do
 	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"

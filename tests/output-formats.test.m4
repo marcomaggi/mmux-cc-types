@@ -44,6 +44,12 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 #### type variables: float
 
+function output-formats-float-1.0 () {
+    declare CURRENT_FORMAT
+
+    mmux_float_ref_format CURRENT_FORMAT
+    dotest-equal "%A" WW(CURRENT_FORMAT)
+}
 function output-formats-float-1.1 () {
     declare ROP OP='123.4567890'
     declare -r EXPECTED_ROP='123.4567890'
@@ -115,6 +121,12 @@ function output-formats-float-2.2 () {
 
 #### type variables: double
 
+function output-formats-double-1.0 () {
+    declare CURRENT_FORMAT
+
+    mmux_float_ref_format CURRENT_FORMAT
+    dotest-equal "%A" WW(CURRENT_FORMAT)
+}
 function output-formats-double-1.1 () {
     declare ROP OP='123.4567890'
     declare -r EXPECTED_ROP='123.4567890'
@@ -251,6 +263,16 @@ function output-formats-double-2.2 () {
 
 #### type variables: ldouble
 
+function output-formats-ldouble-1.0 () {
+    if test -v mmux_ldouble_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_ldouble_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-ldouble-1.1 () {
     if test -v mmux_ldouble_SIZEOF
     then
@@ -329,6 +351,16 @@ function output-formats-ldouble-2.2 () {
 
 #### type variables: float32
 
+function output-formats-float32-1.0 () {
+    if test -v mmux_float32_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_float32_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-float32-1.1 () {
     if test -v mmux_float32_SIZEOF
     then
@@ -413,6 +445,16 @@ function output-formats-float32-2.2 () {
 
 #### type variables: float64
 
+function output-formats-float64-1.0 () {
+    if test -v mmux_float64_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_float64_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-float64-1.1 () {
     if test -v mmux_float64_SIZEOF
     then
@@ -495,6 +537,16 @@ function output-formats-float64-2.2 () {
 
 #### type variables: float128
 
+function output-formats-float128-1.0 () {
+    if test -v mmux_float128_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_float128_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-float128-1.1 () {
     if test -v mmux_float128_SIZEOF
     then
@@ -577,6 +629,16 @@ function output-formats-float128-2.2 () {
 
 #### type variables: float32x
 
+function output-formats-float32x-1.0 () {
+    if test -v mmux_float32x_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_float32x_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-float32x-1.1 () {
     if test -v mmux_float32x_SIZEOF
     then
@@ -659,6 +721,16 @@ function output-formats-float32x-2.2 () {
 
 #### type variables: float64x
 
+function output-formats-float64x-1.0 () {
+    if test -v mmux_float64x_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_float64x_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-float64x-1.1 () {
     if test -v mmux_float64x_SIZEOF
     then
@@ -741,6 +813,16 @@ function output-formats-float64x-2.2 () {
 
 #### type variables: float128x
 
+function output-formats-float128x-1.0 () {
+    if test -v mmux_float128x_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_float128x_ref_format CURRENT_FORMAT
+	dotest-equal "%A" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-float128x-1.1 () {
     if test -v mmux_float128x_SIZEOF
     then
@@ -823,6 +905,16 @@ function output-formats-float128x-2.2 () {
 
 #### type variables: decimal32
 
+function output-formats-decimal32-1.0 () {
+    if test -v mmux_decimal32_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_decimal32_ref_format CURRENT_FORMAT
+	dotest-equal "%f" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-decimal32-1.1 () {
     if test -v mmux_decimal32_SIZEOF
     then
@@ -905,6 +997,16 @@ function output-formats-decimal32-2.2 () {
 
 #### type variables: decimal64
 
+function output-formats-decimal64-1.0 () {
+    if test -v mmux_decimal64_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_decimal64_ref_format CURRENT_FORMAT
+	dotest-equal "%f" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-decimal64-1.1 () {
     if test -v mmux_decimal64_SIZEOF
     then
@@ -987,6 +1089,16 @@ function output-formats-decimal64-2.2 () {
 
 #### type variables: decimal128
 
+function output-formats-decimal128-1.0 () {
+    if test -v mmux_decimal128_SIZEOF
+    then
+	declare CURRENT_FORMAT
+
+	mmux_decimal128_ref_format CURRENT_FORMAT
+	dotest-equal "%f" WW(CURRENT_FORMAT)
+    else dotest-skipped
+    fi
+}
 function output-formats-decimal128-1.1 () {
     if test -v mmux_decimal128_SIZEOF
     then

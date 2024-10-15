@@ -93,6 +93,44 @@ DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE
 
 
 /** --------------------------------------------------------------------
+ ** Output format selection for floating-point numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_ref_format]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  return mmux_bash_store_string_in_variable(argv[1], mmux_bash_pointers_output_format_$1, MMUX_BUILTIN_NAME_STR);
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME_STR);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_ref_format]]],
+    [[[(2 == argc)]]],
+    [[["mmux_$1_ref_format FORMATVAR"]]],
+    [[["Retrieve the current output format for floating-point numbers of type \"$1\"."]]])
+]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[double]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[ldouble]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float64]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+
+/** --------------------------------------------------------------------
  ** Reformatting real floating-point numbers.
  ** ----------------------------------------------------------------- */
 
