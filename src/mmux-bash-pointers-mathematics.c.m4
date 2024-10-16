@@ -44,6 +44,7 @@ m4_define([[[DEFINE_UNARY_BUILTIN]]],[[[m4_ifelse([[[$3]]],,,[[[MMUX_BASH_BUILTI
 MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   mmux_$1_t	rop, op;
 
+  if (0) { fprintf(stderr, "%s: ROPVAR=%s, OP=%s\n", __func__, argv[1], argv[2]); }
   $4(op, argv[2]);
 
   rop = mmux_$1_$2(op);

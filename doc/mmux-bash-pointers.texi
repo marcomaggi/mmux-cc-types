@@ -586,10 +586,11 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @menu
 * types sizeof::                C language type sizes.
 * types limits::                C language type maximum and minimum values.
+* types complex::               Basic complex number builtins.
 * types predicates::            Type predicates.
 * types comparison::            Comparison builtins.
 * types arithmetics::           Arithmetics operation builtins.
-* types complex::               Basic complex number builtins.
+* types mathematics::           Mathematics operation builtins.
 * types bitwise::               Bitwise operation builtins.
 * types formats::               Input and output formats.
 @end menu
@@ -765,6 +766,223 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{gid}
 @MmuxDefineGlobalVarLimits{wchar}
 @MmuxDefineGlobalVarLimits{wint}
+
+@c page
+@node types complex
+@section Basic complex number builtins
+
+
+@menu
+* types complex make::          Constructing complex numbers.
+* types complex parts::         Extracting the real and imaginary parts.
+* types complex abs::           Computing the absolute value.
+* types complex arg::           Computing the argument value.
+* types complex conj::          Computing the complex conjugate value.
+@end menu
+
+@c page
+@node types complex make
+@subsection Constructing complex numbers
+
+
+To construct a complex number from its real and imaginary parts, we do:
+
+@example
+declare ROP
+
+mmux_complexd_make_rectangular ROP '1.2' '3.4'
+"$ROP"  @result{} (1.2)+i* types(3.4)
+@end example
+
+
+
+@macro MmuxDefineComplexMakeRectangularBuiltin{CPLXSTEM,REALSTEM}
+@deffn Builtin mmux_\CPLXSTEM\_make_rectangular @var{ROPVAR} @var{REP} @var{IMP}
+Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
+@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Store a string representation of the result
+in the shell variable @var{ROPVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineComplexMakeRectangularBuiltin{complexf, float}
+@MmuxDefineComplexMakeRectangularBuiltin{complexd, double}
+@MmuxDefineComplexMakeRectangularBuiltin{complexld, ldouble}
+
+@MmuxDefineComplexMakeRectangularBuiltin{complexf32, float32}
+@MmuxDefineComplexMakeRectangularBuiltin{complexf64, float64}
+@MmuxDefineComplexMakeRectangularBuiltin{complexf128, float128}
+
+@MmuxDefineComplexMakeRectangularBuiltin{complexf32x, float32x}
+@MmuxDefineComplexMakeRectangularBuiltin{complexf64x, float64x}
+@MmuxDefineComplexMakeRectangularBuiltin{complexf128x, float128x}
+
+@MmuxDefineComplexMakeRectangularBuiltin{complexd32, decimal32}
+@MmuxDefineComplexMakeRectangularBuiltin{complexd64, decimal64}
+@MmuxDefineComplexMakeRectangularBuiltin{complexd128, decimal128}
+
+@c page
+@node types complex parts
+@subsection Extracting the real and imaginary parts
+
+
+To extract the real and imaginary parts of a complex number, we do:
+
+@example
+declare Z='(1.2)+i* types(3.4)' REP IMP
+
+mmux_complexd_real_part REP "$Z"
+mmux_complexd_real_part IMP "$Z"
+"$REP"  @result{} 1.2
+"$IMP"  @result{} 3.4
+@end example
+
+
+@macro MmuxDefineComplexRealImagPartBuiltin{CPLXSTEM,REALSTEM}
+@deffn Builtin mmux_\CPLXSTEM\_real_part @var{REPVAR} @var{OP}
+@deffnx Builtin mmux_\CPLXSTEM\_imag_part @var{IMPVAR} @var{OP}
+Extract the real or imaginary parts, which will be of type @objtype{\REALSTEM\}, from the complex
+number @var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell
+variable @var{REPVAR} or @var{IMPVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineComplexRealImagPartBuiltin{complexf, float}
+@MmuxDefineComplexRealImagPartBuiltin{complexd, double}
+@MmuxDefineComplexRealImagPartBuiltin{complexld, ldouble}
+
+@MmuxDefineComplexRealImagPartBuiltin{complexf32, float32}
+@MmuxDefineComplexRealImagPartBuiltin{complexf64, float64}
+@MmuxDefineComplexRealImagPartBuiltin{complexf128, float128}
+
+@MmuxDefineComplexRealImagPartBuiltin{complexf32x, float32x}
+@MmuxDefineComplexRealImagPartBuiltin{complexf64x, float64x}
+@MmuxDefineComplexRealImagPartBuiltin{complexf128x, float128x}
+
+@MmuxDefineComplexRealImagPartBuiltin{complexd32, decimal32}
+@MmuxDefineComplexRealImagPartBuiltin{complexd64, decimal64}
+@MmuxDefineComplexRealImagPartBuiltin{complexd128, decimal128}
+
+@c page
+@node types complex abs
+@subsection Computing the absolute value
+
+
+To compute the absolute value of a complex number, we do:
+
+@example
+declare Z='(1.2)+i* types(3.4)' A
+
+mmux_complexd_abs A "$Z"
+"$A"    @result{} 3.605551275463989
+@end example
+
+
+@macro MmuxDefineComplexAbsBuiltin{CPLXSTEM,REALSTEM}
+@deffn Builtin mmux_\CPLXSTEM\_abs @var{ABSVAR} @var{OP}
+Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the complex number
+@var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell variable
+@var{ABSVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineComplexAbsBuiltin{complexf, float}
+@MmuxDefineComplexAbsBuiltin{complexd, double}
+@MmuxDefineComplexAbsBuiltin{complexld, ldouble}
+
+@MmuxDefineComplexAbsBuiltin{complexf32, float32}
+@MmuxDefineComplexAbsBuiltin{complexf64, float64}
+@MmuxDefineComplexAbsBuiltin{complexf128, float128}
+
+@MmuxDefineComplexAbsBuiltin{complexf32x, float32x}
+@MmuxDefineComplexAbsBuiltin{complexf64x, float64x}
+@MmuxDefineComplexAbsBuiltin{complexf128x, float128x}
+
+@MmuxDefineComplexAbsBuiltin{complexd32, decimal32}
+@MmuxDefineComplexAbsBuiltin{complexd64, decimal64}
+@MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
+
+@c page
+@node types complex arg
+@subsection Computing the argument value
+
+
+To compute the argument value of a complex number, we do:
+
+@example
+declare Z='(1.2)+i* types(3.4)' A
+
+mmux_complexd_arg A "$Z"
+"$A"    @result{} 1.231503712340852
+@end example
+
+
+@macro MmuxDefineComplexArgBuiltin{CPLXSTEM,REALSTEM}
+@deffn Builtin mmux_\CPLXSTEM\_arg @var{ARGVAR} @var{OP}
+Extract the argument value, which will be of type @objtype{\REALSTEM\}, from the complex number
+@var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell variable
+@var{ARGVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineComplexArgBuiltin{complexf, float}
+@MmuxDefineComplexArgBuiltin{complexd, double}
+@MmuxDefineComplexArgBuiltin{complexld, ldouble}
+
+@MmuxDefineComplexArgBuiltin{complexf32, float32}
+@MmuxDefineComplexArgBuiltin{complexf64, float64}
+@MmuxDefineComplexArgBuiltin{complexf128, float128}
+
+@MmuxDefineComplexArgBuiltin{complexf32x, float32x}
+@MmuxDefineComplexArgBuiltin{complexf64x, float64x}
+@MmuxDefineComplexArgBuiltin{complexf128x, float128x}
+
+@MmuxDefineComplexArgBuiltin{complexd32, decimal32}
+@MmuxDefineComplexArgBuiltin{complexd64, decimal64}
+@MmuxDefineComplexArgBuiltin{complexd128, decimal128}
+
+@c page
+@node types complex conj
+@subsection Computing the complex conjugate value
+
+
+To compute the complex conjugate value of a complex number, we do:
+
+@example
+declare Z='(1.2)+i* types(3.4)' W
+
+mmux_complexd_conj W "$Z"
+"$W"    @result{} (1.2)+i* types(-3.4)
+@end example
+
+
+@macro MmuxDefineComplexConjBuiltin{CPLXSTEM,REALSTEM}
+@deffn Builtin mmux_\CPLXSTEM\_conj @var{CONJVAR} @var{OP}
+Compute the complex conjugate value, which will be of type @objtype{\CPLXSTEM\}, from the complex
+number @var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell
+variable @var{CONJVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineComplexConjBuiltin{complexf, float}
+@MmuxDefineComplexConjBuiltin{complexd, double}
+@MmuxDefineComplexConjBuiltin{complexld, ldouble}
+
+@MmuxDefineComplexConjBuiltin{complexf32, float32}
+@MmuxDefineComplexConjBuiltin{complexf64, float64}
+@MmuxDefineComplexConjBuiltin{complexf128, float128}
+
+@MmuxDefineComplexConjBuiltin{complexf32x, float32x}
+@MmuxDefineComplexConjBuiltin{complexf64x, float64x}
+@MmuxDefineComplexConjBuiltin{complexf128x, float128x}
+
+@MmuxDefineComplexConjBuiltin{complexd32, decimal32}
+@MmuxDefineComplexConjBuiltin{complexd64, decimal64}
+@MmuxDefineComplexConjBuiltin{complexd128, decimal128}
 
 @c page
 @node types predicates
@@ -2425,221 +2643,117 @@ Increment or decrement @var{OP}, store the result in the shell variable @var{ROP
 @MmuxDefineTypeIncrdecrBuiltin{wint}
 
 @c page
-@node types complex
-@section Basic complex number builtins
+@node types mathematics
+@section Mathematics operation builtins
 
 
-@menu
-* types complex make::          Constructing complex numbers.
-* types complex parts::         Extracting the real and imaginary parts.
-* types complex abs::           Computing the absolute value.
-* types complex arg::           Computing the argument value.
-* types complex conj::          Computing the complex conjugate value.
-@end menu
+All the following builtins compute a value and store its string representation in @var{ROPVAR}.
 
-@c page
-@node types complex make
-@subsection Constructing complex numbers
-
-
-To construct a complex number from its real and imaginary parts, we do:
-
-@example
-declare ROP
-
-mmux_complexd_make_rectangular ROP '1.2' '3.4'
-"$ROP"  @result{} (1.2)+i* types(3.4)
-@end example
-
-
-
-@macro MmuxDefineComplexMakeRectangularBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_make_rectangular @var{ROPVAR} @var{REP} @var{IMP}
-Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
-@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Store a string representation of the result
-in the shell variable @var{ROPVAR}.
+@macro MmuxDefineMathRealBuiltins{STEM}
+@deffn Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
+@deffnx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_exp2 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_exp10 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_log2 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_logb @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_cbrt @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_hypot @var{ROPVAR} @vari{OP} @vari{OP}
+@deffnx Builtin mmux_\STEM\_expm1 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_log1p @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_erf @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_erfc @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_lgamma @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_tgamma @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_j0 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_j1 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_jn @var{ROPVAR} @var{SINT_N} @var{OP}
+@deffnx Builtin mmux_\STEM\_y0 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_y1 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_yn @var{ROPVAR} @var{SINT_N} @var{OP}
+Compute the named C function.
 @end deffn
 
 @end macro
 
-@MmuxDefineComplexMakeRectangularBuiltin{complexf, float}
-@MmuxDefineComplexMakeRectangularBuiltin{complexd, double}
-@MmuxDefineComplexMakeRectangularBuiltin{complexld, ldouble}
+@c ------------------------------------------------------------------------
 
-@MmuxDefineComplexMakeRectangularBuiltin{complexf32, float32}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf64, float64}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf128, float128}
-
-@MmuxDefineComplexMakeRectangularBuiltin{complexf32x, float32x}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf64x, float64x}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf128x, float128x}
-
-@MmuxDefineComplexMakeRectangularBuiltin{complexd32, decimal32}
-@MmuxDefineComplexMakeRectangularBuiltin{complexd64, decimal64}
-@MmuxDefineComplexMakeRectangularBuiltin{complexd128, decimal128}
-
-@c page
-@node types complex parts
-@subsection Extracting the real and imaginary parts
-
-
-To extract the real and imaginary parts of a complex number, we do:
-
-@example
-declare Z='(1.2)+i* types(3.4)' REP IMP
-
-mmux_complexd_real_part REP "$Z"
-mmux_complexd_real_part IMP "$Z"
-"$REP"  @result{} 1.2
-"$IMP"  @result{} 3.4
-@end example
-
-
-@macro MmuxDefineComplexRealImagPartBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_real_part @var{REPVAR} @var{OP}
-@deffnx Builtin mmux_\CPLXSTEM\_imag_part @var{IMPVAR} @var{OP}
-Extract the real or imaginary parts, which will be of type @objtype{\REALSTEM\}, from the complex
-number @var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell
-variable @var{REPVAR} or @var{IMPVAR}.
+@macro MmuxDefineMathComplexBuiltins{STEM}
+@deffn Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
+@deffnx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
+@deffnx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
+Compute the named C function.
 @end deffn
 
 @end macro
 
-@MmuxDefineComplexRealImagPartBuiltin{complexf, float}
-@MmuxDefineComplexRealImagPartBuiltin{complexd, double}
-@MmuxDefineComplexRealImagPartBuiltin{complexld, ldouble}
+@c ------------------------------------------------------------------------
 
-@MmuxDefineComplexRealImagPartBuiltin{complexf32, float32}
-@MmuxDefineComplexRealImagPartBuiltin{complexf64, float64}
-@MmuxDefineComplexRealImagPartBuiltin{complexf128, float128}
+@MmuxDefineMathRealBuiltins{float}
+@MmuxDefineMathRealBuiltins{double}
+@MmuxDefineMathRealBuiltins{ldouble}
 
-@MmuxDefineComplexRealImagPartBuiltin{complexf32x, float32x}
-@MmuxDefineComplexRealImagPartBuiltin{complexf64x, float64x}
-@MmuxDefineComplexRealImagPartBuiltin{complexf128x, float128x}
+@MmuxDefineMathRealBuiltins{float32}
+@MmuxDefineMathRealBuiltins{float64}
+@MmuxDefineMathRealBuiltins{float128}
 
-@MmuxDefineComplexRealImagPartBuiltin{complexd32, decimal32}
-@MmuxDefineComplexRealImagPartBuiltin{complexd64, decimal64}
-@MmuxDefineComplexRealImagPartBuiltin{complexd128, decimal128}
+@MmuxDefineMathRealBuiltins{float32x}
+@MmuxDefineMathRealBuiltins{float64x}
+@MmuxDefineMathRealBuiltins{float128x}
 
-@c page
-@node types complex abs
-@subsection Computing the absolute value
+@ignore
+@MmuxDefineMathRealBuiltins{decimal32}
+@MmuxDefineMathRealBuiltins{decimal64}
+@MmuxDefineMathRealBuiltins{decimal128}
+@end ignore
 
+@MmuxDefineMathComplexBuiltins{complexf}
+@MmuxDefineMathComplexBuiltins{complexd}
+@MmuxDefineMathComplexBuiltins{complexld}
 
-To compute the absolute value of a complex number, we do:
+@MmuxDefineMathComplexBuiltins{complexf32}
+@MmuxDefineMathComplexBuiltins{complexf64}
+@MmuxDefineMathComplexBuiltins{complexf128}
 
-@example
-declare Z='(1.2)+i* types(3.4)' A
+@MmuxDefineMathComplexBuiltins{complexf32x}
+@MmuxDefineMathComplexBuiltins{complexf64x}
+@MmuxDefineMathComplexBuiltins{complexf128x}
 
-mmux_complexd_abs A "$Z"
-"$A"    @result{} 3.605551275463989
-@end example
-
-
-@macro MmuxDefineComplexAbsBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_abs @var{ABSVAR} @var{OP}
-Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the complex number
-@var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell variable
-@var{ABSVAR}.
-@end deffn
-
-@end macro
-
-@MmuxDefineComplexAbsBuiltin{complexf, float}
-@MmuxDefineComplexAbsBuiltin{complexd, double}
-@MmuxDefineComplexAbsBuiltin{complexld, ldouble}
-
-@MmuxDefineComplexAbsBuiltin{complexf32, float32}
-@MmuxDefineComplexAbsBuiltin{complexf64, float64}
-@MmuxDefineComplexAbsBuiltin{complexf128, float128}
-
-@MmuxDefineComplexAbsBuiltin{complexf32x, float32x}
-@MmuxDefineComplexAbsBuiltin{complexf64x, float64x}
-@MmuxDefineComplexAbsBuiltin{complexf128x, float128x}
-
-@MmuxDefineComplexAbsBuiltin{complexd32, decimal32}
-@MmuxDefineComplexAbsBuiltin{complexd64, decimal64}
-@MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
-
-@c page
-@node types complex arg
-@subsection Computing the argument value
-
-
-To compute the argument value of a complex number, we do:
-
-@example
-declare Z='(1.2)+i* types(3.4)' A
-
-mmux_complexd_arg A "$Z"
-"$A"    @result{} 1.231503712340852
-@end example
-
-
-@macro MmuxDefineComplexArgBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_arg @var{ARGVAR} @var{OP}
-Extract the argument value, which will be of type @objtype{\REALSTEM\}, from the complex number
-@var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell variable
-@var{ARGVAR}.
-@end deffn
-
-@end macro
-
-@MmuxDefineComplexArgBuiltin{complexf, float}
-@MmuxDefineComplexArgBuiltin{complexd, double}
-@MmuxDefineComplexArgBuiltin{complexld, ldouble}
-
-@MmuxDefineComplexArgBuiltin{complexf32, float32}
-@MmuxDefineComplexArgBuiltin{complexf64, float64}
-@MmuxDefineComplexArgBuiltin{complexf128, float128}
-
-@MmuxDefineComplexArgBuiltin{complexf32x, float32x}
-@MmuxDefineComplexArgBuiltin{complexf64x, float64x}
-@MmuxDefineComplexArgBuiltin{complexf128x, float128x}
-
-@MmuxDefineComplexArgBuiltin{complexd32, decimal32}
-@MmuxDefineComplexArgBuiltin{complexd64, decimal64}
-@MmuxDefineComplexArgBuiltin{complexd128, decimal128}
-
-@c page
-@node types complex conj
-@subsection Computing the complex conjugate value
-
-
-To compute the complex conjugate value of a complex number, we do:
-
-@example
-declare Z='(1.2)+i* types(3.4)' W
-
-mmux_complexd_conj W "$Z"
-"$W"    @result{} (1.2)+i* types(-3.4)
-@end example
-
-
-@macro MmuxDefineComplexConjBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_conj @var{CONJVAR} @var{OP}
-Compute the complex conjugate value, which will be of type @objtype{\CPLXSTEM\}, from the complex
-number @var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell
-variable @var{CONJVAR}.
-@end deffn
-
-@end macro
-
-@MmuxDefineComplexConjBuiltin{complexf, float}
-@MmuxDefineComplexConjBuiltin{complexd, double}
-@MmuxDefineComplexConjBuiltin{complexld, ldouble}
-
-@MmuxDefineComplexConjBuiltin{complexf32, float32}
-@MmuxDefineComplexConjBuiltin{complexf64, float64}
-@MmuxDefineComplexConjBuiltin{complexf128, float128}
-
-@MmuxDefineComplexConjBuiltin{complexf32x, float32x}
-@MmuxDefineComplexConjBuiltin{complexf64x, float64x}
-@MmuxDefineComplexConjBuiltin{complexf128x, float128x}
-
-@MmuxDefineComplexConjBuiltin{complexd32, decimal32}
-@MmuxDefineComplexConjBuiltin{complexd64, decimal64}
-@MmuxDefineComplexConjBuiltin{complexd128, decimal128}
+@ignore
+@MmuxDefineMathComplexBuiltins{complexd32}
+@MmuxDefineMathComplexBuiltins{complexd64}
+@MmuxDefineMathComplexBuiltins{complexd128}
+@end ignore
 
 @c page
 @node types bitwise

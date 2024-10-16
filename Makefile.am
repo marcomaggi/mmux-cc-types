@@ -274,6 +274,7 @@ EXTRA_DIST		+= \
 	tests/conversion.test.m4		\
 	tests/errors.test.m4			\
 	tests/file-descriptors.test.m4		\
+	tests/mathematics.test.m4		\
 	tests/memory.test.m4			\
 	tests/output-formats.test.m4		\
 	tests/packages.test.m4			\
@@ -298,6 +299,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/conversion.test			\
 	tests/errors.test			\
 	tests/file-descriptors.test		\
+	tests/mathematics.test			\
 	tests/memory.test			\
 	tests/output-formats.test		\
 	tests/packages.test			\
