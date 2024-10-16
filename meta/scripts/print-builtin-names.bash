@@ -42,6 +42,18 @@ declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${M
 declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memmove strerror errno_to_string \
 				  open close read write pread pwrite lseek dup dup2 fcntl ioctl)
 
+declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
+				sinh cosh tanh asinh acosh atanh
+				exp exp2 exp10 log log10 log2 logb
+				pow sqrt cbrt hypot expm1 log1p
+				erf erfc lgamma tgamma j0 j1 jn y0 y1 yn)
+
+declare -ra MATH_COMPLEX_BUILTINS=(sin cos tan asin acos atan
+				   sinh cosh tanh asinh acosh atanh
+				   exp log log10 pow sqrt)
+
+### ------------------------------------------------------------------------
+
 declare -i IDX=
 
 function print_builtin_name () {
@@ -193,6 +205,27 @@ done
     for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
     do
 	for ITEM in reformat
+	do
+	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+}
+
+# Mathematics builtins.
+{
+    for STEM in "${REAL_FLOAT_STEMS[@]}"
+    do
+	for ITEM in "${MATH_REAL_BUILTINS[@]}"
+	do
+	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
+
+    for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
+    do
+	for ITEM in "${MATH_COMPLEX_BUILTINS[@]}"
 	do
 	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"

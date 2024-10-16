@@ -880,4 +880,398 @@ DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf32x]]], [[[flo
 DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf64x]]], [[[float64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
 DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf128x]]],[[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
 
+
+m4_divert(-1)m4_dnl
+m4_dnl --------------------------------------------------------------------
+m4_dnl Orgy of math macros.
+m4_dnl ----------------------------------------------------------------- */
+
+m4_dnl We want to define wrapper functions like:
+m4_dnl
+m4_dnl mmux_float32_t mmux_float32_sin (mmux_float32_t op) { return sinf32(op); }
+m4_dnl
+
+m4_dnl $1 - type stem
+m4_dnl $2 - builtin tail identifier
+m4_dnl $3 - mathematical function identifier, empty if not to be implemented
+m4_dnl $4 - type parser macro
+m4_dnl $5 - C preprocessor for optional definition
+m4_define([[[DEFINE_UNARY_CFUNC]]],[[[m4_ifelse($#,5,,
+[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
+)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return $3(op); }
+]]])]]])]]])
+
+m4_dnl $1 - type stem
+m4_dnl $2 - builtin tail identifier
+m4_dnl $3 - mathematical function identifier, empty if not to be implemented
+m4_dnl $4 - type parser macro
+m4_dnl $5 - C preprocessor for optional definition
+m4_define([[[DEFINE_BINARY_CFUNC]]],[[[m4_ifelse($#,5,,
+[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
+)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return $3(op1, op2); }
+]]])]]])]]])
+
+m4_dnl $1 - type stem
+m4_dnl $2 - builtin tail identifier
+m4_dnl $3 - mathematical function identifier, empty if not to be implemented
+m4_dnl $4 - type parser macro
+m4_dnl $5 - C preprocessor for optional definition
+m4_define([[[DEFINE_BINARYN_CFUNC]]],[[[m4_ifelse($#,5,,
+[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
+)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op) { return $3(N, op); }
+]]])]]])]]])
+
+m4_divert(0)m4_dnl
+
+m4_dnl  $1 - type stem
+m4_dnl  $2 - type parser macro
+m4_dnl  $3 - C preprocessor for optional definition
+
+m4_dnl  $4 - identifier of C function implementing sin
+m4_dnl  $5 - identifier of C function implementing cos
+m4_dnl  $6 - identifier of C function implementing tan
+m4_dnl  $7 - identifier of C function implementing asin
+m4_dnl  $8 - identifier of C function implementing acos
+m4_dnl  $9 - identifier of C function implementing atan
+m4_dnl $10 - identifier of C function implementing atan2
+
+m4_dnl $11 - identifier of C function implementing sinh
+m4_dnl $12 - identifier of C function implementing cosh
+m4_dnl $13 - identifier of C function implementing tanh
+m4_dnl $14 - identifier of C function implementing asinh
+m4_dnl $15 - identifier of C function implementing acosh
+m4_dnl $16 - identifier of C function implementing atanh
+
+m4_dnl $17 - identifier of C function implementing exp
+m4_dnl $18 - identifier of C function implementing exp2
+m4_dnl $19 - identifier of C function implementing exp10
+m4_dnl $20 - identifier of C function implementing log
+m4_dnl $21 - identifier of C function implementing log10
+m4_dnl $22 - identifier of C function implementing log2
+m4_dnl $23 - identifier of C function implementing logb
+m4_dnl $24 - identifier of C function implementing pow
+m4_dnl $25 - identifier of C function implementing sqrt
+m4_dnl $26 - identifier of C function implementing cbrt
+m4_dnl $27 - identifier of C function implementing hypot
+m4_dnl $28 - identifier of C function implementing expm1
+m4_dnl $29 - identifier of C function implementing log1p
+
+m4_dnl $30 - identifier of C function implementing erf
+m4_dnl $31 - identifier of C function implementing erfc
+m4_dnl $32 - identifier of C function implementing lgamma
+m4_dnl $33 - identifier of C function implementing tgamma
+m4_dnl $34 - identifier of C function implementing j0
+m4_dnl $35 - identifier of C function implementing j1
+m4_dnl $36 - identifier of C function implementing jn
+m4_dnl $37 - identifier of C function implementing y0
+m4_dnl $38 - identifier of C function implementing y1
+m4_dnl $39 - identifier of C function implementing yn
+
+m4_define([[[DEFINE_CFUNCS]]],[[[m4_ifelse($#,39,,
+[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 39 got: $#
+)]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[sin]]],	[[[$4]]],  [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[cos]]],	[[[$5]]],  [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[tan]]],	[[[$6]]],  [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[asin]]],	[[[$7]]],  [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[acos]]],	[[[$8]]],  [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[atan]]],	[[[$9]]],  [[[$2]]], [[[$3]]])
+DEFINE_BINARY_CFUNC([[[$1]]], [[[atan2]]],	[[[$10]]], [[[$2]]], [[[$3]]])
+
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[sinh]]],	[[[$11]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[cosh]]],	[[[$12]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[tanh]]],	[[[$13]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[asinh]]],	[[[$14]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[acosh]]],	[[[$15]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[atanh]]],	[[[$16]]], [[[$2]]], [[[$3]]])
+
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[exp]]],	[[[$17]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[exp2]]],	[[[$18]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[exp10]]],	[[[$19]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[log]]],	[[[$20]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[log10]]],	[[[$21]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[log2]]],	[[[$22]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[logb]]],	[[[$23]]], [[[$2]]], [[[$3]]])
+DEFINE_BINARY_CFUNC([[[$1]]], [[[pow]]],	[[[$24]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[sqrt]]],	[[[$25]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[cbrt]]],	[[[$26]]], [[[$2]]], [[[$3]]])
+DEFINE_BINARY_CFUNC([[[$1]]], [[[hypot]]],	[[[$27]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[expm1]]],	[[[$28]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[log1p]]],	[[[$29]]], [[[$2]]], [[[$3]]])
+
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[erf]]],	[[[$30]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[erfc]]],	[[[$31]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[lgamma]]],	[[[$32]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[tgamma]]],	[[[$33]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[j0]]],	[[[$34]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[j1]]],	[[[$35]]], [[[$2]]], [[[$3]]])
+DEFINE_BINARYN_CFUNC([[[$1]]],[[[jn]]],	[[[$36]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[y0]]],	[[[$37]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_CFUNC([[[$1]]],  [[[y1]]],	[[[$38]]], [[[$2]]], [[[$3]]])
+DEFINE_BINARYN_CFUNC([[[$1]]],[[[yn]]],	[[[$39]]], [[[$2]]], [[[$3]]])
+]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_CFUNCS([[[float]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT]]],		[[[]]],
+	      [[[sinf]]],		[[[cosf]]],		[[[tanf]]],
+	      [[[asinf]]],		[[[acosf]]],		[[[atanf]]],		[[[atan2f]]],
+	      [[[sinhf]]],		[[[coshf]]],		[[[tanhf]]],
+	      [[[asinhf]]],		[[[acoshf]]],		[[[atanhf]]],
+	      [[[expf]]],		[[[exp2f]]],		[[[exp10f]]],
+	      [[[logf]]],		[[[log10f]]],		[[[log2f]]],		[[[logbf]]],
+	      [[[powf]]],		[[[sqrtf]]],		[[[cbrtf]]],		[[[hypotf]]],
+	      [[[expm1f]]],		[[[log1pf]]],
+	      [[[erff]]],		[[[erfcf]]],
+	      [[[lgammaf]]],		[[[tgammaf]]],
+	      [[[j0f]]],		[[[j1f]]],		[[[jnf]]],
+	      [[[y0f]]],		[[[y1f]]],		[[[ynf]]])
+DEFINE_CFUNCS([[[double]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DOUBLE]]],		[[[]]],
+	      [[[sin]]],		[[[cos]]],		[[[tan]]],
+	      [[[asin]]],		[[[acos]]],		[[[atan]]],		[[[atan2f]]],
+	      [[[sinh]]],		[[[cosh]]],		[[[tanh]]],
+	      [[[asinh]]],		[[[acosh]]],		[[[atanh]]],
+	      [[[exp]]],		[[[exp2]]],		[[[exp10]]],
+	      [[[log]]],		[[[log10]]],		[[[log2]]],		[[[logb]]],
+	      [[[pow]]],		[[[sqrt]]],		[[[cbrt]]],		[[[hypot]]],
+	      [[[expm1]]],		[[[log1p]]],
+	      [[[erf]]],		[[[erfc]]],
+	      [[[lgamma]]],		[[[tgamma]]],
+	      [[[j0]]],			[[[j1]]],		[[[jn]]],
+	      [[[y0]]],			[[[y1]]],		[[[yn]]])
+DEFINE_CFUNCS([[[ldouble]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_LDOUBLE]]], [[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],
+	      [[[sinl]]],		[[[cosl]]],		[[[tanl]]],
+	      [[[asinl]]],		[[[acosl]]],		[[[atanl]]],		[[[atan2l]]],
+	      [[[sinhl]]],		[[[coshl]]],		[[[tanhl]]],
+	      [[[asinhl]]],		[[[acoshl]]],		[[[atanhl]]],
+	      [[[expl]]],		[[[exp2l]]],		[[[exp10l]]],
+	      [[[logl]]],		[[[log10l]]],		[[[log2l]]],		[[[logbl]]],
+	      [[[powl]]],		[[[sqrtl]]],		[[[cbrtl]]],		[[[hypotl]]],
+	      [[[expm1l]]],		[[[log1pl]]],
+	      [[[erfl]]],		[[[erfcl]]],
+	      [[[lgammal]]],		[[[tgammal]]],
+	      [[[j0l]]],		[[[j1l]]],		[[[jnl]]],
+	      [[[y0l]]],		[[[y1l]]],		[[[ynl]]])
+
+DEFINE_CFUNCS([[[float32]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT32]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT32]]],
+	      [[[sinf32]]],		[[[cosf32]]],		[[[tanf32]]],
+	      [[[asinf32]]],		[[[acosf32]]],		[[[atanf32]]],		[[[atan2f32]]],
+	      [[[sinhf32]]],		[[[coshf32]]],		[[[tanhf32]]],
+	      [[[asinhf32]]],		[[[acoshf32]]],		[[[atanhf32]]],
+	      [[[expf32]]],		[[[exp2f32]]],		[[[exp10f32]]],
+	      [[[logf32]]],		[[[log10f32]]],		[[[log2f32]]],		[[[logbf32]]],
+	      [[[powf32]]],		[[[sqrtf32]]],		[[[cbrtf32]]],		[[[hypotf32]]],
+	      [[[expm1f32]]],		[[[log1pf32]]],
+	      [[[erff32]]],			[[[erfcf32]]],
+	      [[[lgammaf32]]],		[[[tgammaf32]]],
+	      [[[j0f32]]],		[[[j1f32]]],		[[[jnf32]]],
+	      [[[y0f32]]],		[[[y1f32]]],		[[[ynf32]]])
+DEFINE_CFUNCS([[[float64]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT64]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64]]],
+	      [[[sinf64]]],		[[[cosf64]]],		[[[tanf64]]],
+	      [[[asinf64]]],		[[[acosf64]]],		[[[atanf64]]],		[[[atan2f64]]],
+	      [[[sinhf64]]],		[[[coshf64]]],		[[[tanhf64]]],
+	      [[[asinhf64]]],		[[[acoshf64]]],		[[[atanhf64]]],
+	      [[[expf64]]],		[[[exp2f64]]],		[[[exp10f64]]],
+	      [[[logf64]]],		[[[log10f64]]],		[[[log2f64]]],		[[[logbf64]]],
+	      [[[powf64]]],		[[[sqrtf64]]],		[[[cbrtf64]]],		[[[hypotf64]]],
+	      [[[expm1f64]]],		[[[log1pf64]]],
+	      [[[erff64]]],		[[[erfcf64]]],
+	      [[[lgammaf64]]],		[[[tgammaf64]]],
+	      [[[j0f64]]],		[[[j1f64]]],		[[[jnf64]]],
+	      [[[y0f64]]],		[[[y1f64]]],		[[[ynf64]]])
+DEFINE_CFUNCS([[[float128]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT128]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128]]],
+	      [[[sinf128]]],		[[[cosf128]]],		[[[tanf128]]],
+	      [[[asinf128]]],		[[[acosf128]]],		[[[atanf128]]],		[[[atan2f128]]],
+	      [[[sinhf128]]],		[[[coshf128]]],		[[[tanhf128]]],
+	      [[[asinhf128]]],		[[[acoshf128]]],	[[[atanhf128]]],
+	      [[[expf128]]],		[[[exp2f128]]],		[[[exp10f128]]],
+	      [[[logf128]]],		[[[log10f128]]],	[[[log2f128]]],		[[[logbf128]]],
+	      [[[powf128]]],		[[[sqrtf128]]],		[[[cbrtf128]]],		[[[hypotf128]]],
+	      [[[expm1f128]]],		[[[log1pf128]]],
+	      [[[erff128]]],		[[[erfcf128]]],
+	      [[[lgammaf128]]],		[[[tgammaf128]]],
+	      [[[j0f128]]],		[[[j1f128]]],		[[[jnf128]]],
+	      [[[y0f128]]],		[[[y1f128]]],		[[[ynf128]]])
+
+DEFINE_CFUNCS([[[float32x]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT32X]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],
+	      [[[sinf32x]]],		[[[cosf32x]]],		[[[tanf32x]]],
+	      [[[asinf32x]]],		[[[acosf32x]]],		[[[atanf32x]]],		[[[atan2f32x]]],
+	      [[[sinhf32x]]],		[[[coshf32x]]],		[[[tanhf32x]]],
+	      [[[asinhf32x]]],		[[[acoshf32x]]],	[[[atanhf32x]]],
+	      [[[expf32x]]],		[[[exp2f32x]]],		[[[exp10f32x]]],
+	      [[[logf32x]]],		[[[log10f32x]]],	[[[log2f32x]]],		[[[logbf32x]]],
+	      [[[powf32x]]],		[[[sqrtf32x]]],		[[[cbrtf32x]]],		[[[hypotf32x]]],
+	      [[[expm1f32x]]],		[[[log1pf32x]]],
+	      [[[erff32x]]],		[[[erfcf32x]]],
+	      [[[lgammaf32x]]],		[[[tgammaf32x]]],
+	      [[[j0f32x]]],		[[[j1f32x]]],		[[[jnf32x]]],
+	      [[[y0f32x]]],		[[[y1f32x]]],		[[[ynf32x]]])
+DEFINE_CFUNCS([[[float64x]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT64X]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],
+	      [[[sinf64x]]],		[[[cosf64x]]],		[[[tanf64x]]],
+	      [[[asinf64x]]],		[[[acosf64x]]],		[[[atanf64x]]],		[[[atan2f64x]]],
+	      [[[sinhf64x]]],		[[[coshf64x]]],		[[[tanhf64x]]],
+	      [[[asinhf64x]]],		[[[acoshf64x]]],	[[[atanhf64x]]],
+	      [[[expf64x]]],		[[[exp2f64x]]],		[[[exp10f64x]]],
+	      [[[logf64x]]],		[[[log10f64x]]],	[[[log2f64x]]],		[[[logbf64x]]],
+	      [[[powf64x]]],		[[[sqrtf64x]]],		[[[cbrtf64x]]],		[[[hypotf64x]]],
+	      [[[expm1f64x]]],		[[[log1pf64x]]],
+	      [[[erff64x]]],		[[[erfcf64x]]],
+	      [[[lgammaf64x]]],		[[[tgammaf64x]]],
+	      [[[j0f64x]]],		[[[j1f64x]]],		[[[jnf64x]]],
+	      [[[y0f64x]]],		[[[y1f64x]]],		[[[ynf64x]]])
+DEFINE_CFUNCS([[[float128x]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_FLOAT128X]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],
+		  [[[sinf128x]]],	[[[cosf128x]]],		[[[tanf128x]]],
+		  [[[asinf128x]]],	[[[acosf128x]]],	[[[atanf128x]]],	[[[atan2f128x]]],
+		  [[[sinhf128x]]],	[[[coshf128x]]],	[[[tanhf128x]]],
+		  [[[asinhf128x]]],	[[[acoshf128x]]],	[[[atanhf128x]]],
+		  [[[expf128x]]],	[[[exp2f128x]]],	[[[exp10f128x]]],
+		  [[[logf128x]]],	[[[log10f128x]]],	[[[log2f128x]]],	[[[logbf128x]]],
+		  [[[powf128x]]],	[[[sqrtf128x]]],	[[[cbrtf128x]]],	[[[hypotf128x]]],
+		  [[[expm1f128x]]],	[[[log1pf128x]]],
+		  [[[erff128x]]],	[[[erfc128x]]],
+		  [[[lgammaf128x]]],	[[[tgammaf128x]]],
+		  [[[j0f128x]]],	[[[j1f128x]]],		[[[jnf128x]]],
+		  [[[y0f128x]]],	[[[y1f128x]]],		[[[ynf128x]]])
+
+DEFINE_CFUNCS([[[complexf]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF]]],		[[[]]],
+	      [[[csinf]]],		[[[ccosf]]],		[[[ctanf]]],
+	      [[[casinf]]],		[[[cacosf]]],		[[[catanf]]],		[[[]]],
+	      [[[csinhf]]],		[[[ccoshf]]],		[[[ctanhf]]],
+	      [[[casinhf]]],		[[[cacoshf]]],		[[[catanhf]]],
+	      [[[cexpf]]],		[[[]]],			[[[]]],
+	      [[[clogf]]],		[[[clog10f]]],		[[[]]],			[[[]]],
+	      [[[cpowf]]],		[[[csqrtf]]],		[[[]]],			[[[]]],
+	      [[[]]],			[[[]]],
+	      [[[]]],			[[[]]],
+	      [[[]]],			[[[]]],
+	      [[[]]],			[[[]]],			[[[]]],
+	      [[[]]],			[[[]]],			[[[]]])
+DEFINE_CFUNCS([[[complexd]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD]]],	[[[]]],
+		  [[[csin]]],		[[[ccos]]],		[[[ctan]]],
+		  [[[casin]]],		[[[cacos]]],		[[[catan]]],		[[[]]],
+		  [[[csinh]]],		[[[ccosh]]],		[[[ctanh]]],
+		  [[[casinh]]],		[[[cacosh]]],		[[[catanh]]],
+		  [[[cexp]]],		[[[]]],			[[[]]],
+		  [[[clog]]],		[[[clog10]]],		[[[]]],			[[[]]],
+		  [[[cpow]]],		[[[csqrt]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+DEFINE_CFUNCS([[[complexld]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXLD]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]],
+		  [[[csinl]]],		[[[ccosl]]],		[[[ctanl]]],
+		  [[[casinl]]],		[[[cacosl]]],		[[[catanl]]],		[[[]]],
+		  [[[csinhl]]],		[[[ccoshl]]],		[[[ctanhl]]],
+		  [[[casinhl]]],	[[[cacoshl]]],		[[[catanhl]]],
+		  [[[cexpl]]],		[[[]]],			[[[]]],
+		  [[[clogl]]],		[[[clog10l]]],		[[[]]],			[[[]]],
+		  [[[cpowl]]],		[[[csqrtl]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+
+DEFINE_CFUNCS([[[complexf32]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF32]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]],
+		  [[[csinf32]]],	[[[ccosf32]]],		[[[ctanf32]]],
+		  [[[casinf32]]],	[[[cacosf32]]],		[[[catanf32]]],		[[[]]],
+		  [[[csinhf32]]],	[[[ccoshf32]]],		[[[ctanhf32]]],
+		  [[[casinhf32]]],	[[[cacoshf32]]],	[[[catanhf32]]],
+		  [[[cexpf32]]],	[[[]]],			[[[]]],
+		  [[[clogf32]]],	[[[clog10f32]]],	[[[]]],			[[[]]],
+		  [[[cpowf32]]],	[[[csqrtf32]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+DEFINE_CFUNCS([[[complexf64]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF64]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]],
+		  [[[csinf64]]],	[[[ccosf64]]],		[[[ctanf64]]],
+		  [[[casinf64]]],	[[[cacosf64]]],		[[[catanf64]]],		[[[]]],
+		  [[[csinhf64]]],	[[[ccoshf64]]],		[[[ctanhf64]]],
+		  [[[casinhf64]]],	[[[cacoshf64]]],	[[[catanhf64]]],
+		  [[[cexpf64]]],	[[[]]],			[[[]]],
+		  [[[clogf64]]],	[[[clog10f64]]],	[[[]]],			[[[]]],
+		  [[[cpowf64]]],	[[[csqrtf64]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+DEFINE_CFUNCS([[[complexf128]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF128]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]],
+		  [[[csinf128]]],	[[[ccosf128]]],		[[[ctanf128]]],
+		  [[[casinf128]]],	[[[cacosf128]]],	[[[catanf128]]],	[[[]]],
+		  [[[csinhf128]]],	[[[ccoshf128]]],	[[[ctanhf128]]],
+		  [[[casinhf128]]],	[[[cacoshf128]]],	[[[catanhf128]]],
+		  [[[cexpf128]]],	[[[]]],			[[[]]],
+		  [[[clogf128]]],	[[[clog10f128]]],	[[[]]],			[[[]]],
+		  [[[cpowf128]]],	[[[csqrtf128]]],	[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+
+DEFINE_CFUNCS([[[complexf32x]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF32X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]],
+		  [[[csinf32x]]],	[[[ccosf32x]]],		[[[ctanf32x]]],
+		  [[[casinf32x]]],	[[[cacosf32x]]],	[[[catanf32x]]],	[[[]]],
+		  [[[csinhf32x]]],	[[[ccoshf32x]]],	[[[ctanhf32x]]],
+		  [[[casinhf32x]]],	[[[cacoshf32x]]],	[[[catanhf32x]]],
+		  [[[cexpf32x]]],	[[[]]],			[[[]]],
+		  [[[clogf32x]]],	[[[clog10f32x]]],	[[[]]],			[[[]]],
+		  [[[cpowf32x]]],	[[[csqrtf32x]]],	[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+DEFINE_CFUNCS([[[complexf64x]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF64X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]],
+		  [[[csinf64x]]],	[[[ccosf64x]]],		[[[ctanf64x]]],
+		  [[[casinf64x]]],	[[[cacosf64x]]],	[[[catanf64x]]],	[[[]]],
+		  [[[csinhf64x]]],	[[[ccoshf64x]]],	[[[ctanhf64x]]],
+		  [[[casinhf64x]]],	[[[cacoshf64x]]],	[[[catanhf64x]]],
+		  [[[cexpf64x]]],	[[[]]],			[[[]]],
+		  [[[clogf64x]]],	[[[clog10f64x]]],	[[[]]],			[[[]]],
+		  [[[cpowf64x]]],	[[[csqrtf64x]]],	[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+DEFINE_CFUNCS([[[complexf128x]]],
+		  [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXF128X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]],
+		  [[[csinf128x]]],	[[[ccosf128x]]],	[[[ctanf128x]]],
+		  [[[casinf128x]]],	[[[cacosf128x]]],	[[[catanf128x]]],	[[[]]],
+		  [[[csinhf128x]]],	[[[ccoshf128x]]],	[[[ctanhf128x]]],
+		  [[[casinhf128x]]],	[[[cacoshf128x]]],	[[[catanhf128x]]],
+		  [[[cexpf128x]]],	[[[]]],			[[[]]],
+		  [[[clogf128x]]],	[[[clog10f128x]]],	[[[]]],			[[[]]],
+		  [[[cpowf128x]]],	[[[csqrtf128x]]],	[[[]]],			[[[]]],
+	          [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],
+		  [[[]]],		[[[]]],			[[[]]],
+		  [[[]]],		[[[]]],			[[[]]])
+
 /* end of file */
