@@ -185,6 +185,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-mutators.c.m4		\
 	src/mmux-bash-pointers-predicates.c.m4		\
 	src/mmux-cc-types.h.m4				\
+	src/mmux-cc-types-internals.h.m4		\
 	src/mmux-cc-types-core.c.m4			\
 	src/mmux-cc-types-parsers.c.m4			\
 	src/mmux-cc-types-sprint.c.m4
@@ -207,6 +208,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprint.c
@@ -223,6 +225,7 @@ mmux_bash_pointers_LINKER_VERSION	= \
 
 include_HEADERS				= \
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-config.h			\
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h
 
@@ -252,6 +255,8 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-config.h			\
+	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprint.c
@@ -266,7 +271,13 @@ src/%.h: src/%.h.m4 $(MMUX_M4_CC_MACROS)
 src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
-src/%.$(OBJEXT): src/mmux-cc-types.h src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
+src/%.$(OBJEXT): \
+	src/mmux-cc-types.h			\
+	src/mmux-cc-types-internals.h		\
+	src/mmux-cc-types-config.h		\
+	src/mmux-bash-pointers.h		\
+	src/mmux-bash-pointers-internals.h	\
+	src/mmux-bash-pointers-config.h
 
 
 #### tests

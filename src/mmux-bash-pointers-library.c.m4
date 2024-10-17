@@ -137,35 +137,16 @@ m4_divert(0)m4_dnl
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
 {
-  /* Compile the POSIX regular expression required to parse the string representation
-   * of complex numbers.
-   *
-   * We expect complex numbers represented as:
-   *
-   *   (+1.2)+i*(-3.4)
-   *
-   * with the real and imaginary parts  always enclosed in parentheses.  Whatever the
-   * sign, whatever the format of the double number: it should always work.
-   *
-   * FIXME  The compiled  regular expression  is never  released; it  stays allocated
-   * forever.  Ideally it  should be released if this library  is unloaded, which, it
-   * is my understanding, is actually possible.  (Marco Maggi; Sep  4, 2024)
-   */
-  {
-    int	rv = regcomp(&mmux_bash_pointers_complex_rex, "^(\\([^)]\\+\\))+i\\*(\\([^)]\\+\\))$", 0);
-    if (rv) {
-      fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
-      return MMUX_FAILURE;
-    }
+  /* Initialise the parsers module. */
+  if (mmux_cc_types_init_parsers_module()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising parsers module\n");
+    return MMUX_FAILURE;
   }
 
   /* Initialise the sprinters module. */
-  {
-    int	rv = mmux_bash_pointers_init_sprint_module ();
-    if (rv) {
-      fprintf(stderr, "MMUX Bash Pointers: internal error: initialising floating-point numbers output format module\n");
-      return MMUX_FAILURE;
-    }
+  if (mmux_cc_types_init_sprint_module ()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising sprinters module\n");
+    return MMUX_FAILURE;
   }
 
   /* These constants are defined by the Standard C Library; we make them available as
@@ -557,5 +538,102 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_bash_pointers_library_init]]],
     [[[(1 == argc)]]],
     [[["mmux_bash_pointers_library_init"]]],
     [[["Initialise the library MMUX Bash Pointers."]]])
+
+
+/** --------------------------------------------------------------------
+ ** Store result value in result variable.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_bash_rv_t
+mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * caller_name)
+{
+  int		rv, required_nbytes;
+
+  required_nbytes = mmux_$1_sprint_size(value);
+  if (0 > required_nbytes) {
+    return MMUX_FAILURE;
+  } else {
+    char	s_value[required_nbytes];
+
+    rv = mmux_$1_sprint(s_value, required_nbytes, value);
+    if (false == rv) {
+      return mmux_bash_store_string_in_variable(variable_name, s_value, caller_name);
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+}
+]]])]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[pointer]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[schar]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uchar]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sshort]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ushort]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[slong]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ulong]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint8]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint8]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint16]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint16]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sint64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uint64]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[float]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[double]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[float32]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float64]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float128]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[float128x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[decimal32]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[decimal64]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[decimal128]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[usize]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ssize]]])
+
+MMUX_BASH_DEFINE_VALUE_STORER([[[sintmax]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uintmax]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[sintptr]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uintptr]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ptrdiff]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[mode]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[off]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[pid]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[uid]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[gid]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[wchar]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[wint]]])
 
 /* end of file */

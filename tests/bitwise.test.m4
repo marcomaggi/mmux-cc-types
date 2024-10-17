@@ -45,8 +45,10 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 #### bitwise operations for type: pointer
 
 function bitwise-pointer-and-1.1 () {
-    declare ROP OP='0b11110000' MASK=0b11001100
-    declare EXPECTED_ROP=0b11000000
+    declare -r           OP='0b11110000'
+    declare -r         MASK='0b11001100'
+    declare    EXPECTED_ROP='0b11000000'
+    declare ROP
 
     mmux_pointer_add EXPECTED_ROP WW(EXPECTED_ROP) 0
 

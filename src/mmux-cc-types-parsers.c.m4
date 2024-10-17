@@ -26,18 +26,50 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#include "mmux-bash-pointers-internals.h"
+#include <mmux-cc-types-internals.h>
 
 /* This regular expression is used to parse this package's standard format of complex
    double numbers.  */
-regex_t mmux_bash_pointers_complex_rex;
+static regex_t mmux_cc_types_complex_rex;
+
+
+/** --------------------------------------------------------------------
+ ** Initialisation.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_cc_types_init_parsers_module (void)
+{
+  /* Compile the POSIX regular expression required to parse the string representation
+   * of complex numbers.
+   *
+   * We expect complex numbers represented as:
+   *
+   *   (+1.2)+i*(-3.4)
+   *
+   * with the real and imaginary parts  always enclosed in parentheses.  Whatever the
+   * sign, whatever the format of the double number: it should always work.
+   *
+   * FIXME  The compiled  regular expression  is never  released; it  stays allocated
+   * forever.  Ideally it  should be released if this library  is unloaded, which, it
+   * is my understanding, is actually possible.  (Marco Maggi; Sep  4, 2024)
+   */
+  {
+    int	rv = regcomp(&mmux_cc_types_complex_rex, "^(\\([^)]\\+\\))+i\\*(\\([^)]\\+\\))$", 0);
+    if (rv) {
+      fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
+      return true;
+    }
+  }
+  return false;
+}
 
 
 /** --------------------------------------------------------------------
  ** Type parsers: signed exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_rv_t
+bool
 mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
 				    mmux_sintmax_t target_min, mmux_sintmax_t target_max,
 				    char const * target_type_name, char const * caller_name)
@@ -94,14 +126,14 @@ mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_sour
   } else {
     /* Success! */
     *p_dest = rv;
-    return MMUX_SUCCESS;
+    return false;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n", caller_name, target_type_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return MMUX_FAILURE;
+  return true;
 }
 
 
@@ -109,7 +141,7 @@ mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_sour
  ** Type parsers: unsigned exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
-mmux_bash_rv_t
+bool
 mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
 				      mmux_uintmax_t target_max,
 				      char const * target_type_name, char const * caller_name)
@@ -166,14 +198,14 @@ mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_so
   } else {
     /* Success! */
     *p_dest = rv;
-    return MMUX_SUCCESS;
+    return false;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n", caller_name, target_type_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return MMUX_FAILURE;
+  return true;
 }
 
 
@@ -182,40 +214,42 @@ mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_so
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-static mmux_bash_rv_t parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
+static bool parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
 
-mmux_bash_rv_t
+bool
 mmux_$1_parse (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
 {
   int	len = strlen(s_arg);
 
   if (len > 2048) {
-    fprintf(stderr, "%s: error: invalid argument, string too long (max 2048 chars): \"%s\"\n", caller_name, s_arg);
-    return MMUX_FAILURE;
+    if (caller_name) {
+      fprintf(stderr, "%s: error: invalid argument, string too long (max 2048 chars): \"%s\"\n", caller_name, s_arg);
+    }
+    return true;
   } else {
     int		rv;
 
     rv = parse_$1_parentheses_format(p_value, s_arg, caller_name);
-    if (MMUX_SUCCESS == rv) {
+    if (false == rv) {
       return rv;
     } else {
       mmux_$1_part_t	op_re;
 
       rv = mmux_$2_parse(&op_re, s_arg, caller_name);
-      if (MMUX_SUCCESS == rv) {
+      if (false == rv) {
 	*p_value = mmux_$1_make_rectangular(op_re, 0.0);
-	return MMUX_SUCCESS;
+	return false;
       } else {
 	if (caller_name) {
 	  fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
 	}
-	return MMUX_FAILURE;
+	return true;
       }
     }
   }
 }
 
-mmux_bash_rv_t
+bool
 parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
 /* Try to parse a complex number in the format: (1.2)+i*(3.4)
 
@@ -229,15 +263,17 @@ parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char
   size_t		nmatch = 3;
   regmatch_t		match[3];
 
-  rv = regexec(&mmux_bash_pointers_complex_rex, s_arg, nmatch, &(match[0]), 0);
+  rv = regexec(&mmux_cc_types_complex_rex, s_arg, nmatch, &(match[0]), 0);
   if (rv) {
     if (0) {
       char	error_message[1024];
 
-      regerror(rv, &mmux_bash_pointers_complex_rex, error_message, 1024);
-      fprintf(stderr, "%s: error: invalid argument, expected complex number (%s): \"%s\"\n", caller_name, error_message, s_arg);
+      regerror(rv, &mmux_cc_types_complex_rex, error_message, 1024);
+      if (caller_name) {
+	fprintf(stderr, "%s: error: invalid argument, expected complex number (%s): \"%s\"\n", caller_name, error_message, s_arg);
+      }
     }
-    return MMUX_FAILURE;
+    return true;
   }
 
   /* Extract the first matching parentetical subexpression, which represents the real
@@ -269,19 +305,19 @@ parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char
   /* Parse the real part. */
   {
     rv = mmux_$2_parse(&op_re, s_arg_re, caller_name);
-    if (MMUX_FAILURE == rv) { return rv; }
+    if (true == rv) { return rv; }
   }
 
   /* Parse the imaginary part. */
   {
     rv = mmux_$2_parse(&op_im, s_arg_im, caller_name);
-    if (MMUX_FAILURE == rv) { return rv; }
+    if (true == rv) { return rv; }
   }
 
   /* Assemble the complex number. */
   {
     *p_value = mmux_$1_make_rectangular(op_re, op_im);
-    return MMUX_SUCCESS;
+    return false;
   }
 }
 ]]])]]])
@@ -308,11 +344,11 @@ DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-mmux_bash_rv_t
+bool
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
 {
   mmux_$1_t	value;
-  char *		tailptr;
+  char *	tailptr;
 
   errno = 0;
   value = $2(s_value, &tailptr);
@@ -321,10 +357,10 @@ mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_na
       fprintf(stderr, "%s: error: invalid argument, expected \"$1\": \"%s\"\n", caller_name, s_value);
     }
     errno = 0; /* The error is consumed. */
-    return MMUX_FAILURE;
+    return true;
   } else {
     *p_value = value;
-    return MMUX_SUCCESS;
+    return false;
   }
 }
 ]]])]]])
@@ -351,14 +387,14 @@ DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_HAVE_CC_TYPE
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[
-mmux_bash_rv_t
+bool
 mmux_$1_parse (mmux_$1_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_sintmax_t	value;
-  int			rv;
+  bool			rv;
 
   rv = mmux_cc_types_parse_signed_integer(&value, s_source, mmux_$1_minimum(), mmux_$1_maximum(), "$1", caller_name);
-  if (MMUX_SUCCESS == rv) {
+  if (false == rv) {
     *p_dest = (mmux_$1_t)value;
   }
   return rv;
@@ -378,7 +414,7 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[
-mmux_bash_rv_t
+bool
 mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
   mmux_sllong_t	rv;
@@ -423,14 +459,14 @@ mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * c
   } else {
     /* Success! */
     *p_dest = rv;
-    return MMUX_SUCCESS;
+    return false;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"sllong\": \"%s\"\n", caller_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return MMUX_FAILURE;
+  return true;
 }]]])
 
 
@@ -439,14 +475,14 @@ mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * c
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
-mmux_bash_rv_t
+bool
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
   mmux_uintmax_t	value;
-  int			rv;
+  bool			rv;
 
   rv = mmux_cc_types_parse_unsigned_integer(&value, s_arg, (mmux_uintmax_t) mmux_$1_maximum(), "$1", caller_name);
-  if (MMUX_SUCCESS == rv) {
+  if (false == rv) {
     *p_value = (mmux_$1_t)value;
   }
   return rv;
@@ -468,10 +504,10 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[
-mmux_bash_rv_t
+bool
 mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {
-  mmux_ullong_t	rv;
+  mmux_ullong_t		rv;
   char const *		s_source_beg;
   char *		s_source_end	= NULL;
   int			base            = 0;
@@ -513,14 +549,14 @@ mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * c
   } else {
     /* Success! */
     *p_dest = rv;
-    return MMUX_SUCCESS;
+    return false;
   }
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"ullong\": \"%s\"\n", caller_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
-  return MMUX_FAILURE;
+  return true;
 }]]])
 
 
@@ -529,7 +565,7 @@ mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * c
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPEDEF_PARSER]]],[[[
-mmux_bash_rv_t
+bool
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
   return mmux_[[[]]]$2[[[]]]_parse(p_value, s_arg, caller_name);

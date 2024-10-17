@@ -26,7 +26,7 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#include "mmux-bash-pointers-internals.h"
+#include <mmux-cc-types-internals.h>
 
 m4_define([[[MMUX_FLOAT_ZERO]]],  [[[((mmux_$1_t)0.0)]]])
 m4_define([[[MMUX_INTEGER_ZERO]]],[[[((mmux_$1_t)0)]]])
@@ -86,6 +86,32 @@ __extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_
 
 
 /** --------------------------------------------------------------------
+ ** Version functions.
+ ** ----------------------------------------------------------------- */
+
+char const *
+mmux_cc_types_version_string (void)
+{
+  return mmux_cc_types_VERSION_INTERFACE_STRING;
+}
+int
+mmux_cc_types_version_interface_current (void)
+{
+  return mmux_cc_types_VERSION_INTERFACE_CURRENT;
+}
+int
+mmux_cc_types_version_interface_revision (void)
+{
+  return mmux_cc_types_VERSION_INTERFACE_REVISION;
+}
+int
+mmux_cc_types_version_interface_age (void)
+{
+  return mmux_cc_types_VERSION_INTERFACE_AGE;
+}
+
+
+/** --------------------------------------------------------------------
  ** Some real number type functions: string_is, sizeof, minimum, maximum.
  ** ----------------------------------------------------------------- */
 
@@ -99,11 +125,7 @@ mmux_string_is_$1 (char const * s_value)
 {
   mmux_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_$1_parse(&value, s_value, NULL)) {
-    return true;
-  } else {
-    return false;
-  }
+  return mmux_$1_parse(&value, s_value, NULL);
 }
 int
 mmux_$1_sizeof (void)
@@ -226,11 +248,7 @@ mmux_string_is_$1 (char const * s_value)
 {
   mmux_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_$1_parse(&value, s_value, NULL)) {
-    return true;
-  } else {
-    return false;
-  }
+  return mmux_$1_parse(&value, s_value, NULL);
 }
 int
 mmux_$1_sizeof (void)
@@ -320,114 +338,13 @@ mmux_string_is_$1 (char const * s_value)
 {
   mmux_$1_t	value;
 
-  if (MMUX_SUCCESS == mmux_$1_parse(&value, s_value, NULL)) {
-    return true;
-  } else {
-    return false;
-  }
+  return mmux_$1_parse(&value, s_value, NULL);
 }
 ]]])]]])
 
 DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
 DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
 DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
-
-
-/** --------------------------------------------------------------------
- ** Store result value in result variable.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[MMUX_BASH_DEFINE_VALUE_STORER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_bash_rv_t
-mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * caller_name)
-{
-  int		rv, required_nbytes;
-
-  required_nbytes = mmux_$1_sprint_size(value);
-  if (0 > required_nbytes) {
-    return MMUX_FAILURE;
-  } else {
-    char	s_value[required_nbytes];
-
-    rv = mmux_$1_sprint(s_value, required_nbytes, value);
-    if (MMUX_SUCCESS == rv) {
-      return mmux_bash_store_string_in_variable(variable_name, s_value, caller_name);
-    } else {
-      return rv;
-    }
-  }
-}
-]]])]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[pointer]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[schar]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uchar]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sshort]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ushort]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sint]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uint]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[slong]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ulong]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[sint8]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uint8]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sint16]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uint16]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sint32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uint32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sint64]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uint64]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[float]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[double]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[float32]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[float64]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[float128]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[float128x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[decimal32]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[decimal64]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[decimal128]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexd]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexd32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexd64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[usize]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ssize]]])
-
-MMUX_BASH_DEFINE_VALUE_STORER([[[sintmax]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uintmax]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[sintptr]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uintptr]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ptrdiff]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[mode]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[off]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[pid]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[uid]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[gid]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[wchar]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[wint]]])
 
 
 /** --------------------------------------------------------------------
@@ -461,12 +378,12 @@ mmux_$1_is_non_negative (mmux_$1_t X)
   return (MMUX_INTEGER_ZERO($1) <= X)? true : false;
 }
 bool
-mmux_$1_is_nan (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_nan (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return false;
 }
 bool
-mmux_$1_is_infinite (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_infinite (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return false;
 }
@@ -509,7 +426,7 @@ mmux_$1_is_positive (mmux_$1_t X)
   return (MMUX_INTEGER_ZERO($1) < X)? true : false;
 }
 bool
-mmux_$1_is_negative (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_negative (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return false;
 }
@@ -519,17 +436,17 @@ mmux_$1_is_non_positive (mmux_$1_t X)
   return mmux_$1_is_zero(X);
 }
 bool
-mmux_$1_is_non_negative (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_non_negative (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return true;
 }
 bool
-mmux_$1_is_nan (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_nan (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return false;
 }
 bool
-mmux_$1_is_infinite (mmux_$1_t X MMUX_BASH_POINTERS_UNUSED)
+mmux_$1_is_infinite (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return false;
 }
@@ -645,7 +562,7 @@ DEFINE_REAL_FLOAT_NUMBER_PREDICATES([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT1
 
 
 /** --------------------------------------------------------------------
- ** Core C language predicates: floating-point complex numbers.
+ ** Core C language predicates: complex floating-point numbers.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_COMPLEX_NUMBER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
@@ -780,7 +697,7 @@ DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)                   { return $2(X); }
+inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return $2(X);    }
 inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
 inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
 ]]])]]])
@@ -808,7 +725,6 @@ m4_define([[[DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH
 bool
 mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
-  if (0) { fprintf(stderr, "%s: op1=%Lf op2=%Lf margin=%Lf\n", __func__, (long double)op1, (long double)op2, (long double)margin); }
   return (mmux_$1_abs(op1 - op2) <= mmux_$1_abs(margin))? true : false;
 }
 bool
@@ -834,8 +750,6 @@ mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
   mmux_$1_part_t	ret = mmux_$1_real_part(margin);
   mmux_$1_part_t	imt = mmux_$1_imag_part(margin);
 
-  if (0) { fprintf(stderr, "%s: re1=%Lf re1=%Lf ret=%Lf\n", __func__, (long double)re1, (long double)re2, (long double)ret); }
-  if (0) { fprintf(stderr, "%s: im1=%Lf im2=%Lf imt=%Lf\n", __func__, (long double)im1, (long double)im2, (long double)imt); }
   return (mmux_$2_equal_absmargin(re1, re2, ret) && mmux_$2_equal_absmargin(im1, im2, imt))? true : false;
 }
 bool

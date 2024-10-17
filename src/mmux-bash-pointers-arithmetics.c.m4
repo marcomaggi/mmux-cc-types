@@ -30,205 +30,22 @@
 
 
 /** --------------------------------------------------------------------
- ** Core arithmetics functions.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
-{
-  return A + B;
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
-{
-  return A - B;
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
-{
-  return A * B;
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
-{
-  return A / B;
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_neg (mmux_$1_t A)
-{
-  return (- A);
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_inv (mmux_$1_t A)
-{
-  return (((mmux_$1_t)1) / A);
-}
-]]])]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[schar]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uchar]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sshort]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ushort]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[slong]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ulong]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[double]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ldouble]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexd]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint8]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint8]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint16]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint16]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint64]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[usize]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ssize]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sintmax]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uintmax]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sintptr]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uintptr]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ptrdiff]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[mode]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[off]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[pid]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uid]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[gid]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wchar]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wint]]])
-
-/* ------------------------------------------------------------------ */
-
-m4_define([[[DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
-{
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	Cre = Are + Bre;
-  mmux_$1_part_t	Cim = Aim + Bim;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
-{
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	Cre = Are - Bre;
-  mmux_$1_part_t	Cim = Aim - Bim;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
-{
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	Cre = (Are * Bre - Aim * Bim);
-  mmux_$1_part_t	Cim = (Are * Bim + Bre * Aim);
-
-  return mmux_$1_make_rectangular (Cre, Cim);
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
-{
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	D   = Bre * Bre + Bim * Bim;
-  mmux_$1_part_t	Cre = (Are * Bre + Aim * Bim) / D;
-  mmux_$1_part_t	Cim = (Aim * Bre - Are * Bim) / D;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_neg (mmux_$1_t A)
-{
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-
-  return mmux_$1_make_rectangular (-Are, -Aim);
-}
-__attribute__((__const__)) static inline mmux_$1_t
-mmux_$1_inv (mmux_$1_t A)
-{
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	D   = Are * Are + Aim * Aim;
-  mmux_$1_part_t	Cre = + Are / D;
-  mmux_$1_part_t	Cim = - Aim / D;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
-}
-]]])]]])
-
-DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
-
-
-/** --------------------------------------------------------------------
  ** Pointer arithmetics builtins.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_add]]])
 {
   mmux_pointer_t	op;
-  mmux_uint8_t *	op_octets;
-  mmux_uint8_t *	rop_octets;
   mmux_ptrdiff_t	delta;
-  int			rv;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  rv = mmux_ptrdiff_parse(&delta, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op_octets  = (mmux_uint8_t *)op;
-  rop_octets = op_octets + delta;
-  return mmux_pointer_bind_to_variable(argv[1], rop_octets, MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(delta,	argv[3]);
+  {
+    mmux_uint8_t *	op_octets  = (mmux_uint8_t *)op;
+    mmux_uint8_t *	rop_octets = op_octets + delta;
+    return mmux_pointer_bind_to_variable(argv[1], rop_octets, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -244,18 +61,15 @@ m4_define([[[DEFINE_CORE_ARITHMETICS_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmu
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
-  int			rv;
 
   for (int i = 2; i < argc; ++i) {
-    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME_STR);
-    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
   }
-
   for (int i = 3; i < argc; ++i) {
     ops[2] = mmux_$1_add(ops[2], ops[i]);
   }
-
   return mmux_$1_bind_to_variable(argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -273,18 +87,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_sub]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
-  int			rv;
 
   for (int i = 2; i < argc; ++i) {
-    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME_STR);
-    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
   }
-
   for (int i = 3; i < argc; ++i) {
     ops[2] = mmux_$1_sub(ops[2], ops[i]);
   }
-
   return mmux_$1_bind_to_variable(argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -302,18 +113,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_mul]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
-  int			rv;
 
   for (int i = 2; i < argc; ++i) {
-    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME_STR);
-    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
   }
-
   for (int i = 3; i < argc; ++i) {
     ops[2] = mmux_$1_mul(ops[2], ops[i]);
   }
-
   return mmux_$1_bind_to_variable(argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -331,18 +139,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_div]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
-  int			rv;
 
   for (int i = 2; i < argc; ++i) {
-    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME_STR);
-    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
   }
-
   for (int i = 3; i < argc; ++i) {
     ops[2] = mmux_$1_div(ops[2], ops[i]);
   }
-
   return mmux_$1_bind_to_variable(argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -360,14 +165,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_neg]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
-  int			rv;
 
-  rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
   op = mmux_$1_neg(op);
-
   return mmux_$1_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -385,14 +187,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_inv]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
-  int			rv;
 
-  rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
   op = mmux_$1_inv(op);
-
   return mmux_$1_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -484,21 +283,14 @@ m4_define([[[DEFINE_FOR_INTEGERS_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op1, op2;
-  int			rv;
 
-  rv = mmux_$1_parse(&op1, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { goto error; }
-
-  rv = mmux_$1_parse(&op2, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { goto error; }
-
-  op1 = op1 % op2;
-
-  return mmux_$1_bind_to_variable(argv[1], op1, MMUX_BUILTIN_NAME_STR);
-
-error:
-  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR);
-  return rv;
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op1, argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op2, argv[3]);
+  {
+    op1 = mmux_$1_mod(op1, op2);
+    return mmux_$1_bind_to_variable(argv[1], op1, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -516,17 +308,13 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_incr]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
-  int			rv;
 
-  rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { goto error; }
-
-  ++op;
-  return mmux_$1_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
-
-error:
-  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR);
-  return rv;
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
+  {
+    op = mmux_$1_incr(op);
+    return mmux_$1_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -544,17 +332,13 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_decr]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
-  int			rv;
 
-  rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { goto error; }
-
-  --op;
-  return mmux_$1_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
-
-error:
-  mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR);
-  return rv;
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
+  {
+    op = mmux_$1_decr(op);
+    return mmux_$1_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);

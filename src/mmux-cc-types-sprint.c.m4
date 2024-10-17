@@ -26,11 +26,11 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#include "mmux-bash-pointers-internals.h"
+#include <mmux-cc-types-internals.h>
 
 /* This  regular   expression  is  used   to  validate  the  format   specifiers  for
    floating-point numbers.  */
-static regex_t mmux_bash_pointers_float_format_rex;
+static regex_t mmux_cc_types_float_format_rex;
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 #undef  MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])
@@ -60,15 +60,15 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal128]]],	[[["%f"]]],	[[[MMUX_HAVE_C
  ** Initialisation.
  ** ----------------------------------------------------------------- */
 
-int
-mmux_bash_pointers_init_sprint_module (void)
+bool
+mmux_cc_types_init_sprint_module (void)
 {
   /* Compile the POSIX  regular expression required to parse  the string representing
      the output format of floating-point numbers. */
-  int rv = regcomp(&mmux_bash_pointers_float_format_rex, "^%[+-\\#\\'\\ ]*[0-9]*\\.\\?[0-9]*l\\?[feEgGaA]$", REG_NOSUB);
+  int rv = regcomp(&mmux_cc_types_float_format_rex, "^%[+-\\#\\'\\ ]*[0-9]*\\.\\?[0-9]*l\\?[feEgGaA]$", REG_NOSUB);
   if (rv) {
     fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
-    return MMUX_FAILURE;
+    return true;
   }
 
   m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
@@ -91,7 +91,7 @@ mmux_bash_pointers_init_sprint_module (void)
   INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
   INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
 
-  return MMUX_SUCCESS;
+  return false;
 }
 
 
@@ -100,7 +100,7 @@ mmux_bash_pointers_init_sprint_module (void)
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_bash_rv_t
+bool
 mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
 {
   int	new_result_format_len = strlen(new_result_format);
@@ -110,7 +110,7 @@ mmux_$1_set_output_format (char const * const new_result_format, char const * co
       fprintf(stderr, "%s: error setting new float format, string too long (maxlen=%d): %s\n",
 	      caller_name, MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN, new_result_format);
     }
-    return MMUX_FAILURE;
+    return true;
   }
 
   if (0) {
@@ -121,16 +121,16 @@ mmux_$1_set_output_format (char const * const new_result_format, char const * co
   {
     int		rv;
 
-    rv = regexec(&mmux_bash_pointers_float_format_rex, new_result_format, 0, NULL, 0);
+    rv = regexec(&mmux_cc_types_float_format_rex, new_result_format, 0, NULL, 0);
     if (rv) {
       char	error_message[1024];
 
-      regerror(rv, &mmux_bash_pointers_float_format_rex, error_message, 1024);
+      regerror(rv, &mmux_cc_types_float_format_rex, error_message, 1024);
       if (caller_name) {
 	fprintf(stderr, "%s: error: invalid argument, expected float format (%s): \"%s\"\n",
 		caller_name, error_message, new_result_format);
       }
-      return MMUX_FAILURE;
+      return true;
     }
   }
 
@@ -140,7 +140,7 @@ mmux_$1_set_output_format (char const * const new_result_format, char const * co
   if (0) {
     fprintf(stderr, "%s: float format is now: %s\n", __func__, mmux_bash_pointers_output_format_$1);
   }
-  return MMUX_SUCCESS;
+  return false;
 }
 
 ]]])]]])
@@ -185,7 +185,7 @@ mmux_pointer_sprint_size (mmux_pointer_t value)
     return (1 + strlen("0x0"));
   }
 }
-mmux_bash_rv_t
+bool
 mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
 /* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
    the template is "%p"; we want a proper number representation. */
@@ -200,9 +200,9 @@ mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
     to_be_written_chars = snprintf(strptr, len, "0x0");
   }
   if (len > to_be_written_chars) {
-    return MMUX_SUCCESS;
+    return false;
   } else {
-    return MMUX_FAILURE;
+    return true;
   }
 }
 
@@ -227,7 +227,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
     return ++required_nbytes;
   }
 }
-mmux_bash_rv_t
+bool
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
@@ -236,9 +236,9 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
      when the output buffer has enough room. */
   to_be_written_chars = snprintf(strptr, len, $2, value);
   if (len > to_be_written_chars) {
-    return MMUX_SUCCESS;
+    return false;
   } else {
-    return MMUX_FAILURE;
+    return true;
   }
 }]]])]]])
 
@@ -283,7 +283,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
     return ++required_nbytes;
   }
 }
-mmux_bash_rv_t
+bool
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
@@ -294,9 +294,9 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
      output buffer is sufficiently large. */
   to_be_written_chars = $2(strptr, len, mmux_bash_pointers_output_format_$1, value);
   if (len > to_be_written_chars) {
-    return MMUX_SUCCESS;
+    return false;
   } else {
-    return MMUX_FAILURE;
+    return true;
   }
 }]]])]]])
 
@@ -356,12 +356,12 @@ mmux_$1_sprint_size (mmux_$1_t value)
   if (0) { fprintf(stderr, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes); }
   return ++total_required_nbytes;
 }
-mmux_bash_rv_t
+bool
 mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(value);
   mmux_$1_part_t	im = mmux_$1_imag_part(value);
-  mmux_bash_rv_t	rv;
+  bool	rv;
 
   /* Output the opening parenthesis of the real part. */
   {
@@ -369,7 +369,7 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
       *ptr++ = '(';
       --len;
     } else {
-      return MMUX_FAILURE;
+      return true;
     }
   }
 
@@ -380,7 +380,7 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
     if (0) { fprintf(stderr, "%s: before printing rep, len=%d\n", __func__, len); }
 
     rv = mmux_$2_sprint(ptr, len, re);
-    if (MMUX_FAILURE == rv) { return rv; }
+    if (true == rv) { return rv; }
 
     delta  = strlen(ptr);
     ptr   += delta;
@@ -399,7 +399,7 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
       *ptr++  = '(';
       len    += 5;
     } else {
-      return MMUX_FAILURE;
+      return true;
     }
   }
 
@@ -408,7 +408,7 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
     ptrdiff_t	delta;
 
     rv = mmux_$2_sprint(ptr, len, im);
-    if (MMUX_FAILURE == rv) { return rv; }
+    if (true == rv) { return rv; }
 
     delta  = strlen(ptr);
     ptr   += delta;
@@ -423,11 +423,11 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
       *ptr++  = '\0';
       /* len += 2; */
     } else {
-      return MMUX_FAILURE;
+      return true;
     }
   }
 
-  return MMUX_SUCCESS;
+  return false;
 }
 ]]])]]])
 
@@ -458,7 +458,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
 {
   return mmux_[[[]]]$2[[[]]]_sprint_size(value);
 }
-mmux_bash_rv_t
+bool
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, value);

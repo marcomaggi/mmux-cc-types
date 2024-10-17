@@ -1,7 +1,7 @@
 /*
-  Part of: MMUX Bash Pointers
+  Part of: MMUX CC Types
   Contents: private header file
-  Date: Sep  9, 2024
+  Date: Oct 17, 2024
 
   Abstract
 
@@ -22,8 +22,8 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MMUX_BASH_POINTERS_INTERNALS_H
-#define MMUX_BASH_POINTERS_INTERNALS_H 1
+#ifndef MMUX_CC_TYPES_INTERNALS_H
+#define MMUX_CC_TYPES_INTERNALS_H 1
 
 
 /** --------------------------------------------------------------------
@@ -38,7 +38,7 @@
 #  include <config.h>
 #endif
 
-#include <mmux-bash-pointers.h>
+#include <mmux-cc-types.h>
 
 #ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
@@ -135,22 +135,19 @@
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
-#undef  MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN
-#define MMUX_BASH_POINTERS_DEFAULT_COMPARISON_ABSOLUTE_MARGIN	1e-6
-
-#undef  MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON
-#define MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON	1e-6
 
 
 /** --------------------------------------------------------------------
  ** Constants and variables.
  ** ----------------------------------------------------------------- */
 
+mmux_cc_types_private_decl regex_t mmux_bash_pointers_complex_rex;
 
 
 /** --------------------------------------------------------------------
  ** Functions.
  ** ----------------------------------------------------------------- */
+
 
 
 /** --------------------------------------------------------------------
@@ -161,6 +158,6 @@
 } // extern "C"
 #endif
 
-#endif /* MMUX_BASH_POINTERS_INTERNALS_H */
+#endif /* MMUX_CC_TYPES_INTERNALS_H */
 
 /* end of file */

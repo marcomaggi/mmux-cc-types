@@ -8,6 +8,7 @@ AC_INIT([MMUX Bash Pointers],[MMUX_PACKAGE_VERSION],
   [mmux-bash-pointers],[https://github.com/marcomaggi/mmux-bash-pointers])
 MMUX_INIT
 MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_bash_pointers],1,0,0)
+MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_cc_types],0,0,0)
 AC_REVISION([0.1])
 AC_COPYRIGHT([Copyright (c) 2024 Marco Maggi <mrc.mgg@gmail.com>
 
@@ -208,6 +209,7 @@ AS_VAR_IF(with_emacs,'yes',
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
   [src/mmux-bash-pointers-config.h]
+  [src/mmux-cc-types-config.h]
   [src/m4/config.m4]
   [doc/mmux-version.texi]
   [meta/scripts/mmux-bash-pointers.pc]

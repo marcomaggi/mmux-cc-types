@@ -135,9 +135,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_write]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pread]]])
 {
-  int			fd;
-  void *		buffer;
-  size_t		size;
+  int		fd;
+  void *	buffer;
+  size_t	size;
   mmux_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
@@ -164,9 +164,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_pread]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwrite]]])
 {
-  int			fd;
-  void *		buffer;
-  size_t		size;
+  int		fd;
+  void *	buffer;
+  size_t	size;
   mmux_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);
@@ -193,7 +193,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_pwrite]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lseek]]])
 {
-  int			fd, whence;
+  int		fd, whence;
   mmux_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]],		[[[argv[2]]]]);

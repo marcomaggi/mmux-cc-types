@@ -37,28 +37,25 @@ m4_define([[[MMUX_BASH_DEFINE_POINTER_MUTATOR]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_pointer_set]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  void *		ptr;
-  uint8_t *		ptr_byte;
-  mmux_$1_t *	ptr_value;
-  ptrdiff_t		offset;
+  void *	ptr;
+  ptrdiff_t	offset;
   mmux_$1_t	value;
-  int			rv;
 
-  rv = mmux_pointer_parse(&ptr, argv[1], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(offset,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, value,	argv[3]);
+  {
+    uint8_t *		ptr_byte;
+    mmux_$1_t *		ptr_value;
 
-  rv = mmux_ptrdiff_parse(&offset, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    ptr_byte  = ptr;
+    ptr_byte += offset;
+    ptr_value = (mmux_$1_t *)ptr_byte;
 
-  rv = mmux_$1_parse(&value, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  ptr_byte  = ptr;
-  ptr_byte += offset;
-  ptr_value = (mmux_$1_t *)ptr_byte;
-
-  *ptr_value = value;
-  return MMUX_SUCCESS;
+    *ptr_value = value;
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -75,24 +72,20 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_pointer_set]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_array_set]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  void *		ptr;
-  mmux_$1_t *	ptr_value;
-  ptrdiff_t		index;
+  void *	ptr;
+  ptrdiff_t	index;
   mmux_$1_t	value;
-  int			rv;
 
-  rv = mmux_pointer_parse(&ptr, argv[1], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  rv = mmux_ptrdiff_parse(&index, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  rv = mmux_$1_parse(&value, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  ptr_value        = (mmux_$1_t *)ptr;
-  ptr_value[index] = value;
-  return MMUX_SUCCESS;
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(index,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, value,	argv[3]);
+  {
+    mmux_$1_t *	ptr_value;
+    ptr_value        = (mmux_$1_t *)ptr;
+    ptr_value[index] = value;
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);

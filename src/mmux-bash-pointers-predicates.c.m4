@@ -37,9 +37,10 @@
 m4_define([[[DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_string_is_$1]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_$1_t	data;
+  mmux_$1_t	data MMUX_BASH_POINTERS_UNUSED;
+  bool		rv = mmux_$1_parse(&data, argv[1], MMUX_BUILTIN_NAME_STR);
 
-  return mmux_$1_parse(&data, argv[1], MMUX_BUILTIN_NAME_STR);
+  return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
@@ -130,16 +131,12 @@ m4_define([[[DEFINE_ARITHMETIC_PREDICATE]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   mmux_$1_t	value;
-  int			rv;
 
-  rv = mmux_$1_parse(&value, argv[1], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  if (mmux_$1_is_$3(value)) {
-    return MMUX_SUCCESS;
-  } else {
-    return MMUX_FAILURE;
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, value, argv[1]);
+  {
+    return (mmux_$1_is_$3(value))? MMUX_SUCCESS : MMUX_FAILURE;
   }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);

@@ -72,7 +72,7 @@ mmux_bash_builtin_implementation_function (mmux_bash_word_list_t word_list,
     }
     free(argv);
   } else {
-    fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
+    fprintf(stderr, "MMUX Bash Pointers: error: internal error accessing list of builtin operands\n");
     rv = MMUX_BASH_EXECUTION_FAILURE;
   }
   return rv;
@@ -101,7 +101,7 @@ mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word
       }
       free(argv);
     } else {
-      fprintf(stderr, "$1: error: internal error accessing list of builtin operands\n");
+      fprintf(stderr, "MMUX Bash Pointers: error: internal error accessing list of builtin operands\n");
       rv = MMUX_BASH_EXECUTION_FAILURE;
     }
     return rv;

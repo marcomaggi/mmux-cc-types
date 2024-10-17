@@ -36,24 +36,23 @@
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_and]]])
 {
   mmux_pointer_t	op;
-  mmux_uintptr_t	op_uintptr, mask;
-  int			rv;
+  mmux_uintptr_t	mask;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
+  {
+    mmux_uintptr_t	op_uintptr;
 
-  rv = mmux_uintptr_parse(&mask, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op_uintptr    = (mmux_uintptr_t)op;
-  op_uintptr   &= mask;
-  op          = (mmux_pointer_t)op_uintptr;
-
-  return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+    op_uintptr  = (mmux_uintptr_t)op;
+    op_uintptr &= mask;
+    op          = (mmux_pointer_t)op_uintptr;
+    return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_and]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_pointer_bitwise_and ROPVAR PTR MASK"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR PTR MASK"]]],
     [[["Perform the bitwise AND operation between the pointer PTR by the unsigned integer MASK, store the result in PTRVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -61,50 +60,48 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_and]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_or]]])
 {
   mmux_pointer_t	op;
-  mmux_uintptr_t	op_uintptr, mask;
-  int			rv;
+  mmux_uintptr_t	mask;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
+  {
+    mmux_uintptr_t	op_uintptr;
 
-  rv = mmux_uintptr_parse(&mask, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op_uintptr    = (mmux_uintptr_t)op;
-  op_uintptr   |= mask;
-  op          = (mmux_pointer_t)op_uintptr;
-
-  return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+    op_uintptr  = (mmux_uintptr_t)op;
+    op_uintptr |= mask;
+    op          = (mmux_pointer_t)op_uintptr;
+    return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_or]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_pointer_bitwise_or ROPVAR PTR MASK"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR PTR MASK"]]],
     [[["Perform the bitwise OR operation between the pointer PTR by the unsigned integer MASK, store the result in PTRVAR."]]])
 
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_xor]]])
 {
-  mmux_pointer_t	op, mask;
-  mmux_uintptr_t	op_uintptr, mask_uintptr;
-  int			rv;
+  mmux_pointer_t	op;
+  mmux_uintptr_t	mask;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
+  {
+    mmux_uintptr_t	op_uintptr;
 
-  rv = mmux_pointer_parse(&mask, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    op_uintptr  = (mmux_uintptr_t)op;
+    op_uintptr ^= mask;
+    op          = (mmux_pointer_t)op_uintptr;
 
-  op_uintptr    = (mmux_uintptr_t)op;
-  mask_uintptr  = (mmux_uintptr_t)mask;
-  op_uintptr   ^= mask_uintptr;
-  op            = (mmux_pointer_t)op_uintptr;
-
-  return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+    return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_xor]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_pointer_bitwise_xor ROPVAR PTR MASK"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR PTR MASK"]]],
     [[["Perform the bitwise XOR operation between the pointer PTR by the unsigned integer MASK, store the result in PTRVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -112,21 +109,21 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_xor]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_not]]])
 {
   mmux_pointer_t	op;
-  mmux_uintptr_t	op_uintptr;
-  int			rv;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  {
+    mmux_uintptr_t	op_uintptr;
 
-  op_uintptr  = (mmux_uintptr_t)op;
-  op_uintptr  = ~ op_uintptr;
-  op          = (mmux_pointer_t)op_uintptr;
-
-  return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+    op_uintptr = (mmux_uintptr_t)op;
+    op_uintptr = ~ op_uintptr;
+    op         = (mmux_pointer_t)op_uintptr;
+    return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_not]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_pointer_bitwise_not ROPVAR PTR"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR PTR"]]],
     [[["Perform the bitwise NOT operation of the pointer PTR, store the result in PTRVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -134,25 +131,23 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_not]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shl]]])
 {
   mmux_pointer_t	op;
-  mmux_uintptr_t	op_uintptr;
-  mmux_sint_t	nbits;
-  int			rv;
+  mmux_sint_t		nbits;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,	argv[3]);
+  {
+    mmux_uintptr_t	op_uintptr;
 
-  rv = mmux_sint_parse(&nbits, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op_uintptr   = (mmux_uintptr_t)op;
-  op_uintptr <<= nbits;
-  op           = (mmux_pointer_t)op_uintptr;
-
-  return mmux_pointer_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+    op_uintptr   = (mmux_uintptr_t)op;
+    op_uintptr <<= nbits;
+    op           = (mmux_pointer_t)op_uintptr;
+    return mmux_pointer_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shl]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_pointer_bitwise_shl ROPVAR OP NBITS"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP NBITS"]]],
     [[["Compute the bitwise shl of OP, by NBITS, store the result in ROPVAR."]]])
 
 /* ------------------------------------------------------------------ */
@@ -160,25 +155,23 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shl]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shr]]])
 {
   mmux_pointer_t	op;
-  mmux_uintptr_t	op_uintptr;
-  mmux_sint_t	nbits;
-  int			rv;
+  mmux_sint_t		nbits;
 
-  rv = mmux_pointer_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,	argv[3]);
+  {
+    mmux_uintptr_t	op_uintptr;
 
-  rv = mmux_sint_parse(&nbits, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op_uintptr   = (mmux_uintptr_t)op;
-  op_uintptr >>= nbits;
-  op           = (mmux_pointer_t)op_uintptr;
-
-  return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
+    op_uintptr   = (mmux_uintptr_t)op;
+    op_uintptr >>= nbits;
+    op           = (mmux_pointer_t)op_uintptr;
+    return mmux_pointer_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_pointer_bitwise_shr]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_pointer_bitwise_shr ROPVAR OP NBITS"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP NBITS"]]],
     [[["Compute the bitwise shr of OP, by NBITS, store the result in ROPVAR."]]])
 
 
@@ -190,26 +183,24 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN]]],[[
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
-  int			rv;
 
   for (int i = 2; i < argc; ++i) {
-    rv = mmux_$1_parse(&ops[i], argv[i], MMUX_BUILTIN_NAME_STR);
-    if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
+    MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
   }
-
   for (int i = 3; i < argc; ++i) {
     ops[2] $4= ops[i];
   }
   return mmux_$1_bind_to_variable (argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_$3]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 <= argc)]]],
-    [[["mmux_$1_bitwise_$3 ROPVAR OP0 OP ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP0 OP ..."]]],
     [[["Compute the bitwise MMUX_M4_TOUPPER($3) between the operands OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 ]]])
 
@@ -220,25 +211,23 @@ m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN]]],[[[
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
   mmux_sint_t	nbits;
-  int		rv;
 
-  rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  rv = mmux_sint_parse(&nbits, argv[3], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op $4= nbits;
-  return mmux_$1_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,  argv[3]);
+  {
+    op $4= nbits;
+    return mmux_$1_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_$3]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_$1_bitwise_$3 ROPVAR OP NBITS"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP NBITS"]]],
     [[["Compute the bitwise $3 of OP, by NBITS, store the result in ROPVAR."]]])
 ]]])
 
@@ -256,22 +245,22 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_not]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
-  int			rv;
 
-  rv = mmux_$1_parse(&op, argv[2], MMUX_BUILTIN_NAME_STR);
-  if (MMUX_SUCCESS != rv) { mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR); return rv; }
-
-  op = ~ op;
-  return mmux_$1_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
+  {
+    op = ~ op;
+    return mmux_$1_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_bitwise_not]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_$1_bitwise_not ROPVAR OP"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP"]]],
     [[["Compute the bitwise NOT between of the opernot OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
 MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[shl]]],[[[<<]]])

@@ -85,11 +85,29 @@ extern "C" {
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#include <mmux-bash-pointers-config.h>
+#include <mmux-cc-types-config.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <inttypes.h>
 #include <complex.h>
+
+
+/** --------------------------------------------------------------------
+ ** Initialisation functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl bool mmux_cc_types_init_sprint_module (void);
+mmux_cc_types_decl bool mmux_cc_types_init_parsers_module (void);
+
+
+/** --------------------------------------------------------------------
+ ** Version functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl char const *	mmux_cc_types_version_string		(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
@@ -275,13 +293,13 @@ DEFINE_PROTOS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
  ** Special parser functions.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_types_decl mmux_bash_rv_t mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
-								      mmux_sintmax_t target_min, mmux_sintmax_t target_max,
-								      char const * target_type_name, char const * who);
+mmux_cc_types_decl bool mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
+							    mmux_sintmax_t target_min, mmux_sintmax_t target_max,
+							    char const * target_type_name, char const * who);
 
-mmux_cc_types_decl mmux_bash_rv_t mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
-									mmux_uintmax_t target_max,
-									char const * target_type_name, char const * who);
+mmux_cc_types_decl bool mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
+							      mmux_uintmax_t target_max,
+							      char const * target_type_name, char const * who);
 
 
 /** --------------------------------------------------------------------
@@ -300,9 +318,9 @@ typedef bool      mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y
 mmux_cc_types_decl bool mmux_string_is_$1 (char const * s_value);
 mmux_cc_types_decl int mmux_$1_sizeof (void)
   __attribute__((__const__));
-mmux_cc_types_decl mmux_bash_rv_t mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * who)
+mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * who)
   __attribute__((__nonnull__(1,2)));
-mmux_cc_types_decl mmux_bash_rv_t mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
+mmux_cc_types_decl bool mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_cc_types_decl int mmux_$1_sprint_size (mmux_$1_t v);
 ]]])
@@ -571,7 +589,7 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_T
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl char mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
 
-mmux_cc_types_decl mmux_bash_rv_t mmux_$1_set_output_format (char const * const new_result_format, char const * const who)
+mmux_cc_types_decl bool mmux_$1_set_output_format (char const * const new_result_format, char const * const who)
   __attribute__((__nonnull__(1)));
 
 ]]])]]])
@@ -591,6 +609,241 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE
 DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
 DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
 DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Core arithmetics functions.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
+{
+  return A + B;
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
+{
+  return A - B;
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
+{
+  return A * B;
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
+{
+  return A / B;
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_neg (mmux_$1_t A)
+{
+  return (- A);
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_inv (mmux_$1_t A)
+{
+  return (((mmux_$1_t)1) / A);
+}
+]]])]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[schar]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uchar]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sshort]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ushort]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[slong]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ulong]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[double]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ldouble]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexd]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexld]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint8]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint8]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint16]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint16]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint64]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint64]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[usize]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ssize]]])
+
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sintmax]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uintmax]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sintptr]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uintptr]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ptrdiff]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[mode]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[off]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[pid]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uid]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[gid]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wchar]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wint]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
+{
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	Cre = Are + Bre;
+  mmux_$1_part_t	Cim = Aim + Bim;
+
+  return mmux_$1_make_rectangular (Cre, Cim);
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
+{
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	Cre = Are - Bre;
+  mmux_$1_part_t	Cim = Aim - Bim;
+
+  return mmux_$1_make_rectangular (Cre, Cim);
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
+{
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	Cre = (Are * Bre - Aim * Bim);
+  mmux_$1_part_t	Cim = (Are * Bim + Bre * Aim);
+
+  return mmux_$1_make_rectangular (Cre, Cim);
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
+{
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
+  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
+  mmux_$1_part_t	D   = Bre * Bre + Bim * Bim;
+  mmux_$1_part_t	Cre = (Are * Bre + Aim * Bim) / D;
+  mmux_$1_part_t	Cim = (Aim * Bre - Are * Bim) / D;
+
+  return mmux_$1_make_rectangular (Cre, Cim);
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_neg (mmux_$1_t A)
+{
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+
+  return mmux_$1_make_rectangular (-Are, -Aim);
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_inv (mmux_$1_t A)
+{
+  mmux_$1_part_t	Are = mmux_$1_real_part (A);
+  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
+  mmux_$1_part_t	D   = Are * Are + Aim * Aim;
+  mmux_$1_part_t	Cre = + Are / D;
+  mmux_$1_part_t	Cim = - Aim / D;
+
+  return mmux_$1_make_rectangular (Cre, Cim);
+}
+]]])]]])
+
+DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
+DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
+DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
+{
+  return A % B;
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_incr (mmux_$1_t A)
+{
+  return ++A;
+}
+__attribute__((__const__)) static inline mmux_$1_t
+mmux_$1_decr (mmux_$1_t A)
+{
+  return --A;
+}
+]]])]]])
+
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[schar]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uchar]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sshort]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ushort]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sint]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[slong]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ulong]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sint8]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint8]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sint16]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint16]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sint32]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint32]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sint64]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint64]]])
+
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[usize]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ssize]]])
+
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sintmax]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uintmax]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sintptr]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uintptr]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ptrdiff]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[mode]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[off]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[pid]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uid]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[gid]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wchar]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
