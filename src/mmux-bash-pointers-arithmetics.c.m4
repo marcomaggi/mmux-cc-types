@@ -41,9 +41,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_add]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(delta,	argv[3]);
   {
-    mmux_uint8_t *	op_octets  = (mmux_uint8_t *)op;
-    mmux_uint8_t *	rop_octets = op_octets + delta;
-    return mmux_pointer_bind_to_variable(argv[1], rop_octets, MMUX_BUILTIN_NAME_STR);
+    op = mmux_pointer_add(op, delta);
+    return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }

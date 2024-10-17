@@ -615,6 +615,15 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYP
  ** Core arithmetics functions.
  ** ----------------------------------------------------------------- */
 
+__attribute__((__const__)) static inline mmux_pointer_t
+mmux_pointer_add (mmux_pointer_t op, mmux_ptrdiff_t delta)
+{
+  mmux_uint8_t *	op_octets  = (mmux_uint8_t *)op;
+  mmux_uint8_t *	rop_octets = op_octets + delta;
+  mmux_pointer_t	rop        = (mmux_pointer_t)rop_octets;
+  return rop;
+}
+
 m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
