@@ -97,7 +97,7 @@ scripts which are meant to be sourced in a @gnu{} Bash session or script.
 This package makes raw memory pointers available to the shell; it also interfaces some basic
 functions from the C language @posix{} standard library.  The package targets @posix{} platforms.
 
-This package is distributed under the terms of the @gnu{} General Public License (@lgpl{}).
+This package is distributed under the terms of the @gnu{} General Public License (@gpl{}).
 
 Development of this package takes place at:
 

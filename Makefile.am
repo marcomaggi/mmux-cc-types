@@ -76,14 +76,24 @@ endif
 
 #### documentation
 
-EXTRA_DIST		+= doc/mmux-bash-pointers.style.css
-CLEANFILES		+= doc/mmux-bash-pointers.css
-
 AM_MAKEINFOFLAGS	= --no-split
 AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 --css-ref=mmux-bash-pointers.css \
 	-c PRE_BODY_CLOSE="<p>This document describes version <tt>$(PACKAGE_VERSION)</tt> of <em>$(PACKAGE_NAME)</em>.</p>"
 
-info_TEXINFOS		= doc/mmux-bash-pointers.texi
+info_TEXINFOS		= doc/mmux-bash-pointers.texi doc/mmux-cc-types.texi
+
+.PHONY: html-local-mmux-cc-types      install-html-local-mmux-cc-types
+.PHONY: html-local-mmux-bash-pointers install-html-local-mmux-bash-pointers
+
+html-local:                 html-local-mmux-bash-pointers         html-local-mmux-cc-types
+install-html-local: install-html-local-mmux-bash-pointers install-html-local-mmux-cc-types
+
+
+#### documentation: MMUX Bash Pointers
+
+EXTRA_DIST		+= doc/mmux-bash-pointers.style.css
+CLEANFILES		+= doc/mmux-bash-pointers.css
+
 doc_mmux_bash_pointers_TEXINFOS	= \
 	doc/macros.texi			\
 	doc/overview-linking.texi	\
@@ -103,11 +113,42 @@ doc/mmux-bash-pointers.html/mmux-bash-pointers.css: \
 
 ## --------------------------------------------------------------------
 
-html-local: doc/mmux-bash-pointers.html/mmux-bash-pointers.css
+html-local-mmux-bash-pointers: doc/mmux-bash-pointers.html/mmux-bash-pointers.css
 
-install-html-local:
+install-html-local-mmux-bash-pointers:
 	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
 	$(INSTALL) -m 0444 $(builddir)/doc/mmux-bash-pointers.html/mmux-bash-pointers.css "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
+
+
+#### documentation: MMUX CC Types
+
+EXTRA_DIST		+= doc/mmux-cc-types.style.css
+CLEANFILES		+= doc/mmux-cc-types.css
+
+doc_mmux_cc_types_TEXINFOS	= \
+	doc/macros.texi			\
+	doc/overview-linking.texi	\
+	doc/mmux-version.texi		\
+	doc/gpl-3.0.texi		\
+	doc/fdl-1.3.texi
+
+## --------------------------------------------------------------------
+
+doc/mmux-cc-types.html/$(am__dirstamp): doc/$(am__dirstamp)
+	@$(MKDIR_P) doc/mmux-cc-types.html/
+	@: > doc/mmux-cc-types.html/$(am__dirstamp)
+
+doc/mmux-cc-types.html/mmux-cc-types.css: \
+	doc/mmux-cc-types.style.css doc/mmux-cc-types.html/$(am__dirstamp)
+	$(INSTALL) -m 0444 "$(top_srcdir)/doc/mmux-cc-types.style.css" "$(builddir)/doc/mmux-cc-types.html/mmux-cc-types.css"
+
+## --------------------------------------------------------------------
+
+html-local-mmux-cc-types: doc/mmux-cc-types.html/mmux-cc-types.css
+
+install-html-local-mmux-cc-types:
+	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-cc-types.html/"
+	$(INSTALL) -m 0444 $(builddir)/doc/mmux-cc-types.html/mmux-cc-types.css "$(DESTDIR)$(htmldir)/mmux-cc-types.html/"
 
 
 #### shell libraries

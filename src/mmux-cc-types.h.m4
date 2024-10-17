@@ -96,6 +96,7 @@ extern "C" {
  ** Initialisation functions.
  ** ----------------------------------------------------------------- */
 
+mmux_cc_types_decl bool mmux_cc_types_init (void);
 mmux_cc_types_decl bool mmux_cc_types_init_sprint_module (void);
 mmux_cc_types_decl bool mmux_cc_types_init_parsers_module (void);
 

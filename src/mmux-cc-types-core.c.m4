@@ -112,6 +112,19 @@ mmux_cc_types_version_interface_age (void)
 
 
 /** --------------------------------------------------------------------
+ ** Library initialisation.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_cc_types_init (void)
+{
+  if (mmux_cc_types_init_sprint_module())  { return true; }
+  if (mmux_cc_types_init_parsers_module()) { return true; }
+  return false;
+}
+
+
+/** --------------------------------------------------------------------
  ** Some real number type functions: string_is, sizeof, minimum, maximum.
  ** ----------------------------------------------------------------- */
 
