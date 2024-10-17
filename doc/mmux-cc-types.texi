@@ -160,12 +160,12 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * sizeof::                      Type sizes.
 * limits::                      Type maximum and minimum values.
 * string representations::      String representations of supported types.
-* complex::                     Basic complex number builtins.
+* complex::                     Basic complex number operations.
 * predicates::                  Type predicates.
-* comparison::                  Comparison builtins.
-* arithmetics::                 Arithmetics operation builtins.
-* mathematics::                 Mathematics operation builtins.
-* bitwise::                     Bitwise operation builtins.
+* comparison::                  Comparison functions.
+* arithmetics::                 Arithmetics operations.
+* mathematics::                 Mathematics operations.
+* bitwise::                     Bitwise operations.
 * formats::                     Input and output formats.
 
 Appendices
@@ -1183,7 +1183,7 @@ the terminating zero}; otherwise return @samp{-1}.
 
 @c page
 @node complex
-@chapter Basic complex number builtins
+@chapter Basic complex number operations
 
 
 @menu
@@ -1202,20 +1202,19 @@ the terminating zero}; otherwise return @samp{-1}.
 To construct a complex number from its real and imaginary parts, we do:
 
 @example
-declare ROP
+mmux_double_t   rep = 1.2;
+mmux_double_t   imp = 3.4;
+mmux_complexd_t Z;
 
-mmux_complexd_make_rectangular ROP '1.2' '3.4'
-"$ROP"  @result{} (1.2)+i* types(3.4)
+Z = mmux_complexd_make_rectangular(rep, imp);
 @end example
 
 
-
 @macro MmuxDefineComplexMakeRectangularBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_make_rectangular @var{ROPVAR} @var{REP} @var{IMP}
+@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_make_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
 Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
-@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Store a string representation of the result
-in the shell variable @var{ROPVAR}.
-@end deffn
+@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Return the result.
+@end deftypefun
 
 @end macro
 
@@ -1240,25 +1239,23 @@ in the shell variable @var{ROPVAR}.
 @section Extracting the real and imaginary parts
 
 
-To extract the real and imaginary parts of a complex number, we do:
+To extract the real and imaginary parts from a complex number we do:
 
 @example
-declare Z='(1.2)+i* types(3.4)' REP IMP
+mmux_complexd_t Z = ...;
+mmux_double_t   rep;
+mmux_double_t   imp;
 
-mmux_complexd_real_part REP "$Z"
-mmux_complexd_real_part IMP "$Z"
-"$REP"  @result{} 1.2
-"$IMP"  @result{} 3.4
+rep = mmux_complexd_real_part(Z);
+imp = mmux_complexd_real_part(Z);
 @end example
 
 
 @macro MmuxDefineComplexRealImagPartBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_real_part @var{REPVAR} @var{OP}
-@deffnx Builtin mmux_\CPLXSTEM\_imag_part @var{IMPVAR} @var{OP}
-Extract the real or imaginary parts, which will be of type @objtype{\REALSTEM\}, from the complex
-number @var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell
-variable @var{REPVAR} or @var{IMPVAR}.
-@end deffn
+@deftypefun Builtin mmux_\REALSTEM\_t mmux_\CPLXSTEM\_real_part (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx Builtin mmux_\REALSTEM\_t mmux_\CPLXSTEM\_imag_part (mmux_\CPLXSTEM\_t @var{OP})
+Extract and return the real or imaginary parts from the complex number @var{OP}.
+@end deftypefun
 
 @end macro
 
