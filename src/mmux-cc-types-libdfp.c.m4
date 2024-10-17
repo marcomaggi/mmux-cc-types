@@ -1,5 +1,5 @@
 /*
-  Part of: MMUX Bash Pointers
+  Part of: MMUX CC Types
   Contents: support for _DecimalN types through libdfp
   Date: Sep 28, 2024
 
@@ -26,7 +26,7 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#include <mmux-bash-pointers-config.h>
+#include <mmux-cc-types-config.h>
 
 #ifdef HAVE_CONFIG_H
 #  include <config.h>

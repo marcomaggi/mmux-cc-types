@@ -148,20 +148,20 @@ src/libmmux-bash-%.bash: src/libmmux-bash-%.bash.m4 $(MMUX_M4_BASH_MACROS)
 # without the "-pedantic" flag.
 #
 
-EXTRA_DIST	+= src/mmux-bash-pointers-libdfp.c.m4
+EXTRA_DIST	+= src/mmux-cc-types-libdfp.c.m4
 
 if WANT_LIBDFP
-MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES	= src/mmux-bash-pointers-libdfp.c
+MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= src/mmux-cc-types-libdfp.c
 
-BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
-CLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
-DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_LIBDFP_BUILT_SOURCES)
+BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
+CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
+DISTCLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 
-noinst_LTLIBRARIES			= libmmux-bash-pointers-libdfp.la
-libmmux_bash_pointers_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS)
-libmmux_bash_pointers_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
-libmmux_bash_pointers_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
-libmmux_bash_pointers_libdfp_la_SOURCES	= src/mmux-bash-pointers-libdfp.c
+noinst_LTLIBRARIES			= libmmux-cc-types-libdfp.la
+libmmux_cc_types_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS)
+libmmux_cc_types_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
+libmmux_cc_types_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
+libmmux_cc_types_libdfp_la_SOURCES	= src/mmux-cc-types-libdfp.c
 endif
 
 
@@ -234,7 +234,7 @@ libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
 if WANT_LIBDFP
-libmmux_bash_pointers_la_LIBADD		= libmmux-bash-pointers-libdfp.la
+libmmux_bash_pointers_la_LIBADD		= libmmux-cc-types-libdfp.la
 endif
 libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers.h			\
