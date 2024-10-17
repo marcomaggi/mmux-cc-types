@@ -1188,4 +1188,141 @@ DEFINE_CFUNCS([[[complexf128x]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 
+
+/** --------------------------------------------------------------------
+ ** Bitwise operations.
+ ** ----------------------------------------------------------------- */
+
+mmux_pointer_t
+mmux_pointer_bitwise_and (mmux_pointer_t op, mmux_uintptr_t mask)
+{
+  mmux_uintptr_t	op_uintptr;
+
+  op_uintptr  = (mmux_uintptr_t)op;
+  op_uintptr &= mask;
+  op          = (mmux_pointer_t)op_uintptr;
+  return op;
+}
+mmux_pointer_t
+mmux_pointer_bitwise_or (mmux_pointer_t op, mmux_uintptr_t mask)
+{
+  mmux_uintptr_t	op_uintptr;
+
+  op_uintptr  = (mmux_uintptr_t)op;
+  op_uintptr |= mask;
+  op          = (mmux_pointer_t)op_uintptr;
+  return op;
+}
+mmux_pointer_t
+mmux_pointer_bitwise_xor (mmux_pointer_t op, mmux_uintptr_t mask)
+{
+  mmux_uintptr_t	op_uintptr;
+
+  op_uintptr  = (mmux_uintptr_t)op;
+  op_uintptr ^= mask;
+  op          = (mmux_pointer_t)op_uintptr;
+  return op;
+}
+mmux_pointer_t
+mmux_pointer_bitwise_not (mmux_pointer_t op)
+{
+  mmux_uintptr_t	op_uintptr;
+
+  op_uintptr = (mmux_uintptr_t)op;
+  op_uintptr = ~ op_uintptr;
+  op         = (mmux_pointer_t)op_uintptr;
+  return op;
+}
+mmux_pointer_t
+mmux_pointer_bitwise_shl (mmux_pointer_t op, mmux_sint_t nbits)
+{
+  mmux_uintptr_t	op_uintptr;
+
+  op_uintptr   = (mmux_uintptr_t)op;
+  op_uintptr <<= nbits;
+  op           = (mmux_pointer_t)op_uintptr;
+  return op;
+}
+mmux_pointer_t
+mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
+{
+  mmux_uintptr_t	op_uintptr;
+
+  op_uintptr   = (mmux_uintptr_t)op;
+  op_uintptr >>= nbits;
+  op           = (mmux_pointer_t)op_uintptr;
+  return op;
+}
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_BITWISE_FUNCS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_$1_t
+mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return (op1 & op2);
+}
+mmux_$1_t
+mmux_$1_bitwise_or (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return (op1 | op2);
+}
+mmux_$1_t
+mmux_$1_bitwise_xor (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return (op1 ^ op2);
+}
+mmux_$1_t
+mmux_$1_bitwise_not (mmux_$1_t op)
+{
+  return (~ op);
+}
+mmux_$1_t
+mmux_$1_bitwise_shl (mmux_$1_t op, mmux_sint_t nbits)
+{
+  return (op << nbits);
+}
+mmux_$1_t
+mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
+{
+  return (op >> nbits);
+}
+]]])]]])
+
+DEFINE_BITWISE_FUNCS([[[schar]]])
+DEFINE_BITWISE_FUNCS([[[uchar]]])
+DEFINE_BITWISE_FUNCS([[[sshort]]])
+DEFINE_BITWISE_FUNCS([[[ushort]]])
+DEFINE_BITWISE_FUNCS([[[sint]]])
+DEFINE_BITWISE_FUNCS([[[uint]]])
+DEFINE_BITWISE_FUNCS([[[slong]]])
+DEFINE_BITWISE_FUNCS([[[ulong]]])
+DEFINE_BITWISE_FUNCS([[[sllong]]],	[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_BITWISE_FUNCS([[[ullong]]],	[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_BITWISE_FUNCS([[[sint8]]])
+DEFINE_BITWISE_FUNCS([[[uint8]]])
+DEFINE_BITWISE_FUNCS([[[sint16]]])
+DEFINE_BITWISE_FUNCS([[[uint16]]])
+DEFINE_BITWISE_FUNCS([[[sint32]]])
+DEFINE_BITWISE_FUNCS([[[uint32]]])
+DEFINE_BITWISE_FUNCS([[[sint64]]])
+DEFINE_BITWISE_FUNCS([[[uint64]]])
+
+DEFINE_BITWISE_FUNCS([[[ssize]]])
+DEFINE_BITWISE_FUNCS([[[usize]]])
+DEFINE_BITWISE_FUNCS([[[sintmax]]])
+DEFINE_BITWISE_FUNCS([[[uintmax]]])
+DEFINE_BITWISE_FUNCS([[[sintptr]]])
+DEFINE_BITWISE_FUNCS([[[uintptr]]])
+DEFINE_BITWISE_FUNCS([[[ptrdiff]]])
+DEFINE_BITWISE_FUNCS([[[mode]]])
+DEFINE_BITWISE_FUNCS([[[off]]])
+DEFINE_BITWISE_FUNCS([[[pid]]])
+DEFINE_BITWISE_FUNCS([[[uid]]])
+DEFINE_BITWISE_FUNCS([[[gid]]])
+DEFINE_BITWISE_FUNCS([[[wchar]]])
+DEFINE_BITWISE_FUNCS([[[wint]]])
+
+
 /* end of file */

@@ -188,7 +188,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-internals.h.m4		\
 	src/mmux-cc-types-core.c.m4			\
 	src/mmux-cc-types-parsers.c.m4			\
-	src/mmux-cc-types-sprint.c.m4
+	src/mmux-cc-types-sprinters.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers.h			\
@@ -211,7 +211,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
-	src/mmux-cc-types-sprint.c
+	src/mmux-cc-types-sprinters.c
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -259,7 +259,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
-	src/mmux-cc-types-sprint.c
+	src/mmux-cc-types-sprinters.c
 
 .PHONY: library
 

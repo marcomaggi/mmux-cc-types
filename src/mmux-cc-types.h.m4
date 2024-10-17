@@ -1321,6 +1321,76 @@ DEFINE_CPROTOS([[[complexd128]]],
 
 
 /** --------------------------------------------------------------------
+ ** Bitwise operations.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_and (mmux_pointer_t op, mmux_uintptr_t mask)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_or  (mmux_pointer_t op, mmux_uintptr_t mask)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_xor (mmux_pointer_t op, mmux_uintptr_t mask)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_not (mmux_pointer_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shl (mmux_pointer_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_BITWISE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_or  (mmux_$1_t op1, mmux_$1_t op2)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_xor (mmux_$1_t op1, mmux_$1_t op2)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_not (mmux_$1_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shl (mmux_$1_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+]]])]]])
+
+DEFINE_BITWISE_PROTOS([[[schar]]])
+DEFINE_BITWISE_PROTOS([[[uchar]]])
+DEFINE_BITWISE_PROTOS([[[sshort]]])
+DEFINE_BITWISE_PROTOS([[[ushort]]])
+DEFINE_BITWISE_PROTOS([[[sint]]])
+DEFINE_BITWISE_PROTOS([[[uint]]])
+DEFINE_BITWISE_PROTOS([[[slong]]])
+DEFINE_BITWISE_PROTOS([[[ulong]]])
+DEFINE_BITWISE_PROTOS([[[sllong]]],	[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_BITWISE_PROTOS([[[ullong]]],	[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_BITWISE_PROTOS([[[sint8]]])
+DEFINE_BITWISE_PROTOS([[[uint8]]])
+DEFINE_BITWISE_PROTOS([[[sint16]]])
+DEFINE_BITWISE_PROTOS([[[uint16]]])
+DEFINE_BITWISE_PROTOS([[[sint32]]])
+DEFINE_BITWISE_PROTOS([[[uint32]]])
+DEFINE_BITWISE_PROTOS([[[sint64]]])
+DEFINE_BITWISE_PROTOS([[[uint64]]])
+
+DEFINE_BITWISE_PROTOS([[[ssize]]])
+DEFINE_BITWISE_PROTOS([[[usize]]])
+DEFINE_BITWISE_PROTOS([[[sintmax]]])
+DEFINE_BITWISE_PROTOS([[[uintmax]]])
+DEFINE_BITWISE_PROTOS([[[sintptr]]])
+DEFINE_BITWISE_PROTOS([[[uintptr]]])
+DEFINE_BITWISE_PROTOS([[[ptrdiff]]])
+DEFINE_BITWISE_PROTOS([[[mode]]])
+DEFINE_BITWISE_PROTOS([[[off]]])
+DEFINE_BITWISE_PROTOS([[[pid]]])
+DEFINE_BITWISE_PROTOS([[[uid]]])
+DEFINE_BITWISE_PROTOS([[[gid]]])
+DEFINE_BITWISE_PROTOS([[[wchar]]])
+DEFINE_BITWISE_PROTOS([[[wint]]])
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

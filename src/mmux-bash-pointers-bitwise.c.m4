@@ -41,11 +41,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_and]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
   {
-    mmux_uintptr_t	op_uintptr;
-
-    op_uintptr  = (mmux_uintptr_t)op;
-    op_uintptr &= mask;
-    op          = (mmux_pointer_t)op_uintptr;
+    op = mmux_pointer_bitwise_and(op, mask);
     return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -65,11 +61,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_or]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
   {
-    mmux_uintptr_t	op_uintptr;
-
-    op_uintptr  = (mmux_uintptr_t)op;
-    op_uintptr |= mask;
-    op          = (mmux_pointer_t)op_uintptr;
+    op = mmux_pointer_bitwise_or(op, mask);
     return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -89,12 +81,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_xor]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
   {
-    mmux_uintptr_t	op_uintptr;
-
-    op_uintptr  = (mmux_uintptr_t)op;
-    op_uintptr ^= mask;
-    op          = (mmux_pointer_t)op_uintptr;
-
+    op = mmux_pointer_bitwise_xor(op, mask);
     return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -112,11 +99,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_not]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   {
-    mmux_uintptr_t	op_uintptr;
-
-    op_uintptr = (mmux_uintptr_t)op;
-    op_uintptr = ~ op_uintptr;
-    op         = (mmux_pointer_t)op_uintptr;
+    op = mmux_pointer_bitwise_not(op);
     return mmux_pointer_bind_to_variable(argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -136,11 +119,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shl]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,	argv[3]);
   {
-    mmux_uintptr_t	op_uintptr;
-
-    op_uintptr   = (mmux_uintptr_t)op;
-    op_uintptr <<= nbits;
-    op           = (mmux_pointer_t)op_uintptr;
+    op = mmux_pointer_bitwise_shl(op, nbits);
     return mmux_pointer_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -160,11 +139,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shr]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,	argv[3]);
   {
-    mmux_uintptr_t	op_uintptr;
-
-    op_uintptr   = (mmux_uintptr_t)op;
-    op_uintptr >>= nbits;
-    op           = (mmux_pointer_t)op_uintptr;
+    op = mmux_pointer_bitwise_shr(op, nbits);
     return mmux_pointer_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -179,7 +154,7 @@ m4_dnl --------------------------------------------------------------------
 m4_dnl Core bitwise builtins constructors.
 m4_dnl ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_$3]]])
+m4_define([[[DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_$3]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
@@ -188,7 +163,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
   }
   for (int i = 3; i < argc; ++i) {
-    ops[2] $4= ops[i];
+    ops[2] = mmux_$1_bitwise_$3(ops[2], ops[i]);
   }
   return mmux_$1_bind_to_variable (argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -206,7 +181,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 m4_dnl ------------------------------------------------------------
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_$3]]])
+m4_define([[[DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_$3]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
@@ -215,7 +190,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,  argv[3]);
   {
-    op $4= nbits;
+    op = mmux_$1_bitwise_$3(op, nbits);
     return mmux_$1_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -236,10 +211,10 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Core bitwise builtins.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN]]],[[[
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[and]]],[[[&]]])
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[or]]], [[[|]]])
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[xor]]],[[[^]]])
+m4_define([[[DEFINE_CORE_BITWISE_BUILTIN]]],[[[
+DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[and]]])
+DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[or]]])
+DEFINE_TYPICAL_BINARY_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[xor]]])
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_bitwise_not]]])
 {
@@ -248,7 +223,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
   {
-    op = ~ op;
+    op = mmux_$1_bitwise_not(op);
     return mmux_$1_bind_to_variable (argv[1], op, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
@@ -263,46 +238,45 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR OP"]]],
     [[["Compute the bitwise NOT between of the opernot OP, which must be of type \"$1\", store the result in ROPVAR."]]])
 
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[shl]]],[[[<<]]])
-MMUX_BASH_POINTERS_DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[shr]]],[[[>>]]])
+DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[shl]]])
+DEFINE_TYPICAL_SHIFT_CORE_BITWISE_BUILTIN([[[$1]]],[[[$2]]],[[[shr]]])
 ]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[schar]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uchar]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sshort]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[ushort]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sint]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uint]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[slong]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[ulong]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sllong]]],	[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[schar]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uchar]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sshort]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[ushort]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sint]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uint]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[slong]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[ulong]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sllong]]],	[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[ullong]]],	[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
 
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sint8]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uint8]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sint16]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uint16]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sint32]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uint32]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sint64]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uint64]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sint8]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uint8]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sint16]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uint16]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sint32]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uint32]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sint64]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uint64]]])
 
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[usize]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[ssize]]])
-
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sintmax]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uintmax]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[sintptr]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uintptr]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[ptrdiff]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[mode]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[off]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[pid]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[uid]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[gid]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[wchar]]])
-MMUX_BASH_POINTERS_DEFINE_CORE_BITWISE_BUILTIN([[[wint]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[ssize]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[usize]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sintmax]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uintmax]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[sintptr]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uintptr]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[ptrdiff]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[mode]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[off]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[pid]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[uid]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[gid]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[wchar]]])
+DEFINE_CORE_BITWISE_BUILTIN([[[wint]]])
 
 /* end of file */
