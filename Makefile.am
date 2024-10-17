@@ -168,7 +168,6 @@ endif
 #### libraries
 
 EXTRA_DIST	+= \
-	src/mmux-cc-types.h.m4				\
 	src/mmux-bash-pointers.h.m4			\
 	src/mmux-bash-pointers-internals.h.m4		\
 	src/mmux-bash-pointers-accessors.c.m4		\
@@ -184,13 +183,13 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-memory.c.m4		\
 	src/mmux-bash-pointers-misc-builtins.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4		\
-	src/mmux-bash-pointers-parser-functions.c.m4	\
 	src/mmux-bash-pointers-predicates.c.m4		\
-	src/mmux-bash-pointers-sprint-functions.c.m4	\
-	src/mmux-bash-pointers-type-functions.c.m4
+	src/mmux-cc-types.h.m4				\
+	src/mmux-cc-types-core.c.m4			\
+	src/mmux-cc-types-parsers.c.m4			\
+	src/mmux-cc-types-sprint.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
-	src/mmux-cc-types.h				\
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-accessors.c		\
@@ -206,10 +205,11 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
-	src/mmux-bash-pointers-parser-functions.c	\
 	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-bash-pointers-sprint-functions.c	\
-	src/mmux-bash-pointers-type-functions.c
+	src/mmux-cc-types.h				\
+	src/mmux-cc-types-core.c			\
+	src/mmux-cc-types-parsers.c			\
+	src/mmux-cc-types-sprint.c
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -234,10 +234,8 @@ if WANT_LIBDFP
 libmmux_bash_pointers_la_LIBADD		= libmmux-bash-pointers-libdfp.la
 endif
 libmmux_bash_pointers_la_SOURCES	= \
-	src/mmux-cc-types.h				\
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h			\
-	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-accessors.c		\
 	src/mmux-bash-pointers-arithmetics.c		\
 	src/mmux-bash-pointers-bash.c			\
@@ -246,15 +244,17 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-complex-builtins.c	\
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-fds.c			\
+	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-mathematics.c		\
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
-	src/mmux-bash-pointers-parser-functions.c	\
 	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-bash-pointers-sprint-functions.c	\
-	src/mmux-bash-pointers-type-functions.c
+	src/mmux-cc-types.h				\
+	src/mmux-cc-types-core.c			\
+	src/mmux-cc-types-parsers.c			\
+	src/mmux-cc-types-sprint.c
 
 .PHONY: library
 
