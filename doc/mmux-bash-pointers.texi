@@ -1849,7 +1849,7 @@ For complex numbers: the variable holds a complex number; its real part is the m
 of real parts; its imaginary part is the margin for comparison of imaginary parts.
 
 When a shell variable is not set: the default margin for real numbers is @samp{1e-6}; the default
-margin for complex numbers is @samp{(1e-6)+i* types(1e-6)}.
+margin for complex numbers is @samp{(1e-6)+i*(1e-6)}.
 @end defvar
 
 @c page
@@ -1903,15 +1903,15 @@ When multiple operands are present: @varo{OP} is compared with all the other ope
 comparing real numbers, the predicate is:
 
 @example
-abs(@varo{OP} - @var{OP}) <= (@var{EPSILON} * types max(abs(@varo{OP}), abs(@var{OP})))
+abs(@varo{OP} - @var{OP}) <= (@var{EPSILON} * max(abs(@varo{OP}), abs(@var{OP})))
 @end example
 
 @noindent
 when comparing complex numbers, the predicate is:
 
 @example
-abs(@varo{OP_RE} - @var{OP_RE}) <= (@var{EPSILON_RE} * types max(abs(@varo{OP_RE}), abs(@var{OP_RE}))) &&
-abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * types max(abs(@varo{OP_IM}), abs(@var{OP_IM})))
+abs(@varo{OP_RE} - @var{OP_RE}) <= (@var{EPSILON_RE} * max(abs(@varo{OP_RE}), abs(@var{OP_RE}))) &&
+abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * max(abs(@varo{OP_IM}), abs(@var{OP_IM})))
 @end example
 
 @noindent
@@ -1954,7 +1954,7 @@ For complex numbers: the variable holds a complex number; its real part is the e
 comparison of real parts; its imaginary part is the epsilon for comparison of imaginary parts.
 
 When a shell variable is not set: the default epsilon for real numbers is @samp{1e-6}; the default
-epsilon for complex numbers is @samp{(1e-6)+i* types(1e-6)}.
+epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
 @end defvar
 
 @c page
