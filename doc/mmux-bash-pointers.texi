@@ -157,7 +157,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * overview::                    Overview of the package.
 * descriptor::                  Package descriptors.
 * constants::                   Values of system constants.
-* types::                       Interface to supported data types.
+* cctypes::                     Interface to supported C language data types.
 * memory::                      Raw memory operations.
 * errors::                      Handling errors.
 * fds::                         Core file descriptor operations.
@@ -579,24 +579,24 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{X_OK}
 
 @c page
-@node types
+@node cctypes
 @chapter Interface to supported data types
 
 
 @menu
-* types sizeof::                C language type sizes.
-* types limits::                C language type maximum and minimum values.
-* types complex::               Basic complex number builtins.
-* types predicates::            Type predicates.
-* types comparison::            Comparison builtins.
-* types arithmetics::           Arithmetics operation builtins.
-* types mathematics::           Mathematics operation builtins.
-* types bitwise::               Bitwise operation builtins.
-* types formats::               Input and output formats.
+* cctypes sizeof::              C language type sizes.
+* cctypes limits::              C language type maximum and minimum values.
+* cctypes complex::             Basic complex number builtins.
+* cctypes predicates::          Type predicates.
+* cctypes comparison::          Comparison builtins.
+* cctypes arithmetics::         Arithmetics operation builtins.
+* cctypes mathematics::         Mathematics operation builtins.
+* cctypes bitwise::             Bitwise operation builtins.
+* cctypes formats::             Input and output formats.
 @end menu
 
 @c page
-@node types sizeof
+@node cctypes sizeof
 @section C language type sizes
 
 
@@ -687,7 +687,7 @@ Global variable holding the size, measured in bytes, of the C language type with
 @MmuxDefineGlobalVarSizeof{wint}
 
 @c page
-@node types limits
+@node cctypes limits
 @section C language type maximum and minimum values
 
 
@@ -768,20 +768,20 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{wint}
 
 @c page
-@node types complex
+@node cctypes complex
 @section Basic complex number builtins
 
 
 @menu
-* types complex make::          Constructing complex numbers.
-* types complex parts::         Extracting the real and imaginary parts.
-* types complex abs::           Computing the absolute value.
-* types complex arg::           Computing the argument value.
-* types complex conj::          Computing the complex conjugate value.
+* cctypes complex make::        Constructing complex numbers.
+* cctypes complex parts::       Extracting the real and imaginary parts.
+* cctypes complex abs::         Computing the absolute value.
+* cctypes complex arg::         Computing the argument value.
+* cctypes complex conj::        Computing the complex conjugate value.
 @end menu
 
 @c page
-@node types complex make
+@node cctypes complex make
 @subsection Constructing complex numbers
 
 
@@ -822,7 +822,7 @@ in the shell variable @var{ROPVAR}.
 @MmuxDefineComplexMakeRectangularBuiltin{complexd128, decimal128}
 
 @c page
-@node types complex parts
+@node cctypes complex parts
 @subsection Extracting the real and imaginary parts
 
 
@@ -865,7 +865,7 @@ variable @var{REPVAR} or @var{IMPVAR}.
 @MmuxDefineComplexRealImagPartBuiltin{complexd128, decimal128}
 
 @c page
-@node types complex abs
+@node cctypes complex abs
 @subsection Computing the absolute value
 
 
@@ -905,7 +905,7 @@ Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the
 @MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
 
 @c page
-@node types complex arg
+@node cctypes complex arg
 @subsection Computing the argument value
 
 
@@ -945,7 +945,7 @@ Extract the argument value, which will be of type @objtype{\REALSTEM\}, from the
 @MmuxDefineComplexArgBuiltin{complexd128, decimal128}
 
 @c page
-@node types complex conj
+@node cctypes complex conj
 @subsection Computing the complex conjugate value
 
 
@@ -985,23 +985,23 @@ variable @var{CONJVAR}.
 @MmuxDefineComplexConjBuiltin{complexd128, decimal128}
 
 @c page
-@node types predicates
+@node cctypes predicates
 @section Type predicates
 
 
 @menu
-* types predicates stringrep::        String representation predicates.
-* types predicates zero::             Zero number predicates.
-* types predicates positive::         Positive number predicates.
-* types predicates negative::         Negative number predicates.
-* types predicates non-positive::     Non-positive number predicates.
-* types predicates non-negative::     Non-negative number predicates.
-* types predicates nan::              Not-a-number predicates.
-* types predicates infinite::         Infinite number predicates.
+* cctypes predicates stringrep::      String representation predicates.
+* cctypes predicates zero::           Zero number predicates.
+* cctypes predicates positive::       Positive number predicates.
+* cctypes predicates negative::       Negative number predicates.
+* cctypes predicates non-positive::   Non-positive number predicates.
+* cctypes predicates non-negative::   Non-negative number predicates.
+* cctypes predicates nan::            Not-a-number predicates.
+* cctypes predicates infinite::       Infinite number predicates.
 @end menu
 
 @c page
-@node types predicates stringrep
+@node cctypes predicates stringrep
 @subsection String representation predicates
 
 
@@ -1081,7 +1081,7 @@ return false.
 @MmuxDefineTypePredicateStringrepBuiltin{wint}
 
 @c page
-@node types predicates zero
+@node cctypes predicates zero
 @subsection Zero number predicates
 
 
@@ -1161,7 +1161,7 @@ zero number; otherwise return false.
 @MmuxDefineTypePredicateZeroBuiltin{wint}
 
 @c page
-@node types predicates positive
+@node cctypes predicates positive
 @subsection Positive number predicates
 
 
@@ -1226,7 +1226,7 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{wint}
 
 @c page
-@node types predicates negative
+@node cctypes predicates negative
 @subsection Negative number predicates
 
 
@@ -1299,7 +1299,7 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{wint}
 
 @c page
-@node types predicates non-positive
+@node cctypes predicates non-positive
 @subsection Non--positive number predicates
 
 
@@ -1363,7 +1363,7 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{wint}
 
 @c page
-@node types predicates non-negative
+@node cctypes predicates non-negative
 @subsection Non--negative number predicates
 
 
@@ -1427,7 +1427,7 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{wint}
 
 @c page
-@node types predicates nan
+@node cctypes predicates nan
 @subsection Not--a--number predicates
 
 
@@ -1507,7 +1507,7 @@ not--a--number value; otherwise return false.
 @MmuxDefineTypePredicateNanBuiltin{wint}
 
 @c page
-@node types predicates infinite
+@node cctypes predicates infinite
 @subsection Infinite number predicates
 
 
@@ -1587,17 +1587,17 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{wint}
 
 @c page
-@node types comparison
+@node cctypes comparison
 @section Comparison builtins
 
 
 @menu
-* types comparison exact::            Exact comparison builtins.
-* types comparison approximate::      Approximate comparison builtins.
+* cctypes comparison exact::          Exact comparison builtins.
+* cctypes comparison approximate::    Approximate comparison builtins.
 @end menu
 
 @c page
-@node types comparison exact
+@node cctypes comparison exact
 @subsection Exact comparison builtins
 
 
@@ -1738,17 +1738,17 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonExactBuiltin{wint}
 
 @c page
-@node types comparison approximate
+@node cctypes comparison approximate
 @subsection Approximate comparison builtins
 
 
 @menu
-* types comparison approximate absmargin::  Absolute margin criterion.
-* types comparison approximate relepsilon:: Relative epsilon criterion.
+* cctypes comparison approximate absmargin::  Absolute margin criterion.
+* cctypes comparison approximate relepsilon:: Relative epsilon criterion.
 @end menu
 
 @c page
-@node types comparison approximate absmargin
+@node cctypes comparison approximate absmargin
 @subsubsection Absolute margin criterion
 
 
@@ -1853,7 +1853,7 @@ margin for complex numbers is @samp{(1e-6)+i*(1e-6)}.
 @end defvar
 
 @c page
-@node types comparison approximate relepsilon
+@node cctypes comparison approximate relepsilon
 @subsubsection Relative epsilon criterion
 
 
@@ -1958,7 +1958,7 @@ epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
 @end defvar
 
 @c page
-@node types arithmetics
+@node cctypes arithmetics
 @section Arithmetics operation builtins
 
 
@@ -1967,18 +1967,18 @@ might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for
 bitwise operations are implemented for every supported data type.
 
 @menu
-* types arithmetics addition::        Addition builtins.
-* types arithmetics subtraction::     Subtraction builtins.
-* types arithmetics multiplication::  Multiplication builtins.
-* types arithmetics division::        Division builtins.
-* types arithmetics remainder::       Remainder builtins.
-* types arithmetics negation::        Negation builtins.
-* types arithmetics inversion::       Inversion builtins.
-* types arithmetics incrdecr::        Increment and decrement builtins.
+* cctypes arithmetics addition::        Addition builtins.
+* cctypes arithmetics subtraction::     Subtraction builtins.
+* cctypes arithmetics multiplication::  Multiplication builtins.
+* cctypes arithmetics division::        Division builtins.
+* cctypes arithmetics remainder::       Remainder builtins.
+* cctypes arithmetics negation::        Negation builtins.
+* cctypes arithmetics inversion::       Inversion builtins.
+* cctypes arithmetics incrdecr::        Increment and decrement builtins.
 @end menu
 
 @c page
-@node types arithmetics addition
+@node cctypes arithmetics addition
 @subsection Addition builtins
 
 
@@ -2086,7 +2086,7 @@ Perform the addition between values of type @code{\STEM\}.
 @MmuxDefineTypeAdditionBuiltin{wint}
 
 @c page
-@node types arithmetics subtraction
+@node cctypes arithmetics subtraction
 @subsection Subtraction builtins
 
 
@@ -2177,7 +2177,7 @@ Perform the subtraction between values of type @code{\STEM\}.
 @MmuxDefineTypeSubtractionBuiltin{wint}
 
 @c page
-@node types arithmetics multiplication
+@node cctypes arithmetics multiplication
 @subsection Multiplication builtins
 
 
@@ -2268,7 +2268,7 @@ Perform the multiplication between values of type @code{\STEM\}.
 @MmuxDefineTypeMultiplicationBuiltin{wint}
 
 @c page
-@node types arithmetics division
+@node cctypes arithmetics division
 @subsection Division builtins
 
 
@@ -2359,7 +2359,7 @@ Perform the division between values of type @code{\STEM\}.
 @MmuxDefineTypeDivisionBuiltin{wint}
 
 @c page
-@node types arithmetics remainder
+@node cctypes arithmetics remainder
 @subsection Remainder builtins
 
 
@@ -2419,7 +2419,7 @@ Perform the remainder between values of type @code{\STEM\}.
 @MmuxDefineTypeRemainderBuiltin{wint}
 
 @c page
-@node types arithmetics negation
+@node cctypes arithmetics negation
 @subsection Negation builtins
 
 
@@ -2509,7 +2509,7 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{wint}
 
 @c page
-@node types arithmetics inversion
+@node cctypes arithmetics inversion
 @subsection Inversion builtins
 
 
@@ -2596,7 +2596,7 @@ Perform the inversion of a value of type @code{\STEM\}.
 @MmuxDefineTypeInversionBuiltin{wint}
 
 @c page
-@node types arithmetics incrdecr
+@node cctypes arithmetics incrdecr
 @subsection Increment and decrement builtins
 
 
@@ -2643,7 +2643,7 @@ Increment or decrement @var{OP}, store the result in the shell variable @var{ROP
 @MmuxDefineTypeIncrdecrBuiltin{wint}
 
 @c page
-@node types mathematics
+@node cctypes mathematics
 @section Mathematics operation builtins
 
 
@@ -2756,7 +2756,7 @@ Compute the named C function.
 @end ignore
 
 @c page
-@node types bitwise
+@node cctypes bitwise
 @section Bitwise operation builtins
 
 
@@ -2765,16 +2765,16 @@ be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for compl
 operations are implemented for every supported data type.
 
 @menu
-* types bitwise and::           Bitwise AND operation.
-* types bitwise or::            Bitwise OR operation.
-* types bitwise xor::           Bitwise XOR operation.
-* types bitwise not::           Bitwise NOT operation.
-* types bitwise shl::           Bitwise shift--left operation.
-* types bitwise shr::           Bitwise shift--right operation.
+* cctypes bitwise and::         Bitwise AND operation.
+* cctypes bitwise or::          Bitwise OR operation.
+* cctypes bitwise xor::         Bitwise XOR operation.
+* cctypes bitwise not::         Bitwise NOT operation.
+* cctypes bitwise shl::         Bitwise shift--left operation.
+* cctypes bitwise shr::         Bitwise shift--right operation.
 @end menu
 
 @c page
-@node types bitwise and
+@node cctypes bitwise and
 @subsection Bitwise AND operation
 
 
@@ -2849,7 +2849,7 @@ Perform the bitwise AND operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseAndBuiltin{wint}
 
 @c page
-@node types bitwise or
+@node cctypes bitwise or
 @subsection Bitwise OR operation
 
 
@@ -2924,7 +2924,7 @@ Perform the bitwise OR operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseOrBuiltin{wint}
 
 @c page
-@node types bitwise xor
+@node cctypes bitwise xor
 @subsection Bitwise XOR operation
 
 
@@ -2999,7 +2999,7 @@ Perform the bitwise XOR operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseXorBuiltin{wint}
 
 @c page
-@node types bitwise not
+@node cctypes bitwise not
 @subsection Bitwise NOT operation
 
 
@@ -3068,7 +3068,7 @@ Perform the bitwise NOT operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseNotBuiltin{wint}
 
 @c page
-@node types bitwise shl
+@node cctypes bitwise shl
 @subsection Bitwise shift--left operation
 
 
@@ -3122,7 +3122,7 @@ Perform the bitwise shift--left operation on an operand of type \STEM\.
 @MmuxDefineTypeBitwiseShlBuiltin{wint}
 
 @c page
-@node types bitwise shr
+@node cctypes bitwise shr
 @subsection Bitwise shift--right operation
 
 
@@ -3176,16 +3176,16 @@ Perform the bitwise shift--right operation on an operand of type \STEM\.
 @MmuxDefineTypeBitwiseShrBuiltin{wint}
 
 @c page
-@node types formats
+@node cctypes formats
 @section Input and output formats
 
 
 @menu
-* types formats float::         Selecting the printing format for floating--point numbers.
+* cctypes formats float::       Selecting the printing format for floating--point numbers.
 @end menu
 
 @c page
-@node types formats float
+@node cctypes formats float
 @subsection Selecting the printing format for floating--point numbers
 
 
