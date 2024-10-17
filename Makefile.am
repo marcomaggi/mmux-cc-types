@@ -168,6 +168,7 @@ endif
 #### libraries
 
 EXTRA_DIST	+= \
+	src/mmux-cc-types.h.m4				\
 	src/mmux-bash-pointers.h.m4			\
 	src/mmux-bash-pointers-internals.h.m4		\
 	src/mmux-bash-pointers-accessors.c.m4		\
@@ -189,6 +190,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-type-functions.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
+	src/mmux-cc-types.h				\
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-accessors.c		\
@@ -219,7 +221,10 @@ mmux_bash_pointers_AGE			= @mmux_bash_pointers_VERSION_INTERFACE_AGE@
 mmux_bash_pointers_LINKER_VERSION	= \
 	-version-info $(mmux_bash_pointers_CURRENT):$(mmux_bash_pointers_REVISION):$(mmux_bash_pointers_AGE)
 
-include_HEADERS				= src/mmux-bash-pointers.h src/mmux-bash-pointers-config.h
+include_HEADERS				= \
+	src/mmux-cc-types.h				\
+	src/mmux-bash-pointers.h			\
+	src/mmux-bash-pointers-config.h
 
 lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
@@ -229,6 +234,7 @@ if WANT_LIBDFP
 libmmux_bash_pointers_la_LIBADD		= libmmux-bash-pointers-libdfp.la
 endif
 libmmux_bash_pointers_la_SOURCES	= \
+	src/mmux-cc-types.h				\
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h			\
 	src/mmux-bash-pointers-internals.h		\
@@ -260,7 +266,7 @@ src/%.h: src/%.h.m4 $(MMUX_M4_CC_MACROS)
 src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
-src/%.$(OBJEXT): src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
+src/%.$(OBJEXT): src/mmux-cc-types.h src/mmux-bash-pointers.h src/mmux-bash-pointers-internals.h src/mmux-bash-pointers-config.h
 
 
 #### tests

@@ -38,9 +38,9 @@ regex_t mmux_bash_pointers_complex_rex;
  ** ----------------------------------------------------------------- */
 
 mmux_bash_rv_t
-mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
-					 mmux_sintmax_t target_min, mmux_sintmax_t target_max,
-					 char const * target_type_name, char const * caller_name)
+mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
+				    mmux_sintmax_t target_min, mmux_sintmax_t target_max,
+				    char const * target_type_name, char const * caller_name)
 {
   mmux_sintmax_t	rv;
   char const *		s_source_beg;
@@ -110,9 +110,9 @@ mmux_bash_pointers_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s
  ** ----------------------------------------------------------------- */
 
 mmux_bash_rv_t
-mmux_bash_pointers_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
-					   mmux_uintmax_t target_max,
-					   char const * target_type_name, char const * caller_name)
+mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
+				      mmux_uintmax_t target_max,
+				      char const * target_type_name, char const * caller_name)
 {
   mmux_uintmax_t	rv;
   char const *		s_source_beg;
@@ -357,9 +357,7 @@ mmux_$1_parse (mmux_$1_t * p_dest, char const * s_source, char const * caller_na
   mmux_sintmax_t	value;
   int			rv;
 
-  rv = mmux_bash_pointers_parse_signed_integer(&value, s_source,
-					       mmux_$1_minimum(), mmux_$1_maximum(),
-					       "$1", caller_name);
+  rv = mmux_cc_types_parse_signed_integer(&value, s_source, mmux_$1_minimum(), mmux_$1_maximum(), "$1", caller_name);
   if (MMUX_SUCCESS == rv) {
     *p_dest = (mmux_$1_t)value;
   }
@@ -447,9 +445,7 @@ mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name
   mmux_uintmax_t	value;
   int			rv;
 
-  rv = mmux_bash_pointers_parse_unsigned_integer(&value, s_arg,
-						 (mmux_uintmax_t) mmux_$1_maximum(),
-						 "$1", caller_name);
+  rv = mmux_cc_types_parse_unsigned_integer(&value, s_arg, (mmux_uintmax_t) mmux_$1_maximum(), "$1", caller_name);
   if (MMUX_SUCCESS == rv) {
     *p_value = (mmux_$1_t)value;
   }
