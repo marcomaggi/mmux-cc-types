@@ -141,7 +141,6 @@
  ** Constants and variables.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_types_private_decl regex_t mmux_bash_pointers_complex_rex;
 
 
 /** --------------------------------------------------------------------

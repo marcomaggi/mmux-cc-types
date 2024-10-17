@@ -210,7 +210,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
   [src/mmux-bash-pointers-config.h]
   [src/mmux-cc-types-config.h]
-  [src/m4/config.m4]
+  [src/m4/mmux-bash-pointers-config.m4]
+  [src/m4/mmux-cc-types-config.m4]
   [doc/mmux-version.texi]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])

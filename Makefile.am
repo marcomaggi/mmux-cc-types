@@ -21,31 +21,31 @@ MBFLPP_PROG_FLAGS	+= --define=__LIBMBFL_LINKER__=$(MBFL_LIBMBFL_LINKER) --add-ba
 MBFLPP_PROG_ENV		= MBFL_LIBRARY_PATH=$(builddir)/src/share/mbfl; export MBFL_LIBRARY_PATH;
 MBFLPP_PROG_RUN		= $(MBFLPP_PROG_ENV) $(MBFLPP) $(MBFLPP_PROG_FLAGS) $(MBFLPP_FLAGS)
 
-## ------------------------------------------------------------------------
+
+#### GNU m4 macros
+
+EXTRA_DIST		+= \
+	$(top_srcdir)/src/m4/macros-for-cc.m4	\
+	$(top_srcdir)/src/m4/macros-for-bash.m4	\
+	$(top_srcdir)/src/m4/mmux-bash-pointers-config.m4.in
+	$(top_srcdir)/src/m4/mmux-cc-types-config.m4.in
 
 MMUX_M4_FLAGS		=  $(M4FLAGS) --prefix-builtins --include=$(srcdir)/src/m4/
 MMUX_M4_FLAGS		+= --include=$(builddir)/src/ --include=$(builddir)/src/m4
-
-MMUX_M4_MACROS		= \
-	$(top_srcdir)/src/m4/macros-for-cc.m4	\
-	$(top_srcdir)/src/m4/macros-for-bash.m4	\
-	$(top_srcdir)/src/m4/config.m4.in
-
-EXTRA_DIST		+= $(MMUX_M4_MACROS)
 
 # These  are  used  to  preprocess C  language  files  with  extension
 # ".c.m4".  Do not change the order of inclusion!!!
 #
 MMUX_M4_CC_MACROS	= \
 	$(top_srcdir)/src/m4/macros-for-cc.m4	\
-	$(builddir)/src/m4/config.m4
+	$(builddir)/src/m4/mmux-cc-types-config.m4
 
 # These  are  used  to  preprocess   GNU  Bash  files  with  extension
 # ".bash.m4".  Do not change the order of inclusion!!!
 #
 MMUX_M4_BASH_MACROS	= \
 	$(top_srcdir)/src/m4/macros-for-bash.m4	\
-	$(builddir)/src/m4/config.m4
+	$(builddir)/src/m4/mmux-bash-pointers-config.m4
 
 
 #### Automake dirstamp files
