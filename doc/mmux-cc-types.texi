@@ -1380,10 +1380,9 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 
 
 @macro MmuxDefineTypePredicateZeroBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_zero @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents a
-zero number; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_zero (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is zero; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1460,10 +1459,9 @@ zero number; otherwise return false.
 
 
 @macro MmuxDefineTypePredicatePositiveBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_positive @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents a
-positive number; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_positive (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is positive; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1525,10 +1523,9 @@ positive number; otherwise return false.
 
 
 @macro MmuxDefineTypePredicateNegativeBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_negative @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents a
-negative number; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_negative (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is negative; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1598,10 +1595,9 @@ negative number; otherwise return false.
 
 
 @macro MmuxDefineTypePredicateNonPositiveBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_non_positive @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents a
-non--positive number; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_non_positive (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is non--positive; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1662,10 +1658,9 @@ non--positive number; otherwise return false.
 
 
 @macro MmuxDefineTypePredicateNonNegativeBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_non_negative @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents a
-non--negative number; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_non_negative (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is non--negative; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1726,10 +1721,9 @@ non--negative number; otherwise return false.
 
 
 @macro MmuxDefineTypePredicateNanBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_nan @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents a
-not--a--number value; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is not--a--number; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1806,10 +1800,9 @@ not--a--number value; otherwise return false.
 
 
 @macro MmuxDefineTypePredicateInfiniteBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_is_infinite @var{OP}
-Return true if @var{OP} is a valid string representation for the C language type and it represents
-an infinite number; otherwise return false.
-@end deffn
+@deftypefun bool mmux_\STEM\_is_infinite (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is infinite; otherwise return @cfalse{}.
+@end deftypefun
 
 @end macro
 
@@ -1943,22 +1936,22 @@ mandatory):
 
 
 @macro MmuxDefineTypeComparisonExactBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_\STEM\_greater @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_\STEM\_lesser @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_\STEM\_greater_equal @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_\STEM\_lesser_equal @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_\STEM\_greater @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_\STEM\_lesser @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_\STEM\_greater_equal @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_\STEM\_lesser_equal @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between values of type @objtype{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineTypeComparisonExactComplexBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between values of type @objtype{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2058,30 +2051,30 @@ function doit () @{
 @end example
 
 
-@deffn Builtin mmux_float_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_double_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_ldouble_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexld_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float128_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float32x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float64x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float128x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_decimal32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_decimal64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_decimal128_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf128_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf32x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf64x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf128x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd128_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_float_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_double_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_ldouble_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexld_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float128_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float32x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float64x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float128x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_decimal32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_decimal64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_decimal128_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf128_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf32x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf64x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf128x_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd32_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd64_equal_absmargin @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd128_equal_absmargin @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between operands of the named type; when the comparison predicate
 is satisfied: return true; otherwise return false.
 
@@ -2107,7 +2100,7 @@ abs(@varo{OP_IM} - @var{OP_IM}) <= abs(@var{MARGIN_IM})
 where: @var{MARGIN} is the value read from the shell variable @env{ABSOLUTE_MARGIN_STEM};
 @code{STEM} is the stem of the numerical type; @varo{OP_RE}, @var{OP_RE}, @var{MARGIN_RE} are the
 real parts; @varo{OP_IM}, @var{OP_IM}, @var{MARGIN_IM} are the imaginary parts.
-@end deffn
+@end deftypefun
 
 
 @defvar ABSOLUTE_MARGIN_FLOAT
@@ -2163,30 +2156,30 @@ function doit () @{
 @end example
 
 
-@deffn Builtin mmux_float_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_double_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_ldouble_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexld_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_float128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_decimal32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_decimal64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_decimal128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexf128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_complexd128_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_float_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_double_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_ldouble_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexld_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float128_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_float128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_decimal32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_decimal64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_decimal128_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf128_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexf128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd32_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd64_equal_relepsilon @varo{OP} @var{OP} @dots{}
+@deftypefunx Builtin mmux_complexd128_equal_relepsilon @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between operands of the named type; when the comparison predicate
 is satisfied: return true; otherwise return false.
 
@@ -2212,7 +2205,7 @@ abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * max(abs(@varo{OP_IM}), ab
 where: @var{EPSILON} is the value read from the shell variable @env{RELATIVE_EPSILON_STEM};
 @code{STEM} is the stem of the numerical type; @varo{OP_RE}, @var{OP_RE}, @var{EPSILON_RE} are the
 real parts; @varo{OP_IM}, @var{OP_IM}, @var{EPSILON_IM} are the imaginary parts.
-@end deffn
+@end deftypefun
 
 
 @defvar RELATIVE_EPSILON_FLOAT
@@ -2276,7 +2269,7 @@ bitwise operations are implemented for every supported data type.
 @section Addition builtins
 
 
-@deffn Builtin mmux_pointer_add @var{PTRVAR} @var{PTR} @var{DELTA}
+@deftypefun Builtin mmux_pointer_add @var{PTRVAR} @var{PTR} @var{DELTA}
 Perform the addition between @var{PTR} and @var{DELTA}, then store a string representation of the
 result in the variable @var{PTRVAR}; when successful: return true, otherwise return false and set
 the shell variable @code{ERRNO} to the string representation of an exact integer, itself
@@ -2286,7 +2279,7 @@ The argument @var{PTR} must be the string representation of a pointer.
 
 The argument @var{DELTA} must be the string representation of an exact number, in the range of the C
 language type @objtype{ptrdiff_t}.
-@end deffn
+@end deftypefun
 
 
 For the following builtins, the addition operation is as follows:
@@ -2308,9 +2301,9 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeAdditionBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_add @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_add @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the addition between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2403,9 +2396,9 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeSubtractionBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_sub @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_sub @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the subtraction between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2494,9 +2487,9 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeMultiplicationBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the multiplication between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2585,9 +2578,9 @@ only @varo{OP} is present: the result is @varo{OP} itself.
 
 
 @macro MmuxDefineTypeDivisionBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_div @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_div @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the division between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2672,9 +2665,9 @@ The arguments @var{OP} must be string representations of values of the specific 
 
 
 @macro MmuxDefineTypeRemainderBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_mod @var{ROPVAR} @vari{OP} @varii{OP}
+@deftypefun Builtin mmux_\STEM\_mod @var{ROPVAR} @vari{OP} @varii{OP}
 Perform the remainder between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2735,9 +2728,9 @@ undefined; this will be fixed in the future, probably@dots{}
 
 
 @macro MmuxDefineTypeNegationBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_neg @var{ROPVAR} @var{OP}
+@deftypefun Builtin mmux_\STEM\_neg @var{ROPVAR} @var{OP}
 Perform the negation of a value of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2822,9 +2815,9 @@ The argument @var{OP} must be a string representation of a value of the specific
 
 
 @macro MmuxDefineTypeInversionBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_inv @var{ROPVAR} @var{OP}
+@deftypefun Builtin mmux_\STEM\_inv @var{ROPVAR} @var{OP}
 Perform the inversion of a value of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2895,10 +2888,10 @@ Perform the inversion of a value of type @code{\STEM\}.
 
 
 @macro MmuxDefineTypeIncrdecrBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_incr @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_decr @var{ROPVAR} @var{OP}
+@deftypefun Builtin mmux_\STEM\_incr @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_decr @var{ROPVAR} @var{OP}
 Increment or decrement @var{OP}, store the result in the shell variable @var{ROPVAR}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -2944,70 +2937,70 @@ Increment or decrement @var{OP}, store the result in the shell variable @var{ROP
 All the following builtins compute a value and store its string representation in @var{ROPVAR}.
 
 @macro MmuxDefineMathRealBuiltins{STEM}
-@deffn Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
-@deffnx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_exp2 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_exp10 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_log2 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_logb @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_cbrt @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_hypot @var{ROPVAR} @vari{OP} @vari{OP}
-@deffnx Builtin mmux_\STEM\_expm1 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_log1p @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_erf @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_erfc @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_lgamma @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_tgamma @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_j0 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_j1 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_jn @var{ROPVAR} @var{SINT_N} @var{OP}
-@deffnx Builtin mmux_\STEM\_y0 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_y1 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_yn @var{ROPVAR} @var{SINT_N} @var{OP}
+@deftypefun Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
+@deftypefunx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_exp2 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_exp10 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_log2 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_logb @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_cbrt @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_hypot @var{ROPVAR} @vari{OP} @vari{OP}
+@deftypefunx Builtin mmux_\STEM\_expm1 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_log1p @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_erf @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_erfc @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_lgamma @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_tgamma @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_j0 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_j1 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_jn @var{ROPVAR} @var{SINT_N} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_y0 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_y1 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_yn @var{ROPVAR} @var{SINT_N} @var{OP}
 Compute the named C function.
-@end deffn
+@end deftypefun
 
 @end macro
 
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineMathComplexBuiltins{STEM}
-@deffn Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
-@deffnx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
+@deftypefun Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
+@deftypefunx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
+@deftypefunx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
 Compute the named C function.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3072,7 +3065,7 @@ operations are implemented for every supported data type.
 @section Bitwise AND operation
 
 
-@deffn Builtin mmux_pointer_bitwise_and @var{PTRVAR} @var{PTR} @var{MASK}
+@deftypefun Builtin mmux_pointer_bitwise_and @var{PTRVAR} @var{PTR} @var{MASK}
 Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
 AND operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
@@ -3081,7 +3074,7 @@ exact integer, itself representing an @code{errno} error code.
 The argument @var{PTR} must be the string representation of a pointer value.
 
 The argument @var{MASK} must be the string representation of a number of type @objtype{uintptr_t}.
-@end deffn
+@end deftypefun
 
 
 For the following builtins, the bitwise AND operation is as follows:
@@ -3102,9 +3095,9 @@ The arguments @var{OP} must be string representations of values of the specific 
 only @varo{OP} is present: the result is @varo{OP} itself.
 
 @macro MmuxDefineTypeBitwiseAndBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_bitwise_and @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_bitwise_and @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the bitwise AND operation between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3147,7 +3140,7 @@ Perform the bitwise AND operation between values of type @code{\STEM\}.
 @section Bitwise OR operation
 
 
-@deffn Builtin mmux_pointer_bitwise_or @var{PTRVAR} @var{PTR} @var{MASK}
+@deftypefun Builtin mmux_pointer_bitwise_or @var{PTRVAR} @var{PTR} @var{MASK}
 Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
 OR operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
@@ -3156,7 +3149,7 @@ exact integer, itself representing an @code{errno} error code.
 The argument @var{PTR} must be the string representation of a pointer value.
 
 The argument @var{MASK} must be the string representation of a number of type @objtype{uintptr_t}.
-@end deffn
+@end deftypefun
 
 
 For the following builtins, the bitwise OR operation is as follows:
@@ -3177,9 +3170,9 @@ The arguments @var{OP} must be string representations of values of the specific 
 only @varo{OP} is present: the result is @varo{OP} itself.
 
 @macro MmuxDefineTypeBitwiseOrBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_bitwise_or @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_bitwise_or @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the bitwise OR operation between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3222,7 +3215,7 @@ Perform the bitwise OR operation between values of type @code{\STEM\}.
 @section Bitwise XOR operation
 
 
-@deffn Builtin mmux_pointer_bitwise_xor @var{PTRVAR} @var{PTR} @var{MASK}
+@deftypefun Builtin mmux_pointer_bitwise_xor @var{PTRVAR} @var{PTR} @var{MASK}
 Compose a pointer value @var{PTR} with the exact unsigned integer value @var{MASK} using the bitwise
 XOR operation, then store the result in the variable @var{ROPVAR}; when successful: return true,
 otherwise return false and set the shell variable @code{ERRNO} to the string representation of an
@@ -3231,7 +3224,7 @@ exact integer, itself representing an @code{errno} error code.
 The argument @var{PTR} must be the string representation of a pointer value.
 
 The argument @var{MASK} must be the string representation of a number of type @objtype{uintptr_t}.
-@end deffn
+@end deftypefun
 
 
 For the following builtins, the bitwise XOR operation is as follows:
@@ -3252,9 +3245,9 @@ The arguments @var{OP} must be string representations of values of the specific 
 only @varo{OP} is present: the result is @varo{OP} itself.
 
 @macro MmuxDefineTypeBitwiseXorBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_bitwise_xor @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deftypefun Builtin mmux_\STEM\_bitwise_xor @var{ROPVAR} @varo{OP} @var{OP} @dots{}
 Perform the bitwise XOR operation between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3297,14 +3290,14 @@ Perform the bitwise XOR operation between values of type @code{\STEM\}.
 @section Bitwise NOT operation
 
 
-@deffn Builtin mmux_pointer_bitwise_not @var{PTRVAR} @var{PTR}
+@deftypefun Builtin mmux_pointer_bitwise_not @var{PTRVAR} @var{PTR}
 Perform the bitwise NOT operation on a pointer value @var{PTR}, then store the result in the
 variable @var{ROPVAR}; when successful: return true, otherwise return false and set the shell
 variable @code{ERRNO} to the string representation of an exact integer, itself representing an
 @code{errno} error code.
 
 The argument @var{PTR} must be the string representation of a pointer value.
-@end deffn
+@end deftypefun
 
 
 For the following builtins, the bitwise NOT operation is as follows:
@@ -3321,9 +3314,9 @@ string representation of an exact integer, itself representing an @code{errno} e
 The argument @var{OP} must be a string representation of a value of the specific builtin type.
 
 @macro MmuxDefineTypeBitwiseNotBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_bitwise_not @var{ROPVAR} @varo{OP}
+@deftypefun Builtin mmux_\STEM\_bitwise_not @var{ROPVAR} @varo{OP}
 Perform the bitwise NOT operation between values of type @code{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3375,9 +3368,9 @@ The argument @var{NBITS} must be the string representation of a @objtype{sint}.
 
 
 @macro MmuxDefineTypeBitwiseShlBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_bitwise_shl @var{ROPVAR} @var{OP} @var{NBITS}
+@deftypefun Builtin mmux_\STEM\_bitwise_shl @var{ROPVAR} @var{OP} @var{NBITS}
 Perform the bitwise shift--left operation on an operand of type \STEM\.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3429,9 +3422,9 @@ The argument @var{NBITS} must be the string representation of a @objtype{sint}.
 
 
 @macro MmuxDefineTypeBitwiseShrBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_bitwise_shr @var{ROPVAR} @var{OP} @var{NBITS}
+@deftypefun Builtin mmux_\STEM\_bitwise_shr @var{ROPVAR} @var{OP} @var{NBITS}
 Perform the bitwise shift--right operation on an operand of type \STEM\.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3553,13 +3546,13 @@ formats like @samp{%0e}.
 @c ------------------------------------------------------------------------
 
 @macro MmuxRealSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
-@deffn Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
-@deffnx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
-@deffnx Builtin mmux_\STEM\_ref_format @var{CURRENT_FORMAT_VAR}
-@deffnx Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
+@deftypefun Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
+@deftypefunx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
+@deftypefunx Builtin mmux_\STEM\_ref_format @var{CURRENT_FORMAT_VAR}
+@deftypefunx Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
 Select or retrieve the format for string representations of floating--point numbers of type
 @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
@@ -3582,9 +3575,9 @@ Select or retrieve the format for string representations of floating--point numb
 @c ------------------------------------------------------------------------
 
 @macro MmuxComplexReformatBuiltin{STEM}
-@deffn Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
+@deftypefun Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
 Reformat a complex floating--point number of type @objtype{\STEM\}.
-@end deffn
+@end deftypefun
 
 @end macro
 
