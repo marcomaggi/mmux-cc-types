@@ -96,7 +96,7 @@ done
 
     for STEM in "${INTEGER_STEMS[@]}"
     do
-	for ITEM in add sub mul div mod neg inv incr decr
+	for ITEM in add sub mul div mod neg inv incr decr abs
 	do
 	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"
@@ -105,7 +105,7 @@ done
 
     for STEM in "${FLOAT_STEMS[@]}"
     do
-	for ITEM in add sub mul div neg inv
+	for ITEM in add sub mul div neg inv abs
 	do
 	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"

@@ -775,7 +775,6 @@ Global variables holding the maximum and minimum values of the C language type @
 @menu
 * cctypes complex make::        Constructing complex numbers.
 * cctypes complex parts::       Extracting the real and imaginary parts.
-* cctypes complex abs::         Computing the absolute value.
 * cctypes complex arg::         Computing the argument value.
 * cctypes complex conj::        Computing the complex conjugate value.
 @end menu
@@ -863,46 +862,6 @@ variable @var{REPVAR} or @var{IMPVAR}.
 @MmuxDefineComplexRealImagPartBuiltin{complexd32, decimal32}
 @MmuxDefineComplexRealImagPartBuiltin{complexd64, decimal64}
 @MmuxDefineComplexRealImagPartBuiltin{complexd128, decimal128}
-
-@c page
-@node cctypes complex abs
-@subsection Computing the absolute value
-
-
-To compute the absolute value of a complex number, we do:
-
-@example
-declare Z='(1.2)+i* types(3.4)' A
-
-mmux_complexd_abs A "$Z"
-"$A"    @result{} 3.605551275463989
-@end example
-
-
-@macro MmuxDefineComplexAbsBuiltin{CPLXSTEM,REALSTEM}
-@deffn Builtin mmux_\CPLXSTEM\_abs @var{ABSVAR} @var{OP}
-Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the complex number
-@var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell variable
-@var{ABSVAR}.
-@end deffn
-
-@end macro
-
-@MmuxDefineComplexAbsBuiltin{complexf, float}
-@MmuxDefineComplexAbsBuiltin{complexd, double}
-@MmuxDefineComplexAbsBuiltin{complexld, ldouble}
-
-@MmuxDefineComplexAbsBuiltin{complexf32, float32}
-@MmuxDefineComplexAbsBuiltin{complexf64, float64}
-@MmuxDefineComplexAbsBuiltin{complexf128, float128}
-
-@MmuxDefineComplexAbsBuiltin{complexf32x, float32x}
-@MmuxDefineComplexAbsBuiltin{complexf64x, float64x}
-@MmuxDefineComplexAbsBuiltin{complexf128x, float128x}
-
-@MmuxDefineComplexAbsBuiltin{complexd32, decimal32}
-@MmuxDefineComplexAbsBuiltin{complexd64, decimal64}
-@MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
 
 @c page
 @node cctypes complex arg
@@ -1975,6 +1934,7 @@ bitwise operations are implemented for every supported data type.
 * cctypes arithmetics negation::        Negation builtins.
 * cctypes arithmetics inversion::       Inversion builtins.
 * cctypes arithmetics incrdecr::        Increment and decrement builtins.
+* cctypes arithmetics abs::             Absolute value.
 @end menu
 
 @c page
@@ -2641,6 +2601,105 @@ Increment or decrement @var{OP}, store the result in the shell variable @var{ROP
 @MmuxDefineTypeIncrdecrBuiltin{gid}
 @MmuxDefineTypeIncrdecrBuiltin{wchar}
 @MmuxDefineTypeIncrdecrBuiltin{wint}
+
+@c page
+@node cctypes arithmetics abs
+@subsection Absolute value
+
+
+To compute the absolute value of a complex number, we do:
+
+@example
+declare Z='(1.2)+i* types(3.4)' A
+
+mmux_complexd_abs A "$Z"
+"$A"    @result{} 3.605551275463989
+@end example
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineTypeAbsBuiltin{STEM}
+@deffn Builtin mmux_\STEM\_abs @var{ROPVAR} @var{OP}
+Compute the absolute value of @var{OP}, store the result in the shell variable @var{ROPVAR}.
+@end deffn
+
+@end macro
+
+@macro MmuxDefineComplexAbsBuiltin{CPLXSTEM,REALSTEM}
+@deffn Builtin mmux_\CPLXSTEM\_abs @var{ABSVAR} @var{OP}
+Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the complex number
+@var{OP}, which must be of type @objtype{\CPLXSTEM\}, and store the result in the shell variable
+@var{ABSVAR}.
+@end deffn
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineTypeAbsBuiltin{schar}
+@MmuxDefineTypeAbsBuiltin{uchar}
+@MmuxDefineTypeAbsBuiltin{sshort}
+@MmuxDefineTypeAbsBuiltin{ushort}
+@MmuxDefineTypeAbsBuiltin{sint}
+@MmuxDefineTypeAbsBuiltin{uint}
+@MmuxDefineTypeAbsBuiltin{slong}
+@MmuxDefineTypeAbsBuiltin{ulong}
+@MmuxDefineTypeAbsBuiltin{sllong}
+@MmuxDefineTypeAbsBuiltin{ullong}
+@MmuxDefineTypeAbsBuiltin{float}
+@MmuxDefineTypeAbsBuiltin{double}
+@MmuxDefineTypeAbsBuiltin{ldouble}
+
+@MmuxDefineTypeAbsBuiltin{float32}
+@MmuxDefineTypeAbsBuiltin{float64}
+@MmuxDefineTypeAbsBuiltin{float128}
+
+@MmuxDefineTypeAbsBuiltin{float32x}
+@MmuxDefineTypeAbsBuiltin{float64x}
+@MmuxDefineTypeAbsBuiltin{float128x}
+
+@MmuxDefineTypeAbsBuiltin{decimal32}
+@MmuxDefineTypeAbsBuiltin{decimal64}
+@MmuxDefineTypeAbsBuiltin{decimal128}
+
+@MmuxDefineComplexAbsBuiltin{complexf, float}
+@MmuxDefineComplexAbsBuiltin{complexd, double}
+@MmuxDefineComplexAbsBuiltin{complexld, ldouble}
+
+@MmuxDefineComplexAbsBuiltin{complexf32, float32}
+@MmuxDefineComplexAbsBuiltin{complexf64, float64}
+@MmuxDefineComplexAbsBuiltin{complexf128, float128}
+
+@MmuxDefineComplexAbsBuiltin{complexf32x, float32x}
+@MmuxDefineComplexAbsBuiltin{complexf64x, float64x}
+@MmuxDefineComplexAbsBuiltin{complexf128x, float128x}
+
+@MmuxDefineComplexAbsBuiltin{complexd32, decimal32}
+@MmuxDefineComplexAbsBuiltin{complexd64, decimal64}
+@MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
+
+@MmuxDefineTypeAbsBuiltin{sint8}
+@MmuxDefineTypeAbsBuiltin{uint8}
+@MmuxDefineTypeAbsBuiltin{sint16}
+@MmuxDefineTypeAbsBuiltin{uint16}
+@MmuxDefineTypeAbsBuiltin{sint32}
+@MmuxDefineTypeAbsBuiltin{uint32}
+@MmuxDefineTypeAbsBuiltin{sint64}
+@MmuxDefineTypeAbsBuiltin{uint64}
+
+@MmuxDefineTypeAbsBuiltin{ssize}
+@MmuxDefineTypeAbsBuiltin{usize}
+@MmuxDefineTypeAbsBuiltin{sintmax}
+@MmuxDefineTypeAbsBuiltin{uintmax}
+@MmuxDefineTypeAbsBuiltin{sintptr}
+@MmuxDefineTypeAbsBuiltin{uintptr}
+@MmuxDefineTypeAbsBuiltin{mode}
+@MmuxDefineTypeAbsBuiltin{off}
+@MmuxDefineTypeAbsBuiltin{pid}
+@MmuxDefineTypeAbsBuiltin{uid}
+@MmuxDefineTypeAbsBuiltin{gid}
+@MmuxDefineTypeAbsBuiltin{wchar}
+@MmuxDefineTypeAbsBuiltin{wint}
 
 @c page
 @node cctypes mathematics
