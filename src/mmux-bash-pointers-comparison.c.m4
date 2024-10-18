@@ -68,9 +68,9 @@ m4_dnl $2 - preprocessor symbol for conditional definition
 m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTINS]]],[[[
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[equal]]],		[[[$2]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[greater]]],		[[[$2]]])
-MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[lesser]]],		[[[$2]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[less]]],		[[[$2]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[greater_equal]]],	[[[$2]]])
-MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[lesser_equal]]],	[[[$2]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[less_equal]]],	[[[$2]]])
 ]]])
 
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[pointer]]])

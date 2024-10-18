@@ -60,12 +60,12 @@ function comparison-pointer-greater-1.6       () { ! mmux_pointer_greater '0x111
 
 ### ------------------------------------------------------------------------
 
-function comparison-pointer-lesser-1.1        ()  {   mmux_pointer_lesser '0x900'		      ;}
-function comparison-pointer-lesser-1.2        ()  {   mmux_pointer_lesser '0x800' '0x900'	      ;}
-function comparison-pointer-lesser-1.3        ()  {   mmux_pointer_lesser '0x700' '0x800' '0x900'     ;}
-function comparison-pointer-lesser-1.4        ()  { ! mmux_pointer_lesser '0x333' '0x111' 	      ;}
-function comparison-pointer-lesser-1.5        ()  { ! mmux_pointer_lesser '0x333' '0x999' '0x555'     ;}
-function comparison-pointer-lesser-1.6        ()  { ! mmux_pointer_lesser '0x111' '0x111' 	      ;}
+function comparison-pointer-less-1.1        ()  {   mmux_pointer_less '0x900'		      ;}
+function comparison-pointer-less-1.2        ()  {   mmux_pointer_less '0x800' '0x900'	      ;}
+function comparison-pointer-less-1.3        ()  {   mmux_pointer_less '0x700' '0x800' '0x900'     ;}
+function comparison-pointer-less-1.4        ()  { ! mmux_pointer_less '0x333' '0x111' 	      ;}
+function comparison-pointer-less-1.5        ()  { ! mmux_pointer_less '0x333' '0x999' '0x555'     ;}
+function comparison-pointer-less-1.6        ()  { ! mmux_pointer_less '0x111' '0x111' 	      ;}
 
 ### ------------------------------------------------------------------------
 
@@ -78,12 +78,12 @@ function comparison-pointer-greater-equal-1.6 () {   mmux_pointer_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-pointer-lesser-equal-1.1  () {   mmux_pointer_lesser_equal '0x900'			      ;}
-function comparison-pointer-lesser-equal-1.2  () {   mmux_pointer_lesser_equal '0x800' '0x900'		      ;}
-function comparison-pointer-lesser-equal-1.3  () {   mmux_pointer_lesser_equal '0x700' '0x800' '0x900'	      ;}
-function comparison-pointer-lesser-equal-1.4  () { ! mmux_pointer_lesser_equal '0x333' '0x111'		      ;}
-function comparison-pointer-lesser-equal-1.5  () { ! mmux_pointer_lesser_equal '0x333' '0x999' '0x555'	      ;}
-function comparison-pointer-lesser-equal-1.6  () {   mmux_pointer_lesser_equal '0x111' '0x111'		      ;}
+function comparison-pointer-less-equal-1.1  () {   mmux_pointer_less_equal '0x900'			      ;}
+function comparison-pointer-less-equal-1.2  () {   mmux_pointer_less_equal '0x800' '0x900'		      ;}
+function comparison-pointer-less-equal-1.3  () {   mmux_pointer_less_equal '0x700' '0x800' '0x900'	      ;}
+function comparison-pointer-less-equal-1.4  () { ! mmux_pointer_less_equal '0x333' '0x111'		      ;}
+function comparison-pointer-less-equal-1.5  () { ! mmux_pointer_less_equal '0x333' '0x999' '0x555'	      ;}
+function comparison-pointer-less-equal-1.6  () {   mmux_pointer_less_equal '0x111' '0x111'		      ;}
 
 
 #### type variables: schar
@@ -107,13 +107,13 @@ function comparison-schar-greater-1.7       () {   mmux_schar_greater '-11' '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-schar-lesser-1.1        ()  {   mmux_schar_lesser '90' ;}
-function comparison-schar-lesser-1.2        ()  {   mmux_schar_lesser '80' '90' ;}
-function comparison-schar-lesser-1.3        ()  {   mmux_schar_lesser '70' '80' '90' ;}
-function comparison-schar-lesser-1.4        ()  { ! mmux_schar_lesser '33' '11' ;}
-function comparison-schar-lesser-1.5        ()  { ! mmux_schar_lesser '33' '99' '55' ;}
-function comparison-schar-lesser-1.6        ()  { ! mmux_schar_lesser '11' '11' ;}
-function comparison-schar-lesser-1.7        ()  { ! mmux_schar_lesser '-11' '-22' ;}
+function comparison-schar-less-1.1        ()  {   mmux_schar_less '90' ;}
+function comparison-schar-less-1.2        ()  {   mmux_schar_less '80' '90' ;}
+function comparison-schar-less-1.3        ()  {   mmux_schar_less '70' '80' '90' ;}
+function comparison-schar-less-1.4        ()  { ! mmux_schar_less '33' '11' ;}
+function comparison-schar-less-1.5        ()  { ! mmux_schar_less '33' '99' '55' ;}
+function comparison-schar-less-1.6        ()  { ! mmux_schar_less '11' '11' ;}
+function comparison-schar-less-1.7        ()  { ! mmux_schar_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -127,13 +127,13 @@ function comparison-schar-greater-equal-1.7 () {   mmux_schar_greater_equal '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-schar-lesser-equal-1.1  () {   mmux_schar_lesser_equal '90' ;}
-function comparison-schar-lesser-equal-1.2  () {   mmux_schar_lesser_equal '80' '90' ;}
-function comparison-schar-lesser-equal-1.3  () {   mmux_schar_lesser_equal '70' '80' '90' ;}
-function comparison-schar-lesser-equal-1.4  () { ! mmux_schar_lesser_equal '33' '11' ;}
-function comparison-schar-lesser-equal-1.5  () { ! mmux_schar_lesser_equal '33' '99' '55' ;}
-function comparison-schar-lesser-equal-1.6  () {   mmux_schar_lesser_equal '11' '11' ;}
-function comparison-schar-lesser-equal-1.7  () {   mmux_schar_lesser_equal '-33' '-22' '-22' ;}
+function comparison-schar-less-equal-1.1  () {   mmux_schar_less_equal '90' ;}
+function comparison-schar-less-equal-1.2  () {   mmux_schar_less_equal '80' '90' ;}
+function comparison-schar-less-equal-1.3  () {   mmux_schar_less_equal '70' '80' '90' ;}
+function comparison-schar-less-equal-1.4  () { ! mmux_schar_less_equal '33' '11' ;}
+function comparison-schar-less-equal-1.5  () { ! mmux_schar_less_equal '33' '99' '55' ;}
+function comparison-schar-less-equal-1.6  () {   mmux_schar_less_equal '11' '11' ;}
+function comparison-schar-less-equal-1.7  () {   mmux_schar_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uchar
@@ -154,12 +154,12 @@ function comparison-uchar-greater-1.6       () { ! mmux_uchar_greater '11' '11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-uchar-lesser-1.1        ()  {   mmux_uchar_lesser '90' ;}
-function comparison-uchar-lesser-1.2        ()  {   mmux_uchar_lesser '80' '90' ;}
-function comparison-uchar-lesser-1.3        ()  {   mmux_uchar_lesser '70' '80' '90' ;}
-function comparison-uchar-lesser-1.4        ()  { ! mmux_uchar_lesser '33' '11' ;}
-function comparison-uchar-lesser-1.5        ()  { ! mmux_uchar_lesser '33' '99' '55' ;}
-function comparison-uchar-lesser-1.6        ()  { ! mmux_uchar_lesser '11' '11' ;}
+function comparison-uchar-less-1.1        ()  {   mmux_uchar_less '90' ;}
+function comparison-uchar-less-1.2        ()  {   mmux_uchar_less '80' '90' ;}
+function comparison-uchar-less-1.3        ()  {   mmux_uchar_less '70' '80' '90' ;}
+function comparison-uchar-less-1.4        ()  { ! mmux_uchar_less '33' '11' ;}
+function comparison-uchar-less-1.5        ()  { ! mmux_uchar_less '33' '99' '55' ;}
+function comparison-uchar-less-1.6        ()  { ! mmux_uchar_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -172,12 +172,12 @@ function comparison-uchar-greater-equal-1.6 () {   mmux_uchar_greater_equal '11'
 
 ### ------------------------------------------------------------------------
 
-function comparison-uchar-lesser-equal-1.1  () {   mmux_uchar_lesser_equal '90' ;}
-function comparison-uchar-lesser-equal-1.2  () {   mmux_uchar_lesser_equal '80' '90' ;}
-function comparison-uchar-lesser-equal-1.3  () {   mmux_uchar_lesser_equal '70' '80' '90' ;}
-function comparison-uchar-lesser-equal-1.4  () { ! mmux_uchar_lesser_equal '33' '11' ;}
-function comparison-uchar-lesser-equal-1.5  () { ! mmux_uchar_lesser_equal '33' '99' '55' ;}
-function comparison-uchar-lesser-equal-1.6  () {   mmux_uchar_lesser_equal '11' '11' ;}
+function comparison-uchar-less-equal-1.1  () {   mmux_uchar_less_equal '90' ;}
+function comparison-uchar-less-equal-1.2  () {   mmux_uchar_less_equal '80' '90' ;}
+function comparison-uchar-less-equal-1.3  () {   mmux_uchar_less_equal '70' '80' '90' ;}
+function comparison-uchar-less-equal-1.4  () { ! mmux_uchar_less_equal '33' '11' ;}
+function comparison-uchar-less-equal-1.5  () { ! mmux_uchar_less_equal '33' '99' '55' ;}
+function comparison-uchar-less-equal-1.6  () {   mmux_uchar_less_equal '11' '11' ;}
 
 
 #### type variables: sshort
@@ -201,13 +201,13 @@ function comparison-sshort-greater-1.7       () {   mmux_sshort_greater '-11' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sshort-lesser-1.1        ()  {   mmux_sshort_lesser '90' ;}
-function comparison-sshort-lesser-1.2        ()  {   mmux_sshort_lesser '80' '90' ;}
-function comparison-sshort-lesser-1.3        ()  {   mmux_sshort_lesser '70' '80' '90' ;}
-function comparison-sshort-lesser-1.4        ()  { ! mmux_sshort_lesser '33' '11' ;}
-function comparison-sshort-lesser-1.5        ()  { ! mmux_sshort_lesser '33' '99' '55' ;}
-function comparison-sshort-lesser-1.6        ()  { ! mmux_sshort_lesser '11' '11' ;}
-function comparison-sshort-lesser-1.7        ()  { ! mmux_sshort_lesser '-11' '-22' ;}
+function comparison-sshort-less-1.1        ()  {   mmux_sshort_less '90' ;}
+function comparison-sshort-less-1.2        ()  {   mmux_sshort_less '80' '90' ;}
+function comparison-sshort-less-1.3        ()  {   mmux_sshort_less '70' '80' '90' ;}
+function comparison-sshort-less-1.4        ()  { ! mmux_sshort_less '33' '11' ;}
+function comparison-sshort-less-1.5        ()  { ! mmux_sshort_less '33' '99' '55' ;}
+function comparison-sshort-less-1.6        ()  { ! mmux_sshort_less '11' '11' ;}
+function comparison-sshort-less-1.7        ()  { ! mmux_sshort_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -221,13 +221,13 @@ function comparison-sshort-greater-equal-1.7 () {   mmux_sshort_greater_equal '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sshort-lesser-equal-1.1  () {   mmux_sshort_lesser_equal '90' ;}
-function comparison-sshort-lesser-equal-1.2  () {   mmux_sshort_lesser_equal '80' '90' ;}
-function comparison-sshort-lesser-equal-1.3  () {   mmux_sshort_lesser_equal '70' '80' '90' ;}
-function comparison-sshort-lesser-equal-1.4  () { ! mmux_sshort_lesser_equal '33' '11' ;}
-function comparison-sshort-lesser-equal-1.5  () { ! mmux_sshort_lesser_equal '33' '99' '55' ;}
-function comparison-sshort-lesser-equal-1.6  () {   mmux_sshort_lesser_equal '11' '11' ;}
-function comparison-sshort-lesser-equal-1.7  () {   mmux_sshort_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sshort-less-equal-1.1  () {   mmux_sshort_less_equal '90' ;}
+function comparison-sshort-less-equal-1.2  () {   mmux_sshort_less_equal '80' '90' ;}
+function comparison-sshort-less-equal-1.3  () {   mmux_sshort_less_equal '70' '80' '90' ;}
+function comparison-sshort-less-equal-1.4  () { ! mmux_sshort_less_equal '33' '11' ;}
+function comparison-sshort-less-equal-1.5  () { ! mmux_sshort_less_equal '33' '99' '55' ;}
+function comparison-sshort-less-equal-1.6  () {   mmux_sshort_less_equal '11' '11' ;}
+function comparison-sshort-less-equal-1.7  () {   mmux_sshort_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: ushort
@@ -248,12 +248,12 @@ function comparison-ushort-greater-1.6       () { ! mmux_ushort_greater '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-ushort-lesser-1.1        ()  {   mmux_ushort_lesser '90' ;}
-function comparison-ushort-lesser-1.2        ()  {   mmux_ushort_lesser '80' '90' ;}
-function comparison-ushort-lesser-1.3        ()  {   mmux_ushort_lesser '70' '80' '90' ;}
-function comparison-ushort-lesser-1.4        ()  { ! mmux_ushort_lesser '33' '11' ;}
-function comparison-ushort-lesser-1.5        ()  { ! mmux_ushort_lesser '33' '99' '55' ;}
-function comparison-ushort-lesser-1.6        ()  { ! mmux_ushort_lesser '11' '11' ;}
+function comparison-ushort-less-1.1        ()  {   mmux_ushort_less '90' ;}
+function comparison-ushort-less-1.2        ()  {   mmux_ushort_less '80' '90' ;}
+function comparison-ushort-less-1.3        ()  {   mmux_ushort_less '70' '80' '90' ;}
+function comparison-ushort-less-1.4        ()  { ! mmux_ushort_less '33' '11' ;}
+function comparison-ushort-less-1.5        ()  { ! mmux_ushort_less '33' '99' '55' ;}
+function comparison-ushort-less-1.6        ()  { ! mmux_ushort_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -266,12 +266,12 @@ function comparison-ushort-greater-equal-1.6 () {   mmux_ushort_greater_equal '1
 
 ### ------------------------------------------------------------------------
 
-function comparison-ushort-lesser-equal-1.1  () {   mmux_ushort_lesser_equal '90' ;}
-function comparison-ushort-lesser-equal-1.2  () {   mmux_ushort_lesser_equal '80' '90' ;}
-function comparison-ushort-lesser-equal-1.3  () {   mmux_ushort_lesser_equal '70' '80' '90' ;}
-function comparison-ushort-lesser-equal-1.4  () { ! mmux_ushort_lesser_equal '33' '11' ;}
-function comparison-ushort-lesser-equal-1.5  () { ! mmux_ushort_lesser_equal '33' '99' '55' ;}
-function comparison-ushort-lesser-equal-1.6  () {   mmux_ushort_lesser_equal '11' '11' ;}
+function comparison-ushort-less-equal-1.1  () {   mmux_ushort_less_equal '90' ;}
+function comparison-ushort-less-equal-1.2  () {   mmux_ushort_less_equal '80' '90' ;}
+function comparison-ushort-less-equal-1.3  () {   mmux_ushort_less_equal '70' '80' '90' ;}
+function comparison-ushort-less-equal-1.4  () { ! mmux_ushort_less_equal '33' '11' ;}
+function comparison-ushort-less-equal-1.5  () { ! mmux_ushort_less_equal '33' '99' '55' ;}
+function comparison-ushort-less-equal-1.6  () {   mmux_ushort_less_equal '11' '11' ;}
 
 
 #### type variables: sint
@@ -295,13 +295,13 @@ function comparison-sint-greater-1.7       () {   mmux_sint_greater '-11' '-22' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint-lesser-1.1        ()  {   mmux_sint_lesser '90' ;}
-function comparison-sint-lesser-1.2        ()  {   mmux_sint_lesser '80' '90' ;}
-function comparison-sint-lesser-1.3        ()  {   mmux_sint_lesser '70' '80' '90' ;}
-function comparison-sint-lesser-1.4        ()  { ! mmux_sint_lesser '33' '11' ;}
-function comparison-sint-lesser-1.5        ()  { ! mmux_sint_lesser '33' '99' '55' ;}
-function comparison-sint-lesser-1.6        ()  { ! mmux_sint_lesser '11' '11' ;}
-function comparison-sint-lesser-1.7        ()  { ! mmux_sint_lesser '-11' '-22' ;}
+function comparison-sint-less-1.1        ()  {   mmux_sint_less '90' ;}
+function comparison-sint-less-1.2        ()  {   mmux_sint_less '80' '90' ;}
+function comparison-sint-less-1.3        ()  {   mmux_sint_less '70' '80' '90' ;}
+function comparison-sint-less-1.4        ()  { ! mmux_sint_less '33' '11' ;}
+function comparison-sint-less-1.5        ()  { ! mmux_sint_less '33' '99' '55' ;}
+function comparison-sint-less-1.6        ()  { ! mmux_sint_less '11' '11' ;}
+function comparison-sint-less-1.7        ()  { ! mmux_sint_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -315,13 +315,13 @@ function comparison-sint-greater-equal-1.7 () {   mmux_sint_greater_equal '-22' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint-lesser-equal-1.1  () {   mmux_sint_lesser_equal '90' ;}
-function comparison-sint-lesser-equal-1.2  () {   mmux_sint_lesser_equal '80' '90' ;}
-function comparison-sint-lesser-equal-1.3  () {   mmux_sint_lesser_equal '70' '80' '90' ;}
-function comparison-sint-lesser-equal-1.4  () { ! mmux_sint_lesser_equal '33' '11' ;}
-function comparison-sint-lesser-equal-1.5  () { ! mmux_sint_lesser_equal '33' '99' '55' ;}
-function comparison-sint-lesser-equal-1.6  () {   mmux_sint_lesser_equal '11' '11' ;}
-function comparison-sint-lesser-equal-1.7  () {   mmux_sint_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sint-less-equal-1.1  () {   mmux_sint_less_equal '90' ;}
+function comparison-sint-less-equal-1.2  () {   mmux_sint_less_equal '80' '90' ;}
+function comparison-sint-less-equal-1.3  () {   mmux_sint_less_equal '70' '80' '90' ;}
+function comparison-sint-less-equal-1.4  () { ! mmux_sint_less_equal '33' '11' ;}
+function comparison-sint-less-equal-1.5  () { ! mmux_sint_less_equal '33' '99' '55' ;}
+function comparison-sint-less-equal-1.6  () {   mmux_sint_less_equal '11' '11' ;}
+function comparison-sint-less-equal-1.7  () {   mmux_sint_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uint
@@ -342,12 +342,12 @@ function comparison-uint-greater-1.6       () { ! mmux_uint_greater '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint-lesser-1.1        ()  {   mmux_uint_lesser '90' ;}
-function comparison-uint-lesser-1.2        ()  {   mmux_uint_lesser '80' '90' ;}
-function comparison-uint-lesser-1.3        ()  {   mmux_uint_lesser '70' '80' '90' ;}
-function comparison-uint-lesser-1.4        ()  { ! mmux_uint_lesser '33' '11' ;}
-function comparison-uint-lesser-1.5        ()  { ! mmux_uint_lesser '33' '99' '55' ;}
-function comparison-uint-lesser-1.6        ()  { ! mmux_uint_lesser '11' '11' ;}
+function comparison-uint-less-1.1        ()  {   mmux_uint_less '90' ;}
+function comparison-uint-less-1.2        ()  {   mmux_uint_less '80' '90' ;}
+function comparison-uint-less-1.3        ()  {   mmux_uint_less '70' '80' '90' ;}
+function comparison-uint-less-1.4        ()  { ! mmux_uint_less '33' '11' ;}
+function comparison-uint-less-1.5        ()  { ! mmux_uint_less '33' '99' '55' ;}
+function comparison-uint-less-1.6        ()  { ! mmux_uint_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -360,12 +360,12 @@ function comparison-uint-greater-equal-1.6 () {   mmux_uint_greater_equal '11' '
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint-lesser-equal-1.1  () {   mmux_uint_lesser_equal '90' ;}
-function comparison-uint-lesser-equal-1.2  () {   mmux_uint_lesser_equal '80' '90' ;}
-function comparison-uint-lesser-equal-1.3  () {   mmux_uint_lesser_equal '70' '80' '90' ;}
-function comparison-uint-lesser-equal-1.4  () { ! mmux_uint_lesser_equal '33' '11' ;}
-function comparison-uint-lesser-equal-1.5  () { ! mmux_uint_lesser_equal '33' '99' '55' ;}
-function comparison-uint-lesser-equal-1.6  () {   mmux_uint_lesser_equal '11' '11' ;}
+function comparison-uint-less-equal-1.1  () {   mmux_uint_less_equal '90' ;}
+function comparison-uint-less-equal-1.2  () {   mmux_uint_less_equal '80' '90' ;}
+function comparison-uint-less-equal-1.3  () {   mmux_uint_less_equal '70' '80' '90' ;}
+function comparison-uint-less-equal-1.4  () { ! mmux_uint_less_equal '33' '11' ;}
+function comparison-uint-less-equal-1.5  () { ! mmux_uint_less_equal '33' '99' '55' ;}
+function comparison-uint-less-equal-1.6  () {   mmux_uint_less_equal '11' '11' ;}
 
 
 #### type variables: slong
@@ -389,13 +389,13 @@ function comparison-slong-greater-1.7       () {   mmux_slong_greater '-11' '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-slong-lesser-1.1        ()  {   mmux_slong_lesser '90' ;}
-function comparison-slong-lesser-1.2        ()  {   mmux_slong_lesser '80' '90' ;}
-function comparison-slong-lesser-1.3        ()  {   mmux_slong_lesser '70' '80' '90' ;}
-function comparison-slong-lesser-1.4        ()  { ! mmux_slong_lesser '33' '11' ;}
-function comparison-slong-lesser-1.5        ()  { ! mmux_slong_lesser '33' '99' '55' ;}
-function comparison-slong-lesser-1.6        ()  { ! mmux_slong_lesser '11' '11' ;}
-function comparison-slong-lesser-1.7        ()  { ! mmux_slong_lesser '-11' '-22' ;}
+function comparison-slong-less-1.1        ()  {   mmux_slong_less '90' ;}
+function comparison-slong-less-1.2        ()  {   mmux_slong_less '80' '90' ;}
+function comparison-slong-less-1.3        ()  {   mmux_slong_less '70' '80' '90' ;}
+function comparison-slong-less-1.4        ()  { ! mmux_slong_less '33' '11' ;}
+function comparison-slong-less-1.5        ()  { ! mmux_slong_less '33' '99' '55' ;}
+function comparison-slong-less-1.6        ()  { ! mmux_slong_less '11' '11' ;}
+function comparison-slong-less-1.7        ()  { ! mmux_slong_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -409,13 +409,13 @@ function comparison-slong-greater-equal-1.7 () {   mmux_slong_greater_equal '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-slong-lesser-equal-1.1  () {   mmux_slong_lesser_equal '90' ;}
-function comparison-slong-lesser-equal-1.2  () {   mmux_slong_lesser_equal '80' '90' ;}
-function comparison-slong-lesser-equal-1.3  () {   mmux_slong_lesser_equal '70' '80' '90' ;}
-function comparison-slong-lesser-equal-1.4  () { ! mmux_slong_lesser_equal '33' '11' ;}
-function comparison-slong-lesser-equal-1.5  () { ! mmux_slong_lesser_equal '33' '99' '55' ;}
-function comparison-slong-lesser-equal-1.6  () {   mmux_slong_lesser_equal '11' '11' ;}
-function comparison-slong-lesser-equal-1.7  () {   mmux_slong_lesser_equal '-33' '-22' '-22' ;}
+function comparison-slong-less-equal-1.1  () {   mmux_slong_less_equal '90' ;}
+function comparison-slong-less-equal-1.2  () {   mmux_slong_less_equal '80' '90' ;}
+function comparison-slong-less-equal-1.3  () {   mmux_slong_less_equal '70' '80' '90' ;}
+function comparison-slong-less-equal-1.4  () { ! mmux_slong_less_equal '33' '11' ;}
+function comparison-slong-less-equal-1.5  () { ! mmux_slong_less_equal '33' '99' '55' ;}
+function comparison-slong-less-equal-1.6  () {   mmux_slong_less_equal '11' '11' ;}
+function comparison-slong-less-equal-1.7  () {   mmux_slong_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: ulong
@@ -436,12 +436,12 @@ function comparison-ulong-greater-1.6       () { ! mmux_ulong_greater '11' '11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-ulong-lesser-1.1        ()  {   mmux_ulong_lesser '90' ;}
-function comparison-ulong-lesser-1.2        ()  {   mmux_ulong_lesser '80' '90' ;}
-function comparison-ulong-lesser-1.3        ()  {   mmux_ulong_lesser '70' '80' '90' ;}
-function comparison-ulong-lesser-1.4        ()  { ! mmux_ulong_lesser '33' '11' ;}
-function comparison-ulong-lesser-1.5        ()  { ! mmux_ulong_lesser '33' '99' '55' ;}
-function comparison-ulong-lesser-1.6        ()  { ! mmux_ulong_lesser '11' '11' ;}
+function comparison-ulong-less-1.1        ()  {   mmux_ulong_less '90' ;}
+function comparison-ulong-less-1.2        ()  {   mmux_ulong_less '80' '90' ;}
+function comparison-ulong-less-1.3        ()  {   mmux_ulong_less '70' '80' '90' ;}
+function comparison-ulong-less-1.4        ()  { ! mmux_ulong_less '33' '11' ;}
+function comparison-ulong-less-1.5        ()  { ! mmux_ulong_less '33' '99' '55' ;}
+function comparison-ulong-less-1.6        ()  { ! mmux_ulong_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -454,12 +454,12 @@ function comparison-ulong-greater-equal-1.6 () {   mmux_ulong_greater_equal '11'
 
 ### ------------------------------------------------------------------------
 
-function comparison-ulong-lesser-equal-1.1  () {   mmux_ulong_lesser_equal '90' ;}
-function comparison-ulong-lesser-equal-1.2  () {   mmux_ulong_lesser_equal '80' '90' ;}
-function comparison-ulong-lesser-equal-1.3  () {   mmux_ulong_lesser_equal '70' '80' '90' ;}
-function comparison-ulong-lesser-equal-1.4  () { ! mmux_ulong_lesser_equal '33' '11' ;}
-function comparison-ulong-lesser-equal-1.5  () { ! mmux_ulong_lesser_equal '33' '99' '55' ;}
-function comparison-ulong-lesser-equal-1.6  () {   mmux_ulong_lesser_equal '11' '11' ;}
+function comparison-ulong-less-equal-1.1  () {   mmux_ulong_less_equal '90' ;}
+function comparison-ulong-less-equal-1.2  () {   mmux_ulong_less_equal '80' '90' ;}
+function comparison-ulong-less-equal-1.3  () {   mmux_ulong_less_equal '70' '80' '90' ;}
+function comparison-ulong-less-equal-1.4  () { ! mmux_ulong_less_equal '33' '11' ;}
+function comparison-ulong-less-equal-1.5  () { ! mmux_ulong_less_equal '33' '99' '55' ;}
+function comparison-ulong-less-equal-1.6  () {   mmux_ulong_less_equal '11' '11' ;}
 
 
 #### type variables: sllong
@@ -486,13 +486,13 @@ function comparison-sllong-greater-1.7       () {   mmux_sllong_greater '-11' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sllong-lesser-1.1        ()  {   mmux_sllong_lesser '90' ;}
-function comparison-sllong-lesser-1.2        ()  {   mmux_sllong_lesser '80' '90' ;}
-function comparison-sllong-lesser-1.3        ()  {   mmux_sllong_lesser '70' '80' '90' ;}
-function comparison-sllong-lesser-1.4        ()  { ! mmux_sllong_lesser '33' '11' ;}
-function comparison-sllong-lesser-1.5        ()  { ! mmux_sllong_lesser '33' '99' '55' ;}
-function comparison-sllong-lesser-1.6        ()  { ! mmux_sllong_lesser '11' '11' ;}
-function comparison-sllong-lesser-1.7        ()  { ! mmux_sllong_lesser '-11' '-22' ;}
+function comparison-sllong-less-1.1        ()  {   mmux_sllong_less '90' ;}
+function comparison-sllong-less-1.2        ()  {   mmux_sllong_less '80' '90' ;}
+function comparison-sllong-less-1.3        ()  {   mmux_sllong_less '70' '80' '90' ;}
+function comparison-sllong-less-1.4        ()  { ! mmux_sllong_less '33' '11' ;}
+function comparison-sllong-less-1.5        ()  { ! mmux_sllong_less '33' '99' '55' ;}
+function comparison-sllong-less-1.6        ()  { ! mmux_sllong_less '11' '11' ;}
+function comparison-sllong-less-1.7        ()  { ! mmux_sllong_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -506,13 +506,13 @@ function comparison-sllong-greater-equal-1.7 () {   mmux_sllong_greater_equal '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sllong-lesser-equal-1.1  () {   mmux_sllong_lesser_equal '90' ;}
-function comparison-sllong-lesser-equal-1.2  () {   mmux_sllong_lesser_equal '80' '90' ;}
-function comparison-sllong-lesser-equal-1.3  () {   mmux_sllong_lesser_equal '70' '80' '90' ;}
-function comparison-sllong-lesser-equal-1.4  () { ! mmux_sllong_lesser_equal '33' '11' ;}
-function comparison-sllong-lesser-equal-1.5  () { ! mmux_sllong_lesser_equal '33' '99' '55' ;}
-function comparison-sllong-lesser-equal-1.6  () {   mmux_sllong_lesser_equal '11' '11' ;}
-function comparison-sllong-lesser-equal-1.7  () {   mmux_sllong_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sllong-less-equal-1.1  () {   mmux_sllong_less_equal '90' ;}
+function comparison-sllong-less-equal-1.2  () {   mmux_sllong_less_equal '80' '90' ;}
+function comparison-sllong-less-equal-1.3  () {   mmux_sllong_less_equal '70' '80' '90' ;}
+function comparison-sllong-less-equal-1.4  () { ! mmux_sllong_less_equal '33' '11' ;}
+function comparison-sllong-less-equal-1.5  () { ! mmux_sllong_less_equal '33' '99' '55' ;}
+function comparison-sllong-less-equal-1.6  () {   mmux_sllong_less_equal '11' '11' ;}
+function comparison-sllong-less-equal-1.7  () {   mmux_sllong_less_equal '-33' '-22' '-22' ;}
 
 fi
 
@@ -538,12 +538,12 @@ function comparison-ullong-greater-1.6       () { ! mmux_ullong_greater '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-ullong-lesser-1.1        ()  {   mmux_ullong_lesser '90' ;}
-function comparison-ullong-lesser-1.2        ()  {   mmux_ullong_lesser '80' '90' ;}
-function comparison-ullong-lesser-1.3        ()  {   mmux_ullong_lesser '70' '80' '90' ;}
-function comparison-ullong-lesser-1.4        ()  { ! mmux_ullong_lesser '33' '11' ;}
-function comparison-ullong-lesser-1.5        ()  { ! mmux_ullong_lesser '33' '99' '55' ;}
-function comparison-ullong-lesser-1.6        ()  { ! mmux_ullong_lesser '11' '11' ;}
+function comparison-ullong-less-1.1        ()  {   mmux_ullong_less '90' ;}
+function comparison-ullong-less-1.2        ()  {   mmux_ullong_less '80' '90' ;}
+function comparison-ullong-less-1.3        ()  {   mmux_ullong_less '70' '80' '90' ;}
+function comparison-ullong-less-1.4        ()  { ! mmux_ullong_less '33' '11' ;}
+function comparison-ullong-less-1.5        ()  { ! mmux_ullong_less '33' '99' '55' ;}
+function comparison-ullong-less-1.6        ()  { ! mmux_ullong_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -556,12 +556,12 @@ function comparison-ullong-greater-equal-1.6 () {   mmux_ullong_greater_equal '1
 
 ### ------------------------------------------------------------------------
 
-function comparison-ullong-lesser-equal-1.1  () {   mmux_ullong_lesser_equal '90' ;}
-function comparison-ullong-lesser-equal-1.2  () {   mmux_ullong_lesser_equal '80' '90' ;}
-function comparison-ullong-lesser-equal-1.3  () {   mmux_ullong_lesser_equal '70' '80' '90' ;}
-function comparison-ullong-lesser-equal-1.4  () { ! mmux_ullong_lesser_equal '33' '11' ;}
-function comparison-ullong-lesser-equal-1.5  () { ! mmux_ullong_lesser_equal '33' '99' '55' ;}
-function comparison-ullong-lesser-equal-1.6  () {   mmux_ullong_lesser_equal '11' '11' ;}
+function comparison-ullong-less-equal-1.1  () {   mmux_ullong_less_equal '90' ;}
+function comparison-ullong-less-equal-1.2  () {   mmux_ullong_less_equal '80' '90' ;}
+function comparison-ullong-less-equal-1.3  () {   mmux_ullong_less_equal '70' '80' '90' ;}
+function comparison-ullong-less-equal-1.4  () { ! mmux_ullong_less_equal '33' '11' ;}
+function comparison-ullong-less-equal-1.5  () { ! mmux_ullong_less_equal '33' '99' '55' ;}
+function comparison-ullong-less-equal-1.6  () {   mmux_ullong_less_equal '11' '11' ;}
 
 fi
 
@@ -587,13 +587,13 @@ function comparison-sint8-greater-1.7       () {   mmux_sint8_greater '-11' '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint8-lesser-1.1        ()  {   mmux_sint8_lesser '90' ;}
-function comparison-sint8-lesser-1.2        ()  {   mmux_sint8_lesser '80' '90' ;}
-function comparison-sint8-lesser-1.3        ()  {   mmux_sint8_lesser '70' '80' '90' ;}
-function comparison-sint8-lesser-1.4        ()  { ! mmux_sint8_lesser '33' '11' ;}
-function comparison-sint8-lesser-1.5        ()  { ! mmux_sint8_lesser '33' '99' '55' ;}
-function comparison-sint8-lesser-1.6        ()  { ! mmux_sint8_lesser '11' '11' ;}
-function comparison-sint8-lesser-1.7        ()  { ! mmux_sint8_lesser '-11' '-22' ;}
+function comparison-sint8-less-1.1        ()  {   mmux_sint8_less '90' ;}
+function comparison-sint8-less-1.2        ()  {   mmux_sint8_less '80' '90' ;}
+function comparison-sint8-less-1.3        ()  {   mmux_sint8_less '70' '80' '90' ;}
+function comparison-sint8-less-1.4        ()  { ! mmux_sint8_less '33' '11' ;}
+function comparison-sint8-less-1.5        ()  { ! mmux_sint8_less '33' '99' '55' ;}
+function comparison-sint8-less-1.6        ()  { ! mmux_sint8_less '11' '11' ;}
+function comparison-sint8-less-1.7        ()  { ! mmux_sint8_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -607,13 +607,13 @@ function comparison-sint8-greater-equal-1.7 () {   mmux_sint8_greater_equal '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint8-lesser-equal-1.1  () {   mmux_sint8_lesser_equal '90' ;}
-function comparison-sint8-lesser-equal-1.2  () {   mmux_sint8_lesser_equal '80' '90' ;}
-function comparison-sint8-lesser-equal-1.3  () {   mmux_sint8_lesser_equal '70' '80' '90' ;}
-function comparison-sint8-lesser-equal-1.4  () { ! mmux_sint8_lesser_equal '33' '11' ;}
-function comparison-sint8-lesser-equal-1.5  () { ! mmux_sint8_lesser_equal '33' '99' '55' ;}
-function comparison-sint8-lesser-equal-1.6  () {   mmux_sint8_lesser_equal '11' '11' ;}
-function comparison-sint8-lesser-equal-1.7  () {   mmux_sint8_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sint8-less-equal-1.1  () {   mmux_sint8_less_equal '90' ;}
+function comparison-sint8-less-equal-1.2  () {   mmux_sint8_less_equal '80' '90' ;}
+function comparison-sint8-less-equal-1.3  () {   mmux_sint8_less_equal '70' '80' '90' ;}
+function comparison-sint8-less-equal-1.4  () { ! mmux_sint8_less_equal '33' '11' ;}
+function comparison-sint8-less-equal-1.5  () { ! mmux_sint8_less_equal '33' '99' '55' ;}
+function comparison-sint8-less-equal-1.6  () {   mmux_sint8_less_equal '11' '11' ;}
+function comparison-sint8-less-equal-1.7  () {   mmux_sint8_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uint8
@@ -634,12 +634,12 @@ function comparison-uint8-greater-1.6       () { ! mmux_uint8_greater '11' '11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint8-lesser-1.1        ()  {   mmux_uint8_lesser '90' ;}
-function comparison-uint8-lesser-1.2        ()  {   mmux_uint8_lesser '80' '90' ;}
-function comparison-uint8-lesser-1.3        ()  {   mmux_uint8_lesser '70' '80' '90' ;}
-function comparison-uint8-lesser-1.4        ()  { ! mmux_uint8_lesser '33' '11' ;}
-function comparison-uint8-lesser-1.5        ()  { ! mmux_uint8_lesser '33' '99' '55' ;}
-function comparison-uint8-lesser-1.6        ()  { ! mmux_uint8_lesser '11' '11' ;}
+function comparison-uint8-less-1.1        ()  {   mmux_uint8_less '90' ;}
+function comparison-uint8-less-1.2        ()  {   mmux_uint8_less '80' '90' ;}
+function comparison-uint8-less-1.3        ()  {   mmux_uint8_less '70' '80' '90' ;}
+function comparison-uint8-less-1.4        ()  { ! mmux_uint8_less '33' '11' ;}
+function comparison-uint8-less-1.5        ()  { ! mmux_uint8_less '33' '99' '55' ;}
+function comparison-uint8-less-1.6        ()  { ! mmux_uint8_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -652,12 +652,12 @@ function comparison-uint8-greater-equal-1.6 () {   mmux_uint8_greater_equal '11'
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint8-lesser-equal-1.1  () {   mmux_uint8_lesser_equal '90' ;}
-function comparison-uint8-lesser-equal-1.2  () {   mmux_uint8_lesser_equal '80' '90' ;}
-function comparison-uint8-lesser-equal-1.3  () {   mmux_uint8_lesser_equal '70' '80' '90' ;}
-function comparison-uint8-lesser-equal-1.4  () { ! mmux_uint8_lesser_equal '33' '11' ;}
-function comparison-uint8-lesser-equal-1.5  () { ! mmux_uint8_lesser_equal '33' '99' '55' ;}
-function comparison-uint8-lesser-equal-1.6  () {   mmux_uint8_lesser_equal '11' '11' ;}
+function comparison-uint8-less-equal-1.1  () {   mmux_uint8_less_equal '90' ;}
+function comparison-uint8-less-equal-1.2  () {   mmux_uint8_less_equal '80' '90' ;}
+function comparison-uint8-less-equal-1.3  () {   mmux_uint8_less_equal '70' '80' '90' ;}
+function comparison-uint8-less-equal-1.4  () { ! mmux_uint8_less_equal '33' '11' ;}
+function comparison-uint8-less-equal-1.5  () { ! mmux_uint8_less_equal '33' '99' '55' ;}
+function comparison-uint8-less-equal-1.6  () {   mmux_uint8_less_equal '11' '11' ;}
 
 
 #### type variables: sint16
@@ -681,13 +681,13 @@ function comparison-sint16-greater-1.7       () {   mmux_sint16_greater '-11' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint16-lesser-1.1        ()  {   mmux_sint16_lesser '90' ;}
-function comparison-sint16-lesser-1.2        ()  {   mmux_sint16_lesser '80' '90' ;}
-function comparison-sint16-lesser-1.3        ()  {   mmux_sint16_lesser '70' '80' '90' ;}
-function comparison-sint16-lesser-1.4        ()  { ! mmux_sint16_lesser '33' '11' ;}
-function comparison-sint16-lesser-1.5        ()  { ! mmux_sint16_lesser '33' '99' '55' ;}
-function comparison-sint16-lesser-1.6        ()  { ! mmux_sint16_lesser '11' '11' ;}
-function comparison-sint16-lesser-1.7        ()  { ! mmux_sint16_lesser '-11' '-22' ;}
+function comparison-sint16-less-1.1        ()  {   mmux_sint16_less '90' ;}
+function comparison-sint16-less-1.2        ()  {   mmux_sint16_less '80' '90' ;}
+function comparison-sint16-less-1.3        ()  {   mmux_sint16_less '70' '80' '90' ;}
+function comparison-sint16-less-1.4        ()  { ! mmux_sint16_less '33' '11' ;}
+function comparison-sint16-less-1.5        ()  { ! mmux_sint16_less '33' '99' '55' ;}
+function comparison-sint16-less-1.6        ()  { ! mmux_sint16_less '11' '11' ;}
+function comparison-sint16-less-1.7        ()  { ! mmux_sint16_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -701,13 +701,13 @@ function comparison-sint16-greater-equal-1.7 () {   mmux_sint16_greater_equal '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint16-lesser-equal-1.1  () {   mmux_sint16_lesser_equal '90' ;}
-function comparison-sint16-lesser-equal-1.2  () {   mmux_sint16_lesser_equal '80' '90' ;}
-function comparison-sint16-lesser-equal-1.3  () {   mmux_sint16_lesser_equal '70' '80' '90' ;}
-function comparison-sint16-lesser-equal-1.4  () { ! mmux_sint16_lesser_equal '33' '11' ;}
-function comparison-sint16-lesser-equal-1.5  () { ! mmux_sint16_lesser_equal '33' '99' '55' ;}
-function comparison-sint16-lesser-equal-1.6  () {   mmux_sint16_lesser_equal '11' '11' ;}
-function comparison-sint16-lesser-equal-1.7  () {   mmux_sint16_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sint16-less-equal-1.1  () {   mmux_sint16_less_equal '90' ;}
+function comparison-sint16-less-equal-1.2  () {   mmux_sint16_less_equal '80' '90' ;}
+function comparison-sint16-less-equal-1.3  () {   mmux_sint16_less_equal '70' '80' '90' ;}
+function comparison-sint16-less-equal-1.4  () { ! mmux_sint16_less_equal '33' '11' ;}
+function comparison-sint16-less-equal-1.5  () { ! mmux_sint16_less_equal '33' '99' '55' ;}
+function comparison-sint16-less-equal-1.6  () {   mmux_sint16_less_equal '11' '11' ;}
+function comparison-sint16-less-equal-1.7  () {   mmux_sint16_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uint16
@@ -728,12 +728,12 @@ function comparison-uint16-greater-1.6       () { ! mmux_uint16_greater '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint16-lesser-1.1        ()  {   mmux_uint16_lesser '90' ;}
-function comparison-uint16-lesser-1.2        ()  {   mmux_uint16_lesser '80' '90' ;}
-function comparison-uint16-lesser-1.3        ()  {   mmux_uint16_lesser '70' '80' '90' ;}
-function comparison-uint16-lesser-1.4        ()  { ! mmux_uint16_lesser '33' '11' ;}
-function comparison-uint16-lesser-1.5        ()  { ! mmux_uint16_lesser '33' '99' '55' ;}
-function comparison-uint16-lesser-1.6        ()  { ! mmux_uint16_lesser '11' '11' ;}
+function comparison-uint16-less-1.1        ()  {   mmux_uint16_less '90' ;}
+function comparison-uint16-less-1.2        ()  {   mmux_uint16_less '80' '90' ;}
+function comparison-uint16-less-1.3        ()  {   mmux_uint16_less '70' '80' '90' ;}
+function comparison-uint16-less-1.4        ()  { ! mmux_uint16_less '33' '11' ;}
+function comparison-uint16-less-1.5        ()  { ! mmux_uint16_less '33' '99' '55' ;}
+function comparison-uint16-less-1.6        ()  { ! mmux_uint16_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -746,12 +746,12 @@ function comparison-uint16-greater-equal-1.6 () {   mmux_uint16_greater_equal '1
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint16-lesser-equal-1.1  () {   mmux_uint16_lesser_equal '90' ;}
-function comparison-uint16-lesser-equal-1.2  () {   mmux_uint16_lesser_equal '80' '90' ;}
-function comparison-uint16-lesser-equal-1.3  () {   mmux_uint16_lesser_equal '70' '80' '90' ;}
-function comparison-uint16-lesser-equal-1.4  () { ! mmux_uint16_lesser_equal '33' '11' ;}
-function comparison-uint16-lesser-equal-1.5  () { ! mmux_uint16_lesser_equal '33' '99' '55' ;}
-function comparison-uint16-lesser-equal-1.6  () {   mmux_uint16_lesser_equal '11' '11' ;}
+function comparison-uint16-less-equal-1.1  () {   mmux_uint16_less_equal '90' ;}
+function comparison-uint16-less-equal-1.2  () {   mmux_uint16_less_equal '80' '90' ;}
+function comparison-uint16-less-equal-1.3  () {   mmux_uint16_less_equal '70' '80' '90' ;}
+function comparison-uint16-less-equal-1.4  () { ! mmux_uint16_less_equal '33' '11' ;}
+function comparison-uint16-less-equal-1.5  () { ! mmux_uint16_less_equal '33' '99' '55' ;}
+function comparison-uint16-less-equal-1.6  () {   mmux_uint16_less_equal '11' '11' ;}
 
 
 #### type variables: sint32
@@ -775,13 +775,13 @@ function comparison-sint32-greater-1.7       () {   mmux_sint32_greater '-11' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint32-lesser-1.1        ()  {   mmux_sint32_lesser '90' ;}
-function comparison-sint32-lesser-1.2        ()  {   mmux_sint32_lesser '80' '90' ;}
-function comparison-sint32-lesser-1.3        ()  {   mmux_sint32_lesser '70' '80' '90' ;}
-function comparison-sint32-lesser-1.4        ()  { ! mmux_sint32_lesser '33' '11' ;}
-function comparison-sint32-lesser-1.5        ()  { ! mmux_sint32_lesser '33' '99' '55' ;}
-function comparison-sint32-lesser-1.6        ()  { ! mmux_sint32_lesser '11' '11' ;}
-function comparison-sint32-lesser-1.7        ()  { ! mmux_sint32_lesser '-11' '-22' ;}
+function comparison-sint32-less-1.1        ()  {   mmux_sint32_less '90' ;}
+function comparison-sint32-less-1.2        ()  {   mmux_sint32_less '80' '90' ;}
+function comparison-sint32-less-1.3        ()  {   mmux_sint32_less '70' '80' '90' ;}
+function comparison-sint32-less-1.4        ()  { ! mmux_sint32_less '33' '11' ;}
+function comparison-sint32-less-1.5        ()  { ! mmux_sint32_less '33' '99' '55' ;}
+function comparison-sint32-less-1.6        ()  { ! mmux_sint32_less '11' '11' ;}
+function comparison-sint32-less-1.7        ()  { ! mmux_sint32_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -795,13 +795,13 @@ function comparison-sint32-greater-equal-1.7 () {   mmux_sint32_greater_equal '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint32-lesser-equal-1.1  () {   mmux_sint32_lesser_equal '90' ;}
-function comparison-sint32-lesser-equal-1.2  () {   mmux_sint32_lesser_equal '80' '90' ;}
-function comparison-sint32-lesser-equal-1.3  () {   mmux_sint32_lesser_equal '70' '80' '90' ;}
-function comparison-sint32-lesser-equal-1.4  () { ! mmux_sint32_lesser_equal '33' '11' ;}
-function comparison-sint32-lesser-equal-1.5  () { ! mmux_sint32_lesser_equal '33' '99' '55' ;}
-function comparison-sint32-lesser-equal-1.6  () {   mmux_sint32_lesser_equal '11' '11' ;}
-function comparison-sint32-lesser-equal-1.7  () {   mmux_sint32_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sint32-less-equal-1.1  () {   mmux_sint32_less_equal '90' ;}
+function comparison-sint32-less-equal-1.2  () {   mmux_sint32_less_equal '80' '90' ;}
+function comparison-sint32-less-equal-1.3  () {   mmux_sint32_less_equal '70' '80' '90' ;}
+function comparison-sint32-less-equal-1.4  () { ! mmux_sint32_less_equal '33' '11' ;}
+function comparison-sint32-less-equal-1.5  () { ! mmux_sint32_less_equal '33' '99' '55' ;}
+function comparison-sint32-less-equal-1.6  () {   mmux_sint32_less_equal '11' '11' ;}
+function comparison-sint32-less-equal-1.7  () {   mmux_sint32_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uint32
@@ -822,12 +822,12 @@ function comparison-uint32-greater-1.6       () { ! mmux_uint32_greater '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint32-lesser-1.1        ()  {   mmux_uint32_lesser '90' ;}
-function comparison-uint32-lesser-1.2        ()  {   mmux_uint32_lesser '80' '90' ;}
-function comparison-uint32-lesser-1.3        ()  {   mmux_uint32_lesser '70' '80' '90' ;}
-function comparison-uint32-lesser-1.4        ()  { ! mmux_uint32_lesser '33' '11' ;}
-function comparison-uint32-lesser-1.5        ()  { ! mmux_uint32_lesser '33' '99' '55' ;}
-function comparison-uint32-lesser-1.6        ()  { ! mmux_uint32_lesser '11' '11' ;}
+function comparison-uint32-less-1.1        ()  {   mmux_uint32_less '90' ;}
+function comparison-uint32-less-1.2        ()  {   mmux_uint32_less '80' '90' ;}
+function comparison-uint32-less-1.3        ()  {   mmux_uint32_less '70' '80' '90' ;}
+function comparison-uint32-less-1.4        ()  { ! mmux_uint32_less '33' '11' ;}
+function comparison-uint32-less-1.5        ()  { ! mmux_uint32_less '33' '99' '55' ;}
+function comparison-uint32-less-1.6        ()  { ! mmux_uint32_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -840,12 +840,12 @@ function comparison-uint32-greater-equal-1.6 () {   mmux_uint32_greater_equal '1
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint32-lesser-equal-1.1  () {   mmux_uint32_lesser_equal '90' ;}
-function comparison-uint32-lesser-equal-1.2  () {   mmux_uint32_lesser_equal '80' '90' ;}
-function comparison-uint32-lesser-equal-1.3  () {   mmux_uint32_lesser_equal '70' '80' '90' ;}
-function comparison-uint32-lesser-equal-1.4  () { ! mmux_uint32_lesser_equal '33' '11' ;}
-function comparison-uint32-lesser-equal-1.5  () { ! mmux_uint32_lesser_equal '33' '99' '55' ;}
-function comparison-uint32-lesser-equal-1.6  () {   mmux_uint32_lesser_equal '11' '11' ;}
+function comparison-uint32-less-equal-1.1  () {   mmux_uint32_less_equal '90' ;}
+function comparison-uint32-less-equal-1.2  () {   mmux_uint32_less_equal '80' '90' ;}
+function comparison-uint32-less-equal-1.3  () {   mmux_uint32_less_equal '70' '80' '90' ;}
+function comparison-uint32-less-equal-1.4  () { ! mmux_uint32_less_equal '33' '11' ;}
+function comparison-uint32-less-equal-1.5  () { ! mmux_uint32_less_equal '33' '99' '55' ;}
+function comparison-uint32-less-equal-1.6  () {   mmux_uint32_less_equal '11' '11' ;}
 
 
 #### type variables: sint64
@@ -869,13 +869,13 @@ function comparison-sint64-greater-1.7       () {   mmux_sint64_greater '-11' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint64-lesser-1.1        ()  {   mmux_sint64_lesser '90' ;}
-function comparison-sint64-lesser-1.2        ()  {   mmux_sint64_lesser '80' '90' ;}
-function comparison-sint64-lesser-1.3        ()  {   mmux_sint64_lesser '70' '80' '90' ;}
-function comparison-sint64-lesser-1.4        ()  { ! mmux_sint64_lesser '33' '11' ;}
-function comparison-sint64-lesser-1.5        ()  { ! mmux_sint64_lesser '33' '99' '55' ;}
-function comparison-sint64-lesser-1.6        ()  { ! mmux_sint64_lesser '11' '11' ;}
-function comparison-sint64-lesser-1.7        ()  { ! mmux_sint64_lesser '-11' '-22' ;}
+function comparison-sint64-less-1.1        ()  {   mmux_sint64_less '90' ;}
+function comparison-sint64-less-1.2        ()  {   mmux_sint64_less '80' '90' ;}
+function comparison-sint64-less-1.3        ()  {   mmux_sint64_less '70' '80' '90' ;}
+function comparison-sint64-less-1.4        ()  { ! mmux_sint64_less '33' '11' ;}
+function comparison-sint64-less-1.5        ()  { ! mmux_sint64_less '33' '99' '55' ;}
+function comparison-sint64-less-1.6        ()  { ! mmux_sint64_less '11' '11' ;}
+function comparison-sint64-less-1.7        ()  { ! mmux_sint64_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -889,13 +889,13 @@ function comparison-sint64-greater-equal-1.7 () {   mmux_sint64_greater_equal '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-sint64-lesser-equal-1.1  () {   mmux_sint64_lesser_equal '90' ;}
-function comparison-sint64-lesser-equal-1.2  () {   mmux_sint64_lesser_equal '80' '90' ;}
-function comparison-sint64-lesser-equal-1.3  () {   mmux_sint64_lesser_equal '70' '80' '90' ;}
-function comparison-sint64-lesser-equal-1.4  () { ! mmux_sint64_lesser_equal '33' '11' ;}
-function comparison-sint64-lesser-equal-1.5  () { ! mmux_sint64_lesser_equal '33' '99' '55' ;}
-function comparison-sint64-lesser-equal-1.6  () {   mmux_sint64_lesser_equal '11' '11' ;}
-function comparison-sint64-lesser-equal-1.7  () {   mmux_sint64_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sint64-less-equal-1.1  () {   mmux_sint64_less_equal '90' ;}
+function comparison-sint64-less-equal-1.2  () {   mmux_sint64_less_equal '80' '90' ;}
+function comparison-sint64-less-equal-1.3  () {   mmux_sint64_less_equal '70' '80' '90' ;}
+function comparison-sint64-less-equal-1.4  () { ! mmux_sint64_less_equal '33' '11' ;}
+function comparison-sint64-less-equal-1.5  () { ! mmux_sint64_less_equal '33' '99' '55' ;}
+function comparison-sint64-less-equal-1.6  () {   mmux_sint64_less_equal '11' '11' ;}
+function comparison-sint64-less-equal-1.7  () {   mmux_sint64_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uint64
@@ -916,12 +916,12 @@ function comparison-uint64-greater-1.6       () { ! mmux_uint64_greater '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint64-lesser-1.1        ()  {   mmux_uint64_lesser '90' ;}
-function comparison-uint64-lesser-1.2        ()  {   mmux_uint64_lesser '80' '90' ;}
-function comparison-uint64-lesser-1.3        ()  {   mmux_uint64_lesser '70' '80' '90' ;}
-function comparison-uint64-lesser-1.4        ()  { ! mmux_uint64_lesser '33' '11' ;}
-function comparison-uint64-lesser-1.5        ()  { ! mmux_uint64_lesser '33' '99' '55' ;}
-function comparison-uint64-lesser-1.6        ()  { ! mmux_uint64_lesser '11' '11' ;}
+function comparison-uint64-less-1.1        ()  {   mmux_uint64_less '90' ;}
+function comparison-uint64-less-1.2        ()  {   mmux_uint64_less '80' '90' ;}
+function comparison-uint64-less-1.3        ()  {   mmux_uint64_less '70' '80' '90' ;}
+function comparison-uint64-less-1.4        ()  { ! mmux_uint64_less '33' '11' ;}
+function comparison-uint64-less-1.5        ()  { ! mmux_uint64_less '33' '99' '55' ;}
+function comparison-uint64-less-1.6        ()  { ! mmux_uint64_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -934,12 +934,12 @@ function comparison-uint64-greater-equal-1.6 () {   mmux_uint64_greater_equal '1
 
 ### ------------------------------------------------------------------------
 
-function comparison-uint64-lesser-equal-1.1  () {   mmux_uint64_lesser_equal '90' ;}
-function comparison-uint64-lesser-equal-1.2  () {   mmux_uint64_lesser_equal '80' '90' ;}
-function comparison-uint64-lesser-equal-1.3  () {   mmux_uint64_lesser_equal '70' '80' '90' ;}
-function comparison-uint64-lesser-equal-1.4  () { ! mmux_uint64_lesser_equal '33' '11' ;}
-function comparison-uint64-lesser-equal-1.5  () { ! mmux_uint64_lesser_equal '33' '99' '55' ;}
-function comparison-uint64-lesser-equal-1.6  () {   mmux_uint64_lesser_equal '11' '11' ;}
+function comparison-uint64-less-equal-1.1  () {   mmux_uint64_less_equal '90' ;}
+function comparison-uint64-less-equal-1.2  () {   mmux_uint64_less_equal '80' '90' ;}
+function comparison-uint64-less-equal-1.3  () {   mmux_uint64_less_equal '70' '80' '90' ;}
+function comparison-uint64-less-equal-1.4  () { ! mmux_uint64_less_equal '33' '11' ;}
+function comparison-uint64-less-equal-1.5  () { ! mmux_uint64_less_equal '33' '99' '55' ;}
+function comparison-uint64-less-equal-1.6  () {   mmux_uint64_less_equal '11' '11' ;}
 
 
 #### type variables: sintmax
@@ -963,13 +963,13 @@ function comparison-sintmax-greater-1.7       () {   mmux_sintmax_greater '-11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-sintmax-lesser-1.1        ()  {   mmux_sintmax_lesser '90' ;}
-function comparison-sintmax-lesser-1.2        ()  {   mmux_sintmax_lesser '80' '90' ;}
-function comparison-sintmax-lesser-1.3        ()  {   mmux_sintmax_lesser '70' '80' '90' ;}
-function comparison-sintmax-lesser-1.4        ()  { ! mmux_sintmax_lesser '33' '11' ;}
-function comparison-sintmax-lesser-1.5        ()  { ! mmux_sintmax_lesser '33' '99' '55' ;}
-function comparison-sintmax-lesser-1.6        ()  { ! mmux_sintmax_lesser '11' '11' ;}
-function comparison-sintmax-lesser-1.7        ()  { ! mmux_sintmax_lesser '-11' '-22' ;}
+function comparison-sintmax-less-1.1        ()  {   mmux_sintmax_less '90' ;}
+function comparison-sintmax-less-1.2        ()  {   mmux_sintmax_less '80' '90' ;}
+function comparison-sintmax-less-1.3        ()  {   mmux_sintmax_less '70' '80' '90' ;}
+function comparison-sintmax-less-1.4        ()  { ! mmux_sintmax_less '33' '11' ;}
+function comparison-sintmax-less-1.5        ()  { ! mmux_sintmax_less '33' '99' '55' ;}
+function comparison-sintmax-less-1.6        ()  { ! mmux_sintmax_less '11' '11' ;}
+function comparison-sintmax-less-1.7        ()  { ! mmux_sintmax_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -983,13 +983,13 @@ function comparison-sintmax-greater-equal-1.7 () {   mmux_sintmax_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-sintmax-lesser-equal-1.1  () {   mmux_sintmax_lesser_equal '90' ;}
-function comparison-sintmax-lesser-equal-1.2  () {   mmux_sintmax_lesser_equal '80' '90' ;}
-function comparison-sintmax-lesser-equal-1.3  () {   mmux_sintmax_lesser_equal '70' '80' '90' ;}
-function comparison-sintmax-lesser-equal-1.4  () { ! mmux_sintmax_lesser_equal '33' '11' ;}
-function comparison-sintmax-lesser-equal-1.5  () { ! mmux_sintmax_lesser_equal '33' '99' '55' ;}
-function comparison-sintmax-lesser-equal-1.6  () {   mmux_sintmax_lesser_equal '11' '11' ;}
-function comparison-sintmax-lesser-equal-1.7  () {   mmux_sintmax_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sintmax-less-equal-1.1  () {   mmux_sintmax_less_equal '90' ;}
+function comparison-sintmax-less-equal-1.2  () {   mmux_sintmax_less_equal '80' '90' ;}
+function comparison-sintmax-less-equal-1.3  () {   mmux_sintmax_less_equal '70' '80' '90' ;}
+function comparison-sintmax-less-equal-1.4  () { ! mmux_sintmax_less_equal '33' '11' ;}
+function comparison-sintmax-less-equal-1.5  () { ! mmux_sintmax_less_equal '33' '99' '55' ;}
+function comparison-sintmax-less-equal-1.6  () {   mmux_sintmax_less_equal '11' '11' ;}
+function comparison-sintmax-less-equal-1.7  () {   mmux_sintmax_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uintmax
@@ -1010,12 +1010,12 @@ function comparison-uintmax-greater-1.6       () { ! mmux_uintmax_greater '11' '
 
 ### ------------------------------------------------------------------------
 
-function comparison-uintmax-lesser-1.1        ()  {   mmux_uintmax_lesser '90' ;}
-function comparison-uintmax-lesser-1.2        ()  {   mmux_uintmax_lesser '80' '90' ;}
-function comparison-uintmax-lesser-1.3        ()  {   mmux_uintmax_lesser '70' '80' '90' ;}
-function comparison-uintmax-lesser-1.4        ()  { ! mmux_uintmax_lesser '33' '11' ;}
-function comparison-uintmax-lesser-1.5        ()  { ! mmux_uintmax_lesser '33' '99' '55' ;}
-function comparison-uintmax-lesser-1.6        ()  { ! mmux_uintmax_lesser '11' '11' ;}
+function comparison-uintmax-less-1.1        ()  {   mmux_uintmax_less '90' ;}
+function comparison-uintmax-less-1.2        ()  {   mmux_uintmax_less '80' '90' ;}
+function comparison-uintmax-less-1.3        ()  {   mmux_uintmax_less '70' '80' '90' ;}
+function comparison-uintmax-less-1.4        ()  { ! mmux_uintmax_less '33' '11' ;}
+function comparison-uintmax-less-1.5        ()  { ! mmux_uintmax_less '33' '99' '55' ;}
+function comparison-uintmax-less-1.6        ()  { ! mmux_uintmax_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1028,12 +1028,12 @@ function comparison-uintmax-greater-equal-1.6 () {   mmux_uintmax_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-uintmax-lesser-equal-1.1  () {   mmux_uintmax_lesser_equal '90' ;}
-function comparison-uintmax-lesser-equal-1.2  () {   mmux_uintmax_lesser_equal '80' '90' ;}
-function comparison-uintmax-lesser-equal-1.3  () {   mmux_uintmax_lesser_equal '70' '80' '90' ;}
-function comparison-uintmax-lesser-equal-1.4  () { ! mmux_uintmax_lesser_equal '33' '11' ;}
-function comparison-uintmax-lesser-equal-1.5  () { ! mmux_uintmax_lesser_equal '33' '99' '55' ;}
-function comparison-uintmax-lesser-equal-1.6  () {   mmux_uintmax_lesser_equal '11' '11' ;}
+function comparison-uintmax-less-equal-1.1  () {   mmux_uintmax_less_equal '90' ;}
+function comparison-uintmax-less-equal-1.2  () {   mmux_uintmax_less_equal '80' '90' ;}
+function comparison-uintmax-less-equal-1.3  () {   mmux_uintmax_less_equal '70' '80' '90' ;}
+function comparison-uintmax-less-equal-1.4  () { ! mmux_uintmax_less_equal '33' '11' ;}
+function comparison-uintmax-less-equal-1.5  () { ! mmux_uintmax_less_equal '33' '99' '55' ;}
+function comparison-uintmax-less-equal-1.6  () {   mmux_uintmax_less_equal '11' '11' ;}
 
 
 #### type variables: sintptr
@@ -1057,13 +1057,13 @@ function comparison-sintptr-greater-1.7       () {   mmux_sintptr_greater '-11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-sintptr-lesser-1.1        ()  {   mmux_sintptr_lesser '90' ;}
-function comparison-sintptr-lesser-1.2        ()  {   mmux_sintptr_lesser '80' '90' ;}
-function comparison-sintptr-lesser-1.3        ()  {   mmux_sintptr_lesser '70' '80' '90' ;}
-function comparison-sintptr-lesser-1.4        ()  { ! mmux_sintptr_lesser '33' '11' ;}
-function comparison-sintptr-lesser-1.5        ()  { ! mmux_sintptr_lesser '33' '99' '55' ;}
-function comparison-sintptr-lesser-1.6        ()  { ! mmux_sintptr_lesser '11' '11' ;}
-function comparison-sintptr-lesser-1.7        ()  { ! mmux_sintptr_lesser '-11' '-22' ;}
+function comparison-sintptr-less-1.1        ()  {   mmux_sintptr_less '90' ;}
+function comparison-sintptr-less-1.2        ()  {   mmux_sintptr_less '80' '90' ;}
+function comparison-sintptr-less-1.3        ()  {   mmux_sintptr_less '70' '80' '90' ;}
+function comparison-sintptr-less-1.4        ()  { ! mmux_sintptr_less '33' '11' ;}
+function comparison-sintptr-less-1.5        ()  { ! mmux_sintptr_less '33' '99' '55' ;}
+function comparison-sintptr-less-1.6        ()  { ! mmux_sintptr_less '11' '11' ;}
+function comparison-sintptr-less-1.7        ()  { ! mmux_sintptr_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1077,13 +1077,13 @@ function comparison-sintptr-greater-equal-1.7 () {   mmux_sintptr_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-sintptr-lesser-equal-1.1  () {   mmux_sintptr_lesser_equal '90' ;}
-function comparison-sintptr-lesser-equal-1.2  () {   mmux_sintptr_lesser_equal '80' '90' ;}
-function comparison-sintptr-lesser-equal-1.3  () {   mmux_sintptr_lesser_equal '70' '80' '90' ;}
-function comparison-sintptr-lesser-equal-1.4  () { ! mmux_sintptr_lesser_equal '33' '11' ;}
-function comparison-sintptr-lesser-equal-1.5  () { ! mmux_sintptr_lesser_equal '33' '99' '55' ;}
-function comparison-sintptr-lesser-equal-1.6  () {   mmux_sintptr_lesser_equal '11' '11' ;}
-function comparison-sintptr-lesser-equal-1.7  () {   mmux_sintptr_lesser_equal '-33' '-22' '-22' ;}
+function comparison-sintptr-less-equal-1.1  () {   mmux_sintptr_less_equal '90' ;}
+function comparison-sintptr-less-equal-1.2  () {   mmux_sintptr_less_equal '80' '90' ;}
+function comparison-sintptr-less-equal-1.3  () {   mmux_sintptr_less_equal '70' '80' '90' ;}
+function comparison-sintptr-less-equal-1.4  () { ! mmux_sintptr_less_equal '33' '11' ;}
+function comparison-sintptr-less-equal-1.5  () { ! mmux_sintptr_less_equal '33' '99' '55' ;}
+function comparison-sintptr-less-equal-1.6  () {   mmux_sintptr_less_equal '11' '11' ;}
+function comparison-sintptr-less-equal-1.7  () {   mmux_sintptr_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uintptr
@@ -1104,12 +1104,12 @@ function comparison-uintptr-greater-1.6       () { ! mmux_uintptr_greater '11' '
 
 ### ------------------------------------------------------------------------
 
-function comparison-uintptr-lesser-1.1        ()  {   mmux_uintptr_lesser '90' ;}
-function comparison-uintptr-lesser-1.2        ()  {   mmux_uintptr_lesser '80' '90' ;}
-function comparison-uintptr-lesser-1.3        ()  {   mmux_uintptr_lesser '70' '80' '90' ;}
-function comparison-uintptr-lesser-1.4        ()  { ! mmux_uintptr_lesser '33' '11' ;}
-function comparison-uintptr-lesser-1.5        ()  { ! mmux_uintptr_lesser '33' '99' '55' ;}
-function comparison-uintptr-lesser-1.6        ()  { ! mmux_uintptr_lesser '11' '11' ;}
+function comparison-uintptr-less-1.1        ()  {   mmux_uintptr_less '90' ;}
+function comparison-uintptr-less-1.2        ()  {   mmux_uintptr_less '80' '90' ;}
+function comparison-uintptr-less-1.3        ()  {   mmux_uintptr_less '70' '80' '90' ;}
+function comparison-uintptr-less-1.4        ()  { ! mmux_uintptr_less '33' '11' ;}
+function comparison-uintptr-less-1.5        ()  { ! mmux_uintptr_less '33' '99' '55' ;}
+function comparison-uintptr-less-1.6        ()  { ! mmux_uintptr_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1122,12 +1122,12 @@ function comparison-uintptr-greater-equal-1.6 () {   mmux_uintptr_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-uintptr-lesser-equal-1.1  () {   mmux_uintptr_lesser_equal '90' ;}
-function comparison-uintptr-lesser-equal-1.2  () {   mmux_uintptr_lesser_equal '80' '90' ;}
-function comparison-uintptr-lesser-equal-1.3  () {   mmux_uintptr_lesser_equal '70' '80' '90' ;}
-function comparison-uintptr-lesser-equal-1.4  () { ! mmux_uintptr_lesser_equal '33' '11' ;}
-function comparison-uintptr-lesser-equal-1.5  () { ! mmux_uintptr_lesser_equal '33' '99' '55' ;}
-function comparison-uintptr-lesser-equal-1.6  () {   mmux_uintptr_lesser_equal '11' '11' ;}
+function comparison-uintptr-less-equal-1.1  () {   mmux_uintptr_less_equal '90' ;}
+function comparison-uintptr-less-equal-1.2  () {   mmux_uintptr_less_equal '80' '90' ;}
+function comparison-uintptr-less-equal-1.3  () {   mmux_uintptr_less_equal '70' '80' '90' ;}
+function comparison-uintptr-less-equal-1.4  () { ! mmux_uintptr_less_equal '33' '11' ;}
+function comparison-uintptr-less-equal-1.5  () { ! mmux_uintptr_less_equal '33' '99' '55' ;}
+function comparison-uintptr-less-equal-1.6  () {   mmux_uintptr_less_equal '11' '11' ;}
 
 
 #### type variables: ssize
@@ -1151,13 +1151,13 @@ function comparison-ssize-greater-1.7       () {   mmux_ssize_greater '-11' '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-ssize-lesser-1.1        ()  {   mmux_ssize_lesser '90' ;}
-function comparison-ssize-lesser-1.2        ()  {   mmux_ssize_lesser '80' '90' ;}
-function comparison-ssize-lesser-1.3        ()  {   mmux_ssize_lesser '70' '80' '90' ;}
-function comparison-ssize-lesser-1.4        ()  { ! mmux_ssize_lesser '33' '11' ;}
-function comparison-ssize-lesser-1.5        ()  { ! mmux_ssize_lesser '33' '99' '55' ;}
-function comparison-ssize-lesser-1.6        ()  { ! mmux_ssize_lesser '11' '11' ;}
-function comparison-ssize-lesser-1.7        ()  { ! mmux_ssize_lesser '-11' '-22' ;}
+function comparison-ssize-less-1.1        ()  {   mmux_ssize_less '90' ;}
+function comparison-ssize-less-1.2        ()  {   mmux_ssize_less '80' '90' ;}
+function comparison-ssize-less-1.3        ()  {   mmux_ssize_less '70' '80' '90' ;}
+function comparison-ssize-less-1.4        ()  { ! mmux_ssize_less '33' '11' ;}
+function comparison-ssize-less-1.5        ()  { ! mmux_ssize_less '33' '99' '55' ;}
+function comparison-ssize-less-1.6        ()  { ! mmux_ssize_less '11' '11' ;}
+function comparison-ssize-less-1.7        ()  { ! mmux_ssize_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1171,13 +1171,13 @@ function comparison-ssize-greater-equal-1.7 () {   mmux_ssize_greater_equal '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-ssize-lesser-equal-1.1  () {   mmux_ssize_lesser_equal '90' ;}
-function comparison-ssize-lesser-equal-1.2  () {   mmux_ssize_lesser_equal '80' '90' ;}
-function comparison-ssize-lesser-equal-1.3  () {   mmux_ssize_lesser_equal '70' '80' '90' ;}
-function comparison-ssize-lesser-equal-1.4  () { ! mmux_ssize_lesser_equal '33' '11' ;}
-function comparison-ssize-lesser-equal-1.5  () { ! mmux_ssize_lesser_equal '33' '99' '55' ;}
-function comparison-ssize-lesser-equal-1.6  () {   mmux_ssize_lesser_equal '11' '11' ;}
-function comparison-ssize-lesser-equal-1.7  () {   mmux_ssize_lesser_equal '-33' '-22' '-22' ;}
+function comparison-ssize-less-equal-1.1  () {   mmux_ssize_less_equal '90' ;}
+function comparison-ssize-less-equal-1.2  () {   mmux_ssize_less_equal '80' '90' ;}
+function comparison-ssize-less-equal-1.3  () {   mmux_ssize_less_equal '70' '80' '90' ;}
+function comparison-ssize-less-equal-1.4  () { ! mmux_ssize_less_equal '33' '11' ;}
+function comparison-ssize-less-equal-1.5  () { ! mmux_ssize_less_equal '33' '99' '55' ;}
+function comparison-ssize-less-equal-1.6  () {   mmux_ssize_less_equal '11' '11' ;}
+function comparison-ssize-less-equal-1.7  () {   mmux_ssize_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: usize
@@ -1198,12 +1198,12 @@ function comparison-usize-greater-1.6       () { ! mmux_usize_greater '11' '11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-usize-lesser-1.1        ()  {   mmux_usize_lesser '90' ;}
-function comparison-usize-lesser-1.2        ()  {   mmux_usize_lesser '80' '90' ;}
-function comparison-usize-lesser-1.3        ()  {   mmux_usize_lesser '70' '80' '90' ;}
-function comparison-usize-lesser-1.4        ()  { ! mmux_usize_lesser '33' '11' ;}
-function comparison-usize-lesser-1.5        ()  { ! mmux_usize_lesser '33' '99' '55' ;}
-function comparison-usize-lesser-1.6        ()  { ! mmux_usize_lesser '11' '11' ;}
+function comparison-usize-less-1.1        ()  {   mmux_usize_less '90' ;}
+function comparison-usize-less-1.2        ()  {   mmux_usize_less '80' '90' ;}
+function comparison-usize-less-1.3        ()  {   mmux_usize_less '70' '80' '90' ;}
+function comparison-usize-less-1.4        ()  { ! mmux_usize_less '33' '11' ;}
+function comparison-usize-less-1.5        ()  { ! mmux_usize_less '33' '99' '55' ;}
+function comparison-usize-less-1.6        ()  { ! mmux_usize_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1216,12 +1216,12 @@ function comparison-usize-greater-equal-1.6 () {   mmux_usize_greater_equal '11'
 
 ### ------------------------------------------------------------------------
 
-function comparison-usize-lesser-equal-1.1  () {   mmux_usize_lesser_equal '90' ;}
-function comparison-usize-lesser-equal-1.2  () {   mmux_usize_lesser_equal '80' '90' ;}
-function comparison-usize-lesser-equal-1.3  () {   mmux_usize_lesser_equal '70' '80' '90' ;}
-function comparison-usize-lesser-equal-1.4  () { ! mmux_usize_lesser_equal '33' '11' ;}
-function comparison-usize-lesser-equal-1.5  () { ! mmux_usize_lesser_equal '33' '99' '55' ;}
-function comparison-usize-lesser-equal-1.6  () {   mmux_usize_lesser_equal '11' '11' ;}
+function comparison-usize-less-equal-1.1  () {   mmux_usize_less_equal '90' ;}
+function comparison-usize-less-equal-1.2  () {   mmux_usize_less_equal '80' '90' ;}
+function comparison-usize-less-equal-1.3  () {   mmux_usize_less_equal '70' '80' '90' ;}
+function comparison-usize-less-equal-1.4  () { ! mmux_usize_less_equal '33' '11' ;}
+function comparison-usize-less-equal-1.5  () { ! mmux_usize_less_equal '33' '99' '55' ;}
+function comparison-usize-less-equal-1.6  () {   mmux_usize_less_equal '11' '11' ;}
 
 
 #### type variables: ptrdiff
@@ -1245,13 +1245,13 @@ function comparison-ptrdiff-greater-1.7       () {   mmux_ptrdiff_greater '-11' 
 
 ### ------------------------------------------------------------------------
 
-function comparison-ptrdiff-lesser-1.1        ()  {   mmux_ptrdiff_lesser '90' ;}
-function comparison-ptrdiff-lesser-1.2        ()  {   mmux_ptrdiff_lesser '80' '90' ;}
-function comparison-ptrdiff-lesser-1.3        ()  {   mmux_ptrdiff_lesser '70' '80' '90' ;}
-function comparison-ptrdiff-lesser-1.4        ()  { ! mmux_ptrdiff_lesser '33' '11' ;}
-function comparison-ptrdiff-lesser-1.5        ()  { ! mmux_ptrdiff_lesser '33' '99' '55' ;}
-function comparison-ptrdiff-lesser-1.6        ()  { ! mmux_ptrdiff_lesser '11' '11' ;}
-function comparison-ptrdiff-lesser-1.7        ()  { ! mmux_ptrdiff_lesser '-11' '-22' ;}
+function comparison-ptrdiff-less-1.1        ()  {   mmux_ptrdiff_less '90' ;}
+function comparison-ptrdiff-less-1.2        ()  {   mmux_ptrdiff_less '80' '90' ;}
+function comparison-ptrdiff-less-1.3        ()  {   mmux_ptrdiff_less '70' '80' '90' ;}
+function comparison-ptrdiff-less-1.4        ()  { ! mmux_ptrdiff_less '33' '11' ;}
+function comparison-ptrdiff-less-1.5        ()  { ! mmux_ptrdiff_less '33' '99' '55' ;}
+function comparison-ptrdiff-less-1.6        ()  { ! mmux_ptrdiff_less '11' '11' ;}
+function comparison-ptrdiff-less-1.7        ()  { ! mmux_ptrdiff_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1265,13 +1265,13 @@ function comparison-ptrdiff-greater-equal-1.7 () {   mmux_ptrdiff_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-ptrdiff-lesser-equal-1.1  () {   mmux_ptrdiff_lesser_equal '90' ;}
-function comparison-ptrdiff-lesser-equal-1.2  () {   mmux_ptrdiff_lesser_equal '80' '90' ;}
-function comparison-ptrdiff-lesser-equal-1.3  () {   mmux_ptrdiff_lesser_equal '70' '80' '90' ;}
-function comparison-ptrdiff-lesser-equal-1.4  () { ! mmux_ptrdiff_lesser_equal '33' '11' ;}
-function comparison-ptrdiff-lesser-equal-1.5  () { ! mmux_ptrdiff_lesser_equal '33' '99' '55' ;}
-function comparison-ptrdiff-lesser-equal-1.6  () {   mmux_ptrdiff_lesser_equal '11' '11' ;}
-function comparison-ptrdiff-lesser-equal-1.7  () {   mmux_ptrdiff_lesser_equal '-33' '-22' '-22' ;}
+function comparison-ptrdiff-less-equal-1.1  () {   mmux_ptrdiff_less_equal '90' ;}
+function comparison-ptrdiff-less-equal-1.2  () {   mmux_ptrdiff_less_equal '80' '90' ;}
+function comparison-ptrdiff-less-equal-1.3  () {   mmux_ptrdiff_less_equal '70' '80' '90' ;}
+function comparison-ptrdiff-less-equal-1.4  () { ! mmux_ptrdiff_less_equal '33' '11' ;}
+function comparison-ptrdiff-less-equal-1.5  () { ! mmux_ptrdiff_less_equal '33' '99' '55' ;}
+function comparison-ptrdiff-less-equal-1.6  () {   mmux_ptrdiff_less_equal '11' '11' ;}
+function comparison-ptrdiff-less-equal-1.7  () {   mmux_ptrdiff_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: off
@@ -1295,13 +1295,13 @@ function comparison-off-greater-1.7       () {   mmux_off_greater '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-off-lesser-1.1        ()  {   mmux_off_lesser '90' ;}
-function comparison-off-lesser-1.2        ()  {   mmux_off_lesser '80' '90' ;}
-function comparison-off-lesser-1.3        ()  {   mmux_off_lesser '70' '80' '90' ;}
-function comparison-off-lesser-1.4        ()  { ! mmux_off_lesser '33' '11' ;}
-function comparison-off-lesser-1.5        ()  { ! mmux_off_lesser '33' '99' '55' ;}
-function comparison-off-lesser-1.6        ()  { ! mmux_off_lesser '11' '11' ;}
-function comparison-off-lesser-1.7        ()  { ! mmux_off_lesser '-11' '-22' ;}
+function comparison-off-less-1.1        ()  {   mmux_off_less '90' ;}
+function comparison-off-less-1.2        ()  {   mmux_off_less '80' '90' ;}
+function comparison-off-less-1.3        ()  {   mmux_off_less '70' '80' '90' ;}
+function comparison-off-less-1.4        ()  { ! mmux_off_less '33' '11' ;}
+function comparison-off-less-1.5        ()  { ! mmux_off_less '33' '99' '55' ;}
+function comparison-off-less-1.6        ()  { ! mmux_off_less '11' '11' ;}
+function comparison-off-less-1.7        ()  { ! mmux_off_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1315,13 +1315,13 @@ function comparison-off-greater-equal-1.7 () {   mmux_off_greater_equal '-22' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-off-lesser-equal-1.1  () {   mmux_off_lesser_equal '90' ;}
-function comparison-off-lesser-equal-1.2  () {   mmux_off_lesser_equal '80' '90' ;}
-function comparison-off-lesser-equal-1.3  () {   mmux_off_lesser_equal '70' '80' '90' ;}
-function comparison-off-lesser-equal-1.4  () { ! mmux_off_lesser_equal '33' '11' ;}
-function comparison-off-lesser-equal-1.5  () { ! mmux_off_lesser_equal '33' '99' '55' ;}
-function comparison-off-lesser-equal-1.6  () {   mmux_off_lesser_equal '11' '11' ;}
-function comparison-off-lesser-equal-1.7  () {   mmux_off_lesser_equal '-33' '-22' '-22' ;}
+function comparison-off-less-equal-1.1  () {   mmux_off_less_equal '90' ;}
+function comparison-off-less-equal-1.2  () {   mmux_off_less_equal '80' '90' ;}
+function comparison-off-less-equal-1.3  () {   mmux_off_less_equal '70' '80' '90' ;}
+function comparison-off-less-equal-1.4  () { ! mmux_off_less_equal '33' '11' ;}
+function comparison-off-less-equal-1.5  () { ! mmux_off_less_equal '33' '99' '55' ;}
+function comparison-off-less-equal-1.6  () {   mmux_off_less_equal '11' '11' ;}
+function comparison-off-less-equal-1.7  () {   mmux_off_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: mode
@@ -1342,12 +1342,12 @@ function comparison-mode-greater-1.6       () { ! mmux_mode_greater '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-mode-lesser-1.1        ()  {   mmux_mode_lesser '90' ;}
-function comparison-mode-lesser-1.2        ()  {   mmux_mode_lesser '80' '90' ;}
-function comparison-mode-lesser-1.3        ()  {   mmux_mode_lesser '70' '80' '90' ;}
-function comparison-mode-lesser-1.4        ()  { ! mmux_mode_lesser '33' '11' ;}
-function comparison-mode-lesser-1.5        ()  { ! mmux_mode_lesser '33' '99' '55' ;}
-function comparison-mode-lesser-1.6        ()  { ! mmux_mode_lesser '11' '11' ;}
+function comparison-mode-less-1.1        ()  {   mmux_mode_less '90' ;}
+function comparison-mode-less-1.2        ()  {   mmux_mode_less '80' '90' ;}
+function comparison-mode-less-1.3        ()  {   mmux_mode_less '70' '80' '90' ;}
+function comparison-mode-less-1.4        ()  { ! mmux_mode_less '33' '11' ;}
+function comparison-mode-less-1.5        ()  { ! mmux_mode_less '33' '99' '55' ;}
+function comparison-mode-less-1.6        ()  { ! mmux_mode_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1360,12 +1360,12 @@ function comparison-mode-greater-equal-1.6 () {   mmux_mode_greater_equal '11' '
 
 ### ------------------------------------------------------------------------
 
-function comparison-mode-lesser-equal-1.1  () {   mmux_mode_lesser_equal '90' ;}
-function comparison-mode-lesser-equal-1.2  () {   mmux_mode_lesser_equal '80' '90' ;}
-function comparison-mode-lesser-equal-1.3  () {   mmux_mode_lesser_equal '70' '80' '90' ;}
-function comparison-mode-lesser-equal-1.4  () { ! mmux_mode_lesser_equal '33' '11' ;}
-function comparison-mode-lesser-equal-1.5  () { ! mmux_mode_lesser_equal '33' '99' '55' ;}
-function comparison-mode-lesser-equal-1.6  () {   mmux_mode_lesser_equal '11' '11' ;}
+function comparison-mode-less-equal-1.1  () {   mmux_mode_less_equal '90' ;}
+function comparison-mode-less-equal-1.2  () {   mmux_mode_less_equal '80' '90' ;}
+function comparison-mode-less-equal-1.3  () {   mmux_mode_less_equal '70' '80' '90' ;}
+function comparison-mode-less-equal-1.4  () { ! mmux_mode_less_equal '33' '11' ;}
+function comparison-mode-less-equal-1.5  () { ! mmux_mode_less_equal '33' '99' '55' ;}
+function comparison-mode-less-equal-1.6  () {   mmux_mode_less_equal '11' '11' ;}
 
 
 #### type variables: pid
@@ -1389,13 +1389,13 @@ function comparison-pid-greater-1.7       () {   mmux_pid_greater '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-pid-lesser-1.1        ()  {   mmux_pid_lesser '90' ;}
-function comparison-pid-lesser-1.2        ()  {   mmux_pid_lesser '80' '90' ;}
-function comparison-pid-lesser-1.3        ()  {   mmux_pid_lesser '70' '80' '90' ;}
-function comparison-pid-lesser-1.4        ()  { ! mmux_pid_lesser '33' '11' ;}
-function comparison-pid-lesser-1.5        ()  { ! mmux_pid_lesser '33' '99' '55' ;}
-function comparison-pid-lesser-1.6        ()  { ! mmux_pid_lesser '11' '11' ;}
-function comparison-pid-lesser-1.7        ()  { ! mmux_pid_lesser '-11' '-22' ;}
+function comparison-pid-less-1.1        ()  {   mmux_pid_less '90' ;}
+function comparison-pid-less-1.2        ()  {   mmux_pid_less '80' '90' ;}
+function comparison-pid-less-1.3        ()  {   mmux_pid_less '70' '80' '90' ;}
+function comparison-pid-less-1.4        ()  { ! mmux_pid_less '33' '11' ;}
+function comparison-pid-less-1.5        ()  { ! mmux_pid_less '33' '99' '55' ;}
+function comparison-pid-less-1.6        ()  { ! mmux_pid_less '11' '11' ;}
+function comparison-pid-less-1.7        ()  { ! mmux_pid_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1409,13 +1409,13 @@ function comparison-pid-greater-equal-1.7 () {   mmux_pid_greater_equal '-22' '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-pid-lesser-equal-1.1  () {   mmux_pid_lesser_equal '90' ;}
-function comparison-pid-lesser-equal-1.2  () {   mmux_pid_lesser_equal '80' '90' ;}
-function comparison-pid-lesser-equal-1.3  () {   mmux_pid_lesser_equal '70' '80' '90' ;}
-function comparison-pid-lesser-equal-1.4  () { ! mmux_pid_lesser_equal '33' '11' ;}
-function comparison-pid-lesser-equal-1.5  () { ! mmux_pid_lesser_equal '33' '99' '55' ;}
-function comparison-pid-lesser-equal-1.6  () {   mmux_pid_lesser_equal '11' '11' ;}
-function comparison-pid-lesser-equal-1.7  () {   mmux_pid_lesser_equal '-33' '-22' '-22' ;}
+function comparison-pid-less-equal-1.1  () {   mmux_pid_less_equal '90' ;}
+function comparison-pid-less-equal-1.2  () {   mmux_pid_less_equal '80' '90' ;}
+function comparison-pid-less-equal-1.3  () {   mmux_pid_less_equal '70' '80' '90' ;}
+function comparison-pid-less-equal-1.4  () { ! mmux_pid_less_equal '33' '11' ;}
+function comparison-pid-less-equal-1.5  () { ! mmux_pid_less_equal '33' '99' '55' ;}
+function comparison-pid-less-equal-1.6  () {   mmux_pid_less_equal '11' '11' ;}
+function comparison-pid-less-equal-1.7  () {   mmux_pid_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: uid
@@ -1436,12 +1436,12 @@ function comparison-uid-greater-1.6       () { ! mmux_uid_greater '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-uid-lesser-1.1        ()  {   mmux_uid_lesser '90' ;}
-function comparison-uid-lesser-1.2        ()  {   mmux_uid_lesser '80' '90' ;}
-function comparison-uid-lesser-1.3        ()  {   mmux_uid_lesser '70' '80' '90' ;}
-function comparison-uid-lesser-1.4        ()  { ! mmux_uid_lesser '33' '11' ;}
-function comparison-uid-lesser-1.5        ()  { ! mmux_uid_lesser '33' '99' '55' ;}
-function comparison-uid-lesser-1.6        ()  { ! mmux_uid_lesser '11' '11' ;}
+function comparison-uid-less-1.1        ()  {   mmux_uid_less '90' ;}
+function comparison-uid-less-1.2        ()  {   mmux_uid_less '80' '90' ;}
+function comparison-uid-less-1.3        ()  {   mmux_uid_less '70' '80' '90' ;}
+function comparison-uid-less-1.4        ()  { ! mmux_uid_less '33' '11' ;}
+function comparison-uid-less-1.5        ()  { ! mmux_uid_less '33' '99' '55' ;}
+function comparison-uid-less-1.6        ()  { ! mmux_uid_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1454,12 +1454,12 @@ function comparison-uid-greater-equal-1.6 () {   mmux_uid_greater_equal '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-uid-lesser-equal-1.1  () {   mmux_uid_lesser_equal '90' ;}
-function comparison-uid-lesser-equal-1.2  () {   mmux_uid_lesser_equal '80' '90' ;}
-function comparison-uid-lesser-equal-1.3  () {   mmux_uid_lesser_equal '70' '80' '90' ;}
-function comparison-uid-lesser-equal-1.4  () { ! mmux_uid_lesser_equal '33' '11' ;}
-function comparison-uid-lesser-equal-1.5  () { ! mmux_uid_lesser_equal '33' '99' '55' ;}
-function comparison-uid-lesser-equal-1.6  () {   mmux_uid_lesser_equal '11' '11' ;}
+function comparison-uid-less-equal-1.1  () {   mmux_uid_less_equal '90' ;}
+function comparison-uid-less-equal-1.2  () {   mmux_uid_less_equal '80' '90' ;}
+function comparison-uid-less-equal-1.3  () {   mmux_uid_less_equal '70' '80' '90' ;}
+function comparison-uid-less-equal-1.4  () { ! mmux_uid_less_equal '33' '11' ;}
+function comparison-uid-less-equal-1.5  () { ! mmux_uid_less_equal '33' '99' '55' ;}
+function comparison-uid-less-equal-1.6  () {   mmux_uid_less_equal '11' '11' ;}
 
 
 #### type variables: gid
@@ -1480,12 +1480,12 @@ function comparison-gid-greater-1.6       () { ! mmux_gid_greater '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-gid-lesser-1.1        ()  {   mmux_gid_lesser '90' ;}
-function comparison-gid-lesser-1.2        ()  {   mmux_gid_lesser '80' '90' ;}
-function comparison-gid-lesser-1.3        ()  {   mmux_gid_lesser '70' '80' '90' ;}
-function comparison-gid-lesser-1.4        ()  { ! mmux_gid_lesser '33' '11' ;}
-function comparison-gid-lesser-1.5        ()  { ! mmux_gid_lesser '33' '99' '55' ;}
-function comparison-gid-lesser-1.6        ()  { ! mmux_gid_lesser '11' '11' ;}
+function comparison-gid-less-1.1        ()  {   mmux_gid_less '90' ;}
+function comparison-gid-less-1.2        ()  {   mmux_gid_less '80' '90' ;}
+function comparison-gid-less-1.3        ()  {   mmux_gid_less '70' '80' '90' ;}
+function comparison-gid-less-1.4        ()  { ! mmux_gid_less '33' '11' ;}
+function comparison-gid-less-1.5        ()  { ! mmux_gid_less '33' '99' '55' ;}
+function comparison-gid-less-1.6        ()  { ! mmux_gid_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1498,12 +1498,12 @@ function comparison-gid-greater-equal-1.6 () {   mmux_gid_greater_equal '11' '11
 
 ### ------------------------------------------------------------------------
 
-function comparison-gid-lesser-equal-1.1  () {   mmux_gid_lesser_equal '90' ;}
-function comparison-gid-lesser-equal-1.2  () {   mmux_gid_lesser_equal '80' '90' ;}
-function comparison-gid-lesser-equal-1.3  () {   mmux_gid_lesser_equal '70' '80' '90' ;}
-function comparison-gid-lesser-equal-1.4  () { ! mmux_gid_lesser_equal '33' '11' ;}
-function comparison-gid-lesser-equal-1.5  () { ! mmux_gid_lesser_equal '33' '99' '55' ;}
-function comparison-gid-lesser-equal-1.6  () {   mmux_gid_lesser_equal '11' '11' ;}
+function comparison-gid-less-equal-1.1  () {   mmux_gid_less_equal '90' ;}
+function comparison-gid-less-equal-1.2  () {   mmux_gid_less_equal '80' '90' ;}
+function comparison-gid-less-equal-1.3  () {   mmux_gid_less_equal '70' '80' '90' ;}
+function comparison-gid-less-equal-1.4  () { ! mmux_gid_less_equal '33' '11' ;}
+function comparison-gid-less-equal-1.5  () { ! mmux_gid_less_equal '33' '99' '55' ;}
+function comparison-gid-less-equal-1.6  () {   mmux_gid_less_equal '11' '11' ;}
 
 
 #### type variables: wchar
@@ -1527,13 +1527,13 @@ function comparison-wchar-greater-1.7       () {   mmux_wchar_greater '-11' '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-wchar-lesser-1.1        ()  {   mmux_wchar_lesser '90' ;}
-function comparison-wchar-lesser-1.2        ()  {   mmux_wchar_lesser '80' '90' ;}
-function comparison-wchar-lesser-1.3        ()  {   mmux_wchar_lesser '70' '80' '90' ;}
-function comparison-wchar-lesser-1.4        ()  { ! mmux_wchar_lesser '33' '11' ;}
-function comparison-wchar-lesser-1.5        ()  { ! mmux_wchar_lesser '33' '99' '55' ;}
-function comparison-wchar-lesser-1.6        ()  { ! mmux_wchar_lesser '11' '11' ;}
-function comparison-wchar-lesser-1.7        ()  { ! mmux_wchar_lesser '-11' '-22' ;}
+function comparison-wchar-less-1.1        ()  {   mmux_wchar_less '90' ;}
+function comparison-wchar-less-1.2        ()  {   mmux_wchar_less '80' '90' ;}
+function comparison-wchar-less-1.3        ()  {   mmux_wchar_less '70' '80' '90' ;}
+function comparison-wchar-less-1.4        ()  { ! mmux_wchar_less '33' '11' ;}
+function comparison-wchar-less-1.5        ()  { ! mmux_wchar_less '33' '99' '55' ;}
+function comparison-wchar-less-1.6        ()  { ! mmux_wchar_less '11' '11' ;}
+function comparison-wchar-less-1.7        ()  { ! mmux_wchar_less '-11' '-22' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1547,13 +1547,13 @@ function comparison-wchar-greater-equal-1.7 () {   mmux_wchar_greater_equal '-22
 
 ### ------------------------------------------------------------------------
 
-function comparison-wchar-lesser-equal-1.1  () {   mmux_wchar_lesser_equal '90' ;}
-function comparison-wchar-lesser-equal-1.2  () {   mmux_wchar_lesser_equal '80' '90' ;}
-function comparison-wchar-lesser-equal-1.3  () {   mmux_wchar_lesser_equal '70' '80' '90' ;}
-function comparison-wchar-lesser-equal-1.4  () { ! mmux_wchar_lesser_equal '33' '11' ;}
-function comparison-wchar-lesser-equal-1.5  () { ! mmux_wchar_lesser_equal '33' '99' '55' ;}
-function comparison-wchar-lesser-equal-1.6  () {   mmux_wchar_lesser_equal '11' '11' ;}
-function comparison-wchar-lesser-equal-1.7  () {   mmux_wchar_lesser_equal '-33' '-22' '-22' ;}
+function comparison-wchar-less-equal-1.1  () {   mmux_wchar_less_equal '90' ;}
+function comparison-wchar-less-equal-1.2  () {   mmux_wchar_less_equal '80' '90' ;}
+function comparison-wchar-less-equal-1.3  () {   mmux_wchar_less_equal '70' '80' '90' ;}
+function comparison-wchar-less-equal-1.4  () { ! mmux_wchar_less_equal '33' '11' ;}
+function comparison-wchar-less-equal-1.5  () { ! mmux_wchar_less_equal '33' '99' '55' ;}
+function comparison-wchar-less-equal-1.6  () {   mmux_wchar_less_equal '11' '11' ;}
+function comparison-wchar-less-equal-1.7  () {   mmux_wchar_less_equal '-33' '-22' '-22' ;}
 
 
 #### type variables: wint
@@ -1574,12 +1574,12 @@ function comparison-wint-greater-1.6       () { ! mmux_wint_greater '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
-function comparison-wint-lesser-1.1        ()  {   mmux_wint_lesser '90' ;}
-function comparison-wint-lesser-1.2        ()  {   mmux_wint_lesser '80' '90' ;}
-function comparison-wint-lesser-1.3        ()  {   mmux_wint_lesser '70' '80' '90' ;}
-function comparison-wint-lesser-1.4        ()  { ! mmux_wint_lesser '33' '11' ;}
-function comparison-wint-lesser-1.5        ()  { ! mmux_wint_lesser '33' '99' '55' ;}
-function comparison-wint-lesser-1.6        ()  { ! mmux_wint_lesser '11' '11' ;}
+function comparison-wint-less-1.1        ()  {   mmux_wint_less '90' ;}
+function comparison-wint-less-1.2        ()  {   mmux_wint_less '80' '90' ;}
+function comparison-wint-less-1.3        ()  {   mmux_wint_less '70' '80' '90' ;}
+function comparison-wint-less-1.4        ()  { ! mmux_wint_less '33' '11' ;}
+function comparison-wint-less-1.5        ()  { ! mmux_wint_less '33' '99' '55' ;}
+function comparison-wint-less-1.6        ()  { ! mmux_wint_less '11' '11' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1592,12 +1592,12 @@ function comparison-wint-greater-equal-1.6 () {   mmux_wint_greater_equal '11' '
 
 ### ------------------------------------------------------------------------
 
-function comparison-wint-lesser-equal-1.1  () {   mmux_wint_lesser_equal '90' ;}
-function comparison-wint-lesser-equal-1.2  () {   mmux_wint_lesser_equal '80' '90' ;}
-function comparison-wint-lesser-equal-1.3  () {   mmux_wint_lesser_equal '70' '80' '90' ;}
-function comparison-wint-lesser-equal-1.4  () { ! mmux_wint_lesser_equal '33' '11' ;}
-function comparison-wint-lesser-equal-1.5  () { ! mmux_wint_lesser_equal '33' '99' '55' ;}
-function comparison-wint-lesser-equal-1.6  () {   mmux_wint_lesser_equal '11' '11' ;}
+function comparison-wint-less-equal-1.1  () {   mmux_wint_less_equal '90' ;}
+function comparison-wint-less-equal-1.2  () {   mmux_wint_less_equal '80' '90' ;}
+function comparison-wint-less-equal-1.3  () {   mmux_wint_less_equal '70' '80' '90' ;}
+function comparison-wint-less-equal-1.4  () { ! mmux_wint_less_equal '33' '11' ;}
+function comparison-wint-less-equal-1.5  () { ! mmux_wint_less_equal '33' '99' '55' ;}
+function comparison-wint-less-equal-1.6  () {   mmux_wint_less_equal '11' '11' ;}
 
 
 #### type variables: float
@@ -1621,13 +1621,13 @@ function comparison-float-greater-1.7       () {   mmux_float_greater '-1.1' '-2
 
 ### ------------------------------------------------------------------------
 
-function comparison-float-lesser-1.1        ()  {   mmux_float_lesser '9.0' ;}
-function comparison-float-lesser-1.2        ()  {   mmux_float_lesser '8.0' '9.0' ;}
-function comparison-float-lesser-1.3        ()  {   mmux_float_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float-lesser-1.4        ()  { ! mmux_float_lesser '3.3' '1.1' ;}
-function comparison-float-lesser-1.5        ()  { ! mmux_float_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float-lesser-1.6        ()  { ! mmux_float_lesser '1.1' '1.1' ;}
-function comparison-float-lesser-1.7        ()  { ! mmux_float_lesser '-1.1' '-2.2' ;}
+function comparison-float-less-1.1        ()  {   mmux_float_less '9.0' ;}
+function comparison-float-less-1.2        ()  {   mmux_float_less '8.0' '9.0' ;}
+function comparison-float-less-1.3        ()  {   mmux_float_less '7.0' '8.0' '9.0' ;}
+function comparison-float-less-1.4        ()  { ! mmux_float_less '3.3' '1.1' ;}
+function comparison-float-less-1.5        ()  { ! mmux_float_less '3.3' '9.9' '5.5' ;}
+function comparison-float-less-1.6        ()  { ! mmux_float_less '1.1' '1.1' ;}
+function comparison-float-less-1.7        ()  { ! mmux_float_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1641,13 +1641,13 @@ function comparison-float-greater-equal-1.7 () {   mmux_float_greater_equal '-2.
 
 ### ------------------------------------------------------------------------
 
-function comparison-float-lesser-equal-1.1  () {   mmux_float_lesser_equal '9.0' ;}
-function comparison-float-lesser-equal-1.2  () {   mmux_float_lesser_equal '8.0' '9.0' ;}
-function comparison-float-lesser-equal-1.3  () {   mmux_float_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float-lesser-equal-1.4  () { ! mmux_float_lesser_equal '3.3' '1.1' ;}
-function comparison-float-lesser-equal-1.5  () { ! mmux_float_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float-lesser-equal-1.6  () {   mmux_float_lesser_equal '1.1' '1.1' ;}
-function comparison-float-lesser-equal-1.7  () {   mmux_float_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float-less-equal-1.1  () {   mmux_float_less_equal '9.0' ;}
+function comparison-float-less-equal-1.2  () {   mmux_float_less_equal '8.0' '9.0' ;}
+function comparison-float-less-equal-1.3  () {   mmux_float_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float-less-equal-1.4  () { ! mmux_float_less_equal '3.3' '1.1' ;}
+function comparison-float-less-equal-1.5  () { ! mmux_float_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float-less-equal-1.6  () {   mmux_float_less_equal '1.1' '1.1' ;}
+function comparison-float-less-equal-1.7  () {   mmux_float_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1715,13 +1715,13 @@ function comparison-double-greater-1.7       () {   mmux_double_greater '-1.1' '
 
 ### ------------------------------------------------------------------------
 
-function comparison-double-lesser-1.1        ()  {   mmux_double_lesser '9.0' ;}
-function comparison-double-lesser-1.2        ()  {   mmux_double_lesser '8.0' '9.0' ;}
-function comparison-double-lesser-1.3        ()  {   mmux_double_lesser '7.0' '8.0' '9.0' ;}
-function comparison-double-lesser-1.4        ()  { ! mmux_double_lesser '3.3' '1.1' ;}
-function comparison-double-lesser-1.5        ()  { ! mmux_double_lesser '3.3' '9.9' '5.5' ;}
-function comparison-double-lesser-1.6        ()  { ! mmux_double_lesser '1.1' '1.1' ;}
-function comparison-double-lesser-1.7        ()  { ! mmux_double_lesser '-1.1' '-2.2' ;}
+function comparison-double-less-1.1        ()  {   mmux_double_less '9.0' ;}
+function comparison-double-less-1.2        ()  {   mmux_double_less '8.0' '9.0' ;}
+function comparison-double-less-1.3        ()  {   mmux_double_less '7.0' '8.0' '9.0' ;}
+function comparison-double-less-1.4        ()  { ! mmux_double_less '3.3' '1.1' ;}
+function comparison-double-less-1.5        ()  { ! mmux_double_less '3.3' '9.9' '5.5' ;}
+function comparison-double-less-1.6        ()  { ! mmux_double_less '1.1' '1.1' ;}
+function comparison-double-less-1.7        ()  { ! mmux_double_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1735,13 +1735,13 @@ function comparison-double-greater-equal-1.7 () {   mmux_double_greater_equal '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-double-lesser-equal-1.1  () {   mmux_double_lesser_equal '9.0' ;}
-function comparison-double-lesser-equal-1.2  () {   mmux_double_lesser_equal '8.0' '9.0' ;}
-function comparison-double-lesser-equal-1.3  () {   mmux_double_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-double-lesser-equal-1.4  () { ! mmux_double_lesser_equal '3.3' '1.1' ;}
-function comparison-double-lesser-equal-1.5  () { ! mmux_double_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-double-lesser-equal-1.6  () {   mmux_double_lesser_equal '1.1' '1.1' ;}
-function comparison-double-lesser-equal-1.7  () {   mmux_double_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-double-less-equal-1.1  () {   mmux_double_less_equal '9.0' ;}
+function comparison-double-less-equal-1.2  () {   mmux_double_less_equal '8.0' '9.0' ;}
+function comparison-double-less-equal-1.3  () {   mmux_double_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-double-less-equal-1.4  () { ! mmux_double_less_equal '3.3' '1.1' ;}
+function comparison-double-less-equal-1.5  () { ! mmux_double_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-double-less-equal-1.6  () {   mmux_double_less_equal '1.1' '1.1' ;}
+function comparison-double-less-equal-1.7  () {   mmux_double_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1812,13 +1812,13 @@ function comparison-ldouble-greater-1.7       () {   mmux_ldouble_greater '-1.1'
 
 ### ------------------------------------------------------------------------
 
-function comparison-ldouble-lesser-1.1        ()  {   mmux_ldouble_lesser '9.0' ;}
-function comparison-ldouble-lesser-1.2        ()  {   mmux_ldouble_lesser '8.0' '9.0' ;}
-function comparison-ldouble-lesser-1.3        ()  {   mmux_ldouble_lesser '7.0' '8.0' '9.0' ;}
-function comparison-ldouble-lesser-1.4        ()  { ! mmux_ldouble_lesser '3.3' '1.1' ;}
-function comparison-ldouble-lesser-1.5        ()  { ! mmux_ldouble_lesser '3.3' '9.9' '5.5' ;}
-function comparison-ldouble-lesser-1.6        ()  { ! mmux_ldouble_lesser '1.1' '1.1' ;}
-function comparison-ldouble-lesser-1.7        ()  { ! mmux_ldouble_lesser '-1.1' '-2.2' ;}
+function comparison-ldouble-less-1.1        ()  {   mmux_ldouble_less '9.0' ;}
+function comparison-ldouble-less-1.2        ()  {   mmux_ldouble_less '8.0' '9.0' ;}
+function comparison-ldouble-less-1.3        ()  {   mmux_ldouble_less '7.0' '8.0' '9.0' ;}
+function comparison-ldouble-less-1.4        ()  { ! mmux_ldouble_less '3.3' '1.1' ;}
+function comparison-ldouble-less-1.5        ()  { ! mmux_ldouble_less '3.3' '9.9' '5.5' ;}
+function comparison-ldouble-less-1.6        ()  { ! mmux_ldouble_less '1.1' '1.1' ;}
+function comparison-ldouble-less-1.7        ()  { ! mmux_ldouble_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1832,13 +1832,13 @@ function comparison-ldouble-greater-equal-1.7 () {   mmux_ldouble_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-ldouble-lesser-equal-1.1  () {   mmux_ldouble_lesser_equal '9.0' ;}
-function comparison-ldouble-lesser-equal-1.2  () {   mmux_ldouble_lesser_equal '8.0' '9.0' ;}
-function comparison-ldouble-lesser-equal-1.3  () {   mmux_ldouble_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-ldouble-lesser-equal-1.4  () { ! mmux_ldouble_lesser_equal '3.3' '1.1' ;}
-function comparison-ldouble-lesser-equal-1.5  () { ! mmux_ldouble_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-ldouble-lesser-equal-1.6  () {   mmux_ldouble_lesser_equal '1.1' '1.1' ;}
-function comparison-ldouble-lesser-equal-1.7  () {   mmux_ldouble_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-ldouble-less-equal-1.1  () {   mmux_ldouble_less_equal '9.0' ;}
+function comparison-ldouble-less-equal-1.2  () {   mmux_ldouble_less_equal '8.0' '9.0' ;}
+function comparison-ldouble-less-equal-1.3  () {   mmux_ldouble_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-ldouble-less-equal-1.4  () { ! mmux_ldouble_less_equal '3.3' '1.1' ;}
+function comparison-ldouble-less-equal-1.5  () { ! mmux_ldouble_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-ldouble-less-equal-1.6  () {   mmux_ldouble_less_equal '1.1' '1.1' ;}
+function comparison-ldouble-less-equal-1.7  () {   mmux_ldouble_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1911,13 +1911,13 @@ function comparison-float32-greater-1.7       () {   mmux_float32_greater '-1.1'
 
 ### ------------------------------------------------------------------------
 
-function comparison-float32-lesser-1.1        ()  {   mmux_float32_lesser '9.0' ;}
-function comparison-float32-lesser-1.2        ()  {   mmux_float32_lesser '8.0' '9.0' ;}
-function comparison-float32-lesser-1.3        ()  {   mmux_float32_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float32-lesser-1.4        ()  { ! mmux_float32_lesser '3.3' '1.1' ;}
-function comparison-float32-lesser-1.5        ()  { ! mmux_float32_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float32-lesser-1.6        ()  { ! mmux_float32_lesser '1.1' '1.1' ;}
-function comparison-float32-lesser-1.7        ()  { ! mmux_float32_lesser '-1.1' '-2.2' ;}
+function comparison-float32-less-1.1        ()  {   mmux_float32_less '9.0' ;}
+function comparison-float32-less-1.2        ()  {   mmux_float32_less '8.0' '9.0' ;}
+function comparison-float32-less-1.3        ()  {   mmux_float32_less '7.0' '8.0' '9.0' ;}
+function comparison-float32-less-1.4        ()  { ! mmux_float32_less '3.3' '1.1' ;}
+function comparison-float32-less-1.5        ()  { ! mmux_float32_less '3.3' '9.9' '5.5' ;}
+function comparison-float32-less-1.6        ()  { ! mmux_float32_less '1.1' '1.1' ;}
+function comparison-float32-less-1.7        ()  { ! mmux_float32_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -1931,13 +1931,13 @@ function comparison-float32-greater-equal-1.7 () {   mmux_float32_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-float32-lesser-equal-1.1  () {   mmux_float32_lesser_equal '9.0' ;}
-function comparison-float32-lesser-equal-1.2  () {   mmux_float32_lesser_equal '8.0' '9.0' ;}
-function comparison-float32-lesser-equal-1.3  () {   mmux_float32_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float32-lesser-equal-1.4  () { ! mmux_float32_lesser_equal '3.3' '1.1' ;}
-function comparison-float32-lesser-equal-1.5  () { ! mmux_float32_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float32-lesser-equal-1.6  () {   mmux_float32_lesser_equal '1.1' '1.1' ;}
-function comparison-float32-lesser-equal-1.7  () {   mmux_float32_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float32-less-equal-1.1  () {   mmux_float32_less_equal '9.0' ;}
+function comparison-float32-less-equal-1.2  () {   mmux_float32_less_equal '8.0' '9.0' ;}
+function comparison-float32-less-equal-1.3  () {   mmux_float32_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float32-less-equal-1.4  () { ! mmux_float32_less_equal '3.3' '1.1' ;}
+function comparison-float32-less-equal-1.5  () { ! mmux_float32_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float32-less-equal-1.6  () {   mmux_float32_less_equal '1.1' '1.1' ;}
+function comparison-float32-less-equal-1.7  () {   mmux_float32_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2010,13 +2010,13 @@ function comparison-float64-greater-1.7       () {   mmux_float64_greater '-1.1'
 
 ### ------------------------------------------------------------------------
 
-function comparison-float64-lesser-1.1        ()  {   mmux_float64_lesser '9.0' ;}
-function comparison-float64-lesser-1.2        ()  {   mmux_float64_lesser '8.0' '9.0' ;}
-function comparison-float64-lesser-1.3        ()  {   mmux_float64_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float64-lesser-1.4        ()  { ! mmux_float64_lesser '3.3' '1.1' ;}
-function comparison-float64-lesser-1.5        ()  { ! mmux_float64_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float64-lesser-1.6        ()  { ! mmux_float64_lesser '1.1' '1.1' ;}
-function comparison-float64-lesser-1.7        ()  { ! mmux_float64_lesser '-1.1' '-2.2' ;}
+function comparison-float64-less-1.1        ()  {   mmux_float64_less '9.0' ;}
+function comparison-float64-less-1.2        ()  {   mmux_float64_less '8.0' '9.0' ;}
+function comparison-float64-less-1.3        ()  {   mmux_float64_less '7.0' '8.0' '9.0' ;}
+function comparison-float64-less-1.4        ()  { ! mmux_float64_less '3.3' '1.1' ;}
+function comparison-float64-less-1.5        ()  { ! mmux_float64_less '3.3' '9.9' '5.5' ;}
+function comparison-float64-less-1.6        ()  { ! mmux_float64_less '1.1' '1.1' ;}
+function comparison-float64-less-1.7        ()  { ! mmux_float64_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2030,13 +2030,13 @@ function comparison-float64-greater-equal-1.7 () {   mmux_float64_greater_equal 
 
 ### ------------------------------------------------------------------------
 
-function comparison-float64-lesser-equal-1.1  () {   mmux_float64_lesser_equal '9.0' ;}
-function comparison-float64-lesser-equal-1.2  () {   mmux_float64_lesser_equal '8.0' '9.0' ;}
-function comparison-float64-lesser-equal-1.3  () {   mmux_float64_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float64-lesser-equal-1.4  () { ! mmux_float64_lesser_equal '3.3' '1.1' ;}
-function comparison-float64-lesser-equal-1.5  () { ! mmux_float64_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float64-lesser-equal-1.6  () {   mmux_float64_lesser_equal '1.1' '1.1' ;}
-function comparison-float64-lesser-equal-1.7  () {   mmux_float64_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float64-less-equal-1.1  () {   mmux_float64_less_equal '9.0' ;}
+function comparison-float64-less-equal-1.2  () {   mmux_float64_less_equal '8.0' '9.0' ;}
+function comparison-float64-less-equal-1.3  () {   mmux_float64_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float64-less-equal-1.4  () { ! mmux_float64_less_equal '3.3' '1.1' ;}
+function comparison-float64-less-equal-1.5  () { ! mmux_float64_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float64-less-equal-1.6  () {   mmux_float64_less_equal '1.1' '1.1' ;}
+function comparison-float64-less-equal-1.7  () {   mmux_float64_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2109,13 +2109,13 @@ function comparison-float128-greater-1.7       () {   mmux_float128_greater '-1.
 
 ### ------------------------------------------------------------------------
 
-function comparison-float128-lesser-1.1        ()  {   mmux_float128_lesser '9.0' ;}
-function comparison-float128-lesser-1.2        ()  {   mmux_float128_lesser '8.0' '9.0' ;}
-function comparison-float128-lesser-1.3        ()  {   mmux_float128_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float128-lesser-1.4        ()  { ! mmux_float128_lesser '3.3' '1.1' ;}
-function comparison-float128-lesser-1.5        ()  { ! mmux_float128_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float128-lesser-1.6        ()  { ! mmux_float128_lesser '1.1' '1.1' ;}
-function comparison-float128-lesser-1.7        ()  { ! mmux_float128_lesser '-1.1' '-2.2' ;}
+function comparison-float128-less-1.1        ()  {   mmux_float128_less '9.0' ;}
+function comparison-float128-less-1.2        ()  {   mmux_float128_less '8.0' '9.0' ;}
+function comparison-float128-less-1.3        ()  {   mmux_float128_less '7.0' '8.0' '9.0' ;}
+function comparison-float128-less-1.4        ()  { ! mmux_float128_less '3.3' '1.1' ;}
+function comparison-float128-less-1.5        ()  { ! mmux_float128_less '3.3' '9.9' '5.5' ;}
+function comparison-float128-less-1.6        ()  { ! mmux_float128_less '1.1' '1.1' ;}
+function comparison-float128-less-1.7        ()  { ! mmux_float128_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2129,13 +2129,13 @@ function comparison-float128-greater-equal-1.7 () {   mmux_float128_greater_equa
 
 ### ------------------------------------------------------------------------
 
-function comparison-float128-lesser-equal-1.1  () {   mmux_float128_lesser_equal '9.0' ;}
-function comparison-float128-lesser-equal-1.2  () {   mmux_float128_lesser_equal '8.0' '9.0' ;}
-function comparison-float128-lesser-equal-1.3  () {   mmux_float128_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float128-lesser-equal-1.4  () { ! mmux_float128_lesser_equal '3.3' '1.1' ;}
-function comparison-float128-lesser-equal-1.5  () { ! mmux_float128_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float128-lesser-equal-1.6  () {   mmux_float128_lesser_equal '1.1' '1.1' ;}
-function comparison-float128-lesser-equal-1.7  () {   mmux_float128_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float128-less-equal-1.1  () {   mmux_float128_less_equal '9.0' ;}
+function comparison-float128-less-equal-1.2  () {   mmux_float128_less_equal '8.0' '9.0' ;}
+function comparison-float128-less-equal-1.3  () {   mmux_float128_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float128-less-equal-1.4  () { ! mmux_float128_less_equal '3.3' '1.1' ;}
+function comparison-float128-less-equal-1.5  () { ! mmux_float128_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float128-less-equal-1.6  () {   mmux_float128_less_equal '1.1' '1.1' ;}
+function comparison-float128-less-equal-1.7  () {   mmux_float128_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2208,13 +2208,13 @@ function comparison-float32x-greater-1.7       () {   mmux_float32x_greater '-1.
 
 ### ------------------------------------------------------------------------
 
-function comparison-float32x-lesser-1.1        ()  {   mmux_float32x_lesser '9.0' ;}
-function comparison-float32x-lesser-1.2        ()  {   mmux_float32x_lesser '8.0' '9.0' ;}
-function comparison-float32x-lesser-1.3        ()  {   mmux_float32x_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float32x-lesser-1.4        ()  { ! mmux_float32x_lesser '3.3' '1.1' ;}
-function comparison-float32x-lesser-1.5        ()  { ! mmux_float32x_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float32x-lesser-1.6        ()  { ! mmux_float32x_lesser '1.1' '1.1' ;}
-function comparison-float32x-lesser-1.7        ()  { ! mmux_float32x_lesser '-1.1' '-2.2' ;}
+function comparison-float32x-less-1.1        ()  {   mmux_float32x_less '9.0' ;}
+function comparison-float32x-less-1.2        ()  {   mmux_float32x_less '8.0' '9.0' ;}
+function comparison-float32x-less-1.3        ()  {   mmux_float32x_less '7.0' '8.0' '9.0' ;}
+function comparison-float32x-less-1.4        ()  { ! mmux_float32x_less '3.3' '1.1' ;}
+function comparison-float32x-less-1.5        ()  { ! mmux_float32x_less '3.3' '9.9' '5.5' ;}
+function comparison-float32x-less-1.6        ()  { ! mmux_float32x_less '1.1' '1.1' ;}
+function comparison-float32x-less-1.7        ()  { ! mmux_float32x_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2228,13 +2228,13 @@ function comparison-float32x-greater-equal-1.7 () {   mmux_float32x_greater_equa
 
 ### ------------------------------------------------------------------------
 
-function comparison-float32x-lesser-equal-1.1  () {   mmux_float32x_lesser_equal '9.0' ;}
-function comparison-float32x-lesser-equal-1.2  () {   mmux_float32x_lesser_equal '8.0' '9.0' ;}
-function comparison-float32x-lesser-equal-1.3  () {   mmux_float32x_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float32x-lesser-equal-1.4  () { ! mmux_float32x_lesser_equal '3.3' '1.1' ;}
-function comparison-float32x-lesser-equal-1.5  () { ! mmux_float32x_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float32x-lesser-equal-1.6  () {   mmux_float32x_lesser_equal '1.1' '1.1' ;}
-function comparison-float32x-lesser-equal-1.7  () {   mmux_float32x_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float32x-less-equal-1.1  () {   mmux_float32x_less_equal '9.0' ;}
+function comparison-float32x-less-equal-1.2  () {   mmux_float32x_less_equal '8.0' '9.0' ;}
+function comparison-float32x-less-equal-1.3  () {   mmux_float32x_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float32x-less-equal-1.4  () { ! mmux_float32x_less_equal '3.3' '1.1' ;}
+function comparison-float32x-less-equal-1.5  () { ! mmux_float32x_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float32x-less-equal-1.6  () {   mmux_float32x_less_equal '1.1' '1.1' ;}
+function comparison-float32x-less-equal-1.7  () {   mmux_float32x_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2307,13 +2307,13 @@ function comparison-float64x-greater-1.7       () {   mmux_float64x_greater '-1.
 
 ### ------------------------------------------------------------------------
 
-function comparison-float64x-lesser-1.1        ()  {   mmux_float64x_lesser '9.0' ;}
-function comparison-float64x-lesser-1.2        ()  {   mmux_float64x_lesser '8.0' '9.0' ;}
-function comparison-float64x-lesser-1.3        ()  {   mmux_float64x_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float64x-lesser-1.4        ()  { ! mmux_float64x_lesser '3.3' '1.1' ;}
-function comparison-float64x-lesser-1.5        ()  { ! mmux_float64x_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float64x-lesser-1.6        ()  { ! mmux_float64x_lesser '1.1' '1.1' ;}
-function comparison-float64x-lesser-1.7        ()  { ! mmux_float64x_lesser '-1.1' '-2.2' ;}
+function comparison-float64x-less-1.1        ()  {   mmux_float64x_less '9.0' ;}
+function comparison-float64x-less-1.2        ()  {   mmux_float64x_less '8.0' '9.0' ;}
+function comparison-float64x-less-1.3        ()  {   mmux_float64x_less '7.0' '8.0' '9.0' ;}
+function comparison-float64x-less-1.4        ()  { ! mmux_float64x_less '3.3' '1.1' ;}
+function comparison-float64x-less-1.5        ()  { ! mmux_float64x_less '3.3' '9.9' '5.5' ;}
+function comparison-float64x-less-1.6        ()  { ! mmux_float64x_less '1.1' '1.1' ;}
+function comparison-float64x-less-1.7        ()  { ! mmux_float64x_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2327,13 +2327,13 @@ function comparison-float64x-greater-equal-1.7 () {   mmux_float64x_greater_equa
 
 ### ------------------------------------------------------------------------
 
-function comparison-float64x-lesser-equal-1.1  () {   mmux_float64x_lesser_equal '9.0' ;}
-function comparison-float64x-lesser-equal-1.2  () {   mmux_float64x_lesser_equal '8.0' '9.0' ;}
-function comparison-float64x-lesser-equal-1.3  () {   mmux_float64x_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float64x-lesser-equal-1.4  () { ! mmux_float64x_lesser_equal '3.3' '1.1' ;}
-function comparison-float64x-lesser-equal-1.5  () { ! mmux_float64x_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float64x-lesser-equal-1.6  () {   mmux_float64x_lesser_equal '1.1' '1.1' ;}
-function comparison-float64x-lesser-equal-1.7  () {   mmux_float64x_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float64x-less-equal-1.1  () {   mmux_float64x_less_equal '9.0' ;}
+function comparison-float64x-less-equal-1.2  () {   mmux_float64x_less_equal '8.0' '9.0' ;}
+function comparison-float64x-less-equal-1.3  () {   mmux_float64x_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float64x-less-equal-1.4  () { ! mmux_float64x_less_equal '3.3' '1.1' ;}
+function comparison-float64x-less-equal-1.5  () { ! mmux_float64x_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float64x-less-equal-1.6  () {   mmux_float64x_less_equal '1.1' '1.1' ;}
+function comparison-float64x-less-equal-1.7  () {   mmux_float64x_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2406,13 +2406,13 @@ function comparison-float128x-greater-1.7       () {   mmux_float128x_greater '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-float128x-lesser-1.1        ()  {   mmux_float128x_lesser '9.0' ;}
-function comparison-float128x-lesser-1.2        ()  {   mmux_float128x_lesser '8.0' '9.0' ;}
-function comparison-float128x-lesser-1.3        ()  {   mmux_float128x_lesser '7.0' '8.0' '9.0' ;}
-function comparison-float128x-lesser-1.4        ()  { ! mmux_float128x_lesser '3.3' '1.1' ;}
-function comparison-float128x-lesser-1.5        ()  { ! mmux_float128x_lesser '3.3' '9.9' '5.5' ;}
-function comparison-float128x-lesser-1.6        ()  { ! mmux_float128x_lesser '1.1' '1.1' ;}
-function comparison-float128x-lesser-1.7        ()  { ! mmux_float128x_lesser '-1.1' '-2.2' ;}
+function comparison-float128x-less-1.1        ()  {   mmux_float128x_less '9.0' ;}
+function comparison-float128x-less-1.2        ()  {   mmux_float128x_less '8.0' '9.0' ;}
+function comparison-float128x-less-1.3        ()  {   mmux_float128x_less '7.0' '8.0' '9.0' ;}
+function comparison-float128x-less-1.4        ()  { ! mmux_float128x_less '3.3' '1.1' ;}
+function comparison-float128x-less-1.5        ()  { ! mmux_float128x_less '3.3' '9.9' '5.5' ;}
+function comparison-float128x-less-1.6        ()  { ! mmux_float128x_less '1.1' '1.1' ;}
+function comparison-float128x-less-1.7        ()  { ! mmux_float128x_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2426,13 +2426,13 @@ function comparison-float128x-greater-equal-1.7 () {   mmux_float128x_greater_eq
 
 ### ------------------------------------------------------------------------
 
-function comparison-float128x-lesser-equal-1.1  () {   mmux_float128x_lesser_equal '9.0' ;}
-function comparison-float128x-lesser-equal-1.2  () {   mmux_float128x_lesser_equal '8.0' '9.0' ;}
-function comparison-float128x-lesser-equal-1.3  () {   mmux_float128x_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-float128x-lesser-equal-1.4  () { ! mmux_float128x_lesser_equal '3.3' '1.1' ;}
-function comparison-float128x-lesser-equal-1.5  () { ! mmux_float128x_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-float128x-lesser-equal-1.6  () {   mmux_float128x_lesser_equal '1.1' '1.1' ;}
-function comparison-float128x-lesser-equal-1.7  () {   mmux_float128x_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-float128x-less-equal-1.1  () {   mmux_float128x_less_equal '9.0' ;}
+function comparison-float128x-less-equal-1.2  () {   mmux_float128x_less_equal '8.0' '9.0' ;}
+function comparison-float128x-less-equal-1.3  () {   mmux_float128x_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-float128x-less-equal-1.4  () { ! mmux_float128x_less_equal '3.3' '1.1' ;}
+function comparison-float128x-less-equal-1.5  () { ! mmux_float128x_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-float128x-less-equal-1.6  () {   mmux_float128x_less_equal '1.1' '1.1' ;}
+function comparison-float128x-less-equal-1.7  () {   mmux_float128x_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2505,13 +2505,13 @@ function comparison-decimal32-greater-1.7       () {   mmux_decimal32_greater '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-decimal32-lesser-1.1        ()  {   mmux_decimal32_lesser '9.0' ;}
-function comparison-decimal32-lesser-1.2        ()  {   mmux_decimal32_lesser '8.0' '9.0' ;}
-function comparison-decimal32-lesser-1.3        ()  {   mmux_decimal32_lesser '7.0' '8.0' '9.0' ;}
-function comparison-decimal32-lesser-1.4        ()  { ! mmux_decimal32_lesser '3.3' '1.1' ;}
-function comparison-decimal32-lesser-1.5        ()  { ! mmux_decimal32_lesser '3.3' '9.9' '5.5' ;}
-function comparison-decimal32-lesser-1.6        ()  { ! mmux_decimal32_lesser '1.1' '1.1' ;}
-function comparison-decimal32-lesser-1.7        ()  { ! mmux_decimal32_lesser '-1.1' '-2.2' ;}
+function comparison-decimal32-less-1.1        ()  {   mmux_decimal32_less '9.0' ;}
+function comparison-decimal32-less-1.2        ()  {   mmux_decimal32_less '8.0' '9.0' ;}
+function comparison-decimal32-less-1.3        ()  {   mmux_decimal32_less '7.0' '8.0' '9.0' ;}
+function comparison-decimal32-less-1.4        ()  { ! mmux_decimal32_less '3.3' '1.1' ;}
+function comparison-decimal32-less-1.5        ()  { ! mmux_decimal32_less '3.3' '9.9' '5.5' ;}
+function comparison-decimal32-less-1.6        ()  { ! mmux_decimal32_less '1.1' '1.1' ;}
+function comparison-decimal32-less-1.7        ()  { ! mmux_decimal32_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2525,13 +2525,13 @@ function comparison-decimal32-greater-equal-1.7 () {   mmux_decimal32_greater_eq
 
 ### ------------------------------------------------------------------------
 
-function comparison-decimal32-lesser-equal-1.1  () {   mmux_decimal32_lesser_equal '9.0' ;}
-function comparison-decimal32-lesser-equal-1.2  () {   mmux_decimal32_lesser_equal '8.0' '9.0' ;}
-function comparison-decimal32-lesser-equal-1.3  () {   mmux_decimal32_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-decimal32-lesser-equal-1.4  () { ! mmux_decimal32_lesser_equal '3.3' '1.1' ;}
-function comparison-decimal32-lesser-equal-1.5  () { ! mmux_decimal32_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-decimal32-lesser-equal-1.6  () {   mmux_decimal32_lesser_equal '1.1' '1.1' ;}
-function comparison-decimal32-lesser-equal-1.7  () {   mmux_decimal32_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-decimal32-less-equal-1.1  () {   mmux_decimal32_less_equal '9.0' ;}
+function comparison-decimal32-less-equal-1.2  () {   mmux_decimal32_less_equal '8.0' '9.0' ;}
+function comparison-decimal32-less-equal-1.3  () {   mmux_decimal32_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-decimal32-less-equal-1.4  () { ! mmux_decimal32_less_equal '3.3' '1.1' ;}
+function comparison-decimal32-less-equal-1.5  () { ! mmux_decimal32_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-decimal32-less-equal-1.6  () {   mmux_decimal32_less_equal '1.1' '1.1' ;}
+function comparison-decimal32-less-equal-1.7  () {   mmux_decimal32_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2604,13 +2604,13 @@ function comparison-decimal64-greater-1.7       () {   mmux_decimal64_greater '-
 
 ### ------------------------------------------------------------------------
 
-function comparison-decimal64-lesser-1.1        ()  {   mmux_decimal64_lesser '9.0' ;}
-function comparison-decimal64-lesser-1.2        ()  {   mmux_decimal64_lesser '8.0' '9.0' ;}
-function comparison-decimal64-lesser-1.3        ()  {   mmux_decimal64_lesser '7.0' '8.0' '9.0' ;}
-function comparison-decimal64-lesser-1.4        ()  { ! mmux_decimal64_lesser '3.3' '1.1' ;}
-function comparison-decimal64-lesser-1.5        ()  { ! mmux_decimal64_lesser '3.3' '9.9' '5.5' ;}
-function comparison-decimal64-lesser-1.6        ()  { ! mmux_decimal64_lesser '1.1' '1.1' ;}
-function comparison-decimal64-lesser-1.7        ()  { ! mmux_decimal64_lesser '-1.1' '-2.2' ;}
+function comparison-decimal64-less-1.1        ()  {   mmux_decimal64_less '9.0' ;}
+function comparison-decimal64-less-1.2        ()  {   mmux_decimal64_less '8.0' '9.0' ;}
+function comparison-decimal64-less-1.3        ()  {   mmux_decimal64_less '7.0' '8.0' '9.0' ;}
+function comparison-decimal64-less-1.4        ()  { ! mmux_decimal64_less '3.3' '1.1' ;}
+function comparison-decimal64-less-1.5        ()  { ! mmux_decimal64_less '3.3' '9.9' '5.5' ;}
+function comparison-decimal64-less-1.6        ()  { ! mmux_decimal64_less '1.1' '1.1' ;}
+function comparison-decimal64-less-1.7        ()  { ! mmux_decimal64_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2624,13 +2624,13 @@ function comparison-decimal64-greater-equal-1.7 () {   mmux_decimal64_greater_eq
 
 ### ------------------------------------------------------------------------
 
-function comparison-decimal64-lesser-equal-1.1  () {   mmux_decimal64_lesser_equal '9.0' ;}
-function comparison-decimal64-lesser-equal-1.2  () {   mmux_decimal64_lesser_equal '8.0' '9.0' ;}
-function comparison-decimal64-lesser-equal-1.3  () {   mmux_decimal64_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-decimal64-lesser-equal-1.4  () { ! mmux_decimal64_lesser_equal '3.3' '1.1' ;}
-function comparison-decimal64-lesser-equal-1.5  () { ! mmux_decimal64_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-decimal64-lesser-equal-1.6  () {   mmux_decimal64_lesser_equal '1.1' '1.1' ;}
-function comparison-decimal64-lesser-equal-1.7  () {   mmux_decimal64_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-decimal64-less-equal-1.1  () {   mmux_decimal64_less_equal '9.0' ;}
+function comparison-decimal64-less-equal-1.2  () {   mmux_decimal64_less_equal '8.0' '9.0' ;}
+function comparison-decimal64-less-equal-1.3  () {   mmux_decimal64_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-decimal64-less-equal-1.4  () { ! mmux_decimal64_less_equal '3.3' '1.1' ;}
+function comparison-decimal64-less-equal-1.5  () { ! mmux_decimal64_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-decimal64-less-equal-1.6  () {   mmux_decimal64_less_equal '1.1' '1.1' ;}
+function comparison-decimal64-less-equal-1.7  () {   mmux_decimal64_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2703,13 +2703,13 @@ function comparison-decimal128-greater-1.7       () {   mmux_decimal128_greater 
 
 ### ------------------------------------------------------------------------
 
-function comparison-decimal128-lesser-1.1        ()  {   mmux_decimal128_lesser '9.0' ;}
-function comparison-decimal128-lesser-1.2        ()  {   mmux_decimal128_lesser '8.0' '9.0' ;}
-function comparison-decimal128-lesser-1.3        ()  {   mmux_decimal128_lesser '7.0' '8.0' '9.0' ;}
-function comparison-decimal128-lesser-1.4        ()  { ! mmux_decimal128_lesser '3.3' '1.1' ;}
-function comparison-decimal128-lesser-1.5        ()  { ! mmux_decimal128_lesser '3.3' '9.9' '5.5' ;}
-function comparison-decimal128-lesser-1.6        ()  { ! mmux_decimal128_lesser '1.1' '1.1' ;}
-function comparison-decimal128-lesser-1.7        ()  { ! mmux_decimal128_lesser '-1.1' '-2.2' ;}
+function comparison-decimal128-less-1.1        ()  {   mmux_decimal128_less '9.0' ;}
+function comparison-decimal128-less-1.2        ()  {   mmux_decimal128_less '8.0' '9.0' ;}
+function comparison-decimal128-less-1.3        ()  {   mmux_decimal128_less '7.0' '8.0' '9.0' ;}
+function comparison-decimal128-less-1.4        ()  { ! mmux_decimal128_less '3.3' '1.1' ;}
+function comparison-decimal128-less-1.5        ()  { ! mmux_decimal128_less '3.3' '9.9' '5.5' ;}
+function comparison-decimal128-less-1.6        ()  { ! mmux_decimal128_less '1.1' '1.1' ;}
+function comparison-decimal128-less-1.7        ()  { ! mmux_decimal128_less '-1.1' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 
@@ -2723,13 +2723,13 @@ function comparison-decimal128-greater-equal-1.7 () {   mmux_decimal128_greater_
 
 ### ------------------------------------------------------------------------
 
-function comparison-decimal128-lesser-equal-1.1  () {   mmux_decimal128_lesser_equal '9.0' ;}
-function comparison-decimal128-lesser-equal-1.2  () {   mmux_decimal128_lesser_equal '8.0' '9.0' ;}
-function comparison-decimal128-lesser-equal-1.3  () {   mmux_decimal128_lesser_equal '7.0' '8.0' '9.0' ;}
-function comparison-decimal128-lesser-equal-1.4  () { ! mmux_decimal128_lesser_equal '3.3' '1.1' ;}
-function comparison-decimal128-lesser-equal-1.5  () { ! mmux_decimal128_lesser_equal '3.3' '9.9' '5.5' ;}
-function comparison-decimal128-lesser-equal-1.6  () {   mmux_decimal128_lesser_equal '1.1' '1.1' ;}
-function comparison-decimal128-lesser-equal-1.7  () {   mmux_decimal128_lesser_equal '-3.3' '-2.2' '-2.2' ;}
+function comparison-decimal128-less-equal-1.1  () {   mmux_decimal128_less_equal '9.0' ;}
+function comparison-decimal128-less-equal-1.2  () {   mmux_decimal128_less_equal '8.0' '9.0' ;}
+function comparison-decimal128-less-equal-1.3  () {   mmux_decimal128_less_equal '7.0' '8.0' '9.0' ;}
+function comparison-decimal128-less-equal-1.4  () { ! mmux_decimal128_less_equal '3.3' '1.1' ;}
+function comparison-decimal128-less-equal-1.5  () { ! mmux_decimal128_less_equal '3.3' '9.9' '5.5' ;}
+function comparison-decimal128-less-equal-1.6  () {   mmux_decimal128_less_equal '1.1' '1.1' ;}
+function comparison-decimal128-less-equal-1.7  () {   mmux_decimal128_less_equal '-3.3' '-2.2' '-2.2' ;}
 
 ### ------------------------------------------------------------------------
 

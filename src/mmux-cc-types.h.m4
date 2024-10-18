@@ -265,12 +265,13 @@ mmux_cc_types_decl int mmux_strfromd128 (char * s_value, size_t size, char const
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im);
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_real_part (mmux_$1_t Z);
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_imag_part (mmux_$1_t Z);
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_abs  (mmux_$1_t Z);
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_arg  (mmux_$1_t Z);
-mmux_cc_types_decl mmux_$1_t      mmux_$1_conj (mmux_$1_t Z);
+mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_part_t mmux_$1_real_part (mmux_$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_$1_part_t mmux_$1_imag_part (mmux_$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_$1_part_t mmux_$1_abs  (mmux_$1_t Z)		__attribute__((__const__));
+mmux_cc_types_decl mmux_$1_part_t mmux_$1_arg  (mmux_$1_t Z)		__attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t      mmux_$1_conj (mmux_$1_t Z)		__attribute__((__const__));
 ]]])]]])
 
 DEFINE_PROTOS([[[complexf]]])
@@ -422,9 +423,9 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[wint]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs;
-mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max;
-mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t mmux_$1_min;
+mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
 ]]])]]])
 
 DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float]]])
@@ -449,30 +450,31 @@ DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOA
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative;
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal;
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater;
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_lesser;
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal;
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_lesser_equal;
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
+mmux_cc_types_decl int mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
 ]]])]]])
 
 m4_define([[[DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan;
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite;
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal;
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
 ]]])]]])
 
 m4_define([[[DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin;
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon;
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon	__attribute__((__const__));
 ]]])]]])
 
 /* ------------------------------------------------------------------ */

@@ -1623,7 +1623,7 @@ mandatory):
 @end example
 
 @item
-The @samp{lesser} builtins return true if for all the operands (of which only @varo{OP} is
+The @samp{less} builtins return true if for all the operands (of which only @varo{OP} is
 mandatory):
 
 @example
@@ -1639,7 +1639,7 @@ mandatory):
 @end example
 
 @item
-The @samp{lesser_equal} builtins return true if for all the operands (of which only @varo{OP} is
+The @samp{less_equal} builtins return true if for all the operands (of which only @varo{OP} is
 mandatory):
 
 @example
@@ -1651,9 +1651,9 @@ mandatory):
 @macro MmuxDefineTypeComparisonExactBuiltin{STEM}
 @deffn Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_\STEM\_greater @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_\STEM\_lesser @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_less @varo{OP} @var{OP} @dots{}
 @deffnx Builtin mmux_\STEM\_greater_equal @varo{OP} @var{OP} @dots{}
-@deffnx Builtin mmux_\STEM\_lesser_equal @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_less_equal @varo{OP} @var{OP} @dots{}
 Perform the comparison operations between values of type @objtype{\STEM\}.
 @end deffn
 

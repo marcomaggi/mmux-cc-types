@@ -628,18 +628,40 @@ DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == 
 
 m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+DECL int
+mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
+{
+  if (op1 > op2) {
+    return +1;
+  } else if (op1 < op2) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (op1 >  op2)? true : false; }
-DECL bool mmux_$1_lesser        (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <  op2)? true : false; }
+DECL bool mmux_$1_less          (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <  op2)? true : false; }
 DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (op1 >= op2)? true : false; }
-DECL bool mmux_$1_lesser_equal  (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <= op2)? true : false; }
+DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <= op2)? true : false; }
 ]]])]]])
 
 m4_define([[[DEFINE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
+DECL int
+mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
+{
+  if (mmux_$1_greater(op1, op2)) {
+    return +1;
+  } else if (mmux_$1_less(op1, op2)) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
-DECL bool mmux_$1_lesser        (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1,op2))? true : false; }
+DECL bool mmux_$1_less          (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1,op2))? true : false; }
 DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
-DECL bool mmux_$1_lesser_equal  (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
+DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
 ]]])]]])
 
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[pointer]]])

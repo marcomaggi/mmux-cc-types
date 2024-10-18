@@ -264,17 +264,31 @@ DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_H
  ** Comparison functions.
  ** ----------------------------------------------------------------- */
 
+#undef  DECL
+#define DECL		__attribute__((__const__))
+
 m4_define([[[DEFINE_REAL_DECIMAL_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == op2)? true : false; }
-bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
-bool mmux_$1_lesser        (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1,op2))? true : false; }
-bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
-bool mmux_$1_lesser_equal  (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
+DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == op2)?              true : false; }
+DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
+DECL bool mmux_$1_less          (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1,op2))? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
+DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
+DECL int
+mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
+{
+  if (mmux_$1_greater(op1, op2)) {
+    return +1;
+  } else if (mmux_$1_less(op1, op2)) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 ]]])]]])
 
-DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal32]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal64]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -292,7 +306,7 @@ DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPL
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-mmux_$1_t mmux_$1_abs (mmux_$1_t X)                   { return $2(X); }
+mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return $2(X); }
 mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
 mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
 ]]])]]])
