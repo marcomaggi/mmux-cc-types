@@ -586,15 +586,15 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_T
  ** Selecting printf output format for floating point numbers.
  ** ----------------------------------------------------------------- */
 
-#undef  MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN
-#define MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN		8
+#undef  MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN
+#define MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN		(1+8)
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl char mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
-
-mmux_cc_types_decl bool mmux_$1_set_output_format (char const * const new_result_format, char const * const who)
+mmux_cc_types_decl bool mmux_$1_set_output_format (char const * new_result_format, char const * who)
   __attribute__((__nonnull__(1)));
 
+mmux_cc_types_decl char const * mmux_$1_ref_output_format  (void);
+mmux_cc_types_decl void         mmux_$1_save_output_format (char * dest);
 ]]])]]])
 
 DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float]]])

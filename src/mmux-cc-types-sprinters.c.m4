@@ -1,5 +1,5 @@
 /*
-  Part of: MMUX Bash Pointers
+  Part of: MMUX CC Types
   Contents: functions to print values to string
   Date: Sep 11, 2024
 
@@ -28,15 +28,25 @@
 
 #include <mmux-cc-types-internals.h>
 
+/* Given that  the length MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN  is meant to  include the
+   terminating  nul character:  the _MINUS  length is  used to  validate the  maximum
+   length (nul excluded) for at format string. */
+#undef  MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS
+#define MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS		(MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN-1)
+
 /* This  regular   expression  is  used   to  validate  the  format   specifiers  for
    floating-point numbers.  */
 static regex_t mmux_cc_types_float_format_rex;
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
-#undef  MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])
-#define MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])	[[[$2]]]
+#undef  MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])
+#define MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])	[[[$2]]]
 
-char	mmux_bash_pointers_output_format_$1[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
+/* Just    to     be    paranoid     we    add     a    character     beyond    index
+   MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN and  we will  set that character  to nul  in the
+   initialisation  function.   That character  should  never  be touched  by  correct
+   code. */
+char	mmux_cc_types_output_format_$1[1+MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
 ]]])]]])
 
 DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]],	[[["%A"]]])
@@ -67,12 +77,13 @@ mmux_cc_types_init_sprint_module (void)
      the output format of floating-point numbers. */
   int rv = regcomp(&mmux_cc_types_float_format_rex, "^%[+-\\#\\'\\ ]*[0-9]*\\.\\?[0-9]*l\\?[feEgGaA]$", REG_NOSUB);
   if (rv) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
+    fprintf(stderr, "MMUX CC Types: internal error: compiling regular expression\n");
     return true;
   }
 
   m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  mmux_$1_set_output_format(MMUX_BASH_POINTERS_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]]), "MMUX Bash Pointers");
+  mmux_$1_set_output_format(MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]]), "MMUX CC Types");
+  mmux_cc_types_output_format_$1[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN] = '\0';
   ]]])]]])
 
   INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]])
@@ -105,10 +116,10 @@ mmux_$1_set_output_format (char const * const new_result_format, char const * co
 {
   int	new_result_format_len = strlen(new_result_format);
 
-  if (new_result_format_len > MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN) {
+  if (new_result_format_len > MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS) {
     if (caller_name) {
       fprintf(stderr, "%s: error setting new float format, string too long (maxlen=%d): %s\n",
-	      caller_name, MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN, new_result_format);
+	      caller_name, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS, new_result_format);
     }
     return true;
   }
@@ -136,13 +147,23 @@ mmux_$1_set_output_format (char const * const new_result_format, char const * co
 
   /* We tell "strncpy()"  to copy the from  buffer and fill everything  else with nul
      bytes.  See the documentation of "strncpy()". */
-  strncpy(mmux_bash_pointers_output_format_$1, new_result_format, MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
-  if (0) {
-    fprintf(stderr, "%s: float format is now: %s\n", __func__, mmux_bash_pointers_output_format_$1);
-  }
+  strncpy(mmux_cc_types_output_format_$1, new_result_format, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN);
   return false;
 }
 
+char const *
+mmux_$1_ref_output_format (void)
+{
+  return mmux_cc_types_output_format_$1;
+}
+
+void
+mmux_$1_save_output_format (char * const dest)
+{
+  /* We tell  "strncpy()" to copy  the from internal  state and fill  everything else
+     with nul bytes.  See the documentation of "strncpy()". */
+  strncpy(dest, mmux_cc_types_output_format_$1, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN);
+}
 ]]])]]])
 
 DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float]]])
@@ -267,12 +288,12 @@ mmux_$1_sprint_size (mmux_$1_t value)
   if (0) {
     fprintf(stderr, "%s: enter %s value=%Lf format=\"%s\"\n",
 	    __func__, "$2",
-	    (long double)value, mmux_bash_pointers_output_format_$1);
+	    (long double)value, mmux_cc_types_output_format_$1);
   }
 
   /* According to the documentation, when the output is truncated: "$2()" returns the
      number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = $2(NULL, 0, mmux_bash_pointers_output_format_$1, value);
+  required_nbytes = $2(NULL, 0, mmux_cc_types_output_format_$1, value);
 
   if (0) { fprintf(stderr, "%s: %s required_nbytes=%d\n", __func__, "$2", required_nbytes); }
 
@@ -292,7 +313,7 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 
   /* According to the  documentation: "$2()" writes the terminating null  byte if the
      output buffer is sufficiently large. */
-  to_be_written_chars = $2(strptr, len, mmux_bash_pointers_output_format_$1, value);
+  to_be_written_chars = $2(strptr, len, mmux_cc_types_output_format_$1, value);
   if (len > to_be_written_chars) {
     return false;
   } else {

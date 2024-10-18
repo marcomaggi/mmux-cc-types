@@ -159,14 +159,13 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * typedefs::                    Type definitions.
 * sizeof::                      Type sizes.
 * limits::                      Type maximum and minimum values.
-* string representations::      String representations of supported types.
+* stringrep::                   String representations of supported types.
 * complex::                     Basic complex number operations.
 * predicates::                  Type predicates.
 * comparison::                  Comparison functions.
 * arithmetics::                 Arithmetics operations.
 * mathematics::                 Mathematics operations.
 * bitwise::                     Bitwise operations.
-* formats::                     Input and output formats.
 
 Appendices
 
@@ -885,18 +884,19 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{wint}
 
 @c page
-@node string representations
+@node stringrep
 @chapter String representations of supported types
 
 
 @menu
-* string predicates::           Type predicates for string representations.
-* string parsers::              Parsing string representations of C language types.
-* string sprinters::            Printing string representations of C language types.
+* stringrep predicates::        Type predicates for string representations.
+* stringrep formats::           Selecting the printing format for floating--point numbers.
+* stringrep parsers::           Parsing string representations of C language types.
+* stringrep sprinters::         Printing string representations of C language types.
 @end menu
 
 @c page
-@node string predicates
+@node stringrep predicates
 @section Type predicates for string representations
 
 
@@ -977,7 +977,102 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{wint}
 
 @c page
-@node string parsers
+@node stringrep formats
+@section Selecting the printing format for floating--point numbers
+
+
+@cindex Printing format for floating--point numbers
+@cindex Formatting floating--point numbers
+
+
+@value{PACKAGE} implements @cfunc{mmux_*_sprint} functions to convert numbers from a binary
+representation to the corresponding @asciiz{} string representation.  For floating--point numbers
+the following facilities are implemented to select the string format.
+
+To select an output format for the result of the @cfunc{mmux_double_sprint} function, we do:
+
+@example
+char const * fmt = "%.4f";
+
+if (mmux_double_set_output_format(fmt)) @{
+  /* error: invalid format */
+@}
+
+/* call "mmux_double_sprint()" */
+@end example
+
+To save the current format and restore it later we do:
+
+@example
+char saved_fmt[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
+
+mmux_double_save_output_format(saved_fmt);
+@{
+  char const * fmt = "%.4f";
+
+  if (mmux_double_set_output_format(fmt)) @{
+    /* error: invalid format */
+  @}
+  /* call "mmux_double_sprint()" */
+@}
+mmux_double_set_output_format(saved_fmt);
+@end example
+
+
+String representations of complex floating--point numbers are composed using the format selected for
+the corresponding real floating--point type.
+
+For all the following functions:
+
+@itemize
+@item
+If the format string @var{OUTPUT_FORMAT} is valid: it is duplicated into an internal library state
+and the setter function returns @cfalse{}; otherwise nothing happens and the setter function returns
+@ctrue{}.
+
+@item
+The string referenced by the pointer returned by the getter functions must not be mutated.
+
+@item
+The format--saving functions expect the destination buffer to be capable of holding a
+@code{MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN} characters, nul--termination character included.
+@end itemize
+
+
+@defvr {C Preprocessor Symbol} MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN
+The number of bytes required to hold a format specification string.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxRealSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
+@deftypefun bool mmux_\STEM\_set_output_format (char const * @var{OUTPUT_FORMAT})
+@deftypefunx {char const *} mmux_\STEM\_ref_output_format (void)
+@deftypefunx void mmux_\STEM\_save_output_format (char * @var{DEST})
+Select, retrieve or save the current format for string representations of floating--point numbers of
+type @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
+@end deftypefun
+
+@end macro
+
+@MmuxRealSelectOutputFormatBuiltin{float, %A}
+@MmuxRealSelectOutputFormatBuiltin{double, %A}
+@MmuxRealSelectOutputFormatBuiltin{ldouble, %A}
+
+@MmuxRealSelectOutputFormatBuiltin{float32, %A}
+@MmuxRealSelectOutputFormatBuiltin{float64, %A}
+@MmuxRealSelectOutputFormatBuiltin{float128, %A}
+
+@MmuxRealSelectOutputFormatBuiltin{float32x, %A}
+@MmuxRealSelectOutputFormatBuiltin{float64x, %A}
+@MmuxRealSelectOutputFormatBuiltin{float128x, %A}
+
+@MmuxRealSelectOutputFormatBuiltin{decimal32, %f}
+@MmuxRealSelectOutputFormatBuiltin{decimal64, %f}
+@MmuxRealSelectOutputFormatBuiltin{decimal128, %f}
+
+@c page
+@node stringrep parsers
 @section Parsing string representations of C language types
 
 
@@ -1075,7 +1170,7 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{wint}
 
 @c page
-@node string sprinters
+@node stringrep sprinters
 @section Printing string representations of C language types
 
 
@@ -1966,140 +2061,6 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{wint}
 
 @c page
-@node formats
-@chapter Input and output formats
-
-
-@menu
-* formats float::       Selecting the printing format for floating--point numbers.
-@end menu
-
-@c page
-@node formats float
-@section Selecting the printing format for floating--point numbers
-
-
-@cindex Printing format for floating--point numbers
-@cindex Formatting floating--point numbers
-
-
-To select an output format for the result of operations, we do:
-
-@example
-declare OLD_FORMAT ROP OP1='123.4' OP2='567.8'
-
-mmux_double_set_format '%g' OLD_FORMAT
-@{
-    mmux_double_add ROP "$OP1" "$OP2"
-@}
-mmux_double_set_format "$OLD_FORMAT"
-
-"$ROP"  @result{} 6.912000e+02
-@end example
-
-To query the currently selected output format for the result of operations:
-
-@example
-declare CURRENT_FORMAT
-
-mmux_double_ref_format CURRENT_FORMAT
-"$CURRENT_FORMAT"       @result{} "%A"
-@end example
-
-If we just want to reformat a number we do:
-
-@example
-declare OP='123.4567890'
-
-mmux_double_reformat OP '%g' "$OP"
-"$OP"   @result{} 1.234568e+02
-@end example
-
-The string representation of exact integers is an acceptable format for floating--point numbers: we
-can use the formatting capabilities implemented for floating--point numbers to format exact
-integers.
-
-String representations of complex floating--point numbers are composed using the format selected for
-the corresponding real floating--point type.
-
-For the following builtins:
-
-@itemize
-@item
-The argument @var{OUTPUT_FORMAT} must be a string compatible with the @cfunc{printf} format
-selection for floating--point numbers.  Each supported type may have limitations in the available
-format.
-
-@item
-The optional argument @var{OLD_FORMAT_VAR} must be a shell variable name in which the builtin will
-store the old output format, so that: it is possible to temporarily select a new format, then
-restore the old one.
-
-@item
-The argument @var{CURRENT_FORMAT_VAR} must be a shell variable name in which the builtin will store
-the currently selected output format.
-@end itemize
-
-@quotation
-@strong{NOTE} We should be careful @strong{not} to select a field width of zero; that is, to avoid
-formats like @samp{%0e}.
-@end quotation
-
-
-@c ------------------------------------------------------------------------
-
-@macro MmuxRealSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
-@deftypefun Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT}
-@deftypefunx Builtin mmux_\STEM\_set_format @var{OUTPUT_FORMAT} @var{OLD_FORMAT_VAR}
-@deftypefunx Builtin mmux_\STEM\_ref_format @var{CURRENT_FORMAT_VAR}
-@deftypefunx Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
-Select or retrieve the format for string representations of floating--point numbers of type
-@objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
-@end deftypefun
-
-@end macro
-
-@MmuxRealSelectOutputFormatBuiltin{float, %A}
-@MmuxRealSelectOutputFormatBuiltin{double, %A}
-@MmuxRealSelectOutputFormatBuiltin{ldouble, %A}
-
-@MmuxRealSelectOutputFormatBuiltin{float32, %A}
-@MmuxRealSelectOutputFormatBuiltin{float64, %A}
-@MmuxRealSelectOutputFormatBuiltin{float128, %A}
-
-@MmuxRealSelectOutputFormatBuiltin{float32x, %A}
-@MmuxRealSelectOutputFormatBuiltin{float64x, %A}
-@MmuxRealSelectOutputFormatBuiltin{float128x, %A}
-
-@MmuxRealSelectOutputFormatBuiltin{decimal32, %f}
-@MmuxRealSelectOutputFormatBuiltin{decimal64, %f}
-@MmuxRealSelectOutputFormatBuiltin{decimal128, %f}
-
-@c ------------------------------------------------------------------------
-
-@macro MmuxComplexReformatBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_reformat @var{OUTPUTVAR} @var{OUTPUT_FORMAT} @var{INPUT_NUMBER}
-Reformat a complex floating--point number of type @objtype{\STEM\}.
-@end deftypefun
-
-@end macro
-
-@MmuxComplexReformatBuiltin{complexf}
-@MmuxComplexReformatBuiltin{complexd}
-@MmuxComplexReformatBuiltin{complexld}
-
-@MmuxComplexReformatBuiltin{complexf32}
-@MmuxComplexReformatBuiltin{complexf64}
-@MmuxComplexReformatBuiltin{complexf128}
-
-@MmuxComplexReformatBuiltin{complexf32x}
-@MmuxComplexReformatBuiltin{complexf64x}
-@MmuxComplexReformatBuiltin{complexf128x}
-
-@MmuxComplexReformatBuiltin{complexf32}
-@MmuxComplexReformatBuiltin{complexd64}
-@MmuxComplexReformatBuiltin{complexd128}
-
 @c page
 @c ------------------------------------------------------------
 @c Appendices.

@@ -37,15 +37,10 @@ m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_BUILTIN]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_set_format]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  char	old_format[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
+  char	old_format[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
   bool	rv;
 
-  if (0) { printf("%s: old format: \"%s\"\n", __func__, mmux_bash_pointers_output_format_$1); }
-  if (0) { printf("%s: new format: \"%s\"\n", __func__, argv[1]); }
-
-  /* Save the old format. */
-  memset(old_format, '\0', 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
-  strncpy(old_format, mmux_bash_pointers_output_format_$1, 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
+  mmux_$1_save_output_format(old_format);
 
   /* Set the new format. */
   rv = mmux_$1_set_output_format(argv[1], MMUX_BUILTIN_NAME_STR);
@@ -56,7 +51,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     if (3 == argc) {
       mmux_bash_rv_t	rv2 = mmux_bash_store_string_in_variable(argv[2], old_format, MMUX_BUILTIN_NAME_STR);
       if (MMUX_SUCCESS != rv2) {
-	strncpy(mmux_bash_pointers_output_format_$1, old_format, 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
+	mmux_$1_set_output_format(old_format, NULL);
 	mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR);
 	return rv2;
       }
@@ -100,7 +95,7 @@ m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_ref_format]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  return mmux_bash_store_string_in_variable(argv[1], mmux_bash_pointers_output_format_$1, MMUX_BUILTIN_NAME_STR);
+  return mmux_bash_store_string_in_variable(argv[1], mmux_$1_ref_output_format(), MMUX_BUILTIN_NAME_STR);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BUILTIN_NAME_STR);
@@ -137,6 +132,7 @@ DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE
 m4_dnl $1 - complex floating-point number stem
 m4_dnl $2 - complex floating-point number parser macro
 m4_dnl $3 - C language preprocessor symbol for conditional definition
+
 m4_define([[[DEFINE_REAL_FLOAT_REFORMAT_BUILTIN]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_reformat]]])
 {
@@ -145,18 +141,18 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
 
   $2(value, argv[3], MMUX_BUILTIN_NAME_STR);
   {
-    char		old_format[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
-    mmux_bash_rv_t	rv;
+    char		old_format[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
+    mmux_bash_rv_t	bash_rv;
 
-    memset(old_format, '\0', 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
-    strncpy(old_format, mmux_bash_pointers_output_format_$1, 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
+    mmux_$1_save_output_format(old_format);
     {
-      bool	rv2 = mmux_$1_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
-      if (true == rv2) { return MMUX_FAILURE; }
-      rv = mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+      bool	rv = mmux_$1_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
+      if (true == rv) { bash_rv = MMUX_FAILURE; goto get_out; }
+      bash_rv = mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
     }
-    strncpy(mmux_bash_pointers_output_format_$1, old_format, 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
-    return rv;
+   get_out:
+    mmux_$1_set_output_format(old_format, NULL);
+    return bash_rv;
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
@@ -204,19 +200,18 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
 
   $3(value, argv[3], MMUX_BUILTIN_NAME_STR);
   {
-    char		old_format[1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN];
-    mmux_bash_rv_t	rv2;
+    char		old_format[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
+    mmux_bash_rv_t	bash_rv;
 
-    memset(old_format, '\0', 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
-    strncpy(old_format, mmux_bash_pointers_output_format_$2, 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
+    mmux_$2_save_output_format(old_format);
     {
       bool	rv = mmux_$2_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
-      if (true == rv) { rv2 = MMUX_FAILURE; goto get_out; }
-      rv2 = mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+      if (true == rv) { bash_rv = MMUX_FAILURE; goto get_out; }
+      bash_rv = mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
     }
    get_out:
-    strncpy(mmux_bash_pointers_output_format_$2, old_format, 1+MMUX_BASH_POINTERS_FLOAT_FORMAT_MAXLEN);
-    return rv2;
+    mmux_$2_set_output_format(old_format, NULL);
+    return bash_rv;
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
