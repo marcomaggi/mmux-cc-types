@@ -1553,6 +1553,7 @@ an infinite number; otherwise return false.
 @menu
 * cctypes comparison exact::          Exact comparison builtins.
 * cctypes comparison approximate::    Approximate comparison builtins.
+* cctypes comparison minmax::         Minimum and maximum selection.
 @end menu
 
 @c page
@@ -1915,6 +1916,81 @@ comparison of real parts; its imaginary part is the epsilon for comparison of im
 When a shell variable is not set: the default epsilon for real numbers is @samp{1e-6}; the default
 epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
 @end defvar
+
+@c page
+@node cctypes comparison minmax
+@subsection Minimum and maximum selection
+
+
+For all the following bultins:
+
+@itemize
+@item
+Only @varo{OP} is mandatory among the @var{OP} arguments.  When only @varo{OP} is present: it is the
+selected maximum or minimum.
+
+@item
+The minimum and maximum selection is performed by comparing each @var{OP} argument with @varo{OP};
+when they are equal @varo{OP} is selected.
+@end itemize
+
+
+@macro MmuxDefineTypeMinMaxBuiltins{STEM}
+@deffn Builtin mmux_\STEM\_min @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+@deffnx Builtin mmux_\STEM\_max @var{ROPVAR} @varo{OP} @var{OP} @dots{}
+Select the maximum or minimum among the operands, store the result in @var{ROPVAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineTypeMinMaxBuiltins{schar}
+@MmuxDefineTypeMinMaxBuiltins{uchar}
+@MmuxDefineTypeMinMaxBuiltins{sshort}
+@MmuxDefineTypeMinMaxBuiltins{ushort}
+@MmuxDefineTypeMinMaxBuiltins{sint}
+@MmuxDefineTypeMinMaxBuiltins{uint}
+@MmuxDefineTypeMinMaxBuiltins{slong}
+@MmuxDefineTypeMinMaxBuiltins{ulong}
+@MmuxDefineTypeMinMaxBuiltins{sllong}
+@MmuxDefineTypeMinMaxBuiltins{ullong}
+@MmuxDefineTypeMinMaxBuiltins{float}
+@MmuxDefineTypeMinMaxBuiltins{double}
+@MmuxDefineTypeMinMaxBuiltins{ldouble}
+
+@MmuxDefineTypeMinMaxBuiltins{float32}
+@MmuxDefineTypeMinMaxBuiltins{float64}
+@MmuxDefineTypeMinMaxBuiltins{float128}
+
+@MmuxDefineTypeMinMaxBuiltins{float32x}
+@MmuxDefineTypeMinMaxBuiltins{float64x}
+@MmuxDefineTypeMinMaxBuiltins{float128x}
+
+@MmuxDefineTypeMinMaxBuiltins{decimal32}
+@MmuxDefineTypeMinMaxBuiltins{decimal64}
+@MmuxDefineTypeMinMaxBuiltins{decimal128}
+
+@MmuxDefineTypeMinMaxBuiltins{sint8}
+@MmuxDefineTypeMinMaxBuiltins{uint8}
+@MmuxDefineTypeMinMaxBuiltins{sint16}
+@MmuxDefineTypeMinMaxBuiltins{uint16}
+@MmuxDefineTypeMinMaxBuiltins{sint32}
+@MmuxDefineTypeMinMaxBuiltins{uint32}
+@MmuxDefineTypeMinMaxBuiltins{sint64}
+@MmuxDefineTypeMinMaxBuiltins{uint64}
+
+@MmuxDefineTypeMinMaxBuiltins{ssize}
+@MmuxDefineTypeMinMaxBuiltins{usize}
+@MmuxDefineTypeMinMaxBuiltins{sintmax}
+@MmuxDefineTypeMinMaxBuiltins{uintmax}
+@MmuxDefineTypeMinMaxBuiltins{sintptr}
+@MmuxDefineTypeMinMaxBuiltins{uintptr}
+@MmuxDefineTypeMinMaxBuiltins{mode}
+@MmuxDefineTypeMinMaxBuiltins{off}
+@MmuxDefineTypeMinMaxBuiltins{pid}
+@MmuxDefineTypeMinMaxBuiltins{uid}
+@MmuxDefineTypeMinMaxBuiltins{gid}
+@MmuxDefineTypeMinMaxBuiltins{wchar}
+@MmuxDefineTypeMinMaxBuiltins{wint}
 
 @c page
 @node cctypes arithmetics

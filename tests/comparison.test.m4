@@ -85,6 +85,60 @@ function comparison-pointer-less-equal-1.4  () { ! mmux_pointer_less_equal '0x33
 function comparison-pointer-less-equal-1.5  () { ! mmux_pointer_less_equal '0x333' '0x999' '0x555'	      ;}
 function comparison-pointer-less-equal-1.6  () {   mmux_pointer_less_equal '0x111' '0x111'		      ;}
 
+### ------------------------------------------------------------------------
+
+function comparison-pointer-max-1.1 () {
+    declare -r EXPECTED_ROP='0x900'
+
+    mmux_pointer_max ROP '0x900'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function comparison-pointer-max-1.2 () {
+    declare -r EXPECTED_ROP='0x900'
+
+    mmux_pointer_max ROP '0x900' '0x100'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function comparison-pointer-max-1.3 () {
+    declare -r EXPECTED_ROP='0x900'
+
+    mmux_pointer_max ROP '0x100' '0x900'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function comparison-pointer-max-1.4 () {
+    declare -r EXPECTED_ROP='0x900'
+
+    mmux_pointer_max ROP '0x100' '0x200' '0x300' '0x400' '0x900' '0x500' '0x600' '0x800' '0x800'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function comparison-pointer-min-1.1 () {
+    declare -r EXPECTED_ROP='0x100'
+
+    mmux_pointer_min ROP '0x100'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function comparison-pointer-min-1.2 () {
+    declare -r EXPECTED_ROP='0x100'
+
+    mmux_pointer_min ROP '0x900' '0x100'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function comparison-pointer-min-1.3 () {
+    declare -r EXPECTED_ROP='0x100'
+
+    mmux_pointer_min ROP '0x100' '0x900'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function comparison-pointer-min-1.4 () {
+    declare -r EXPECTED_ROP='0x100'
+
+    mmux_pointer_min ROP '0x100' '0x200' '0x300' '0x400' '0x900' '0x500' '0x600' '0x800' '0x800'
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
 
 #### type variables: schar
 

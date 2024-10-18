@@ -145,6 +145,100 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
+ ** Min max builtins.
+ ** ----------------------------------------------------------------- */
+
+m4_dnl $1 - the type stem
+m4_dnl $2 - the function stem
+m4_dnl $3 - preprocessor symbol for conditional definition
+m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_$2]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
+  mmux_$1_t	ops[argc]; /* we allocate two more of these, not a problem */
+
+  for (int i = 2; i < argc; ++i) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, ops[i], argv[i]);
+  }
+  for (int i = 3; i < argc; ++i) {
+    ops[2] = mmux_$1_$2(ops[2], ops[i]);
+  }
+  return mmux_$1_bind_to_variable(argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[m4_dnl
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME_STR);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_$1_$2]]],
+    [[[(3 <= argc)]]],
+    [[["mmux_$1_$2 ROPVAR OP0 OP ..."]]],
+    [[["Select the $2 between the operands, store it in ROPVAR."]]])
+]]])
+
+m4_dnl $1 - the type stem
+m4_dnl $2 - preprocessor symbol for conditional definition
+m4_define([[[MMUX_BASH_DEFINE_COMPARISON_BUILTINS]]],[[[
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[min]]],		[[[$2]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTIN([[[$1]]],	[[[max]]],		[[[$2]]])
+]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[pointer]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[schar]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uchar]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sshort]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ushort]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sint]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uint]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[slong]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ulong]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sllong]]],			[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ullong]]],			[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[double]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ldouble]]],			[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float32]]],			[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float64]]],			[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float128]]],			[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float32x]]],			[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float64x]]],			[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[float128x]]],			[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[decimal32]]],			[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[decimal64]]],			[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[decimal128]]],			[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sint8]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uint8]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sint16]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uint16]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sint32]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uint32]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sint64]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uint64]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[usize]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ssize]]])
+
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sintmax]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uintmax]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[sintptr]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uintptr]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[ptrdiff]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[mode]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[off]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[pid]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[uid]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[gid]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wchar]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
+
+
+/** --------------------------------------------------------------------
  ** Approximate comparison builtins for real floating-point numbers.
  ** ----------------------------------------------------------------- */
 

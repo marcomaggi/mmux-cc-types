@@ -103,7 +103,7 @@ done
 	done
     done
 
-    for STEM in "${FLOAT_STEMS[@]}"
+    for STEM in "${REAL_FLOAT_STEMS[@]}"
     do
 	for ITEM in add sub mul div neg inv abs
 	do
@@ -114,7 +114,7 @@ done
 
     for STEM in "${COMPLEX_FLOAT_STEMS[@]}"
     do
-	for ITEM in make_rectangular real_part imag_part abs arg conj
+	for ITEM in add sub mul div neg inv abs make_rectangular real_part imag_part arg conj
 	do
 	    printf -v NAME 'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"
@@ -165,7 +165,7 @@ done
 {
     for STEM in 'pointer' "${INTEGER_STEMS[@]}"
     do
-	for ITEM in equal greater less greater_equal less_equal
+	for ITEM in equal greater less greater_equal less_equal min max
 	do
 	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"
@@ -174,7 +174,7 @@ done
 
     for STEM in "${REAL_FLOAT_STEMS[@]}"
     do
-	for ITEM in equal greater less greater_equal less_equal equal_absmargin equal_relepsilon
+	for ITEM in equal greater less greater_equal less_equal equal_absmargin equal_relepsilon min max
 	do
 	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"
