@@ -2700,7 +2700,6 @@ Compute the named C function.
 @deffnx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
 @deffnx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
 @deffnx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
-@deffnx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
 @deffnx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
 @deffnx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
 @deffnx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}

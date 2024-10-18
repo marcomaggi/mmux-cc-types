@@ -1799,45 +1799,43 @@ increment, decrement.
 @chapter Mathematics operation builtins
 
 
-All the following builtins compute a value and store its string representation in @var{ROPVAR}.
-
-@macro MmuxDefineMathRealBuiltins{STEM}
-@deftypefun Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
-@deftypefunx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_exp2 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_exp10 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_log2 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_logb @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_cbrt @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_hypot @var{ROPVAR} @vari{OP} @vari{OP}
-@deftypefunx Builtin mmux_\STEM\_expm1 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_log1p @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_erf @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_erfc @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_lgamma @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_tgamma @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_j0 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_j1 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_jn @var{ROPVAR} @var{SINT_N} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_y0 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_y1 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_yn @var{ROPVAR} @var{SINT_N} @var{OP}
+@macro MmuxDefineMathRealFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_asin (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_acos (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan2 (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sinh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cosh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_tanh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_asinh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_acosh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_atanh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp2 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp10 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_logb (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cbrt (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_hypot (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_expm1 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log1p (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_erf (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_erfc (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_lgamma (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_tgamma (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_j0 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_j1 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_jn (mmux_sint_t @var{N}, mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_y0 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_y1 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_yn (mmux_sint_t @var{N}, mmux_\STEM\_t @var{OP})
 Compute the named C function.
 @end deftypefun
 
@@ -1845,25 +1843,24 @@ Compute the named C function.
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineMathComplexBuiltins{STEM}
-@deftypefun Builtin mmux_\STEM\_sin @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_cos @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_tan @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_asin @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_acos @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_atan @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_atan2 @var{ROPVAR} @vari{OP} @varii{OP}
-@deftypefunx Builtin mmux_\STEM\_sinh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_cosh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_tanh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_asinh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_acosh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_atanh @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_exp @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_log @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_log10 @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_pow @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_sqrt @var{ROPVAR} @var{OP}
+@macro MmuxDefineMathComplexFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_asin (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_acos (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sinh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cosh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_tanh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_asinh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_acosh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_atanh (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
 Compute the named C function.
 @end deftypefun
 
@@ -1871,40 +1868,40 @@ Compute the named C function.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineMathRealBuiltins{float}
-@MmuxDefineMathRealBuiltins{double}
-@MmuxDefineMathRealBuiltins{ldouble}
+@MmuxDefineMathRealFuncs{float}
+@MmuxDefineMathRealFuncs{double}
+@MmuxDefineMathRealFuncs{ldouble}
 
-@MmuxDefineMathRealBuiltins{float32}
-@MmuxDefineMathRealBuiltins{float64}
-@MmuxDefineMathRealBuiltins{float128}
+@MmuxDefineMathRealFuncs{float32}
+@MmuxDefineMathRealFuncs{float64}
+@MmuxDefineMathRealFuncs{float128}
 
-@MmuxDefineMathRealBuiltins{float32x}
-@MmuxDefineMathRealBuiltins{float64x}
-@MmuxDefineMathRealBuiltins{float128x}
+@MmuxDefineMathRealFuncs{float32x}
+@MmuxDefineMathRealFuncs{float64x}
+@MmuxDefineMathRealFuncs{float128x}
 
 @ignore
-@MmuxDefineMathRealBuiltins{decimal32}
-@MmuxDefineMathRealBuiltins{decimal64}
-@MmuxDefineMathRealBuiltins{decimal128}
+@MmuxDefineMathRealFuncs{decimal32}
+@MmuxDefineMathRealFuncs{decimal64}
+@MmuxDefineMathRealFuncs{decimal128}
 @end ignore
 
-@MmuxDefineMathComplexBuiltins{complexf}
-@MmuxDefineMathComplexBuiltins{complexd}
-@MmuxDefineMathComplexBuiltins{complexld}
+@MmuxDefineMathComplexFuncs{complexf}
+@MmuxDefineMathComplexFuncs{complexd}
+@MmuxDefineMathComplexFuncs{complexld}
 
-@MmuxDefineMathComplexBuiltins{complexf32}
-@MmuxDefineMathComplexBuiltins{complexf64}
-@MmuxDefineMathComplexBuiltins{complexf128}
+@MmuxDefineMathComplexFuncs{complexf32}
+@MmuxDefineMathComplexFuncs{complexf64}
+@MmuxDefineMathComplexFuncs{complexf128}
 
-@MmuxDefineMathComplexBuiltins{complexf32x}
-@MmuxDefineMathComplexBuiltins{complexf64x}
-@MmuxDefineMathComplexBuiltins{complexf128x}
+@MmuxDefineMathComplexFuncs{complexf32x}
+@MmuxDefineMathComplexFuncs{complexf64x}
+@MmuxDefineMathComplexFuncs{complexf128x}
 
 @ignore
-@MmuxDefineMathComplexBuiltins{complexd32}
-@MmuxDefineMathComplexBuiltins{complexd64}
-@MmuxDefineMathComplexBuiltins{complexd128}
+@MmuxDefineMathComplexFuncs{complexd32}
+@MmuxDefineMathComplexFuncs{complexd64}
+@MmuxDefineMathComplexFuncs{complexd128}
 @end ignore
 
 @c page
