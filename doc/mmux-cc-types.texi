@@ -889,11 +889,32 @@ Return the maximum and minimum values representable by the range of values of th
 
 
 @menu
+* stringrep complex::           Peculiar string representation for complex floating--point numbers.
 * stringrep predicates::        Type predicates for string representations.
 * stringrep formats::           Selecting the printing format for floating--point numbers.
 * stringrep parsers::           Parsing string representations of C language types.
 * stringrep sprinters::         Printing string representations of C language types.
 @end menu
+
+@c page
+@node stringrep complex
+@section Peculiar string representation for complex floating--point numbers
+
+
+This package's ``official'' representation of complex numbers is like this:
+
+@example
+(1.2)+i*(3.4)
+@end example
+
+@noindent
+in which both the real part @samp{1.2} and the imaginary part @samp{3.4} are enclosed in
+parentheses; this way any format for the real numbers can be used in the string representation of
+complex numbers reducing the work needed by human eyes parse the expression.  Example:
+
+@example
+(0x1.3333333333333p+0)+i*(0x1.b333333333333p+1)
+@end example
 
 @c page
 @node stringrep predicates
