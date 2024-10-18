@@ -310,6 +310,7 @@ mmux_cc_types_decl bool mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p
 
 m4_dnl $1 - type stem
 m4_define([[[DEFINE_TYPE_PROTOS_ALL_NUMBERS]]],[[[m4_dnl
+typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
 typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
 typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
@@ -324,7 +325,7 @@ mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, char const * s_valu
   __attribute__((__nonnull__(1,2)));
 mmux_cc_types_decl bool mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
-mmux_cc_types_decl int mmux_$1_sprint_size (mmux_$1_t v);
+mmux_cc_types_decl int mmux_$1_sprint_size (mmux_$1_t value);
 ]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -333,10 +334,11 @@ m4_dnl $1 - type stem
 m4_dnl $2 - C preprocessor symbol for conditional code
 m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
-mmux_cc_types_decl mmux_$1_t mmux_$1_minimum (void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_maximum (void)
-  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_minimum __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_maximum __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -419,33 +421,6 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
- ** More type functions prototypes.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
-]]])]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[double]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[ldouble]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
-
-
-/** --------------------------------------------------------------------
  ** Type predicate prototypes.
  ** ----------------------------------------------------------------- */
 
@@ -473,8 +448,8 @@ mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribut
 ]]])]]])
 
 m4_define([[[DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon __attribute__((__const__));
 ]]])]]])
 
 /* ------------------------------------------------------------------ */

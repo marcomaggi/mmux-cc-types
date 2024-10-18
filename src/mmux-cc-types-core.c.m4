@@ -125,7 +125,7 @@ mmux_cc_types_init (void)
 
 
 /** --------------------------------------------------------------------
- ** Some real number type functions: string_is, sizeof, minimum, maximum.
+ ** Real number type functions: string_is, sizeof, minimum, maximum.
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - Stem of the type.
@@ -199,11 +199,101 @@ DEFINE_REAL_TYPE_FUNCTIONS(uint32,	UINT32_MAX,	0)
 DEFINE_REAL_TYPE_FUNCTIONS(sint64,	INT64_MAX,	INT64_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uint64,	UINT64_MAX,	0)
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Integer non-alias number functions: abs, min, max.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_STYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+mmux_$1_t
+mmux_$1_abs (mmux_$1_t op)
+{
+  return ((mmux_$1_is_negative(op))? -op : op);
+}
+mmux_$1_t
+mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return ((mmux_$1_greater_equal(op1, op2))? op1 : op2);
+}
+mmux_$1_t
+mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return ((mmux_$1_less_equal(op1, op2))? op1 : op2);
+}
+]]])]]])
+
+m4_define([[[DEFINE_UTYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+mmux_$1_t
+mmux_$1_abs (mmux_$1_t op)
+{
+  return op;
+}
+mmux_$1_t
+mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return ((mmux_$1_greater_equal(op1, op2))? op1 : op2);
+}
+mmux_$1_t
+mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return ((mmux_$1_less_equal(op1, op2))? op1 : op2);
+}
+]]])]]])
+
+
+DEFINE_UTYPE_FUNCTIONS([[[pointer]]])
+
+DEFINE_STYPE_FUNCTIONS([[[schar]]])
+DEFINE_UTYPE_FUNCTIONS([[[uchar]]])
+DEFINE_STYPE_FUNCTIONS([[[sshort]]])
+DEFINE_UTYPE_FUNCTIONS([[[ushort]]])
+DEFINE_STYPE_FUNCTIONS([[[sint]]])
+DEFINE_UTYPE_FUNCTIONS([[[uint]]])
+DEFINE_STYPE_FUNCTIONS([[[slong]]])
+DEFINE_UTYPE_FUNCTIONS([[[ulong]]])
+DEFINE_STYPE_FUNCTIONS([[[sllong]]],	[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_UTYPE_FUNCTIONS([[[ullong]]],	[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_STYPE_FUNCTIONS([[[sint8]]])
+DEFINE_UTYPE_FUNCTIONS([[[uint8]]])
+DEFINE_STYPE_FUNCTIONS([[[sint16]]])
+DEFINE_UTYPE_FUNCTIONS([[[uint16]]])
+DEFINE_STYPE_FUNCTIONS([[[sint32]]])
+DEFINE_UTYPE_FUNCTIONS([[[uint32]]])
+DEFINE_STYPE_FUNCTIONS([[[sint64]]])
+DEFINE_UTYPE_FUNCTIONS([[[uint64]]])
+
+
+/** --------------------------------------------------------------------
+ ** Real non-alias floating-point number functions: abs, min, max.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return $2(X);    }
+inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
+inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
+]]])]]])
+
+DEFINE_TYPE_FUNCTIONS([[[float]]],	[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
+DEFINE_TYPE_FUNCTIONS([[[double]]],	[[[fabs]]],     [[[fmax]]],      [[[fmin]]])
+DEFINE_TYPE_FUNCTIONS([[[ldouble]]],	[[[fabsl]]],    [[[fmaxl]]],     [[[fminl]]],    [[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_TYPE_FUNCTIONS([[[float32]]],	[[[fabsf32]]],  [[[fmaxf32]]],   [[[fminf32]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_TYPE_FUNCTIONS([[[float64]]],	[[[fabsf64]]],  [[[fmaxf64]]],   [[[fminf64]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_TYPE_FUNCTIONS([[[float128]]],	[[[fabsf128]]], [[[fmaxf128]]],  [[[fminf128]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_TYPE_FUNCTIONS([[[float32x]]],	[[[fabsf32x]]], [[[fmaxf32x]]],  [[[fminf32x]]], [[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_TYPE_FUNCTIONS([[[float64x]]],	[[[fabsf64x]]], [[[fmaxf64x]]],  [[[fminf64x]]], [[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_TYPE_FUNCTIONS([[[float128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fminf128x]]],[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+
+/** --------------------------------------------------------------------
+ ** Aliased integer number type functions: string_is, sizeof, minimum, maximum, abs, min, max.
+ ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
-m4_define([[[DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS]]],[[[
+m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[
 bool
 mmux_string_is_$1 (char const * s_value)
 {
@@ -224,22 +314,37 @@ mmux_$1_minimum (void)
 {
   return mmux_$2_minimum ();
 }
+mmux_$1_t
+mmux_$1_abs (mmux_$1_t op)
+{
+  return mmux_$2_abs(op);
+}
+mmux_$1_t
+mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_max(op1, op2);
+}
+mmux_$1_t
+mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_min(op1, op2);
+}
 ]]])
 
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(ssize,	MMUX_CC_TYPES_STEM_ALIAS_SSIZE)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(usize,	MMUX_CC_TYPES_STEM_ALIAS_USIZE)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(sintmax,	MMUX_CC_TYPES_STEM_ALIAS_SINTMAX)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(uintmax,	MMUX_CC_TYPES_STEM_ALIAS_UINTMAX)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(sintptr,	MMUX_CC_TYPES_STEM_ALIAS_SINTPTR)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(uintptr,	MMUX_CC_TYPES_STEM_ALIAS_UINTPTR)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(mode,	MMUX_CC_TYPES_STEM_ALIAS_MODE)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(off,		MMUX_CC_TYPES_STEM_ALIAS_OFF)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(pid,		MMUX_CC_TYPES_STEM_ALIAS_PID)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(uid,		MMUX_CC_TYPES_STEM_ALIAS_UID)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(gid,		MMUX_CC_TYPES_STEM_ALIAS_GID)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(ptrdiff,	MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(wchar,	MMUX_CC_TYPES_STEM_ALIAS_WCHAR)
-DEFINE_REAL_TYPEDEF_TYPE_FUNCTIONS(wint,	MMUX_CC_TYPES_STEM_ALIAS_WINT)
+DEFINE_TYPE_FUNCTIONS(ssize,	MMUX_CC_TYPES_STEM_ALIAS_SSIZE)
+DEFINE_TYPE_FUNCTIONS(usize,	MMUX_CC_TYPES_STEM_ALIAS_USIZE)
+DEFINE_TYPE_FUNCTIONS(sintmax,	MMUX_CC_TYPES_STEM_ALIAS_SINTMAX)
+DEFINE_TYPE_FUNCTIONS(uintmax,	MMUX_CC_TYPES_STEM_ALIAS_UINTMAX)
+DEFINE_TYPE_FUNCTIONS(sintptr,	MMUX_CC_TYPES_STEM_ALIAS_SINTPTR)
+DEFINE_TYPE_FUNCTIONS(uintptr,	MMUX_CC_TYPES_STEM_ALIAS_UINTPTR)
+DEFINE_TYPE_FUNCTIONS(mode,	MMUX_CC_TYPES_STEM_ALIAS_MODE)
+DEFINE_TYPE_FUNCTIONS(off,	MMUX_CC_TYPES_STEM_ALIAS_OFF)
+DEFINE_TYPE_FUNCTIONS(pid,	MMUX_CC_TYPES_STEM_ALIAS_PID)
+DEFINE_TYPE_FUNCTIONS(uid,	MMUX_CC_TYPES_STEM_ALIAS_UID)
+DEFINE_TYPE_FUNCTIONS(gid,	MMUX_CC_TYPES_STEM_ALIAS_GID)
+DEFINE_TYPE_FUNCTIONS(ptrdiff,	MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF)
+DEFINE_TYPE_FUNCTIONS(wchar,	MMUX_CC_TYPES_STEM_ALIAS_WCHAR)
+DEFINE_TYPE_FUNCTIONS(wint,	MMUX_CC_TYPES_STEM_ALIAS_WINT)
 
 
 /** --------------------------------------------------------------------
@@ -725,29 +830,6 @@ DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uid]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[gid]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[wchar]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[wint]]])
-
-
-/** --------------------------------------------------------------------
- ** More type functions.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
-inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return $2(X);    }
-inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
-inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
-]]])]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float]]],	[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[double]]],	[[[fabs]]],     [[[fmax]]],      [[[fmin]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[ldouble]]],	[[[fabsl]]],    [[[fmaxl]]],     [[[fminl]]],    [[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32]]],	[[[fabsf32]]],  [[[fmaxf32]]],   [[[fminf32]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64]]],	[[[fabsf64]]],  [[[fmaxf64]]],   [[[fminf64]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128]]],	[[[fabsf128]]], [[[fmaxf128]]],  [[[fminf128]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float32x]]],	[[[fabsf32x]]], [[[fmaxf32x]]],  [[[fminf32x]]], [[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float64x]]],	[[[fabsf64x]]], [[[fmaxf64x]]],  [[[fminf64x]]], [[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
-DEFINE_TYPE_FUNCTIONS_COMPARISON_MORE([[[float128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fminf128x]]],[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
 
 
 /** --------------------------------------------------------------------

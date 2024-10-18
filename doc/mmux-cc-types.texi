@@ -80,10 +80,6 @@
 @end macro
 @end ifnotinfo
 
-@macro MmuxBuiltin{NAME}
-@code{\NAME\}
-@end macro
-
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
@@ -1066,7 +1062,7 @@ The number of bytes required to hold a format specification string.
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxRealSelectOutputFormatBuiltin{STEM,DEFAULTFORMAT}
+@macro MmuxRealSelectOutputFormatFunction{STEM,DEFAULTFORMAT}
 @deftypefun bool mmux_\STEM\_set_output_format (char const * @var{OUTPUT_FORMAT})
 @deftypefunx {char const *} mmux_\STEM\_ref_output_format (void)
 @deftypefunx void mmux_\STEM\_save_output_format (char * @var{DEST})
@@ -1076,21 +1072,21 @@ type @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
 
 @end macro
 
-@MmuxRealSelectOutputFormatBuiltin{float, %A}
-@MmuxRealSelectOutputFormatBuiltin{double, %A}
-@MmuxRealSelectOutputFormatBuiltin{ldouble, %A}
+@MmuxRealSelectOutputFormatFunction{float, %A}
+@MmuxRealSelectOutputFormatFunction{double, %A}
+@MmuxRealSelectOutputFormatFunction{ldouble, %A}
 
-@MmuxRealSelectOutputFormatBuiltin{float32, %A}
-@MmuxRealSelectOutputFormatBuiltin{float64, %A}
-@MmuxRealSelectOutputFormatBuiltin{float128, %A}
+@MmuxRealSelectOutputFormatFunction{float32, %A}
+@MmuxRealSelectOutputFormatFunction{float64, %A}
+@MmuxRealSelectOutputFormatFunction{float128, %A}
 
-@MmuxRealSelectOutputFormatBuiltin{float32x, %A}
-@MmuxRealSelectOutputFormatBuiltin{float64x, %A}
-@MmuxRealSelectOutputFormatBuiltin{float128x, %A}
+@MmuxRealSelectOutputFormatFunction{float32x, %A}
+@MmuxRealSelectOutputFormatFunction{float64x, %A}
+@MmuxRealSelectOutputFormatFunction{float128x, %A}
 
-@MmuxRealSelectOutputFormatBuiltin{decimal32, %f}
-@MmuxRealSelectOutputFormatBuiltin{decimal64, %f}
-@MmuxRealSelectOutputFormatBuiltin{decimal128, %f}
+@MmuxRealSelectOutputFormatFunction{decimal32, %f}
+@MmuxRealSelectOutputFormatFunction{decimal64, %f}
+@MmuxRealSelectOutputFormatFunction{decimal128, %f}
 
 @c page
 @node stringrep parsers
@@ -1305,7 +1301,6 @@ the terminating zero}; otherwise return @samp{-1}.
 @menu
 * complex make::        Constructing complex numbers.
 * complex parts::       Extracting the real and imaginary parts.
-* complex abs::         Computing the absolute value.
 * complex arg::         Computing the argument value.
 * complex conj::        Computing the complex conjugate value.
 @end menu
@@ -1326,7 +1321,7 @@ Z = mmux_complexd_make_rectangular(rep, imp);
 @end example
 
 
-@macro MmuxDefineComplexMakeRectangularBuiltin{CPLXSTEM,REALSTEM}
+@macro MmuxDefineComplexMakeRectangularFunction{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_make_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
 Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
 @var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Return the result.
@@ -1334,21 +1329,21 @@ Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imag
 
 @end macro
 
-@MmuxDefineComplexMakeRectangularBuiltin{complexf, float}
-@MmuxDefineComplexMakeRectangularBuiltin{complexd, double}
-@MmuxDefineComplexMakeRectangularBuiltin{complexld, ldouble}
+@MmuxDefineComplexMakeRectangularFunction{complexf, float}
+@MmuxDefineComplexMakeRectangularFunction{complexd, double}
+@MmuxDefineComplexMakeRectangularFunction{complexld, ldouble}
 
-@MmuxDefineComplexMakeRectangularBuiltin{complexf32, float32}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf64, float64}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf128, float128}
+@MmuxDefineComplexMakeRectangularFunction{complexf32, float32}
+@MmuxDefineComplexMakeRectangularFunction{complexf64, float64}
+@MmuxDefineComplexMakeRectangularFunction{complexf128, float128}
 
-@MmuxDefineComplexMakeRectangularBuiltin{complexf32x, float32x}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf64x, float64x}
-@MmuxDefineComplexMakeRectangularBuiltin{complexf128x, float128x}
+@MmuxDefineComplexMakeRectangularFunction{complexf32x, float32x}
+@MmuxDefineComplexMakeRectangularFunction{complexf64x, float64x}
+@MmuxDefineComplexMakeRectangularFunction{complexf128x, float128x}
 
-@MmuxDefineComplexMakeRectangularBuiltin{complexd32, decimal32}
-@MmuxDefineComplexMakeRectangularBuiltin{complexd64, decimal64}
-@MmuxDefineComplexMakeRectangularBuiltin{complexd128, decimal128}
+@MmuxDefineComplexMakeRectangularFunction{complexd32, decimal32}
+@MmuxDefineComplexMakeRectangularFunction{complexd64, decimal64}
+@MmuxDefineComplexMakeRectangularFunction{complexd128, decimal128}
 
 @c page
 @node complex parts
@@ -1367,113 +1362,85 @@ imp = mmux_complexd_real_part(Z);
 @end example
 
 
-@macro MmuxDefineComplexRealImagPartBuiltin{CPLXSTEM,REALSTEM}
-@deftypefun Builtin mmux_\REALSTEM\_t mmux_\CPLXSTEM\_real_part (mmux_\CPLXSTEM\_t @var{OP})
-@deftypefunx Builtin mmux_\REALSTEM\_t mmux_\CPLXSTEM\_imag_part (mmux_\CPLXSTEM\_t @var{OP})
+@macro MmuxDefineComplexRealImagPartFunction{CPLXSTEM,REALSTEM}
+@deftypefun  mmux_\REALSTEM\_t mmux_\CPLXSTEM\_real_part (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_imag_part (mmux_\CPLXSTEM\_t @var{OP})
 Extract and return the real or imaginary parts from the complex number @var{OP}.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineComplexRealImagPartBuiltin{complexf, float}
-@MmuxDefineComplexRealImagPartBuiltin{complexd, double}
-@MmuxDefineComplexRealImagPartBuiltin{complexld, ldouble}
+@MmuxDefineComplexRealImagPartFunction{complexf, float}
+@MmuxDefineComplexRealImagPartFunction{complexd, double}
+@MmuxDefineComplexRealImagPartFunction{complexld, ldouble}
 
-@MmuxDefineComplexRealImagPartBuiltin{complexf32, float32}
-@MmuxDefineComplexRealImagPartBuiltin{complexf64, float64}
-@MmuxDefineComplexRealImagPartBuiltin{complexf128, float128}
+@MmuxDefineComplexRealImagPartFunction{complexf32, float32}
+@MmuxDefineComplexRealImagPartFunction{complexf64, float64}
+@MmuxDefineComplexRealImagPartFunction{complexf128, float128}
 
-@MmuxDefineComplexRealImagPartBuiltin{complexf32x, float32x}
-@MmuxDefineComplexRealImagPartBuiltin{complexf64x, float64x}
-@MmuxDefineComplexRealImagPartBuiltin{complexf128x, float128x}
+@MmuxDefineComplexRealImagPartFunction{complexf32x, float32x}
+@MmuxDefineComplexRealImagPartFunction{complexf64x, float64x}
+@MmuxDefineComplexRealImagPartFunction{complexf128x, float128x}
 
-@MmuxDefineComplexRealImagPartBuiltin{complexd32, decimal32}
-@MmuxDefineComplexRealImagPartBuiltin{complexd64, decimal64}
-@MmuxDefineComplexRealImagPartBuiltin{complexd128, decimal128}
-
-@c page
-@node complex abs
-@section Computing the absolute value
-
-
-@macro MmuxDefineComplexAbsBuiltin{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_abs (mmux_\CPLXSTEM\_t @var{OP})
-Compute and return the absolute value of the complex number @var{OP}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineComplexAbsBuiltin{complexf, float}
-@MmuxDefineComplexAbsBuiltin{complexd, double}
-@MmuxDefineComplexAbsBuiltin{complexld, ldouble}
-
-@MmuxDefineComplexAbsBuiltin{complexf32, float32}
-@MmuxDefineComplexAbsBuiltin{complexf64, float64}
-@MmuxDefineComplexAbsBuiltin{complexf128, float128}
-
-@MmuxDefineComplexAbsBuiltin{complexf32x, float32x}
-@MmuxDefineComplexAbsBuiltin{complexf64x, float64x}
-@MmuxDefineComplexAbsBuiltin{complexf128x, float128x}
-
-@MmuxDefineComplexAbsBuiltin{complexd32, decimal32}
-@MmuxDefineComplexAbsBuiltin{complexd64, decimal64}
-@MmuxDefineComplexAbsBuiltin{complexd128, decimal128}
+@MmuxDefineComplexRealImagPartFunction{complexd32, decimal32}
+@MmuxDefineComplexRealImagPartFunction{complexd64, decimal64}
+@MmuxDefineComplexRealImagPartFunction{complexd128, decimal128}
 
 @c page
 @node complex arg
 @section Computing the argument value
 
 
-@macro MmuxDefineComplexArgBuiltin{CPLXSTEM,REALSTEM}
+@macro MmuxDefineComplexArgFunction{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_arg (mmux_\CPLXSTEM\_t @var{OP})
 Compute and return the argument value of the complex number @var{OP}.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineComplexArgBuiltin{complexf, float}
-@MmuxDefineComplexArgBuiltin{complexd, double}
-@MmuxDefineComplexArgBuiltin{complexld, ldouble}
+@MmuxDefineComplexArgFunction{complexf, float}
+@MmuxDefineComplexArgFunction{complexd, double}
+@MmuxDefineComplexArgFunction{complexld, ldouble}
 
-@MmuxDefineComplexArgBuiltin{complexf32, float32}
-@MmuxDefineComplexArgBuiltin{complexf64, float64}
-@MmuxDefineComplexArgBuiltin{complexf128, float128}
+@MmuxDefineComplexArgFunction{complexf32, float32}
+@MmuxDefineComplexArgFunction{complexf64, float64}
+@MmuxDefineComplexArgFunction{complexf128, float128}
 
-@MmuxDefineComplexArgBuiltin{complexf32x, float32x}
-@MmuxDefineComplexArgBuiltin{complexf64x, float64x}
-@MmuxDefineComplexArgBuiltin{complexf128x, float128x}
+@MmuxDefineComplexArgFunction{complexf32x, float32x}
+@MmuxDefineComplexArgFunction{complexf64x, float64x}
+@MmuxDefineComplexArgFunction{complexf128x, float128x}
 
-@MmuxDefineComplexArgBuiltin{complexd32, decimal32}
-@MmuxDefineComplexArgBuiltin{complexd64, decimal64}
-@MmuxDefineComplexArgBuiltin{complexd128, decimal128}
+@MmuxDefineComplexArgFunction{complexd32, decimal32}
+@MmuxDefineComplexArgFunction{complexd64, decimal64}
+@MmuxDefineComplexArgFunction{complexd128, decimal128}
 
 @c page
 @node complex conj
 @section Computing the complex conjugate value
 
 
-@macro MmuxDefineComplexConjBuiltin{CPLXSTEM,REALSTEM}
+@macro MmuxDefineComplexConjFunction{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_conj (mmux_\CPLXSTEM\_t @var{OP})
 Compute and return complex conjugate value of the complex number @var{OP}.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineComplexConjBuiltin{complexf, float}
-@MmuxDefineComplexConjBuiltin{complexd, double}
-@MmuxDefineComplexConjBuiltin{complexld, ldouble}
+@MmuxDefineComplexConjFunction{complexf, float}
+@MmuxDefineComplexConjFunction{complexd, double}
+@MmuxDefineComplexConjFunction{complexld, ldouble}
 
-@MmuxDefineComplexConjBuiltin{complexf32, float32}
-@MmuxDefineComplexConjBuiltin{complexf64, float64}
-@MmuxDefineComplexConjBuiltin{complexf128, float128}
+@MmuxDefineComplexConjFunction{complexf32, float32}
+@MmuxDefineComplexConjFunction{complexf64, float64}
+@MmuxDefineComplexConjFunction{complexf128, float128}
 
-@MmuxDefineComplexConjBuiltin{complexf32x, float32x}
-@MmuxDefineComplexConjBuiltin{complexf64x, float64x}
-@MmuxDefineComplexConjBuiltin{complexf128x, float128x}
+@MmuxDefineComplexConjFunction{complexf32x, float32x}
+@MmuxDefineComplexConjFunction{complexf64x, float64x}
+@MmuxDefineComplexConjFunction{complexf128x, float128x}
 
-@MmuxDefineComplexConjBuiltin{complexd32, decimal32}
-@MmuxDefineComplexConjBuiltin{complexd64, decimal64}
-@MmuxDefineComplexConjBuiltin{complexd128, decimal128}
+@MmuxDefineComplexConjFunction{complexd32, decimal32}
+@MmuxDefineComplexConjFunction{complexd64, decimal64}
+@MmuxDefineComplexConjFunction{complexd128, decimal128}
 
 @c page
 @node predicates
@@ -1563,24 +1530,25 @@ nan; otherwise return @cfalse{}.
 
 @c page
 @node comparison
-@chapter Comparison builtins
+@chapter Comparison functions
 
 
 @menu
-* comparison exact::            Exact comparison builtins.
+* comparison exact::            Exact comparison functions.
+* comparison mimmax::           Maximum and minimum values.
 * comparison absmargin::        Absolute margin comparison criterion.
 * comparison relepsilon::       Relative epsilon comparison criterion.
 @end menu
 
 @c page
 @node comparison exact
-@section Exact comparison builtins
+@section Exact comparison functions
 
 
 The @cfunc{mmux_*_cmp} functions perform the usual comparison with ternary result.  The predicate
 functions return @ctrue{} if the operands are in the named relation; otherwise return @cfalse{}.
 
-@macro MmuxDefineTypeComparisonExactBuiltin{STEM}
+@macro MmuxDefineTypeComparisonExactFunction{STEM}
 @deftypefun int mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -1594,7 +1562,7 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineTypeComparisonExactComplexBuiltin{STEM}
+@macro MmuxDefineTypeComparisonExactComplexFunction{STEM}
 @deftypefun bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 Comparison between @objtype{mmux_\STEM\_t} values.
 @end deftypefun
@@ -1603,72 +1571,137 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineTypeComparisonExactBuiltin{pointer}
+@MmuxDefineTypeComparisonExactFunction{pointer}
 
-@MmuxDefineTypeComparisonExactBuiltin{schar}
-@MmuxDefineTypeComparisonExactBuiltin{uchar}
-@MmuxDefineTypeComparisonExactBuiltin{sshort}
-@MmuxDefineTypeComparisonExactBuiltin{ushort}
-@MmuxDefineTypeComparisonExactBuiltin{sint}
-@MmuxDefineTypeComparisonExactBuiltin{uint}
-@MmuxDefineTypeComparisonExactBuiltin{slong}
-@MmuxDefineTypeComparisonExactBuiltin{ulong}
-@MmuxDefineTypeComparisonExactBuiltin{sllong}
-@MmuxDefineTypeComparisonExactBuiltin{ullong}
-@MmuxDefineTypeComparisonExactBuiltin{float}
-@MmuxDefineTypeComparisonExactBuiltin{double}
-@MmuxDefineTypeComparisonExactBuiltin{ldouble}
+@MmuxDefineTypeComparisonExactFunction{schar}
+@MmuxDefineTypeComparisonExactFunction{uchar}
+@MmuxDefineTypeComparisonExactFunction{sshort}
+@MmuxDefineTypeComparisonExactFunction{ushort}
+@MmuxDefineTypeComparisonExactFunction{sint}
+@MmuxDefineTypeComparisonExactFunction{uint}
+@MmuxDefineTypeComparisonExactFunction{slong}
+@MmuxDefineTypeComparisonExactFunction{ulong}
+@MmuxDefineTypeComparisonExactFunction{sllong}
+@MmuxDefineTypeComparisonExactFunction{ullong}
+@MmuxDefineTypeComparisonExactFunction{float}
+@MmuxDefineTypeComparisonExactFunction{double}
+@MmuxDefineTypeComparisonExactFunction{ldouble}
 
-@MmuxDefineTypeComparisonExactBuiltin{float32}
-@MmuxDefineTypeComparisonExactBuiltin{float64}
-@MmuxDefineTypeComparisonExactBuiltin{float128}
+@MmuxDefineTypeComparisonExactFunction{float32}
+@MmuxDefineTypeComparisonExactFunction{float64}
+@MmuxDefineTypeComparisonExactFunction{float128}
 
-@MmuxDefineTypeComparisonExactBuiltin{float32x}
-@MmuxDefineTypeComparisonExactBuiltin{float64x}
-@MmuxDefineTypeComparisonExactBuiltin{float128x}
+@MmuxDefineTypeComparisonExactFunction{float32x}
+@MmuxDefineTypeComparisonExactFunction{float64x}
+@MmuxDefineTypeComparisonExactFunction{float128x}
 
-@MmuxDefineTypeComparisonExactBuiltin{decimal32}
-@MmuxDefineTypeComparisonExactBuiltin{decimal64}
-@MmuxDefineTypeComparisonExactBuiltin{decimal128}
+@MmuxDefineTypeComparisonExactFunction{decimal32}
+@MmuxDefineTypeComparisonExactFunction{decimal64}
+@MmuxDefineTypeComparisonExactFunction{decimal128}
 
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexd}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexld}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf}
+@MmuxDefineTypeComparisonExactComplexFunction{complexd}
+@MmuxDefineTypeComparisonExactComplexFunction{complexld}
 
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf32}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf64}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf128}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf32}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf64}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf128}
 
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf32x}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf64x}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexf128x}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf32x}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf64x}
+@MmuxDefineTypeComparisonExactComplexFunction{complexf128x}
 
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexd32}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexd64}
-@MmuxDefineTypeComparisonExactComplexBuiltin{complexd128}
+@MmuxDefineTypeComparisonExactComplexFunction{complexd32}
+@MmuxDefineTypeComparisonExactComplexFunction{complexd64}
+@MmuxDefineTypeComparisonExactComplexFunction{complexd128}
 
-@MmuxDefineTypeComparisonExactBuiltin{sint8}
-@MmuxDefineTypeComparisonExactBuiltin{uint8}
-@MmuxDefineTypeComparisonExactBuiltin{sint16}
-@MmuxDefineTypeComparisonExactBuiltin{uint16}
-@MmuxDefineTypeComparisonExactBuiltin{sint32}
-@MmuxDefineTypeComparisonExactBuiltin{uint32}
-@MmuxDefineTypeComparisonExactBuiltin{sint64}
-@MmuxDefineTypeComparisonExactBuiltin{uint64}
+@MmuxDefineTypeComparisonExactFunction{sint8}
+@MmuxDefineTypeComparisonExactFunction{uint8}
+@MmuxDefineTypeComparisonExactFunction{sint16}
+@MmuxDefineTypeComparisonExactFunction{uint16}
+@MmuxDefineTypeComparisonExactFunction{sint32}
+@MmuxDefineTypeComparisonExactFunction{uint32}
+@MmuxDefineTypeComparisonExactFunction{sint64}
+@MmuxDefineTypeComparisonExactFunction{uint64}
 
-@MmuxDefineTypeComparisonExactBuiltin{ssize}
-@MmuxDefineTypeComparisonExactBuiltin{usize}
-@MmuxDefineTypeComparisonExactBuiltin{sintmax}
-@MmuxDefineTypeComparisonExactBuiltin{uintmax}
-@MmuxDefineTypeComparisonExactBuiltin{sintptr}
-@MmuxDefineTypeComparisonExactBuiltin{uintptr}
-@MmuxDefineTypeComparisonExactBuiltin{mode}
-@MmuxDefineTypeComparisonExactBuiltin{off}
-@MmuxDefineTypeComparisonExactBuiltin{pid}
-@MmuxDefineTypeComparisonExactBuiltin{uid}
-@MmuxDefineTypeComparisonExactBuiltin{gid}
-@MmuxDefineTypeComparisonExactBuiltin{wchar}
-@MmuxDefineTypeComparisonExactBuiltin{wint}
+@MmuxDefineTypeComparisonExactFunction{ssize}
+@MmuxDefineTypeComparisonExactFunction{usize}
+@MmuxDefineTypeComparisonExactFunction{sintmax}
+@MmuxDefineTypeComparisonExactFunction{uintmax}
+@MmuxDefineTypeComparisonExactFunction{sintptr}
+@MmuxDefineTypeComparisonExactFunction{uintptr}
+@MmuxDefineTypeComparisonExactFunction{mode}
+@MmuxDefineTypeComparisonExactFunction{off}
+@MmuxDefineTypeComparisonExactFunction{pid}
+@MmuxDefineTypeComparisonExactFunction{uid}
+@MmuxDefineTypeComparisonExactFunction{gid}
+@MmuxDefineTypeComparisonExactFunction{wchar}
+@MmuxDefineTypeComparisonExactFunction{wint}
+
+@c page
+@node comparison mimmax
+@section Maximum and minimum values
+
+
+@macro MmuxDefineTypeComparisonMinMaxFunction{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_max (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_min (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+Return the maximum or minimum value between the operands.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineTypeComparisonMinMaxFunction{pointer}
+
+@MmuxDefineTypeComparisonMinMaxFunction{schar}
+@MmuxDefineTypeComparisonMinMaxFunction{uchar}
+@MmuxDefineTypeComparisonMinMaxFunction{sshort}
+@MmuxDefineTypeComparisonMinMaxFunction{ushort}
+@MmuxDefineTypeComparisonMinMaxFunction{sint}
+@MmuxDefineTypeComparisonMinMaxFunction{uint}
+@MmuxDefineTypeComparisonMinMaxFunction{slong}
+@MmuxDefineTypeComparisonMinMaxFunction{ulong}
+@MmuxDefineTypeComparisonMinMaxFunction{sllong}
+@MmuxDefineTypeComparisonMinMaxFunction{ullong}
+@MmuxDefineTypeComparisonMinMaxFunction{float}
+@MmuxDefineTypeComparisonMinMaxFunction{double}
+@MmuxDefineTypeComparisonMinMaxFunction{ldouble}
+
+@MmuxDefineTypeComparisonMinMaxFunction{float32}
+@MmuxDefineTypeComparisonMinMaxFunction{float64}
+@MmuxDefineTypeComparisonMinMaxFunction{float128}
+
+@MmuxDefineTypeComparisonMinMaxFunction{float32x}
+@MmuxDefineTypeComparisonMinMaxFunction{float64x}
+@MmuxDefineTypeComparisonMinMaxFunction{float128x}
+
+@MmuxDefineTypeComparisonMinMaxFunction{decimal32}
+@MmuxDefineTypeComparisonMinMaxFunction{decimal64}
+@MmuxDefineTypeComparisonMinMaxFunction{decimal128}
+
+@MmuxDefineTypeComparisonMinMaxFunction{sint8}
+@MmuxDefineTypeComparisonMinMaxFunction{uint8}
+@MmuxDefineTypeComparisonMinMaxFunction{sint16}
+@MmuxDefineTypeComparisonMinMaxFunction{uint16}
+@MmuxDefineTypeComparisonMinMaxFunction{sint32}
+@MmuxDefineTypeComparisonMinMaxFunction{uint32}
+@MmuxDefineTypeComparisonMinMaxFunction{sint64}
+@MmuxDefineTypeComparisonMinMaxFunction{uint64}
+
+@MmuxDefineTypeComparisonMinMaxFunction{ssize}
+@MmuxDefineTypeComparisonMinMaxFunction{usize}
+@MmuxDefineTypeComparisonMinMaxFunction{sintmax}
+@MmuxDefineTypeComparisonMinMaxFunction{uintmax}
+@MmuxDefineTypeComparisonMinMaxFunction{sintptr}
+@MmuxDefineTypeComparisonMinMaxFunction{uintptr}
+@MmuxDefineTypeComparisonMinMaxFunction{mode}
+@MmuxDefineTypeComparisonMinMaxFunction{off}
+@MmuxDefineTypeComparisonMinMaxFunction{pid}
+@MmuxDefineTypeComparisonMinMaxFunction{uid}
+@MmuxDefineTypeComparisonMinMaxFunction{gid}
+@MmuxDefineTypeComparisonMinMaxFunction{wchar}
+@MmuxDefineTypeComparisonMinMaxFunction{wint}
 
 @c page
 @node comparison absmargin
@@ -1808,7 +1841,7 @@ Compare the operands using the given epsilon.
 
 @c page
 @node arithmetics
-@chapter Arithmetics operation builtins
+@chapter Arithmetics operations
 
 
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
@@ -1816,14 +1849,28 @@ Perform the addition between @var{PTR} and @var{DELTA}, return the result.
 @end deftypefun
 
 
-@macro MmuxDefineNotIntegerArithmeticsFunc{STEM}
+@macro MmuxDefineNotIntegerRealArithmeticsFunc{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_add (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_sub (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_mul (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse.
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_abs (mmux_\STEM\_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value.
+@end deftypefun
+
+@end macro
+
+@macro MmuxDefineComplexArithmeticsFunc{CPLXSTEM,REALSTEM}
+@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_add (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_sub (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_mul (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_div (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_neg (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inv (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_abs (mmux_\CPLXSTEM\_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value.
 @end deftypefun
 
 @end macro
@@ -1835,11 +1882,12 @@ Compute the addition, subtraction, multiplication, division, negation, inverse.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_abs (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse, remainder,
-increment, decrement.
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
+remainder, increment, decrement.
 @end deftypefun
 
 @end macro
@@ -1855,37 +1903,37 @@ increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{ulong}
 @MmuxDefineIntegerArithmeticsFunc{sllong}
 @MmuxDefineIntegerArithmeticsFunc{ullong}
-@MmuxDefineNotIntegerArithmeticsFunc{float}
-@MmuxDefineNotIntegerArithmeticsFunc{double}
-@MmuxDefineNotIntegerArithmeticsFunc{ldouble}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float}
+@MmuxDefineNotIntegerRealArithmeticsFunc{double}
+@MmuxDefineNotIntegerRealArithmeticsFunc{ldouble}
 
-@MmuxDefineNotIntegerArithmeticsFunc{float32}
-@MmuxDefineNotIntegerArithmeticsFunc{float64}
-@MmuxDefineNotIntegerArithmeticsFunc{float128}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float32}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float64}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float128}
 
-@MmuxDefineNotIntegerArithmeticsFunc{float32x}
-@MmuxDefineNotIntegerArithmeticsFunc{float64x}
-@MmuxDefineNotIntegerArithmeticsFunc{float128x}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float32x}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float64x}
+@MmuxDefineNotIntegerRealArithmeticsFunc{float128x}
 
-@MmuxDefineNotIntegerArithmeticsFunc{decimal32}
-@MmuxDefineNotIntegerArithmeticsFunc{decimal64}
-@MmuxDefineNotIntegerArithmeticsFunc{decimal128}
+@MmuxDefineNotIntegerRealArithmeticsFunc{decimal32}
+@MmuxDefineNotIntegerRealArithmeticsFunc{decimal64}
+@MmuxDefineNotIntegerRealArithmeticsFunc{decimal128}
 
-@MmuxDefineNotIntegerArithmeticsFunc{complexf}
-@MmuxDefineNotIntegerArithmeticsFunc{complexd}
-@MmuxDefineNotIntegerArithmeticsFunc{complexld}
+@MmuxDefineComplexArithmeticsFunc{complexf,float}
+@MmuxDefineComplexArithmeticsFunc{complexd,double}
+@MmuxDefineComplexArithmeticsFunc{complexld,ldouble}
 
-@MmuxDefineNotIntegerArithmeticsFunc{complexf32}
-@MmuxDefineNotIntegerArithmeticsFunc{complexf64}
-@MmuxDefineNotIntegerArithmeticsFunc{complexf128}
+@MmuxDefineComplexArithmeticsFunc{complexf32,float32}
+@MmuxDefineComplexArithmeticsFunc{complexf64,float64}
+@MmuxDefineComplexArithmeticsFunc{complexf128,float128}
 
-@MmuxDefineNotIntegerArithmeticsFunc{complexf32x}
-@MmuxDefineNotIntegerArithmeticsFunc{complexf64x}
-@MmuxDefineNotIntegerArithmeticsFunc{complexf128x}
+@MmuxDefineComplexArithmeticsFunc{complexf32x,float32x}
+@MmuxDefineComplexArithmeticsFunc{complexf64x,float64x}
+@MmuxDefineComplexArithmeticsFunc{complexf128x,float128x}
 
-@MmuxDefineNotIntegerArithmeticsFunc{complexd32}
-@MmuxDefineNotIntegerArithmeticsFunc{complexd64}
-@MmuxDefineNotIntegerArithmeticsFunc{complexd128}
+@MmuxDefineComplexArithmeticsFunc{complexd32,decimal32}
+@MmuxDefineComplexArithmeticsFunc{complexd64,decimal64}
+@MmuxDefineComplexArithmeticsFunc{complexd128,decimal128}
 
 @MmuxDefineIntegerArithmeticsFunc{sint8}
 @MmuxDefineIntegerArithmeticsFunc{uint8}
@@ -1912,7 +1960,7 @@ increment, decrement.
 
 @c page
 @node mathematics
-@chapter Mathematics operation builtins
+@chapter Mathematics operations
 
 
 @macro MmuxDefineMathRealFuncs{STEM}
@@ -2022,7 +2070,7 @@ Compute the named C function.
 
 @c page
 @node bitwise
-@chapter Bitwise operation builtins
+@chapter Bitwise operations
 
 
 @deftypefun mmux_pointer_t mmux_pointer_bitwise_and (mmux_pointer_t @var{OP}, mmux_uintptr_t @var{MASK})
