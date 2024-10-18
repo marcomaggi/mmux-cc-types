@@ -165,7 +165,7 @@ done
 {
     for STEM in 'pointer' "${INTEGER_STEMS[@]}"
     do
-	for ITEM in equal greater lesser greater_equal lesser_equal
+	for ITEM in equal greater less greater_equal less_equal
 	do
 	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"
@@ -174,7 +174,7 @@ done
 
     for STEM in "${REAL_FLOAT_STEMS[@]}"
     do
-	for ITEM in equal greater lesser greater_equal lesser_equal equal_absmargin equal_relepsilon
+	for ITEM in equal greater less greater_equal less_equal equal_absmargin equal_relepsilon
 	do
 	    printf -v NAME  'mmux_%s_%s' "$STEM" "$ITEM"
 	    print_builtin_name "$NAME"
