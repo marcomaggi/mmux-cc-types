@@ -333,7 +333,7 @@ mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 __attribute__((__const__)) bool
 mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
 {
-  return (mmux_$1_abs(op1 - op2) <= (epsilon * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
+  return (mmux_$1_abs(op1 - op2) <= (mmux_$1_abs(epsilon) * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
 }
 bool
 mmux_$2_equal_absmargin (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t margin)
