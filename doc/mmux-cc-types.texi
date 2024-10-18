@@ -1364,514 +1364,86 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @chapter Type predicates
 
 
-@menu
-* predicates zero::           Zero number predicates.
-* predicates positive::       Positive number predicates.
-* predicates negative::       Negative number predicates.
-* predicates non-positive::   Non-positive number predicates.
-* predicates non-negative::   Non-negative number predicates.
-* predicates nan::            Not-a-number predicates.
-* predicates infinite::       Infinite number predicates.
-@end menu
-
-@c page
-@node predicates zero
-@section Zero number predicates
-
-
-@macro MmuxDefineTypePredicateZeroBuiltin{STEM}
+@macro MmuxDefineTypePredicates{STEM}
 @deftypefun bool mmux_\STEM\_is_zero (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is zero; otherwise return @cfalse{}.
+@deftypefunx bool mmux_\STEM\_is_positive (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_negative (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_non_positive (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_non_negative (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_infinite (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
+nan; otherwise return @cfalse{}.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineTypePredicateZeroBuiltin{pointer}
-
-@MmuxDefineTypePredicateZeroBuiltin{schar}
-@MmuxDefineTypePredicateZeroBuiltin{uchar}
-@MmuxDefineTypePredicateZeroBuiltin{sshort}
-@MmuxDefineTypePredicateZeroBuiltin{ushort}
-@MmuxDefineTypePredicateZeroBuiltin{sint}
-@MmuxDefineTypePredicateZeroBuiltin{uint}
-@MmuxDefineTypePredicateZeroBuiltin{slong}
-@MmuxDefineTypePredicateZeroBuiltin{ulong}
-@MmuxDefineTypePredicateZeroBuiltin{sllong}
-@MmuxDefineTypePredicateZeroBuiltin{ullong}
-@MmuxDefineTypePredicateZeroBuiltin{float}
-@MmuxDefineTypePredicateZeroBuiltin{double}
-@MmuxDefineTypePredicateZeroBuiltin{ldouble}
-
-@MmuxDefineTypePredicateZeroBuiltin{float32}
-@MmuxDefineTypePredicateZeroBuiltin{float64}
-@MmuxDefineTypePredicateZeroBuiltin{float128}
-
-@MmuxDefineTypePredicateZeroBuiltin{float32x}
-@MmuxDefineTypePredicateZeroBuiltin{float64x}
-@MmuxDefineTypePredicateZeroBuiltin{float128x}
-
-@MmuxDefineTypePredicateZeroBuiltin{decimal32}
-@MmuxDefineTypePredicateZeroBuiltin{decimal64}
-@MmuxDefineTypePredicateZeroBuiltin{decimal128}
-
-@MmuxDefineTypePredicateZeroBuiltin{complexf}
-@MmuxDefineTypePredicateZeroBuiltin{complexd}
-@MmuxDefineTypePredicateZeroBuiltin{complexld}
-
-@MmuxDefineTypePredicateZeroBuiltin{complexf32}
-@MmuxDefineTypePredicateZeroBuiltin{complexf64}
-@MmuxDefineTypePredicateZeroBuiltin{complexf128}
-
-@MmuxDefineTypePredicateZeroBuiltin{complexf32x}
-@MmuxDefineTypePredicateZeroBuiltin{complexf64x}
-@MmuxDefineTypePredicateZeroBuiltin{complexf128x}
-
-@MmuxDefineTypePredicateZeroBuiltin{complexd32}
-@MmuxDefineTypePredicateZeroBuiltin{complexd64}
-@MmuxDefineTypePredicateZeroBuiltin{complexd128}
-
-@MmuxDefineTypePredicateZeroBuiltin{sint8}
-@MmuxDefineTypePredicateZeroBuiltin{uint8}
-@MmuxDefineTypePredicateZeroBuiltin{sint16}
-@MmuxDefineTypePredicateZeroBuiltin{uint16}
-@MmuxDefineTypePredicateZeroBuiltin{sint32}
-@MmuxDefineTypePredicateZeroBuiltin{uint32}
-@MmuxDefineTypePredicateZeroBuiltin{sint64}
-@MmuxDefineTypePredicateZeroBuiltin{uint64}
-
-@MmuxDefineTypePredicateZeroBuiltin{ssize}
-@MmuxDefineTypePredicateZeroBuiltin{usize}
-@MmuxDefineTypePredicateZeroBuiltin{sintmax}
-@MmuxDefineTypePredicateZeroBuiltin{uintmax}
-@MmuxDefineTypePredicateZeroBuiltin{sintptr}
-@MmuxDefineTypePredicateZeroBuiltin{uintptr}
-@MmuxDefineTypePredicateZeroBuiltin{mode}
-@MmuxDefineTypePredicateZeroBuiltin{off}
-@MmuxDefineTypePredicateZeroBuiltin{pid}
-@MmuxDefineTypePredicateZeroBuiltin{uid}
-@MmuxDefineTypePredicateZeroBuiltin{gid}
-@MmuxDefineTypePredicateZeroBuiltin{wchar}
-@MmuxDefineTypePredicateZeroBuiltin{wint}
-
-@c page
-@node predicates positive
-@section Positive number predicates
-
-
-@macro MmuxDefineTypePredicatePositiveBuiltin{STEM}
-@deftypefun bool mmux_\STEM\_is_positive (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is positive; otherwise return @cfalse{}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypePredicatePositiveBuiltin{pointer}
-
-@MmuxDefineTypePredicatePositiveBuiltin{schar}
-@MmuxDefineTypePredicatePositiveBuiltin{uchar}
-@MmuxDefineTypePredicatePositiveBuiltin{sshort}
-@MmuxDefineTypePredicatePositiveBuiltin{ushort}
-@MmuxDefineTypePredicatePositiveBuiltin{sint}
-@MmuxDefineTypePredicatePositiveBuiltin{uint}
-@MmuxDefineTypePredicatePositiveBuiltin{slong}
-@MmuxDefineTypePredicatePositiveBuiltin{ulong}
-@MmuxDefineTypePredicatePositiveBuiltin{sllong}
-@MmuxDefineTypePredicatePositiveBuiltin{ullong}
-
-@MmuxDefineTypePredicatePositiveBuiltin{float}
-@MmuxDefineTypePredicatePositiveBuiltin{double}
-@MmuxDefineTypePredicatePositiveBuiltin{ldouble}
-
-@MmuxDefineTypePredicatePositiveBuiltin{float32}
-@MmuxDefineTypePredicatePositiveBuiltin{float64}
-@MmuxDefineTypePredicatePositiveBuiltin{float128}
-
-@MmuxDefineTypePredicatePositiveBuiltin{float32x}
-@MmuxDefineTypePredicatePositiveBuiltin{float64x}
-@MmuxDefineTypePredicatePositiveBuiltin{float128x}
-
-@MmuxDefineTypePredicatePositiveBuiltin{decimal32}
-@MmuxDefineTypePredicatePositiveBuiltin{decimal64}
-@MmuxDefineTypePredicatePositiveBuiltin{decimal128}
-
-@MmuxDefineTypePredicatePositiveBuiltin{sint8}
-@MmuxDefineTypePredicatePositiveBuiltin{uint8}
-@MmuxDefineTypePredicatePositiveBuiltin{sint16}
-@MmuxDefineTypePredicatePositiveBuiltin{uint16}
-@MmuxDefineTypePredicatePositiveBuiltin{sint32}
-@MmuxDefineTypePredicatePositiveBuiltin{uint32}
-@MmuxDefineTypePredicatePositiveBuiltin{sint64}
-@MmuxDefineTypePredicatePositiveBuiltin{uint64}
-
-@MmuxDefineTypePredicatePositiveBuiltin{ssize}
-@MmuxDefineTypePredicatePositiveBuiltin{usize}
-@MmuxDefineTypePredicatePositiveBuiltin{sintmax}
-@MmuxDefineTypePredicatePositiveBuiltin{uintmax}
-@MmuxDefineTypePredicatePositiveBuiltin{sintptr}
-@MmuxDefineTypePredicatePositiveBuiltin{uintptr}
-@MmuxDefineTypePredicatePositiveBuiltin{mode}
-@MmuxDefineTypePredicatePositiveBuiltin{off}
-@MmuxDefineTypePredicatePositiveBuiltin{pid}
-@MmuxDefineTypePredicatePositiveBuiltin{uid}
-@MmuxDefineTypePredicatePositiveBuiltin{gid}
-@MmuxDefineTypePredicatePositiveBuiltin{wchar}
-@MmuxDefineTypePredicatePositiveBuiltin{wint}
-
-@c page
-@node predicates negative
-@section Negative number predicates
-
-
-@macro MmuxDefineTypePredicateNegativeBuiltin{STEM}
-@deftypefun bool mmux_\STEM\_is_negative (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is negative; otherwise return @cfalse{}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypePredicateNegativeBuiltin{pointer}
-
-@MmuxDefineTypePredicateNegativeBuiltin{schar}
-@MmuxDefineTypePredicateNegativeBuiltin{uchar}
-@MmuxDefineTypePredicateNegativeBuiltin{sshort}
-@MmuxDefineTypePredicateNegativeBuiltin{ushort}
-@MmuxDefineTypePredicateNegativeBuiltin{sint}
-@MmuxDefineTypePredicateNegativeBuiltin{uint}
-@MmuxDefineTypePredicateNegativeBuiltin{slong}
-@MmuxDefineTypePredicateNegativeBuiltin{ulong}
-@MmuxDefineTypePredicateNegativeBuiltin{sllong}
-@MmuxDefineTypePredicateNegativeBuiltin{ullong}
-
-@MmuxDefineTypePredicateNegativeBuiltin{float}
-@MmuxDefineTypePredicateNegativeBuiltin{double}
-@MmuxDefineTypePredicateNegativeBuiltin{ldouble}
-
-@MmuxDefineTypePredicateNegativeBuiltin{float32}
-@MmuxDefineTypePredicateNegativeBuiltin{float64}
-@MmuxDefineTypePredicateNegativeBuiltin{float128}
-
-@MmuxDefineTypePredicateNegativeBuiltin{float32x}
-@MmuxDefineTypePredicateNegativeBuiltin{float64x}
-@MmuxDefineTypePredicateNegativeBuiltin{float128x}
-
-@MmuxDefineTypePredicateNegativeBuiltin{float32}
-@MmuxDefineTypePredicateNegativeBuiltin{float64}
-@MmuxDefineTypePredicateNegativeBuiltin{float128}
-
-@MmuxDefineTypePredicateNegativeBuiltin{float32x}
-@MmuxDefineTypePredicateNegativeBuiltin{float64x}
-@MmuxDefineTypePredicateNegativeBuiltin{float128x}
-
-@MmuxDefineTypePredicateNegativeBuiltin{decimal32}
-@MmuxDefineTypePredicateNegativeBuiltin{decimal64}
-@MmuxDefineTypePredicateNegativeBuiltin{decimal128}
-
-@MmuxDefineTypePredicateNegativeBuiltin{sint8}
-@MmuxDefineTypePredicateNegativeBuiltin{uint8}
-@MmuxDefineTypePredicateNegativeBuiltin{sint16}
-@MmuxDefineTypePredicateNegativeBuiltin{uint16}
-@MmuxDefineTypePredicateNegativeBuiltin{sint32}
-@MmuxDefineTypePredicateNegativeBuiltin{uint32}
-@MmuxDefineTypePredicateNegativeBuiltin{sint64}
-@MmuxDefineTypePredicateNegativeBuiltin{uint64}
-
-@MmuxDefineTypePredicateNegativeBuiltin{ssize}
-@MmuxDefineTypePredicateNegativeBuiltin{usize}
-@MmuxDefineTypePredicateNegativeBuiltin{sintmax}
-@MmuxDefineTypePredicateNegativeBuiltin{uintmax}
-@MmuxDefineTypePredicateNegativeBuiltin{sintptr}
-@MmuxDefineTypePredicateNegativeBuiltin{uintptr}
-@MmuxDefineTypePredicateNegativeBuiltin{mode}
-@MmuxDefineTypePredicateNegativeBuiltin{off}
-@MmuxDefineTypePredicateNegativeBuiltin{pid}
-@MmuxDefineTypePredicateNegativeBuiltin{uid}
-@MmuxDefineTypePredicateNegativeBuiltin{gid}
-@MmuxDefineTypePredicateNegativeBuiltin{wchar}
-@MmuxDefineTypePredicateNegativeBuiltin{wint}
-
-@c page
-@node predicates non-positive
-@section Non--positive number predicates
-
-
-@macro MmuxDefineTypePredicateNonPositiveBuiltin{STEM}
-@deftypefun bool mmux_\STEM\_is_non_positive (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is non--positive; otherwise return @cfalse{}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{pointer}
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{schar}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uchar}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sshort}
-@MmuxDefineTypePredicateNonPositiveBuiltin{ushort}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sint}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uint}
-@MmuxDefineTypePredicateNonPositiveBuiltin{slong}
-@MmuxDefineTypePredicateNonPositiveBuiltin{ulong}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sllong}
-@MmuxDefineTypePredicateNonPositiveBuiltin{ullong}
-@MmuxDefineTypePredicateNonPositiveBuiltin{float}
-@MmuxDefineTypePredicateNonPositiveBuiltin{double}
-@MmuxDefineTypePredicateNonPositiveBuiltin{ldouble}
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{float32}
-@MmuxDefineTypePredicateNonPositiveBuiltin{float64}
-@MmuxDefineTypePredicateNonPositiveBuiltin{float128}
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{float32x}
-@MmuxDefineTypePredicateNonPositiveBuiltin{float64x}
-@MmuxDefineTypePredicateNonPositiveBuiltin{float128x}
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{decimal32}
-@MmuxDefineTypePredicateNonPositiveBuiltin{decimal64}
-@MmuxDefineTypePredicateNonPositiveBuiltin{decimal128}
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{sint8}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uint8}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sint16}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uint16}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sint32}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uint32}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sint64}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uint64}
-
-@MmuxDefineTypePredicateNonPositiveBuiltin{ssize}
-@MmuxDefineTypePredicateNonPositiveBuiltin{usize}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sintmax}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uintmax}
-@MmuxDefineTypePredicateNonPositiveBuiltin{sintptr}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uintptr}
-@MmuxDefineTypePredicateNonPositiveBuiltin{mode}
-@MmuxDefineTypePredicateNonPositiveBuiltin{off}
-@MmuxDefineTypePredicateNonPositiveBuiltin{pid}
-@MmuxDefineTypePredicateNonPositiveBuiltin{uid}
-@MmuxDefineTypePredicateNonPositiveBuiltin{gid}
-@MmuxDefineTypePredicateNonPositiveBuiltin{wchar}
-@MmuxDefineTypePredicateNonPositiveBuiltin{wint}
-
-@c page
-@node predicates non-negative
-@section Non--negative number predicates
-
-
-@macro MmuxDefineTypePredicateNonNegativeBuiltin{STEM}
-@deftypefun bool mmux_\STEM\_is_non_negative (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is non--negative; otherwise return @cfalse{}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{pointer}
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{schar}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uchar}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sshort}
-@MmuxDefineTypePredicateNonNegativeBuiltin{ushort}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sint}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uint}
-@MmuxDefineTypePredicateNonNegativeBuiltin{slong}
-@MmuxDefineTypePredicateNonNegativeBuiltin{ulong}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sllong}
-@MmuxDefineTypePredicateNonNegativeBuiltin{ullong}
-@MmuxDefineTypePredicateNonNegativeBuiltin{float}
-@MmuxDefineTypePredicateNonNegativeBuiltin{double}
-@MmuxDefineTypePredicateNonNegativeBuiltin{ldouble}
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{float32}
-@MmuxDefineTypePredicateNonNegativeBuiltin{float64}
-@MmuxDefineTypePredicateNonNegativeBuiltin{float128}
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{float32x}
-@MmuxDefineTypePredicateNonNegativeBuiltin{float64x}
-@MmuxDefineTypePredicateNonNegativeBuiltin{float128x}
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{decimal32}
-@MmuxDefineTypePredicateNonNegativeBuiltin{decimal64}
-@MmuxDefineTypePredicateNonNegativeBuiltin{decimal128}
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{sint8}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uint8}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sint16}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uint16}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sint32}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uint32}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sint64}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uint64}
-
-@MmuxDefineTypePredicateNonNegativeBuiltin{ssize}
-@MmuxDefineTypePredicateNonNegativeBuiltin{usize}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sintmax}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uintmax}
-@MmuxDefineTypePredicateNonNegativeBuiltin{sintptr}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uintptr}
-@MmuxDefineTypePredicateNonNegativeBuiltin{mode}
-@MmuxDefineTypePredicateNonNegativeBuiltin{off}
-@MmuxDefineTypePredicateNonNegativeBuiltin{pid}
-@MmuxDefineTypePredicateNonNegativeBuiltin{uid}
-@MmuxDefineTypePredicateNonNegativeBuiltin{gid}
-@MmuxDefineTypePredicateNonNegativeBuiltin{wchar}
-@MmuxDefineTypePredicateNonNegativeBuiltin{wint}
-
-@c page
-@node predicates nan
-@section Not--a--number predicates
-
-
-@macro MmuxDefineTypePredicateNanBuiltin{STEM}
-@deftypefun bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is not--a--number; otherwise return @cfalse{}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypePredicateNanBuiltin{pointer}
-
-@MmuxDefineTypePredicateNanBuiltin{schar}
-@MmuxDefineTypePredicateNanBuiltin{uchar}
-@MmuxDefineTypePredicateNanBuiltin{sshort}
-@MmuxDefineTypePredicateNanBuiltin{ushort}
-@MmuxDefineTypePredicateNanBuiltin{sint}
-@MmuxDefineTypePredicateNanBuiltin{uint}
-@MmuxDefineTypePredicateNanBuiltin{slong}
-@MmuxDefineTypePredicateNanBuiltin{ulong}
-@MmuxDefineTypePredicateNanBuiltin{sllong}
-@MmuxDefineTypePredicateNanBuiltin{ullong}
-@MmuxDefineTypePredicateNanBuiltin{float}
-@MmuxDefineTypePredicateNanBuiltin{double}
-@MmuxDefineTypePredicateNanBuiltin{ldouble}
-
-@MmuxDefineTypePredicateNanBuiltin{float32}
-@MmuxDefineTypePredicateNanBuiltin{float64}
-@MmuxDefineTypePredicateNanBuiltin{float128}
-
-@MmuxDefineTypePredicateNanBuiltin{float32x}
-@MmuxDefineTypePredicateNanBuiltin{float64x}
-@MmuxDefineTypePredicateNanBuiltin{float128x}
-
-@MmuxDefineTypePredicateNanBuiltin{decimal32}
-@MmuxDefineTypePredicateNanBuiltin{decimal64}
-@MmuxDefineTypePredicateNanBuiltin{decimal128}
-
-@MmuxDefineTypePredicateNanBuiltin{complexf}
-@MmuxDefineTypePredicateNanBuiltin{complexd}
-@MmuxDefineTypePredicateNanBuiltin{complexld}
-
-@MmuxDefineTypePredicateNanBuiltin{complexf32}
-@MmuxDefineTypePredicateNanBuiltin{complexf64}
-@MmuxDefineTypePredicateNanBuiltin{complexf128}
-
-@MmuxDefineTypePredicateNanBuiltin{complexf32x}
-@MmuxDefineTypePredicateNanBuiltin{complexf64x}
-@MmuxDefineTypePredicateNanBuiltin{complexf128x}
-
-@MmuxDefineTypePredicateNanBuiltin{complexd32}
-@MmuxDefineTypePredicateNanBuiltin{complexd64}
-@MmuxDefineTypePredicateNanBuiltin{complexd128}
-
-@MmuxDefineTypePredicateNanBuiltin{sint8}
-@MmuxDefineTypePredicateNanBuiltin{uint8}
-@MmuxDefineTypePredicateNanBuiltin{sint16}
-@MmuxDefineTypePredicateNanBuiltin{uint16}
-@MmuxDefineTypePredicateNanBuiltin{sint32}
-@MmuxDefineTypePredicateNanBuiltin{uint32}
-@MmuxDefineTypePredicateNanBuiltin{sint64}
-@MmuxDefineTypePredicateNanBuiltin{uint64}
-
-@MmuxDefineTypePredicateNanBuiltin{ssize}
-@MmuxDefineTypePredicateNanBuiltin{usize}
-@MmuxDefineTypePredicateNanBuiltin{sintmax}
-@MmuxDefineTypePredicateNanBuiltin{uintmax}
-@MmuxDefineTypePredicateNanBuiltin{sintptr}
-@MmuxDefineTypePredicateNanBuiltin{uintptr}
-@MmuxDefineTypePredicateNanBuiltin{mode}
-@MmuxDefineTypePredicateNanBuiltin{off}
-@MmuxDefineTypePredicateNanBuiltin{pid}
-@MmuxDefineTypePredicateNanBuiltin{uid}
-@MmuxDefineTypePredicateNanBuiltin{gid}
-@MmuxDefineTypePredicateNanBuiltin{wchar}
-@MmuxDefineTypePredicateNanBuiltin{wint}
-
-@c page
-@node predicates infinite
-@section Infinite number predicates
-
-
-@macro MmuxDefineTypePredicateInfiniteBuiltin{STEM}
-@deftypefun bool mmux_\STEM\_is_infinite (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is infinite; otherwise return @cfalse{}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypePredicateInfiniteBuiltin{pointer}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{schar}
-@MmuxDefineTypePredicateInfiniteBuiltin{uchar}
-@MmuxDefineTypePredicateInfiniteBuiltin{sshort}
-@MmuxDefineTypePredicateInfiniteBuiltin{ushort}
-@MmuxDefineTypePredicateInfiniteBuiltin{sint}
-@MmuxDefineTypePredicateInfiniteBuiltin{uint}
-@MmuxDefineTypePredicateInfiniteBuiltin{slong}
-@MmuxDefineTypePredicateInfiniteBuiltin{ulong}
-@MmuxDefineTypePredicateInfiniteBuiltin{sllong}
-@MmuxDefineTypePredicateInfiniteBuiltin{ullong}
-@MmuxDefineTypePredicateInfiniteBuiltin{float}
-@MmuxDefineTypePredicateInfiniteBuiltin{double}
-@MmuxDefineTypePredicateInfiniteBuiltin{ldouble}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{float32}
-@MmuxDefineTypePredicateInfiniteBuiltin{float64}
-@MmuxDefineTypePredicateInfiniteBuiltin{float128}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{float32x}
-@MmuxDefineTypePredicateInfiniteBuiltin{float64x}
-@MmuxDefineTypePredicateInfiniteBuiltin{float128x}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{decimal32}
-@MmuxDefineTypePredicateInfiniteBuiltin{decimal64}
-@MmuxDefineTypePredicateInfiniteBuiltin{decimal128}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexd}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexld}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf32}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf64}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf128}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf32x}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf64x}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexf128x}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{complexd32}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexd64}
-@MmuxDefineTypePredicateInfiniteBuiltin{complexd128}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{sint8}
-@MmuxDefineTypePredicateInfiniteBuiltin{uint8}
-@MmuxDefineTypePredicateInfiniteBuiltin{sint16}
-@MmuxDefineTypePredicateInfiniteBuiltin{uint16}
-@MmuxDefineTypePredicateInfiniteBuiltin{sint32}
-@MmuxDefineTypePredicateInfiniteBuiltin{uint32}
-@MmuxDefineTypePredicateInfiniteBuiltin{sint64}
-@MmuxDefineTypePredicateInfiniteBuiltin{uint64}
-
-@MmuxDefineTypePredicateInfiniteBuiltin{ssize}
-@MmuxDefineTypePredicateInfiniteBuiltin{usize}
-@MmuxDefineTypePredicateInfiniteBuiltin{sintmax}
-@MmuxDefineTypePredicateInfiniteBuiltin{uintmax}
-@MmuxDefineTypePredicateInfiniteBuiltin{sintptr}
-@MmuxDefineTypePredicateInfiniteBuiltin{uintptr}
-@MmuxDefineTypePredicateInfiniteBuiltin{mode}
-@MmuxDefineTypePredicateInfiniteBuiltin{off}
-@MmuxDefineTypePredicateInfiniteBuiltin{pid}
-@MmuxDefineTypePredicateInfiniteBuiltin{uid}
-@MmuxDefineTypePredicateInfiniteBuiltin{gid}
-@MmuxDefineTypePredicateInfiniteBuiltin{wchar}
-@MmuxDefineTypePredicateInfiniteBuiltin{wint}
+@MmuxDefineTypePredicates{pointer}
+
+@MmuxDefineTypePredicates{schar}
+@MmuxDefineTypePredicates{uchar}
+@MmuxDefineTypePredicates{sshort}
+@MmuxDefineTypePredicates{ushort}
+@MmuxDefineTypePredicates{sint}
+@MmuxDefineTypePredicates{uint}
+@MmuxDefineTypePredicates{slong}
+@MmuxDefineTypePredicates{ulong}
+@MmuxDefineTypePredicates{sllong}
+@MmuxDefineTypePredicates{ullong}
+@MmuxDefineTypePredicates{float}
+@MmuxDefineTypePredicates{double}
+@MmuxDefineTypePredicates{ldouble}
+
+@MmuxDefineTypePredicates{float32}
+@MmuxDefineTypePredicates{float64}
+@MmuxDefineTypePredicates{float128}
+
+@MmuxDefineTypePredicates{float32x}
+@MmuxDefineTypePredicates{float64x}
+@MmuxDefineTypePredicates{float128x}
+
+@MmuxDefineTypePredicates{decimal32}
+@MmuxDefineTypePredicates{decimal64}
+@MmuxDefineTypePredicates{decimal128}
+
+@MmuxDefineTypePredicates{complexf}
+@MmuxDefineTypePredicates{complexd}
+@MmuxDefineTypePredicates{complexld}
+
+@MmuxDefineTypePredicates{complexf32}
+@MmuxDefineTypePredicates{complexf64}
+@MmuxDefineTypePredicates{complexf128}
+
+@MmuxDefineTypePredicates{complexf32x}
+@MmuxDefineTypePredicates{complexf64x}
+@MmuxDefineTypePredicates{complexf128x}
+
+@MmuxDefineTypePredicates{complexd32}
+@MmuxDefineTypePredicates{complexd64}
+@MmuxDefineTypePredicates{complexd128}
+
+@MmuxDefineTypePredicates{sint8}
+@MmuxDefineTypePredicates{uint8}
+@MmuxDefineTypePredicates{sint16}
+@MmuxDefineTypePredicates{uint16}
+@MmuxDefineTypePredicates{sint32}
+@MmuxDefineTypePredicates{uint32}
+@MmuxDefineTypePredicates{sint64}
+@MmuxDefineTypePredicates{uint64}
+
+@MmuxDefineTypePredicates{ssize}
+@MmuxDefineTypePredicates{usize}
+@MmuxDefineTypePredicates{sintmax}
+@MmuxDefineTypePredicates{uintmax}
+@MmuxDefineTypePredicates{sintptr}
+@MmuxDefineTypePredicates{uintptr}
+@MmuxDefineTypePredicates{mode}
+@MmuxDefineTypePredicates{off}
+@MmuxDefineTypePredicates{pid}
+@MmuxDefineTypePredicates{uid}
+@MmuxDefineTypePredicates{gid}
+@MmuxDefineTypePredicates{wchar}
+@MmuxDefineTypePredicates{wint}
 
 @c page
 @node comparison
@@ -1879,8 +1451,9 @@ Return @ctrue{} if @var{OP} is infinite; otherwise return @cfalse{}.
 
 
 @menu
-* comparison exact::          Exact comparison builtins.
-* comparison approximate::    Approximate comparison builtins.
+* comparison exact::            Exact comparison builtins.
+* comparison absmargin::        Absolute margin comparison criterion.
+* comparison relepsilon::       Relative epsilon comparison criterion.
 @end menu
 
 @c page
@@ -1888,60 +1461,17 @@ Return @ctrue{} if @var{OP} is infinite; otherwise return @cfalse{}.
 @section Exact comparison builtins
 
 
-@gnu{} Bash already implements comparison operations for integer values, and such implementation
-might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for completeness, the
-comparison operations are implemented for every supported data type.
-
-@itemize
-@item
-The @samp{equal} builtins return true if all the operands (of which only @varo{OP} is mandatory) are
-equal:
-
-@example
-@varo{OP} == @var{OP} == @dots{}
-@end example
-
-@item
-The @samp{greater} builtins return true if for all the operands (of which only @varo{OP} is
-mandatory):
-
-@example
-@varo{OP} > @var{OP} > @dots{}
-@end example
-
-@item
-The @samp{lesser} builtins return true if for all the operands (of which only @varo{OP} is
-mandatory):
-
-@example
-@varo{OP} < @var{OP} < @dots{}
-@end example
-
-@item
-The @samp{greater_equal} builtins return true if for all the operands (of which only @varo{OP} is
-mandatory):
-
-@example
-@varo{OP} >= @var{OP} >= @dots{}
-@end example
-
-@item
-The @samp{lesser_equal} builtins return true if for all the operands (of which only @varo{OP} is
-mandatory):
-
-@example
-@varo{OP} <= @var{OP} <= @dots{}
-@end example
-@end itemize
-
+The @cfunc{mmux_*_cmp} functions perform the usual comparison with ternary result.  The predicate
+functions return @ctrue{} if the operands are in the named relation; otherwise return @cfalse{}.
 
 @macro MmuxDefineTypeComparisonExactBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_\STEM\_greater @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_\STEM\_lesser @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_\STEM\_greater_equal @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_\STEM\_lesser_equal @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between values of type @objtype{\STEM\}.
+@deftypefun int mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_greater (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_lesser (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_greater_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_lesser_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+Comparison between @objtype{mmux_\STEM\_t} values.
 @end deftypefun
 
 @end macro
@@ -1949,8 +1479,8 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineTypeComparisonExactComplexBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_equal @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between values of type @objtype{\STEM\}.
+@deftypefun bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+Comparison between @objtype{mmux_\STEM\_t} values.
 @end deftypefun
 
 @end macro
@@ -2025,909 +1555,244 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonExactBuiltin{wint}
 
 @c page
-@node comparison approximate
-@section Approximate comparison builtins
+@node comparison absmargin
+@section Absolute margin comparison criterion
 
 
-@menu
-* comparison approximate absmargin::  Absolute margin criterion.
-* comparison approximate relepsilon:: Relative epsilon criterion.
-@end menu
+To compare real numbers with the criterion of the absolute margin means to verify the predicate
+between the real numbers @vari{OP}, @varii{OP}, @var{MARGIN}:
 
-@c page
-@node comparison approximate absmargin
-@subsection Absolute margin criterion
+@example
+abs(@vari{OP} - @varii{OP}) <= abs(@var{MARGIN})
+@end example
 
+@noindent
+while to compare complex numbers means to verify the predicate between the complex numbers
+@vari{OP}, @varii{OP}, @var{MARGIN}:
+
+@example
+abs(real(@vari{OP}) - real(@varii{OP})) <= abs(real(@var{MARGIN})) &&
+abs(imag(@vari{OP}) - imag(@varii{OP})) <= abs(imag(@var{MARGIN}))
+@end example
 
 To compare two floating--point numbers with the criterion of the absolute margin, we do:
 
 @example
-function doit () @{
-    declare -r ABSOLUTE_MARGIN_FLOAT='0.1'
+mmux_double_t   op1    = 1.2;
+mmux_double_t   op2    = 1.23;
+mmux_double_t   margin = 1e-6;
 
-    mmux_float_equal_absmargin '1.0' '1.02'       @result{} 0
-    mmux_float_equal_absmargin '1.0' '1.3'        @result{} 1
+if (mmux_double_equal_absmargin(op1, op2, margin)) @{
+  ... /* equal */
+@} else @{
+  ... /* not equal */
 @}
 @end example
 
 
-@deftypefun Builtin mmux_float_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_double_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_ldouble_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexld_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float128_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float32x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float64x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float128x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_decimal32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_decimal64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_decimal128_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf128_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf32x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf64x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf128x_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd32_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd64_equal_absmargin @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd128_equal_absmargin @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between operands of the named type; when the comparison predicate
-is satisfied: return true; otherwise return false.
-
-The argument @varo{OP} is the only mandatory one; when only this argument is present: the return
-value is true.
-
-When multiple operands are present: @varo{OP} is compared with all the other operands in turn.  When
-comparing real numbers, the predicate is:
-
-@example
-abs(@varo{OP} - @var{OP}) <= abs(@var{MARGIN})
-@end example
-
-@noindent
-when comparing complex numbers, the predicate is:
-
-@example
-abs(@varo{OP_RE} - @var{OP_RE}) <= abs(@var{MARGIN_RE}) &&
-abs(@varo{OP_IM} - @var{OP_IM}) <= abs(@var{MARGIN_IM})
-@end example
-
-@noindent
-where: @var{MARGIN} is the value read from the shell variable @env{ABSOLUTE_MARGIN_STEM};
-@code{STEM} is the stem of the numerical type; @varo{OP_RE}, @var{OP_RE}, @var{MARGIN_RE} are the
-real parts; @varo{OP_IM}, @var{OP_IM}, @var{MARGIN_IM} are the imaginary parts.
+@macro MmuxDefineAbsmarginFunc{STEM}
+@deftypefun bool mmux_\STEM\_equal_absmargin (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @vari{MARGIN})
+Compare the operands using the given margin.
 @end deftypefun
 
+@end macro
 
-@defvar ABSOLUTE_MARGIN_FLOAT
-@defvarx ABSOLUTE_MARGIN_DOUBLE
-@defvarx ABSOLUTE_MARGIN_LDOUBLE
-@defvarx ABSOLUTE_MARGIN_COMPLEXF
-@defvarx ABSOLUTE_MARGIN_COMPLEXD
-@defvarx ABSOLUTE_MARGIN_COMPLEXLD
-@defvarx ABSOLUTE_MARGIN_FLOAT32
-@defvarx ABSOLUTE_MARGIN_FLOAT64
-@defvarx ABSOLUTE_MARGIN_FLOAT128
-@defvarx ABSOLUTE_MARGIN_FLOAT32X
-@defvarx ABSOLUTE_MARGIN_FLOAT64X
-@defvarx ABSOLUTE_MARGIN_FLOAT128X
-@defvarx ABSOLUTE_MARGIN_DECIMAL32
-@defvarx ABSOLUTE_MARGIN_DECIMAL64
-@defvarx ABSOLUTE_MARGIN_DECIMAL128
-@defvarx ABSOLUTE_MARGIN_COMPLEXF32
-@defvarx ABSOLUTE_MARGIN_COMPLEXF64
-@defvarx ABSOLUTE_MARGIN_COMPLEXF128
-@defvarx ABSOLUTE_MARGIN_COMPLEXF32X
-@defvarx ABSOLUTE_MARGIN_COMPLEXF64X
-@defvarx ABSOLUTE_MARGIN_COMPLEXF128X
-@defvarx ABSOLUTE_MARGIN_COMPLEXD32
-@defvarx ABSOLUTE_MARGIN_COMPLEXD64
-@defvarx ABSOLUTE_MARGIN_COMPLEXD128
-Shell variables used to select the margin for the equality with absolute margin builtins.  Each
-variable is used to select a margin for the named numerical type.
 
-For real numbers: the variable holds a real number being the margin.
-
-For complex numbers: the variable holds a complex number; its real part is the margin for comparison
-of real parts; its imaginary part is the margin for comparison of imaginary parts.
-
-When a shell variable is not set: the default margin for real numbers is @samp{1e-6}; the default
-margin for complex numbers is @samp{(1e-6)+i*(1e-6)}.
-@end defvar
+@MmuxDefineAbsmarginFunc{double}
+@MmuxDefineAbsmarginFunc{ldouble}
+@MmuxDefineAbsmarginFunc{complexf}
+@MmuxDefineAbsmarginFunc{complexd}
+@MmuxDefineAbsmarginFunc{complexld}
+@MmuxDefineAbsmarginFunc{float32}
+@MmuxDefineAbsmarginFunc{float64}
+@MmuxDefineAbsmarginFunc{float128}
+@MmuxDefineAbsmarginFunc{float32x}
+@MmuxDefineAbsmarginFunc{float64x}
+@MmuxDefineAbsmarginFunc{float128x}
+@MmuxDefineAbsmarginFunc{decimal32}
+@MmuxDefineAbsmarginFunc{decimal64}
+@MmuxDefineAbsmarginFunc{decimal128}
+@MmuxDefineAbsmarginFunc{complexf32}
+@MmuxDefineAbsmarginFunc{complexf64}
+@MmuxDefineAbsmarginFunc{complexf128}
+@MmuxDefineAbsmarginFunc{complexf32x}
+@MmuxDefineAbsmarginFunc{complexf64x}
+@MmuxDefineAbsmarginFunc{complexf128x}
+@MmuxDefineAbsmarginFunc{complexd32}
+@MmuxDefineAbsmarginFunc{complexd64}
+@MmuxDefineAbsmarginFunc{complexd128}
 
 @c page
-@node comparison approximate relepsilon
-@subsection Relative epsilon criterion
+@node comparison relepsilon
+@section Relative epsilon comparison criterion
 
+
+To compare real numbers with the criterion of the relative epsilon means to verify the predicate
+between the real numbers @vari{OP}, @varii{OP}, @var{EPSILON}:
+
+@example
+abs(@vari{OP} - @varii{OP}) <= (abs(@var{EPSILON}) * max(abs(@vari{OP}), abs(@varii{OP})))
+@end example
+
+@noindent
+while to compare complex numbers means to verify the predicate between the complex numbers
+@vari{OP}, @varii{OP}, @var{EPSILON}:
+
+@example
+abs(real(@varo{OP}) - real(@var{OP})) <= (abs(real(@var{EPSILON})) * max(abs(real(@vari{OP})), real(abs(@varii{OP})))) &&
+abs(imag(@varo{OP}) - imag(@var{OP})) <= (abs(imag(@var{EPSILON})) * max(abs(imag(@vari{OP})), imag(abs(@varii{OP}))))
+@end example
 
 To compare two floating--point numbers with the criterion of the relative epsilon, we do:
 
 @example
-function doit () @{
-    declare -r RELATIVE_EPSILON_FLOAT='0.1'
+mmux_double_t   op1     = 1.2;
+mmux_double_t   op2     = 1.23;
+mmux_double_t   epsilon = 1e-6;
 
-    mmux_float_equal_relepsilon '1.0' '1.02'       @result{} 0
-    mmux_float_equal_relepsilon '1.0' '1.3'        @result{} 1
+if (mmux_double_equal_relepsilon(op1, op2, epsilon)) @{
+  ... /* equal */
+@} else @{
+  ... /* not equal */
 @}
 @end example
 
 
-@deftypefun Builtin mmux_float_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_double_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_ldouble_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexld_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_float128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_decimal32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_decimal64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_decimal128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf32x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf64x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexf128x_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd32_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd64_equal_relepsilon @varo{OP} @var{OP} @dots{}
-@deftypefunx Builtin mmux_complexd128_equal_relepsilon @varo{OP} @var{OP} @dots{}
-Perform the comparison operations between operands of the named type; when the comparison predicate
-is satisfied: return true; otherwise return false.
-
-The argument @varo{OP} is the only mandatory one; when only this argument is present: the return
-value is true.
-
-When multiple operands are present: @varo{OP} is compared with all the other operands in turn.  When
-comparing real numbers, the predicate is:
-
-@example
-abs(@varo{OP} - @var{OP}) <= (@var{EPSILON} * max(abs(@varo{OP}), abs(@var{OP})))
-@end example
-
-@noindent
-when comparing complex numbers, the predicate is:
-
-@example
-abs(@varo{OP_RE} - @var{OP_RE}) <= (@var{EPSILON_RE} * max(abs(@varo{OP_RE}), abs(@var{OP_RE}))) &&
-abs(@varo{OP_IM} - @var{OP_IM}) <= (@var{EPSILON_IM} * max(abs(@varo{OP_IM}), abs(@var{OP_IM})))
-@end example
-
-@noindent
-where: @var{EPSILON} is the value read from the shell variable @env{RELATIVE_EPSILON_STEM};
-@code{STEM} is the stem of the numerical type; @varo{OP_RE}, @var{OP_RE}, @var{EPSILON_RE} are the
-real parts; @varo{OP_IM}, @var{OP_IM}, @var{EPSILON_IM} are the imaginary parts.
+@macro MmuxDefineRelepsilonFunc{STEM}
+@deftypefun bool mmux_\STEM\_equal_relepsilon (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @vari{EPSILON})
+Compare the operands using the given epsilon.
 @end deftypefun
 
+@end macro
 
-@defvar RELATIVE_EPSILON_FLOAT
-@defvarx RELATIVE_EPSILON_DOUBLE
-@defvarx RELATIVE_EPSILON_LDOUBLE
-@defvarx RELATIVE_EPSILON_COMPLEXF
-@defvarx RELATIVE_EPSILON_COMPLEXD
-@defvarx RELATIVE_EPSILON_COMPLEXLD
-@defvarx RELATIVE_EPSILON_FLOAT32
-@defvarx RELATIVE_EPSILON_FLOAT64
-@defvarx RELATIVE_EPSILON_FLOAT128
-@defvarx RELATIVE_EPSILON_FLOAT32X
-@defvarx RELATIVE_EPSILON_FLOAT64X
-@defvarx RELATIVE_EPSILON_FLOAT128X
-@defvarx RELATIVE_EPSILON_DECIMAL32
-@defvarx RELATIVE_EPSILON_DECIMAL64
-@defvarx RELATIVE_EPSILON_DECIMAL128
-@defvarx RELATIVE_EPSILON_COMPLEXF32
-@defvarx RELATIVE_EPSILON_COMPLEXF64
-@defvarx RELATIVE_EPSILON_COMPLEXF128
-@defvarx RELATIVE_EPSILON_COMPLEXF32X
-@defvarx RELATIVE_EPSILON_COMPLEXF64X
-@defvarx RELATIVE_EPSILON_COMPLEXF128X
-@defvarx RELATIVE_EPSILON_COMPLEXD32
-@defvarx RELATIVE_EPSILON_COMPLEXD64
-@defvarx RELATIVE_EPSILON_COMPLEXD128
-Shell variables used to select the epsilon for the equality with relative epsilon.  Each variable is
-used to select an epsilon for the named numerical type.
 
-For real numbers: the variable holds a real number being the epsilon.
-
-For complex numbers: the variable holds a complex number; its real part is the epsilon for
-comparison of real parts; its imaginary part is the epsilon for comparison of imaginary parts.
-
-When a shell variable is not set: the default epsilon for real numbers is @samp{1e-6}; the default
-epsilon for complex numbers is @samp{(1e-6)+i*(1e-6)}.
-@end defvar
+@MmuxDefineRelepsilonFunc{double}
+@MmuxDefineRelepsilonFunc{ldouble}
+@MmuxDefineRelepsilonFunc{complexf}
+@MmuxDefineRelepsilonFunc{complexd}
+@MmuxDefineRelepsilonFunc{complexld}
+@MmuxDefineRelepsilonFunc{float32}
+@MmuxDefineRelepsilonFunc{float64}
+@MmuxDefineRelepsilonFunc{float128}
+@MmuxDefineRelepsilonFunc{float32x}
+@MmuxDefineRelepsilonFunc{float64x}
+@MmuxDefineRelepsilonFunc{float128x}
+@MmuxDefineRelepsilonFunc{decimal32}
+@MmuxDefineRelepsilonFunc{decimal64}
+@MmuxDefineRelepsilonFunc{decimal128}
+@MmuxDefineRelepsilonFunc{complexf32}
+@MmuxDefineRelepsilonFunc{complexf64}
+@MmuxDefineRelepsilonFunc{complexf128}
+@MmuxDefineRelepsilonFunc{complexf32x}
+@MmuxDefineRelepsilonFunc{complexf64x}
+@MmuxDefineRelepsilonFunc{complexf128x}
+@MmuxDefineRelepsilonFunc{complexd32}
+@MmuxDefineRelepsilonFunc{complexd64}
+@MmuxDefineRelepsilonFunc{complexd128}
 
 @c page
 @node arithmetics
 @chapter Arithmetics operation builtins
 
 
-@gnu{} Bash already implements arithmetics operations for integer values, and such implementation
-might be preferable to the builtins implemented by @value{PACKAGE}.  Anyway, for completeness, the
-bitwise operations are implemented for every supported data type.
-
-@menu
-* arithmetics addition::        Addition builtins.
-* arithmetics subtraction::     Subtraction builtins.
-* arithmetics multiplication::  Multiplication builtins.
-* arithmetics division::        Division builtins.
-* arithmetics remainder::       Remainder builtins.
-* arithmetics negation::        Negation builtins.
-* arithmetics inversion::       Inversion builtins.
-* arithmetics incrdecr::        Increment and decrement builtins.
-@end menu
-
-@c page
-@node arithmetics addition
-@section Addition builtins
-
-
-@deftypefun Builtin mmux_pointer_add @var{PTRVAR} @var{PTR} @var{DELTA}
-Perform the addition between @var{PTR} and @var{DELTA}, then store a string representation of the
-result in the variable @var{PTRVAR}; when successful: return true, otherwise return false and set
-the shell variable @code{ERRNO} to the string representation of an exact integer, itself
-representing an @code{errno} error code.
-
-The argument @var{PTR} must be the string representation of a pointer.
-
-The argument @var{DELTA} must be the string representation of an exact number, in the range of the C
-language type @objtype{ptrdiff_t}.
+@deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
+Perform the addition between @var{PTR} and @var{DELTA}, return the result.
 @end deftypefun
 
 
-For the following builtins, the addition operation is as follows:
-
-@example
-@var{ROP} = @varo{OP} + @var{OP} + @dots{}
-@end example
-
-@noindent
-and there can be any number of operands, depending on the capabilities of the underlying platform.
-
-All the builtins perform the addition between the operands @var{OP}, of which @varo{OP} is
-mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
-successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.
-
-The arguments @var{OP} must be string representations of values of the specific builtin type.  If
-only @varo{OP} is present: the result is @varo{OP} itself.
-
-
-@macro MmuxDefineTypeAdditionBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_add @var{ROPVAR} @varo{OP} @var{OP} @dots{}
-Perform the addition between values of type @code{\STEM\}.
+@macro MmuxDefineNotIntegerArithmeticsFunc{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_add (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sub (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_mul (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineTypeAdditionBuiltin{schar}
-@MmuxDefineTypeAdditionBuiltin{uchar}
-@MmuxDefineTypeAdditionBuiltin{sshort}
-@MmuxDefineTypeAdditionBuiltin{ushort}
-@MmuxDefineTypeAdditionBuiltin{sint}
-@MmuxDefineTypeAdditionBuiltin{uint}
-@MmuxDefineTypeAdditionBuiltin{slong}
-@MmuxDefineTypeAdditionBuiltin{ulong}
-@MmuxDefineTypeAdditionBuiltin{sllong}
-@MmuxDefineTypeAdditionBuiltin{ullong}
-@MmuxDefineTypeAdditionBuiltin{float}
-@MmuxDefineTypeAdditionBuiltin{double}
-@MmuxDefineTypeAdditionBuiltin{ldouble}
-
-@MmuxDefineTypeAdditionBuiltin{float32}
-@MmuxDefineTypeAdditionBuiltin{float64}
-@MmuxDefineTypeAdditionBuiltin{float128}
-
-@MmuxDefineTypeAdditionBuiltin{float32x}
-@MmuxDefineTypeAdditionBuiltin{float64x}
-@MmuxDefineTypeAdditionBuiltin{float128x}
-
-@MmuxDefineTypeAdditionBuiltin{decimal32}
-@MmuxDefineTypeAdditionBuiltin{decimal64}
-@MmuxDefineTypeAdditionBuiltin{decimal128}
-
-@MmuxDefineTypeAdditionBuiltin{complexf}
-@MmuxDefineTypeAdditionBuiltin{complexd}
-@MmuxDefineTypeAdditionBuiltin{complexld}
-
-@MmuxDefineTypeAdditionBuiltin{complexf32}
-@MmuxDefineTypeAdditionBuiltin{complexf64}
-@MmuxDefineTypeAdditionBuiltin{complexf128}
-
-@MmuxDefineTypeAdditionBuiltin{complexf32x}
-@MmuxDefineTypeAdditionBuiltin{complexf64x}
-@MmuxDefineTypeAdditionBuiltin{complexf128x}
-
-@MmuxDefineTypeAdditionBuiltin{complexd32}
-@MmuxDefineTypeAdditionBuiltin{complexd64}
-@MmuxDefineTypeAdditionBuiltin{complexd128}
-
-@MmuxDefineTypeAdditionBuiltin{sint8}
-@MmuxDefineTypeAdditionBuiltin{uint8}
-@MmuxDefineTypeAdditionBuiltin{sint16}
-@MmuxDefineTypeAdditionBuiltin{uint16}
-@MmuxDefineTypeAdditionBuiltin{sint32}
-@MmuxDefineTypeAdditionBuiltin{uint32}
-@MmuxDefineTypeAdditionBuiltin{sint64}
-@MmuxDefineTypeAdditionBuiltin{uint64}
-
-@MmuxDefineTypeAdditionBuiltin{ssize}
-@MmuxDefineTypeAdditionBuiltin{usize}
-@MmuxDefineTypeAdditionBuiltin{sintmax}
-@MmuxDefineTypeAdditionBuiltin{uintmax}
-@MmuxDefineTypeAdditionBuiltin{sintptr}
-@MmuxDefineTypeAdditionBuiltin{uintptr}
-@MmuxDefineTypeAdditionBuiltin{mode}
-@MmuxDefineTypeAdditionBuiltin{off}
-@MmuxDefineTypeAdditionBuiltin{pid}
-@MmuxDefineTypeAdditionBuiltin{uid}
-@MmuxDefineTypeAdditionBuiltin{gid}
-@MmuxDefineTypeAdditionBuiltin{wchar}
-@MmuxDefineTypeAdditionBuiltin{wint}
-
-@c page
-@node arithmetics subtraction
-@section Subtraction builtins
-
-
-For the following builtins, the subtraction operation is as follows:
-
-@example
-@var{ROP} = @varo{OP} - @var{OP} - @dots{}
-@end example
-
-@noindent
-and there can be any number of operands, depending on the capabilities of the underlying platform.
-
-All the builtins perform the subtraction between the operands @var{OP}, of which @varo{OP} is
-mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
-successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.
-
-The arguments @var{OP} must be string representations of values of the specific builtin type.  If
-only @varo{OP} is present: the result is @varo{OP} itself.
-
-
-@macro MmuxDefineTypeSubtractionBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_sub @var{ROPVAR} @varo{OP} @var{OP} @dots{}
-Perform the subtraction between values of type @code{\STEM\}.
+@macro MmuxDefineIntegerArithmeticsFunc{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_add (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sub (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_mul (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, remainder,
+increment, decrement.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineTypeSubtractionBuiltin{schar}
-@MmuxDefineTypeSubtractionBuiltin{uchar}
-@MmuxDefineTypeSubtractionBuiltin{sshort}
-@MmuxDefineTypeSubtractionBuiltin{ushort}
-@MmuxDefineTypeSubtractionBuiltin{sint}
-@MmuxDefineTypeSubtractionBuiltin{uint}
-@MmuxDefineTypeSubtractionBuiltin{slong}
-@MmuxDefineTypeSubtractionBuiltin{ulong}
-@MmuxDefineTypeSubtractionBuiltin{sllong}
-@MmuxDefineTypeSubtractionBuiltin{ullong}
-@MmuxDefineTypeSubtractionBuiltin{float}
-@MmuxDefineTypeSubtractionBuiltin{double}
-@MmuxDefineTypeSubtractionBuiltin{ldouble}
 
-@MmuxDefineTypeSubtractionBuiltin{float32}
-@MmuxDefineTypeSubtractionBuiltin{float64}
-@MmuxDefineTypeSubtractionBuiltin{float128}
-
-@MmuxDefineTypeSubtractionBuiltin{float32x}
-@MmuxDefineTypeSubtractionBuiltin{float64x}
-@MmuxDefineTypeSubtractionBuiltin{float128x}
-
-@MmuxDefineTypeSubtractionBuiltin{decimal32}
-@MmuxDefineTypeSubtractionBuiltin{decimal64}
-@MmuxDefineTypeSubtractionBuiltin{decimal128}
-
-@MmuxDefineTypeSubtractionBuiltin{complexf}
-@MmuxDefineTypeSubtractionBuiltin{complexd}
-@MmuxDefineTypeSubtractionBuiltin{complexld}
-
-@MmuxDefineTypeSubtractionBuiltin{complexf32}
-@MmuxDefineTypeSubtractionBuiltin{complexf64}
-@MmuxDefineTypeSubtractionBuiltin{complexf128}
-
-@MmuxDefineTypeSubtractionBuiltin{complexd32}
-@MmuxDefineTypeSubtractionBuiltin{complexd64}
-@MmuxDefineTypeSubtractionBuiltin{complexd128}
-
-@MmuxDefineTypeSubtractionBuiltin{sint8}
-@MmuxDefineTypeSubtractionBuiltin{uint8}
-@MmuxDefineTypeSubtractionBuiltin{sint16}
-@MmuxDefineTypeSubtractionBuiltin{uint16}
-@MmuxDefineTypeSubtractionBuiltin{sint32}
-@MmuxDefineTypeSubtractionBuiltin{uint32}
-@MmuxDefineTypeSubtractionBuiltin{sint64}
-@MmuxDefineTypeSubtractionBuiltin{uint64}
-
-@MmuxDefineTypeSubtractionBuiltin{ssize}
-@MmuxDefineTypeSubtractionBuiltin{usize}
-@MmuxDefineTypeSubtractionBuiltin{sintmax}
-@MmuxDefineTypeSubtractionBuiltin{uintmax}
-@MmuxDefineTypeSubtractionBuiltin{sintptr}
-@MmuxDefineTypeSubtractionBuiltin{uintptr}
-@MmuxDefineTypeSubtractionBuiltin{mode}
-@MmuxDefineTypeSubtractionBuiltin{off}
-@MmuxDefineTypeSubtractionBuiltin{pid}
-@MmuxDefineTypeSubtractionBuiltin{uid}
-@MmuxDefineTypeSubtractionBuiltin{gid}
-@MmuxDefineTypeSubtractionBuiltin{wchar}
-@MmuxDefineTypeSubtractionBuiltin{wint}
-
-@c page
-@node arithmetics multiplication
-@section Multiplication builtins
-
-
-For the following builtins, the multiplication operation is as follows:
-
-@example
-@var{ROP} = @varo{OP} * types @var{OP} * types @dots{}
-@end example
-
-@noindent
-and there can be any number of operands, depending on the capabilities of the underlying platform.
-
-All the builtins perform the multiplication between the operands @var{OP}, of which @varo{OP} is
-mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
-successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.
-
-The arguments @var{OP} must be string representations of values of the specific builtin type.  If
-only @varo{OP} is present: the result is @varo{OP} itself.
-
-
-@macro MmuxDefineTypeMultiplicationBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_mul @var{ROPVAR} @varo{OP} @var{OP} @dots{}
-Perform the multiplication between values of type @code{\STEM\}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypeMultiplicationBuiltin{schar}
-@MmuxDefineTypeMultiplicationBuiltin{uchar}
-@MmuxDefineTypeMultiplicationBuiltin{sshort}
-@MmuxDefineTypeMultiplicationBuiltin{ushort}
-@MmuxDefineTypeMultiplicationBuiltin{sint}
-@MmuxDefineTypeMultiplicationBuiltin{uint}
-@MmuxDefineTypeMultiplicationBuiltin{slong}
-@MmuxDefineTypeMultiplicationBuiltin{ulong}
-@MmuxDefineTypeMultiplicationBuiltin{sllong}
-@MmuxDefineTypeMultiplicationBuiltin{ullong}
-@MmuxDefineTypeMultiplicationBuiltin{float}
-@MmuxDefineTypeMultiplicationBuiltin{double}
-@MmuxDefineTypeMultiplicationBuiltin{ldouble}
-
-@MmuxDefineTypeMultiplicationBuiltin{float32}
-@MmuxDefineTypeMultiplicationBuiltin{float64}
-@MmuxDefineTypeMultiplicationBuiltin{float128}
-
-@MmuxDefineTypeMultiplicationBuiltin{float32x}
-@MmuxDefineTypeMultiplicationBuiltin{float64x}
-@MmuxDefineTypeMultiplicationBuiltin{float128x}
-
-@MmuxDefineTypeMultiplicationBuiltin{decimal32}
-@MmuxDefineTypeMultiplicationBuiltin{decimal64}
-@MmuxDefineTypeMultiplicationBuiltin{decimal128}
-
-@MmuxDefineTypeMultiplicationBuiltin{complexf}
-@MmuxDefineTypeMultiplicationBuiltin{complexd}
-@MmuxDefineTypeMultiplicationBuiltin{complexld}
-
-@MmuxDefineTypeMultiplicationBuiltin{complexf32}
-@MmuxDefineTypeMultiplicationBuiltin{complexf64}
-@MmuxDefineTypeMultiplicationBuiltin{complexf128}
-
-@MmuxDefineTypeMultiplicationBuiltin{complexd32}
-@MmuxDefineTypeMultiplicationBuiltin{complexd64}
-@MmuxDefineTypeMultiplicationBuiltin{complexd128}
-
-@MmuxDefineTypeMultiplicationBuiltin{sint8}
-@MmuxDefineTypeMultiplicationBuiltin{uint8}
-@MmuxDefineTypeMultiplicationBuiltin{sint16}
-@MmuxDefineTypeMultiplicationBuiltin{uint16}
-@MmuxDefineTypeMultiplicationBuiltin{sint32}
-@MmuxDefineTypeMultiplicationBuiltin{uint32}
-@MmuxDefineTypeMultiplicationBuiltin{sint64}
-@MmuxDefineTypeMultiplicationBuiltin{uint64}
-
-@MmuxDefineTypeMultiplicationBuiltin{ssize}
-@MmuxDefineTypeMultiplicationBuiltin{usize}
-@MmuxDefineTypeMultiplicationBuiltin{sintmax}
-@MmuxDefineTypeMultiplicationBuiltin{uintmax}
-@MmuxDefineTypeMultiplicationBuiltin{sintptr}
-@MmuxDefineTypeMultiplicationBuiltin{uintptr}
-@MmuxDefineTypeMultiplicationBuiltin{mode}
-@MmuxDefineTypeMultiplicationBuiltin{off}
-@MmuxDefineTypeMultiplicationBuiltin{pid}
-@MmuxDefineTypeMultiplicationBuiltin{uid}
-@MmuxDefineTypeMultiplicationBuiltin{gid}
-@MmuxDefineTypeMultiplicationBuiltin{wchar}
-@MmuxDefineTypeMultiplicationBuiltin{wint}
-
-@c page
-@node arithmetics division
-@section Division builtins
-
-
-For the following builtins, the division operation is as follows:
-
-@example
-@var{ROP} = @varo{OP} * types @var{OP} * types @dots{}
-@end example
-
-@noindent
-and there can be any number of operands, depending on the capabilities of the underlying platform.
-
-All the builtins perform the division between the operands @var{OP}, of which @varo{OP} is
-mandatory, then store a string representation of the result in the variable @var{ROPVAR}; when
-successful: return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.
-
-The arguments @var{OP} must be string representations of values of the specific builtin type.  If
-only @varo{OP} is present: the result is @varo{OP} itself.
-
-
-@macro MmuxDefineTypeDivisionBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_div @var{ROPVAR} @varo{OP} @var{OP} @dots{}
-Perform the division between values of type @code{\STEM\}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypeDivisionBuiltin{schar}
-@MmuxDefineTypeDivisionBuiltin{uchar}
-@MmuxDefineTypeDivisionBuiltin{sshort}
-@MmuxDefineTypeDivisionBuiltin{ushort}
-@MmuxDefineTypeDivisionBuiltin{sint}
-@MmuxDefineTypeDivisionBuiltin{uint}
-@MmuxDefineTypeDivisionBuiltin{slong}
-@MmuxDefineTypeDivisionBuiltin{ulong}
-@MmuxDefineTypeDivisionBuiltin{sllong}
-@MmuxDefineTypeDivisionBuiltin{ullong}
-@MmuxDefineTypeDivisionBuiltin{float}
-@MmuxDefineTypeDivisionBuiltin{double}
-@MmuxDefineTypeDivisionBuiltin{ldouble}
-
-@MmuxDefineTypeDivisionBuiltin{float32}
-@MmuxDefineTypeDivisionBuiltin{float64}
-@MmuxDefineTypeDivisionBuiltin{float128}
-
-@MmuxDefineTypeDivisionBuiltin{float32x}
-@MmuxDefineTypeDivisionBuiltin{float64x}
-@MmuxDefineTypeDivisionBuiltin{float128x}
-
-@MmuxDefineTypeDivisionBuiltin{decimal32}
-@MmuxDefineTypeDivisionBuiltin{decimal64}
-@MmuxDefineTypeDivisionBuiltin{decimal128}
-
-@MmuxDefineTypeDivisionBuiltin{complexf}
-@MmuxDefineTypeDivisionBuiltin{complexd}
-@MmuxDefineTypeDivisionBuiltin{complexld}
-
-@MmuxDefineTypeDivisionBuiltin{complexf32}
-@MmuxDefineTypeDivisionBuiltin{complexf64}
-@MmuxDefineTypeDivisionBuiltin{complexf128}
-
-@MmuxDefineTypeDivisionBuiltin{complexd32}
-@MmuxDefineTypeDivisionBuiltin{complexd64}
-@MmuxDefineTypeDivisionBuiltin{complexd128}
-
-@MmuxDefineTypeDivisionBuiltin{sint8}
-@MmuxDefineTypeDivisionBuiltin{uint8}
-@MmuxDefineTypeDivisionBuiltin{sint16}
-@MmuxDefineTypeDivisionBuiltin{uint16}
-@MmuxDefineTypeDivisionBuiltin{sint32}
-@MmuxDefineTypeDivisionBuiltin{uint32}
-@MmuxDefineTypeDivisionBuiltin{sint64}
-@MmuxDefineTypeDivisionBuiltin{uint64}
-
-@MmuxDefineTypeDivisionBuiltin{ssize}
-@MmuxDefineTypeDivisionBuiltin{usize}
-@MmuxDefineTypeDivisionBuiltin{sintmax}
-@MmuxDefineTypeDivisionBuiltin{uintmax}
-@MmuxDefineTypeDivisionBuiltin{sintptr}
-@MmuxDefineTypeDivisionBuiltin{uintptr}
-@MmuxDefineTypeDivisionBuiltin{mode}
-@MmuxDefineTypeDivisionBuiltin{off}
-@MmuxDefineTypeDivisionBuiltin{pid}
-@MmuxDefineTypeDivisionBuiltin{uid}
-@MmuxDefineTypeDivisionBuiltin{gid}
-@MmuxDefineTypeDivisionBuiltin{wchar}
-@MmuxDefineTypeDivisionBuiltin{wint}
-
-@c page
-@node arithmetics remainder
-@section Remainder builtins
-
-
-For the following builtins, the remainder operation is as follows:
-
-@example
-@var{ROP} = @vari{OP} % @varii{OP}
-@end example
-
-All the builtins perform the remainder between the operands @var{OP}, then store a string
-representation of the result in the variable @var{ROPVAR}; when successful: return true, otherwise
-return false and set the shell variable @code{ERRNO} to the string representation of an exact
-integer, itself representing an @code{errno} error code.
-
-The arguments @var{OP} must be string representations of values of the specific builtin type.
-
-
-@macro MmuxDefineTypeRemainderBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_mod @var{ROPVAR} @vari{OP} @varii{OP}
-Perform the remainder between values of type @code{\STEM\}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypeRemainderBuiltin{schar}
-@MmuxDefineTypeRemainderBuiltin{uchar}
-@MmuxDefineTypeRemainderBuiltin{sshort}
-@MmuxDefineTypeRemainderBuiltin{ushort}
-@MmuxDefineTypeRemainderBuiltin{sint}
-@MmuxDefineTypeRemainderBuiltin{uint}
-@MmuxDefineTypeRemainderBuiltin{slong}
-@MmuxDefineTypeRemainderBuiltin{ulong}
-@MmuxDefineTypeRemainderBuiltin{sllong}
-@MmuxDefineTypeRemainderBuiltin{ullong}
-
-@MmuxDefineTypeRemainderBuiltin{sint8}
-@MmuxDefineTypeRemainderBuiltin{uint8}
-@MmuxDefineTypeRemainderBuiltin{sint16}
-@MmuxDefineTypeRemainderBuiltin{uint16}
-@MmuxDefineTypeRemainderBuiltin{sint32}
-@MmuxDefineTypeRemainderBuiltin{uint32}
-@MmuxDefineTypeRemainderBuiltin{sint64}
-@MmuxDefineTypeRemainderBuiltin{uint64}
-
-@MmuxDefineTypeRemainderBuiltin{ssize}
-@MmuxDefineTypeRemainderBuiltin{usize}
-@MmuxDefineTypeRemainderBuiltin{sintmax}
-@MmuxDefineTypeRemainderBuiltin{uintmax}
-@MmuxDefineTypeRemainderBuiltin{sintptr}
-@MmuxDefineTypeRemainderBuiltin{uintptr}
-@MmuxDefineTypeRemainderBuiltin{mode}
-@MmuxDefineTypeRemainderBuiltin{off}
-@MmuxDefineTypeRemainderBuiltin{pid}
-@MmuxDefineTypeRemainderBuiltin{uid}
-@MmuxDefineTypeRemainderBuiltin{gid}
-@MmuxDefineTypeRemainderBuiltin{wchar}
-@MmuxDefineTypeRemainderBuiltin{wint}
-
-@c page
-@node arithmetics negation
-@section Negation builtins
-
-
-For the following builtins, the negation operation is as follows:
-
-@example
-@var{ROP} = - @var{OP}
-@end example
-
-All the builtins perform the negation of the operand @var{OP}, then store a string representation of
-the result in the variable @var{ROPVAR}; when successful: return true, otherwise return false and
-set the shell variable @code{ERRNO} to the string representation of an exact integer, itself
-representing an @code{errno} error code.
-
-The argument @var{OP} must be a string representation of a value of the specific builtin type.
-
-@strong{NOTE} The builtins are implemented also for unsigned integers, for which the operation is
-undefined; this will be fixed in the future, probably@dots{}
-
-
-@macro MmuxDefineTypeNegationBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_neg @var{ROPVAR} @var{OP}
-Perform the negation of a value of type @code{\STEM\}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypeNegationBuiltin{schar}
-@MmuxDefineTypeNegationBuiltin{uchar}
-@MmuxDefineTypeNegationBuiltin{sshort}
-@MmuxDefineTypeNegationBuiltin{ushort}
-@MmuxDefineTypeNegationBuiltin{sint}
-@MmuxDefineTypeNegationBuiltin{uint}
-@MmuxDefineTypeNegationBuiltin{slong}
-@MmuxDefineTypeNegationBuiltin{ulong}
-@MmuxDefineTypeNegationBuiltin{sllong}
-@MmuxDefineTypeNegationBuiltin{ullong}
-@MmuxDefineTypeNegationBuiltin{float}
-@MmuxDefineTypeNegationBuiltin{double}
-@MmuxDefineTypeNegationBuiltin{ldouble}
-
-@MmuxDefineTypeNegationBuiltin{float32}
-@MmuxDefineTypeNegationBuiltin{float64}
-@MmuxDefineTypeNegationBuiltin{float128}
-
-@MmuxDefineTypeNegationBuiltin{float32x}
-@MmuxDefineTypeNegationBuiltin{float64x}
-@MmuxDefineTypeNegationBuiltin{float128x}
-
-@MmuxDefineTypeNegationBuiltin{decimal32}
-@MmuxDefineTypeNegationBuiltin{decimal64}
-@MmuxDefineTypeNegationBuiltin{decimal128}
-
-@MmuxDefineTypeNegationBuiltin{complexf}
-@MmuxDefineTypeNegationBuiltin{complexd}
-@MmuxDefineTypeNegationBuiltin{complexld}
-
-@MmuxDefineTypeNegationBuiltin{complexf32}
-@MmuxDefineTypeNegationBuiltin{complexf64}
-@MmuxDefineTypeNegationBuiltin{complexf128}
-
-@MmuxDefineTypeNegationBuiltin{complexd32}
-@MmuxDefineTypeNegationBuiltin{complexd64}
-@MmuxDefineTypeNegationBuiltin{complexd128}
-
-@MmuxDefineTypeNegationBuiltin{sint8}
-@MmuxDefineTypeNegationBuiltin{uint8}
-@MmuxDefineTypeNegationBuiltin{sint16}
-@MmuxDefineTypeNegationBuiltin{uint16}
-@MmuxDefineTypeNegationBuiltin{sint32}
-@MmuxDefineTypeNegationBuiltin{uint32}
-@MmuxDefineTypeNegationBuiltin{sint64}
-@MmuxDefineTypeNegationBuiltin{uint64}
-
-@MmuxDefineTypeNegationBuiltin{ssize}
-@MmuxDefineTypeNegationBuiltin{usize}
-@MmuxDefineTypeNegationBuiltin{sintmax}
-@MmuxDefineTypeNegationBuiltin{uintmax}
-@MmuxDefineTypeNegationBuiltin{sintptr}
-@MmuxDefineTypeNegationBuiltin{uintptr}
-@MmuxDefineTypeNegationBuiltin{mode}
-@MmuxDefineTypeNegationBuiltin{off}
-@MmuxDefineTypeNegationBuiltin{pid}
-@MmuxDefineTypeNegationBuiltin{uid}
-@MmuxDefineTypeNegationBuiltin{gid}
-@MmuxDefineTypeNegationBuiltin{wchar}
-@MmuxDefineTypeNegationBuiltin{wint}
-
-@c page
-@node arithmetics inversion
-@section Inversion builtins
-
-
-For the following builtins, the inversion operation is as follows:
-
-@example
-@var{ROP} = 1 / @var{OP}
-@end example
-
-All the builtins perform the inversion of the operand @var{OP}, then store a string representation of
-the result in the variable @var{ROPVAR}; when successful: return true, otherwise return false and
-set the shell variable @code{ERRNO} to the string representation of an exact integer, itself
-representing an @code{errno} error code.
-
-The argument @var{OP} must be a string representation of a value of the specific builtin type.
-
-
-@macro MmuxDefineTypeInversionBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_inv @var{ROPVAR} @var{OP}
-Perform the inversion of a value of type @code{\STEM\}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypeInversionBuiltin{schar}
-@MmuxDefineTypeInversionBuiltin{uchar}
-@MmuxDefineTypeInversionBuiltin{sshort}
-@MmuxDefineTypeInversionBuiltin{ushort}
-@MmuxDefineTypeInversionBuiltin{sint}
-@MmuxDefineTypeInversionBuiltin{uint}
-@MmuxDefineTypeInversionBuiltin{slong}
-@MmuxDefineTypeInversionBuiltin{ulong}
-@MmuxDefineTypeInversionBuiltin{sllong}
-@MmuxDefineTypeInversionBuiltin{ullong}
-@MmuxDefineTypeInversionBuiltin{float}
-@MmuxDefineTypeInversionBuiltin{double}
-@MmuxDefineTypeInversionBuiltin{ldouble}
-
-@MmuxDefineTypeInversionBuiltin{float32}
-@MmuxDefineTypeInversionBuiltin{float64}
-@MmuxDefineTypeInversionBuiltin{float128}
-
-@MmuxDefineTypeInversionBuiltin{float32x}
-@MmuxDefineTypeInversionBuiltin{float64x}
-@MmuxDefineTypeInversionBuiltin{float128x}
-
-@MmuxDefineTypeInversionBuiltin{decimal32}
-@MmuxDefineTypeInversionBuiltin{decimal64}
-@MmuxDefineTypeInversionBuiltin{decimal128}
-
-@MmuxDefineTypeInversionBuiltin{complexf}
-@MmuxDefineTypeInversionBuiltin{complexd}
-@MmuxDefineTypeInversionBuiltin{complexld}
-
-@MmuxDefineTypeInversionBuiltin{complexf32}
-@MmuxDefineTypeInversionBuiltin{complexf64}
-@MmuxDefineTypeInversionBuiltin{complexf128}
-
-@MmuxDefineTypeInversionBuiltin{complexd32}
-@MmuxDefineTypeInversionBuiltin{complexd64}
-@MmuxDefineTypeInversionBuiltin{complexd128}
-
-@MmuxDefineTypeInversionBuiltin{sint8}
-@MmuxDefineTypeInversionBuiltin{uint8}
-@MmuxDefineTypeInversionBuiltin{sint16}
-@MmuxDefineTypeInversionBuiltin{uint16}
-@MmuxDefineTypeInversionBuiltin{sint32}
-@MmuxDefineTypeInversionBuiltin{uint32}
-@MmuxDefineTypeInversionBuiltin{sint64}
-@MmuxDefineTypeInversionBuiltin{uint64}
-
-@MmuxDefineTypeInversionBuiltin{ssize}
-@MmuxDefineTypeInversionBuiltin{usize}
-@MmuxDefineTypeInversionBuiltin{sintmax}
-@MmuxDefineTypeInversionBuiltin{uintmax}
-@MmuxDefineTypeInversionBuiltin{sintptr}
-@MmuxDefineTypeInversionBuiltin{uintptr}
-@MmuxDefineTypeInversionBuiltin{mode}
-@MmuxDefineTypeInversionBuiltin{off}
-@MmuxDefineTypeInversionBuiltin{pid}
-@MmuxDefineTypeInversionBuiltin{uid}
-@MmuxDefineTypeInversionBuiltin{gid}
-@MmuxDefineTypeInversionBuiltin{wchar}
-@MmuxDefineTypeInversionBuiltin{wint}
-
-@c page
-@node arithmetics incrdecr
-@section Increment and decrement builtins
-
-
-@macro MmuxDefineTypeIncrdecrBuiltin{STEM}
-@deftypefun Builtin mmux_\STEM\_incr @var{ROPVAR} @var{OP}
-@deftypefunx Builtin mmux_\STEM\_decr @var{ROPVAR} @var{OP}
-Increment or decrement @var{OP}, store the result in the shell variable @var{ROPVAR}.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineTypeIncrdecrBuiltin{schar}
-@MmuxDefineTypeIncrdecrBuiltin{uchar}
-@MmuxDefineTypeIncrdecrBuiltin{sshort}
-@MmuxDefineTypeIncrdecrBuiltin{ushort}
-@MmuxDefineTypeIncrdecrBuiltin{sint}
-@MmuxDefineTypeIncrdecrBuiltin{uint}
-@MmuxDefineTypeIncrdecrBuiltin{slong}
-@MmuxDefineTypeIncrdecrBuiltin{ulong}
-@MmuxDefineTypeIncrdecrBuiltin{sllong}
-@MmuxDefineTypeIncrdecrBuiltin{ullong}
-
-@MmuxDefineTypeIncrdecrBuiltin{sint8}
-@MmuxDefineTypeIncrdecrBuiltin{uint8}
-@MmuxDefineTypeIncrdecrBuiltin{sint16}
-@MmuxDefineTypeIncrdecrBuiltin{uint16}
-@MmuxDefineTypeIncrdecrBuiltin{sint32}
-@MmuxDefineTypeIncrdecrBuiltin{uint32}
-@MmuxDefineTypeIncrdecrBuiltin{sint64}
-@MmuxDefineTypeIncrdecrBuiltin{uint64}
-
-@MmuxDefineTypeIncrdecrBuiltin{ssize}
-@MmuxDefineTypeIncrdecrBuiltin{usize}
-@MmuxDefineTypeIncrdecrBuiltin{sintmax}
-@MmuxDefineTypeIncrdecrBuiltin{uintmax}
-@MmuxDefineTypeIncrdecrBuiltin{sintptr}
-@MmuxDefineTypeIncrdecrBuiltin{uintptr}
-@MmuxDefineTypeIncrdecrBuiltin{mode}
-@MmuxDefineTypeIncrdecrBuiltin{off}
-@MmuxDefineTypeIncrdecrBuiltin{pid}
-@MmuxDefineTypeIncrdecrBuiltin{uid}
-@MmuxDefineTypeIncrdecrBuiltin{gid}
-@MmuxDefineTypeIncrdecrBuiltin{wchar}
-@MmuxDefineTypeIncrdecrBuiltin{wint}
+@MmuxDefineIntegerArithmeticsFunc{schar}
+@MmuxDefineIntegerArithmeticsFunc{uchar}
+@MmuxDefineIntegerArithmeticsFunc{sshort}
+@MmuxDefineIntegerArithmeticsFunc{ushort}
+@MmuxDefineIntegerArithmeticsFunc{sint}
+@MmuxDefineIntegerArithmeticsFunc{uint}
+@MmuxDefineIntegerArithmeticsFunc{slong}
+@MmuxDefineIntegerArithmeticsFunc{ulong}
+@MmuxDefineIntegerArithmeticsFunc{sllong}
+@MmuxDefineIntegerArithmeticsFunc{ullong}
+@MmuxDefineNotIntegerArithmeticsFunc{float}
+@MmuxDefineNotIntegerArithmeticsFunc{double}
+@MmuxDefineNotIntegerArithmeticsFunc{ldouble}
+
+@MmuxDefineNotIntegerArithmeticsFunc{float32}
+@MmuxDefineNotIntegerArithmeticsFunc{float64}
+@MmuxDefineNotIntegerArithmeticsFunc{float128}
+
+@MmuxDefineNotIntegerArithmeticsFunc{float32x}
+@MmuxDefineNotIntegerArithmeticsFunc{float64x}
+@MmuxDefineNotIntegerArithmeticsFunc{float128x}
+
+@MmuxDefineNotIntegerArithmeticsFunc{decimal32}
+@MmuxDefineNotIntegerArithmeticsFunc{decimal64}
+@MmuxDefineNotIntegerArithmeticsFunc{decimal128}
+
+@MmuxDefineNotIntegerArithmeticsFunc{complexf}
+@MmuxDefineNotIntegerArithmeticsFunc{complexd}
+@MmuxDefineNotIntegerArithmeticsFunc{complexld}
+
+@MmuxDefineNotIntegerArithmeticsFunc{complexf32}
+@MmuxDefineNotIntegerArithmeticsFunc{complexf64}
+@MmuxDefineNotIntegerArithmeticsFunc{complexf128}
+
+@MmuxDefineNotIntegerArithmeticsFunc{complexf32x}
+@MmuxDefineNotIntegerArithmeticsFunc{complexf64x}
+@MmuxDefineNotIntegerArithmeticsFunc{complexf128x}
+
+@MmuxDefineNotIntegerArithmeticsFunc{complexd32}
+@MmuxDefineNotIntegerArithmeticsFunc{complexd64}
+@MmuxDefineNotIntegerArithmeticsFunc{complexd128}
+
+@MmuxDefineIntegerArithmeticsFunc{sint8}
+@MmuxDefineIntegerArithmeticsFunc{uint8}
+@MmuxDefineIntegerArithmeticsFunc{sint16}
+@MmuxDefineIntegerArithmeticsFunc{uint16}
+@MmuxDefineIntegerArithmeticsFunc{sint32}
+@MmuxDefineIntegerArithmeticsFunc{uint32}
+@MmuxDefineIntegerArithmeticsFunc{sint64}
+@MmuxDefineIntegerArithmeticsFunc{uint64}
+
+@MmuxDefineIntegerArithmeticsFunc{ssize}
+@MmuxDefineIntegerArithmeticsFunc{usize}
+@MmuxDefineIntegerArithmeticsFunc{sintmax}
+@MmuxDefineIntegerArithmeticsFunc{uintmax}
+@MmuxDefineIntegerArithmeticsFunc{sintptr}
+@MmuxDefineIntegerArithmeticsFunc{uintptr}
+@MmuxDefineIntegerArithmeticsFunc{mode}
+@MmuxDefineIntegerArithmeticsFunc{off}
+@MmuxDefineIntegerArithmeticsFunc{pid}
+@MmuxDefineIntegerArithmeticsFunc{uid}
+@MmuxDefineIntegerArithmeticsFunc{gid}
+@MmuxDefineIntegerArithmeticsFunc{wchar}
+@MmuxDefineIntegerArithmeticsFunc{wint}
 
 @c page
 @node mathematics
