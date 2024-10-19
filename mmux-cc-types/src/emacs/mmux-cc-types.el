@@ -33,7 +33,7 @@
 (defface mmux-cc-types-function-face
   `((t (:foreground "spring green")))
   "Shell mode custom face used for MMUX CC Types functions."
-  :group 'sh
+  :group 'c
   :group 'font-lock-faces)
 
 (defconst mmux-cc-types-function-face
