@@ -884,6 +884,43 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
+ ** Mathematicsl constants.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG10E	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LN2	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LN10	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI_2	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI_4	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_1_PI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_PI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT2	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT1_2	(void) __attribute__((__const__));
+]]])]]])
+
+DEFINE_MATH_CONSTANTS_PROTOS(float)
+DEFINE_MATH_CONSTANTS_PROTOS(double)
+DEFINE_MATH_CONSTANTS_PROTOS(ldouble,		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_MATH_CONSTANTS_PROTOS(float32,		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_MATH_CONSTANTS_PROTOS(float64,		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_MATH_CONSTANTS_PROTOS(float128,		[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_MATH_CONSTANTS_PROTOS(float32x,		[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_MATH_CONSTANTS_PROTOS(float64x,		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_MATH_CONSTANTS_PROTOS(float128x,		[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_MATH_CONSTANTS_PROTOS(decimal32,		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_MATH_CONSTANTS_PROTOS(decimal64,		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_MATH_CONSTANTS_PROTOS(decimal128,	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+
+
+/** --------------------------------------------------------------------
  ** Mathematics C type functions.
  ** ----------------------------------------------------------------- */
 

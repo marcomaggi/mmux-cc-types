@@ -226,6 +226,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-predicates.c.m4		\
 	src/mmux-cc-types.h.m4				\
 	src/mmux-cc-types-internals.h.m4		\
+	src/mmux-cc-types-constants.c.m4		\
 	src/mmux-cc-types-core.c.m4			\
 	src/mmux-cc-types-parsers.c.m4			\
 	src/mmux-cc-types-sprinters.c.m4
@@ -248,6 +249,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprinters.c
@@ -295,6 +297,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprinters.c

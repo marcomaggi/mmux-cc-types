@@ -156,6 +156,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * typedefs::                    Type definitions.
 * sizeof::                      Type sizes.
 * limits::                      Type maximum and minimum values.
+* constants::                   Functions returning constant values.
 * stringrep::                   String representations of supported types.
 * complex::                     Basic complex number operations.
 * predicates::                  Type predicates.
@@ -908,6 +909,54 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{gid}
 @MmuxDefineCFunctionMaximum{wchar}
 @MmuxDefineCFunctionMaximum{wint}
+
+@c page
+@node constants
+@chapter Functions returning constant values
+
+
+@macro MmuxDefineConstantFunction{STEM,FUNCSTEM,EXPR}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_constant_\FUNCSTEM\ (void)
+Return a constant value corresponding to @math{\EXPR\}.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineConstantFunctions{STEM}
+@MmuxDefineConstantFunction{\STEM\,E,e}
+@MmuxDefineConstantFunction{\STEM\,LOG2E,log_2(e)}
+@MmuxDefineConstantFunction{\STEM\,LOG10E,log_10(e)}
+@MmuxDefineConstantFunction{\STEM\,LN2,ln(2)}
+@MmuxDefineConstantFunction{\STEM\,LN10,ln(10)}
+@MmuxDefineConstantFunction{\STEM\,PI,pi}
+@MmuxDefineConstantFunction{\STEM\,PI_2,pi/2}
+@MmuxDefineConstantFunction{\STEM\,PI_4,pi/4}
+@MmuxDefineConstantFunction{\STEM\,1_PI,1/pi}
+@MmuxDefineConstantFunction{\STEM\,2_PI,2/pi}
+@MmuxDefineConstantFunction{\STEM\,2_SQRTPI,2/sqrt(pi)}
+@MmuxDefineConstantFunction{\STEM\,SQRT2,sqrt(2)}
+@MmuxDefineConstantFunction{\STEM\,SQRT1_2,sqrt(1/2)}
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineConstantFunctions{float}
+@MmuxDefineConstantFunctions{double}
+@MmuxDefineConstantFunctions{ldouble}
+
+@MmuxDefineConstantFunctions{float32}
+@MmuxDefineConstantFunctions{float64}
+@MmuxDefineConstantFunctions{float128}
+
+@MmuxDefineConstantFunctions{float32x}
+@MmuxDefineConstantFunctions{float64x}
+@MmuxDefineConstantFunctions{float128x}
+
+@MmuxDefineConstantFunctions{decimal32}
+@MmuxDefineConstantFunctions{decimal64}
+@MmuxDefineConstantFunctions{decimal128}
 
 @c page
 @node stringrep

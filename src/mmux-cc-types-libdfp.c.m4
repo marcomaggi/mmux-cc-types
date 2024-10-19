@@ -109,6 +109,23 @@ MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
 #define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
 ]]])
 
+/* These, and only these, are already defined in "dfp/math.h". */
+#if 0
+#define M_Edl		2.7182818284590452353602874713526625DL  /* e */
+#define M_LOG2Edl	1.4426950408889634073599246810018921DL  /* log_2 e */
+#define M_LOG10Edl	0.4342944819032518276511289189166051DL  /* log_10 e */
+#define M_LN2dl		0.6931471805599453094172321214581766DL  /* log_e 2 */
+#define M_LN10dl	2.3025850929940456840179914546843642DL  /* log_e 10 */
+#define M_PIdl		3.1415926535897932384626433832795029DL  /* pi */
+#define M_PI_2dl	1.5707963267948966192313216916397514DL  /* pi/2 */
+#define M_PI_4dl	0.7853981633974483096156608458198757DL  /* pi/4 */
+#define M_1_PIdl	0.3183098861837906715377675267450287DL  /* 1/pi */
+#define M_2_PIdl	0.6366197723675813430755350534900574DL  /* 2/pi */
+#define M_2_SQRTPIdl	1.1283791670955125738961589031215452DL  /* 2/sqrt(pi) */
+#define M_SQRT2dl	1.4142135623730950488016887242096981DL  /* sqrt(2) */
+#define M_SQRT1_2dl	0.7071067811865475244008443621048490DL  /* 1/sqrt(2) */
+#endif
+
 
 /** --------------------------------------------------------------------
  ** Type definitions.
@@ -473,10 +490,64 @@ mmux_exp10d128 (mmux_decimal128_t op)
 ]]])
 
 
+/** --------------------------------------------------------------------
+ ** Mathematicsl constants.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+__extension__ mmux_decimal128_t mmux_decimal128_constant_E	(void) { return M_Edl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_LOG2E	(void) { return M_LOG2Edl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_LOG10E	(void) { return M_LOG10Edl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_LN2	(void) { return M_LN2dl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_LN10	(void) { return M_LN10dl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_PI	(void) { return M_PIdl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_PI_2	(void) { return M_PI_2dl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_PI_4	(void) { return M_PI_4dl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_1_PI	(void) { return M_1_PIdl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_2_PI	(void) { return M_2_PIdl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_2_SQRTPI (void) { return M_2_SQRTPIdl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_SQRT2	(void) { return M_SQRT2dl; }
+__extension__ mmux_decimal128_t mmux_decimal128_constant_SQRT1_2(void) { return M_SQRT1_2dl; }
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+__extension__ mmux_decimal32_t mmux_decimal32_constant_E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_E(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_LOG2E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LOG2E(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_LOG10E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LOG10E(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_LN2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LN2(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_LN10	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LN10(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_PI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_PI(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_PI_2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_PI_2(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_PI_4	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_PI_4(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_1_PI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_1_PI(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_2_PI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_2_PI(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_2_SQRTPI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_2_SQRTPI(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_SQRT2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_SQRT2(); }
+__extension__ mmux_decimal32_t mmux_decimal32_constant_SQRT1_2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_SQRT1_2(); }
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+__extension__ mmux_decimal64_t mmux_decimal64_constant_E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_E(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_LOG2E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LOG2E(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_LOG10E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LOG10E(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_LN2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LN2(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_LN10	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LN10(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_PI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_PI(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_PI_2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_PI_2(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_PI_4	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_PI_4(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_1_PI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_1_PI(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_2_PI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_2_PI(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_2_SQRTPI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_2_SQRTPI(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_SQRT2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_SQRT2(); }
+__extension__ mmux_decimal64_t mmux_decimal64_constant_SQRT1_2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_SQRT1_2(); }
+]]])
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics builtins.
+ ** ----------------------------------------------------------------- */
+
 m4_divert(-1)m4_dnl
-m4_dnl --------------------------------------------------------------------
-m4_dnl Orgy of math macros.
-m4_dnl ----------------------------------------------------------------- */
 
 m4_dnl $1 - type stem
 m4_dnl $2 - builtin tail identifier
@@ -512,10 +583,8 @@ mmux_$1_t mmux_$1_$2 (int N, mmux_$1_t op) { return $3(N, op); }
 ]]])]]])]]])
 
 m4_divert(0)m4_dnl
-
-/** --------------------------------------------------------------------
- ** Mathematics builtins.
- ** ----------------------------------------------------------------- */
+
+m4_dnl ----------------------------------------------------------------------
 
 m4_dnl  $1 - type stem
 m4_dnl  $2 - type parser macro
