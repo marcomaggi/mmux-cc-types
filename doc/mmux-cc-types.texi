@@ -152,6 +152,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * version::                     Version functions.
 * initialisation::              Library initialisation.
 * config::                      How to configure code to link the library.
+* literals::                    Generating literal constants.
 * typedefs::                    Type definitions.
 * sizeof::                      Type sizes.
 * limits::                      Type maximum and minimum values.
@@ -535,6 +536,35 @@ type is supported.
 @MmuxDefineCppSymbolHaveType{COMPLEXD32}
 @MmuxDefineCppSymbolHaveType{COMPLEXD64}
 @MmuxDefineCppSymbolHaveType{COMPLEXD128}
+
+@c page
+@node literals
+@chapter Generating literal constants
+
+
+When a type is supported by @value{PACKAGE}: the corresponding C preprocessor macro generating
+literals is defined.  We have to remember that the argument of these macros must be a
+floating--point number specification, integer numbers will cause a compilation error.
+
+@macro MmuxDefineFlonumLiteralMacro{STEM,TYPEDEF,SUFFIX}
+@deffn {Preprocessor Macro} MMUX_\STEM\_LITERAL (@var{FLOATING_POINT_NUMBER})
+Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using the suffix
+@samp{\SUFFIX\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineFlonumLiteralMacro{FLOAT32,_Float32,f32}
+@MmuxDefineFlonumLiteralMacro{FLOAT64,_Float64,f64}
+@MmuxDefineFlonumLiteralMacro{FLOAT128,_Float128,f128}
+
+@MmuxDefineFlonumLiteralMacro{FLOAT32X,_Float32x,f32x}
+@MmuxDefineFlonumLiteralMacro{FLOAT64X,_Float64x,f64x}
+@MmuxDefineFlonumLiteralMacro{FLOAT128X,_Float128x,f128x}
+
+@MmuxDefineFlonumLiteralMacro{DECIMAL32,_Decimal32,DF}
+@MmuxDefineFlonumLiteralMacro{DECIMAL64,_Decimal64,DD}
+@MmuxDefineFlonumLiteralMacro{DECIMAL128,_Decimal128,DL}
 
 @c page
 @node typedefs

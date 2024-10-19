@@ -61,6 +61,56 @@
 
 
 /** --------------------------------------------------------------------
+ ** Preprocessor macros.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
+#undef  MMUX_FLOAT32_LITERAL
+#define MMUX_FLOAT32_LITERAL(X)		(X ## f32)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
+#undef  MMUX_FLOAT64_LITERAL
+#define MMUX_FLOAT64_LITERAL(X)		(X ## f64)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
+#undef  MMUX_FLOAT128_LITERAL
+#define MMUX_FLOAT128_LITERAL(X)	(X ## f128)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],[[[
+#undef  MMUX_FLOAT32X_LITERAL
+#define MMUX_FLOAT32X_LITERAL(X)	(X ## f32x)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],[[[
+#undef  MMUX_FLOAT64X_LITERAL
+#define MMUX_FLOAT64X_LITERAL(X)	(X ## f64x)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
+#undef  MMUX_FLOAT128X_LITERAL
+#define MMUX_FLOAT128X_LITERAL(X)	(X ## f128x)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+#undef  MMUX_DECIMAL32_LITERAL
+#define MMUX_DECIMAL32_LITERAL(X)	(X ## DF)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+#undef  MMUX_DECIMAL64_LITERAL
+#define MMUX_DECIMAL64_LITERAL(X)	(X ## DD)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+#undef  MMUX_DECIMAL128_LITERAL
+#define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
+]]])
+
+
+/** --------------------------------------------------------------------
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
@@ -394,6 +444,35 @@ DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal64]]],	[[[strfromd64]]],  [[[strtod6
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
 
 
+/** --------------------------------------------------------------------
+ ** Mathematics functions not implemented by libdfp.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+mmux_decimal32_t
+mmux_exp10d32 (mmux_decimal32_t op)
+{
+  return expd32(op * logd32(MMUX_DECIMAL32_LITERAL(10.0)));
+}
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+mmux_decimal64_t
+mmux_exp10d64 (mmux_decimal64_t op)
+{
+  return expd64(op * logd64(MMUX_DECIMAL64_LITERAL(10.0)));
+}
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+mmux_decimal128_t
+mmux_exp10d128 (mmux_decimal128_t op)
+{
+  return expd128(op * logd128(MMUX_DECIMAL128_LITERAL(10.0)));
+}
+]]])
+
+
 m4_divert(-1)m4_dnl
 m4_dnl --------------------------------------------------------------------
 m4_dnl Orgy of math macros.
@@ -429,7 +508,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARYN_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op) { return $3(N, op); }
+mmux_$1_t mmux_$1_$2 (int N, mmux_$1_t op) { return $3(N, op); }
 ]]])]]])]]])
 
 m4_divert(0)m4_dnl
@@ -529,46 +608,46 @@ DEFINE_BINARYN_CFUNC([[[$1]]],[[[yn]]],		[[[$39]]], [[[$2]]], [[[$3]]])
 /* ------------------------------------------------------------------ */
 
 DEFINE_CFUNCS([[[decimal32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32_UNIMPLEMENTED]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],
 	      [[[sind32]]],		[[[cosd32]]],		[[[tand32]]],
 	      [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
 	      [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
 	      [[[asinhd32]]],		[[[acoshd32]]],		[[[atanhd32]]],
-	      [[[expd32]]],		[[[exp2d32]]],		[[[exp10d32]]],
+	      [[[expd32]]],		[[[exp2d32]]],		[[[mmux_exp10d32]]],
 	      [[[logd32]]],		[[[log10d32]]],		[[[log2d32]]],		[[[logbd32]]],
 	      [[[powd32]]],		[[[sqrtd32]]],		[[[cbrtd32]]],		[[[hypotd32]]],
 	      [[[expm1d32]]],		[[[log1pd32]]],
-	      [[[erfd32]]],		[[[erfcd32x]]],
+	      [[[erfd32]]],		[[[erfcd32]]],
 	      [[[lgammad32]]],		[[[tgammad32]]],
 	      [[[j0d32]]],		[[[j1d32]]],		[[[jnd32]]],
 	      [[[y0d32]]],		[[[y1d32]]],		[[[ynd32]]])
 
 DEFINE_CFUNCS([[[decimal64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64_UNIMPLEMENTED]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],
 	      [[[sind64]]],		[[[cosd64]]],		[[[tand64]]],
 	      [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
 	      [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
 	      [[[asinhd64]]],		[[[acoshd64]]],		[[[atanhd64]]],
-	      [[[expd64]]],		[[[exp2d64]]],		[[[exp10d64]]],
+	      [[[expd64]]],		[[[exp2d64]]],		[[[mmux_exp10d64]]],
 	      [[[logd64]]],		[[[log10d64]]],		[[[log2d64]]],		[[[logbd64]]],
 	      [[[powd64]]],		[[[sqrtd64]]],		[[[cbrtd64]]],		[[[hypotd64]]],
 	      [[[expm1d64]]],		[[[log1pd64]]],
-	      [[[erfd64]]],		[[[erfcd64x]]],
+	      [[[erfd64]]],		[[[erfcd64]]],
 	      [[[lgammad64]]],		[[[tgammad64]]],
 	      [[[j0d64]]],		[[[j1d64]]],		[[[jnd64]]],
 	      [[[y0d64]]],		[[[y1d64]]],		[[[ynd64]]])
 
 DEFINE_CFUNCS([[[decimal128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128_UNIMPLEMENTED]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],
 	      [[[sind128]]],		[[[cosd128]]],		[[[tand128]]],
 	      [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
 	      [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
 	      [[[asinhd128]]],		[[[acoshd128]]],	[[[atanhd128]]],
-	      [[[expd128]]],		[[[exp2d128]]],		[[[exp10d128]]],
+	      [[[expd128]]],		[[[exp2d128]]],		[[[mmux_exp10d128]]],
 	      [[[logd128]]],		[[[log10d128]]],	[[[log2d128]]],		[[[logbd128]]],
 	      [[[powd128]]],		[[[sqrtd128]]],		[[[cbrtd128]]],		[[[hypotd128]]],
 	      [[[expm1d128]]],		[[[log1pd128]]],
-	      [[[erfd128]]],		[[[erfcd128x]]],
+	      [[[erfd128]]],		[[[erfcd128]]],
 	      [[[lgammad128]]],		[[[tgammad128]]],
 	      [[[j0d128]]],		[[[j1d128]]],		[[[jnd128]]],
 	      [[[y0d128]]],		[[[y1d128]]],		[[[ynd128]]])

@@ -93,6 +93,56 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
+ ** Preprocessor macros.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
+#undef  MMUX_FLOAT32_LITERAL
+#define MMUX_FLOAT32_LITERAL(X)		(X ## f32)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
+#undef  MMUX_FLOAT64_LITERAL
+#define MMUX_FLOAT64_LITERAL(X)		(X ## f64)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
+#undef  MMUX_FLOAT128_LITERAL
+#define MMUX_FLOAT128_LITERAL(X)	(X ## f128)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],[[[
+#undef  MMUX_FLOAT32X_LITERAL
+#define MMUX_FLOAT32X_LITERAL(X)	(X ## f32x)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],[[[
+#undef  MMUX_FLOAT64X_LITERAL
+#define MMUX_FLOAT64X_LITERAL(X)	(X ## f64x)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
+#undef  MMUX_FLOAT128X_LITERAL
+#define MMUX_FLOAT128X_LITERAL(X)	(X ## f128x)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+#undef  MMUX_DECIMAL32_LITERAL
+#define MMUX_DECIMAL32_LITERAL(X)	(X ## DF)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+#undef  MMUX_DECIMAL64_LITERAL
+#define MMUX_DECIMAL64_LITERAL(X)	(X ## DD)
+]]])
+
+MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+#undef  MMUX_DECIMAL128_LITERAL
+#define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
+]]])
+
+
+/** --------------------------------------------------------------------
  ** Initialisation functions.
  ** ----------------------------------------------------------------- */
 
@@ -872,7 +922,7 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op);
 ]]])]]])]]])
 
 m4_dnl  $1 - type stem
-m4_dnl  $2 - type parser macro
+m4_dnl  $2 - unused
 m4_dnl  $3 - C preprocessor for optional definition
 
 m4_dnl  $4 - identifier of C function implementing sin
