@@ -231,6 +231,15 @@ done
 	    print_builtin_name "$NAME"
 	done
     done
+
+    for STEM in "${REAL_FLOAT_STEMS[@]}"
+    do
+	for ITEM in E LOG2E LOG10E LN2 LN10 PI PI_2 PI_4 1_PI 2_PI 2_SQRTPI SQRT2 SQRT1_2
+	do
+	    printf -v NAME 'mmux_%s_constant_%s' "$STEM" "$ITEM"
+	    print_builtin_name "$NAME"
+	done
+    done
 }
 
 ### end of file

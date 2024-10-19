@@ -586,6 +586,7 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @menu
 * cctypes sizeof::              C language type sizes.
 * cctypes limits::              C language type maximum and minimum values.
+* cctypes constants::           Builtins returning constant values.
 * cctypes complex::             Basic complex number builtins.
 * cctypes predicates::          Type predicates.
 * cctypes comparison::          Comparison builtins.
@@ -766,6 +767,54 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{gid}
 @MmuxDefineGlobalVarLimits{wchar}
 @MmuxDefineGlobalVarLimits{wint}
+
+@c page
+@node cctypes constants
+@section Builtins returning constant values
+
+
+@macro MmuxDefineConstantBuiltin{STEM,FUNCSTEM,EXPR}
+@deffn Builtin mmux_\STEM\_constant_\FUNCSTEM\ @var{ROPVAR}
+Store in the shell variable @var{ROPVAR} a constant value corresponding to @math{\EXPR\}.
+@end deffn
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineConstantBuiltins{STEM}
+@MmuxDefineConstantBuiltin{\STEM\,E,e}
+@MmuxDefineConstantBuiltin{\STEM\,LOG2E,log_2(e)}
+@MmuxDefineConstantBuiltin{\STEM\,LOG10E,log_10(e)}
+@MmuxDefineConstantBuiltin{\STEM\,LN2,ln(2)}
+@MmuxDefineConstantBuiltin{\STEM\,LN10,ln(10)}
+@MmuxDefineConstantBuiltin{\STEM\,PI,pi}
+@MmuxDefineConstantBuiltin{\STEM\,PI_2,pi/2}
+@MmuxDefineConstantBuiltin{\STEM\,PI_4,pi/4}
+@MmuxDefineConstantBuiltin{\STEM\,1_PI,1/pi}
+@MmuxDefineConstantBuiltin{\STEM\,2_PI,2/pi}
+@MmuxDefineConstantBuiltin{\STEM\,2_SQRTPI,2/sqrt(pi)}
+@MmuxDefineConstantBuiltin{\STEM\,SQRT2,sqrt(2)}
+@MmuxDefineConstantBuiltin{\STEM\,SQRT1_2,sqrt(1/2)}
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineConstantBuiltins{float}
+@MmuxDefineConstantBuiltins{double}
+@MmuxDefineConstantBuiltins{ldouble}
+
+@MmuxDefineConstantBuiltins{float32}
+@MmuxDefineConstantBuiltins{float64}
+@MmuxDefineConstantBuiltins{float128}
+
+@MmuxDefineConstantBuiltins{float32x}
+@MmuxDefineConstantBuiltins{float64x}
+@MmuxDefineConstantBuiltins{float128x}
+
+@MmuxDefineConstantBuiltins{decimal32}
+@MmuxDefineConstantBuiltins{decimal64}
+@MmuxDefineConstantBuiltins{decimal128}
 
 @c page
 @node cctypes complex

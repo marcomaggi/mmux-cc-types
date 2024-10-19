@@ -884,7 +884,7 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
- ** Mathematicsl constants.
+ ** Mathematical constants.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[

@@ -46,6 +46,18 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 mmux_double_set_format "%.5f"
 
+### ------------------------------------------------------------------------
+
+function mathematics-double-constant-pi-1.1 () {
+    declare -r EXPECTED_ROP='3.1415926535897932'
+    declare ROP
+
+    mmux_double_constant_PI ROP
+    mmux_double_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
 function mathematics-double-sin-1.1 () {
     declare -r OP='1.2' EXPECTED_ROP='0.93204'
     declare ROP

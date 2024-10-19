@@ -29,6 +29,58 @@
 #include "mmux-bash-pointers-internals.h"
 
 
+/** --------------------------------------------------------------------
+ ** Mathematical constants.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_constant_$2]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+  return mmux_$1_bind_to_variable(argv[1], mmux_$1_constant_$2(), MMUX_BUILTIN_NAME_STR);
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+	  MMUX_BUILTIN_NAME_STR);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR"]]],
+    [[["Store in ROPVAR a constant value representing $2."]]])]]])
+
+m4_define([[[DEFINE_MATH_CONSTANTS_BUILTINS]]],[[[
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[E]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[LOG2E]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[LOG10E]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[LN2]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[LN10]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[PI]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[PI_2]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[PI_4]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[1_PI]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[2_PI]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[2_SQRTPI]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[SQRT2]]],	[[[$2]]])
+DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN([[[$1]]],	[[[SQRT1_2]]],	[[[$2]]])
+]]])
+
+DEFINE_MATH_CONSTANTS_BUILTINS(float)
+DEFINE_MATH_CONSTANTS_BUILTINS(double)
+DEFINE_MATH_CONSTANTS_BUILTINS(ldouble,		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_MATH_CONSTANTS_BUILTINS(float32,		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_MATH_CONSTANTS_BUILTINS(float64,		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_MATH_CONSTANTS_BUILTINS(float128,	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_MATH_CONSTANTS_BUILTINS(float32x,	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_MATH_CONSTANTS_BUILTINS(float64x,	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_MATH_CONSTANTS_BUILTINS(float128x,	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_MATH_CONSTANTS_BUILTINS(decimal32,	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_MATH_CONSTANTS_BUILTINS(decimal64,	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_MATH_CONSTANTS_BUILTINS(decimal128,	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+
+
 m4_divert(-1)m4_dnl
 m4_dnl --------------------------------------------------------------------
 m4_dnl Orgy of macros.
