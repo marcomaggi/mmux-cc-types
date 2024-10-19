@@ -1,4 +1,4 @@
-;;; mmux-cc-types.el --- support for programming MMUX CC Types under GNU Emacs
+;;; mmux-bash-pointers.el --- support for programming MMUX Bash Pointers under GNU Emacs
 
 ;; Copyright (C) 2024  Marco Maggi
 
@@ -6,7 +6,7 @@
 ;; Created: 2024
 ;; Keywords: languages
 
-;; This file is part of MMUX CC Types.
+;; This file is part of MMUX Bash Pointers.
 ;;
 ;; This program is  free software: you can redistribute  it and/or modify it under the  terms of the
 ;; GNU General Public License as published by the  Free Software Foundation, either version 3 of the
@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; Add-on to c-mode that supports the MMUX CC Types.
+;; Add-on to sh-mode that supports the MMUX Bash Pointers.
 
 ;;; Change Log:
 
@@ -30,20 +30,42 @@
 
 ;;; Code:
 
-(defface mmux-cc-types-function-face
+(defface mmux-bash-pointers-function-face
   `((t (:foreground "spring green")))
-  "Shell mode custom face used for MMUX CC Types functions."
+  "Shell mode custom face used for MMUX Bash Pointers functions."
   :group 'sh
   :group 'font-lock-faces)
 
-(defconst mmux-cc-types-function-face
-  'mmux-cc-types-function-face
-  "Shell mode custom face used for MMUX CC Types functions.")
+(defconst mmux-bash-pointers-function-face
+  'mmux-bash-pointers-function-face
+  "Shell mode custom face used for MMUX Bash Pointers functions.")
 
-(defconst mmux-cc-types-known-functions
+(defconst mmux-bash-pointers-known-functions
   (eval-when-compile
     (regexp-opt
-     '("mmux_pointer_pointer_set"
+     '("mmux_bash_pointers_library_init"
+       "mmux_libc_malloc"
+       "mmux_libc_realloc"
+       "mmux_libc_calloc"
+       "mmux_libc_free"
+       "mmux_libc_memset"
+       "mmux_libc_memcpy"
+       "mmux_libc_memmove"
+       "mmux_libc_strerror"
+       "mmux_libc_errno_to_string"
+       "mmux_libc_open"
+       "mmux_libc_close"
+       "mmux_libc_read"
+       "mmux_libc_write"
+       "mmux_libc_pread"
+       "mmux_libc_pwrite"
+       "mmux_libc_lseek"
+       "mmux_libc_dup"
+       "mmux_libc_dup2"
+       "mmux_libc_fcntl"
+       "mmux_libc_ioctl"
+       ;;
+       "mmux_pointer_pointer_set"
        "mmux_pointer_array_set"
        "mmux_pointer_pointer_ref"
        "mmux_pointer_array_ref"
@@ -2647,22 +2669,22 @@
 ;;only once at file-loading time.
 ;;
 (font-lock-add-keywords
-    ;;This argument MODE  is set to `c-mode' because  this call is performed at  the top-level.  See
+    ;;This argument MODE  is set to `sh-mode' because  this call is performed at  the top-level.  See
     ;;the documentation of `font-lock-add-keywords' for details.
-    'c-mode
+    'sh-mode
 
   ;;Here  we need  to  remember that  "(regexp-opt  ... 'symbols)"  encloses  the generated  regular
   ;;expression between  '\_<\(' and  '\)\_>' so  the SUBEXP  number must  be 1  to match  the actual
   ;;symbol.
   ;;
-  `((,mmux-cc-types-known-functions 1 mmux-cc-types-function-face keep))
+  `((,mmux-bash-pointers-known-functions 1 mmux-bash-pointers-function-face keep))
 
   ;;This  true value  as HOW  argument causes  this specification  to be  appended to  the value  of
   ;;`font-lock-keywords'.
   ;;
   ;;We need it to  allow correct fontification of known function names, which  must happen after the
-  ;;fontification built into `c-mode'.
+  ;;fontification built into `sh-mode'.
   t)
 
-(provide 'mmux-cc-types)
-;;; mmux-cc-types.el ends here
+(provide 'mmux-bash-pointers)
+;;; mmux-bash-pointers.el ends here

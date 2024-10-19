@@ -70,7 +70,7 @@ tests/$(am__dirstamp):
 
 if WANT_EMACS
 sharelispdir		= $(datadir)/emacs/site-lisp
-dist_sharelisp_LISP	= src/emacs/mmux-bash-packages.el
+dist_sharelisp_LISP	= src/emacs/mmux-bash-packages.el src/emacs/mmux-bash-pointers.el
 endif
 
 
