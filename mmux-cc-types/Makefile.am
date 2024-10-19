@@ -34,19 +34,13 @@ MMUX_M4_CC_MACROS	= \
 
 #### Automake dirstamp files
 
-MMUX_AM_DIRSTAMP_FILES	= \
-	src/m4/$(am__dirstamp)	\
-	tests/$(am__dirstamp)
+MMUX_AM_DIRSTAMP_FILES	=src/m4/$(am__dirstamp)
 
 BUILT_SOURCES		+= $(MMUX_AM_DIRSTAMP_FILES)
 DISTCLEANFILES		+= $(MMUX_AM_DIRSTAMP_FILES)
 
 src/m4/$(am__dirstamp):
 	@$(MKDIR_P) src/m4/
-	@: > $(@)
-
-tests/$(am__dirstamp):
-	@$(MKDIR_P) tests/
 	@: > $(@)
 
 
@@ -117,7 +111,7 @@ CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 DISTCLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 
 noinst_LTLIBRARIES			= libmmux-cc-types-libdfp.la
-libmmux_cc_types_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS)
+libmmux_cc_types_libdfp_la_CPPFLAGS	= $(AM_CPPFLAGS)
 libmmux_cc_types_libdfp_la_CFLAGS	= $(AM_CFLAGS)  $(LIBDFP_CFLAGS) -Wno-pedantic
 libmmux_cc_types_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
 libmmux_cc_types_libdfp_la_SOURCES	= src/mmux-cc-types-libdfp.c
@@ -187,7 +181,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-config.h
 
 
-#### tests
+#### TESTS
 
 check_PROGRAMS	= \
 	tests/version
@@ -199,17 +193,21 @@ mmux_cc_types_tests_ldadd	= $(AM_LDFLAGS) libmmux-cc-types.la
 
 ## ------------------------------------------------------------------------
 
-tests_version_CPPFLAGS				= $(mmux_cc_types_tests_cppflags)
-tests_version_LDADD				= $(mmux_cc_types_tests_ldadd)
-
-## ------------------------------------------------------------------------
-
-installcheck-local: $(TESTS)
-	@for f in $(TESTS); do $(builddir)/$$f; done
+tests_version_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_version_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"
 
+installcheck-local: $(TESTS)
+	@RV=0							;\
+	for FILE in $(TESTS)					;\
+	do echo "running: '$(builddir)/$$FILE'"			;\
+	    if ! "$(builddir)/$$FILE"				;\
+	    then RV=$$?; break					;\
+	    fi							;\
+	done							;\
+	if test "$$RV" = 77; then exit 0; else exit $$RV; fi	;
 
 
 #### common rules

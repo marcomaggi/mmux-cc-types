@@ -66,6 +66,57 @@ function mathematics-double-sin-1.1 () {
     dotest-equal WW(EXPECTED_ROP) WW(ROP)
 }
 
+
+#### decimal32
+
+function mathematics-decimal32-constant-pi-1.1 () {
+    if test -v mmux_decimal32_SIZEOF
+    then
+	mmux_decimal32_set_format "%.5f"
+
+	declare -r EXPECTED_ROP='3.1415926535897932'
+	declare ROP
+
+	mmux_decimal32_constant_PI ROP
+	mmux_decimal32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+    else dotest-skipped
+    fi
+}
+
+### ------------------------------------------------------------------------
+
+function mathematics-decimal32-y0-1.1 () {
+    if false && test -v mmux_decimal32_SIZEOF
+    then
+	mmux_decimal32_set_format "%.5f"
+
+	# octave --eval 'format long; bessely(0,1.234567)'
+	declare -r EXPECTED_ROP='0.249111708328877'
+	declare ROP OP='1.234567'
+
+	mmux_decimal32_y0 ROP WW(OP)
+	mmux_decimal32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+    else dotest-skipped
+    fi
+}
+
+### ------------------------------------------------------------------------
+
+function mathematics-decimal32-j0-1.1 () {
+    if false && test -v mmux_decimal32_SIZEOF
+    then
+	mmux_decimal32_set_format "%.5f"
+
+	# octave --eval 'format long; bessely(0,1.234567)'
+	declare -r EXPECTED_ROP='0.249111708328877'
+	declare ROP OP='1.234567'
+
+	mmux_decimal32_j0 ROP WW(OP)
+	mmux_decimal32_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
+    else dotest-skipped
+    fi
+}
+
 
 
 #### complexd

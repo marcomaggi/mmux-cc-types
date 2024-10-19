@@ -688,8 +688,12 @@ DEFINE_CFUNCS([[[decimal32]]],
 	      [[[expm1d32]]],		[[[log1pd32]]],
 	      [[[erfd32]]],		[[[erfcd32]]],
 	      [[[lgammad32]]],		[[[tgammad32]]],
+	      [[[]]],			[[[]]],			[[[]]],
+	      [[[]]],			[[[]]],			[[[]]])
+#if 0 /* not implemented by libdfp */
 	      [[[j0d32]]],		[[[j1d32]]],		[[[jnd32]]],
 	      [[[y0d32]]],		[[[y1d32]]],		[[[ynd32]]])
+#endif
 
 DEFINE_CFUNCS([[[decimal64]]],
 	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],
@@ -703,8 +707,12 @@ DEFINE_CFUNCS([[[decimal64]]],
 	      [[[expm1d64]]],		[[[log1pd64]]],
 	      [[[erfd64]]],		[[[erfcd64]]],
 	      [[[lgammad64]]],		[[[tgammad64]]],
+	      [[[]]],			[[[]]],			[[[]]],
+	      [[[]]],			[[[]]],			[[[]]])
+#if 0 /* not implemented by libdfp */
 	      [[[j0d64]]],		[[[j1d64]]],		[[[jnd64]]],
 	      [[[y0d64]]],		[[[y1d64]]],		[[[ynd64]]])
+#endif
 
 DEFINE_CFUNCS([[[decimal128]]],
 	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],
@@ -718,8 +726,12 @@ DEFINE_CFUNCS([[[decimal128]]],
 	      [[[expm1d128]]],		[[[log1pd128]]],
 	      [[[erfd128]]],		[[[erfcd128]]],
 	      [[[lgammad128]]],		[[[tgammad128]]],
+	      [[[]]],			[[[]]],			[[[]]],
+	      [[[]]],			[[[]]],			[[[]]])
+#if 0 /* not implemented by libdfp */
 	      [[[j0d128]]],		[[[j1d128]]],		[[[jnd128]]],
 	      [[[y0d128]]],		[[[y1d128]]],		[[[ynd128]]])
+#endif
 
 /* ------------------------------------------------------------------ */
 
