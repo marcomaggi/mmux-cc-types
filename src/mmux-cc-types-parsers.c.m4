@@ -1,5 +1,5 @@
 /*
-  Part of: MMUX Bash Pointers
+  Part of: MMUX CC Types
   Contents: parsers from strings to internal values
   Date: Sep 11, 2024
 
@@ -57,7 +57,7 @@ mmux_cc_types_init_parsers_module (void)
   {
     int	rv = regcomp(&mmux_cc_types_complex_rex, "^(\\([^)]\\+\\))+i\\*(\\([^)]\\+\\))$", 0);
     if (rv) {
-      fprintf(stderr, "MMUX Bash Pointers: internal error: compiling regular expression\n");
+      fprintf(stderr, "MMUX CC Types: internal error: compiling regular expression\n");
       return true;
     }
   }
