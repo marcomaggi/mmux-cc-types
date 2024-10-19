@@ -5,10 +5,12 @@ AUTOMAKE_OPTIONS	= foreign
 EXTRA_DIST		= INSTALL
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
-AM_CPPFLAGS		= -I$(srcdir)/src/ -I$(builddir)/src/
+AM_CPPFLAGS		= -I$(srcdir)/src/ -I$(builddir)/src/ -I$(builddir)/mmux-cc-types/src
 CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
+
+SUBDIRS			= mmux-cc-types
 
 ## --------------------------------------------------------------------
 
@@ -28,7 +30,6 @@ EXTRA_DIST		+= \
 	$(top_srcdir)/src/m4/macros-for-cc.m4	\
 	$(top_srcdir)/src/m4/macros-for-bash.m4	\
 	$(top_srcdir)/src/m4/mmux-bash-pointers-config.m4.in
-	$(top_srcdir)/src/m4/mmux-cc-types-config.m4.in
 
 MMUX_M4_FLAGS		=  $(M4FLAGS) --prefix-builtins --include=$(srcdir)/src/m4/
 MMUX_M4_FLAGS		+= --include=$(builddir)/src/ --include=$(builddir)/src/m4
@@ -37,8 +38,7 @@ MMUX_M4_FLAGS		+= --include=$(builddir)/src/ --include=$(builddir)/src/m4
 # ".c.m4".  Do not change the order of inclusion!!!
 #
 MMUX_M4_CC_MACROS	= \
-	$(top_srcdir)/src/m4/macros-for-cc.m4	\
-	$(builddir)/src/m4/mmux-cc-types-config.m4
+	$(top_srcdir)/src/m4/macros-for-cc.m4
 
 # These  are  used  to  preprocess   GNU  Bash  files  with  extension
 # ".bash.m4".  Do not change the order of inclusion!!!
@@ -80,16 +80,7 @@ AM_MAKEINFOFLAGS	= --no-split
 AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 --css-ref=mmux-bash-pointers.css \
 	-c PRE_BODY_CLOSE="<p>This document describes version <tt>$(PACKAGE_VERSION)</tt> of <em>$(PACKAGE_NAME)</em>.</p>"
 
-info_TEXINFOS		= doc/mmux-bash-pointers.texi doc/mmux-cc-types.texi
-
-.PHONY: html-local-mmux-cc-types      install-html-local-mmux-cc-types
-.PHONY: html-local-mmux-bash-pointers install-html-local-mmux-bash-pointers
-
-html-local:                 html-local-mmux-bash-pointers         html-local-mmux-cc-types
-install-html-local: install-html-local-mmux-bash-pointers install-html-local-mmux-cc-types
-
-
-#### documentation: MMUX Bash Pointers
+info_TEXINFOS		= doc/mmux-bash-pointers.texi
 
 EXTRA_DIST		+= doc/mmux-bash-pointers.style.css
 CLEANFILES		+= doc/mmux-bash-pointers.css
@@ -113,42 +104,11 @@ doc/mmux-bash-pointers.html/mmux-bash-pointers.css: \
 
 ## --------------------------------------------------------------------
 
-html-local-mmux-bash-pointers: doc/mmux-bash-pointers.html/mmux-bash-pointers.css
+html-local: doc/mmux-bash-pointers.html/mmux-bash-pointers.css
 
-install-html-local-mmux-bash-pointers:
+install-html-local:
 	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
 	$(INSTALL) -m 0444 $(builddir)/doc/mmux-bash-pointers.html/mmux-bash-pointers.css "$(DESTDIR)$(htmldir)/mmux-bash-pointers.html/"
-
-
-#### documentation: MMUX CC Types
-
-EXTRA_DIST		+= doc/mmux-cc-types.style.css
-CLEANFILES		+= doc/mmux-cc-types.css
-
-doc_mmux_cc_types_TEXINFOS	= \
-	doc/macros.texi			\
-	doc/overview-linking.texi	\
-	doc/mmux-version.texi		\
-	doc/gpl-3.0.texi		\
-	doc/fdl-1.3.texi
-
-## --------------------------------------------------------------------
-
-doc/mmux-cc-types.html/$(am__dirstamp): doc/$(am__dirstamp)
-	@$(MKDIR_P) doc/mmux-cc-types.html/
-	@: > doc/mmux-cc-types.html/$(am__dirstamp)
-
-doc/mmux-cc-types.html/mmux-cc-types.css: \
-	doc/mmux-cc-types.style.css doc/mmux-cc-types.html/$(am__dirstamp)
-	$(INSTALL) -m 0444 "$(top_srcdir)/doc/mmux-cc-types.style.css" "$(builddir)/doc/mmux-cc-types.html/mmux-cc-types.css"
-
-## --------------------------------------------------------------------
-
-html-local-mmux-cc-types: doc/mmux-cc-types.html/mmux-cc-types.css
-
-install-html-local-mmux-cc-types:
-	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-cc-types.html/"
-	$(INSTALL) -m 0444 $(builddir)/doc/mmux-cc-types.html/mmux-cc-types.css "$(DESTDIR)$(htmldir)/mmux-cc-types.html/"
 
 
 #### shell libraries
@@ -176,36 +136,6 @@ src/libmmux-bash-%.bash: src/libmmux-bash-%.bash.m4 $(MMUX_M4_BASH_MACROS)
 	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_BASH_MACROS) $< >$@
 
 
-#### support library for _DecimalN
-#
-# This support  library exists because  "libdfp" is a crazy  beast: it
-# defines  header files  with the  same filenames  of the  stancdard C
-# header files, then tries to load them all.
-#
-# The command line  options needed to do this can  mess with the other
-# code.  So everything "libdfp" is confined into this support library.
-#
-# Also  we really  want  to compile  this code  (and  only this  code)
-# without the "-pedantic" flag.
-#
-
-EXTRA_DIST	+= src/mmux-cc-types-libdfp.c.m4
-
-if WANT_LIBDFP
-MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= src/mmux-cc-types-libdfp.c
-
-BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
-CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
-DISTCLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
-
-noinst_LTLIBRARIES			= libmmux-cc-types-libdfp.la
-libmmux_cc_types_libdfp_la_CPPFLAGS= $(AM_CPPFLAGS)
-libmmux_cc_types_libdfp_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS) $(LIBDFP_CFLAGS) -Wno-pedantic
-libmmux_cc_types_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
-libmmux_cc_types_libdfp_la_SOURCES	= src/mmux-cc-types-libdfp.c
-endif
-
-
 #### libraries
 
 EXTRA_DIST	+= \
@@ -223,13 +153,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-memory.c.m4		\
 	src/mmux-bash-pointers-misc-builtins.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4		\
-	src/mmux-bash-pointers-predicates.c.m4		\
-	src/mmux-cc-types.h.m4				\
-	src/mmux-cc-types-internals.h.m4		\
-	src/mmux-cc-types-constants.c.m4		\
-	src/mmux-cc-types-core.c.m4			\
-	src/mmux-cc-types-parsers.c.m4			\
-	src/mmux-cc-types-sprinters.c.m4
+	src/mmux-bash-pointers-predicates.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers.h			\
@@ -246,27 +170,18 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
-	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-cc-types.h				\
-	src/mmux-cc-types-internals.h			\
-	src/mmux-cc-types-constants.c			\
-	src/mmux-cc-types-core.c			\
-	src/mmux-cc-types-parsers.c			\
-	src/mmux-cc-types-sprinters.c
+	src/mmux-bash-pointers-predicates.c
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 DISTCLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 
-mmux_bash_pointers_CURRENT		= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
-mmux_bash_pointers_REVISION		= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@
-mmux_bash_pointers_AGE			= @mmux_bash_pointers_VERSION_INTERFACE_AGE@
-mmux_bash_pointers_LINKER_VERSION	= \
-	-version-info $(mmux_bash_pointers_CURRENT):$(mmux_bash_pointers_REVISION):$(mmux_bash_pointers_AGE)
+mmux_bash_pointers_CURRENT	= @mmux_bash_pointers_VERSION_INTERFACE_CURRENT@
+mmux_bash_pointers_REVISION	= @mmux_bash_pointers_VERSION_INTERFACE_REVISION@
+mmux_bash_pointers_AGE		= @mmux_bash_pointers_VERSION_INTERFACE_AGE@
+mmux_bash_pointers_LINKER_VERSION= -version-info $(mmux_bash_pointers_CURRENT):$(mmux_bash_pointers_REVISION):$(mmux_bash_pointers_AGE)
 
 include_HEADERS				= \
-	src/mmux-cc-types.h				\
-	src/mmux-cc-types-config.h			\
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h
 
@@ -274,9 +189,7 @@ lib_LTLIBRARIES				= libmmux-bash-pointers.la
 libmmux_bash_pointers_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_bash_pointers_la_CFLAGS		= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_bash_pointers_la_LDFLAGS	= $(mmux_bash_pointers_LINKER_VERSION) $(AM_LDFLAGS)
-if WANT_LIBDFP
-libmmux_bash_pointers_la_LIBADD		= libmmux-cc-types-libdfp.la
-endif
+libmmux_bash_pointers_la_LIBADD		= mmux-cc-types/libmmux-cc-types.la
 libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers.h			\
 	src/mmux-bash-pointers-config.h			\
@@ -293,14 +206,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
-	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-cc-types.h				\
-	src/mmux-cc-types-config.h			\
-	src/mmux-cc-types-internals.h			\
-	src/mmux-cc-types-constants.c			\
-	src/mmux-cc-types-core.c			\
-	src/mmux-cc-types-parsers.c			\
-	src/mmux-cc-types-sprinters.c
+	src/mmux-bash-pointers-predicates.c
 
 .PHONY: library
 
@@ -313,9 +219,6 @@ src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
 src/%.$(OBJEXT): \
-	src/mmux-cc-types.h			\
-	src/mmux-cc-types-internals.h		\
-	src/mmux-cc-types-config.h		\
 	src/mmux-bash-pointers.h		\
 	src/mmux-bash-pointers-internals.h	\
 	src/mmux-bash-pointers-config.h

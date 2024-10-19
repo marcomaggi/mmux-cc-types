@@ -52,7 +52,11 @@ function mathematics-double-constant-pi-1.1 () {
     declare -r EXPECTED_ROP='3.1415926535897932'
     declare ROP
 
+    dotest-unset-debug
+    dotest-debug EXPECTED_ROP=WW(EXPECTED_ROP)
+
     mmux_double_constant_PI ROP
+    dotest-debug WW(EXPECTED_ROP) WW(ROP)
     mmux_double_equal_relepsilon WW(EXPECTED_ROP) WW(ROP)
 }
 

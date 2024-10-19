@@ -114,12 +114,12 @@ AC_CACHE_SAVE
 
 #### check for C language types
 
-MMUX_CC_CHECK_STANDARD_TYPES
-MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_FLOAT
-MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT
+dnl MMUX_CC_CHECK_STANDARD_TYPES
+dnl MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_FLOAT
+dnl MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT
 
-MMUX_CC_INSPECT_STANDARD_TYPES
-MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
+dnl MMUX_CC_INSPECT_STANDARD_TYPES
+dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 
 
 #### inspecting errno constants
@@ -209,13 +209,12 @@ AS_VAR_IF(with_emacs,'yes',
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
   [src/mmux-bash-pointers-config.h]
-  [src/mmux-cc-types-config.h]
   [src/m4/mmux-bash-pointers-config.m4]
-  [src/m4/mmux-cc-types-config.m4]
   [doc/mmux-version.texi]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT
+AC_CONFIG_SUBDIRS([mmux-cc-types])
 AC_OUTPUT
 
 ### end of file

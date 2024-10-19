@@ -83,7 +83,7 @@ doc/mmux-cc-types.html/mmux-cc-types.css: \
 
 html-local: doc/mmux-cc-types.html/mmux-cc-types.css
 
-install-html:
+install-html-local:
 	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-cc-types.html/"
 	$(INSTALL) -m 0444 $(builddir)/doc/mmux-cc-types.html/mmux-cc-types.css "$(DESTDIR)$(htmldir)/mmux-cc-types.html/"
 
