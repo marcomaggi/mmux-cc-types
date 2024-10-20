@@ -278,17 +278,17 @@ CLEANFILES		+= $(MMUX_CHECK_BUILT_TESTS)
 
 MBFL_TESTS_VERBENV	= TESTSUCCESS=yes; export TESTSUCCESS; TESTSTART=yes; export TESTSTART;
 
-# This  environment setting  is used  both  to compile  ".test.m4" files  and to  run
-# ".test" files.
+# This environment  setting is used  both to compile  ".test.m4" files
+# and to run ".test" files.
 #
-MBFL_TESTS_ENV		= MBFL_LIBRARY_PATH=$(builddir)/src/share/mbfl; export MBFL_LIBRARY_PATH;
-# We set TMPDIR  because if the "/tmp"  directory is mounted on  a separate partition
-# with  "noexec"  attribute: tests  for  executability  of  files  will fail  if  the
-# temporary test files are created under "/tmp".
+MBFL_TESTS_ENV		= export MBFL_LIBRARY_PATH=$(builddir)/src:$(MBFL_LIBRARY_PATH);
+# We  set TMPDIR  because  if the  "/tmp" directory  is  mounted on  a
+# separate partition with "noexec"  attribute: tests for executability
+# of files  will fail if  the temporary  test files are  created under
+# "/tmp".
 MBFL_TESTS_ENV		+= TMPDIR=$(PWD)/tmp; export TMPDIR;
 MBFL_TESTS_ENV		+= testsdir=$(builddir)/tests; export testsdir;
 MBFL_TESTS_ENV		+= TESTMATCH=$(TESTMATCH); export TESTMATCH;
-MBFL_TESTS_ENV		+= export MBFL_LIBRARY_PATH=$(builddir)/src:$(MBFL_LIBRARY_PATH)
 MBFL_TESTS_ENV		+= export LD_LIBRARY_PATH=$(builddir)/.libs/:$(LD_LIBRARY_PATH);
 MBFL_TESTS_COMPILE	= $(MBFL_TESTS_ENV) $(MBFLPP_PROG_RUN)
 MBFL_TESTS_FLAGS	= $(MBFLPP_GENERAL_FLAGS)
