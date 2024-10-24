@@ -43,12 +43,40 @@
   'mmux-bash-pointers-function-face
   "Shell mode custom face used for MMUX Bash Pointers functions.")
 
-(defmacro mmux-bash-pointers-prepare-regexp (NAME IDENTIFIERS-LIST)
-  `(defconst ,NAME (eval-when-compile (regexp-opt (quote ,IDENTIFIERS-LIST) 'symbols))))
+(defmacro mmux-bash-pointers-prepare-regexp (STEM IDENTIFIERS-LIST)
+  (let ((REGEXP-VARNAME		(intern (format "mmux-bash-pointers-known-functions-%s" STEM)))
+	(FONT-LOCK-FUNC-NAME	(intern (format "mmux-bash-pointers-font-lock-add-keywords-%s" STEM))))
+    `(progn
+       (defconst ,REGEXP-VARNAME (eval-when-compile (regexp-opt (quote ,IDENTIFIERS-LIST) 'symbols)))
+
+       (defun ,FONT-LOCK-FUNC-NAME ()
+	   "Add font locking to `sh-mode' supporting MMUX Bash Pointers identifiers.
+
+Add font locking to `sh-mode' supporting MMUX Bash Pointers identifiers.
+This function is to be called from a hook."
+	 (message "MMUX Bash Pointers: configuring %s font-locking for the current buffer %s" (quote ,STEM) (buffer-name))
+	 (font-lock-add-keywords
+	     ;;This argument MODE is  set to `nil' because this call is performed  from a mode hook;
+	     ;;it causes the  configuration to happen in the current  buffer.  See the documentation
+	     ;;of `font-lock-add-keywords' for details.
+	     nil
+
+	   ;;Here  we need  to  remember that  "(regexp-opt ...  'symbols)"  encloses the  generated
+	   ;;regular expression between '\_<\(' and '\)\_>' so  the SUBEXP number must be 1 to match
+	   ;;the actual symbol.
+	   ;;
+	   `((,mmux-bash-pointers-known-functions-general 1 mmux-bash-pointers-function-face keep))
+
+	   ;;This true value as  HOW argument causes this specification to be  appended to the value
+	   ;;of `font-lock-keywords'.
+	   ;;
+	   ;;We need it  to allow correct fontification  of known function names,  which must happen
+	   ;;after the fontification built into `sh-mode'.
+	   t)))))
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-general
+ general
  ("mmux_bash_pointers_library_init"
   "mmux_bash_pointers_builtin_p"
   "mmux_libc_malloc"
@@ -74,7 +102,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexd128
+ complexd128
  ("mmux_complexd128_abs"
   "mmux_complexd128_acos"
   "mmux_complexd128_acosh"
@@ -118,7 +146,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexd32
+ complexd32
  ("mmux_complexd32_abs"
   "mmux_complexd32_acos"
   "mmux_complexd32_acosh"
@@ -162,7 +190,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexd64
+ complexd64
  ("mmux_complexd64_abs"
   "mmux_complexd64_acos"
   "mmux_complexd64_acosh"
@@ -206,7 +234,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexd
+ complexd
  ("mmux_complexd_abs"
   "mmux_complexd_acos"
   "mmux_complexd_acosh"
@@ -250,7 +278,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf128
+ complexf128
  ("mmux_complexf128_abs"
   "mmux_complexf128_acos"
   "mmux_complexf128_acosh"
@@ -294,7 +322,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf128x
+ complexf128x
  ("mmux_complexf128x_abs"
   "mmux_complexf128x_acos"
   "mmux_complexf128x_acosh"
@@ -338,7 +366,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf32
+ complexf32
  ("mmux_complexf32_abs"
   "mmux_complexf32_acos"
   "mmux_complexf32_acosh"
@@ -382,7 +410,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf32x
+ complexf32x
  ("mmux_complexf32x_abs"
   "mmux_complexf32x_acos"
   "mmux_complexf32x_acosh"
@@ -426,7 +454,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf64
+ complexf64
  ("mmux_complexf64_abs"
   "mmux_complexf64_acos"
   "mmux_complexf64_acosh"
@@ -470,7 +498,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf64x
+ complexf64x
  ("mmux_complexf64x_abs"
   "mmux_complexf64x_acos"
   "mmux_complexf64x_acosh"
@@ -514,7 +542,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexf
+ complexf
  ("mmux_complexf_abs"
   "mmux_complexf_acos"
   "mmux_complexf_acosh"
@@ -558,7 +586,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-complexld
+ complexld
  ("mmux_complexld_abs"
   "mmux_complexld_acos"
   "mmux_complexld_acosh"
@@ -602,7 +630,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-decimal128
+ decimal128
  ("mmux_decimal128_abs"
   "mmux_decimal128_acos"
   "mmux_decimal128_acosh"
@@ -685,7 +713,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-decimal32
+ decimal32
  ("mmux_decimal32_abs"
   "mmux_decimal32_acos"
   "mmux_decimal32_acosh"
@@ -768,7 +796,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-decimal64
+ decimal64
  ("mmux_decimal64_abs"
   "mmux_decimal64_acos"
   "mmux_decimal64_acosh"
@@ -851,7 +879,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-double
+ double
  ("mmux_double_abs"
   "mmux_double_acos"
   "mmux_double_acosh"
@@ -934,7 +962,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float128
+ float128
  ("mmux_float128_abs"
   "mmux_float128_acos"
   "mmux_float128_acosh"
@@ -1017,7 +1045,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float128x
+ float128x
  ("mmux_float128x_abs"
   "mmux_float128x_acos"
   "mmux_float128x_acosh"
@@ -1100,7 +1128,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float32
+ float32
  ("mmux_float32_abs"
   "mmux_float32_acos"
   "mmux_float32_acosh"
@@ -1183,7 +1211,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float32x
+ float32x
  ("mmux_float32x_abs"
   "mmux_float32x_acos"
   "mmux_float32x_acosh"
@@ -1266,7 +1294,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float64
+ float64
  ("mmux_float64_abs"
   "mmux_float64_acos"
   "mmux_float64_acosh"
@@ -1349,7 +1377,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float64x
+ float64x
  ("mmux_float64x_abs"
   "mmux_float64x_acos"
   "mmux_float64x_acosh"
@@ -1432,7 +1460,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-float
+ float
  ("mmux_float_abs"
   "mmux_float_acos"
   "mmux_float_acosh"
@@ -1515,7 +1543,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-gid
+ gid
  ("mmux_gid_abs"
   "mmux_gid_add"
   "mmux_gid_array_ref"
@@ -1553,7 +1581,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-ldouble
+ ldouble
  ("mmux_ldouble_abs"
   "mmux_ldouble_acos"
   "mmux_ldouble_acosh"
@@ -1636,7 +1664,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-mode
+ mode
  ("mmux_mode_abs"
   "mmux_mode_add"
   "mmux_mode_array_ref"
@@ -1674,7 +1702,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-off
+ off
  ("mmux_off_abs"
   "mmux_off_add"
   "mmux_off_array_ref"
@@ -1712,7 +1740,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-pid
+ pid
  ("mmux_pid_abs"
   "mmux_pid_add"
   "mmux_pid_array_ref"
@@ -1750,7 +1778,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-pointer
+ pointer
  ("mmux_pointer_add"
   "mmux_pointer_array_ref"
   "mmux_pointer_array_set"
@@ -1779,7 +1807,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-ptrdiff
+ ptrdiff
  ("mmux_ptrdiff_abs"
   "mmux_ptrdiff_add"
   "mmux_ptrdiff_array_ref"
@@ -1817,7 +1845,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-schar
+ schar
  ("mmux_schar_abs"
   "mmux_schar_add"
   "mmux_schar_array_ref"
@@ -1855,7 +1883,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sint16
+ sint16
  ("mmux_sint16_abs"
   "mmux_sint16_add"
   "mmux_sint16_array_ref"
@@ -1893,7 +1921,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sint32
+ sint32
  ("mmux_sint32_abs"
   "mmux_sint32_add"
   "mmux_sint32_array_ref"
@@ -1931,7 +1959,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sint64
+ sint64
  ("mmux_sint64_abs"
   "mmux_sint64_add"
   "mmux_sint64_array_ref"
@@ -1969,7 +1997,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sint8
+ sint8
  ("mmux_sint8_abs"
   "mmux_sint8_add"
   "mmux_sint8_array_ref"
@@ -2007,7 +2035,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sint
+ sint
  ("mmux_sint_abs"
   "mmux_sint_add"
   "mmux_sint_array_ref"
@@ -2045,7 +2073,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sintmax
+ sintmax
  ("mmux_sintmax_abs"
   "mmux_sintmax_add"
   "mmux_sintmax_array_ref"
@@ -2083,7 +2111,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sintptr
+ sintptr
  ("mmux_sintptr_abs"
   "mmux_sintptr_add"
   "mmux_sintptr_array_ref"
@@ -2121,7 +2149,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sllong
+ sllong
  ("mmux_sllong_abs"
   "mmux_sllong_add"
   "mmux_sllong_array_ref"
@@ -2159,7 +2187,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-slong
+ slong
  ("mmux_slong_abs"
   "mmux_slong_add"
   "mmux_slong_array_ref"
@@ -2197,7 +2225,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-sshort
+ sshort
  ("mmux_sshort_abs"
   "mmux_sshort_add"
   "mmux_sshort_array_ref"
@@ -2235,7 +2263,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-ssize
+ ssize
  ("mmux_ssize_abs"
   "mmux_ssize_add"
   "mmux_ssize_array_ref"
@@ -2273,7 +2301,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-string
+ string
  ("mmux_string_is_complexd"
   "mmux_string_is_complexd128"
   "mmux_string_is_complexd32"
@@ -2334,7 +2362,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uchar
+ uchar
  ("mmux_uchar_abs"
   "mmux_uchar_add"
   "mmux_uchar_array_ref"
@@ -2372,7 +2400,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uid
+ uid
  ("mmux_uid_abs"
   "mmux_uid_add"
   "mmux_uid_array_ref"
@@ -2410,7 +2438,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uint16
+ uint16
  ("mmux_uint16_abs"
   "mmux_uint16_add"
   "mmux_uint16_array_ref"
@@ -2448,7 +2476,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uint32
+ uint32
  ("mmux_uint32_abs"
   "mmux_uint32_add"
   "mmux_uint32_array_ref"
@@ -2486,7 +2514,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uint64
+ uint64
  ("mmux_uint64_abs"
   "mmux_uint64_add"
   "mmux_uint64_array_ref"
@@ -2524,7 +2552,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uint8
+ uint8
  ("mmux_uint8_abs"
   "mmux_uint8_add"
   "mmux_uint8_array_ref"
@@ -2562,7 +2590,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uint
+ uint
  ("mmux_uint_abs"
   "mmux_uint_add"
   "mmux_uint_array_ref"
@@ -2600,7 +2628,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uintmax
+ uintmax
  ("mmux_uintmax_abs"
   "mmux_uintmax_add"
   "mmux_uintmax_array_ref"
@@ -2638,7 +2666,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-uintptr
+ uintptr
  ("mmux_uintptr_abs"
   "mmux_uintptr_add"
   "mmux_uintptr_array_ref"
@@ -2676,7 +2704,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-ullong
+ ullong
  ("mmux_ullong_abs"
   "mmux_ullong_add"
   "mmux_ullong_array_ref"
@@ -2714,7 +2742,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-ulong
+ ulong
  ("mmux_ulong_abs"
   "mmux_ulong_add"
   "mmux_ulong_array_ref"
@@ -2752,7 +2780,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-ushort
+ ushort
  ("mmux_ushort_abs"
   "mmux_ushort_add"
   "mmux_ushort_array_ref"
@@ -2790,7 +2818,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-usize
+ usize
  ("mmux_usize_abs"
   "mmux_usize_add"
   "mmux_usize_array_ref"
@@ -2828,7 +2856,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-wchar
+ wchar
  ("mmux_wchar_abs"
   "mmux_wchar_add"
   "mmux_wchar_array_ref"
@@ -2866,7 +2894,7 @@
 
 
 (mmux-bash-pointers-prepare-regexp
- mmux-bash-pointers-known-functions-wint
+ wint
  ("mmux_wint_abs"
   "mmux_wint_add"
   "mmux_wint_array_ref"
@@ -2901,90 +2929,6 @@
   "mmux_wint_pointer_ref"
   "mmux_wint_pointer_set"
   "mmux_wint_sub"))
-
-
-(defun mmux-bash-pointers-font-lock-add-keywords ()
-  "Add font locking to `sh-mode' supporting MMUX Bash Pointers identifiers.
-
-Add font locking to `sh-mode' supporting MMUX Bash Pointers identifiers.
-This function is to be called from a hook."
-  (message "MMUX Bash Pointers: configuring font-locking for the current buffer %s" (buffer-name))
-  (font-lock-add-keywords
-      ;;This argument  MODE is  set to `nil'  because this call  is performed  from a mode  hook; it
-      ;;causes  the  configuration to  happen  in  the current  buffer.   See  the documentation  of
-      ;;`font-lock-add-keywords' for details.
-      nil
-
-    ;;Here  we need  to remember  that "(regexp-opt  ... 'symbols)"  encloses the  generated regular
-    ;;expression between  '\_<\(' and '\)\_>'  so the SUBEXP  number must be  1 to match  the actual
-    ;;symbol.
-    ;;
-    `((,mmux-bash-pointers-known-functions-general 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexd128 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexd32 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexd64 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexd 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf128 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf128x 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf32 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf32x 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf64 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf64x 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexf 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-complexld 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-decimal128 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-decimal32 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-decimal64 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-double 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float128 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float128x 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float32 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float32x 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float64 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float64x 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-float 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-gid 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-ldouble 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-mode 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-off 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-pid 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-pointer 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-ptrdiff 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-schar 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sint16 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sint32 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sint64 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sint8 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sint 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sintmax 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sintptr 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sllong 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-slong 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-sshort 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-ssize 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-string 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uchar 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uid 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uint16 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uint32 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uint64 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uint8 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uint 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uintmax 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-uintptr 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-ullong 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-ulong 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-ushort 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-usize 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-wchar 1 mmux-bash-pointers-function-face keep)
-      (,mmux-bash-pointers-known-functions-wint 1 mmux-bash-pointers-function-face keep))
-
-    ;;This true  value as  HOW argument causes  this specification  to be appended  to the  value of
-    ;;`font-lock-keywords'.
-    ;;
-    ;;We need it to allow correct fontification of known function names, which must happen after the
-    ;;fontification built into `sh-mode'.
-    t))
 
 (provide 'mmux-bash-pointers)
 ;;; mmux-bash-pointers.el ends here
