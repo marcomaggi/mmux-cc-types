@@ -68,6 +68,7 @@
        "mmux_package_option_enable_load_when_provide"
        "mmux_package_option_load_when_provide_is_enabled"
        "mmux_package_provide_by_descriptor"
+       "mmux_package_require_by_descriptor"
 
        ;; loading
        "mmux_package_descriptor_has_builtins_to_enable"

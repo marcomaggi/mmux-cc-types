@@ -29,11 +29,13 @@
 
 #### macros
 
-MBFL_DEFINE_QQ_MACRO
-MBFL_DEFINE_UNDERSCORE_MACRO_FOR_SLOTS
+MBFL_DEFINE_SPECIAL_MACROS
+MBFL_DEFINE_UNDERSCORE_MACRO
 
 
 #### setup
+
+echo "$MBFL_LIBRARY_PATH" >&2
 
 mbfl_embed_library(__LIBMBFL_LINKER__)
 mbfl_linker_source_library_by_stem(core)

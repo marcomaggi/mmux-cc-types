@@ -245,7 +245,7 @@ EXTRA_DIST		+= \
 	tests/types.test.m4			\
 	tests/version.test.m4
 
-# For some reason GNU Automake does not want "TEST_EXTENSIONS" to be
+# For some reason  GNU Automake does not want  "TEST_EXTENSIONS" to be
 # inside a conditional; so we put it here.
 TEST_EXTENSIONS		= .test
 
@@ -276,8 +276,6 @@ CLEANFILES		+= $(MMUX_CHECK_BUILT_TESTS)
 
 ## --------------------------------------------------------------------
 
-MBFL_TESTS_VERBENV	= TESTSUCCESS=yes; export TESTSUCCESS; TESTSTART=yes; export TESTSTART;
-
 # This environment  setting is used  both to compile  ".test.m4" files
 # and to run ".test" files.
 #
@@ -298,18 +296,22 @@ MBFL_TESTS_PREREQUISITES= \
 	$(builddir)/src/libmmux-bash-packages.bash	\
 	$(builddir)/src/libmmux-bash-pointers.bash
 
+tests/%.test: tests/%.test.m4 $(MBFL_TESTS_PREREQUISITES)
+	$(MBFL_TESTS_COMPILE) $(MBFL_TESTS_FLAGS) $< >$@
+
+## ------------------------------------------------------------------------
+
+MBFL_TESTS_RUN_VERBENV	= TESTSUCCESS=yes; export TESTSUCCESS; TESTSTART=yes; export TESTSTART;
+MBFL_TESTS_RUN_ENV	= $(MBFL_TESTS_ENV)
 # Read "Parallel Test Harness" in the documentation of GNU Automake to
 # understand how to use this interface for "make check".
 #
 # We must make sure that this ends with a semicolon!!!
-AM_TESTS_ENVIRONMENT	= $(MBFL_TESTS_VERBENV) $(MBFL_TESTS_ENV)
+AM_TESTS_ENVIRONMENT	= $(MBFL_TESTS_RUN_VERBENV) $(MBFL_TESTS_RUN_ENV)
 TEST_LOG_COMPILER	= $(BASH_PROGRAM)
 AM_TEST_LOG_FLAGS	= $(MBFLFLAGS)
 
 ## --------------------------------------------------------------------
-
-tests/%.test: tests/%.test.m4 $(MBFL_TESTS_PREREQUISITES)
-	$(MBFL_TESTS_COMPILE) $(MBFL_TESTS_FLAGS) $< >$@
 
 endif
 

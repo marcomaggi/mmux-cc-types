@@ -28,6 +28,8 @@
 #page
 #### package descriptor
 
+mmux_package_require_by_descriptor MMUX_BASH_PACKAGES_PACKAGE 0
+
 declare -gA MMUX_BASH_POINTERS_PACKAGE=([PACKAGING_VERSION]='0'
 					[PACKAGE_NAME]='MMUX Bash Pointers'
 					[SEMANTIC_VERSION]='mmux_bash_pointers_SEMANTIC_VERSION'

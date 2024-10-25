@@ -4815,6 +4815,7 @@ not really required by other shell libraries, including those depending on
 * packages conventions::        Conventions used in this documentation.
 * packages descriptor::         Package descriptor.
 * packages registry::           Registry of descriptors.
+* packages requiring::          Requiring a package.
 * packages providing::          Providing a package.
 * packages loading::            Loading a package.
 * packages unloading::          Unloading a package.
@@ -5102,6 +5103,47 @@ return false.
 @defun mmux_package_descriptor_is_registered_as_broken @var{DESCRIPTOR_ARRAYNAME}
 Return true if a package descriptor has been registered and its state is @samp{broken}; otherwise
 return false.
+@end defun
+
+@c page
+@node packages requiring
+@appendixsec Requiring a package
+
+
+When the code of a package adhering to the @mmux{} Bash Packaging Infrastructure is sourced: it can
+require a list of packages satisfying @api{} version requirements.  So in the source code of
+@file{libmmux-bash-pointers.bash} there is the top--level code:
+
+@example
+mmux_package_require_by_descriptor MMUX_BASH_PACKAGES_PACKAGE 0
+@end example
+
+@noindent
+while in the source code of @file{libmmux-bash-mpc.bash} there is the top--level code:
+
+@example
+mmux_package_require_by_descriptor MMUX_BASH_PACKAGES_PACKAGE 0
+mmux_package_require_by_descriptor MMUX_BASH_POINTERS_PACKAGE 0
+mmux_package_require_by_descriptor MMUX_BASH_MPFR_PACKAGE     0
+@end example
+
+@ref{packages conventions, Conventions used in this documentation}.
+
+@defun mmux_package_require_by_descriptor @var{DESCRIPTOR_ARRAYNAME}
+@defunx mmux_package_require_by_descriptor @var{DESCRIPTOR_ARRAYNAME} @var{API_VERSION}
+Check that the registry contains a descriptor with name @var{DESCRIPTOR_ARRAYNAME} which supports
+@api{} version @var{API_VERSION}, which must be the string representation of a non--negative exact
+integer.  If the requirements are satisfied: return success; otherwise print error messages to
+@stderr{} then call @func{mmux_package_exit_because_error_loading_package}.
+
+When the argument @var{API_VERSION} is not present: it defaults to @samp{0}.
+
+If @var{DESCRIPTOR_ARRAYNAME} is registered and it implements an @api{} with version number
+@var{CURRENT} and age number @var{AGE}, the requirements are satisfied if:
+
+@example
+(@var{CURRENT} - @var{AGE}) <= @var{API_VERSION} <= @var{CURRENT}
+@end example
 @end defun
 
 @c page

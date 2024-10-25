@@ -90,8 +90,14 @@ function mmux_package_descriptor_is_registered_as_broken () {
 
 function mmux_package_provide_by_descriptor () {
     declare -r mmux_p_PACKAGE_DESCRIPTOR_NAME=PP(1,PACKAGE_DESCRIPTOR)
+    declare -n mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
-    mmux_package_print_debug_message 'providing package: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    declare -ri mmux_p_CURRENT=RR(mmux_p_PACKAGE_DESCRIPTOR,INTERFACE_VERSION_CURRENT)
+    declare -ri mmux_p_REVISION=RR(mmux_p_PACKAGE_DESCRIPTOR,INTERFACE_VERSION_REVISION)
+    declare -ri mmux_p_AGE=RR(mmux_p_PACKAGE_DESCRIPTOR,INTERFACE_VERSION_AGE)
+
+    mmux_package_print_debug_message 'providing package: "%s" version %d.%d.%d' \
+				     WW(mmux_p_PACKAGE_DESCRIPTOR_NAME) WW(mmux_p_CURRENT) WW(mmux_p_REVISION) WW(mmux_p_AGE)
     mmux_package_check_packaging_version WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
 
     if mmux_package_descriptor_is_registered WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
@@ -304,6 +310,46 @@ function mmux_package_run_descriptor_before_unloading_hook () {
 }
 
 #page
+#### requiring packages
+
+function mmux_package_require_by_descriptor () {
+    declare -r  mmux_p_PACKAGE_DESCRIPTOR_NAME=PP(1,PACKAGE_DESCRIPTOR)
+    declare -ri mmux_p_REQUIRED_VERSION=${2:=0}
+
+    mmux_package_print_debug_message 'requiring package: "%s" version %d' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME) WW(mmux_p_REQUIRED_VERSION)
+
+    if ! mmux_package_descriptor_is_registered WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+    then
+	mmux_package_print_error_message 'required package has not been provided: "%s"' WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	mmux_package_exit_because_error_loading_package
+    fi
+
+    if test -n QQ(mmux_p_REQUIRED_VERSION)
+    then
+	{
+	    declare -n  mmux_p_PACKAGE_DESCRIPTOR=RR(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+	    declare -ri mmux_p_CURRENT=RR(mmux_p_PACKAGE_DESCRIPTOR,INTERFACE_VERSION_CURRENT)
+	    declare -ri mmux_p_AGE=RR(mmux_p_PACKAGE_DESCRIPTOR,    INTERFACE_VERSION_AGE)
+	    declare -ri mmux_p_MAX_VERSION=RR(mmux_p_CURRENT)
+	    declare -ri mmux_p_MIN_VERSION=$(( WW(mmux_p_CURRENT) - WW(mmux_p_AGE) ))
+
+	    if (( ( mmux_p_MIN_VERSION <= mmux_p_REQUIRED_VERSION ) && ( mmux_p_REQUIRED_VERSION <= mmux_p_MAX_VERSION ) ))
+	    then mmux_package_return_success
+	    else
+		mmux_package_print_error_message 'unsupported required API version %d for package: "%s"'      \
+						 WW(mmux_p_REQUIRED_VERSION)				      \
+						 WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)
+		mmux_package_print_error_message 'package "%s" implements API versions from %d to %d'	      \
+						 WW(mmux_p_PACKAGE_DESCRIPTOR_NAME)			      \
+						 WW(mmux_p_MIN_VERSION) WW(mmux_p_MAX_VERSION)
+		mmux_package_exit_because_error_loading_package
+	    fi
+	}
+    fi
+    mmux_package_return_success
+}
+
+#page
 #### data validation functions
 
 function mmux_package_string_is_identifier () {
@@ -367,7 +413,7 @@ function mmux_package_print_verbose_message () {
 	declare -r TEMPLATE=${1:?"missing parameter 1 TEMPLATE in call to '$FUNCNAME'"}
 	shift 1
 	{
-	    printf 'MMUX Bash Package: '
+	    printf 'MMUX Package Manager: '
 	    printf QQ(TEMPLATE) "$@"
 	    printf '\n'
 	} >&2
@@ -388,7 +434,7 @@ function mmux_package_print_debug_message () {
 	declare -r TEMPLATE=${1:?"missing parameter 1 TEMPLATE in call to '$FUNCNAME'"}
 	shift 1
 	{
-	    printf 'MMUX Bash Package: debug: '
+	    printf 'MMUX Package Manager: debug: '
 	    printf QQ(TEMPLATE) "$@"
 	    printf '\n'
 	} >&2
