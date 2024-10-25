@@ -7,8 +7,7 @@ AC_INIT([MMUX Bash Pointers],[MMUX_PACKAGE_VERSION],
   [mrc.mgg@gmail.com],
   [mmux-bash-pointers],[https://github.com/marcomaggi/mmux-bash-pointers])
 MMUX_INIT
-MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_bash_pointers],1,0,0)
-MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_cc_types],0,0,0)
+MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_bash_pointers],0,0,0)
 AC_REVISION([0.1])
 AC_COPYRIGHT([Copyright (c) 2024 Marco Maggi <mrc.mgg@gmail.com>
 
