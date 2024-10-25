@@ -230,21 +230,25 @@ mmux_bash_pointers_decl int mmux_bash_builtin_wrong_num_of_args (void);
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_variable (char const * variable_name, char const * s_value,
-									   char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_string_bind_to_bash_variable
+  (char const * variable_name, char const * s_value, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_global_variable (char const * variable_name, char const * s_value,
-										  char const * who)
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_string_bind_to_bash_global_variable
+  (char const * v, char const * s_value, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_sint_in_variable (char const * variable_name, int value, char const * who)
-  __attribute__((__nonnull__(1)));
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_variable (char const * variable_name, char const * s_value,
+									   char const * who)
+  __attribute__((__nonnull__(1,2),
+		 __deprecated__("use the newest mmux_string_bind_to_bash_variable")));
 
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * who)
-  __attribute__((__nonnull__(1)));
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_global_variable (char const * variable_name, char const * s_value,
+										  char const * who)
+  __attribute__((__nonnull__(1,2),
+		 __deprecated__("use the newest mmux_string_bind_to_bash_global_variable")));
 
 /* ------------------------------------------------------------------ */
 

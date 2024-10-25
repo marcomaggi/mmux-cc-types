@@ -62,7 +62,7 @@ mmux_bash_pointers_version_interface_age (void)
 mmux_bash_rv_t
 mmux_bash_pointers_set_ERRNO (int errnum, char const * const who)
 {
-  return mmux_bash_store_sint_in_variable("ERRNO", errnum, who);
+  return mmux_sint_bind_to_variable("ERRNO", errnum, who);
 }
 mmux_bash_rv_t
 mmux_bash_pointers_consume_errno (char const * const who)
@@ -558,7 +558,7 @@ mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char cons
 
     rv = mmux_$1_sprint(s_value, required_nbytes, value);
     if (false == rv) {
-      return mmux_bash_store_string_in_variable(variable_name, s_value, caller_name);
+      return mmux_string_bind_to_bash_variable(variable_name, s_value, caller_name);
     } else {
       return MMUX_FAILURE;
     }

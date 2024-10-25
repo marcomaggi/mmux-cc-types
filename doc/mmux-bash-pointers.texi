@@ -4522,13 +4522,17 @@ fi
 
 @value{PACKAGE} installs a shared library:
 
-@center @file{libmmux-bash-pointers.so}
+@example
+libmmux-bash-pointers.so
+@end example
 
 @noindent
 and C language headers:
 
-@center @file{libmmux-bash-pointers.h}
-@center @file{libmmux-bash-pointers-config.h}
+@example
+libmmux-bash-pointers.h
+libmmux-bash-pointers-config.h
+@end example
 
 @noindent
 we can write code that links to the shared library to reuse some of its facilities.  @ref{overview
@@ -4686,6 +4690,45 @@ Return value used to signal a failed function call.
 @node shared library bindings
 @appendixsec Binding values to variables
 
+
+@cindex Binding strings to shell variables
+@cindex Binding values to shell variables
+@cindex Assigning strings to shell variables
+@cindex Assigning values to shell variables
+@cindex Shell variables, binding values with C functions
+@cindex Shell variables, assigning values with C functions
+@cindex Creating a global shell variable with C functions
+@cindex Declaring a global shell variable with C functions
+@cindex Assigning a global shell variable with C functions
+
+
+@deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
+Assign @var{svalue} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+
+When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
+@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
+builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_global_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
+Like @cfunc{mmux_string_bind_to_bash_variable} but bind the value to a global shell variable.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_create_global_string_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
+Like @cfunc{mmux_string_bind_to_bash_global_variable} but  return @code{MMUX_FAILURE} if the shell
+variable already exists.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_create_global_sint_variable (char const * @var{variable_name}, int @var{value}, char const * @var{who})
+Like @cfunc{mmux_bash_create_global_string_variable} but convert @var{value} to its string
+representation and bind that string to the shell variable.
+@end deftypefun
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionBindToVariable{STEM}
 @deftypefun mmux_bash_rv_t mmux_\STEM\_bind_to_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})

@@ -117,16 +117,14 @@ mmux_bash_builtin_wrong_num_of_args (void)
 
 
 /** --------------------------------------------------------------------
- ** Binding values to shell variables.
+ ** Binding string values to shell variables.
  ** ----------------------------------------------------------------- */
 
 static mmux_bash_rv_t
-store_string_in_variable (char const * variable_name, char const * const s_value, char const * const caller_name, bool global_variable)
+string_bind_to_bash_variable (char const * variable_name, char const * const s_value, char const * const caller_name, bool global_variable)
 {
   SHELL_VAR *	shell_variable MMUX_BASH_POINTERS_UNUSED;
   int		flags = 0;
-
-  if (0) { fprintf(stderr, "%s: variable_name=%s s_value=%s (who=%s)\n", __func__, variable_name, s_value, caller_name); }
 
   if (global_variable) {
     shell_variable = bind_global_variable(variable_name, (char *)s_value, flags);
@@ -134,78 +132,44 @@ store_string_in_variable (char const * variable_name, char const * const s_value
     shell_variable = builtin_bind_variable((char *)variable_name, (char *)s_value, flags);
   }
 
-  if (0) { fprintf(stderr, "%s: result of binding %p\n", __func__, (void*)shell_variable); }
-
   if (shell_variable) {
     return MMUX_BASH_EXECUTION_SUCCESS;
   } else {
     if (caller_name) {
-      if (global_variable) {
-	fprintf(stderr, "%s: failed binding value to global shell variable: \"%s\"=\"%s\"\n", caller_name, variable_name, s_value);
-      } else {
-	fprintf(stderr, "%s: failed binding value to shell variable: \"%s\"=\"%s\"\n", caller_name, variable_name, s_value);
-      }
+      fprintf(stderr, "%s: failed binding value to %s shell variable: \"%s\"=\"%s\"\n",
+	      caller_name, ((global_variable)? " global" : ""), variable_name, s_value);
     }
     return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
 mmux_bash_rv_t
+mmux_string_bind_to_bash_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
+{
+  return string_bind_to_bash_variable(variable_name, s_value, caller_name, false);
+}
+mmux_bash_rv_t
+mmux_string_bind_to_bash_global_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
+{
+  return string_bind_to_bash_variable(variable_name, s_value, caller_name, true);
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_bash_rv_t
 mmux_bash_store_string_in_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
 {
-  return store_string_in_variable(variable_name, s_value, caller_name, false);
+  return string_bind_to_bash_variable(variable_name, s_value, caller_name, false);
 }
 mmux_bash_rv_t
 mmux_bash_store_string_in_global_variable (char const * variable_name, char const * const s_value, char const * const caller_name)
 {
-  return store_string_in_variable(variable_name, s_value, caller_name, true);
+  return string_bind_to_bash_variable(variable_name, s_value, caller_name, true);
 }
 
-/* ------------------------------------------------------------------ */
-
-static mmux_bash_rv_t
-store_sint_in_variable (char const * variable_name, int value, char const * const caller_name, bool global_variable)
-{
-  int	required_nbytes;
-
-  /* Compute the number of required characters, INCLUDING the terminating zero. */
-  {
-    /* According to  the documentation,  when the  output is  truncated: "snprintf()"
-       returns the number of required bytes, EXCLUDING the terminating null byte. */
-    required_nbytes = snprintf(NULL, 0, "%d", value);
-    if (0 > required_nbytes) {
-      return MMUX_BASH_EXECUTION_FAILURE;
-    }
-    ++required_nbytes;
-  }
-
-  /* Convert the value to string then store it. */
-  {
-    char	s_value[required_nbytes];
-    int		to_be_written_chars;
-
-    /* According  to  the documentation:  "snprintf()"  writes  the terminating  null
-       byte. */
-    to_be_written_chars = snprintf(s_value, required_nbytes, "%d", value);
-    if (required_nbytes == (1+to_be_written_chars)) {
-      return store_string_in_variable(variable_name, s_value, caller_name, global_variable);
-    } else {
-      return MMUX_BASH_EXECUTION_FAILURE;
-    }
-  }
-}
-
-mmux_bash_rv_t
-mmux_bash_store_sint_in_variable (char const * variable_name, int value, char const * const caller_name)
-{
-  return store_sint_in_variable(variable_name, value, caller_name, false);
-}
-mmux_bash_rv_t
-mmux_bash_store_sint_in_global_variable (char const * variable_name, int value, char const * const caller_name)
-{
-  return store_sint_in_variable(variable_name, value, caller_name, true);
-}
-
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Creating global string and sint variables.
+ ** ----------------------------------------------------------------- */
 
 mmux_bash_rv_t
 mmux_bash_create_global_string_variable (char const * const variable_name, char const * const s_value, char const * const caller_name)
@@ -213,7 +177,7 @@ mmux_bash_create_global_string_variable (char const * const variable_name, char 
   SHELL_VAR	* shell_variable = find_global_variable(variable_name);
 
   if (NULL == shell_variable) {
-    return mmux_bash_store_string_in_global_variable(variable_name, s_value, caller_name);
+    return mmux_string_bind_to_bash_variable(variable_name, s_value, caller_name);
   } else {
     if (caller_name) {
       fprintf(stderr, "%s: failed creation of global variable, it already exists: \"%s\"\n", caller_name, variable_name);
