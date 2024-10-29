@@ -38,7 +38,7 @@ m4_define([[[DEFINE_TYPE_STRING_REP_PREDICATE]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mm
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	data MMUX_BASH_POINTERS_UNUSED;
-  bool		rv = mmux_$1_parse(&data, argv[1], MMUX_BUILTIN_NAME_STR);
+  bool		rv = mmux_$1_parse(&data, argv[1], NULL);
 
   return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
 ]]],[[[
