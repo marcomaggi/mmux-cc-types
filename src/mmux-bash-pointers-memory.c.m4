@@ -42,7 +42,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_malloc]]])
     void *	ptr = malloc(len);
     if (0) { fprintf(stderr, "%s: allocated pointer %p\n", __func__, ptr); }
     if (ptr) {
-      return mmux_pointer_bind_to_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
+      return mmux_pointer_bind_to_bash_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
     } else {
       mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME_STR);
       return MMUX_FAILURE;
@@ -68,7 +68,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_calloc]]])
     void *	ptr = calloc(item_count, item_size);
     if (0) { fprintf(stderr, "%s: allocated pointer %p\n", __func__, ptr); }
     if (ptr) {
-      return mmux_pointer_bind_to_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
+      return mmux_pointer_bind_to_bash_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
     } else {
       mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME_STR);
       return MMUX_FAILURE;
@@ -93,7 +93,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_realloc]]])
   {
     ptr = realloc(ptr, len);
     if (ptr) {
-      return mmux_pointer_bind_to_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
+      return mmux_pointer_bind_to_bash_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
     } else {
       mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME_STR);
       return MMUX_FAILURE;

@@ -4731,7 +4731,7 @@ representation and bind that string to the shell variable.
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionBindToVariable{STEM}
-@deftypefun mmux_bash_rv_t mmux_\STEM\_bind_to_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
+@deftypefun mmux_bash_rv_t mmux_\STEM\_bind_to_bash_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
 

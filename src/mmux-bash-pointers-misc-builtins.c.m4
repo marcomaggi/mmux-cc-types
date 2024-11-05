@@ -148,7 +148,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
     {
       bool	rv = mmux_$1_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
       if (true == rv) { bash_rv = MMUX_FAILURE; goto get_out; }
-      bash_rv = mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+      bash_rv = mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
     }
    get_out:
     mmux_$1_set_output_format(old_format, NULL);
@@ -207,7 +207,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
     {
       bool	rv = mmux_$2_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
       if (true == rv) { bash_rv = MMUX_FAILURE; goto get_out; }
-      bash_rv = mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+      bash_rv = mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
     }
    get_out:
     mmux_$2_set_output_format(old_format, NULL);

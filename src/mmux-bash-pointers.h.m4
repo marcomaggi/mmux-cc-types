@@ -118,7 +118,7 @@ typedef enum {
 
 m4_dnl $1 - type stem
 m4_define([[[DEFINE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_bind_to_variable (char const * variable_name, mmux_$1_t value, char const * who);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_bind_to_bash_variable (char const * variable_name, mmux_$1_t value, char const * who);
 ]]])]]])
 
 DEFINE_PROTOS([[[pointer]]])

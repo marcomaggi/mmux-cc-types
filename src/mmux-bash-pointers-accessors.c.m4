@@ -50,7 +50,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     ptr_byte += offset;
     ptr_value = (mmux_$1_t *)ptr_byte;
     value     = *ptr_value;
-    return mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+    return mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
@@ -80,7 +80,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
     ptr_value = (mmux_$1_t *)ptr;
     value     = ptr_value[index];
-    return mmux_$1_bind_to_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+    return mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
