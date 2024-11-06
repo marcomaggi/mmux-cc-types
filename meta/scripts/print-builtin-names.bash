@@ -70,11 +70,18 @@ print_builtin_name 'mmux_bash_pointers_library_init'
 declare -i IDX JDX
 declare NAME ALIAS ITEM STEM
 
-for ITEM in "${LIBC_BUILTINS[@]}"
-do
-    printf -v NAME 'mmux_libc_%s' "$ITEM"
-    print_builtin_name "$NAME"
-done
+# Standard C Library stuff.
+{
+    for ITEM in "${LIBC_BUILTINS[@]}"
+    do
+	printf -v NAME 'mmux_libc_%s' "$ITEM"
+	print_builtin_name "$NAME"
+    done
+
+    for NAME in mmux_pointer_from_bash_string mmux_pointer_to_bash_string
+    do print_builtin_name "$NAME"
+    done
+}
 
 for STEM in "${MMUX_BASH_POINTERS_STEMS[@]}"
 do

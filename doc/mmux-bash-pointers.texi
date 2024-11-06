@@ -4056,10 +4056,71 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @chapter @asciiz{} strings
 
 
+@menu
+* strings conversion::          Converting @asciiz{} strings to other representations.
+* strings inspection::          Inspecting @asciiz{} strings.
+@end menu
+
+@c page
+@node strings conversion
+@section Converting @asciiz{} strings to other representations
+
+
+@gnu{} Bash's internal string representation is @asciiz{}; we can only have read--only access to
+Bash strings in certain timespans while a builtin is evaluated; Bash itself owns the memory.  To
+convert between Bash strings and raw memory strings owned by client code, without error checking, we
+do:
+
+@example
+declare PTR STR
+declare -i LEN
+
+mmux_pointer_from_bash_string PTR 'ciao'
+@{
+    mmux_libc_strlen LEN @RR{PTR}
+    mmux_pointer_to_bash_string STR @RR{PTR} @RR{LEN}
+    @RR{STR}    @result{} ciao
+@}
+mmux_libc_free @RR{PTR}
+@end example
+
+
+@deffn Builtin mmux_pointer_from_bash_string @var{PTRVAR} @var{STRING}
+Take a Bash string argument @var{STRING}, duplicate it allocating memory with @cfunc{malloc}, then
+bind the string representation of the resulting pointer to the shell variable name @var{PTRVAR}.
+
+When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.  If an
+error occurs allocating memory: the return value is false and the shell variable @var{PTRVAR} is
+left untouched.
+@end deffn
+
+
+@deffn Builtin mmux_pointer_to_bash_string @var{STRVAR} @var{POINTER}
+@deffnx Builtin mmux_pointer_to_bash_string @var{STRVAR} @var{POINTER} @var{USIZE}
+Convert into a Bash string the @var{USIZE} bytes starting at offset zero from @var{POINTER}.  If
+@var{USIZE} is not present: @var{POINTER} is meant to reference an @asciiz{} string, which will be
+fully duplicated into a Bash string.  The new Bash string is bound to the shell variable whose name
+is @var{STRVAR}.
+
+When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.  If an
+error occurs allocating memory: the return value is false and the shell variable @var{PTRVAR} is
+left untouched.
+@end deffn
+
+@c page
+@node strings inspection
+@section Inspecting @asciiz{} strings
+
+
 @deffn Builtin mmux_libc_strlen @var{USIZEVAR} @var{ASCIIZ_POINTER}
 Interface to the standard function @cfunc{strlen}.  Compute the length, measured in bytes, of the
 @asciiz{} string referenced by @var{ASCIIZ_POINTER} and store it in the shell variable
-@var{USIZEVAR}.  When successful return true; otherwise return false.
+@var{USIZEVAR}.
+
+When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
+string representation of an exact integer, itself representing an @code{errno} error code.
 
 @example
 declare STR LEN
@@ -4745,8 +4806,9 @@ Return value used to signal a failed function call.
 
 
 @deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
-Assign @var{svalue} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
-otherwise return @code{MMUX_FAILURE}.
+Assign @var{s_value} to the shell @var{variable_name}; the @asciiz{} string referenced by
+@var{s_value} is duplicated internally by Bash, so Bash does @strong{not} own the memory referenced
+by @var{s_value}.  When successful return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
 
 When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
 @var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a

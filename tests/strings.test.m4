@@ -41,6 +41,88 @@ mbfl_linker_source_library_by_stem(mmux-bash-packages)
 mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 
+#### conversion to/from bash strings
+
+function strings-from-bash-1.1 () {
+    declare -r EXPECTED_RESULT='ciao'
+    declare PTR C I A O Z
+
+    mbfl_location_enter
+    {
+	if mmux_pointer_from_bash_string PTR 'ciao'
+	then mbfl_location_handler "mmux_libc_free RR(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref C RR(PTR) 0 )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref I RR(PTR) 1 )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref A RR(PTR) 2 )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref O RR(PTR) 3 )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref Z RR(PTR) 4 )
+
+	dotest-predicate mmux_string_is_pointer WW(PTR) &&
+	    dotest-equal 'c' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(C)) &&
+	    dotest-equal 'i' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(I)) &&
+	    dotest-equal 'a' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(A)) &&
+	    dotest-equal 'o' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(O)) &&
+	    dotest-equal 0 WW(Z)
+    }
+    mbfl_location_leave
+}
+function strings-to-bash-1.1 () {
+    declare -r EXPECTED_RESULT='ciao'
+    declare PTR STR
+
+    mbfl_location_enter
+    {
+	if mmux_pointer_from_bash_string PTR 'ciao'
+	then mbfl_location_handler "mmux_libc_free RR(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string   STR WW(PTR) 4 )
+
+	dotest-predicate mmux_string_is_pointer WW(PTR) &&
+	    dotest-equal WW(EXPECTED_RESULT) WW(STR)
+    }
+    mbfl_location_leave
+}
+function strings-to-bash-1.2 () {
+    declare -r EXPECTED_RESULT='ciao'
+    declare PTR STR LEN
+
+    mbfl_location_enter
+    {
+	if mmux_pointer_from_bash_string PTR 'ciao'
+	then mbfl_location_handler "mmux_libc_free RR(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR) WW(LEN) )
+
+	dotest-predicate mmux_string_is_pointer WW(PTR) &&
+	    dotest-equal WW(EXPECTED_RESULT) WW(STR)
+    }
+    mbfl_location_leave
+}
+function strings-to-bash-2.1 () {
+    declare -r EXPECTED_RESULT='ciao'
+    declare PTR STR LEN
+
+    mbfl_location_enter
+    {
+	if mmux_pointer_from_bash_string PTR 'ciao'
+	then mbfl_location_handler "mmux_libc_free RR(PTR)"
+	else mbfl_location_leave_then_return_failure
+	fi
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR) )
+
+	dotest-predicate mmux_string_is_pointer WW(PTR) &&
+	    dotest-equal WW(EXPECTED_RESULT) WW(STR)
+    }
+    mbfl_location_leave
+}
+
+
 #### strlen
 
 function strings-strlen-1.1 () {
