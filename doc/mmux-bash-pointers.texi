@@ -84,6 +84,18 @@
 @code{\NAME\}
 @end macro
 
+@macro RR{VARNAME}
+$@{\VARNAME\:?@}
+@end macro
+
+@macro WW{VARNAME}
+"$@{\VARNAME\:?@}"
+@end macro
+
+@macro QQ{VARNAME}
+"$@{\VARNAME\@}"
+@end macro
+
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
@@ -159,6 +171,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * constants::                   Values of system constants.
 * cctypes::                     Interface to supported C language data types.
 * memory::                      Raw memory operations.
+* strings::                     @asciiz{} strings.
 * errors::                      Handling errors.
 * fds::                         Core file descriptor operations.
 * misc::                        Miscellaneous features.
@@ -4037,6 +4050,35 @@ fi
 mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @end example
 @end defun
+
+@c page
+@node strings
+@chapter @asciiz{} strings
+
+
+@deffn Builtin mmux_libc_strlen @var{USIZEVAR} @var{ASCIIZ_POINTER}
+Interface to the standard function @cfunc{strlen}.  Compute the length, measured in bytes, of the
+@asciiz{} string referenced by @var{ASCIIZ_POINTER} and store it in the shell variable
+@var{USIZEVAR}.  When successful return true; otherwise return false.
+
+@example
+declare STR LEN
+
+mmux_libc_malloc STR 5
+@{
+    mmux_schar_pointer_set @RR{STR} 0 65
+    mmux_schar_pointer_set @RR{STR} 1 66
+    mmux_schar_pointer_set @RR{STR} 2 67
+    mmux_schar_pointer_set @RR{STR} 3 68
+    mmux_schar_pointer_set @RR{STR} 4 0
+
+    mmux_libc_strlen LEN @RR{STR}
+    @RR{STR}    @result{} 4
+@}
+mmux_libc_free @RR{STR}
+@end example
+@end deffn
+
 
 @c page
 @node errors
