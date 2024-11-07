@@ -53,7 +53,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -162,11 +162,11 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[m4_dnl
   for (int i = 3; i < argc; ++i) {
     ops[2] = mmux_$1_$2(ops[2], ops[i]);
   }
-  return mmux_$1_bind_to_bash_variable(argv[1], ops[2], MMUX_BUILTIN_NAME_STR);
+  return mmux_$1_bind_to_bash_variable(argv[1], ops[2], MMUX_BASH_BUILTIN_STRING_NAME);
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -277,7 +277,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -325,7 +325,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -393,7 +393,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -440,7 +440,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[m4_dnl
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }

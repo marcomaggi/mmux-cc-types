@@ -58,7 +58,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -88,7 +88,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }

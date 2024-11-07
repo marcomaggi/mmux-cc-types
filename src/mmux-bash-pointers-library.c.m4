@@ -81,7 +81,7 @@ m4_dnl --------------------------------------------------------------------
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   if (0) { fprintf(stderr, "%s: sizeof %s\n", __func__, "$1"); }
   mmux_bash_create_global_sint_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_SIZEOF", mmux_$1_sizeof(),
-                                        MMUX_BUILTIN_NAME_STR);
+                                        MMUX_BASH_BUILTIN_STRING_NAME);
 ]]])]]])
 
 /* ------------------------------------------------------------------ */
@@ -96,7 +96,7 @@ m4_define([[[MMUX_DEFINE_MAXIMUM_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2
     char	str[requested_nbytes];
 
     mmux_$1_sprint(str, requested_nbytes, value);
-    mmux_bash_create_global_string_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_MAX", str, MMUX_BUILTIN_NAME_STR);
+    mmux_bash_create_global_string_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_MAX", str, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }]]])]]])
 
@@ -112,19 +112,19 @@ m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2
     char	str[requested_nbytes];
 
     mmux_$1_sprint(str, requested_nbytes, value);
-    mmux_bash_create_global_string_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_MIN", str, MMUX_BUILTIN_NAME_STR);
+    mmux_bash_create_global_string_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_MIN", str, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }]]])]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
-  mmux_bash_create_global_sint_variable("mmux_libc_$1",	$1, MMUX_BUILTIN_NAME_STR);
+  mmux_bash_create_global_sint_variable("mmux_libc_$1",	$1, MMUX_BASH_BUILTIN_STRING_NAME);
 #endif
 ]]])
 
 m4_define([[[MMUX_DEFINE_INT_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
-  mmux_bash_create_global_sint_variable("mmux_libc_$1",	$1, MMUX_BUILTIN_NAME_STR);
+  mmux_bash_create_global_sint_variable("mmux_libc_$1",	$1, MMUX_BASH_BUILTIN_STRING_NAME);
 #endif
 ]]])
 

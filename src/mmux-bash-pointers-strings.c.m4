@@ -40,14 +40,13 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_from_bash_string]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(str,	argv[2]);
   {
     size_t	len = strlen(str);
-    if (0) { fprintf(stderr, "%s: str=%s len=%lu\n", __func__, str, len); }
     void *	ptr = malloc(1+len);
 
     if (ptr) {
       memcpy(ptr, str, 1+len);
-      return mmux_pointer_bind_to_bash_variable(argv[1], ptr, MMUX_BUILTIN_NAME_STR);
+      return mmux_pointer_bind_to_bash_variable(argv[1], ptr, MMUX_BASH_BUILTIN_STRING_NAME);
     } else {
-      mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME_STR);
+      mmux_bash_pointers_set_ERRNO(errno, MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
     }
   }
@@ -67,7 +66,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_to_bash_string]]])
   {
     if (3 == argc) {
       char *	str = ptr;
-      return mmux_string_bind_to_bash_variable(argv[1], str, MMUX_BUILTIN_NAME_STR);
+      return mmux_string_bind_to_bash_variable(argv[1], str, MMUX_BASH_BUILTIN_STRING_NAME);
     } else {
       size_t	len;
 
@@ -86,12 +85,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_to_bash_string]]])
 	  memcpy(str, ptr, len);
 	  str[len] = '\0';
 	  {
-	    mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], str, MMUX_BUILTIN_NAME_STR);
+	    mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], str, MMUX_BASH_BUILTIN_STRING_NAME);
 	    free(str);
 	    return rv;
 	  }
 	} else {
-	  mmux_bash_pointers_set_ERRNO(errno, MMUX_BUILTIN_NAME_STR);
+	  mmux_bash_pointers_set_ERRNO(errno, MMUX_BASH_BUILTIN_STRING_NAME);
 	  return MMUX_FAILURE;
 	}
       }
@@ -116,7 +115,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strlen]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
   {
     size_t	len = strlen(ptr);
-    return mmux_usize_bind_to_bash_variable(argv[1], len, MMUX_BUILTIN_NAME_STR);
+    return mmux_usize_bind_to_bash_variable(argv[1], len, MMUX_BASH_BUILTIN_STRING_NAME);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
@@ -135,7 +134,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strdup]]])
   {
     char const *	instr = ptr;
     char *		oustr = strdup(instr);
-    return mmux_pointer_bind_to_bash_variable(argv[1], oustr, MMUX_BUILTIN_NAME_STR);
+    return mmux_pointer_bind_to_bash_variable(argv[1], oustr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }

@@ -42,7 +42,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strerror]]])
     char *	errmsg = strerror(errnum);
 
     if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errmsg);}
-    return mmux_string_bind_to_bash_variable(argv[1], errmsg, MMUX_BUILTIN_NAME_STR);
+    return mmux_string_bind_to_bash_variable(argv[1], errmsg, MMUX_BASH_BUILTIN_STRING_NAME);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
@@ -207,7 +207,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_errno_to_string]]])
 	return MMUX_FAILURE;
       }
 
-    return mmux_string_bind_to_bash_variable(argv[1], errsym, MMUX_BUILTIN_NAME_STR);
+    return mmux_string_bind_to_bash_variable(argv[1], errsym, MMUX_BASH_BUILTIN_STRING_NAME);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }

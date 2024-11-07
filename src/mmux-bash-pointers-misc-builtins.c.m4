@@ -43,16 +43,16 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_save_output_format(old_format);
 
   /* Set the new format. */
-  rv = mmux_$1_set_output_format(argv[1], MMUX_BUILTIN_NAME_STR);
+  rv = mmux_$1_set_output_format(argv[1], MMUX_BASH_BUILTIN_STRING_NAME);
   if (false == rv) {
     /* If  requested: store  the old  format  string into  a variable  whose name  is
        specified as  second argument.   If an  error occurs:  restore the  old format
        before returning. */
     if (3 == argc) {
-      mmux_bash_rv_t	rv2 = mmux_string_bind_to_bash_variable(argv[2], old_format, MMUX_BUILTIN_NAME_STR);
+      mmux_bash_rv_t	rv2 = mmux_string_bind_to_bash_variable(argv[2], old_format, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv2) {
 	mmux_$1_set_output_format(old_format, NULL);
-	mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BUILTIN_NAME_STR);
+	mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
 	return rv2;
       }
     }
@@ -60,7 +60,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   return MMUX_SUCCESS;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -95,10 +95,10 @@ m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_GETTER_BUILTIN]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_ref_format]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  return mmux_string_bind_to_bash_variable(argv[1], mmux_$1_ref_output_format(), MMUX_BUILTIN_NAME_STR);
+  return mmux_string_bind_to_bash_variable(argv[1], mmux_$1_ref_output_format(), MMUX_BASH_BUILTIN_STRING_NAME);
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -139,16 +139,16 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_reformat]]])
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   mmux_$1_t		value;
 
-  $2(value, argv[3], MMUX_BUILTIN_NAME_STR);
+  $2(value, argv[3], MMUX_BASH_BUILTIN_STRING_NAME);
   {
     char		old_format[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
     mmux_bash_rv_t	bash_rv;
 
     mmux_$1_save_output_format(old_format);
     {
-      bool	rv = mmux_$1_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
+      bool	rv = mmux_$1_set_output_format(argv[2], MMUX_BASH_BUILTIN_STRING_NAME);
       if (true == rv) { bash_rv = MMUX_FAILURE; goto get_out; }
-      bash_rv = mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+      bash_rv = mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BASH_BUILTIN_STRING_NAME);
     }
    get_out:
     mmux_$1_set_output_format(old_format, NULL);
@@ -157,7 +157,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
@@ -198,16 +198,16 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_$1_reformat]]])
 MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   mmux_$1_t		value;
 
-  $3(value, argv[3], MMUX_BUILTIN_NAME_STR);
+  $3(value, argv[3], MMUX_BASH_BUILTIN_STRING_NAME);
   {
     char		old_format[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
     mmux_bash_rv_t	bash_rv;
 
     mmux_$2_save_output_format(old_format);
     {
-      bool	rv = mmux_$2_set_output_format(argv[2], MMUX_BUILTIN_NAME_STR);
+      bool	rv = mmux_$2_set_output_format(argv[2], MMUX_BASH_BUILTIN_STRING_NAME);
       if (true == rv) { bash_rv = MMUX_FAILURE; goto get_out; }
-      bash_rv = mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BUILTIN_NAME_STR);
+      bash_rv = mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BASH_BUILTIN_STRING_NAME);
     }
    get_out:
     mmux_$2_set_output_format(old_format, NULL);
@@ -216,7 +216,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
-	  MMUX_BUILTIN_NAME_STR);
+	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
 }
