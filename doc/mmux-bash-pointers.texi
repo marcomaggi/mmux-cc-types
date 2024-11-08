@@ -96,6 +96,10 @@ $@{\VARNAME\:?@}
 "$@{\VARNAME\@}"
 @end macro
 
+@macro cfuncpage{FUNCNAME}
+@ref{\FUNCNAME\,\FUNCNAME\,\FUNCNAME\,*manpages*}
+@end macro
+
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
@@ -224,6 +228,7 @@ $VALUE  @result{} 123
 * overview usage::              How to use the shell libraries.
 * overview decimal::            Support for the @objtype{_DecimalN} types.
 * overview stems::              Specifying C language types with their stem.
+* overview conventions::        Conventions used in this documentation.
 * overview linking::            Linking code with the shared library.
 @end menu
 
@@ -472,6 +477,265 @@ non--standard C language type implementing complex floating--point numbers havin
 @MmuxDefineTypeStem{gid, gid_t}
 @MmuxDefineTypeStem{wchar, wchar_t}
 @MmuxDefineTypeStem{wint, wint_t}
+
+@c page
+@node overview conventions
+@section Conventions used in this documentation
+
+
+The following naming conventions for builtin and function arguments are used in this documentation:
+
+@table @var
+@item POINTER
+@cindex @var{POINTER}, builtin and function argument
+The argument is a string representation of a @objtype{void *} value.
+
+@item SCHAR
+@cindex @var{SCHAR}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_schar_t} value.
+
+@item UCHAR
+@cindex @var{UCHAR}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uchar_t} value.
+
+@item SSHORT
+@cindex @var{SSHORT}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sshort_t} value.
+
+@item USHORT
+@cindex @var{USHORT}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_ushort_t} value.
+
+@item SINT
+@cindex @var{SINT}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sint_t} value.
+
+@item UINT
+@cindex @var{UINT}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uint_t} value.
+
+@item SLONG
+@cindex @var{SLONG}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_slong_t} value.
+
+@item ULONG
+@cindex @var{ULONG}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_ulong_t} value.
+
+@item SLLONG
+@cindex @var{SLLONG}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sllong_t} value.
+
+@item ULLONG
+@cindex @var{ULLONG}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_ullong_t} value.
+
+@item FLOAT
+@cindex @var{FLOAT}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float_t} value.
+
+@item DOUBLE
+@cindex @var{DOUBLE}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_double_t} value.
+
+@item LDOUBLE
+@cindex @var{LDOUBLE}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_ldouble_t} value.
+
+@item FLOAT32
+@cindex @var{FLOAT32}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float32_t} value.
+
+@item FLOAT64
+@cindex @var{FLOAT64}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float64_t} value.
+
+@item FLOAT128
+@cindex @var{FLOAT128}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float128_t} value.
+
+@item FLOAT32X
+@cindex @var{FLOAT32X}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float32x_t} value.
+
+@item FLOAT64X
+@cindex @var{FLOAT64X}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float64x_t} value.
+
+@item FLOAT128X
+@cindex @var{FLOAT128X}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_float128x_t} value.
+
+@item DECIMAL32
+@cindex @var{DECIMAL32}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_decimal32_t} value.
+
+@item DECIMAL64
+@cindex @var{DECIMAL64}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_decimal64_t} value.
+
+@item DECIMAL128
+@cindex @var{DECIMAL128}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_decimal128_t} value.
+
+@item COMPLEXF
+@cindex @var{COMPLEXF}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf_t} value.
+
+@item COMPLEXD
+@cindex @var{COMPLEXD}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexd_t} value.
+
+@item COMPLEXLD
+@cindex @var{COMPLEXLD}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexld_t} value.
+
+@item COMPLEXF32
+@cindex @var{COMPLEXF32}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf32_t} value.
+
+@item COMPLEXF64
+@cindex @var{COMPLEXF64}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf64_t} value.
+
+@item COMPLEXF128
+@cindex @var{COMPLEXF128}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf128_t} value.
+
+@item COMPLEXF32X
+@cindex @var{COMPLEXF32X}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf32x_t} value.
+
+@item COMPLEXF64X
+@cindex @var{COMPLEXF64X}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf64x_t} value.
+
+@item COMPLEXF128X
+@cindex @var{COMPLEXF128X}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexf128x_t} value.
+
+@item COMPLEXD32
+@cindex @var{COMPLEXD32}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexd32_t} value.
+
+@item COMPLEXD64
+@cindex @var{COMPLEXD64}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexd64_t} value.
+
+@item complexd128
+@cindex @var{complexd128}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_complexd128_t} value.
+
+@item SINT8
+@cindex @var{SINT8}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sint8_t} value.
+
+@item UINT8
+@cindex @var{UINT8}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uint8_t} value.
+
+@item SINT16
+@cindex @var{SINT16}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sint16_t} value.
+
+@item UINT16
+@cindex @var{UINT16}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uint16_t} value.
+
+@item SINT32
+@cindex @var{SINT32}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sint32_t} value.
+
+@item UINT32
+@cindex @var{UINT32}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uint32_t} value.
+
+@item SINT64
+@cindex @var{SINT64}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sint64_t} value.
+
+@item UINT64
+@cindex @var{UINT64}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uint64_t} value.
+
+@item SSIZE
+@cindex @var{SSIZE}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_ssize_t} value.
+
+@item USIZE
+@cindex @var{USIZE}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_usize_t} value.
+
+@item SINTMAX
+@cindex @var{SINTMAX}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sintmax_t} value.
+
+@item UINTMAX
+@cindex @var{UINTMAX}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uintmax_t} value.
+
+@item SINTPTR
+@cindex @var{SINTPTR}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_sintptr_t} value.
+
+@item UINTPTR
+@cindex @var{UINTPTR}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uintptr_t} value.
+
+@item MODE
+@cindex @var{MODE}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_mode_t} value.
+
+@item OFF
+@cindex @var{OFF}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_off_t} value.
+
+@item PID
+@cindex @var{PID}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_pid_t} value.
+
+@item UID
+@cindex @var{UID}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_uid_t} value.
+
+@item GID
+@cindex @var{GID}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_gid_t} value.
+
+@item WCHAR
+@cindex @var{WCHAR}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_wchar_t} value.
+
+@item WINT
+@cindex @var{WINT}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_wint_t} value.
+@end table
+
+Additional argument specifications:
+
+@table @var
+@item ASCIIZ_POINTER
+@cindex @var{ASCIIZ_POINTER}, builtin and function argument
+The argument is a string representation of a @objtype{char *} value, referencing a block of memory
+containing a string in @asciiz{} format.
+
+@item STR
+@itemx STRING
+@cindex @var{STR}, builtin and function argument
+@cindex @var{STRING}, builtin and function argument
+The argument is a Bash string.
+
+@item STRVAR
+@cindex @var{STRVAR}, builtin and function argument
+The argument is a Bash string representing the name of a shell variable.  When successful: the
+builtin or function will bind a string to the variable.
+
+@item PTRVAR
+@cindex @var{PTRVAR}, builtin and function argument
+The argument is a Bash string representing the name of a shell variable.  When successful: the
+builtin or function will bind to the variable a string representation of a pointer value.
+@end table
+
 
 @c page
 
@@ -3671,6 +3935,15 @@ mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
 @end deffn
 
 
+@deffn {@gnu{} Builtin} mmux_libc_mempcpy @var{NEXT_PTR_TO_VAR} @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
+Like @MmuxBuiltin{mmux_libc_memcpy}, but store in the shell variable @var{NEXT_PTR_TO_VAR} the
+string representation of the sum between @var{PTR_TO} and @var{SIZE}.
+
+The underlying C language function @cfunc{mempcpy} is a @gnu{} extension: this builtin is available
+only on @gnu{} platforms.
+@end deffn
+
+
 @deffn Builtin mmux_libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memmove}; if successful return true, otherwise
 return false and set the shell variable @code{ERRNO} to the string representation of an exact
@@ -4059,6 +4332,7 @@ mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
 @menu
 * strings conversion::          Converting @asciiz{} strings to other representations.
 * strings inspection::          Inspecting @asciiz{} strings.
+* strings duplication::         Duplicating @asciiz{} strings.
 @end menu
 
 @c page
@@ -4079,7 +4353,7 @@ mmux_pointer_from_bash_string PTR 'ciao'
 @{
     mmux_libc_strlen LEN @RR{PTR}
     mmux_pointer_to_bash_string STR @RR{PTR} @RR{LEN}
-    @RR{STR}    @result{} ciao
+    @WW{STR}    @result{} "ciao"
 @}
 mmux_libc_free @RR{PTR}
 @end example
@@ -4096,12 +4370,12 @@ left untouched.
 @end deffn
 
 
-@deffn Builtin mmux_pointer_to_bash_string @var{STRVAR} @var{POINTER}
-@deffnx Builtin mmux_pointer_to_bash_string @var{STRVAR} @var{POINTER} @var{USIZE}
-Convert into a Bash string the @var{USIZE} bytes starting at offset zero from @var{POINTER}.  If
-@var{USIZE} is not present: @var{POINTER} is meant to reference an @asciiz{} string, which will be
-fully duplicated into a Bash string.  The new Bash string is bound to the shell variable whose name
-is @var{STRVAR}.
+@deffn Builtin mmux_pointer_to_bash_string @var{STRVAR} @var{ASCIIZ_POINTER}
+@deffnx Builtin mmux_pointer_to_bash_string @var{STRVAR} @var{ASCIIZ_POINTER} @var{USIZE}
+Convert into a Bash string the @var{USIZE} bytes starting at offset zero from @var{ASCIIZ_POINTER}.
+If @var{USIZE} is not present: @var{ASCIIZ_POINTER} is meant to reference an @asciiz{} string, which
+will be fully duplicated into a Bash string.  The new Bash string is bound to the shell variable
+whose name is @var{STRVAR}.
 
 When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
 string representation of an exact integer, itself representing an @code{errno} error code.  If an
@@ -4115,28 +4389,60 @@ left untouched.
 
 
 @deffn Builtin mmux_libc_strlen @var{USIZEVAR} @var{ASCIIZ_POINTER}
-Interface to the standard function @cfunc{strlen}.  Compute the length, measured in bytes, of the
-@asciiz{} string referenced by @var{ASCIIZ_POINTER} and store it in the shell variable
+Interface to the standard C language function @cfunc{strlen}.  Compute the length, measured in
+bytes, of the @asciiz{} string referenced by @var{ASCIIZ_POINTER} and store it in the shell variable
 @var{USIZEVAR}.
 
 When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
 string representation of an exact integer, itself representing an @code{errno} error code.
 
 @example
-declare STR LEN
+declare PTR LEN
 
-mmux_libc_malloc STR 5
+mmux_libc_malloc PTR 5
 @{
-    mmux_schar_pointer_set @RR{STR} 0 65
-    mmux_schar_pointer_set @RR{STR} 1 66
-    mmux_schar_pointer_set @RR{STR} 2 67
-    mmux_schar_pointer_set @RR{STR} 3 68
-    mmux_schar_pointer_set @RR{STR} 4 0
+    mmux_schar_pointer_set @RR{PTR} 0 65
+    mmux_schar_pointer_set @RR{PTR} 1 66
+    mmux_schar_pointer_set @RR{PTR} 2 67
+    mmux_schar_pointer_set @RR{PTR} 3 68
+    mmux_schar_pointer_set @RR{PTR} 4 0
 
-    mmux_libc_strlen LEN @RR{STR}
-    @RR{STR}    @result{} 4
+    mmux_libc_strlen LEN @RR{PTR}
+    @RR{LEN}    @result{} 4
 @}
-mmux_libc_free @RR{STR}
+mmux_libc_free @RR{PTR}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_strnlen @var{USIZEVAR} @var{ASCIIZ_POINTER} @var{USIZE_MAX}
+Interface to the standard C language function @cfunc{strnlen}; @cfuncpage{strnlen}.  When successful
+return true, otherwise return false and set the shell variable @code{ERRNO} to the string
+representation of an exact integer, itself representing an @code{errno} error code.
+@end deffn
+
+@c page
+@node strings duplication
+@section Duplicating @asciiz{} strings
+
+
+@deffn Builtin mmux_libc_strdup @var{ASCIIZ_PTRVAR} @var{ASCIIZ_POINTER}
+Interface to the standard C language function @cfunc{strdup}; @cfuncpage{strdup}.  When successful
+return true, otherwise return false and set the shell variable @code{ERRNO} to the string
+representation of an exact integer, itself representing an @code{errno} error code.
+
+@example
+declare PTR1 PTR2
+
+mmux_pointer_from_bash_string PTR1 'ciao mamma'
+@{
+    mmux_libc_strdup PTR2 @RR{PTR1}
+    @{
+        ...
+    @}
+    mmux_libc_free @RR{(PTR2}
+@}
+mmux_libc_free @RR{PTR1}
 @end example
 @end deffn
 

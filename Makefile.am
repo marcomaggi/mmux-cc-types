@@ -128,7 +128,7 @@ mmuxbashlib_DATA	=  $(MMUX_SHELL_LIBFILES)
 mmuxbashlibdir		=  $(datadir)/bash
 
 src/mmux-bash-pointers-builtin-definitions.bash: $(top_srcdir)/meta/scripts/print-builtin-names.bash
-	$(BASH_PROGRAM) $< >$@
+	export CONFIG_H_FILE=$(builddir)/config.h; $(BASH_PROGRAM) $< >$@
 
 src/libmmux-bash-pointers.bash: src/mmux-bash-pointers-builtin-definitions.bash
 

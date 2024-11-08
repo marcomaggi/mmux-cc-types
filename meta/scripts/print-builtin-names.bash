@@ -250,6 +250,39 @@ done
     done
 }
 
+### ------------------------------------------------------------------------
+
+# The environment variable "CONFIG_H_FILE" is exported by the makefile.
+#
+function have_cfunc () {
+    declare -r CFUNCNAME=${1:?}
+    declare -r UPCASE_CFUNCNAME=${CFUNCNAME^^}
+    declare -r SYMBOL_TEMPLATE='HAVE_%s'
+    declare -r RESULT_TEMPLATE='#define HAVE_%s 1'
+    declare SYMBOL RESULT LINE
+
+    printf -v SYMBOL "$SYMBOL_TEMPLATE" "${UPCASE_CFUNCNAME}"
+    printf -v RESULT "$RESULT_TEMPLATE" "${UPCASE_CFUNCNAME}"
+
+    LINE=$(grep "$SYMBOL" "$CONFIG_H_FILE" )
+    if test "$LINE" = "$RESULT"
+    then return 0
+    else return 1
+    fi
+}
+
+# Builtin wrapping C language functions that may not be available.
+{
+    for ITEM in mempcpy strnlen
+    do
+	if have_cfunc "$ITEM"
+	then
+	    printf -v NAME 'mmux_libc_%s' "$ITEM"
+	    print_builtin_name "$NAME"
+	fi
+    done
+}
+
 ### end of file
 # Local Variables:
 # mode: sh

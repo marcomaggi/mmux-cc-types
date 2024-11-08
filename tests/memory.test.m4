@@ -29,8 +29,12 @@
 
 #### macros
 
-MBFL_DEFINE_QQ_MACRO
-MBFL_DEFINE_UNDERSCORE_MACRO_FOR_SLOTS
+MBFL_DEFINE_SPECIAL_MACROS
+
+m4_define([[[COMPENSATE]]],[[[if $1
+then mbfl_location_handler "$2"
+else mbfl_location_leave_then_return_failure
+fi]]])
 
 
 #### setup
@@ -96,55 +100,113 @@ function memory-1.4 () {
 }
 
 
-#### standard memory operations
+#### standard memory operations: memset
 
-function memory-2.1 () {
-    declare PTR SIZE=123 RESULT=Z
+function memory-memset-1.1 () {
+    declare -r EXPECTED_RESULT=1
+    declare -r SIZE=123
+    declare PTR RESULT
 
-    if mmux_libc_malloc PTR $SIZE
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_libc_malloc PTR WW(SIZE),
+		   mmux_libc_free WW(PTR))
+
+	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR) 1 WW(SIZE) )
+	mbfl_location_leave_when_failure( mmux_uint8_pointer_ref RESULT WW(PTR) 1 )
+
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
+#### standard memory operations: memcpy
+
+function memory-memcpy-1.1 () {
+    declare -r EXPECTED_RESULT=1
+    declare -ri SIZE=123
+    declare PTR_FROM PTR_TO RESULT
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE),
+		   mmux_libc_free WW(PTR_FROM))
+
+	COMPENSATE(mmux_libc_malloc PTR_TO WW(SIZE),
+		   mmux_libc_free WW(PTR_TO))
+
+	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 1 WW(SIZE) )
+	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
+
+	mbfl_location_leave_when_failure( mmux_libc_memcpy WW(PTR_TO) WW(PTR_FROM) WW(SIZE) )
+	mbfl_location_leave_when_failure( mmux_uint8_pointer_ref RESULT WW(PTR_TO) 10 )
+
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
+#### standard memory operations: mempcpy
+
+function memory-mempcpy-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_mempcpy
     then
-	mmux_libc_memset $PTR 1 $SIZE
-	mmux_uint8_pointer_ref RESULT $PTR 1
-	mmux_libc_free $PTR
-	dotest-equal 1 $RESULT
-    else return $?
+	mbfl_location_enter
+	{
+	    declare -r EXPECTED_RESULT=1
+	    declare -ri SIZE=123
+	    declare PTR_FROM PTR_TO RESULT
+	    declare PTR_AFTER_TO COMPUTED_PTR_AFTER_TO
+
+	    COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE),
+		       mmux_libc_free WW(PTR_FROM))
+
+	    COMPENSATE(mmux_libc_malloc PTR_TO WW(SIZE),
+		       mmux_libc_free WW(PTR_TO))
+
+	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 1 WW(SIZE) )
+	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
+
+	    mbfl_location_leave_when_failure( mmux_libc_mempcpy PTR_AFTER_TO WW(PTR_TO) WW(PTR_FROM) WW(SIZE) )
+	    mbfl_location_leave_when_failure( mmux_uint8_pointer_ref RESULT WW(PTR_TO) 10 )
+
+	    mbfl_location_leave_when_failure( mmux_pointer_add COMPUTED_PTR_AFTER_TO WW(PTR_TO) WW(SIZE) )
+
+	    dotest-equal WW(EXPECTED_RESULT) WW(RESULT) &&
+		dotest-predicate mmux_pointer_equal WW(PTR_AFTER_TO) WW(COMPUTED_PTR_AFTER_TO)
+	}
+	mbfl_location_leave
+    else dotest-skipped
     fi
 }
 
-function memory-3.1 () {
-    declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
+
+#### standard memory operations: memmove
 
-    mmux_libc_malloc PTR_FROM $SIZE
-    mmux_libc_malloc PTR_TO   $SIZE
+function memory-memmove-1.1 () {
+    declare -r EXPECTED_RESULT=1
+    declare -ri SIZE=123
+    declare PTR_FROM PTR_TO RESULT
 
-    mmux_libc_memset $PTR_FROM 1 $SIZE
-    mmux_libc_memset $PTR_TO   0 $SIZE
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE),
+		   mmux_libc_free WW(PTR_FROM))
 
-    mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
-    mmux_uint8_pointer_ref RESULT $PTR_TO 10
+	COMPENSATE(mmux_libc_malloc PTR_TO WW(SIZE),
+		   mmux_libc_free WW(PTR_TO))
 
-    mmux_libc_free $PTR_FROM
-    mmux_libc_free $PTR_TO
+	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 1 WW(SIZE) )
+	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
 
-    dotest-equal 1 $RESULT
-}
+	mbfl_location_leave_when_failure( mmux_libc_memmove WW(PTR_TO) WW(PTR_FROM) WW(SIZE) )
+	mbfl_location_leave_when_failure( mmux_uint8_pointer_ref RESULT WW(PTR_TO) 10 )
 
-function memory-4.1 () {
-    declare PTR_FROM PTR_TO SIZE=123 RESULT=Z
-
-    mmux_libc_malloc PTR_FROM $SIZE
-    mmux_libc_malloc PTR_TO   $SIZE
-
-    mmux_libc_memset $PTR_FROM 1 $SIZE
-    mmux_libc_memset $PTR_TO   0 $SIZE
-
-    mmux_libc_memmove $PTR_TO $PTR_FROM $SIZE
-    mmux_uint8_pointer_ref RESULT $PTR_TO 10
-
-    mmux_libc_free $PTR_FROM
-    mmux_libc_free $PTR_TO
-
-    dotest-equal 1 $RESULT
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
 }
 
 

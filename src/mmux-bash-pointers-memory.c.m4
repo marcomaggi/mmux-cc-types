@@ -175,6 +175,34 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memcpy]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_mempcpy]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_MEMPCPY]]],[[[
+  void *	ptr_from;
+  void *	ptr_to;
+  size_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_to,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_from,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
+  {
+    void *	after_to = mempcpy(ptr_to, ptr_from, len);
+    return mmux_pointer_bind_to_bash_variable(argv[1], after_to, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_mempcpy]]],
+    [[[(5 == argc)]]],
+    [[["mmux_libc_mempcpy AFTER_POINTER_TOVAR POINTER_TO POINTER_FROM SIZE"]]],
+    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memmove]]])
 {
   void *	ptr_from;

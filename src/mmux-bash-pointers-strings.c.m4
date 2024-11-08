@@ -100,12 +100,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_to_bash_string]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[((3 == argc) || (4 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRVAR POINTER USIZE"]]],
-    [[["Duplicate a Bash string into newly allocated memory block."]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRVAR POINTER [USIZE]"]]],
+    [[["Duplicate a raw ASCIIZ string into a Bash string."]]])
 
 
 /** --------------------------------------------------------------------
- ** Standard string operations.
+ ** Inspection.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strlen]]])
@@ -126,6 +126,35 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strnlen]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRNLEN]]],[[[
+  void *	ptr;
+  mmux_usize_t	maxlen;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(maxlen,	argv[3]);
+  {
+    size_t	len = strnlen(ptr, maxlen);
+    return mmux_usize_bind_to_bash_variable(argv[1], len, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_PTR USIZE_MAXLEN"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_PTR, USIZE_MAXLEN)"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Duplication.
+ ** ----------------------------------------------------------------- */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strdup]]])
 {
   void *	ptr;
@@ -139,9 +168,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strdup]]])
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(2 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER DUPLICATE_STRPTRVAR ORIGINAL_STRPTR"]]],
-    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(DUPLICATE_STRPTRVAR, ORIGINAL_STRPTR)"]]])
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DUPLICATE_PTRVAR ASCIIZ_POINTER"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(DUPLICATE_PTRVAR, ASCIIZ_POINTER)"]]])
 
 
 /* end of file */

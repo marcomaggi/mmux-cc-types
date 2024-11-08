@@ -121,6 +121,11 @@ dnl MMUX_CC_INSPECT_STANDARD_TYPES
 dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 
 
+#### inspecting functions
+
+AC_CHECK_FUNCS([mempcpy strnlen])
+
+
 #### inspecting errno constants
 
 AC_DEFUN([MMUX_ERRNO_TEST],[MMUX_CC_DETERMINE_VALUEOF([$1],[$1],[MMUX_CC_COMMON_INCLUDES_FOR_TESTS])])

@@ -31,6 +31,11 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
+m4_define([[[COMPENSATE]]],[[[if $1
+then mbfl_location_handler "$2"
+else mbfl_location_leave_then_return_failure
+fi]]])
+
 
 #### setup
 
@@ -163,6 +168,72 @@ function strings-strlen-1.2 () {
 	mbfl_location_leave_when_failure(mmux_libc_strlen RESULT RR(STR))
 
 	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
+#### strnlen
+
+function strings-strnlen-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_strnlen
+    then
+	mbfl_location_enter
+	{
+	    declare -r EXPECTED_RESULT=10
+	    declare STR
+	    declare -i LEN
+
+	    if mmux_pointer_from_bash_string PTR 'ciao mamma'
+	    then mbfl_location_handler "mmux_libc_free RR(PTR)"
+	    else mbfl_location_leave_then_return_failure
+	    fi
+
+	    mbfl_location_leave_when_failure(mmux_libc_strnlen LEN RR(PTR) 123)
+	    dotest-equal WW(EXPECTED_RESULT) WW(LEN)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+function strings-strnlen-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_strnlen
+    then
+	mbfl_location_enter
+	{
+	    declare -r EXPECTED_RESULT=4
+	    declare STR
+	    declare -i LEN
+
+	    if mmux_pointer_from_bash_string PTR 'ciao mamma'
+	    then mbfl_location_handler "mmux_libc_free RR(PTR)"
+	    else mbfl_location_leave_then_return_failure
+	    fi
+
+	    mbfl_location_leave_when_failure(mmux_libc_strnlen LEN RR(PTR) 4)
+	    dotest-equal WW(EXPECTED_RESULT) WW(LEN)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+
+#### strdup
+
+function strings-strdup-1.1 () {
+    declare -r EXPECTED_RESULT='ciao mamma'
+    declare STR PTR1 PTR2
+    declare -i LEN
+
+    mbfl_location_enter
+    {
+	COMPENSATE( mmux_pointer_from_bash_string PTR1 'ciao mamma',
+		    mmux_libc_free RR(PTR1) )
+	COMPENSATE( mmux_libc_strdup PTR2 RR(PTR1),
+		    mmux_libc_free RR(PTR2) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
+	dotest-equal WW(EXPECTED_RESULT) WW(STR)
     }
     mbfl_location_leave
 }
