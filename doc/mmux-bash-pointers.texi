@@ -3944,6 +3944,25 @@ only on @gnu{} platforms.
 @end deffn
 
 
+@deffn {Builtin} mmux_libc_memccpy @var{AFTER_PTR_VAR} @var{PTR_TO} @var{PTR_FROM} @var{UINT8_SEPARATOR} @var{USIZE}
+Interface to the C language function @cfunc{memccpy}; copy at most @var{USIZE} octets from a memory
+block to another stopping if @var{UINT8_SEPARATOR} is found; the separator octet is not copied.  If
+successful return true, otherwise return false and set the shell variable @code{ERRNO} to the string
+representation of an exact integer, itself representing an @code{errno} error code.
+
+The argument @var{AFTER_PTR_VAR} must be a shell variable name; when the operation is successful:
+
+@itemize
+@item
+If an octet matching @var{UINT8_SEPARATOR} was found: the shell variable is set to the pointer, in
+the memory block referenced by @var{PTR_FROM}, right after @var{UINT8_SEPARATOR}.
+
+@item
+Otherwise the shell variable is left untouched.
+@end itemize
+@end deffn
+
+
 @deffn Builtin mmux_libc_memmove @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Interface to the standard C language function @cfunc{memmove}; if successful return true, otherwise
 return false and set the shell variable @code{ERRNO} to the string representation of an exact

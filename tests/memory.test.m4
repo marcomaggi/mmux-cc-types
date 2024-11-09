@@ -224,7 +224,7 @@ function memory-memccpy-1.1 () {
 	    fill_raw_memory WW(PTR_FROM) 0 WW(SIZE)
 	    fill_raw_memory WW(PTR_TO)   0 WW(SIZE) 50
 
-	    mbfl_location_leave_when_failure( mmux_libc_memccpy AFTER_SEPARATOR_PTR WW(PTR_TO) WW(PTR_FROM) '5' WW(SIZE) )
+	    mbfl_location_leave_when_failure( mmux_libc_memccpy AFTER_SEPARATOR_PTR WW(PTR_TO) WW(PTR_FROM) WW(SEPARATOR_OCTET) WW(SIZE) )
 	    mbfl_location_leave_when_failure( mmux_pointer_add COMPUTED_AFTER_SEPARATOR_PTR WW(PTR_TO) '6' )
 
 	    # Retrieve the byte
@@ -243,6 +243,39 @@ function memory-memccpy-1.1 () {
 	    dotest-debug WW(COMPUTED_AFTER_SEPARATOR_PTR) WW(AFTER_SEPARATOR_PTR)
 	    dotest-equal WW(EXPECTED_RESULT) WW(RESULT) &&
 		dotest-predicate mmux_pointer_equal WW(COMPUTED_AFTER_SEPARATOR_PTR) WW(AFTER_SEPARATOR_PTR)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+# The separator is not present in the source memory block.
+#
+function memory-memccpy-1.2 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_memccpy
+    then
+	dotest-unset-debug
+
+	mbfl_location_enter
+	{
+	    declare -ri SIZE=24
+	    declare PTR_FROM PTR_TO
+	    declare AFTER_SEPARATOR_PTR
+
+	    declare -r SEPARATOR_OCTET='99'
+
+	    COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE), mmux_libc_free WW(PTR_FROM))
+	    COMPENSATE(mmux_libc_malloc PTR_TO   WW(SIZE), mmux_libc_free WW(PTR_TO))
+
+	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 0 WW(SIZE) )
+	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
+
+	    fill_raw_memory WW(PTR_FROM) 0 WW(SIZE)
+	    fill_raw_memory WW(PTR_TO)   0 WW(SIZE) 50
+
+	    mbfl_location_leave_when_failure( mmux_libc_memccpy AFTER_SEPARATOR_PTR WW(PTR_TO) WW(PTR_FROM) WW(SEPARATOR_OCTET) WW(SIZE) )
+
+	    dotest-equal "" QQ(AFTER_SEPARATOR_PTR)
 	}
 	mbfl_location_leave
     else dotest-skipped

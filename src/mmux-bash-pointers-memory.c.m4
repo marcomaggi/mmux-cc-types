@@ -216,7 +216,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memccpy]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[5]);
   {
     void *	after_to = memccpy(ptr_to, ptr_from, octet, len);
-    return mmux_pointer_bind_to_bash_variable(argv[1], after_to, MMUX_BASH_BUILTIN_STRING_NAME);
+
+    if (after_to) {
+      return mmux_pointer_bind_to_bash_variable(argv[1], after_to, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      return MMUX_SUCCESS;
+    }
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
