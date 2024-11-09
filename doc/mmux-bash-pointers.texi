@@ -4208,7 +4208,6 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 
 @menu
 * memory conversions arrays::   Converting data to and from index arrays.
-* memory conversions strings::  Converting data to and from strings.
 @end menu
 
 @c page
@@ -4216,7 +4215,7 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 @subsection Converting data to and from index arrays
 
 
-@defun mmux-bash-pointers-array-from-memory @var{ARRY_TO} @var{PTR_FROM} @var{SIZE}
+@defun mmux_index_array_from_memory @var{ARRY_TO} @var{PTR_FROM} @var{SIZE}
 Copy byte by byte data from a memory block into a Bash index array.
 
 The argument @var{ARRY_TO} must be a string representing the name of a Bash index array; this
@@ -4231,18 +4230,25 @@ representing the number of bytes to copy; it must fit the C language type @objty
 @example
 declare POINTER
 declare -i SIZE=5
-declare -a ARRY
 
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
+mmux_libc_malloc POINTER @RR{SIZE}
+@{
+    declare -a ARRY
 
-mmux-bash-pointers-array-from-memory ARRY $POINTER $SIZE
+    mmux_uint8_pointer_set @RR{POINTER} 0 '11'
+    mmux_uint8_pointer_set @RR{POINTER} 1 '22'
+    mmux_uint8_pointer_set @RR{POINTER} 2 '33'
+    mmux_uint8_pointer_set @RR{POINTER} 3 '44'
+    mmux_uint8_pointer_set @RR{POINTER} 4 '55'
+    mmux_index_array_from_memory ARRY @RR{POINTER} @RR{SIZE}
+    $@{ARRY[0]@}        @result{} 11
+@}
+mmux_libc_free @RR{POINTER}
 @end example
 @end defun
 
 
-@defun mmux-bash-pointers-memory-from-array @var{PTR_TO} @var{ARRY_FROM} @var{SIZE}
+@defun mmux_index_array_to_memory @var{PTR_TO} @var{ARRY_FROM} @var{SIZE}
 Copy byte by byte data from a Bash index array into a memory block.
 
 The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
@@ -4257,70 +4263,17 @@ representing the number of bytes to copy; it must fit the C language type @objty
 @example
 declare POINTER
 declare -i SIZE=5
-declare -a ARRY=(1 2 3 4 5)
+declare -a ARRY=(11 22 33 44 55)
 
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
+mmux_libc_malloc POINTER $SIZE
+@{
+    declare BYTE
 
-mmux-bash-pointers-memory-from-array $POINTER ARRY $SIZE
-@end example
-@end defun
-
-@c page
-@node memory conversions strings
-@subsection Converting data to and from strings
-
-
-@defun mmux-bash-pointers-string-from-memory @var{STRINGVAR_TO} @var{PTR_FROM} @var{SIZE}
-Copy byte by byte data from a memory block into a Bash string.
-
-The argument @var{STRINGVAR_TO} must be a string representing a Bash variable name; this function
-stores in this variable a string built with the bytes from the memory block, starting from index
-zero.
-
-The argument @var{PTR_FROM} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the source of the copy operation.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare POINTER
-declare -i SIZE=5
-declare STRING
-
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
-
-mmux-bash-pointers-string-from-memory STRING $POINTER $SIZE
-@end example
-@end defun
-
-
-@defun mmux-bash-pointers-memory-from-string @var{PTR_TO} @var{STRING_FROM} @var{SIZE}
-Copy byte by byte data from a Bash string into a memory block.
-
-The argument @var{PTR_TO} must be the string representation of a pointer referencing a previously
-allocated memory block; the referenced memory is the target of the copy operation.
-
-The argument @var{STRING_FROM} must be a string; this function reads from this strings the bytes to
-store in the memory block, starting from index zero.
-
-The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to copy; it must fit the C language type @objtype{size_t}.
-
-@example
-declare POINTER
-declare -i SIZE=5
-declare -a STRING="12345"
-
-if ! mmux_libc_malloc POINTER $SIZE
-then exit 1
-fi
-
-mmux-bash-pointers-memory-from-string $POINTER $STRING $SIZE
+    mmux_index_array_to_memory @RR{POINTER} ARRY @RR{SIZE}
+    mmux_uint8_pointer_ref BYTE @RR{POINTER} 0
+    @RR{BYTE}   @result{} 11
+@}
+mmux_libc_free @RR{POINTER}
 @end example
 @end defun
 

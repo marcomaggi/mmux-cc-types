@@ -37,6 +37,21 @@ else mbfl_location_leave_then_return_failure
 fi]]])
 
 
+#### helpers
+
+function fill_raw_memory () {
+    mbfl_mandatory_parameter(POINTER,			1, pointer value)
+    mbfl_mandatory_integer_parameter(START_OFFSET,	2, inclusive start offset for filling)
+    mbfl_mandatory_integer_parameter(END_OFFSET,	3, exclusive end offset for filling)
+    mbfl_optional_integer_parameter(START_VALUE,	4, 0)
+    declare -i OFFSET VALUE
+
+    for ((OFFSET=START_OFFSET, VALUE=$START_VALUE; OFFSET < END_OFFSET; ++OFFSET, ++VALUE))
+    do mmux_uint8_pointer_set WW(POINTER) WW(OFFSET) WW(VALUE)
+    done
+}
+
+
 #### setup
 
 mbfl_embed_library(__LIBMBFL_LINKER__)
@@ -176,6 +191,58 @@ function memory-mempcpy-1.1 () {
 
 	    dotest-equal WW(EXPECTED_RESULT) WW(RESULT) &&
 		dotest-predicate mmux_pointer_equal WW(PTR_AFTER_TO) WW(COMPUTED_PTR_AFTER_TO)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+
+#### standard memory operations: memccpy
+
+function memory-memccpy-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_memccpy
+    then
+	dotest-unset-debug
+
+	mbfl_location_enter
+	{
+	    declare -r EXPECTED_RESULT=56
+	    declare -ri SIZE=24
+	    declare PTR_FROM PTR_TO
+	    declare AFTER_SEPARATOR_PTR COMPUTED_AFTER_SEPARATOR_PTR
+
+	    declare -r SEPARATOR_OCTET='5'
+	    declare OCTET_AFTER_SEPARATOR
+
+	    COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE), mmux_libc_free WW(PTR_FROM))
+	    COMPENSATE(mmux_libc_malloc PTR_TO   WW(SIZE), mmux_libc_free WW(PTR_TO))
+
+	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 0 WW(SIZE) )
+	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
+
+	    fill_raw_memory WW(PTR_FROM) 0 WW(SIZE)
+	    fill_raw_memory WW(PTR_TO)   0 WW(SIZE) 50
+
+	    mbfl_location_leave_when_failure( mmux_libc_memccpy AFTER_SEPARATOR_PTR WW(PTR_TO) WW(PTR_FROM) '5' WW(SIZE) )
+	    mbfl_location_leave_when_failure( mmux_pointer_add COMPUTED_AFTER_SEPARATOR_PTR WW(PTR_TO) '6' )
+
+	    # Retrieve the byte
+	    mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT WW(AFTER_SEPARATOR_PTR) '0')
+
+	    if false
+	    then
+		declare -a ARRY_FROM ARRY_TO
+
+		mmux-bash-pointers-array-from-memory ARRY_FROM WW(PTR_FROM) WW(SIZE)
+		mmux-bash-pointers-array-from-memory ARRY_TO   WW(PTR_TO)   WW(SIZE)
+		mbfl_array_dump ARRY_FROM
+		mbfl_array_dump ARRY_TO
+	    fi
+
+	    dotest-debug WW(COMPUTED_AFTER_SEPARATOR_PTR) WW(AFTER_SEPARATOR_PTR)
+	    dotest-equal WW(EXPECTED_RESULT) WW(RESULT) &&
+		dotest-predicate mmux_pointer_equal WW(COMPUTED_AFTER_SEPARATOR_PTR) WW(AFTER_SEPARATOR_PTR)
 	}
 	mbfl_location_leave
     else dotest-skipped

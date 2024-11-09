@@ -83,54 +83,26 @@ function mmux_bash_pointers_library_after_loading_hook () {
 # "pointer-" builtins are seen as undefined.  (Marco Maggi; Sep 12, 2024)
 #
 
-function mmux-bash-pointers-array-from-memory () {
-    declare -rn ARRY=${1:?"missing target index array name parameter to '$FUNCNAME'"}
-    declare -r  POINTER=${2:?"missing source memory pointer parameter to '$FUNCNAME'"}
-    declare -ri NUMBER_OF_BYTES=${3:?"missing how many bytes to copy parameter to '$FUNCNAME'"}
-    declare -i  IDX BYTE
+function mmux_index_array_from_memory () {
+    declare -rn mmux_p_ARRY=PP(1, target index array name)
+    declare -r  mmux_p_POINTER=PP(2, source memory pointer)
+    declare -ri mmux_p_NUMBER_OF_BYTES=PP(3, how many bytes to copy)
+    declare -i  mmux_p_IDX mmux_p_BYTE
 
-    for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
+    for ((mmux_p_IDX=0; mmux_p_IDX < mmux_p_NUMBER_OF_BYTES; ++mmux_p_IDX))
     do
-	mmux_uint8_pointer_ref BYTE $POINTER $IDX
-	ARRY[$IDX]=$BYTE
+	mmux_uint8_pointer_ref mmux_p_BYTE WW(mmux_p_POINTER) RR(mmux_p_IDX)
+	mmux_p_ARRY[RR(mmux_p_IDX)]=WW(mmux_p_BYTE)
     done
 }
-function mmux-bash-pointers-memory-from-array () {
-    declare -r  POINTER=${1:?"missing target memory pointer parameter to '$FUNCNAME'"}
-    declare -rn ARRY=${2:?"missing source index array name parameter to '$FUNCNAME'"}
-    declare -ri NUMBER_OF_BYTES=${3:?"missing how many bytes to copy parameter to '$FUNCNAME'"}
-    declare -i  IDX
+function mmux_index_array_to_memory () {
+    declare -r  mmux_p_POINTER=PP(1, target memory pointer)
+    declare -rn mmux_p_ARRY=PP(2, source index array name)
+    declare -ri mmux_p_NUMBER_OF_BYTES=PP(3, how many bytes to copy)
+    declare -i  mmux_p_IDX
 
-    for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
-    do mmux_uint8_pointer_set $POINTER $IDX "${ARRY[$IDX]}"
-    done
-}
-
-### ------------------------------------------------------------------------
-
-function mmux-bash-pointers-string-from-memory () {
-    declare -rn STRING=${1:?"missing target string name parameter to '$FUNCNAME'"}
-    declare -r  POINTER=${2:?"missing source memory pointer parameter to '$FUNCNAME'"}
-    declare -ri NUMBER_OF_BYTES=${3:?"missing how many bytes to copy parameter to '$FUNCNAME'"}
-    declare -i  IDX BYTE
-    declare CHAR
-
-    for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
-    do
-	mmux_uint8_pointer_ref BYTE $POINTER $IDX
-	STRING+=${MMUX_BASH_POINTERS_ASCII_TABLE[$BYTE]}
-    done
-}
-function mmux-bash-pointers-memory-from-string () {
-    declare -r  POINTER=${1:?"missing target memory pointer parameter to '$FUNCNAME'"}
-    declare -r  STRING=${2:?"missing source string name parameter to '$FUNCNAME'"}
-    declare -ri NUMBER_OF_BYTES=${3:?"missing how many bytes to copy parameter to '$FUNCNAME'"}
-    declare -i  IDX CHAR
-
-    for ((IDX=0; IDX < $NUMBER_OF_BYTES; ++IDX))
-    do
-	printf -v CHAR '%d' "'${STRING:$IDX:1}"
-	mmux_uint8_pointer_set $POINTER $IDX "$CHAR"
+    for ((mmux_p_IDX=0; mmux_p_IDX < mmux_p_NUMBER_OF_BYTES; ++mmux_p_IDX))
+    do mmux_uint8_pointer_set WW(mmux_p_POINTER) RR(mmux_p_IDX) "${mmux_p_ARRY[RR(mmux_p_IDX)]}"
     done
 }
 
@@ -165,10 +137,8 @@ function mmux_bash_pointers_library_before_unloading_hook () {
 	  MMUX_BASH_POINTERS_STEMS
 
     unset -f \
-	  mmux-bash-pointers-array-from-memory			\
-	  mmux-bash-pointers-memory-from-array			\
-	  mmux-bash-pointers-string-from-memory			\
-	  mmux-bash-pointers-memory-from-string			\
+	  mmux_index_array_from_memory				\
+	  mmux_index_array_to_memory				\
 	  mmux_bash_pointers_builtin_p				\
 	  mmux_bash_pointers_library_after_loading_hook		\
 	  mmux_bash_pointers_library_before_unloading_hook

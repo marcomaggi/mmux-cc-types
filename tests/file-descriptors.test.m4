@@ -29,8 +29,7 @@
 
 #### macros
 
-MBFL_DEFINE_QQ_MACRO
-MBFL_DEFINE_UNDERSCORE_MACRO_FOR_SLOTS
+MBFL_DEFINE_SPECIAL_MACROS
 
 
 #### setup
@@ -62,7 +61,7 @@ function file-descriptors-open-close-1.1 () {
 	if ! mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
 	then
 	    mbfl_declare_varref(MSG)
-	    mmux_libc_strerror _(MSG) $ERRNO
+	    mmux_libc_strerror UU(MSG) $ERRNO
 	    mbfl_message_error_printf 'opening file: %s\n' QQ(MSG)
 	    mbfl_location_leave_then_return_failure
 	fi
@@ -100,7 +99,7 @@ function file-descriptors-read-write-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-memory-from-array WW(BUFFER) _(ORIGIN_DATA) WW(SIZE)
+	mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
 
 	if ! mmux_libc_lseek OFFSET $FD 0 $mmux_libc_SEEK_SET
 	then mbfl_location_leave_then_return_failure
@@ -118,8 +117,8 @@ function file-descriptors-read-write-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-array-from-memory _(RESULT) WW(BUFFER) WW(SIZE)
-	#mbfl_array_dump _(RESULT) RESULT
+	mmux_index_array_from_memory UU(RESULT) WW(BUFFER) WW(SIZE)
+	#mbfl_array_dump UU(RESULT) RESULT
 
 	dotest-equal $SIZE $DONE && \
 	    dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \
@@ -150,7 +149,7 @@ function file-descriptors-dup-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD" _(ID)
+	then mbfl_location_handler "mmux_libc_close $FD" UU(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
 
@@ -159,7 +158,7 @@ function file-descriptors-dup-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-memory-from-array WW(BUFFER) _(ORIGIN_DATA) WW(SIZE)
+	mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
 
 	if ! mmux_libc_pwrite DONE $FD $BUFFER $SIZE 0
 	then mbfl_location_leave_then_return_failure
@@ -174,8 +173,8 @@ function file-descriptors-dup-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-array-from-memory _(RESULT) WW(BUFFER) WW(SIZE)
-	#mbfl_array_dump _(RESULT) RESULT
+	mmux_index_array_from_memory UU(RESULT) WW(BUFFER) WW(SIZE)
+	#mbfl_array_dump UU(RESULT) RESULT
 
 	dotest-equal $SIZE $DONE && \
 	    dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \
@@ -206,7 +205,7 @@ function file-descriptors-dup2-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD" _(ID)
+	then mbfl_location_handler "mmux_libc_close $FD" UU(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
 
@@ -215,7 +214,7 @@ function file-descriptors-dup2-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-memory-from-array WW(BUFFER) _(ORIGIN_DATA) WW(SIZE)
+	mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
 
 	if ! mmux_libc_pwrite DONE $FD $BUFFER $SIZE 0
 	then mbfl_location_leave_then_return_failure
@@ -233,8 +232,8 @@ function file-descriptors-dup2-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-array-from-memory _(RESULT) WW(BUFFER) WW(SIZE)
-	#mbfl_array_dump _(RESULT) RESULT
+	mmux_index_array_from_memory UU(RESULT) WW(BUFFER) WW(SIZE)
+	#mbfl_array_dump UU(RESULT) RESULT
 
 	dotest-equal $SIZE $DONE && \
 	    dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \
@@ -265,7 +264,7 @@ function file-descriptors-fcntl-F_DUPFD-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD" _(ID)
+	then mbfl_location_handler "mmux_libc_close $FD" UU(ID)
 	else mbfl_location_leave_then_return_failure
 	fi
 
@@ -274,7 +273,7 @@ function file-descriptors-fcntl-F_DUPFD-1.1 () {
 	else mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-memory-from-array WW(BUFFER) _(ORIGIN_DATA) WW(SIZE)
+	mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
 
 	if ! mmux_libc_pwrite DONE $FD $BUFFER $SIZE 0
 	then mbfl_location_leave_then_return_failure
@@ -292,8 +291,8 @@ function file-descriptors-fcntl-F_DUPFD-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	mmux-bash-pointers-array-from-memory _(RESULT) WW(BUFFER) WW(SIZE)
-	#mbfl_array_dump _(RESULT) RESULT
+	mmux_index_array_from_memory UU(RESULT) WW(BUFFER) WW(SIZE)
+	#mbfl_array_dump UU(RESULT) RESULT
 
 	dotest-equal $SIZE $DONE && \
 	    dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \

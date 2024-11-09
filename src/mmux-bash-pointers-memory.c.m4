@@ -203,6 +203,30 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_mempcpy]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memccpy]]])
+{
+  void *	ptr_from;
+  void *	ptr_to;
+  mmux_uint8_t	octet;
+  size_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_to,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_from,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT8(octet,	argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[5]);
+  {
+    void *	after_to = memccpy(ptr_to, ptr_from, octet, len);
+    return mmux_pointer_bind_to_bash_variable(argv[1], after_to, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memccpy]]],
+    [[[(6 == argc)]]],
+    [[["mmux_libc_memccpy AFTER_POINTER_TO POINTER_TO POINTER_FROM UINT8 USIZE"]]],
+    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memmove]]])
 {
   void *	ptr_from;

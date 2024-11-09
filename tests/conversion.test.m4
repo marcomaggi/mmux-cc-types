@@ -29,8 +29,12 @@
 
 #### macros
 
-MBFL_DEFINE_QQ_MACRO
-MBFL_DEFINE_UNDERSCORE_MACRO_FOR_SLOTS
+MBFL_DEFINE_SPECIAL_MACROS
+
+m4_define([[[COMPENSATE]]],[[[if $1
+then mbfl_location_handler "$2"
+else mbfl_location_leave_then_return_failure
+fi]]])
 
 
 #### setup
@@ -52,13 +56,11 @@ function conversion-array-1.1 () {
 
     mbfl_location_enter
     {
-	if mmux_libc_malloc POINTER $SIZE
-	then mbfl_location_handler "mmux_libc_free $POINTER"
-	else mbfl_location_leave_then_return_failure
-	fi
+	COMPENSATE( mmux_libc_malloc POINTER WW(SIZE),
+		    mmux_libc_free RR(POINTER) )
 
-	mmux-bash-pointers-memory-from-array   $POINTER      _(ORIGIN_ARRY) $SIZE
-	mmux-bash-pointers-array-from-memory _(RESULT_ARRY)    $POINTER     $SIZE
+	mmux_index_array_to_memory   WW(POINTER)     UU(ORIGIN_ARRY) WW(SIZE)
+	mmux_index_array_from_memory UU(RESULT_ARRY) WW(POINTER)     WW(SIZE)
 
 	dotest-equal     11 mbfl_slot_qref(RESULT_ARRY, 0) && \
 	    dotest-equal 22 mbfl_slot_qref(RESULT_ARRY, 1) && \
@@ -68,36 +70,6 @@ function conversion-array-1.1 () {
     }
     mbfl_location_leave
 }
-
-
-#### conversion to/from string
-
-function conversion-string-1.1 () {
-    declare -i SIZE=5
-    declare POINTER
-    declare RESULT_STRING
-    declare ORIGIN_STRING="ABCDE"
-
-    mbfl_location_enter
-    {
-	if mmux_libc_malloc POINTER $SIZE
-	then mbfl_location_handler "mmux_libc_free $POINTER"
-	else mbfl_location_leave_then_return_failure
-	fi
-
-	mmux-bash-pointers-memory-from-string $POINTER       $ORIGIN_STRING $SIZE
-	mmux-bash-pointers-string-from-memory  RESULT_STRING $POINTER       $SIZE
-
-	dotest-equal     A mbfl_string_idx(RESULT_STRING, 0) && \
-	    dotest-equal B mbfl_string_idx(RESULT_STRING, 1) && \
-	    dotest-equal C mbfl_string_idx(RESULT_STRING, 2) && \
-	    dotest-equal D mbfl_string_idx(RESULT_STRING, 3) && \
-	    dotest-equal E mbfl_string_idx(RESULT_STRING, 4)
-    }
-    mbfl_location_leave
-}
-
-
 
 
 #### let's go
