@@ -155,6 +155,26 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Duplication.
  ** ----------------------------------------------------------------- */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcpy]]])
+{
+  void *	dst_ptr;
+  void *	src_ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[2]);
+  {
+    strcpy(dst_ptr, src_ptr);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC)"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strdup]]])
 {
   void *	ptr;

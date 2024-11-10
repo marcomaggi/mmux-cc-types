@@ -483,6 +483,19 @@ non--standard C language type implementing complex floating--point numbers havin
 @section Conventions used in this documentation
 
 
+Unless otherwise specified: the loadable builtins provided by @value{PACKAGE} return only two
+values: true or false.  Unless otherwise specified: these values are reserved to signal the
+successful execution of the builtin itself; the return value is false only if an error occurred
+while executing the builtin.
+
+When a builtin is successful: its return value is true; otherwise its return value is false and the
+shell variable @env{ERRNO} is set to the string representation of an exact integer, itself
+representing an @code{errno} error code.
+
+Some builtins return true of false to indicate the result of evaluating predicate; in this case it
+is impossible to distinguish an error from the predicate condition being false; this behaviour is
+analogous to that of Bash's @command{test} builtin.
+
 The following naming conventions for builtin and function arguments are used in this documentation:
 
 @table @var
@@ -4335,10 +4348,8 @@ mmux_libc_free @RR{PTR}
 Take a Bash string argument @var{STRING}, duplicate it allocating memory with @cfunc{malloc}, then
 bind the string representation of the resulting pointer to the shell variable name @var{PTRVAR}.
 
-When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.  If an
-error occurs allocating memory: the return value is false and the shell variable @var{PTRVAR} is
-left untouched.
+If an error occurs allocating memory: the return value is false and the shell variable @var{PTRVAR}
+is left untouched.
 @end deffn
 
 
@@ -4349,10 +4360,8 @@ If @var{USIZE} is not present: @var{ASCIIZ_POINTER} is meant to reference an @as
 will be fully duplicated into a Bash string.  The new Bash string is bound to the shell variable
 whose name is @var{STRVAR}.
 
-When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.  If an
-error occurs allocating memory: the return value is false and the shell variable @var{PTRVAR} is
-left untouched.
+If an error occurs allocating memory: the return value is false and the shell variable @var{PTRVAR}
+is left untouched.
 @end deffn
 
 @c page
@@ -4364,9 +4373,6 @@ left untouched.
 Interface to the standard C language function @cfunc{strlen}.  Compute the length, measured in
 bytes, of the @asciiz{} string referenced by @var{ASCIIZ_POINTER} and store it in the shell variable
 @var{USIZEVAR}.
-
-When successful return true, otherwise return false and set the shell variable @code{ERRNO} to the
-string representation of an exact integer, itself representing an @code{errno} error code.
 
 @example
 declare PTR LEN
@@ -4388,9 +4394,7 @@ mmux_libc_free @RR{PTR}
 
 
 @deffn Builtin mmux_libc_strnlen @var{USIZEVAR} @var{ASCIIZ_POINTER} @var{USIZE_MAX}
-Interface to the standard C language function @cfunc{strnlen}; @cfuncpage{strnlen}.  When successful
-return true, otherwise return false and set the shell variable @code{ERRNO} to the string
-representation of an exact integer, itself representing an @code{errno} error code.
+Interface to the standard C language function @cfunc{strnlen}; @cfuncpage{strnlen}.
 @end deffn
 
 @c page
@@ -4398,10 +4402,33 @@ representation of an exact integer, itself representing an @code{errno} error co
 @section Duplicating @asciiz{} strings
 
 
+@deffn Builtin mmux_libc_strcpy @var{PTR_TO} @var{PTR_FROM}
+Interface to the standard C language function @cfunc{strcpy}; @cfuncpage{strcpy}.
+
+@example
+declare -r ORIGINAL_STRING='ciao mamma'
+declare PTR2 PTR1
+declare -i LEN
+
+mmux_pointer_from_bash_string PTR1 @WW{ORIGINAL_STRING}
+@{
+    mmux_libc_strlen LEN @RR{PTR1}
+    mmux_usize_incr  LEN @RR{LEN}
+
+    mmux_libc_malloc PTR2 @RR{LEN}
+    @{
+        mmux_libc_strcpy @RR{PTR2} @RR{PTR1}
+        ...
+    @}
+    mmux_libc_free @WW{PTR2}
+@}
+mmux_libc_free @RR{PTR1}
+@end example
+@end deffn
+
+
 @deffn Builtin mmux_libc_strdup @var{ASCIIZ_PTRVAR} @var{ASCIIZ_POINTER}
-Interface to the standard C language function @cfunc{strdup}; @cfuncpage{strdup}.  When successful
-return true, otherwise return false and set the shell variable @code{ERRNO} to the string
-representation of an exact integer, itself representing an @code{errno} error code.
+Interface to the standard C language function @cfunc{strdup}; @cfuncpage{strdup}.
 
 @example
 declare PTR1 PTR2
@@ -4412,7 +4439,7 @@ mmux_pointer_from_bash_string PTR1 'ciao mamma'
     @{
         ...
     @}
-    mmux_libc_free @RR{(PTR2}
+    mmux_libc_free @RR{PTR2}
 @}
 mmux_libc_free @RR{PTR1}
 @end example

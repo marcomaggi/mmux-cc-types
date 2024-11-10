@@ -219,6 +219,33 @@ function strings-strnlen-1.1 () {
 }
 
 
+#### strcpy
+
+function strings-strcpy-1.1 () {
+    declare -r EXPECTED_RESULT='ciao mamma' ORIGINAL_STRING='ciao mamma'
+    declare STR PTR1 PTR2
+    declare -i LEN
+
+    mbfl_location_enter
+    {
+	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
+		    mmux_libc_free RR(PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
+	mmux_usize_incr LEN RR(LEN)
+
+	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN),
+		    mmux_libc_free WW(PTR2))
+
+	mbfl_location_leave_when_failure( mmux_libc_strcpy RR(PTR2) RR(PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
+	dotest-equal WW(EXPECTED_RESULT) WW(STR)
+    }
+    mbfl_location_leave
+}
+
+
 #### strdup
 
 function strings-strdup-1.1 () {
