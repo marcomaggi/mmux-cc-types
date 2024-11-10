@@ -3958,17 +3958,16 @@ only on @gnu{} platforms.
 
 
 @deffn {Builtin} mmux_libc_memccpy @var{AFTER_PTR_VAR} @var{PTR_TO} @var{PTR_FROM} @var{UINT8_SEPARATOR} @var{USIZE}
-Interface to the C language function @cfunc{memccpy}; copy at most @var{USIZE} octets from a memory
-block to another stopping if @var{UINT8_SEPARATOR} is found; the separator octet is not copied.  If
-successful return true, otherwise return false and set the shell variable @code{ERRNO} to the string
-representation of an exact integer, itself representing an @code{errno} error code.
+Interface to the C language function @cfunc{memccpy}, @cfuncpage{memccpy}.  Copy at most @var{USIZE}
+octets from a memory block to another stopping if @var{UINT8_SEPARATOR} is found; the separator
+octet is copied.
 
 The argument @var{AFTER_PTR_VAR} must be a shell variable name; when the operation is successful:
 
 @itemize
 @item
 If an octet matching @var{UINT8_SEPARATOR} was found: the shell variable is set to the pointer, in
-the memory block referenced by @var{PTR_FROM}, right after @var{UINT8_SEPARATOR}.
+the memory block referenced by @var{PTR_TO}, right after @var{UINT8_SEPARATOR}.
 
 @item
 Otherwise the shell variable is left untouched.
@@ -4318,6 +4317,7 @@ mmux_libc_free @RR{POINTER}
 * strings conversion::          Converting @asciiz{} strings to other representations.
 * strings inspection::          Inspecting @asciiz{} strings.
 * strings duplication::         Duplicating @asciiz{} strings.
+* strings concatenation::       Concatenating @asciiz{} strings.
 @end menu
 
 @c page
@@ -4427,6 +4427,14 @@ mmux_libc_free @RR{PTR1}
 @end deffn
 
 
+@deffn Builtin mmux_libc_stpcpy @var{AFTER_PTR_VAR} @var{PTR_TO} @var{PTR_FROM}
+Interface to the standard C language function @cfunc{stpcpy}; @cfuncpage{stpcpy}.  Like
+@MmuxBuiltin{mmux_libc_strcpy} but, when successful, bind to the shell variable @var{AFTER_PTR_VAR}
+the string representation of a pointer to the null character in the memory block referenced by
+@var{PTR_TO}.
+@end deffn
+
+
 @deffn Builtin mmux_libc_strdup @var{ASCIIZ_PTRVAR} @var{ASCIIZ_POINTER}
 Interface to the standard C language function @cfunc{strdup}; @cfuncpage{strdup}.
 
@@ -4445,6 +4453,45 @@ mmux_libc_free @RR{PTR1}
 @end example
 @end deffn
 
+@c page
+@node strings concatenation
+@section Concatenating @asciiz{} strings
+
+
+@deffn Builtin mmux_libc_strcat @var{PTR_TO} @var{PTR_FROM}
+Interface to the standard C language function @cfunc{strcat}; @cfuncpage{strcat}.
+
+@example
+declare -r ORIGINAL_STRING1='ciao ' ORIGINAL_STRING2='mamma'
+declare STRING PTR1 PTR2 PTR3
+declare -i LEN1 LEN2 LEN3 LEN3_PLUS
+
+mmux_pointer_from_bash_string PTR1 @WW{ORIGINAL_STRING1}
+@{
+    mmux_pointer_from_bash_string PTR2 @WW{ORIGINAL_STRING2}
+    @{
+        mmux_libc_strlen LEN1 @RR{PTR1}
+        mmux_libc_strlen LEN2 @RR{PTR2}
+        mmux_usize_add LEN3 @RR{LEN2} @RR{LEN1}
+        mmux_usize_incr LEN3_PLUS @RR{LEN3}
+
+        mmux_libc_malloc PTR3 @RR{LEN3_PLUS}
+        @{
+            # Put a null character at the end of the destination string!
+            mmux_schar_pointer_set @RR{PTR3} 0 0
+
+            mmux_libc_strcat @RR{PTR3} @RR{PTR1}
+            mmux_libc_strcat @RR{PTR3} @RR{PTR2}
+            mmux_pointer_to_bash_string STRING @RR{PTR3}
+            @WW{STRING} @result{} ciao mamma
+        @}
+        mmux_libc_free @RR{PTR3}
+    @}
+    mmux_libc_free @RR{PTR2}
+@}
+mmux_libc_free @RR{PTR1}
+@end example
+@end deffn
 
 @c page
 @node errors

@@ -222,9 +222,9 @@ function strings-strnlen-1.1 () {
 #### strcpy
 
 function strings-strcpy-1.1 () {
-    declare -r EXPECTED_RESULT='ciao mamma' ORIGINAL_STRING='ciao mamma'
+    declare -r EXPECTED_STRING='ciao mamma' ORIGINAL_STRING='ciao mamma'
     declare STR PTR1 PTR2
-    declare -i LEN
+    declare -i LEN LEN_PLUS
 
     mbfl_location_enter
     {
@@ -232,15 +232,15 @@ function strings-strcpy-1.1 () {
 		    mmux_libc_free RR(PTR1) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
-	mmux_usize_incr LEN RR(LEN)
+	mmux_usize_incr LEN_PLUS RR(LEN)
 
-	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN),
+	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS),
 		    mmux_libc_free WW(PTR2))
 
 	mbfl_location_leave_when_failure( mmux_libc_strcpy RR(PTR2) RR(PTR1) )
 
 	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
-	dotest-equal WW(EXPECTED_RESULT) WW(STR)
+	dotest-equal WW(EXPECTED_STRING) WW(STR)
     }
     mbfl_location_leave
 }
@@ -249,7 +249,7 @@ function strings-strcpy-1.1 () {
 #### strdup
 
 function strings-strdup-1.1 () {
-    declare -r EXPECTED_RESULT='ciao mamma'
+    declare -r EXPECTED_STRING='ciao mamma'
     declare STR PTR1 PTR2
     declare -i LEN
 
@@ -260,7 +260,72 @@ function strings-strdup-1.1 () {
 	COMPENSATE( mmux_libc_strdup PTR2 RR(PTR1),
 		    mmux_libc_free RR(PTR2) )
 	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
-	dotest-equal WW(EXPECTED_RESULT) WW(STR)
+	dotest-equal WW(EXPECTED_STRING) WW(STR)
+    }
+    mbfl_location_leave
+}
+
+
+#### stpcpy
+
+function strings-stpcpy-1.1 () {
+    declare -r EXPECTED_STRING='ciao mamma' ORIGINAL_STRING='ciao mamma'
+    declare EXPECTED_AFTER_PTR AFTER_PTR
+    declare STR PTR1 PTR2
+    declare -i LEN LEN_PLUS
+
+    mbfl_location_enter
+    {
+	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
+		    mmux_libc_free RR(PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
+	mmux_usize_incr LEN_PLUS RR(LEN)
+
+	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS),
+		    mmux_libc_free WW(PTR2))
+
+	mbfl_location_leave_when_failure( mmux_libc_stpcpy AFTER_PTR RR(PTR2) RR(PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
+
+	mmux_pointer_add EXPECTED_AFTER_PTR RR(PTR2) RR(LEN)
+
+	dotest-equal WW(EXPECTED_STRING) WW(STR) &&
+	    dotest-equal WW(EXPECTED_AFTER_PTR) WW(AFTER_PTR)
+    }
+    mbfl_location_leave
+}
+
+
+#### strcat
+
+function strings-strcat-1.1 () {
+    declare -r EXPECTED_STRING='ciao mamma' ORIGINAL_STRING1='ciao ' ORIGINAL_STRING2='mamma'
+    declare STRING PTR1 PTR2 PTR3
+    declare -i LEN1 LEN2 LEN3 LEN3_PLUS
+
+    dotest-unset-debug
+
+    mbfl_location_enter
+    {
+	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING1), mmux_libc_free RR(PTR1) )
+	COMPENSATE( mmux_pointer_from_bash_string PTR2 WW(ORIGINAL_STRING2), mmux_libc_free RR(PTR2) )
+
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN1 RR(PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN2 RR(PTR2) )
+	mbfl_location_leave_when_failure( mmux_usize_add LEN3 RR(LEN2) RR(LEN1) )
+	mbfl_location_leave_when_failure( mmux_usize_incr LEN3_PLUS RR(LEN3) )
+
+	dotest-debug LEN3_PLUS=RR(LEN3_PLUS)
+
+	COMPENSATE( mmux_libc_malloc PTR3 RR(LEN3_PLUS), mmux_libc_free RR(PTR3) )
+	mmux_schar_pointer_set RR(PTR3) 0 0
+
+	mbfl_location_leave_when_failure( mmux_libc_strcat RR(PTR3) RR(PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_strcat RR(PTR3) RR(PTR2) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STRING RR(PTR3) )
+	dotest-equal WW(EXPECTED_STRING) WW(STRING)
     }
     mbfl_location_leave
 }
