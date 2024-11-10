@@ -313,4 +313,26 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC"]]],
     [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC)"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncat]]])
+{
+  void *	dst_ptr;
+  void *	src_ptr;
+  mmux_ssize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[3]);
+  {
+    strncat(dst_ptr, src_ptr, len);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, SSIZE)"]]])
+
 /* end of file */

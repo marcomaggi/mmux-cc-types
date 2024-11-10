@@ -4533,6 +4533,13 @@ mmux_libc_free @RR{PTR1}
 @end example
 @end deffn
 
+
+@deffn Builtin mmux_libc_strncat @var{PTR_TO} @var{PTR_FROM} @var{SSIZE}
+Interface to the standard C language function @cfunc{strncat}; @cfuncpage{strncat}.  This builtin
+always appends a null character to the destination buffer after copying at most @var{SSIZE} bytes
+from the source buffer.
+@end deffn
+
 @c page
 @node errors
 @chapter Handling errors
