@@ -4427,11 +4427,46 @@ mmux_libc_free @RR{PTR1}
 @end deffn
 
 
+@deffn Builtin mmux_libc_strncpy @var{PTR_TO} @var{PTR_FROM} @var{SSIZE}
+Interface to the standard C language function @cfunc{strncpy}; @cfuncpage{strncpy}.
+@end deffn
+
+
 @deffn Builtin mmux_libc_stpcpy @var{AFTER_PTR_VAR} @var{PTR_TO} @var{PTR_FROM}
 Interface to the standard C language function @cfunc{stpcpy}; @cfuncpage{stpcpy}.  Like
 @MmuxBuiltin{mmux_libc_strcpy} but, when successful, bind to the shell variable @var{AFTER_PTR_VAR}
 the string representation of a pointer to the null character in the memory block referenced by
 @var{PTR_TO}.
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_stpncpy @var{AFTER_PTR_VAR} @var{PTR_TO} @var{PTR_FROM} @var{SSIZE}
+Interface to the standard C language function @cfunc{stpncpy}; @cfuncpage{stpncpy}.  If we want the
+destination buffer to contain the terminating null character: the null character from the source
+buffer must be among the first @var{SSIZE} characters.
+
+@example
+declare -r ORIGINAL_STRING='ciao mamma'
+declare PTR1 PTR2 AFTER_PTR
+declare -i LEN LEN_PLUS
+
+mmux_pointer_from_bash_string PTR1 @WW{ORIGINAL_STRING}
+@{
+    # Compute LEN_PLUS to include the terminating null character
+    # from the source buffer.
+    mmux_libc_strlen LEN @WW{PTR1}
+    mmux_usize_incr LEN_PLUS @RR{LEN}
+
+    mmux_libc_malloc PTR2 @RR{LEN_PLUS}
+    @{
+        mmux_libc_stpncpy AFTER_PTR @RR{PTR2} @RR{PTR1} @RR{LEN_PLUS}
+        # Here $AFTER_PTR references the null character at the end of
+        # the destination buffer.
+    @}
+    mmux_libc_free @WW{PTR2}
+@}
+mmux_libc_free @RR{PTR1}
+@end example
 @end deffn
 
 
@@ -4451,6 +4486,11 @@ mmux_pointer_from_bash_string PTR1 'ciao mamma'
 @}
 mmux_libc_free @RR{PTR1}
 @end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_strndup @var{ASCIIZ_PTRVAR} @var{ASCIIZ_POINTER} @var{SSIZE}
+Interface to the standard C language function @cfunc{strndup}; @cfuncpage{strndup}.
 @end deffn
 
 @c page

@@ -175,6 +175,28 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncpy]]])
+{
+  void *	dst_ptr;
+  void *	src_ptr;
+  mmux_ssize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[3]);
+  {
+    strncpy(dst_ptr, src_ptr, len);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC SSIZE)"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stpcpy]]])
 {
   void *	dst_ptr;
@@ -195,6 +217,34 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stpncpy]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STPNCPY]]],[[[
+  void *	dst_ptr;
+  void *	src_ptr;
+  ssize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[4]);
+  {
+    char *	after = stpncpy(dst_ptr, src_ptr, len);
+    return mmux_pointer_bind_to_bash_variable(argv[1], after, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_VAR ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_VAR, ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, SSIZE)"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strdup]]])
 {
   void *	ptr;
@@ -211,6 +261,34 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER DUPLICATE_PTRVAR ASCIIZ_POINTER"]]],
     [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(DUPLICATE_PTRVAR, ASCIIZ_POINTER)"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strndup]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRNDUP]]],[[[
+
+  void *	ptr;
+  ssize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[3]);
+  {
+    char const *	instr = ptr;
+    char *		oustr = strndup(instr, len);
+    return mmux_pointer_bind_to_bash_variable(argv[1], oustr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DUPLICATE_PTRVAR ASCIIZ_POINTER SSIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(DUPLICATE_PTRVAR, ASCIIZ_POINTER, SSIZE)"]]])
 
 
 /** --------------------------------------------------------------------

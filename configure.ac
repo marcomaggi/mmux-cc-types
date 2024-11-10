@@ -123,7 +123,7 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 
 #### inspecting functions
 
-AC_CHECK_FUNCS([mempcpy strnlen])
+AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy])
 
 
 #### inspecting errno constants
