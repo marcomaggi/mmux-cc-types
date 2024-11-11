@@ -4339,6 +4339,7 @@ variable @var{SINTVAR} the value returned by the function.
 * strings duplication::         Duplicating @asciiz{} strings.
 * strings concatenation::       Concatenating @asciiz{} strings.
 * strings comparison::          Comparing @asciiz{} strings.
+* strings collation::           Collation builtins for @asciiz{} strings.
 @end menu
 
 @c page
@@ -4640,6 +4641,25 @@ mmux_pointer_from_bash_string PTR1 '1.2.3'
 @}
 mmux_libc_free @RR{PTR1}
 @end example
+@end deffn
+
+@c page
+@node strings collation
+@section Collation builtins for @asciiz{} strings
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_strcoll @var{SINTVAR} @vari{PTR} @varii{PTR}
+Interface to the standard C language function @cfunc{strcoll}; @cfuncpage{strcoll}.  A string
+representation of the C language ternary return value is bound to the shell variable @var{SINTVAR}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_strxfrm @var{RESULT_USIZE_VAR} @vari{PTR} @varii{PTR} @var{ULEN}
+Interface to the standard C language function @cfunc{strxfrm}; @cfuncpage{strxfrm}.  A string
+representation of the C language return value is bound to the shell variable @var{RESULT_USIZE_VAR}.
 @end deffn
 
 @c page

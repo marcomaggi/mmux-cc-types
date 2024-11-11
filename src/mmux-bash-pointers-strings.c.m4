@@ -179,11 +179,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncpy]]])
 {
   void *	dst_ptr;
   void *	src_ptr;
-  mmux_ssize_t	len;
+  mmux_usize_t	len;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[3]);
   {
     strncpy(dst_ptr, src_ptr, len);
     return MMUX_SUCCESS;
@@ -192,8 +192,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncpy]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
-    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC SSIZE)"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC USIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, USIZE)"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -222,11 +222,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stpncpy]]])
 MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STPNCPY]]],[[[
   void *	dst_ptr;
   void *	src_ptr;
-  ssize_t	len;
+  mmux_usize_t	len;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[3]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
   {
     char *	after = stpncpy(dst_ptr, src_ptr, len);
     return mmux_pointer_bind_to_bash_variable(argv[1], after, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -240,8 +240,8 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STPNCPY]]],[[[
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_VAR ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
-    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_VAR, ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, SSIZE)"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_VAR ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC USIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_VAR, ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, USIZE)"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -269,10 +269,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strndup]]])
 MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRNDUP]]],[[[
 
   void *	ptr;
-  ssize_t	len;
+  mmux_usize_t	len;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[3]);
   {
     char const *	instr = ptr;
     char *		oustr = strndup(instr, len);
@@ -287,8 +287,8 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRNDUP]]],[[[
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER DUPLICATE_PTRVAR ASCIIZ_POINTER SSIZE"]]],
-    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(DUPLICATE_PTRVAR, ASCIIZ_POINTER, SSIZE)"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DUPLICATE_PTRVAR ASCIIZ_POINTER USIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(DUPLICATE_PTRVAR, ASCIIZ_POINTER, USIZE)"]]])
 
 
 /** --------------------------------------------------------------------
@@ -319,11 +319,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncat]]])
 {
   void *	dst_ptr;
   void *	src_ptr;
-  mmux_ssize_t	len;
+  mmux_usize_t	len;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SSIZE(len,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[3]);
   {
     strncat(dst_ptr, src_ptr, len);
     return MMUX_SUCCESS;
@@ -332,8 +332,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncat]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
-    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, SSIZE)"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC USIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, USIZE)"]]])
 
 
 /** --------------------------------------------------------------------
@@ -459,5 +459,50 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2"]]],
     [[["Compare ASCIIZ strings."]]])
+
+
+/** --------------------------------------------------------------------
+ ** Collation.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcoll]]])
+{
+  void *	ptr1;
+  void *	ptr2;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
+  {
+    int		rv = strcoll(ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2"]]],
+    [[["Compare ASCIIZ strings."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strxfrm]]])
+{
+  void *	dst_ptr;
+  void *	src_ptr;
+  mmux_usize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(dst_ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(src_ptr,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
+  {
+    mmux_usize_t	result_size = strxfrm(dst_ptr, src_ptr, len);
+    return mmux_usize_bind_to_bash_variable(argv[1], result_size, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_USIZE_VAR ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC USIZE"]]],
+    [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(RESULT_USIZE_VAR, ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, USIZE)"]]])
 
 /* end of file */
