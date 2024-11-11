@@ -4338,6 +4338,7 @@ variable @var{SINTVAR} the value returned by the function.
 * strings inspection::          Inspecting @asciiz{} strings.
 * strings duplication::         Duplicating @asciiz{} strings.
 * strings concatenation::       Concatenating @asciiz{} strings.
+* strings comparison::          Comparing @asciiz{} strings.
 @end menu
 
 @c page
@@ -4363,6 +4364,8 @@ mmux_pointer_from_bash_string PTR 'ciao'
 mmux_libc_free @RR{PTR}
 @end example
 
+@ref{overview conventions, Conventions in coding and documentation}.
+
 
 @deffn Builtin mmux_pointer_from_bash_string @var{PTRVAR} @var{STRING}
 Take a Bash string argument @var{STRING}, duplicate it allocating memory with @cfunc{malloc}, then
@@ -4387,6 +4390,9 @@ is left untouched.
 @c page
 @node strings inspection
 @section Inspecting @asciiz{} strings
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_strlen @var{USIZEVAR} @var{ASCIIZ_POINTER}
@@ -4420,6 +4426,9 @@ Interface to the standard C language function @cfunc{strnlen}; @cfuncpage{strnle
 @c page
 @node strings duplication
 @section Duplicating @asciiz{} strings
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_strcpy @var{PTR_TO} @var{PTR_FROM}
@@ -4518,6 +4527,9 @@ Interface to the standard C language function @cfunc{strndup}; @cfuncpage{strndu
 @section Concatenating @asciiz{} strings
 
 
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
 @deffn Builtin mmux_libc_strcat @var{PTR_TO} @var{PTR_FROM}
 Interface to the standard C language function @cfunc{strcat}; @cfuncpage{strcat}.
 
@@ -4558,6 +4570,76 @@ mmux_libc_free @RR{PTR1}
 Interface to the standard C language function @cfunc{strncat}; @cfuncpage{strncat}.  This builtin
 always appends a null character to the destination buffer after copying at most @var{SSIZE} bytes
 from the source buffer.
+@end deffn
+
+@c page
+@node strings comparison
+@section Comparing @asciiz{} strings
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_strcmp @var{SINTVAR} @vari{PTR} @varii{PTR}
+Interface to the standard C language function @cfunc{strcmp}; @cfuncpage{strcmp}.  A string
+representation of the C language ternary return value is bound to the shell variable @var{SINTVAR}.
+
+@example
+declare PTR1 PTR2
+declare -i TERNARY
+
+mmux_pointer_from_bash_string PTR1 'ciao mamma'
+@{
+    mmux_pointer_from_bash_string PTR2 'hello world'
+    @{
+        mmux_libc_strcmp TERNARY @WW{PTR1} @WW{PTR2}
+        (( 0 == TERNARY ))
+    @}
+    mmux_libc_free @RR{PTR2}
+@}
+mmux_libc_free @RR{PTR1}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_strncmp @var{SINTVAR} @vari{PTR} @varii{PTR} @var{USIZE_LEN}
+Interface to the standard C language function @cfunc{strncmp}; @cfuncpage{strncmp}.  A string
+representation of the C language ternary return value is bound to the shell variable @var{SINTVAR}.
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_strcasecmp @var{SINTVAR} @vari{PTR} @varii{PTR}
+Interface to the extension C language function @cfunc{strncmp}; @cfuncpage{strncmp}.  A string
+representation of the C language ternary return value is bound to the shell variable @var{SINTVAR}.
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_strncasecmp @var{SINTVAR} @vari{PTR} @varii{PTR} @var{USIZE_LEN}
+Interface to the extension C language function @cfunc{strncasecmp}; @cfuncpage{strncasecmp}.  A
+string representation of the C language ternary return value is bound to the shell variable
+@var{SINTVAR}.
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_strverscmp @var{SINTVAR} @vari{PTR} @varii{PTR}
+Interface to the extension C language function @cfunc{strverscmp}; @cfuncpage{strverscmp}.  A string
+representation of the C language ternary return value is bound to the shell variable @var{SINTVAR}.
+
+@example
+declare PTR1 PTR2
+declare -i TERNARY
+
+mmux_pointer_from_bash_string PTR1 '1.2.3'
+@{
+    mmux_pointer_from_bash_string PTR2 '1.2.9'
+    @{
+        mmux_libc_strverscmp TERNARY @WW{PTR1} @WW{PTR2}
+        (( 0 > TERNARY ))
+    @}
+    mmux_libc_free @RR{PTR2}
+@}
+mmux_libc_free @RR{PTR1}
+@end example
 @end deffn
 
 @c page

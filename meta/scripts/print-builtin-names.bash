@@ -47,7 +47,7 @@ declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${M
 declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memccpy memmove memcmp
 			   strerror errno_to_string
 			   open close read write pread pwrite lseek dup dup2 fcntl ioctl
-			   strlen strcpy strncpy strdup stpcpy strcat strncat)
+			   strlen strcpy strncpy strdup stpcpy strcat strncat strcmp strncmp)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
@@ -279,7 +279,7 @@ function have_cfunc () {
 
 # Builtin wrapping C language functions that may not be available.
 {
-    for ITEM in mempcpy strnlen strndup stpncpy
+    for ITEM in mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
     do
 	if have_cfunc "$ITEM"
 	then

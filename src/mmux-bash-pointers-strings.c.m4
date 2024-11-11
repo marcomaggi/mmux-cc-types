@@ -335,4 +335,129 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC SSIZE"]]],
     [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, SSIZE)"]]])
 
+
+/** --------------------------------------------------------------------
+ ** Comparison.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcmp]]])
+{
+  void *	ptr1;
+  void *	ptr2;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
+  {
+    int		rv = strcmp(ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2"]]],
+    [[["Compare ASCIIZ strings."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncmp]]])
+{
+  void *	ptr1;
+  void *	ptr2;
+  mmux_usize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
+  {
+    int		rv = strncmp(ptr2, ptr1, len);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2 LEN"]]],
+    [[["Compare ASCIIZ strings."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcasecmp]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRCASECMP]]],[[[
+  void *	ptr1;
+  void *	ptr2;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
+  {
+    int		rv = strcasecmp(ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2"]]],
+    [[["Compare ASCIIZ strings."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncasecmp]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRNCASECMP]]],[[[
+  void *	ptr1;
+  void *	ptr2;
+  mmux_usize_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
+  {
+    int		rv = strncasecmp(ptr2, ptr1, len);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2 LEN"]]],
+    [[["Compare ASCIIZ strings."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strverscmp]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRVERSCMP]]],[[[
+  void *	ptr1;
+  void *	ptr2;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
+  {
+    int		rv = strverscmp(ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2"]]],
+    [[["Compare ASCIIZ strings."]]])
+
 /* end of file */

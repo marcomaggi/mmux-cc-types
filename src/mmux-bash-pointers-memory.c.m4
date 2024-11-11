@@ -262,23 +262,22 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcmp]]])
 {
-  void *	ptr_from;
-  void *	ptr_to;
+  void *	ptr1;
+  void *	ptr2;
   size_t	len;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_to,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_from,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[3]);
   MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
   {
-    int		rv = memcmp(ptr_to, ptr_from, len);
+    int		rv = memcmp(ptr2, ptr1, len);
     return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTR1 PTR2 SIZE"]]],
-    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
-
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2 SIZE"]]],
+    [[["Compare memory blocks."]]])
 
 /* end of file */
