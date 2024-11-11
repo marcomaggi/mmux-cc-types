@@ -22,26 +22,32 @@
 # not, see <http://www.gnu.org/licenses/>.
 #
 
-declare -ra SIGNED_INTEGER_STEMS=(schar sshort sint slong sllong sint8 sint16 sint32 sint64 ssize \
-					sintmax sintptr ptrdiff off uid gid wchar)
-declare -ra UNSIGNED_INTEGER_STEMS=(uchar ushort uint ulong ullong uint8 uint16 uint32 uint64 usize \
-					  uintmax uintptr mode pid wint)
+declare -ra SIGNED_INTEGER_STEMS=(schar sshort sint slong sllong
+				  sint8 sint16 sint32 sint64 ssize
+				  sintmax sintptr ptrdiff off uid gid wchar)
+declare -ra UNSIGNED_INTEGER_STEMS=(uchar ushort uint ulong ullong
+				    uint8 uint16 uint32 uint64 usize
+				    uintmax uintptr mode pid wint)
 declare -ra INTEGER_STEMS=("${SIGNED_INTEGER_STEMS[@]}" "${UNSIGNED_INTEGER_STEMS[@]}")
 
-declare -ra REAL_FLOAT_STEMS=(float double ldouble float32 float64 float128 float32x float64x float128x \
-				    decimal32 decimal64 decimal128)
-declare -ra COMPLEX_FLOAT_STEMS=(complexf complexd complexld complexf32 complexf64 complexf128 \
-					  complexf32x complexf64x complexf128x \
-					  complexd32 complexd64 complexd128)
+declare -ra REAL_FLOAT_STEMS=(float double ldouble
+			      float32 float64 float128
+			      float32x float64x float128x
+			      decimal32 decimal64 decimal128)
+declare -ra COMPLEX_FLOAT_STEMS=(complexf complexd complexld
+				 complexf32 complexf64 complexf128
+				 complexf32x complexf64x complexf128x
+				 complexd32 complexd64 complexd128)
 declare -ra FLOAT_STEMS=("${REAL_FLOAT_STEMS[@]}" "${COMPLEX_FLOAT_STEMS[@]}")
 
 declare -ga MMUX_BASH_POINTERS_REAL_STEMS=('pointer' "${INTEGER_STEMS[@]}" "${REAL_FLOAT_STEMS[@]}")
 declare -ga MMUX_BASH_POINTERS_COMPLEX_STEMS=("${COMPLEX_FLOAT_STEMS[@]}")
 declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}")
 
-declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memccpy memmove strerror errno_to_string  \
-				  open close read write pread pwrite lseek dup dup2 fcntl ioctl	      \
-				  strlen strcpy strncpy strdup stpcpy strcat strncat)
+declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memccpy memmove memcmp
+			   strerror errno_to_string
+			   open close read write pread pwrite lseek dup dup2 fcntl ioctl
+			   strlen strcpy strncpy strdup stpcpy strcat strncat)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh

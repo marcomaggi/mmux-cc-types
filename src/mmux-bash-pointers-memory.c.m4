@@ -50,9 +50,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_malloc]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_malloc]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_libc_malloc PTRVAR SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTRVAR SIZE"]]],
     [[["Allocate a memory block, store the pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
@@ -76,9 +76,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_calloc]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_calloc]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_libc_calloc PTRVAR ITEM_COUNT ITEM_SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTRVAR ITEM_COUNT ITEM_SIZE"]]],
     [[["Allocate a memory block wide enough to hold ITEM_COUNT items of ITEM_SIZE, store the pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
@@ -101,9 +101,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_realloc]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_realloc]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_libc_realloc PTRVAR OLDPTR NEW_SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTRVAR OLDPTR NEW_SIZE"]]],
     [[["Reallocate a memory block to a new size, store the new pointer in the given variable."]]])
 
 /* ------------------------------------------------------------------ */
@@ -120,14 +120,14 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_free]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_free]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
-    [[["mmux_libc_free PTR"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTR"]]],
     [[["Release a memory block."]]])
 
 
 /** --------------------------------------------------------------------
- ** Standard memory operations.
+ ** Memory operations: setting.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memset]]])
@@ -146,12 +146,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memset]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memset]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_libc_memset BLOCK C SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER BLOCK C SIZE"]]],
     [[["Copy C to each of the SIZE bytes of BLOCK."]]])
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Memory operations: duplicating.
+ ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcpy]]])
 {
@@ -168,9 +171,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcpy]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memcpy]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_libc_memcpy POINTER_TO POINTER_FROM SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER POINTER_TO POINTER_FROM SIZE"]]],
     [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
 
 /* ------------------------------------------------------------------ */
@@ -196,9 +199,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_MEMPCPY]]],[[[
   return MMUX_FAILURE;
 ]]])
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_mempcpy]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
-    [[["mmux_libc_mempcpy AFTER_POINTER_TOVAR POINTER_TO POINTER_FROM SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER AFTER_POINTER_TOVAR POINTER_TO POINTER_FROM SIZE"]]],
     [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
 
 /* ------------------------------------------------------------------ */
@@ -225,9 +228,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memccpy]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memccpy]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
-    [[["mmux_libc_memccpy AFTER_POINTER_TO POINTER_TO POINTER_FROM UINT8 USIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER AFTER_POINTER_TO POINTER_TO POINTER_FROM UINT8 USIZE"]]],
     [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
 
 /* ------------------------------------------------------------------ */
@@ -247,9 +250,35 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memmove]]])
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_memmove]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_libc_memmove POINTER_TO POINTER_FROM SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER POINTER_TO POINTER_FROM SIZE"]]],
     [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
+
+
+/** --------------------------------------------------------------------
+ ** Memory operations: comparison.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcmp]]])
+{
+  void *	ptr_from;
+  void *	ptr_to;
+  size_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_to,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr_from,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(len,	argv[4]);
+  {
+    int		rv = memcmp(ptr_to, ptr_from, len);
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTR1 PTR2 SIZE"]]],
+    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
+
 
 /* end of file */

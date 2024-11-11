@@ -228,7 +228,7 @@ $VALUE  @result{} 123
 * overview usage::              How to use the shell libraries.
 * overview decimal::            Support for the @objtype{_DecimalN} types.
 * overview stems::              Specifying C language types with their stem.
-* overview conventions::        Conventions used in this documentation.
+* overview conventions::        Conventions in coding and documentation
 * overview linking::            Linking code with the shared library.
 @end menu
 
@@ -480,7 +480,7 @@ non--standard C language type implementing complex floating--point numbers havin
 
 @c page
 @node overview conventions
-@section Conventions used in this documentation
+@section Conventions in coding and documentation
 
 
 Unless otherwise specified: the loadable builtins provided by @value{PACKAGE} return only two
@@ -748,7 +748,6 @@ builtin or function will bind a string to the variable.
 The argument is a Bash string representing the name of a shell variable.  When successful: the
 builtin or function will bind to the variable a string representation of a pointer value.
 @end table
-
 
 @c page
 
@@ -3794,6 +3793,7 @@ Reformat a complex floating--point number of type @objtype{\STEM\}.
 * memory pointers::             Memory block accessors and mutators.
 * memory arrays::               Memory arrays accessors and mutators.
 * memory conversions::          Converting data to and from memory blocks.
+* memory comparison::           Comparing memory blocks.
 @end menu
 
 @c page
@@ -3828,6 +3828,8 @@ mmux_libc_free $PTR
 
 @noindent
 because @func{mmux_libc_malloc} allocates memory in a subshell.
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_malloc @var{PTRVAR} @var{SIZE}
@@ -3896,7 +3898,8 @@ representation; in this case the error code is @samp{EINVAL}.
 
 
 The following builtins can fail if one of the arguments @var{PTR} is not a valid pointer string
-representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.
+representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.  @ref{overview
+conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_memset @var{PTR} @var{BYTE} @var{SIZE}
@@ -4041,6 +4044,7 @@ For all the following builtins: if the operation is successful, the return value
 the return value is false and the shell variable @code{ERRNO} is set to the string representation of
 an exact integer, itself representing an @code{errno} error code.
 
+@ref{overview conventions, Conventions in coding and documentation}.
 
 @macro MmuxDefineAccessorMutator{STEM}
 @deffn {Builtin Mutator} mmux_\STEM\_pointer_set @var{POINTER} @var{OFFSET} @var{VALUE}
@@ -4158,6 +4162,7 @@ For all the following builtins: if the operation is successful, the return value
 the return value is false and the shell variable @code{ERRNO} is set to the string representation of
 an exact integer, itself representing an @code{errno} error code.
 
+@ref{overview conventions, Conventions in coding and documentation}.
 
 @macro MmuxDefineArrayAccessorMutator{STEM}
 @deffn {Builtin Mutator} mmux_\STEM\_array_set @var{ARRAY} @var{INDEX} @var{VALUE}
@@ -4246,6 +4251,9 @@ Accessor and mutator for memory blocks operating on the C language type @code{\S
 @subsection Converting data to and from index arrays
 
 
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
 @defun mmux_index_array_from_memory @var{ARRY_TO} @var{PTR_FROM} @var{SIZE}
 Copy byte by byte data from a memory block into a Bash index array.
 
@@ -4307,6 +4315,18 @@ mmux_libc_malloc POINTER $SIZE
 mmux_libc_free @RR{POINTER}
 @end example
 @end defun
+
+@c page
+@node memory comparison
+@section Comparing memory blocks
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+@deffn Builtin mmux_libc_memcmp @var{SINTVAR} @vari{PTR} @varii{PTR} @var{USIZE}
+Interface to the standard C language function @cfunc{memcmp}; @cfuncpage{memcmp}.  Bind to the shell
+variable @var{SINTVAR} the value returned by the function.
+@end deffn
 
 @c page
 @node strings
