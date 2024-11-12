@@ -828,6 +828,80 @@ function strings-strrchr-1.1 () {
 }
 
 
+#### strstr
+
+function strings-strstr-1.1 () {
+    declare HAYSTACK NEEDLE RESULT_PTR
+    declare -i PTRDIFF
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
+	COMPENSATE(mmux_pointer_from_bash_string NEEDLE   'O MA',       mmux_libc_free RR(NEEDLE))
+
+	mbfl_location_leave_when_failure( mmux_libc_strstr RESULT_PTR RR(HAYSTACK) RR(NEEDLE) )
+	mbfl_location_leave_when_failure( mmux_pointer_diff PTRDIFF RR(RESULT_PTR) RR(HAYSTACK) )
+	dotest-equal 3 WW(PTRDIFF)
+    }
+    mbfl_location_leave
+}
+
+
+#### strcasestr
+
+function strings-strcasestr-1.1 () {
+    declare HAYSTACK NEEDLE RESULT_PTR
+    declare -i PTRDIFF
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
+	COMPENSATE(mmux_pointer_from_bash_string NEEDLE   'o ma',       mmux_libc_free RR(NEEDLE))
+
+	mbfl_location_leave_when_failure( mmux_libc_strcasestr RESULT_PTR RR(HAYSTACK) RR(NEEDLE) )
+	mbfl_location_leave_when_failure( mmux_pointer_diff PTRDIFF RR(RESULT_PTR) RR(HAYSTACK) )
+	dotest-equal 3 WW(PTRDIFF)
+    }
+    mbfl_location_leave
+}
+
+
+#### strspn
+
+function strings-strspn-1.1 () {
+    declare STRING SKIPSET
+    declare -i EXPECTED_RESULT=5 RESULT
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
+	COMPENSATE(mmux_pointer_from_bash_string SKIPSET 'ciao ',      mmux_libc_free RR(SKIPSET))
+
+	mbfl_location_leave_when_failure( mmux_libc_strspn RESULT RR(STRING) RR(SKIPSET) )
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
+#### strcspn
+
+function strings-strcspn-1.1 () {
+    declare STRING STOPSET
+    declare -i EXPECTED_RESULT=5 RESULT
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
+	COMPENSATE(mmux_pointer_from_bash_string STOPSET 'm',          mmux_libc_free RR(STOPSET))
+
+	mbfl_location_leave_when_failure( mmux_libc_strcspn RESULT RR(STRING) RR(STOPSET) )
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest strings-

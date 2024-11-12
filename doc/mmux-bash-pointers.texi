@@ -4748,6 +4748,26 @@ Interface to the extension C language function @cfunc{strchrnul}; @cfuncpage{str
 Interface to the standard C language function @cfunc{strrchr}; @cfuncpage{strrchr}.
 @end deffn
 
+
+@deffn Builtin mmux_libc_strstr @var{RESULT_ASCIIZ_PTRVAR} @var{ASCIIZ_HAYSTACK_PTR} @var{ASCIIZ_NEEDLE_PTR}
+Interface to the standard C language function @cfunc{strstr}; @cfuncpage{strstr}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_strcasestr @var{RESULT_ASCIIZ_PTRVAR} @var{ASCIIZ_HAYSTACK_PTR} @var{ASCIIZ_NEEDLE_PTR}
+Interface to the standard C language function @cfunc{strcasestr}; @cfuncpage{strcasestr}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_strspn @var{USIZEVAR} @var{ASCIIZ_PTR} @var{ASCIIZ_SKIPSET_PTR}
+Interface to the standard C language function @cfunc{strspn}; @cfuncpage{strspn}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_strcspn @var{USIZEVAR} @var{ASCIIZ_PTR} @var{ASCIIZ_STOPSET_PTR}
+Interface to the standard C language function @cfunc{strcspn}; @cfuncpage{strcspn}.
+@end deffn
+
 @c page
 @node errors
 @chapter Handling errors

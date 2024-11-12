@@ -525,7 +525,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strchr]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER SHCAR"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_POINTER SHCAR"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -550,7 +550,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRCHRNUL]]],[[[
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTR ASCIIZ_PTR SCHAR"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_PTR SCHAR"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -569,7 +569,79 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strrchr]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER SHCAR"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_POINTER SHCAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strstr]]])
+{
+  mmux_pointer_t	haystack, needle;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(haystack,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(needle,	argv[3]);
+  {
+    mmux_pointer_t	result = strstr(haystack, needle);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR HAYSTACK_ASCIIZ_PTR NEEDLE_ASCIIZ_PTR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcasestr]]])
+{
+  mmux_pointer_t	haystack, needle;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(haystack,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(needle,	argv[3]);
+  {
+    mmux_pointer_t	result = strcasestr(haystack, needle);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR HAYSTACK_ASCIIZ_PTR NEEDLE_ASCIIZ_PTR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strspn]]])
+{
+  mmux_pointer_t	str, skipset;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(str,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(skipset,	argv[3]);
+  {
+    mmux_usize_t	len = strspn(str, skipset);
+    return mmux_usize_bind_to_bash_variable(argv[1], len, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER USIZEVAR ASCIIZ_PTR SKIPSET_ASCIIZ_PTR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcspn]]])
+{
+  mmux_pointer_t	str, stopset;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(str,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(stopset,	argv[3]);
+  {
+    mmux_usize_t	len = strcspn(str, stopset);
+    return mmux_usize_bind_to_bash_variable(argv[1], len, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER USIZEVAR ASCIIZ_PTR STOPSET_ASCIIZ_PTR"]]])
 
 
 /* end of file */
