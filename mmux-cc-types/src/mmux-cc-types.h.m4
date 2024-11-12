@@ -651,6 +651,14 @@ mmux_pointer_add (mmux_pointer_t op, mmux_ptrdiff_t delta)
   mmux_pointer_t	rop        = (mmux_pointer_t)rop_octets;
   return rop;
 }
+__attribute__((__const__)) static inline mmux_ptrdiff_t
+mmux_pointer_diff (mmux_pointer_t ptr1, mmux_pointer_t ptr2)
+{
+  mmux_uint8_t *	ptr1_octets  = (mmux_uint8_t *)ptr1;
+  mmux_uint8_t *	ptr2_octets  = (mmux_uint8_t *)ptr2;
+  mmux_ptrdiff_t	delta        = ptr1_octets - ptr2_octets;
+  return delta;
+}
 
 m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__)) static inline mmux_$1_t
