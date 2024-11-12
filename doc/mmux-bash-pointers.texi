@@ -96,6 +96,10 @@ $@{\VARNAME\:?@}
 "$@{\VARNAME\@}"
 @end macro
 
+@macro SS{ARRYNAME,KEY}
+'\ARRYNAME\[\KEY\]'
+@end macro
+
 @macro cfuncpage{FUNCNAME}
 @ref{\FUNCNAME\,\FUNCNAME\,\FUNCNAME\,*manpages*}
 @end macro
@@ -4393,6 +4397,7 @@ shell variable @var{PTRVAR} the value returned by the function.
 * strings comparison::          Comparing @asciiz{} strings.
 * strings collation::           Collation builtins for @asciiz{} strings.
 * strings searching::           Searching in @asciiz{} strings.
+* strings tokens::              Finding tokens in @asciiz{} strings.
 @end menu
 
 @c page
@@ -4771,6 +4776,80 @@ Interface to the standard C language function @cfunc{strcspn}; @cfuncpage{strcsp
 
 @deffn Builtin mmux_libc_strpbrk @var{ASCIIZ_RESULT_PTRVAR} @var{ASCIIZ_PTR} @var{ASCIIZ_STOPSET_PTR}
 Interface to the standard C language function @cfunc{strpbrk}; @cfuncpage{strpbrk}.
+@end deffn
+
+@c page
+@node strings tokens
+@section Finding tokens in @asciiz{} strings
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_strtok @var{ASCIIZ_RESULT_PTRVAR} @var{ASCIIZ_NEWSTRING_PTR} @var{ASCIIZ_DELIMITERS_PTR}
+Interface to the standard C language function @cfunc{strtok}; @cfuncpage{strtok}.
+
+@example
+declare STRING
+declare -a TOKEN
+
+mmux_pointer_from_bash_string STRING 'uno due tre quattro '
+@{
+    mmux_pointer_from_bash_string DELIMITERS ' '
+    @{
+        mmux_libc_strtok @SS{TOKEN,0} @RR{STRING} @RR{DELIMITERS}
+        mmux_libc_strtok @SS{TOKEN,1} 0           @RR{DELIMITERS}
+        mmux_libc_strtok @SS{TOKEN,2} 0           @RR{DELIMITERS}
+        mmux_libc_strtok @SS{TOKEN,3} 0           @RR{DELIMITERS}
+
+        mmux_pointer_to_bash_string @SS{TOKEN,0} @WW{TOKEN[0]}
+        mmux_pointer_to_bash_string @SS{TOKEN,1} @WW{TOKEN[1]}
+        mmux_pointer_to_bash_string @SS{TOKEN,2} @WW{TOKEN[2]}
+        mmux_pointer_to_bash_string @SS{TOKEN,3} @WW{TOKEN[3]}
+
+        @WW{TOKEN[0]}   @result{} uno
+        @WW{TOKEN[1]}   @result{} due
+        @WW{TOKEN[2]}   @result{} tre
+        @WW{TOKEN[3]}   @result{} quattro
+    @}
+    mmux_libc_free @RR{DELIMITERS}
+@}
+mmux_libc_free @RR{STRING}
+@end example
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_basename @var{ASCIIZ_RESULT_PTRVAR} @var{ASCIIZ_PATHNAME_PTR}
+Interface to the extension C language function @cfunc{basename}; @cfuncpage{basename}.
+
+@example
+declare PATHNAME RESULT
+
+mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext'
+@{
+    mmux_libc_basename RESULT @RR{PATHNAME}
+    mmux_pointer_to_bash_string RESULT @WW{RESULT}
+    @WW{RESULT} @result{} filename.ext
+@}
+mmux_libc_free @RR{PATHNAME}
+@end example
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_dirname @var{ASCIIZ_RESULT_PTRVAR} @var{ASCIIZ_PATHNAME_PTR}
+Interface to the extension C language function @cfunc{dirname}; @cfuncpage{dirname}.
+
+@example
+declare PATHNAME RESULT
+
+mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext'
+@{
+    mmux_libc_dirname RESULT @RR{PATHNAME}
+    mmux_pointer_to_bash_string RESULT @WW{RESULT}
+    @WW{RESULT} @result{} /path/to
+@}
+mmux_libc_free @RR{PATHNAME}
+@end example
 @end deffn
 
 @c page

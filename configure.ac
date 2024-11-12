@@ -68,6 +68,8 @@ PKG_INSTALLDIR
 MMUX_CHECK_PKG_CONFIG_MACROS
 PKG_CHECK_MODULES([BASH],[bash],,[AC_MSG_WARN([package GNU Bash not found])])
 
+AC_CHECK_HEADERS([libgen.h])
+
 AC_SEARCH_LIBS(cos, m,, [AC_MSG_ERROR([Cannot find libm])])
 MBFL_SETUP_FOR_TESTING([v3.0.0])
 
@@ -124,7 +126,7 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 #### inspecting functions
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
-                rawmemchr memmem strchrnul])
+                rawmemchr memmem strchrnul basename dirname])
 
 
 #### inspecting errno constants

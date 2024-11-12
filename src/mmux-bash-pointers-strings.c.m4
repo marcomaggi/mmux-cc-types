@@ -28,6 +28,10 @@
 
 #include "mmux-bash-pointers-internals.h"
 
+#if ((defined HAVE_LIBGEN_H) && (1 == HAVE_LIBGEN_H))
+#  include <libgen.h>
+#endif
+
 
 /** --------------------------------------------------------------------
  ** Conversion.
@@ -660,5 +664,72 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strpbrk]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_PTR STOPSET_ASCIIZ_PTR"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Finding tokens.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strtok]]])
+{
+  mmux_pointer_t	newstring, delimiters;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(newstring,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(delimiters,	argv[3]);
+  {
+    mmux_pointer_t	result = strtok(newstring, delimiters);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_NEWSTRING_PTR ASCIIZ_DELIMITERS_PTR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_basename]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_BASENAME]]],[[[
+  mmux_pointer_t	pathname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pathname,	argv[2]);
+  {
+    mmux_pointer_t	result = basename(pathname);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_PATHNAME_PTR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dirname]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_DIRNAME]]],[[[
+  mmux_pointer_t	pathname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pathname,	argv[2]);
+  {
+    mmux_pointer_t	result = dirname(pathname);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_PATHNAME_PTR"]]])
 
 /* end of file */

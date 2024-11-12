@@ -922,6 +922,73 @@ function strings-strpbrk-1.1 () {
 }
 
 
+#### strtok
+
+function strings-strtok-1.1 () {
+    declare STRING
+    declare -a TOKEN
+    declare -r EXPECTED_TOKEN_0='uno' EXPECTED_TOKEN_1='due' EXPECTED_TOKEN_2='tre' EXPECTED_TOKEN_3='quattro'
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string STRING     'uno due tre quattro ', mmux_libc_free RR(STRING))
+	COMPENSATE(mmux_pointer_from_bash_string DELIMITERS ' ', mmux_libc_free RR(DELIMITERS))
+
+	mbfl_location_leave_when_failure( mmux_libc_strtok SS(TOKEN,0) RR(STRING) RR(DELIMITERS) )
+	mbfl_location_leave_when_failure( mmux_libc_strtok SS(TOKEN,1) 0 RR(DELIMITERS) )
+	mbfl_location_leave_when_failure( mmux_libc_strtok SS(TOKEN,2) 0 RR(DELIMITERS) )
+	mbfl_location_leave_when_failure( mmux_libc_strtok SS(TOKEN,3) 0 RR(DELIMITERS) )
+
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string SS(TOKEN,0) WW(TOKEN,0) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string SS(TOKEN,1) WW(TOKEN,1) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string SS(TOKEN,2) WW(TOKEN,2) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string SS(TOKEN,3) WW(TOKEN,3) )
+
+	#mbfl_array_dump TOKEN
+
+	dotest-equal WW(EXPECTED_TOKEN_0) WW(TOKEN,0) &&
+	    dotest-equal WW(EXPECTED_TOKEN_1) WW(TOKEN,1) &&
+	    dotest-equal WW(EXPECTED_TOKEN_2) WW(TOKEN,2) &&
+	    dotest-equal WW(EXPECTED_TOKEN_3) WW(TOKEN,3)
+    }
+    mbfl_location_leave
+}
+
+
+#### basename
+
+function strings-basename-1.1 () {
+    declare PATHNAME
+    declare EXPECTED_RESULT='filename.ext' RESULT
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext', mmux_libc_free RR(PATHNAME))
+	mbfl_location_leave_when_failure( mmux_libc_basename RESULT RR(PATHNAME) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string RESULT WW(RESULT) )
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
+#### dirname
+
+function strings-dirname-1.1 () {
+    declare PATHNAME
+    declare EXPECTED_RESULT='/path/to' RESULT
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext', mmux_libc_free RR(PATHNAME))
+	mbfl_location_leave_when_failure( mmux_libc_dirname RESULT RR(PATHNAME) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string RESULT WW(RESULT) )
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest strings-
