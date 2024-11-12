@@ -51,6 +51,25 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER ROPVAR PTR DELTA"]]],
     [[["Increment the pointer PTR by the signed integer DELTA, store the result in PTRVAR."]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_diff]]])
+{
+  mmux_pointer_t	ptr1, ptr2;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[3]);
+  {
+    mmux_ptrdiff_t	delta = mmux_pointer_diff(ptr1, ptr2);
+    return mmux_ptrdiff_bind_to_bash_variable(argv[1], delta, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTRDIFF_VAR POINTER1 POINTER2"]]],
+    [[["Compute the difference POINTER1 - POINTER2, bind the result to PTRDIFF_VAR."]]])
+
 
 /** --------------------------------------------------------------------
  ** Core arithmetics builtins.

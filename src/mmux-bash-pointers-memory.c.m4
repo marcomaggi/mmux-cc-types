@@ -280,4 +280,101 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SINTVAR PTR1 PTR2 SIZE"]]],
     [[["Compare memory blocks."]]])
 
+
+/** --------------------------------------------------------------------
+ ** Searching.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memchr]]])
+{
+  mmux_pointer_t	ptr;
+  mmux_uint8_t		octet;
+  mmux_usize_t		size;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT8(octet,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(size,	argv[4]);
+  {
+    mmux_pointer_t	result = memchr(ptr, octet, size);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER UINT8 SIZE"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rawmemchr]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_RAWMEMCHR]]],[[[
+  mmux_pointer_t	ptr;
+  mmux_uint8_t		octet;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT8(octet,	argv[3]);
+  {
+    mmux_pointer_t	result = rawmemchr(ptr, octet);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER UINT8"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memrchr]]])
+{
+  mmux_pointer_t	ptr;
+  mmux_uint8_t		octet;
+  mmux_usize_t		size;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT8(octet,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(size,	argv[4]);
+  {
+    mmux_pointer_t	result = memrchr(ptr, octet, size);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER UINT8 SIZE"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memmem]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_MEMMEM]]],[[[
+  mmux_pointer_t	haystack_ptr, needle_ptr;
+  mmux_usize_t		haystack_len, needle_len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(haystack_ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(haystack_len,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(needle_ptr,	argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(needle_len,		argv[5]);
+  {
+    mmux_pointer_t	result = memmem(haystack_ptr, haystack_len, needle_ptr, needle_len);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PTRVAR HAYSTACK_PTR HAYSTACK_USIZE NEEDLE_PTR NEEDLE_USIZE"]]])
+
 /* end of file */

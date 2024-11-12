@@ -122,7 +122,7 @@ m4_dnl version an argument  like "-1.2" is interpreted  as an option, and  an er
 m4_dnl because there  are no  options allowed.   Here we  want such  arguments to  just go
 m4_dnl through any validation and come to us as they are.
 MMUX_BASH_DEFINE_BUILTIN_FUNCTION([[[$1]]],[[[$2]]])
-MMUX_BASH_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE([[[$1]]],[[[$4]]])
+MMUX_BASH_DEFINE_BUILTIN_LONG_DOC_SINGLE_LINE([[[$1]]],[[[m4_ifelse([[[$4]]],,[[["A builtin that does something"]]],[[[$4]]])]]])
 MMUX_BASH_DEFINE_BUILTIN_STRUCT([[[$1]]],[[[$3]]])
 ]]])
 

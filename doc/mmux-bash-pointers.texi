@@ -3794,6 +3794,7 @@ Reformat a complex floating--point number of type @objtype{\STEM\}.
 * memory arrays::               Memory arrays accessors and mutators.
 * memory conversions::          Converting data to and from memory blocks.
 * memory comparison::           Comparing memory blocks.
+* memory searching::            Searching in memory blocks.
 @end menu
 
 @c page
@@ -4323,9 +4324,54 @@ mmux_libc_free @RR{POINTER}
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
+
 @deffn Builtin mmux_libc_memcmp @var{SINTVAR} @vari{PTR} @varii{PTR} @var{USIZE}
 Interface to the standard C language function @cfunc{memcmp}; @cfuncpage{memcmp}.  Bind to the shell
 variable @var{SINTVAR} the value returned by the function.
+@end deffn
+
+@c page
+@node memory searching
+@section Searching in memory blocks
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_memchr @var{PTRVAR} @var{POINTER} @var{UCHAR} @var{USIZE}
+Interface to the standard C language function @cfunc{memchr}; @cfuncpage{memchr}.  Bind to the shell
+variable @var{PTRVAR} the value returned by the function.
+
+@example
+declare PTR RESULT_PTR
+declare -i LEN
+
+mmux_pointer_from_bash_string PTR 'CIAO MAMMA'
+@{
+    mmux_libc_strlen LEN @RR{PTR}
+    mmux_libc_memchr RESULT_PTR @RR{PTR} 65 @RR{LEN}
+    ...
+@}
+mmux_libc_free @RR{PTR}
+@end example
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_rawmemchr @var{PTRVAR} @var{POINTER} @var{UCHAR}
+Interface to the extension C language function @cfunc{rawmemchr}; @cfuncpage{rawmemchr}.  Bind to
+the shell variable @var{PTRVAR} the value returned by the function.
+@end deffn
+
+
+@deffn Builtin mmux_libc_memrchr @var{PTRVAR} @var{POINTER} @var{UCHAR} @var{USIZE}
+Interface to the standard C language function @cfunc{memrchr}; @cfuncpage{memrchr}.  Bind to the
+shell variable @var{PTRVAR} the value returned by the function.
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_memmem @var{PTRVAR} @var{HAYSTACK_PTR} @var{HAYSTACK_LEN} @var{NEEDLE_PTR} @var{NEEDLE_LEN}
+Interface to the extension C language function @cfunc{memmem}; @cfuncpage{memmem}.  Bind to the
+shell variable @var{PTRVAR} the value returned by the function.
 @end deffn
 
 @c page

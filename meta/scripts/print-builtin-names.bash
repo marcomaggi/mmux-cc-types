@@ -44,10 +44,12 @@ declare -ga MMUX_BASH_POINTERS_REAL_STEMS=('pointer' "${INTEGER_STEMS[@]}" "${RE
 declare -ga MMUX_BASH_POINTERS_COMPLEX_STEMS=("${COMPLEX_FLOAT_STEMS[@]}")
 declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}")
 
-declare -ra LIBC_BUILTINS=(malloc realloc calloc free memset memcpy memccpy memmove memcmp
+declare -ra LIBC_BUILTINS=(malloc realloc calloc free
+			   memset memcpy memccpy memmove memcmp memchr memrchr
 			   strerror errno_to_string
 			   open close read write pread pwrite lseek dup dup2 fcntl ioctl
-			   strlen strcpy strncpy strdup stpcpy strcat strncat strcmp strncmp strcoll strxfrm)
+			   strlen strcpy strncpy strdup stpcpy strcat strncat strcmp strncmp strcoll strxfrm
+			   )
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
@@ -107,6 +109,7 @@ done
 # Arithmetics builtins.
 {
     print_builtin_name 'mmux_pointer_add'
+    print_builtin_name 'mmux_pointer_diff'
 
     for STEM in "${INTEGER_STEMS[@]}"
     do
@@ -279,12 +282,15 @@ function have_cfunc () {
 
 # Builtin wrapping C language functions that may not be available.
 {
-    for ITEM in mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
+    for ITEM in mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
+			rawmemchr memmem
     do
 	if have_cfunc "$ITEM"
 	then
+	    printf '%s: present: %s\n' "$0" "$ITEM" >&2
 	    printf -v NAME 'mmux_libc_%s' "$ITEM"
 	    print_builtin_name "$NAME"
+	else printf '%s: missing: %s\n' "$0" "$ITEM" >&2
 	fi
     done
 }

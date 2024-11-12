@@ -359,6 +359,91 @@ function memory-memcmp-1.3 () {
 }
 
 
+#### memchr
+
+function memory-memchr-1.1 () {
+    declare RESULT_PTR RESULT_CHAR
+    declare PTR
+    declare -i LEN
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_memchr RESULT_PTR RR(PTR) 65 RR(LEN) )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
+	dotest-equal 65 WW(RESULT_CHAR)
+    }
+    mbfl_location_leave
+}
+
+
+#### rawmemchr
+
+function memory-rawmemchr-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_rawmemchr
+    then
+	declare RESULT_PTR RESULT_CHAR
+	declare PTR
+
+	mbfl_location_enter
+	{
+	    COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	    mbfl_location_leave_when_failure( mmux_libc_rawmemchr RESULT_PTR RR(PTR) 65 )
+	    mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
+	    dotest-equal 65 WW(RESULT_CHAR)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+
+#### memrchr
+
+function memory-memrchr-1.1 () {
+    declare RESULT_PTR RESULT_CHAR
+    declare PTR
+    declare -i LEN
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_memrchr RESULT_PTR RR(PTR) 65 RR(LEN) )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
+	dotest-equal 65 WW(RESULT_CHAR)
+    }
+    mbfl_location_leave
+}
+
+
+#### memmem
+
+function memory-memmem-1.1 () {
+    declare HAYSTACK NEEDLE
+    declare -i HAYSTACK_LEN NEEDLE_LEN
+    declare RESULT_PTR
+    declare -i PTRDIFF
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
+	COMPENSATE(mmux_pointer_from_bash_string NEEDLE   'O MA',       mmux_libc_free RR(NEEDLE))
+
+	mbfl_location_leave_when_failure( mmux_libc_strlen HAYSTACK_LEN RR(HAYSTACK) )
+	mbfl_location_leave_when_failure( mmux_libc_strlen NEEDLE_LEN   RR(NEEDLE)   )
+
+	mbfl_location_leave_when_failure( mmux_libc_memmem RESULT_PTR \
+					  RR(HAYSTACK) RR(HAYSTACK_LEN) \
+					  RR(NEEDLE)   RR(NEEDLE_LEN) )
+	mbfl_location_leave_when_failure( mmux_pointer_diff PTRDIFF RR(RESULT_PTR) RR(HAYSTACK) )
+	dotest-equal 3 WW(PTRDIFF)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest memory-
