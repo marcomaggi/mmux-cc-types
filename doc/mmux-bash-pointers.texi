@@ -2464,6 +2464,12 @@ Perform the addition between values of type @code{\STEM\}.
 @subsection Subtraction builtins
 
 
+@deffn Builtin mmux_pointer_diff @var{PTRDIFF_VAR} @vari{PTR} @varii{PTR}
+Compute the difference between the pointer values @code{@vari{PTR} - @varii{PTR}}, interpreting them
+as pointers to @objtype{mmux_uint8_t}, then bind the result to the shell variable @var{PTRDIFF_VAR}.
+@end deffn
+
+
 For the following builtins, the subtraction operation is as follows:
 
 @example
@@ -4386,6 +4392,7 @@ shell variable @var{PTRVAR} the value returned by the function.
 * strings concatenation::       Concatenating @asciiz{} strings.
 * strings comparison::          Comparing @asciiz{} strings.
 * strings collation::           Collation builtins for @asciiz{} strings.
+* strings searching::           Searching in @asciiz{} strings.
 @end menu
 
 @c page
@@ -4706,6 +4713,39 @@ representation of the C language ternary return value is bound to the shell vari
 @deffn Builtin mmux_libc_strxfrm @var{RESULT_USIZE_VAR} @vari{PTR} @varii{PTR} @var{ULEN}
 Interface to the standard C language function @cfunc{strxfrm}; @cfuncpage{strxfrm}.  A string
 representation of the C language return value is bound to the shell variable @var{RESULT_USIZE_VAR}.
+@end deffn
+
+@c page
+@node strings searching
+@section Searching in @asciiz{} strings
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_strchr @var{RESULT_ASCIIZ_PTRVAR} @var{ASCIIZ_PTR} @var{SCHAR}
+Interface to the standard C language function @cfunc{strchr}; @cfuncpage{strchr}.
+
+@example
+declare PTR RESULT_PTR
+
+mmux_pointer_from_bash_string PTR 'CIAO MAMMA'
+@{
+    mmux_libc_strchr RESULT_PTR @RR{PTR} 65
+    ...
+@}
+mmux_libc_free @RR{PTR}
+@end example
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_strchrnul @var{RESULT_ASCIIZ_PTRVAR} @var{ASCIIZ_PTR} @var{SCHAR}
+Interface to the extension C language function @cfunc{strchrnul}; @cfuncpage{strchrnul}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_strrchr @var{RESULT_ASCIIZ_PTRVAR} @var{ASCIIZ_PTR} @var{SCHAR}
+Interface to the standard C language function @cfunc{strrchr}; @cfuncpage{strrchr}.
 @end deffn
 
 @c page

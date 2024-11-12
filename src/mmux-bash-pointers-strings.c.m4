@@ -505,4 +505,71 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_USIZE_VAR ASCIIZ_POINTER_DST ASCIIZ_POINTER_SRC USIZE"]]],
     [[["Compute MMUX_BASH_BUILTIN_IDENTIFIER(RESULT_USIZE_VAR, ASCIIZ_POINTER_DST, ASCIIZ_POINTER_SRC, USIZE)"]]])
 
+
+/** --------------------------------------------------------------------
+ ** Searching.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strchr]]])
+{
+  mmux_pointer_t	ptr;
+  mmux_schar_t		schar;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(schar,	argv[3]);
+  {
+    mmux_pointer_t	result = strchr(ptr, schar);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER SHCAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strchrnul]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRCHRNUL]]],[[[
+  mmux_pointer_t	ptr;
+  mmux_schar_t		schar;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(schar,	argv[3]);
+  {
+    mmux_pointer_t	result = strchrnul(ptr, schar);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTR ASCIIZ_PTR SCHAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strrchr]]])
+{
+  mmux_pointer_t	ptr;
+  mmux_schar_t		schar;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(schar,	argv[3]);
+  {
+    mmux_pointer_t	result = strrchr(ptr, schar);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RESULT_PTRVAR POINTER SHCAR"]]])
+
+
 /* end of file */

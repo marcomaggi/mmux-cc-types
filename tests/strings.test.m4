@@ -770,6 +770,64 @@ function strings-strxfrm-1.1 () {
 }
 
 
+#### strchr
+
+function strings-strchr-1.1 () {
+    declare RESULT_PTR RESULT_CHAR
+    declare PTR
+    declare -i LEN
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_leave_when_failure( mmux_libc_strchr RESULT_PTR RR(PTR) 65 )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
+	dotest-equal 65 WW(RESULT_CHAR)
+    }
+    mbfl_location_leave
+}
+
+
+#### strchrnul
+
+function strings-strchrnul-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_strchrnul
+    then
+	declare RESULT_PTR RESULT_CHAR
+	declare PTR
+	declare -i LEN
+
+	mbfl_location_enter
+	{
+	    COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	    mbfl_location_leave_when_failure( mmux_libc_strchrnul RESULT_PTR RR(PTR) 65 )
+	    mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
+	    dotest-equal 65 WW(RESULT_CHAR)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+
+#### strrchr
+
+function strings-strrchr-1.1 () {
+    declare RESULT_PTR RESULT_CHAR
+    declare PTR
+    declare -i LEN
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_leave_when_failure( mmux_libc_strrchr RESULT_PTR RR(PTR) 65 )
+	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
+	dotest-equal 65 WW(RESULT_CHAR)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest strings-
