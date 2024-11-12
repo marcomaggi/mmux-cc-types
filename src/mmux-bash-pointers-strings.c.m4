@@ -643,5 +643,22 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER USIZEVAR ASCIIZ_PTR STOPSET_ASCIIZ_PTR"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strpbrk]]])
+{
+  mmux_pointer_t	str, stopset;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(str,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(stopset,	argv[3]);
+  {
+    mmux_pointer_t	result = strpbrk(str, stopset);
+    return mmux_pointer_bind_to_bash_variable(argv[1], result, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCIIZ_RESULT_PTRVAR ASCIIZ_PTR STOPSET_ASCIIZ_PTR"]]])
 
 /* end of file */

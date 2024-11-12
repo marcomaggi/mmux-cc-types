@@ -902,6 +902,26 @@ function strings-strcspn-1.1 () {
 }
 
 
+#### strpbrk
+
+function strings-strpbrk-1.1 () {
+    declare STRING STOPSET
+    declare EXPECTED_RESULT RESULT
+
+    mbfl_location_enter
+    {
+	COMPENSATE(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
+	COMPENSATE(mmux_pointer_from_bash_string STOPSET 'm',          mmux_libc_free RR(STOPSET))
+
+	mbfl_location_leave_when_failure( mmux_pointer_add EXPECTED_RESULT RR(STRING) 5 )
+
+	mbfl_location_leave_when_failure( mmux_libc_strpbrk RESULT RR(STRING) RR(STOPSET) )
+	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest strings-

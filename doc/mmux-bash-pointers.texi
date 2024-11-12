@@ -4768,6 +4768,11 @@ Interface to the standard C language function @cfunc{strspn}; @cfuncpage{strspn}
 Interface to the standard C language function @cfunc{strcspn}; @cfuncpage{strcspn}.
 @end deffn
 
+
+@deffn Builtin mmux_libc_strpbrk @var{ASCIIZ_RESULT_PTRVAR} @var{ASCIIZ_PTR} @var{ASCIIZ_STOPSET_PTR}
+Interface to the standard C language function @cfunc{strpbrk}; @cfuncpage{strpbrk}.
+@end deffn
+
 @c page
 @node errors
 @chapter Handling errors
