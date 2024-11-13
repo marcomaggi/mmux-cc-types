@@ -5353,7 +5353,6 @@ fi
 @end example
 @end deffn
 
-
 @c page
 @node misc
 @chapter Miscellaneous features
@@ -5697,7 +5696,7 @@ If an error occurs and @var{who} is not @cnull{}: print an error message to @std
 
 @deftypefun mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * @var{who})
 Call @cfunc{mmux_bash_pointers_set_ERRNO} to deal with the current value of the standard
-@code{errno}; the set @code{errno} itself to zero.  When successful return @samp{MMUX_SUCCESS},
+@code{errno}; then set @code{errno} itself to zero.  When successful return @samp{MMUX_SUCCESS},
 otherwise return @samp{MMUX_FAILURE}.
 
 If an error occurs and @var{who} is not @cnull{}: print an error message to @stderr{}.
