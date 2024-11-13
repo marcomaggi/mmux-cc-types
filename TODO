@@ -1,0 +1,11 @@
+-*- coding: utf-8-unix -*-
+
+* Add a builtin interfacing Linux's "openat2()" ?
+
+### end of file
+# Local Variables:
+# mode: text
+# fill-column: 100
+# paragraph-start: "*"
+# ispell-local-dictionary: "en_GB-ise-w_accents"
+# End:
