@@ -823,6 +823,7 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{F_SETOWN}
 @MmuxDefineGlobalVarSystemConstant{F_UNLCK}
 @MmuxDefineGlobalVarSystemConstant{F_WRLCK}
+@MmuxDefineGlobalVarSystemConstant{MAXSYMLINKS}
 @MmuxDefineGlobalVarSystemConstant{O_ACCMODE}
 @MmuxDefineGlobalVarSystemConstant{O_APPEND}
 @MmuxDefineGlobalVarSystemConstant{O_ASYNC}
@@ -5307,12 +5308,12 @@ The argument @var{NEW_FD} must be the string representation of a file descriptor
 
 
 @menu
-* fs hard links::               Hard link builtins.
+* fs links::                    Hard and symbolic link builtins.
 @end menu
 
 @c page
-@node fs hard links
-@section Hard link builtins
+@node fs links
+@section Hard and symbolic link builtins
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5349,6 +5350,44 @@ then
 
     mmux_libc_strerror ERRMSG @RR{ERRNO}
     printf 'linkat: error: %s\n' @WW{ERRMSG} >&2
+fi
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_symlink @var{OLDNAME} @var{NEWNAME}
+Interface to the standard C language function @cfunc{symlink}, @glibcref{Symbolic Links, symlink}.
+
+@example
+declare -i ERRNO
+
+if ! mmux_libc_symlink 'oldname.ext' 'newname.ext'
+then
+    declare ERRMSG
+
+    mmux_libc_strerror ERRMSG @RR{ERRNO}
+    printf 'symlink: error: %s\n' @WW{ERRMSG} >&2
+fi
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_readlink @var{REAL_PATHNAME_VAR} @var{PATHNAME}
+Interface to the standard C language function @cfunc{readlink}, @glibcref{Symbolic Links, readlink}.
+
+@example
+declare PATHNAME
+declare -i ERRNO
+
+mmux_libc_symlink 'oldname.ext' 'newname.ext'
+
+if mmux_libc_readlink PATHNAME 'newname.ext'
+then @WW{PATHNAME}      @result{} oldname.ext
+else
+    declare ERRMSG
+
+    mmux_libc_strerror ERRMSG @RR{ERRNO}
+    printf 'symlink: error: %s\n' @WW{ERRMSG} >&2
 fi
 @end example
 @end deffn

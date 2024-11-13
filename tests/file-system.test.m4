@@ -123,6 +123,55 @@ function file-system-linkat-1.1 () {
 }
 
 
+#### symlink
+
+function file-system-symlink-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+	declare -r TMP=$(dotest-echo-tmpdir)
+	declare OLDNAME='Makefile'
+	declare NEWNAME
+
+	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
+	dotest-debug NEWNAME=WW(NEWNAME)
+
+	dotest-mktmpdir
+	mbfl_location_leave_when_failure( mmux_libc_symlink WW(OLDNAME) WW(NEWNAME) )
+
+	dotest-predicate mbfl_file_is_symlink WW(NEWNAME)
+    }
+    mbfl_location_leave
+}
+
+
+#### readlink
+
+function file-system-readlink-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+	declare -r TMP=$(dotest-echo-tmpdir)
+	declare OLDNAME='Makefile'
+	declare NEWNAME REALNAME
+
+	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
+	dotest-debug NEWNAME=WW(NEWNAME)
+
+	dotest-mktmpdir
+	mbfl_location_leave_when_failure( mmux_libc_symlink WW(OLDNAME) WW(NEWNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_readlink REALNAME WW(NEWNAME) )
+
+	dotest-equal WW(OLDNAME) WW(REALNAME)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-
