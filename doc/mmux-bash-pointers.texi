@@ -854,6 +854,9 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{O_WRITE}
 @MmuxDefineGlobalVarSystemConstant{O_WRONLY}
 @MmuxDefineGlobalVarSystemConstant{R_OK}
+@MmuxDefineGlobalVarSystemConstant{RENAME_EXCHANGE}
+@MmuxDefineGlobalVarSystemConstant{RENAME_NOREPLACE}
+@MmuxDefineGlobalVarSystemConstant{RENAME_WITHEOUT}
 @MmuxDefineGlobalVarSystemConstant{SEEK_CUR}
 @MmuxDefineGlobalVarSystemConstant{SEEK_DATA}
 @MmuxDefineGlobalVarSystemConstant{SEEK_END}
@@ -5312,6 +5315,7 @@ The argument @var{NEW_FD} must be the string representation of a file descriptor
 * fs errors::                   How to handle errors.
 * fs links::                    Hard and symbolic link builtins.
 * fs deleting::                 Deleting links builtins.
+* fs renaming::                 Renaming links builtins.
 @end menu
 
 @c page
@@ -5427,6 +5431,43 @@ Interface to the standard C language function @cfunc{rmdir}, @glibcref{Deleting 
 
 @deffn Builtin mmux_libc_remove @var{PATHNAME}
 Interface to the standard C language function @cfunc{remove}, @glibcref{Deleting Files, remove}.
+@end deffn
+
+@c page
+@node fs renaming
+@section Renaming links builtins
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_rename @var{PATHNAME}
+Interface to the standard C language function @cfunc{rename}, @glibcref{Deleting Files, rename}.
+
+@example
+mmux_libc_rename 'oldname.ext' 'newname.ext'
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_renameat @var{OLDDIRFD} @var{OLDNAME} @var{NEWDIRFD} @var{NEWNAME}
+Interface to the standard C language function @cfunc{renameat}, @cfuncpage{renameat}.
+
+@example
+mmux_libc_renameat @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
+                   @RR{mmux_libc_AT_FDCWD} 'newname.ext'
+@end example
+@end deffn
+
+
+@deffn {Linux Builtin} mmux_libc_renameat2 @var{OLDDIRFD} @var{OLDNAME} @var{NEWDIRFD} @var{NEWNAME}
+Interface to the standard C language function @cfunc{renameat2}, @cfuncpage{renameat2}.
+
+@example
+mmux_libc_renameat2 @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
+                    @RR{mmux_libc_AT_FDCWD} 'newname.ext' \
+                    @RR{mmux_libc_RENAME_EXCHANGE}
+@end example
 @end deffn
 
 @c page

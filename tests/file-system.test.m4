@@ -224,16 +224,11 @@ function file-system-unlink-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	dotest-unset-debug
-	declare -r TMP=$(dotest-echo-tmpdir)
-	declare OLDNAME='Makefile'
-	declare NEWNAME
 
-	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
-	dotest-debug NEWNAME=WW(NEWNAME)
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
 
-	dotest-mktmpdir
-	mbfl_location_leave_when_failure( mmux_libc_link WW(OLDNAME) WW(NEWNAME) )
-	mbfl_location_leave_when_failure( mmux_libc_unlink WW(NEWNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_unlink WW(PATHNAME) )
     }
     mbfl_location_leave
 }
@@ -247,16 +242,11 @@ function file-system-unlinkat-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	dotest-unset-debug
-	declare -r TMP=$(dotest-echo-tmpdir)
-	declare OLDNAME='Makefile'
-	declare NEWNAME
 
-	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
-	dotest-debug NEWNAME=WW(NEWNAME)
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
 
-	dotest-mktmpdir
-	mbfl_location_leave_when_failure( mmux_libc_link WW(OLDNAME) WW(NEWNAME) )
-	mbfl_location_leave_when_failure( mmux_libc_unlinkat RR(mmux_libc_AT_FDCWD) WW(NEWNAME) 0)
+	mbfl_location_leave_when_failure( mmux_libc_unlinkat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) 0)
     }
     mbfl_location_leave
 }
@@ -270,16 +260,11 @@ function file-system-remove-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	dotest-unset-debug
-	declare -r TMP=$(dotest-echo-tmpdir)
-	declare OLDNAME='Makefile'
-	declare NEWNAME
 
-	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
-	dotest-debug NEWNAME=WW(NEWNAME)
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
 
-	dotest-mktmpdir
-	mbfl_location_leave_when_failure( mmux_libc_link WW(OLDNAME) WW(NEWNAME) )
-	mbfl_location_leave_when_failure( mmux_libc_remove WW(NEWNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_remove WW(PATHNAME) )
     }
     mbfl_location_leave
 }
@@ -293,16 +278,78 @@ function file-system-rmdir-1.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	dotest-unset-debug
-	declare -r TMP=$(dotest-echo-tmpdir)
-	declare PATHNAME
 
-	printf -v PATHNAME '%s/%s' WW(TMP) 'spiffy.ext'
+	declare -r PATHNAME=$(dotest-mkdir 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
 
-	dotest-mktmpdir
-	mbfl_file_make_directory WW(PATHNAME)
 	mbfl_location_leave_when_failure( mmux_libc_rmdir WW(PATHNAME) )
     }
     mbfl_location_leave
+}
+
+
+#### rename
+
+function file-system-rename-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r OLDNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r NEWNAME=$(dotest-mkpathname 'peppa.ext')
+
+	mbfl_location_leave_when_failure( mmux_libc_rename WW(OLDNAME) WW(NEWNAME) )
+	dotest-assert-file-exists WW(NEWNAME) 'new hard link is missing'
+    }
+    mbfl_location_leave
+}
+
+
+#### renameat
+
+function file-system-renameat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r OLDNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r NEWNAME=$(dotest-mkpathname 'peppa.ext')
+
+	mbfl_location_leave_when_failure( mmux_libc_renameat RR(mmux_libc_AT_FDCWD) WW(OLDNAME) \
+							     RR(mmux_libc_AT_FDCWD) WW(NEWNAME) )
+	dotest-assert-file-exists WW(NEWNAME) 'new hard link is missing'
+    }
+    mbfl_location_leave
+}
+
+
+#### renameat2
+
+function file-system-renameat2-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_renameat2
+    then
+	mbfl_location_enter
+	{
+	    mbfl_location_handler dotest-clean-files
+
+	    dotest-set-debug
+
+	    # We use the flag "RENAME_EXCHANGE", so both the pathnames must exist.
+	    declare -r OLDNAME=$(dotest-mkfile 'spiffy.ext')
+	    declare -r NEWNAME=$(dotest-mkfile 'peppa.ext')
+
+	    mbfl_location_leave_when_failure( mmux_libc_renameat2 RR(mmux_libc_AT_FDCWD) WW(OLDNAME) \
+								  RR(mmux_libc_AT_FDCWD) WW(NEWNAME) \
+								  RR(mmux_libc_RENAME_EXCHANGE) )
+	    dotest-assert-file-exists WW(NEWNAME) 'new hard link is missing'
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
 }
 
 

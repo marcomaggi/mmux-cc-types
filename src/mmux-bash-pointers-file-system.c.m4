@@ -298,4 +298,97 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME"]]])
 
+
+/** --------------------------------------------------------------------
+ ** Renaming.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rename]]])
+{
+  char const *	oldname;
+  char const *	newname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(oldname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(newname,	argv[2]);
+  {
+    int		rv = rename(oldname, newname);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OLDNAME NEWNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_renameat]]])
+{
+  int		olddirfd;
+  char const *	oldname;
+  int		newdirfd;
+  char const *	newname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(olddirfd,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(oldname,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(newdirfd,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(newname,	argv[4]);
+  {
+    int		rv = renameat(olddirfd, oldname, newdirfd, newname);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OLDDIRFD OLDNAME NEWDIRFD NEWNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_renameat2]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_RENAMEAT2]]],[[[
+  int		olddirfd;
+  char const *	oldname;
+  int		newdirfd;
+  char const *	newname;
+  mmux_uint_t	flags;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(olddirfd,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(oldname,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(newdirfd,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(newname,	argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT(flags,		argv[5]);
+  {
+    int		rv = renameat2(olddirfd, oldname, newdirfd, newname, flags);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OLDDIRFD OLDNAME NEWDIRFD NEWNAME FLAGS"]]])
+
 /* end of file */

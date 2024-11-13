@@ -126,7 +126,8 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 #### inspecting functions
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
-                rawmemchr memmem strchrnul basename dirname canonicalize_file_name])
+                rawmemchr memmem strchrnul basename dirname canonicalize_file_name
+                renameat2])
 
 
 #### inspecting errno constants
@@ -194,6 +195,7 @@ MMUX_CONSTANT_TESTS([SIOCATMARK])
 
 ## file system stuff
 MMUX_CONSTANT_TESTS([AT_FDCWD AT_SYMLINK_FOLLOW AT_EMPTY_PATH AT_REMOVEDIR MAXSYMLINKS])
+MMUX_CONSTANT_TESTS([RENAME_EXCHANGE RENAME_NOREPLACE RENAME_WITHEOUT])
 
 ## miscellaneous
 MMUX_CONSTANT_TESTS([EOF])
