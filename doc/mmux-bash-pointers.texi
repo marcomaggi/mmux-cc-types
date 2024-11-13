@@ -5322,6 +5322,7 @@ The argument @var{NEW_FD} must be the string representation of a file descriptor
 * fs links::                    Hard and symbolic link builtins.
 * fs deleting::                 Deleting links builtins.
 * fs renaming::                 Renaming links builtins.
+* fs directories::              Directory builtins.
 @end menu
 
 @c page
@@ -5473,6 +5474,31 @@ Interface to the standard C language function @cfunc{renameat2}, @cfuncpage{rena
 mmux_libc_renameat2 @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
                     @RR{mmux_libc_AT_FDCWD} 'newname.ext' \
                     @RR{mmux_libc_RENAME_EXCHANGE}
+@end example
+@end deffn
+
+@c page
+@node fs directories
+@section Directory builtins
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_mkdir @var{PATHNAME} @var{MODE}
+Interface to the standard C language function @cfunc{mkdir}, @glibcref{Creating Directories, mkdir}.
+
+@example
+mmux_libc_mkdir 'pathname.d' @RR{mmux_libc_S_IRUSR}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_mkdirat @var{DIRFD} @var{PATHNAME} @var{MODE}
+Interface to the standard C language function @cfunc{mkdirat}, @cfuncpage{mkdirat}.
+
+@example
+mmux_libc_mkdirat @RR{mmux_libc_AT_FDCWD} 'pathname.d' @RR{mmux_libc_S_IRUSR}
 @end example
 @end deffn
 

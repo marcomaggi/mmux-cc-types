@@ -353,6 +353,44 @@ function file-system-renameat2-1.1 () {
 }
 
 
+#### mkdir
+
+function file-system-mkdir-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkpathname 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_mkdir WW(PATHNAME) RR(mmux_libc_S_IRUSR) )
+	dotest-predicate mbfl_file_is_directory WW(PATHNAME)
+    }
+    mbfl_location_leave
+}
+
+
+#### mkdirat
+
+function file-system-mkdirat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkpathname 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_mkdirat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) RR(mmux_libc_S_IRUSR) )
+	dotest-predicate mbfl_file_is_directory WW(PATHNAME)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-
