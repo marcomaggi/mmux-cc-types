@@ -5392,6 +5392,17 @@ fi
 @end example
 @end deffn
 
+
+@deffn {@gnu{} Builtin} mmux_libc_canonicalize_file_name @var{REAL_PATHNAME_VAR} @var{PATHNAME}
+Interface to the extension C language function @cfunc{canonicalize_file_name}, @glibcref{Symbolic
+Links, canonicalize_file_name}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_realpath @var{REAL_PATHNAME_VAR} @var{PATHNAME}
+Interface to the standard C language function @cfunc{realpath}, @glibcref{Symbolic Links, realpath}.
+@end deffn
+
 @c page
 @node misc
 @chapter Miscellaneous features

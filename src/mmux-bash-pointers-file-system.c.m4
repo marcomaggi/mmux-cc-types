@@ -88,7 +88,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
- ** Soft links.
+ ** Symbolic links.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_symlink]]])
@@ -146,7 +146,61 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_readlink]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER OLDNAME NEWNAME"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER REAL_PATHNAME_VAR PATHNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_canonicalize_file_name]]])
+{
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_CANONICALIZE_FILE_NAME]]],[[[
+  char const *	in;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(in,	argv[2]);
+  {
+    char *	ou = canonicalize_file_name(in);
+
+    if (ou) {
+      mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], ou, MMUX_BASH_BUILTIN_STRING_NAME);
+      free(ou);
+      return rv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER CANON_PATHNAME_VAR PATHNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_realpath]]])
+{
+  char const *	in;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(in,	argv[2]);
+  {
+    char *	ou = realpath(in, NULL);
+
+    if (ou) {
+      mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], ou, MMUX_BASH_BUILTIN_STRING_NAME);
+      free(ou);
+      return rv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER CANON_PATHNAME_VAR PATHNAME"]]])
 
 
 /* end of file */

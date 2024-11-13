@@ -126,7 +126,7 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 #### inspecting functions
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
-                rawmemchr memmem strchrnul basename dirname])
+                rawmemchr memmem strchrnul basename dirname canonicalize_file_name])
 
 
 #### inspecting errno constants

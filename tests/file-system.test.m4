@@ -172,6 +172,50 @@ function file-system-readlink-1.1 () {
 }
 
 
+#### canonicalize_file_name
+
+function file-system-canonicalize_file_name-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_canonicalize_file_name
+    then
+	mbfl_location_enter
+	{
+	    mbfl_location_handler dotest-clean-files
+
+	    dotest-unset-debug
+	    declare -r TMP=$(dotest-echo-tmpdir)
+	    declare OLDNAME='Makefile'
+	    declare EXPECTED_RESULT="$(pwd -P)/Makefile"
+
+	    mbfl_location_leave_when_failure( mmux_libc_canonicalize_file_name REALNAME WW(OLDNAME) )
+
+	    dotest-equal WW(EXPECTED_RESULT) WW(REALNAME)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+
+#### realpath
+
+function file-system-realpath-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+	declare -r TMP=$(dotest-echo-tmpdir)
+	declare OLDNAME='Makefile'
+	declare EXPECTED_RESULT="$(pwd -P)/Makefile"
+
+	mbfl_location_leave_when_failure( mmux_libc_realpath REALNAME WW(OLDNAME) )
+
+	dotest-equal WW(EXPECTED_RESULT) WW(REALNAME)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-
