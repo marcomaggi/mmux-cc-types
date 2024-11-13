@@ -182,6 +182,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * strings::                     @asciiz{} strings.
 * errors::                      Handling errors.
 * fds::                         Core file descriptor operations.
+* fs::                          File system interface.
 * misc::                        Miscellaneous features.
 
 Appendices
@@ -804,6 +805,9 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 
 @end macro
 
+@MmuxDefineGlobalVarSystemConstant{AT_FDCWD}
+@MmuxDefineGlobalVarSystemConstant{AT_SYMLINK_FOLLOW}
+@MmuxDefineGlobalVarSystemConstant{AT_EMPTY_PATH}
 @MmuxDefineGlobalVarSystemConstant{EOF}
 @MmuxDefineGlobalVarSystemConstant{F_DUPFD}
 @MmuxDefineGlobalVarSystemConstant{F_GETFD}
@@ -5296,6 +5300,59 @@ The argument @var{OLD_FD} must be the string representation of a file descriptor
 
 The argument @var{NEW_FD} must be the string representation of a file descriptor.
 @end deffn
+
+@c page
+@node fs
+@chapter File system interface
+
+
+@menu
+* fs hard links::               Hard link builtins.
+@end menu
+
+@c page
+@node fs hard links
+@section Hard link builtins
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_link @var{OLDNAME} @var{NEWNAME}
+Interface to the standard C language function @cfunc{link}, @glibcref{Hard Links, link}.
+
+@example
+declare -i ERRNO
+
+if ! mmux_libc_link 'oldname.ext' 'newname.ext'
+then
+    declare ERRMSG
+
+    mmux_libc_strerror ERRMSG @RR{ERRNO}
+    printf 'link: error: %s\n' @WW{ERRMSG} >&2
+fi
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_linkat @var{OLDFD} @var{OLDNAME} @var{NEWFD} @var{NEWNAME} @var{FLAGS}
+Interface to the standard C language function @cfunc{linkat}, @glibcref{Hard Links, linkat}.
+
+@example
+declare -i ERRNO
+
+if ! mmux_libc_linkat @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
+                      @RR{mmux_libc_AT_FDCWD} 'newname.ext' \
+                      @RR{mmux_libc_AT_SYMLINK_FOLLOW}
+then
+    declare ERRMSG
+
+    mmux_libc_strerror ERRMSG @RR{ERRNO}
+    printf 'linkat: error: %s\n' @WW{ERRMSG} >&2
+fi
+@end example
+@end deffn
+
 
 @c page
 @node misc

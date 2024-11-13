@@ -148,6 +148,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-comparison.c.m4		\
 	src/mmux-bash-pointers-errors.c.m4		\
 	src/mmux-bash-pointers-fds.c.m4			\
+	src/mmux-bash-pointers-file-system.c.m4		\
 	src/mmux-bash-pointers-library.c.m4		\
 	src/mmux-bash-pointers-mathematics.c.m4		\
 	src/mmux-bash-pointers-memory.c.m4		\
@@ -166,6 +167,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-fds.c			\
+	src/mmux-bash-pointers-file-system.c		\
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-mathematics.c		\
 	src/mmux-bash-pointers-memory.c			\
@@ -202,6 +204,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-fds.c			\
+	src/mmux-bash-pointers-file-system.c		\
 	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-mathematics.c		\
@@ -238,6 +241,7 @@ EXTRA_DIST		+= \
 	tests/conversion.test.m4		\
 	tests/errors.test.m4			\
 	tests/file-descriptors.test.m4		\
+	tests/file-system.test.m4		\
 	tests/mathematics.test.m4		\
 	tests/memory.test.m4			\
 	tests/output-formats.test.m4		\
@@ -264,6 +268,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/conversion.test			\
 	tests/errors.test			\
 	tests/file-descriptors.test		\
+	tests/file-system.test			\
 	tests/mathematics.test			\
 	tests/memory.test			\
 	tests/output-formats.test		\
