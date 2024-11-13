@@ -5419,6 +5419,16 @@ mmux_libc_unlinkat @RR{mmux_libc_AT_FDCWD} 'filename.ext' 0
 @end example
 @end deffn
 
+
+@deffn Builtin mmux_libc_rmdir @var{PATHNAME}
+Interface to the standard C language function @cfunc{rmdir}, @glibcref{Deleting Files, rmdir}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_remove @var{PATHNAME}
+Interface to the standard C language function @cfunc{remove}, @glibcref{Deleting Files, remove}.
+@end deffn
+
 @c page
 @node misc
 @chapter Miscellaneous features

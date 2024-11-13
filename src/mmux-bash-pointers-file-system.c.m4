@@ -254,5 +254,48 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME FLAGS"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rmdir]]])
+{
+  char const *	pathname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  {
+    int		rv = rmdir(pathname);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_remove]]])
+{
+  char const *	pathname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  {
+    int		rv = remove(pathname);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME"]]])
 
 /* end of file */

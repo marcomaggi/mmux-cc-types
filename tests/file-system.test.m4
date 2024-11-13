@@ -262,6 +262,50 @@ function file-system-unlinkat-1.1 () {
 }
 
 
+#### remove
+
+function file-system-remove-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+	declare -r TMP=$(dotest-echo-tmpdir)
+	declare OLDNAME='Makefile'
+	declare NEWNAME
+
+	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
+	dotest-debug NEWNAME=WW(NEWNAME)
+
+	dotest-mktmpdir
+	mbfl_location_leave_when_failure( mmux_libc_link WW(OLDNAME) WW(NEWNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_remove WW(NEWNAME) )
+    }
+    mbfl_location_leave
+}
+
+
+#### rmdir
+
+function file-system-rmdir-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+	declare -r TMP=$(dotest-echo-tmpdir)
+	declare PATHNAME
+
+	printf -v PATHNAME '%s/%s' WW(TMP) 'spiffy.ext'
+
+	dotest-mktmpdir
+	mbfl_file_make_directory WW(PATHNAME)
+	mbfl_location_leave_when_failure( mmux_libc_rmdir WW(PATHNAME) )
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-
