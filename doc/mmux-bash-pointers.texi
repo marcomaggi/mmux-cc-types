@@ -805,9 +805,10 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 
 @end macro
 
-@MmuxDefineGlobalVarSystemConstant{AT_FDCWD}
-@MmuxDefineGlobalVarSystemConstant{AT_SYMLINK_FOLLOW}
 @MmuxDefineGlobalVarSystemConstant{AT_EMPTY_PATH}
+@MmuxDefineGlobalVarSystemConstant{AT_FDCWD}
+@MmuxDefineGlobalVarSystemConstant{AT_REMOVEDIR}
+@MmuxDefineGlobalVarSystemConstant{AT_SYMLINK_FOLLOW}
 @MmuxDefineGlobalVarSystemConstant{EOF}
 @MmuxDefineGlobalVarSystemConstant{F_DUPFD}
 @MmuxDefineGlobalVarSystemConstant{F_GETFD}
@@ -5308,8 +5309,30 @@ The argument @var{NEW_FD} must be the string representation of a file descriptor
 
 
 @menu
+* fs errors::                   How to handle errors.
 * fs links::                    Hard and symbolic link builtins.
+* fs deleting::                 Deleting links builtins.
 @end menu
+
+@c page
+@node fs errors
+@section How to handle errors
+
+
+Unless otherwise specified: the file system builtins return false when an error occurs and set the
+shell variable @env{ERRNO}.  To handle an error we should do something like:
+
+@example
+declare -i ERRNO
+
+if ! mmux_libc_link 'oldname.ext' 'newname.ext'
+then
+    declare ERRMSG
+
+    mmux_libc_strerror ERRMSG @RR{ERRNO}
+    printf 'link: error: %s\n' @WW{ERRMSG} >&2
+fi
+@end example
 
 @c page
 @node fs links
@@ -5323,15 +5346,7 @@ The argument @var{NEW_FD} must be the string representation of a file descriptor
 Interface to the standard C language function @cfunc{link}, @glibcref{Hard Links, link}.
 
 @example
-declare -i ERRNO
-
-if ! mmux_libc_link 'oldname.ext' 'newname.ext'
-then
-    declare ERRMSG
-
-    mmux_libc_strerror ERRMSG @RR{ERRNO}
-    printf 'link: error: %s\n' @WW{ERRMSG} >&2
-fi
+mmux_libc_link 'oldname.ext' 'newname.ext'
 @end example
 @end deffn
 
@@ -5340,17 +5355,9 @@ fi
 Interface to the standard C language function @cfunc{linkat}, @glibcref{Hard Links, linkat}.
 
 @example
-declare -i ERRNO
-
-if ! mmux_libc_linkat @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
-                      @RR{mmux_libc_AT_FDCWD} 'newname.ext' \
-                      @RR{mmux_libc_AT_SYMLINK_FOLLOW}
-then
-    declare ERRMSG
-
-    mmux_libc_strerror ERRMSG @RR{ERRNO}
-    printf 'linkat: error: %s\n' @WW{ERRMSG} >&2
-fi
+mmux_libc_linkat @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
+                 @RR{mmux_libc_AT_FDCWD} 'newname.ext' \
+                 @RR{mmux_libc_AT_SYMLINK_FOLLOW}
 @end example
 @end deffn
 
@@ -5359,15 +5366,7 @@ fi
 Interface to the standard C language function @cfunc{symlink}, @glibcref{Symbolic Links, symlink}.
 
 @example
-declare -i ERRNO
-
-if ! mmux_libc_symlink 'oldname.ext' 'newname.ext'
-then
-    declare ERRMSG
-
-    mmux_libc_strerror ERRMSG @RR{ERRNO}
-    printf 'symlink: error: %s\n' @WW{ERRMSG} >&2
-fi
+mmux_libc_symlink 'oldname.ext' 'newname.ext'
 @end example
 @end deffn
 
@@ -5377,18 +5376,10 @@ Interface to the standard C language function @cfunc{readlink}, @glibcref{Symbol
 
 @example
 declare PATHNAME
-declare -i ERRNO
 
 mmux_libc_symlink 'oldname.ext' 'newname.ext'
-
-if mmux_libc_readlink PATHNAME 'newname.ext'
-then @WW{PATHNAME}      @result{} oldname.ext
-else
-    declare ERRMSG
-
-    mmux_libc_strerror ERRMSG @RR{ERRNO}
-    printf 'symlink: error: %s\n' @WW{ERRMSG} >&2
-fi
+mmux_libc_readlink PATHNAME 'newname.ext'
+@WW{PATHNAME}      @result{} oldname.ext
 @end example
 @end deffn
 
@@ -5401,6 +5392,31 @@ Links, canonicalize_file_name}.
 
 @deffn Builtin mmux_libc_realpath @var{REAL_PATHNAME_VAR} @var{PATHNAME}
 Interface to the standard C language function @cfunc{realpath}, @glibcref{Symbolic Links, realpath}.
+@end deffn
+
+@c page
+@node fs deleting
+@section Deleting links builtins
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_unlink @var{PATHNAME}
+Interface to the standard C language function @cfunc{unlink}, @glibcref{Deleting Files, unlink}.
+
+@example
+mmux_libc_unlink 'filename.ext'
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_unlinkat @var{DIRFD} @var{PATHNAME} @var{FLAGS}
+Interface to the standard C language function @cfunc{unlinkat}, @cfuncpage{unlinkat}.
+
+@example
+mmux_libc_unlinkat @RR{mmux_libc_AT_FDCWD} 'filename.ext' 0
+@end example
 @end deffn
 
 @c page
