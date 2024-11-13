@@ -5111,6 +5111,12 @@ fi
 @end deffn
 
 
+@deffn Builtin mmux_libc_openat @var{FDVAR} @var{DIRFD} @var{FILENAME} @var{FLAGS}
+@deffnx Builtin mmux_libc_openat @var{FDVAR} @var{DIRFD} @var{FILENAME} @var{FLAGS} @var{MODE}
+Interface to the standard C function @cfunc{openat}, @cfuncpage{openat}.
+@end deffn
+
+
 @deffn Builtin mmux_libc_close @var{FD}
 Interface to the standard C function @cfunc{close}.  When successful: return true; otherwise set the
 shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.

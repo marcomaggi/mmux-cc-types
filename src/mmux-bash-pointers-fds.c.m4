@@ -50,9 +50,39 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_open]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_open]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[((4 == argc) || (5 == argc))]]],
-    [[["mmux_libc_open FDVAR FILENAME FLAGS [MODE]"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FDVAR FILENAME FLAGS [MODE]"]]],
+    [[["Open a file, store the file descriptor in FDVAR."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
+{
+  int		dirfd, flags;
+  char const *	pathname;
+  mode_t	mode = 0;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[dirfd]]],			[[[argv[2]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR([[[pathname]]],	[[[argv[3]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],			[[[argv[4]]]]);
+  if (6 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_MODE([[[mode]]],		[[[argv[5]]]]);
+  }
+
+  {
+    int		rv = openat(dirfd, pathname, flags, mode);
+    if (-1 != rv) {
+      return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((5 == argc) || (6 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FDVAR DIRFD FILENAME FLAGS [MODE]"]]],
     [[["Open a file, store the file descriptor in FDVAR."]]])
 
 
@@ -73,9 +103,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_close]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_close]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
-    [[["mmux_libc_close FD"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FD"]]],
     [[["Close a file descriptor."]]])
 
 
@@ -100,9 +130,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_read]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_read]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
-    [[["mmux_libc_read DONEVAR FD BUFFER SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD BUFFER SIZE"]]],
     [[["Read SIZE bytes from FD and store them in BUFFER, store in DONEVAR the number of bytes read."]]])
 
 
@@ -127,9 +157,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_write]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_write]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
-    [[["mmux_libc_write DONEVAR FD BUFFER SIZE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD BUFFER SIZE"]]],
     [[["Write SIZE bytes to FD from BUFFER, store in DONEVAR the number of bytes written."]]])
 
 
@@ -156,9 +186,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pread]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_pread]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
-    [[["mmux_libc_pread DONEVAR FD BUFFER SIZE OFFSET"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD BUFFER SIZE OFFSET"]]],
     [[["Read SIZE bytes from FD, at OFFSET from the current position, and store them in BUFFER, store in DONEVAR the number of bytes read."]]])
 
 
@@ -185,9 +215,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwrite]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_pwrite]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
-    [[["mmux_libc_pwrite DONEVAR FD BUFFER SIZE OFFSET"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD BUFFER SIZE OFFSET"]]],
     [[["Write SIZE bytes to FD, at OFFSET from the current position, from BUFFER, store in DONEVAR the number of bytes written."]]])
 
 
@@ -211,9 +241,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lseek]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_lseek]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
-    [[["mmux_libc_lseek OFFVAR FD OFFSET WHENCE"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OFFVAR FD OFFSET WHENCE"]]],
     [[["Change the file position of FD of OFFSET from WHENCE, store in OFFVAR the resulting file position."]]])
 
 
@@ -234,9 +264,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["mmux_libc_dup FDVAR FD"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FDVAR FD"]]],
     [[["Duplicate the file descriptor FD, store the result in FDVAR."]]])
 
 
@@ -258,9 +288,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup2]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_dup2]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
-    [[["mmux_libc_dup2 RVAR OLD_FD NEW_FD"]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RVAR OLD_FD NEW_FD"]]],
     [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD, store the result in RVAR."]]])
 
 
@@ -410,9 +440,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_fcntl]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 <= argc)]]],
-    [[["mmux_libc_fcntl RVAR FD COMMAND ARG ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RVAR FD COMMAND ARG ..."]]],
     [[["Call fcntl with the given arguments, store the result in RVAR."]]])
 
 
@@ -450,10 +480,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
 
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_ioctl]]],
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 <= argc)]]],
-    [[["mmux_libc_ioctl RVAR FD COMMAND ARG ..."]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER RVAR FD COMMAND ARG ..."]]],
     [[["Call ioctl with the given arguments, store the result in RVAR."]]])
-
 
 /* end of file */

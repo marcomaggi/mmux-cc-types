@@ -74,6 +74,39 @@ function file-descriptors-open-close-1.1 () {
 }
 
 
+#### openat
+
+function file-descriptors-openat-1.1 () {
+    dotest-unset-debug
+    mbfl_location_enter
+    {
+	declare -i FD RV ERRNO=0
+	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	mbfl_location_handler dotest-clean-files
+
+	dotest-debug mmux_libc_O_RDWR=WW(mmux_libc_O_RDWR)
+	dotest-debug mmux_libc_O_CREAT=WW(mmux_libc_O_CREAT)
+	dotest-debug mmux_libc_O_EXCL=WW(mmux_libc_O_EXCL)
+	dotest-debug FLAGS=WW(FLAGS)
+
+	if ! mmux_libc_openat FD RR(mmux_libc_AT_FDCWD) QQ(FILENAME) WW(FLAGS) WW(MODE)
+	then
+	    mbfl_declare_varref(MSG)
+	    mmux_libc_strerror UU(MSG) $ERRNO
+	    mbfl_message_error_printf 'opening file: %s\n' QQ(MSG)
+	    mbfl_location_leave_then_return_failure
+	fi
+
+	if ! mmux_libc_close $FD
+	then mbfl_location_leave_then_return_failure
+	fi
+    }
+    mbfl_location_leave
+}
+
+
 #### opening, closing, reading with "read", writing with "write"
 
 function file-descriptors-read-write-1.1 () {
