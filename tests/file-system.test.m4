@@ -391,6 +391,83 @@ function file-system-mkdirat-1.1 () {
 }
 
 
+#### chown
+
+function file-system-chown-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_chown WW(PATHNAME) RR(UID) RR(UID))
+    }
+    mbfl_location_leave
+}
+
+
+#### fchown
+
+function file-system-fchown-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	if mmux_libc_open FD WW(PATHNAME) 0 0
+	then mbfl_location_handler "mmux_libc_close RR(FD)"
+	else mbfl_location_leave_then_return_failure
+	fi
+
+	mbfl_location_leave_when_failure( mmux_libc_fchown WW(FD) RR(UID) RR(UID))
+    }
+    mbfl_location_leave
+}
+
+
+#### lchown
+
+function file-system-lchown-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_lchown WW(PATHNAME) RR(UID) RR(UID))
+    }
+    mbfl_location_leave
+}
+
+
+#### fchownat
+
+function file-system-fchownat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_fchownat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) RR(UID) RR(UID) 0)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-

@@ -446,4 +446,119 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME MODE"]]])
 
+
+/** --------------------------------------------------------------------
+ ** File ownership.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_chown]]])
+{
+  char const *	pathname;
+  mmux_uid_t	uid;
+  mmux_gid_t	gid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,			argv[3]);
+  {
+    int		rv = chown(pathname, uid, gid);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME UID GID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fchown]]])
+{
+  mmux_sint_t	fd;
+  mmux_uid_t	uid;
+  mmux_gid_t	gid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(fd,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,	argv[3]);
+  {
+    int		rv = fchown(fd, uid, gid);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FD UID GID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lchown]]])
+{
+  char const *	pathname;
+  mmux_uid_t	uid;
+  mmux_gid_t	gid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,			argv[3]);
+  {
+    int		rv = lchown(pathname, uid, gid);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME UID GID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fchownat]]])
+{
+  mmux_sint_t	dirfd;
+  char const *	pathname;
+  mmux_uid_t	uid;
+  mmux_gid_t	gid;
+  mmux_sint_t	flags;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(dirfd,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,			argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,			argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,		argv[5]);
+  {
+    int		rv = fchownat(dirfd, pathname, uid, gid, flags);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME UID GID FLAGS"]]])
+
 /* end of file */

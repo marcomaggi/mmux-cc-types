@@ -5323,6 +5323,7 @@ The argument @var{NEW_FD} must be the string representation of a file descriptor
 * fs deleting::                 Deleting links builtins.
 * fs renaming::                 Renaming links builtins.
 * fs directories::              Directory builtins.
+* fs ownership::                File ownership builtins.
 @end menu
 
 @c page
@@ -5501,6 +5502,35 @@ Interface to the standard C language function @cfunc{mkdirat}, @cfuncpage{mkdira
 mmux_libc_mkdirat @RR{mmux_libc_AT_FDCWD} 'pathname.d' @RR{mmux_libc_S_IRUSR}
 @end example
 @end deffn
+
+@c page
+@node fs ownership
+@section File ownership builtins
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_chown @var{PATHNAME} @var{UID} @var{GID}
+Interface to the standard C language function @cfunc{chown}, @glibcref{File Owner, chown}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_fchown @var{FD} @var{UID} @var{GID}
+Interface to the standard C language function @cfunc{fchown}, @glibcref{File Owner, fchown}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_lchown @var{PATHNAME} @var{UID} @var{GID}
+Interface to the standard C language function @cfunc{lchown}, @cfuncpage{lchown}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_fchownat @var{DIRFD} @var{PATHNAME} @var{UID} @var{GID} @var{FLAGS}
+Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchownat}.
+@end deffn
+
+
 
 @c page
 @node misc
