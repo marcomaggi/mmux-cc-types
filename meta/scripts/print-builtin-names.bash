@@ -52,7 +52,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   strchr strrchr strstr strcasestr strspn strcspn strpbrk strtok
 			   link linkat symlink readlink realpath unlink unlinkat remove rmdir rename renameat
 			   mkdir mkdirat
-			   chown fchown lchown fchownat)
+			   chown fchown lchown fchownat
+			   getuid getgid)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh

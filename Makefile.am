@@ -154,6 +154,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-memory.c.m4		\
 	src/mmux-bash-pointers-misc-builtins.c.m4	\
 	src/mmux-bash-pointers-mutators.c.m4		\
+	src/mmux-bash-pointers-persona.c.m4		\
 	src/mmux-bash-pointers-predicates.c.m4		\
 	src/mmux-bash-pointers-strings.c.m4
 
@@ -173,6 +174,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
+	src/mmux-bash-pointers-persona.c		\
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-bash-pointers-strings.c
 
@@ -211,6 +213,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-memory.c			\
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
+	src/mmux-bash-pointers-persona.c		\
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-bash-pointers-strings.c
 
@@ -246,6 +249,7 @@ EXTRA_DIST		+= \
 	tests/memory.test.m4			\
 	tests/output-formats.test.m4		\
 	tests/packages.test.m4			\
+	tests/persona.test.m4			\
 	tests/pointers.test.m4			\
 	tests/predicates.test.m4		\
 	tests/strings.test.m4			\
@@ -273,6 +277,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/memory.test			\
 	tests/output-formats.test		\
 	tests/packages.test			\
+	tests/persona.test			\
 	tests/pointers.test			\
 	tests/predicates.test			\
 	tests/strings.test			\

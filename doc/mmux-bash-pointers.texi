@@ -180,9 +180,10 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * cctypes::                     Interface to supported C language data types.
 * memory::                      Raw memory operations.
 * strings::                     @asciiz{} strings.
-* errors::                      Handling errors.
 * fds::                         Core file descriptor operations.
 * fs::                          File system interface.
+* persona::                     Persona operations.
+* errors::                      Handling errors.
 * misc::                        Miscellaneous features.
 
 Appendices
@@ -4862,221 +4863,6 @@ mmux_libc_free @RR{PATHNAME}
 @end deffn
 
 @c page
-@node errors
-@chapter Handling errors
-
-
-@menu
-* errors builtins::             Builtin handling errors.
-* errors errno::                Values of @code{errno}.
-@end menu
-
-@c page
-@node errors builtins
-@section Builtin handling errors
-
-
-@defvr {Shell Variable} ERRNO
-If an error occurs in the call to a builtin that interfaces a Standard C Library function: the
-builtin will set the shell variable @env{ERRNO} to the string representation of an exact integer,
-itself representing a standard @code{errno} code.
-
-@example
-declare PTR ERRNO=0 SYM
-
-mmux_libc_malloc PTR 'ciao'
-mmux-bash-pointers-errno-to-string SYM $ERRNO
-$SYM    @result{} EINVAL
-@end example
-@end defvr
-
-
-@deffn Builtin mmux_libc_strerror @var{MSGVAR} @var{ERRNUM}
-Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
-representation of an exact integer, itself representing a valid value for @code{errno}; @var{ERRNUM}
-must fit the C language type @code{int}.
-
-@example
-declare MSG
-
-if test -v mmux_libc_EINVAL
-then mmux_libc_strerror MSG $mmux_libc_EINVAL
-else MSG='EINVAL undefined'
-fi
-
-"$MSG"  @result{} Invalid argument
-@end example
-@end deffn
-
-
-@defun mmux-bash-pointers-errno-to-string @var{SYMVAR} @var{ERRNUM}
-Store in @var{SYMVAR} a string representation of the @code{errno} code @var{ERRNUM}.  When
-successful return true, otherwise return false.
-
-@example
-declare SYM
-
-mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
-"$SYM"  @result{} ENOMEM
-@end example
-@end defun
-
-@c page
-@node errors errno
-@section Values of @code{errno}
-
-
-If a C language constant referenced by one of the following variables is undefined: the
-corresponding Bash variable is undefined; we can test this condition with @code{test -v}; to test if
-the underlying platform implements the constant @code{ENOMEM}, we can do:
-
-@example
-if test -v mmux_libc_ENOMEM
-then # implemented
-else # not implemented
-fi
-@end example
-
-@macro MmuxDefineGlobalVarErrno{NAME}
-@defvar mmux_libc_\NAME\
-Global variable holding the value of the C language constant @code{\NAME\}.
-@end defvar
-
-@end macro
-
-@MmuxDefineGlobalVarErrno{EPERM}
-@MmuxDefineGlobalVarErrno{ENOENT}
-@MmuxDefineGlobalVarErrno{ESRCH}
-@MmuxDefineGlobalVarErrno{EINTR}
-@MmuxDefineGlobalVarErrno{EIO}
-@MmuxDefineGlobalVarErrno{ENXIO}
-@MmuxDefineGlobalVarErrno{E2BIG}
-@MmuxDefineGlobalVarErrno{ENOEXEC}
-@MmuxDefineGlobalVarErrno{EBADF}
-@MmuxDefineGlobalVarErrno{ECHILD}
-@MmuxDefineGlobalVarErrno{EAGAIN}
-@MmuxDefineGlobalVarErrno{ENOMEM}
-@MmuxDefineGlobalVarErrno{EACCES}
-@MmuxDefineGlobalVarErrno{EFAULT}
-@MmuxDefineGlobalVarErrno{ENOTBLK}
-@MmuxDefineGlobalVarErrno{EBUSY}
-@MmuxDefineGlobalVarErrno{EEXIST}
-@MmuxDefineGlobalVarErrno{EXDEV}
-@MmuxDefineGlobalVarErrno{ENODEV}
-@MmuxDefineGlobalVarErrno{ENOTDIR}
-@MmuxDefineGlobalVarErrno{EISDIR}
-@MmuxDefineGlobalVarErrno{EINVAL}
-@MmuxDefineGlobalVarErrno{ENFILE}
-@MmuxDefineGlobalVarErrno{EMFILE}
-@MmuxDefineGlobalVarErrno{ENOTTY}
-@MmuxDefineGlobalVarErrno{ETXTBSY}
-@MmuxDefineGlobalVarErrno{EFBIG}
-@MmuxDefineGlobalVarErrno{ENOSPC}
-@MmuxDefineGlobalVarErrno{ESPIPE}
-@MmuxDefineGlobalVarErrno{EROFS}
-@MmuxDefineGlobalVarErrno{EMLINK}
-@MmuxDefineGlobalVarErrno{EPIPE}
-@MmuxDefineGlobalVarErrno{EDOM}
-@MmuxDefineGlobalVarErrno{ERANGE}
-@MmuxDefineGlobalVarErrno{EDEADLK}
-@MmuxDefineGlobalVarErrno{ENAMETOOLONG}
-@MmuxDefineGlobalVarErrno{ENOLCK}
-@MmuxDefineGlobalVarErrno{ENOSYS}
-@MmuxDefineGlobalVarErrno{ENOTEMPTY}
-@MmuxDefineGlobalVarErrno{ELOOP}
-@MmuxDefineGlobalVarErrno{EWOULDBLOCK}
-@MmuxDefineGlobalVarErrno{ENOMSG}
-@MmuxDefineGlobalVarErrno{EIDRM}
-@MmuxDefineGlobalVarErrno{ECHRNG}
-@MmuxDefineGlobalVarErrno{EL2NSYNC}
-@MmuxDefineGlobalVarErrno{EL3HLT}
-@MmuxDefineGlobalVarErrno{EL3RST}
-@MmuxDefineGlobalVarErrno{ELNRNG}
-@MmuxDefineGlobalVarErrno{EUNATCH}
-@MmuxDefineGlobalVarErrno{ENOCSI}
-@MmuxDefineGlobalVarErrno{EL2HLT}
-@MmuxDefineGlobalVarErrno{EBADE}
-@MmuxDefineGlobalVarErrno{EBADR}
-@MmuxDefineGlobalVarErrno{EXFULL}
-@MmuxDefineGlobalVarErrno{ENOANO}
-@MmuxDefineGlobalVarErrno{EBADRQC}
-@MmuxDefineGlobalVarErrno{EBADSLT}
-@MmuxDefineGlobalVarErrno{EDEADLOCK}
-@MmuxDefineGlobalVarErrno{EBFONT}
-@MmuxDefineGlobalVarErrno{ENOSTR}
-@MmuxDefineGlobalVarErrno{ENODATA}
-@MmuxDefineGlobalVarErrno{ETIME}
-@MmuxDefineGlobalVarErrno{ENOSR}
-@MmuxDefineGlobalVarErrno{ENONET}
-@MmuxDefineGlobalVarErrno{ENOPKG}
-@MmuxDefineGlobalVarErrno{EREMOTE}
-@MmuxDefineGlobalVarErrno{ENOLINK}
-@MmuxDefineGlobalVarErrno{EADV}
-@MmuxDefineGlobalVarErrno{ESRMNT}
-@MmuxDefineGlobalVarErrno{ECOMM}
-@MmuxDefineGlobalVarErrno{EPROTO}
-@MmuxDefineGlobalVarErrno{EMULTIHOP}
-@MmuxDefineGlobalVarErrno{EDOTDOT}
-@MmuxDefineGlobalVarErrno{EBADMSG}
-@MmuxDefineGlobalVarErrno{EOVERFLOW}
-@MmuxDefineGlobalVarErrno{ENOTUNIQ}
-@MmuxDefineGlobalVarErrno{EBADFD}
-@MmuxDefineGlobalVarErrno{EREMCHG}
-@MmuxDefineGlobalVarErrno{ELIBACC}
-@MmuxDefineGlobalVarErrno{ELIBBAD}
-@MmuxDefineGlobalVarErrno{ELIBSCN}
-@MmuxDefineGlobalVarErrno{ELIBMAX}
-@MmuxDefineGlobalVarErrno{ELIBEXEC}
-@MmuxDefineGlobalVarErrno{EILSEQ}
-@MmuxDefineGlobalVarErrno{ERESTART}
-@MmuxDefineGlobalVarErrno{ESTRPIPE}
-@MmuxDefineGlobalVarErrno{EUSERS}
-@MmuxDefineGlobalVarErrno{ENOTSOCK}
-@MmuxDefineGlobalVarErrno{EDESTADDRREQ}
-@MmuxDefineGlobalVarErrno{EMSGSIZE}
-@MmuxDefineGlobalVarErrno{EPROTOTYPE}
-@MmuxDefineGlobalVarErrno{ENOPROTOOPT}
-@MmuxDefineGlobalVarErrno{EPROTONOSUPPORT}
-@MmuxDefineGlobalVarErrno{ESOCKTNOSUPPORT}
-@MmuxDefineGlobalVarErrno{EOPNOTSUPP}
-@MmuxDefineGlobalVarErrno{EPFNOSUPPORT}
-@MmuxDefineGlobalVarErrno{EAFNOSUPPORT}
-@MmuxDefineGlobalVarErrno{EADDRINUSE}
-@MmuxDefineGlobalVarErrno{EADDRNOTAVAIL}
-@MmuxDefineGlobalVarErrno{ENETDOWN}
-@MmuxDefineGlobalVarErrno{ENETUNREACH}
-@MmuxDefineGlobalVarErrno{ENETRESET}
-@MmuxDefineGlobalVarErrno{ECONNABORTED}
-@MmuxDefineGlobalVarErrno{ECONNRESET}
-@MmuxDefineGlobalVarErrno{ENOBUFS}
-@MmuxDefineGlobalVarErrno{EISCONN}
-@MmuxDefineGlobalVarErrno{ENOTCONN}
-@MmuxDefineGlobalVarErrno{ESHUTDOWN}
-@MmuxDefineGlobalVarErrno{ETOOMANYREFS}
-@MmuxDefineGlobalVarErrno{ETIMEDOUT}
-@MmuxDefineGlobalVarErrno{ECONNREFUSED}
-@MmuxDefineGlobalVarErrno{EHOSTDOWN}
-@MmuxDefineGlobalVarErrno{EHOSTUNREACH}
-@MmuxDefineGlobalVarErrno{EALREADY}
-@MmuxDefineGlobalVarErrno{EINPROGRESS}
-@MmuxDefineGlobalVarErrno{ESTALE}
-@MmuxDefineGlobalVarErrno{EUCLEAN}
-@MmuxDefineGlobalVarErrno{ENOTNAM}
-@MmuxDefineGlobalVarErrno{ENAVAIL}
-@MmuxDefineGlobalVarErrno{EISNAM}
-@MmuxDefineGlobalVarErrno{EREMOTEIO}
-@MmuxDefineGlobalVarErrno{EDQUOT}
-@MmuxDefineGlobalVarErrno{ENOMEDIUM}
-@MmuxDefineGlobalVarErrno{EMEDIUMTYPE}
-@MmuxDefineGlobalVarErrno{ECANCELED}
-@MmuxDefineGlobalVarErrno{ENOKEY}
-@MmuxDefineGlobalVarErrno{EKEYEXPIRED}
-@MmuxDefineGlobalVarErrno{EKEYREVOKED}
-@MmuxDefineGlobalVarErrno{EKEYREJECTED}
-@MmuxDefineGlobalVarErrno{EOWNERDEAD}
-@MmuxDefineGlobalVarErrno{ENOTRECOVERABLE}
-
-@c page
 @node fds
 @chapter Core file descriptor operations
 
@@ -5530,7 +5316,250 @@ Interface to the standard C language function @cfunc{lchown}, @cfuncpage{lchown}
 Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchownat}.
 @end deffn
 
+@c page
+@node persona
+@chapter Persona operations
 
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_getuid @var{UIDVAR}
+Interface to the standard C language function @cfunc{getuid}, @glibcref{Reading persona, getuid}.
+
+@example
+declare THE_UID
+
+mmux_libc_getuid THE_UID
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getgid @var{GIDVAR}
+Interface to the standard C language function @cfunc{getgid}, @glibcref{Reading persona, getgid}.
+
+@example
+declare THE_GID
+
+mmux_libc_getgid THE_GID
+@end example
+@end deffn
+
+
+@c page
+@node errors
+@chapter Handling errors
+
+
+@menu
+* errors builtins::             Builtin handling errors.
+* errors errno::                Values of @code{errno}.
+@end menu
+
+@c page
+@node errors builtins
+@section Builtin handling errors
+
+
+@defvr {Shell Variable} ERRNO
+If an error occurs in the call to a builtin that interfaces a Standard C Library function: the
+builtin will set the shell variable @env{ERRNO} to the string representation of an exact integer,
+itself representing a standard @code{errno} code.
+
+@example
+declare PTR ERRNO=0 SYM
+
+mmux_libc_malloc PTR 'ciao'
+mmux-bash-pointers-errno-to-string SYM $ERRNO
+$SYM    @result{} EINVAL
+@end example
+@end defvr
+
+
+@deffn Builtin mmux_libc_strerror @var{MSGVAR} @var{ERRNUM}
+Store in @var{MSGVAR} the error message corresponding to @var{ERRNUM}, which must be the string
+representation of an exact integer, itself representing a valid value for @code{errno}; @var{ERRNUM}
+must fit the C language type @code{int}.
+
+@example
+declare MSG
+
+if test -v mmux_libc_EINVAL
+then mmux_libc_strerror MSG $mmux_libc_EINVAL
+else MSG='EINVAL undefined'
+fi
+
+"$MSG"  @result{} Invalid argument
+@end example
+@end deffn
+
+
+@defun mmux-bash-pointers-errno-to-string @var{SYMVAR} @var{ERRNUM}
+Store in @var{SYMVAR} a string representation of the @code{errno} code @var{ERRNUM}.  When
+successful return true, otherwise return false.
+
+@example
+declare SYM
+
+mmux-bash-pointers-errno-to-string SYM $mmux_libc_ENOMEM
+"$SYM"  @result{} ENOMEM
+@end example
+@end defun
+
+@c page
+@node errors errno
+@section Values of @code{errno}
+
+
+If a C language constant referenced by one of the following variables is undefined: the
+corresponding Bash variable is undefined; we can test this condition with @code{test -v}; to test if
+the underlying platform implements the constant @code{ENOMEM}, we can do:
+
+@example
+if test -v mmux_libc_ENOMEM
+then # implemented
+else # not implemented
+fi
+@end example
+
+@macro MmuxDefineGlobalVarErrno{NAME}
+@defvar mmux_libc_\NAME\
+Global variable holding the value of the C language constant @code{\NAME\}.
+@end defvar
+
+@end macro
+
+@MmuxDefineGlobalVarErrno{EPERM}
+@MmuxDefineGlobalVarErrno{ENOENT}
+@MmuxDefineGlobalVarErrno{ESRCH}
+@MmuxDefineGlobalVarErrno{EINTR}
+@MmuxDefineGlobalVarErrno{EIO}
+@MmuxDefineGlobalVarErrno{ENXIO}
+@MmuxDefineGlobalVarErrno{E2BIG}
+@MmuxDefineGlobalVarErrno{ENOEXEC}
+@MmuxDefineGlobalVarErrno{EBADF}
+@MmuxDefineGlobalVarErrno{ECHILD}
+@MmuxDefineGlobalVarErrno{EAGAIN}
+@MmuxDefineGlobalVarErrno{ENOMEM}
+@MmuxDefineGlobalVarErrno{EACCES}
+@MmuxDefineGlobalVarErrno{EFAULT}
+@MmuxDefineGlobalVarErrno{ENOTBLK}
+@MmuxDefineGlobalVarErrno{EBUSY}
+@MmuxDefineGlobalVarErrno{EEXIST}
+@MmuxDefineGlobalVarErrno{EXDEV}
+@MmuxDefineGlobalVarErrno{ENODEV}
+@MmuxDefineGlobalVarErrno{ENOTDIR}
+@MmuxDefineGlobalVarErrno{EISDIR}
+@MmuxDefineGlobalVarErrno{EINVAL}
+@MmuxDefineGlobalVarErrno{ENFILE}
+@MmuxDefineGlobalVarErrno{EMFILE}
+@MmuxDefineGlobalVarErrno{ENOTTY}
+@MmuxDefineGlobalVarErrno{ETXTBSY}
+@MmuxDefineGlobalVarErrno{EFBIG}
+@MmuxDefineGlobalVarErrno{ENOSPC}
+@MmuxDefineGlobalVarErrno{ESPIPE}
+@MmuxDefineGlobalVarErrno{EROFS}
+@MmuxDefineGlobalVarErrno{EMLINK}
+@MmuxDefineGlobalVarErrno{EPIPE}
+@MmuxDefineGlobalVarErrno{EDOM}
+@MmuxDefineGlobalVarErrno{ERANGE}
+@MmuxDefineGlobalVarErrno{EDEADLK}
+@MmuxDefineGlobalVarErrno{ENAMETOOLONG}
+@MmuxDefineGlobalVarErrno{ENOLCK}
+@MmuxDefineGlobalVarErrno{ENOSYS}
+@MmuxDefineGlobalVarErrno{ENOTEMPTY}
+@MmuxDefineGlobalVarErrno{ELOOP}
+@MmuxDefineGlobalVarErrno{EWOULDBLOCK}
+@MmuxDefineGlobalVarErrno{ENOMSG}
+@MmuxDefineGlobalVarErrno{EIDRM}
+@MmuxDefineGlobalVarErrno{ECHRNG}
+@MmuxDefineGlobalVarErrno{EL2NSYNC}
+@MmuxDefineGlobalVarErrno{EL3HLT}
+@MmuxDefineGlobalVarErrno{EL3RST}
+@MmuxDefineGlobalVarErrno{ELNRNG}
+@MmuxDefineGlobalVarErrno{EUNATCH}
+@MmuxDefineGlobalVarErrno{ENOCSI}
+@MmuxDefineGlobalVarErrno{EL2HLT}
+@MmuxDefineGlobalVarErrno{EBADE}
+@MmuxDefineGlobalVarErrno{EBADR}
+@MmuxDefineGlobalVarErrno{EXFULL}
+@MmuxDefineGlobalVarErrno{ENOANO}
+@MmuxDefineGlobalVarErrno{EBADRQC}
+@MmuxDefineGlobalVarErrno{EBADSLT}
+@MmuxDefineGlobalVarErrno{EDEADLOCK}
+@MmuxDefineGlobalVarErrno{EBFONT}
+@MmuxDefineGlobalVarErrno{ENOSTR}
+@MmuxDefineGlobalVarErrno{ENODATA}
+@MmuxDefineGlobalVarErrno{ETIME}
+@MmuxDefineGlobalVarErrno{ENOSR}
+@MmuxDefineGlobalVarErrno{ENONET}
+@MmuxDefineGlobalVarErrno{ENOPKG}
+@MmuxDefineGlobalVarErrno{EREMOTE}
+@MmuxDefineGlobalVarErrno{ENOLINK}
+@MmuxDefineGlobalVarErrno{EADV}
+@MmuxDefineGlobalVarErrno{ESRMNT}
+@MmuxDefineGlobalVarErrno{ECOMM}
+@MmuxDefineGlobalVarErrno{EPROTO}
+@MmuxDefineGlobalVarErrno{EMULTIHOP}
+@MmuxDefineGlobalVarErrno{EDOTDOT}
+@MmuxDefineGlobalVarErrno{EBADMSG}
+@MmuxDefineGlobalVarErrno{EOVERFLOW}
+@MmuxDefineGlobalVarErrno{ENOTUNIQ}
+@MmuxDefineGlobalVarErrno{EBADFD}
+@MmuxDefineGlobalVarErrno{EREMCHG}
+@MmuxDefineGlobalVarErrno{ELIBACC}
+@MmuxDefineGlobalVarErrno{ELIBBAD}
+@MmuxDefineGlobalVarErrno{ELIBSCN}
+@MmuxDefineGlobalVarErrno{ELIBMAX}
+@MmuxDefineGlobalVarErrno{ELIBEXEC}
+@MmuxDefineGlobalVarErrno{EILSEQ}
+@MmuxDefineGlobalVarErrno{ERESTART}
+@MmuxDefineGlobalVarErrno{ESTRPIPE}
+@MmuxDefineGlobalVarErrno{EUSERS}
+@MmuxDefineGlobalVarErrno{ENOTSOCK}
+@MmuxDefineGlobalVarErrno{EDESTADDRREQ}
+@MmuxDefineGlobalVarErrno{EMSGSIZE}
+@MmuxDefineGlobalVarErrno{EPROTOTYPE}
+@MmuxDefineGlobalVarErrno{ENOPROTOOPT}
+@MmuxDefineGlobalVarErrno{EPROTONOSUPPORT}
+@MmuxDefineGlobalVarErrno{ESOCKTNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EOPNOTSUPP}
+@MmuxDefineGlobalVarErrno{EPFNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EAFNOSUPPORT}
+@MmuxDefineGlobalVarErrno{EADDRINUSE}
+@MmuxDefineGlobalVarErrno{EADDRNOTAVAIL}
+@MmuxDefineGlobalVarErrno{ENETDOWN}
+@MmuxDefineGlobalVarErrno{ENETUNREACH}
+@MmuxDefineGlobalVarErrno{ENETRESET}
+@MmuxDefineGlobalVarErrno{ECONNABORTED}
+@MmuxDefineGlobalVarErrno{ECONNRESET}
+@MmuxDefineGlobalVarErrno{ENOBUFS}
+@MmuxDefineGlobalVarErrno{EISCONN}
+@MmuxDefineGlobalVarErrno{ENOTCONN}
+@MmuxDefineGlobalVarErrno{ESHUTDOWN}
+@MmuxDefineGlobalVarErrno{ETOOMANYREFS}
+@MmuxDefineGlobalVarErrno{ETIMEDOUT}
+@MmuxDefineGlobalVarErrno{ECONNREFUSED}
+@MmuxDefineGlobalVarErrno{EHOSTDOWN}
+@MmuxDefineGlobalVarErrno{EHOSTUNREACH}
+@MmuxDefineGlobalVarErrno{EALREADY}
+@MmuxDefineGlobalVarErrno{EINPROGRESS}
+@MmuxDefineGlobalVarErrno{ESTALE}
+@MmuxDefineGlobalVarErrno{EUCLEAN}
+@MmuxDefineGlobalVarErrno{ENOTNAM}
+@MmuxDefineGlobalVarErrno{ENAVAIL}
+@MmuxDefineGlobalVarErrno{EISNAM}
+@MmuxDefineGlobalVarErrno{EREMOTEIO}
+@MmuxDefineGlobalVarErrno{EDQUOT}
+@MmuxDefineGlobalVarErrno{ENOMEDIUM}
+@MmuxDefineGlobalVarErrno{EMEDIUMTYPE}
+@MmuxDefineGlobalVarErrno{ECANCELED}
+@MmuxDefineGlobalVarErrno{ENOKEY}
+@MmuxDefineGlobalVarErrno{EKEYEXPIRED}
+@MmuxDefineGlobalVarErrno{EKEYREVOKED}
+@MmuxDefineGlobalVarErrno{EKEYREJECTED}
+@MmuxDefineGlobalVarErrno{EOWNERDEAD}
+@MmuxDefineGlobalVarErrno{ENOTRECOVERABLE}
 
 @c page
 @node misc
