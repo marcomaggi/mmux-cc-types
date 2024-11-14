@@ -5329,7 +5329,6 @@ Interface to the standard C language function @cfunc{getuid}, @glibcref{Reading 
 
 @example
 declare THE_UID
-
 mmux_libc_getuid THE_UID
 @end example
 @end deffn
@@ -5337,12 +5336,6 @@ mmux_libc_getuid THE_UID
 
 @deffn Builtin mmux_libc_getgid @var{GIDVAR}
 Interface to the standard C language function @cfunc{getgid}, @glibcref{Reading Persona, getgid}.
-
-@example
-declare THE_GID
-
-mmux_libc_getgid THE_GID
-@end example
 @end deffn
 
 
@@ -5361,7 +5354,6 @@ Interface to the standard C language function @cfunc{getgroups}, @glibcref{Readi
 
 @example
 declare -a THE_GIDS
-
 mmux_libc_getgroups THE_GIDS
 @end example
 @end deffn

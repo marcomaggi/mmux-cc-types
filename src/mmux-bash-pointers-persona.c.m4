@@ -104,22 +104,24 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgroups]]])
 	mmux_sint_t			required_bytes = mmux_gid_sprint_size(gids[i]);
 
 	if (required_bytes < 0) {
-	  fprintf(stderr, "%s: error: cannot convert GID value to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
-	  return MMUX_FAILURE;
+	  goto error_converting_gid_to_string;
 	} else {
 	  char	index_array_value[required_bytes];
 
 	  if (mmux_gid_sprint(index_array_value, required_bytes, gids[i])) {
-	    fprintf(stderr, "%s: error: cannot convert GID value to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
-	    return MMUX_FAILURE;
+	    goto error_converting_gid_to_string;
+	  } else {
+	    rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value,
+					    MMUX_BASH_BUILTIN_STRING_NAME);
+	    if (MMUX_SUCCESS != rv) { return rv; }
 	  }
-
-	  rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value,
-					  MMUX_BASH_BUILTIN_STRING_NAME);
-	  if (MMUX_SUCCESS != rv) { return rv; }
 	}
       }
       return MMUX_SUCCESS;
+
+    error_converting_gid_to_string:
+      fprintf(stderr, "%s: error: cannot convert GID value to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
     }
   }
 }
