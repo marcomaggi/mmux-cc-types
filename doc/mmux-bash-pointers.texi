@@ -5321,6 +5321,16 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 @chapter Persona operations
 
 
+@menu
+* persona getting::             Getting users and groups.
+* persona setting::             Setting users and groups.
+@end menu
+
+@c page
+@node persona getting
+@section Getting users and groups
+
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
@@ -5357,6 +5367,44 @@ declare -a THE_GIDS
 mmux_libc_getgroups THE_GIDS
 @end example
 @end deffn
+
+@c page
+@node persona setting
+@section Setting users and groups
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_setuid @var{UID}
+Interface to the standard C language function @cfunc{setuid}, @glibcref{Setting User ID, setuid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_seteuid @var{UID}
+Interface to the standard C language function @cfunc{seteuid}, @glibcref{Setting User ID, seteuid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setreuid @var{RUID} @var{EUID}
+Interface to the standard C language function @cfunc{setreuid}, @glibcref{Setting User ID, setreuid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setgid @var{GID}
+Interface to the standard C language function @cfunc{setgid}, @glibcref{Setting Groups, setgid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setegid @var{GID}
+Interface to the standard C language function @cfunc{setegid}, @glibcref{Setting Groups, setegid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setregid @var{RGID} @var{EGID}
+Interface to the standard C language function @cfunc{setregid}, @glibcref{Setting Groups, setregid}.
+@end deffn
+
 
 @c page
 @node errors
