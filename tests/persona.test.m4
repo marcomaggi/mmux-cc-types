@@ -120,9 +120,11 @@ function persona-getgroups-1.1 () {
 function persona-getgrouplist-1.1 () {
     mbfl_location_enter
     {
+	declare THE_GID
 	declare -a THE_GIDS
 
-	mbfl_location_leave_when_failure( mmux_libc_getgrouplist THE_GIDS 'marco' 1000)
+	mbfl_location_leave_when_failure( mmux_libc_getgid THE_GID )
+	mbfl_location_leave_when_failure( mmux_libc_getgrouplist THE_GIDS 'marco' RR(THE_GID))
 	#mbfl_array_dump THE_GIDS
     }
     mbfl_location_leave
