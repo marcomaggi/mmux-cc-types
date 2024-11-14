@@ -74,6 +74,47 @@ function persona-getgid-1.1 () {
 }
 
 
+#### geteuid
+
+function persona-geteuid-1.1 () {
+    mbfl_location_enter
+    {
+	declare THE_UID
+
+	mbfl_location_leave_when_failure( mmux_libc_geteuid THE_UID )
+	dotest-predicate mmux_string_is_uid WW(THE_UID)
+    }
+    mbfl_location_leave
+}
+
+
+#### getegid
+
+function persona-getegid-1.1 () {
+    mbfl_location_enter
+    {
+	declare THE_GID
+
+	mbfl_location_leave_when_failure( mmux_libc_getegid THE_GID )
+	dotest-predicate mmux_string_is_gid WW(THE_GID)
+    }
+    mbfl_location_leave
+}
+
+
+#### getgroups
+
+function persona-getgroups-1.1 () {
+    mbfl_location_enter
+    {
+	declare -a THE_GIDS
+
+	mbfl_location_leave_when_failure( mmux_libc_getgroups THE_GIDS )
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest persona-

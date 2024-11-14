@@ -5325,7 +5325,7 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 
 
 @deffn Builtin mmux_libc_getuid @var{UIDVAR}
-Interface to the standard C language function @cfunc{getuid}, @glibcref{Reading persona, getuid}.
+Interface to the standard C language function @cfunc{getuid}, @glibcref{Reading Persona, getuid}.
 
 @example
 declare THE_UID
@@ -5336,7 +5336,7 @@ mmux_libc_getuid THE_UID
 
 
 @deffn Builtin mmux_libc_getgid @var{GIDVAR}
-Interface to the standard C language function @cfunc{getgid}, @glibcref{Reading persona, getgid}.
+Interface to the standard C language function @cfunc{getgid}, @glibcref{Reading Persona, getgid}.
 
 @example
 declare THE_GID
@@ -5345,6 +5345,26 @@ mmux_libc_getgid THE_GID
 @end example
 @end deffn
 
+
+@deffn Builtin mmux_libc_geteuid @var{UIDVAR}
+Interface to the standard C language function @cfunc{geteuid}, @glibcref{Reading Persona, geteuid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getegid @var{GIDVAR}
+Interface to the standard C language function @cfunc{getegid}, @glibcref{Reading Persona, getegid}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getgroups @var{INDEX_ARRAY_VARNAME}
+Interface to the standard C language function @cfunc{getgroups}, @glibcref{Reading Persona, getgroups}.
+
+@example
+declare -a THE_GIDS
+
+mmux_libc_getgroups THE_GIDS
+@end example
+@end deffn
 
 @c page
 @node errors

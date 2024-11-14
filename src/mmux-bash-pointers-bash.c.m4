@@ -244,4 +244,49 @@ mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char 
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Operating on Bash index arrays.
+ ** ----------------------------------------------------------------- */
+
+typedef void			mmux_bash_index_array_variable_t;
+typedef mmux_sintmax_t		mmux_bash_index_array_index_t;
+
+mmux_bash_rv_t
+mmux_bash_index_array_find_or_make (mmux_bash_index_array_variable_t ** index_array_variable_p,
+				    char const * index_array_name,
+				    char const * const caller_name)
+{
+  mmux_bash_index_array_variable_t *	index_array_variable;
+
+  index_array_variable = find_or_make_array_variable((char *)index_array_name, 1);
+  if (index_array_variable) {
+    *index_array_variable_p = index_array_variable;
+    return MMUX_SUCCESS;
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: failed access to shell array variable: \"%s\"\n", caller_name, index_array_name);
+    }
+    return MMUX_BASH_EXECUTION_FAILURE;
+  }
+}
+
+mmux_bash_rv_t
+mmux_bash_index_array_bind (mmux_bash_index_array_variable_t * index_array_variable,
+			    mmux_bash_index_array_index_t index_array_key,
+			    char const * const index_array_value,
+			    char const * const caller_name)
+{
+  SHELL_VAR *	v;
+
+  v = bind_array_element(index_array_variable, index_array_key, (char *)index_array_value, ASS_FORCE);
+  if (NULL == v) {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: failure while binding index array element\n", caller_name);
+    }
+    return MMUX_FAILURE;
+  }
+  return MMUX_SUCCESS;
+}
+
 /* end of file */
