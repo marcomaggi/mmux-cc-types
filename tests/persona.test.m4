@@ -115,6 +115,68 @@ function persona-getgroups-1.1 () {
 }
 
 
+#### getgrouplist
+
+function persona-getgrouplist-1.1 () {
+    mbfl_location_enter
+    {
+	declare -a THE_GIDS
+
+	mbfl_location_leave_when_failure( mmux_libc_getgrouplist THE_GIDS 'marco' 1000)
+	#mbfl_array_dump THE_GIDS
+    }
+    mbfl_location_leave
+}
+
+
+#### getlogin
+
+function persona-getlogin-1.1 () {
+    mbfl_location_enter
+    {
+	declare USERNAME
+
+	mbfl_location_leave_when_failure( mmux_libc_getlogin USERNAME )
+	dotest-equal WW(USER) WW(USERNAME)
+    }
+    mbfl_location_leave
+}
+
+
+#### cuserid
+
+function persona-cuserid-1.1 () {
+    mbfl_location_enter
+    {
+	declare USERNAME
+
+	mbfl_location_leave_when_failure( mmux_libc_cuserid USERNAME )
+	dotest-equal WW(USER) WW(USERNAME)
+    }
+    mbfl_location_leave
+}
+
+
+#### group_member
+
+function persona-group_member-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_group_member
+    then
+	mbfl_location_enter
+	{
+	    declare THE_GID
+	    declare -i BOOL
+
+	    mbfl_location_leave_when_failure( mmux_libc_getgid THE_GID )
+	    mbfl_location_leave_when_failure( mmux_libc_group_member BOOL RR(THE_GID) )
+	    (( 1 == RR(BOOL) ))
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
+
+
 #### let's go
 
 dotest persona-

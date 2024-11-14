@@ -127,7 +127,7 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
-                renameat2])
+                renameat2 group_member])
 
 
 #### inspecting errno constants

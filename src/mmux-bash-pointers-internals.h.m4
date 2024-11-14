@@ -104,6 +104,10 @@
 #  include <float.h>
 #endif
 
+#ifdef HAVE_GRP_H
+#  include <grp.h>
+#endif
+
 #ifdef HAVE_LIMITS_H
 #  include <limits.h>
 #endif

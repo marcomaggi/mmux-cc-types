@@ -53,7 +53,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   link linkat symlink readlink realpath unlink unlinkat remove rmdir rename renameat
 			   mkdir mkdirat
 			   chown fchown lchown fchownat
-			   getuid getgid geteuid getegid getgroups)
+			   getuid getgid geteuid getegid getgroups getgrouplist getlogin cuserid)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
@@ -288,7 +288,7 @@ function have_cfunc () {
 {
     for ITEM in mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
 			rawmemchr memmem strchrnul basename dirname canonicalize_file_name \
-			renameat2
+			renameat2 group_member
     do
 	if have_cfunc "$ITEM"
 	then

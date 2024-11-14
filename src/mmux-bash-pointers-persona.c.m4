@@ -272,5 +272,111 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER RGID EGID"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrouplist]]])
+{
+  char const *	username;
+  mmux_gid_t	gid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(username,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,			argv[3]);
+  {
+    mmux_sint_t		ngroups = 0;
+
+    getgrouplist(username, gid, NULL, &ngroups);
+    {
+      mmux_gid_t	gids[ngroups];
+      mmux_sint_t	rv = getgrouplist(username, gid, gids, &ngroups);
+
+      if (-1 == rv) {
+	goto error_reading_groups;
+      } else {
+	char const *				index_array_name = argv[1];
+	mmux_bash_index_array_variable_t	index_array_variable;
+	mmux_bash_rv_t				brv;
+
+	brv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { return brv; }
+
+	for (mmux_sint_t i=0; i<ngroups; ++i) {
+	  mmux_bash_index_array_index_t	index_array_key = i;
+	  mmux_sint_t			required_bytes = mmux_gid_sprint_size(gids[i]);
+
+	  if (required_bytes < 0) {
+	    goto error_converting_gid_to_string;
+	  } else {
+	    char	index_array_value[required_bytes];
+
+	    if (mmux_gid_sprint(index_array_value, required_bytes, gids[i])) {
+	      goto error_converting_gid_to_string;
+	    } else {
+	      brv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value,
+					       MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
+	    }
+	  }
+	}
+	return MMUX_SUCCESS;
+
+      error_converting_gid_to_string:
+	fprintf(stderr, "%s: error: cannot convert GID value to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	return MMUX_FAILURE;
+      }
+    }
+  error_reading_groups:
+    mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    return MMUX_FAILURE;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GROUPS_ARRYNAME USERNAME GID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_group_member]]])
+{
+  mmux_gid_t	gid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,		argv[2]);
+  {
+    int		rv = group_member(gid);
+
+    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER BOOLVAR GID"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Identifying who logged in.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getlogin]]])
+{
+  char const *	username = getlogin();
+
+  return mmux_string_bind_to_bash_variable(argv[1], username, MMUX_BASH_BUILTIN_STRING_NAME);
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER USERNAMEVAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_cuserid]]])
+{
+  char const *	username = cuserid(NULL);
+
+  return mmux_string_bind_to_bash_variable(argv[1], username, MMUX_BASH_BUILTIN_STRING_NAME);
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER USERNAMEVAR"]]])
 
 /* end of file */

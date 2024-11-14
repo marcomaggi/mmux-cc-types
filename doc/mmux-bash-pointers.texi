@@ -5324,6 +5324,7 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 @menu
 * persona getting::             Getting users and groups.
 * persona setting::             Setting users and groups.
+* persona login::               Identifying who logged in.
 @end menu
 
 @c page
@@ -5368,6 +5369,36 @@ mmux_libc_getgroups THE_GIDS
 @end example
 @end deffn
 
+
+@deffn Builtin mmux_libc_getgrouplist @var{INDEX_ARRAY_VARNAME} @var{USERNAME} @var{GID}
+Interface to the standard C language function @cfunc{getgrouplist}, @glibcref{Reading Persona, getgrouplist}.
+
+@example
+declare -a THE_GIDS
+mmux_libc_getgroups THE_GIDS 'marco' 1000
+
+$@{THE_GIDS[0]@}        @result{} 1000
+$@{THE_GIDS[1]@}        @result{} 7
+@end example
+@end deffn
+
+
+@deffn {@gnu{} Builtin} mmux_libc_group_member @var{BOOLVAR} @var{GID}
+Interface to the extension C language function @cfunc{group_member}, @cfuncpage{group_member}.
+
+@example
+declare SOME_GID=...
+declare -i BOOL
+
+mmux_libc_group_member BOOL @WW{SOME_GID}
+if (( 1 == BOOL ))
+then # it is a member
+else # it is not
+fi
+@end example
+@end deffn
+
+
 @c page
 @node persona setting
 @section Setting users and groups
@@ -5405,6 +5436,28 @@ Interface to the standard C language function @cfunc{setegid}, @glibcref{Setting
 Interface to the standard C language function @cfunc{setregid}, @glibcref{Setting Groups, setregid}.
 @end deffn
 
+@c page
+@node persona login
+@section Identifying who logged in
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_getlogin @var{USERNAMEVAR}
+Interface to the standard C language function @cfunc{getlogin}, @glibcref{Who Logged In, getlogin}.
+
+@example
+declare USERNAME
+mmux_libc_getlogin USERNAME
+@WW{USERNAME}   @result{} marco
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_cuserid @var{USERNAMEVAR}
+Interface to the standard C language function @cfunc{cuserid}, @glibcref{Who Logged In, cuserid}.
+@end deffn
 
 @c page
 @node errors
