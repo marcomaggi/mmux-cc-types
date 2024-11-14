@@ -92,11 +92,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgroups]]])
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
     } else {
-      char const *				index_array_name = argv[1];
-      mmux_bash_index_array_variable_t *	index_array_variable;
-      mmux_bash_rv_t				rv;
+      char const *			index_array_name = argv[1];
+      mmux_bash_index_array_variable_t	index_array_variable;
+      mmux_bash_rv_t			rv;
 
-      rv = mmux_bash_index_array_find_or_make(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
+      rv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv) { return rv; }
 
       for (mmux_sint_t i=0; i<ngroups; ++i) {

@@ -191,11 +191,17 @@ DEFINE_PROTOS([[[wint]]])
 
 
 /** --------------------------------------------------------------------
- ** GNU Bash interface.
+ ** GNU Bash interface: word list.
  ** ----------------------------------------------------------------- */
 
 /* This is meatn to be an alias for Bash's "WORD_LIST". */
 typedef void *		mmux_bash_word_list_t;
+
+
+
+/** --------------------------------------------------------------------
+ ** GNU Bash interface: loadable builtins.
+ ** ----------------------------------------------------------------- */
 
 typedef bool mmux_bash_builtin_validate_argc_t (int argc);
 typedef mmux_bash_rv_t mmux_bash_builtin_implementation_function_t        (mmux_bash_word_list_t word_list);
@@ -228,7 +234,10 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_builtin_implementation_function
 
 mmux_bash_pointers_decl int mmux_bash_builtin_wrong_num_of_args (void);
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** GNU Bash interface: scalar variables.
+ ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_string_bind_to_bash_variable
   (char const * variable_name, char const * s_value, char const * caller_name)
@@ -265,17 +274,23 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_get_shell_variable_string_value
 										  char const * who)
   __attribute__((__nonnull__(1,2)));
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** GNU Bash interface: index array variables.
+ ** ----------------------------------------------------------------- */
 
-typedef void			mmux_bash_index_array_variable_t;
+typedef void *			mmux_bash_index_array_variable_t;
 typedef mmux_sintmax_t		mmux_bash_index_array_index_t;
 
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_find_or_make (mmux_bash_index_array_variable_t ** index_array_variable_p,
-									   char const * index_array_name,
-									   char const * caller_name)
+mmux_bash_pointers_decl bool mmux_bash_index_array_mutable_p (mmux_bash_index_array_variable_t index_array_variable)
+  __attribute__((__nonnull__(1)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_find_or_make_mutable (mmux_bash_index_array_variable_t * index_array_variable_p,
+										   char const * index_array_name,
+										   char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_index_array_variable_t * index_array_variable,
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_index_array_variable_t index_array_variable,
 								   mmux_bash_index_array_index_t index_array_key,
 								   char const * index_array_value,
 								   char const * caller_name)

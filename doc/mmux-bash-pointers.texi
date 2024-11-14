@@ -5636,6 +5636,7 @@ installed along with this package.  Refer to its documentation for details.
 * shared library version::      Version functions.
 * shared library retvals::      Return values of C language functions.
 * shared library bindings::     Binding values to variables.
+* shared library arrays::       Handling array variables.
 * shared library errors::       Handling errors.
 @end menu
 
@@ -5900,6 +5901,91 @@ builtin.
 @MmuxDefineCFunctionBindToVariable{gid}
 @MmuxDefineCFunctionBindToVariable{wchar}
 @MmuxDefineCFunctionBindToVariable{wint}
+
+@c page
+@node shared library arrays
+@appendixsec Handling array variables
+
+
+@menu
+* shared library arrays index:: Handling index array variables.
+@end menu
+
+@c page
+@node shared library arrays index
+@appendixsubsec Handling index array variables
+
+
+To bind a value to a shell index array variable we can do:
+
+@example
+mmux_bash_index_array_variable_t        index_array_variable;
+mmux_bash_index_array_index_t           index_array_key   = 1;
+char const *                            index_array_value = "ciao";
+mmux_bash_rv_t                          rv;
+
+rv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, "mybuiltin");
+if (MMUX_SUCCESS != rv) @{ /* handle the error */ @}
+
+rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, "mybuiltin");
+if (MMUX_SUCCESS != rv) @{ /* handle the error */ @}
+@end example
+
+
+@deftp {Opaque Pointer Typedef} mmux_bash_index_array_variable_t
+Pointer to a data structure representing an shell index array variable.
+@end deftp
+
+
+@deftp {Exact Integer Typedef} mmux_bash_index_array_index_t
+Type of exact integers representing indexes in a shell index array variable.
+@end deftp
+
+
+@deftypefun bool mmux_bash_index_array_mutable_p (mmux_bash_index_array_variable_t @var{INDEX_ARRAY_VARIABLE})
+Return @ctrue{} if the index array variable referenced by @var{INDEX_ARRAY_VARIABLE} is mutable: not
+read--only, not no--assign; otherwise return @cfalse{}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_index_array_find_or_make_mutable (mmux_bash_index_array_variable_t * @var{INDEX_ARRAY_VARIABLE_P}, char const * @var{INDEX_ARRAY_NAME}, char const * @var{WHO})
+Search the shell context for a shell index array variable with name equal to the @asciiz{} string
+referenced by @var{INDEX_ARRAY_NAME}, and whose attributes make it mutable:
+
+@itemize
+@item
+If a shell variable already exists: store a pointer to its data structure in the location referenced
+by @var{INDEX_ARRAY_VARIABLE_P}; then return @code{MMUX_SUCCESS}.
+
+@item
+If a shell variable does not already exists: create a new one and store a pointer to its data
+structure in the location referenced by @var{INDEX_ARRAY_VARIABLE_P}; then return
+@code{MMUX_SUCCESS}.
+
+@item
+If no suitable shell variable is found or can be created: return @code{MMUX_FAILURE}.
+@end itemize
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_index_array_variable_t @var{INDEX_ARRAY_VARIABLE}, mmux_bash_index_array_index_t @var{iNDEX_ARRAY_KEY}, char const * @var{INDEX_ARRAY_VALUE}, char const * @var{WHO})
+Bind a value in a shell index array variable.  When successful return @code{MMUX_SUCCESS}; otherwise
+return @code{MMUX_FAILURE}.
+
+The variable referenced by @var{INDEX_ARRAY_VARIABLE} must be mutable.
+
+The index key is represented by @var{iNDEX_ARRAY_KEY}.
+
+The value to bind is the @asciiz{} string referenced by @var{INDEX_ARRAY_VALUE}.
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
 
 @c page
 @node shared library errors
