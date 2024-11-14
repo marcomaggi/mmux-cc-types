@@ -200,7 +200,7 @@ function persona-getpwuid-1.1 () {
 	dotest-debug PW_PASSWD=WW(PW_PASSWD)
 	dotest-debug PW_UID=WW(PW_UID)
 	dotest-debug PW_GID=WW(PW_GID)
-	dotest-debug PW_GECOS=WW(PW_GECOS)
+	dotest-debug PW_GECOS=QQ(PW_GECOS)
 	dotest-debug PW_DIR=WW(PW_DIR)
 	dotest-debug PW_SHELL=WW(PW_SHELL)
 	true
@@ -232,10 +232,80 @@ function persona-getpwnam-1.1 () {
 	dotest-debug PW_PASSWD=WW(PW_PASSWD)
 	dotest-debug PW_UID=WW(PW_UID)
 	dotest-debug PW_GID=WW(PW_GID)
-	dotest-debug PW_GECOS=WW(PW_GECOS)
+	dotest-debug PW_GECOS=QQ(PW_GECOS)
 	dotest-debug PW_DIR=WW(PW_DIR)
 	dotest-debug PW_SHELL=WW(PW_SHELL)
 	true
+    }
+    mbfl_location_leave
+}
+
+
+#### getpwent
+
+function persona-getpwent-1.1 () {
+    mbfl_location_enter
+    {
+	declare PASSWD PW_NAME PW_PASSWD PW_UID PW_GID PW_GECOS PW_DIR PW_SHELL
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_setpwent )
+	mbfl_location_leave_when_failure( mmux_libc_getpwent PASSWD )
+
+	mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+
+	mbfl_location_leave_when_failure( mmux_libc_endpwent )
+
+	# If we are here: it was a success.
+	dotest-debug PASSWD=WW(PASSWD)
+	dotest-debug PW_NAME=WW(PW_NAME)
+	dotest-debug PW_PASSWD=WW(PW_PASSWD)
+	dotest-debug PW_UID=WW(PW_UID)
+	dotest-debug PW_GID=WW(PW_GID)
+	dotest-debug PW_GECOS=QQ(PW_GECOS)
+	dotest-debug PW_DIR=WW(PW_DIR)
+	dotest-debug PW_SHELL=WW(PW_SHELL)
+	true
+    }
+    mbfl_location_leave
+}
+function persona-getpwent-1.2 () {
+    mbfl_location_enter
+    {
+	declare PASSWD PW_NAME PW_PASSWD PW_UID PW_GID PW_GECOS PW_DIR PW_SHELL
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_setpwent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getpwent PASSWD )
+	until mmux_pointer_is_zero RR(PASSWD)
+	do
+	    mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+
+	    dotest-debug PASSWD=WW(PASSWD)
+	    dotest-debug PW_NAME=WW(PW_NAME)
+	    dotest-debug PW_PASSWD=WW(PW_PASSWD)
+	    dotest-debug PW_UID=WW(PW_UID)
+	    dotest-debug PW_GID=WW(PW_GID)
+	    dotest-debug PW_GECOS=QQ(PW_GECOS)
+	    dotest-debug PW_DIR=WW(PW_DIR)
+	    dotest-debug PW_SHELL=WW(PW_SHELL)
+
+	    mbfl_location_leave_when_failure( mmux_libc_getpwent PASSWD )
+	done
+	mbfl_location_leave_when_failure( mmux_libc_endpwent )
     }
     mbfl_location_leave
 }

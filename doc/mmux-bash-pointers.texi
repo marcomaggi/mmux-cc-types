@@ -5500,6 +5500,40 @@ can be @cnull{} if there is no database entry associated to @var{USERNAME}.
 @end deffn
 
 
+@deffn Builtin mmux_libc_setpwent
+Interface to the standard C language function @cfunc{setpwent}, @glibcref{Scanning All Users, setpwent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getpwent @var{PASSWD_POINTER_VAR}
+Interface to the standard C language function @cfunc{setpwent}, @glibcref{Scanning All Users,
+setpwent}.
+
+Bind the shell variable whose name is @var{PASSWD_POINTER_VAR} to a string representation of a
+pointer to the @code{struct passwd} returned by the internal call to @cfunc{getpwent}.  This value
+is @cnull{} if there are no more entries in this iteration of the database.
+
+@example
+declare PASSWD PW_NAME
+
+mmux_libc_setpwent
+mmux_libc_getpwent PASSWD
+until mmux_pointer_is_zero @RR{PASSWD}
+do
+    mmux_libc_pw_name PW_NAME @RR{PASSWD}
+    echo @WW{PW_NAME}
+    mmux_libc_getpwent PASSWD
+done
+mmux_libc_endpwent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_endpwent
+Interface to the standard C language function @cfunc{endpwent}, @glibcref{Scanning All Users, endpwent}.
+@end deffn
+
+
 @deffn Builtin mmux_libc_pw_name @var{PW_NAME_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_NAME_VAR} a string representation of the field
 @code{pw_name} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.

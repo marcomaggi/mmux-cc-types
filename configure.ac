@@ -125,6 +125,9 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 
 #### inspecting functions
 
+# These are not checked in the "mmux.m4" file, even though the common includes have them.
+AC_CHECK_HEADERS([grp.h pwd.h])
+
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
                 renameat2 group_member])
