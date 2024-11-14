@@ -311,6 +311,136 @@ function persona-getpwent-1.2 () {
 }
 
 
+#### getgrgid
+
+function persona-getgrgid-1.1 () {
+    mbfl_location_enter
+    {
+	declare GID GROUP GR_NAME PW_GID
+	declare -a GR_MEM
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_getgid GID )
+	mbfl_location_leave_when_failure( mmux_libc_getgrgid GROUP RR(UID) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_name  GR_NAME RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_gid   GR_GID  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_mem   GR_MEM RR(GROUP) )
+
+	# If we are here: it was a success.
+	dotest-debug GID=WW(GID)
+	dotest-debug GROUP=WW(GROUP)
+	dotest-debug GR_NAME=WW(GR_NAME)
+	dotest-debug GR_GID=WW(GR_GID)
+	{
+	    declare -i IDX
+	    for ((IDX=0; IDX < ${#GR_MEM[@]}; ++IDX))
+	    do dotest-debug GR_MEM=WW(GR_MEM,$IDX)
+	    done
+	}
+	true
+    }
+    mbfl_location_leave
+}
+
+
+#### getgrnam
+
+function persona-getgrnam-1.1 () {
+    mbfl_location_enter
+    {
+	declare GID GROUP GR_NAME PW_GID
+	declare -a GR_MEM
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_getgid GID )
+	mbfl_location_leave_when_failure( mmux_libc_getgrnam GROUP RR(USER) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_name  GR_NAME RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_gid   GR_GID  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_mem   GR_MEM RR(GROUP) )
+
+	# If we are here: it was a success.
+	dotest-debug GID=WW(GID)
+	dotest-debug GROUP=WW(GROUP)
+	dotest-debug GR_NAME=WW(GR_NAME)
+	dotest-debug GR_GID=WW(GR_GID)
+	{
+	    declare -i IDX
+	    for ((IDX=0; IDX < ${#GR_MEM[@]}; ++IDX))
+	    do dotest-debug GR_MEM=WW(GR_MEM,$IDX)
+	    done
+	}
+	true
+    }
+    mbfl_location_leave
+}
+
+
+#### getgrent
+
+function persona-getgrent-1.1 () {
+    mbfl_location_enter
+    {
+	declare GROUP GR_NAME GR_GID
+	declare -a GR_MEM
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_setgrent )
+	mbfl_location_leave_when_failure( mmux_libc_getgrent GROUP )
+
+	mbfl_location_leave_when_failure( mmux_libc_gr_name GR_NAME RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_gid  GR_GID  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_mem  GR_MEM  RR(GROUP) )
+
+	mbfl_location_leave_when_failure( mmux_libc_endgrent )
+
+	# If we are here: it was a success.
+	dotest-debug GROUP=WW(GROUP)
+	dotest-debug GR_NAME=WW(GR_NAME)
+	dotest-debug GR_GID=WW(GR_GID)
+	{
+	    declare -i IDX
+	    for ((IDX=0; IDX < ${#GR_MEM[@]}; ++IDX))
+	    do dotest-debug GR_MEM=WW(GR_MEM,$IDX)
+	    done
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function persona-getgrent-1.2 () {
+    mbfl_location_enter
+    {
+	declare GROUP GR_NAME GR_GID
+	declare -a GR_MEM
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_setgrent )
+	mbfl_location_leave_when_failure( mmux_libc_getgrent GROUP )
+
+	until mmux_pointer_is_zero RR(GROUP)
+	do
+	    mbfl_location_leave_when_failure( mmux_libc_gr_name GR_NAME RR(GROUP) )
+	    mbfl_location_leave_when_failure( mmux_libc_gr_gid  GR_GID  RR(GROUP) )
+	    mbfl_location_leave_when_failure( mmux_libc_gr_mem  GR_MEM  RR(GROUP) )
+
+	    dotest-debug GROUP=WW(GROUP)
+	    dotest-debug GR_NAME=WW(GR_NAME)
+	    dotest-debug GR_GID=WW(GR_GID)
+	    {
+		declare -i IDX
+		for ((IDX=0; IDX < ${#GR_MEM[@]}; ++IDX))
+		do dotest-debug GR_MEM=WW(GR_MEM,$IDX)
+		done
+	    }
+
+	    mbfl_location_leave_when_failure( mmux_libc_getgrent GROUP )
+	done
+	mbfl_location_leave_when_failure( mmux_libc_endgrent )
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest persona-

@@ -5325,7 +5325,8 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 * persona getting::             Getting users and groups.
 * persona setting::             Setting users and groups.
 * persona login::               Identifying who logged in.
-* persona database::            User database.
+* persona database user::       User database.
+* persona database group::      Group database.
 @end menu
 
 @c page
@@ -5461,7 +5462,7 @@ Interface to the standard C language function @cfunc{cuserid}, @glibcref{Who Log
 @end deffn
 
 @c page
-@node persona database
+@node persona database user
 @section User database
 
 
@@ -5573,6 +5574,95 @@ Bind to the shell variable whose name is @var{PW_DIR_VAR} a string representatio
 @deffn Builtin mmux_libc_pw_shell @var{PW_SHELL_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_SHELL_VAR} a string representation of the field
 @code{pw_shell} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+@c page
+@node persona database group
+@section Group database
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_getgrgid @var{GROUP_POINTER_VAR} @var{GID}
+Interface to the standard C language function @cfunc{getgrgid}, @glibcref{Lookup Group, getgrgid}.
+
+Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
+pointer to the @code{struct group} returned by the internal call to @cfunc{getgrgid}.  This value
+can be @cnull{} if there is no database entry associated to @var{GID}.
+
+@example
+declare GROUP
+declare GR_NAME GR_GID
+declare -a GR_MEM
+
+mmux_libc_getgrgid GROUP @RR{SOME_GID}
+mmux_libc_gr_name GR_NAME   @RR{GROUP}
+mmux_libc_gr_gid  GR_GID    @RR{GROUP}
+mmux_libc_gr_mem  GR_MEM    @RR{GROUP}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getgrnam @var{GROUP_POINTER_VAR} @var{GROUPNAME}
+Interface to the standard C language function @cfunc{getgrnam}, @glibcref{Lookup Group, getgrnam}.
+
+Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
+pointer to the @code{struct group} returned by the internal call to @cfunc{getgrnam}.  This value
+can be @cnull{} if there is no database entry associated to @var{GROUPNAME}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setgrent
+Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanning All Users, setgrent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getgrent @var{GROUP_POINTER_VAR}
+Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanning All Users,
+setgrent}.
+
+Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
+pointer to the @code{struct group} returned by the internal call to @cfunc{getgrent}.  This value is
+@cnull{} if there are no more entries in this iteration of the database.
+
+@example
+declare GROUP GR_NAME
+
+mmux_libc_setgrent
+mmux_libc_getgrent GROUP
+until mmux_pointer_is_zero @RR{GROUP}
+do
+    mmux_libc_gr_name GR_NAME @RR{GROUP}
+    echo @WW{GR_NAME}
+    mmux_libc_getgrent GROUP
+done
+mmux_libc_endgrent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_endgrent
+Interface to the standard C language function @cfunc{endgrent}, @glibcref{Scanning All Users, endgrent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_gr_name @var{GR_NAME_VAR} @var{GROUP_POINTER}
+Bind to the shell variable whose name is @var{GR_NAME_VAR} a string representation of the field
+@code{gr_name} in the @code{struct group} referenced by the pointer @var{GROUP_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_gr_gid @var{GR_GID_VAR} @var{GROUP_POINTER}
+Bind to the shell variable whose name is @var{GR_GID_VAR} a string representation of the field
+@code{gr_gid} in the @code{struct group} referenced by the pointer @var{GROUP_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_gr_mem @var{GR_MEM_INDEX_ARRAY_VAR} @var{GROUP_POINTER}
+Bind to the elements of the shell index array variable whose name is @var{GR_MEM_INDEX_ARRAY_VAR}
+the string representations of the elements in the vector field @code{gr_mem} in the @code{struct
+group} referenced by the pointer @var{GROUP_POINTER}.
 @end deffn
 
 @c page

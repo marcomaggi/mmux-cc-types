@@ -586,5 +586,153 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_SHELL_VAR PASSWD_POINTER"]]])
 
+
+/** --------------------------------------------------------------------
+ ** Group database.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrgid]]])
+{
+  mmux_gid_t	gid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,		argv[2]);
+  {
+    struct group *	P = getgrgid(gid);
+
+    if (P) {
+      return mmux_pointer_bind_to_bash_variable(argv[1], P, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GROUP_POINTER_VAR GID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrnam]]])
+{
+  char const *	username;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(username,	argv[2]);
+  {
+    struct group *	P = getgrnam(username);
+
+    if (P) {
+      return mmux_pointer_bind_to_bash_variable(argv[1], P, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GROUP_POINTER_VAR GID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setgrent]]])
+{
+  setgrent();
+  return MMUX_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(1 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_endgrent]]])
+{
+  endgrent();
+  return MMUX_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(1 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrent]]])
+{
+  struct group *	P = getgrent();
+
+  /* It is fine if P is NULL: it just marks the end of the iteration. */
+  return mmux_pointer_bind_to_bash_variable(argv[1], P, MMUX_BASH_BUILTIN_STRING_NAME);
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GROUP_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_name]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct group *	P = ptr;
+
+    return mmux_string_bind_to_bash_variable(argv[1], P->gr_name, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GR_NAME_VAR GROUP_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_gid]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct group *	P = ptr;
+
+    return mmux_gid_bind_to_bash_variable(argv[1], P->gr_gid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GR_GID_VAR GROUP_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_mem]]])
+{
+  char const *		index_array_name;
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(index_array_name,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,			argv[2]);
+  {
+    struct group *			P = ptr;
+    mmux_bash_index_array_variable_t	index_array_variable;
+    mmux_bash_index_array_index_t	index_array_key = 0;
+    char *				index_array_value;
+    mmux_bash_rv_t			rv;
+
+    rv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
+    if (MMUX_SUCCESS != rv) { return rv; }
+
+    for (char ** mem=P->gr_mem; *mem; ++mem, ++index_array_key) {
+      index_array_value = *mem;
+      rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != rv) { return rv; }
+    }
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GR_MEM_ARRY_VAR GROUP_POINTER"]]])
 
 /* end of file */
