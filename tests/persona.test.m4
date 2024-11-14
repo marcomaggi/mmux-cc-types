@@ -177,6 +177,70 @@ function persona-group_member-1.1 () {
 }
 
 
+#### getpwuid
+
+function persona-getpwuid-1.1 () {
+    mbfl_location_enter
+    {
+	declare PASSWD PW_NAME PW_PASSWD PW_UID PW_GID PW_GECOS PW_DIR PW_SHELL
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_getpwuid PASSWD RR(UID) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+
+	# If we are here: it was a success.
+	dotest-debug PASSWD=WW(PASSWD)
+	dotest-debug PW_NAME=WW(PW_NAME)
+	dotest-debug PW_PASSWD=WW(PW_PASSWD)
+	dotest-debug PW_UID=WW(PW_UID)
+	dotest-debug PW_GID=WW(PW_GID)
+	dotest-debug PW_GECOS=WW(PW_GECOS)
+	dotest-debug PW_DIR=WW(PW_DIR)
+	dotest-debug PW_SHELL=WW(PW_SHELL)
+	true
+    }
+    mbfl_location_leave
+}
+
+
+#### getpwnam
+
+function persona-getpwnam-1.1 () {
+    mbfl_location_enter
+    {
+	declare PASSWD PW_NAME PW_PASSWD PW_UID PW_GID PW_GECOS PW_DIR PW_SHELL
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_getpwnam PASSWD WW(USER) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+
+	# If we are here: it was a success.
+	dotest-debug PASSWD=WW(PASSWD)
+	dotest-debug PW_NAME=WW(PW_NAME)
+	dotest-debug PW_PASSWD=WW(PW_PASSWD)
+	dotest-debug PW_UID=WW(PW_UID)
+	dotest-debug PW_GID=WW(PW_GID)
+	dotest-debug PW_GECOS=WW(PW_GECOS)
+	dotest-debug PW_DIR=WW(PW_DIR)
+	dotest-debug PW_SHELL=WW(PW_SHELL)
+	true
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest persona-

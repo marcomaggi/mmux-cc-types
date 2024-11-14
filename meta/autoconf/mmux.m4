@@ -592,7 +592,7 @@ AC_DEFUN([MMUX_CC_CHECK_COMMON_HEADERS],
   [AC_HEADER_ASSERT
    AC_HEADER_STDBOOL
    AC_HEADER_SYS_WAIT
-   AC_CHECK_HEADERS([complex.h ctype.h errno.h fcntl.h float.h limits.h math.h regex.h stddef.h wchar.h sys/ioctl.h grp.h])
+   AC_CHECK_HEADERS([complex.h ctype.h errno.h fcntl.h float.h limits.h math.h regex.h stddef.h wchar.h sys/ioctl.h grp.h pwd.h])
    AC_CACHE_SAVE])
 
 

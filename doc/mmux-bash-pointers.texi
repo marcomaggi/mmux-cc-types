@@ -5325,6 +5325,7 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 * persona getting::             Getting users and groups.
 * persona setting::             Setting users and groups.
 * persona login::               Identifying who logged in.
+* persona database::            User database.
 @end menu
 
 @c page
@@ -5457,6 +5458,87 @@ mmux_libc_getlogin USERNAME
 
 @deffn Builtin mmux_libc_cuserid @var{USERNAMEVAR}
 Interface to the standard C language function @cfunc{cuserid}, @glibcref{Who Logged In, cuserid}.
+@end deffn
+
+@c page
+@node persona database
+@section User database
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_getpwuid @var{PASSWD_POINTER_VAR} @var{UID}
+Interface to the standard C language function @cfunc{getpwuid}, @glibcref{Lookup User, getpwuid}.
+
+Bind the shell variable whose name is @var{PASSWD_POINTER_VAR} to a string representation of a
+pointer to the @code{struct passwd} returned by the internal call to @cfunc{getpwuid}.  This value
+can be @cnull{} if there is no database entry associated to @var{UID}.
+
+@example
+declare PASSWD
+declare PW_NAME PW_PASSWD PW_UID PW_GID PW_GECOS PW_DIR PW_SHELL
+
+mmux_libc_getpwuid PASSWD @RR{UID}
+mmux_libc_pw_name   PW_NAME   @RR{PASSWD}
+mmux_libc_pw_passwd PW_PASSWD @RR{PASSWD}
+mmux_libc_pw_uid    PW_UID    @RR{PASSWD}
+mmux_libc_pw_gid    PW_GID    @RR{PASSWD}
+mmux_libc_pw_gecos  PW_GECOS  @RR{PASSWD}
+mmux_libc_pw_dir    PW_DIR    @RR{PASSWD}
+mmux_libc_pw_shell  PW_SHELL  @RR{PASSWD}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getpwnam @var{PASSWD_POINTER_VAR} @var{USERNAME}
+Interface to the standard C language function @cfunc{getpwnam}, @glibcref{Lookup User, getpwnam}.
+
+Bind the shell variable whose name is @var{PASSWD_POINTER_VAR} to a string representation of a
+pointer to the @code{struct passwd} returned by the internal call to @cfunc{getpwnam}.  This value
+can be @cnull{} if there is no database entry associated to @var{USERNAME}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_name @var{PW_NAME_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_NAME_VAR} a string representation of the field
+@code{pw_name} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_passwd @var{PW_PASSWD_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_PASSWD_VAR} a string representation of the field
+@code{pw_passwd} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_uid @var{PW_UID_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_UID_VAR} a string representation of the field
+@code{pw_uid} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_gid @var{PW_GID_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_GID_VAR} a string representation of the field
+@code{pw_gid} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_gecos @var{PW_GECOS_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_GECOS_VAR} a string representation of the field
+@code{pw_gecos} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_dir @var{PW_DIR_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_DIR_VAR} a string representation of the field
+@code{pw_dir} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pw_shell @var{PW_SHELL_VAR} @var{PASSWD_POINTER}
+Bind to the shell variable whose name is @var{PW_SHELL_VAR} a string representation of the field
+@code{pw_shell} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 @c page

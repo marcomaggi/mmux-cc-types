@@ -116,6 +116,10 @@
 #  include <math.h>
 #endif
 
+#ifdef HAVE_PWD_H
+#  include <pwd.h>
+#endif
+
 #ifdef HAVE_STDBOOL_H
 #  include <stdbool.h>
 #endif

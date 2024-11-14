@@ -379,4 +379,177 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER USERNAMEVAR"]]])
 
+
+/** --------------------------------------------------------------------
+ ** User database.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpwuid]]])
+{
+  mmux_uid_t	uid;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,		argv[2]);
+  {
+    struct passwd *	P = getpwuid(uid);
+
+    if (P) {
+      return mmux_pointer_bind_to_bash_variable(argv[1], P, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PASSWD_POINTER_VAR UID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpwnam]]])
+{
+  char const *	username;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(username,	argv[2]);
+  {
+    struct passwd *	P = getpwnam(username);
+
+    if (P) {
+      return mmux_pointer_bind_to_bash_variable(argv[1], P, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PASSWD_POINTER_VAR UID"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_name]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_string_bind_to_bash_variable(argv[1], P->pw_name, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_NAME_VAR PASSWD_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_passwd]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_string_bind_to_bash_variable(argv[1], P->pw_passwd, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_PASSWD_VAR PASSWD_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_uid]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_uid_bind_to_bash_variable(argv[1], P->pw_uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_UID_VAR PASSWD_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_gid]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_gid_bind_to_bash_variable(argv[1], P->pw_gid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_GID_VAR PASSWD_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_gecos]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_string_bind_to_bash_variable(argv[1], P->pw_gecos, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_GECOS_VAR PASSWD_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_dir]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_string_bind_to_bash_variable(argv[1], P->pw_dir, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_DIR_VAR PASSWD_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_shell]]])
+{
+  mmux_pointer_t	ptr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  {
+    struct passwd *	P = ptr;
+
+    return mmux_string_bind_to_bash_variable(argv[1], P->pw_shell, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PW_SHELL_VAR PASSWD_POINTER"]]])
+
+
 /* end of file */

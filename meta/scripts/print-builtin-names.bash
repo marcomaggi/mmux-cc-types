@@ -53,7 +53,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   link linkat symlink readlink realpath unlink unlinkat remove rmdir rename renameat
 			   mkdir mkdirat
 			   chown fchown lchown fchownat
-			   getuid getgid geteuid getegid getgroups getgrouplist getlogin cuserid)
+			   getuid getgid geteuid getegid getgroups getgrouplist getlogin cuserid
+			   getpwuid getpwnam pw_name pw_passwd pw_uid pw_gid pw_gecos pw_dir pw_shell)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
