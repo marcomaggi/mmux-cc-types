@@ -5614,12 +5614,12 @@ can be @cnull{} if there is no database entry associated to @var{GROUPNAME}.
 
 
 @deffn Builtin mmux_libc_setgrent
-Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanning All Users, setgrent}.
+Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanning All Groups, setgrent}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_getgrent @var{GROUP_POINTER_VAR}
-Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanning All Users,
+Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanning All Groups,
 setgrent}.
 
 Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
@@ -5643,7 +5643,7 @@ mmux_libc_endgrent
 
 
 @deffn Builtin mmux_libc_endgrent
-Interface to the standard C language function @cfunc{endgrent}, @glibcref{Scanning All Users, endgrent}.
+Interface to the standard C language function @cfunc{endgrent}, @glibcref{Scanning All Groups, endgrent}.
 @end deffn
 
 
