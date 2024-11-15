@@ -369,6 +369,42 @@ function time-asctime-1.1 () {
 }
 
 
+#### ctime
+
+function time-ctime-1.1 () {
+    mbfl_location_enter
+    {
+	declare THE_TIME STRING
+
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_time THE_TIME )
+	mbfl_location_leave_when_failure( mmux_libc_ctime STRING RR(THE_TIME) )
+	dotest-debug QQ(STRING)
+	true
+    }
+    mbfl_location_leave
+}
+
+
+#### strftime
+
+function time-strftime-1.1 () {
+    mbfl_location_enter
+    {
+	declare TM STRING TEMPLATE="%a, %d %b %Y %H:%M:%S %z"
+
+	dotest-set-debug
+
+	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_leave_when_failure( mmux_libc_strftime STRING WW(TEMPLATE) RR(TM) )
+	dotest-debug QQ(STRING)
+	true
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest time-

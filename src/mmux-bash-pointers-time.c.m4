@@ -631,6 +631,61 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER STRINGVAR TM_POINTER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ctime]]])
+{
+  char const *	string_varname;
+  mmux_time_t	T;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(string_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_TIME(T,				argv[2]);
+  {
+    char const *	string     = ctime(&T);
+
+    return mmux_string_bind_to_bash_variable(string_varname, string, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRINGVAR TIME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strftime]]])
+{
+  char const *		string_varname;
+  char const *		template;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(string_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(template,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,			argv[3]);
+  {
+    struct tm *		tm_pointer    = pointer;
+#undef  IS_THIS_ENOUGH_QUESTION_MARK
+#define IS_THIS_ENOUGH_QUESTION_MARK	4096
+    char		string[IS_THIS_ENOUGH_QUESTION_MARK];
+    mmux_usize_t	len;
+
+    /* See the documentation  of "strftime()" in the GLIBC manual  for an explanation
+       of this nonsense. */
+    string[0] = '\1';
+    len       = strftime(string, IS_THIS_ENOUGH_QUESTION_MARK, template, tm_pointer);
+    if ((0 == len) && ('\0' != string[0])) {
+      fprintf(stderr, "%s: error converting broken-time to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    } else {
+      return mmux_string_bind_to_bash_variable(string_varname, string, MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRINGVAR TEMPLATE TM_POINTER"]]])
+
 
 /** --------------------------------------------------------------------
  ** Module initialisation.
