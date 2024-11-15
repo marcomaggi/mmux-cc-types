@@ -51,6 +51,9 @@ mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 function time-struct-timeval-1.0 () {
     dotest-predicate mmux_string_is_slong WW(mmux_libc_timeval_SIZEOF)
 }
+
+# Constructor with init values.
+#
 function time-struct-timeval-1.1 () {
     mbfl_location_enter
     {
@@ -58,16 +61,16 @@ function time-struct-timeval-1.1 () {
 	declare -i SECONDS MICROSECONDS
 
 	dotest-unset-debug
-
-	# No init values.
-	COMPENSATE(mmux_libc_timeval_make TIMEVAL, mmux_libc_free RR(TIMEVAL))
+	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
-
 	dotest-equal 0 RR(SECONDS) &&
 	    dotest-equal 0 RR(MICROSECONDS)
     }
     mbfl_location_leave
 }
+
+# Constructor with init values.
+#
 function time-struct-timeval-1.2 () {
     mbfl_location_enter
     {
@@ -77,7 +80,7 @@ function time-struct-timeval-1.2 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_timeval_make TIMEVAL RR(INIT_SECONDS) RR(INIT_MICROSECONDS), mmux_libc_free RR(TIMEVAL))
+	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL RR(INIT_SECONDS) RR(INIT_MICROSECONDS), mmux_libc_free RR(TIMEVAL))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
 
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
@@ -86,6 +89,50 @@ function time-struct-timeval-1.2 () {
     mbfl_location_leave
 }
 
+# Full getter and setter.
+#
+function time-struct-timeval-2.1 () {
+    mbfl_location_enter
+    {
+	declare -r INIT_SECONDS=123 INIT_MICROSECONDS=456
+	declare TIMEVAL
+	declare -i SECONDS MICROSECONDS
+
+	dotest-unset-debug
+	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
+	mbfl_location_leave_when_failure( mmux_libc_timeval_set RR(TIMEVAL) RR(INIT_SECONDS) RR(INIT_MICROSECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
+
+	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
+	    dotest-equal RR(INIT_MICROSECONDS) RR(MICROSECONDS)
+    }
+    mbfl_location_leave
+}
+
+# Partial setters and getters.
+#
+function time-struct-timeval-3.1 () {
+    mbfl_location_enter
+    {
+	declare -r INIT_SECONDS=123 INIT_MICROSECONDS=456
+	declare TIMEVAL
+	declare -i SECONDS MICROSECONDS
+
+	dotest-unset-debug
+
+	# No init values.
+	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(TIMEVAL)  RR(INIT_SECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(TIMEVAL)  RR(INIT_MICROSECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_ref      SECONDS      RR(TIMEVAL))
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_ref MICROSECONDS RR(TIMEVAL))
+
+	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
+	    dotest-equal RR(INIT_MICROSECONDS) RR(MICROSECONDS)
+    }
+    mbfl_location_leave
+}
 
 
 #### struct timespec
@@ -93,6 +140,9 @@ function time-struct-timeval-1.2 () {
 function time-struct-timespec-1.0 () {
     dotest-predicate mmux_string_is_slong WW(mmux_libc_timespec_SIZEOF)
 }
+
+# Constructor with init values.
+#
 function time-struct-timespec-1.1 () {
     mbfl_location_enter
     {
@@ -100,16 +150,16 @@ function time-struct-timespec-1.1 () {
 	declare -i SECONDS NANOSECONDS
 
 	dotest-unset-debug
-
-	# No init values.
-	COMPENSATE(mmux_libc_timespec_make TIMESPEC, mmux_libc_free RR(TIMESPEC))
-	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC) )
-
+	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
 	dotest-equal 0 RR(SECONDS) &&
 	    dotest-equal 0 RR(NANOSECONDS)
     }
     mbfl_location_leave
 }
+
+# Constructor with init values.
+#
 function time-struct-timespec-1.2 () {
     mbfl_location_enter
     {
@@ -119,8 +169,53 @@ function time-struct-timespec-1.2 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_timespec_make TIMESPEC RR(INIT_SECONDS) RR(INIT_NANOSECONDS), mmux_libc_free RR(TIMESPEC))
+	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC RR(INIT_SECONDS) RR(INIT_NANOSECONDS), mmux_libc_free RR(TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
+
+	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
+	    dotest-equal RR(INIT_NANOSECONDS) RR(NANOSECONDS)
+    }
+    mbfl_location_leave
+}
+
+# Full getter and setter.
+#
+function time-struct-timespec-2.1 () {
+    mbfl_location_enter
+    {
+	declare -r INIT_SECONDS=123 INIT_NANOSECONDS=456
+	declare TIMESPEC
+	declare -i SECONDS NANOSECONDS
+
+	dotest-unset-debug
+	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_timespec_set RR(TIMESPEC) RR(INIT_SECONDS) RR(INIT_NANOSECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
+
+	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
+	    dotest-equal RR(INIT_NANOSECONDS) RR(NANOSECONDS)
+    }
+    mbfl_location_leave
+}
+
+# Partial setters and getters.
+#
+function time-struct-timespec-3.1 () {
+    mbfl_location_enter
+    {
+	declare -r INIT_SECONDS=123 INIT_NANOSECONDS=456
+	declare TIMESPEC
+	declare -i SECONDS NANOSECONDS
+
+	dotest-unset-debug
+
+	# No init values.
+	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
+
+	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_set      RR(TIMESPEC)  RR(INIT_SECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_set RR(TIMESPEC)  RR(INIT_NANOSECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_ref      SECONDS      RR(TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_ref NANOSECONDS RR(TIMESPEC))
 
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
 	    dotest-equal RR(INIT_NANOSECONDS) RR(NANOSECONDS)

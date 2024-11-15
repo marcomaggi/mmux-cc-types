@@ -56,9 +56,9 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   getuid getgid geteuid getegid getgroups getgrouplist getlogin cuserid
 			   getpwuid getpwnam setpwent getpwent endpwent pw_name pw_passwd pw_uid pw_gid pw_gecos pw_dir pw_shell
 			   getgrgid getgrnam setgrent getgrent endgrent gr_name gr_gid gr_mem
-			   timeval_make timeval_set timeval_ref timeval_seconds_set timeval_microseconds_set
+			   timeval_malloc timeval_set timeval_ref timeval_seconds_set timeval_microseconds_set
 			   timeval_seconds_ref timeval_microseconds_ref
-			   timespec_make timespec_set timespec_ref timespec_seconds_set timespec_nanoseconds_set
+			   timespec_malloc timespec_set timespec_ref timespec_seconds_set timespec_nanoseconds_set
 			   timespec_seconds_ref timespec_nanoseconds_ref
 			  )
 

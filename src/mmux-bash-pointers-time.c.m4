@@ -33,7 +33,7 @@
  ** Struct timeval.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_make]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_malloc]]])
 {
   char const *	pointer_varname;
   mmux_slong_t	sec = 0, microseconds = 0;
@@ -210,7 +210,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Struct timespec.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_make]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_malloc]]])
 {
   char const *	pointer_varname;
   mmux_slong_t	seconds = 0, nanoseconds = 0;
