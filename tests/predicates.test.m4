@@ -2345,6 +2345,85 @@ function predicates-is-nan-wint-1.2 () {
 }
 
 
+#### type variables: time
+
+function predicates-is-zero-time-1.1 () {
+    mmux_time_is_zero 0
+}
+function predicates-is-zero-time-1.2 () {
+    ! mmux_time_is_zero WW(mmux_time_MAX)
+}
+function predicates-is-zero-time-1.3 () {
+    ! mmux_time_is_zero WW(mmux_time_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-positive-time-1.1 () {
+    ! mmux_time_is_positive 0
+}
+function predicates-is-positive-time-1.2 () {
+    mmux_time_is_positive WW(mmux_time_MAX)
+}
+function predicates-is-positive-time-1.3 () {
+    ! mmux_time_is_positive WW(mmux_time_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-negative-time-1.1 () {
+    ! mmux_time_is_negative 0
+}
+function predicates-is-negative-time-1.2 () {
+    ! mmux_time_is_negative WW(mmux_time_MAX)
+}
+function predicates-is-negative-time-1.3 () {
+    mmux_time_is_negative WW(mmux_time_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-positive-time-1.1 () {
+    mmux_time_is_non_positive 0
+}
+function predicates-is-non-positive-time-1.2 () {
+    ! mmux_time_is_non_positive WW(mmux_time_MAX)
+}
+function predicates-is-non-positive-time-1.3 () {
+    mmux_time_is_non_positive WW(mmux_time_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-negative-time-1.1 () {
+    mmux_time_is_non_negative 0
+}
+function predicates-is-non-negative-time-1.2 () {
+    mmux_time_is_non_negative WW(mmux_time_MAX)
+}
+function predicates-is-non-negative-time-1.3 () {
+    ! mmux_time_is_non_negative WW(mmux_time_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-infinite-time-1.1 () {
+    ! mmux_time_is_infinite WW(mmux_time_MAX)
+}
+function predicates-is-infinite-time-1.2 () {
+    ! mmux_time_is_infinite WW(mmux_time_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-nan-time-1.1 () {
+    ! mmux_time_is_nan WW(mmux_time_MAX)
+}
+function predicates-is-nan-time-1.2 () {
+    ! mmux_time_is_nan WW(mmux_time_MIN)
+}
+
+
 #### type variables: float
 
 function predicates-is-zero-float-1.1 () {

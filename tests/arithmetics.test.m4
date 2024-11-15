@@ -3421,6 +3421,167 @@ function arithmetics-wint-abs-1.1 () {
 }
 
 
+#### type variables: time
+
+function arithmetics-time-add-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_add ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-add-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 + 2))
+
+    mmux_time_add ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-add-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 + 2 + 3 + 5 + 7 + 11 + 13))
+
+    mmux_time_add ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-sub-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_sub ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-sub-1.2 () {
+    declare ROP OP0=100 OP1=2
+    declare -r EXPECTED_ROP=$((100 - 2))
+
+    mmux_time_sub ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-sub-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((100 - 2 - 3 - 5 - 7 - 11 - 13))
+
+    mmux_time_sub ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-mul-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_mul ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-mul-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 * 2))
+
+    mmux_time_mul ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-mul-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 * 2 * 3 * 5 * 7 * 11 * 13))
+
+    mmux_time_mul ROP QQ(OP0) QQ(OP1) QQ(OP2) QQ(OP3) QQ(OP4) QQ(OP5) QQ(OP6)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-div-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_div ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-div-1.2 () {
+    declare ROP OP0=10 OP1=2
+    declare -r EXPECTED_ROP=$((10 / 2))
+
+    mmux_time_div ROP QQ(OP0) QQ(OP1)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-div-1.3 () {
+    declare ROP OP0=100 OP1=2 OP2=3
+    declare -r EXPECTED_ROP=$((100 / 2 / 3))
+
+    mmux_time_div ROP QQ(OP0) QQ(OP1) QQ(OP2)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-mod-1.1 () {
+    declare ROP OP1=11 OP2=3
+    declare -r EXPECTED_ROP=$(( WW(OP1) % WW(OP2) ))
+
+    mmux_time_mod ROP WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-inv-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-inv-1.2 () {
+    declare ROP OP=10
+    declare -r EXPECTED_ROP='0'
+
+    mmux_time_inv ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-incr-1.1 () {
+    declare ROP OP=99
+    declare -r EXPECTED_ROP='100'
+
+    mmux_time_incr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-decr-1.1 () {
+    declare ROP OP=100
+    declare -r EXPECTED_ROP='99'
+
+    mmux_time_decr ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function arithmetics-time-abs-1.1 () {
+    declare ROP OP=123
+    declare -r EXPECTED_ROP='123'
+
+    mmux_time_abs ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+function arithmetics-time-abs-1.2 () {
+    declare ROP OP=-123
+    declare -r EXPECTED_ROP='123'
+
+    mmux_time_abs ROP QQ(OP)
+    dotest-equal QQ(EXPECTED_ROP) QQ(ROP)
+}
+
+
 #### type variables: float
 
 function arithmetics-float-add-1.1 () {

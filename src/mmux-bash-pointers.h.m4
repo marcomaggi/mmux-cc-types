@@ -188,6 +188,7 @@ DEFINE_PROTOS([[[gid]]])
 DEFINE_PROTOS([[[ptrdiff]]])
 DEFINE_PROTOS([[[wchar]]])
 DEFINE_PROTOS([[[wint]]])
+DEFINE_PROTOS([[[time]]])
 
 
 /** --------------------------------------------------------------------

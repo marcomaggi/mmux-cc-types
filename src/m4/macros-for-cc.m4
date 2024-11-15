@@ -623,6 +623,13 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_WINT]]],[[[{
   if (true == mmux_retval) { goto mmux_error_parsing_builtin_argument; }
 }]]])
 
+# $1 - name of the target variable
+# $2 - expression evaluating to the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_TIME]]],[[[{
+  bool mmux_retval = mmux_time_parse(&($1), $2, MMUX_BASH_BUILTIN_STRING_NAME);
+  if (true == mmux_retval) { goto mmux_error_parsing_builtin_argument; }
+}]]])
+
 
 m4_dnl let's go
 

@@ -3751,6 +3751,115 @@ function bitwise-wint-shr-1.1 () {
 }
 
 
+#### bitwise operations for type: time
+
+function bitwise-time-and-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_bitwise_and ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-and-time-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 & 2))
+
+    mmux_time_bitwise_and ROP WW(OP0) WW(OP1)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-and-time-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 & 2 & 3 & 5 & 7 & 11 & 13))
+
+    mmux_time_bitwise_and ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4) WW(OP5) WW(OP6)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-time-or-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_bitwise_or ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-time-or-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 | 2))
+
+    mmux_time_bitwise_or ROP WW(OP0) WW(OP1)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-time-or-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=3 OP3=5 OP4=7 OP5=11 OP6=13
+    declare -r EXPECTED_ROP=$((1 | 2 | 3 | 5 | 7 | 11 | 13))
+
+    mmux_time_bitwise_or ROP WW(OP0) WW(OP1) WW(OP2) WW(OP3) WW(OP4) WW(OP5) WW(OP6)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-time-xor-1.1 () {
+    declare ROP OP=1
+    declare -r EXPECTED_ROP='1'
+
+    mmux_time_bitwise_xor ROP WW(OP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-time-xor-1.2 () {
+    declare ROP OP0=1 OP1=2
+    declare -r EXPECTED_ROP=$((1 ^ 2))
+
+    mmux_time_bitwise_xor ROP WW(OP0) WW(OP1)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+function bitwise-time-xor-1.3 () {
+    declare ROP OP0=1 OP1=2 OP2=4
+    declare -r EXPECTED_ROP=$((1 ^ 2 ^ 4))
+
+    mmux_time_bitwise_xor ROP WW(OP0) WW(OP1) WW(OP2)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-not-time-1.1 () {
+    declare ROP OP=123
+    declare -r EXPECTED_ROP=$(( ~ OP ))
+
+    mmux_time_bitwise_not ROP WW(OP)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-time-shl-1.1 () {
+    declare ROP OP=0b1 NBITS=3
+    declare EXPECTED_ROP=$(( 1 << 3 ))
+
+    mmux_time_bitwise_shl ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+### ------------------------------------------------------------------------
+
+function bitwise-time-shr-1.1 () {
+    declare ROP OP=8 NBITS=3
+    declare EXPECTED_ROP=$(( 8 >> 3 ))
+
+    mmux_time_bitwise_shr ROP WW(OP) WW(NBITS)
+    dotest-unset-debug
+    dotest-debug ROP=WW(ROP)
+    dotest-equal WW(EXPECTED_ROP) WW(ROP)
+}
+
+
 #### let's go
 
 dotest bitwise-

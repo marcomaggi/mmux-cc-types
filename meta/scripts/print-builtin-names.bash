@@ -24,7 +24,7 @@
 
 declare -ra SIGNED_INTEGER_STEMS=(schar sshort sint slong sllong
 				  sint8 sint16 sint32 sint64 ssize
-				  sintmax sintptr ptrdiff off uid gid wchar)
+				  sintmax sintptr ptrdiff off uid gid wchar time)
 declare -ra UNSIGNED_INTEGER_STEMS=(uchar ushort uint ulong ullong
 				    uint8 uint16 uint32 uint64 usize
 				    uintmax uintptr mode pid wint)

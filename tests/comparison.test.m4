@@ -1654,6 +1654,56 @@ function comparison-wint-less-equal-1.5  () { ! mmux_wint_less_equal '33' '99' '
 function comparison-wint-less-equal-1.6  () {   mmux_wint_less_equal '11' '11' ;}
 
 
+#### type variables: time
+
+function comparison-time-equal-1.1         () {   mmux_time_equal '10' ;}
+function comparison-time-equal-1.2         () {   mmux_time_equal '10' '10' ;}
+function comparison-time-equal-1.3         () {   mmux_time_equal '10' '10' '10' ;}
+function comparison-time-equal-1.4         () { ! mmux_time_equal '9' '11' '10' ;}
+function comparison-time-equal-1.5         () {   mmux_time_equal '-9' '-9' ;}
+function comparison-time-equal-1.6         () { ! mmux_time_equal '-9' '-4' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-time-greater-1.1       () {   mmux_time_greater '90' ;}
+function comparison-time-greater-1.2       () {   mmux_time_greater '90' '80' ;}
+function comparison-time-greater-1.3       () {   mmux_time_greater '90' '80' '70' ;}
+function comparison-time-greater-1.4       () { ! mmux_time_greater '11' '33' ;}
+function comparison-time-greater-1.5       () { ! mmux_time_greater '99' '33' '55' ;}
+function comparison-time-greater-1.6       () { ! mmux_time_greater '11' '11' ;}
+function comparison-time-greater-1.7       () {   mmux_time_greater '-11' '-22' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-time-less-1.1        ()  {   mmux_time_less '90' ;}
+function comparison-time-less-1.2        ()  {   mmux_time_less '80' '90' ;}
+function comparison-time-less-1.3        ()  {   mmux_time_less '70' '80' '90' ;}
+function comparison-time-less-1.4        ()  { ! mmux_time_less '33' '11' ;}
+function comparison-time-less-1.5        ()  { ! mmux_time_less '33' '99' '55' ;}
+function comparison-time-less-1.6        ()  { ! mmux_time_less '11' '11' ;}
+function comparison-time-less-1.7        ()  { ! mmux_time_less '-11' '-22' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-time-greater-equal-1.1 () {   mmux_time_greater_equal '90' ;}
+function comparison-time-greater-equal-1.2 () {   mmux_time_greater_equal '90' '80' ;}
+function comparison-time-greater-equal-1.3 () {   mmux_time_greater_equal '90' '80' '70' ;}
+function comparison-time-greater-equal-1.4 () { ! mmux_time_greater_equal '11' '33' ;}
+function comparison-time-greater-equal-1.5 () { ! mmux_time_greater_equal '99' '33' '55' ;}
+function comparison-time-greater-equal-1.6 () {   mmux_time_greater_equal '11' '11' ;}
+function comparison-time-greater-equal-1.7 () {   mmux_time_greater_equal '-22' '-33' '-33' ;}
+
+### ------------------------------------------------------------------------
+
+function comparison-time-less-equal-1.1  () {   mmux_time_less_equal '90' ;}
+function comparison-time-less-equal-1.2  () {   mmux_time_less_equal '80' '90' ;}
+function comparison-time-less-equal-1.3  () {   mmux_time_less_equal '70' '80' '90' ;}
+function comparison-time-less-equal-1.4  () { ! mmux_time_less_equal '33' '11' ;}
+function comparison-time-less-equal-1.5  () { ! mmux_time_less_equal '33' '99' '55' ;}
+function comparison-time-less-equal-1.6  () {   mmux_time_less_equal '11' '11' ;}
+function comparison-time-less-equal-1.7  () {   mmux_time_less_equal '-33' '-22' '-22' ;}
+
+
 #### type variables: float
 
 function comparison-float-equal-1.1         () {   mmux_float_equal '1.0' ;}

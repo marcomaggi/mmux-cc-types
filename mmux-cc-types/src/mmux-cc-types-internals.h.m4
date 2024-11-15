@@ -73,9 +73,17 @@
 #  include <sys/types.h>
 #endif
 
+#ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>
+#endif
+
 /* for the type: ssize_t, pid_t */
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
+#endif
+
+#ifdef HAVE_TIME_H
+#  include <time.h>
 #endif
 
 /* ------------------------------------------------------------------ */

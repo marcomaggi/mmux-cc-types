@@ -292,6 +292,7 @@ DEFINE_CORE_ARITHMETICS_BUILTIN([[[uid]]])
 DEFINE_CORE_ARITHMETICS_BUILTIN([[[gid]]])
 DEFINE_CORE_ARITHMETICS_BUILTIN([[[wchar]]])
 DEFINE_CORE_ARITHMETICS_BUILTIN([[[wint]]])
+DEFINE_CORE_ARITHMETICS_BUILTIN([[[time]]])
 
 
 /** --------------------------------------------------------------------
@@ -406,6 +407,7 @@ DEFINE_FOR_INTEGERS_BUILTIN([[[uid]]])
 DEFINE_FOR_INTEGERS_BUILTIN([[[gid]]])
 DEFINE_FOR_INTEGERS_BUILTIN([[[wchar]]])
 DEFINE_FOR_INTEGERS_BUILTIN([[[wint]]])
+DEFINE_FOR_INTEGERS_BUILTIN([[[time]]])
 
 
 /** --------------------------------------------------------------------
@@ -486,6 +488,7 @@ DEFINE_FOR_REALS_BUILTIN([[[uid]]])
 DEFINE_FOR_REALS_BUILTIN([[[gid]]])
 DEFINE_FOR_REALS_BUILTIN([[[wchar]]])
 DEFINE_FOR_REALS_BUILTIN([[[wint]]])
+DEFINE_FOR_REALS_BUILTIN([[[time]]])
 
 
 /** --------------------------------------------------------------------
