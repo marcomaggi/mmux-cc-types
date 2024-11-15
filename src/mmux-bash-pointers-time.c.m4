@@ -545,7 +545,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_localtime]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER TIME"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -566,7 +566,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gmtime]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER TIME"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -587,7 +587,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_mktime]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TIMEVAR TM_POINTER"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -608,7 +608,28 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timegm]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TIMEVAR TM_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_asctime]]])
+{
+  char const *		string_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(string_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,			argv[2]);
+  {
+    struct tm *		tm_pointer = pointer;
+    char const *	string     = asctime(tm_pointer);
+
+    return mmux_string_bind_to_bash_variable(string_varname, string, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRINGVAR TM_POINTER"]]])
 
 
 /** --------------------------------------------------------------------

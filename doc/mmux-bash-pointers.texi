@@ -6057,6 +6057,14 @@ mmux_libc_free @RR{TM}
 @end example
 @end deftp
 
+
+@deftp {Shell Variable} mmux_libc_ascitime @var{STRINGVAR} @var{TM_POINTER}
+Interface to the standard C language function @cfunc{ascitime}, @glibcref{Formatting Calendar Time,
+ascitime}.  Bind the shell variable whose name is @var{STRINGVAR} with a string representation of
+the broken--down time represented by the data structure @code{struct tm} referenced by
+@var{TM_POINTER}.
+@end deftp
+
 @c page
 @node errors
 @chapter Handling errors

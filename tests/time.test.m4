@@ -351,6 +351,24 @@ function time-timegm-1.1 () {
 }
 
 
+#### asctime
+
+function time-asctime-1.1 () {
+    mbfl_location_enter
+    {
+	declare TM STRING
+
+	dotest-unset-debug
+
+	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_leave_when_failure( mmux_libc_asctime STRING RR(TM) )
+	dotest-debug QQ(STRING)
+	true
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest time-
