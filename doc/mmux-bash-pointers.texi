@@ -183,6 +183,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * fds::                         Core file descriptor operations.
 * fs::                          File system interface.
 * persona::                     Persona operations.
+* time::                        Handling time and date.
 * errors::                      Handling errors.
 * misc::                        Miscellaneous features.
 
@@ -5663,6 +5664,182 @@ Bind to the shell variable whose name is @var{GR_GID_VAR} a string representatio
 Bind to the elements of the shell index array variable whose name is @var{GR_MEM_INDEX_ARRAY_VAR}
 the string representations of the elements in the vector field @code{gr_mem} in the @code{struct
 group} referenced by the pointer @var{GROUP_POINTER}.
+@end deffn
+
+@c page
+@node time
+@chapter Handling time and date
+
+
+@menu
+* time timeval::                Handling @code{struct timeval}.
+* time timespec::               Handling @code{struct timespec}.
+@end menu
+
+@c page
+@node time timeval
+@section Handling @code{struct timeval}
+
+
+To use a standard @code{struct timeval} value, we can do:
+
+@example
+declare TIMEVAL
+
+mmux_libc_timeval_make TIMEVAL
+@{
+    mmux_libc_timeval_seconds_set      @RR{TIMEVAL} 123
+    mmux_libc_timeval_microseconds_set @RR{TIMEVAL} 456
+    ...
+@}
+mmuc_libc_free @RR{TIMEVAL}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deftp {Shell Variable} mmux_libc_timeval_SIZEOF
+Shell variable bound to the number of bytes required to contain a @code{struct timeval}.
+@end deftp
+
+
+@deffn Builtin mmux_libc_timeval_make @var{TIMEVAL_POINTER_VAR}
+@deffnx Builtin mmux_libc_timeval_make @var{TIMEVAL_POINTER_VAR} @var{SLONG_SECONDS} @var{SLONG_MICROSECONDS}
+Allocate data structure of type @code{struct timeval} using @cfunc{malloc} and initialise it with
+the given values; store a string representation of its pointer in the shell variable whose name is
+@var{TIMEVAL_POINTER_VAR}.  @glibcref{Time Types, struct timeval}.
+
+To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+
+The optional argument @var{SLONG_SECONDS} represents the number of seconds; when not present: it
+defaults to zero.  This value must fit a @objtype{mmux_slong_t} value and it is internally converted
+to a @objtype{time_t} value.
+
+The optional argument @var{SLONG_MICROSECONDS} represents the number of microseconds; when not
+present: it defaults to zero.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timeval_ref @var{SLONG_SECONDS_VAR} @var{SLONG_MICROSECONDS_VAR} @var{TIMEVAL_POINTER}
+Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval}: bind to the shell variable
+@var{SLONG_SECONDS_VAR} a string representation of the number of seconds from the data structure;
+bind to the shell variable @var{SLONG_MICROSECONDS_VAR} a string representation of the number of
+microseconds from the data structure.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timeval_seconds_ref @var{SLONG_SECONDS_VAR} @var{TIMEVAL_POINTER}
+Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} bind to the shell variable
+@var{SLONG_SECONDS_VAR} a string representation of the number of seconds from the data structure.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timeval_microseconds_ref @var{SLONG_MICROSECONDS_VAR} @var{TIMEVAL_POINTER}
+Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} bind to the shell variable
+@var{SLONG_MICROSECONDS_VAR} a string representation of the number of microseconds from the data
+structure.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timeval_set @var{TIMEVAL_POINTER} @var{SLONG_SECONDS} @var{SLONG_MICROSECONDS}
+Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval}: store in its @code{tv_sec} field
+the value @var{SLONG_SECONDS} converted to a @objtype{time_t}; store in its @code{tv_usec} field the
+value @var{SLONG_MICROSECONDS} converted to a @objtype{mmux_slong_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timeval_seconds_set @var{TIMEVAL_POINTER} @var{SLONG_SECONDS}
+Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} store in its @code{tv_sec} field
+the value @var{SLONG_SECONDS} converted to a @objtype{time_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timeval_microseconds_set @var{TIMEVAL_POINTER} @var{SLONG_MICROSECONDS}
+Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} store in its @code{tv_usec} field
+the value @var{SLONG_MICROSECONDS} converted to a @objtype{mmux_slong_t}.
+@end deffn
+
+@c page
+@node time timespec
+@section Handling @code{struct timespec}
+
+
+To use a standard @code{struct timespec} value, we can do:
+
+@example
+declare TIMESPEC
+
+mmux_libc_timespec_make TIMESPEC
+@{
+    mmux_libc_timespec_seconds_set     @RR{TIMESPEC} 123
+    mmux_libc_timespec_nanoseconds_set @RR{TIMESPEC} 456
+    ...
+@}
+mmuc_libc_free @RR{TIMESPEC}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deftp {Shell Variable} mmux_libc_timespec_SIZEOF
+Shell variable bound to the number of bytes required to contain a @code{struct timespec}.
+@end deftp
+
+
+@deffn Builtin mmux_libc_timespec_make @var{TIMESPEC_POINTER_VAR}
+@deffnx Builtin mmux_libc_timespec_make @var{TIMESPEC_POINTER_VAR} @var{SLONG_SECONDS} @var{SLONG_NANOSECONDS}
+Allocate data structure of type @code{struct timespec} using @cfunc{malloc} and initialise it with
+the given values; store a string representation of its pointer in the shell variable whose name is
+@var{TIMESPEC_POINTER_VAR}.  @glibcref{Time Types, struct timespec}.
+
+To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+
+The optional argument @var{SLONG_SECONDS} represents the number of seconds; when not present: it
+defaults to zero.  This value must fit a @objtype{mmux_slong_t} value and it is internally converted
+to a @objtype{time_t} value.
+
+The optional argument @var{SLONG_NANOSECONDS} represents the number of nanoseconds; when not
+present: it defaults to zero.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_ref @var{SLONG_SECONDS_VAR} @var{SLONG_NANOSECONDS_VAR} @var{TIMESPEC_POINTER}
+Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec}: bind to the shell variable
+@var{SLONG_SECONDS_VAR} a string representation of the number of seconds from the data structure;
+bind to the shell variable @var{SLONG_NANOSECONDS_VAR} a string representation of the number of
+nanoseconds from the data structure.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_seconds_ref @var{SLONG_SECONDS_VAR} @var{TIMESPEC_POINTER}
+Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} bind to the shell variable
+@var{SLONG_SECONDS_VAR} a string representation of the number of seconds from the data structure.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_nanoseconds_ref @var{SLONG_NANOSECONDS_VAR} @var{TIMESPEC_POINTER}
+Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} bind to the shell variable
+@var{SLONG_NANOSECONDS_VAR} a string representation of the number of nanoseconds from the data
+structure.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_set @var{TIMESPEC_POINTER} @var{SLONG_SECONDS} @var{SLONG_NANOSECONDS}
+Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec}: store in its @code{tv_sec} field
+the value @var{SLONG_SECONDS} converted to a @objtype{time_t}; store in its @code{tv_nsec} field the
+value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_seconds_set @var{TIMESPEC_POINTER} @var{SLONG_SECONDS}
+Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} store in its @code{tv_sec} field
+the value @var{SLONG_SECONDS} converted to a @objtype{time_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_nanoseconds_set @var{TIMESPEC_POINTER} @var{SLONG_NANOSECONDS}
+Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} store in its @code{tv_nsec} field
+the value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 @c page

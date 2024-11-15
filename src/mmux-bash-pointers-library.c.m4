@@ -149,6 +149,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     return MMUX_FAILURE;
   }
 
+  /* Initialise the parsers module. */
+  if (MMUX_SUCCESS != mmux_bash_pointers_init_time_module()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising time module\n");
+    return MMUX_FAILURE;
+  }
+
   /* These constants are defined by the Standard C Library; we make them available as
      global shell variables. */
   {

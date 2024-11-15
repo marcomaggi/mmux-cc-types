@@ -156,7 +156,8 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-mutators.c.m4		\
 	src/mmux-bash-pointers-persona.c.m4		\
 	src/mmux-bash-pointers-predicates.c.m4		\
-	src/mmux-bash-pointers-strings.c.m4
+	src/mmux-bash-pointers-strings.c.m4		\
+	src/mmux-bash-pointers-time.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers.h			\
@@ -176,7 +177,8 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-persona.c		\
 	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-bash-pointers-strings.c
+	src/mmux-bash-pointers-strings.c		\
+	src/mmux-bash-pointers-time.c
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -215,7 +217,8 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-persona.c		\
 	src/mmux-bash-pointers-predicates.c		\
-	src/mmux-bash-pointers-strings.c
+	src/mmux-bash-pointers-strings.c		\
+	src/mmux-bash-pointers-time.c
 
 .PHONY: library
 
@@ -254,6 +257,7 @@ EXTRA_DIST		+= \
 	tests/predicates.test.m4		\
 	tests/strings.test.m4			\
 	tests/structs.test.m4			\
+	tests/time.test.m4			\
 	tests/types.test.m4			\
 	tests/version.test.m4
 
@@ -282,6 +286,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/predicates.test			\
 	tests/strings.test			\
 	tests/structs.test			\
+	tests/time.test				\
 	tests/types.test			\
 	tests/version.test
 

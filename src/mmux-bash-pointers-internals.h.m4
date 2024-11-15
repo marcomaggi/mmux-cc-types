@@ -160,6 +160,8 @@
  ** Functions.
  ** ----------------------------------------------------------------- */
 
+mmux_bash_pointers_private_decl mmux_bash_rv_t mmux_bash_pointers_init_time_module (void);
+
 
 /** --------------------------------------------------------------------
  ** Done.
