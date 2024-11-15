@@ -265,48 +265,87 @@ function time-struct-tm-1.1 () {
     mbfl_location_leave
 }
 
-function time-struct-tm-1.2 () {
+
+#### time
+
+function time-time-1.1 () {
     mbfl_location_enter
     {
-	declare TM SEC MIN HOUR MDAY MON YEAR WDAY YDAY ISDST GMTOFF
+	declare THE_TIME
+
+	dotest-unset-debug
+	mbfl_location_leave_when_failure( mmux_libc_time THE_TIME )
+	dotest-predicate mmux_string_is_time WW(THE_TIME)
+    }
+    mbfl_location_leave
+}
+
+
+#### localtime
+
+function time-localtime-1.1 () {
+    mbfl_location_enter
+    {
+	declare TM
+	declare -i THE_TIME
 
 	dotest-unset-debug
 	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_leave_when_failure( mmux_libc_time THE_TIME )
+	mbfl_location_leave_when_failure( mmux_libc_localtime RR(TM) RR(THE_TIME) )
+	dotest-predicate mmux_string_is_time WW(THE_TIME)
+    }
+    mbfl_location_leave
+}
 
-	mbfl_location_leave_when_failure( mmux_libc_tm_sec_ref    SEC    RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_min_ref    MIN    RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_hour_ref   HOUR   RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_mday_ref   MDAY   RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_mon_ref    MON    RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_year_ref   YEAR   RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_wday_ref   WDAY   RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_yday_ref   YDAY   RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_isdst_ref  ISDST  RR(TM))
-	mbfl_location_leave_when_failure( mmux_libc_tm_gmtoff_ref GMTOFF RR(TM))
+
+#### gmtime
 
-	mbfl_location_leave_when_failure( mmux_libc_tm_sec_set    RR(TM) RR(SEC))
-	mbfl_location_leave_when_failure( mmux_libc_tm_min_set    RR(TM) RR(MIN))
-	mbfl_location_leave_when_failure( mmux_libc_tm_hour_set   RR(TM) RR(HOUR))
-	mbfl_location_leave_when_failure( mmux_libc_tm_mday_set   RR(TM) RR(MDAY))
-	mbfl_location_leave_when_failure( mmux_libc_tm_mon_set    RR(TM) RR(MON))
-	mbfl_location_leave_when_failure( mmux_libc_tm_year_set   RR(TM) RR(YEAR))
-	mbfl_location_leave_when_failure( mmux_libc_tm_wday_set   RR(TM) RR(WDAY))
-	mbfl_location_leave_when_failure( mmux_libc_tm_yday_set   RR(TM) RR(YDAY))
-	mbfl_location_leave_when_failure( mmux_libc_tm_isdst_set  RR(TM) RR(ISDST))
-	mbfl_location_leave_when_failure( mmux_libc_tm_gmtoff_set RR(TM) RR(GMTOFF))
+function time-gmtime-1.1 () {
+    mbfl_location_enter
+    {
+	declare TM
+	declare -i THE_TIME
 
-	dotest-debug TM=QQ(TM)
-	dotest-debug SEC=QQ(SEC)
-	dotest-debug MIN=QQ(MIN)
-	dotest-debug HOUR=QQ(HOUR)
-	dotest-debug MDAY=QQ(MDAY)
-	dotest-debug MON=QQ(MON)
-	dotest-debug YEAR=QQ(YEAR)
-	dotest-debug WDAY=QQ(WDAY)
-	dotest-debug YDAY=QQ(YDAY)
-	dotest-debug ISDST=QQ(ISDST)
-	dotest-debug GMTOFF=QQ(GMTOFF)
-	true
+	dotest-unset-debug
+	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_leave_when_failure( mmux_libc_time THE_TIME )
+	mbfl_location_leave_when_failure( mmux_libc_gmtime RR(TM) RR(THE_TIME) )
+	dotest-predicate mmux_string_is_time WW(THE_TIME)
+    }
+    mbfl_location_leave
+}
+
+
+#### mktime
+
+function time-mktime-1.1 () {
+    mbfl_location_enter
+    {
+	declare TM
+	declare -i THE_TIME
+
+	dotest-unset-debug
+	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_leave_when_failure( mmux_libc_mktime THE_TIME RR(TM) )
+	dotest-predicate mmux_string_is_time WW(THE_TIME)
+    }
+    mbfl_location_leave
+}
+
+
+#### timegm
+
+function time-timegm-1.1 () {
+    mbfl_location_enter
+    {
+	declare TM
+	declare -i THE_TIME
+
+	dotest-unset-debug
+	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_leave_when_failure( mmux_libc_timegm THE_TIME RR(TM) )
+	dotest-predicate mmux_string_is_time WW(THE_TIME)
     }
     mbfl_location_leave
 }
