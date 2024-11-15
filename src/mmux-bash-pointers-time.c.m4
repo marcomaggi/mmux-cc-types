@@ -380,6 +380,134 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Struct tm.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_malloc]]])
+{
+  char const *	pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pointer_varname,	argv[1]);
+  {
+    struct tm *	tm_pointer = malloc(sizeof(struct tm));
+
+    if (tm_pointer) {
+      mmux_time_t	T;
+      mmux_bash_rv_t	rv;
+
+      T           = time(NULL);
+      *tm_pointer = *localtime(&T);
+      rv = mmux_pointer_bind_to_bash_variable(pointer_varname, tm_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != rv) {
+	free(tm_pointer);
+      }
+      return rv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_$1_set]]])
+{
+  mmux_pointer_t	pointer;
+  mmux_sint_t		value;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(value,	argv[2]);
+  {
+    struct tm *	tm_pointer	= pointer;
+
+    tm_pointer->tm_$1 = value;
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SINT_VALUE"]]])
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_$1_ref]]])
+{
+  char const *		varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct tm *		tm_pointer	= pointer;
+    mmux_sint_t		value		= tm_pointer->tm_$1;
+
+    return mmux_sint_bind_to_bash_variable(varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SINT_VALUE"]]])
+]]])
+
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[sec]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[min]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[hour]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[mday]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[mon]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[year]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[wday]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[yday]]])
+DEFINE_STRUCT_TM_INT_SETTER_AND_GETTER([[[isdst]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_gmtoff_set]]])
+{
+  mmux_pointer_t	pointer;
+  mmux_slong_t		value;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SLONG(value,	argv[2]);
+  {
+    struct tm *	tm_pointer	= pointer;
+
+    tm_pointer->tm_gmtoff = value;
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_gmtoff_ref]]])
+{
+  char const *		varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct tm *		tm_pointer	= pointer;
+    mmux_slong_t		value		= tm_pointer->tm_gmtoff;
+
+    return mmux_slong_bind_to_bash_variable(varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+
+
+/** --------------------------------------------------------------------
  ** Module initialisation.
  ** ----------------------------------------------------------------- */
 
@@ -388,10 +516,13 @@ mmux_bash_pointers_init_time_module (void)
 {
   mmux_bash_rv_t	rv;
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_timeval_SIZEOF", sizeof(struct timeval), NULL);
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_timeval_SIZEOF",  sizeof(struct timeval), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_create_global_sint_variable("mmux_libc_timespec_SIZEOF", sizeof(struct timespec), NULL);
+  if (MMUX_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_tm_SIZEOF",       sizeof(struct tm), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   return MMUX_SUCCESS;

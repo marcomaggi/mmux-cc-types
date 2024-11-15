@@ -5707,6 +5707,7 @@ group} referenced by the pointer @var{GROUP_POINTER}.
 @menu
 * time timeval::                Handling @code{struct timeval}.
 * time timespec::               Handling @code{struct timespec}.
+* time tm::                     Handling @code{struct tm}.
 @end menu
 
 @c page
@@ -5873,6 +5874,98 @@ the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}.
 @deffn Builtin mmux_libc_timespec_nanoseconds_set @var{TIMESPEC_POINTER} @var{SLONG_NANOSECONDS}
 Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} store in its @code{tv_nsec} field
 the value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
+@end deffn
+
+@c page
+@node time tm
+@section Handling @code{struct tm}
+
+
+To use a standard @code{struct tm} value, we can do:
+
+@example
+declare TM
+declare -i SEC MIN HOUR MDAY MON YEAR WDAY YDAY ISDST GMTOFF
+
+mmux_libc_tm_malloc TM
+@{
+    mmux_libc_tm_sec_ref    SEC    @RR{TM}
+    mmux_libc_tm_min_ref    MIN    @RR{TM}
+    mmux_libc_tm_hour_ref   HOUR   @RR{TM}
+    mmux_libc_tm_mday_ref   MDAY   @RR{TM}
+    mmux_libc_tm_mon_ref    MON    @RR{TM}
+    mmux_libc_tm_year_ref   YEAR   @RR{TM}
+    mmux_libc_tm_wday_ref   WDAY   @RR{TM}
+    mmux_libc_tm_yday_ref   YDAY   @RR{TM}
+    mmux_libc_tm_isdst_ref  ISDST  @RR{TM}
+    mmux_libc_tm_gmtoff_ref GMTOFF @RR{TM}
+    ...
+@}
+mmux_libc_free @RR{TM}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deftp {Shell Variable} mmux_libc_tm_SIZEOF
+Shell variable bound to the number of bytes required to contain a @code{struct tm}.
+@end deftp
+
+
+@deffn Builtin mmux_libc_tm_malloc @var{TM_POINTER_VAR}
+Allocate data structure of type @code{struct tm} using @cfunc{malloc} and initialise it with the
+given values; store a string representation of its pointer in the shell variable whose name is
+@var{TM_POINTER_VAR}.  @glibcref{Time Types, struct tm}.
+
+To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+
+The allocated data structure is initialised to the current time using the C language code:
+
+@example
+struct tm *     TM = ...;
+mmux_time_t     T;
+
+T   = time(NULL);
+*TM = *localtime(&T);
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineStructTmSetterGetter{FIELD,ARG}
+@deffn Builtin mmux_libc_tm_\FIELD\_ref @var{SINT_\ARG\_VAR} @var{TM_POINTER}
+Given a pointer @var{TM_POINTER} to a @code{struct tm} bind to the shell variable
+@var{SINT_\ARG\_VAR} a string representation of the field @code{tm_\FIELD\} value.
+@end deffn
+
+@deffn Builtin mmux_libc_tm_\FIELD\_set @var{TM_POINTER} @var{SINT_\ARG\}
+Given a pointer @var{TM_POINTER} to a @code{struct tm} set the structure field @code{tm_\FIELD\} to
+the value @var{SINT_\ARG\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineStructTmSetterGetter{sec,SEC}
+@MmuxDefineStructTmSetterGetter{min,MIN}
+@MmuxDefineStructTmSetterGetter{hour,HOUR}
+@MmuxDefineStructTmSetterGetter{mday,MDAY}
+@MmuxDefineStructTmSetterGetter{mon,MON}
+@MmuxDefineStructTmSetterGetter{year,YEAR}
+@MmuxDefineStructTmSetterGetter{wday,WDAY}
+@MmuxDefineStructTmSetterGetter{yday,YDAY}
+@MmuxDefineStructTmSetterGetter{isdst,ISDST}
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_tm_gmtoff_ref @var{SLONG_GMTOFF_VAR} @var{TM_POINTER}
+Given a pointer @var{TM_POINTER} to a @code{struct tm} bind to the shell variable
+@var{SLONG_GMTOFF_VAR} a string representation of the field @code{tm_gmtoff} value.
+@end deffn
+
+
+@deffn Builtin mmux_libc_tm_gmtoff_set @var{TM_POINTER} @var{SLONG_GMTOFF}
+Given a pointer @var{TM_POINTER} to a @code{struct tm} set the structure field @code{tm_gmtoff} to
+the value @var{SLONG_GMTOFF}.
 @end deffn
 
 @c page
