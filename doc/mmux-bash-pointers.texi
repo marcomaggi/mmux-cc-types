@@ -5746,7 +5746,7 @@ To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or 
 
 The optional argument @var{TIME_SECONDS} represents the number of seconds; when not present: it
 defaults to zero.  This value must fit a @objtype{mmux_slong_t} value and it is internally converted
-to a @objtype{time_t} value.
+to a @objtype{mmux_time_t} value.
 
 The optional argument @var{SLONG_MICROSECONDS} represents the number of microseconds; when not
 present: it defaults to zero.
@@ -5776,14 +5776,14 @@ structure.
 
 @deffn Builtin mmux_libc_timeval_set @var{TIMEVAL_POINTER} @var{TIME_SECONDS} @var{SLONG_MICROSECONDS}
 Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval}: store in its @code{tv_sec} field
-the value @var{TIME_SECONDS} converted to a @objtype{time_t}; store in its @code{tv_usec} field the
+the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}; store in its @code{tv_usec} field the
 value @var{SLONG_MICROSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timeval_seconds_set @var{TIMEVAL_POINTER} @var{TIME_SECONDS}
 Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} store in its @code{tv_sec} field
-the value @var{TIME_SECONDS} converted to a @objtype{time_t}.
+the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}.
 @end deffn
 
 
@@ -5829,7 +5829,7 @@ To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or 
 
 The optional argument @var{TIME_SECONDS} represents the number of seconds; when not present: it
 defaults to zero.  This value must fit a @objtype{mmux_slong_t} value and it is internally converted
-to a @objtype{time_t} value.
+to a @objtype{mmux_time_t} value.
 
 The optional argument @var{SLONG_NANOSECONDS} represents the number of nanoseconds; when not
 present: it defaults to zero.
@@ -5859,14 +5859,14 @@ structure.
 
 @deffn Builtin mmux_libc_timespec_set @var{TIMESPEC_POINTER} @var{TIME_SECONDS} @var{SLONG_NANOSECONDS}
 Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec}: store in its @code{tv_sec} field
-the value @var{TIME_SECONDS} converted to a @objtype{time_t}; store in its @code{tv_nsec} field the
+the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}; store in its @code{tv_nsec} field the
 value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timespec_seconds_set @var{TIMESPEC_POINTER} @var{TIME_SECONDS}
 Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} store in its @code{tv_sec} field
-the value @var{TIME_SECONDS} converted to a @objtype{time_t}.
+the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}.
 @end deffn
 
 
