@@ -590,6 +590,41 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fd_set_malloc_triplet]]])
+{
+  char const *	fd_set_pointer_varname[3];
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname[0],	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname[1],	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname[2],	argv[3]);
+  {
+    fd_set *	fd_set_pointer = malloc(3 * sizeof(fd_set));
+
+    if (fd_set_pointer) {
+      mmux_bash_rv_t	rv;
+
+      for (int i=0; i<3; ++i) {
+	FD_ZERO(&(fd_set_pointer[i]));
+	rv = mmux_pointer_bind_to_bash_variable(fd_set_pointer_varname[i], &(fd_set_pointer[i]), MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != rv) { goto error_binding_variable; }
+      }
+      return rv;
+
+    error_binding_variable:
+      free(fd_set_pointer);
+      return rv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER READ_FD_SET_POINTER_VAR WRIT_FD_SET_POINTER_VAR EXEC_FD_SET_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_FD_ZERO]]])
 {
   mmux_pointer_t	pointer;

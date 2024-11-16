@@ -481,7 +481,7 @@ function file-descriptors-pipe-1.1 () {
 function file-descriptors-select-1.1 () {
     mbfl_location_enter
     {
-	declare READ_FD_SET WRIT_FD_SET EXCE_FD_SET
+	declare READ_FD_SET WRIT_FD_SET EXEC_FD_SET
 	declare TIMEOUT
 	declare -i READY_FDS_NUM NFDS=RR(mmux_libc_FD_SETSIZE)
 	declare -i READING_FD WRITING_FD
@@ -491,7 +491,7 @@ function file-descriptors-select-1.1 () {
 
 	COMPENSATE(mmux_libc_fd_set_malloc READ_FD_SET,  mmux_libc_free RR(READ_FD_SET))
 	COMPENSATE(mmux_libc_fd_set_malloc WRIT_FD_SET,  mmux_libc_free RR(WRIT_FD_SET))
-	COMPENSATE(mmux_libc_fd_set_malloc EXCE_FD_SET,  mmux_libc_free RR(EXCE_FD_SET))
+	COMPENSATE(mmux_libc_fd_set_malloc EXEC_FD_SET,  mmux_libc_free RR(EXEC_FD_SET))
 	COMPENSATE(mmux_libc_timeval_malloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
 
 	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
@@ -503,7 +503,41 @@ function file-descriptors-select-1.1 () {
 	printf 'ciao\n' >&RR(WRITING_FD)
 
 	mbfl_location_leave_when_failure( mmux_libc_select READY_FDS_NUM RR(NFDS) \
-							   RR(READ_FD_SET) RR(WRIT_FD_SET) RR(EXCE_FD_SET) \
+							   RR(READ_FD_SET) RR(WRIT_FD_SET) RR(EXEC_FD_SET) \
+							   RR(TIMEOUT) )
+
+	dotest-predicate mmux_libc_FD_ISSET RR(READING_FD) RR(READ_FD_SET) && {
+	    read -u RR(READING_FD)
+	    dotest-equal QQ(REPLY) 'ciao'
+	}
+    }
+    mbfl_location_leave
+}
+
+function file-descriptors-select-1.2 () {
+    mbfl_location_enter
+    {
+	declare READ_FD_SET WRIT_FD_SET EXEC_FD_SET
+	declare TIMEOUT
+	declare -i READY_FDS_NUM NFDS=RR(mmux_libc_FD_SETSIZE)
+	declare -i READING_FD WRITING_FD
+	declare REPLY
+
+	dotest-unset-debug
+
+	COMPENSATE(mmux_libc_fd_set_malloc_triplet READ_FD_SET WRIT_FD_SET EXEC_FD_SET,  mmux_libc_free RR(READ_FD_SET))
+	COMPENSATE(mmux_libc_timeval_malloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
+
+	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
+	mbfl_location_handler "mmux_libc_close RR(READING_FD)"
+	mbfl_location_handler "mmux_libc_close RR(WRITING_FD)"
+
+	mbfl_location_leave_when_failure( mmux_libc_FD_SET RR(READING_FD) RR(READ_FD_SET) )
+
+	printf 'ciao\n' >&RR(WRITING_FD)
+
+	mbfl_location_leave_when_failure( mmux_libc_select READY_FDS_NUM RR(NFDS) \
+							   RR(READ_FD_SET) RR(WRIT_FD_SET) RR(EXEC_FD_SET) \
 							   RR(TIMEOUT) )
 
 	dotest-predicate mmux_libc_FD_ISSET RR(READING_FD) RR(READ_FD_SET) && {

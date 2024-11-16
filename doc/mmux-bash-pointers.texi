@@ -5263,12 +5263,42 @@ The value of the standard C language constant @code{FS_SETSIZE}.
 @end defvr
 
 
+@defvr {Shell Variable} mmux_libc_fd_set_SIZEOF
+The size, measured in bytes, of values of type @objtype{fd_set}.
+@end defvr
+
+
 @deffn Builtin mmux_libc_fd_set_malloc @var{FD_SET_POINTER_VAR}
 Use @cfunc{malloc} to allocate a block of memory wide enough to contain a @objtype{fd_set} value;
-store a string representation of the pointer referencing it in the shell variable whose name is
-@var{FD_SET_POINTER_VAR}.  The value @objtype{fs_set} is reset with using the macro @cfunc{FD_ZERO}.
+bind a string representation of the pointer referencing it to the shell variable whose name is
+@var{FD_SET_POINTER_VAR}.  The value @objtype{fs_set} is reset using the macro @cfunc{FD_ZERO}.
 
-To release the memory we just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+To release the memory we just apply @MmuxBuiltin{mmux_libc_free} or @cfunc{free} to the pointer.
+@end deffn
+
+
+@deffn Builtin mmux_libc_fd_set_malloc_triplet @var{READ_FD_SET_POINTER_VAR} @var{WRITE_FD_SET_POINTER_VAR} @var{EXCEPTION_FD_SET_POINTER_VAR}
+Use @cfunc{malloc} to allocate a block of memory wide enough to contain three @objtype{fd_set}
+values, effectively allocating an array of three elements; then:
+
+@itemize
+@item
+Bind a string representation of the pointer referencing the first @objtype{fd_set} value to the
+shell variable whose name is @var{READ_FD_SET_POINTER_VAR}.
+
+@item
+Bind a string representation of the pointer referencing the second @objtype{fd_set} value to the
+shell variable whose name is @var{WRITE_FD_SET_POINTER_VAR}.
+
+@item
+Bind a string representation of the pointer referencing the third @objtype{fd_set} value to the
+shell variable whose name is @var{EXCEPTION_FD_SET_POINTER_VAR}.
+@end itemize
+
+Each @objtype{fs_set} value is reset using the macro @cfunc{FD_ZERO}.
+
+To release the memory we just apply @MmuxBuiltin{mmux_libc_free} or @cfunc{free} to the first
+pointer, the one bound to @var{READ_FD_SET_POINTER_VAR}.
 @end deffn
 
 
