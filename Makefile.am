@@ -148,7 +148,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-bitwise.c.m4		\
 	src/mmux-bash-pointers-comparison.c.m4		\
 	src/mmux-bash-pointers-errors.c.m4		\
-	src/mmux-bash-pointers-fds.c.m4			\
+	src/mmux-bash-pointers-file-descriptors.c.m4	\
 	src/mmux-bash-pointers-file-system.c.m4		\
 	src/mmux-bash-pointers-library.c.m4		\
 	src/mmux-bash-pointers-mathematics.c.m4		\
@@ -170,7 +170,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-bitwise.c		\
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
-	src/mmux-bash-pointers-fds.c			\
+	src/mmux-bash-pointers-file-descriptors.c	\
 	src/mmux-bash-pointers-file-system.c		\
 	src/mmux-bash-pointers-library.c		\
 	src/mmux-bash-pointers-mathematics.c		\
@@ -210,7 +210,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-bitwise.c		\
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
-	src/mmux-bash-pointers-fds.c			\
+	src/mmux-bash-pointers-file-descriptors.c	\
 	src/mmux-bash-pointers-file-system.c		\
 	src/mmux-bash-pointers-internals.h		\
 	src/mmux-bash-pointers-library.c		\
