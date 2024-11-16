@@ -4909,6 +4909,7 @@ mmux_libc_free @RR{PATHNAME}
 * fds seeking::                 Seeking position in file descriptors.
 * fds duplicating::             Duplicating file descriptors.
 * fds piping::                  Opening file descriptor pipes.
+* fds selecting::               Selecting file descriptors.
 @end menu
 
 @c page
@@ -5209,6 +5210,99 @@ mmux_libc_pipe READING_FD WRITING_FD
 mmux_libc_close @RR{READING_FD}
 mmux_libc_close @RR{WRITING_FD}
 @end example
+@end deffn
+
+@c page
+@node fds selecting
+@section Selecting file descriptors
+
+
+To select file descriptors that must undergo operations, we do:
+
+@example
+declare READ_FD_SET WRIT_FD_SET EXCE_FD_SET
+declare TIMEOUT
+declare -i READY_FDS_NUM NFDS=@RR{mmux_libc_FD_SETSIZE}
+
+mmux_libc_fd_set_malloc READ_FD_SET
+mmux_libc_fd_set_malloc WRIT_FD_SET
+mmux_libc_fd_set_malloc EXCE_FD_SET
+mmux_libc_timeval_malloc TIMEOUT 1 0
+@{
+    declare -i READING_FD WRITING_FD
+
+    mmux_libc_pipe READING_FD WRITING_FD
+    @{
+        declare REPLY
+
+        mmux_libc_FD_SET @RR{READING_FD} @RR{READ_FD_SET}
+        printf 'ciao\n' >&@RR{WRITING_FD}
+        mmux_libc_select READY_FDS_NUM @RR{NFDS} \
+                         @RR{READ_FD_SET} @RR{WRIT_FD_SET} @RR{EXCE_FD_SET} \
+                         @RR{TIMEOUT}
+        if mmux_libc_FD_ISSET @RR{READING_FD} @RR{READ_FD_SET}
+        then
+            read -u @RR{READING_FD}
+            @QQ{REPLY}  @result{} ciao
+        fi
+    @}
+    mmux_libc_close @RR{READING_FD}
+    mmux_libc_close @RR{WRITING_FD}
+@}
+mmux_libc_free @RR{TIMEOUT}
+mmux_libc_free @RR{EXCE_FD_SET}
+mmux_libc_free @RR{WRIT_FD_SET}
+mmux_libc_free @RR{READ_FD_SET}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr {Shell Variable} mmux_libc_FD_SETSIZE
+The value of the standard C language constant @code{FS_SETSIZE}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_fd_set_malloc @var{FD_SET_POINTER_VAR}
+Use @cfunc{malloc} to allocate a block of memory wide enough to contain a @objtype{fd_set} value;
+store a string representation of the pointer referencing it in the shell variable whose name is
+@var{FD_SET_POINTER_VAR}.  The value @objtype{fs_set} is reset with using the macro @cfunc{FD_ZERO}.
+
+To release the memory we just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_FD_ZERO @var{FD_SET_POINTER}
+Interface to the standard C macro @cfunc{FD_ZERO}; @glibcref{Waiting for I/O, FD_ZERO}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_FD_SET @var{FD} @var{FD_SET_POINTER}
+Interface to the standard C macro @cfunc{FD_SET}; @glibcref{Waiting for I/O, FD_SET}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_FD_CLR @var{FD} @var{FD_SET_POINTER}
+Interface to the standard C macro @cfunc{FD_CLR}; @glibcref{Waiting for I/O, FD_CLR}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_FD_ISSET @var{FD} @var{FD_SET_POINTER}
+Interface to the standard C macro @cfunc{FD_ISSET}; @glibcref{Waiting for I/O, FD_ISSET}.  This
+builtin returns true if @var{FD} is set in the @objtype{fd_set} value referenced by
+@var{FD_SET_POINTER}; it returns false if @var{FD} is not set or an error occurs.
+@end deffn
+
+
+@deffn Builtin mmux_libc_select @var{READY_FS_NUM_VAR} @var{NFDS} @var{READ_FD_SET_POINTER} @var{WRITE_FD_SET_POINTER} @var{EXCEPT_FD_SET_POINTER} @var{TIMEVAL_POINTER}
+Interface to the standard C function @cfunc{select}; @glibcref{Waiting for I/O, select}.
+
+The argument @var{READY_FS_NUM_VAR} must be the name of a shell variable: when the builtin is
+successful, the variable is set to the number of file descriptors that are ready to undergo the
+selected operation.
+
+The argument @var{NFDS} must be the maximum file descriptor number that is checked by the builtin;
+it is usually @code{mmux_libc_FD_SETSIZE}.
 @end deffn
 
 @c page
@@ -5812,9 +5906,9 @@ mmuc_libc_free @RR{TIMEVAL}
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deftp {Shell Variable} mmux_libc_timeval_SIZEOF
+@defvr {Shell Variable} mmux_libc_timeval_SIZEOF
 Shell variable bound to the number of bytes required to contain a @code{struct timeval}.
-@end deftp
+@end defvr
 
 
 @deffn Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR}
@@ -5895,9 +5989,9 @@ mmuc_libc_free @RR{TIMESPEC}
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deftp {Shell Variable} mmux_libc_timespec_SIZEOF
+@defvr {Shell Variable} mmux_libc_timespec_SIZEOF
 Shell variable bound to the number of bytes required to contain a @code{struct timespec}.
-@end deftp
+@end defvr
 
 
 @deffn Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR}
@@ -5987,9 +6081,9 @@ mmux_libc_free @RR{TM}
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deftp {Shell Variable} mmux_libc_tm_SIZEOF
+@defvr {Shell Variable} mmux_libc_tm_SIZEOF
 Shell variable bound to the number of bytes required to contain a @code{struct tm}.
-@end deftp
+@end defvr
 
 
 @deffn Builtin mmux_libc_tm_malloc @var{TM_POINTER_VAR}

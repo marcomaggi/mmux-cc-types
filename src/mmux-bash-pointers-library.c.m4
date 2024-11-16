@@ -137,21 +137,23 @@ m4_divert(0)m4_dnl
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
 {
-  /* Initialise the parsers module. */
   if (mmux_cc_types_init_parsers_module()) {
     fprintf(stderr, "MMUX Bash Pointers: internal error: initialising parsers module\n");
     return MMUX_FAILURE;
   }
 
-  /* Initialise the sprinters module. */
   if (mmux_cc_types_init_sprint_module ()) {
     fprintf(stderr, "MMUX Bash Pointers: internal error: initialising sprinters module\n");
     return MMUX_FAILURE;
   }
 
-  /* Initialise the parsers module. */
   if (MMUX_SUCCESS != mmux_bash_pointers_init_time_module()) {
     fprintf(stderr, "MMUX Bash Pointers: internal error: initialising time module\n");
+    return MMUX_FAILURE;
+  }
+
+  if (MMUX_SUCCESS != mmux_bash_pointers_init_file_descriptors_module()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising file descriptors module\n");
     return MMUX_FAILURE;
   }
 
