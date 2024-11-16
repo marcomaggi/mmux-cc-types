@@ -4908,6 +4908,7 @@ mmux_libc_free @RR{PATHNAME}
 * fds writing::                 Writing to file descriptors.
 * fds seeking::                 Seeking position in file descriptors.
 * fds duplicating::             Duplicating file descriptors.
+* fds piping::                  Opening file descriptor pipes.
 @end menu
 
 @c page
@@ -5182,6 +5183,32 @@ The argument @var{rDVAR} must be the name of a shell variable in which the retur
 The argument @var{OLD_FD} must be the string representation of a file descriptor.
 
 The argument @var{NEW_FD} must be the string representation of a file descriptor.
+@end deffn
+
+@c page
+@node fds piping
+@section Opening file descriptor pipes
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_pipe @var{READ_FDVAR} @var{WRITE_FDVAR}
+Interface to the standard C function @cfunc{pipe}; @glibcref{Creating a Pipe, pipe}.
+
+@example
+declare -i READING_FD WRITING_FD
+declare REPLY
+
+mmux_libc_pipe READING_FD WRITING_FD
+@{
+    printf 'ciao\n' >&@RR{WRITING_FD}
+    read -u @RR{READING_FD}
+    @WW{REPLY}  @result{} ciao
+@}
+mmux_libc_close @RR{READING_FD}
+mmux_libc_close @RR{WRITING_FD}
+@end example
 @end deffn
 
 @c page

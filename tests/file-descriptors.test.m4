@@ -31,6 +31,11 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
+m4_define([[[COMPENSATE]]],[[[if $1
+then mbfl_location_handler "$2"
+else mbfl_location_leave_then_return_failure
+fi]]])
+
 
 #### setup
 
@@ -444,6 +449,31 @@ function file-descriptors-fcntl-F_GETFL-1.2 () {
 }
 
 fi
+
+
+#### pipe
+
+function file-descriptors-pipe-1.1 () {
+    mbfl_location_enter
+    {
+	declare -i READING_FD WRITING_FD
+	declare REPLY
+
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
+	mbfl_location_handler "mmux_libc_close RR(READING_FD)"
+	mbfl_location_handler "mmux_libc_close RR(WRITING_FD)"
+
+	dotest-debug RR(READING_FD) RR(WRITING_FD)
+
+	printf 'ciao\n' >&RR(WRITING_FD)
+	read -u RR(READING_FD)
+
+	dotest-equal QQ(REPLY) 'ciao'
+    }
+    mbfl_location_leave
+}
 
 
 #### let's go
