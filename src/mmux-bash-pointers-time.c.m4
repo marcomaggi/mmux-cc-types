@@ -743,6 +743,52 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER INPUT_STRING TEMPLATE TM_POINTER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sleep]]])
+{
+  char const *		leftover_varname;
+  mmux_uint_t		seconds;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(leftover_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT(seconds,			argv[2]);
+  {
+    mmux_uint_t		leftover = sleep(seconds);
+
+    return mmux_uint_bind_to_bash_variable(leftover_varname, leftover, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER LEFTOVER_SECONDS_UINT_VAR UINT_SECONDS"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_nanosleep]]])
+{
+  mmux_pointer_t	requested_time, remaining_time;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(requested_time,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(remaining_time,	argv[2]);
+  {
+    struct timespec *	timespec_requested_time = requested_time;
+    struct timespec *	timespec_remaining_time = remaining_time;
+    mmux_sint_t		rv = nanosleep(timespec_requested_time, timespec_remaining_time);
+
+    if (-1 == rv) {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    } else {
+      return MMUX_SUCCESS;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER REQUESTED_TIME_TIMESPEC_POINTER REMAINING_TIME_TIMESPEC_POINTER"]]])
+
 
 /** --------------------------------------------------------------------
  ** Module initialisation.

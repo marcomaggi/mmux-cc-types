@@ -463,6 +463,47 @@ function time-strptime-1.1 () {
 }
 
 
+#### sleep
+
+function time-sleep-1.1 () {
+    mbfl_location_enter
+    {
+	declare -i LEFTOVER_SECONDS
+
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_sleep LEFTOVER_SECONDS 1 )
+	dotest-predicate mmux_string_is_uint RR(LEFTOVER_SECONDS)
+    }
+    mbfl_location_leave
+}
+
+
+#### nanosleep
+
+function time-nanosleep-1.1 () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+	declare -i SECONDS NANOSECONDS
+
+	dotest-unset-debug
+
+	COMPENSATE(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 1, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	COMPENSATE(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+
+	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_ref     SECONDS     RR(REMAINING_TIMESPEC) )
+	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_ref NANOSECONDS RR(REMAINING_TIMESPEC) )
+
+	dotest-equal 0 RR(SECONDS) &&
+	    dotest-equal 0 RR(NANOSECONDS)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest time-
