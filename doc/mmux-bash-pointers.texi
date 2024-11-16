@@ -4901,6 +4901,23 @@ mmux_libc_free @RR{PATHNAME}
 @chapter Core file descriptor operations
 
 
+@menu
+* fds opening::                 Opening file descriptors.
+* fds closing::                 Closing file descriptors.
+* fds reading::                 Reading from file descriptors.
+* fds writing::                 Writing to file descriptors.
+* fds seeking::                 Seeking position in file descriptors.
+* fds duplicating::             Duplicating file descriptors.
+@end menu
+
+@c page
+@node fds opening
+@section Opening file descriptors
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
 @deffn Builtin mmux_libc_open @var{FDVAR} @var{FILENAME} @var{FLAGS}
 @deffnx Builtin mmux_libc_open @var{FDVAR} @var{FILENAME} @var{FLAGS} @var{MODE}
 Interface to the standard C function @cfunc{open}.  When successful: return true; otherwise set the
@@ -4936,6 +4953,13 @@ fi
 Interface to the standard C function @cfunc{openat}, @cfuncpage{openat}.
 @end deffn
 
+@c page
+@node fds closing
+@section Closing file descriptors
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
 
 @deffn Builtin mmux_libc_close @var{FD}
 Interface to the standard C function @cfunc{close}.  When successful: return true; otherwise set the
@@ -4943,6 +4967,13 @@ shell variable @env{ERRNO} to a string representation of the @code{errno} code, 
 
 The argument @var{FD} must be the string representation of a file descriptor.
 @end deffn
+
+@c page
+@node fds reading
+@section Reading from file descriptors
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_read @var{DONEVAR} @var{FD} @var{BUFFER} @var{SIZE}
@@ -4993,6 +5024,35 @@ declare BUFFER
 @end deffn
 
 
+@deffn Builtin mmux_libc_pread @var{DONEVAR} @var{FD} @var{BUFFER} @var{SIZE} @var{OFFSET}
+Interface to the standard C function @cfunc{pread}.  When successful: return true; otherwise set the
+shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
+
+The argument @var{DONEVAR} must be the name of a shell variable in which the return value of
+@cfunc{read} will be stored.
+
+The argument @var{FD} must be the string representation of a file descriptor.
+
+The argument @var{BUFFER} must be the string representation of a pointer from which data will be
+read.
+
+The argument @var{SIZE} must be the string representation of an exact, non-negative, integer being
+the number of bytes to read from the file descriptor and write to memory; it must be compatible with
+the type @objtype{usize}.
+
+The argument @var{OFFSET} must be the string representation of an exact, non-negative, integer being
+the offset from the start of the file for the read operation; it must be compatible with the type
+@objtype{usize}.
+@end deffn
+
+@c page
+@node fds writing
+@section Writing to file descriptors
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
 @deffn Builtin mmux_libc_write @var{DONEVAR} @var{FD} @var{BUFFER} @var{SIZE}
 Interface to the standard C function @cfunc{write}.  When successful: return true; otherwise set the
 shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
@@ -5037,28 +5097,6 @@ fi
 @end deffn
 
 
-@deffn Builtin mmux_libc_pread @var{DONEVAR} @var{FD} @var{BUFFER} @var{SIZE} @var{OFFSET}
-Interface to the standard C function @cfunc{pread}.  When successful: return true; otherwise set the
-shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
-
-The argument @var{DONEVAR} must be the name of a shell variable in which the return value of
-@cfunc{read} will be stored.
-
-The argument @var{FD} must be the string representation of a file descriptor.
-
-The argument @var{BUFFER} must be the string representation of a pointer from which data will be
-read.
-
-The argument @var{SIZE} must be the string representation of an exact, non-negative, integer being
-the number of bytes to read from the file descriptor and write to memory; it must be compatible with
-the type @objtype{usize}.
-
-The argument @var{OFFSET} must be the string representation of an exact, non-negative, integer being
-the offset from the start of the file for the read operation; it must be compatible with the type
-@objtype{usize}.
-@end deffn
-
-
 @deffn Builtin mmux_libc_pwrite @var{DONEVAR} @var{FD} @var{BUFFER} @var{SIZE} @var{OFFSET}
 Interface to the standard C function @cfunc{pwrite}.  When successful: return true; otherwise set
 the shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return
@@ -5080,6 +5118,13 @@ The argument @var{OFFSET} must be the string representation of an exact, non-neg
 the offset from the start of the file for the write operation; it must be compatible with the type
 @objtype{off}.
 @end deffn
+
+@c page
+@node fds seeking
+@section Seeking position in file descriptors
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_lseek @var{OFFVAR} @var{FD} @var{OFFSET} @var{WHENCE}
@@ -5107,6 +5152,13 @@ then # error
 fi
 @end example
 @end deffn
+
+@c page
+@node fds duplicating
+@section Duplicating file descriptors
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_dup @var{FDVAR} @var{OLD_FD}
