@@ -5969,6 +5969,24 @@ Given a pointer @var{TM_POINTER} to a @code{struct tm} set the structure field @
 the value @var{SLONG_GMTOFF}.
 @end deffn
 
+
+@deffn Builtin mmux_libc_tm_reset @var{TM_POINTER}
+Given a pointer @var{TM_POINTER} to a @code{struct tm} reset all the fields to their minimum value:
+
+@example
+tm_sec    = 0
+tm_min    = 0
+tm_hour   = 0
+tm_mday   = 1
+tm_mon    = 0
+tm_year   = 0
+tm_wday   = 0
+tm_yday   = 0
+tm_isdst  = 0
+tm_gmtoff = 0
+@end example
+@end deffn
+
 @c page
 @node time builtins
 @section Time builtins
@@ -5977,7 +5995,7 @@ the value @var{SLONG_GMTOFF}.
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deftp {Shell Variable} mmux_libc_time @var{TIMEVAR}
+@deffn Builtin mmux_libc_time @var{TIMEVAR}
 Interface to the standard C language function @cfunc{time}, @glibcref{Getting the Time, time}.  Bind
 to the shell variable whose name is @var{TIMEVAR} a string representation of the current time.
 
@@ -5986,18 +6004,18 @@ declare -i THE_TIME
 
 mmux_libc_time THE_TIME
 @end example
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_localtime @var{TM_POINTER} @var{TIME}
+@deffn Builtin mmux_libc_localtime @var{TM_POINTER} @var{TIME}
 Interface to the standard C language function @cfunc{localtime}, @glibcref{Broken-down Time,
 localtime}.  Fill the data structure of type @code{struct tm} referenced by @var{TM_POINTER} with
 the broken--down time computed from @var{TIME}, which can be a value from a call to
 @MmuxBuiltin{mmux_libc_time}.
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_gmtime @var{TM_POINTER} @var{TIME}
+@deffn Builtin mmux_libc_gmtime @var{TM_POINTER} @var{TIME}
 Interface to the standard C language function @cfunc{gmtime}, @glibcref{Broken-down Time, gmtime}.
 Fill the data structure of type @code{struct tm} referenced by @var{TM_POINTER} with the
 broken--down time computed from @var{TIME}, which can be a value from a call to
@@ -6015,10 +6033,10 @@ mmux_libc_tm_malloc TM
 @}
 mmux_libc_free @RR{TM}
 @end example
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_mktime @var{TIMEVAR} @var{TM_POINTER}
+@deffn Builtin mmux_libc_mktime @var{TIMEVAR} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{mktime}, @glibcref{Broken--down Time, mktime}.
 Bind to the shell variable whose name is @var{TIMEVAR} a string representation of the time from the
 data structure @code{struct tm} referenced by @var{TM_POINTER}.
@@ -6035,10 +6053,10 @@ mmux_libc_tm_malloc TM
 @}
 mmux_libc_free @RR{TM}
 @end example
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_timegm @var{TIMEVAR} @var{TM_POINTER}
+@deffn Builtin mmux_libc_timegm @var{TIMEVAR} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{timegm}, @glibcref{Broken--down Time, timegm}.
 Bind to the shell variable whose name is @var{TIMEVAR} a string representation of the time from the
 data structure @code{struct tm} referenced by @var{TM_POINTER}.
@@ -6055,10 +6073,10 @@ mmux_libc_tm_malloc TM
 @}
 mmux_libc_free @RR{TM}
 @end example
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_asctime @var{STRINGVAR} @var{TM_POINTER}
+@deffn Builtin mmux_libc_asctime @var{STRINGVAR} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{asctime}, @glibcref{Formatting Calendar Time,
 asctime}.  Bind the shell variable whose name is @var{STRINGVAR} with a string representation of the
 broken--down time represented by the data structure @code{struct tm} referenced by @var{TM_POINTER}.
@@ -6073,10 +6091,10 @@ mmux_libc_tm_malloc TM
 @}
 mmux_libc_free @RR{TM}
 @end example
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_ctime @var{STRINGVAR} @var{TIME}
+@deffn Builtin mmux_libc_ctime @var{STRINGVAR} @var{TIME}
 Interface to the standard C language function @cfunc{ctime}, @glibcref{Formatting Calendar Time,
 ctime}.  Bind the shell variable whose name is @var{STRINGVAR} with a string representation of the
 value @objtype{mmux_time_t} represented by @var{TIME}.
@@ -6087,10 +6105,10 @@ declare THE_TIME STRING
 mmux_libc_time THE_TIME
 mmux_libc_ctime STRING @RR{THE_TIME}
 @end example
-@end deftp
+@end deffn
 
 
-@deftp {Shell Variable} mmux_libc_strftime @var{STRINGVAR} @var{TEMPLATE} @var{TM_POINTER}
+@deffn Builtin mmux_libc_strftime @var{STRINGVAR} @var{TEMPLATE} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{strftime}, @glibcref{Formatting Calendar Time,
 strftime}.  Bind the shell variable whose name is @var{STRINGVAR} with a string representation of
 the broken--down time represented by the data structure @code{struct tm} referenced by
@@ -6107,7 +6125,27 @@ mmux_libc_tm_malloc TM
 @}
 mmux_libc_free @RR{TM}
 @end example
-@end deftp
+@end deffn
+
+
+@deffn Builtin mmux_libc_strptime @var{INPUT_STRING} @var{TEMPLATE} @var{TM_POINTER}
+Interface to the standard C language function @cfunc{strptime}, @glibcref{Low--Level Time String
+Parsing, strptime}.  Fill the data structure @code{struct tm} referenced by @var{TM_POINTER} with
+values from parsing @var{INPUT_STRING} according to @var{TEMPLATE}.
+
+@example
+declare -r TEMPLATE='%a, %d %b %Y %H:%M:%S %z'
+declare -r INPUT_STRING='Fri, 15 Nov 2024 23:11:20 +0100'
+declare TM
+
+mmux_libc_tm_malloc TM
+@{
+    mmux_libc_strptime @QQ{INPUT_STRING} @WW{TEMPLATE} @RR{TM}
+    ...
+@}
+mmux_libc_free @RR{TM}
+@end example
+@end deffn
 
 @c page
 @node errors

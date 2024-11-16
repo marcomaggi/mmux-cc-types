@@ -496,7 +496,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_gmtoff_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
   {
     struct tm *		tm_pointer	= pointer;
-    mmux_slong_t		value		= tm_pointer->tm_gmtoff;
+    mmux_slong_t	value		= tm_pointer->tm_gmtoff;
 
     return mmux_slong_bind_to_bash_variable(varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -505,6 +505,34 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_gmtoff_ref]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER SLONG_VALUE"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_reset]]])
+{
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,	argv[1]);
+  {
+    struct tm *	tm_pointer	= pointer;
+
+    tm_pointer->tm_sec    = 0;
+    tm_pointer->tm_min    = 0;
+    tm_pointer->tm_hour   = 0;
+    tm_pointer->tm_mday   = 1;
+    tm_pointer->tm_mon    = 0;
+    tm_pointer->tm_year   = 0;
+    tm_pointer->tm_wday   = 0;
+    tm_pointer->tm_yday   = 0;
+    tm_pointer->tm_isdst  = 0;
+    tm_pointer->tm_gmtoff = 0;
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER"]]])
 
 
 /** --------------------------------------------------------------------
@@ -685,6 +713,35 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strftime]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER STRINGVAR TEMPLATE TM_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strptime]]])
+{
+  char const *		input_string;
+  char const *		template;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(input_string,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(template,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[3]);
+  {
+    struct tm *		tm_pointer    = pointer;
+    char *		rv;
+
+    rv = strptime(input_string, template, tm_pointer);
+    if (rv) {
+      return MMUX_SUCCESS;
+    } else {
+      fprintf(stderr, "%s: error parsing time string: '%s'\n", MMUX_BASH_BUILTIN_STRING_NAME, input_string);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER INPUT_STRING TEMPLATE TM_POINTER"]]])
 
 
 /** --------------------------------------------------------------------
