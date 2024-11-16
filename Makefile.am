@@ -144,6 +144,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-accessors.c.m4		\
 	src/mmux-bash-pointers-arithmetics.c.m4		\
 	src/mmux-bash-pointers-bash.c.m4		\
+	src/mmux-bash-pointers-bind-functions.c.m4	\
 	src/mmux-bash-pointers-bitwise.c.m4		\
 	src/mmux-bash-pointers-comparison.c.m4		\
 	src/mmux-bash-pointers-errors.c.m4		\
@@ -165,6 +166,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-accessors.c		\
 	src/mmux-bash-pointers-arithmetics.c		\
 	src/mmux-bash-pointers-bash.c			\
+	src/mmux-bash-pointers-bind-functions.c		\
 	src/mmux-bash-pointers-bitwise.c		\
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
@@ -204,6 +206,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-accessors.c		\
 	src/mmux-bash-pointers-arithmetics.c		\
 	src/mmux-bash-pointers-bash.c			\
+	src/mmux-bash-pointers-bind-functions.c		\
 	src/mmux-bash-pointers-bitwise.c		\
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
