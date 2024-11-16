@@ -65,7 +65,9 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   tm_mday_set tm_mday_ref tm_mon_set tm_mon_ref tm_year_set tm_year_ref
 			   tm_wday_set tm_wday_ref tm_yday_set tm_yday_ref tm_isdst_set tm_isdst_ref
 			   tm_gmtoff_set tm_gmtoff_ref tm_reset
-			   time localtime gmtime mktime timegm asctime ctime strftime strptime sleep nanosleep)
+			   time localtime gmtime mktime timegm asctime ctime strftime strptime sleep nanosleep
+			   islower isupper isalpha isdigit isalnum isxdigit ispunct isspace isblank isgraph isprint
+			   iscntrl isascii tolower toupper schar_from_string schar_to_string)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh

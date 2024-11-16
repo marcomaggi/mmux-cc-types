@@ -180,6 +180,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * cctypes::                     Interface to supported C language data types.
 * memory::                      Raw memory operations.
 * strings::                     @asciiz{} strings.
+* characters::                  Characters operations.
 * fds::                         Core file descriptor operations.
 * fs::                          File system interface.
 * persona::                     Persona operations.
@@ -4895,6 +4896,77 @@ mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext'
 mmux_libc_free @RR{PATHNAME}
 @end example
 @end deffn
+
+@c page
+@node characters
+@chapter Characters operations
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_schar_to_string @var{STRINGVAR} @var{SCHAR}
+Interpret the string @var{SCHAR} as the string representation of a number of type
+@objtype{mmux_schar_t}, store it as @asciiz{} character in an @asciiz{} string, bind the string to
+the shell variable whose name is @var{STRINGVAR}.
+
+@example
+declare STRING
+declare -i ASCII_CODE=65
+
+mmux_libc_schar_to_string STRING @RR{ASCII_CODE}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_schar_from_string @var{SCHARVAR} @var{STRING}
+@deffnx Builtin mmux_libc_schar_from_string @var{SCHARVAR} @var{STRING} @var{USIZE_INDEX}
+Extract the character at the zero--based index @var{USIZE_INDEX} from the non--empty string
+@var{STRING}, bind the string representation of its @mmuxascii{} code to the shell variable whose
+name is @var{SCHARVAR}.  When @var{USIZE_INDEX} is not given: it defaults to zero.
+
+@example
+declare STRING='A'
+declare -i ASCII_CODE
+
+mmux_libc_schar_from_string ASCII_CODE @WW{STRING}
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineCharacterPredicateBuiltin{FUNC}
+@deffn Builtin mmux_libc_\FUNC\ @var{SCHAR}
+Interface to the standard C function @cfunc{\FUNC\}.  I the input character matches the class:
+return true; otherwise return false.
+@end deffn
+
+@end macro
+
+@macro MmuxDefineCharacterConversionBuiltin{FUNC}
+@deffn Builtin mmux_libc_\FUNC\ @var{OUTPUT_SCHAR_VAR} @var{INPUT_SCHAR}
+Interface to the standard C function @cfunc{\FUNC\}.  Bind to the shell variable whose name is
+@var{OUTPUT_SCHAR_VAR} the result of converting @var{INPUT_SCHAR}.
+@end deffn
+
+@end macro
+
+@MmuxDefineCharacterPredicateBuiltin{islower}
+@MmuxDefineCharacterPredicateBuiltin{isupper}
+@MmuxDefineCharacterPredicateBuiltin{isalpha}
+@MmuxDefineCharacterPredicateBuiltin{isdigit}
+@MmuxDefineCharacterPredicateBuiltin{isalnum}
+@MmuxDefineCharacterPredicateBuiltin{isxdigit}
+@MmuxDefineCharacterPredicateBuiltin{ispunct}
+@MmuxDefineCharacterPredicateBuiltin{isspace}
+@MmuxDefineCharacterPredicateBuiltin{isblank}
+@MmuxDefineCharacterPredicateBuiltin{isgraph}
+@MmuxDefineCharacterPredicateBuiltin{isprint}
+@MmuxDefineCharacterPredicateBuiltin{iscntrl}
+@MmuxDefineCharacterPredicateBuiltin{isascii}
+
+@MmuxDefineCharacterConversionBuiltin{tolower}
+@MmuxDefineCharacterConversionBuiltin{toupper}
 
 @c page
 @node fds

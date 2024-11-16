@@ -146,6 +146,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-bash.c.m4		\
 	src/mmux-bash-pointers-bind-functions.c.m4	\
 	src/mmux-bash-pointers-bitwise.c.m4		\
+	src/mmux-bash-pointers-characters.c.m4		\
 	src/mmux-bash-pointers-comparison.c.m4		\
 	src/mmux-bash-pointers-errors.c.m4		\
 	src/mmux-bash-pointers-file-descriptors.c.m4	\
@@ -168,6 +169,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-bash.c			\
 	src/mmux-bash-pointers-bind-functions.c		\
 	src/mmux-bash-pointers-bitwise.c		\
+	src/mmux-bash-pointers-characters.c		\
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-file-descriptors.c	\
@@ -208,6 +210,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-bash.c			\
 	src/mmux-bash-pointers-bind-functions.c		\
 	src/mmux-bash-pointers-bitwise.c		\
+	src/mmux-bash-pointers-characters.c		\
 	src/mmux-bash-pointers-comparison.c		\
 	src/mmux-bash-pointers-errors.c			\
 	src/mmux-bash-pointers-file-descriptors.c	\
@@ -245,6 +248,7 @@ EXTRA_DIST		+= \
 	tests/arithmetics.test.m4		\
 	tests/arrays.test.m4			\
 	tests/bitwise.test.m4			\
+	tests/characters.test.m4		\
 	tests/comparison.test.m4		\
 	tests/complex.test.m4			\
 	tests/conversion.test.m4		\
@@ -274,6 +278,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/arithmetics.test			\
 	tests/arrays.test			\
 	tests/bitwise.test			\
+	tests/characters.test			\
 	tests/comparison.test			\
 	tests/complex.test			\
 	tests/conversion.test			\
