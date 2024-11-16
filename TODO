@@ -4,6 +4,12 @@
 
 * Add a builtin interfacing "pselect()" ?
 
+* Add a builtin interfacing "poll()" ?
+
+* Add a builtin interfacing "ppoll()" ?
+
+* Add a builtin interfacing "epoll()" ?
+
 ### end of file
 # Local Variables:
 # mode: text
