@@ -5647,6 +5647,27 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
+@deffn Builtin mmux_libc_umask @var{OLD_MASK_VAR} @var{NEW_MASK}
+Interface to the standard C language function @cfunc{umask}, @glibcref{Setting Permissions, umask}.
+Set the current permissions mask to @var{NEW_MASK} and bind the shell variable whose name is
+@var{OLD_MASK_VAR} to the old permissions mask.
+
+@example
+declare -r NEW_UMASK=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+declare OLD_UMASK
+
+mmux_libc_umask OLD_UMASK @RR{NEW_UMASK}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getumask @var{CUR_MASK_VAR}
+Interface to the extension C language function @cfunc{getumask}, @glibcref{Setting Permissions,
+getumask}.  Bind the shell variable whose name is @var{CUR_MASK_VAR} to the current permissions
+mask.
+@end deffn
+
+
 @deffn Builtin mmux_libc_access @var{PATHNAME} @var{HOW}
 Interface to the standard C language function @cfunc{access}, @glibcref{Testing File Access,
 access}.

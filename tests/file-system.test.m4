@@ -576,6 +576,45 @@ function file-system-faccessat-1.2 () {
     mbfl_location_leave
 }
 
+
+#### umask
+
+function file-system-umask-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r NEW_UMASK=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+	declare OLD_UMASK
+
+	# Remember that this function is run in a subshell by libmbfl-tests.
+	mbfl_location_leave_when_failure( mmux_libc_umask OLD_UMASK RR(NEW_UMASK) )
+    }
+    mbfl_location_leave
+}
+
+
+#### getumask
+
+function file-system-getumask-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare OLD_UMASK
+
+	# Remember that this function is run in a subshell by libmbfl-tests.
+	mbfl_location_leave_when_failure( mmux_libc_getumask OLD_UMASK )
+
+	dotest-debug OLD_UMASK=WW(OLD_UMASK)
+	true
+    }
+    mbfl_location_leave
+}
 
 
 #### let's go
