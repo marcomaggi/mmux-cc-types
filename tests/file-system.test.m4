@@ -430,11 +430,7 @@ function file-system-fchown-1.1 () {
 	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	if mmux_libc_open FD WW(PATHNAME) 0 0
-	then mbfl_location_handler "mmux_libc_close RR(FD)"
-	else mbfl_location_leave_then_return_failure
-	fi
-
+	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) 0 0, mmux_libc_close RR(FD) )
 	mbfl_location_leave_when_failure( mmux_libc_fchown WW(FD) RR(UID) RR(UID))
     }
     mbfl_location_leave
@@ -612,6 +608,69 @@ function file-system-getumask-1.1 () {
 
 	dotest-debug OLD_UMASK=WW(OLD_UMASK)
 	true
+    }
+    mbfl_location_leave
+}
+
+
+#### chmod
+
+function file-system-chmod-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_chmod WW(PATHNAME) RR(MODE) )
+    }
+    mbfl_location_leave
+}
+
+
+#### fchmod
+
+function file-system-fchmod-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+	declare FD
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) 0 0, mmux_libc_close RR(FD) )
+	mbfl_location_leave_when_failure( mmux_libc_fchmod WW(FD) RR(MODE) )
+    }
+    mbfl_location_leave
+}
+
+
+#### fchmodat
+
+function file-system-fchmodat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+	declare -r FLAGS=RR(mmux_libc_AT_SYMLINK_NOFOLLOW)
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_fchmodat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) RR(MODE) RR(FLAGS) )
     }
     mbfl_location_leave
 }

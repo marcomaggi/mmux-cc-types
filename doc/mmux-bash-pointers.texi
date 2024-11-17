@@ -5668,6 +5668,49 @@ mask.
 @end deffn
 
 
+@deffn Builtin mmux_libc_chmod @var{PATHNAME} @var{MODE}
+Interface to the standard C language function @cfunc{chmod}, @glibcref{Setting Permissions, chmod}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare -r MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+
+mmux_libc_chmod WW(PATHNAME) @RR{MODE}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_fchmod @var{FD} @var{MODE}
+Interface to the standard C language function @cfunc{fchmod}, @glibcref{Setting Permissions,
+fchmod}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare -r MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+declare FD
+
+mmux_libc_open FD @WW{PATHNAME} 0 0
+@{
+    mmux_libc_fchmod @WW{FD} @RR{MODE}
+@}
+mmux_libc_close @RR{FD}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_fchmodat @var{DIRFD} @var{PATHNAME} @var{MODE} @var{FLAGS}
+Interface to the standard C language function @cfunc{fchmodat}, @cfuncpage{fchmodat}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare -r MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR | mmux_libc_S_IRGRP ))
+declare -r FLAGS=@RR{mmux_libc_AT_SYMLINK_NOFOLLOW}
+
+mmux_libc_fchmodat @RR{mmux_libc_AT_FDCWD} @WW{PATHNAME} @RR{MODE} @RR{FLAGS}
+@end example
+@end deffn
+
+
 @deffn Builtin mmux_libc_access @var{PATHNAME} @var{HOW}
 Interface to the standard C language function @cfunc{access}, @glibcref{Testing File Access,
 access}.
