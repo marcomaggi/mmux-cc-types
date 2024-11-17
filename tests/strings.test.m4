@@ -52,7 +52,9 @@ LC_COLLATE=C
 
 function strings-from-bash-1.1 () {
     declare -r EXPECTED_RESULT='ciao'
-    declare PTR C I A O Z
+    declare PTR
+    declare  OCTET_C  OCTET_I  OCTET_A  OCTET_O  OCTET_Z
+    declare STRING_C STRING_I STRING_A STRING_O
 
     mbfl_location_enter
     {
@@ -67,11 +69,16 @@ function strings-from-bash-1.1 () {
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref O RR(PTR) 3 )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref Z RR(PTR) 4 )
 
+	mmux_libc_schar_to_string STRING_C WW(C)
+	mmux_libc_schar_to_string STRING_I WW(I)
+	mmux_libc_schar_to_string STRING_A WW(A)
+	mmux_libc_schar_to_string STRING_O WW(O)
+
 	dotest-predicate mmux_string_is_pointer WW(PTR) &&
-	    dotest-equal 'c' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(C)) &&
-	    dotest-equal 'i' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(I)) &&
-	    dotest-equal 'a' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(A)) &&
-	    dotest-equal 'o' WW(MMUX_BASH_POINTERS_ASCII_TABLE, WW(O)) &&
+	    dotest-equal 'c' WW(STRING_C) &&
+	    dotest-equal 'i' WW(STRING_I) &&
+	    dotest-equal 'a' WW(STRING_A) &&
+	    dotest-equal 'o' WW(STRING_O) &&
 	    dotest-equal 0 WW(Z)
     }
     mbfl_location_leave
