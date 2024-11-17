@@ -31,11 +31,6 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
-m4_define([[[COMPENSATE]]],[[[if $1
-then mbfl_location_handler "$2"
-else mbfl_location_leave_then_return_failure
-fi]]])
-
 
 #### setup
 
@@ -61,7 +56,7 @@ function time-struct-timeval-1.1 () {
 	declare -i SECONDS MICROSECONDS
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
+	mbfl_location_compensate(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
 	dotest-equal 0 RR(SECONDS) &&
 	    dotest-equal 0 RR(MICROSECONDS)
@@ -80,7 +75,7 @@ function time-struct-timeval-1.2 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL RR(INIT_SECONDS) RR(INIT_MICROSECONDS), mmux_libc_free RR(TIMEVAL))
+	mbfl_location_compensate(mmux_libc_timeval_malloc TIMEVAL RR(INIT_SECONDS) RR(INIT_MICROSECONDS), mmux_libc_free RR(TIMEVAL))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
 
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
@@ -99,7 +94,7 @@ function time-struct-timeval-2.1 () {
 	declare -i SECONDS MICROSECONDS
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
+	mbfl_location_compensate(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_set RR(TIMEVAL) RR(INIT_SECONDS) RR(INIT_MICROSECONDS))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
 
@@ -121,7 +116,7 @@ function time-struct-timeval-3.1 () {
 	dotest-unset-debug
 
 	# No init values.
-	COMPENSATE(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
+	mbfl_location_compensate(mmux_libc_timeval_malloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
 
 	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(TIMEVAL)  RR(INIT_SECONDS))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(TIMEVAL)  RR(INIT_MICROSECONDS))
@@ -150,7 +145,7 @@ function time-struct-timespec-1.1 () {
 	declare -i SECONDS NANOSECONDS
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
 	dotest-equal 0 RR(SECONDS) &&
 	    dotest-equal 0 RR(NANOSECONDS)
@@ -169,7 +164,7 @@ function time-struct-timespec-1.2 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC RR(INIT_SECONDS) RR(INIT_NANOSECONDS), mmux_libc_free RR(TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc TIMESPEC RR(INIT_SECONDS) RR(INIT_NANOSECONDS), mmux_libc_free RR(TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
 
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
@@ -188,7 +183,7 @@ function time-struct-timespec-2.1 () {
 	declare -i SECONDS NANOSECONDS
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_set RR(TIMESPEC) RR(INIT_SECONDS) RR(INIT_NANOSECONDS))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
 
@@ -210,7 +205,7 @@ function time-struct-timespec-3.1 () {
 	dotest-unset-debug
 
 	# No init values.
-	COMPENSATE(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
 
 	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_set      RR(TIMESPEC)  RR(INIT_SECONDS))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_set RR(TIMESPEC)  RR(INIT_NANOSECONDS))
@@ -236,7 +231,7 @@ function time-struct-tm-1.1 () {
 	declare TM SEC MIN HOUR MDAY MON YEAR WDAY YDAY ISDST GMTOFF
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 
 	mbfl_location_leave_when_failure( mmux_libc_tm_sec_ref    SEC    RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_tm_min_ref    MIN    RR(TM))
@@ -271,7 +266,7 @@ function time-struct-tm-2.1 () {
 	declare TM SEC MIN HOUR MDAY MON YEAR WDAY YDAY ISDST GMTOFF
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 
 	mbfl_location_leave_when_failure( mmux_libc_tm_reset RR(TM) )
 
@@ -327,7 +322,7 @@ function time-localtime-1.1 () {
 	declare -i THE_TIME
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_time THE_TIME )
 	mbfl_location_leave_when_failure( mmux_libc_localtime RR(TM) RR(THE_TIME) )
 	dotest-predicate mmux_string_is_time WW(THE_TIME)
@@ -345,7 +340,7 @@ function time-gmtime-1.1 () {
 	declare -i THE_TIME
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_time THE_TIME )
 	mbfl_location_leave_when_failure( mmux_libc_gmtime RR(TM) RR(THE_TIME) )
 	dotest-predicate mmux_string_is_time WW(THE_TIME)
@@ -363,7 +358,7 @@ function time-mktime-1.1 () {
 	declare -i THE_TIME
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_mktime THE_TIME RR(TM) )
 	dotest-predicate mmux_string_is_time WW(THE_TIME)
     }
@@ -380,7 +375,7 @@ function time-timegm-1.1 () {
 	declare -i THE_TIME
 
 	dotest-unset-debug
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_timegm THE_TIME RR(TM) )
 	dotest-predicate mmux_string_is_time WW(THE_TIME)
     }
@@ -397,7 +392,7 @@ function time-asctime-1.1 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_asctime STRING RR(TM) )
 	dotest-debug QQ(STRING)
 	true
@@ -433,7 +428,7 @@ function time-strftime-1.1 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_strftime STRING WW(TEMPLATE) RR(TM) )
 	dotest-debug QQ(STRING)
 	true
@@ -453,7 +448,7 @@ function time-strptime-1.1 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
+	mbfl_location_compensate(mmux_libc_tm_malloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_strptime WW(INPUT_STRING) WW(TEMPLATE) RR(TM) )
 	mbfl_location_leave_when_failure( mmux_libc_strftime OUTPUT_STRING WW(TEMPLATE) RR(TM) )
 	dotest-debug QQ(OUTPUT_STRING)
@@ -489,8 +484,8 @@ function time-nanosleep-1.1 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 1, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	COMPENSATE(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 1, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
 

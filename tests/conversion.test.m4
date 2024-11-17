@@ -31,11 +31,6 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
-m4_define([[[COMPENSATE]]],[[[if $1
-then mbfl_location_handler "$2"
-else mbfl_location_leave_then_return_failure
-fi]]])
-
 
 #### setup
 
@@ -56,7 +51,7 @@ function conversion-array-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_libc_malloc POINTER WW(SIZE),
+	mbfl_location_compensate( mmux_libc_malloc POINTER WW(SIZE),
 		    mmux_libc_free RR(POINTER) )
 
 	mmux_index_array_to_memory   WW(POINTER)     UU(ORIGIN_ARRY) WW(SIZE)

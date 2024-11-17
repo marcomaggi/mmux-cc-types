@@ -31,11 +31,6 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
-m4_define([[[COMPENSATE]]],[[[if $1
-then mbfl_location_handler "$2"
-else mbfl_location_leave_then_return_failure
-fi]]])
-
 
 #### helpers
 
@@ -124,7 +119,7 @@ function memory-memset-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_libc_malloc PTR WW(SIZE),
+	mbfl_location_compensate(mmux_libc_malloc PTR WW(SIZE),
 		   mmux_libc_free RR(PTR))
 
 	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR) 1 WW(SIZE) )
@@ -145,10 +140,10 @@ function memory-memcpy-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE),
+	mbfl_location_compensate(mmux_libc_malloc PTR_FROM WW(SIZE),
 		   mmux_libc_free RR(PTR_FROM))
 
-	COMPENSATE(mmux_libc_malloc PTR_TO WW(SIZE),
+	mbfl_location_compensate(mmux_libc_malloc PTR_TO WW(SIZE),
 		   mmux_libc_free RR(PTR_TO))
 
 	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 1 WW(SIZE) )
@@ -175,10 +170,10 @@ function memory-mempcpy-1.1 () {
 	    declare PTR_FROM PTR_TO RESULT
 	    declare PTR_AFTER_TO COMPUTED_PTR_AFTER_TO
 
-	    COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE),
+	    mbfl_location_compensate(mmux_libc_malloc PTR_FROM WW(SIZE),
 		       mmux_libc_free RR(PTR_FROM))
 
-	    COMPENSATE(mmux_libc_malloc PTR_TO WW(SIZE),
+	    mbfl_location_compensate(mmux_libc_malloc PTR_TO WW(SIZE),
 		       mmux_libc_free RR(PTR_TO))
 
 	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 1 WW(SIZE) )
@@ -215,8 +210,8 @@ function memory-memccpy-1.1 () {
 	    declare -r SEPARATOR_OCTET='5'
 	    declare OCTET_AFTER_SEPARATOR
 
-	    COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE), mmux_libc_free RR(PTR_FROM))
-	    COMPENSATE(mmux_libc_malloc PTR_TO   WW(SIZE), mmux_libc_free RR(PTR_TO))
+	    mbfl_location_compensate(mmux_libc_malloc PTR_FROM WW(SIZE), mmux_libc_free RR(PTR_FROM))
+	    mbfl_location_compensate(mmux_libc_malloc PTR_TO   WW(SIZE), mmux_libc_free RR(PTR_TO))
 
 	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 0 WW(SIZE) )
 	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
@@ -264,8 +259,8 @@ function memory-memccpy-1.2 () {
 
 	    declare -r SEPARATOR_OCTET='99'
 
-	    COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE), mmux_libc_free RR(PTR_FROM))
-	    COMPENSATE(mmux_libc_malloc PTR_TO   WW(SIZE), mmux_libc_free RR(PTR_TO))
+	    mbfl_location_compensate(mmux_libc_malloc PTR_FROM WW(SIZE), mmux_libc_free RR(PTR_FROM))
+	    mbfl_location_compensate(mmux_libc_malloc PTR_TO   WW(SIZE), mmux_libc_free RR(PTR_TO))
 
 	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 0 WW(SIZE) )
 	    mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_TO)   0 WW(SIZE) )
@@ -292,10 +287,10 @@ function memory-memmove-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_libc_malloc PTR_FROM WW(SIZE),
+	mbfl_location_compensate(mmux_libc_malloc PTR_FROM WW(SIZE),
 		   mmux_libc_free RR(PTR_FROM))
 
-	COMPENSATE(mmux_libc_malloc PTR_TO WW(SIZE),
+	mbfl_location_compensate(mmux_libc_malloc PTR_TO WW(SIZE),
 		   mmux_libc_free RR(PTR_TO))
 
 	mbfl_location_leave_when_failure( mmux_libc_memset WW(PTR_FROM) 1 WW(SIZE) )
@@ -318,8 +313,8 @@ function memory-memcmp-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_memcmp TERNARY WW(PTR1) WW(PTR2) WW(LEN) )
 	(( 0 == TERNARY ))
@@ -334,8 +329,8 @@ function memory-memcmp-1.2 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_memcmp TERNARY WW(PTR1) WW(PTR2) WW(LEN) )
 	dotest-debug TERNARY=WW(TERNARY)
@@ -349,8 +344,8 @@ function memory-memcmp-1.3 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_memcmp TERNARY WW(PTR2) WW(PTR1) WW(LEN) )
 	(( 0 < TERNARY ))
@@ -368,7 +363,7 @@ function memory-memchr-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR) )
 	mbfl_location_leave_when_failure( mmux_libc_memchr RESULT_PTR RR(PTR) 65 RR(LEN) )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
@@ -388,7 +383,7 @@ function memory-rawmemchr-1.1 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
 	    mbfl_location_leave_when_failure( mmux_libc_rawmemchr RESULT_PTR RR(PTR) 65 )
 	    mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
 	    dotest-equal 65 WW(RESULT_CHAR)
@@ -408,7 +403,7 @@ function memory-memrchr-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR) )
 	mbfl_location_leave_when_failure( mmux_libc_memrchr RESULT_PTR RR(PTR) 65 RR(LEN) )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
@@ -428,8 +423,8 @@ function memory-memmem-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
-	COMPENSATE(mmux_pointer_from_bash_string NEEDLE   'O MA',       mmux_libc_free RR(NEEDLE))
+	mbfl_location_compensate(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
+	mbfl_location_compensate(mmux_pointer_from_bash_string NEEDLE   'O MA',       mmux_libc_free RR(NEEDLE))
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen HAYSTACK_LEN RR(HAYSTACK) )
 	mbfl_location_leave_when_failure( mmux_libc_strlen NEEDLE_LEN   RR(NEEDLE)   )

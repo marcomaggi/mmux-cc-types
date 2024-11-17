@@ -31,11 +31,6 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
-m4_define([[[COMPENSATE]]],[[[if $1
-then mbfl_location_handler "$2"
-else mbfl_location_leave_then_return_failure
-fi]]])
-
 
 #### setup
 
@@ -237,13 +232,13 @@ function strings-strcpy-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
 		    mmux_libc_free RR(PTR1) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
 	mmux_usize_incr LEN_PLUS RR(LEN)
 
-	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS),
+	mbfl_location_compensate( mmux_libc_malloc PTR2 RR(LEN_PLUS),
 		    mmux_libc_free WW(PTR2))
 
 	mbfl_location_leave_when_failure( mmux_libc_strcpy RR(PTR2) RR(PTR1))
@@ -264,13 +259,13 @@ function strings-strncpy-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
 		    mmux_libc_free RR(PTR1) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
 	mmux_usize_add LEN_PLUS RR(LEN) 10
 
-	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS),
+	mbfl_location_compensate( mmux_libc_malloc PTR2 RR(LEN_PLUS),
 		    mmux_libc_free WW(PTR2))
 
 	mbfl_location_leave_when_failure( mmux_libc_strncpy RR(PTR2) RR(PTR1) RR(LEN_PLUS))
@@ -291,9 +286,9 @@ function strings-strdup-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 'ciao mamma',
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 'ciao mamma',
 		    mmux_libc_free RR(PTR1) )
-	COMPENSATE( mmux_libc_strdup PTR2 RR(PTR1),
+	mbfl_location_compensate( mmux_libc_strdup PTR2 RR(PTR1),
 		    mmux_libc_free RR(PTR2) )
 	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
 	dotest-equal WW(EXPECTED_STRING) WW(STR)
@@ -313,9 +308,9 @@ function strings-strndup-1.1 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE( mmux_pointer_from_bash_string PTR1 'ciao mamma',
+	    mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 'ciao mamma',
 			mmux_libc_free RR(PTR1) )
-	    COMPENSATE( mmux_libc_strndup PTR2 RR(PTR1) 4,
+	    mbfl_location_compensate( mmux_libc_strndup PTR2 RR(PTR1) 4,
 			mmux_libc_free RR(PTR2) )
 	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR WW(PTR2) )
 	    dotest-equal WW(EXPECTED_STRING) WW(STR)
@@ -336,13 +331,13 @@ function strings-stpcpy-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
 		    mmux_libc_free RR(PTR1) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
 	mmux_usize_incr LEN_PLUS RR(LEN)
 
-	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS),
+	mbfl_location_compensate( mmux_libc_malloc PTR2 RR(LEN_PLUS),
 		    mmux_libc_free WW(PTR2))
 
 	mbfl_location_leave_when_failure( mmux_libc_stpcpy AFTER_PTR RR(PTR2) RR(PTR1) )
@@ -368,13 +363,13 @@ function strings-stpncpy-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING),
 		    mmux_libc_free RR(PTR1) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
 	mmux_usize_incr LEN_PLUS RR(LEN)
 
-	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS),
+	mbfl_location_compensate( mmux_libc_malloc PTR2 RR(LEN_PLUS),
 		    mmux_libc_free WW(PTR2))
 
 	mbfl_location_leave_when_failure( mmux_libc_stpncpy AFTER_PTR RR(PTR2) RR(PTR1) RR(LEN_PLUS))
@@ -401,8 +396,8 @@ function strings-strcat-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING1), mmux_libc_free RR(PTR1) )
-	COMPENSATE( mmux_pointer_from_bash_string PTR2 WW(ORIGINAL_STRING2), mmux_libc_free RR(PTR2) )
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING1), mmux_libc_free RR(PTR1) )
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR2 WW(ORIGINAL_STRING2), mmux_libc_free RR(PTR2) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN1 RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN2 RR(PTR2) )
@@ -411,7 +406,7 @@ function strings-strcat-1.1 () {
 
 	dotest-debug LEN3_PLUS=RR(LEN3_PLUS)
 
-	COMPENSATE( mmux_libc_malloc PTR3 RR(LEN3_PLUS), mmux_libc_free RR(PTR3) )
+	mbfl_location_compensate( mmux_libc_malloc PTR3 RR(LEN3_PLUS), mmux_libc_free RR(PTR3) )
 	mmux_schar_pointer_set RR(PTR3) 0 0
 
 	mbfl_location_leave_when_failure( mmux_libc_strcat RR(PTR3) RR(PTR1) )
@@ -434,8 +429,8 @@ function strings-strncat-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING1), mmux_libc_free RR(PTR1) )
-	COMPENSATE( mmux_pointer_from_bash_string PTR2 WW(ORIGINAL_STRING2), mmux_libc_free RR(PTR2) )
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING1), mmux_libc_free RR(PTR1) )
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR2 WW(ORIGINAL_STRING2), mmux_libc_free RR(PTR2) )
 
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN1 RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN2 RR(PTR2) )
@@ -444,7 +439,7 @@ function strings-strncat-1.1 () {
 
 	dotest-debug LEN3_PLUS=RR(LEN3_PLUS)
 
-	COMPENSATE( mmux_libc_malloc PTR3 RR(LEN3_PLUS), mmux_libc_free RR(PTR3) )
+	mbfl_location_compensate( mmux_libc_malloc PTR3 RR(LEN3_PLUS), mmux_libc_free RR(PTR3) )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_set RR(PTR3) 0 0 )
 
 	mbfl_location_leave_when_failure( mmux_libc_strncat RR(PTR3) RR(PTR1) RR(LEN1))
@@ -464,8 +459,8 @@ function strings-strcmp-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strcmp TERNARY WW(PTR1) WW(PTR2) )
 	(( 0 == TERNARY ))
     }
@@ -479,8 +474,8 @@ function strings-strcmp-1.2 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strcmp TERNARY WW(PTR1) WW(PTR2) )
 	dotest-debug TERNARY=WW(TERNARY)
 	(( 0 > TERNARY ))
@@ -493,8 +488,8 @@ function strings-strcmp-1.3 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strcmp TERNARY WW(PTR2) WW(PTR1) )
 	(( 0 < TERNARY ))
     }
@@ -510,8 +505,8 @@ function strings-strncmp-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_strncmp TERNARY WW(PTR1) WW(PTR2) WW(LEN) )
 	(( 0 == TERNARY ))
@@ -526,8 +521,8 @@ function strings-strncmp-1.2 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_strncmp TERNARY WW(PTR1) WW(PTR2) WW(LEN) )
 	dotest-debug TERNARY=WW(TERNARY)
@@ -541,8 +536,8 @@ function strings-strncmp-1.3 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_strncmp TERNARY WW(PTR2) WW(PTR1) WW(LEN) )
 	(( 0 < TERNARY ))
@@ -561,8 +556,8 @@ function strings-strcasecmp-1.1 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strcasecmp TERNARY WW(PTR1) WW(PTR2) )
 	    (( 0 == TERNARY ))
 	}
@@ -580,8 +575,8 @@ function strings-strcasecmp-1.2 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strcasecmp TERNARY WW(PTR1) WW(PTR2) )
 	    dotest-debug TERNARY=WW(TERNARY)
 	    (( 0 > TERNARY ))
@@ -598,8 +593,8 @@ function strings-strcasecmp-1.3 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strcasecmp TERNARY WW(PTR2) WW(PTR1) )
 	    (( 0 < TERNARY ))
 	}
@@ -619,8 +614,8 @@ function strings-strncasecmp-1.1 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	    mbfl_location_leave_when_failure( mmux_libc_strncasecmp TERNARY WW(PTR1) WW(PTR2) WW(LEN) )
 	    (( 0 == TERNARY ))
@@ -639,8 +634,8 @@ function strings-strncasecmp-1.2 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	    mbfl_location_leave_when_failure( mmux_libc_strncasecmp TERNARY WW(PTR1) WW(PTR2) WW(LEN) )
 	    dotest-debug TERNARY=WW(TERNARY)
@@ -658,8 +653,8 @@ function strings-strncasecmp-1.3 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'CIAO MAMMA', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strlen LEN RR(PTR1) )
 	    mbfl_location_leave_when_failure( mmux_libc_strncasecmp TERNARY WW(PTR2) WW(PTR1) WW(LEN) )
 	    (( 0 < TERNARY ))
@@ -680,8 +675,8 @@ function strings-strverscmp-1.1 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 '1.2.3', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 '1.2.3', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 '1.2.3', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 '1.2.3', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strverscmp TERNARY WW(PTR1) WW(PTR2) )
 	    (( 0 == TERNARY ))
 	}
@@ -697,8 +692,8 @@ function strings-strverscmp-1.2 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR1 '1.2.3', mmux_libc_free RR(PTR1))
-	    COMPENSATE(mmux_pointer_from_bash_string PTR2 '1.2.8', mmux_libc_free RR(PTR2))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 '1.2.3', mmux_libc_free RR(PTR1))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 '1.2.8', mmux_libc_free RR(PTR2))
 	    mbfl_location_leave_when_failure( mmux_libc_strverscmp TERNARY WW(PTR1) WW(PTR2) )
 	    (( 0 > TERNARY ))
 	}
@@ -716,8 +711,8 @@ function strings-strcoll-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'ciao mamma', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strcoll TERNARY WW(PTR1) WW(PTR2) )
 	(( 0 == TERNARY ))
     }
@@ -731,8 +726,8 @@ function strings-strcoll-1.2 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strcoll TERNARY WW(PTR1) WW(PTR2) )
 	dotest-debug TERNARY=WW(TERNARY)
 	(( 0 > TERNARY ))
@@ -745,8 +740,8 @@ function strings-strcoll-1.3 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
-	COMPENSATE(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR1 'ciao mamma', mmux_libc_free RR(PTR1))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR2 'hello world', mmux_libc_free RR(PTR2))
 	mbfl_location_leave_when_failure( mmux_libc_strcoll TERNARY WW(PTR2) WW(PTR1) )
 	(( 0 < TERNARY ))
     }
@@ -763,10 +758,10 @@ function strings-strxfrm-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING), mmux_libc_free RR(PTR1) )
+	mbfl_location_compensate( mmux_pointer_from_bash_string PTR1 WW(ORIGINAL_STRING), mmux_libc_free RR(PTR1) )
 	mbfl_location_leave_when_failure( mmux_libc_strlen LEN WW(PTR1) )
 	mmux_usize_add LEN_PLUS RR(LEN) 1
-	COMPENSATE( mmux_libc_malloc PTR2 RR(LEN_PLUS), mmux_libc_free WW(PTR2))
+	mbfl_location_compensate( mmux_libc_malloc PTR2 RR(LEN_PLUS), mmux_libc_free WW(PTR2))
 
 	mbfl_location_leave_when_failure( mmux_libc_strxfrm RESULT_USIZE RR(PTR2) RR(PTR1) RR(LEN_PLUS))
 
@@ -786,7 +781,7 @@ function strings-strchr-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
 	mbfl_location_leave_when_failure( mmux_libc_strchr RESULT_PTR RR(PTR) 65 )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
 	dotest-equal 65 WW(RESULT_CHAR)
@@ -806,7 +801,7 @@ function strings-strchrnul-1.1 () {
 
 	mbfl_location_enter
 	{
-	    COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	    mbfl_location_compensate(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
 	    mbfl_location_leave_when_failure( mmux_libc_strchrnul RESULT_PTR RR(PTR) 65 )
 	    mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
 	    dotest-equal 65 WW(RESULT_CHAR)
@@ -826,7 +821,7 @@ function strings-strrchr-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PTR 'CIAO MAMMA', mmux_libc_free RR(PTR))
 	mbfl_location_leave_when_failure( mmux_libc_strrchr RESULT_PTR RR(PTR) 65 )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref RESULT_CHAR RR(RESULT_PTR) 0 )
 	dotest-equal 65 WW(RESULT_CHAR)
@@ -843,8 +838,8 @@ function strings-strstr-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
-	COMPENSATE(mmux_pointer_from_bash_string NEEDLE   'O MA',       mmux_libc_free RR(NEEDLE))
+	mbfl_location_compensate(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
+	mbfl_location_compensate(mmux_pointer_from_bash_string NEEDLE   'O MA',       mmux_libc_free RR(NEEDLE))
 
 	mbfl_location_leave_when_failure( mmux_libc_strstr RESULT_PTR RR(HAYSTACK) RR(NEEDLE) )
 	mbfl_location_leave_when_failure( mmux_pointer_diff PTRDIFF RR(RESULT_PTR) RR(HAYSTACK) )
@@ -862,8 +857,8 @@ function strings-strcasestr-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
-	COMPENSATE(mmux_pointer_from_bash_string NEEDLE   'o ma',       mmux_libc_free RR(NEEDLE))
+	mbfl_location_compensate(mmux_pointer_from_bash_string HAYSTACK 'CIAO MAMMA', mmux_libc_free RR(HAYSTACK))
+	mbfl_location_compensate(mmux_pointer_from_bash_string NEEDLE   'o ma',       mmux_libc_free RR(NEEDLE))
 
 	mbfl_location_leave_when_failure( mmux_libc_strcasestr RESULT_PTR RR(HAYSTACK) RR(NEEDLE) )
 	mbfl_location_leave_when_failure( mmux_pointer_diff PTRDIFF RR(RESULT_PTR) RR(HAYSTACK) )
@@ -881,8 +876,8 @@ function strings-strspn-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
-	COMPENSATE(mmux_pointer_from_bash_string SKIPSET 'ciao ',      mmux_libc_free RR(SKIPSET))
+	mbfl_location_compensate(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
+	mbfl_location_compensate(mmux_pointer_from_bash_string SKIPSET 'ciao ',      mmux_libc_free RR(SKIPSET))
 
 	mbfl_location_leave_when_failure( mmux_libc_strspn RESULT RR(STRING) RR(SKIPSET) )
 	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
@@ -899,8 +894,8 @@ function strings-strcspn-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
-	COMPENSATE(mmux_pointer_from_bash_string STOPSET 'm',          mmux_libc_free RR(STOPSET))
+	mbfl_location_compensate(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
+	mbfl_location_compensate(mmux_pointer_from_bash_string STOPSET 'm',          mmux_libc_free RR(STOPSET))
 
 	mbfl_location_leave_when_failure( mmux_libc_strcspn RESULT RR(STRING) RR(STOPSET) )
 	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
@@ -917,8 +912,8 @@ function strings-strpbrk-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
-	COMPENSATE(mmux_pointer_from_bash_string STOPSET 'm',          mmux_libc_free RR(STOPSET))
+	mbfl_location_compensate(mmux_pointer_from_bash_string STRING  'ciao mamma', mmux_libc_free RR(STRING))
+	mbfl_location_compensate(mmux_pointer_from_bash_string STOPSET 'm',          mmux_libc_free RR(STOPSET))
 
 	mbfl_location_leave_when_failure( mmux_pointer_add EXPECTED_RESULT RR(STRING) 5 )
 
@@ -938,8 +933,8 @@ function strings-strtok-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string STRING     'uno due tre quattro ', mmux_libc_free RR(STRING))
-	COMPENSATE(mmux_pointer_from_bash_string DELIMITERS ' ', mmux_libc_free RR(DELIMITERS))
+	mbfl_location_compensate(mmux_pointer_from_bash_string STRING     'uno due tre quattro ', mmux_libc_free RR(STRING))
+	mbfl_location_compensate(mmux_pointer_from_bash_string DELIMITERS ' ', mmux_libc_free RR(DELIMITERS))
 
 	mbfl_location_leave_when_failure( mmux_libc_strtok SS(TOKEN,0) RR(STRING) RR(DELIMITERS) )
 	mbfl_location_leave_when_failure( mmux_libc_strtok SS(TOKEN,1) 0 RR(DELIMITERS) )
@@ -970,7 +965,7 @@ function strings-basename-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext', mmux_libc_free RR(PATHNAME))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext', mmux_libc_free RR(PATHNAME))
 	mbfl_location_leave_when_failure( mmux_libc_basename RESULT RR(PATHNAME) )
 	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string RESULT WW(RESULT) )
 	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)
@@ -987,7 +982,7 @@ function strings-dirname-1.1 () {
 
     mbfl_location_enter
     {
-	COMPENSATE(mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext', mmux_libc_free RR(PATHNAME))
+	mbfl_location_compensate(mmux_pointer_from_bash_string PATHNAME '/path/to/filename.ext', mmux_libc_free RR(PATHNAME))
 	mbfl_location_leave_when_failure( mmux_libc_dirname RESULT RR(PATHNAME) )
 	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string RESULT WW(RESULT) )
 	dotest-equal WW(EXPECTED_RESULT) WW(RESULT)

@@ -31,11 +31,6 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
-m4_define([[[COMPENSATE]]],[[[if $1
-then mbfl_location_handler "$2"
-else mbfl_location_leave_then_return_failure
-fi]]])
-
 
 #### setup
 

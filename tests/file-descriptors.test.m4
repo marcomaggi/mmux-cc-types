@@ -31,11 +31,6 @@
 
 MBFL_DEFINE_SPECIAL_MACROS
 
-m4_define([[[COMPENSATE]]],[[[if $1
-then mbfl_location_handler "$2"
-else mbfl_location_leave_then_return_failure
-fi]]])
-
 
 #### setup
 
@@ -489,10 +484,10 @@ function file-descriptors-select-1.1 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_fd_set_malloc READ_FD_SET,  mmux_libc_free RR(READ_FD_SET))
-	COMPENSATE(mmux_libc_fd_set_malloc WRIT_FD_SET,  mmux_libc_free RR(WRIT_FD_SET))
-	COMPENSATE(mmux_libc_fd_set_malloc EXEC_FD_SET,  mmux_libc_free RR(EXEC_FD_SET))
-	COMPENSATE(mmux_libc_timeval_malloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
+	mbfl_location_compensate(mmux_libc_fd_set_malloc READ_FD_SET,  mmux_libc_free RR(READ_FD_SET))
+	mbfl_location_compensate(mmux_libc_fd_set_malloc WRIT_FD_SET,  mmux_libc_free RR(WRIT_FD_SET))
+	mbfl_location_compensate(mmux_libc_fd_set_malloc EXEC_FD_SET,  mmux_libc_free RR(EXEC_FD_SET))
+	mbfl_location_compensate(mmux_libc_timeval_malloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
 
 	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
 	mbfl_location_handler "mmux_libc_close RR(READING_FD)"
@@ -525,8 +520,8 @@ function file-descriptors-select-1.2 () {
 
 	dotest-unset-debug
 
-	COMPENSATE(mmux_libc_fd_set_malloc_triplet READ_FD_SET WRIT_FD_SET EXEC_FD_SET,  mmux_libc_free RR(READ_FD_SET))
-	COMPENSATE(mmux_libc_timeval_malloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
+	mbfl_location_compensate(mmux_libc_fd_set_malloc_triplet READ_FD_SET WRIT_FD_SET EXEC_FD_SET,  mmux_libc_free RR(READ_FD_SET))
+	mbfl_location_compensate(mmux_libc_timeval_malloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
 
 	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
 	mbfl_location_handler "mmux_libc_close RR(READING_FD)"
