@@ -5749,8 +5749,98 @@ fi
 @section File attributes
 
 
+To use a standard @code{struct stat} value, we can do:
+
+@example
+declare STAT
+declare ST_MODE ST_INO ST_DEV ST_NLINK ST_UID ST_GID ST_SIZE
+declare ST_ATIME ST_ATIME_NSEC ST_MTIME ST_MTIME_NSEC ST_CTIME ST_CTIME_NSEC
+declare ST_BLOCKS ST_BLKSIZE
+
+mmux_libc_stat_malloc STAT
+@{
+    mmux_libc_stat @WW{PATHNAME} @RR{STAT}
+
+    mmux_libc_st_mode_ref       ST_MODE         @RR{STAT}
+    mmux_libc_st_ino_ref        ST_INO          @RR{STAT}
+    mmux_libc_st_dev_ref        ST_DEV          @RR{STAT}
+    mmux_libc_st_nlink_ref      ST_NLINK        @RR{STAT}
+    mmux_libc_st_uid_ref        ST_UID          @RR{STAT}
+    mmux_libc_st_gid_ref        ST_GID          @RR{STAT}
+    mmux_libc_st_size_ref       ST_SIZE         @RR{STAT}
+    mmux_libc_st_atime_ref      ST_ATIME        @RR{STAT}
+    mmux_libc_st_atime_nsec_ref ST_ATIME_NSEC   @RR{STAT}
+    mmux_libc_st_mtime_ref      ST_MTIME        @RR{STAT}
+    mmux_libc_st_mtime_nsec_ref ST_MTIME_NSEC   @RR{STAT}
+    mmux_libc_st_ctime_ref      ST_CTIME        @RR{STAT}
+    mmux_libc_st_ctime_nsec_ref ST_CTIME_NSEC   @RR{STAT}
+    mmux_libc_st_blocks_ref     ST_BLOCKS       @RR{STAT}
+    mmux_libc_st_blksize_ref    ST_BLKSIZE      @RR{STAT}
+
+    # ...
+@}
+mmuc_libc_free @RR{STAT}
+@end example
+
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
+
+@defvr {Shell Variable} mmux_libc_stat_SIZEOF
+Shell variable bound to the number of bytes required to contain a @code{struct stat},
+@glibcref{Attribute Meanings, struct stat}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_stat_malloc @var{STAT_POINTER_VAR}
+Allocate a data structure of type @code{struct stat} using @cfunc{malloc} and initialise it all zero
+values; bind a string representation of its pointer to the shell variable whose name is
+@var{STAT_POINTER_VAR}.
+
+To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineStructStatFieldGetter{ARG,FIELD}
+@deffn Builtin mmux_libc_\FIELD\_ref @var{\ARG\_VAR} @var{STAT_POINTER}
+Given a pointer @var{STAT_POINTER} to a @code{struct stat}: bind to the shell variable
+@var{MODE_VAR} a string representation of the value of field @code{\FIELD\}.
+@end deffn
+
+@end macro
+
+@MmuxDefineStructStatFieldGetter{MODE,st_mode}
+@MmuxDefineStructStatFieldGetter{INO,st_ino}
+@MmuxDefineStructStatFieldGetter{DEV,st_dev}
+@MmuxDefineStructStatFieldGetter{NLINK,st_nlink}
+@MmuxDefineStructStatFieldGetter{UID,st_uid}
+@MmuxDefineStructStatFieldGetter{GID,st_gid}
+@MmuxDefineStructStatFieldGetter{SIZE,st_size}
+@MmuxDefineStructStatFieldGetter{ATIME,st_atime}
+@MmuxDefineStructStatFieldGetter{ATIME_NSEC,st_atime_nsec}
+@MmuxDefineStructStatFieldGetter{MTIME,st_mtime}
+@MmuxDefineStructStatFieldGetter{MTIME_NSEC,st_mtime_nsec}
+@MmuxDefineStructStatFieldGetter{CTIME,st_ctime}
+@MmuxDefineStructStatFieldGetter{CTIME_NSEC,st_ctime_nsec}
+@MmuxDefineStructStatFieldGetter{BLOCKS,st_blocks}
+@MmuxDefineStructStatFieldGetter{BLKSIZE,st_blksize}
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_stat @var{PATHNAME} @var{STAT_POINTER}
+Interface to the standard C language function @cfunc{stat}, @glibcref{Reading Attributes, stat}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_fstat @var{FD} @var{STAT_POINTER}
+Interface to the standard C language function @cfunc{fstat}, @glibcref{Reading Attributes, fstat}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_lstat @var{PATHNAME} @var{STAT_POINTER}
+Interface to the standard C language function @cfunc{lstat}, @glibcref{Reading Attributes, lstat}.
+@end deffn
 
 @c page
 @node fs truncating
@@ -6181,8 +6271,8 @@ Shell variable bound to the number of bytes required to contain a @code{struct t
 
 @deffn Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR}
 @deffnx Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_MICROSECONDS}
-Allocate data structure of type @code{struct timeval} using @cfunc{malloc} and initialise it with
-the given values; store a string representation of its pointer in the shell variable whose name is
+Allocate a data structure of type @code{struct timeval} using @cfunc{malloc} and initialise it with
+the given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TIMEVAL_POINTER_VAR}.  @glibcref{Time Types, struct timeval}.
 
 To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
@@ -6264,8 +6354,8 @@ Shell variable bound to the number of bytes required to contain a @code{struct t
 
 @deffn Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR}
 @deffnx Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_NANOSECONDS}
-Allocate data structure of type @code{struct timespec} using @cfunc{malloc} and initialise it with
-the given values; store a string representation of its pointer in the shell variable whose name is
+Allocate a data structure of type @code{struct timespec} using @cfunc{malloc} and initialise it with
+the given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TIMESPEC_POINTER_VAR}.  @glibcref{Time Types, struct timespec}.
 
 To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
@@ -6355,8 +6445,8 @@ Shell variable bound to the number of bytes required to contain a @code{struct t
 
 
 @deffn Builtin mmux_libc_tm_malloc @var{TM_POINTER_VAR}
-Allocate data structure of type @code{struct tm} using @cfunc{malloc} and initialise it with the
-given values; store a string representation of its pointer in the shell variable whose name is
+Allocate a data structure of type @code{struct tm} using @cfunc{malloc} and initialise it with the
+given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TM_POINTER_VAR}.  @glibcref{Time Types, struct tm}.
 
 To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.

@@ -737,7 +737,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
- ** File attributes.
+ ** Truncating file size.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_truncate]]])
@@ -790,9 +790,282 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
- ** Truncating file size.
+ ** File attributes.
  ** ----------------------------------------------------------------- */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat_malloc]]])
+{
+  char const *	pointer_varname;
 
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pointer_varname,	argv[1]);
+  {
+    struct stat *	stat_pointer = malloc(sizeof(struct stat));
+
+    if (stat_pointer) {
+      return mmux_pointer_bind_to_bash_variable(pointer_varname, stat_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STAT_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_mode_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_mode_t		value        = stat_pointer->st_mode;
+
+    return mmux_mode_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_uid_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_uid_t		value        = stat_pointer->st_uid;
+
+    return mmux_uid_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_gid_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_gid_t		value        = stat_pointer->st_gid;
+
+    return mmux_gid_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_size_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_off_t		value        = stat_pointer->st_size;
+
+    return mmux_off_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STAT_GETTER_UINTMAX]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_$1_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_uintmax_t	value        = (uintmax_t)(stat_pointer->st_$1);
+
+    return mmux_uintmax_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])]]])
+
+DEFINE_STAT_GETTER_UINTMAX([[[ino]]])
+DEFINE_STAT_GETTER_UINTMAX([[[dev]]])
+DEFINE_STAT_GETTER_UINTMAX([[[nlink]]])
+DEFINE_STAT_GETTER_UINTMAX([[[blocks]]])
+DEFINE_STAT_GETTER_UINTMAX([[[blksize]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STAT_GETTER_TIME]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_$1_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_time_t		value        = (stat_pointer->st_$1);
+
+    return mmux_time_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])]]])
+
+DEFINE_STAT_GETTER_TIME([[[atime]]])
+DEFINE_STAT_GETTER_TIME([[[mtime]]])
+DEFINE_STAT_GETTER_TIME([[[ctime]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STAT_GETTER_ULONG]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_$1e_nsec_ref]]])
+{
+  char const *		value_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    mmux_ulong_t	value        = (stat_pointer->st_$1.tv_nsec);
+
+    return mmux_ulong_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VARNAME STAT_POINTER"]]])]]])
+
+DEFINE_STAT_GETTER_ULONG([[[atim]]])
+DEFINE_STAT_GETTER_ULONG([[[mtim]]])
+DEFINE_STAT_GETTER_ULONG([[[ctim]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat]]])
+{
+  char const *		pathname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    int			rv           = stat(pathname, stat_pointer);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME STAT_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fstat]]])
+{
+  mmux_sint_t		fd;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(fd,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,	argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    int			rv           = fstat(fd, stat_pointer);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FD STAT_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lstat]]])
+{
+  char const *		pathname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[2]);
+  {
+    struct stat *	stat_pointer = pointer;
+    int			rv           = lstat(pathname, stat_pointer);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME STAT_POINTER"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Module initialisation.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_rv_t
+mmux_bash_pointers_init_file_system_module (void)
+{
+  mmux_bash_rv_t	rv;
+
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_stat_SIZEOF",  sizeof(struct stat), NULL);
+  if (MMUX_SUCCESS != rv) { return rv; }
+
+  return MMUX_SUCCESS;
+}
 
 /* end of file */

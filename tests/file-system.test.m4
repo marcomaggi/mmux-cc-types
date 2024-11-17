@@ -719,6 +719,223 @@ function file-system-ftruncate-1.1 () {
 }
 
 
+#### stat
+
+function file-system-stat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare STAT
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare ST_MODE ST_INO ST_DEV ST_NLINK ST_UID ST_GID ST_SIZE ST_BLOCKS ST_BLKSIZE
+	declare ST_ATIME ST_ATIME_NSEC ST_MTIME ST_MTIME_NSEC ST_CTIME ST_CTIME_NSEC
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_stat WW(PATHNAME) RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_st_mode_ref		ST_MODE RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ino_ref		ST_INO RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_dev_ref		ST_DEV RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_nlink_ref	ST_NLINK RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
+
+	dotest-debug ST_MODE=QQ(ST_MODE)
+	dotest-debug ST_INO=QQ(ST_INO)
+	dotest-debug ST_DEV=QQ(ST_DEV)
+	dotest-debug ST_NLINK=QQ(ST_NLINK)
+	dotest-debug ST_UID=QQ(ST_UID)
+	dotest-debug ST_GID=QQ(ST_GID)
+	dotest-debug ST_SIZE=QQ(ST_SIZE)
+	dotest-debug ST_ATIME=QQ(ST_ATIME)
+	dotest-debug ST_ATIME_NSEC=QQ(ST_ATIME_NSEC)
+	dotest-debug ST_MTIME=QQ(ST_MTIME)
+	dotest-debug ST_MTIME_NSEC=QQ(ST_MTIME_NSEC)
+	dotest-debug ST_CTIME=QQ(ST_CTIME)
+	dotest-debug ST_CTIME_NSEC=QQ(ST_CTIME_NSEC)
+	dotest-debug ST_BLOCKS=QQ(ST_BLOCKS)
+	dotest-debug ST_BLKSIZE=QQ(ST_BLKSIZE)
+
+	dotest-predicate mmux_string_is_uintmax RR(ST_MODE) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_INO) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_DEV) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_NLINK) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_UID) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_GID) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_SIZE) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_ATIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_ATIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_MTIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_MTIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_CTIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_CTIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_BLOCKS) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_BLKSIZE)
+    }
+    mbfl_location_leave
+}
+
+
+#### fstat
+
+function file-system-fstat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare STAT FD
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -i FLAGS=RR(mmux_libc_O_RDWR)
+	declare ST_MODE ST_INO ST_DEV ST_NLINK ST_UID ST_GID ST_SIZE ST_BLOCKS ST_BLKSIZE
+	declare ST_ATIME ST_ATIME_NSEC ST_MTIME ST_MTIME_NSEC ST_CTIME ST_CTIME_NSEC
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) RR(FLAGS) 0, mmux_libc_close RR(FD) )
+	mbfl_location_leave_when_failure( mmux_libc_fstat RR(FD) RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_st_mode_ref		ST_MODE RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ino_ref		ST_INO RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_dev_ref		ST_DEV RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_nlink_ref	ST_NLINK RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
+
+	dotest-debug ST_MODE=QQ(ST_MODE)
+	dotest-debug ST_INO=QQ(ST_INO)
+	dotest-debug ST_DEV=QQ(ST_DEV)
+	dotest-debug ST_NLINK=QQ(ST_NLINK)
+	dotest-debug ST_UID=QQ(ST_UID)
+	dotest-debug ST_GID=QQ(ST_GID)
+	dotest-debug ST_SIZE=QQ(ST_SIZE)
+	dotest-debug ST_ATIME=QQ(ST_ATIME)
+	dotest-debug ST_ATIME_NSEC=QQ(ST_ATIME_NSEC)
+	dotest-debug ST_MTIME=QQ(ST_MTIME)
+	dotest-debug ST_MTIME_NSEC=QQ(ST_MTIME_NSEC)
+	dotest-debug ST_CTIME=QQ(ST_CTIME)
+	dotest-debug ST_CTIME_NSEC=QQ(ST_CTIME_NSEC)
+	dotest-debug ST_BLOCKS=QQ(ST_BLOCKS)
+	dotest-debug ST_BLKSIZE=QQ(ST_BLKSIZE)
+
+	dotest-predicate mmux_string_is_uintmax RR(ST_MODE) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_INO) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_DEV) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_NLINK) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_UID) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_GID) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_SIZE) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_ATIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_ATIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_MTIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_MTIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_CTIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_CTIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_BLOCKS) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_BLKSIZE)
+    }
+    mbfl_location_leave
+}
+
+
+#### lstat
+
+function file-system-lstat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare STAT
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare ST_MODE ST_INO ST_DEV ST_NLINK ST_UID ST_GID ST_SIZE ST_BLOCKS ST_BLKSIZE
+	declare ST_ATIME ST_ATIME_NSEC ST_MTIME ST_MTIME_NSEC ST_CTIME ST_CTIME_NSEC
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_lstat WW(PATHNAME) RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_st_mode_ref		ST_MODE RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ino_ref		ST_INO RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_dev_ref		ST_DEV RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_nlink_ref	ST_NLINK RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
+
+	dotest-debug ST_MODE=QQ(ST_MODE)
+	dotest-debug ST_INO=QQ(ST_INO)
+	dotest-debug ST_DEV=QQ(ST_DEV)
+	dotest-debug ST_NLINK=QQ(ST_NLINK)
+	dotest-debug ST_UID=QQ(ST_UID)
+	dotest-debug ST_GID=QQ(ST_GID)
+	dotest-debug ST_SIZE=QQ(ST_SIZE)
+	dotest-debug ST_ATIME=QQ(ST_ATIME)
+	dotest-debug ST_ATIME_NSEC=QQ(ST_ATIME_NSEC)
+	dotest-debug ST_MTIME=QQ(ST_MTIME)
+	dotest-debug ST_MTIME_NSEC=QQ(ST_MTIME_NSEC)
+	dotest-debug ST_CTIME=QQ(ST_CTIME)
+	dotest-debug ST_CTIME_NSEC=QQ(ST_CTIME_NSEC)
+	dotest-debug ST_BLOCKS=QQ(ST_BLOCKS)
+	dotest-debug ST_BLKSIZE=QQ(ST_BLKSIZE)
+
+	dotest-predicate mmux_string_is_uintmax RR(ST_MODE) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_INO) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_DEV) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_NLINK) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_UID) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_GID) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_SIZE) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_ATIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_ATIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_MTIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_MTIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_CTIME) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_CTIME_NSEC) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_BLOCKS) &&
+	dotest-predicate mmux_string_is_uintmax RR(ST_BLKSIZE)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-
