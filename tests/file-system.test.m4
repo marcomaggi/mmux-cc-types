@@ -41,6 +41,20 @@ mbfl_linker_source_library_by_stem(mmux-bash-packages)
 mbfl_linker_source_library_by_stem(mmux-bash-pointers)
 
 
+#### constants
+
+function file-system-constants-1.0 () { mmux_string_is_slong RR(mmux_libc_AT_EACCESS) ; }
+function file-system-constants-1.1 () { mmux_string_is_slong RR(mmux_libc_AT_EMPTY_PATH) ; }
+function file-system-constants-1.2 () { mmux_string_is_slong RR(mmux_libc_AT_FDCWD) ; }
+function file-system-constants-1.3 () { mmux_string_is_slong RR(mmux_libc_AT_REMOVEDIR) ; }
+function file-system-constants-1.4 () { mmux_string_is_slong RR(mmux_libc_AT_SYMLINK_FOLLOW) ; }
+function file-system-constants-1.5 () { mmux_string_is_slong RR(mmux_libc_AT_SYMLINK_NOFOLLOW) ; }
+#function file-system-constants-1.6 () { mmux_string_is_slong RR(mmux_libc_MAXSYMLINKS) ; }
+function file-system-constants-1.7 () { mmux_string_is_slong RR(mmux_libc_RENAME_EXCHANGE) ; }
+function file-system-constants-1.8 () { mmux_string_is_slong RR(mmux_libc_RENAME_NOREPLACE) ; }
+#function file-system-constants-1.9 () { mmux_string_is_slong RR(mmux_libc_RENAME_WITHEOUT) ; }
+
+
 #### link
 
 function file-system-link-1.1 () {
