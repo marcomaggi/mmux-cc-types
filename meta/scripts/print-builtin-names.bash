@@ -67,7 +67,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   tm_gmtoff_set tm_gmtoff_ref tm_reset
 			   time localtime gmtime mktime timegm asctime ctime strftime strptime sleep nanosleep
 			   islower isupper isalpha isdigit isalnum isxdigit ispunct isspace isblank isgraph isprint
-			   iscntrl isascii tolower toupper schar_from_string schar_to_string)
+			   iscntrl isascii tolower toupper)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
@@ -103,8 +103,11 @@ declare NAME ALIAS ITEM STEM
 	printf -v NAME 'mmux_libc_%s' "$ITEM"
 	print_builtin_name "$NAME"
     done
+}
 
-    for NAME in mmux_pointer_from_bash_string mmux_pointer_to_bash_string
+# Conversions.
+{
+    for NAME in mmux_pointer_from_bash_string mmux_pointer_to_bash_string mmux_schar_from_string mmux_schar_to_string
     do print_builtin_name "$NAME"
     done
 }

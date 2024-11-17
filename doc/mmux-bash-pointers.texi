@@ -905,6 +905,7 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 * cctypes mathematics::         Mathematics operation builtins.
 * cctypes bitwise::             Bitwise operation builtins.
 * cctypes formats::             Input and output formats.
+* cctypes conversion::          Conversion builtins.
 @end menu
 
 @c page
@@ -3838,6 +3839,48 @@ Reformat a complex floating--point number of type @objtype{\STEM\}.
 @MmuxComplexReformatBuiltin{complexd128}
 
 @c page
+@node cctypes conversion
+@section Conversion builtins
+
+
+@menu
+* cctypes conversion schar::    Converting characters.
+@end menu
+
+@c page
+@node cctypes conversion schar
+@subsection Converting characters
+
+
+@deffn Builtin mmux_schar_to_string @var{STRINGVAR} @var{SCHAR}
+Interpret the string @var{SCHAR} as the string representation of a number of type
+@objtype{mmux_schar_t}, store it as @asciiz{} character in an @asciiz{} string, bind the string to
+the shell variable whose name is @var{STRINGVAR}.
+
+@example
+declare STRING
+declare -i ASCII_CODE=65
+
+mmux_schar_to_string STRING @RR{ASCII_CODE}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_schar_from_string @var{SCHARVAR} @var{STRING}
+@deffnx Builtin mmux_schar_from_string @var{SCHARVAR} @var{STRING} @var{USIZE_INDEX}
+Extract the character at the zero--based index @var{USIZE_INDEX} from the non--empty string
+@var{STRING}, bind the string representation of its @mmuxascii{} code to the shell variable whose
+name is @var{SCHARVAR}.  When @var{USIZE_INDEX} is not given: it defaults to zero.
+
+@example
+declare STRING='A'
+declare -i ASCII_CODE
+
+mmux_schar_from_string ASCII_CODE @WW{STRING}
+@end example
+@end deffn
+
+@c page
 @node memory
 @chapter Raw memory operations
 
@@ -4904,36 +4947,6 @@ mmux_libc_free @RR{PATHNAME}
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
-
-@deffn Builtin mmux_libc_schar_to_string @var{STRINGVAR} @var{SCHAR}
-Interpret the string @var{SCHAR} as the string representation of a number of type
-@objtype{mmux_schar_t}, store it as @asciiz{} character in an @asciiz{} string, bind the string to
-the shell variable whose name is @var{STRINGVAR}.
-
-@example
-declare STRING
-declare -i ASCII_CODE=65
-
-mmux_libc_schar_to_string STRING @RR{ASCII_CODE}
-@end example
-@end deffn
-
-
-@deffn Builtin mmux_libc_schar_from_string @var{SCHARVAR} @var{STRING}
-@deffnx Builtin mmux_libc_schar_from_string @var{SCHARVAR} @var{STRING} @var{USIZE_INDEX}
-Extract the character at the zero--based index @var{USIZE_INDEX} from the non--empty string
-@var{STRING}, bind the string representation of its @mmuxascii{} code to the shell variable whose
-name is @var{SCHARVAR}.  When @var{USIZE_INDEX} is not given: it defaults to zero.
-
-@example
-declare STRING='A'
-declare -i ASCII_CODE
-
-mmux_libc_schar_from_string ASCII_CODE @WW{STRING}
-@end example
-@end deffn
-
-@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCharacterPredicateBuiltin{FUNC}
 @deffn Builtin mmux_libc_\FUNC\ @var{SCHAR}

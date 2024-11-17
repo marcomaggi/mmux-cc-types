@@ -33,7 +33,7 @@
  ** Conversion.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_schar_from_string]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_from_string]]])
 {
   char const *	schar_varname;
   char const *	string;
@@ -64,7 +64,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_schar_to_string]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_to_string]]])
 {
   char const *	string_varname;
   mmux_schar_t	ch;

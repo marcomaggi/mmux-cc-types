@@ -47,14 +47,14 @@ function characters-schar_from_string-1.1 () {
     declare STRING='A'
     declare -i ASCII_CODE
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string ASCII_CODE WW(STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string ASCII_CODE WW(STRING) )
     dotest-equal 65 RR(ASCII_CODE)
 }
 function characters-schar_from_string-2.1 () {
     declare STRING='BOCCA'
     declare -i ASCII_CODE
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string ASCII_CODE WW(STRING) 4 )
+    mbfl_location_leave_when_failure( mmux_schar_from_string ASCII_CODE WW(STRING) 4 )
     dotest-equal 65 RR(ASCII_CODE)
 }
 
@@ -65,7 +65,7 @@ function characters-schar_to_string-1.1 () {
     declare STRING
     declare -i ASCII_CODE=65
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_to_string STRING RR(ASCII_CODE) )
+    mbfl_location_leave_when_failure( mmux_schar_to_string STRING RR(ASCII_CODE) )
     dotest-equal 'A' QQ(STRING)
 }
 
@@ -77,7 +77,7 @@ function characters-islower-1.1 () {
     declare -i ASCII_CODE
 
     dotest-unset-debug
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string ASCII_CODE WW(STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string ASCII_CODE WW(STRING) )
     dotest-debug ASCII_CODE=RR(ASCII_CODE)
     ! mmux_libc_islower RR(ASCII_CODE)
 }
@@ -86,7 +86,7 @@ function characters-islower-1.2 () {
     declare -i ASCII_CODE
 
     dotest-unset-debug
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string ASCII_CODE WW(STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string ASCII_CODE WW(STRING) )
     dotest-debug ASCII_CODE=RR(ASCII_CODE)
     mmux_libc_islower RR(ASCII_CODE)
 }
@@ -99,7 +99,7 @@ function characters-isupper-1.1 () {
     declare -i ASCII_CODE
 
     dotest-unset-debug
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string ASCII_CODE WW(STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string ASCII_CODE WW(STRING) )
     dotest-debug ASCII_CODE=RR(ASCII_CODE)
     mmux_libc_isupper RR(ASCII_CODE)
 }
@@ -108,7 +108,7 @@ function characters-isupper-1.2 () {
     declare -i ASCII_CODE
 
     dotest-unset-debug
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string ASCII_CODE WW(STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string ASCII_CODE WW(STRING) )
     dotest-debug ASCII_CODE=RR(ASCII_CODE)
     ! mmux_libc_isupper RR(ASCII_CODE)
 }
@@ -122,9 +122,9 @@ function characters-tolower-1.1 () {
 
     dotest-unset-debug
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
     mbfl_location_leave_when_failure( mmux_libc_tolower OUTPUT_ASCII_CODE RR(INPUT_ASCII_CODE) )
-    mbfl_location_leave_when_failure( mmux_libc_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
+    mbfl_location_leave_when_failure( mmux_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
 
     dotest-debug INPUT_ASCII_CODE=RR(INPUT_ASCII_CODE) OUTPUT_ASCII_CODE=RR(OUTPUT_ASCII_CODE)
     dotest-equal 'a' QQ(OUTPUT_STRING)
@@ -135,9 +135,9 @@ function characters-tolower-1.2 () {
 
     dotest-unset-debug
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
     mbfl_location_leave_when_failure( mmux_libc_tolower OUTPUT_ASCII_CODE RR(INPUT_ASCII_CODE) )
-    mbfl_location_leave_when_failure( mmux_libc_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
+    mbfl_location_leave_when_failure( mmux_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
 
     dotest-debug INPUT_ASCII_CODE=RR(INPUT_ASCII_CODE) OUTPUT_ASCII_CODE=RR(OUTPUT_ASCII_CODE)
     dotest-equal 'a' QQ(OUTPUT_STRING)
@@ -152,9 +152,9 @@ function characters-toupper-1.1 () {
 
     dotest-unset-debug
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
     mbfl_location_leave_when_failure( mmux_libc_toupper OUTPUT_ASCII_CODE RR(INPUT_ASCII_CODE) )
-    mbfl_location_leave_when_failure( mmux_libc_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
+    mbfl_location_leave_when_failure( mmux_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
 
     dotest-debug INPUT_ASCII_CODE=RR(INPUT_ASCII_CODE) OUTPUT_ASCII_CODE=RR(OUTPUT_ASCII_CODE)
     dotest-equal 'A' QQ(OUTPUT_STRING)
@@ -165,9 +165,9 @@ function characters-toupper-1.2 () {
 
     dotest-unset-debug
 
-    mbfl_location_leave_when_failure( mmux_libc_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
+    mbfl_location_leave_when_failure( mmux_schar_from_string INPUT_ASCII_CODE WW(INPUT_STRING) )
     mbfl_location_leave_when_failure( mmux_libc_toupper OUTPUT_ASCII_CODE RR(INPUT_ASCII_CODE) )
-    mbfl_location_leave_when_failure( mmux_libc_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
+    mbfl_location_leave_when_failure( mmux_schar_to_string OUTPUT_STRING RR(OUTPUT_ASCII_CODE) )
 
     dotest-debug INPUT_ASCII_CODE=RR(INPUT_ASCII_CODE) OUTPUT_ASCII_CODE=RR(OUTPUT_ASCII_CODE)
     dotest-equal 'A' QQ(OUTPUT_STRING)

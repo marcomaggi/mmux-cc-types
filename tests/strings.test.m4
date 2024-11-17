@@ -64,10 +64,10 @@ function strings-from-bash-1.1 () {
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref O RR(PTR) 3 )
 	mbfl_location_leave_when_failure( mmux_schar_pointer_ref Z RR(PTR) 4 )
 
-	mmux_libc_schar_to_string STRING_C WW(C)
-	mmux_libc_schar_to_string STRING_I WW(I)
-	mmux_libc_schar_to_string STRING_A WW(A)
-	mmux_libc_schar_to_string STRING_O WW(O)
+	mmux_schar_to_string STRING_C WW(C)
+	mmux_schar_to_string STRING_I WW(I)
+	mmux_schar_to_string STRING_A WW(A)
+	mmux_schar_to_string STRING_O WW(O)
 
 	dotest-predicate mmux_string_is_pointer WW(PTR) &&
 	    dotest-equal 'c' WW(STRING_C) &&
