@@ -563,7 +563,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
- ** File attributes.
+ ** File access permissions.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_umask]]])
@@ -734,5 +734,65 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_faccessat]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME HOW FLAGS"]]])
+
+
+/** --------------------------------------------------------------------
+ ** File attributes.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_truncate]]])
+{
+  char const *	pathname;
+  mmux_off_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_OFF(len,			argv[2]);
+  {
+    int		rv = truncate(pathname, len);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME LEN"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ftruncate]]])
+{
+  mmux_sint_t	fd;
+  mmux_off_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(fd,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_OFF(len,	argv[2]);
+  {
+    int		rv = ftruncate(fd, len);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME LEN"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Truncating file size.
+ ** ----------------------------------------------------------------- */
+
+
 
 /* end of file */

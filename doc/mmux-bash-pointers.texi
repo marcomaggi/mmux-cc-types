@@ -5432,7 +5432,9 @@ it is usually @code{mmux_libc_FD_SETSIZE}.
 * fs renaming::                 Renaming links builtins.
 * fs directories::              Directory builtins.
 * fs ownership::                File ownership builtins.
+* fs permissions::              File access permissions.
 * fs attributes::               File attributes.
+* fs truncating::               Truncating files.
 @end menu
 
 @c page
@@ -5640,8 +5642,8 @@ Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchow
 @end deffn
 
 @c page
-@node fs attributes
-@section File attributes
+@node fs permissions
+@section File access permissions
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5739,6 +5741,53 @@ if mmux_libc_faccessat @RR{mmux_libc_AT_FDCWD} @WW{PATHNAME} @RR{HOW} @RR{FLAGS}
 then # accessible
 else # not accessible
 fi
+@end example
+@end deffn
+
+@c page
+@node fs attributes
+@section File attributes
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@c page
+@node fs truncating
+@section Truncating files
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_truncate @var{PATHNAME} @var{LEN}
+Interface to the standard C language function @cfunc{truncate}, @glibcref{File Size, truncate}.  The
+argument @var{LEN} must be compatible with the C language type @objtype{mmux_off_t}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare -r LEN=0
+
+mmux_libc_truncate @WW{PATHNAME} @RR{LEN}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_ftruncate @var{FD} @var{LEN}
+Interface to the standard C language function @cfunc{ftruncate}, @glibcref{File Size, ftruncate}.
+The argument @var{LEN} must be compatible with the C language type @objtype{mmux_off_t}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare -i FLAGS=@RR{mmux_libc_O_RDWR}
+declare -r LEN=0
+declare FD
+
+mmux_libc_open FD @WW{PATHNAME} @RR{FLAGS}
+@{
+    mmux_libc_ftruncate @RR{FD} @RR{LEN}
+@}
+mmux_libc_close @RR{FD}
 @end example
 @end deffn
 

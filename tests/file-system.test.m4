@@ -676,6 +676,49 @@ function file-system-fchmodat-1.1 () {
 }
 
 
+#### truncate
+
+function file-system-truncate-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r LEN=0
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_truncate WW(PATHNAME) RR(LEN) )
+    }
+    mbfl_location_leave
+}
+
+
+#### ftruncate
+
+function file-system-ftruncate-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -i FLAGS=RR(mmux_libc_O_RDWR)
+	declare -r LEN=0
+	declare FD
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) RR(FLAGS) 0, mmux_libc_close RR(FD) )
+	mbfl_location_leave_when_failure( mmux_libc_ftruncate WW(FD) RR(LEN) )
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-system-
