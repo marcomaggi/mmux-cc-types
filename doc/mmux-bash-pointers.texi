@@ -5778,7 +5778,9 @@ mmux_libc_stat_malloc STAT
     mmux_libc_st_blocks_ref     ST_BLOCKS       @RR{STAT}
     mmux_libc_st_blksize_ref    ST_BLKSIZE      @RR{STAT}
 
-    # ...
+    if mmux_libc_S_ISREG @RR{ST_MODE}
+    then # ...
+    fi
 @}
 mmuc_libc_free @RR{STAT}
 @end example
@@ -5847,6 +5849,38 @@ Interface to the standard C language function @cfunc{lstat}, @glibcref{Reading A
 @deffn Builtin mmux_libc_fstatat @var{DIRFD} @var{PATHNAME} @var{STAT_POINTER} @var{FLAGS}
 Interface to the standard C language function @cfunc{fstatat}, @cfuncpage{fstatat}.
 @end deffn
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineStatModePredicate{STEM}
+@deffn Builtin mmux_libc_S_\STEM\ @var{ST_MODE}
+Interface to the standard C language macro @cfunc{S_\STEM\}, @glibcref{Testing File Type, S_\STEM\}.
+Return true if the file satisfies the macro predicate; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineStatModePredicate{ISDIR}
+@MmuxDefineStatModePredicate{ISCHR}
+@MmuxDefineStatModePredicate{ISBLK}
+@MmuxDefineStatModePredicate{ISREG}
+@MmuxDefineStatModePredicate{ISFIFO}
+@MmuxDefineStatModePredicate{ISLNK}
+@MmuxDefineStatModePredicate{ISSOCK}
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineStatPtrPredicate{STEM}
+@deffn Builtin mmux_libc_S_\STEM\ @var{STAT_POINTER}
+Interface to the standard C language macro @cfunc{S_\STEM\}, @glibcref{Testing File Type, S_\STEM\}.
+Return true if the file satisfies the macro predicate; otherwise return false.
+@end deffn
+
+@end macro
+
+@MmuxDefineStatPtrPredicate{TYPEISMQ}
+@MmuxDefineStatPtrPredicate{TYPEISSEM}
+@MmuxDefineStatPtrPredicate{TYPEISSHM}
 
 @c page
 @node fs truncating

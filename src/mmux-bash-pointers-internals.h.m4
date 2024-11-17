@@ -120,6 +120,10 @@
 #  include <pwd.h>
 #endif
 
+#ifdef HAVE_UTIME_H
+#  include <utime.h>
+#endif
+
 #ifdef HAVE_STDBOOL_H
 #  include <stdbool.h>
 #endif

@@ -1009,6 +1009,35 @@ function file-system-fstatat-1.1 () {
 }
 
 
+#### S_ISREG
+
+function file-system-S_ISREG-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare STAT
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare ST_MODE ST_INO ST_DEV ST_NLINK ST_UID ST_GID ST_SIZE ST_BLOCKS ST_BLKSIZE
+	declare ST_ATIME ST_ATIME_NSEC ST_MTIME ST_MTIME_NSEC ST_CTIME ST_CTIME_NSEC
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_stat WW(PATHNAME) RR(STAT) )
+
+	mbfl_location_leave_when_failure( mmux_libc_st_mode_ref		ST_MODE RR(STAT) )
+	dotest-predicate mmux_libc_S_ISREG WW(ST_MODE)
+    }
+    mbfl_location_leave
+}
+
+# S_ISDIR S_ISCHR S_ISBLK S_ISFIFO S_ISLNK S_ISSOCK S_TYPEISMQ S_TYPEISSEM S_TYPEISSHM
+
+
 #### let's go
 
 dotest file-system-
