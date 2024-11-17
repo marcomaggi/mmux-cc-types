@@ -561,4 +561,61 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME UID GID FLAGS"]]])
 
+
+/** --------------------------------------------------------------------
+ ** File attributes.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_access]]])
+{
+  char const *	pathname;
+  mmux_sint_t	how;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(how,			argv[2]);
+  {
+    int		rv = access(pathname, how);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else if (0 != errno) {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+    return MMUX_FAILURE;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME HOW"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_faccessat]]])
+{
+  mmux_sint_t	dirfd;
+  char const *	pathname;
+  mmux_sint_t	how;
+  mmux_sint_t	flags;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(dirfd,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(how,			argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,		argv[4]);
+  {
+    int		rv = faccessat(dirfd, pathname, how, flags);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else if (0 != errno) {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+    return MMUX_FAILURE;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME HOW FLAGS"]]])
+
 /* end of file */

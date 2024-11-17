@@ -5432,6 +5432,7 @@ it is usually @code{mmux_libc_FD_SETSIZE}.
 * fs renaming::                 Renaming links builtins.
 * fs directories::              Directory builtins.
 * fs ownership::                File ownership builtins.
+* fs attributes::               File attributes.
 @end menu
 
 @c page
@@ -5636,6 +5637,45 @@ Interface to the standard C language function @cfunc{lchown}, @cfuncpage{lchown}
 
 @deffn Builtin mmux_libc_fchownat @var{DIRFD} @var{PATHNAME} @var{UID} @var{GID} @var{FLAGS}
 Interface to the standard C language function @cfunc{fchownat}, @cfuncpage{fchownat}.
+@end deffn
+
+@c page
+@node fs attributes
+@section File attributes
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_access @var{PATHNAME} @var{HOW}
+Interface to the standard C language function @cfunc{access}, @glibcref{Testing File Access,
+access}.
+
+@example
+declare -r PATHNAME=spiffy.ext
+declare -r FLAGS=$(( mmux_libc_R_OK & mmux_libc_W_OK ))
+
+if mmux_libc_access @WW{PATHNAME} @RR{FLAGS}
+then # accessible
+else # not accessible
+fi
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_faccessat @var{DIRFD} @var{PATHNAME} @var{HOW} @var{FLAGS}
+Interface to the standard C language function @cfunc{faccessat}, @cfuncpage{faccessat}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare -r HOW=$(( mmux_libc_R_OK & mmux_libc_W_OK ))
+declare -r FLAGS=@RR{mmux_libc_AT_SYMLINK_NOFOLLOW}
+
+if mmux_libc_faccessat @RR{mmux_libc_AT_FDCWD} @WW{PATHNAME} @RR{HOW} @RR{FLAGS}
+then # accessible
+else # not accessible
+fi
+@end example
 @end deffn
 
 @c page

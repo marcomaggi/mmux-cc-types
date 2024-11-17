@@ -463,6 +463,107 @@ function file-system-fchownat-1.1 () {
 }
 
 
+#### access
+
+function file-system-access-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_access WW(PATHNAME) RR(mmux_libc_R_OK) )
+    }
+    mbfl_location_leave
+}
+function file-system-access-1.2 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_access WW(PATHNAME) RR(mmux_libc_W_OK) )
+    }
+    mbfl_location_leave
+}
+function file-system-access-1.3 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	! mmux_libc_access WW(PATHNAME) RR(mmux_libc_X_OK)
+    }
+    mbfl_location_leave
+}
+function file-system-access-1.4 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r HOW=$(( mmux_libc_R_OK & mmux_libc_W_OK ))
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_access WW(PATHNAME) RR(HOW) )
+    }
+    mbfl_location_leave
+}
+
+
+#### faccessat
+
+function file-system-faccessat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r HOW=RR(mmux_libc_R_OK)
+	declare -r FLAGS=RR(mmux_libc_AT_SYMLINK_NOFOLLOW)
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_faccessat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) RR(HOW) RR(FLAGS) )
+    }
+    mbfl_location_leave
+}
+function file-system-faccessat-1.2 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -r HOW=$(( mmux_libc_R_OK & mmux_libc_W_OK ))
+	declare -r FLAGS=RR(mmux_libc_AT_SYMLINK_NOFOLLOW)
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_leave_when_failure( mmux_libc_faccessat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) RR(HOW) RR(FLAGS) )
+    }
+    mbfl_location_leave
+}
+
+
+
 #### let's go
 
 dotest file-system-
