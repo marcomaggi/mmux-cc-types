@@ -54,7 +54,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   link linkat symlink readlink realpath unlink unlinkat remove rmdir rename renameat
 			   mkdir mkdirat
 			   chown fchown lchown fchownat umask getumask chmod fchmod fchmodat access faccessat
-			   truncate ftruncate stat fstat lstat stat_malloc
+			   truncate ftruncate stat fstat lstat fstatat stat_malloc
 			   st_mode_ref st_ino_ref st_dev_ref st_nlink_ref st_uid_ref st_gid_ref st_size_ref
 			   st_atime_ref st_atime_nsec_ref st_mtime_ref st_mtime_nsec_ref st_ctime_ref st_ctime_nsec_ref
 			   st_blocks_ref st_blksize_ref

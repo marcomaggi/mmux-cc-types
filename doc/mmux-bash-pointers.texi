@@ -816,6 +816,7 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 
 @MmuxDefineGlobalVarSystemConstant{AT_EMPTY_PATH}
 @MmuxDefineGlobalVarSystemConstant{AT_FDCWD}
+@MmuxDefineGlobalVarSystemConstant{AT_NOAUTOMOUNT}
 @MmuxDefineGlobalVarSystemConstant{AT_REMOVEDIR}
 @MmuxDefineGlobalVarSystemConstant{AT_SYMLINK_FOLLOW}
 @MmuxDefineGlobalVarSystemConstant{EOF}
@@ -5840,6 +5841,11 @@ Interface to the standard C language function @cfunc{fstat}, @glibcref{Reading A
 
 @deffn Builtin mmux_libc_lstat @var{PATHNAME} @var{STAT_POINTER}
 Interface to the standard C language function @cfunc{lstat}, @glibcref{Reading Attributes, lstat}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_fstatat @var{DIRFD} @var{PATHNAME} @var{STAT_POINTER} @var{FLAGS}
+Interface to the standard C language function @cfunc{fstatat}, @cfuncpage{fstatat}.
 @end deffn
 
 @c page

@@ -1052,6 +1052,36 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER PATHNAME STAT_POINTER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fstatat]]])
+{
+  mmux_sint_t		dirfd;
+  char const *		pathname;
+  mmux_pointer_t	pointer;
+  mmux_sint_t		flags;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(dirfd,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pathname,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(pointer,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,		argv[4]);
+  {
+    struct stat *	stat_pointer = pointer;
+    int			rv           = fstatat(dirfd, pathname, stat_pointer, flags);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DIRFD PATHNAME STAT_POINTER FLAGS"]]])
+
 
 /** --------------------------------------------------------------------
  ** Module initialisation.
