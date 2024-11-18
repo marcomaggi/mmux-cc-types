@@ -82,7 +82,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_malloc]]])
 	 "sun_path" in its computation;  at least this is what I  observe.  So we add
 	 it to the memory  block to be able to extract the path  as an ASCIIZ string.
 	 The reported length is still the value computed by "SUN_LEN()", because that
-	 is what is needed to pass when calling "bind()". */
+	 is what  is needed  to pass  when calling "bind()".   (Marco Maggi;  Nov 18,
+	 2024) */
       size_t			addr_len = SUN_LEN(&name);
       struct sockaddr_un *	addr_ptr = calloc(1, 1+addr_len);
 
