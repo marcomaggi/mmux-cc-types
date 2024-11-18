@@ -7852,7 +7852,7 @@ mmux_package_require_by_descriptor MMUX_BASH_PACKAGES_PACKAGE 0
 @end example
 
 @noindent
-while in the source code of @file{libmmux-bash-mpc.bash} there is the top--level code:
+while in the source code of @file{libmmux-bash-mpfi.bash} there is the top--level code:
 
 @example
 mmux_package_require_by_descriptor MMUX_BASH_PACKAGES_PACKAGE 0
