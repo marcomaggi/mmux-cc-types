@@ -799,7 +799,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat_malloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pointer_varname,	argv[1]);
   {
-    struct stat *	stat_pointer = malloc(sizeof(struct stat));
+    struct stat *	stat_pointer = calloc(1, sizeof(struct stat));
 
     if (stat_pointer) {
       return mmux_pointer_bind_to_bash_variable(pointer_varname, stat_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -1140,7 +1140,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utimbuf_malloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pointer_varname,	argv[1]);
   {
-    struct utimbuf *	utimbuf_pointer = malloc(sizeof(struct utimbuf));
+    struct utimbuf *	utimbuf_pointer = calloc(1, sizeof(struct utimbuf));
 
     if (utimbuf_pointer) {
       return mmux_pointer_bind_to_bash_variable(pointer_varname, utimbuf_pointer, MMUX_BASH_BUILTIN_STRING_NAME);

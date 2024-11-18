@@ -428,6 +428,8 @@ function file-system-fchown-1.1 () {
 	dotest-unset-debug
 
 	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare FD
+
 	dotest-debug PATHNAME=WW(PATHNAME)
 
 	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) 0 0, mmux_libc_close RR(FD) )
@@ -1036,6 +1038,124 @@ function file-system-S_ISREG-1.1 () {
 }
 
 # S_ISDIR S_ISCHR S_ISBLK S_ISFIFO S_ISLNK S_ISSOCK S_TYPEISMQ S_TYPEISSEM S_TYPEISSHM
+
+
+#### utime
+
+function file-system-utime-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare UTIMBUF
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_utimbuf_malloc UTIMBUF, mmux_libc_free RR(UTIMBUF) )
+
+	mbfl_location_leave_when_failure( mmux_libc_utimbuf_actime_set  RR(UTIMBUF) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_utimbuf_modtime_set RR(UTIMBUF) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_utime WW(PATHNAME) RR(UTIMBUF) )
+    }
+    mbfl_location_leave
+}
+
+
+#### utimes
+
+function file-system-utimes-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+
+	declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_timeval_malloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_malloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(MODIFICATION_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(MODIFICATION_TIMEVAL) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_utimes WW(PATHNAME) RR(ACCESS_TIMEVAL) RR(MODIFICATION_TIMEVAL) )
+    }
+    mbfl_location_leave
+}
+
+
+#### lutimes
+
+function file-system-lutimes-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+
+	declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_timeval_malloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_malloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(MODIFICATION_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(MODIFICATION_TIMEVAL) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_lutimes WW(PATHNAME) RR(ACCESS_TIMEVAL) RR(MODIFICATION_TIMEVAL) )
+    }
+    mbfl_location_leave
+}
+
+
+#### futimes
+
+function file-system-futimes-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+
+	declare -r PATHNAME=$(dotest-mkfile 'spiffy.ext')
+	declare -i FLAGS=RR(mmux_libc_O_RDWR)
+	declare FD
+	declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
+
+	dotest-debug PATHNAME=WW(PATHNAME)
+
+	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) RR(FLAGS) 0, mmux_libc_close RR(FD) )
+
+	mbfl_location_compensate( mmux_libc_timeval_malloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_malloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(MODIFICATION_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(MODIFICATION_TIMEVAL) 456 )
+
+	mbfl_location_leave_when_failure( mmux_libc_futimes WW(FD) RR(ACCESS_TIMEVAL) RR(MODIFICATION_TIMEVAL) )
+    }
+    mbfl_location_leave
+}
 
 
 #### let's go

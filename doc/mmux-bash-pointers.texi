@@ -5428,14 +5428,15 @@ it is usually @code{mmux_libc_FD_SETSIZE}.
 
 @menu
 * fs errors::                   How to handle errors.
-* fs links::                    Hard and symbolic link builtins.
-* fs deleting::                 Deleting links builtins.
-* fs renaming::                 Renaming links builtins.
-* fs directories::              Directory builtins.
-* fs ownership::                File ownership builtins.
+* fs links::                    Hard and symbolic links.
+* fs deleting::                 Deleting links.
+* fs renaming::                 Renaming links.
+* fs directories::              Directories.
+* fs ownership::                File ownership.
 * fs permissions::              File access permissions.
 * fs attributes::               File attributes.
 * fs truncating::               Truncating files.
+* fs times::                    File system times.
 @end menu
 
 @c page
@@ -5460,7 +5461,7 @@ fi
 
 @c page
 @node fs links
-@section Hard and symbolic link builtins
+@section Hard and symbolic links
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5520,7 +5521,7 @@ Interface to the standard C language function @cfunc{realpath}, @glibcref{Symbol
 
 @c page
 @node fs deleting
-@section Deleting links builtins
+@section Deleting links
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5544,18 +5545,13 @@ mmux_libc_unlinkat @RR{mmux_libc_AT_FDCWD} 'filename.ext' 0
 @end deffn
 
 
-@deffn Builtin mmux_libc_rmdir @var{PATHNAME}
-Interface to the standard C language function @cfunc{rmdir}, @glibcref{Deleting Files, rmdir}.
-@end deffn
-
-
 @deffn Builtin mmux_libc_remove @var{PATHNAME}
 Interface to the standard C language function @cfunc{remove}, @glibcref{Deleting Files, remove}.
 @end deffn
 
 @c page
 @node fs renaming
-@section Renaming links builtins
+@section Renaming links
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5592,7 +5588,7 @@ mmux_libc_renameat2 @RR{mmux_libc_AT_FDCWD} 'oldname.ext' \
 
 @c page
 @node fs directories
-@section Directory builtins
+@section Directories
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5615,9 +5611,14 @@ mmux_libc_mkdirat @RR{mmux_libc_AT_FDCWD} 'pathname.d' @RR{mmux_libc_S_IRUSR}
 @end example
 @end deffn
 
+
+@deffn Builtin mmux_libc_rmdir @var{PATHNAME}
+Interface to the standard C language function @cfunc{rmdir}, @glibcref{Deleting Files, rmdir}.
+@end deffn
+
 @c page
 @node fs ownership
-@section File ownership builtins
+@section File ownership
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -5916,6 +5917,130 @@ declare FD
 mmux_libc_open FD @WW{PATHNAME} @RR{FLAGS}
 @{
     mmux_libc_ftruncate @RR{FD} @RR{LEN}
+@}
+mmux_libc_close @RR{FD}
+@end example
+@end deffn
+
+@c page
+@node fs times
+@section File system times
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr {Shell Variable} mmux_libc_utimbuf_SIZEOF
+Shell variable bound to the number of bytes required to contain a @code{struct utimbuf},
+@glibcref{File Times, struct utimbuf}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_utimbuf_malloc @var{UTIMBUF_POINTER_VAR}
+Allocate a block of memory, using @cfunc{malloc}, wide enough to contain a @code{struct utimbuf}
+value; bind to the shell variable whose name is @var{UTIMBUF_POINTER_VAR} a string representation of
+the pointer referencing it.  @glibcref{File Times, struct utimbuf}.
+
+To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_utimbuf_actime_ref @var{ACTIME_VAR} @var{UTIMBUF_POINTER}
+@deffnx Builtin mmux_libc_utimbuf_actime_set @var{UTIMBUF_POINTER} @var{ACTIME}
+Setter and getter for the field @code{actime} of @code{struct utimbuf} values.
+
+The getter binds to the shell variable whose name is @var{ACTIME_VAR} a string representation of the
+field @code{actime} in the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+
+The setter converts the string @var{ACTIME} to a value of type @objtype{mmux_time_t} and store it in
+the field @code{actime} of the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_utimbuf_modtime_ref @var{MODTIME_VAR} @var{UTIMBUF_POINTER}
+@deffnx Builtin mmux_libc_utimbuf_modtime_set @var{UTIMBUF_POINTER} @var{MODTIME}
+Setter and getter for the field @code{modtime} of @code{struct utimbuf} values.
+
+The getter binds to the shell variable whose name is @var{MODTIME_VAR} a string representation of the
+field @code{modtime} in the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+
+The setter converts the string @var{MODTIME} to a value of type @objtype{mmux_time_t} and store it in
+the field @code{modtime} of the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_utime @var{PATHNAME} @var{UTIMBUF_POINTER}
+Interface to the standard C language function @cfunc{utime}, @glibcref{File Times, utime}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare UTIMBUF
+
+mmux_libc_utimbuf_malloc UTIMBUF
+@{
+    mmux_libc_utimbuf_actime_set  @RR{UTIMBUF} 123
+    mmux_libc_utimbuf_modtime_set @RR{UTIMBUF} 456
+
+    mmux_libc_utime WW(PATHNAME) @RR{UTIMBUF}
+@}
+mmux_libc_free RR(UTIMBUF)
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_utimes @var{PATHNAME} @var{ACCESS_TIMEVAL_POINTER} @var{MODIFICATION_TIMEVAL_POINTER}
+Interface to the standard C language function @cfunc{utimes}, @glibcref{File Times, utimes}.
+
+@example
+declare -r PATHNAME='spiffy.ext'
+declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
+
+mmux_libc_timeval_malloc ACCESS_TIMEVAL
+mmux_libc_timeval_malloc MODIFICATION_TIMEVAL
+@{
+    mmux_libc_timeval_seconds_set      @RR{ACCESS_TIMEVAL} 123
+    mmux_libc_timeval_microseconds_set @RR{ACCESS_TIMEVAL} 456
+
+    mmux_libc_timeval_seconds_set      @RR{MODIFICATION_TIMEVAL} 123
+    mmux_libc_timeval_microseconds_set @RR{MODIFICATION_TIMEVAL} 456
+
+    mmux_libc_utimes @WW{PATHNAME} @RR{ACCESS_TIMEVAL} @RR{MODIFICATION_TIMEVAL}
+@}
+mmux_libc_free @RR{MODIFICATION_TIMEVAL}
+mmux_libc_free @RR{ACCESS_TIMEVAL}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_lutimes @var{PATHNAME} @var{ACCESS_TIMEVAL_POINTER} @var{MODIFICATION_TIMEVAL_POINTER}
+Interface to the standard C language function @cfunc{lutimes}, @glibcref{File Times, lutimes}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_futimes @var{FD} @var{ACCESS_TIMEVAL_POINTER} @var{MODIFICATION_TIMEVAL_POINTER}
+Interface to the standard C language function @cfunc{futimes}, @glibcref{File Times, futimes}.
+
+@example
+declare -r  PATHNAME='spiffy.ext'
+declare -ri OPEN_FLAGS=@RR{mmux_libc_O_RDWR}
+declare FD
+declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
+
+mmux_libc_open FD @WW{PATHNAME} @RR{FLAGS}
+@{
+    mmux_libc_timeval_malloc ACCESS_TIMEVAL
+    mmux_libc_timeval_malloc MODIFICATION_TIMEVAL
+    @{
+        mmux_libc_timeval_seconds_set      @RR{ACCESS_TIMEVAL} 123
+        mmux_libc_timeval_microseconds_set @RR{ACCESS_TIMEVAL} 456
+
+        mmux_libc_timeval_seconds_set      @RR{MODIFICATION_TIMEVAL} 123
+        mmux_libc_timeval_microseconds_set @RR{MODIFICATION_TIMEVAL} 456
+
+        mmux_libc_utimes @WW{PATHNAME} @RR{ACCESS_TIMEVAL} @RR{MODIFICATION_TIMEVAL}
+    @}
+    mmux_libc_free @RR{MODIFICATION_TIMEVAL}
+    mmux_libc_free @RR{ACCESS_TIMEVAL}
 @}
 mmux_libc_close @RR{FD}
 @end example

@@ -45,7 +45,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_malloc]]])
     MMUX_BASH_PARSE_BUILTIN_ARG_SLONG(microseconds,		argv[3]);
   }
   {
-    struct timeval *	timeval_pointer = malloc(sizeof(struct timeval));
+    struct timeval *	timeval_pointer = calloc(1, sizeof(struct timeval));
 
     if (timeval_pointer) {
       mmux_bash_rv_t	rv;
@@ -220,7 +220,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_malloc]]])
     MMUX_BASH_PARSE_BUILTIN_ARG_SLONG(nanoseconds,		argv[3]);
   }
   {
-    struct timespec *	timespec_pointer = malloc(sizeof(struct timespec));
+    struct timespec *	timespec_pointer = calloc(1, sizeof(struct timespec));
 
     if (timespec_pointer) {
       mmux_bash_rv_t	rv;
@@ -389,7 +389,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_malloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(pointer_varname,	argv[1]);
   {
-    struct tm *	tm_pointer = malloc(sizeof(struct tm));
+    struct tm *	tm_pointer = calloc(1, sizeof(struct tm));
 
     if (tm_pointer) {
       mmux_time_t	T;
