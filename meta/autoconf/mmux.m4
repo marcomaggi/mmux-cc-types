@@ -680,6 +680,10 @@ AC_INCLUDES_DEFAULT([
 #  include <netinet/in.h>
 #endif
 
+#ifdef HAVE_NET_IF_H
+#  include <net/if.h>
+#endif
+
 #ifdef HAVE_PWD_H
 #  include <pwd.h>
 #endif

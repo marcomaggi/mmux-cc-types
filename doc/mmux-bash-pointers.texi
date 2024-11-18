@@ -185,6 +185,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * fs::                          File system interface.
 * persona::                     Persona operations.
 * time::                        Handling time and date.
+* sockets::                     Sockets interface.
 * errors::                      Handling errors.
 * misc::                        Miscellaneous features.
 
@@ -6869,6 +6870,161 @@ mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 1
 mmux_libc_free @RR{REQUESTED_TIMESPEC}
 @end example
 @end deffn
+
+@c page
+@node sockets
+@chapter Sockets interface
+
+
+@menu
+* sockets inames::              Socket interface names.
+* sockets sockaddr_un::         Interface to @code{struct sockaddr_un}.
+* sockets sockaddr::            Interface to @code{struct sockaddr}.
+* sockets addresses::           Socket addresses.
+@end menu
+
+@c page
+@node sockets inames
+@section Socket interface names
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_if_nameindex_to_array @var{ARRAY_VAR}
+Interface to the standard C language function @cfunc{if_nameindex}, @glibcref{Interface Naming,
+if_nameindex}.  Fill the shell index array whose name is @var{ARRAY_VAR} with the pairs interface
+index/interface name, where the index is the key and the name is the value.
+
+@example
+declare -a ARRY
+
+mmux_libc_if_nameindex_to_array ARRY
+@WW{ARRY[1]}    @result{} lo
+@WW{ARRY[2]}    @result{} eth0
+@WW{ARRY[3]}    @result{} wlan0
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_if_nametoindex @var{INDEX_VAR} @var{NAME}
+Interface to the standard C language function @cfunc{if_nametoindex}, @glibcref{Interface Naming,
+if_nametoindex}.
+
+@example
+declare INDEX
+
+mmux_libc_if_nametoindex INDEX 'eth0'
+@WW{INDEX}       @result{} 2
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_if_indextoname @var{INDEX_VAR} @var{NAME}
+Interface to the standard C language function @cfunc{if_indextoname}, @glibcref{Interface Naming,
+if_indextoname}.
+
+@example
+declare NAME
+
+mmux_libc_if_indextoname NAME '2'
+@WW{NAME}       @result{} eth0
+@end example
+@end deffn
+
+@c page
+@node sockets sockaddr_un
+@section Interface to @code{struct sockaddr_un}
+
+
+To use values of type @code{struct sockaddr_un} we do:
+
+@example
+declare -r FAMILY=@RR{mmux_libc_AF_LOCAL}
+declare -r PATHNAME='/tmp/sock.ext'
+declare SOCKADDR_UN SOCKADDR_UN_LENGTH
+declare SUN_FAMILY SUN_PATH
+
+mmux_libc_sockaddr_un_malloc SOCKADDR_UN SOCKADDR_UN_LENGTH @RR{FAMILY} @WW{PATHNAME}
+@{
+    mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY @RR{SOCKADDR_UN}
+    mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   @RR{SOCKADDR_UN}
+
+    @WW{SUN_FAMILY}     @result{} [whatever AF_LOCAL is]
+    @WW{SUN_PATH}       @result{} /tmp/sock.ext
+@}
+mmux_libc_free @RR{SOCKADDR_UN}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_sockaddr_un_malloc @var{SOCKADDR_UN_POINTER_VAR} @var{SOCKADDR_UN_LENGTH_VAR} @var{SUN_FAMILY} @var{SUN_PATH}
+Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_un}
+value with the given parameters as fields; then:
+
+@itemize
+@item
+Bind to the shell variable whose name is @var{SOCKADDR_UN_POINTER_VAR} a string representation of
+the pointer referencing it.
+
+@item
+Bind to the shell variable whose name is @var{SOCKADDR_UN_LENGTH_VAR} a string representation of the
+length of the data structure.  This value is needed if we use @MmuxBuiltin{mmux_libc_bind}.
+@end itemize
+
+To release the memory: we just use @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+
+The argument @var{SUN_FAMILY} must be the string representation of an exact integer, for example
+@samp{mmux_libc_AF_LOCAL}.
+
+The argument @var{SUN_PATH} must be a string representing the local socket file pathname; the
+maximum length of the pathname is platform--specific.
+@end deffn
+
+
+@deffn Builtin mmux_libc_sockaddr_un_sun_family_ref @var{SUN_FAMILY_VAR} @var{SOCKADDR_UN_POINTER}
+Bind to the shell variable whose name is @var{SUN_FAMILY_VAR} the string representation of the field
+@code{sun_family} in the @code{struct sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_sockaddr_un_sun_path_ref @var{SUN_PATH_VAR} @var{SOCKADDR_UN_POINTER}
+Bind to the shell variable whose name is @var{SUN_PATH_VAR} the string representation of the field
+@code{sun_path} in the @code{struct sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
+@end deffn
+
+@c page
+@node sockets sockaddr
+@section Interface to @code{struct sockaddr}
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_sockaddr_sa_family_ref @var{SA_FAMILY_VAR} @var{SOCKADDR_POINTER}
+Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string representation of the field
+@code{sa_family} in the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+@end deffn
+
+@c page
+@node sockets addresses
+@section Socket addresses
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_bind @var{SOCKFD} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{bind}, @glibcref{Socket Addresses, bind}.
+
+The argument @var{SOCKADDR_POINTER} must be a pointer to a memory block containing a @code{struct
+sockaddr} value.
+
+The argument @var{SOCKADDR_SIZE} must be the string representation of the number of bytes in the
+block referenced by @var{SOCKADDR_POINTER}.
+@end deffn
+
 
 @c page
 @node errors

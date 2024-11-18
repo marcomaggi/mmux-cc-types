@@ -162,6 +162,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     return MMUX_FAILURE;
   }
 
+  if (MMUX_SUCCESS != mmux_bash_pointers_init_sockets_module()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising sockets module\n");
+    return MMUX_FAILURE;
+  }
+
   /* These constants are defined by the Standard C Library; we make them available as
      global shell variables. */
   {
@@ -561,6 +566,24 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[S_IXUSR]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[W_OK]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[X_OK]]]);
+
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[SOCK_STREAM]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[SOCK_DGRAM]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[SOCK_RAW]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[AF_LOCAL]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[AF_UNIX]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[AF_FILE]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[AF_INET]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[AF_INET6]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[AF_UNSPEC]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[PF_LOCAL]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[PF_UNIX]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[PF_FILE]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[PF_INET]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[PF_INET6]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[PF_UNSPEC]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[IFNAMSIZ]]]);
+
   }
   return MMUX_SUCCESS;
 }

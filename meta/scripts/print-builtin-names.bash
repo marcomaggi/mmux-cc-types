@@ -74,7 +74,10 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   tm_gmtoff_set tm_gmtoff_ref tm_reset
 			   time localtime gmtime mktime timegm asctime ctime strftime strptime sleep nanosleep
 			   islower isupper isalpha isdigit isalnum isxdigit ispunct isspace isblank isgraph isprint
-			   iscntrl isascii tolower toupper)
+			   iscntrl isascii tolower toupper
+			   sockaddr_sa_family_ref bind getsockname
+			   sockaddr_un_malloc sockaddr_un_sun_family_ref sockaddr_un_sun_path_ref
+			   if_nametoindex if_indextoname if_nameindex_to_array)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
