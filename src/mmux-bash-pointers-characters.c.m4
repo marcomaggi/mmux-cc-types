@@ -39,8 +39,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_from_string]]])
   char const *	string;
   mmux_usize_t	idx = 0;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(schar_varname,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(string,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(schar_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(string,	argv[2]);
   if (4 == argc) {
     MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(idx,		argv[3]);
   }
@@ -69,7 +69,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_to_string]]])
   char const *	string_varname;
   mmux_schar_t	ch;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(string_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(string_varname,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(ch,				argv[2]);
   {
     char	str[2];
@@ -126,7 +126,7 @@ m4_define([[[DEFINE_CHARACTER_CASE_CONVERSION_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MA
   char const *	output_ch_varname;
   mmux_schar_t	input_ch;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(output_ch_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(output_ch_varname,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(input_ch,			argv[2]);
   {
     mmux_schar_t	output_ch = $1(input_ch);

@@ -197,7 +197,7 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_POINTER]]],[[[MMUX_BASH_PARSE_BUILTIN_A
 
 # $1 - name of the target variable
 # $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR]]],[[[{ $1 = $2; }]]])
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM]]],[[[{ $1 = $2; }]]])
 
 # --------------------------------------------------------------------
 

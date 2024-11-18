@@ -279,7 +279,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrouplist]]])
   char const *	username;
   mmux_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(username,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(username,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,			argv[3]);
   {
     mmux_sint_t		ngroups = 0;
@@ -410,7 +410,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpwnam]]])
 {
   char const *	username;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(username,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(username,	argv[2]);
   {
     struct passwd *	P = getpwnam(username);
 
@@ -617,7 +617,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrnam]]])
 {
   char const *	username;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(username,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(username,	argv[2]);
   {
     struct group *	P = getgrnam(username);
 
@@ -710,7 +710,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_mem]]])
   char const *		index_array_name;
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(index_array_name,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(index_array_name,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,			argv[2]);
   {
     struct group *			P = ptr;

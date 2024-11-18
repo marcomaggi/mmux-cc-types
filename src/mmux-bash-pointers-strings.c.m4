@@ -41,7 +41,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_from_bash_string]]])
 {
   char const *	str;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(str,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(str,	argv[2]);
   {
     size_t	len = strlen(str);
     void *	ptr = malloc(1+len);

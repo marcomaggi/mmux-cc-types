@@ -68,7 +68,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
   mode_t	mode = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[dirfd]]],			[[[argv[2]]]]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR([[[pathname]]],	[[[argv[3]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[pathname]]],	[[[argv[3]]]]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],			[[[argv[4]]]]);
   if (6 == argc) {
     MMUX_BASH_PARSE_BUILTIN_ARG_MODE([[[mode]]],		[[[argv[5]]]]);
@@ -330,8 +330,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pipe]]])
   char const *	reading_fd_varname;
   char const *	writing_fd_varname;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(reading_fd_varname,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(writing_fd_varname,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(reading_fd_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(writing_fd_varname,	argv[2]);
   {
     int		fds[2];
     int		rv = pipe(fds);
@@ -565,7 +565,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fd_set_malloc]]])
 {
   char const *	fd_set_pointer_varname;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(fd_set_pointer_varname,	argv[1]);
   {
     fd_set *	fd_set_pointer = malloc(sizeof(fd_set));
 
@@ -594,9 +594,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fd_set_malloc_triplet]]])
 {
   char const *	fd_set_pointer_varname[3];
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname[0],	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname[1],	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(fd_set_pointer_varname[2],	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(fd_set_pointer_varname[0],	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(fd_set_pointer_varname[1],	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(fd_set_pointer_varname[2],	argv[3]);
   {
     fd_set *	fd_set_pointer = malloc(3 * sizeof(fd_set));
 
@@ -716,7 +716,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_select]]])
   mmux_pointer_t	except_fds_pointer;
   mmux_pointer_t	timeval_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_ASCIIZ_PTR(ready_fds_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(ready_fds_varname,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nfds,			argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(read_fds_pointer,		argv[3]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(write_fds_pointer,	argv[4]);
