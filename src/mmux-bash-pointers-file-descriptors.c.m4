@@ -35,18 +35,28 @@
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_open]]])
 {
+  char const *		fd_varname;
+  char const *		pathname;
   int			flags;
   mode_t		mode = 0;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],[[[argv[3]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[fd_varname]]],	[[[argv[1]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[pathname]]],		[[[argv[2]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],			[[[argv[3]]]]);
   if (5 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARG_MODE([[[mode]]],[[[argv[4]]]]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_MODE([[[mode]]],		[[[argv[4]]]]);
   }
 
   {
-    int		rv = open(argv[2], flags, mode);
-    if (-1 != rv) {
-      return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    int		fd = open(pathname, flags, mode);
+    if (-1 != fd) {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_sint_bind_to_bash_variable(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) {
+	close(fd);
+      }
+      return brv;
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
@@ -63,21 +73,29 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
 {
+  char const *	fd_varname;;
   int		dirfd, flags;
   char const *	pathname;
   mode_t	mode = 0;
 
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[fd_varname]]],	[[[argv[1]]]]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[dirfd]]],			[[[argv[2]]]]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[pathname]]],	[[[argv[3]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[pathname]]],		[[[argv[3]]]]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],			[[[argv[4]]]]);
   if (6 == argc) {
     MMUX_BASH_PARSE_BUILTIN_ARG_MODE([[[mode]]],		[[[argv[5]]]]);
   }
 
   {
-    int		rv = openat(dirfd, pathname, flags, mode);
-    if (-1 != rv) {
-      return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    int		fd = openat(dirfd, pathname, flags, mode);
+    if (-1 != fd) {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_sint_bind_to_bash_variable(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) {
+	close(fd);
+      }
+      return brv;
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
@@ -275,14 +293,22 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup]]])
 {
-  int	fd;
+  char const *	new_fd_varname;
+  int		old_fd;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[fd]]], [[[argv[2]]]]);
-
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM([[[new_fd_varname]]],	[[[argv[1]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[old_fd]]],		[[[argv[2]]]]);
   {
-    fd = dup(fd);
-    if (-1 != fd) {
-      return mmux_sint_bind_to_bash_variable(argv[1], fd, MMUX_BASH_BUILTIN_STRING_NAME);
+    int		new_fd = dup(old_fd);
+
+    if (-1 != new_fd) {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_sint_bind_to_bash_variable(new_fd_varname, new_fd, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) {
+	close(new_fd);
+      }
+      return brv;
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
@@ -292,22 +318,22 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER FDVAR FD"]]],
-    [[["Duplicate the file descriptor FD, store the result in FDVAR."]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NEW_FD_VAR OLD_FD"]]],
+    [[["Duplicate the file descriptor OLD_FD, store the result in NEW_FD_VAR."]]])
 
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup2]]])
 {
-  int	rv, old_fd, new_fd;
+  int	old_fd, new_fd;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[old_fd]]], [[[argv[2]]]]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[new_fd]]], [[[argv[3]]]]);
-
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[old_fd]]], [[[argv[1]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[new_fd]]], [[[argv[2]]]]);
   {
-    rv = dup2(old_fd, new_fd);
+    int		rv = dup2(old_fd, new_fd);
+
     if (-1 != rv) {
-      return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_SUCCESS;
     } else {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
@@ -316,9 +342,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup2]]])
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER RVAR OLD_FD NEW_FD"]]],
-    [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD, store the result in RVAR."]]])
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OLD_FD NEW_FD"]]],
+    [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD."]]])
 
 
 /** --------------------------------------------------------------------
