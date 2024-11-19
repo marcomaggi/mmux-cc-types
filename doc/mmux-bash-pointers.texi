@@ -934,6 +934,14 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{SOCK_RDM}
 @MmuxDefineGlobalVarSystemConstant{SOCK_SEQPACKET}
 @MmuxDefineGlobalVarSystemConstant{SOCK_STREAM}
+@MmuxDefineGlobalVarSystemConstant{MSG_CONFIRM}
+@MmuxDefineGlobalVarSystemConstant{MSG_DONTROUTE}
+@MmuxDefineGlobalVarSystemConstant{MSG_DONTWAIT}
+@MmuxDefineGlobalVarSystemConstant{MSG_EOR}
+@MmuxDefineGlobalVarSystemConstant{MSG_MORE}
+@MmuxDefineGlobalVarSystemConstant{MSG_NOSIGNAL}
+@MmuxDefineGlobalVarSystemConstant{MSG_OOB}
+@MmuxDefineGlobalVarSystemConstant{MSG_PEEK}
 
 @c page
 @node cctypes
@@ -7094,6 +7102,100 @@ Interface to the standard C language function @cfunc{shutdown}, @glibcref{Closin
 @deffn Builtin mmux_libc_socketpair @vari{SOCK_VAR} @varii{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}
 Interface to the standard C language function @cfunc{socketpair}, @glibcref{Socket Pairs,
 socketpair}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_connect @var{SOCK} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{connect}, @glibcref{Connecting, connect}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_listen @var{SOCK} @var{SINT_N}
+Interface to the standard C language function @cfunc{listen}, @glibcref{Listening, listen}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_accept @var{CONNECTED_SOCK_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{accept}, @glibcref{Accepting Connections,
+accept}.
+
+The argument @var{CONNECTED_SOCK_VAR} must be the name of a shell variable: the new, connected,
+socket descriptor is bound to this variable.
+
+The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
+measured in bytes, of the connected address is bound to this variable; it is probably different from
+@var{ALLOCATED_SOCKADDR_LENGTH}.
+
+The argument @var{SOCK} must be the string representation of the server socket descriptor.
+
+The argument @var{SOCKADDR_POINTER} must be the string representation of a pointer to a @code{struct
+sockaddr} value, wide enough to contain an address data structure.
+
+The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
+bytes allocated to contain the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+If we allocate @math{512} bytes for this: it will probably be enough.
+@end deffn
+
+
+@deffn {Linux Builtin} mmux_libc_accept4 @var{CONNECTED_SOCK_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH} @var{FLAGS}
+Interface to the extension C language function @cfunc{accept4}, @cfuncpage{accept4}.  This is like
+@cfunc{mmux_libc_accept}, but provides the additional argument @var{FLAGS}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getpeername @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{getpeername}, @glibcref{Who is Connected,
+getpeername}.
+
+The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
+measured in bytes, of the connected address is bound to this variable; it is probably different from
+@var{ALLOCATED_SOCKADDR_LENGTH}.
+
+The argument @var{SOCK} must be the string representation of the socket descriptor.
+
+The argument @var{SOCKADDR_POINTER} must be the string representation of a pointer to a @code{struct
+sockaddr} value, wide enough to contain an address data structure.
+
+The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
+bytes allocated to contain the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+If we allocate @math{512} bytes for this: it will probably be enough.
+@end deffn
+
+
+@deffn Builtin mmux_libc_send @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS}
+Interface to the standard C language function @cfunc{send}, @glibcref{Sending Data, send}.
+
+Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_SENT_VAR} a string representation of
+the number of bytes actually sent.
+@end deffn
+
+
+@deffn Builtin mmux_libc_recv @var{NUMBER_OF_BYTES_RECEIVED_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS}
+Interface to the standard C language function @cfunc{recv}, @glibcref{Recving Data, recv}.
+
+Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_RECEIVED_VAR} a string representation
+of the number of bytes actually received.
+@end deffn
+
+
+@deffn Builtin mmux_libc_sendto @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{sendto}, @glibcref{Sending Datagrams, sendto}.
+
+Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_SENT_VAR} a string representation of
+the number of bytes actually sent.
+@end deffn
+
+
+@deffn Builtin mmux_libc_recvfrom @var{NUMBER_OF_BYTES_RECEIVED_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{recvfrom}, @glibcref{Receiving Datagrams,
+recvfrom}.
+
+Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_RECEIVED_VAR} a string representation
+of the number of bytes actually received.
+
+The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
+measured in bytes, of the connected address is bound to this variable; it is probably different from
+@var{ALLOCATED_SOCKADDR_LENGTH}.
 @end deffn
 
 @c page

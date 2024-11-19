@@ -130,7 +130,7 @@ AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/socket.h sys/un.h netinet/in.h net/if.
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
-                renameat2 group_member dup3])
+                renameat2 group_member dup3 accept4])
 
 
 #### inspecting errno constants
@@ -208,6 +208,7 @@ MMUX_CONSTANT_TESTS([AF_INET6 AF_IPX AF_KCM AF_KEY AF_LLC AF_LOCAL AF_MPLS AF_NE
 MMUX_CONSTANT_TESTS([AF_RDS AF_TIPC AF_UNIX AF_UNSPEC AF_VSOCK AF_X25 AF_XDP])
 MMUX_CONSTANT_TESTS([PF_LOCAL PF_UNIX PF_FILE PF_INET PF_INET6 PF_UNSPEC])
 MMUX_CONSTANT_TESTS([SHUT_RD SHUT_WR SHUT_RDWR])
+MMUX_CONSTANT_TESTS([MSG_OOB MSG_PEEK MSG_DONTROUTE MSG_CONFIRM MSG_DONTWAIT MSG_EOR MSG_MORE MSG_NOSIGNAL])
 MMUX_CONSTANT_TESTS([IFNAMSIZ])
 
 ## miscellaneous

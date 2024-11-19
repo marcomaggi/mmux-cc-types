@@ -273,51 +273,55 @@ function file-descriptors-dup2-1.1 () {
 #### dup3
 
 function file-descriptors-dup3-1.1 () {
-    mbfl_location_enter
-    {
-	declare -i FD NEW_FD DONE OFFSET SIZE=5
-	declare BUFFER
-	mbfl_declare_index_array_varref(RESULT)
-	mbfl_declare_index_array_varref(ORIGIN_DATA,(11 22 33 44 55))
-	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
-	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
-	declare -i DUP3_FLAGS=RR(mmux_libc_O_CLOEXEC)
+    if mmux_bash_pointers_builtin_p mmux_libc_dup3
+    then
+	mbfl_location_enter
+	{
+	    declare -i FD NEW_FD DONE OFFSET SIZE=5
+	    declare BUFFER
+	    mbfl_declare_index_array_varref(RESULT)
+	    mbfl_declare_index_array_varref(ORIGIN_DATA,(11 22 33 44 55))
+	    declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	    declare -i DUP3_FLAGS=RR(mmux_libc_O_CLOEXEC)
 
-	mbfl_declare_varref(ID)
+	    mbfl_declare_varref(ID)
 
-	declare -r FILENAME=$(dotest-mkfile 'name.ext')
-	mbfl_location_handler dotest-clean-files
+	    declare -r FILENAME=$(dotest-mkfile 'name.ext')
+	    mbfl_location_handler dotest-clean-files
 
-	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD" UU(ID)
-	else mbfl_location_leave_then_return_failure
-	fi
+	    if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
+	    then mbfl_location_handler "mmux_libc_close $FD" UU(ID)
+	    else mbfl_location_leave_then_return_failure
+	    fi
 
-	mbfl_location_compensate( mmux_libc_malloc BUFFER $SIZE, mmux_libc_free RR(BUFFER) )
-	mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
-	mbfl_location_leave_when_failure( mmux_libc_pwrite DONE $FD $BUFFER $SIZE 0 )
+	    mbfl_location_compensate( mmux_libc_malloc BUFFER $SIZE, mmux_libc_free RR(BUFFER) )
+	    mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
+	    mbfl_location_leave_when_failure( mmux_libc_pwrite DONE $FD $BUFFER $SIZE 0 )
 
-	# I'm so dirty...
-	NEW_FD=$(( FD + 1 ))
+	    # I'm so dirty...
+	    NEW_FD=$(( FD + 1 ))
 
-	if mmux_libc_dup3 $FD $NEW_FD RR(DUP3_FLAGS)
-	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_close WW(NEW_FD)"
-	else mbfl_location_leave_then_return_failure
-	fi
+	    if mmux_libc_dup3 $FD $NEW_FD RR(DUP3_FLAGS)
+	    then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_close WW(NEW_FD)"
+	    else mbfl_location_leave_then_return_failure
+	    fi
 
-	mbfl_location_leave_when_failure( mmux_libc_pread DONE RR(NEW_FD) $BUFFER $SIZE 0 )
+	    mbfl_location_leave_when_failure( mmux_libc_pread DONE RR(NEW_FD) $BUFFER $SIZE 0 )
 
-	mmux_index_array_from_memory UU(RESULT) WW(BUFFER) WW(SIZE)
-	#mbfl_array_dump UU(RESULT) RESULT
+	    mmux_index_array_from_memory UU(RESULT) WW(BUFFER) WW(SIZE)
+	    #mbfl_array_dump UU(RESULT) RESULT
 
-	dotest-equal $SIZE $DONE && \
-	    dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \
-	    dotest-equal 22 mbfl_slot_qref(RESULT, 1) && \
-	    dotest-equal 33 mbfl_slot_qref(RESULT, 2) && \
-	    dotest-equal 44 mbfl_slot_qref(RESULT, 3) && \
-	    dotest-equal 55 mbfl_slot_qref(RESULT, 4)
-    }
-    mbfl_location_leave
+	    dotest-equal $SIZE $DONE && \
+		dotest-equal 11 mbfl_slot_qref(RESULT, 0) && \
+		dotest-equal 22 mbfl_slot_qref(RESULT, 1) && \
+		dotest-equal 33 mbfl_slot_qref(RESULT, 2) && \
+		dotest-equal 44 mbfl_slot_qref(RESULT, 3) && \
+		dotest-equal 55 mbfl_slot_qref(RESULT, 4)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
 }
 
 

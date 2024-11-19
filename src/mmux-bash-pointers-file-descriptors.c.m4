@@ -350,6 +350,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup3]]])
 {
+MMUX_BASH_CONDITIONAL_CODE([[[HAVE_DUP3]]],[[[
   int	old_fd, new_fd, flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[old_fd]]], [[[argv[1]]]]);
@@ -365,6 +366,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup3]]])
     }
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+]]],[[[
+  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+	  MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],

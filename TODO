@@ -1,14 +1,18 @@
 -*- coding: utf-8-unix -*-
 
-* Add a builtin interfacing Linux's "openat2()" ?
+* Add a builtin interfacing Linux's "openat2()"?
 
-* Add a builtin interfacing "pselect()" ?
+* Add a builtin interfacing "pselect()"?
 
-* Add a builtin interfacing "poll()" ?
+* Add a builtin interfacing "poll()"?
 
-* Add a builtin interfacing "ppoll()" ?
+* Add a builtin interfacing "ppoll()"?
 
-* Add a builtin interfacing "epoll()" ?
+* Add a builtin interfacing "epoll()"?
+
+* Add a builtin interfacing "sendmsg()"?  (Documented in a manual page.)
+
+* Add a builtin interfacing the CMSG macros?  (See the manual page cmsg(3).)
 
 ### end of file
 # Local Variables:
