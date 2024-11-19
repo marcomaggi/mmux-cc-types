@@ -239,6 +239,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     MMUX_DEFINE_SIZEOF_VARIABLE([[[wchar]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[wint]]]);
     MMUX_DEFINE_SIZEOF_VARIABLE([[[time]]]);
+    MMUX_DEFINE_SIZEOF_VARIABLE([[[socklen]]]);
   }
   {
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[pointer]]]);
@@ -295,6 +296,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[wchar]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[wint]]]);
     MMUX_DEFINE_MAXIMUM_VARIABLE([[[time]]]);
+    MMUX_DEFINE_MAXIMUM_VARIABLE([[[socklen]]]);
   }
   {
     MMUX_DEFINE_MINIMUM_VARIABLE([[[pointer]]]);
@@ -349,6 +351,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     MMUX_DEFINE_MINIMUM_VARIABLE([[[wchar]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[wint]]]);
     MMUX_DEFINE_MINIMUM_VARIABLE([[[time]]]);
+    MMUX_DEFINE_MINIMUM_VARIABLE([[[socklen]]]);
   }
   {
     MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE([[[EPERM]]]);

@@ -297,6 +297,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
 @cindex @code{time}, type stem
+@cindex @code{socklen}, type stem
 
 
 The following word definitions just alias the corresponding C language type; such uniform names are
@@ -397,6 +398,7 @@ non--standard C language type implementing complex floating--point numbers havin
 @MmuxDefineTypeStem{wchar, wchar_t}
 @MmuxDefineTypeStem{wint, wint_t}
 @MmuxDefineTypeStem{time, time_t}
+@MmuxDefineTypeStem{socklen, socklen_t}
 
 @c page
 @node overview errors
@@ -641,7 +643,7 @@ Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using 
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
 @cindex @code{time}, type stem
-
+@cindex @code{socklen}, type stem
 
 The following type definitions just alias the corresponding C language type; the type name is
 composed from a ``stem'': a single word representing the name of the type.  Such uniform names are
@@ -742,6 +744,7 @@ parts are values of type @objtype{mmux_decimal128_t}.
 @MmuxDefineCAliasTypedef{wchar, wchar_t}
 @MmuxDefineCAliasTypedef{wint, wint_t}
 @MmuxDefineCAliasTypedef{time, time_t}
+@MmuxDefineCAliasTypedef{socklen, socklen_t}
 
 
 @MmuxDefineCAliasTypedefPart{complexf,float}
@@ -841,6 +844,7 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{wchar}
 @MmuxDefineCFunctionSizeof{wint}
 @MmuxDefineCFunctionSizeof{time}
+@MmuxDefineCFunctionSizeof{socklen}
 
 @c page
 @node limits
@@ -915,6 +919,7 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{wchar}
 @MmuxDefineCFunctionMaximum{wint}
 @MmuxDefineCFunctionMaximum{time}
+@MmuxDefineCFunctionMaximum{socklen}
 
 @c page
 @node constants
@@ -1078,6 +1083,7 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{wchar}
 @MmuxDefineCFunctionPredicate{wint}
 @MmuxDefineCFunctionPredicate{time}
+@MmuxDefineCFunctionPredicate{socklen}
 
 @c page
 @node stringrep formats
@@ -1272,6 +1278,7 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{wchar}
 @MmuxDefineCFunctionParser{wint}
 @MmuxDefineCFunctionParser{time}
+@MmuxDefineCFunctionParser{socklen}
 
 @c page
 @node stringrep sprinters
@@ -1380,6 +1387,7 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{wchar}
 @MmuxDefineCFunctionSprinter{wint}
 @MmuxDefineCFunctionSprinter{time}
+@MmuxDefineCFunctionSprinter{socklen}
 
 @c page
 @node complex
@@ -1616,6 +1624,7 @@ nan; otherwise return @cfalse{}.
 @MmuxDefineTypePredicates{wchar}
 @MmuxDefineTypePredicates{wint}
 @MmuxDefineTypePredicates{time}
+@MmuxDefineTypePredicates{socklen}
 
 @c page
 @node comparison
@@ -1727,6 +1736,7 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @MmuxDefineTypeComparisonExactFunction{wchar}
 @MmuxDefineTypeComparisonExactFunction{wint}
 @MmuxDefineTypeComparisonExactFunction{time}
+@MmuxDefineTypeComparisonExactFunction{socklen}
 
 @c page
 @node comparison mimmax
@@ -1793,6 +1803,7 @@ Return the maximum or minimum value between the operands.
 @MmuxDefineTypeComparisonMinMaxFunction{wchar}
 @MmuxDefineTypeComparisonMinMaxFunction{wint}
 @MmuxDefineTypeComparisonMinMaxFunction{time}
+@MmuxDefineTypeComparisonMinMaxFunction{socklen}
 
 @c page
 @node comparison absmargin
@@ -2055,6 +2066,7 @@ remainder, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{wchar}
 @MmuxDefineIntegerArithmeticsFunc{wint}
 @MmuxDefineIntegerArithmeticsFunc{time}
+@MmuxDefineIntegerArithmeticsFunc{socklen}
 
 @c page
 @node mathematics
@@ -2269,6 +2281,7 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{wchar}
 @MmuxDefineBitwiseFuncs{wint}
 @MmuxDefineBitwiseFuncs{time}
+@MmuxDefineBitwiseFuncs{socklen}
 
 @c page
 @c page

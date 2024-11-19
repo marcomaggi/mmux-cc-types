@@ -2424,6 +2424,85 @@ function predicates-is-nan-time-1.2 () {
 }
 
 
+#### type variables: socklen
+
+function predicates-is-zero-socklen-1.1 () {
+    mmux_socklen_is_zero 0
+}
+function predicates-is-zero-socklen-1.2 () {
+    ! mmux_socklen_is_zero WW(mmux_socklen_MAX)
+}
+function predicates-is-zero-socklen-1.3 () {
+    mmux_socklen_is_zero WW(mmux_socklen_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-positive-socklen-1.1 () {
+    ! mmux_socklen_is_positive 0
+}
+function predicates-is-positive-socklen-1.2 () {
+    mmux_socklen_is_positive WW(mmux_socklen_MAX)
+}
+function predicates-is-positive-socklen-1.3 () {
+    ! mmux_socklen_is_positive WW(mmux_socklen_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-negative-socklen-1.1 () {
+    ! mmux_socklen_is_negative 0
+}
+function predicates-is-negative-socklen-1.2 () {
+    ! mmux_socklen_is_negative WW(mmux_socklen_MAX)
+}
+function predicates-is-negative-socklen-1.3 () {
+    ! mmux_socklen_is_negative WW(mmux_socklen_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-positive-socklen-1.1 () {
+    mmux_socklen_is_non_positive 0
+}
+function predicates-is-non-positive-socklen-1.2 () {
+    ! mmux_socklen_is_non_positive WW(mmux_socklen_MAX)
+}
+function predicates-is-non-positive-socklen-1.3 () {
+    mmux_socklen_is_non_positive WW(mmux_socklen_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-negative-socklen-1.1 () {
+    mmux_socklen_is_non_negative 0
+}
+function predicates-is-non-negative-socklen-1.2 () {
+    mmux_socklen_is_non_negative WW(mmux_socklen_MAX)
+}
+function predicates-is-non-negative-socklen-1.3 () {
+    mmux_socklen_is_non_negative WW(mmux_socklen_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-infinite-socklen-1.1 () {
+    ! mmux_socklen_is_infinite WW(mmux_socklen_MAX)
+}
+function predicates-is-infinite-socklen-1.2 () {
+    ! mmux_socklen_is_infinite WW(mmux_socklen_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-nan-socklen-1.1 () {
+    ! mmux_socklen_is_nan WW(mmux_socklen_MAX)
+}
+function predicates-is-nan-socklen-1.2 () {
+    ! mmux_socklen_is_nan WW(mmux_socklen_MIN)
+}
+
+
 #### type variables: float
 
 function predicates-is-zero-float-1.1 () {

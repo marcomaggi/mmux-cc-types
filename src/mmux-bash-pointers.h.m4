@@ -189,6 +189,7 @@ DEFINE_PROTOS([[[ptrdiff]]])
 DEFINE_PROTOS([[[wchar]]])
 DEFINE_PROTOS([[[wint]]])
 DEFINE_PROTOS([[[time]]])
+DEFINE_PROTOS([[[socklen]]])
 
 
 /** --------------------------------------------------------------------

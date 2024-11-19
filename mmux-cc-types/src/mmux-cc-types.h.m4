@@ -283,6 +283,7 @@ DEFINE_ALIAS_TYPEDEF([[[ptrdiff]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]]);
 DEFINE_ALIAS_TYPEDEF([[[wchar]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]]);
 DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]]);
 DEFINE_ALIAS_TYPEDEF([[[time]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]]);
+DEFINE_ALIAS_TYPEDEF([[[socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]]);
 
 
 /** --------------------------------------------------------------------
@@ -470,6 +471,7 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ptrdiff]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[wchar]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[wint]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[time]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[socklen]]])
 
 
 /** --------------------------------------------------------------------
@@ -574,6 +576,7 @@ DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ptrdiff]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[wchar]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[wint]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[time]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[socklen]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -760,6 +763,7 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[gid]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wchar]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wint]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[time]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[socklen]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -894,6 +898,7 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[gid]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wchar]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wint]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[time]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[socklen]]])
 
 
 /** --------------------------------------------------------------------
@@ -1476,6 +1481,7 @@ DEFINE_BITWISE_PROTOS([[[gid]]])
 DEFINE_BITWISE_PROTOS([[[wchar]]])
 DEFINE_BITWISE_PROTOS([[[wint]]])
 DEFINE_BITWISE_PROTOS([[[time]]])
+DEFINE_BITWISE_PROTOS([[[socklen]]])
 
 
 /** --------------------------------------------------------------------

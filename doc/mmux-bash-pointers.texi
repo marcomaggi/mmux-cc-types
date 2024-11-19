@@ -388,6 +388,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
 @cindex @code{time}, type stem
+@cindex @code{socklen}, type stem
 
 
 The following word definitions just alias the corresponding C language type; such uniform names are
@@ -488,6 +489,7 @@ non--standard C language type implementing complex floating--point numbers havin
 @MmuxDefineTypeStem{wchar, wchar_t}
 @MmuxDefineTypeStem{wint, wint_t}
 @MmuxDefineTypeStem{time, time_t}
+@MmuxDefineTypeStem{socklen, socklen_t}
 
 @c page
 @node overview conventions
@@ -737,6 +739,10 @@ The argument is a string representation of a @objtype{mmux_wint_t} value.
 @item TIME
 @cindex @var{TIME}, builtin and function argument
 The argument is a string representation of a @objtype{mmux_time_t} value.
+
+@item SOCKLEN
+@cindex @var{SOCKLEN}, builtin and function argument
+The argument is a string representation of a @objtype{mmux_socklen_t} value.
 @end table
 
 Additional argument specifications:
@@ -1053,6 +1059,7 @@ Global variable holding the size, measured in bytes, of the C language type with
 @MmuxDefineGlobalVarSizeof{wchar}
 @MmuxDefineGlobalVarSizeof{wint}
 @MmuxDefineGlobalVarSizeof{time}
+@MmuxDefineGlobalVarSizeof{socklen}
 
 @c page
 @node cctypes limits
@@ -1135,6 +1142,7 @@ Global variables holding the maximum and minimum values of the C language type @
 @MmuxDefineGlobalVarLimits{wchar}
 @MmuxDefineGlobalVarLimits{wint}
 @MmuxDefineGlobalVarLimits{time}
+@MmuxDefineGlobalVarLimits{socklen}
 
 @c page
 @node cctypes constants
@@ -1456,6 +1464,7 @@ return false.
 @MmuxDefineTypePredicateStringrepBuiltin{wchar}
 @MmuxDefineTypePredicateStringrepBuiltin{wint}
 @MmuxDefineTypePredicateStringrepBuiltin{time}
+@MmuxDefineTypePredicateStringrepBuiltin{socklen}
 
 @c page
 @node cctypes predicates zero
@@ -1537,6 +1546,7 @@ zero number; otherwise return false.
 @MmuxDefineTypePredicateZeroBuiltin{wchar}
 @MmuxDefineTypePredicateZeroBuiltin{wint}
 @MmuxDefineTypePredicateZeroBuiltin{time}
+@MmuxDefineTypePredicateZeroBuiltin{socklen}
 
 @c page
 @node cctypes predicates positive
@@ -1603,6 +1613,7 @@ positive number; otherwise return false.
 @MmuxDefineTypePredicatePositiveBuiltin{wchar}
 @MmuxDefineTypePredicatePositiveBuiltin{wint}
 @MmuxDefineTypePredicatePositiveBuiltin{time}
+@MmuxDefineTypePredicatePositiveBuiltin{socklen}
 
 @c page
 @node cctypes predicates negative
@@ -1677,6 +1688,7 @@ negative number; otherwise return false.
 @MmuxDefineTypePredicateNegativeBuiltin{wchar}
 @MmuxDefineTypePredicateNegativeBuiltin{wint}
 @MmuxDefineTypePredicateNegativeBuiltin{time}
+@MmuxDefineTypePredicateNegativeBuiltin{socklen}
 
 @c page
 @node cctypes predicates non-positive
@@ -1742,6 +1754,7 @@ non--positive number; otherwise return false.
 @MmuxDefineTypePredicateNonPositiveBuiltin{wchar}
 @MmuxDefineTypePredicateNonPositiveBuiltin{wint}
 @MmuxDefineTypePredicateNonPositiveBuiltin{time}
+@MmuxDefineTypePredicateNonPositiveBuiltin{socklen}
 
 @c page
 @node cctypes predicates non-negative
@@ -1807,6 +1820,7 @@ non--negative number; otherwise return false.
 @MmuxDefineTypePredicateNonNegativeBuiltin{wchar}
 @MmuxDefineTypePredicateNonNegativeBuiltin{wint}
 @MmuxDefineTypePredicateNonNegativeBuiltin{time}
+@MmuxDefineTypePredicateNonNegativeBuiltin{socklen}
 
 @c page
 @node cctypes predicates nan
@@ -1888,6 +1902,7 @@ not--a--number value; otherwise return false.
 @MmuxDefineTypePredicateNanBuiltin{wchar}
 @MmuxDefineTypePredicateNanBuiltin{wint}
 @MmuxDefineTypePredicateNanBuiltin{time}
+@MmuxDefineTypePredicateNanBuiltin{socklen}
 
 @c page
 @node cctypes predicates infinite
@@ -1969,6 +1984,7 @@ an infinite number; otherwise return false.
 @MmuxDefineTypePredicateInfiniteBuiltin{wchar}
 @MmuxDefineTypePredicateInfiniteBuiltin{wint}
 @MmuxDefineTypePredicateInfiniteBuiltin{time}
+@MmuxDefineTypePredicateInfiniteBuiltin{socklen}
 
 @c page
 @node cctypes comparison
@@ -2122,6 +2138,7 @@ Perform the comparison operations between values of type @objtype{\STEM\}.
 @MmuxDefineTypeComparisonExactBuiltin{wchar}
 @MmuxDefineTypeComparisonExactBuiltin{wint}
 @MmuxDefineTypeComparisonExactBuiltin{time}
+@MmuxDefineTypeComparisonExactBuiltin{socklen}
 
 @c page
 @node cctypes comparison approximate
@@ -2418,6 +2435,7 @@ Select the maximum or minimum among the operands, store the result in @var{ROPVA
 @MmuxDefineTypeMinMaxBuiltins{wchar}
 @MmuxDefineTypeMinMaxBuiltins{wint}
 @MmuxDefineTypeMinMaxBuiltins{time}
+@MmuxDefineTypeMinMaxBuiltins{socklen}
 
 @c page
 @node cctypes arithmetics
@@ -2548,6 +2566,7 @@ Perform the addition between values of type @code{\STEM\}.
 @MmuxDefineTypeAdditionBuiltin{wchar}
 @MmuxDefineTypeAdditionBuiltin{wint}
 @MmuxDefineTypeAdditionBuiltin{time}
+@MmuxDefineTypeAdditionBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics subtraction
@@ -2646,6 +2665,7 @@ Perform the subtraction between values of type @code{\STEM\}.
 @MmuxDefineTypeSubtractionBuiltin{wchar}
 @MmuxDefineTypeSubtractionBuiltin{wint}
 @MmuxDefineTypeSubtractionBuiltin{time}
+@MmuxDefineTypeSubtractionBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics multiplication
@@ -2738,6 +2758,7 @@ Perform the multiplication between values of type @code{\STEM\}.
 @MmuxDefineTypeMultiplicationBuiltin{wchar}
 @MmuxDefineTypeMultiplicationBuiltin{wint}
 @MmuxDefineTypeMultiplicationBuiltin{time}
+@MmuxDefineTypeMultiplicationBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics division
@@ -2830,6 +2851,7 @@ Perform the division between values of type @code{\STEM\}.
 @MmuxDefineTypeDivisionBuiltin{wchar}
 @MmuxDefineTypeDivisionBuiltin{wint}
 @MmuxDefineTypeDivisionBuiltin{time}
+@MmuxDefineTypeDivisionBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics remainder
@@ -2891,6 +2913,7 @@ Perform the remainder between values of type @code{\STEM\}.
 @MmuxDefineTypeRemainderBuiltin{wchar}
 @MmuxDefineTypeRemainderBuiltin{wint}
 @MmuxDefineTypeRemainderBuiltin{time}
+@MmuxDefineTypeRemainderBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics negation
@@ -2982,6 +3005,7 @@ Perform the negation of a value of type @code{\STEM\}.
 @MmuxDefineTypeNegationBuiltin{wchar}
 @MmuxDefineTypeNegationBuiltin{wint}
 @MmuxDefineTypeNegationBuiltin{time}
+@MmuxDefineTypeNegationBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics inversion
@@ -3070,6 +3094,7 @@ Perform the inversion of a value of type @code{\STEM\}.
 @MmuxDefineTypeInversionBuiltin{wchar}
 @MmuxDefineTypeInversionBuiltin{wint}
 @MmuxDefineTypeInversionBuiltin{time}
+@MmuxDefineTypeInversionBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics incrdecr
@@ -3118,6 +3143,7 @@ Increment or decrement @var{OP}, store the result in the shell variable @var{ROP
 @MmuxDefineTypeIncrdecrBuiltin{wchar}
 @MmuxDefineTypeIncrdecrBuiltin{wint}
 @MmuxDefineTypeIncrdecrBuiltin{time}
+@MmuxDefineTypeIncrdecrBuiltin{socklen}
 
 @c page
 @node cctypes arithmetics abs
@@ -3218,6 +3244,7 @@ Extract the absolute value, which will be of type @objtype{\REALSTEM\}, from the
 @MmuxDefineTypeAbsBuiltin{wchar}
 @MmuxDefineTypeAbsBuiltin{wint}
 @MmuxDefineTypeAbsBuiltin{time}
+@MmuxDefineTypeAbsBuiltin{socklen}
 
 @c page
 @node cctypes mathematics
@@ -3424,6 +3451,7 @@ Perform the bitwise AND operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseAndBuiltin{wchar}
 @MmuxDefineTypeBitwiseAndBuiltin{wint}
 @MmuxDefineTypeBitwiseAndBuiltin{time}
+@MmuxDefineTypeBitwiseAndBuiltin{socklen}
 
 @c page
 @node cctypes bitwise or
@@ -3500,6 +3528,7 @@ Perform the bitwise OR operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseOrBuiltin{wchar}
 @MmuxDefineTypeBitwiseOrBuiltin{wint}
 @MmuxDefineTypeBitwiseOrBuiltin{time}
+@MmuxDefineTypeBitwiseOrBuiltin{socklen}
 
 @c page
 @node cctypes bitwise xor
@@ -3576,6 +3605,7 @@ Perform the bitwise XOR operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseXorBuiltin{wchar}
 @MmuxDefineTypeBitwiseXorBuiltin{wint}
 @MmuxDefineTypeBitwiseXorBuiltin{time}
+@MmuxDefineTypeBitwiseXorBuiltin{socklen}
 
 @c page
 @node cctypes bitwise not
@@ -3646,6 +3676,7 @@ Perform the bitwise NOT operation between values of type @code{\STEM\}.
 @MmuxDefineTypeBitwiseNotBuiltin{wchar}
 @MmuxDefineTypeBitwiseNotBuiltin{wint}
 @MmuxDefineTypeBitwiseNotBuiltin{time}
+@MmuxDefineTypeBitwiseNotBuiltin{socklen}
 
 @c page
 @node cctypes bitwise shl
@@ -3701,6 +3732,7 @@ Perform the bitwise shift--left operation on an operand of type \STEM\.
 @MmuxDefineTypeBitwiseShlBuiltin{wchar}
 @MmuxDefineTypeBitwiseShlBuiltin{wint}
 @MmuxDefineTypeBitwiseShlBuiltin{time}
+@MmuxDefineTypeBitwiseShlBuiltin{socklen}
 
 @c page
 @node cctypes bitwise shr
@@ -3756,6 +3788,7 @@ Perform the bitwise shift--right operation on an operand of type \STEM\.
 @MmuxDefineTypeBitwiseShrBuiltin{wchar}
 @MmuxDefineTypeBitwiseShrBuiltin{wint}
 @MmuxDefineTypeBitwiseShrBuiltin{time}
+@MmuxDefineTypeBitwiseShrBuiltin{socklen}
 
 @c page
 @node cctypes formats
@@ -7742,6 +7775,7 @@ builtin.
 @MmuxDefineCFunctionBindToVariable{wchar}
 @MmuxDefineCFunctionBindToVariable{wint}
 @MmuxDefineCFunctionBindToVariable{time}
+@MmuxDefineCFunctionBindToVariable{socklen}
 
 @c page
 @node shared library arrays

@@ -122,6 +122,7 @@ DEFINE_TYPE_STRING_REP_PREDICATE([[[gid]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[wchar]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[wint]]])
 DEFINE_TYPE_STRING_REP_PREDICATE([[[time]]])
+DEFINE_TYPE_STRING_REP_PREDICATE([[[socklen]]])
 
 
 /** --------------------------------------------------------------------
@@ -239,5 +240,6 @@ DEFINE_ALL_ARITHMETIC_PREDICATES([[[gid]]])
 DEFINE_ALL_ARITHMETIC_PREDICATES([[[wchar]]])
 DEFINE_ALL_ARITHMETIC_PREDICATES([[[wint]]])
 DEFINE_ALL_ARITHMETIC_PREDICATES([[[time]]])
+DEFINE_ALL_ARITHMETIC_PREDICATES([[[socklen]]])
 
 /* end of file */
