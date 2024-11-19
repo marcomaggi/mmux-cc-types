@@ -891,6 +891,50 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{W_OK}
 @MmuxDefineGlobalVarSystemConstant{X_OK}
 
+@MmuxDefineGlobalVarSystemConstant{AF_ALG}
+@MmuxDefineGlobalVarSystemConstant{AF_APPLETALK}
+@MmuxDefineGlobalVarSystemConstant{AF_AX25}
+@MmuxDefineGlobalVarSystemConstant{AF_BLUETOOTH}
+@MmuxDefineGlobalVarSystemConstant{AF_CAN}
+@MmuxDefineGlobalVarSystemConstant{AF_DECnet}
+@MmuxDefineGlobalVarSystemConstant{AF_IB}
+@MmuxDefineGlobalVarSystemConstant{AF_INET6}
+@MmuxDefineGlobalVarSystemConstant{AF_INET}
+@MmuxDefineGlobalVarSystemConstant{AF_IPX}
+@MmuxDefineGlobalVarSystemConstant{AF_KCM}
+@MmuxDefineGlobalVarSystemConstant{AF_KEY}
+@MmuxDefineGlobalVarSystemConstant{AF_LLC}
+@MmuxDefineGlobalVarSystemConstant{AF_LOCAL}
+@MmuxDefineGlobalVarSystemConstant{AF_MPLS}
+@MmuxDefineGlobalVarSystemConstant{AF_NETLINK}
+@MmuxDefineGlobalVarSystemConstant{AF_PACKET}
+@MmuxDefineGlobalVarSystemConstant{AF_PPPOX}
+@MmuxDefineGlobalVarSystemConstant{AF_RDS}
+@MmuxDefineGlobalVarSystemConstant{AF_TIPC}
+@MmuxDefineGlobalVarSystemConstant{AF_UNIX}
+@MmuxDefineGlobalVarSystemConstant{AF_UNSPEC}
+@MmuxDefineGlobalVarSystemConstant{AF_VSOCK}
+@MmuxDefineGlobalVarSystemConstant{AF_X25}
+@MmuxDefineGlobalVarSystemConstant{AF_XDP}
+@MmuxDefineGlobalVarSystemConstant{IFNAMSIZ}
+@MmuxDefineGlobalVarSystemConstant{PF_FILE}
+@MmuxDefineGlobalVarSystemConstant{PF_INET6}
+@MmuxDefineGlobalVarSystemConstant{PF_INET}
+@MmuxDefineGlobalVarSystemConstant{PF_LOCAL}
+@MmuxDefineGlobalVarSystemConstant{PF_UNIX}
+@MmuxDefineGlobalVarSystemConstant{PF_UNSPEC}
+@MmuxDefineGlobalVarSystemConstant{SHUT_RDWR}
+@MmuxDefineGlobalVarSystemConstant{SHUT_RD}
+@MmuxDefineGlobalVarSystemConstant{SHUT_WR}
+@MmuxDefineGlobalVarSystemConstant{SOCK_CLOEXEC}
+@MmuxDefineGlobalVarSystemConstant{SOCK_DGRAM}
+@MmuxDefineGlobalVarSystemConstant{SOCK_NONBLOCK}
+@MmuxDefineGlobalVarSystemConstant{SOCK_PACKET}
+@MmuxDefineGlobalVarSystemConstant{SOCK_RAW}
+@MmuxDefineGlobalVarSystemConstant{SOCK_RDM}
+@MmuxDefineGlobalVarSystemConstant{SOCK_SEQPACKET}
+@MmuxDefineGlobalVarSystemConstant{SOCK_STREAM}
+
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -5261,16 +5305,18 @@ The argument @var{OLD_FD} must be the string representation of a file descriptor
 @end deffn
 
 
-@deffn Builtin mmux_libc_dup2 @var{RVAR} @var{OLD_FD} @var{NEW_FD}
+@deffn Builtin mmux_libc_dup2 @var{OLD_FD} @var{NEW_FD}
 Interface to the standard C function @cfunc{dup2}.  When successful: return true; otherwise set the
 shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
-
-The argument @var{rDVAR} must be the name of a shell variable in which the return value of
-@cfunc{dup} will be stored.
 
 The argument @var{OLD_FD} must be the string representation of a file descriptor.
 
 The argument @var{NEW_FD} must be the string representation of a file descriptor.
+@end deffn
+
+
+@deffn {Linux Builtin} mmux_libc_dup3 @var{OLD_FD} @var{NEW_FD} @var{FLAGS}
+Interface to the extension C function @cfunc{dup3}, @cfuncpage{dup3}.
 @end deffn
 
 @c page
@@ -6881,6 +6927,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets sockaddr_un::         Interface to @code{struct sockaddr_un}.
 * sockets sockaddr::            Interface to @code{struct sockaddr}.
 * sockets addresses::           Socket addresses.
+* sockets creating::            Creating sockets.
 @end menu
 
 @c page
@@ -7025,6 +7072,29 @@ The argument @var{SOCKADDR_SIZE} must be the string representation of the number
 block referenced by @var{SOCKADDR_POINTER}.
 @end deffn
 
+@c page
+@node sockets creating
+@section Creating sockets
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_socket @var{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}
+Interface to the standard C language function @cfunc{socket}, @glibcref{Creating a Socket, socket}.
+When successful: bind to the shell variable whose name is @var{SOCK_VAR} the socket descriptor.
+@end deffn
+
+
+@deffn Builtin mmux_libc_shutdown @var{SOCK} @var{HOW}
+Interface to the standard C language function @cfunc{shutdown}, @glibcref{Closing a Socket, shutdown}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_socketpair @vari{SOCK_VAR} @varii{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}
+Interface to the standard C language function @cfunc{socketpair}, @glibcref{Socket Pairs,
+socketpair}.
+@end deffn
 
 @c page
 @node errors

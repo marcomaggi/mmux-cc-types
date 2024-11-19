@@ -324,6 +324,109 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Sockets: creation, closure, pair.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_socket]]])
+{
+  char const *	sock_varname;
+  mmux_sint_t	namespace, style, protocol;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(sock_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(namespace,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(style,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(protocol,		argv[4]);
+  {
+    int		sock = socket(namespace, style, protocol);
+
+    if (-1 != sock) {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_sint_bind_to_bash_variable(sock_varname, sock, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) {
+	close(sock);
+      }
+      return brv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCK_VAR NAMESPACE STYLE PROTOCOL"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_shutdown]]])
+{
+  mmux_sint_t		sock, how;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(how,			argv[2]);
+  {
+    int		rv = shutdown(sock, how);
+
+    if (0 == rv) {
+      return MMUX_SUCCESS;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCK HOW"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_socketpair]]])
+{
+  char const *	sock_varname1;
+  char const *	sock_varname2;
+  mmux_sint_t	namespace, style, protocol;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(sock_varname1,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(sock_varname2,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(namespace,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(style,		argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(protocol,		argv[5]);
+  {
+    int		socks[2];
+    int		rv = socketpair(namespace, style, protocol, socks);
+
+    if (0 == rv) {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_sint_bind_to_bash_variable(sock_varname1, socks[0], MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
+
+      brv = mmux_sint_bind_to_bash_variable(sock_varname2, socks[1], MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
+
+      return brv;
+
+    error_binding_variables:
+      close(socks[0]);
+      close(socks[1]);
+      return brv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCK HOW"]]])
+
+
+/** --------------------------------------------------------------------
  ** Module initialisation.
  ** ----------------------------------------------------------------- */
 

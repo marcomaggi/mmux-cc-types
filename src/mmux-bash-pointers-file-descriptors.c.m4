@@ -346,6 +346,31 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER OLD_FD NEW_FD"]]],
     [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD."]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup3]]])
+{
+  int	old_fd, new_fd, flags;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[old_fd]]], [[[argv[1]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[new_fd]]], [[[argv[2]]]]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT([[[flags]]],	 [[[argv[3]]]]);
+  {
+    int		rv = dup3(old_fd, new_fd, flags);
+
+    if (-1 != rv) {
+      return MMUX_SUCCESS;
+    } else {
+      return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OLD_FD NEW_FD FLAGS"]]],
+    [[["Duplicate the file descriptor OLD_FD to NEW_FD, then close OLD_FD."]]])
+
 
 /** --------------------------------------------------------------------
  ** Piping.

@@ -47,7 +47,7 @@ declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${M
 declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   memset memcpy memccpy memmove memcmp memchr memrchr
 			   strerror errno_to_string
-			   open openat close read write pread pwrite lseek dup dup2 fcntl ioctl pipe
+			   open openat close read write pread pwrite lseek dup dup2 dup3 fcntl ioctl pipe
 			   fd_set_malloc fd_set_malloc_triplet FD_ZERO FD_SET FD_CLR FD_ISSET select
 			   strlen strcpy strncpy strdup stpcpy strcat strncat strcmp strncmp strcoll strxfrm
 			   strchr strrchr strstr strcasestr strspn strcspn strpbrk strtok
@@ -75,9 +75,10 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   time localtime gmtime mktime timegm asctime ctime strftime strptime sleep nanosleep
 			   islower isupper isalpha isdigit isalnum isxdigit ispunct isspace isblank isgraph isprint
 			   iscntrl isascii tolower toupper
-			   sockaddr_sa_family_ref bind getsockname
+			   sockaddr_sa_family_ref
 			   sockaddr_un_malloc sockaddr_un_sun_family_ref sockaddr_un_sun_path_ref
-			   if_nametoindex if_indextoname if_nameindex_to_array)
+			   if_nametoindex if_indextoname if_nameindex_to_array
+			   bind getsockname socket shutdown socketpair)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
