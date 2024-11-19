@@ -160,11 +160,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_bind]]])
 {
   mmux_sint_t		sock;
   mmux_pointer_t	addr_pointer;
-  mmux_sint_t		addr_length;
+  mmux_socklen_t	addr_length;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,		argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(addr_length,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(addr_length,	argv[3]);
   {
     struct sockaddr *	sockaddr_pointer = addr_pointer;
     int			rv               = bind(sock, sockaddr_pointer, addr_length);
@@ -196,11 +196,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockname]]])
   {
 #undef  IS_THIS_ENOUGH_QUESTION_MARK
 #define IS_THIS_ENOUGH_QUESTION_MARK		1024
-    socklen_t		addr_length = IS_THIS_ENOUGH_QUESTION_MARK;
-    uint8_t		buffer[addr_length];
+    mmux_socklen_t	addr_length = IS_THIS_ENOUGH_QUESTION_MARK;
+    mmux_uint8_t	buffer[addr_length];
     struct sockaddr *	addr = (struct sockaddr *)buffer;
     int			rv   = getsockname(sock, addr, &addr_length);
-
 
     if (0 == rv) {
       struct sockaddr *	sockaddr_pointer = malloc(addr_length);
@@ -212,21 +211,18 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockname]]])
 	mmux_bash_rv_t	brv;
 
 	memcpy(sockaddr_pointer, addr, addr_length);
-	{
-	  brv = mmux_pointer_bind_to_bash_variable(addr_pointer_var, sockaddr_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-	  if (MMUX_SUCCESS != brv) {
-	    free(sockaddr_pointer);
-	    return brv;
-	  }
-	}
-	{
-	  brv = mmux_sintmax_bind_to_bash_variable(addr_length_var, addr_length, MMUX_BASH_BUILTIN_STRING_NAME);
-	  if (MMUX_SUCCESS != brv) {
-	    free(sockaddr_pointer);
-	    return brv;
-	  }
-	}
-	return MMUX_SUCCESS;
+
+	brv = mmux_pointer_bind_to_bash_variable(addr_pointer_var, sockaddr_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
+
+	brv = mmux_socklen_bind_to_bash_variable(addr_length_var, addr_length, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
+
+	return brv;
+
+      error_binding_variables:
+	free(sockaddr_pointer);
+	return brv;
       }
     } else {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
@@ -485,16 +481,16 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_accept]]])
   char const *		connected_sockaddr_length_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	addr_pointer;
-  mmux_usize_t		allocated_sockaddr_length;
+  mmux_socklen_t	allocated_sockaddr_length;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(connected_sock_varname,			argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(connected_sockaddr_length_varname,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,					argv[3]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,				argv[4]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(allocated_sockaddr_length,			argv[5]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(allocated_sockaddr_length,		argv[5]);
   {
     struct sockaddr *	sockaddr_pointer          = addr_pointer;
-    socklen_t		connected_sockaddr_length = (socklen_t) allocated_sockaddr_length;
+    mmux_socklen_t	connected_sockaddr_length = allocated_sockaddr_length;
     int			connected_sock            = accept(sock, sockaddr_pointer, &connected_sockaddr_length);
 
     if (-1 != connected_sock) {
@@ -503,8 +499,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_accept]]])
       brv = mmux_sint_bind_to_bash_variable(connected_sock_varname, connected_sock, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-      brv = mmux_usize_bind_to_bash_variable(connected_sockaddr_length_varname, (mmux_usize_t)connected_sockaddr_length,
-					     MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_socklen_bind_to_bash_variable(connected_sockaddr_length_varname, connected_sockaddr_length, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
       return brv;
@@ -532,18 +527,18 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_ACCEPT4]]],[[[
   char const *		connected_sockaddr_length_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	addr_pointer;
-  mmux_usize_t		allocated_sockaddr_length;
+  mmux_socklen_t	allocated_sockaddr_length;
   mmux_sint_t		flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(connected_sock_varname,			argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(connected_sockaddr_length_varname,	argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,					argv[3]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,				argv[4]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(allocated_sockaddr_length,			argv[5]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(allocated_sockaddr_length,		argv[5]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,					argv[6]);
   {
     struct sockaddr *	sockaddr_pointer          = addr_pointer;
-    socklen_t		connected_sockaddr_length = (socklen_t) allocated_sockaddr_length;
+    mmux_socklen_t	connected_sockaddr_length = allocated_sockaddr_length;
     int			connected_sock            = accept4(sock, sockaddr_pointer, &connected_sockaddr_length, flags);
 
     if (-1 != connected_sock) {
@@ -552,8 +547,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_ACCEPT4]]],[[[
       brv = mmux_sint_bind_to_bash_variable(connected_sock_varname, connected_sock, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-      brv = mmux_usize_bind_to_bash_variable(connected_sockaddr_length_varname, (mmux_usize_t)connected_sockaddr_length,
-					     MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_socklen_bind_to_bash_variable(connected_sockaddr_length_varname, connected_sockaddr_length, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
       return brv;
@@ -584,20 +578,19 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpeername]]])
   char const *		connected_sockaddr_length_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	addr_pointer;
-  mmux_usize_t		allocated_sockaddr_length;
+  mmux_socklen_t	allocated_sockaddr_length;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(connected_sockaddr_length_varname,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,					argv[2]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,				argv[3]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(allocated_sockaddr_length,			argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(allocated_sockaddr_length,		argv[4]);
   {
     struct sockaddr *	sockaddr_pointer = addr_pointer;
-    socklen_t		connected_sockaddr_length = (socklen_t) allocated_sockaddr_length;
+    mmux_socklen_t	connected_sockaddr_length = allocated_sockaddr_length;
     int			rv = getpeername(sock, sockaddr_pointer, &connected_sockaddr_length);
 
     if (0 != rv) {
-      return mmux_usize_bind_to_bash_variable(connected_sockaddr_length_varname, (mmux_usize_t)connected_sockaddr_length,
-					      MMUX_BASH_BUILTIN_STRING_NAME);
+      return mmux_socklen_bind_to_bash_variable(connected_sockaddr_length_varname, connected_sockaddr_length, MMUX_BASH_BUILTIN_STRING_NAME);
     } else {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
@@ -684,7 +677,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sendto]]])
   mmux_usize_t		buffer_length;
   mmux_sint_t		flags;
   mmux_pointer_t	addr_pointer;
-  mmux_usize_t		addr_length;
+  mmux_socklen_t	sockaddr_length;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(number_of_bytes_sent_varname,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,				argv[2]);
@@ -692,12 +685,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sendto]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(buffer_length,			argv[4]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,				argv[5]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,			argv[6]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(addr_length,			argv[7]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(sockaddr_length,			argv[7]);
   {
     struct sockaddr *	sockaddr_pointer     = addr_pointer;
-    socklen_t		sockaddr_length      = (socklen_t) addr_length;
-    mmux_ssize_t	number_of_bytes_sent = sendto(sock, buffer_pointer, buffer_length, flags,
-						      sockaddr_pointer, sockaddr_length);
+    mmux_ssize_t	number_of_bytes_sent = sendto(sock, buffer_pointer, buffer_length, flags, sockaddr_pointer, sockaddr_length);
 
     if (-1 != number_of_bytes_sent) {
       return mmux_ssize_bind_to_bash_variable(number_of_bytes_sent_varname, number_of_bytes_sent, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -723,7 +714,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recvfrom]]])
   mmux_usize_t		buffer_length;
   mmux_sint_t		flags;
   mmux_pointer_t	addr_pointer;
-  mmux_usize_t		allocated_addr_length;
+  mmux_socklen_t	allocated_sockaddr_length;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(number_of_bytes_received_varname,	argv[1]);
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(connected_sockaddr_length_varname,	argv[2]);
@@ -732,22 +723,20 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recvfrom]]])
   MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(buffer_length,				argv[5]);
   MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,					argv[6]);
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,				argv[7]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(allocated_addr_length,			argv[8]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(allocated_sockaddr_length,		argv[8]);
   {
     struct sockaddr *	sockaddr_pointer          = addr_pointer;
-    socklen_t		connected_sockaddr_length = (socklen_t) allocated_addr_length;
+    mmux_socklen_t	connected_sockaddr_length = allocated_sockaddr_length;
     mmux_ssize_t	number_of_bytes_received  = recvfrom(sock, buffer_pointer, buffer_length, flags,
 							     sockaddr_pointer, &connected_sockaddr_length);
 
     if (-1 != number_of_bytes_received) {
       mmux_bash_rv_t	brv;
 
-      brv =  mmux_ssize_bind_to_bash_variable(number_of_bytes_received_varname, number_of_bytes_received,
-					      MMUX_BASH_BUILTIN_STRING_NAME);
+      brv =  mmux_ssize_bind_to_bash_variable(number_of_bytes_received_varname, number_of_bytes_received, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-      brv = mmux_usize_bind_to_bash_variable(connected_sockaddr_length_varname, (mmux_usize_t)connected_sockaddr_length,
-					     MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_socklen_bind_to_bash_variable(connected_sockaddr_length_varname, connected_sockaddr_length, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
       return brv;
