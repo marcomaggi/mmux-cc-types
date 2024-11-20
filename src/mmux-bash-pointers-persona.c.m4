@@ -100,7 +100,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgroups]]])
       if (MMUX_SUCCESS != rv) { return rv; }
 
       for (mmux_sint_t i=0; i<ngroups; ++i) {
-	mmux_bash_index_array_index_t	index_array_key = i;
+	mmux_bash_index_array_key_t	index_array_key = i;
 	mmux_sint_t			required_bytes = mmux_gid_sprint_size(gids[i]);
 
 	if (required_bytes < 0) {
@@ -300,7 +300,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrouplist]]])
 	if (MMUX_SUCCESS != brv) { return brv; }
 
 	for (mmux_sint_t i=0; i<ngroups; ++i) {
-	  mmux_bash_index_array_index_t	index_array_key = i;
+	  mmux_bash_index_array_key_t	index_array_key = i;
 	  mmux_sint_t			required_bytes = mmux_gid_sprint_size(gids[i]);
 
 	  if (required_bytes < 0) {
@@ -715,7 +715,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_mem]]])
   {
     struct group *			P = ptr;
     mmux_bash_index_array_variable_t	index_array_variable;
-    mmux_bash_index_array_index_t	index_array_key = 0;
+    mmux_bash_index_array_key_t		index_array_key = 0;
     char *				index_array_value;
     mmux_bash_rv_t			rv;
 

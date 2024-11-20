@@ -177,6 +177,15 @@
 #undef  MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON
 #define MMUX_BASH_POINTERS_DEFAULT_COMPARISON_RELATIVE_EPSILON	1e-6
 
+#if ((! (defined MMUX_HAVE_SO_STYLE)) || (0 == MMUX_HAVE_SO_STYLE))
+#  undef  SO_STYLE
+#  undef  MMUX_HAVE_SO_STYLE
+#  undef  MMUX_VALUEOF_SO_STYLE
+#  define MMUX_HAVE_SO_STYLE		1
+#  define MMUX_VALUEOF_SO_STYLE		MMUX_VALUEOF_SO_TYPE
+#  define SO_STYLE			MMUX_VALUEOF_SO_TYPE
+#endif
+
 
 /** --------------------------------------------------------------------
  ** Constants and variables.

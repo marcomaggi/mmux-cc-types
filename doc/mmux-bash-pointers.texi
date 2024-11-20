@@ -948,6 +948,19 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{MSG_NOSIGNAL}
 @MmuxDefineGlobalVarSystemConstant{MSG_OOB}
 @MmuxDefineGlobalVarSystemConstant{MSG_PEEK}
+@MmuxDefineGlobalVarSystemConstant{SOL_SOCKET}
+@MmuxDefineGlobalVarSystemConstant{SO_BROADCAST}
+@MmuxDefineGlobalVarSystemConstant{SO_DEBUG}
+@MmuxDefineGlobalVarSystemConstant{SO_DONTROUTE}
+@MmuxDefineGlobalVarSystemConstant{SO_ERROR}
+@MmuxDefineGlobalVarSystemConstant{SO_KEEPALIVE}
+@MmuxDefineGlobalVarSystemConstant{SO_LINGER}
+@MmuxDefineGlobalVarSystemConstant{SO_OOBINLINE}
+@MmuxDefineGlobalVarSystemConstant{SO_RCVBUF}
+@MmuxDefineGlobalVarSystemConstant{SO_REUSEADDR}
+@MmuxDefineGlobalVarSystemConstant{SO_SNDBUF}
+@MmuxDefineGlobalVarSystemConstant{SO_STYLE}
+@MmuxDefineGlobalVarSystemConstant{SO_TYPE}
 
 @c page
 @node cctypes
@@ -6969,6 +6982,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets sockaddr::            Interface to @code{struct sockaddr}.
 * sockets addresses::           Socket addresses.
 * sockets creating::            Creating sockets.
+* sockets options::             Socket options.
 @end menu
 
 @c page
@@ -7229,6 +7243,114 @@ of the number of bytes actually received.
 The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
 measured in bytes, of the connected address is bound to this variable; it is probably different from
 @var{ALLOCATED_SOCKADDR_LENGTH}.
+@end deffn
+
+@c page
+@node sockets options
+@section Socket options
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_getsockopt @var{OPTION_VALUE_VAR} @var{SOCK} @var{LEVEL} @var{OPTNAME}
+Interface to the standard C language function @cfunc{getsockopt}, @glibcref{Socket Option Functions,
+getsockopt}.
+
+All the socket options are available for inspection:
+
+@itemize
+@item
+When @var{OPTNAME} is one among the C language macros:
+
+@example
+SO_BROADCAST    SO_DEBUG        SO_DONTROUTE    SO_ERROR
+SO_KEEPALIVE    SO_OOBINLINE    SO_REUSEADDR    SO_STYLE
+SO_TYPE
+@end example
+
+@noindent
+the C language option value is of type @objtype{mmux_sint_t}; in this case the builtin binds the
+resulting option value to the shell variable @var{OPTION_VALUE_VAR}.
+
+@item
+When @var{OPTNAME} is one among the C language macros:
+
+@example
+SO_SNDBUF       SO_RCVBUF
+@end example
+
+@noindent
+the C language option value is of type @objtype{mmux_usize_t}; in this case the builtin binds the
+resulting option value to the shell variable @var{OPTION_VALUE_VAR}.
+
+@item
+When @var{OPTNAME} is the C language macro @code{SO_LINGER}: the C language option value is a
+pointer referencing a @code{struct linger} value; in this case the builtin binds the variable
+@var{OPTION_VALUE_VAR} as an associative array, setting the following keys:
+
+@table @code
+@item ONOFF
+A value of type @objtype{mmux_sint_t} representing the field @code{l_onoff} of the @code{struct
+linger} value.
+
+@item LINGER
+A value of type @objtype{mmux_sint_t} representing the field @code{l_linger} of the @code{struct
+linger} value.
+@end table
+@end itemize
+@end deffn
+
+
+@deffn Builtin mmux_libc_setsockopt @var{SOCK} @var{LEVEL} @var{OPTNAME} @var{OPTION_VALUE}
+Interface to the standard C language function @cfunc{setsockopt}, @glibcref{Socket Option Functions,
+setsockopt}.
+
+Not all the socket options are available for setting, only some of them:
+
+@itemize
+@item
+When @var{OPTNAME} is one among the C language macros:
+
+@example
+SO_BROADCAST    SO_DEBUG        SO_DONTROUTE
+SO_KEEPALIVE    SO_OOBINLINE    SO_REUSEADDR
+@end example
+
+@noindent
+the C language option value is of type @objtype{mmux_sint_t}; in this case the builtin expects the
+argument @var{OPTION_VALUE} to represent such an integer.
+
+@item
+When @var{OPTNAME} is one among the C language macros:
+
+@example
+SO_SNDBUF       SO_RCVBUF
+@end example
+
+@noindent
+the C language option value is of type @objtype{mmux_usize_t}; in this case the builtin expects the
+argument @var{OPTION_VALUE} to represent such an integer.
+
+@quotation
+@strong{NOTE} The underlying system might not set the value as we request.  For reasons.
+@end quotation
+
+@item
+When @var{OPTNAME} is the C language macro @code{SO_LINGER}: the C language option value is a
+pointer referencing a @code{struct linger} value; in this case the builtin expects the argument
+@var{OPTION_VALUE} to be the name of an associative array with the following keys set:
+
+@table @code
+@item ONOFF
+A value of type @objtype{mmux_sint_t} representing the field @code{l_onoff} of the @code{struct
+linger} value.  If the value is @samp{0} the option is disabled; otherwise it is enabled.
+
+@item LINGER
+A value of type @objtype{mmux_sint_t} representing the field @code{l_linger} of the @code{struct
+linger} value.
+@end table
+@end itemize
 @end deffn
 
 @c page
@@ -7784,6 +7906,7 @@ builtin.
 
 @menu
 * shared library arrays index:: Handling index array variables.
+* shared library arrays assoc:: Handling associative array variables.
 @end menu
 
 @c page
@@ -7795,7 +7918,7 @@ To bind a value to a shell index array variable we can do:
 
 @example
 mmux_bash_index_array_variable_t        index_array_variable;
-mmux_bash_index_array_index_t           index_array_key   = 1;
+mmux_bash_index_array_key_t           index_array_key   = 1;
 char const *                            index_array_value = "ciao";
 mmux_bash_rv_t                          rv;
 
@@ -7812,7 +7935,7 @@ Pointer to a data structure representing an shell index array variable.
 @end deftp
 
 
-@deftp {Exact Integer Typedef} mmux_bash_index_array_index_t
+@deftp {Exact Integer Typedef} mmux_bash_index_array_key_t
 Type of exact integers representing indexes in a shell index array variable.
 @end deftp
 
@@ -7847,15 +7970,162 @@ error; usually @var{WHO} references the name of a builtin.
 @end deftypefun
 
 
-@deftypefun mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_index_array_variable_t @var{INDEX_ARRAY_VARIABLE}, mmux_bash_index_array_index_t @var{iNDEX_ARRAY_KEY}, char const * @var{INDEX_ARRAY_VALUE}, char const * @var{WHO})
+@deftypefun mmux_bash_rv_t mmux_bash_index_array_find_existent (mmux_bash_index_array_variable_t * @var{INDEX_ARRAY_VARIABLE_P}, char const * @var{INDEX_ARRAY_NAME}, char const * @var{WHO})
+Find an existent index array variable.  When successful return @code{MMUX_SUCCESS}; otherwise return
+@code{MMUX_FAILURE}.
+
+If the shell variable exists: store a pointer to it in the location referenced by
+@var{INDEX_ARRAY_VARIABLE_P}.
+
+The argument @var{INDEX_ARRAY_NAME} must be an @asciiz{} string representing the name of the
+variable.
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_index_array_variable_t @var{INDEX_ARRAY_VARIABLE}, mmux_bash_index_array_key_t @var{iNDEX_ARRAY_KEY}, char const * @var{INDEX_ARRAY_VALUE}, char const * @var{WHO})
 Bind a value in a shell index array variable.  When successful return @code{MMUX_SUCCESS}; otherwise
 return @code{MMUX_FAILURE}.
 
-The variable referenced by @var{INDEX_ARRAY_VARIABLE} must be mutable.
+The variable referenced by @var{INDEX_ARRAY_VARIABLE} must be a mutable index array.
 
 The index key is represented by @var{iNDEX_ARRAY_KEY}.
 
 The value to bind is the @asciiz{} string referenced by @var{INDEX_ARRAY_VALUE}.
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_index_array_ref (mmux_bash_index_array_variable_t @var{INDEX_ARRAY_VARIABLE}, mmux_bash_index_array_key_t @var{INDEX_ARRAY_KEY}, char const ** @var{INDEX_ARRAY_VALUE_P}, char const * @var{WHO})
+Retrieve the @asciiz{} string representing the value from an indexiative array.  When successful
+return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
+
+The argument @var{INDEX_ARRAY_VARIABLE} must be a pointer to an existent indexiative array variable.
+
+The argument @var{INDEX_ARRAY_KEY} must be an exact integer representing a key of the array.
+
+The argument @var{INDEX_ARRAY_VALUE_P} must reference a location in which this function stores a
+pointer to the value indexiated to the key; the value is an @asciiz{} string.  The value is part of
+Bash's internal state: we can read it; we cannot mutate it; if we want to keep it for further use,
+we must duplicate it.
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+@c page
+@node shared library arrays assoc
+@appendixsubsec Handling associative array variables
+
+
+To bind a value to a shell associative array variable we can do:
+
+@example
+mmux_bash_assoc_array_variable_t        assoc_array_variable;
+mmux_bash_assoc_array_key_t             assoc_array_key   = "greetings";
+char const *                            assoc_array_value = "ciao";
+mmux_bash_rv_t                          rv;
+
+rv = mmux_bash_assoc_array_find_or_make_mutable(&assoc_array_variable, assoc_array_name, "mybuiltin");
+if (MMUX_SUCCESS != rv) @{ /* handle the error */ @}
+
+rv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, "mybuiltin");
+if (MMUX_SUCCESS != rv) @{ /* handle the error */ @}
+@end example
+
+
+@deftp {Opaque Pointer Typedef} mmux_bash_assoc_array_variable_t
+Pointer to a data structure representing an shell assoc array variable.
+@end deftp
+
+
+@deftp {Pointer Typedef} mmux_bash_assoc_array_key_t
+An alias for @code{char const *} representing the type of the key.
+@end deftp
+
+
+@deftypefun bool mmux_bash_assoc_array_mutable_p (mmux_bash_assoc_array_variable_t @var{ASSOC_ARRAY_VARIABLE})
+Return @ctrue{} if the assoc array variable referenced by @var{ASSOC_ARRAY_VARIABLE} is mutable: not
+read--only, not no--assign; otherwise return @cfalse{}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_assoc_array_find_or_make_mutable (mmux_bash_assoc_array_variable_t * @var{ASSOC_ARRAY_VARIABLE_P}, char const * @var{ASSOC_ARRAY_NAME}, char const * @var{WHO})
+Search the shell context for a shell assoc array variable with name equal to the @asciiz{} string
+referenced by @var{ASSOC_ARRAY_NAME}, and whose attributes make it mutable:
+
+@itemize
+@item
+If a shell variable already exists: store a pointer to its data structure in the location referenced
+by @var{ASSOC_ARRAY_VARIABLE_P}; then return @code{MMUX_SUCCESS}.
+
+@item
+If a shell variable does not already exists: create a new one and store a pointer to its data
+structure in the location referenced by @var{ASSOC_ARRAY_VARIABLE_P}; then return
+@code{MMUX_SUCCESS}.
+
+@item
+If no suitable shell variable is found or can be created: return @code{MMUX_FAILURE}.
+@end itemize
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_assoc_array_find_existent (mmux_bash_assoc_array_variable_t * @var{ASSOC_ARRAY_VARIABLE_P}, char const * @var{ASSOC_ARRAY_NAME}, char const * @var{WHO})
+Find an existent associative array variable.  When successful return @code{MMUX_SUCCESS}; otherwise
+return @code{MMUX_FAILURE}.
+
+If the shell variable exists: store a pointer to it in the location referenced by
+@var{ASSOC_ARRAY_VARIABLE_P}.
+
+The argument @var{ASSOC_ARRAY_NAME} must be an @asciiz{} string representing the name of the
+variable.
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_assoc_array_bind (mmux_bash_assoc_array_variable_t @var{ASSOC_ARRAY_VARIABLE}, mmux_bash_assoc_array_assoc_t @var{assoc_ARRAY_KEY}, char const * @var{ASSOC_ARRAY_VALUE}, char const * @var{WHO})
+Bind a value in a shell assoc array variable.  When successful return @code{MMUX_SUCCESS}; otherwise
+return @code{MMUX_FAILURE}.
+
+The variable referenced by @var{ASSOC_ARRAY_VARIABLE} must be a mutable associative array.
+
+The assoc key is represented by @var{assoc_ARRAY_KEY}.
+
+The value to bind is the @asciiz{} string referenced by @var{ASSOC_ARRAY_VALUE}.
+
+In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
+the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
+error; usually @var{WHO} references the name of a builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_assoc_array_ref (mmux_bash_assoc_array_variable_t @var{ASSOC_ARRAY_VARIABLE}, mmux_bash_assoc_array_key_t @var{ASSOC_ARRAY_KEY}, char const ** @var{ASSOC_ARRAY_VALUE_P}, char const * @var{WHO})
+Retrieve the @asciiz{} string representing the value from an associative array.  When successful
+return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
+
+The argument @var{ASSOC_ARRAY_VARIABLE} must be a pointer to an existent associative array variable.
+
+The argument @var{ASSOC_ARRAY_KEY} must be a pointer to an @asciiz{} string representing a key of
+the array.
+
+The argument @var{ASSOC_ARRAY_VALUE_P} must reference a location in which this function stores a
+pointer to the value associated to the key; the value is an @asciiz{} string.  The value is part of
+Bash's internal state: we can read it; we cannot mutate it; if we want to keep it for further use,
+we must duplicate it.
 
 In case of failure and if @var{WHO} is not @cnull{}: print an error message to @stderr{} describing
 the error; use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the

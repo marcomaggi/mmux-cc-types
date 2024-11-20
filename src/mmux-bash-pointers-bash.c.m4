@@ -260,14 +260,31 @@ mmux_bash_index_array_mutable_p (mmux_bash_index_array_variable_t index_array_va
     return false;
   }
 }
-
 mmux_bash_rv_t
-mmux_bash_index_array_find_or_make_mutable (mmux_bash_index_array_variable_t* index_array_variable_p,
+mmux_bash_index_array_find_existent (mmux_bash_index_array_variable_t * index_array_variable_p,
+				     char const * index_array_name,
+				     char const * caller_name)
+{
+  SHELL_VAR *		shell_variable;
+
+  shell_variable = find_variable(index_array_name);
+  if (shell_variable && var_isset(shell_variable) && array_p(shell_variable)) {
+    *index_array_variable_p = shell_variable;
+    return MMUX_SUCCESS;
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: could not find existent index array: \"%s\"\n", caller_name, index_array_name);
+    }
+    return MMUX_FAILURE;
+  }
+}
+mmux_bash_rv_t
+mmux_bash_index_array_find_or_make_mutable (mmux_bash_index_array_variable_t * index_array_variable_p,
 					    char const * index_array_name,
 					    char const * const caller_name)
 {
   mmux_bash_index_array_variable_t	index_array_variable;
-  /* By  setting flags sothat:
+  /* By setting flags so that:
    *
    * (1 & flags) == true)
    *
@@ -288,10 +305,9 @@ mmux_bash_index_array_find_or_make_mutable (mmux_bash_index_array_variable_t* in
     return MMUX_BASH_EXECUTION_FAILURE;
   }
 }
-
 mmux_bash_rv_t
 mmux_bash_index_array_bind (mmux_bash_index_array_variable_t index_array_variable,
-			    mmux_bash_index_array_index_t index_array_key,
+			    mmux_bash_index_array_key_t index_array_key,
 			    char const * const index_array_value,
 			    char const * const caller_name)
 {
@@ -306,6 +322,155 @@ mmux_bash_index_array_bind (mmux_bash_index_array_variable_t index_array_variabl
     return MMUX_FAILURE;
   }
   return MMUX_SUCCESS;
+}
+mmux_bash_rv_t
+mmux_bash_index_array_ref (mmux_bash_index_array_variable_t index_array_variable,
+			   mmux_bash_index_array_key_t index_array_key,
+			   char const ** index_array_value_p,
+			   char const * const caller_name)
+/* The  argument  "index_array_variable"  must   reference  an  existent  indexiative
+   array. */
+{
+  SHELL_VAR *	var               = (SHELL_VAR *) index_array_variable;
+  char const *	index_array_value = array_reference(array_cell(var), index_array_key);
+
+  if (index_array_value) {
+    *index_array_value_p = index_array_value;
+    return MMUX_SUCCESS;
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: missing requested key '%jd' from index array: '%s'\n", caller_name, index_array_key, var->name);
+    }
+    return MMUX_FAILURE;
+  }
+}
+
+
+/** --------------------------------------------------------------------
+ ** Operating on Bash associative arrays.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_bash_assoc_array_mutable_p (mmux_bash_assoc_array_variable_t assoc_array_variable)
+{
+  SHELL_VAR *	var = (SHELL_VAR *) assoc_array_variable;
+
+  if ((! readonly_p(var)) && (! noassign_p(var))) {
+    return true;
+  } else {
+    return false;
+  }
+}
+mmux_bash_rv_t
+mmux_bash_assoc_array_find_existent (mmux_bash_assoc_array_variable_t * assoc_array_variable_p,
+				     char const * assoc_array_name,
+				     char const * caller_name)
+{
+  SHELL_VAR *		shell_variable;
+
+  shell_variable = find_variable(assoc_array_name);
+  if (shell_variable && var_isset(shell_variable) && assoc_p(shell_variable)) {
+    *assoc_array_variable_p = shell_variable;
+    return MMUX_SUCCESS;
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: could not find existent assoc array: \"%s\"\n", caller_name, assoc_array_name);
+    }
+    return MMUX_FAILURE;
+  }
+}
+mmux_bash_rv_t
+mmux_bash_assoc_array_find_or_make_mutable (mmux_bash_assoc_array_variable_t * assoc_array_variable_p,
+					    char const * assoc_array_name,
+					    char const * const caller_name)
+{
+  mmux_bash_assoc_array_variable_t	assoc_array_variable;
+  /* By setting flags so that:
+   *
+   *	(1 & flags) == true)
+   *
+   * we request a validation  for the array as not being  read-only or no-assign.  If
+   * the array already exists  and it is read-only or no-assign:  the return value of
+   * "find_or_make_array_variable()" is NULL.
+   *
+   * By setting flags so that:
+   *
+   *	(2 & flags) == true)
+   *
+   * we request finding or making an associative array.
+   */
+  int					flags = (1 | 2);
+
+  assoc_array_variable = find_or_make_array_variable((char *)assoc_array_name, flags);
+  if (assoc_array_variable) {
+    *assoc_array_variable_p = assoc_array_variable;
+    return MMUX_SUCCESS;
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: failed access to shell array variable: \"%s\"\n", caller_name, assoc_array_name);
+    }
+    return MMUX_BASH_EXECUTION_FAILURE;
+  }
+}
+
+mmux_bash_rv_t
+mmux_bash_assoc_array_bind (mmux_bash_assoc_array_variable_t assoc_array_variable,
+			    mmux_bash_assoc_array_key_t assoc_array_key,
+			    char const * const assoc_array_value,
+			    char const * const caller_name)
+{
+  SHELL_VAR *	var = (SHELL_VAR *) assoc_array_variable;
+  SHELL_VAR *	rv;
+  mmux_sint_t	flags = 0;
+  char *	internal_assoc_array_key;
+
+  /* NOTE For some reason  Bash requires the key to be duplicated  by us, rather than
+     being internalised  by Bash  itself.  Apparently the  value string,  instead, is
+     internalised by Bash.  (Marco Maggi; Nov 20, 2024) */
+  {
+    mmux_ssize_t	len = 1+strlen(assoc_array_key);
+
+    internal_assoc_array_key = malloc(len);
+    if (NULL ==internal_assoc_array_key) {
+      mmux_bash_pointers_consume_errno(caller_name);
+      return MMUX_FAILURE;
+    }
+    memcpy(internal_assoc_array_key, assoc_array_key, len);
+  }
+
+  /* The function  "bind_assoc_variable()" requires  the name  of the  shell variable
+     itself  as second  argument;  as of  GNU  Bash 5.2  it is  used  only for  error
+     reporting. */
+  rv = bind_assoc_variable(assoc_array_variable, var->name, (char *)internal_assoc_array_key, (char *)assoc_array_value, flags);
+  if (NULL == rv) {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: failure while binding assoc array element\n", caller_name);
+    }
+    return MMUX_FAILURE;
+  }
+  return MMUX_SUCCESS;
+}
+
+mmux_bash_rv_t
+mmux_bash_assoc_array_ref (mmux_bash_assoc_array_variable_t assoc_array_variable,
+			   mmux_bash_assoc_array_key_t assoc_array_key,
+			   char const ** assoc_array_value_p,
+			   char const * const caller_name)
+/* The  argument  "assoc_array_variable"  must   reference  an  existent  associative
+   array. */
+{
+  SHELL_VAR *	var               = (SHELL_VAR *) assoc_array_variable;
+  char const *	assoc_array_value = assoc_reference(assoc_cell(var), (char *)assoc_array_key);
+
+  if (assoc_array_value) {
+    *assoc_array_value_p = assoc_array_value;
+    return MMUX_SUCCESS;
+  } else {
+    if (caller_name) {
+      fprintf(stderr, "%s: error: missing requested key '%s' from associative array: '%s'\n", caller_name, assoc_array_key, var->name);
+    }
+    return MMUX_FAILURE;
+  }
 }
 
 /* end of file */

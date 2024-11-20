@@ -303,7 +303,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_nameindex_to_array]]])
       struct if_nameindex * A = if_nameindex();
 
       for (int i=0; NULL != A[i].if_name; ++i) {
-	mmux_bash_index_array_index_t	index_array_key   = A[i].if_index;
+	mmux_bash_index_array_key_t	index_array_key   = A[i].if_index;
 	char *				index_array_value = A[i].if_name;
 
 	rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -753,6 +753,248 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recvfrom]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(8 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_RECEIVED_VAR CONNECTED_SOCKADDR_LENGTH_VAR SOCK BUFFER_POINTER BUFFER_LENGTH FLAGS SOCKADDR_POINTER ALLOCATED_SOCKADDR_LENGTH"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Sockets: options.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockopt]]])
+{
+  char const *		option_value_varname;
+  mmux_sint_t		sock;
+  mmux_sint_t		level;
+  mmux_sint_t		optname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(option_value_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(level,			argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(optname,			argv[4]);
+  {
+    switch (optname) {
+    case SO_BROADCAST:
+    case SO_DEBUG:
+    case SO_DONTROUTE:
+    case SO_ERROR:
+    case SO_KEEPALIVE:
+    case SO_OOBINLINE:
+    case SO_REUSEADDR:
+    case SO_TYPE: /* case SO_STYLE: it is an alias for SO_TYPE */
+      /* The option value is an "int". */
+      {
+	mmux_sint_t	optval;
+	mmux_socklen_t	optlen = sizeof(mmux_sint_t);
+	int		rv = getsockopt(sock, level, optname, &optval, &optlen);
+
+	if (0 == rv) {
+	  return mmux_sint_bind_to_bash_variable(option_value_varname, optval, MMUX_BASH_BUILTIN_STRING_NAME);
+	} else {
+	  goto error_calling_getsockopt;
+	}
+      }
+      break;
+
+    case SO_RCVBUF: /* size of receiving buffer */
+    case SO_SNDBUF: /* size of sending buffer */
+      /* The option value is a "size_t". */
+      {
+	mmux_usize_t	optval = 0;
+	mmux_socklen_t	optlen = sizeof(mmux_usize_t);
+	int		rv = getsockopt(sock, level, optname, &optval, &optlen);
+
+	if (0 == rv) {
+	  return mmux_sint_bind_to_bash_variable(option_value_varname, optval, MMUX_BASH_BUILTIN_STRING_NAME);
+	} else {
+	  goto error_calling_getsockopt;
+	}
+      }
+      break;
+
+    case SO_LINGER:
+      /* The option value is a "struct linger". */
+      {
+	struct linger	optval;
+	mmux_socklen_t	optlen = sizeof(optval);
+	int		rv = getsockopt(sock, level, optname, &optval, &optlen);
+
+	if (-1 == rv) {
+	  goto error_calling_getsockopt;
+	} else {
+	  if (0) { fprintf(stderr, "%s: called getsockopt l_onoff=%d, l_linger=%d\n", __func__, optval.l_onoff, optval.l_linger); }
+	  mmux_bash_assoc_array_variable_t	assoc_array_variable;
+	  mmux_bash_rv_t			brv;
+
+	  brv = mmux_bash_assoc_array_find_or_make_mutable(&assoc_array_variable, option_value_varname, MMUX_BASH_BUILTIN_STRING_NAME);
+	  if (MMUX_SUCCESS != brv) { return brv; }
+
+	  brv = mmux_bash_assoc_array_bind(assoc_array_variable, "ONOFF", (optval.l_onoff)? "1" : "0", MMUX_BASH_BUILTIN_STRING_NAME);
+	  if (MMUX_SUCCESS != brv) { return brv; }
+	  {
+	    mmux_sint_t	requested_size = mmux_sint_sprint_size(optval.l_linger);
+
+	    if (-1 == requested_size) {
+	      goto error_converting_l_linger;
+	    } else {
+	      char	timeout_period_in_seconds[requested_size];
+
+	      rv = mmux_sint_sprint(timeout_period_in_seconds, requested_size, optval.l_linger);
+	      if (0 != rv) { goto error_converting_l_linger; }
+
+	      brv = mmux_bash_assoc_array_bind(assoc_array_variable, "LINGER", timeout_period_in_seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
+	    }
+	    return MMUX_SUCCESS;
+
+	  error_converting_l_linger:
+	    fprintf(stderr, "%s: error: failure while converting l_linger to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	    return MMUX_FAILURE;
+	  }
+	}
+      }
+      break;
+
+    default:
+      errno = EINVAL;
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+
+  error_calling_getsockopt:
+    mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    return MMUX_FAILURE;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER OPTION_VALUE_VAR SOCK LEVEL OPTNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setsockopt]]])
+{
+  mmux_sint_t		sock;
+  mmux_sint_t		level;
+  mmux_sint_t		optname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(sock,			argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(level,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(optname,			argv[3]);
+  {
+    switch (optname) {
+    case SO_BROADCAST:
+    case SO_DEBUG:
+    case SO_DONTROUTE:
+    case SO_KEEPALIVE:
+    case SO_OOBINLINE:
+    case SO_REUSEADDR:
+      /* The  option  SO_TYPE  ==  SO_STYLE   and  SO_ERROR  are  not  available  for
+	 setting. */
+      {
+	mmux_sint_t	optval;
+
+	MMUX_BASH_PARSE_BUILTIN_ARG_SINT(optval,	argv[4]);
+	{
+	  mmux_socklen_t	optlen = sizeof(optval);
+	  int			rv = setsockopt(sock, level, optname, &optval, optlen);
+
+	  if (0 == rv) {
+	    return MMUX_SUCCESS;
+	  } else {
+	    goto error_calling_setsockopt;
+	  }
+	}
+      }
+      break;
+
+    case SO_RCVBUF: /* size of receiving buffer */
+    case SO_SNDBUF: /* size of sending buffer */
+      /* The option value is a "size_t". */
+      {
+	mmux_usize_t	optval;
+
+	MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(optval,	argv[4]);
+	{
+	  mmux_socklen_t	optlen = sizeof(optval);
+	  int			rv = setsockopt(sock, level, optname, &optval, optlen);
+
+	  if (0 == rv) {
+	    return MMUX_SUCCESS;
+	  } else {
+	    goto error_calling_setsockopt;
+	  }
+	}
+      }
+      break;
+
+    case SO_LINGER:
+      /* The option value is a "struct linger". */
+      {
+	char const *	option_value_array_varname;
+
+	MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(option_value_array_varname,	argv[4]);
+	{
+	    mmux_bash_assoc_array_variable_t	assoc_array_variable;
+	    char const *			assoc_array_value;
+	    struct linger			optval;
+	    mmux_bash_rv_t			brv;
+
+	    brv = mmux_bash_assoc_array_find_existent(&assoc_array_variable, option_value_array_varname, MMUX_BASH_BUILTIN_STRING_NAME);
+	    if (MMUX_SUCCESS != brv) { return brv; }
+
+	    /* Retrieve the value of the key "ONOFF". */
+	    {
+	      brv = mmux_bash_assoc_array_ref(assoc_array_variable, "ONOFF", &assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
+	      if (0 == strcmp("0",assoc_array_value)) {
+		optval.l_onoff = 0;
+	      } else {
+		optval.l_onoff = 1;
+	      }
+	    }
+
+	    /* Retrieve the value of the key "LINGER". */
+	    {
+	      mmux_sint_t	timeout_period_in_seconds;
+
+	      brv = mmux_bash_assoc_array_ref(assoc_array_variable, "LINGER", &assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (false == mmux_sint_parse(&timeout_period_in_seconds, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME)) {
+		optval.l_linger = timeout_period_in_seconds;
+	      } else {
+		return MMUX_FAILURE;
+	      }
+	    }
+
+	    {
+	      if (0) { fprintf(stderr, "%s: calling setsockopt l_onoff=%d, l_linger=%d\n", __func__, optval.l_onoff, optval.l_linger); }
+	      mmux_socklen_t	optlen = sizeof(optval);
+	      int		rv = setsockopt(sock, level, optname, &optval, optlen);
+
+	      if (0 == rv) {
+		return MMUX_SUCCESS;
+	      } else {
+		goto error_calling_setsockopt;
+	      }
+	  }
+	}
+      }
+      break;
+
+    default:
+      errno = EINVAL;
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+
+  error_calling_setsockopt:
+    mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    return MMUX_FAILURE;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCK LEVEL OPTNAME OPTION_VALUE"]]])
 
 
 /** --------------------------------------------------------------------

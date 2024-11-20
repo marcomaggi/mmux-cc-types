@@ -282,7 +282,7 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_get_shell_variable_string_value
  ** ----------------------------------------------------------------- */
 
 typedef void *			mmux_bash_index_array_variable_t;
-typedef mmux_sintmax_t		mmux_bash_index_array_index_t;
+typedef mmux_sintmax_t		mmux_bash_index_array_key_t;
 
 mmux_bash_pointers_decl bool mmux_bash_index_array_mutable_p (mmux_bash_index_array_variable_t index_array_variable)
   __attribute__((__nonnull__(1)));
@@ -292,11 +292,55 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_find_or_make_mutabl
 										   char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_find_existent (mmux_bash_index_array_variable_t * index_array_variable_p,
+									    char const * index_array_name,
+									    char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_index_array_variable_t index_array_variable,
-								   mmux_bash_index_array_index_t index_array_key,
+								   mmux_bash_index_array_key_t index_array_key,
 								   char const * index_array_value,
 								   char const * caller_name)
   __attribute__((__nonnull__(1,3)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_ref (mmux_bash_index_array_variable_t index_array_variable,
+								  mmux_bash_index_array_key_t index_array_key,
+								  char const ** index_array_value_p,
+								  char const * const caller_name)
+  __attribute__((__nonnull__(1,3)));
+
+
+/** --------------------------------------------------------------------
+ ** GNU Bash interface: associative array variables.
+ ** ----------------------------------------------------------------- */
+
+typedef void *			mmux_bash_assoc_array_variable_t;
+typedef char const *		mmux_bash_assoc_array_key_t;
+
+mmux_bash_pointers_decl bool mmux_bash_assoc_array_mutable_p (mmux_bash_assoc_array_variable_t assoc_array_variable)
+  __attribute__((__nonnull__(1)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_find_or_make_mutable (mmux_bash_assoc_array_variable_t * assoc_array_variable_p,
+										   char const * assoc_array_name,
+										   char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_find_existent (mmux_bash_assoc_array_variable_t * assoc_array_variable_p,
+									    char const * assoc_array_name,
+									    char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_bind (mmux_bash_assoc_array_variable_t assoc_array_variable,
+								   mmux_bash_assoc_array_key_t assoc_array_key,
+								   char const * assoc_array_value,
+								   char const * caller_name)
+  __attribute__((__nonnull__(1,2,3)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_ref (mmux_bash_assoc_array_variable_t assoc_array_variable,
+								  mmux_bash_assoc_array_key_t assoc_array_key,
+								  char const ** assoc_array_value_p,
+								  char const * const caller_name)
+  __attribute__((__nonnull__(1,2,3)));
 
 
 /** --------------------------------------------------------------------
