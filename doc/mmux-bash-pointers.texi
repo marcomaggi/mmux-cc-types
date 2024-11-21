@@ -219,7 +219,7 @@ This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE
 builtins for the @gnu{} Bash shell; to do so it installs a C11 language shared library and shell
 scripts which are meant to be sourced in a @gnu{} Bash session or script.
 
-This package makes raw memory pointers available to the shell:
+This package makes raw memory pointers available to the shell, along with other stuff:
 
 @example
 source libmmux-bash-packages.bash
