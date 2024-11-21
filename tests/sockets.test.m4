@@ -457,7 +457,7 @@ function sockets-setsockopt-sint-SO_REUSEADDR-1.1 () {
 
 # NOTE Apparently: setting the option SO_SNDBUF is just a suggestion, not an order.  The system does
 # what it wants.  (Marco Maggi; Nov 20, 2024)
-function sockets-setsockopt-sint-SO_SNDBUF-1.1 () {
+function sockets-setsockopt-usize-SO_SNDBUF-1.1 () {
     mbfl_location_enter
     {
 	dotest-unset-debug
@@ -476,7 +476,7 @@ function sockets-setsockopt-sint-SO_SNDBUF-1.1 () {
 }
 # NOTE Apparently: setting the option SO_RCVBUF is just a suggestion, not an order.  The system does
 # what it wants.  (Marco Maggi; Nov 20, 2024)
-function sockets-setsockopt-sint-SO_RCVBUF-1.1 () {
+function sockets-setsockopt-usize-SO_RCVBUF-1.1 () {
     mbfl_location_enter
     {
 	dotest-unset-debug
@@ -501,11 +501,8 @@ function sockets-setsockopt-SO_LINGER-1.1 () {
 	dotest-unset-debug
 
 	declare SOCKFD
-	declare -A SETTER_OPTVAL GETTER_OPTVAL
-	declare CIAO=999
-
-	SETTER_OPTVAL[ONOFF]=1
-	SETTER_OPTVAL[LINGER]=123
+	declare -Ar SETTER_OPTVAL=([ONOFF]=1 [LINGER]=123)
+	declare -A  GETTER_OPTVAL
 
 	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) 0,
 				  mmux_libc_close RR(SOCKFD) )

@@ -7254,6 +7254,37 @@ measured in bytes, of the connected address is bound to this variable; it is pro
 @section Socket options
 
 
+To set and get a socket option whose value is of type @objtype{mmux_sint_t}, we do:
+
+@example
+declare SOCKFD OPTVAL
+
+mmux_libc_socket SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} 0
+@{
+    mmux_libc_setsockopt @RR{SOCKFD} @RR{mmux_libc_SOL_SOCKET} @RR{mmux_libc_SO_KEEPALIVE} 1
+    mmux_libc_getsockopt OPTVAL @RR{SOCKFD} @RR{mmux_libc_SOL_SOCKET} @RR{mmux_libc_SO_KEEPALIVE}
+    @RR{OPTVAL}         @result{} 1
+@}
+mmux_libc_close @RR{SOCKFD}
+@end example
+
+To set and get a socket option whose value is of type @code{struct linger}, we do:
+
+@example
+declare SOCKFD
+declare -Ar SETTER_OPTVAL=([ONOFF]=1 [LINGER]=123)
+declare -A  GETTER_OPTVAL
+
+mmux_libc_socket SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} 0
+@{
+    mmux_libc_setsockopt @RR{SOCKFD} @RR{mmux_libc_SOL_SOCKET} @RR{mmux_libc_SO_LINGER} SETTER_OPTVAL
+    mmux_libc_getsockopt GETTER_OPTVAL @RR{SOCKFD} @RR{mmux_libc_SOL_SOCKET} @RR{mmux_libc_SO_LINGER}
+    $@{GETTER_OPTVAL[ONOFF]@}   @result{} 1
+    $@{GETTER_OPTVAL[LINGER]@}  @result{} 123
+@}
+mmux_libc_close @RR{SOCKFD}
+@end example
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
@@ -7324,6 +7355,10 @@ SO_KEEPALIVE    SO_OOBINLINE    SO_REUSEADDR
 @noindent
 the C language option value is of type @objtype{mmux_sint_t}; in this case the builtin expects the
 argument @var{OPTION_VALUE} to represent such an integer.
+
+@quotation
+@strong{NOTE} To set the option @code{SO_DEBUG} the process could need special privileges.
+@end quotation
 
 @item
 When @var{OPTNAME} is one among the C language macros:
