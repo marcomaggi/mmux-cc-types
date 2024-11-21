@@ -241,6 +241,7 @@ $VALUE  @result{} 123
 * overview usage::              How to use the shell libraries.
 * overview decimal::            Support for the @objtype{_DecimalN} types.
 * overview stems::              Specifying C language types with their stem.
+* overview cctypes::            Type names according to @mmux{} CC Types.
 * overview conventions::        Conventions in coding and documentation
 * overview linking::            Linking code with the shared library.
 @end menu
@@ -326,82 +327,15 @@ package--configuration time.  This package relies on the availability of the ext
 
 
 @cindex Type stems
-@cindex @code{pointer}, type stem
-@cindex @code{schar}, type stem
-@cindex @code{uchar}, type stem
-@cindex @code{sshort}, type stem
-@cindex @code{ushort}, type stem
-@cindex @code{sint}, type stem
-@cindex @code{uint}, type stem
-@cindex @code{slong}, type stem
-@cindex @code{ulong}, type stem
-@cindex @code{sllong}, type stem
-@cindex @code{ullong}, type stem
-@cindex @code{float}, type stem
-@cindex @code{double}, type stem
-@cindex @code{ldouble}, type stem
-
-@cindex @code{float32}, type stem
-@cindex @code{float64}, type stem
-@cindex @code{float128}, type stem
-
-@cindex @code{float32x}, type stem
-@cindex @code{float64x}, type stem
-@cindex @code{float128x}, type stem
-
-@cindex @code{decimal32}, type stem
-@cindex @code{decimal64}, type stem
-@cindex @code{decimal128}, type stem
-
-@cindex @code{complexf}, type stem
-@cindex @code{complexd}, type stem
-@cindex @code{complexld}, type stem
-
-@cindex @code{complexf32}, type stem
-@cindex @code{complexf64}, type stem
-@cindex @code{complexf128}, type stem
-
-@cindex @code{complexf32x}, type stem
-@cindex @code{complexf64x}, type stem
-@cindex @code{complexf128x}, type stem
-
-@cindex @code{complexd32}, type stem
-@cindex @code{complexd64}, type stem
-@cindex @code{complexd128}, type stem
-
-@cindex @code{sint8}, type stem
-@cindex @code{uint8}, type stem
-@cindex @code{sint16}, type stem
-@cindex @code{uint16}, type stem
-@cindex @code{sint32}, type stem
-@cindex @code{uint32}, type stem
-@cindex @code{sint64}, type stem
-@cindex @code{uint64}, type stem
-
-@cindex @code{ssize}, type stem
-@cindex @code{usize}, type stem
-@cindex @code{sintmax}, type stem
-@cindex @code{uintmax}, type stem
-@cindex @code{sintptr}, type stem
-@cindex @code{uintptr}, type stem
-@cindex @code{mode}, type stem
-@cindex @code{off}, type stem
-@cindex @code{pid}, type stem
-@cindex @code{uid}, type stem
-@cindex @code{gid}, type stem
-@cindex @code{wchar}, type stem
-@cindex @code{wint}, type stem
-@cindex @code{time}, type stem
-@cindex @code{socklen}, type stem
 
 
 The following word definitions just alias the corresponding C language type; such uniform names are
-useful when using preprocessor macros to generate code.
-
-If @value{PACKAGE} supports a type: it blindly implements all the possible operations for it, even
-when it looks like an operation does not make much sense.  A type is a type.
+useful when using preprocessor macros to generate code.  If @value{PACKAGE} supports a type: it
+blindly implements all the possible operations for it, even when it looks like an operation does not
+make much sense.  A type is a type.
 
 @macro MmuxDefineTypeStem{STEM,TYPE}
+@cindex @code{\STEM\}, type stem
 @deftp {Type Stem} \STEM\
 Single--word specification of a C language type supported by this package.  It is an alias for the C
 language type @code{\TYPE\}.
@@ -494,6 +428,108 @@ non--standard C language type implementing complex floating--point numbers havin
 @MmuxDefineTypeStem{wint, wint_t}
 @MmuxDefineTypeStem{time, time_t}
 @MmuxDefineTypeStem{socklen, socklen_t}
+
+@c page
+@node overview cctypes
+@section Type names according to @mmux{} CC Types
+
+
+@value{PACKAGE} depends upon the external package @mmux{} CC Types, which in turn defines C language
+type aliases for the common C language types; such uniform names are useful when using preprocessor
+macros to generate code.  In this documentation, often we use @mmux{} CC Types's aliases to indicate
+that we are using the rules of data processing defined by that package (for example when converting
+to and from @asciiz{} strings).
+
+@macro MmuxDefineCCTypeAlias{STEM,TYPE}
+@cindex @objtype{mmux_\STEM\_t}, data type
+@deftp Typedef mmux_\STEM\_t
+Alias for the C language type @code{\TYPE\}.
+@end deftp
+
+@end macro
+
+
+@MmuxDefineCCTypeAlias{pointer,void *}
+
+@MmuxDefineCCTypeAlias{schar,signed char}
+@MmuxDefineCCTypeAlias{uchar,unsigned char}
+@MmuxDefineCCTypeAlias{sshort,signed short int}
+@MmuxDefineCCTypeAlias{ushort,unsigned short int}
+@MmuxDefineCCTypeAlias{sint,signed int}
+@MmuxDefineCCTypeAlias{uint,unsigned int}
+@MmuxDefineCCTypeAlias{slong,signed long}
+@MmuxDefineCCTypeAlias{ulong,unsigned long}
+@MmuxDefineCCTypeAlias{sllong,signed long long}
+@MmuxDefineCCTypeAlias{ullong,unsigned long long}
+@MmuxDefineCCTypeAlias{float,float}
+@MmuxDefineCCTypeAlias{double,double}
+@MmuxDefineCCTypeAlias{ldouble,long double}
+
+@MmuxDefineCCTypeAlias{float32, _Float32}
+@MmuxDefineCCTypeAlias{float64, _Float64}
+@MmuxDefineCCTypeAlias{float128, _Float128}
+
+@MmuxDefineCCTypeAlias{float32x, _Float32x}
+@MmuxDefineCCTypeAlias{float64x, _Float64x}
+@MmuxDefineCCTypeAlias{float128x, _Float128x}
+
+@MmuxDefineCCTypeAlias{decimal32, _Decimal32}
+@MmuxDefineCCTypeAlias{decimal64, _Decimal64}
+@MmuxDefineCCTypeAlias{decimal128, _Decimal128}
+
+@MmuxDefineCCTypeAlias{complexf,float complex}
+@MmuxDefineCCTypeAlias{complexd,double complex}
+@MmuxDefineCCTypeAlias{complexld,long double complex}
+
+@MmuxDefineCCTypeAlias{complexf32, _Float32 complex}
+@MmuxDefineCCTypeAlias{complexf64, _Float64 complex}
+@MmuxDefineCCTypeAlias{complexf128, _Float128 complex}
+
+@MmuxDefineCCTypeAlias{complexf32x, _Float32 complex}
+@MmuxDefineCCTypeAlias{complexf64x, _Float64x complex}
+@MmuxDefineCCTypeAlias{complexf128x, _Float128x complex}
+
+@deftp Typedef mmux_complexd32_t
+It is an alias for a non--standard C language type implementing complex floating--point numbers
+having @objtype{_Decimal32} values as real and imaginary parts.
+@end deftp
+
+
+@deftp Typedef mmux_complexd64_t
+It is an alias for a non--standard C language type implementing complex floating--point numbers
+having @objtype{_Decimal64} values as real and imaginary parts.
+@end deftp
+
+
+@deftp Typedef mmux_complexd128_t
+It is an alias for a non--standard C language type implementing complex floating--point numbers
+having @objtype{_Decimal128} values as real and imaginary parts.
+@end deftp
+
+@MmuxDefineCCTypeAlias{sint8,int8_t}
+@MmuxDefineCCTypeAlias{uint8,uint8_t}
+@MmuxDefineCCTypeAlias{sint16,int16_t}
+@MmuxDefineCCTypeAlias{uint16,uint16_t}
+@MmuxDefineCCTypeAlias{sint32,int32_t}
+@MmuxDefineCCTypeAlias{uint32,uint32_t}
+@MmuxDefineCCTypeAlias{sint64,int64_t}
+@MmuxDefineCCTypeAlias{uint64,uint64_t}
+
+@MmuxDefineCCTypeAlias{ssize,ssize_t}
+@MmuxDefineCCTypeAlias{usize,size_t}
+@MmuxDefineCCTypeAlias{sintmax, intmax_t}
+@MmuxDefineCCTypeAlias{uintmax, uintmax_t}
+@MmuxDefineCCTypeAlias{sintptr, intptr_t}
+@MmuxDefineCCTypeAlias{uintptr, uintptr_t}
+@MmuxDefineCCTypeAlias{mode, mode_t}
+@MmuxDefineCCTypeAlias{off, off_t}
+@MmuxDefineCCTypeAlias{pid, pid_t}
+@MmuxDefineCCTypeAlias{uid, uid_t}
+@MmuxDefineCCTypeAlias{gid, gid_t}
+@MmuxDefineCCTypeAlias{wchar, wchar_t}
+@MmuxDefineCCTypeAlias{wint, wint_t}
+@MmuxDefineCCTypeAlias{time, time_t}
+@MmuxDefineCCTypeAlias{socklen, socklen_t}
 
 @c page
 @node overview conventions
