@@ -264,6 +264,8 @@ function sockets-struct-sockaddr_in6-1.1 () {
     {
 	dotest-unset-debug
 
+	declare -r INPUT_ASCII_SIN6_ADDR='1:2:3:4:5:6:7:8'
+
 	declare SOCKADDR_IN6
 
 	declare -r INPUT_SIN6_FAMILY=RR(mmux_libc_AF_INET6)
@@ -289,24 +291,112 @@ function sockets-struct-sockaddr_in6-1.1 () {
 								RR(INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID) \
 								RR(INPUT_HOST_BYTEORDER_SIN6_PORT),
 				  mmux_libc_free RR(SOCKADDR_IN6) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(INPUT_SIN6_FAMILY) WW(INPUT_ASCII_SIN6_ADDR) RR(SIN6_ADDR_POINTER) )
 
 	mbfl_location_leave_when_failure( mmux_libc_sin6_family_ref   OUTPUT_SIN6_FAMILY                  RR(SOCKADDR_IN6) )
-	mbfl_location_leave_when_failure( mmux_libc_sin6_addr_ref     OUTPUT_SIN6_ADDR_POINTER            RR(SOCKADDR_IN6) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_ntop         RR(INPUT_SIN6_FAMILY) RR(SOCKADDR_IN6) OUTPUT_ASCII_ADDR )
 	mbfl_location_leave_when_failure( mmux_libc_sin6_flowinfo_ref OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO RR(SOCKADDR_IN6) )
 	mbfl_location_leave_when_failure( mmux_libc_sin6_scope_id_ref OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID RR(SOCKADDR_IN6) )
 	mbfl_location_leave_when_failure( mmux_libc_sin6_port_ref     OUTPUT_HOST_BYTEORDER_SIN6_PORT     RR(SOCKADDR_IN6) )
 
 	dotest-debug OUTPUT_SIN6_FAMILY=WW(OUTPUT_SIN6_FAMILY)
-	dotest-debug OUTPUT_SIN6_ADDR_POINTER=WW(OUTPUT_SIN6_ADDR_POINTER)
+	dotest-debug OUTPUT_ASCII_ADDR=WW(OUTPUT_ASCII_ADDR)
 	dotest-debug OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO=WW(OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO)
 	dotest-debug OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID=WW(OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID)
 	dotest-debug OUTPUT_HOST_BYTEORDER_SIN6_PORT=WW(OUTPUT_HOST_BYTEORDER_SIN6_PORT)
 
 	dotest-equal RR(INPUT_SIN6_FAMILY) WW(OUTPUT_SIN6_FAMILY) &&
-	    dotest-equal RR(SIN6_ADDR_POINTER) RR(OUTPUT_SIN6_ADDR_POINTER) &&
 	    dotest-equal RR(INPUT_HOST_BYTEORDER_SIN6_FLOWINFO) RR(OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO) &&
 	    dotest-equal RR(INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID) RR(OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID) &&
 	    dotest-equal RR(INPUT_HOST_BYTEORDER_SIN6_PORT) RR(OUTPUT_HOST_BYTEORDER_SIN6_PORT)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-sockaddr_in6-sin6_family-1.1 () {
+    declare SOCKADDR_IN6_POINTER
+    declare -r INPUT_SIN6_FAMILY=RR(mmux_libc_AF_INET)
+    declare    OUPUT_SIN6_FAMILY
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc SOCKADDR_IN6_POINTER 1 RR(mmux_libc_sockaddr_in6_SIZEOF),
+				  mmux_libc_free RR(SOCKADDR_IN6_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_family_set RR(SOCKADDR_IN6_POINTER) RR(INPUT_SIN6_FAMILY) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_family_ref OUPUT_SIN6_FAMILY        RR(SOCKADDR_IN6_POINTER) )
+	dotest-equal RR(INPUT_SIN6_FAMILY) RR(OUPUT_SIN6_FAMILY)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-sockaddr_in6-sin6_addr-pointer-1.1 () {
+    declare SOCKADDR_IN6_POINTER SIN6_ADDR_POINTER
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc SOCKADDR_IN6_POINTER 1 RR(mmux_libc_sockaddr_in6_SIZEOF),
+				  mmux_libc_free RR(SOCKADDR_IN6_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_addr_pointer_ref SIN6_ADDR_POINTER RR(SOCKADDR_IN6_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_memcpy RR(SIN6_ADDR_POINTER) RR(mmux_libc_in6addr_loopback_pointer) \
+					  RR(mmux_libc_in6_addr_SIZEOF) )
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-sockaddr_in6-sin6_flowinfo-1.1 () {
+    declare SOCKADDR_IN6_POINTER
+    declare -r INPUT_SIN6_FLOWINFO=0
+    declare    OUPUT_SIN6_FLOWINFO
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc SOCKADDR_IN6_POINTER 1 RR(mmux_libc_sockaddr_in6_SIZEOF),
+				  mmux_libc_free RR(SOCKADDR_IN6_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_flowinfo_set RR(SOCKADDR_IN6_POINTER) RR(INPUT_SIN6_FLOWINFO) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_flowinfo_ref OUPUT_SIN6_FLOWINFO RR(SOCKADDR_IN6_POINTER) )
+	dotest-equal RR(INPUT_SIN6_FLOWINFO) RR(OUPUT_SIN6_FLOWINFO)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-sockaddr_in6-sin6_scope_id-1.1 () {
+    declare SOCKADDR_IN6_POINTER
+    declare -r INPUT_SIN6_SCOPE_ID=0
+    declare    OUPUT_SIN6_SCOPE_ID
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc SOCKADDR_IN6_POINTER 1 RR(mmux_libc_sockaddr_in6_SIZEOF),
+				  mmux_libc_free RR(SOCKADDR_IN6_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_scope_id_set RR(SOCKADDR_IN6_POINTER) RR(INPUT_SIN6_SCOPE_ID) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_scope_id_ref OUPUT_SIN6_SCOPE_ID RR(SOCKADDR_IN6_POINTER) )
+	dotest-equal RR(INPUT_SIN6_SCOPE_ID) RR(OUPUT_SIN6_SCOPE_ID)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-sockaddr_in6-sin6_port-1.1 () {
+    declare SOCKADDR_IN6_POINTER
+    declare -r INPUT_SIN6_PORT=8080
+    declare    OUPUT_SIN6_PORT
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc SOCKADDR_IN6_POINTER 1 RR(mmux_libc_sockaddr_in6_SIZEOF),
+				  mmux_libc_free RR(SOCKADDR_IN6_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_port_set RR(SOCKADDR_IN6_POINTER) RR(INPUT_SIN6_PORT) )
+	mbfl_location_leave_when_failure( mmux_libc_sin6_port_ref OUPUT_SIN6_PORT        RR(SOCKADDR_IN6_POINTER) )
+	dotest-equal RR(INPUT_SIN6_PORT) RR(OUPUT_SIN6_PORT)
     }
     mbfl_location_leave
 }

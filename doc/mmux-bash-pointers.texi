@@ -7229,6 +7229,7 @@ from host to network byte ordering, using @cfunc{htons}.
 @end table
 @end deffn
 
+@c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin_family_ref @var{SIN_FAMILY_VAR} @var{SOCKADDR_IN_POINTER}
 @deffnx Builtin mmux_libc_sin_family_set @var{SOCKADDR_IN_POINTER} @var{SIN_FAMILY}
@@ -7254,6 +7255,7 @@ mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
 @end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin_addr_ref @var{NETWORK_BYTEORDER_SIN_ADDR_VAR} @var{SOCKADDR_IN_POINTER}
 @deffnx Builtin mmux_libc_sin_addr_set @var{SOCKADDR_IN_POINTER} @var{NETWORK_BYTEORDER_SIN_ADDR}
@@ -7281,6 +7283,7 @@ mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 @end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin_addr_pointer_ref @var{SIN_ADDR_POINTER_VAR} @var{SOCKADDR_IN_POINTER}
 Getter for a pointer to the field @code{sin_addr.s_addr} of the @code{struct sockaddr_in} referenced
@@ -7307,6 +7310,7 @@ mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 @end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin_port_ref @var{HOST_BYTEORDER_SIN_PORT_VAR} @var{SOCKADDR_IN_POINTER}
 @deffnx Builtin mmux_libc_sin_port_set @var{SOCKADDR_IN_POINTER} @var{HOST_BYTEORDER_SIN_PORT}
@@ -7343,28 +7347,17 @@ mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 To use values of type @code{struct sockaddr_in6} we do:
 
 @example
-declare SOCKADDR_IN6
+declare SOCKADDR_IN6 SIN6_ADDR_POINTER
+declare -r SIN6_FAMILY=@RR{mmux_libc_AF_INET6}
+declare -r SIN6_FLOWINFO=0
+declare -r SIN6_SCOPE_ID=0
+declare -r SIN6_PORT=8080
 
-declare -r INPUT_SIN6_FAMILY=@RR{mmux_libc_AF_INET6}
-declare SIN6_ADDR_POINTER
-declare -r INPUT_HOST_BYTEORDER_SIN6_FLOWINFO=0
-declare -r INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID=0
-declare -r INPUT_HOST_BYTEORDER_SIN6_PORT=8080
-
-declare OUTPUT_SIN6_FAMILY
-declare OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO
-declare OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID
-declare OUTPUT_HOST_BYTEORDER_SIN6_PORT
-
-mmux_libc_sockaddr_in6_malloc SOCKADDR_IN6 \
-    @RR{INPUT_SIN6_FAMILY} SIN6_ADDR_POINTER @RR{INPUT_HOST_BYTEORDER_SIN6_FLOWINFO} \
-    @RR{INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID} @RR{INPUT_HOST_BYTEORDER_SIN6_PORT}
+mmux_libc_sockaddr_in6_malloc SOCKADDR_IN6 @RR{SIN6_FAMILY} SIN6_ADDR_POINTER \
+    @RR{SIN6_FLOWINFO} @RR{SIN6_SCOPE_ID} @RR{SIN6_PORT}
 @{
-    mmux_libc_sin6_family_ref   OUTPUT_SIN6_FAMILY                  @RR{SOCKADDR_IN6}
-    mmux_libc_sin6_addr_ref     OUTPUT_SIN6_ADDR_POINTER            @RR{SOCKADDR_IN6}
-    mmux_libc_sin6_flowinfo_ref OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO @RR{SOCKADDR_IN6}
-    mmux_libc_sin6_scope_id_ref OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID @RR{SOCKADDR_IN6}
-    mmux_libc_sin6_port_ref     OUTPUT_HOST_BYTEORDER_SIN6_PORT     @RR{SOCKADDR_IN6}
+    mmux_libc_inet_pton @RR{INPUT_SIN6_FAMILY} '1:2:3:4:5:6:7:8' @RR{SIN6_ADDR_POINTER}
+    # ...
 @}
 mmux_libc_free @RR{SOCKADDR_IN6}
 @end example
@@ -7382,7 +7375,7 @@ Size, measured in bytes, of a value of type @code{struct in6_addr}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_malloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{HOST_BYTEORDER_SIN6_FLOWINFO} @var{HOST_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
+@deffn Builtin mmux_libc_sockaddr_in6_malloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
 Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in6}
 value and initialise.  Arguments:
 
@@ -7401,16 +7394,13 @@ representation of the pointer referencing the field @code{sin6_addr} of the @cod
 sockaddr_in6} value.  We can use the pointer to fill the field, for example with
 @MmuxBuiltin{mmux_libc_memcpy} or @cfunc{memcpy}.
 
-@item HOST_BYTEORDER_SIN6_FLOWINFO
-The string representation, in host byte order, of a @objtype{mmux_uint32_t} integer representing the
-field @code{sin6_flowinfo} of the @code{struct sockaddr_in6} value.  Internally this value is
-converted from host to network byte ordering, using @cfunc{htonl}, then stored in the @code{struct
-sockaddr_in6}.
+@item NETWORK_BYTEORDER_SIN6_FLOWINFO
+The string representation, in network byte order, of a @objtype{mmux_uint32_t} integer representing
+the field @code{sin6_flowinfo} of the @code{struct sockaddr_in6} value.
 
-@item HOST_BYTEORDER_SIN6_SCOPE_ID
-The string representation, in host byte order, of a @objtype{mmux_uint32_t} integer representing the
-field @code{sin6_scope_id} of the @code{struct sockaddr_in6} value.  This value is stored in
-@strong{host} byte order in the @code{struct sockaddr_in6}.
+@item NETWORK_BYTEORDER_SIN6_SCOPE_ID
+The string representation, in network byte order, of a @objtype{mmux_uint32_t} integer representing
+the field @code{sin6_scope_id} of the @code{struct sockaddr_in6} value.
 
 @item HOST_BYTEORDER_SIN6_PORT
 The string representation, in host byte order, of a @objtype{mmux_uint16_t} integer representing a
@@ -7419,42 +7409,124 @@ port number.  Internally this value is converted from host to network byte order
 @end table
 @end deffn
 
+@c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin6_family_ref @var{SIN6_FAMILY_VAR} @var{SOCKADDR_IN6_POINTER}
-Bind to the shell variable whose name is @var{SIN6_FAMILY_VAR} the string representation of the
-field @code{sin_family} in the @code{struct sockaddr_in6} value referenced by
-@var{SOCKADDR_IN6_POINTER}.  It is usually the value of @samp{mmux_libc_AF_INET6}.
+@deffnx Builtin mmux_libc_sin6_family_set @var{SOCKADDR_IN6_POINTER} @var{SIN6_FAMILY}
+Setter and getter for the field @code{sin6_family} of the @code{struct sockaddr_in6} referenced by
+@var{SOCKADDR_IN6_POINTER}; it is usually the value of @samp{mmux_libc_AF_INET6}.
+
+The getter binds the shell variable whose name is @var{SIN6_FAMILY_VAR} to the string representation
+of the field @code{sin6_family} as is, without any byte reordering.
+
+The setter sets the field @code{sin6_family} to the value @var{SIN6_FAMILY} as is, without any byte
+reordering.
+
+@example
+declare SOCKADDR_IN6_POINTER
+declare -r INPUT_SIN6_FAMILY=RR(mmux_libc_AF_INET)
+declare    OUPUT_SIN6_FAMILY
+
+mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+@{
+    mmux_libc_sin6_family_set @RR{SOCKADDR_IN6_POINTER} @RR{INPUT_SIN6_FAMILY}
+    mmux_libc_sin6_family_ref OUPUT_SIN6_FAMILY @RR{SOCKADDR_IN6_POINTER}
+@}
+mmux_libc_free @RR{SOCKADDR_IN6_POINTER}
+@end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_addr_ref @var{SIN6_ADDR_POINTER_VAR} @var{SOCKADDR_IN6_POINTER}
-Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_ADDR_VAR} the string
-representation of a pointer to the field @code{sin6_addr} in the @code{struct sockaddr_in6} value
-referenced by @var{SOCKADDR_IN6_POINTER}.
+@deffn Builtin mmux_libc_sin6_addr_pointer_ref @var{SIN6_ADDR_POINTER_VAR} @var{SOCKADDR_IN6_POINTER}
+Bind the shell variable whose name is @var{SIN6_ADDR_POINTER_VAR} to the string representation of a
+pointer to the field @code{sin6_addr} in the @code{struct sockaddr_in6} value referenced by
+@var{SOCKADDR_IN6_POINTER}.
+
+@example
+declare SOCKADDR_IN6_POINTER SIN6_ADDR_POINTER
+
+mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+@{
+    mmux_libc_sin6_addr_pointer_ref SIN6_ADDR_POINTER @RR{SOCKADDR_IN6_POINTER}
+    mmux_libc_memcpy @RR{SIN6_ADDR_POINTER} @RR{mmux_libc_in6addr_loopback_pointer} \
+        @RR{mmux_libc_in6_addr_SIZEOF}
+@}
+mmux_libc_free @RR{SOCKADDR_IN6_POINTER}
+@end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_flowinfo_ref @var{HOST_BYTEORDER_SIN6_FLOWINFO_VAR} @var{SOCKADDR_IN6_POINTER}
-Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_FLOWINFO_VAR} the string
-representation of the field @code{sin6_flowinfo} in the @code{struct sockaddr_in6} value referenced
-by @var{SOCKADDR_IN6_POINTER}; before binding, the field's value is converted from network to host
-byte ordering using @cfunc{ntohl}; the value is the representation of a @objtype{mmux_uint32_t}.
+@deffn Builtin mmux_libc_sin6_flowinfo_ref @var{NETWORK_BYTEORDER_SIN6_FLOWINFO_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffnx Builtin mmux_libc_sin6_flowinfo_set @var{SOCKADDR_IN6_POINTER} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO}
+Setter and getter for the field @code{sin6_flowinfo} of the @code{struct sockaddr_in6} referenced by
+@var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
+usually the value @samp{0}.
+
+The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SIN6_FLOWINFO_VAR} to the
+string representation of the field @code{sin6_flowinfo} as is, without any byte reordering.
+
+The setter sets the field @code{sin6_flowinfo} to the value @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} as
+is, without any byte reordering.
+
+@example
+declare SOCKADDR_IN6_POINTER
+declare -r INPUT_SIN6_FLOWINFO=0
+declare    OUPUT_SIN6_FLOWINFO
+
+mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+@{
+    mmux_libc_sin6_flowinfo_set @RR{SOCKADDR_IN6_POINTER} @RR{INPUT_SIN6_FLOWINFO}
+    mmux_libc_sin6_flowinfo_ref OUPUT_SIN6_FLOWINFO @RR{SOCKADDR_IN6_POINTER}
+@}
+mmux_libc_free RR(SOCKADDR_IN6_POINTER)
+@end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_port_ref @var{HOST_BYTEORDER_SIN6_SCOPE_ID_VAR} @var{SOCKADDR_IN6_POINTER}
-Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_SCOPE_ID_VAR} the string
-representation of the field @code{sin6_scope_id} in the @code{struct sockaddr_in6} value referenced
-by @var{SOCKADDR_IN6_POINTER}; the field's value is in host byte ordering and it is left so; the
-value is the representation of a @objtype{mmux_uint32_t}.
+@deffn Builtin mmux_libc_sin6_scope_id_ref @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffnx Builtin mmux_libc_sin6_scope_id_set @var{SOCKADDR_IN6_POINTER} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID}
+Setter and getter for the field @code{sin6_scope_id} of the @code{struct sockaddr_in6} referenced by
+@var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
+usually the value @samp{0}.
+
+The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID_VAR} to the
+string representation of the field @code{sin6_scope_id} as is, without any byte reordering.
+
+The setter sets the field @code{sin6_scope_id} to the value @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} as
+is, without any byte reordering.
+
+@example
+declare SOCKADDR_IN6_POINTER
+declare -r INPUT_SIN6_SCOPE_ID=0
+declare    OUPUT_SIN6_SCOPE_ID
+
+mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+@{
+    mmux_libc_sin6_scope_id_set @RR{SOCKADDR_IN6_POINTER} @RR{INPUT_SIN6_SCOPE_ID}
+    mmux_libc_sin6_scope_id_ref OUPUT_SIN6_SCOPE_ID @RR{SOCKADDR_IN6_POINTER}
+@}
+mmux_libc_free RR(SOCKADDR_IN6_POINTER)
+@end example
 @end deffn
 
+@c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin6_port_ref @var{HOST_BYTEORDER_SIN6_PORT_VAR} @var{SOCKADDR_IN6_POINTER}
-Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_PORT_VAR} the string
-representation of the field @code{sin6_port} in the @code{struct sockaddr_in6} value referenced by
-@var{SOCKADDR_IN6_POINTER}; before binding, the field's value is converted from network to host byte
-ordering using @cfunc{ntohs}; the value is the representation of a @objtype{mmux_uint16_t}.
+@deffnx Builtin mmux_libc_sin6_port_set @var{SOCKADDR_IN6_POINTER} @var{HOST_BYTEORDER_SIN6_PORT}
+Setter and getter for the field @code{sin6_port} of the @code{struct sockaddr_in6} referenced by
+@var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint16_t}; it is
+usually @samp{0}.
+
+The getter binds the shell variable whose name is @var{HOST_BYTEORDER_SIN6_PORT_VAR} to the string
+representation of the field @code{sin6_port}; before binding: it converts the binary value from
+network to host byte order using the standard C language function @cfunc{ntohs}.
+
+The setter sets the field @code{sin6_port} to the value @var{HOST_BYTEORDER_SIN6_PORT}; before
+setting: the binary value is converted from host to network byte order using the standard C language
+function @cfunc{htons}.
 @end deffn
 
 @c page
