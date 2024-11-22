@@ -185,7 +185,7 @@ function sockets-struct-sockaddr_in-1.1 () {
 function sockets-struct-sockaddr_in6-1.1 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare SOCKADDR_IN6
 
@@ -230,6 +230,121 @@ function sockets-struct-sockaddr_in6-1.1 () {
 	    dotest-equal RR(INPUT_HOST_BYTEORDER_SIN6_FLOWINFO) RR(OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO) &&
 	    dotest-equal RR(INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID) RR(OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID) &&
 	    dotest-equal RR(INPUT_HOST_BYTEORDER_SIN6_PORT) RR(OUTPUT_HOST_BYTEORDER_SIN6_PORT)
+    }
+    mbfl_location_leave
+}
+
+
+#### inet_aton, inet_ntoa
+
+function sockets-inet_aton-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -r ASCII_ADDR='127.0.0.1'
+	declare UINT32_ADDR
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_aton UINT32_ADDR WW(ASCII_ADDR) )
+
+	dotest-debug WW(UINT32_ADDR)
+	dotest-predicate mmux_string_is_uint32 WW(UINT32_ADDR)
+    }
+    mbfl_location_leave
+}
+function sockets-inet_ntoa-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -r INPUT_ASCII_ADDR='127.0.0.1'
+	declare UINT32_ADDR OUTPUT_ASCII_ADDR
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_aton UINT32_ADDR WW(INPUT_ASCII_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR RR(UINT32_ADDR) )
+
+	dotest-debug WW(UINT32_ADDR) WW(OUTPUT_ASCII_ADDR)
+	if dotest-option-debug
+	then printf '%x\n' WW(UINT32_ADDR) >&2
+	fi
+	dotest-equal WW(INPUT_ASCII_ADDR) WW(OUTPUT_ASCII_ADDR)
+    }
+    mbfl_location_leave
+}
+
+
+#### inet_addr
+
+function sockets-inet_addr-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -r INPUT_ASCII_ADDR='127.0.0.1'
+	declare UINT32_ADDR OUTPUT_ASCII_ADDR
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_addr UINT32_ADDR WW(INPUT_ASCII_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR RR(UINT32_ADDR) )
+
+	dotest-debug UINT32_ADDR=WW(UINT32_ADDR) OUTPUT_ASCII_ADDR=WW(OUTPUT_ASCII_ADDR) UINT32_ADDR_HEX=$(printf '%x\n' WW(UINT32_ADDR))
+	dotest-equal WW(INPUT_ASCII_ADDR) WW(OUTPUT_ASCII_ADDR)
+    }
+    mbfl_location_leave
+}
+function sockets-inet_addr-1.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -r INPUT_ASCII_ADDR='ciao'
+	declare UINT32_ADDR OUTPUT_ASCII_ADDR
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_addr UINT32_ADDR WW(INPUT_ASCII_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR RR(UINT32_ADDR) )
+
+	dotest-debug UINT32_ADDR=WW(UINT32_ADDR) OUTPUT_ASCII_ADDR=WW(OUTPUT_ASCII_ADDR) UINT32_ADDR_HEX=$(printf '%x\n' WW(UINT32_ADDR))
+	dotest-equal WW(mmux_libc_INADDR_NONE) WW(UINT32_ADDR)
+    }
+    mbfl_location_leave
+}
+
+
+#### inet_network
+
+function sockets-inet_network-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -r INPUT_ASCII_ADDR='1.2.3.4'
+	declare UINT32_ADDR OUTPUT_ASCII_ADDR
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_network UINT32_ADDR WW(INPUT_ASCII_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR RR(UINT32_ADDR) )
+
+	dotest-debug UINT32_ADDR=WW(UINT32_ADDR) OUTPUT_ASCII_ADDR=WW(OUTPUT_ASCII_ADDR) UINT32_ADDR_HEX=$(printf '%x\n' WW(UINT32_ADDR))
+	dotest-equal '4.3.2.1' WW(OUTPUT_ASCII_ADDR)
+    }
+    mbfl_location_leave
+}
+
+
+#### inet_makeaddr
+
+function sockets-inet_makeaddr-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -ri UINT32_NET_ADDR='16#FFFFFF00'
+	declare -ri UINT32_LOCAL_ADDR='16#00000012'
+	declare -ri EXPECTED_UINT32_ADDR='16#12FFFFFF'
+	declare UINT32_ADDR
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_makeaddr UINT32_ADDR RR(UINT32_NET_ADDR) RR(UINT32_LOCAL_ADDR) )
+
+	dotest-debug UINT32_ADDR=WW(UINT32_ADDR) UINT32_ADDR_HEX=$(printf '%x\n' WW(UINT32_ADDR))
+	dotest-equal WW(EXPECTED_UINT32_ADDR) WW(UINT32_ADDR)
     }
     mbfl_location_leave
 }

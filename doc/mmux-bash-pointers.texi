@@ -1006,6 +1006,21 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{INADDR_LOOPBACK}
 @MmuxDefineGlobalVarSystemConstant{INADDR_NONE}
 
+@c ------------------------------------------------------------------------
+
+@defvar mmux_libc_in6addr_loopback_pointer
+Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
+in6addr_loopback}.  We can the pointer to this data structure to initialise a @code{struct
+sockaddr_in6}.  @glibcref{Host Address Data Type, in6addr_loopback}.
+@end defvar
+
+
+@defvar mmux_libc_in6addr_any_pointer
+Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
+in6addr_any}.  We can the pointer to this data structure to initialise a @code{struct sockaddr_in6}.
+@glibcref{Host Address Data Type, in6addr_any}.
+@end defvar
+
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -7375,6 +7390,108 @@ Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string represen
 @section Socket addresses
 
 
+Data structures of type @code{struct in_addr} have a single field @code{s_addr} of type
+@objtype{mmux_uint32_t} representing an IPv4 address; to convert between the @mmuxascii{}
+representation and the @objtype{mmux_uint32_t} representation, we do:
+
+@example
+declare -r INPUT_ASCII_ADDR='127.0.0.1'
+declare UINT32_ADDR
+declare OUTPUT_ASCII_ADDR
+
+mmux_libc_inet_aton UINT32_ADDR @WW{INPUT_ASCII_ADDR}
+mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR @RR{UINT32_ADDR}
+
+@WW{UINT32_ADDR}        @result{} 16777343
+@WW{OUTPUT_ASCII_ADDR}  @result{} 127.0.0.1
+
+printf '%x\n' @WW{UINT32_ADDR}  @print{} 100007f
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_inet_aton @var{UINT32_IN_ADDR_VAR} @var{ASCII_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_aton}, @glibcref{Host Address Functions,
+inet_aton}.  Convert the @mmuxascii{} representation of an IPv4 address into its
+@objtype{mmux_uint32_t} representation, then bind a string representation of the latter to the shell
+variable whose name is @var{UINT32_IN_ADDR_VAR}.
+
+If the input string is invalid: this function sets @env{ERRNO} to @code{EINVAL} and returns false.
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_ntoa  @var{ASCII_IN_ADDR_VAR} @var{UINT32_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_ntoa}, @glibcref{Host Address Functions,
+inet_ntoa}.  Convert the @objtype{mmux_uint32_t} representation of an IPv4 address into its
+@mmuxascii{} representation, then bind the latter to the shell variable whose name is
+@var{ASCII_IN_ADDR_VAR}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_addr @var{UINT32_IN_ADDR_VAR} @var{ASCII_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_addr}, @glibcref{Host Address Functions,
+inet_addr}.  This builtin behaves like @MmuxBuiltin{mmux_libc_aton}, but, because of the definition
+of @cfunc{inet_addr}, if the input string is invalid: the resulting @objtype{mmux_uint32_t} value is
+equal to @code{INADDR_NONE}.
+
+@example
+declare -r INPUT_ASCII_ADDR='ciao'
+declare UINT32_ADDR
+declare OUTPUT_ASCII_ADDR
+
+mmux_libc_inet_addr UINT32_ADDR @WW{INPUT_ASCII_ADDR}
+mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR @RR{UINT32_ADDR}
+
+@WW{UINT32_ADDR}        @result{} 4294967295
+@WW{OUTPUT_ASCII_ADDR}  @result{} 255.255.255.255
+
+printf '%x\n' @WW{UINT32_ADDR}  @print{} ffffffff
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_network @var{UINT32_IN_ADDR_VAR} @var{ASCII_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_network}, @glibcref{Host Address
+Functions, inet_network}.
+
+@example
+declare -r INPUT_ASCII_ADDR='1.2.3.4'
+declare UINT32_ADDR
+declare OUTPUT_ASCII_ADDR
+
+mmux_libc_inet_network UINT32_ADDR @WW{INPUT_ASCII_ADDR}
+mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR @RR{UINT32_ADDR}
+
+@WW{UINT32_ADDR}        @result{} 16909060
+@WW{OUTPUT_ASCII_ADDR}  @result{} 4.3.2.1
+
+printf '%x\n' @WW{UINT32_ADDR}  @print{} 1020304
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_makeaddr @var{UINT32_IN_ADDR_VAR} @var{UINT32_NET_IN_ADDR} @var{UINT32_LOCAL_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_makeaddr}, @glibcref{Host Address
+Functions, inet_makeaddr}.
+
+@example
+declare -ri UINT32_NET_ADDR='16#FFFFFF00'
+declare -ri UINT32_LOCAL_ADDR='16#00000012'
+declare UINT32_ADDR
+
+mmux_libc_inet_makeaddr UINT32_ADDR @RR{UINT32_NET_ADDR} @RR{UINT32_LOCAL_ADDR}
+
+@WW{UINT32_ADDR}                @result{} 318767103
+printf '%x\n' @WW{UINT32_ADDR}  @print{} 12ffffff
+@end example
+@end deffn
+
+@c page
+@node sockets creating
+@section Creating sockets
+
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
@@ -7387,13 +7504,6 @@ sockaddr} value.
 The argument @var{SOCKADDR_SIZE} must be the string representation of the number of bytes in the
 block referenced by @var{SOCKADDR_POINTER}.
 @end deffn
-
-@c page
-@node sockets creating
-@section Creating sockets
-
-
-@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_socket @var{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}

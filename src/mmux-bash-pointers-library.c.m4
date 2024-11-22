@@ -128,6 +128,22 @@ m4_define([[[MMUX_DEFINE_INT_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1)
 #endif
 ]]])
 
+m4_define([[[MMUX_DEFINE_ULONG_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
+{
+  int requested_nbytes = mmux_ulong_sprint_size($1);
+
+  if (0 > requested_nbytes) {
+    return MMUX_FAILURE;
+  } else {
+    char	str[requested_nbytes];
+
+    mmux_ulong_sprint(str, requested_nbytes, $1);
+    mmux_bash_create_global_string_variable("mmux_libc_$1", str, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+#endif
+]]])
+
 m4_divert(0)m4_dnl
 
 
@@ -635,9 +651,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[SO_STYLE]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[SO_TYPE]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[INADDR_ANY]]]);
-    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[INADDR_BROADCAST]]]);
-    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[INADDR_LOOPBACK]]]);
-    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[INADDR_NONE]]]);
+
+    MMUX_DEFINE_ULONG_CONSTANT_VARIABLE([[[INADDR_BROADCAST]]]);
+    MMUX_DEFINE_ULONG_CONSTANT_VARIABLE([[[INADDR_LOOPBACK]]]);
+    MMUX_DEFINE_ULONG_CONSTANT_VARIABLE([[[INADDR_NONE]]]);
   }
   return MMUX_SUCCESS;
 }

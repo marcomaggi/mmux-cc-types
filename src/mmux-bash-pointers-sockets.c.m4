@@ -499,6 +499,124 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Sockets: host address conversion.
+ ** ----------------------------------------------------------------- */
+
+/* ASCII-to-network */
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_aton]]])
+{
+  char const *		in_addr_varname;
+  char const *		ascii_in_addr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(in_addr_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(ascii_in_addr,		argv[2]);
+  {
+    struct in_addr	name;
+    int			rv   = inet_aton(ascii_in_addr, &name);
+
+    if (0 != rv) {
+      mmux_uint32_t	addr = name.s_addr;
+
+      return mmux_uint32_bind_to_bash_variable(in_addr_varname, addr, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IN_ADDR_VAR ASCII_IN_ADDR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_addr]]])
+{
+  char const *		in_addr_varname;
+  char const *		ascii_in_addr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(in_addr_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(ascii_in_addr,		argv[2]);
+  {
+    mmux_uint32_t	addr = inet_addr(ascii_in_addr);
+
+    return mmux_uint32_bind_to_bash_variable(in_addr_varname, addr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IN_ADDR_VAR ASCII_IN_ADDR"]]])
+
+/* ------------------------------------------------------------------ */
+
+/* Network to ASCII. */
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_ntoa]]])
+{
+  char const *		ascii_in_addr_varname;
+  mmux_uint32_t		addr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(ascii_in_addr_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT32(addr,			argv[2]);
+  {
+    struct in_addr	name          = { .s_addr = addr };
+    char const *	ascii_in_addr = inet_ntoa(name);
+
+    return mmux_string_bind_to_bash_variable(ascii_in_addr_varname, ascii_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCII_IN_ADDR_VAR IN_ADDR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_network]]])
+{
+  char const *		network_in_addr_varname;
+  char const *		ascii_in_addr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(network_in_addr_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(ascii_in_addr,			argv[2]);
+  {
+    mmux_uint32_t	network_addr = inet_network(ascii_in_addr);
+
+    if (INADDR_NONE != network_addr) {
+      return mmux_uint32_bind_to_bash_variable(network_in_addr_varname, network_addr, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IN_ADDR_VAR ASCII_IN_ADDR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_makeaddr]]])
+{
+  char const *		uint32_in_addr_varname;
+  mmux_uint32_t		uint32_net_in_addr;
+  mmux_uint32_t		uint32_local_in_addr;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(uint32_in_addr_varname,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT32(uint32_net_in_addr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT32(uint32_local_in_addr,		argv[3]);
+  {
+    struct	in_addr	addr = inet_makeaddr(uint32_net_in_addr, uint32_local_in_addr);
+
+    return mmux_uint32_bind_to_bash_variable(uint32_in_addr_varname, addr.s_addr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ASCII_IN_ADDR_VAR UINT32_NET_IN_ADDR UINT32_LOCAL_IN_ADDR"]]])
+
+
+/** --------------------------------------------------------------------
  ** Sockets: addresses.
  ** ----------------------------------------------------------------- */
 
@@ -1365,6 +1483,12 @@ mmux_bash_pointers_init_sockets_module (void)
   if (MMUX_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_un_SIZEOF",  sizeof(struct sockaddr_un), NULL);
+  if (MMUX_SUCCESS != rv) { return rv; }
+
+  rv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_loopback_pointer", (mmux_pointer_t)&(in6addr_loopback), NULL);
+  if (MMUX_SUCCESS != rv) { return rv; }
+
+  rv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_any_pointer", (mmux_pointer_t)&(in6addr_any), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   return MMUX_SUCCESS;

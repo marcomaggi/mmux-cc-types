@@ -80,6 +80,10 @@
 
 /* ------------------------------------------------------------------ */
 
+#ifdef HAVE_ARPA_INET_H
+#  include <arpa/inet.h>
+#endif
+
 #ifdef HAVE_ASSERT_H
 #  include <assert.h>
 #endif

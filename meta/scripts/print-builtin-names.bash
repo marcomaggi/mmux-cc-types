@@ -80,7 +80,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   sockaddr_in_malloc sockaddr_in_sin_family_ref sockaddr_in_sin_addr_ref sockaddr_in_sin_port_ref
 			   sockaddr_in6_malloc sockaddr_in6_sin6_family_ref sockaddr_in6_sin6_addr_ref
 			   sockaddr_in6_sin6_flowinfo_ref sockaddr_in6_sin6_scope_id_ref sockaddr_in6_sin6_port_ref
-			   htons ntohs htonl ntohl
+			   htons ntohs htonl ntohl inet_aton inet_addr inet_ntoa inet_network inet_makeaddr
 			   if_nametoindex if_indextoname if_nameindex_to_array
 			   bind getsockname socket shutdown socketpair connect listen accept getpeername
 			   send recv sendto recvfrom getsockopt setsockopt)
