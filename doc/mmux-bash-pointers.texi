@@ -96,8 +96,16 @@ $@{\VARNAME\:?@}
 "$@{\VARNAME\:?@}"
 @end macro
 
+@macro WWW{ARRYNAME,KEY}
+"$@{\ARRYNAME\[\KEY\]:?@}"
+@end macro
+
 @macro QQ{VARNAME}
 "$@{\VARNAME\@}"
+@end macro
+
+@macro QQQ{ARRYNAME,KEY}
+"$@{\ARRYNAME\[\KEY\]@}"
 @end macro
 
 @macro SS{ARRYNAME,KEY}
@@ -7165,28 +7173,16 @@ Bind to the shell variable whose name is @var{SUN_PATH_VAR} the string represent
 To use values of type @code{struct sockaddr_in} we do:
 
 @example
-declare SOCKADDR_IN
+declare SOCKADDR_IN_POINTER SIN_ADDR_POINTER
+declare -r SIN_FAMILY=@RR{mmux_libc_AF_INET}
+declare -r SIN_PORT='8080'
 
-declare -r INPUT_SIN_FAMILY=@RR{mmux_libc_AF_INET}
-declare -r INPUT_HOST_BYTEORDER_SIN_ADDR=@RR{mmux_libc_INADDR_LOOPBACK}
-declare -r INPUT_HOST_BYTEORDER_SIN_PORT=1024
-
-declare OUTPUT_SIN_FAMILY
-declare OUTPUT_HOST_BYTEORDER_SIN_ADDR
-declare OUTPUT_HOST_BYTEORDER_SIN_PORT
-
-mmux_libc_sockaddr_in_malloc SOCKADDR_IN \
-    @RR{INPUT_SIN_FAMILY} @WW{INPUT_HOST_BYTEORDER_SIN_ADDR} @RR{INPUT_HOST_BYTEORDER_SIN_PORT}
+mmux_libc_sockaddr_in_malloc SOCKADDR_IN_POINTER @RR{SIN_FAMILY} IN_ADDR_POINTER @RR{SIN_PORT}
 @{
-    mmux_libc_sockaddr_in_sin_family_ref OUTPUT_SIN_FAMILY              @RR{SOCKADDR_IN}
-    mmux_libc_sockaddr_in_sin_addr_ref   OUTPUT_HOST_BYTEORDER_SIN_ADDR @RR{SOCKADDR_IN}
-    mmux_libc_sockaddr_in_sin_port_ref   OUTPUT_HOST_BYTEORDER_SIN_PORT @RR{SOCKADDR_IN}
-
-    @WW{OUTPUT_SIN_FAMILY}                      @result{} 2
-    @WW{OUTPUT_HOST_BYTEORDER_SIN_ADDR}         @result{} 2130706433
-    @WW{OUTPUT_HOST_BYTEORDER_SIN_PORT}         @result{} 1024
+    mmux_libc_inet_pton @RR{SIN_FAMILY} '1.2.3.4' @RR{IN_ADDR_POINTER}
+    # ...
 @}
-mmux_libc_free @RR{SOCKADDR_IN}
+mmux_libc_free RR(SOCKADDR_IN_POINTER)
 @end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -7202,9 +7198,9 @@ Size, measured in bytes, of a value of type @code{struct in_addr}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_sockaddr_in_malloc @var{SOCKADDR_IN_POINTER_VAR} @var{SIN_FAMILY} @var{HOST_BYTEORDER_SIN_ADDR} @var{HOST_BYTEORDER_SIN_PORT}
+@deffn Builtin mmux_libc_sockaddr_in_malloc @var{SOCKADDR_IN_POINTER_VAR} @var{SIN_FAMILY} @var{SIN_ADDR_POINTER_VAR} @var{HOST_BYTEORDER_SIN_PORT}
 Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in}
-value and initialise.  Arguments:
+value and initialise is.  Arguments:
 
 @table @var
 @item SOCKADDR_IN_POINTER_VAR
@@ -7212,42 +7208,131 @@ The name of a shell variable: when successful, this builtin binds to this variab
 representation of the pointer referencing the @code{struct sockaddr_in} value.
 
 @item SIN_FAMILY
-The string representation of the family argument; it is usually the value of
-@samp{mmux_libc_AF_INET}.
+The string representation of the family argument, to be stored in the field @code{sin_family}; it is
+usually the value of @samp{mmux_libc_AF_INET}.  It is stored in the data structure as is, without
+any byte reordering.
 
-@item HOST_BYTEORDER_SIN_ADDR
-The string representation, in host byte order, of a @objtype{mmux_uint32_t} integer representing a
-@code{struct in_addr} value.  Internally this value is converted from host to network byte ordering,
-using @cfunc{htonl}, then stored in the @code{struct sockaddr_in}.
+@item SIN_ADDR_POINTER_VAR
+The name of a shell variable: when successful, this builtin binds to this variable a string
+representation of the pointer to the field @code{sin_addr.s_addr} of the newly allocated
+@code{struct sockaddr_in}.
+
+We can use such pointer to access the field using the setter @MmuxBuiltin{mmux_uint32_pointer_set}
+and getter @MmuxBuiltin{mmux_uint32_pointer_set}; values directly extracted from the data structure
+are in network byte order; values directly stored in the data structure must be in network byte
+order.  We can also use this pointer as argument in calls to other socket functions.
 
 @item HOST_BYTEORDER_SIN_PORT
 The string representation, in host byte order, of a @objtype{mmux_uint16_t} integer representing a
-port number.  Internally this value is converted from host to network byte ordering, using
-@cfunc{htons}, then stored in the @code{struct sockaddr_in}.
+port number, to be stored in the field @code{sin_port}.  Before storing it: this value is converted
+from host to network byte ordering, using @cfunc{htons}.
 @end table
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in_sin_family_ref @var{SIN_FAMILY_VAR} @var{SOCKADDR_IN_POINTER}
-Bind to the shell variable whose name is @var{SIN_FAMILY_VAR} the string representation of the field
-@code{sin_family} in the @code{struct sockaddr_in} value referenced by @var{SOCKADDR_IN_POINTER}.
-It is usually the value of @samp{mmux_libc_AF_INET}.
+@deffn Builtin mmux_libc_sin_family_ref @var{SIN_FAMILY_VAR} @var{SOCKADDR_IN_POINTER}
+@deffnx Builtin mmux_libc_sin_family_set @var{SOCKADDR_IN_POINTER} @var{SIN_FAMILY}
+Setter and getter for the field @code{sin_family} of the @code{struct sockaddr_in} referenced by
+@var{SOCKADDR_IN_POINTER}; it is usually the value of @samp{mmux_libc_AF_INET}.
+
+The getter binds the shell variable whose name is @var{SIN_FAMILY_VAR} to the string representation
+of the field @code{sin_family} as is, without any byte reordering.
+
+The setter sets the field @code{sin_family} to the value @var{SIN_FAMILY} as is, without any byte
+reordering.
+
+@example
+declare SOCKADDR_IN_POINTER
+declare -r INPUT_SIN_FAMILY=@RR{mmux_libc_AF_INET}
+declare    OUPUT_SIN_FAMILY
+
+mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    mmux_libc_sin_family_set @RR{SOCKADDR_IN_POINTER} @RR{INPUT_SIN_FAMILY}
+    mmux_libc_sin_family_ref OUPUT_SIN_FAMILY @RR{SOCKADDR_IN_POINTER}
+@}
+@end example
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in_sin_addr_ref @var{HOST_BYTEORDER_SIN_ADDR_VAR} @var{SOCKADDR_IN_POINTER}
-Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN_ADDR_VAR} the string representation
-of the field @code{sin_addr} in the @code{struct sockaddr_in} value referenced by
-@var{SOCKADDR_IN_POINTER}; before binding, the field's value is converted from network to host byte
-ordering using @cfunc{ntohl}; the value is the representation of a @objtype{mmux_uint32_t}.
+@deffn Builtin mmux_libc_sin_addr_ref @var{NETWORK_BYTEORDER_SIN_ADDR_VAR} @var{SOCKADDR_IN_POINTER}
+@deffnx Builtin mmux_libc_sin_addr_set @var{SOCKADDR_IN_POINTER} @var{NETWORK_BYTEORDER_SIN_ADDR}
+Setter and getter for the field @code{sin_addr.s_addr} of the @code{struct sockaddr_in} referenced
+by @var{SOCKADDR_IN_POINTER}; its binary representation is a value of type @objtype{mmux_uint32_t}.
+
+The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SIN_ADDR_VAR} to the string
+representation of the field @code{sin_addr}; the value from the field is bound as is,
+@strong{without} any byte reordering.
+
+The setter sets the field @code{sin_addr} to the value @var{NETWORK_BYTEORDER_SIN_ADDR}; the binary
+value is stored in the field as is, @strong{without} any byte reordering.
+
+@example
+declare SOCKADDR_IN_POINTER
+declare -r INPUT_SIN_ADDR=@RR{mmux_libc_INADDR_LOOPBACK}
+declare    OUPUT_SIN_ADDR
+
+mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    mmux_libc_sin_addr_set @RR{SOCKADDR_IN_POINTER} @RR{INPUT_SIN_ADDR}
+    mmux_libc_sin_addr_ref OUPUT_SIN_ADDR @RR{SOCKADDR_IN_POINTER}
+@}
+mmux_libc_free @RR{SOCKADDR_IN_POINTER}
+@end example
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in_sin_port_ref @var{HOST_BYTEORDER_SIN_PORT_VAR} @var{SOCKADDR_IN_POINTER}
-Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN_PORT_VAR} the string representation
-of the field @code{sin_port} in the @code{struct sockaddr_in} value referenced by
-@var{SOCKADDR_IN_POINTER}; before binding, the field's value is converted from network to host byte
-ordering using @cfunc{ntohs}; the value is the representation of a @objtype{mmux_uint16_t}.
+@deffn Builtin mmux_libc_sin_addr_pointer_ref @var{SIN_ADDR_POINTER_VAR} @var{SOCKADDR_IN_POINTER}
+Getter for a pointer to the field @code{sin_addr.s_addr} of the @code{struct sockaddr_in} referenced
+by @var{SOCKADDR_IN_POINTER}.  Bind the shell variable whose name is @var{SIN_ADDR_POINTER_VAR} to
+the string representation of the pointer.
+
+We can use such pointer to access the field using the setter @MmuxBuiltin{mmux_uint32_pointer_set}
+and getter @MmuxBuiltin{mmux_uint32_pointer_set}; values directly extracted from the data structure
+are in network byte order; values directly stored in the data structure must be in network byte
+order.  We can also use this pointer as argument in calls to other socket functions.
+
+@example
+declare SOCKADDR_IN_POINTER SIN_ADDR_POINTER
+declare -r INPUT_SIN_ADDR=@RR{mmux_libc_INADDR_LOOPBACK}
+declare    OUPUT_SIN_ADDR
+
+mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    mmux_libc_sin_addr_pointer_ref SIN_ADDR_POINTER @RR{SOCKADDR_IN_POINTER}
+    mmux_uint32_pointer_set @RR{SIN_ADDR_POINTER} 0 @RR{INPUT_SIN_ADDR}
+    mmux_uint32_pointer_ref OUPUT_SIN_ADDR @RR{SIN_ADDR_POINTER} 0
+@}
+mmux_libc_free @RR{SOCKADDR_IN_POINTER}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_sin_port_ref @var{HOST_BYTEORDER_SIN_PORT_VAR} @var{SOCKADDR_IN_POINTER}
+@deffnx Builtin mmux_libc_sin_port_set @var{SOCKADDR_IN_POINTER} @var{HOST_BYTEORDER_SIN_PORT}
+Setter and getter for the field @code{sin_port} of the @code{struct sockaddr_in} referenced by
+@var{SOCKADDR_IN_POINTER}; its binary representation is a value of type @objtype{mmux_uint16_t}.
+
+The getter binds the shell variable whose name is @var{HOST_BYTEORDER_SIN_PORT_VAR} to the string
+representation of the field @code{sin_port}; before binding it: the binary value is converted from
+network to host byte order using the standard C language function @cfunc{ntohs}.
+
+The setter sets the field @code{sin_port} to the value @var{HOST_BYTEORDER_SIN_PORT}; before setting
+it: the binary value is converted from host to network byte order using the standard C language
+function @cfunc{htons}.
+
+@example
+declare SOCKADDR_IN_POINTER
+declare -r INPUT_SIN_PORT=8080
+declare    OUPUT_SIN_PORT
+
+mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    mmux_libc_sin_port_set @RR{SOCKADDR_IN_POINTER} @RR{INPUT_SIN_PORT}
+    mmux_libc_sin_port_ref OUPUT_SIN_PORT @RR{SOCKADDR_IN_POINTER}
+@}
+mmux_libc_free @RR{SOCKADDR_IN_POINTER}
+@end example
 @end deffn
 
 @c page
@@ -7275,11 +7360,11 @@ mmux_libc_sockaddr_in6_malloc SOCKADDR_IN6 \
     @RR{INPUT_SIN6_FAMILY} SIN6_ADDR_POINTER @RR{INPUT_HOST_BYTEORDER_SIN6_FLOWINFO} \
     @RR{INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID} @RR{INPUT_HOST_BYTEORDER_SIN6_PORT}
 @{
-    mmux_libc_sockaddr_in6_sin6_family_ref   OUTPUT_SIN6_FAMILY                  @RR{SOCKADDR_IN6}
-    mmux_libc_sockaddr_in6_sin6_addr_ref     OUTPUT_SIN6_ADDR_POINTER            @RR{SOCKADDR_IN6}
-    mmux_libc_sockaddr_in6_sin6_flowinfo_ref OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO @RR{SOCKADDR_IN6}
-    mmux_libc_sockaddr_in6_sin6_scope_id_ref OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID @RR{SOCKADDR_IN6}
-    mmux_libc_sockaddr_in6_sin6_port_ref     OUTPUT_HOST_BYTEORDER_SIN6_PORT     @RR{SOCKADDR_IN6}
+    mmux_libc_sin6_family_ref   OUTPUT_SIN6_FAMILY                  @RR{SOCKADDR_IN6}
+    mmux_libc_sin6_addr_ref     OUTPUT_SIN6_ADDR_POINTER            @RR{SOCKADDR_IN6}
+    mmux_libc_sin6_flowinfo_ref OUTPUT_HOST_BYTEORDER_SIN6_FLOWINFO @RR{SOCKADDR_IN6}
+    mmux_libc_sin6_scope_id_ref OUTPUT_HOST_BYTEORDER_SIN6_SCOPE_ID @RR{SOCKADDR_IN6}
+    mmux_libc_sin6_port_ref     OUTPUT_HOST_BYTEORDER_SIN6_PORT     @RR{SOCKADDR_IN6}
 @}
 mmux_libc_free @RR{SOCKADDR_IN6}
 @end example
@@ -7335,21 +7420,21 @@ port number.  Internally this value is converted from host to network byte order
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_sin_family_ref @var{SIN6_FAMILY_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffn Builtin mmux_libc_sin6_family_ref @var{SIN6_FAMILY_VAR} @var{SOCKADDR_IN6_POINTER}
 Bind to the shell variable whose name is @var{SIN6_FAMILY_VAR} the string representation of the
 field @code{sin_family} in the @code{struct sockaddr_in6} value referenced by
 @var{SOCKADDR_IN6_POINTER}.  It is usually the value of @samp{mmux_libc_AF_INET6}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_sin_addr_ref @var{SIN6_ADDR_POINTER_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffn Builtin mmux_libc_sin6_addr_ref @var{SIN6_ADDR_POINTER_VAR} @var{SOCKADDR_IN6_POINTER}
 Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_ADDR_VAR} the string
 representation of a pointer to the field @code{sin6_addr} in the @code{struct sockaddr_in6} value
 referenced by @var{SOCKADDR_IN6_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_sin_flowinfo_ref @var{HOST_BYTEORDER_SIN6_FLOWINFO_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffn Builtin mmux_libc_sin6_flowinfo_ref @var{HOST_BYTEORDER_SIN6_FLOWINFO_VAR} @var{SOCKADDR_IN6_POINTER}
 Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_FLOWINFO_VAR} the string
 representation of the field @code{sin6_flowinfo} in the @code{struct sockaddr_in6} value referenced
 by @var{SOCKADDR_IN6_POINTER}; before binding, the field's value is converted from network to host
@@ -7357,7 +7442,7 @@ byte ordering using @cfunc{ntohl}; the value is the representation of a @objtype
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_sin_port_ref @var{HOST_BYTEORDER_SIN6_SCOPE_ID_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffn Builtin mmux_libc_sin6_port_ref @var{HOST_BYTEORDER_SIN6_SCOPE_ID_VAR} @var{SOCKADDR_IN6_POINTER}
 Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_SCOPE_ID_VAR} the string
 representation of the field @code{sin6_scope_id} in the @code{struct sockaddr_in6} value referenced
 by @var{SOCKADDR_IN6_POINTER}; the field's value is in host byte ordering and it is left so; the
@@ -7365,7 +7450,7 @@ value is the representation of a @objtype{mmux_uint32_t}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_sin_port_ref @var{HOST_BYTEORDER_SIN6_PORT_VAR} @var{SOCKADDR_IN6_POINTER}
+@deffn Builtin mmux_libc_sin6_port_ref @var{HOST_BYTEORDER_SIN6_PORT_VAR} @var{SOCKADDR_IN6_POINTER}
 Bind to the shell variable whose name is @var{HOST_BYTEORDER_SIN6_PORT_VAR} the string
 representation of the field @code{sin6_port} in the @code{struct sockaddr_in6} value referenced by
 @var{SOCKADDR_IN6_POINTER}; before binding, the field's value is converted from network to host byte
@@ -7390,6 +7475,101 @@ Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string represen
 @section Socket addresses
 
 
+To convert Internet addresses between binary network format and presentation @mmuxascii{} format:
+the preferred builtins are @MmuxBuiltin{mmux_libc_inet_ntop} and @MmuxBuiltin{mmux_libc_inet_pton}.
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_inet_pton @var{AF_TYPE} @var{ASCII_ADDR} @var{ADDR_POINTER}
+Interface to the standard C language function @cfunc{inet_pton}, @glibcref{Host Address Functions,
+inet_pton}.  Convert an address from @mmuxascii{} presentation to network binary format.  If an
+error occurs: the shell variable @env{ERRNO} is set to @code{EINVAL} and the return status is false.
+
+The argument @var{AF_TYPE} must be one among @env{mmux_libc_AF_INET} and @env{mmux_libc_AF_INET6}.
+
+The argument @var{ASCII_ADDR} must be a shell string representing the address in @mmuxascii{}
+format.
+
+The argument @var{ADDR_POINTER} must be a pointer to an address data structure; if the argument
+@var{AF_TYPE} is:
+
+@table @env
+@item mmux_libc_AF_INET
+Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in}.
+
+@item mmux_libc_AF_INET6
+Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in6}.
+@end table
+
+We can just store the binary format in a raw memory block; for IPv4 addresses:
+
+@example
+declare -r AF_TYPE=@RR{mmux_libc_AF_INET}
+declare -r INPUT_ASCII_IN_ADDR='127.0.0.1'
+declare IN_ADDR_POINTER
+declare OUTPUT_ASCII_IN_ADDR
+
+mmux_libc_calloc IN_ADDR_POINTER 1 @RR{mmux_libc_in_addr_SIZEOF}
+@{
+    mmux_libc_inet_pton @RR{AF_TYPE} @WW{INPUT_ASCII_IN_ADDR} @RR{IN_ADDR_POINTER}
+    mmux_libc_inet_ntop @RR{AF_TYPE} @RR{IN_ADDR_POINTER} OUTPUT_ASCII_IN_ADD
+    @WW{OUTPUT_ASCII_IN_ADD}    @result{} 127.0.0.1
+@}
+mmux_libc_free @RR{IN_ADDR_POINTER}
+@end example
+
+@noindent
+for IPv6 addresses:
+
+@example
+declare -r AF_TYPE=@RR{mmux_libc_AF_INET6}
+declare -r INPUT_ASCII_IN6_ADDR='1:2:3:4:5:6:7:8'
+declare IN6_ADDR_POINTER
+declare OUTPUT_ASCII_IN6_ADDR
+
+mmux_libc_calloc IN6_ADDR_POINTER 1 @RR{mmux_libc_in6_addr_SIZEOF}
+@{
+    mmux_libc_inet_pton @RR{AF_TYPE} @WW{INPUT_ASCII_IN6_ADDR} @RR{IN6_ADDR_POINTER}
+    mmux_libc_inet_ntop @RR{AF_TYPE} @RR{IN6_ADDR_POINTER} OUTPUT_ASCII_IN6_ADDR
+    @WW{OUTPUT_ASCII_IN6_ADDR}  @result{} 1:2:3:4:5:6:7:8
+@}
+mmux_libc_free @RR{IN6_ADDR_POINTER}
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_ntop @var{AF_TYPE} @var{ADDR_POINTER} @var{ASCII_ADDR_VAR}
+Interface to the standard C language function @cfunc{inet_ntop}, @glibcref{Host Address Functions,
+inet_ntop}.  Convert an address from network binary format to @mmuxascii{} presentation.  If an
+error occurs: the shell variable @env{ERRNO} is set to @code{EINVAL} and the return status is false.
+
+The argument @var{AF_TYPE} must be one among @env{mmux_libc_AF_INET} and @env{mmux_libc_AF_INET6}.
+
+The argument @var{ADDR_POINTER} must be a pointer to an address data structure; if the argument
+@var{AF_TYPE} is:
+
+@table @env
+@item mmux_libc_AF_INET
+Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in}.
+
+@item mmux_libc_AF_INET6
+Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in6}.
+@end table
+
+The argument @var{ASCII_ADDR_VAR} must be the name of a shell variable: when successful, this
+builtin binds the variable to the address @mmuxascii{} presentation.
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_aton @var{UINT32_IN_ADDR_VAR} @var{ASCII_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_aton}, @glibcref{Host Address Functions,
+inet_aton}.  Convert the @mmuxascii{} representation of an IPv4 address into its
+@objtype{mmux_uint32_t} representation, then bind a string representation of the latter to the shell
+variable whose name is @var{UINT32_IN_ADDR_VAR}.
+
+If the input string is invalid: this function sets @env{ERRNO} to @code{EINVAL} and returns false.
+
 Data structures of type @code{struct in_addr} have a single field @code{s_addr} of type
 @objtype{mmux_uint32_t} representing an IPv4 address; to convert between the @mmuxascii{}
 representation and the @objtype{mmux_uint32_t} representation, we do:
@@ -7407,17 +7587,6 @@ mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR @RR{UINT32_ADDR}
 
 printf '%x\n' @WW{UINT32_ADDR}  @print{} 100007f
 @end example
-
-@ref{overview conventions, Conventions in coding and documentation}.
-
-
-@deffn Builtin mmux_libc_inet_aton @var{UINT32_IN_ADDR_VAR} @var{ASCII_IN_ADDR}
-Interface to the standard C language function @cfunc{inet_aton}, @glibcref{Host Address Functions,
-inet_aton}.  Convert the @mmuxascii{} representation of an IPv4 address into its
-@objtype{mmux_uint32_t} representation, then bind a string representation of the latter to the shell
-variable whose name is @var{UINT32_IN_ADDR_VAR}.
-
-If the input string is invalid: this function sets @env{ERRNO} to @code{EINVAL} and returns false.
 @end deffn
 
 
@@ -7484,6 +7653,38 @@ mmux_libc_inet_makeaddr UINT32_ADDR @RR{UINT32_NET_ADDR} @RR{UINT32_LOCAL_ADDR}
 
 @WW{UINT32_ADDR}                @result{} 318767103
 printf '%x\n' @WW{UINT32_ADDR}  @print{} 12ffffff
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_lnaof @var{UINT32_LOCAL_IN_ADDR_VAR} @var{UINT32_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_lnaof}, @glibcref{Host Address Functions,
+inet_lnaof}.  Extract local--address--within--network part of an address.
+
+@example
+declare -ri UINT32_ADDR='16#12FFFFFF'
+declare -i  UINT32_LOCAL_ADDR
+
+mmux_libc_inet_lnaof UINT32_LOCAL_ADDR @WW{UINT32_ADDR}
+
+@WW{UINT32_LOCAL_ADDR}                  @result{} 18
+printf '%x\n' @WW{UINT32_LOCAL_ADDR}    @print{} 12
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_inet_netof @var{UINT32_NET_IN_ADDR_VAR} @var{UINT32_IN_ADDR}
+Interface to the standard C language function @cfunc{inet_netof}, @glibcref{Host Address Functions,
+inet_netof}.  Extract network part of an address.
+
+@example
+declare -ri UINT32_ADDR='16#12FFFFFF'
+declare -i  UINT32_NET_ADDR
+
+mmux_libc_inet_netof UINT32_NET_ADDR @WW{UINT32_ADDR}
+
+@WW{UINT32_NET_ADDR}                  @result{} 16777215
+printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
 @end example
 @end deffn
 
