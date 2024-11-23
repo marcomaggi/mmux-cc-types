@@ -175,7 +175,7 @@ function sockets-struct-sockaddr_un-1.1 () {
 	declare -r FAMILY=RR(mmux_libc_AF_LOCAL) PATHNAME='/tmp/sock.ext'
 	declare SOCKADDR_UN SOCKADDR_UN_LENGTH SUN_FAMILY SUN_PATH
 
-	mbfl_location_compensate( mmux_libc_sockaddr_un_malloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(FAMILY) WW(PATHNAME),
+	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(FAMILY) WW(PATHNAME),
 				  mmux_libc_free RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
@@ -197,7 +197,7 @@ function sockets-struct-sockaddr_un-1.2 () {
 	declare SOCKADDR_UN SOCKADDR_UN_LENGTH SUN_FAMILY SUN_PATH
 	declare SA_FAMILY
 
-	mbfl_location_compensate( mmux_libc_sockaddr_un_malloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(FAMILY) WW(PATHNAME),
+	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(FAMILY) WW(PATHNAME),
 				  mmux_libc_free RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
@@ -235,7 +235,7 @@ function sockets-struct-sockaddr_in-1.1 () {
 	dotest-debug INPUT_SIN_FAMILY=WW(INPUT_SIN_FAMILY)
 	dotest-debug INPUT_HOST_BYTEORDER_SIN_PORT=WW(INPUT_HOST_BYTEORDER_SIN_PORT)
 
-	mbfl_location_compensate( mmux_libc_sockaddr_in_malloc SOCKADDR_IN_POINTER \
+	mbfl_location_compensate( mmux_libc_sockaddr_in_calloc SOCKADDR_IN_POINTER \
 							       RR(INPUT_SIN_FAMILY) \
 							       IN_ADDR_POINTER \
 							       RR(INPUT_HOST_BYTEORDER_SIN_PORT),
@@ -360,7 +360,7 @@ function sockets-struct-sockaddr_in6-1.1 () {
 	dotest-debug INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID=WW(INPUT_HOST_BYTEORDER_SIN6_SCOPE_ID)
 	dotest-debug INPUT_HOST_BYTEORDER_SIN6_PORT=WW(INPUT_HOST_BYTEORDER_SIN6_PORT)
 
-	mbfl_location_compensate( mmux_libc_sockaddr_in6_malloc SOCKADDR_IN6 \
+	mbfl_location_compensate( mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 \
 								RR(INPUT_SIN6_FAMILY) \
 								SIN6_ADDR_POINTER \
 								RR(INPUT_HOST_BYTEORDER_SIN6_FLOWINFO) \
@@ -522,7 +522,7 @@ function sockets-struct-addrinfo-1.1 () {
 	dotest-debug INPUT_AI_CANONNAME=QQ(INPUT_AI_CANONNAME)
 	dotest-debug INPUT_AI_NEXT=QQ(INPUT_AI_NEXT)
 
-	mbfl_location_compensate( mmux_libc_addrinfo_malloc ADDRINFO_POINTER		\
+	mbfl_location_compensate( mmux_libc_addrinfo_calloc ADDRINFO_POINTER		\
 							    WW(INPUT_AI_FLAGS)		\
 							    WW(INPUT_AI_FAMILY)		\
 							    WW(INPUT_AI_SOCKTYPE)	\

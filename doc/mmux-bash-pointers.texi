@@ -7046,7 +7046,8 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets sockaddr::            Interface to @code{struct sockaddr}.
 * sockets addrinfo::            Interface to @code{struct addrinfo}.
 * sockets byteorder::           Converting byte order in socket addresses.
-* sockets addresses::           Socket addresses.
+* sockets addresses::           Converting socket addresses between binary
+                                and presentation formats.
 * sockets hostent::             Interface to @code{struct hostent}.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
@@ -7114,7 +7115,7 @@ declare -r PATHNAME='/tmp/sock.ext'
 declare SOCKADDR_UN SOCKADDR_UN_LENGTH
 declare SUN_FAMILY SUN_PATH
 
-mmux_libc_sockaddr_un_malloc SOCKADDR_UN SOCKADDR_UN_LENGTH @RR{FAMILY} @WW{PATHNAME}
+mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH @RR{FAMILY} @WW{PATHNAME}
 @{
     mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY @RR{SOCKADDR_UN}
     mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   @RR{SOCKADDR_UN}
@@ -7128,8 +7129,8 @@ mmux_libc_free @RR{SOCKADDR_UN}
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deffn Builtin mmux_libc_sockaddr_un_malloc @var{SOCKADDR_UN_POINTER_VAR} @var{SOCKADDR_UN_LENGTH_VAR} @var{SUN_FAMILY} @var{SUN_PATH}
-Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_un}
+@deffn Builtin mmux_libc_sockaddr_un_calloc @var{SOCKADDR_UN_POINTER_VAR} @var{SOCKADDR_UN_LENGTH_VAR} @var{SUN_FAMILY} @var{SUN_PATH}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_un}
 value with the given parameters as fields; then:
 
 @itemize
@@ -7175,7 +7176,7 @@ declare SOCKADDR_IN_POINTER SIN_ADDR_POINTER
 declare -r SIN_FAMILY=@RR{mmux_libc_AF_INET}
 declare -r SIN_PORT='8080'
 
-mmux_libc_sockaddr_in_malloc SOCKADDR_IN_POINTER @RR{SIN_FAMILY} IN_ADDR_POINTER @RR{SIN_PORT}
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN_POINTER @RR{SIN_FAMILY} IN_ADDR_POINTER @RR{SIN_PORT}
 @{
     mmux_libc_inet_pton @RR{SIN_FAMILY} '1.2.3.4' @RR{IN_ADDR_POINTER}
     # ...
@@ -7196,8 +7197,8 @@ Size, measured in bytes, of a value of type @code{struct in_addr}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_sockaddr_in_malloc @var{SOCKADDR_IN_POINTER_VAR} @var{SIN_FAMILY} @var{SIN_ADDR_POINTER_VAR} @var{HOST_BYTEORDER_SIN_PORT}
-Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in}
+@deffn Builtin mmux_libc_sockaddr_in_calloc @var{SOCKADDR_IN_POINTER_VAR} @var{SIN_FAMILY} @var{SIN_ADDR_POINTER_VAR} @var{HOST_BYTEORDER_SIN_PORT}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_in}
 value and initialise it.  Arguments:
 
 @table @var
@@ -7351,7 +7352,7 @@ declare -r SIN6_FLOWINFO=0
 declare -r SIN6_SCOPE_ID=0
 declare -r SIN6_PORT=8080
 
-mmux_libc_sockaddr_in6_malloc SOCKADDR_IN6 @RR{SIN6_FAMILY} SIN6_ADDR_POINTER \
+mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 @RR{SIN6_FAMILY} SIN6_ADDR_POINTER \
     @RR{SIN6_FLOWINFO} @RR{SIN6_SCOPE_ID} @RR{SIN6_PORT}
 @{
     mmux_libc_inet_pton @RR{INPUT_SIN6_FAMILY} '1:2:3:4:5:6:7:8' @RR{SIN6_ADDR_POINTER}
@@ -7373,8 +7374,8 @@ Size, measured in bytes, of a value of type @code{struct in6_addr}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_malloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
-Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in6}
+@deffn Builtin mmux_libc_sockaddr_in6_calloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_in6}
 value and initialise it.  Arguments:
 
 @table @var
@@ -7580,7 +7581,7 @@ declare -r INPUT_AI_NEXT='0x0'
 
 mmux_pointer_from_bash_string INPUT_AI_CANONNAME @WW{INPUT_ASCII_CANONNAME}
 @{
-    mmux_libc_addrinfo_malloc ADDRINFO_POINTER \
+    mmux_libc_addrinfo_calloc ADDRINFO_POINTER \
         @WW{INPUT_AI_FLAGS} @WW{INPUT_AI_FAMILY} @WW{INPUT_AI_SOCKTYPE} @WW{INPUT_AI_PROTOCOL} \
         @WW{INPUT_AI_ADDRLEN} @WW{INPUT_AI_ADDR} @WW{INPUT_AI_CANONNAME} @WW{INPUT_AI_NEXT}
     @{
@@ -7608,8 +7609,8 @@ Size, measured in bytes, of values of type @code{struct addrinfo}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_addrinfo_malloc @var{ADDRINFO_POINTER_VAR} @var{AI_FLAGS} @var{AI_FAMILY} @var{AI_SOCKTYPE} @var{AI_PROTOCOL} @var{AI_ADDRLEN} @var{AI_ADDR} @var{AI_CANONNAME} @var{AI_NEXT}
-Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in6}
+@deffn Builtin mmux_libc_addrinfo_calloc @var{ADDRINFO_POINTER_VAR} @var{AI_FLAGS} @var{AI_FAMILY} @var{AI_SOCKTYPE} @var{AI_PROTOCOL} @var{AI_ADDRLEN} @var{AI_ADDR} @var{AI_CANONNAME} @var{AI_NEXT}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_in6}
 value and initialise it.  Arguments:
 
 @table @var
@@ -7937,7 +7938,7 @@ mmux_libc_ntohl OUPUT @RR{INPUT}
 
 @c page
 @node sockets addresses
-@section Socket addresses
+@section Converting socket addresses between binary and presentation formats.
 
 
 To convert Internet addresses between binary network format and presentation @mmuxascii{} format:

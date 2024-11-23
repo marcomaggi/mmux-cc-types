@@ -76,13 +76,13 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   islower isupper isalpha isdigit isalnum isxdigit ispunct isspace isblank isgraph isprint
 			   iscntrl isascii tolower toupper
 			   sockaddr_sa_family_ref
-			   sockaddr_un_malloc sockaddr_un_sun_family_ref sockaddr_un_sun_path_ref
-			   sockaddr_in_malloc
+			   sockaddr_un_calloc sockaddr_un_sun_family_ref sockaddr_un_sun_path_ref
+			   sockaddr_in_calloc
 			   sin_family_ref sin_family_set sin_addr_ref sin_addr_set sin_addr_pointer_ref sin_port_ref sin_port_set
-			   sockaddr_in6_malloc
+			   sockaddr_in6_calloc
 			   sin6_family_ref sin6_family_set sin6_addr_pointer_ref sin6_flowinfo_ref sin6_flowinfo_set
 			   sin6_scope_id_ref sin6_scope_id_set sin6_port_ref sin6_port_set
-			   addrinfo_malloc ai_flags_ref ai_flags_set ai_family_ref ai_family_set ai_socktype_ref ai_socktype_set
+			   addrinfo_calloc ai_flags_ref ai_flags_set ai_family_ref ai_family_set ai_socktype_ref ai_socktype_set
 			   ai_protocol_ref ai_protocol_set ai_addrlen_ref ai_addrlen_set ai_addr_ref ai_addr_set
 			   ai_canonname_ref ai_canonname_set ai_next_ref ai_next_set
 			   htons ntohs htonl ntohl inet_aton inet_addr inet_ntoa inet_network inet_makeaddr

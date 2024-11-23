@@ -57,7 +57,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Sockets: struct sockaddr_un.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_malloc]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_calloc]]])
 {
   char const *		sockaddr_un_pointer_varname;
   char const *		sockaddr_un_length_varname;
@@ -156,7 +156,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Sockets: struct sockaddr_in.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_malloc]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_calloc]]])
 {
   char const *		sockaddr_in_pointer_varname;
   mmux_sshort_t		sin_family;
@@ -347,7 +347,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Sockets: struct sockaddr_in6.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_malloc]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_calloc]]])
 {
   char const *		sockaddr_in6_pointer_varname;
   mmux_sshort_t		sin6_family;
@@ -586,7 +586,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Sockets: struct addrinfo.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_malloc]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
 {
   char const *		addrinfo_pointer_varname;
   mmux_sint_t		ai_flags;
