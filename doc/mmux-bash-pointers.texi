@@ -7049,6 +7049,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets sockaddr_in::         Interface to @code{struct sockaddr_in}.
 * sockets sockaddr_in6::        Interface to @code{struct sockaddr_in6}.
 * sockets sockaddr::            Interface to @code{struct sockaddr}.
+* sockets byteorder::           Converting byte order in socket addresses.
 * sockets addresses::           Socket addresses.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
@@ -7540,6 +7541,65 @@ function @cfunc{htons}.
 @deffn Builtin mmux_libc_sockaddr_sa_family_ref @var{SA_FAMILY_VAR} @var{SOCKADDR_POINTER}
 Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string representation of the field
 @code{sa_family} in the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+@end deffn
+
+@c page
+@node sockets byteorder
+@section Converting byte order in socket addresses
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_htons @var{UINT16_OUTPUT_VAR} @var{UINT16_INPUT}
+Interface to the standard C language function @cfunc{htons}, @glibcref{Byte Order, htons}.
+
+@example
+declare -ri INPUT=16#1234
+declare OUPUT
+
+mmux_libc_htons OUPUT @RR{INPUT}
+@RR{OUPUT}      @result{} 16#3412
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_ntohs @var{UINT16_OUTPUT_VAR} @var{UINT16_INPUT}
+Interface to the standard C language function @cfunc{ntohs}, @glibcref{Byte Order, ntohs}.
+
+@example
+declare -ri INPUT=16#1234
+declare OUPUT
+
+mmux_libc_ntohs OUPUT @RR{INPUT}
+@RR{OUPUT}      @result{} 16#3412
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_htonl @var{UINT32_OUTPUT_VAR} @var{UINT32_INPUT}
+Interface to the standard C language function @cfunc{htonl}, @glibcref{Byte Order, htonl}.
+
+@example
+declare -ri INPUT=16#12345678
+declare OUPUT
+
+mmux_libc_htonl OUPUT @RR{INPUT}
+@RR{OUPUT}      @result{} 16#78563412
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_ntohl @var{UINT32_OUTPUT_VAR} @var{UINT32_INPUT}
+Interface to the standard C language function @cfunc{ntohl}, @glibcref{Byte Order, ntohl}.
+
+@example
+declare -ri INPUT=16#12345678
+declare OUPUT
+
+mmux_libc_ntohl OUPUT @RR{INPUT}
+@RR{OUPUT}      @result{} 16#78563412
+@end example
 @end deffn
 
 @c page

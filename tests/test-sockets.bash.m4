@@ -89,6 +89,82 @@ function sockets-if_indextoname-1.1 () {
 }
 
 
+#### htons
+
+function sockets-htons-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -ri INPUT=16#1234
+	declare -ri EXPECTED_OUPUT=16#3412
+	declare OUPUT
+
+	mbfl_location_leave_when_failure( mmux_libc_htons OUPUT RR(INPUT) )
+	dotest-debug INPUT=WW(INPUT) OUPUT=WW(OUPUT)
+	dotest-equal WW(EXPECTED_OUPUT) WW(OUPUT)
+    }
+    mbfl_location_leave
+}
+
+
+#### ntohs
+
+function sockets-ntohs-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -ri INPUT=16#1234
+	declare -ri EXPECTED_OUPUT=16#3412
+	declare OUPUT
+
+	mbfl_location_leave_when_failure( mmux_libc_ntohs OUPUT RR(INPUT) )
+	dotest-debug INPUT=WW(INPUT) OUPUT=WW(OUPUT)
+	dotest-equal WW(EXPECTED_OUPUT) WW(OUPUT)
+    }
+    mbfl_location_leave
+}
+
+
+#### htonl
+
+function sockets-htonl-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -ri INPUT=16#12345678
+	declare -ri EXPECTED_OUPUT=16#78563412
+	declare OUPUT
+
+	mbfl_location_leave_when_failure( mmux_libc_htonl OUPUT RR(INPUT) )
+	dotest-debug INPUT=WW(INPUT) OUPUT=WW(OUPUT)
+	dotest-equal WW(EXPECTED_OUPUT) WW(OUPUT)
+    }
+    mbfl_location_leave
+}
+
+
+#### ntohl
+
+function sockets-ntohl-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -ri INPUT=16#12345678
+	declare -ri EXPECTED_OUPUT=16#78563412
+	declare OUPUT
+
+	mbfl_location_leave_when_failure( mmux_libc_ntohl OUPUT RR(INPUT) )
+	dotest-debug INPUT=WW(INPUT) OUPUT=WW(OUPUT)
+	dotest-equal WW(EXPECTED_OUPUT) WW(OUPUT)
+    }
+    mbfl_location_leave
+}
+
+
 #### struct sockaddr_un
 
 function sockets-struct-sockaddr_un-1.1 () {
