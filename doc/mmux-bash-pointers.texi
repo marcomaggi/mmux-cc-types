@@ -944,7 +944,6 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{S_IXUSR}
 @MmuxDefineGlobalVarSystemConstant{W_OK}
 @MmuxDefineGlobalVarSystemConstant{X_OK}
-
 @MmuxDefineGlobalVarSystemConstant{AF_ALG}
 @MmuxDefineGlobalVarSystemConstant{AF_APPLETALK}
 @MmuxDefineGlobalVarSystemConstant{AF_AX25}
@@ -1013,6 +1012,17 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{INADDR_BROADCAST}
 @MmuxDefineGlobalVarSystemConstant{INADDR_LOOPBACK}
 @MmuxDefineGlobalVarSystemConstant{INADDR_NONE}
+@MmuxDefineGlobalVarSystemConstant{AI_ADDRCONFIG}
+@MmuxDefineGlobalVarSystemConstant{AI_ADDRCONFIG}
+@MmuxDefineGlobalVarSystemConstant{AI_ALL}
+@MmuxDefineGlobalVarSystemConstant{AI_CANONIDN}
+@MmuxDefineGlobalVarSystemConstant{AI_CANONNAME}
+@MmuxDefineGlobalVarSystemConstant{AI_IDN}
+@MmuxDefineGlobalVarSystemConstant{AI_IDN_ALLOW_UNASSIGNED}
+@MmuxDefineGlobalVarSystemConstant{AI_IDN_USE_STD3_ASCII_RULES}
+@MmuxDefineGlobalVarSystemConstant{AI_NUMERICSERV}
+@MmuxDefineGlobalVarSystemConstant{AI_PASSIVE}
+@MmuxDefineGlobalVarSystemConstant{AI_V4MAPPED}
 
 @c page
 @node cctypes
@@ -7034,8 +7044,10 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets sockaddr_in::         Interface to @code{struct sockaddr_in}.
 * sockets sockaddr_in6::        Interface to @code{struct sockaddr_in6}.
 * sockets sockaddr::            Interface to @code{struct sockaddr}.
+* sockets addrinfo::            Interface to @code{struct addrinfo}.
 * sockets byteorder::           Converting byte order in socket addresses.
 * sockets addresses::           Socket addresses.
+* sockets hostent::             Interface to @code{struct hostent}.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -7186,7 +7198,7 @@ Size, measured in bytes, of a value of type @code{struct in_addr}.
 
 @deffn Builtin mmux_libc_sockaddr_in_malloc @var{SOCKADDR_IN_POINTER_VAR} @var{SIN_FAMILY} @var{SIN_ADDR_POINTER_VAR} @var{HOST_BYTEORDER_SIN_PORT}
 Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in}
-value and initialise is.  Arguments:
+value and initialise it.  Arguments:
 
 @table @var
 @item SOCKADDR_IN_POINTER_VAR
@@ -7363,7 +7375,7 @@ Size, measured in bytes, of a value of type @code{struct in6_addr}.
 
 @deffn Builtin mmux_libc_sockaddr_in6_malloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
 Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in6}
-value and initialise.  Arguments:
+value and initialise it.  Arguments:
 
 @table @var
 @item SOCKADDR_IN6_POINTER_VAR
@@ -7541,6 +7553,327 @@ in6addr_any}.  We can the pointer to this data structure to initialise a @code{s
 @deffn Builtin mmux_libc_sockaddr_sa_family_ref @var{SA_FAMILY_VAR} @var{SOCKADDR_POINTER}
 Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string representation of the field
 @code{sa_family} in the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+@end deffn
+
+@c page
+@node sockets addrinfo
+@section Interface to @code{struct addrinfo}
+
+
+There are multiple ways to use values of type @code{struct addrinfo}, let's see how we can just
+initialise one and inspect it:
+
+@example
+declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
+declare    OUPUT_ASCII_CANONNAME
+
+declare ADDRINFO_POINTER
+
+declare -r INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
+declare -r INPUT_AI_FAMILY=@RR{mmux_libc_AF_INET}
+declare -r INPUT_AI_SOCKTYPE=@RR{mmux_libc_SOCK_STREAM}
+declare -r INPUT_AI_PROTOCOL=0
+declare -r INPUT_AI_ADDRLEN=0
+declare -r INPUT_AI_ADDR='0x0'
+declare    INPUT_AI_CANONNAME
+declare -r INPUT_AI_NEXT='0x0'
+
+mmux_pointer_from_bash_string INPUT_AI_CANONNAME @WW{INPUT_ASCII_CANONNAME}
+@{
+    mmux_libc_addrinfo_malloc ADDRINFO_POINTER \
+        @WW{INPUT_AI_FLAGS} @WW{INPUT_AI_FAMILY} @WW{INPUT_AI_SOCKTYPE} @WW{INPUT_AI_PROTOCOL} \
+        @WW{INPUT_AI_ADDRLEN} @WW{INPUT_AI_ADDR} @WW{INPUT_AI_CANONNAME} @WW{INPUT_AI_NEXT}
+    @{
+        mmux_libc_ai_flags_ref     OUPUT_AI_FLAGS     @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_family_ref    OUPUT_AI_FAMILY    @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_socktype_ref  OUPUT_AI_SOCKTYPE  @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_protocol_ref  OUPUT_AI_PROTOCOL  @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_addrlen_ref   OUPUT_AI_ADDRLEN   @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_addr_ref      OUPUT_AI_ADDR      @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_canonname_ref OUPUT_AI_CANONNAME @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_next_ref      OUPUT_AI_NEXT      @RR{ADDRINFO_POINTER}
+
+        mmux_pointer_to_bash_string OUPUT_ASCII_CANONNAME @WW{OUPUT_AI_CANONNAME}
+    @}
+    mmux_libc_free @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free @RR{INPUT_AI_CANONNAME}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_addrinfo_SIZEOF
+Size, measured in bytes, of values of type @code{struct addrinfo}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_addrinfo_malloc @var{ADDRINFO_POINTER_VAR} @var{AI_FLAGS} @var{AI_FAMILY} @var{AI_SOCKTYPE} @var{AI_PROTOCOL} @var{AI_ADDRLEN} @var{AI_ADDR} @var{AI_CANONNAME} @var{AI_NEXT}
+Allocate a memory block, using @cfunc{malloc}, wide enough to contain a @code{struct sockaddr_in6}
+value and initialise it.  Arguments:
+
+@table @var
+@item ADDRINFO_POINTER_VAR
+Name of a shell variable, when successful: this builtin binds to this shell variable a string
+representation of the pointer referencing the newly allocated data structure.
+
+@item AI_FLAGS
+Initialisation value for the field @code{ai_flags} of the newly allocated @code{struct addrinfo};
+the field is of type @objtype{mmux_sint_t}.  It is a bitwise OR combination between the flags
+@code{mmux_libc_AI_*}.
+
+@item AI_FAMILY
+Initialisation value for the field @code{ai_family} of the newly allocated @code{struct addrinfo};
+the field is of type @objtype{mmux_sint_t}.  It is usually one among @code{mmux_libc_AF_INET} and
+@code{mmux_libc_AF_INET6}.
+
+@item AI_SOCKTYPE
+Initialisation value for the field @code{ai_socktype} of the newly allocated @code{struct addrinfo};
+the field is of type @objtype{mmux_sint_t}.  It is usully one among @code{mmux_libc_SOCK_DGRAM} and
+@code{mmux_libc_AF_SOCK_STREAM}.
+
+@item AI_PROTOCOL
+Initialisation value for the field @code{ai_protocol} of the newly allocated @code{struct addrinfo};
+the field is of type @objtype{mmux_sint_t}.  It is usually zero.
+
+@item AI_ADDRLEN
+Initialisation value for the field @code{ai_addrlen} of the newly allocated @code{struct addrinfo};
+the field is of type @objtype{mmux_socklen_t}.  It is the length of the data structure representing
+the address and referenced by the field @code{ai_addr}.
+
+@item AI_ADDR
+Initialisation value for the field @code{ai_addr} of the newly allocated @code{struct addrinfo}; the
+field is of generic type @objtype{mmux_pointer_t} and specific abstract type @code{struct sockaddr
+*}.
+
+@item AI_CANONNAME
+Initialisation value for the field @code{ai_canonname} of the newly allocated @code{struct
+addrinfo}; the field is of generic type @objtype{mmux_pointer_t} and specific type @code{char *}.
+Notice that no memory management is performed on this pointer: it is responsibility of the caller to
+manage the memory in which the canonical name is stored.
+
+@item AI_NEXT
+Initialisation value for the field @code{ai_next} of the newly allocated @code{struct addrinfo}; the
+field is of generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.
+Notice that no memory management is performed on this pointer: it is responsibility of the caller to
+manage the memory of this address data structure.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_flags_ref @var{AI_FLAGS_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_flags_set @var{ADDRINFO_POINTER} @var{AI_FLAGS}
+Getter and setter for the field @code{ai_flags} of values of type @code{struct addrinfo}; the field
+is of type @objtype{mmux_sint_t}.
+
+The getter binds the shell variable whose name is @var{AI_FLAGS} to the value of the field from the
+data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_FLAGS}.
+
+@example
+declare ADDRINFO_POINTER
+declare -ri INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
+declare     OUPUT_AI_FLAGS
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_libc_ai_flags_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_FLAGS}
+    mmux_libc_ai_flags_ref OUPUT_AI_FLAGS @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free @RR{ADDRINFO_POINTER}
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_family_ref @var{AI_FAMILY_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_family_set @var{ADDRINFO_POINTER} @var{AI_FAMILY}
+Getter and setter for the field @code{ai_family} of values of type @code{struct addrinfo}; the field
+is of type @objtype{mmux_sint_t}.
+
+The getter binds the shell variable whose name is @var{AI_FAMILY} to the value of the field from the
+data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_FAMILY}.
+
+@example
+declare ADDRINFO_POINTER
+declare -r INPUT_AI_FAMILY=@RR{mmux_libc_AF_INET}
+declare    OUPUT_AI_FAMILY
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_libc_ai_family_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_FAMILY}
+    mmux_libc_ai_family_ref OUPUT_AI_FAMILY @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free @RR{ADDRINFO_POINTER}
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_socktype_ref @var{AI_SOCKTYPE_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_socktype_set @var{ADDRINFO_POINTER} @var{AI_SOCKTYPE}
+Getter and setter for the field @code{ai_socktype} of values of type @code{struct addrinfo}; the field
+is of type @objtype{mmux_sint_t}.
+
+The getter binds the shell variable whose name is @var{AI_SOCKTYPE} to the value of the field from the
+data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_SOCKTYPE}.
+
+@example
+declare ADDRINFO_POINTER
+declare -r INPUT_AI_SOCKTYPE=@RR{mmux_libc_SOCK_STREAM}
+declare    OUPUT_AI_SOCKTYPE
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_libc_ai_socktype_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_SOCKTYPE}
+    mmux_libc_ai_socktype_ref OUPUT_AI_SOCKTYPE @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free @RR{ADDRINFO_POINTER}
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_protocol_ref @var{AI_PROTOCOL_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_protocol_set @var{ADDRINFO_POINTER} @var{AI_PROTOCOL}
+Getter and setter for the field @code{ai_protocol} of values of type @code{struct addrinfo}; the field
+is of type @objtype{mmux_sint_t}.
+
+The getter binds the shell variable whose name is @var{AI_PROTOCOL} to the value of the field from the
+data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_PROTOCOL}.
+
+@example
+declare ADDRINFO_POINTER
+declare -r INPUT_AI_PROTOCOL=0
+declare    OUPUT_AI_PROTOCOL
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_libc_ai_protocol_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_PROTOCOL}
+    mmux_libc_ai_protocol_ref OUPUT_AI_PROTOCOL @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free RR(ADDRINFO_POINTER)
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_addrlen_ref @var{AI_ADDRLEN_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_addrlen_set @var{ADDRINFO_POINTER} @var{AI_ADDRLEN}
+Getter and setter for the field @code{ai_addrlen} of values of type @code{struct addrinfo}; the
+field is of type @objtype{mmux_socklen_t}.
+
+The getter binds the shell variable whose name is @var{AI_ADDRLEN} to the value of the field from
+the data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_ADDRLEN}.
+
+@example
+declare ADDRINFO_POINTER
+declare -r INPUT_AI_ADDRLEN=@RR{mmux_libc_sockaddr_in_SIZEOF}
+declare    OUPUT_AI_ADDRLEN
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_libc_ai_addrlen_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_ADDRLEN}
+    mmux_libc_ai_addrlen_ref OUPUT_AI_ADDRLEN @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free @RR{ADDRINFO_POINTER}
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_addr_ref @var{AI_ADDR_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_addr_set @var{ADDRINFO_POINTER} @var{AI_ADDR}
+Getter and setter for the field @code{ai_addr} of values of type @code{struct addrinfo}; the field
+is of generic type @objtype{mmux_pointer_t} and specific type @code{struct sockaddr *}.
+
+The getter binds the shell variable whose name is @var{AI_ADDR} to the value of the field from the
+data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_ADDR}.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_canonname_ref @var{AI_CANONNAME_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_canonname_set @var{ADDRINFO_POINTER} @var{AI_CANONNAME}
+Getter and setter for the field @code{ai_canonname} of values of type @code{struct addrinfo}; the
+field is of generic type @objtype{mmux_pointer_t} and specific type @code{char *}.  Notice that no
+memory management is performed on this pointer: it is responsibility of the caller to manage the
+memory in which the canonical name is stored.
+
+The getter binds the shell variable whose name is @var{AI_CANONNAME} to the value of the field from
+the data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_CANONNAME}.
+
+@example
+declare ADDRINFO_POINTER
+
+declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
+declare    OUPUT_ASCII_CANONNAME
+
+declare INPUT_AI_CANONNAME
+declare OUPUT_AI_CANONNAME
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_pointer_from_bash_string INPUT_AI_CANONNAME @WW{INPUT_ASCII_CANONNAME}
+    @{
+        mmux_libc_ai_canonname_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_CANONNAME}
+        mmux_libc_ai_canonname_ref OUPUT_AI_CANONNAME @RR{ADDRINFO_POINTER}
+        mmux_pointer_to_bash_string OUPUT_ASCII_CANONNAME @WW{OUPUT_AI_CANONNAME}
+    @}
+    mmux_libc_free @RR{INPUT_AI_CANONNAME}
+@}
+mmux_libc_free @RR{ADDRINFO_POINTER}
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_ai_next_ref @var{AI_NEXT_VAR} @var{ADDRINFO_POINTER}
+@deffnx Builtin mmux_libc_ai_next_set @var{ADDRINFO_POINTER} @var{AI_NEXT}
+Getter and setter for the field @code{ai_next} of values of type @code{struct addrinfo}; the field
+is of generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.  Notice that
+no memory management is performed on this pointer: it is responsibility of the caller to manage the
+memory of this address data structure.
+
+The getter binds the shell variable whose name is @var{AI_NEXT} to the value of the field from the
+data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+the value @var{AI_NEXT}.
+
+@example
+declare ADDRINFO_POINTER
+declare -r INPUT_AI_NEXT='0x0'
+declare    OUPUT_AI_NEXT
+
+mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+@{
+    mmux_libc_ai_next_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_NEXT}
+    mmux_libc_ai_next_ref OUPUT_AI_NEXT @RR{ADDRINFO_POINTER}
+@}
+mmux_libc_free @RR{ADDRINFO_POINTER}
+@end example
 @end deffn
 
 @c page
@@ -7819,6 +8152,19 @@ mmux_libc_inet_netof UINT32_NET_ADDR @WW{UINT32_ADDR}
 printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
 @end example
 @end deffn
+
+@c page
+@node sockets hostent
+@section Interface to @code{struct hostent}
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_hostent_SIZEOF
+
+@end defvr
+
 
 @c page
 @node sockets creating

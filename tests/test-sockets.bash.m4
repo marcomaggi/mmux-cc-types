@@ -478,6 +478,248 @@ function sockets-struct-sockaddr_in6-sin6_port-1.1 () {
 }
 
 
+#### struct addrinfo
+
+function sockets-struct-addrinfo-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
+	declare    OUPUT_ASCII_CANONNAME
+
+	declare ADDRINFO_POINTER
+
+	declare -r INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
+	declare -r INPUT_AI_FAMILY=RR(mmux_libc_AF_INET)
+	declare -r INPUT_AI_SOCKTYPE=RR(mmux_libc_SOCK_STREAM)
+	declare -r INPUT_AI_PROTOCOL=0
+	declare -r INPUT_AI_ADDRLEN=0
+	declare -r INPUT_AI_ADDR='0x0'
+	declare    INPUT_AI_CANONNAME
+	declare -r INPUT_AI_NEXT='0x0'
+
+	declare OUPUT_AI_FLAGS
+	declare OUPUT_AI_FAMILY
+	declare OUPUT_AI_SOCKTYPE
+	declare OUPUT_AI_PROTOCOL
+	declare OUPUT_AI_ADDRLEN
+	declare OUPUT_AI_ADDR
+	declare OUPUT_AI_CANONNAME
+	declare OUPUT_AI_NEXT
+
+	mbfl_location_compensate( mmux_pointer_from_bash_string INPUT_AI_CANONNAME WW(INPUT_ASCII_CANONNAME),
+				  mmux_libc_free RR(INPUT_AI_CANONNAME) )
+
+	dotest-debug INPUT_ASCII_CANONNAME=QQ(INPUT_ASCII_CANONNAME)
+
+	dotest-debug INPUT_AI_FLAGS=QQ(INPUT_AI_FLAGS)
+	dotest-debug INPUT_AI_FAMILY=QQ(INPUT_AI_FAMILY)
+	dotest-debug INPUT_AI_SOCKTYPE=QQ(INPUT_AI_SOCKTYPE)
+	dotest-debug INPUT_AI_PROTOCOL=QQ(INPUT_AI_PROTOCOL)
+	dotest-debug INPUT_AI_ADDRLEN=QQ(INPUT_AI_ADDRLEN)
+	dotest-debug INPUT_AI_ADDR=QQ(INPUT_AI_ADDR)
+	dotest-debug INPUT_AI_CANONNAME=QQ(INPUT_AI_CANONNAME)
+	dotest-debug INPUT_AI_NEXT=QQ(INPUT_AI_NEXT)
+
+	mbfl_location_compensate( mmux_libc_addrinfo_malloc ADDRINFO_POINTER		\
+							    WW(INPUT_AI_FLAGS)		\
+							    WW(INPUT_AI_FAMILY)		\
+							    WW(INPUT_AI_SOCKTYPE)	\
+							    WW(INPUT_AI_PROTOCOL)	\
+							    WW(INPUT_AI_ADDRLEN)	\
+							    WW(INPUT_AI_ADDR)		\
+							    WW(INPUT_AI_CANONNAME)	\
+							    WW(INPUT_AI_NEXT),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+
+	mbfl_location_leave_when_failure( mmux_libc_ai_flags_ref	OUPUT_AI_FLAGS	   RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_family_ref	OUPUT_AI_FAMILY    RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_socktype_ref	OUPUT_AI_SOCKTYPE  RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_protocol_ref	OUPUT_AI_PROTOCOL  RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addrlen_ref	OUPUT_AI_ADDRLEN   RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addr_ref		OUPUT_AI_ADDR	   RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_canonname_ref	OUPUT_AI_CANONNAME RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_next_ref		OUPUT_AI_NEXT	   RR(ADDRINFO_POINTER) )
+
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string OUPUT_ASCII_CANONNAME WW(OUPUT_AI_CANONNAME) )
+
+	dotest-debug OUPUT_AI_FLAGS=QQ(OUPUT_AI_FLAGS)
+	dotest-debug OUPUT_AI_FAMILY=QQ(OUPUT_AI_FAMILY)
+	dotest-debug OUPUT_AI_SOCKTYPE=QQ(OUPUT_AI_SOCKTYPE)
+	dotest-debug OUPUT_AI_PROTOCOL=QQ(OUPUT_AI_PROTOCOL)
+	dotest-debug OUPUT_AI_ADDRLEN=QQ(OUPUT_AI_ADDRLEN)
+	dotest-debug OUPUT_AI_ADDR=QQ(OUPUT_AI_ADDR)
+	dotest-debug OUPUT_AI_CANONNAME=QQ(OUPUT_AI_CANONNAME)
+	dotest-debug OUPUT_AI_NEXT=QQ(OUPUT_AI_NEXT)
+
+	dotest-debug OUPUT_ASCII_CANONNAME=QQ(OUPUT_ASCII_CANONNAME)
+
+	dotest-equal     QQ(OUPUT_AI_FLAGS)     QQ(INPUT_AI_FLAGS) &&
+	    dotest-equal QQ(OUPUT_AI_FAMILY)    QQ(INPUT_AI_FAMILY) &&
+	    dotest-equal QQ(OUPUT_AI_SOCKTYPE)  QQ(INPUT_AI_SOCKTYPE) &&
+	    dotest-equal QQ(OUPUT_AI_PROTOCOL)  QQ(INPUT_AI_PROTOCOL) &&
+	    dotest-equal QQ(OUPUT_AI_ADDRLEN)   QQ(INPUT_AI_ADDRLEN) &&
+	    dotest-equal QQ(OUPUT_AI_ADDR)      QQ(INPUT_AI_ADDR) &&
+	    dotest-equal QQ(OUPUT_AI_CANONNAME) QQ(INPUT_AI_CANONNAME) &&
+	    dotest-equal QQ(OUPUT_AI_NEXT)      QQ(INPUT_AI_NEXT)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_flags-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -ri INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
+    declare     OUPUT_AI_FLAGS
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_flags_set RR(ADDRINFO_POINTER) RR(INPUT_AI_FLAGS) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_flags_ref OUPUT_AI_FLAGS        RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_FLAGS) RR(OUPUT_AI_FLAGS)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_family-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -r INPUT_AI_FAMILY=RR(mmux_libc_AF_INET)
+    declare    OUPUT_AI_FAMILY
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_family_set RR(ADDRINFO_POINTER) RR(INPUT_AI_FAMILY) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_family_ref OUPUT_AI_FAMILY        RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_FAMILY) RR(OUPUT_AI_FAMILY)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_socktype-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -r INPUT_AI_SOCKTYPE=RR(mmux_libc_SOCK_STREAM)
+    declare    OUPUT_AI_SOCKTYPE
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_socktype_set RR(ADDRINFO_POINTER) RR(INPUT_AI_SOCKTYPE) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_socktype_ref OUPUT_AI_SOCKTYPE        RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_SOCKTYPE) RR(OUPUT_AI_SOCKTYPE)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_protocol-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -r INPUT_AI_PROTOCOL=0
+    declare    OUPUT_AI_PROTOCOL
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_protocol_set RR(ADDRINFO_POINTER) RR(INPUT_AI_PROTOCOL) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_protocol_ref OUPUT_AI_PROTOCOL        RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_PROTOCOL) RR(OUPUT_AI_PROTOCOL)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_addrlen-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -r INPUT_AI_ADDRLEN=RR(mmux_libc_sockaddr_in_SIZEOF)
+    declare    OUPUT_AI_ADDRLEN
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addrlen_set RR(ADDRINFO_POINTER) RR(INPUT_AI_ADDRLEN) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addrlen_ref OUPUT_AI_ADDRLEN RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_ADDRLEN) RR(OUPUT_AI_ADDRLEN)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_addr-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -r INPUT_AI_ADDR='0x0'
+    declare    OUPUT_AI_ADDR
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addr_set RR(ADDRINFO_POINTER) RR(INPUT_AI_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addr_ref OUPUT_AI_ADDR        RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_ADDR) RR(OUPUT_AI_ADDR)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_canonname-1.1 () {
+    declare ADDRINFO_POINTER
+
+    declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
+    declare    OUPUT_ASCII_CANONNAME
+
+    declare INPUT_AI_CANONNAME
+    declare OUPUT_AI_CANONNAME
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_compensate( mmux_pointer_from_bash_string INPUT_AI_CANONNAME WW(INPUT_ASCII_CANONNAME),
+				  mmux_libc_free RR(INPUT_AI_CANONNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_canonname_set RR(ADDRINFO_POINTER) RR(INPUT_AI_CANONNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_canonname_ref OUPUT_AI_CANONNAME RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string OUPUT_ASCII_CANONNAME WW(OUPUT_AI_CANONNAME) )
+	dotest-equal RR(INPUT_AI_CANONNAME) RR(OUPUT_AI_CANONNAME) &&
+	    dotest-equal RR(INPUT_AI_CANONNAME) RR(OUPUT_AI_CANONNAME)
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-struct-addrinfo-ai_next-1.1 () {
+    declare ADDRINFO_POINTER
+    declare -r INPUT_AI_NEXT='0x0'
+    declare    OUPUT_AI_NEXT
+
+    mbfl_location_enter
+    {
+	mbfl_location_compensate( mmux_libc_calloc ADDRINFO_POINTER 1 RR(mmux_libc_addrinfo_SIZEOF),
+				  mmux_libc_free RR(ADDRINFO_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_next_set RR(ADDRINFO_POINTER) RR(INPUT_AI_NEXT) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_next_ref OUPUT_AI_NEXT        RR(ADDRINFO_POINTER) )
+	dotest-equal RR(INPUT_AI_NEXT) RR(OUPUT_AI_NEXT)
+    }
+    mbfl_location_leave
+}
+
+
 #### inet_aton, inet_ntoa
 
 function sockets-inet_aton-1.1 () {

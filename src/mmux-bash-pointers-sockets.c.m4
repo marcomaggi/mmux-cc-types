@@ -583,6 +583,113 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Sockets: struct addrinfo.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_malloc]]])
+{
+  char const *		addrinfo_pointer_varname;
+  mmux_sint_t		ai_flags;
+  mmux_sint_t		ai_family;
+  mmux_sint_t		ai_socktype;
+  mmux_sint_t		ai_protocol;
+  mmux_socklen_t	ai_addrlen;
+  mmux_pointer_t	addr_pointer;
+  mmux_pointer_t	canonname_pointer;
+  mmux_pointer_t	next_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(addrinfo_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_flags,				argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_family,				argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_socktype,				argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_protocol,				argv[5]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(ai_addrlen,			argv[6]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,			argv[7]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(canonname_pointer,		argv[8]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(next_pointer,			argv[9]);
+  {
+    struct sockaddr *	ai_addr           = addr_pointer;
+    char *		ai_canonname      = canonname_pointer;
+    struct addrinfo *	ai_next           = next_pointer;
+    struct addrinfo *	addrinfo_pointer  = calloc(1, sizeof(struct addrinfo));
+    mmux_bash_rv_t	brv;
+
+    addrinfo_pointer->ai_flags		= ai_flags;
+    addrinfo_pointer->ai_family		= ai_family;
+    addrinfo_pointer->ai_socktype	= ai_socktype;
+    addrinfo_pointer->ai_protocol	= ai_protocol;
+    addrinfo_pointer->ai_addrlen	= ai_addrlen;
+    addrinfo_pointer->ai_addr		= ai_addr;
+    addrinfo_pointer->ai_canonname	= ai_canonname;
+    addrinfo_pointer->ai_next		= ai_next;
+
+    brv = mmux_pointer_bind_to_bash_variable(addrinfo_pointer_varname, addrinfo_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+    if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
+
+    return brv;
+
+  error_binding_variables:
+    free(addrinfo_pointer);
+    return brv;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(10 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ADDRINFO_POINTER_VAR AI_FLAGS AI_FAMILY AI_SOCKTYPE AI_PROTOCOL AI_ADDRLEN AI_ADDR AI_CANONNAME AI_NEXT"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STRUCT_ADDRINFO_SETTER_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
+{
+  char const *		$1_varname;
+  mmux_pointer_t	_addrinfo_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM($1_varname,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_addrinfo_pointer,	argv[2]);
+  {
+    struct addrinfo *	addrinfo_pointer = _addrinfo_pointer;
+
+    return mmux_$2_bind_to_bash_variable($1_varname, addrinfo_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR ADDRINFO_POINTER"]]])
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_set]]])
+{
+  mmux_pointer_t	_addrinfo_pointer;
+  mmux_$2_t		$1;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_addrinfo_pointer,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_$3($1,				argv[2]);
+  {
+    struct addrinfo *	addrinfo_pointer = _addrinfo_pointer;
+
+    addrinfo_pointer->$1 = $1;
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR ADDRINFO_POINTER"]]])
+]]])
+
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_flags]]],	[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_family]]],	[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_socktype]]],	[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_protocol]]],	[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addrlen]]],	[[[socklen]]],[[[SOCKLEN]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addr]]],		[[[pointer]]],[[[POINTER]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_canonname]]],	[[[pointer]]],[[[POINTER]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_next]]],		[[[pointer]]],[[[POINTER]]])
+
+
+/** --------------------------------------------------------------------
  ** Sockets: byte order.
  ** ----------------------------------------------------------------- */
 
@@ -1742,28 +1849,35 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 mmux_bash_rv_t
 mmux_bash_pointers_init_sockets_module (void)
 {
-  mmux_bash_rv_t	rv;
+  mmux_bash_rv_t	brv;
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_in_addr_SIZEOF",  sizeof(struct in_addr), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+  {
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_in_addr_SIZEOF",  sizeof(struct in_addr), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_in6_addr_SIZEOF",  sizeof(struct in6_addr), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_in6_addr_SIZEOF",  sizeof(struct in6_addr), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in_SIZEOF",  sizeof(struct sockaddr_in), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in_SIZEOF",  sizeof(struct sockaddr_in), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in6_SIZEOF",  sizeof(struct sockaddr_in6), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in6_SIZEOF",  sizeof(struct sockaddr_in6), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_un_SIZEOF",  sizeof(struct sockaddr_un), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_un_SIZEOF",  sizeof(struct sockaddr_un), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
 
-  rv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_loopback_pointer", (mmux_pointer_t)&(in6addr_loopback), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_addrinfo_SIZEOF", sizeof(struct addrinfo), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+  }
 
-  rv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_any_pointer", (mmux_pointer_t)&(in6addr_any), NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
+  {
+    brv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_loopback_pointer", (mmux_pointer_t)&(in6addr_loopback), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+
+    brv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_any_pointer", (mmux_pointer_t)&(in6addr_any), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+  }
 
   return MMUX_SUCCESS;
 }

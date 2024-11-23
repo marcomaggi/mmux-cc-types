@@ -126,7 +126,7 @@ dnl MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 #### inspecting functions
 
 # These are not checked in the "mmux.m4" file, even though the common includes have them.
-AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/socket.h sys/un.h netinet/in.h net/if.h arpa/inet.h])
+AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/socket.h sys/un.h netinet/in.h net/if.h arpa/inet.h netdb.h])
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
@@ -213,6 +213,8 @@ MMUX_CONSTANT_TESTS([IFNAMSIZ])
 MMUX_CONSTANT_TESTS([SOL_SOCKET SO_BROADCAST SO_DEBUG SO_DONTROUTE SO_ERROR SO_KEEPALIVE SO_LINGER])
 MMUX_CONSTANT_TESTS([SO_OOBINLINE SO_RCVBUF SO_REUSEADDR SO_SNDBUF SO_STYLE SO_TYPE])
 MMUX_CONSTANT_TESTS([INADDR_ANY INADDR_BROADCAST INADDR_LOOPBACK INADDR_NONE])
+MMUX_CONSTANT_TESTS([AI_ADDRCONFIG AI_ALL AI_CANONIDN  AI_CANONNAME AI_IDN AI_IDN_ALLOW_UNASSIGNED])
+MMUX_CONSTANT_TESTS([AI_IDN_USE_STD3_ASCII_RULES AI_NUMERICSERV AI_PASSIVE AI_V4MAPPED])
 
 ## miscellaneous
 MMUX_CONSTANT_TESTS([EOF])
