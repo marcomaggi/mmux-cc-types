@@ -1014,21 +1014,6 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{INADDR_LOOPBACK}
 @MmuxDefineGlobalVarSystemConstant{INADDR_NONE}
 
-@c ------------------------------------------------------------------------
-
-@defvar mmux_libc_in6addr_loopback_pointer
-Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
-in6addr_loopback}.  We can the pointer to this data structure to initialise a @code{struct
-sockaddr_in6}.  @glibcref{Host Address Data Type, in6addr_loopback}.
-@end defvar
-
-
-@defvar mmux_libc_in6addr_any_pointer
-Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
-in6addr_any}.  We can the pointer to this data structure to initialise a @code{struct sockaddr_in6}.
-@glibcref{Host Address Data Type, in6addr_any}.
-@end defvar
-
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -7529,6 +7514,21 @@ The setter sets the field @code{sin6_port} to the value @var{HOST_BYTEORDER_SIN6
 setting: the binary value is converted from host to network byte order using the standard C language
 function @cfunc{htons}.
 @end deffn
+
+@c ------------------------------------------------------------------------
+
+@defvar mmux_libc_in6addr_loopback_pointer
+Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
+in6addr_loopback}.  We can the pointer to this data structure to initialise a @code{struct
+sockaddr_in6}.  @glibcref{Host Address Data Type, in6addr_loopback}.
+@end defvar
+
+
+@defvar mmux_libc_in6addr_any_pointer
+Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
+in6addr_any}.  We can the pointer to this data structure to initialise a @code{struct sockaddr_in6}.
+@glibcref{Host Address Data Type, in6addr_any}.
+@end defvar
 
 @c page
 @node sockets sockaddr
