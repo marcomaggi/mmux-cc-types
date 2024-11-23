@@ -248,60 +248,60 @@ src/%.$(OBJEXT): \
 #### tests
 
 EXTRA_DIST		+= \
-	tests/arithmetics.test.m4		\
-	tests/arrays.test.m4			\
-	tests/bitwise.test.m4			\
-	tests/characters.test.m4		\
-	tests/comparison.test.m4		\
-	tests/complex.test.m4			\
-	tests/conversion.test.m4		\
-	tests/errors.test.m4			\
-	tests/file-descriptors.test.m4		\
-	tests/file-system.test.m4		\
-	tests/mathematics.test.m4		\
-	tests/memory.test.m4			\
-	tests/output-formats.test.m4		\
-	tests/packages.test.m4			\
-	tests/persona.test.m4			\
-	tests/pointers.test.m4			\
-	tests/predicates.test.m4		\
-	tests/sockets.test.m4			\
-	tests/strings.test.m4			\
-	tests/structs.test.m4			\
-	tests/time.test.m4			\
-	tests/types.test.m4			\
-	tests/version.test.m4
+	tests/test-arithmetics.bash.m4		\
+	tests/test-arrays.bash.m4		\
+	tests/test-bitwise.bash.m4		\
+	tests/test-characters.bash.m4		\
+	tests/test-comparison.bash.m4		\
+	tests/test-complex.bash.m4		\
+	tests/test-conversion.bash.m4		\
+	tests/test-errors.bash.m4		\
+	tests/test-file-descriptors.bash.m4	\
+	tests/test-file-system.bash.m4		\
+	tests/test-mathematics.bash.m4		\
+	tests/test-memory.bash.m4		\
+	tests/test-output-formats.bash.m4	\
+	tests/test-packages.bash.m4		\
+	tests/test-persona.bash.m4		\
+	tests/test-pointers.bash.m4		\
+	tests/test-predicates.bash.m4		\
+	tests/test-sockets.bash.m4		\
+	tests/test-strings.bash.m4		\
+	tests/test-structs.bash.m4		\
+	tests/test-time.bash.m4			\
+	tests/test-types.bash.m4		\
+	tests/test-version.bash.m4
 
 # For some reason  GNU Automake does not want  "TEST_EXTENSIONS" to be
 # inside a conditional; so we put it here.
-TEST_EXTENSIONS		= .test
+TEST_EXTENSIONS		= .bash
 
 if WANT_MBFL_TESTING_ENABLED
 
 MMUX_CHECK_BUILT_TESTS	= \
-	tests/arithmetics.test			\
-	tests/arrays.test			\
-	tests/bitwise.test			\
-	tests/characters.test			\
-	tests/comparison.test			\
-	tests/complex.test			\
-	tests/conversion.test			\
-	tests/errors.test			\
-	tests/file-descriptors.test		\
-	tests/file-system.test			\
-	tests/mathematics.test			\
-	tests/memory.test			\
-	tests/output-formats.test		\
-	tests/packages.test			\
-	tests/persona.test			\
-	tests/pointers.test			\
-	tests/predicates.test			\
-	tests/sockets.test			\
-	tests/strings.test			\
-	tests/structs.test			\
-	tests/time.test				\
-	tests/types.test			\
-	tests/version.test
+	tests/test-arithmetics.bash		\
+	tests/test-arrays.bash			\
+	tests/test-bitwise.bash			\
+	tests/test-characters.bash		\
+	tests/test-comparison.bash		\
+	tests/test-complex.bash			\
+	tests/test-conversion.bash		\
+	tests/test-errors.bash			\
+	tests/test-file-descriptors.bash	\
+	tests/test-file-system.bash		\
+	tests/test-mathematics.bash		\
+	tests/test-memory.bash			\
+	tests/test-output-formats.bash		\
+	tests/test-packages.bash		\
+	tests/test-persona.bash			\
+	tests/test-pointers.bash		\
+	tests/test-predicates.bash		\
+	tests/test-sockets.bash			\
+	tests/test-strings.bash			\
+	tests/test-structs.bash			\
+	tests/test-time.bash			\
+	tests/test-types.bash			\
+	tests/test-version.bash
 
 TESTS			= $(MMUX_CHECK_BUILT_TESTS)
 check_SCRIPTS		= $(MMUX_CHECK_BUILT_TESTS)
@@ -309,8 +309,8 @@ CLEANFILES		+= $(MMUX_CHECK_BUILT_TESTS)
 
 ## --------------------------------------------------------------------
 
-# This environment  setting is used  both to compile  ".test.m4" files
-# and to run ".test" files.
+# This environment  setting is used  both to compile  ".bash.m4" files
+# and to run ".bash" files.
 #
 MBFL_TESTS_ENV		= export MBFL_LIBRARY_PATH=$(builddir)/src:$(MBFL_LIBRARY_PATH);
 # We  set TMPDIR  because  if the  "/tmp" directory  is  mounted on  a
@@ -329,8 +329,8 @@ MBFL_TESTS_PREREQUISITES= \
 	$(builddir)/src/libmmux-bash-packages.bash	\
 	$(builddir)/src/libmmux-bash-pointers.bash
 
-tests/%.test: tests/%.test.m4 $(MBFL_TESTS_PREREQUISITES)
-	$(MBFL_TESTS_COMPILE) $(MBFL_TESTS_FLAGS) $< >$@
+tests/test-%.bash: tests/test-%.bash.m4 $(MBFL_TESTS_PREREQUISITES)
+	$(MBFL_TESTS_COMPILE) $(MBFL_TESTS_FLAGS) --output=$@ $<
 
 ## ------------------------------------------------------------------------
 
@@ -341,7 +341,9 @@ MBFL_TESTS_RUN_ENV	= $(MBFL_TESTS_ENV)
 #
 # We must make sure that this ends with a semicolon!!!
 AM_TESTS_ENVIRONMENT	= $(MBFL_TESTS_RUN_VERBENV) $(MBFL_TESTS_RUN_ENV)
-TEST_LOG_COMPILER	= $(BASH_PROGRAM)
+# This variable name is  composed with the template "%s_LOG_COMPILER",
+# where "%s" must be the test file extension.
+BASH_LOG_COMPILER	= $(BASH_PROGRAM)
 AM_TEST_LOG_FLAGS	= $(MBFLFLAGS)
 
 ## --------------------------------------------------------------------
