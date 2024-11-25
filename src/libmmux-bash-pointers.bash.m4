@@ -67,6 +67,72 @@ function mmux_bash_pointers_library_after_loading_hook () {
 
     mmux_bash_pointers_library_init
 
+
+#### after loading hook: socket helpers
+
+function mmux_libc_addrinfo_array_init_defaults () {
+    declare -n mmux_p_ADDRINFO_ARRY=PP(1, addrinfo shell array)
+    mmux_p_ADDRINFO_ARRY=([AI_FLAGS]=0
+			  [AI_FAMILY]=0
+			  [AI_SOCKTYPE]=0
+			  [AI_PROTOCOL]=0
+			  [AI_ADDRLEN]=0
+			  [AI_ADDR]='0x0'
+			  [AI_CANONNAME]='0x0'
+			  [AI_NEXT]='0x0')
+}
+function mmux_libc_addrinfo_calloc_with_array () {
+    declare -n mmux_p_ADDRINFO_POINTER=PP(1, addrinfo pointer)
+    declare -n mmux_p_ADDRINFO_ARRY=PP(2, addrinfo shell array)
+    mmux_libc_addrinfo_calloc mmux_p_ADDRINFO_POINTER			\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_FLAGS)		\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_FAMILY)	\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_SOCKTYPE)	\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_PROTOCOL)	\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_ADDRLEN)	\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_ADDR)		\
+			      QQ(mmux_p_ADDRINFO_ARRY,AI_CANONNAME)	\
+			      WW(mmux_p_ADDRINFO_ARRY,AI_NEXT)
+}
+function mmux_libc_addrinfo_array_init_from_pointer () {
+    declare -n mmux_p_ADDRINFO_ARRY=PP(1, addrinfo shell array)
+    declare mmux_p_ADDRINFO_POINTER=PP(2, addrinfo pointer)
+
+    if ! mmux_libc_ai_flags_ref SS(mmux_p_ADDRINFO_ARRY,AI_FLAGS) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_family_ref SS(mmux_p_ADDRINFO_ARRY,AI_FAMILY) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_socktype_ref SS(mmux_p_ADDRINFO_ARRY,AI_SOCKTYPE) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_protocol_ref SS(mmux_p_ADDRINFO_ARRY,AI_PROTOCOL) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_addrlen_ref SS(mmux_p_ADDRINFO_ARRY,AI_ADDRLEN) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_addr_ref SS(mmux_p_ADDRINFO_ARRY,AI_ADDR) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_canonname_ref SS(mmux_p_ADDRINFO_ARRY,AI_CANONNAME) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+    if ! mmux_libc_ai_next_ref SS(mmux_p_ADDRINFO_ARRY,AI_NEXT) RR(mmux_p_ADDRINFO_POINTER)
+    then return 1
+    fi
+
+    if ! mmux_pointer_is_zero RR(mmux_p_ADDRINFO_ARRY,AI_CANONNAME)
+    then
+	if ! mmux_pointer_to_bash_string SS(mmux_p_ADDRINFO_ARRY,ASCII_CANONNAME) RR(mmux_p_ADDRINFO_ARRY,AI_CANONNAME)
+	then return 1
+	fi
+    fi
+
+    return 0
+}
+
 #page
 #### after loading hook: utilities
 #

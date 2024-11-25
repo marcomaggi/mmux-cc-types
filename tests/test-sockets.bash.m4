@@ -1332,6 +1332,48 @@ function sockets-setsockopt-SO_LINGER-1.1 () {
 }
 
 
+#### getaddrinfo
+
+function sockets-getaddrinfo-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare GAI_ERRNUM GAI_ERRMSG
+	declare ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR HINTS_ADDRINFO_PTR
+	declare -A HINTS_ADDRINFO_ARRAY OUPUT_ADDRINFO_ARRAY
+	declare -r ASCII_CANONNAME='localhost'
+	declare -r ASCII_SERVICE=''
+
+	mmux_libc_addrinfo_array_init_defaults HINTS_ADDRINFO_ARRAY
+	mmux_libc_addrinfo_array_init_defaults OUPUT_ADDRINFO_ARRAY
+
+	HINTS_ADDRINFO_ARRAY[AI_FLAGS]=$(( RR(mmux_libc_AI_V4MAPPED) | RR(mmux_libc_AI_ADDRCONFIG) | RR(mmux_libc_AI_CANONNAME) ))
+	HINTS_ADDRINFO_ARRAY[AI_FAMILY]=RR(mmux_libc_AF_UNSPEC)
+	HINTS_ADDRINFO_ARRAY[AI_SOCKTYPE]=RR(mmux_libc_SOCK_STREAM)
+
+	dotest-option-debug && mbfl_array_dump HINTS_ADDRINFO_ARRAY
+
+	mbfl_location_compensate( mmux_libc_addrinfo_calloc_with_array HINTS_ADDRINFO_PTR HINTS_ADDRINFO_ARRAY,
+				  mmux_libc_free RR(HINTS_ADDRINFO_PTR) )
+
+	mbfl_location_compensate( mmux_libc_getaddrinfo WW(ASCII_CANONNAME) QQ(ASCII_SERVICE) RR(HINTS_ADDRINFO_PTR) \
+							ADDRINFO_LINKED_LIST_PTR,
+				  mmux_libc_freeaddrinfo RR(ADDRINFO_LINKED_LIST_PTR) )
+
+	ADDRINFO_PTR=RR(ADDRINFO_LINKED_LIST_PTR)
+	until mmux_pointer_is_zero RR(ADDRINFO_PTR)
+	do
+	    mbfl_location_leave_when_failure( mmux_libc_addrinfo_array_init_from_pointer OUPUT_ADDRINFO_ARRAY RR(ADDRINFO_PTR) )
+	    dotest-option-debug && mbfl_array_dump OUPUT_ADDRINFO_ARRAY
+	    mbfl_location_leave_when_failure( mmux_libc_ai_next_ref ADDRINFO_PTR RR(ADDRINFO_PTR) )
+	done
+	dotest-equal WW(ASCII_CANONNAME) WW(OUPUT_ADDRINFO_ARRAY,ASCII_CANONNAME)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest sockets-

@@ -1001,6 +1001,63 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Sockets: addresses.
  ** ----------------------------------------------------------------- */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getaddrinfo]]])
+{
+  char const *		node;
+  char const *		service;
+  mmux_pointer_t	_hints_pointer;
+  char const *		addrinfo_linked_list_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(node,				argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(service,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_hints_pointer,			argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(addrinfo_linked_list_varname,	argv[4]);
+  {
+    struct addrinfo *	hints_pointer = _hints_pointer;
+    struct addrinfo *	addrinfo_linked_list;
+
+    if (0 == strlen(node))    { node    = NULL; }
+    if (0 == strlen(service)) { service = NULL; }
+    {
+      int	rv = getaddrinfo(node, service, hints_pointer, &addrinfo_linked_list);
+
+      if (0 == rv) {
+	return mmux_pointer_bind_to_bash_variable(addrinfo_linked_list_varname, addrinfo_linked_list, MMUX_BASH_BUILTIN_STRING_NAME);
+      } else {
+	mmux_bash_rv_t	brv;
+
+	brv = mmux_sint_bind_to_bash_variable("GAI_ERRNUM", rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { return brv; }
+
+	return mmux_string_bind_to_bash_variable("GAI_ERRMSG", gai_strerror(rv), MMUX_BASH_BUILTIN_STRING_NAME);
+      }
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NODE SERVICE HINTS_ADDRINFO_POINTER ADDRINFO_LINKED_LIST_VARNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_freeaddrinfo]]])
+{
+  mmux_pointer_t	addrinfo_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addrinfo_pointer,	argv[1]);
+  {
+    free(addrinfo_pointer);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ADDRINFO_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_bind]]])
 {
   mmux_sint_t		sock;
@@ -1868,6 +1925,9 @@ mmux_bash_pointers_init_sockets_module (void)
     if (MMUX_SUCCESS != brv) { return brv; }
 
     brv = mmux_bash_create_global_sint_variable("mmux_libc_addrinfo_SIZEOF", sizeof(struct addrinfo), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_hostent_SIZEOF", sizeof(struct hostent), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
   }
 

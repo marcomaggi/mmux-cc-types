@@ -116,6 +116,10 @@ $@{\VARNAME\:?@}
 @ref{\FUNCNAME\,\FUNCNAME\,\FUNCNAME\,*manpages*}
 @end macro
 
+@macro MmuxCStruct{NAME}
+@code{struct \NAME\}
+@end macro
+
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
@@ -5914,7 +5918,7 @@ fi
 @section File attributes
 
 
-To use a standard @code{struct stat} value, we can do:
+To use a standard @MmuxCStruct{stat} value, we can do:
 
 @example
 declare STAT
@@ -5954,13 +5958,13 @@ mmuc_libc_free @RR{STAT}
 
 
 @defvr {Shell Variable} mmux_libc_stat_SIZEOF
-Shell variable bound to the number of bytes required to contain a @code{struct stat},
+Shell variable bound to the number of bytes required to contain a @MmuxCStruct{stat},
 @glibcref{Attribute Meanings, struct stat}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_stat_malloc @var{STAT_POINTER_VAR}
-Allocate a data structure of type @code{struct stat} using @cfunc{malloc} and initialise it all zero
+Allocate a data structure of type @MmuxCStruct{stat} using @cfunc{malloc} and initialise it all zero
 values; bind a string representation of its pointer to the shell variable whose name is
 @var{STAT_POINTER_VAR}.
 
@@ -5971,7 +5975,7 @@ To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or 
 
 @macro MmuxDefineStructStatFieldGetter{ARG,FIELD}
 @deffn Builtin mmux_libc_\FIELD\_ref @var{\ARG\_VAR} @var{STAT_POINTER}
-Given a pointer @var{STAT_POINTER} to a @code{struct stat}: bind to the shell variable
+Given a pointer @var{STAT_POINTER} to a @MmuxCStruct{stat}: bind to the shell variable
 @var{MODE_VAR} a string representation of the value of field @code{\FIELD\}.
 @end deffn
 
@@ -6094,13 +6098,13 @@ mmux_libc_close @RR{FD}
 
 
 @defvr {Shell Variable} mmux_libc_utimbuf_SIZEOF
-Shell variable bound to the number of bytes required to contain a @code{struct utimbuf},
+Shell variable bound to the number of bytes required to contain a @MmuxCStruct{utimbuf},
 @glibcref{File Times, struct utimbuf}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_utimbuf_malloc @var{UTIMBUF_POINTER_VAR}
-Allocate a block of memory, using @cfunc{malloc}, wide enough to contain a @code{struct utimbuf}
+Allocate a block of memory, using @cfunc{malloc}, wide enough to contain a @MmuxCStruct{utimbuf}
 value; bind to the shell variable whose name is @var{UTIMBUF_POINTER_VAR} a string representation of
 the pointer referencing it.  @glibcref{File Times, struct utimbuf}.
 
@@ -6110,25 +6114,25 @@ To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or 
 
 @deffn Builtin mmux_libc_utimbuf_actime_ref @var{ACTIME_VAR} @var{UTIMBUF_POINTER}
 @deffnx Builtin mmux_libc_utimbuf_actime_set @var{UTIMBUF_POINTER} @var{ACTIME}
-Setter and getter for the field @code{actime} of @code{struct utimbuf} values.
+Setter and getter for the field @code{actime} of @MmuxCStruct{utimbuf} values.
 
 The getter binds to the shell variable whose name is @var{ACTIME_VAR} a string representation of the
-field @code{actime} in the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+field @code{actime} in the @MmuxCStruct{utimbuf} value referenced by @var{UTIMBUF_POINTER}.
 
 The setter converts the string @var{ACTIME} to a value of type @objtype{mmux_time_t} and store it in
-the field @code{actime} of the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+the field @code{actime} of the @MmuxCStruct{utimbuf} value referenced by @var{UTIMBUF_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_utimbuf_modtime_ref @var{MODTIME_VAR} @var{UTIMBUF_POINTER}
 @deffnx Builtin mmux_libc_utimbuf_modtime_set @var{UTIMBUF_POINTER} @var{MODTIME}
-Setter and getter for the field @code{modtime} of @code{struct utimbuf} values.
+Setter and getter for the field @code{modtime} of @MmuxCStruct{utimbuf} values.
 
 The getter binds to the shell variable whose name is @var{MODTIME_VAR} a string representation of the
-field @code{modtime} in the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+field @code{modtime} in the @MmuxCStruct{utimbuf} value referenced by @var{UTIMBUF_POINTER}.
 
 The setter converts the string @var{MODTIME} to a value of type @objtype{mmux_time_t} and store it in
-the field @code{modtime} of the @code{struct utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+the field @code{modtime} of the @MmuxCStruct{utimbuf} value referenced by @var{UTIMBUF_POINTER}.
 @end deffn
 
 
@@ -6366,7 +6370,7 @@ Interface to the standard C language function @cfunc{cuserid}, @glibcref{Who Log
 Interface to the standard C language function @cfunc{getpwuid}, @glibcref{Lookup User, getpwuid}.
 
 Bind the shell variable whose name is @var{PASSWD_POINTER_VAR} to a string representation of a
-pointer to the @code{struct passwd} returned by the internal call to @cfunc{getpwuid}.  This value
+pointer to the @MmuxCStruct{passwd} returned by the internal call to @cfunc{getpwuid}.  This value
 can be @cnull{} if there is no database entry associated to @var{UID}.
 
 @example
@@ -6389,7 +6393,7 @@ mmux_libc_pw_shell  PW_SHELL  @RR{PASSWD}
 Interface to the standard C language function @cfunc{getpwnam}, @glibcref{Lookup User, getpwnam}.
 
 Bind the shell variable whose name is @var{PASSWD_POINTER_VAR} to a string representation of a
-pointer to the @code{struct passwd} returned by the internal call to @cfunc{getpwnam}.  This value
+pointer to the @MmuxCStruct{passwd} returned by the internal call to @cfunc{getpwnam}.  This value
 can be @cnull{} if there is no database entry associated to @var{USERNAME}.
 @end deffn
 
@@ -6404,7 +6408,7 @@ Interface to the standard C language function @cfunc{setpwent}, @glibcref{Scanni
 setpwent}.
 
 Bind the shell variable whose name is @var{PASSWD_POINTER_VAR} to a string representation of a
-pointer to the @code{struct passwd} returned by the internal call to @cfunc{getpwent}.  This value
+pointer to the @MmuxCStruct{passwd} returned by the internal call to @cfunc{getpwent}.  This value
 is @cnull{} if there are no more entries in this iteration of the database.
 
 @example
@@ -6430,43 +6434,43 @@ Interface to the standard C language function @cfunc{endpwent}, @glibcref{Scanni
 
 @deffn Builtin mmux_libc_pw_name @var{PW_NAME_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_NAME_VAR} a string representation of the field
-@code{pw_name} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_name} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_pw_passwd @var{PW_PASSWD_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_PASSWD_VAR} a string representation of the field
-@code{pw_passwd} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_passwd} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_pw_uid @var{PW_UID_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_UID_VAR} a string representation of the field
-@code{pw_uid} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_uid} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_pw_gid @var{PW_GID_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_GID_VAR} a string representation of the field
-@code{pw_gid} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_gid} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_pw_gecos @var{PW_GECOS_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_GECOS_VAR} a string representation of the field
-@code{pw_gecos} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_gecos} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_pw_dir @var{PW_DIR_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_DIR_VAR} a string representation of the field
-@code{pw_dir} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_dir} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_pw_shell @var{PW_SHELL_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_SHELL_VAR} a string representation of the field
-@code{pw_shell} in the @code{struct passwd} referenced by the pointer @var{PASSWD_POINTER}.
+@code{pw_shell} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 @c page
@@ -6481,7 +6485,7 @@ Bind to the shell variable whose name is @var{PW_SHELL_VAR} a string representat
 Interface to the standard C language function @cfunc{getgrgid}, @glibcref{Lookup Group, getgrgid}.
 
 Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
-pointer to the @code{struct group} returned by the internal call to @cfunc{getgrgid}.  This value
+pointer to the @MmuxCStruct{group} returned by the internal call to @cfunc{getgrgid}.  This value
 can be @cnull{} if there is no database entry associated to @var{GID}.
 
 @example
@@ -6501,7 +6505,7 @@ mmux_libc_gr_mem  GR_MEM    @RR{GROUP}
 Interface to the standard C language function @cfunc{getgrnam}, @glibcref{Lookup Group, getgrnam}.
 
 Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
-pointer to the @code{struct group} returned by the internal call to @cfunc{getgrnam}.  This value
+pointer to the @MmuxCStruct{group} returned by the internal call to @cfunc{getgrnam}.  This value
 can be @cnull{} if there is no database entry associated to @var{GROUPNAME}.
 @end deffn
 
@@ -6516,7 +6520,7 @@ Interface to the standard C language function @cfunc{setgrent}, @glibcref{Scanni
 setgrent}.
 
 Bind the shell variable whose name is @var{GROUP_POINTER_VAR} to a string representation of a
-pointer to the @code{struct group} returned by the internal call to @cfunc{getgrent}.  This value is
+pointer to the @MmuxCStruct{group} returned by the internal call to @cfunc{getgrent}.  This value is
 @cnull{} if there are no more entries in this iteration of the database.
 
 @example
@@ -6542,13 +6546,13 @@ Interface to the standard C language function @cfunc{endgrent}, @glibcref{Scanni
 
 @deffn Builtin mmux_libc_gr_name @var{GR_NAME_VAR} @var{GROUP_POINTER}
 Bind to the shell variable whose name is @var{GR_NAME_VAR} a string representation of the field
-@code{gr_name} in the @code{struct group} referenced by the pointer @var{GROUP_POINTER}.
+@code{gr_name} in the @MmuxCStruct{group} referenced by the pointer @var{GROUP_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_gr_gid @var{GR_GID_VAR} @var{GROUP_POINTER}
 Bind to the shell variable whose name is @var{GR_GID_VAR} a string representation of the field
-@code{gr_gid} in the @code{struct group} referenced by the pointer @var{GROUP_POINTER}.
+@code{gr_gid} in the @MmuxCStruct{group} referenced by the pointer @var{GROUP_POINTER}.
 @end deffn
 
 
@@ -6564,18 +6568,18 @@ group} referenced by the pointer @var{GROUP_POINTER}.
 
 
 @menu
-* time timeval::                Handling @code{struct timeval}.
-* time timespec::               Handling @code{struct timespec}.
-* time tm::                     Handling @code{struct tm}.
+* time timeval::                Handling @MmuxCStruct{timeval}.
+* time timespec::               Handling @MmuxCStruct{timespec}.
+* time tm::                     Handling @MmuxCStruct{tm}.
 * time builtins::               Time builtins.
 @end menu
 
 @c page
 @node time timeval
-@section Handling @code{struct timeval}
+@section Handling @MmuxCStruct{timeval}
 
 
-To use a standard @code{struct timeval} value, we can do:
+To use a standard @MmuxCStruct{timeval} value, we can do:
 
 @example
 declare TIMEVAL
@@ -6593,13 +6597,13 @@ mmuc_libc_free @RR{TIMEVAL}
 
 
 @defvr {Shell Variable} mmux_libc_timeval_SIZEOF
-Shell variable bound to the number of bytes required to contain a @code{struct timeval}.
+Shell variable bound to the number of bytes required to contain a @MmuxCStruct{timeval}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR}
 @deffnx Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_MICROSECONDS}
-Allocate a data structure of type @code{struct timeval} using @cfunc{malloc} and initialise it with
+Allocate a data structure of type @MmuxCStruct{timeval} using @cfunc{malloc} and initialise it with
 the given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TIMEVAL_POINTER_VAR}.  @glibcref{Time Types, struct timeval}.
 
@@ -6615,7 +6619,7 @@ present: it defaults to zero.
 
 
 @deffn Builtin mmux_libc_timeval_ref @var{TIME_SECONDS_VAR} @var{SLONG_MICROSECONDS_VAR} @var{TIMEVAL_POINTER}
-Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval}: bind to the shell variable
+Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval}: bind to the shell variable
 @var{TIME_SECONDS_VAR} a string representation of the number of seconds from the data structure;
 bind to the shell variable @var{SLONG_MICROSECONDS_VAR} a string representation of the number of
 microseconds from the data structure.
@@ -6623,42 +6627,42 @@ microseconds from the data structure.
 
 
 @deffn Builtin mmux_libc_timeval_seconds_ref @var{TIME_SECONDS_VAR} @var{TIMEVAL_POINTER}
-Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} bind to the shell variable
+Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval} bind to the shell variable
 @var{TIME_SECONDS_VAR} a string representation of the number of seconds from the data structure.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timeval_microseconds_ref @var{SLONG_MICROSECONDS_VAR} @var{TIMEVAL_POINTER}
-Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} bind to the shell variable
+Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval} bind to the shell variable
 @var{SLONG_MICROSECONDS_VAR} a string representation of the number of microseconds from the data
 structure.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timeval_set @var{TIMEVAL_POINTER} @var{TIME_SECONDS} @var{SLONG_MICROSECONDS}
-Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval}: store in its @code{tv_sec} field
+Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval}: store in its @code{tv_sec} field
 the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}; store in its @code{tv_usec} field the
 value @var{SLONG_MICROSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timeval_seconds_set @var{TIMEVAL_POINTER} @var{TIME_SECONDS}
-Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} store in its @code{tv_sec} field
+Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval} store in its @code{tv_sec} field
 the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timeval_microseconds_set @var{TIMEVAL_POINTER} @var{SLONG_MICROSECONDS}
-Given a pointer @var{TIMEVAL_POINTER} to a @code{struct timeval} store in its @code{tv_usec} field
+Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval} store in its @code{tv_usec} field
 the value @var{SLONG_MICROSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 @c page
 @node time timespec
-@section Handling @code{struct timespec}
+@section Handling @MmuxCStruct{timespec}
 
 
-To use a standard @code{struct timespec} value, we can do:
+To use a standard @MmuxCStruct{timespec} value, we can do:
 
 @example
 declare TIMESPEC
@@ -6676,13 +6680,13 @@ mmuc_libc_free @RR{TIMESPEC}
 
 
 @defvr {Shell Variable} mmux_libc_timespec_SIZEOF
-Shell variable bound to the number of bytes required to contain a @code{struct timespec}.
+Shell variable bound to the number of bytes required to contain a @MmuxCStruct{timespec}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR}
 @deffnx Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_NANOSECONDS}
-Allocate a data structure of type @code{struct timespec} using @cfunc{malloc} and initialise it with
+Allocate a data structure of type @MmuxCStruct{timespec} using @cfunc{malloc} and initialise it with
 the given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TIMESPEC_POINTER_VAR}.  @glibcref{Time Types, struct timespec}.
 
@@ -6698,7 +6702,7 @@ present: it defaults to zero.
 
 
 @deffn Builtin mmux_libc_timespec_ref @var{TIME_SECONDS_VAR} @var{SLONG_NANOSECONDS_VAR} @var{TIMESPEC_POINTER}
-Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec}: bind to the shell variable
+Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec}: bind to the shell variable
 @var{TIME_SECONDS_VAR} a string representation of the number of seconds from the data structure;
 bind to the shell variable @var{SLONG_NANOSECONDS_VAR} a string representation of the number of
 nanoseconds from the data structure.
@@ -6706,42 +6710,42 @@ nanoseconds from the data structure.
 
 
 @deffn Builtin mmux_libc_timespec_seconds_ref @var{TIME_SECONDS_VAR} @var{TIMESPEC_POINTER}
-Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} bind to the shell variable
+Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec} bind to the shell variable
 @var{TIME_SECONDS_VAR} a string representation of the number of seconds from the data structure.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timespec_nanoseconds_ref @var{SLONG_NANOSECONDS_VAR} @var{TIMESPEC_POINTER}
-Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} bind to the shell variable
+Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec} bind to the shell variable
 @var{SLONG_NANOSECONDS_VAR} a string representation of the number of nanoseconds from the data
 structure.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timespec_set @var{TIMESPEC_POINTER} @var{TIME_SECONDS} @var{SLONG_NANOSECONDS}
-Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec}: store in its @code{tv_sec} field
+Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec}: store in its @code{tv_sec} field
 the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}; store in its @code{tv_nsec} field the
 value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timespec_seconds_set @var{TIMESPEC_POINTER} @var{TIME_SECONDS}
-Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} store in its @code{tv_sec} field
+Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec} store in its @code{tv_sec} field
 the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_timespec_nanoseconds_set @var{TIMESPEC_POINTER} @var{SLONG_NANOSECONDS}
-Given a pointer @var{TIMESPEC_POINTER} to a @code{struct timespec} store in its @code{tv_nsec} field
+Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec} store in its @code{tv_nsec} field
 the value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
 @c page
 @node time tm
-@section Handling @code{struct tm}
+@section Handling @MmuxCStruct{tm}
 
 
-To use a standard @code{struct tm} value, we can do:
+To use a standard @MmuxCStruct{tm} value, we can do:
 
 @example
 declare TM
@@ -6768,12 +6772,12 @@ mmux_libc_free @RR{TM}
 
 
 @defvr {Shell Variable} mmux_libc_tm_SIZEOF
-Shell variable bound to the number of bytes required to contain a @code{struct tm}.
+Shell variable bound to the number of bytes required to contain a @MmuxCStruct{tm}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_tm_malloc @var{TM_POINTER_VAR}
-Allocate a data structure of type @code{struct tm} using @cfunc{malloc} and initialise it with the
+Allocate a data structure of type @MmuxCStruct{tm} using @cfunc{malloc} and initialise it with the
 given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TM_POINTER_VAR}.  @glibcref{Time Types, struct tm}.
 
@@ -6794,12 +6798,12 @@ T   = time(NULL);
 
 @macro MmuxDefineStructTmSetterGetter{FIELD,ARG}
 @deffn Builtin mmux_libc_tm_\FIELD\_ref @var{SINT_\ARG\_VAR} @var{TM_POINTER}
-Given a pointer @var{TM_POINTER} to a @code{struct tm} bind to the shell variable
+Given a pointer @var{TM_POINTER} to a @MmuxCStruct{tm} bind to the shell variable
 @var{SINT_\ARG\_VAR} a string representation of the field @code{tm_\FIELD\} value.
 @end deffn
 
 @deffn Builtin mmux_libc_tm_\FIELD\_set @var{TM_POINTER} @var{SINT_\ARG\}
-Given a pointer @var{TM_POINTER} to a @code{struct tm} set the structure field @code{tm_\FIELD\} to
+Given a pointer @var{TM_POINTER} to a @MmuxCStruct{tm} set the structure field @code{tm_\FIELD\} to
 the value @var{SINT_\ARG\}.
 @end deffn
 
@@ -6818,19 +6822,19 @@ the value @var{SINT_\ARG\}.
 @c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_tm_gmtoff_ref @var{SLONG_GMTOFF_VAR} @var{TM_POINTER}
-Given a pointer @var{TM_POINTER} to a @code{struct tm} bind to the shell variable
+Given a pointer @var{TM_POINTER} to a @MmuxCStruct{tm} bind to the shell variable
 @var{SLONG_GMTOFF_VAR} a string representation of the field @code{tm_gmtoff} value.
 @end deffn
 
 
 @deffn Builtin mmux_libc_tm_gmtoff_set @var{TM_POINTER} @var{SLONG_GMTOFF}
-Given a pointer @var{TM_POINTER} to a @code{struct tm} set the structure field @code{tm_gmtoff} to
+Given a pointer @var{TM_POINTER} to a @MmuxCStruct{tm} set the structure field @code{tm_gmtoff} to
 the value @var{SLONG_GMTOFF}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_tm_reset @var{TM_POINTER}
-Given a pointer @var{TM_POINTER} to a @code{struct tm} reset all the fields to their minimum value:
+Given a pointer @var{TM_POINTER} to a @MmuxCStruct{tm} reset all the fields to their minimum value:
 
 @example
 tm_sec    = 0
@@ -6868,7 +6872,7 @@ mmux_libc_time THE_TIME
 
 @deffn Builtin mmux_libc_localtime @var{TM_POINTER} @var{TIME}
 Interface to the standard C language function @cfunc{localtime}, @glibcref{Broken-down Time,
-localtime}.  Fill the data structure of type @code{struct tm} referenced by @var{TM_POINTER} with
+localtime}.  Fill the data structure of type @MmuxCStruct{tm} referenced by @var{TM_POINTER} with
 the broken--down time computed from @var{TIME}, which can be a value from a call to
 @MmuxBuiltin{mmux_libc_time}.
 @end deffn
@@ -6876,7 +6880,7 @@ the broken--down time computed from @var{TIME}, which can be a value from a call
 
 @deffn Builtin mmux_libc_gmtime @var{TM_POINTER} @var{TIME}
 Interface to the standard C language function @cfunc{gmtime}, @glibcref{Broken-down Time, gmtime}.
-Fill the data structure of type @code{struct tm} referenced by @var{TM_POINTER} with the
+Fill the data structure of type @MmuxCStruct{tm} referenced by @var{TM_POINTER} with the
 broken--down time computed from @var{TIME}, which can be a value from a call to
 @MmuxBuiltin{mmux_libc_time}.
 
@@ -6898,7 +6902,7 @@ mmux_libc_free @RR{TM}
 @deffn Builtin mmux_libc_mktime @var{TIMEVAR} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{mktime}, @glibcref{Broken--down Time, mktime}.
 Bind to the shell variable whose name is @var{TIMEVAR} a string representation of the time from the
-data structure @code{struct tm} referenced by @var{TM_POINTER}.
+data structure @MmuxCStruct{tm} referenced by @var{TM_POINTER}.
 
 @example
 declare TM
@@ -6918,7 +6922,7 @@ mmux_libc_free @RR{TM}
 @deffn Builtin mmux_libc_timegm @var{TIMEVAR} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{timegm}, @glibcref{Broken--down Time, timegm}.
 Bind to the shell variable whose name is @var{TIMEVAR} a string representation of the time from the
-data structure @code{struct tm} referenced by @var{TM_POINTER}.
+data structure @MmuxCStruct{tm} referenced by @var{TM_POINTER}.
 
 @example
 declare TM
@@ -6938,7 +6942,7 @@ mmux_libc_free @RR{TM}
 @deffn Builtin mmux_libc_asctime @var{STRINGVAR} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{asctime}, @glibcref{Formatting Calendar Time,
 asctime}.  Bind the shell variable whose name is @var{STRINGVAR} with a string representation of the
-broken--down time represented by the data structure @code{struct tm} referenced by @var{TM_POINTER}.
+broken--down time represented by the data structure @MmuxCStruct{tm} referenced by @var{TM_POINTER}.
 
 @example
 declare TM STRING
@@ -6970,7 +6974,7 @@ mmux_libc_ctime STRING @RR{THE_TIME}
 @deffn Builtin mmux_libc_strftime @var{STRINGVAR} @var{TEMPLATE} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{strftime}, @glibcref{Formatting Calendar Time,
 strftime}.  Bind the shell variable whose name is @var{STRINGVAR} with a string representation of
-the broken--down time represented by the data structure @code{struct tm} referenced by
+the broken--down time represented by the data structure @MmuxCStruct{tm} referenced by
 @var{TM_POINTER}, according to @var{TEMPLATE}.
 
 @example
@@ -6989,7 +6993,7 @@ mmux_libc_free @RR{TM}
 
 @deffn Builtin mmux_libc_strptime @var{INPUT_STRING} @var{TEMPLATE} @var{TM_POINTER}
 Interface to the standard C language function @cfunc{strptime}, @glibcref{Low--Level Time String
-Parsing, strptime}.  Fill the data structure @code{struct tm} referenced by @var{TM_POINTER} with
+Parsing, strptime}.  Fill the data structure @MmuxCStruct{tm} referenced by @var{TM_POINTER} with
 values from parsing @var{INPUT_STRING} according to @var{TEMPLATE}.
 
 @example
@@ -7040,15 +7044,15 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 
 @menu
 * sockets inames::              Socket interface names.
-* sockets sockaddr_un::         Interface to @code{struct sockaddr_un}.
-* sockets sockaddr_in::         Interface to @code{struct sockaddr_in}.
-* sockets sockaddr_in6::        Interface to @code{struct sockaddr_in6}.
-* sockets sockaddr::            Interface to @code{struct sockaddr}.
-* sockets addrinfo::            Interface to @code{struct addrinfo}.
+* sockets sockaddr_un::         Interface to @MmuxCStruct{sockaddr_un}.
+* sockets sockaddr_in::         Interface to @MmuxCStruct{sockaddr_in}.
+* sockets sockaddr_in6::        Interface to @MmuxCStruct{sockaddr_in6}.
+* sockets sockaddr::            Interface to @MmuxCStruct{sockaddr}.
+* sockets addrinfo::            Interface to @MmuxCStruct{addrinfo}.
+* sockets hostent::             Interface to @MmuxCStruct{hostent}.
 * sockets byteorder::           Converting byte order in socket addresses.
-* sockets addresses::           Converting socket addresses between binary
-                                and presentation formats.
-* sockets hostent::             Interface to @code{struct hostent}.
+* sockets convaddr::            Converting socket addresses between formats.
+* sockets addresses::           Socket addresses.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -7104,10 +7108,10 @@ mmux_libc_if_indextoname NAME '2'
 
 @c page
 @node sockets sockaddr_un
-@section Interface to @code{struct sockaddr_un}
+@section Interface to @MmuxCStruct{sockaddr_un}
 
 
-To use values of type @code{struct sockaddr_un} we do:
+To use values of type @MmuxCStruct{sockaddr_un} we do:
 
 @example
 declare -r FAMILY=@RR{mmux_libc_AF_LOCAL}
@@ -7130,7 +7134,7 @@ mmux_libc_free @RR{SOCKADDR_UN}
 
 
 @deffn Builtin mmux_libc_sockaddr_un_calloc @var{SOCKADDR_UN_POINTER_VAR} @var{SOCKADDR_UN_LENGTH_VAR} @var{SUN_FAMILY} @var{SUN_PATH}
-Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_un}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_un}
 value with the given parameters as fields; then:
 
 @itemize
@@ -7155,21 +7159,21 @@ maximum length of the pathname is platform--specific.
 
 @deffn Builtin mmux_libc_sockaddr_un_sun_family_ref @var{SUN_FAMILY_VAR} @var{SOCKADDR_UN_POINTER}
 Bind to the shell variable whose name is @var{SUN_FAMILY_VAR} the string representation of the field
-@code{sun_family} in the @code{struct sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
+@code{sun_family} in the @MmuxCStruct{sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
 @end deffn
 
 
 @deffn Builtin mmux_libc_sockaddr_un_sun_path_ref @var{SUN_PATH_VAR} @var{SOCKADDR_UN_POINTER}
 Bind to the shell variable whose name is @var{SUN_PATH_VAR} the string representation of the field
-@code{sun_path} in the @code{struct sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
+@code{sun_path} in the @MmuxCStruct{sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
 @end deffn
 
 @c page
 @node sockets sockaddr_in
-@section Interface to @code{struct sockaddr_in}
+@section Interface to @MmuxCStruct{sockaddr_in}
 
 
-To use values of type @code{struct sockaddr_in} we do:
+To use values of type @MmuxCStruct{sockaddr_in} we do:
 
 @example
 declare SOCKADDR_IN_POINTER SIN_ADDR_POINTER
@@ -7188,23 +7192,23 @@ mmux_libc_free RR(SOCKADDR_IN_POINTER)
 
 
 @defvr Constant mmux_libc_sockaddr_in_SIZEOF
-Size, measured in bytes, of a value of type @code{struct sockaddr_in}.
+Size, measured in bytes, of a value of type @MmuxCStruct{sockaddr_in}.
 @end defvr
 
 
 @defvr Constant mmux_libc_in_addr_SIZEOF
-Size, measured in bytes, of a value of type @code{struct in_addr}.
+Size, measured in bytes, of a value of type @MmuxCStruct{in_addr}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_sockaddr_in_calloc @var{SOCKADDR_IN_POINTER_VAR} @var{SIN_FAMILY} @var{SIN_ADDR_POINTER_VAR} @var{HOST_BYTEORDER_SIN_PORT}
-Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_in}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_in}
 value and initialise it.  Arguments:
 
 @table @var
 @item SOCKADDR_IN_POINTER_VAR
 The name of a shell variable: when successful, this builtin binds to this variable a string
-representation of the pointer referencing the @code{struct sockaddr_in} value.
+representation of the pointer referencing the @MmuxCStruct{sockaddr_in} value.
 
 @item SIN_FAMILY
 The string representation of the family argument, to be stored in the field @code{sin_family}; it is
@@ -7214,7 +7218,7 @@ any byte reordering.
 @item SIN_ADDR_POINTER_VAR
 The name of a shell variable: when successful, this builtin binds to this variable a string
 representation of the pointer to the field @code{sin_addr.s_addr} of the newly allocated
-@code{struct sockaddr_in}.
+@MmuxCStruct{sockaddr_in}.
 
 We can use such pointer to access the field using the setter @MmuxBuiltin{mmux_uint32_pointer_set}
 and getter @MmuxBuiltin{mmux_uint32_pointer_set}; values directly extracted from the data structure
@@ -7232,7 +7236,7 @@ from host to network byte ordering, using @cfunc{htons}.
 
 @deffn Builtin mmux_libc_sin_family_ref @var{SIN_FAMILY_VAR} @var{SOCKADDR_IN_POINTER}
 @deffnx Builtin mmux_libc_sin_family_set @var{SOCKADDR_IN_POINTER} @var{SIN_FAMILY}
-Setter and getter for the field @code{sin_family} of the @code{struct sockaddr_in} referenced by
+Setter and getter for the field @code{sin_family} of the @MmuxCStruct{sockaddr_in} referenced by
 @var{SOCKADDR_IN_POINTER}; it is usually the value of @samp{mmux_libc_AF_INET}.
 
 The getter binds the shell variable whose name is @var{SIN_FAMILY_VAR} to the string representation
@@ -7258,7 +7262,7 @@ mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
 
 @deffn Builtin mmux_libc_sin_addr_ref @var{NETWORK_BYTEORDER_SIN_ADDR_VAR} @var{SOCKADDR_IN_POINTER}
 @deffnx Builtin mmux_libc_sin_addr_set @var{SOCKADDR_IN_POINTER} @var{NETWORK_BYTEORDER_SIN_ADDR}
-Setter and getter for the field @code{sin_addr.s_addr} of the @code{struct sockaddr_in} referenced
+Setter and getter for the field @code{sin_addr.s_addr} of the @MmuxCStruct{sockaddr_in} referenced
 by @var{SOCKADDR_IN_POINTER}; its binary representation is a value of type @objtype{mmux_uint32_t}.
 
 The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SIN_ADDR_VAR} to the string
@@ -7285,7 +7289,7 @@ mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 @c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_sin_addr_pointer_ref @var{SIN_ADDR_POINTER_VAR} @var{SOCKADDR_IN_POINTER}
-Getter for a pointer to the field @code{sin_addr.s_addr} of the @code{struct sockaddr_in} referenced
+Getter for a pointer to the field @code{sin_addr.s_addr} of the @MmuxCStruct{sockaddr_in} referenced
 by @var{SOCKADDR_IN_POINTER}.  Bind the shell variable whose name is @var{SIN_ADDR_POINTER_VAR} to
 the string representation of the pointer.
 
@@ -7313,7 +7317,7 @@ mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 
 @deffn Builtin mmux_libc_sin_port_ref @var{HOST_BYTEORDER_SIN_PORT_VAR} @var{SOCKADDR_IN_POINTER}
 @deffnx Builtin mmux_libc_sin_port_set @var{SOCKADDR_IN_POINTER} @var{HOST_BYTEORDER_SIN_PORT}
-Setter and getter for the field @code{sin_port} of the @code{struct sockaddr_in} referenced by
+Setter and getter for the field @code{sin_port} of the @MmuxCStruct{sockaddr_in} referenced by
 @var{SOCKADDR_IN_POINTER}; its binary representation is a value of type @objtype{mmux_uint16_t}.
 
 The getter binds the shell variable whose name is @var{HOST_BYTEORDER_SIN_PORT_VAR} to the string
@@ -7340,10 +7344,10 @@ mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 
 @c page
 @node sockets sockaddr_in6
-@section Interface to @code{struct sockaddr_in6}
+@section Interface to @MmuxCStruct{sockaddr_in6}
 
 
-To use values of type @code{struct sockaddr_in6} we do:
+To use values of type @MmuxCStruct{sockaddr_in6} we do:
 
 @example
 declare SOCKADDR_IN6 SIN6_ADDR_POINTER
@@ -7365,23 +7369,23 @@ mmux_libc_free @RR{SOCKADDR_IN6}
 
 
 @defvr Constant mmux_libc_sockaddr_in6_SIZEOF
-Size, measured in bytes, of a value of type @code{struct sockaddr_in6}.
+Size, measured in bytes, of a value of type @MmuxCStruct{sockaddr_in6}.
 @end defvr
 
 
 @defvr Constant mmux_libc_in6_addr_SIZEOF
-Size, measured in bytes, of a value of type @code{struct in6_addr}.
+Size, measured in bytes, of a value of type @MmuxCStruct{in6_addr}.
 @end defvr
 
 
 @deffn Builtin mmux_libc_sockaddr_in6_calloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
-Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_in6}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_in6}
 value and initialise it.  Arguments:
 
 @table @var
 @item SOCKADDR_IN6_POINTER_VAR
 The name of a shell variable: when successful, this builtin binds to this variable a string
-representation of the pointer referencing the @code{struct sockaddr_in6} value.
+representation of the pointer referencing the @MmuxCStruct{sockaddr_in6} value.
 
 @item SIN6_FAMILY
 The string representation of the family argument; it is usually the value of
@@ -7395,16 +7399,16 @@ sockaddr_in6} value.  We can use the pointer to fill the field, for example with
 
 @item NETWORK_BYTEORDER_SIN6_FLOWINFO
 The string representation, in network byte order, of a @objtype{mmux_uint32_t} integer representing
-the field @code{sin6_flowinfo} of the @code{struct sockaddr_in6} value.
+the field @code{sin6_flowinfo} of the @MmuxCStruct{sockaddr_in6} value.
 
 @item NETWORK_BYTEORDER_SIN6_SCOPE_ID
 The string representation, in network byte order, of a @objtype{mmux_uint32_t} integer representing
-the field @code{sin6_scope_id} of the @code{struct sockaddr_in6} value.
+the field @code{sin6_scope_id} of the @MmuxCStruct{sockaddr_in6} value.
 
 @item HOST_BYTEORDER_SIN6_PORT
 The string representation, in host byte order, of a @objtype{mmux_uint16_t} integer representing a
 port number.  Internally this value is converted from host to network byte ordering, using
-@cfunc{htons}, then stored in the @code{struct sockaddr_in6}.
+@cfunc{htons}, then stored in the @MmuxCStruct{sockaddr_in6}.
 @end table
 @end deffn
 
@@ -7412,7 +7416,7 @@ port number.  Internally this value is converted from host to network byte order
 
 @deffn Builtin mmux_libc_sin6_family_ref @var{SIN6_FAMILY_VAR} @var{SOCKADDR_IN6_POINTER}
 @deffnx Builtin mmux_libc_sin6_family_set @var{SOCKADDR_IN6_POINTER} @var{SIN6_FAMILY}
-Setter and getter for the field @code{sin6_family} of the @code{struct sockaddr_in6} referenced by
+Setter and getter for the field @code{sin6_family} of the @MmuxCStruct{sockaddr_in6} referenced by
 @var{SOCKADDR_IN6_POINTER}; it is usually the value of @samp{mmux_libc_AF_INET6}.
 
 The getter binds the shell variable whose name is @var{SIN6_FAMILY_VAR} to the string representation
@@ -7439,7 +7443,7 @@ mmux_libc_free @RR{SOCKADDR_IN6_POINTER}
 
 @deffn Builtin mmux_libc_sin6_addr_pointer_ref @var{SIN6_ADDR_POINTER_VAR} @var{SOCKADDR_IN6_POINTER}
 Bind the shell variable whose name is @var{SIN6_ADDR_POINTER_VAR} to the string representation of a
-pointer to the field @code{sin6_addr} in the @code{struct sockaddr_in6} value referenced by
+pointer to the field @code{sin6_addr} in the @MmuxCStruct{sockaddr_in6} value referenced by
 @var{SOCKADDR_IN6_POINTER}.
 
 @example
@@ -7459,7 +7463,7 @@ mmux_libc_free @RR{SOCKADDR_IN6_POINTER}
 
 @deffn Builtin mmux_libc_sin6_flowinfo_ref @var{NETWORK_BYTEORDER_SIN6_FLOWINFO_VAR} @var{SOCKADDR_IN6_POINTER}
 @deffnx Builtin mmux_libc_sin6_flowinfo_set @var{SOCKADDR_IN6_POINTER} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO}
-Setter and getter for the field @code{sin6_flowinfo} of the @code{struct sockaddr_in6} referenced by
+Setter and getter for the field @code{sin6_flowinfo} of the @MmuxCStruct{sockaddr_in6} referenced by
 @var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
 usually the value @samp{0}.
 
@@ -7487,7 +7491,7 @@ mmux_libc_free RR(SOCKADDR_IN6_POINTER)
 
 @deffn Builtin mmux_libc_sin6_scope_id_ref @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID_VAR} @var{SOCKADDR_IN6_POINTER}
 @deffnx Builtin mmux_libc_sin6_scope_id_set @var{SOCKADDR_IN6_POINTER} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID}
-Setter and getter for the field @code{sin6_scope_id} of the @code{struct sockaddr_in6} referenced by
+Setter and getter for the field @code{sin6_scope_id} of the @MmuxCStruct{sockaddr_in6} referenced by
 @var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
 usually the value @samp{0}.
 
@@ -7515,7 +7519,7 @@ mmux_libc_free RR(SOCKADDR_IN6_POINTER)
 
 @deffn Builtin mmux_libc_sin6_port_ref @var{HOST_BYTEORDER_SIN6_PORT_VAR} @var{SOCKADDR_IN6_POINTER}
 @deffnx Builtin mmux_libc_sin6_port_set @var{SOCKADDR_IN6_POINTER} @var{HOST_BYTEORDER_SIN6_PORT}
-Setter and getter for the field @code{sin6_port} of the @code{struct sockaddr_in6} referenced by
+Setter and getter for the field @code{sin6_port} of the @MmuxCStruct{sockaddr_in6} referenced by
 @var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint16_t}; it is
 usually @samp{0}.
 
@@ -7539,13 +7543,13 @@ sockaddr_in6}.  @glibcref{Host Address Data Type, in6addr_loopback}.
 
 @defvar mmux_libc_in6addr_any_pointer
 Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
-in6addr_any}.  We can the pointer to this data structure to initialise a @code{struct sockaddr_in6}.
+in6addr_any}.  We can the pointer to this data structure to initialise a @MmuxCStruct{sockaddr_in6}.
 @glibcref{Host Address Data Type, in6addr_any}.
 @end defvar
 
 @c page
 @node sockets sockaddr
-@section Interface to @code{struct sockaddr}
+@section Interface to @MmuxCStruct{sockaddr}
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -7553,19 +7557,63 @@ in6addr_any}.  We can the pointer to this data structure to initialise a @code{s
 
 @deffn Builtin mmux_libc_sockaddr_sa_family_ref @var{SA_FAMILY_VAR} @var{SOCKADDR_POINTER}
 Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string representation of the field
-@code{sa_family} in the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+@code{sa_family} in the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
 @end deffn
 
 @c page
 @node sockets addrinfo
-@section Interface to @code{struct addrinfo}
+@section Interface to @MmuxCStruct{addrinfo}
 
 
-There are multiple ways to use values of type @code{struct addrinfo}, let's see how we can just
-initialise one and inspect it:
+@menu
+* sockets addrinfo overview::   Using instances of @MmuxCStruct{addrinfo}.
+* sockets addrinfo variables::  Variables associated to using @MmuxCStruct{addrinfo}.
+* sockets addrinfo ctors::      Allocating and initialising instances of @MmuxCStruct{addrinfo}.
+* sockets addrinfo getref::     Getters and setters for instances of @MmuxCStruct{addrinfo}.
+@end menu
+
+@c page
+@node sockets addrinfo overview
+@subsection Using instances of @MmuxCStruct{addrinfo}
+
+
+There are multiple ways to use values of type @MmuxCStruct{addrinfo}; the suggested way is to use
+shell associative arrays to initialise and consume the values:
 
 @example
-declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
+declare GAI_ERRNUM GAI_ERRMSG
+declare ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR HINTS_ADDRINFO_PTR
+declare -A HINTS_ADDRINFO_ARRAY OUPUT_ADDRINFO_ARRAY
+declare -r ASCII_CANONNAME='localhost'
+declare -r ASCII_SERVICE=''
+
+mmux_libc_addrinfo_array_init_defaults HINTS_ADDRINFO_ARRAY
+mmux_libc_addrinfo_array_init_defaults OUPUT_ADDRINFO_ARRAY
+
+HINTS_ADDRINFO_ARRAY[AI_FLAGS]=$(( @RR{mmux_libc_AI_V4MAPPED}   | \
+                                   @RR{mmux_libc_AI_ADDRCONFIG} | \
+                                   @RR{mmux_libc_AI_CANONNAME} ))
+HINTS_ADDRINFO_ARRAY[AI_FAMILY]=@RR{mmux_libc_AF_UNSPEC}
+HINTS_ADDRINFO_ARRAY[AI_SOCKTYPE]=@RR{mmux_libc_SOCK_STREAM}
+
+mmux_libc_addrinfo_calloc_with_array HINTS_ADDRINFO_PTR HINTS_ADDRINFO_ARRAY
+
+mmux_libc_getaddrinfo @WW{ASCII_CANONNAME} @QQ{ASCII_SERVICE} @RR{HINTS_ADDRINFO_PTR} \
+    ADDRINFO_LINKED_LIST_PTR
+
+ADDRINFO_PTR=@RR{ADDRINFO_LINKED_LIST_PTR}
+until mmux_pointer_is_zero @RR{ADDRINFO_PTR}
+do
+    mmux_libc_addrinfo_array_init_from_pointer OUPUT_ADDRINFO_ARRAY @RR{ADDRINFO_PTR}
+    # use the values in OUPUT_ADDRINFO_ARRAY
+    mmux_libc_ai_next_ref ADDRINFO_PTR @RR{ADDRINFO_PTR}
+done
+@end example
+
+Let's see how we can just initialise a @MmuxCStruct{addrinfo} value and inspect it:
+
+@example
+declare -r INPUT_ASCII_CANONNAME='localhost'
 declare    OUPUT_ASCII_CANONNAME
 
 declare ADDRINFO_POINTER
@@ -7601,16 +7649,25 @@ mmux_pointer_from_bash_string INPUT_AI_CANONNAME @WW{INPUT_ASCII_CANONNAME}
 mmux_libc_free @RR{INPUT_AI_CANONNAME}
 @end example
 
-@ref{overview conventions, Conventions in coding and documentation}.
+@c page
+@node sockets addrinfo variables
+@subsection Variables associated to using @MmuxCStruct{addrinfo}
 
 
 @defvr Constant mmux_libc_addrinfo_SIZEOF
-Size, measured in bytes, of values of type @code{struct addrinfo}.
+Size, measured in bytes, of values of type @MmuxCStruct{addrinfo}.
 @end defvr
+
+@c page
+@node sockets addrinfo ctors
+@subsection Allocating and initialising instances of @MmuxCStruct{addrinfo}
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @deffn Builtin mmux_libc_addrinfo_calloc @var{ADDRINFO_POINTER_VAR} @var{AI_FLAGS} @var{AI_FAMILY} @var{AI_SOCKTYPE} @var{AI_PROTOCOL} @var{AI_ADDRLEN} @var{AI_ADDR} @var{AI_CANONNAME} @var{AI_NEXT}
-Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @code{struct sockaddr_in6}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_in6}
 value and initialise it.  Arguments:
 
 @table @var
@@ -7619,31 +7676,31 @@ Name of a shell variable, when successful: this builtin binds to this shell vari
 representation of the pointer referencing the newly allocated data structure.
 
 @item AI_FLAGS
-Initialisation value for the field @code{ai_flags} of the newly allocated @code{struct addrinfo};
+Initialisation value for the field @code{ai_flags} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is a bitwise OR combination between the flags
 @code{mmux_libc_AI_*}.
 
 @item AI_FAMILY
-Initialisation value for the field @code{ai_family} of the newly allocated @code{struct addrinfo};
+Initialisation value for the field @code{ai_family} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is usually one among @code{mmux_libc_AF_INET} and
 @code{mmux_libc_AF_INET6}.
 
 @item AI_SOCKTYPE
-Initialisation value for the field @code{ai_socktype} of the newly allocated @code{struct addrinfo};
+Initialisation value for the field @code{ai_socktype} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is usully one among @code{mmux_libc_SOCK_DGRAM} and
 @code{mmux_libc_AF_SOCK_STREAM}.
 
 @item AI_PROTOCOL
-Initialisation value for the field @code{ai_protocol} of the newly allocated @code{struct addrinfo};
+Initialisation value for the field @code{ai_protocol} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is usually zero.
 
 @item AI_ADDRLEN
-Initialisation value for the field @code{ai_addrlen} of the newly allocated @code{struct addrinfo};
+Initialisation value for the field @code{ai_addrlen} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_socklen_t}.  It is the length of the data structure representing
 the address and referenced by the field @code{ai_addr}.
 
 @item AI_ADDR
-Initialisation value for the field @code{ai_addr} of the newly allocated @code{struct addrinfo}; the
+Initialisation value for the field @code{ai_addr} of the newly allocated @MmuxCStruct{addrinfo}; the
 field is of generic type @objtype{mmux_pointer_t} and specific abstract type @code{struct sockaddr
 *}.
 
@@ -7654,7 +7711,7 @@ Notice that no memory management is performed on this pointer: it is responsibil
 manage the memory in which the canonical name is stored.
 
 @item AI_NEXT
-Initialisation value for the field @code{ai_next} of the newly allocated @code{struct addrinfo}; the
+Initialisation value for the field @code{ai_next} of the newly allocated @MmuxCStruct{addrinfo}; the
 field is of generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.
 Notice that no memory management is performed on this pointer: it is responsibility of the caller to
 manage the memory of this address data structure.
@@ -7663,9 +7720,62 @@ manage the memory of this address data structure.
 
 @c ------------------------------------------------------------------------
 
+@defun mmux_libc_addrinfo_array_init_defaults @var{ADDRINFO_ARRAY_VAR}
+Initialise the shell associative array variable whose name is @var{ADDRINFO_ARRAY_VAR} with the
+following key value pairs:
+
+@example
+[AI_FLAGS]=0
+[AI_FAMILY]=0
+[AI_SOCKTYPE]=0
+[AI_PROTOCOL]=0
+[AI_ADDRLEN]=0
+[AI_ADDR]='0x0'
+[AI_CANONNAME]='0x0'
+[AI_NEXT]='0x0'
+@end example
+@end defun
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_addrinfo_calloc_with_array @var{ADDRINFO_POINTER_VAR} @var{ADDRINFO_ARRAY_VAR}
+Wrapper for @MmuxBuiltin{mmux_libc_addrinfo_calloc} that initialises the newly allocated data
+structure with values from the shell associative array variable whose name is
+@var{ADDRINFO_ARRAY_VAR}.  Arguments:
+
+@table @var
+@item ADDRINFO_POINTER_VAR
+When successful: this builtin binds the pointer to the newly allocated data structure to the
+variable whose name is @var{ADDRINFO_POINTER_VAR}.
+
+@item ADDRINFO_ARRAY_VAR
+Name of the shell associative array variable from which initialisation values for the newly
+allocated data structure are taken.  To initialise the data structure with zero values: we can
+initialise the array itself with @MmuxBuiltin{mmux_libc_addrinfo_array_init_defaults}.
+@end table
+@end defun
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_addrinfo_array_init_from_pointer @var{ADDRINFO_ARRAY_VAR} @var{ADDRINFO_POINTER}
+Initialise the shell associative array variable whose name is @var{ADDRINFO_ARRAY_VAR} with values
+from the @MmuxCStruct{addrinfo} value referenced by @var{ADDRINFO_POINTER}.  The keys set in the
+array are:
+
+@example
+AI_FLAGS        AI_FAMILY       AI_SOCKTYPE     AI_PROTOCOL
+AI_ADDRLEN      AI_ADDR         AI_CANONNAME    AI_NEXT
+@end example
+@end defun
+
+@c page
+@node sockets addrinfo getref
+@subsection Getters and setters for instances of @MmuxCStruct{addrinfo}
+
+
 @deffn Builtin mmux_libc_ai_flags_ref @var{AI_FLAGS_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_flags_set @var{ADDRINFO_POINTER} @var{AI_FLAGS}
-Getter and setter for the field @code{ai_flags} of values of type @code{struct addrinfo}; the field
+Getter and setter for the field @code{ai_flags} of values of type @MmuxCStruct{addrinfo}; the field
 is of type @objtype{mmux_sint_t}.
 
 The getter binds the shell variable whose name is @var{AI_FLAGS} to the value of the field from the
@@ -7692,7 +7802,7 @@ mmux_libc_free @RR{ADDRINFO_POINTER}
 
 @deffn Builtin mmux_libc_ai_family_ref @var{AI_FAMILY_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_family_set @var{ADDRINFO_POINTER} @var{AI_FAMILY}
-Getter and setter for the field @code{ai_family} of values of type @code{struct addrinfo}; the field
+Getter and setter for the field @code{ai_family} of values of type @MmuxCStruct{addrinfo}; the field
 is of type @objtype{mmux_sint_t}.
 
 The getter binds the shell variable whose name is @var{AI_FAMILY} to the value of the field from the
@@ -7719,7 +7829,7 @@ mmux_libc_free @RR{ADDRINFO_POINTER}
 
 @deffn Builtin mmux_libc_ai_socktype_ref @var{AI_SOCKTYPE_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_socktype_set @var{ADDRINFO_POINTER} @var{AI_SOCKTYPE}
-Getter and setter for the field @code{ai_socktype} of values of type @code{struct addrinfo}; the field
+Getter and setter for the field @code{ai_socktype} of values of type @MmuxCStruct{addrinfo}; the field
 is of type @objtype{mmux_sint_t}.
 
 The getter binds the shell variable whose name is @var{AI_SOCKTYPE} to the value of the field from the
@@ -7746,7 +7856,7 @@ mmux_libc_free @RR{ADDRINFO_POINTER}
 
 @deffn Builtin mmux_libc_ai_protocol_ref @var{AI_PROTOCOL_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_protocol_set @var{ADDRINFO_POINTER} @var{AI_PROTOCOL}
-Getter and setter for the field @code{ai_protocol} of values of type @code{struct addrinfo}; the field
+Getter and setter for the field @code{ai_protocol} of values of type @MmuxCStruct{addrinfo}; the field
 is of type @objtype{mmux_sint_t}.
 
 The getter binds the shell variable whose name is @var{AI_PROTOCOL} to the value of the field from the
@@ -7773,7 +7883,7 @@ mmux_libc_free RR(ADDRINFO_POINTER)
 
 @deffn Builtin mmux_libc_ai_addrlen_ref @var{AI_ADDRLEN_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_addrlen_set @var{ADDRINFO_POINTER} @var{AI_ADDRLEN}
-Getter and setter for the field @code{ai_addrlen} of values of type @code{struct addrinfo}; the
+Getter and setter for the field @code{ai_addrlen} of values of type @MmuxCStruct{addrinfo}; the
 field is of type @objtype{mmux_socklen_t}.
 
 The getter binds the shell variable whose name is @var{AI_ADDRLEN} to the value of the field from
@@ -7800,7 +7910,7 @@ mmux_libc_free @RR{ADDRINFO_POINTER}
 
 @deffn Builtin mmux_libc_ai_addr_ref @var{AI_ADDR_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_addr_set @var{ADDRINFO_POINTER} @var{AI_ADDR}
-Getter and setter for the field @code{ai_addr} of values of type @code{struct addrinfo}; the field
+Getter and setter for the field @code{ai_addr} of values of type @MmuxCStruct{addrinfo}; the field
 is of generic type @objtype{mmux_pointer_t} and specific type @code{struct sockaddr *}.
 
 The getter binds the shell variable whose name is @var{AI_ADDR} to the value of the field from the
@@ -7814,7 +7924,7 @@ the value @var{AI_ADDR}.
 
 @deffn Builtin mmux_libc_ai_canonname_ref @var{AI_CANONNAME_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_canonname_set @var{ADDRINFO_POINTER} @var{AI_CANONNAME}
-Getter and setter for the field @code{ai_canonname} of values of type @code{struct addrinfo}; the
+Getter and setter for the field @code{ai_canonname} of values of type @MmuxCStruct{addrinfo}; the
 field is of generic type @objtype{mmux_pointer_t} and specific type @code{char *}.  Notice that no
 memory management is performed on this pointer: it is responsibility of the caller to manage the
 memory in which the canonical name is stored.
@@ -7828,7 +7938,7 @@ the value @var{AI_CANONNAME}.
 @example
 declare ADDRINFO_POINTER
 
-declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
+declare -r INPUT_ASCII_CANONNAME='gnu.org'
 declare    OUPUT_ASCII_CANONNAME
 
 declare INPUT_AI_CANONNAME
@@ -7852,7 +7962,7 @@ mmux_libc_free @RR{ADDRINFO_POINTER}
 
 @deffn Builtin mmux_libc_ai_next_ref @var{AI_NEXT_VAR} @var{ADDRINFO_POINTER}
 @deffnx Builtin mmux_libc_ai_next_set @var{ADDRINFO_POINTER} @var{AI_NEXT}
-Getter and setter for the field @code{ai_next} of values of type @code{struct addrinfo}; the field
+Getter and setter for the field @code{ai_next} of values of type @MmuxCStruct{addrinfo}; the field
 is of generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.  Notice that
 no memory management is performed on this pointer: it is responsibility of the caller to manage the
 memory of this address data structure.
@@ -7876,6 +7986,18 @@ mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
 mmux_libc_free @RR{ADDRINFO_POINTER}
 @end example
 @end deffn
+
+@c page
+@node sockets hostent
+@section Interface to @MmuxCStruct{hostent}
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_hostent_SIZEOF
+Size, measured in bytes, of values of type @MmuxCStruct{hostent}.
+@end defvr
 
 @c page
 @node sockets byteorder
@@ -7937,8 +8059,8 @@ mmux_libc_ntohl OUPUT @RR{INPUT}
 @end deffn
 
 @c page
-@node sockets addresses
-@section Converting socket addresses between binary and presentation formats.
+@node sockets convaddr
+@section Converting socket addresses between formats
 
 
 To convert Internet addresses between binary network format and presentation @mmuxascii{} format:
@@ -7962,10 +8084,10 @@ The argument @var{ADDR_POINTER} must be a pointer to an address data structure; 
 
 @table @env
 @item mmux_libc_AF_INET
-Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in}.
+Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in}.
 
 @item mmux_libc_AF_INET6
-Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in6}.
+Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in6}.
 @end table
 
 We can just store the binary format in a raw memory block; for IPv4 addresses:
@@ -8017,10 +8139,10 @@ The argument @var{ADDR_POINTER} must be a pointer to an address data structure; 
 
 @table @env
 @item mmux_libc_AF_INET
-Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in}.
+Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in}.
 
 @item mmux_libc_AF_INET6
-Then @var{ADDR_POINTER} must reference a data structure of type @code{struct sockaddr_in6}.
+Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in6}.
 @end table
 
 The argument @var{ASCII_ADDR_VAR} must be the name of a shell variable: when successful, this
@@ -8036,7 +8158,7 @@ variable whose name is @var{UINT32_IN_ADDR_VAR}.
 
 If the input string is invalid: this function sets @env{ERRNO} to @code{EINVAL} and returns false.
 
-Data structures of type @code{struct in_addr} have a single field @code{s_addr} of type
+Data structures of type @MmuxCStruct{in_addr} have a single field @code{s_addr} of type
 @objtype{mmux_uint32_t} representing an IPv4 address; to convert between the @mmuxascii{}
 representation and the @objtype{mmux_uint32_t} representation, we do:
 
@@ -8155,17 +8277,93 @@ printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
 @end deffn
 
 @c page
-@node sockets hostent
-@section Interface to @code{struct hostent}
+@node sockets addresses
+@section Socket addresses
 
+
+The suggested way to retrieve informations about a host address is to use
+@MmuxBuiltin{mmux_libc_getaddrinfo}.
+
+@example
+declare GAI_ERRNUM GAI_ERRMSG
+declare ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR HINTS_ADDRINFO_PTR
+declare -A HINTS_ADDRINFO_ARRAY OUPUT_ADDRINFO_ARRAY
+declare -r ASCII_CANONNAME='localhost'
+declare -r ASCII_SERVICE=''
+
+mmux_libc_addrinfo_array_init_defaults HINTS_ADDRINFO_ARRAY
+mmux_libc_addrinfo_array_init_defaults OUPUT_ADDRINFO_ARRAY
+
+HINTS_ADDRINFO_ARRAY[AI_FLAGS]=$(( @RR{mmux_libc_AI_V4MAPPED}   | \
+                                   @RR{mmux_libc_AI_ADDRCONFIG} | \
+                                   @RR{mmux_libc_AI_CANONNAME} ))
+HINTS_ADDRINFO_ARRAY[AI_FAMILY]=@RR{mmux_libc_AF_UNSPEC}
+HINTS_ADDRINFO_ARRAY[AI_SOCKTYPE]=@RR{mmux_libc_SOCK_STREAM}
+
+mmux_libc_addrinfo_calloc_with_array HINTS_ADDRINFO_PTR HINTS_ADDRINFO_ARRAY
+@{
+    mmux_libc_getaddrinfo @WW{ASCII_CANONNAME} @QQ{ASCII_SERVICE} @RR{HINTS_ADDRINFO_PTR} \
+                          ADDRINFO_LINKED_LIST_PTR
+    @{
+        ADDRINFO_PTR=@RR{ADDRINFO_LINKED_LIST_PTR}
+        until mmux_pointer_is_zero @RR{ADDRINFO_PTR}
+        do
+            mmux_libc_addrinfo_array_init_from_pointer OUPUT_ADDRINFO_ARRAY @RR{ADDRINFO_PTR}
+            # do something with OUPUT_ADDRINFO_ARRAY
+            mmux_libc_ai_next_ref ADDRINFO_PTR @RR{ADDRINFO_PTR}
+        done
+    @}
+    mmux_libc_freeaddrinfo @RR{ADDRINFO_LINKED_LIST_PTR}
+@}
+mmux_libc_free @RR{HINTS_ADDRINFO_PTR}
+@end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@defvr Constant mmux_libc_hostent_SIZEOF
+@defvar GAI_ERRNUM
+Used by @MmuxBuiltin{mmux_libc_getaddrinfo} in case of failure, to report the error code.
+@end defvar
 
-@end defvr
 
+@defvar GAI_ERRMSG
+Used by @MmuxBuiltin{mmux_libc_getaddrinfo} in case of failure, to report the error message.
+@end defvar
+
+
+@deffn Builtin mmux_libc_getaddrinfo @var{NODE} @var{SERVICE} @var{HINTS_ADDRINFO_PTR} @var{ADDRINFO_LINKED_LIST_VAR}
+Interface to the standard C language function @cfunc{getaddrinfo}, @cfuncpage{getaddrinfo}.
+Retrieve information about networking addresses.  When successful return true; otherwise: set the
+shell variable @env{GAI_ERRNUM} to the error code and the shell variable @env{GAI_ERRMSG} to a
+string representing the error message, then return false.
+
+Arguments:
+
+@table @var
+@item NODE
+Bash string representing the node to inspect; it can be a hostname or an address in numerical
+format.
+
+@item SERVICE
+Bash string representing the service to inspect.
+
+@item HINTS_ADDRINFO_PTR
+Pointer to a @MmuxCStruct{addrinfo} whose fields have been initialised to restrict the search of
+possible addresses.
+
+@item ADDRINFO_LINKED_LIST_VAR
+Shell variable name; when successful: this builtin binds the variable to the string representation
+of a pointer to a linked list of @MmuxCStruct{addrinfo} values.  The linked list must be released
+with a call to @MmuxBuiltin{mmux_libc_freeaddrinfo} or @cfunc{freeaddrinfo}.
+@end table
+@end deffn
+
+
+@deffn Builtin mmux_libc_freeaddrinfo @var{ADDRINFO_LINKED_LIST_PTR}
+Interface to the standard C language function @cfunc{freeaddrinfo}, @cfuncpage{freeaddrinfo}.  The
+argument @var{ADDRINFO_LINKED_LIST_PTR} must be the string representation of the pointer to the
+linked list returned by @cfunc{getaddrinfo}.
+@end deffn
 
 @c page
 @node sockets creating
@@ -8230,7 +8428,7 @@ The argument @var{SOCKADDR_POINTER} must be the string representation of a point
 sockaddr} value, wide enough to contain an address data structure.
 
 The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
-bytes allocated to contain the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
 If we allocate @math{512} bytes for this: it will probably be enough.
 @end deffn
 
@@ -8255,7 +8453,7 @@ The argument @var{SOCKADDR_POINTER} must be the string representation of a point
 sockaddr} value, wide enough to contain an address data structure.
 
 The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
-bytes allocated to contain the @code{struct sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
 If we allocate @math{512} bytes for this: it will probably be enough.
 @end deffn
 
@@ -8315,7 +8513,7 @@ mmux_libc_socket SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} 0
 mmux_libc_close @RR{SOCKFD}
 @end example
 
-To set and get a socket option whose value is of type @code{struct linger}, we do:
+To set and get a socket option whose value is of type @MmuxCStruct{linger}, we do:
 
 @example
 declare SOCKFD
@@ -8368,7 +8566,7 @@ resulting option value to the shell variable @var{OPTION_VALUE_VAR}.
 
 @item
 When @var{OPTNAME} is the C language macro @code{SO_LINGER}: the C language option value is a
-pointer referencing a @code{struct linger} value; in this case the builtin binds the variable
+pointer referencing a @MmuxCStruct{linger} value; in this case the builtin binds the variable
 @var{OPTION_VALUE_VAR} as an associative array, setting the following keys:
 
 @table @code
@@ -8424,7 +8622,7 @@ argument @var{OPTION_VALUE} to represent such an integer.
 
 @item
 When @var{OPTNAME} is the C language macro @code{SO_LINGER}: the C language option value is a
-pointer referencing a @code{struct linger} value; in this case the builtin expects the argument
+pointer referencing a @MmuxCStruct{linger} value; in this case the builtin expects the argument
 @var{OPTION_VALUE} to be the name of an associative array with the following keys set:
 
 @table @code
