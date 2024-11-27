@@ -983,14 +983,6 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{SHUT_RDWR}
 @MmuxDefineGlobalVarSystemConstant{SHUT_RD}
 @MmuxDefineGlobalVarSystemConstant{SHUT_WR}
-@MmuxDefineGlobalVarSystemConstant{SOCK_CLOEXEC}
-@MmuxDefineGlobalVarSystemConstant{SOCK_DGRAM}
-@MmuxDefineGlobalVarSystemConstant{SOCK_NONBLOCK}
-@MmuxDefineGlobalVarSystemConstant{SOCK_PACKET}
-@MmuxDefineGlobalVarSystemConstant{SOCK_RAW}
-@MmuxDefineGlobalVarSystemConstant{SOCK_RDM}
-@MmuxDefineGlobalVarSystemConstant{SOCK_SEQPACKET}
-@MmuxDefineGlobalVarSystemConstant{SOCK_STREAM}
 @MmuxDefineGlobalVarSystemConstant{MSG_CONFIRM}
 @MmuxDefineGlobalVarSystemConstant{MSG_DONTROUTE}
 @MmuxDefineGlobalVarSystemConstant{MSG_DONTWAIT}
@@ -1022,11 +1014,74 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{AI_CANONIDN}
 @MmuxDefineGlobalVarSystemConstant{AI_CANONNAME}
 @MmuxDefineGlobalVarSystemConstant{AI_IDN}
-@MmuxDefineGlobalVarSystemConstant{AI_IDN_ALLOW_UNASSIGNED}
-@MmuxDefineGlobalVarSystemConstant{AI_IDN_USE_STD3_ASCII_RULES}
 @MmuxDefineGlobalVarSystemConstant{AI_NUMERICSERV}
 @MmuxDefineGlobalVarSystemConstant{AI_PASSIVE}
 @MmuxDefineGlobalVarSystemConstant{AI_V4MAPPED}
+
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_AH}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_BEETPH}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_COMP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_DCCP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_EGP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_ENCAP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_ESP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_ETHERNET}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_GRE}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_ICMP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_IDP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_IGMP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_IP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_IPIP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_IPV6}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_MPLS}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_MPTCP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_MTP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_PIM}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_PUP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_RAW}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_RSVP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_SCTP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_TCP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_TP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_UDP}
+@MmuxDefineGlobalVarSystemConstant{IPPROTO_UDPLITE}
+
+@MmuxDefineGlobalVarSystemConstant{IPPORT_BIFFUDP}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_CMDSERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_DAYTIME}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_DISCARD}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_ECHO}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_EFSSERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_EXECSERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_FINGER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_FTP}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_LOGINSERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_MTP}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_NAMESERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_NETSTAT}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_RESERVED}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_RJE}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_ROUTESERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_SMTP}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_SUPDUP}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_SYSTAT}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_TELNET}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_TFTP}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_TIMESERVER}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_TTYLINK}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_USERRESERVED}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_WHOIS}
+@MmuxDefineGlobalVarSystemConstant{IPPORT_WHOSERVER}
+
+@MmuxDefineGlobalVarSystemConstant{SOCK_CLOEXEC}
+@MmuxDefineGlobalVarSystemConstant{SOCK_DCCP}
+@MmuxDefineGlobalVarSystemConstant{SOCK_DGRAM}
+@MmuxDefineGlobalVarSystemConstant{SOCK_NONBLOCK}
+@MmuxDefineGlobalVarSystemConstant{SOCK_PACKET}
+@MmuxDefineGlobalVarSystemConstant{SOCK_RAW}
+@MmuxDefineGlobalVarSystemConstant{SOCK_RDM}
+@MmuxDefineGlobalVarSystemConstant{SOCK_SEQPACKET}
+@MmuxDefineGlobalVarSystemConstant{SOCK_STREAM}
 
 @c page
 @node cctypes
@@ -7565,378 +7620,292 @@ Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string represen
 @section Interface to @MmuxCStruct{addrinfo}
 
 
-@menu
-* sockets addrinfo overview::   Using instances of @MmuxCStruct{addrinfo}.
-* sockets addrinfo variables::  Variables associated to using @MmuxCStruct{addrinfo}.
-* sockets addrinfo ctors::      Allocating and initialising instances of @MmuxCStruct{addrinfo}.
-* sockets addrinfo getref::     Getters and setters for instances of @MmuxCStruct{addrinfo}.
-@end menu
-
-@c page
-@node sockets addrinfo overview
-@subsection Using instances of @MmuxCStruct{addrinfo}
-
-
-There are multiple ways to use values of type @MmuxCStruct{addrinfo}; the suggested way is to use
-shell associative arrays to initialise and consume the values:
-
-@example
-declare GAI_ERRNUM GAI_ERRMSG
-declare ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR HINTS_ADDRINFO_PTR
-declare -A HINTS_ADDRINFO_ARRAY OUPUT_ADDRINFO_ARRAY
-declare -r ASCII_CANONNAME='localhost'
-declare -r ASCII_SERVICE=''
-
-mmux_libc_addrinfo_array_init_defaults HINTS_ADDRINFO_ARRAY
-mmux_libc_addrinfo_array_init_defaults OUPUT_ADDRINFO_ARRAY
-
-HINTS_ADDRINFO_ARRAY[AI_FLAGS]=$(( @RR{mmux_libc_AI_V4MAPPED}   | \
-                                   @RR{mmux_libc_AI_ADDRCONFIG} | \
-                                   @RR{mmux_libc_AI_CANONNAME} ))
-HINTS_ADDRINFO_ARRAY[AI_FAMILY]=@RR{mmux_libc_AF_UNSPEC}
-HINTS_ADDRINFO_ARRAY[AI_SOCKTYPE]=@RR{mmux_libc_SOCK_STREAM}
-
-mmux_libc_addrinfo_calloc_with_array HINTS_ADDRINFO_PTR HINTS_ADDRINFO_ARRAY
-
-mmux_libc_getaddrinfo @WW{ASCII_CANONNAME} @QQ{ASCII_SERVICE} @RR{HINTS_ADDRINFO_PTR} \
-    ADDRINFO_LINKED_LIST_PTR
-
-ADDRINFO_PTR=@RR{ADDRINFO_LINKED_LIST_PTR}
-until mmux_pointer_is_zero @RR{ADDRINFO_PTR}
-do
-    mmux_libc_addrinfo_array_init_from_pointer OUPUT_ADDRINFO_ARRAY @RR{ADDRINFO_PTR}
-    # use the values in OUPUT_ADDRINFO_ARRAY
-    mmux_libc_ai_next_ref ADDRINFO_PTR @RR{ADDRINFO_PTR}
-done
-@end example
-
 Let's see how we can just initialise a @MmuxCStruct{addrinfo} value and inspect it:
 
 @example
-declare -r INPUT_ASCII_CANONNAME='localhost'
-declare    OUPUT_ASCII_CANONNAME
+declare ADDRINFO_PTR
 
-declare ADDRINFO_POINTER
+declare -A OUPUT
+declare -A INPUT=([AI_FLAGS]=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
+                  [AI_FAMILY]=$mmux_libc_AF_INET
+                  [AI_SOCKTYPE]=$mmux_libc_SOCK_STREAM
+                  [AI_PROTOCOL]=$mmux_libc_IPPROTO_TCP
+                  [AI_ADDRLEN]=0
+                  [AI_ADDR]='0x0'
+                  [AI_CANONNAME]=
+                  [AI_NEXT]='0x0'
+                  [ASCII_CANONNAME]='localhost')
 
-declare -r INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
-declare -r INPUT_AI_FAMILY=@RR{mmux_libc_AF_INET}
-declare -r INPUT_AI_SOCKTYPE=@RR{mmux_libc_SOCK_STREAM}
-declare -r INPUT_AI_PROTOCOL=0
-declare -r INPUT_AI_ADDRLEN=0
-declare -r INPUT_AI_ADDR='0x0'
-declare    INPUT_AI_CANONNAME
-declare -r INPUT_AI_NEXT='0x0'
+mmux_pointer_from_bash_string INPUT[AI_CANONNAME] $@{INPUT[ASCII_CANONNAME]@}
 
-mmux_pointer_from_bash_string INPUT_AI_CANONNAME @WW{INPUT_ASCII_CANONNAME}
-@{
-    mmux_libc_addrinfo_calloc ADDRINFO_POINTER \
-        @WW{INPUT_AI_FLAGS} @WW{INPUT_AI_FAMILY} @WW{INPUT_AI_SOCKTYPE} @WW{INPUT_AI_PROTOCOL} \
-        @WW{INPUT_AI_ADDRLEN} @WW{INPUT_AI_ADDR} @WW{INPUT_AI_CANONNAME} @WW{INPUT_AI_NEXT}
-    @{
-        mmux_libc_ai_flags_ref     OUPUT_AI_FLAGS     @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_family_ref    OUPUT_AI_FAMILY    @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_socktype_ref  OUPUT_AI_SOCKTYPE  @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_protocol_ref  OUPUT_AI_PROTOCOL  @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_addrlen_ref   OUPUT_AI_ADDRLEN   @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_addr_ref      OUPUT_AI_ADDR      @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_canonname_ref OUPUT_AI_CANONNAME @RR{ADDRINFO_POINTER}
-        mmux_libc_ai_next_ref      OUPUT_AI_NEXT      @RR{ADDRINFO_POINTER}
+mmux_libc_addrinfo_calloc ADDRINFO_PTR \
+    $@{INPUT[AI_FLAGS]@}          \
+    $@{INPUT[AI_FAMILY]@}         \
+    $@{INPUT[AI_SOCKTYPE]@}       \
+    $@{INPUT[AI_PROTOCOL]@}       \
+    $@{INPUT[AI_ADDRLEN]@}        \
+    $@{INPUT[AI_ADDR]@}           \
+    $@{INPUT[AI_CANONNAME]@}      \
+    $@{INPUT[AI_NEXT]@}
 
-        mmux_pointer_to_bash_string OUPUT_ASCII_CANONNAME @WW{OUPUT_AI_CANONNAME}
-    @}
-    mmux_libc_free @RR{ADDRINFO_POINTER}
-@}
-mmux_libc_free @RR{INPUT_AI_CANONNAME}
+mmux_libc_ai_flags_ref        OUPUT[AI_FLAGS]     $ADDRINFO_PTR
+mmux_libc_ai_family_ref       OUPUT[AI_FAMILY]    $ADDRINFO_PTR
+mmux_libc_ai_socktype_ref     OUPUT[AI_SOCKTYPE]  $ADDRINFO_PTR
+mmux_libc_ai_protocol_ref     OUPUT[AI_PROTOCOL]  $ADDRINFO_PTR
+mmux_libc_ai_addrlen_ref      OUPUT[AI_ADDRLEN]   $ADDRINFO_PTR
+mmux_libc_ai_addr_ref         OUPUT[AI_ADDR]      $ADDRINFO_PTR
+mmux_libc_ai_canonname_ref    OUPUT[AI_CANONNAME] $ADDRINFO_PTR
+mmux_libc_ai_next_ref         OUPUT[AI_NEXT]      $ADDRINFO_PTR
+
+mmux_pointer_to_bash_string OUPUT[ASCII_CANONNAME] $@{OUPUT[AI_CANONNAME]@}
+
+mmux_libc_addrinfo_dump $ADDRINFO_PTR
+@print{} struct addrinfo.ai_flags="40" (AI_ADDRCONFIG | AI_V4MAPPED)
+@print{} struct addrinfo.ai_family="2" (AF_INET)
+@print{} struct addrinfo.ai_socktype="1" (SOCK_STREAM)
+@print{} struct addrinfo.ai_protocol="6" (IPPROTO_TCP)
+@print{} struct addrinfo.ai_addrlen="0"
+@print{} struct addrinfo.ai_addr="0x0"
+@print{} struct addrinfo.ai_canonname="0x2222870" (localhost)
+@print{} struct addrinfo.ai_next="0x0"
 @end example
 
-@c page
-@node sockets addrinfo variables
-@subsection Variables associated to using @MmuxCStruct{addrinfo}
+@ref{overview conventions, Conventions in coding and documentation}.
 
 
 @defvr Constant mmux_libc_addrinfo_SIZEOF
 Size, measured in bytes, of values of type @MmuxCStruct{addrinfo}.
 @end defvr
 
-@c page
-@node sockets addrinfo ctors
-@subsection Allocating and initialising instances of @MmuxCStruct{addrinfo}
 
-
-@ref{overview conventions, Conventions in coding and documentation}.
-
-
-@deffn Builtin mmux_libc_addrinfo_calloc @var{ADDRINFO_POINTER_VAR} @var{AI_FLAGS} @var{AI_FAMILY} @var{AI_SOCKTYPE} @var{AI_PROTOCOL} @var{AI_ADDRLEN} @var{AI_ADDR} @var{AI_CANONNAME} @var{AI_NEXT}
-Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_in6}
-value and initialise it.  Arguments:
+@deffn Builtin mmux_libc_addrinfo_calloc @var{ADDRINFO_PTR_VAR}
+@deffnx Builtin mmux_libc_addrinfo_calloc @var{ADDRINFO_PTR_VAR} @var{AI_FLAGS} @var{AI_FAMILY} @var{AI_SOCKTYPE} @var{AI_PROTOCOL} @var{AI_ADDRLEN} @var{AI_ADDR} @var{AI_CANONNAME} @var{AI_NEXT}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{addrinfo} value
+and initialise it.  Arguments:
 
 @table @var
-@item ADDRINFO_POINTER_VAR
+@item ADDRINFO_PTR_VAR
 Name of a shell variable, when successful: this builtin binds to this shell variable a string
 representation of the pointer referencing the newly allocated data structure.
 
 @item AI_FLAGS
 Initialisation value for the field @code{ai_flags} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is a bitwise OR combination between the flags
-@code{mmux_libc_AI_*}.
+@code{mmux_libc_AI_*}.  When not used: it defaults to zero.
 
 @item AI_FAMILY
 Initialisation value for the field @code{ai_family} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is usually one among @code{mmux_libc_AF_INET} and
-@code{mmux_libc_AF_INET6}.
+@code{mmux_libc_AF_INET6}.  When not used: it defaults to zero.
 
 @item AI_SOCKTYPE
 Initialisation value for the field @code{ai_socktype} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_sint_t}.  It is usully one among @code{mmux_libc_SOCK_DGRAM} and
-@code{mmux_libc_AF_SOCK_STREAM}.
+@code{mmux_libc_SOCK_STREAM}.  When not used: it defaults to zero.
 
 @item AI_PROTOCOL
 Initialisation value for the field @code{ai_protocol} of the newly allocated @MmuxCStruct{addrinfo};
-the field is of type @objtype{mmux_sint_t}.  It is usually zero.
+the field is of type @objtype{mmux_sint_t}.  It is one of the constants @code{mmux_libc_IPPROTO_*};
+it is often zero, which is the value of @code{mmux_libc_IPPROTO_IP}.  When not used: it defaults to
+zero.
 
 @item AI_ADDRLEN
 Initialisation value for the field @code{ai_addrlen} of the newly allocated @MmuxCStruct{addrinfo};
 the field is of type @objtype{mmux_socklen_t}.  It is the length of the data structure representing
-the address and referenced by the field @code{ai_addr}.
+the address and referenced by the field @code{ai_addr}.  When not used: it defaults to zero.
 
 @item AI_ADDR
 Initialisation value for the field @code{ai_addr} of the newly allocated @MmuxCStruct{addrinfo}; the
 field is of generic type @objtype{mmux_pointer_t} and specific abstract type @code{struct sockaddr
-*}.
+*}.  When not used: it defaults to zero.
 
 @item AI_CANONNAME
 Initialisation value for the field @code{ai_canonname} of the newly allocated @code{struct
 addrinfo}; the field is of generic type @objtype{mmux_pointer_t} and specific type @code{char *}.
 Notice that no memory management is performed on this pointer: it is responsibility of the caller to
-manage the memory in which the canonical name is stored.
+manage the memory in which the canonical name is stored.  When not used: it defaults to zero.
 
 @item AI_NEXT
 Initialisation value for the field @code{ai_next} of the newly allocated @MmuxCStruct{addrinfo}; the
 field is of generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.
 Notice that no memory management is performed on this pointer: it is responsibility of the caller to
-manage the memory of this address data structure.
+manage the memory of this address data structure.  When not used: it defaults to zero.
 @end table
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@defun mmux_libc_addrinfo_array_init_defaults @var{ADDRINFO_ARRAY_VAR}
-Initialise the shell associative array variable whose name is @var{ADDRINFO_ARRAY_VAR} with the
-following key value pairs:
+@deffn Builtin mmux_libc_ai_flags_ref @var{AI_FLAGS_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_flags_set @var{ADDRINFO_PTR} @var{AI_FLAGS}
+@deffnx Function mmux_libc_ai_flags_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_flags} of @MmuxCStruct{addrinfo}; the field is of
+type @objtype{mmux_sint_t}.
+
+The getter binds to the shell variable whose name is @var{AI_FLAGS_VAR} the value of the field from
+the data structure referenced by the pointer @var{ADDRINFO_PTR}.
+
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to the
+value @var{AI_FLAGS}.
 
 @example
-[AI_FLAGS]=0
-[AI_FAMILY]=0
-[AI_SOCKTYPE]=0
-[AI_PROTOCOL]=0
-[AI_ADDRLEN]=0
-[AI_ADDR]='0x0'
-[AI_CANONNAME]='0x0'
-[AI_NEXT]='0x0'
-@end example
-@end defun
-
-@c ------------------------------------------------------------------------
-
-@defun mmux_libc_addrinfo_calloc_with_array @var{ADDRINFO_POINTER_VAR} @var{ADDRINFO_ARRAY_VAR}
-Wrapper for @MmuxBuiltin{mmux_libc_addrinfo_calloc} that initialises the newly allocated data
-structure with values from the shell associative array variable whose name is
-@var{ADDRINFO_ARRAY_VAR}.  Arguments:
-
-@table @var
-@item ADDRINFO_POINTER_VAR
-When successful: this builtin binds the pointer to the newly allocated data structure to the
-variable whose name is @var{ADDRINFO_POINTER_VAR}.
-
-@item ADDRINFO_ARRAY_VAR
-Name of the shell associative array variable from which initialisation values for the newly
-allocated data structure are taken.  To initialise the data structure with zero values: we can
-initialise the array itself with @MmuxBuiltin{mmux_libc_addrinfo_array_init_defaults}.
-@end table
-@end defun
-
-@c ------------------------------------------------------------------------
-
-@defun mmux_libc_addrinfo_array_init_from_pointer @var{ADDRINFO_ARRAY_VAR} @var{ADDRINFO_POINTER}
-Initialise the shell associative array variable whose name is @var{ADDRINFO_ARRAY_VAR} with values
-from the @MmuxCStruct{addrinfo} value referenced by @var{ADDRINFO_POINTER}.  The keys set in the
-array are:
-
-@example
-AI_FLAGS        AI_FAMILY       AI_SOCKTYPE     AI_PROTOCOL
-AI_ADDRLEN      AI_ADDR         AI_CANONNAME    AI_NEXT
-@end example
-@end defun
-
-@c page
-@node sockets addrinfo getref
-@subsection Getters and setters for instances of @MmuxCStruct{addrinfo}
-
-
-@deffn Builtin mmux_libc_ai_flags_ref @var{AI_FLAGS_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_flags_set @var{ADDRINFO_POINTER} @var{AI_FLAGS}
-Getter and setter for the field @code{ai_flags} of values of type @MmuxCStruct{addrinfo}; the field
-is of type @objtype{mmux_sint_t}.
-
-The getter binds the shell variable whose name is @var{AI_FLAGS} to the value of the field from the
-data structure referenced by the pointer @var{ADDRINFO_POINTER}.
-
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
-the value @var{AI_FLAGS}.
-
-@example
-declare ADDRINFO_POINTER
+declare ADDRINFO_PTR
 declare -ri INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
 declare     OUPUT_AI_FLAGS
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
-    mmux_libc_ai_flags_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_FLAGS}
-    mmux_libc_ai_flags_ref OUPUT_AI_FLAGS @RR{ADDRINFO_POINTER}
+    mmux_libc_ai_flags_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_FLAGS}
+    mmux_libc_ai_flags_ref OUPUT_AI_FLAGS @RR{ADDRINFO_PTR}
 @}
-mmux_libc_free @RR{ADDRINFO_POINTER}
+mmux_libc_free @RR{ADDRINFO_PTR}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_family_ref @var{AI_FAMILY_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_family_set @var{ADDRINFO_POINTER} @var{AI_FAMILY}
-Getter and setter for the field @code{ai_family} of values of type @MmuxCStruct{addrinfo}; the field
-is of type @objtype{mmux_sint_t}.
+@deffn Builtin mmux_libc_ai_family_ref @var{AI_FAMILY_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_family_set @var{ADDRINFO_PTR} @var{AI_FAMILY}
+@deffnx Function mmux_libc_ai_family_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_family} of @MmuxCStruct{addrinfo};
+the field is of type @objtype{mmux_sint_t}.
 
-The getter binds the shell variable whose name is @var{AI_FAMILY} to the value of the field from the
-data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds the shell variable whose name is @var{AI_FAMILY_VAR} to the value of the field from
+the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
-the value @var{AI_FAMILY}.
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to the
+value @var{AI_FAMILY}.
 
 @example
-declare ADDRINFO_POINTER
+declare ADDRINFO_PTR
 declare -r INPUT_AI_FAMILY=@RR{mmux_libc_AF_INET}
 declare    OUPUT_AI_FAMILY
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
-    mmux_libc_ai_family_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_FAMILY}
-    mmux_libc_ai_family_ref OUPUT_AI_FAMILY @RR{ADDRINFO_POINTER}
+    mmux_libc_ai_family_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_FAMILY}
+    mmux_libc_ai_family_ref OUPUT_AI_FAMILY @RR{ADDRINFO_PTR}
 @}
-mmux_libc_free @RR{ADDRINFO_POINTER}
+mmux_libc_free @RR{ADDRINFO_PTR}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_socktype_ref @var{AI_SOCKTYPE_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_socktype_set @var{ADDRINFO_POINTER} @var{AI_SOCKTYPE}
-Getter and setter for the field @code{ai_socktype} of values of type @MmuxCStruct{addrinfo}; the field
-is of type @objtype{mmux_sint_t}.
+@deffn Builtin mmux_libc_ai_socktype_ref @var{AI_SOCKTYPE_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_socktype_set @var{ADDRINFO_PTR} @var{AI_SOCKTYPE}
+@deffnx Function mmux_libc_ai_socktype_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_socktype} of @MmuxCStruct{addrinfo}; the field is
+of type @objtype{mmux_sint_t}.
 
-The getter binds the shell variable whose name is @var{AI_SOCKTYPE} to the value of the field from the
-data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds to the shell variable whose name is @var{AI_SOCKTYPE_VAR} the value of the field
+from the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
-the value @var{AI_SOCKTYPE}.
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to the
+value @var{AI_SOCKTYPE}.
 
 @example
-declare ADDRINFO_POINTER
+declare ADDRINFO_PTR
 declare -r INPUT_AI_SOCKTYPE=@RR{mmux_libc_SOCK_STREAM}
 declare    OUPUT_AI_SOCKTYPE
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
-    mmux_libc_ai_socktype_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_SOCKTYPE}
-    mmux_libc_ai_socktype_ref OUPUT_AI_SOCKTYPE @RR{ADDRINFO_POINTER}
+    mmux_libc_ai_socktype_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_SOCKTYPE}
+    mmux_libc_ai_socktype_ref OUPUT_AI_SOCKTYPE @RR{ADDRINFO_PTR}
 @}
-mmux_libc_free @RR{ADDRINFO_POINTER}
+mmux_libc_free @RR{ADDRINFO_PTR}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_protocol_ref @var{AI_PROTOCOL_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_protocol_set @var{ADDRINFO_POINTER} @var{AI_PROTOCOL}
-Getter and setter for the field @code{ai_protocol} of values of type @MmuxCStruct{addrinfo}; the field
-is of type @objtype{mmux_sint_t}.
+@deffn Builtin mmux_libc_ai_protocol_ref @var{AI_PROTOCOL_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_protocol_set @var{ADDRINFO_PTR} @var{AI_PROTOCOL}
+@deffnx Function mmux_libc_ai_protocol_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_protocol} of @MmuxCStruct{addrinfo}; the field is
+of type @objtype{mmux_sint_t}.
 
-The getter binds the shell variable whose name is @var{AI_PROTOCOL} to the value of the field from the
-data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds to the shell variable whose name is @var{AI_PROTOCOL_VAR} the value of the field
+from the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
-the value @var{AI_PROTOCOL}.
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to the
+value @var{AI_PROTOCOL}.
 
 @example
-declare ADDRINFO_POINTER
-declare -r INPUT_AI_PROTOCOL=0
+declare ADDRINFO_PTR
+declare -r INPUT_AI_PROTOCOL=@RR{mmux_libc_IPPROTO_TCP}
 declare    OUPUT_AI_PROTOCOL
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
-    mmux_libc_ai_protocol_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_PROTOCOL}
-    mmux_libc_ai_protocol_ref OUPUT_AI_PROTOCOL @RR{ADDRINFO_POINTER}
+    mmux_libc_ai_protocol_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_PROTOCOL}
+    mmux_libc_ai_protocol_ref OUPUT_AI_PROTOCOL @RR{ADDRINFO_PTR}
 @}
-mmux_libc_free RR(ADDRINFO_POINTER)
+mmux_libc_free RR(ADDRINFO_PTR)
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_addrlen_ref @var{AI_ADDRLEN_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_addrlen_set @var{ADDRINFO_POINTER} @var{AI_ADDRLEN}
-Getter and setter for the field @code{ai_addrlen} of values of type @MmuxCStruct{addrinfo}; the
-field is of type @objtype{mmux_socklen_t}.
+@deffn Builtin mmux_libc_ai_addrlen_ref @var{AI_ADDRLEN_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_addrlen_set @var{ADDRINFO_PTR} @var{AI_ADDRLEN}
+@deffnx Function mmux_libc_ai_addrlen_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_addrlen} of @MmuxCStruct{addrinfo}; the field is
+of type @objtype{mmux_socklen_t}.
 
-The getter binds the shell variable whose name is @var{AI_ADDRLEN} to the value of the field from
-the data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds to the shell variable whose name is @var{AI_ADDRLEN_VAR} the value of the field
+from the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to
 the value @var{AI_ADDRLEN}.
 
 @example
-declare ADDRINFO_POINTER
+declare ADDRINFO_PTR
 declare -r INPUT_AI_ADDRLEN=@RR{mmux_libc_sockaddr_in_SIZEOF}
 declare    OUPUT_AI_ADDRLEN
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
-    mmux_libc_ai_addrlen_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_ADDRLEN}
-    mmux_libc_ai_addrlen_ref OUPUT_AI_ADDRLEN @RR{ADDRINFO_POINTER}
+    mmux_libc_ai_addrlen_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_ADDRLEN}
+    mmux_libc_ai_addrlen_ref OUPUT_AI_ADDRLEN @RR{ADDRINFO_PTR}
 @}
-mmux_libc_free @RR{ADDRINFO_POINTER}
+mmux_libc_free @RR{ADDRINFO_PTR}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_addr_ref @var{AI_ADDR_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_addr_set @var{ADDRINFO_POINTER} @var{AI_ADDR}
-Getter and setter for the field @code{ai_addr} of values of type @MmuxCStruct{addrinfo}; the field
-is of generic type @objtype{mmux_pointer_t} and specific type @code{struct sockaddr *}.
+@deffn Builtin mmux_libc_ai_addr_ref @var{AI_ADDR_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_addr_set @var{ADDRINFO_PTR} @var{AI_ADDR}
+@deffnx Function mmux_libc_ai_addr_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_addr} of @MmuxCStruct{addrinfo};
+the field is of generic type @objtype{mmux_pointer_t} and specific type @code{struct sockaddr *}.
 
-The getter binds the shell variable whose name is @var{AI_ADDR} to the value of the field from the
-data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds to the shell variable whose name is @var{AI_ADDR_VAR} the value of the field from
+the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
-the value @var{AI_ADDR}.
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to the
+value @var{AI_ADDR}.
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_canonname_ref @var{AI_CANONNAME_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_canonname_set @var{ADDRINFO_POINTER} @var{AI_CANONNAME}
-Getter and setter for the field @code{ai_canonname} of values of type @MmuxCStruct{addrinfo}; the
-field is of generic type @objtype{mmux_pointer_t} and specific type @code{char *}.  Notice that no
-memory management is performed on this pointer: it is responsibility of the caller to manage the
-memory in which the canonical name is stored.
+@deffn Builtin mmux_libc_ai_canonname_ref @var{AI_CANONNAME_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_canonname_set @var{ADDRINFO_PTR} @var{AI_CANONNAME}
+@deffnx Function mmux_libc_ai_canonname_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_canonname} of @MmuxCStruct{addrinfo}; the field is
+of generic type @objtype{mmux_pointer_t} and specific type @code{char *}.  Notice that no memory
+management is performed on this pointer: it is responsibility of the caller to manage the memory in
+which the canonical name is stored.
 
-The getter binds the shell variable whose name is @var{AI_CANONNAME} to the value of the field from
-the data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds to the shell variable whose name is @var{AI_CANONNAME_VAR} the value of the field
+from the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to
 the value @var{AI_CANONNAME}.
 
 @example
-declare ADDRINFO_POINTER
+declare ADDRINFO_PTR
 
 declare -r INPUT_ASCII_CANONNAME='gnu.org'
 declare    OUPUT_ASCII_CANONNAME
@@ -7944,48 +7913,56 @@ declare    OUPUT_ASCII_CANONNAME
 declare INPUT_AI_CANONNAME
 declare OUPUT_AI_CANONNAME
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
     mmux_pointer_from_bash_string INPUT_AI_CANONNAME @WW{INPUT_ASCII_CANONNAME}
     @{
-        mmux_libc_ai_canonname_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_CANONNAME}
-        mmux_libc_ai_canonname_ref OUPUT_AI_CANONNAME @RR{ADDRINFO_POINTER}
+        mmux_libc_ai_canonname_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_CANONNAME}
+        mmux_libc_ai_canonname_ref OUPUT_AI_CANONNAME @RR{ADDRINFO_PTR}
         mmux_pointer_to_bash_string OUPUT_ASCII_CANONNAME @WW{OUPUT_AI_CANONNAME}
     @}
     mmux_libc_free @RR{INPUT_AI_CANONNAME}
 @}
-mmux_libc_free @RR{ADDRINFO_POINTER}
+mmux_libc_free @RR{ADDRINFO_PTR}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_ai_next_ref @var{AI_NEXT_VAR} @var{ADDRINFO_POINTER}
-@deffnx Builtin mmux_libc_ai_next_set @var{ADDRINFO_POINTER} @var{AI_NEXT}
-Getter and setter for the field @code{ai_next} of values of type @MmuxCStruct{addrinfo}; the field
-is of generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.  Notice that
-no memory management is performed on this pointer: it is responsibility of the caller to manage the
+@deffn Builtin mmux_libc_ai_next_ref @var{AI_NEXT_VAR} @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_ai_next_set @var{ADDRINFO_PTR} @var{AI_NEXT}
+@deffnx Function mmux_libc_ai_next_print @var{ADDRINFO_PTR}
+Getter, setter and printer for the field @code{ai_next} of @MmuxCStruct{addrinfo}; the field is of
+generic type @objtype{mmux_pointer_t} and specific type @code{struct addrinfo *}.  Notice that no
+memory management is performed on this pointer: it is responsibility of the caller to manage the
 memory of this address data structure.
 
-The getter binds the shell variable whose name is @var{AI_NEXT} to the value of the field from the
-data structure referenced by the pointer @var{ADDRINFO_POINTER}.
+The getter binds to the shell variable whose name is @var{AI_NEXT_VAR} the value of the field from
+the data structure referenced by the pointer @var{ADDRINFO_PTR}.
 
-The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_POINTER} to
-the value @var{AI_NEXT}.
+The setter sets the field in the data structure referenced by the pointer @var{ADDRINFO_PTR} to the
+value @var{AI_NEXT}.
 
 @example
-declare ADDRINFO_POINTER
+declare ADDRINFO_PTR
 declare -r INPUT_AI_NEXT='0x0'
 declare    OUPUT_AI_NEXT
 
-mmux_libc_calloc ADDRINFO_POINTER 1 @RR{mmux_libc_addrinfo_SIZEOF}
+mmux_libc_calloc ADDRINFO_PTR 1 @RR{mmux_libc_addrinfo_SIZEOF}
 @{
-    mmux_libc_ai_next_set @RR{ADDRINFO_POINTER} @RR{INPUT_AI_NEXT}
-    mmux_libc_ai_next_ref OUPUT_AI_NEXT @RR{ADDRINFO_POINTER}
+    mmux_libc_ai_next_set @RR{ADDRINFO_PTR} @RR{INPUT_AI_NEXT}
+    mmux_libc_ai_next_ref OUPUT_AI_NEXT @RR{ADDRINFO_PTR}
 @}
-mmux_libc_free @RR{ADDRINFO_POINTER}
+mmux_libc_free @RR{ADDRINFO_PTR}
 @end example
 @end deffn
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_addrinfo_dump @var{ADDRINFO_PTR}
+Applied to a pointer to @code{struct addrinfo}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+@end defun
 
 @c page
 @node sockets hostent
@@ -8285,37 +8262,6 @@ The suggested way to retrieve informations about a host address is to use
 @MmuxBuiltin{mmux_libc_getaddrinfo}.
 
 @example
-declare GAI_ERRNUM GAI_ERRMSG
-declare ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR HINTS_ADDRINFO_PTR
-declare -A HINTS_ADDRINFO_ARRAY OUPUT_ADDRINFO_ARRAY
-declare -r ASCII_CANONNAME='localhost'
-declare -r ASCII_SERVICE=''
-
-mmux_libc_addrinfo_array_init_defaults HINTS_ADDRINFO_ARRAY
-mmux_libc_addrinfo_array_init_defaults OUPUT_ADDRINFO_ARRAY
-
-HINTS_ADDRINFO_ARRAY[AI_FLAGS]=$(( @RR{mmux_libc_AI_V4MAPPED}   | \
-                                   @RR{mmux_libc_AI_ADDRCONFIG} | \
-                                   @RR{mmux_libc_AI_CANONNAME} ))
-HINTS_ADDRINFO_ARRAY[AI_FAMILY]=@RR{mmux_libc_AF_UNSPEC}
-HINTS_ADDRINFO_ARRAY[AI_SOCKTYPE]=@RR{mmux_libc_SOCK_STREAM}
-
-mmux_libc_addrinfo_calloc_with_array HINTS_ADDRINFO_PTR HINTS_ADDRINFO_ARRAY
-@{
-    mmux_libc_getaddrinfo @WW{ASCII_CANONNAME} @QQ{ASCII_SERVICE} @RR{HINTS_ADDRINFO_PTR} \
-                          ADDRINFO_LINKED_LIST_PTR
-    @{
-        ADDRINFO_PTR=@RR{ADDRINFO_LINKED_LIST_PTR}
-        until mmux_pointer_is_zero @RR{ADDRINFO_PTR}
-        do
-            mmux_libc_addrinfo_array_init_from_pointer OUPUT_ADDRINFO_ARRAY @RR{ADDRINFO_PTR}
-            # do something with OUPUT_ADDRINFO_ARRAY
-            mmux_libc_ai_next_ref ADDRINFO_PTR @RR{ADDRINFO_PTR}
-        done
-    @}
-    mmux_libc_freeaddrinfo @RR{ADDRINFO_LINKED_LIST_PTR}
-@}
-mmux_libc_free @RR{HINTS_ADDRINFO_PTR}
 @end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -8341,11 +8287,14 @@ Arguments:
 
 @table @var
 @item NODE
-Bash string representing the node to inspect; it can be a hostname or an address in numerical
-format.
+It represents the node to inspect, it can be a hostname or an address in numerical format.  It is
+either a Bash string or the string representation of a pointer referencing an @asciiz{} string; if
+the first two characters are @samp{0x} it is meant to be a pointer.
 
 @item SERVICE
-Bash string representing the service to inspect.
+It represents the service to inspect.  It is either a Bash string or the string representation of a
+pointer referencing an @asciiz{} string; if the first two characters are @samp{0x} it is meant to be
+a pointer.
 
 @item HINTS_ADDRINFO_PTR
 Pointer to a @MmuxCStruct{addrinfo} whose fields have been initialised to restrict the search of

@@ -67,70 +67,246 @@ function mmux_bash_pointers_library_after_loading_hook () {
 
     mmux_bash_pointers_library_init
 
-
+#page
 #### after loading hook: socket helpers
 
-function mmux_libc_addrinfo_array_init_defaults () {
-    declare -n mmux_p_ADDRINFO_ARRY=PP(1, addrinfo shell array)
-    mmux_p_ADDRINFO_ARRY=([AI_FLAGS]=0
-			  [AI_FAMILY]=0
-			  [AI_SOCKTYPE]=0
-			  [AI_PROTOCOL]=0
-			  [AI_ADDRLEN]=0
-			  [AI_ADDR]='0x0'
-			  [AI_CANONNAME]='0x0'
-			  [AI_NEXT]='0x0')
-}
-function mmux_libc_addrinfo_calloc_with_array () {
-    declare -n mmux_p_ADDRINFO_POINTER=PP(1, addrinfo pointer)
-    declare -n mmux_p_ADDRINFO_ARRY=PP(2, addrinfo shell array)
-    mmux_libc_addrinfo_calloc mmux_p_ADDRINFO_POINTER			\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_FLAGS)		\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_FAMILY)	\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_SOCKTYPE)	\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_PROTOCOL)	\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_ADDRLEN)	\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_ADDR)		\
-			      QQ(mmux_p_ADDRINFO_ARRY,AI_CANONNAME)	\
-			      WW(mmux_p_ADDRINFO_ARRY,AI_NEXT)
-}
-function mmux_libc_addrinfo_array_init_from_pointer () {
-    declare -n mmux_p_ADDRINFO_ARRY=PP(1, addrinfo shell array)
-    declare mmux_p_ADDRINFO_POINTER=PP(2, addrinfo pointer)
+m4_define([[[DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER]]],[[[
+function mmux_libc_ai_$1_print () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare FIELD_VALUE
 
-    if ! mmux_libc_ai_flags_ref SS(mmux_p_ADDRINFO_ARRY,AI_FLAGS) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_family_ref SS(mmux_p_ADDRINFO_ARRY,AI_FAMILY) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_socktype_ref SS(mmux_p_ADDRINFO_ARRY,AI_SOCKTYPE) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_protocol_ref SS(mmux_p_ADDRINFO_ARRY,AI_PROTOCOL) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_addrlen_ref SS(mmux_p_ADDRINFO_ARRY,AI_ADDRLEN) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_addr_ref SS(mmux_p_ADDRINFO_ARRY,AI_ADDR) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_canonname_ref SS(mmux_p_ADDRINFO_ARRY,AI_CANONNAME) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-    if ! mmux_libc_ai_next_ref SS(mmux_p_ADDRINFO_ARRY,AI_NEXT) RR(mmux_p_ADDRINFO_POINTER)
-    then return 1
-    fi
-
-    if ! mmux_pointer_is_zero RR(mmux_p_ADDRINFO_ARRY,AI_CANONNAME)
+    if mmux_string_is_pointer WW(ADDRINFO_PTR)
     then
-	if ! mmux_pointer_to_bash_string SS(mmux_p_ADDRINFO_ARRY,ASCII_CANONNAME) RR(mmux_p_ADDRINFO_ARRY,AI_CANONNAME)
-	then return 1
-	fi
+	mmux_libc_ai_$1_ref FIELD_VALUE RR(ADDRINFO_PTR)
+	printf '%s' WW(FIELD_VALUE)
+    else return 1
     fi
+}
+]]])
 
-    return 0
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[flags]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[family]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[socktype]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[protocol]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[addrlen]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[addr]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[canonname]]])
+DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER([[[next]]])
+
+function mmux_libc_addrinfo_dump () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_string_is_pointer WW(ADDRINFO_PTR)
+    then
+	declare FIELD_NAME FIELD_VALUE ITEM
+
+	for FIELD_NAME in 'flags' 'family' 'socktype' 'protocol' 'addrlen' 'addr' 'canonname' 'next'
+	do
+	    if ! mmux_libc_addrinfo_dump_ai_${FIELD_NAME:?} RR(ADDRINFO_PTR) WW(ADDRINFO_NAME)
+	    then
+		mmux_libc_addrinfo_dump_error_inspecting_field WW(FUNCNAME) RR(FIELD_NAME) RR(ADDRINFO_PTR)
+		return 1
+	    fi
+	done
+    else
+	mmux_libc_addrinfo_dump_error_expected_pointer WW(FUNCNAME) WW(ADDRINFO_PTR)
+	return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_flags () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_flags_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then
+	declare FLAG_NAME
+	declare -i FOUND_FLAGS_IDX=0 IDX
+	declare -a FOUND_FLAGS
+	declare FLAGS_EXPRESSION_STRING
+
+	for FLAG_NAME in AI_ADDRCONFIG AI_ALL AI_CANONIDN AI_CANONNAME AI_IDN AI_NUMERICSERV AI_PASSIVE AI_V4MAPPED
+	do
+	    declare VAR_NAME=mmux_libc_${FLAG_NAME:?}
+	    if test -v WW(VAR_NAME)
+	    then
+		declare -n FLAG_VALUE=RR(VAR_NAME)
+
+		if (( RR(FIELD_VALUE) & RR(FLAG_VALUE) ))
+		then
+		    FOUND_FLAGS[RR(FOUND_FLAGS_IDX)]=RR(FLAG_NAME)
+		    let ++FOUND_FLAGS_IDX
+		fi
+	    fi
+	done
+
+	if (( 0 < FOUND_FLAGS_IDX ))
+	then
+	    printf -v FLAGS_EXPRESSION_STRING '%s' WW(FOUND_FLAGS,0)
+	    for ((IDX=1; IDX < FOUND_FLAGS_IDX; ++IDX))
+	    do printf -v FLAGS_EXPRESSION_STRING '%s | %s' WW(FLAGS_EXPRESSION_STRING) WW(FOUND_FLAGS,$IDX)
+	    done
+	    printf '%s.ai_flags="%s" (%s)\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE) WW(FLAGS_EXPRESSION_STRING) >&2
+	fi
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_family () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_family_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then
+	declare FLAG_NAME
+
+	for FLAG_NAME in AF_ALG AF_APPLETALK AF_AX25 AF_BLUETOOTH AF_CAN AF_DECnet AF_FILE AF_IB AF_INET \
+				AF_INET6 AF_IPX AF_KCM AF_KEY AF_LLC AF_LOCAL AF_MPLS AF_NETLINK AF_PACKET AF_PPPOX \
+				AF_RDS AF_TIPC AF_UNIX AF_UNSPEC AF_VSOCK AF_X25 AF_XDP
+	do
+	    declare VAR_NAME=mmux_libc_${FLAG_NAME:?}
+	    if test -v WW(VAR_NAME)
+	    then
+		declare -n FLAG_VALUE=RR(VAR_NAME)
+
+		if test RR(FIELD_VALUE) = RR(FLAG_VALUE)
+		then
+		    printf '%s.ai_family="%s" (%s)\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE) WW(FLAG_NAME)
+		    break
+		fi
+	    fi
+	done
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_socktype () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_socktype_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then
+	declare FLAG_NAME
+
+	for FLAG_NAME in SOCK_DCCP SOCK_DGRAM SOCK_NONBLOCK SOCK_PACKET SOCK_RAW SOCK_RDM SOCK_SEQPACKET SOCK_STREAM
+	do
+	    declare VAR_NAME=mmux_libc_${FLAG_NAME:?}
+	    if test -v WW(VAR_NAME)
+	    then
+		declare -n FLAG_VALUE=RR(VAR_NAME)
+
+		if test RR(FIELD_VALUE) = RR(FLAG_VALUE)
+		then
+		    printf '%s.ai_socktype="%s" (%s)\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE) WW(FLAG_NAME)
+		    break
+		fi
+	    fi
+	done
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_protocol () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_protocol_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then
+	declare FLAG_NAME
+
+	for FLAG_NAME in \
+	    IPPROTO_AH \
+		IPPROTO_BEETPH IPPROTO_COMP IPPROTO_DCCP IPPROTO_EGP IPPROTO_ENCAP IPPROTO_ESP IPPROTO_ETHERNET \
+		IPPROTO_GRE IPPROTO_ICMP IPPROTO_IDP IPPROTO_IGMP IPPROTO_IP IPPROTO_IPIP IPPROTO_IPV6 IPPROTO_MPLS \
+		IPPROTO_MPTCP IPPROTO_MTP IPPROTO_PIM IPPROTO_PUP IPPROTO_RAW IPPROTO_RSVP IPPROTO_SCTP IPPROTO_TCP \
+		IPPROTO_TP IPPROTO_UDP IPPROTO_UDPLITE
+	do
+	    declare VAR_NAME=mmux_libc_${FLAG_NAME:?}
+	    if test -v WW(VAR_NAME)
+	    then
+		declare -n FLAG_VALUE=RR(VAR_NAME)
+
+		if test RR(FIELD_VALUE) = RR(FLAG_VALUE)
+		then
+		    printf '%s.ai_protocol="%s" (%s)\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE) WW(FLAG_NAME)
+		    break
+		fi
+	    fi
+	done
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_addrlen () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_addrlen_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then
+	declare FLAG_NAME
+
+	for FLAG_NAME in sockaddr_in_SIZEOF sockaddr_in6_SIZEOF sockaddr_un_SIZEOF
+	do
+	    declare VAR_NAME=mmux_libc_${FLAG_NAME:?}
+	    if test -v WW(VAR_NAME)
+	    then
+		declare -n FLAG_VALUE=RR(VAR_NAME)
+
+		if (( RR(FIELD_VALUE) == RR(FLAG_VALUE) ))
+		then
+		    printf '%s.ai_addrlen="%s" (%s)\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE) WW(FLAG_NAME)
+		    return 0
+		fi
+	    fi
+	done
+	# If we are here none of the sizes were right.
+	printf '%s.ai_addrlen="%s"\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE)
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_addr () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_addr_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then printf '%s.ai_addr="%s"\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE)
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_canonname () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_canonname_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then
+	if mmux_pointer_is_zero RR(FIELD_VALUE)
+	then printf '%s.ai_canonname="%s"\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE)
+	else
+	    declare ASCII_CANONNAME
+
+	    mmux_pointer_to_bash_string ASCII_CANONNAME RR(FIELD_VALUE)
+	    printf '%s.ai_canonname="%s" (%s)\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE) WW(ASCII_CANONNAME)
+	fi
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_ai_next () {
+    declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)
+    declare -r ADDRINFO_NAME=${2:-'struct addrinfo'}
+
+    if mmux_libc_ai_next_ref FIELD_VALUE RR(ADDRINFO_PTR)
+    then printf '%s.ai_next="%s"\n' WW(ADDRINFO_NAME) RR(FIELD_VALUE)
+    else return 1
+    fi
+}
+function mmux_libc_addrinfo_dump_error_expected_pointer () {
+    declare THE_FUNCNAME=PP(1, function name)
+    declare THE_POINTER=PP(2, addrinfo pointer name)
+
+    printf '%s: error: expected addrinfo pointer: "%s"\n' WW(FUNCNAME) WW(ADDRINFO_PTR) >&2
+}
+function mmux_libc_addrinfo_dump_error_inspecting_field () {
+    declare THE_FUNCNAME=PP(1, function name)
+    declare THE_FIELD=PP(2, field name)
+    declare THE_POINTER=PP(3, addrinfo pointer name)
+
+    printf '%s: error: inspecting field "%s" of: %s\n' WW(THE_FUNCNAME) WW(THE_FIELD) RR(THE_POINTER) >&2
 }
 
 #page
@@ -198,7 +374,29 @@ function mmux_bash_pointers_library_before_unloading_hook () {
 	  mmux_index_array_to_memory				\
 	  mmux_bash_pointers_builtin_p				\
 	  mmux_bash_pointers_library_after_loading_hook		\
-	  mmux_bash_pointers_library_before_unloading_hook
+	  mmux_bash_pointers_library_before_unloading_hook	\
+	  mmux_libc_addrinfo_array_init_defaults		\
+	  mmux_libc_addrinfo_calloc_with_array			\
+	  mmux_libc_addrinfo_array_init_from_pointer		\
+	  mmux_libc_ai_flags_print				\
+	  mmux_libc_ai_family_print				\
+	  mmux_libc_ai_socktype_print				\
+	  mmux_libc_ai_protocol_print				\
+	  mmux_libc_ai_addrlen_print				\
+	  mmux_libc_ai_addr_print				\
+	  mmux_libc_ai_canonname_print				\
+	  mmux_libc_ai_next_print				\
+	  mmux_libc_addrinfo_dump				\
+	  mmux_libc_addrinfo_dump_ai_flags			\
+	  mmux_libc_addrinfo_dump_ai_family			\
+	  mmux_libc_addrinfo_dump_ai_socktype			\
+	  mmux_libc_addrinfo_dump_ai_protocol			\
+	  mmux_libc_addrinfo_dump_ai_addrlen			\
+	  mmux_libc_addrinfo_dump_ai_addr			\
+	  mmux_libc_addrinfo_dump_ai_canonname			\
+	  mmux_libc_addrinfo_dump_ai_next			\
+	  mmux_libc_addrinfo_dump_error_inspecting_field	\
+	  mmux_libc_addrinfo_dump_error_expected_pointer
 }
 
 #page

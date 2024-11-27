@@ -28,12 +28,15 @@
 
 #include "mmux-bash-pointers-internals.h"
 
+#undef  IS_POINTER_REPRESENTATION
+#define IS_POINTER_REPRESENTATION(ARGVJ)	((2 < strlen(ARGVJ)) && ('0' == ARGVJ[0]) && ('1' == ARGVJ[1]))
+
 
 /** --------------------------------------------------------------------
  ** Sockets: struct sockaddr.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_sa_family_ref]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sa_family_ref]]])
 {
   char const *		sa_family_varname;
   mmux_pointer_t	addr_pointer;
@@ -589,24 +592,26 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
 {
   char const *		addrinfo_pointer_varname;
-  mmux_sint_t		ai_flags;
-  mmux_sint_t		ai_family;
-  mmux_sint_t		ai_socktype;
-  mmux_sint_t		ai_protocol;
-  mmux_socklen_t	ai_addrlen;
-  mmux_pointer_t	addr_pointer;
-  mmux_pointer_t	canonname_pointer;
-  mmux_pointer_t	next_pointer;
+  mmux_sint_t		ai_flags		= 0;
+  mmux_sint_t		ai_family		= AF_UNSPEC;
+  mmux_sint_t		ai_socktype		= 0;
+  mmux_sint_t		ai_protocol		= 0;
+  mmux_socklen_t	ai_addrlen		= 0;
+  mmux_pointer_t	addr_pointer		= NULL;
+  mmux_pointer_t	canonname_pointer	= NULL;
+  mmux_pointer_t	next_pointer		= NULL;
 
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(addrinfo_pointer_varname,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_flags,				argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_family,				argv[3]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_socktype,				argv[4]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_protocol,				argv[5]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(ai_addrlen,			argv[6]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,			argv[7]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(canonname_pointer,		argv[8]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(next_pointer,			argv[9]);
+  if (10 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_flags,				argv[2]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_family,				argv[3]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_socktype,			argv[4]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_SINT(ai_protocol,			argv[5]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(ai_addrlen,			argv[6]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(addr_pointer,			argv[7]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(canonname_pointer,		argv[8]);
+    MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(next_pointer,			argv[9]);
+  }
   {
     struct sockaddr *	ai_addr           = addr_pointer;
     char *		ai_canonname      = canonname_pointer;
@@ -635,8 +640,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(10 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER ADDRINFO_POINTER_VAR AI_FLAGS AI_FAMILY AI_SOCKTYPE AI_PROTOCOL AI_ADDRLEN AI_ADDR AI_CANONNAME AI_NEXT"]]])
+    [[[((2 == argc) || (10 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ADDRINFO_POINTER_VAR [AI_FLAGS AI_FAMILY AI_SOCKTYPE AI_PROTOCOL AI_ADDRLEN AI_ADDR AI_CANONNAME AI_NEXT]"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -679,11 +684,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR ADDRINFO_POINTER"]]])
 ]]])
 
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_flags]]],	[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_family]]],	[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_socktype]]],	[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_protocol]]],	[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addrlen]]],	[[[socklen]]],[[[SOCKLEN]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_flags]]],		[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_family]]],		[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_socktype]]],		[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_protocol]]],		[[[sint]]],[[[SINT]]])
+DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addrlen]]],		[[[socklen]]],[[[SOCKLEN]]])
 DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addr]]],		[[[pointer]]],[[[POINTER]]])
 DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_canonname]]],	[[[pointer]]],[[[POINTER]]])
 DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_next]]],		[[[pointer]]],[[[POINTER]]])
@@ -1008,8 +1013,20 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getaddrinfo]]])
   mmux_pointer_t	_hints_pointer;
   char const *		addrinfo_linked_list_varname;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(node,				argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(service,			argv[2]);
+  if (IS_POINTER_REPRESENTATION(argv[1])) {
+    mmux_pointer_t	_node;
+    MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_node,		argv[1]);
+    node = _node;
+  } else {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(node,		argv[1]);
+  }
+  if (IS_POINTER_REPRESENTATION(argv[2])) {
+    mmux_pointer_t	_service;
+    MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_service,	argv[2]);
+    service = _service;
+  } else {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(service,	argv[2]);
+  }
   MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_hints_pointer,			argv[3]);
   MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(addrinfo_linked_list_varname,	argv[4]);
   {
