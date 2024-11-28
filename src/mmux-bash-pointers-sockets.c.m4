@@ -1075,6 +1075,54 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnameinfo]]])
+{
+  mmux_pointer_t	_sockaddr_pointer;
+  mmux_socklen_t	socklen;
+  char const *		host_varname;
+  char const *		serv_varname;
+  mmux_sint_t		flags;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_sockaddr_pointer,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN(socklen,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(host_varname,		argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(serv_varname,		argv[4]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(flags,			argv[5]);
+  {
+    struct sockaddr *	sockaddr_pointer = _sockaddr_pointer;
+#undef  IS_THIS_ENOUGH_QUESTION_MARK
+#define IS_THIS_ENOUGH_QUESTION_MARK	512
+    char		host[IS_THIS_ENOUGH_QUESTION_MARK];
+    char		serv[IS_THIS_ENOUGH_QUESTION_MARK];
+    int			rv = getnameinfo(sockaddr_pointer, socklen,
+					 host, IS_THIS_ENOUGH_QUESTION_MARK,
+					 serv, IS_THIS_ENOUGH_QUESTION_MARK,
+					 flags);
+
+    if (0 == rv) {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_string_bind_to_bash_variable(host_varname, host, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) { return brv; }
+
+      return mmux_string_bind_to_bash_variable(serv_varname, serv, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_sint_bind_to_bash_variable("GAI_ERRNUM", rv, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) { return brv; }
+
+      return mmux_string_bind_to_bash_variable("GAI_ERRMSG", gai_strerror(rv), MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_PTR SOCKADDR_LEN HOST_VAR SERV_VAR FLAGS"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_bind]]])
 {
   mmux_sint_t		sock;

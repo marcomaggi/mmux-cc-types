@@ -1017,6 +1017,12 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{AI_NUMERICSERV}
 @MmuxDefineGlobalVarSystemConstant{AI_PASSIVE}
 @MmuxDefineGlobalVarSystemConstant{AI_V4MAPPED}
+@MmuxDefineGlobalVarSystemConstant{NI_DGRAM}
+@MmuxDefineGlobalVarSystemConstant{NI_IDN}
+@MmuxDefineGlobalVarSystemConstant{NI_NAMEREQD}
+@MmuxDefineGlobalVarSystemConstant{NI_NOFQDN}
+@MmuxDefineGlobalVarSystemConstant{NI_NUMERICHOST}
+@MmuxDefineGlobalVarSystemConstant{NI_NUMERICSERV}
 
 @MmuxDefineGlobalVarSystemConstant{IPPROTO_AH}
 @MmuxDefineGlobalVarSystemConstant{IPPROTO_BEETPH}
@@ -7107,7 +7113,8 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets hostent::             Interface to @MmuxCStruct{hostent}.
 * sockets byteorder::           Converting byte order in socket addresses.
 * sockets convaddr::            Converting socket addresses between formats.
-* sockets addresses::           Socket addresses.
+* sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
+* sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -8254,14 +8261,39 @@ printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
 @end deffn
 
 @c page
-@node sockets addresses
-@section Socket addresses
+@node sockets getaddrinfo
+@section Interface to @cfunc{getaddrinfo}
 
 
-The suggested way to retrieve informations about a host address is to use
+The suggested way to retrieve a binary representation of a socket address is to use
 @MmuxBuiltin{mmux_libc_getaddrinfo}.
 
 @example
+declare GAI_ERRNUM GAI_ERRMSG
+declare HINTS_ADDRINFO_PTR
+declare ADDRINFO_LINKED_LIST_PTR
+declare ADDRINFO_PTR
+
+mmux_libc_addrinfo_calloc HINTS_ADDRINFO_PTR
+@{
+    mmux_libc_ai_flags_set     @RR{HINTS_ADDRINFO_PTR} \
+        $(( @RR{mmux_libc_AI_V4MAPPED}   | \
+            @RR{mmux_libc_AI_ADDRCONFIG} | \
+            @RR{mmux_libc_AI_CANONNAME} ))
+    mmux_libc_ai_family_set    @RR{HINTS_ADDRINFO_PTR} @RR{mmux_libc_AF_UNSPEC}
+    mmux_libc_ai_socktype_set  @RR{HINTS_ADDRINFO_PTR} @RR{mmux_libc_SOCK_STREAM}
+@}
+mmux_libc_getaddrinfo 'localhost' 'smtp' @RR{HINTS_ADDRINFO_PTR} ADDRINFO_LINKED_LIST_PTR
+
+ADDRINFO_PTR=@RR{ADDRINFO_LINKED_LIST_PTR}
+until mmux_pointer_is_zero @RR{ADDRINFO_PTR}
+do
+    mmux_libc_addrinfo_dump @RR{ADDRINFO_PTR}
+    mmux_libc_ai_next_ref ADDRINFO_PTR @RR{ADDRINFO_PTR}
+done
+
+mmux_libc_free @RR{HINTS_ADDRINFO_PTR}
+mmux_libc_freeaddrinfo @RR{ADDRINFO_LINKED_LIST_PTR}
 @end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -8312,6 +8344,82 @@ with a call to @MmuxBuiltin{mmux_libc_freeaddrinfo} or @cfunc{freeaddrinfo}.
 Interface to the standard C language function @cfunc{freeaddrinfo}, @cfuncpage{freeaddrinfo}.  The
 argument @var{ADDRINFO_LINKED_LIST_PTR} must be the string representation of the pointer to the
 linked list returned by @cfunc{getaddrinfo}.
+@end deffn
+
+@c page
+@node sockets getnameinfo
+@section Interface to @cfunc{getnameinfo}
+
+
+The suggested way to retrieve a textual presentation of a socket address is to use
+@MmuxBuiltin{mmux_libc_getaddrinfo}.
+
+@example
+declare GAI_ERRNUM GAI_ERRMSG
+declare HINTS_ADDRINFO_PTR
+declare ADDRINFO_LINKED_LIST_PTR
+declare ADDRINFO_PTR
+
+mmux_libc_addrinfo_calloc HINTS_ADDRINFO_PTR
+@{
+    mmux_libc_ai_flags_set     @RR{HINTS_ADDRINFO_PTR} \
+        $(( @RR{mmux_libc_AI_V4MAPPED}   | \
+            @RR{mmux_libc_AI_ADDRCONFIG} | \
+            @RR{mmux_libc_AI_CANONNAME} ))
+    mmux_libc_ai_family_set    @RR{HINTS_ADDRINFO_PTR} @RR{mmux_libc_AF_UNSPEC}
+    mmux_libc_ai_socktype_set  @RR{HINTS_ADDRINFO_PTR} @RR{mmux_libc_SOCK_STREAM}
+@}
+mmux_libc_getaddrinfo 'localhost' 'smtp' @RR{HINTS_ADDRINFO_PTR} ADDRINFO_LINKED_LIST_PTR
+
+ADDRINFO_PTR=@RR{ADDRINFO_LINKED_LIST_PTR}
+until mmux_pointer_is_zero @RR{ADDRINFO_PTR}
+do
+    @{
+        declare AI_ADDR AI_ADDRLEN
+        declare HOST_STR SERV_STR
+
+        mmux_libc_getnameinfo @RR{AI_ADDR} @RR{AI_ADDRLEN} HOST_STR SERV_STR 0
+        printf 'HOST=%s SERVICE=%s\n' @WW{HOST_STR} @WW{SERV_STR}
+    @}
+
+    mmux_libc_ai_next_ref ADDRINFO_PTR @RR{ADDRINFO_PTR}
+done
+
+mmux_libc_free @RR{HINTS_ADDRINFO_PTR}
+mmux_libc_freeaddrinfo @RR{ADDRINFO_LINKED_LIST_PTR}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+
+@deffn Builtin mmux_libc_getnameinfo @var{SOCKADDR_PTR} @var{SOCKADDR_LEN} @var{HOST_VAR} @var{SERVICE_VAR} @var{FLAGS}
+Interface to the standard C language function @cfunc{getnameinfo}, @cfuncpage{getnameinfo}.  Given
+an abstract socket address specification: retrieve informations about the host and the service.
+When successful return true; otherwise: set the shell variable @env{GAI_ERRNUM} to the error code
+and the shell variable @env{GAI_ERRMSG} to a string representing the error message, then return
+false.  Arguments:
+
+@table @var
+@item SOCKADDR_PTR
+Pointer to a @code{struct sockaddr} representing the address to process.
+
+@item SOCKADDR_LEN
+Length, measured in bytes, of the @code{struct sockaddr} value referenced by @var{SOCKADDR_PTR}.
+
+@item HOST_VAR
+Shell variable name; when successful: this builtin binds to this variable a string presentation of
+the host name.
+
+@item SERVICE_VAR
+Shell variable name; when successful: this builtin binds to this variable a string presentation of
+the service name.
+
+@item FLAGS
+Value compatible with @objtype{mmux_sint_t} representing a bitwise OR combination of the
+@code{mmux_libc_NI_*} values.
+@end table
+
 @end deffn
 
 @c page

@@ -88,7 +88,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   htons ntohs htonl ntohl inet_aton inet_addr inet_ntoa inet_network inet_makeaddr
 			   inet_lnaof inet_netof inet_pton inet_ntop
 			   if_nametoindex if_indextoname if_nameindex_to_array
-			   getaddrinfo freeaddrinfo
+			   getaddrinfo freeaddrinfo getnameinfo
 			   bind getsockname socket shutdown socketpair connect listen accept getpeername
 			   send recv sendto recvfrom getsockopt setsockopt)
 

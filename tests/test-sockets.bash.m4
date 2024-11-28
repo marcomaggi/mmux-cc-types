@@ -1525,12 +1525,12 @@ function sockets-setsockopt-SO_LINGER-1.1 () {
 function sockets-getaddrinfo-1.1 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare GAI_ERRNUM GAI_ERRMSG
 	declare  HINTS_ADDRINFO_PTR ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR
 	declare -r ASCII_CANONNAME='localhost'
-	declare -r ASCII_SERVICE=''
+	declare -r ASCII_SERVICE='smtp'
 	declare AI_CANONNAME_PTR AI_CANONNAME_STRING
 
 	mbfl_location_compensate( mmux_libc_addrinfo_calloc HINTS_ADDRINFO_PTR,
@@ -1541,7 +1541,7 @@ function sockets-getaddrinfo-1.1 () {
 	    mbfl_location_leave_when_failure( mmux_libc_ai_flags_set     RR(HINTS_ADDRINFO_PTR) RR(HINTS_AI_FLAGS) )
 	    mbfl_location_leave_when_failure( mmux_libc_ai_family_set    RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_AF_UNSPEC) )
 	    mbfl_location_leave_when_failure( mmux_libc_ai_socktype_set  RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_SOCK_STREAM) )
-	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(HINTS_ADDRINFO_PTR) 'hints')
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(HINTS_ADDRINFO_PTR) 'hints' >&2 )
 	}
 
 	mbfl_location_compensate( mmux_libc_getaddrinfo WW(ASCII_CANONNAME) QQ(ASCII_SERVICE) RR(HINTS_ADDRINFO_PTR) \
@@ -1551,7 +1551,7 @@ function sockets-getaddrinfo-1.1 () {
 	ADDRINFO_PTR=RR(ADDRINFO_LINKED_LIST_PTR)
 	until mmux_pointer_is_zero RR(ADDRINFO_PTR)
 	do
-	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(ADDRINFO_PTR) )
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(ADDRINFO_PTR) >&2 )
 
 	    # We put this here because we loop until ADDRINFO_PTR is NULL.
 	    mbfl_location_leave_when_failure( mmux_libc_ai_canonname_ref AI_CANONNAME_PTR RR(ADDRINFO_PTR) )
@@ -1562,6 +1562,52 @@ function sockets-getaddrinfo-1.1 () {
 
 	dotest-debug WW(ASCII_CANONNAME) WW(AI_CANONNAME_STRING)
 	dotest-equal WW(ASCII_CANONNAME) WW(AI_CANONNAME_STRING)
+    }
+    mbfl_location_leave
+}
+
+
+#### getnameinfo
+
+function sockets-getnameinfo-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare GAI_ERRNUM GAI_ERRMSG
+	declare  HINTS_ADDRINFO_PTR ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR
+	declare -r ASCII_CANONNAME='localhost'
+	declare -r ASCII_SERVICE='smtp'
+	declare AI_CANONNAME_PTR AI_CANONNAME_STRING
+	declare AI_ADDR AI_ADDRLEN
+	declare HOST_STR SERV_STR
+
+	mbfl_location_compensate( mmux_libc_addrinfo_calloc HINTS_ADDRINFO_PTR,
+				  mmux_libc_free         RR(HINTS_ADDRINFO_PTR) )
+	{
+	    declare -r HINTS_AI_FLAGS=$(( RR(mmux_libc_AI_V4MAPPED) | RR(mmux_libc_AI_ADDRCONFIG) | RR(mmux_libc_AI_CANONNAME) ))
+
+	    mbfl_location_leave_when_failure( mmux_libc_ai_flags_set     RR(HINTS_ADDRINFO_PTR) RR(HINTS_AI_FLAGS) )
+	    mbfl_location_leave_when_failure( mmux_libc_ai_family_set    RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_AF_INET) )
+	    mbfl_location_leave_when_failure( mmux_libc_ai_socktype_set  RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_SOCK_STREAM) )
+	    mbfl_location_leave_when_failure( mmux_libc_ai_protocol_set  RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_IPPROTO_TCP) )
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(HINTS_ADDRINFO_PTR) 'hints' >&2 )
+	}
+
+	mbfl_location_compensate( mmux_libc_getaddrinfo WW(ASCII_CANONNAME) QQ(ASCII_SERVICE) RR(HINTS_ADDRINFO_PTR) \
+							ADDRINFO_LINKED_LIST_PTR,
+				  mmux_libc_freeaddrinfo RR(ADDRINFO_LINKED_LIST_PTR) )
+
+	ADDRINFO_PTR=RR(ADDRINFO_LINKED_LIST_PTR)
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(HINTS_ADDRINFO_PTR) >&2 )
+
+	mbfl_location_leave_when_failure( mmux_libc_ai_addr_ref    AI_ADDR    RR(ADDRINFO_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_ai_addrlen_ref AI_ADDRLEN RR(ADDRINFO_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_getnameinfo RR(AI_ADDR) RR(AI_ADDRLEN) HOST_STR SERV_STR 0 )
+
+	dotest-debug HOST=WW(HOST_STR) SERV=WW(SERV_STR)
+	dotest-equal WW(ASCII_CANONNAME) WW(HOST_STR)
     }
     mbfl_location_leave
 }
