@@ -7111,9 +7111,11 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets sockaddr::            Interface to @MmuxCStruct{sockaddr}.
 * sockets addrinfo::            Interface to @MmuxCStruct{addrinfo}.
 * sockets hostent::             Interface to @MmuxCStruct{hostent}.
+* sockets servent::             Interface to @MmuxCStruct{servent}.
 * sockets byteorder::           Converting byte order in socket addresses.
 * sockets convaddr::            Converting socket addresses between formats.
 * sockets hostsdb::             Hosts database.
+* sockets servsdb::             Services database.
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
 * sockets creating::            Creating sockets.
@@ -8039,6 +8041,143 @@ return true.  If an error occurs: print a messaget to @stderr{}, then return fal
 @end defun
 
 @c page
+@node sockets servent
+@section Interface to @MmuxCStruct{servent}
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_servent_SIZEOF
+Size, measured in bytes, of values of type @MmuxCStruct{servent}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_servent_calloc @var{SERVENT_PTR_VAR}
+Allocate a memory block, using @cfunc{calloc}, and bind to the shell variable whose name is
+@var{SERVENT_PTR_VAR} a pointer to it.
+@end deffn
+
+
+@deffn Builtin mmux_libc_s_name_ref @var{S_NAME_VAR} @var{SERVENT_PTR}
+Getter for the field @code{s_name} of a @code{struct servent} value.  Bind to the shell variable
+whose name is @var{S_NAME_VAR} the value of the @code{struct servent} value referenced by
+@var{SERVENT_PTR}.  The value is a shell string.
+
+@example
+declare SERVENT_PTR S_NAME
+
+mmux_libc_setservent 0
+@{
+    mmux_libc_getservent SERVENT_PTR
+    mmux_libc_s_name_ref S_NAME @RR{SERVENT_PTR}
+@}
+mmux_libc_endservent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_s_aliases_ref @var{S_ALIASES_VAR} @var{SERVENT_PTR}
+Getter for the field @code{s_aliases} of a @code{struct servent} value.  Bind to the shell variable
+whose name is @var{S_ALIASES_VAR} the value of the @code{struct servent} value referenced by
+@var{SERVENT_PTR}.  The value if a pointer.
+
+@example
+declare SERVENT_PTR S_ALIASES
+
+mmux_libc_setservent 0
+@{
+    mmux_libc_getservent SERVENT_PTR
+    mmux_libc_s_aliases_ref S_ALIASES @RR{SERVENT_PTR}
+
+    if ! mmux_pointer_is_zero @RR{S_ALIASES}
+    then
+        declare ALIAS_PTR ALIAS_STR
+        declare -i IDX=0
+
+        mmux_pointer_array_ref ALIAS_PTR @RR{S_ALIASES} @RR{IDX}
+        until mmux_pointer_is_zero @RR{ALIAS_PTR}
+        do
+            mmux_pointer_to_bash_string ALIAS_STR @RR{ALIAS_PTR}
+            # do something with ALIAS_STR
+            let ++IDX
+            mmux_pointer_array_ref ALIAS_PTR @RR{S_ALIASES} @RR{IDX}
+        done
+    fi
+@}
+mmux_libc_endservent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_s_port_ref @var{S_PORT_VAR} @var{SERVENT_PTR}
+Getter for the field @code{s_port} of a @code{struct servent} value.  Bind to the shell variable
+whose name is @var{S_PORT_VAR} the value of the @code{struct servent} value referenced by
+@var{SERVENT_PTR}.  The value is an exact integer representing a port number.
+
+The port number in the data structure is represented in network byte order; this builtin retrieves
+the value without any conversion; if we want this value in host byte order: we have to convert it
+using @MmuxBuiltin{mmux_libc_ntohs} or @cfunc{ntohs}.
+
+@example
+declare SERVENT_PTR S_PORT
+
+mmux_libc_setservent 0
+@{
+    mmux_libc_getservent SERVENT_PTR
+    mmux_libc_s_port_ref S_PORT @RR{SERVENT_PTR}
+@}
+mmux_libc_endservent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_s_proto_ref @var{S_PROTO_VAR} @var{SERVENT_PTR}
+Getter for the field @code{s_proto} of a @code{struct servent} value.  Bind to the shell variable
+whose name is @var{S_PROTO_VAR} the value of the @code{struct servent} value referenced by
+@var{SERVENT_PTR}.  The value is a shell string.
+
+@example
+declare SERVENT_PTR S_PROTO
+
+mmux_libc_setservent 0
+@{
+    mmux_libc_getservent SERVENT_PTR
+    mmux_libc_s_proto_ref S_PROTO @RR{SERVENT_PTR}
+@}
+mmux_libc_endservent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_servent_dump @var{SERVENT_PTR}
+@deffnx Builtin mmux_libc_servent_dump @var{SERVENT_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct servent}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct servent}.
+
+The port number in the data structure is represented in network byte order; this builtin converts it
+into host byte order before printing, using @cfunc{ntohs}.
+
+@example
+declare SERVENT_PTR
+
+mmux_libc_setservent 0
+@{
+    mmux_libc_getservent SERVENT_PTR
+    mmux_libc_servent_dump @RR{SERVENT_PTR}
+    @print{} struct servent.s_name = "smtp"
+    @print{} struct servent.s_aliases[0] = "mail"
+    @print{} struct servent.s_port = "25"
+    @print{} struct servent.s_proto = "tcp"
+@}
+mmux_libc_endservent
+@end example
+@end deffn
+
+@c page
 @node sockets byteorder
 @section Converting byte order in socket addresses
 
@@ -8374,6 +8513,66 @@ pointer is null.
 
 @deffn Builtin mmux_libc_sethostent
 Interface to the standard C language function @cfunc{sethostent}, @glibcref{Host Names, sethostent}.
+@end deffn
+
+@c page
+@node sockets servsdb
+@section Services database
+
+
+To inspect the hosts database @file{/etc/services} we do:
+
+@example
+mmux_libc_setservent 0
+@{
+    declare SERVENT_PTR
+    declare -i IDX=0
+
+    mmux_libc_getservent SERVENT_PTR
+    until mmux_pointer_is_zero @RR{SERVENT_PTR}
+    do
+        @{
+            mmux_libc_servent_dump @RR{SERVENT_PTR} "servent[$IDX]"
+            echo
+        @} >&2
+        mmux_libc_getservent SERVENT_PTR
+        let ++IDX
+    done
+@}
+mmux_libc_endservent
+@end example
+
+@noindent
+which prints something like:
+
+@example
+...
+servent[34].s_name = "smtp"
+servent[34].s_aliases[0] = "mail"
+servent[34].s_port = "25"
+servent[34].s_proto = "tcp"
+...
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_setservent @var{STAYOPEN}
+Interface to the standard C language function @cfunc{setservent}, @glibcref{Host Names, setservent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getservent @var{SERVENT_PTR_VAR}
+Interface to the standard C language function @cfunc{getservent}, @glibcref{Host Names, getservent}.
+
+The argument @var{SERVENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to the next @code{struct servent} in the database; when there are no more entries: the
+pointer is null.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setservent
+Interface to the standard C language function @cfunc{setservent}, @glibcref{Host Names, setservent}.
 @end deffn
 
 @c page

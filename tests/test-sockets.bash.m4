@@ -1618,7 +1618,7 @@ function sockets-getnameinfo-1.1 () {
 function sockets-gethostent-1.1 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare HOSTENT_PTR
 	declare -i IDX=0
@@ -1630,15 +1630,171 @@ function sockets-gethostent-1.1 () {
 
 	until mmux_pointer_is_zero RR(HOSTENT_PTR)
 	do
-	    {
-		mmux_libc_hostent_dump RR(HOSTENT_PTR) "hostent[$IDX]"
-		echo
-	    } >&2
+	    if dotest-option-debug
+	    then
+		{
+		    mmux_libc_hostent_dump RR(HOSTENT_PTR) "hostent[$IDX]"
+		    echo
+		} >&2
+	    fi
 	    mbfl_location_leave_when_failure( mmux_libc_gethostent HOSTENT_PTR )
 	    let ++IDX
 	done
 
 	true
+    }
+    mbfl_location_leave
+}
+
+
+#### services database
+
+function sockets-getservent-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR
+	declare -i IDX=0
+
+	mbfl_location_compensate( mmux_libc_setservent 0,
+				  mmux_libc_endservent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+
+	until mmux_pointer_is_zero RR(SERVENT_PTR)
+	do
+	    if dotest-option-debug
+	    then
+		{
+		    mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]"
+		    echo
+		} >&2
+	    fi
+	    mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+	    let ++IDX
+	done
+
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-servent-s_name-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR S_NAME
+
+	mbfl_location_compensate( mmux_libc_setservent 0,
+				  mmux_libc_endservent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_s_name_ref S_NAME RR(SERVENT_PTR) )
+
+	dotest-debug S_NAME=WW(S_NAME)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-servent-s_aliases-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR S_ALIASES
+
+	mbfl_location_compensate( mmux_libc_setservent 0,
+				  mmux_libc_endservent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_s_aliases_ref S_ALIASES RR(SERVENT_PTR) )
+
+	dotest-debug S_ALIASES=WW(S_ALIASES)
+
+	if ! mmux_pointer_is_zero RR(S_ALIASES)
+	then
+	    declare ALIAS_PTR ALIAS_STR
+	    declare -i IDX=0
+
+	    mbfl_location_leave_when_failure( mmux_pointer_array_ref ALIAS_PTR RR(S_ALIASES) RR(IDX) )
+	    dotest-debug ALIAS_PTR=WW(ALIAS_PTR)
+	    until mmux_pointer_is_zero RR(ALIAS_PTR)
+	    do
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string ALIAS_STR RR(ALIAS_PTR) )
+		dotest-debug ALIAS_STR=WW(ALIAS_STR)
+		let ++IDX
+		mbfl_location_leave_when_failure( mmux_pointer_array_ref ALIAS_PTR RR(S_ALIASES) RR(IDX) )
+		dotest-debug ALIAS_PTR=WW(ALIAS_PTR)
+	    done
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-servent-s_port-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR S_PORT
+
+	mbfl_location_compensate( mmux_libc_setservent 0,
+				  mmux_libc_endservent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_s_port_ref S_PORT RR(SERVENT_PTR) )
+
+	dotest-debug S_PORT=WW(S_PORT)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-servent-s_proto-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR S_PROTO
+
+	mbfl_location_compensate( mmux_libc_setservent 0,
+				  mmux_libc_endservent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_s_proto_ref S_PROTO RR(SERVENT_PTR) )
+
+	dotest-debug S_PROTO=WW(S_PROTO)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-servent-dump-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR
+
+	mbfl_location_compensate( mmux_libc_setservent 0,
+				  mmux_libc_endservent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_servent_dump RR(SERVENT_PTR) )
     }
     mbfl_location_leave
 }

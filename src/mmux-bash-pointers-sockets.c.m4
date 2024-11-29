@@ -735,7 +735,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR HOSTENT_POINTER"]]])
 ]]])
 
-DEFINE_STRUCT_HOSTENT_GETTER([[[h_name]]],		[[[pointer]]])
+DEFINE_STRUCT_HOSTENT_GETTER([[[h_name]]],		[[[string]]])
 DEFINE_STRUCT_HOSTENT_GETTER([[[h_aliases]]],		[[[pointer]]])
 DEFINE_STRUCT_HOSTENT_GETTER([[[h_addrtype]]],		[[[sint]]])
 DEFINE_STRUCT_HOSTENT_GETTER([[[h_length]]],		[[[sint]]])
@@ -817,6 +817,89 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_dump]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[((2 == argc) || (3 == argc))]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER HOSTENT_POINTER [STRUCT_NAME]"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Sockets: struct servent.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_calloc]]])
+{
+  char const *		servent_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(servent_pointer_varname,	argv[1]);
+  {
+    struct servent *	ptr = calloc(1, sizeof(struct servent));
+
+    return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STRUCT_SERVENT_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
+{
+  char const *		$1_varname;
+  mmux_pointer_t	_servent_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM($1_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_servent_pointer,	argv[2]);
+  {
+    struct servent *	servent_pointer = _servent_pointer;
+
+    return mmux_$2_bind_to_bash_variable($1_varname, servent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR SERVENT_POINTER"]]])
+]]])
+
+DEFINE_STRUCT_SERVENT_GETTER([[[s_name]]],		[[[string]]])
+DEFINE_STRUCT_SERVENT_GETTER([[[s_aliases]]],		[[[pointer]]])
+DEFINE_STRUCT_SERVENT_GETTER([[[s_port]]],		[[[sint]]])
+DEFINE_STRUCT_SERVENT_GETTER([[[s_proto]]],		[[[string]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_dump]]])
+{
+  mmux_pointer_t	_servent_pointer;
+  char const *		struct_name = "struct servent";
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_servent_pointer,	argv[1]);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(struct_name,	argv[2]);
+  }
+  {
+    struct servent *	servent_pointer = _servent_pointer;
+    int			aliases_idx = 0;
+
+    printf("%s.s_name = \"%s\"\n", struct_name, servent_pointer->s_name);
+
+    if (NULL != servent_pointer->s_aliases) {
+      for (; servent_pointer->s_aliases[aliases_idx]; ++aliases_idx) {
+	printf("%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, servent_pointer->s_aliases[aliases_idx]);
+      }
+    }
+    if (0 == aliases_idx) {
+      printf("%s.s_aliases = \"0x0\"\n", struct_name);
+    }
+
+    printf("%s.s_port = \"%d\"\n", struct_name, ntohs(servent_pointer->s_port));
+    printf("%s.s_proto = \"%s\"\n", struct_name, servent_pointer->s_proto);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------
@@ -1293,6 +1376,54 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gethostent]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER HOSTENT_PTR_VAR"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Sockets: services database.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setservent]]])
+{
+  mmux_sint_t		stayopen;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(stayopen,	argv[1]);
+  {
+    setservent(stayopen);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STAYOPEN"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_endservent]]])
+{
+  endservent();
+  return MMUX_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(1 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservent]]])
+{
+  char const *		servent_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(servent_pointer_varname,	argv[1]);
+  {
+    struct servent *	he = getservent();
+
+    return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_PTR_VAR"]]])
 
 
 /** --------------------------------------------------------------------
@@ -2166,6 +2297,9 @@ mmux_bash_pointers_init_sockets_module (void)
     if (MMUX_SUCCESS != brv) { return brv; }
 
     brv = mmux_bash_create_global_sint_variable("mmux_libc_hostent_SIZEOF", sizeof(struct hostent), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_servent_SIZEOF", sizeof(struct servent), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
   }
 
