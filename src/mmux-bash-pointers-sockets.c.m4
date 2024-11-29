@@ -903,6 +903,87 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Sockets: struct protoent.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_calloc]]])
+{
+  char const *		protoent_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(protoent_pointer_varname,	argv[1]);
+  {
+    struct protoent *	ptr = calloc(1, sizeof(struct protoent));
+
+    return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STRUCT_PROTOENT_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
+{
+  char const *		$1_varname;
+  mmux_pointer_t	_protoent_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM($1_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_protoent_pointer,	argv[2]);
+  {
+    struct protoent *	protoent_pointer = _protoent_pointer;
+
+    return mmux_$2_bind_to_bash_variable($1_varname, protoent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR PROTOENT_POINTER"]]])
+]]])
+
+DEFINE_STRUCT_PROTOENT_GETTER([[[p_name]]],		[[[string]]])
+DEFINE_STRUCT_PROTOENT_GETTER([[[p_aliases]]],		[[[pointer]]])
+DEFINE_STRUCT_PROTOENT_GETTER([[[p_proto]]],		[[[sint]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_dump]]])
+{
+  mmux_pointer_t	_protoent_pointer;
+  char const *		struct_name = "struct protoent";
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_protoent_pointer,	argv[1]);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(struct_name,	argv[2]);
+  }
+  {
+    struct protoent *	protoent_pointer = _protoent_pointer;
+    int			aliases_idx = 0;
+
+    printf("%s.s_name = \"%s\"\n", struct_name, protoent_pointer->p_name);
+
+    if (NULL != protoent_pointer->p_aliases) {
+      for (; protoent_pointer->p_aliases[aliases_idx]; ++aliases_idx) {
+	printf("%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, protoent_pointer->p_aliases[aliases_idx]);
+      }
+    }
+    if (0 == aliases_idx) {
+      printf("%s.s_aliases = \"0x0\"\n", struct_name);
+    }
+
+    printf("%s.s_proto = \"%d\"\n", struct_name, protoent_pointer->p_proto);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_POINTER [STRUCT_NAME]"]]])
+
+
+/** --------------------------------------------------------------------
  ** Sockets: byte order.
  ** ----------------------------------------------------------------- */
 
@@ -1471,6 +1552,93 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyport]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[((3 == argc) || (4 == argc))]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_PTR_VAR PORT [PROTO]"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Sockets: protocols database.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setprotoent]]])
+{
+  mmux_sint_t		stayopen;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(stayopen,	argv[1]);
+  {
+    setprotoent(stayopen);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STAYOPEN"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_endprotoent]]])
+{
+  endprotoent();
+  return MMUX_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(1 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotoent]]])
+{
+  char const *		protoent_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(protoent_pointer_varname,	argv[1]);
+  {
+    struct protoent *	he = getprotoent();
+
+    return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_PTR_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobyname]]])
+{
+  char const *		protoent_pointer_varname;
+  char const *		name;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(protoent_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(name,				argv[2]);
+  {
+    struct protoent *	he = getprotobyname(name);
+
+    return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_PTR_VAR NAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobynumber]]])
+{
+  char const *		protoent_pointer_varname;
+  mmux_sint_t		proto;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(protoent_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(proto,				argv[2]);
+  {
+    struct protoent *	he = getprotobynumber(proto);
+
+    return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_PTR_VAR PORT"]]])
 
 
 /** --------------------------------------------------------------------

@@ -89,6 +89,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   sethostent gethostent endhostent
 			   servent_calloc s_name_ref s_aliases_ref s_port_ref s_proto_ref servent_dump
 			   setservent getservent endservent getservbyname getservbyport
+			   protoent_calloc p_name_ref p_aliases_ref p_proto_ref protoent_dump
+			   setprotoent getprotoent endprotoent getprotobyname getprotobynumber
 			   htons ntohs htonl ntohl inet_aton inet_addr inet_ntoa inet_network inet_makeaddr
 			   inet_lnaof inet_netof inet_pton inet_ntop
 			   if_nametoindex if_indextoname if_nameindex_to_array

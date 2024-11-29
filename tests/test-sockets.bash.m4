@@ -1694,7 +1694,7 @@ function sockets-getservbyname-1.1 () {
 	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
 	then
 	    if dotest-option-debug
-	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
+	    then mmux_libc_servent_dump RR(SERVENT_PTR) >&2
 	    fi
 	fi
 	true
@@ -1713,7 +1713,7 @@ function sockets-getservbyname-1.2 () {
 	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
 	then
 	    if dotest-option-debug
-	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
+	    then mmux_libc_servent_dump RR(SERVENT_PTR) >&2
 	    fi
 	fi
 	true
@@ -1883,6 +1883,182 @@ function sockets-servent-dump-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getservent SERVENT_PTR )
 	mbfl_location_leave_when_failure( mmux_libc_servent_dump RR(SERVENT_PTR) )
+    }
+    mbfl_location_leave
+}
+
+
+#### protocols database
+
+function sockets-getprotoent-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR
+	declare -i IDX=0
+
+	mbfl_location_compensate( mmux_libc_setprotoent 0,
+				  mmux_libc_endprotoent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotoent PROTOENT_PTR )
+
+	until mmux_pointer_is_zero RR(PROTOENT_PTR)
+	do
+	    if dotest-option-debug
+	    then
+		{
+		    mmux_libc_protoent_dump RR(PROTOENT_PTR) "protoent[$IDX]"
+		    echo
+		} >&2
+	    fi
+	    mbfl_location_leave_when_failure( mmux_libc_getprotoent PROTOENT_PTR )
+	    let ++IDX
+	done
+
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-getprotobyname-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotobyname PROTOENT_PTR 'tcp' )
+
+	if ! mmux_pointer_is_zero RR(PROTOENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_protoent_dump RR(PROTOENT_PTR) >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-getprotobynumber-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotobynumber PROTOENT_PTR RR(mmux_libc_IPPROTO_TCP) )
+
+	if ! mmux_pointer_is_zero RR(PROTOENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_protoent_dump RR(PROTOENT_PTR) >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-protoent-p_name-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR S_NAME
+
+	mbfl_location_compensate( mmux_libc_setprotoent 0,
+				  mmux_libc_endprotoent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotoent PROTOENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_p_name_ref S_NAME RR(PROTOENT_PTR) )
+
+	dotest-debug S_NAME=WW(S_NAME)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-protoent-p_aliases-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR S_ALIASES
+
+	mbfl_location_compensate( mmux_libc_setprotoent 0,
+				  mmux_libc_endprotoent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotoent PROTOENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_p_aliases_ref S_ALIASES RR(PROTOENT_PTR) )
+
+	dotest-debug S_ALIASES=WW(S_ALIASES)
+
+	if ! mmux_pointer_is_zero RR(S_ALIASES)
+	then
+	    declare ALIAS_PTR ALIAS_STR
+	    declare -i IDX=0
+
+	    mbfl_location_leave_when_failure( mmux_pointer_array_ref ALIAS_PTR RR(S_ALIASES) RR(IDX) )
+	    dotest-debug ALIAS_PTR=WW(ALIAS_PTR)
+	    until mmux_pointer_is_zero RR(ALIAS_PTR)
+	    do
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string ALIAS_STR RR(ALIAS_PTR) )
+		dotest-debug ALIAS_STR=WW(ALIAS_STR)
+		let ++IDX
+		mbfl_location_leave_when_failure( mmux_pointer_array_ref ALIAS_PTR RR(S_ALIASES) RR(IDX) )
+		dotest-debug ALIAS_PTR=WW(ALIAS_PTR)
+	    done
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-protoent-p_proto-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR S_PROTO
+
+	mbfl_location_compensate( mmux_libc_setprotoent 0,
+				  mmux_libc_endprotoent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotoent PROTOENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_p_proto_ref S_PROTO RR(PROTOENT_PTR) )
+
+	dotest-debug S_PROTO=WW(S_PROTO)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-protoent-dump-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare PROTOENT_PTR
+
+	mbfl_location_compensate( mmux_libc_setprotoent 0,
+				  mmux_libc_endprotoent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getprotoent PROTOENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_protoent_dump RR(PROTOENT_PTR) )
     }
     mbfl_location_leave
 }
