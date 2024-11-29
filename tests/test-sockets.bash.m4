@@ -1682,6 +1682,94 @@ function sockets-getservent-1.1 () {
 
 ### ------------------------------------------------------------------------
 
+function sockets-getservbyname-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR
+
+	mbfl_location_leave_when_failure( mmux_libc_getservbyname SERVENT_PTR 'smtp' 'tcp' )
+
+	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+function sockets-getservbyname-1.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR
+
+	mbfl_location_leave_when_failure( mmux_libc_getservbyname SERVENT_PTR 'smtp' )
+
+	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-getservbyport-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR
+	declare -i HOST_BYTEORDER_PORT=25
+	declare -i NETWORK_BYTEORDER_PORT
+
+	mbfl_location_leave_when_failure( mmux_libc_htons NETWORK_BYTEORDER_PORT RR(HOST_BYTEORDER_PORT) )
+	mbfl_location_leave_when_failure( mmux_libc_getservbyport SERVENT_PTR RR(NETWORK_BYTEORDER_PORT) 'tcp' )
+
+	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+function sockets-getservbyport-1.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare SERVENT_PTR
+	declare -i HOST_BYTEORDER_PORT=25
+	declare -i NETWORK_BYTEORDER_PORT
+
+	mbfl_location_leave_when_failure( mmux_libc_htons NETWORK_BYTEORDER_PORT RR(HOST_BYTEORDER_PORT) )
+	mbfl_location_leave_when_failure( mmux_libc_getservbyport SERVENT_PTR RR(NETWORK_BYTEORDER_PORT) )
+
+	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
 function sockets-servent-s_name-1.1 () {
     mbfl_location_enter
     {

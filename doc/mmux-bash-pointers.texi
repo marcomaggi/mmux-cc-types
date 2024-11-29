@@ -8575,6 +8575,55 @@ pointer is null.
 Interface to the standard C language function @cfunc{setservent}, @glibcref{Host Names, setservent}.
 @end deffn
 
+
+@deffn Builtin mmux_libc_getservbyname @var{SERVENT_PTR_VAR} @var{NAME}
+@deffnx Builtin mmux_libc_getservbyname @var{SERVENT_PTR_VAR} @var{NAME} @var{PROTO}
+Interface to the standard C language function @cfunc{getservbyname}, @glibcref{Host Names,
+getservbyname}.
+
+The argument @var{SERVENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to a matching @code{struct servent} in the database; when there are no matching entries: the
+pointer is null.
+
+The optional argument @var{PROTO} must be a shell string representing the protocol; when not given:
+@cfunc{getservbyname} is called with the corresponding argument set to @cnull{}.
+
+@example
+declare SERVENT_PTR
+
+mmux_libc_getservbyname SERVENT_PTR 'smtp' 'tcp'
+if ! mmux_pointer_is_zero @RR{SERVENT_PTR}
+then mmux_libc_servent_dump @RR{SERVENT_PTR}
+fi
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getservbyport @var{SERVENT_PTR_VAR} @var{NETWORK_BYTEORDER_PORT}
+@deffnx Builtin mmux_libc_getservbyport @var{SERVENT_PTR_VAR} @var{NETWORK_BYTEORDER_PORT} @var{PROTO}
+Interface to the standard C language function @cfunc{getservbyport}, @glibcref{Host Names,
+getservbyport}.
+
+The argument @var{SERVENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to a matching @code{struct servent} in the database; when there are no matching entries: the
+pointer is null.
+
+The optional argument @var{PROTO} must be a shell string representing the protocol; when not given:
+@cfunc{getservbyport} is called with the corresponding argument set to @cnull{}.
+
+@example
+declare SERVENT_PTR
+declare -i HOST_BYTEORDER_PORT=25
+declare -i NETWORK_BYTEORDER_PORT
+
+mmux_libc_htons NETWORK_BYTEORDER_PORT @RR{HOST_BYTEORDER_PORT}
+mmux_libc_getservbyport SERVENT_PTR @RR{NETWORK_BYTEORDER_PORT} 'tcp'
+if ! mmux_pointer_is_zero @RR{SERVENT_PTR}
+then mmux_libc_servent_dump @RR{SERVENT_PTR}
+fi
+@end example
+@end deffn
+
 @c page
 @node sockets getaddrinfo
 @section Interface to @cfunc{getaddrinfo}

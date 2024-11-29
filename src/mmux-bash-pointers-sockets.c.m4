@@ -1425,6 +1425,53 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_PTR_VAR"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyname]]])
+{
+  char const *		servent_pointer_varname;
+  char const *		name;
+  char const *		proto = NULL;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(servent_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(name,				argv[2]);
+  if (4 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(proto,			argv[3]);
+  }
+  {
+    struct servent *	he = getservbyname(name, proto);
+
+    return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((3 == argc) || (4 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_PTR_VAR NAME [PROTO]"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyport]]])
+{
+  char const *		servent_pointer_varname;
+  mmux_sint_t		port;
+  char const *		proto = NULL;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(servent_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(port,				argv[2]);
+  if (4 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(proto,			argv[3]);
+  }
+  {
+    struct servent *	he = getservbyport(port, proto);
+
+    return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((3 == argc) || (4 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_PTR_VAR PORT [PROTO]"]]])
+
 
 /** --------------------------------------------------------------------
  ** Sockets: interface naming.
