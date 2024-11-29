@@ -1613,6 +1613,37 @@ function sockets-getnameinfo-1.1 () {
 }
 
 
+#### hosts database
+
+function sockets-gethostent-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-set-debug
+
+	declare HOSTENT_PTR
+	declare -i IDX=0
+
+	mbfl_location_compensate( mmux_libc_sethostent 0,
+				  mmux_libc_endhostent )
+
+	mbfl_location_leave_when_failure( mmux_libc_gethostent HOSTENT_PTR )
+
+	until mmux_pointer_is_zero RR(HOSTENT_PTR)
+	do
+	    {
+		mmux_libc_hostent_dump RR(HOSTENT_PTR) "hostent[$IDX]"
+		echo
+	    } >&2
+	    mbfl_location_leave_when_failure( mmux_libc_gethostent HOSTENT_PTR )
+	    let ++IDX
+	done
+
+	true
+    }
+    mbfl_location_leave
+}
+
+
 #### client/server
 
 # function client-server-1.1 () {

@@ -7113,6 +7113,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets hostent::             Interface to @MmuxCStruct{hostent}.
 * sockets byteorder::           Converting byte order in socket addresses.
 * sockets convaddr::            Converting socket addresses between formats.
+* sockets hostsdb::             Hosts database.
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
 * sockets creating::            Creating sockets.
@@ -7983,6 +7984,60 @@ return true.  If an error occurs: print a messaget to @stderr{}, then return fal
 Size, measured in bytes, of values of type @MmuxCStruct{hostent}.
 @end defvr
 
+
+@deffn Builtin mmux_libc_hostent_calloc @var{HOSTENT_PTR_VAR}
+Allocate a memory block, using @cfunc{calloc}, and bind to the shell variable whose name is
+@var{HOSTENT_PTR_VAR} a pointer to it.
+@end deffn
+
+
+@deffn Builtin mmux_libc_h_name_ref @var{H_NAME_VAR} @var{HOSTENT_PTR}
+Getter for the field @code{h_name} of a @code{struct hostent} value.  Bind to the shell variable
+whose name is @var{H_NAME_VAR} the value of the @code{struct hostent} value referenced by
+@var{HOSTENT_PTR}.  The value is a shell string.
+@end deffn
+
+
+@deffn Builtin mmux_libc_h_aliases_ref @var{H_ALIASES_VAR} @var{HOSTENT_PTR}
+Getter for the field @code{h_aliases} of a @code{struct hostent} value.  Bind to the shell variable
+whose name is @var{H_ALIASES_VAR} the value of the @code{struct hostent} value referenced by
+@var{HOSTENT_PTR}.  The value if a pointer.
+@end deffn
+
+
+@deffn Builtin mmux_libc_h_addrtype_ref @var{H_ADDRTYPE_VAR} @var{HOSTENT_PTR}
+Getter for the field @code{h_addrtype} of a @code{struct hostent} value.  Bind to the shell variable
+whose name is @var{H_ADDRTYPE_VAR} the value of the @code{struct hostent} value referenced by
+@var{HOSTENT_PTR}.  The value is an exact integer representing @code{AF_INET} or @code{AF_INET6}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_h_length_ref @var{H_LENGTH_VAR} @var{HOSTENT_PTR}
+Getter for the field @code{h_length} of a @code{struct hostent} value.  Bind to the shell variable
+whose name is @var{H_LENGTH_VAR} the value of the @code{struct hostent} value referenced by
+@var{HOSTENT_PTR}.  The value is an exact integer.
+@end deffn
+
+
+@deffn Builtin mmux_libc_h_addr_list_ref @var{H_ADDR_LIST_VAR} @var{HOSTENT_PTR}
+Getter for the field @code{h_addr_list} of a @code{struct hostent} value.  Bind to the shell variable
+whose name is @var{H_ADDR_LIST_VAR} the value of the @code{struct hostent} value referenced by
+@var{HOSTENT_PTR}.  The value is a pointer.
+@end deffn
+
+
+@deffn Builtin mmux_libc_h_addr_ref @var{H_ADDR_VAR} @var{HOSTENT_PTR}
+Getter for the field @code{h_addr} of a @code{struct hostent} value.  Bind to the shell variable
+whose name is @var{H_ADDR_VAR} the value of the @code{struct hostent} value referenced by
+@var{HOSTENT_PTR}.  The value is a pointer.
+@end deffn
+
+
+@defun mmux_libc_hostent_dump @var{HOSTENT_PTR}
+Applied to a pointer to @code{struct hostent}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+@end defun
+
 @c page
 @node sockets byteorder
 @section Converting byte order in socket addresses
@@ -8258,6 +8313,67 @@ mmux_libc_inet_netof UINT32_NET_ADDR @WW{UINT32_ADDR}
 @WW{UINT32_NET_ADDR}                  @result{} 16777215
 printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
 @end example
+@end deffn
+
+@c page
+@node sockets hostsdb
+@section Hosts database
+
+
+To inspect the hosts database @file{/etc/hosts} we do:
+
+@example
+mmux_libc_sethostent 0
+@{
+    declare HOSTENT_PTR
+    declare -i IDX=0
+
+    mmux_libc_gethostent HOSTENT_PTR
+    until mmux_pointer_is_zero @RR{HOSTENT_PTR}
+    do
+        @{
+            mmux_libc_hostent_dump @RR{HOSTENT_PTR} "hostent[$IDX]"
+            echo
+        @} >&2
+        mmux_libc_gethostent HOSTENT_PTR
+        let ++IDX
+    done
+@}
+mmux_libc_endhostent
+@end example
+
+@noindent
+which prints something like:
+
+@example
+hostent[0].h_name = "localhost"
+hostent[0].h_aliases = "0x0"
+hostent[0].h_addrtype = "2" (AF_INET)
+hostent[0].h_length = "4"
+hostent[0].h_addr_list[0] = "127.0.0.1"
+hostent[0].h_addr = "127.0.0.1"
+...
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_sethostent @var{STAYOPEN}
+Interface to the standard C language function @cfunc{sethostent}, @glibcref{Host Names, sethostent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_gethostent @var{HOSTENT_PTR_VAR}
+Interface to the standard C language function @cfunc{gethostent}, @glibcref{Host Names, gethostent}.
+
+The argument @var{HOSTENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to the next @code{struct hostent} in the database; when there are no more entries: the
+pointer is null.
+@end deffn
+
+
+@deffn Builtin mmux_libc_sethostent
+Interface to the standard C language function @cfunc{sethostent}, @glibcref{Host Names, sethostent}.
 @end deffn
 
 @c page
