@@ -2064,6 +2064,240 @@ function sockets-protoent-dump-1.1 () {
 }
 
 
+#### networks database
+
+function sockets-getnetent-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR
+	declare -i IDX=0
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+
+	until mmux_pointer_is_zero RR(NETENT_PTR)
+	do
+	    if dotest-option-debug
+	    then
+		{
+		    mmux_libc_netent_dump RR(NETENT_PTR) "netent[$IDX]"
+		    echo
+		} >&2
+	    fi
+	    mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	    let ++IDX
+	done
+
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-getnetbyname-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR N_NAME
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_n_name_ref N_NAME RR(NETENT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_getnetbyname NETENT_PTR RR(N_NAME) )
+
+	if ! mmux_pointer_is_zero RR(NETENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-getnetbyaddr-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR N_NET
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_n_net_ref N_NET RR(NETENT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_getnetbyaddr NETENT_PTR RR(N_NET)  RR(mmux_libc_AF_INET))
+
+	if ! mmux_pointer_is_zero RR(NETENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+function sockets-getnetbyaddr-1.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR
+	declare N_NET_STR='127.0.0.0'
+	declare IN_ADDR_POINTER
+	declare N_NET_NETWORK_BYTEORDER
+	declare N_NET_HOST_BYTEORDER
+
+	mbfl_location_compensate( mmux_libc_calloc IN_ADDR_POINTER 1 RR(mmux_libc_in_addr_SIZEOF),
+				  mmux_libc_free RR(IN_ADDR_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET) WW(N_NET_STR) RR(IN_ADDR_POINTER) )
+	mbfl_location_leave_when_failure( mmux_uint32_pointer_ref N_NET_NETWORK_BYTEORDER RR(IN_ADDR_POINTER) 0 )
+	mbfl_location_leave_when_failure( mmux_libc_ntohl N_NET_HOST_BYTEORDER RR(N_NET_NETWORK_BYTEORDER)  )
+	mbfl_location_leave_when_failure( mmux_libc_getnetbyaddr NETENT_PTR RR(N_NET_HOST_BYTEORDER) RR(mmux_libc_AF_INET))
+
+	if ! mmux_pointer_is_zero RR(NETENT_PTR)
+	then
+	    if dotest-option-debug
+	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
+	    fi
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-netent-n_name-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR N_NAME
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_n_name_ref N_NAME RR(NETENT_PTR) )
+	dotest-debug N_NAME=WW(N_NAME)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-netent-n_aliases-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR N_ALIASES
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_n_aliases_ref N_ALIASES RR(NETENT_PTR) )
+
+	dotest-debug N_ALIASES=WW(N_ALIASES)
+
+	if ! mmux_pointer_is_zero RR(N_ALIASES)
+	then
+	    declare ALIAS_PTR ALIAS_STR
+	    declare -i IDX=0
+
+	    mbfl_location_leave_when_failure( mmux_pointer_array_ref ALIAS_PTR RR(N_ALIASES) RR(IDX) )
+	    dotest-debug ALIAS_PTR=WW(ALIAS_PTR)
+	    until mmux_pointer_is_zero RR(ALIAS_PTR)
+	    do
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string ALIAS_STR RR(ALIAS_PTR) )
+		dotest-debug ALIAS_STR=WW(ALIAS_STR)
+		let ++IDX
+		mbfl_location_leave_when_failure( mmux_pointer_array_ref ALIAS_PTR RR(N_ALIASES) RR(IDX) )
+		dotest-debug ALIAS_PTR=WW(ALIAS_PTR)
+	    done
+	fi
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-netent-n_addrtype-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR S_PROTO
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_n_addrtype_ref N_ADDRTYPE RR(NETENT_PTR) )
+
+	dotest-debug N_ADDRTYPE=WW(N_ADDRTYPE)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-netent-n_net-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR N_NET
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_n_net_ref N_NET RR(NETENT_PTR) )
+
+	dotest-debug N_NET=WW(N_NET)
+	true
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+function sockets-netent-dump-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	declare NETENT_PTR
+
+	mbfl_location_compensate( mmux_libc_setnetent 0,
+				  mmux_libc_endnetent )
+
+	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
+	mbfl_location_leave_when_failure( mmux_libc_netent_dump RR(NETENT_PTR) )
+    }
+    mbfl_location_leave
+}
+
+
 #### client/server
 
 # function client-server-1.1 () {

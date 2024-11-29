@@ -984,6 +984,100 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Sockets: struct netent.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_calloc]]])
+{
+  char const *		netent_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(netent_pointer_varname,	argv[1]);
+  {
+    struct netent *	ptr = calloc(1, sizeof(struct netent));
+
+    return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETENT_POINTER_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_STRUCT_NETENT_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
+{
+  char const *		$1_varname;
+  mmux_pointer_t	_netent_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM($1_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_netent_pointer,	argv[2]);
+  {
+    struct netent *	netent_pointer = _netent_pointer;
+
+    return mmux_$2_bind_to_bash_variable($1_varname, netent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR NETENT_POINTER"]]])
+]]])
+
+DEFINE_STRUCT_NETENT_GETTER([[[n_name]]],		[[[string]]])
+DEFINE_STRUCT_NETENT_GETTER([[[n_aliases]]],		[[[pointer]]])
+DEFINE_STRUCT_NETENT_GETTER([[[n_addrtype]]],		[[[sint]]])
+DEFINE_STRUCT_NETENT_GETTER([[[n_net]]],		[[[ulong]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_dump]]])
+{
+  mmux_pointer_t	_netent_pointer;
+  char const *		struct_name = "struct netent";
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_netent_pointer,	argv[1]);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(struct_name,	argv[2]);
+  }
+  {
+    struct netent *	netent_pointer = _netent_pointer;
+    int			aliases_idx = 0;
+
+    printf("%s.n_name = \"%s\"\n", struct_name, netent_pointer->n_name);
+
+    if (NULL != netent_pointer->n_aliases) {
+      for (; netent_pointer->n_aliases[aliases_idx]; ++aliases_idx) {
+	printf("%s.n_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, netent_pointer->n_aliases[aliases_idx]);
+      }
+    }
+    if (0 == aliases_idx) {
+      printf("%s.n_aliases = \"0x0\"\n", struct_name);
+    }
+
+    printf("%s.n_addrtype = \"%d\"\n", struct_name, netent_pointer->n_addrtype);
+
+    /* The value "netent_pointer->n_net" is in host byte order. */
+    {
+#undef  IS_THIS_ENOUGH_QUESTION_MARK
+#define IS_THIS_ENOUGH_QUESTION_MARK	512
+      char		net_str[IS_THIS_ENOUGH_QUESTION_MARK];
+      mmux_uint32_t	network_byteorder_net = htonl(netent_pointer->n_net);
+
+      inet_ntop(netent_pointer->n_addrtype, &(network_byteorder_net), net_str, (mmux_socklen_t)IS_THIS_ENOUGH_QUESTION_MARK);
+
+      printf("%s.n_net = \"%lu\" (%s)\n", struct_name, (mmux_ulong_t)(netent_pointer->n_net), net_str);
+    }
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETENT_POINTER [STRUCT_NAME]"]]])
+
+
+/** --------------------------------------------------------------------
  ** Sockets: byte order.
  ** ----------------------------------------------------------------- */
 
@@ -1638,7 +1732,96 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobynumber]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_PTR_VAR PORT"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_PTR_VAR NUMBER"]]])
+
+
+/** --------------------------------------------------------------------
+ ** Sockets: networks database.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setnetent]]])
+{
+  mmux_sint_t		stayopen;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(stayopen,	argv[1]);
+  {
+    setnetent(stayopen);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STAYOPEN"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_endnetent]]])
+{
+  endnetent();
+  return MMUX_SUCCESS;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(1 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetent]]])
+{
+  char const *		netent_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(netent_pointer_varname,	argv[1]);
+  {
+    struct netent *	he = getnetent();
+
+    return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(2 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETENT_PTR_VAR"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyname]]])
+{
+  char const *		netent_pointer_varname;
+  char const *		name;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(netent_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(name,			argv[2]);
+  {
+    struct netent *	he = getnetbyname(name);
+
+    return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETENT_PTR_VAR NAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyaddr]]])
+{
+  char const *		netent_pointer_varname;
+  mmux_uint32_t		net;
+  mmux_sint_t		type;
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(netent_pointer_varname,	argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_UINT32(net,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(type,			argv[3]);
+  {
+    struct netent *	he = getnetbyaddr(net, type);
+
+    return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETENT_PTR_VAR UINT32_NET SINT_TYPE"]]])
 
 
 /** --------------------------------------------------------------------
