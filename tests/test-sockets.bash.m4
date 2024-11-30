@@ -2399,6 +2399,7 @@ function sockfd1-sockets-socketpair-1.2 () {
 	dotest-equal RR(MESSAGE_LENGTH) RR(NBYTES_SENT_BY_SOCKFD1)
     }
     mbfl_location_leave
+    mbfl_exit
 }
 function sockfd2-sockets-socketpair-1.2 () {
     mbfl_location_enter
