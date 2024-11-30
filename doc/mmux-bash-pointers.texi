@@ -1089,6 +1089,12 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{SOCK_SEQPACKET}
 @MmuxDefineGlobalVarSystemConstant{SOCK_STREAM}
 
+@defvr Constant mmux_libc_MSG_ZERO
+Set to zero.  To be used as @var{FLAGS} value for @MmuxBuiltin{mmux_libc_send} when no other
+@code{mmux_libc_MSG_*} flags is needed; it gives the reader of the code a remainder of which flags
+are available for the operation.
+@end defvr
+
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -9303,7 +9309,7 @@ Interface to the standard C language function @cfunc{shutdown}, @glibcref{Closin
 @end deffn
 
 
-@deffn Builtin mmux_libc_socketpair @vari{SOCK_VAR} @varii{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}
+@deffn Builtin mmux_libc_socketpair @vari{SOCK_VAR} @varii{SOCK_VAR} @var{PF_NAMESPACE} @var{SOCK_STYLE} @var{IPPROTO_PROTOCOL}
 Interface to the standard C language function @cfunc{socketpair}, @glibcref{Socket Pairs,
 socketpair}.
 @end deffn

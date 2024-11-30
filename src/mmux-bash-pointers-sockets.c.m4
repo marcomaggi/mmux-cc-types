@@ -2006,8 +2006,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_socketpair]]])
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCK HOW"]]])
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKFD1_VAR SOCKFD2_VAR PF_NAMESPACE SOCK_STYLE IPPROTO_PROTOCOL"]]])
 
 /* ------------------------------------------------------------------ */
 
