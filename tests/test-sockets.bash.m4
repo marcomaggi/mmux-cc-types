@@ -2303,13 +2303,9 @@ function sockets-netent-dump-1.1 () {
 function sockets-socketpair-1.1 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare SOCKFD1 SOCKFD2
-	declare NBYTES_SENT_BY_SOCKFD1
-	declare NBYTES_RECV_BY_SOCKFD2
-	declare NBYTES_SENT_BY_SOCKFD2
-	declare NBYTES_RECV_BY_SOCKFD1
 
 	mbfl_location_leave_when_failure( mmux_libc_socketpair SOCKFD1 SOCKFD2 \
 							       RR(mmux_libc_PF_LOCAL) \
@@ -2321,35 +2317,37 @@ function sockets-socketpair-1.1 () {
 	# Socket 1.
 	{
 	    declare STR_1_TO_2='hello world'
-	    declare STR_1_TO_2_PTR
-	    declare STR_1_TO_2_LEN
+	    declare STR_1_TO_2_BUFPTR
+	    declare STR_1_TO_2_BUFLEN
+	    declare NBYTES_SENT_BY_SOCKFD1
 
-	    mbfl_location_leave_when_failure( mmux_pointer_from_bash_string STR_1_TO_2_PTR WW(STR_1_TO_2) )
-	    mbfl_location_leave_when_failure( mmux_libc_strlen STR_1_TO_2_LEN WW(STR_1_TO_2_PTR) )
+	    mbfl_location_leave_when_failure( mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR WW(STR_1_TO_2) )
+	    mbfl_location_leave_when_failure( mmux_libc_strlen STR_1_TO_2_BUFLEN WW(STR_1_TO_2_BUFPTR) )
 	    mbfl_location_leave_when_failure( mmux_libc_send NBYTES_SENT_BY_SOCKFD1 \
-							     RR(SOCKFD1) RR(STR_1_TO_2_PTR) RR(STR_1_TO_2_LEN) \
+							     RR(SOCKFD1) RR(STR_1_TO_2_BUFPTR) RR(STR_1_TO_2_BUFLEN) \
 							     RR(mmux_libc_MSG_ZERO) )
 	    dotest-debug SOCKFD1=RR(SOCKFD1) sent to SOCKFD2=RR(SOCKFD2) STR=\"WW(STR_1_TO_2)\"
 	}
 
 	# Socket 2.
 	{
-	    declare STR_2_FROM_1_LEN='4096'
-	    declare STR_2_FROM_1_PTR
+	    declare NBYTES_RECV_BY_SOCKFD2
+	    declare STR_2_FROM_1_BUFLEN='4096'
+	    declare STR_2_FROM_1_BUFPTR
 	    declare STR_2_FROM_1
 
-	    mbfl_location_compensate( mmux_libc_calloc STR_2_FROM_1_PTR 1 RR(STR_2_FROM_1_LEN),
-				      mmux_libc_free RR(STR_2_FROM_1_PTR) )
+	    mbfl_location_compensate( mmux_libc_calloc STR_2_FROM_1_BUFPTR 1 RR(STR_2_FROM_1_BUFLEN),
+				      mmux_libc_free RR(STR_2_FROM_1_BUFPTR) )
 
 	    mbfl_location_leave_when_failure( mmux_libc_recv NBYTES_RECV_BY_SOCKFD2 \
-							     RR(SOCKFD2) RR(STR_2_FROM_1_PTR) RR(STR_2_FROM_1_LEN) \
-							     0 )
-	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR_2_FROM_1 RR(STR_2_FROM_1_PTR) RR(NBYTES_RECV_BY_SOCKFD2) )
+							     RR(SOCKFD2) RR(STR_2_FROM_1_BUFPTR) RR(STR_2_FROM_1_BUFLEN) \
+							     RR(mmux_libc_MSG_ZERO) )
+	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR_2_FROM_1 RR(STR_2_FROM_1_BUFPTR) RR(NBYTES_RECV_BY_SOCKFD2) )
 	    dotest-debug SOCKFD2=RR(SOCKFD2) recv from SOCKFD1=RR(SOCKFD1) STR=\"WW(STR_2_FROM_1)\"
 	}
 
-	dotest-equal RR(STR_1_TO_2_LEN) RR(NBYTES_SENT_BY_SOCKFD1) &&
-	    dotest-equal RR(STR_1_TO_2_LEN) RR(NBYTES_RECV_BY_SOCKFD2) &&
+	dotest-equal RR(STR_1_TO_2_BUFLEN) RR(NBYTES_SENT_BY_SOCKFD1) &&
+	    dotest-equal RR(STR_1_TO_2_BUFLEN) RR(NBYTES_RECV_BY_SOCKFD2) &&
 	    dotest-equal WW(STR_1_TO_2) WW(STR_2_FROM_1)
     }
     mbfl_location_leave
@@ -2363,7 +2361,7 @@ function sockets-socketpair-1.1 () {
 function sockets-socketpair-1.2 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare -r  MESSAGE_STRING='hello world'
 	declare -ri MESSAGE_LENGTH=mbfl_string_len(MESSAGE_STRING)
@@ -2386,14 +2384,14 @@ function sockfd1-sockets-socketpair-1.2 () {
 	mbfl_location_handler "mmux_libc_shutdown RR(SOCKFD1) RR(mmux_libc_SHUT_RDWR)"
 
 	declare STR_1_TO_2=RR(MESSAGE_STRING)
-	declare STR_1_TO_2_PTR
-	declare STR_1_TO_2_LEN
+	declare STR_1_TO_2_BUFPTR
+	declare STR_1_TO_2_BUFLEN
 	declare NBYTES_SENT_BY_SOCKFD1
 
-	mbfl_location_leave_when_failure( mmux_pointer_from_bash_string STR_1_TO_2_PTR WW(STR_1_TO_2) )
-	mbfl_location_leave_when_failure( mmux_libc_strlen STR_1_TO_2_LEN WW(STR_1_TO_2_PTR) )
+	mbfl_location_leave_when_failure( mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR WW(STR_1_TO_2) )
+	mbfl_location_leave_when_failure( mmux_libc_strlen STR_1_TO_2_BUFLEN WW(STR_1_TO_2_BUFPTR) )
 	mbfl_location_leave_when_failure( mmux_libc_send NBYTES_SENT_BY_SOCKFD1 \
-							 RR(SOCKFD1) RR(STR_1_TO_2_PTR) RR(STR_1_TO_2_LEN) \
+							 RR(SOCKFD1) RR(STR_1_TO_2_BUFPTR) RR(STR_1_TO_2_BUFLEN) \
 							 RR(mmux_libc_MSG_ZERO) )
 	dotest-debug SOCKFD1=RR(SOCKFD1) sent to SOCKFD2=RR(SOCKFD2) STR=\"WW(STR_1_TO_2)\"
 	dotest-equal RR(MESSAGE_LENGTH) RR(NBYTES_SENT_BY_SOCKFD1)
@@ -2406,18 +2404,18 @@ function sockfd2-sockets-socketpair-1.2 () {
     {
 	mbfl_location_handler "mmux_libc_shutdown RR(SOCKFD2) RR(mmux_libc_SHUT_RDWR)"
 
-	declare STR_2_FROM_1_LEN=4096
-	declare STR_2_FROM_1_PTR
+	declare STR_2_FROM_1_BUFLEN=4096
+	declare STR_2_FROM_1_BUFPTR
 	declare STR_2_FROM_1
 	declare NBYTES_RECV_BY_SOCKFD2
 
-	mbfl_location_compensate( mmux_libc_calloc STR_2_FROM_1_PTR 1 RR(STR_2_FROM_1_LEN),
-				  mmux_libc_free RR(STR_2_FROM_1_PTR) )
+	mbfl_location_compensate( mmux_libc_calloc STR_2_FROM_1_BUFPTR 1 RR(STR_2_FROM_1_BUFLEN),
+				  mmux_libc_free RR(STR_2_FROM_1_BUFPTR) )
 
 	mbfl_location_leave_when_failure( mmux_libc_recv NBYTES_RECV_BY_SOCKFD2 \
-							 RR(SOCKFD2) RR(STR_2_FROM_1_PTR) RR(STR_2_FROM_1_LEN) \
+							 RR(SOCKFD2) RR(STR_2_FROM_1_BUFPTR) RR(STR_2_FROM_1_BUFLEN) \
 							 0 )
-	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR_2_FROM_1 RR(STR_2_FROM_1_PTR) RR(NBYTES_RECV_BY_SOCKFD2) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR_2_FROM_1 RR(STR_2_FROM_1_BUFPTR) RR(NBYTES_RECV_BY_SOCKFD2) )
 	dotest-debug SOCKFD2=RR(SOCKFD2) recv from SOCKFD1=RR(SOCKFD1) STR=\"WW(STR_2_FROM_1)\"
 	dotest-equal RR(MESSAGE_LENGTH) RR(NBYTES_RECV_BY_SOCKFD2) &&
 	    dotest-equal WW(MESSAGE_STRING) WW(STR_2_FROM_1)

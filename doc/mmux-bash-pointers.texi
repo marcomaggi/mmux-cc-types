@@ -7124,6 +7124,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets convaddr::            Converting socket addresses between formats.
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
+* sockets pair::                Interface to @cfunc{socketpair}.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -9217,7 +9218,6 @@ mmux_libc_freeaddrinfo @RR{ADDRINFO_LINKED_LIST_PTR}
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-
 @deffn Builtin mmux_libc_getnameinfo @var{SOCKADDR_PTR} @var{SOCKADDR_LEN} @var{HOST_VAR} @var{SERVICE_VAR} @var{FLAGS}
 Interface to the standard C language function @cfunc{getnameinfo}, @cfuncpage{getnameinfo}.  Given
 an abstract socket address specification: retrieve informations about the host and the service.
@@ -9248,6 +9248,64 @@ Value compatible with @objtype{mmux_sint_t} representing a bitwise OR combinatio
 @end deffn
 
 @c page
+@node sockets pair
+@section Interface to @cfunc{socketpair}
+
+
+Using the builtin @MmuxBuiltin{mmux_libc_socketpair} is the easiest way to start experimenting with
+sockets; we do it as follows:
+
+@example
+declare SOCKFD1 SOCKFD2
+
+mmux_libc_socketpair SOCKFD1 SOCKFD2 \
+    @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_IP}
+@{
+    # Socket 1.
+    @{
+        declare STR_1_TO_2='hello world'
+        declare STR_1_TO_2_BUFPTR
+        declare STR_1_TO_2_BUFLEN
+        declare NBYTES_SENT_BY_SOCKFD1
+
+        mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR @WW{STR_1_TO_2}
+        mmux_libc_strlen              STR_1_TO_2_BUFLEN @WW{STR_1_TO_2_BUFPTR}
+        mmux_libc_send NBYTES_SENT_BY_SOCKFD1 \
+            @RR{SOCKFD1} @RR{STR_1_TO_2_BUFPTR} @RR{STR_1_TO_2_BUFLEN} @RR{mmux_libc_MSG_ZERO}
+    @}
+
+    # Socket 2.
+    @{
+        declare NBYTES_RECV_BY_SOCKFD2
+        declare STR_2_FROM_1_BUFLEN='4096'
+        declare STR_2_FROM_1_BUFPTR
+        declare STR_2_FROM_1
+
+        mmux_libc_calloc STR_2_FROM_1_BUFPTR 1 @RR{STR_2_FROM_1_BUFLEN}
+        @{
+            mmux_libc_recv NBYTES_RECV_BY_SOCKFD2 \
+                @RR{SOCKFD2} @RR{STR_2_FROM_1_BUFPTR} @RR{STR_2_FROM_1_BUFLEN} \
+                @RR{mmux_libc_MSG_ZERO}
+            mmux_pointer_to_bash_string STR_2_FROM_1 @RR{STR_2_FROM_1_BUFPTR} @RR{NBYTES_RECV_BY_SOCKFD2}
+            printf 'received: %s\n' @WW{STR_2_FROM_1}
+        @}
+        mmux_libc_free @RR{STR_2_FROM_1_BUFPTR}
+    @}
+@}
+mmux_libc_shutdown @RR{SOCKFD1} @RR{mmux_libc_SHUT_RDWR}
+mmux_libc_shutdown @RR{SOCKFD2} @RR{mmux_libc_SHUT_RDWR}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_socketpair @vari{SOCK_VAR} @varii{SOCK_VAR} @var{PF_NAMESPACE} @var{SOCK_STYLE} @var{IPPROTO_PROTOCOL}
+Interface to the standard C language function @cfunc{socketpair}, @glibcref{Socket Pairs,
+socketpair}.
+@end deffn
+
+
+@c page
 @node sockets creating
 @section Creating sockets
 
@@ -9274,12 +9332,6 @@ When successful: bind to the shell variable whose name is @var{SOCK_VAR} the soc
 
 @deffn Builtin mmux_libc_shutdown @var{SOCK} @var{HOW}
 Interface to the standard C language function @cfunc{shutdown}, @glibcref{Closing a Socket, shutdown}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_socketpair @vari{SOCK_VAR} @varii{SOCK_VAR} @var{PF_NAMESPACE} @var{SOCK_STYLE} @var{IPPROTO_PROTOCOL}
-Interface to the standard C language function @cfunc{socketpair}, @glibcref{Socket Pairs,
-socketpair}.
 @end deffn
 
 
