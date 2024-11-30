@@ -68,6 +68,11 @@ function mmux_bash_pointers_library_after_loading_hook () {
     mmux_bash_pointers_library_init
 
 #page
+#### global variables
+
+declare -gi mmux_libc_MSG_ZERO='0'
+
+#page
 #### after loading hook: socket helpers
 
 m4_define([[[DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER]]],[[[
@@ -368,6 +373,8 @@ function mmux_bash_pointers_library_before_unloading_hook () {
 	  MMUX_BASH_POINTERS_REAL_STEMS			\
 	  MMUX_BASH_POINTERS_COMPLEX_STEMS		\
 	  MMUX_BASH_POINTERS_STEMS
+
+    unset -v $(compgen -v -A variable mmux_libc_)
 
     unset -f \
 	  mmux_index_array_from_memory				\
