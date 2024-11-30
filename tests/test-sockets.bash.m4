@@ -1691,7 +1691,7 @@ function sockets-getservbyname-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getservbyname SERVENT_PTR 'smtp' 'tcp' )
 
-	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	if mmux_pointer_is_positive RR(SERVENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_servent_dump RR(SERVENT_PTR) >&2
@@ -1710,7 +1710,7 @@ function sockets-getservbyname-1.2 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getservbyname SERVENT_PTR 'smtp' )
 
-	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	if mmux_pointer_is_positive RR(SERVENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_servent_dump RR(SERVENT_PTR) >&2
@@ -1735,7 +1735,7 @@ function sockets-getservbyport-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_htons NETWORK_BYTEORDER_PORT RR(HOST_BYTEORDER_PORT) )
 	mbfl_location_leave_when_failure( mmux_libc_getservbyport SERVENT_PTR RR(NETWORK_BYTEORDER_PORT) 'tcp' )
 
-	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	if mmux_pointer_is_positive RR(SERVENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
@@ -1757,7 +1757,7 @@ function sockets-getservbyport-1.2 () {
 	mbfl_location_leave_when_failure( mmux_libc_htons NETWORK_BYTEORDER_PORT RR(HOST_BYTEORDER_PORT) )
 	mbfl_location_leave_when_failure( mmux_libc_getservbyport SERVENT_PTR RR(NETWORK_BYTEORDER_PORT) )
 
-	if ! mmux_pointer_is_zero RR(SERVENT_PTR)
+	if mmux_pointer_is_positive RR(SERVENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_servent_dump RR(SERVENT_PTR) "servent[$IDX]" >&2
@@ -1806,7 +1806,7 @@ function sockets-servent-s_aliases-1.1 () {
 
 	dotest-debug S_ALIASES=WW(S_ALIASES)
 
-	if ! mmux_pointer_is_zero RR(S_ALIASES)
+	if mmux_pointer_is_positive RR(S_ALIASES)
 	then
 	    declare ALIAS_PTR ALIAS_STR
 	    declare -i IDX=0
@@ -1932,7 +1932,7 @@ function sockets-getprotobyname-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getprotobyname PROTOENT_PTR 'tcp' )
 
-	if ! mmux_pointer_is_zero RR(PROTOENT_PTR)
+	if mmux_pointer_is_positive RR(PROTOENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_protoent_dump RR(PROTOENT_PTR) >&2
@@ -1954,7 +1954,7 @@ function sockets-getprotobynumber-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getprotobynumber PROTOENT_PTR RR(mmux_libc_IPPROTO_TCP) )
 
-	if ! mmux_pointer_is_zero RR(PROTOENT_PTR)
+	if mmux_pointer_is_positive RR(PROTOENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_protoent_dump RR(PROTOENT_PTR) >&2
@@ -2003,7 +2003,7 @@ function sockets-protoent-p_aliases-1.1 () {
 
 	dotest-debug S_ALIASES=WW(S_ALIASES)
 
-	if ! mmux_pointer_is_zero RR(S_ALIASES)
+	if mmux_pointer_is_positive RR(S_ALIASES)
 	then
 	    declare ALIAS_PTR ALIAS_STR
 	    declare -i IDX=0
@@ -2113,7 +2113,7 @@ function sockets-getnetbyname-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_n_name_ref N_NAME RR(NETENT_PTR) )
 	mbfl_location_leave_when_failure( mmux_libc_getnetbyname NETENT_PTR RR(N_NAME) )
 
-	if ! mmux_pointer_is_zero RR(NETENT_PTR)
+	if mmux_pointer_is_positive RR(NETENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
@@ -2140,7 +2140,7 @@ function sockets-getnetbyaddr-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_n_net_ref N_NET RR(NETENT_PTR) )
 	mbfl_location_leave_when_failure( mmux_libc_getnetbyaddr NETENT_PTR RR(N_NET)  RR(mmux_libc_AF_INET))
 
-	if ! mmux_pointer_is_zero RR(NETENT_PTR)
+	if mmux_pointer_is_positive RR(NETENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
@@ -2168,7 +2168,7 @@ function sockets-getnetbyaddr-1.2 () {
 	mbfl_location_leave_when_failure( mmux_libc_ntohl N_NET_HOST_BYTEORDER RR(N_NET_NETWORK_BYTEORDER)  )
 	mbfl_location_leave_when_failure( mmux_libc_getnetbyaddr NETENT_PTR RR(N_NET_HOST_BYTEORDER) RR(mmux_libc_AF_INET))
 
-	if ! mmux_pointer_is_zero RR(NETENT_PTR)
+	if mmux_pointer_is_positive RR(NETENT_PTR)
 	then
 	    if dotest-option-debug
 	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
@@ -2216,7 +2216,7 @@ function sockets-netent-n_aliases-1.1 () {
 
 	dotest-debug N_ALIASES=WW(N_ALIASES)
 
-	if ! mmux_pointer_is_zero RR(N_ALIASES)
+	if mmux_pointer_is_positive RR(N_ALIASES)
 	then
 	    declare ALIAS_PTR ALIAS_STR
 	    declare -i IDX=0
@@ -2491,7 +2491,7 @@ function sockfd2-sockets-socketpair-1.2 () {
 #     then mmux_libc_close RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKFD)
 #     fi
 
-#     if ! mmux_pointer_is_zero RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKADDR_POINTER)
+#     if mmux_pointer_is_positive RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKADDR_POINTER)
 #     then mmux_libc_free RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKADDR_POINTER)
 #     fi
 
@@ -2551,7 +2551,7 @@ function sockfd2-sockets-socketpair-1.2 () {
 #     then mmux_libc_close RR(mmux_p_SERVER_CONNECTION_ARRAY,SERVER_SOCKFD)
 #     fi
 
-#     if ! mmux_pointer_is_zero RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER)
+#     if mmux_pointer_is_positive RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER)
 #     then mmux_libc_free RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER)
 #     fi
 
