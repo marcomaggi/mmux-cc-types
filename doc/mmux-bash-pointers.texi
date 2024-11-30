@@ -7119,10 +7119,9 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets hostsdb::             Hosts database.
 * sockets servicesdb::          Services database.
 * sockets protocolsdb::         Protocols database.
-* sockets netent::              Interface to @MmuxCStruct{netent}.
+* sockets networksdb::          Networks database.
 * sockets byteorder::           Converting byte order in socket addresses.
 * sockets convaddr::            Converting socket addresses between formats.
-* sockets networksdb::          Networks database.
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
 * sockets creating::            Creating sockets.
@@ -7978,7 +7977,7 @@ mmux_libc_free @RR{ADDRINFO_PTR}
 
 @defun mmux_libc_addrinfo_dump @var{ADDRINFO_PTR}
 Applied to a pointer to @code{struct addrinfo}: print to @stdout{} a description of each field, then
-return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+return true.  If an error occurs: print a message to @stderr{}, then return false.
 @end defun
 
 @c page
@@ -8045,7 +8044,7 @@ whose name is @var{H_NAME_VAR} the field of the @code{struct hostent} value refe
 @deffn Builtin mmux_libc_h_aliases_ref @var{H_ALIASES_VAR} @var{HOSTENT_PTR}
 Getter for the field @code{h_aliases} of a @code{struct hostent} value.  Bind to the shell variable
 whose name is @var{H_ALIASES_VAR} the field of the @code{struct hostent} value referenced by
-@var{HOSTENT_PTR}.  The value if a pointer.
+@var{HOSTENT_PTR}.  The value is a pointer.
 @end deffn
 
 
@@ -8079,7 +8078,7 @@ whose name is @var{H_ADDR_VAR} the field of the @code{struct hostent} value refe
 
 @defun mmux_libc_hostent_dump @var{HOSTENT_PTR}
 Applied to a pointer to @code{struct hostent}: print to @stdout{} a description of each field, then
-return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+return true.  If an error occurs: print a message to @stderr{}, then return false.
 @end defun
 
 
@@ -8175,7 +8174,7 @@ mmux_libc_endservent
 @deffn Builtin mmux_libc_s_aliases_ref @var{S_ALIASES_VAR} @var{SERVENT_PTR}
 Getter for the field @code{s_aliases} of a @code{struct servent} value.  Bind to the shell variable
 whose name is @var{S_ALIASES_VAR} the field of the @code{struct servent} value referenced by
-@var{SERVENT_PTR}.  The value if a pointer.
+@var{SERVENT_PTR}.  The value is a pointer.
 
 @example
 declare SERVENT_PTR S_ALIASES
@@ -8248,7 +8247,7 @@ mmux_libc_endservent
 @deffn Builtin mmux_libc_servent_dump @var{SERVENT_PTR}
 @deffnx Builtin mmux_libc_servent_dump @var{SERVENT_PTR} @var{STRUCT_NAME}
 Applied to a pointer to @code{struct servent}: print to @stdout{} a description of each field, then
-return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+return true.  If an error occurs: print a message to @stderr{}, then return false.
 
 The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
 structure; when not given: it defaults to @samp{struct servent}.
@@ -8415,7 +8414,7 @@ mmux_libc_endprotoent
 @deffn Builtin mmux_libc_p_aliases_ref @var{P_ALIASES_VAR} @var{PROTOENT_PTR}
 Getter for the field @code{p_aliases} of a @code{struct protoent} value.  Bind to the shell variable
 whose name is @var{P_ALIASES_VAR} the field of the @code{struct protoent} value referenced by
-@var{PROTOENT_PTR}.  The value if a pointer.
+@var{PROTOENT_PTR}.  The value is a pointer.
 
 @example
 declare PROTOENT_PTR P_ALIASES
@@ -8467,7 +8466,7 @@ mmux_libc_endprotoent
 @deffn Builtin mmux_libc_protoent_dump @var{PROTOENT_PTR}
 @deffnx Builtin mmux_libc_protoent_dump @var{PROTOENT_PTR} @var{STRUCT_NAME}
 Applied to a pointer to @code{struct protoent}: print to @stdout{} a description of each field, then
-return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+return true.  If an error occurs: print a message to @stderr{}, then return false.
 
 The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
 structure; when not given: it defaults to @samp{struct protoent}.
@@ -8556,9 +8555,42 @@ fi
 @end deffn
 
 @c page
-@node sockets netent
-@section Interface to @MmuxCStruct{netent}
+@node sockets networksdb
+@section Networks database
 
+
+To inspect the networks database @file{/etc/networks} we do:
+
+@example
+mmux_libc_setnetent 0
+@{
+    declare NETENT_PTR
+    declare -i IDX=0
+
+    mmux_libc_getnetent NETENT_PTR
+    until mmux_pointer_is_zero @RR{NETENT_PTR}
+    do
+        @{
+            mmux_libc_netent_dump @RR{NETENT_PTR} "netent[$IDX]"
+            echo
+        @} >&2
+        mmux_libc_getnetent NETENT_PTR
+        let ++IDX
+    done
+@}
+mmux_libc_endnetent
+@end example
+
+@noindent
+which prints something like:
+
+@example
+netent[0].n_name = "loopback"
+netent[0].n_aliases = "0x0"
+netent[0].n_addrtype = "2"
+netent[0].n_net = "2130706432" (127.0.0.0)
+...
+@end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
@@ -8576,7 +8608,7 @@ and bind to the shell variable whose name is @var{NETENT_PTR_VAR} a pointer to i
 
 @deffn Builtin mmux_libc_n_name_ref @var{N_NAME_VAR} @var{NETENT_PTR}
 Getter for the field @code{n_name} of a @code{struct netent} value.  Bind to the shell variable
-whose name is @var{N_NAME_VAR} the value of the @code{struct netent} value referenced by
+whose name is @var{N_NAME_VAR} the field of the @code{struct netent} value referenced by
 @var{NETENT_PTR}.  The value is a shell string.
 
 @example
@@ -8594,8 +8626,8 @@ mmux_libc_endnetent
 
 @deffn Builtin mmux_libc_n_aliases_ref @var{N_ALIASES_VAR} @var{NETENT_PTR}
 Getter for the field @code{n_aliases} of a @code{struct netent} value.  Bind to the shell variable
-whose name is @var{N_ALIASES_VAR} the value of the @code{struct netent} value referenced by
-@var{NETENT_PTR}.  The value if a pointer.
+whose name is @var{N_ALIASES_VAR} the field of the @code{struct netent} value referenced by
+@var{NETENT_PTR}.  The value is a pointer.
 
 @example
 declare NETENT_PTR N_ALIASES
@@ -8627,7 +8659,7 @@ mmux_libc_endnetent
 
 @deffn Builtin mmux_libc_n_addrtype_ref @var{N_ADDRTYPE_VAR} @var{NETENT_PTR}
 Getter for the field @code{n_addrtype} of a @code{struct netent} value.  Bind to the shell variable
-whose name is @var{N_ADDRTYPE_VAR} the value of the @code{struct netent} value referenced by
+whose name is @var{N_ADDRTYPE_VAR} the field of the @code{struct netent} value referenced by
 @var{NETENT_PTR}.  The value is an exact integer representing a @code{mmux_libc_AF_*} constants,
 usually @code{AF_INET}.
 
@@ -8646,7 +8678,7 @@ mmux_libc_endnetent
 
 @deffn Builtin mmux_libc_n_net_ref @var{N_NET_VAR} @var{NETENT_PTR}
 Getter for the field @code{n_net} of a @code{struct netent} value.  Bind to the shell variable whose
-name is @var{N_NET_VAR} the value of the @code{struct netent} value referenced by @var{NETENT_PTR}.
+name is @var{N_NET_VAR} the field of the @code{struct netent} value referenced by @var{NETENT_PTR}.
 The value is a @objtype{mmux_uint32_t} value representing the network address number in
 @strong{host} byte order.
 
@@ -8666,7 +8698,7 @@ mmux_libc_endnetent
 @deffn Builtin mmux_libc_netent_dump @var{NETENT_PTR}
 @deffnx Builtin mmux_libc_netent_dump @var{NETENT_PTR} @var{STRUCT_NAME}
 Applied to a pointer to @code{struct netent}: print to @stdout{} a description of each field, then
-return true.  If an error occurs: print a messaget to @stderr{}, then return false.
+return true.  If an error occurs: print a message to @stderr{}, then return false.
 
 The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
 structure; when not given: it defaults to @samp{struct netent}.
@@ -8698,6 +8730,81 @@ mmux_libc_setnetent 0
     @print{} struct netent.n_net = "2130706432" (127.0.0.0)
 @}
 mmux_libc_endnetent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_setnetent @var{STAYOPEN}
+Interface to the standard C language function @cfunc{setnetent}, @glibcref{Networks Database,
+setnetent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getnetent @var{NETENT_PTR_VAR}
+Interface to the standard C language function @cfunc{getnetent}, @glibcref{Networks Database,
+getnetent}.
+
+The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to the next @code{struct netent} in the database; when there are no more entries: the
+pointer is null.
+@end deffn
+
+
+@deffn Builtin mmux_libc_endnetent
+Interface to the standard C language function @cfunc{endnetent}, @glibcref{Networks Database,
+endnetent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getnetbyname @var{NETENT_PTR_VAR} @var{NAME}
+Interface to the standard C language function @cfunc{getnetbyname}, @glibcref{Networks Database,
+getnetbyname}.
+
+The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to a matching @code{struct netent} in the database; when there are no matching entries: the
+pointer is null.
+
+@example
+declare NETENT_PTR
+
+mmux_libc_getnetbyname NETENT_PTR 'loopback'
+
+if mmux_pointer_is_positive @RR{NETENT_PTR}
+then mmux_libc_netent_dump @RR{NETENT_PTR}
+fi
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getnetbyaddr @var{NETENT_PTR_VAR} @var{N_NET_HOST_BYTEORDER} @var{AF_TYPE}
+Interface to the standard C language function @cfunc{getnetbyaddr}, @glibcref{Networks Database,
+getnetbyaddr}.
+
+The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to a matching @code{struct netent} in the database; when there are no matching entries: the
+pointer is null.
+
+@example
+declare NETENT_PTR
+declare IN_ADDR_POINTER
+
+mmux_libc_calloc IN_ADDR_POINTER 1 @RR{mmux_libc_in_addr_SIZEOF}
+@{
+    mmux_libc_inet_pton @RR{mmux_libc_AF_INET} '127.0.0.0' @RR{IN_ADDR_POINTER}
+    @{
+        declare N_NET_NETWORK_BYTEORDER
+        declare N_NET_HOST_BYTEORDER
+
+        mmux_uint32_pointer_ref N_NET_NETWORK_BYTEORDER @RR{IN_ADDR_POINTER} 0
+        mmux_libc_ntohl N_NET_HOST_BYTEORDER @RR{N_NET_NETWORK_BYTEORDER}
+        mmux_libc_getnetbyaddr NETENT_PTR @RR{N_NET_HOST_BYTEORDER} @RR{mmux_libc_AF_INET}
+
+        if mmux_pointer_is_positive @RR{NETENT_PTR}
+        then mmux_libc_netent_dump @RR{NETENT_PTR}
+        fi
+    @}
+@}
+mmux_libc_free @RR{IN_ADDR_POINTER}
 @end example
 @end deffn
 
@@ -8975,121 +9082,6 @@ mmux_libc_inet_netof UINT32_NET_ADDR @WW{UINT32_ADDR}
 
 @WW{UINT32_NET_ADDR}                  @result{} 16777215
 printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
-@end example
-@end deffn
-
-@c page
-@node sockets networksdb
-@section Networks database
-
-
-To inspect the networks database @file{/etc/networks} we do:
-
-@example
-mmux_libc_setnetent 0
-@{
-    declare NETENT_PTR
-    declare -i IDX=0
-
-    mmux_libc_getnetent NETENT_PTR
-    until mmux_pointer_is_zero @RR{NETENT_PTR}
-    do
-        @{
-            mmux_libc_netent_dump @RR{NETENT_PTR} "netent[$IDX]"
-            echo
-        @} >&2
-        mmux_libc_getnetent NETENT_PTR
-        let ++IDX
-    done
-@}
-mmux_libc_endnetent
-@end example
-
-@noindent
-which prints something like:
-
-@example
-netent[0].n_name = "loopback"
-netent[0].n_aliases = "0x0"
-netent[0].n_addrtype = "2"
-netent[0].n_net = "2130706432" (127.0.0.0)
-...
-@end example
-
-@ref{overview conventions, Conventions in coding and documentation}.
-
-
-@deffn Builtin mmux_libc_setnetent @var{STAYOPEN}
-Interface to the standard C language function @cfunc{setnetent}, @glibcref{Networks Database,
-setnetent}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_getnetent @var{NETENT_PTR_VAR}
-Interface to the standard C language function @cfunc{getnetent}, @glibcref{Networks Database,
-getnetent}.
-
-The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to the next @code{struct netent} in the database; when there are no more entries: the
-pointer is null.
-@end deffn
-
-
-@deffn Builtin mmux_libc_endnetent
-Interface to the standard C language function @cfunc{endnetent}, @glibcref{Networks Database,
-endnetent}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_getnetbyname @var{NETENT_PTR_VAR} @var{NAME}
-Interface to the standard C language function @cfunc{getnetbyname}, @glibcref{Networks Database,
-getnetbyname}.
-
-The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct netent} in the database; when there are no matching entries: the
-pointer is null.
-
-@example
-declare NETENT_PTR
-
-mmux_libc_getnetbyname NETENT_PTR 'loopback'
-
-if mmux_pointer_is_positive @RR{NETENT_PTR}
-then mmux_libc_netent_dump @RR{NETENT_PTR}
-fi
-@end example
-@end deffn
-
-
-@deffn Builtin mmux_libc_getnetbyaddr @var{NETENT_PTR_VAR} @var{N_NET_HOST_BYTEORDER} @var{AF_TYPE}
-Interface to the standard C language function @cfunc{getnetbyaddr}, @glibcref{Networks Database,
-getnetbyaddr}.
-
-The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct netent} in the database; when there are no matching entries: the
-pointer is null.
-
-@example
-declare NETENT_PTR
-declare IN_ADDR_POINTER
-
-mmux_libc_calloc IN_ADDR_POINTER 1 @RR{mmux_libc_in_addr_SIZEOF}
-@{
-    mmux_libc_inet_pton @RR{mmux_libc_AF_INET} '127.0.0.0' @RR{IN_ADDR_POINTER}
-    @{
-        declare N_NET_NETWORK_BYTEORDER
-        declare N_NET_HOST_BYTEORDER
-
-        mmux_uint32_pointer_ref N_NET_NETWORK_BYTEORDER @RR{IN_ADDR_POINTER} 0
-        mmux_libc_ntohl N_NET_HOST_BYTEORDER @RR{N_NET_NETWORK_BYTEORDER}
-        mmux_libc_getnetbyaddr NETENT_PTR @RR{N_NET_HOST_BYTEORDER} @RR{mmux_libc_AF_INET}
-
-        if mmux_pointer_is_positive @RR{NETENT_PTR}
-        then mmux_libc_netent_dump @RR{NETENT_PTR}
-        fi
-    @}
-@}
-mmux_libc_free @RR{IN_ADDR_POINTER}
 @end example
 @end deffn
 
