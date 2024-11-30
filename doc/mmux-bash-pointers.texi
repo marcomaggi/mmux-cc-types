@@ -7118,11 +7118,10 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets addrinfo::            Interface to @MmuxCStruct{addrinfo}.
 * sockets hostsdb::             Hosts database.
 * sockets servicesdb::          Services database.
-* sockets protoent::            Interface to @MmuxCStruct{protoent}.
+* sockets protocolsdb::         Protocols database.
 * sockets netent::              Interface to @MmuxCStruct{netent}.
 * sockets byteorder::           Converting byte order in socket addresses.
 * sockets convaddr::            Converting socket addresses between formats.
-* sockets protocolsdb::         Protocols database.
 * sockets networksdb::          Networks database.
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
@@ -8344,9 +8343,42 @@ fi
 @end deffn
 
 @c page
-@node sockets protoent
-@section Interface to @MmuxCStruct{protoent}
+@node sockets protocolsdb
+@section Protocols database
 
+
+To inspect the protocols database @file{/etc/protocols} we do:
+
+@example
+mmux_libc_setprotoent 0
+@{
+    declare PROTOENT_PTR
+    declare -i IDX=0
+
+    mmux_libc_getprotoent PROTOENT_PTR
+    until mmux_pointer_is_zero @RR{PROTOENT_PTR}
+    do
+        @{
+            mmux_libc_protoent_dump @RR{PROTOENT_PTR} "protoent[$IDX]"
+            echo
+        @} >&2
+        mmux_libc_getprotoent PROTOENT_PTR
+        let ++IDX
+    done
+@}
+mmux_libc_endprotoent
+@end example
+
+@noindent
+which prints something like:
+
+@example
+...
+protoent[6].s_name = "tcp"
+protoent[6].s_aliases[0] = "TCP"
+protoent[6].s_proto = "6"
+...
+@end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
@@ -8364,7 +8396,7 @@ and bind to the shell variable whose name is @var{PROTOENT_PTR_VAR} a pointer to
 
 @deffn Builtin mmux_libc_p_name_ref @var{P_NAME_VAR} @var{PROTOENT_PTR}
 Getter for the field @code{p_name} of a @code{struct protoent} value.  Bind to the shell variable
-whose name is @var{P_NAME_VAR} the value of the @code{struct protoent} value referenced by
+whose name is @var{P_NAME_VAR} the field of the @code{struct protoent} value referenced by
 @var{PROTOENT_PTR}.  The value is a shell string.
 
 @example
@@ -8382,7 +8414,7 @@ mmux_libc_endprotoent
 
 @deffn Builtin mmux_libc_p_aliases_ref @var{P_ALIASES_VAR} @var{PROTOENT_PTR}
 Getter for the field @code{p_aliases} of a @code{struct protoent} value.  Bind to the shell variable
-whose name is @var{P_ALIASES_VAR} the value of the @code{struct protoent} value referenced by
+whose name is @var{P_ALIASES_VAR} the field of the @code{struct protoent} value referenced by
 @var{PROTOENT_PTR}.  The value if a pointer.
 
 @example
@@ -8415,7 +8447,7 @@ mmux_libc_endprotoent
 
 @deffn Builtin mmux_libc_p_proto_ref @var{P_PROTO_VAR} @var{PROTOENT_PTR}
 Getter for the field @code{p_proto} of a @code{struct protoent} value.  Bind to the shell variable
-whose name is @var{P_PROTO_VAR} the value of the @code{struct protoent} value referenced by
+whose name is @var{P_PROTO_VAR} the field of the @code{struct protoent} value referenced by
 @var{PROTOENT_PTR}.  The value is an exact integer representing a @code{mmux_libc_IPPROTO_*}
 constant.
 
@@ -8452,6 +8484,74 @@ mmux_libc_setprotoent 0
     @print{} struct protoent.s_proto = "0"
 @}
 mmux_libc_endprotoent
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_setprotoent @var{STAYOPEN}
+Interface to the standard C language function @cfunc{setprotoent}, @glibcref{Protocols Database,
+setprotoent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getprotoent @var{PROTOENT_PTR_VAR}
+Interface to the standard C language function @cfunc{getprotoent}, @glibcref{Protocols Database,
+getprotoent}.
+
+The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to the next @code{struct protoent} in the database; when there are no more entries: the
+pointer is null.
+@end deffn
+
+
+@deffn Builtin mmux_libc_endprotoent
+Interface to the standard C language function @cfunc{endprotoent}, @glibcref{Protocols Database,
+endprotoent}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_getprotobyname @var{PROTOENT_PTR_VAR} @var{NAME}
+Interface to the standard C language function @cfunc{getprotobyname}, @glibcref{Protocols Database,
+getprotobyname}.
+
+The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to a matching @code{struct protoent} in the database; when there are no matching entries:
+the pointer is null.
+
+@example
+declare PROTOENT_PTR
+
+mmux_libc_getprotobyname PROTOENT_PTR 'igmp'
+
+if mmux_pointer_is_positive @RR{PROTOENT_PTR}
+then mmux_libc_protoent_dump @RR{PROTOENT_PTR}
+fi
+@print{} struct protoent.s_name = "igmp"
+@print{} struct protoent.s_aliases[0] = "IGMP"
+@print{} struct protoent.s_proto = "2"
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_getprotobynumber @var{PROTOENT_PTR_VAR} @var{IPPROTO_NUMBER}
+Interface to the standard C language function @cfunc{getprotobynumber}, @glibcref{Protocols
+Database, getprotobynumber}.
+
+The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
+pointer to a matching @code{struct protoent} in the database; when there are no matching entries:
+the pointer is null.
+
+@example
+declare PROTOENT_PTR
+
+mmux_libc_getprotobynumber PROTOENT_PTR @RR{mmux_libc_IPPROTO_TCP}
+
+if mmux_pointer_is_positive @RR{PROTOENT_PTR}
+then mmux_libc_protoent_dump @RR{PROTOENT_PTR}
+fi
+@print{} struct protoent.s_name = "tcp"
+@print{} struct protoent.s_aliases[0] = "TCP"
+@print{} struct protoent.s_proto = "6"
 @end example
 @end deffn
 
@@ -8875,114 +8975,6 @@ mmux_libc_inet_netof UINT32_NET_ADDR @WW{UINT32_ADDR}
 
 @WW{UINT32_NET_ADDR}                  @result{} 16777215
 printf '%x\n' @WW{UINT32_NET_ADDR}    @print{} ffffff
-@end example
-@end deffn
-
-@c page
-@node sockets protocolsdb
-@section Protocols database
-
-
-To inspect the protocols database @file{/etc/protocols} we do:
-
-@example
-mmux_libc_setprotoent 0
-@{
-    declare PROTOENT_PTR
-    declare -i IDX=0
-
-    mmux_libc_getprotoent PROTOENT_PTR
-    until mmux_pointer_is_zero @RR{PROTOENT_PTR}
-    do
-        @{
-            mmux_libc_protoent_dump @RR{PROTOENT_PTR} "protoent[$IDX]"
-            echo
-        @} >&2
-        mmux_libc_getprotoent PROTOENT_PTR
-        let ++IDX
-    done
-@}
-mmux_libc_endprotoent
-@end example
-
-@noindent
-which prints something like:
-
-@example
-...
-protoent[6].s_name = "tcp"
-protoent[6].s_aliases[0] = "TCP"
-protoent[6].s_proto = "6"
-...
-@end example
-
-@ref{overview conventions, Conventions in coding and documentation}.
-
-
-@deffn Builtin mmux_libc_setprotoent @var{STAYOPEN}
-Interface to the standard C language function @cfunc{setprotoent}, @glibcref{Protocols Database,
-setprotoent}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_getprotoent @var{PROTOENT_PTR_VAR}
-Interface to the standard C language function @cfunc{getprotoent}, @glibcref{Protocols Database,
-getprotoent}.
-
-The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to the next @code{struct protoent} in the database; when there are no more entries: the
-pointer is null.
-@end deffn
-
-
-@deffn Builtin mmux_libc_endprotoent
-Interface to the standard C language function @cfunc{endprotoent}, @glibcref{Protocols Database,
-endprotoent}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_getprotobyname @var{PROTOENT_PTR_VAR} @var{NAME}
-Interface to the standard C language function @cfunc{getprotobyname}, @glibcref{Protocols Database,
-getprotobyname}.
-
-The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct protoent} in the database; when there are no matching entries:
-the pointer is null.
-
-@example
-declare PROTOENT_PTR
-
-mmux_libc_getprotobyname PROTOENT_PTR 'igmp'
-
-if mmux_pointer_is_positive @RR{PROTOENT_PTR}
-then mmux_libc_protoent_dump @RR{PROTOENT_PTR}
-fi
-@print{} struct protoent.s_name = "igmp"
-@print{} struct protoent.s_aliases[0] = "IGMP"
-@print{} struct protoent.s_proto = "2"
-@end example
-@end deffn
-
-
-@deffn Builtin mmux_libc_getprotobynumber @var{PROTOENT_PTR_VAR} @var{IPPROTO_NUMBER}
-Interface to the standard C language function @cfunc{getprotobynumber}, @glibcref{Protocols
-Database, getprotobynumber}.
-
-The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct protoent} in the database; when there are no matching entries:
-the pointer is null.
-
-@example
-declare PROTOENT_PTR
-
-mmux_libc_getprotobynumber PROTOENT_PTR @RR{mmux_libc_IPPROTO_TCP}
-
-if mmux_pointer_is_positive @RR{PROTOENT_PTR}
-then mmux_libc_protoent_dump @RR{PROTOENT_PTR}
-fi
-@print{} struct protoent.s_name = "tcp"
-@print{} struct protoent.s_aliases[0] = "TCP"
-@print{} struct protoent.s_proto = "6"
 @end example
 @end deffn
 
