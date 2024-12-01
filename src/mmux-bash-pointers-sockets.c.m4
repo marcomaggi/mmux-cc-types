@@ -116,7 +116,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_sun_family_ref]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sun_family_ref]]])
 {
   char const *		sun_family_varname;
   mmux_pointer_t	pointer;
@@ -136,7 +136,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_sun_path_ref]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sun_path_ref]]])
 {
   char const *		sun_path_varname;
   mmux_pointer_t	pointer;
@@ -153,6 +153,40 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_sun_path_ref]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SUN_PATH_VAR SOCKADDR_UN_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_dump]]])
+{
+  mmux_pointer_t	_sockaddr_un_pointer;
+  char const *		struct_name = "struct sockaddr_un";
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_sockaddr_un_pointer,	argv[1]);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(struct_name,	argv[2]);
+  }
+  {
+    struct sockaddr_un *	sockaddr_un_pointer = _sockaddr_un_pointer;
+
+    {
+      const char *	family_name = ((AF_LOCAL == sockaddr_un_pointer->sun_family)? "AF_LOCAL" : NULL);
+
+      printf("%s.sun_family = \"%d\"", struct_name, sockaddr_un_pointer->sun_family);
+      if (family_name) {
+	printf(" (%s)\n", family_name);
+      } else {
+	printf(" (not AF_LOCAL !!!)\n");
+      }
+    }
+
+    printf("%s.sun_path = \"%s\"\n", struct_name, sockaddr_un_pointer->sun_path);
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_UN_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------
@@ -344,6 +378,168 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_port_set]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN_POINTER HOST_BYTEORDER_SIN_PORT"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_dump]]])
+{
+  mmux_pointer_t	_sockaddr_in_pointer;
+  char const *		struct_name = "struct sockaddr_in";
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_sockaddr_in_pointer,	argv[1]);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(struct_name,	argv[2]);
+  }
+  {
+    struct sockaddr_in *	sockaddr_in_pointer = _sockaddr_in_pointer;
+
+    {
+      char const *	sin_name = "unknown";
+
+      switch (sockaddr_in_pointer->sin_family) {
+#if (defined MMUX_HAVE_AF_ALG)
+      case AF_ALG:
+	sin_name = "AF_ALG";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_APPLETALK)
+      case AF_APPLETALK:
+	sin_name = "AF_APPLETALK";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_AX25)
+      case AF_AX25:
+	sin_name = "AF_AX25";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_BLUETOOTH)
+      case AF_BLUETOOTH:
+	sin_name = "AF_BLUETOOTH";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_CAN)
+      case AF_CAN:
+	sin_name = "AF_CAN";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_DECnet)
+      case AF_DECnet:
+	sin_name = "AF_DECnet";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_IB)
+      case AF_IB:
+	sin_name = "AF_IB";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_INET6)
+      case AF_INET6:
+	sin_name = "AF_INET6";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_INET)
+      case AF_INET:
+	sin_name = "AF_INET";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_IPX)
+      case AF_IPX:
+	sin_name = "AF_IPX";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_KCM)
+      case AF_KCM:
+	sin_name = "AF_KCM";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_KEY)
+      case AF_KEY:
+	sin_name = "AF_KEY";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_LLC)
+      case AF_LLC:
+	sin_name = "AF_LLC";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_MPLS)
+      case AF_MPLS:
+	sin_name = "AF_MPLS";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_NETLINK)
+      case AF_NETLINK:
+	sin_name = "AF_NETLINK";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_PACKET)
+      case AF_PACKET:
+	sin_name = "AF_PACKET";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_PPPOX)
+      case AF_PPPOX:
+	sin_name = "AF_PPPOX";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_RDS)
+      case AF_RDS:
+	sin_name = "AF_RDS";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_TIPC)
+      case AF_TIPC:
+	sin_name = "AF_TIPC";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_UNIX)
+      case AF_UNIX:
+	sin_name = "AF_UNIX";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_UNSPEC)
+      case AF_UNSPEC:
+	sin_name = "AF_UNSPEC";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_VSOCK)
+      case AF_VSOCK:
+	sin_name = "AF_VSOCK";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_X25)
+      case AF_X25:
+	sin_name = "AF_X25";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_XDP)
+      case AF_XDP:
+	sin_name = "AF_XDP";
+	break;
+#endif
+      }
+      printf("%s.sin_family = \"%d\" (%s)\n", struct_name, sockaddr_in_pointer->sin_family, sin_name);
+    }
+
+    {
+#undef  presentation_len
+#define presentation_len	512
+      char	presentation_buf[presentation_len];
+
+      inet_ntop(sockaddr_in_pointer->sin_family, &(sockaddr_in_pointer->sin_addr), presentation_buf, presentation_len);
+      presentation_buf[presentation_len-1] = '\0';
+      printf("%s.sin_addr = \"%s\"\n", struct_name, presentation_buf);
+    }
+
+    printf("%s.sin_port = \"%d\"\n", struct_name, ntohs(sockaddr_in_pointer->sin_port));
+
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------
@@ -583,6 +779,170 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_port_set]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER SIN6_PORT"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_dump]]])
+{
+  mmux_pointer_t	_sockaddr_in6_pointer;
+  char const *		struct_name = "struct sockaddr_in6";
+
+  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(_sockaddr_in6_pointer,	argv[1]);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(struct_name,	argv[2]);
+  }
+  {
+    struct sockaddr_in6 *	sockaddr_in6_pointer = _sockaddr_in6_pointer;
+
+    {
+      char const *	sin6_name = "unknown";
+
+      switch (sockaddr_in6_pointer->sin6_family) {
+#if (defined MMUX_HAVE_AF_ALG)
+      case AF_ALG:
+	sin6_name = "AF_ALG";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_APPLETALK)
+      case AF_APPLETALK:
+	sin6_name = "AF_APPLETALK";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_AX25)
+      case AF_AX25:
+	sin6_name = "AF_AX25";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_BLUETOOTH)
+      case AF_BLUETOOTH:
+	sin6_name = "AF_BLUETOOTH";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_CAN)
+      case AF_CAN:
+	sin6_name = "AF_CAN";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_DECnet)
+      case AF_DECnet:
+	sin6_name = "AF_DECnet";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_IB)
+      case AF_IB:
+	sin6_name = "AF_IB";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_INET6)
+      case AF_INET6:
+	sin6_name = "AF_INET6";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_INET)
+      case AF_INET:
+	sin6_name = "AF_INET";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_IPX)
+      case AF_IPX:
+	sin6_name = "AF_IPX";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_KCM)
+      case AF_KCM:
+	sin6_name = "AF_KCM";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_KEY)
+      case AF_KEY:
+	sin6_name = "AF_KEY";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_LLC)
+      case AF_LLC:
+	sin6_name = "AF_LLC";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_MPLS)
+      case AF_MPLS:
+	sin6_name = "AF_MPLS";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_NETLINK)
+      case AF_NETLINK:
+	sin6_name = "AF_NETLINK";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_PACKET)
+      case AF_PACKET:
+	sin6_name = "AF_PACKET";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_PPPOX)
+      case AF_PPPOX:
+	sin6_name = "AF_PPPOX";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_RDS)
+      case AF_RDS:
+	sin6_name = "AF_RDS";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_TIPC)
+      case AF_TIPC:
+	sin6_name = "AF_TIPC";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_UNIX)
+      case AF_UNIX:
+	sin6_name = "AF_UNIX";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_UNSPEC)
+      case AF_UNSPEC:
+	sin6_name = "AF_UNSPEC";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_VSOCK)
+      case AF_VSOCK:
+	sin6_name = "AF_VSOCK";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_X25)
+      case AF_X25:
+	sin6_name = "AF_X25";
+	break;
+#endif
+#if (defined MMUX_HAVE_AF_XDP)
+      case AF_XDP:
+	sin6_name = "AF_XDP";
+	break;
+#endif
+      }
+      printf("%s.sin6_family = \"%d\" (%s)\n", struct_name, sockaddr_in6_pointer->sin6_family, sin6_name);
+    }
+
+    {
+#undef  presentation_len
+#define presentation_len	512
+      char	presentation_buf[presentation_len];
+
+      inet_ntop(sockaddr_in6_pointer->sin6_family, &(sockaddr_in6_pointer->sin6_addr), presentation_buf, presentation_len);
+      presentation_buf[presentation_len-1] = '\0';
+      printf("%s.sin6_addr = \"%s\"\n", struct_name, presentation_buf);
+    }
+
+    printf("%s.sin6_flowinfo = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_flowinfo));
+    printf("%s.sin6_scope_id = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_scope_id));
+    printf("%s.sin6_port = \"%d\"\n", struct_name, ntohs(sockaddr_in6_pointer->sin6_port));
+
+    return MMUX_SUCCESS;
+  }
+  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------
@@ -2024,9 +2384,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_connect]]])
     struct sockaddr *	sockaddr_pointer = addr_pointer;
     int			rv = connect(sock, sockaddr_pointer, sockaddr_length);
 
-    if (0 != rv) {
+    if (0 == rv) {
       return MMUX_SUCCESS;
     } else {
+      if (0) { fprintf(stderr, "%s: error %s\n", __func__, strerror(errno)); }
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
     }
@@ -2048,9 +2409,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_listen]]])
   {
     int		rv = listen(sock, N);
 
-    if (0 != rv) {
+    if (0 == rv) {
       return MMUX_SUCCESS;
     } else {
+      if (0) { fprintf(stderr, "%s: error %s\n", __func__, strerror(errno)); }
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
     }
@@ -2058,8 +2420,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_listen]]])
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(4 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCK SOCKADDR_POINTER SOCKADDR_LENGTH"]]])
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKFD N"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -2208,6 +2570,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_bind]]])
     if (0 == rv) {
       return MMUX_SUCCESS;
     } else {
+      if (0) { fprintf(stderr, "%s: error binding %s\n", __func__, strerror(errno)); }
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
     }

@@ -177,8 +177,8 @@ function sockets-struct-sockaddr_un-1.1 () {
 
 	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(FAMILY) WW(PATHNAME),
 				  mmux_libc_free RR(SOCKADDR_UN) )
-	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
-	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
+	mbfl_location_leave_when_failure( mmux_libc_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
+	mbfl_location_leave_when_failure( mmux_libc_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
 
 	dotest-debug SOCKADDR_UN_LENGTH=RR(SOCKADDR_UN_LENGTH)
 	dotest-debug ,WW(SUN_FAMILY),WW(SUN_PATH), ${#SUN_PATH} ${#PATHNAME}
@@ -199,8 +199,8 @@ function sockets-struct-sockaddr_un-1.2 () {
 
 	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(FAMILY) WW(PATHNAME),
 				  mmux_libc_free RR(SOCKADDR_UN) )
-	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
-	mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
+	mbfl_location_leave_when_failure( mmux_libc_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
+	mbfl_location_leave_when_failure( mmux_libc_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sa_family_ref              SA_FAMILY  RR(SOCKADDR_UN) )
 
 	dotest-debug ,WW(SUN_FAMILY),WW(SUN_PATH), ${#SUN_PATH} ${#PATHNAME}
@@ -2424,156 +2424,718 @@ function sockfd2-sockets-socketpair-1.2 () {
 }
 
 
-#### client/server
+#### shutdown
 
-# function client-server-1.1 () {
-#     mbfl_location_enter
-#     {
-# 	declare GAI_ERRNUM GAI_ERRMSG
+function sockets-shutdown-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
 
-# 	declare SERVER_SOCK SERVER_CONN_SOCK CLIENT_SOCK
+	declare SOCKFD1 SOCKFD2
 
-# 	declare ADDRINFO_LINKED_LIST_PTR ADDRINFO_PTR HINTS_ADDRINFO_PTR
-# 	declare -A HINTS_ADDRINFO_ARRAY SERVER_ADDRINFO_ARRAY
+	mbfl_location_leave_when_failure( mmux_libc_socketpair SOCKFD1 SOCKFD2 \
+							       RR(mmux_libc_PF_LOCAL) \
+							       RR(mmux_libc_SOCK_STREAM) \
+							       RR(mmux_libc_IPPROTO_IP) )
+	mmux_libc_shutdown RR(SOCKFD1) RR(mmux_libc_SHUT_RD)
+	mmux_libc_shutdown RR(SOCKFD2) RR(mmux_libc_SHUT_WR)
 
-# 	declare -A SERVER_CONNECTION
+	mbfl_location_handler "mmux_libc_shutdown RR(SOCKFD1) RR(mmux_libc_SHUT_WR)"
+	mbfl_location_handler "mmux_libc_shutdown RR(SOCKFD2) RR(mmux_libc_SHUT_RD)"
 
-# 	mmux_libc_addrinfo_array_init_defaults HINTS_ADDRINFO_ARRAY
-# 	mmux_libc_addrinfo_array_init_defaults OUPUT_ADDRINFO_ARRAY
+	# Socket 1.
+	{
+	    declare STR_1_TO_2='hello world'
+	    declare STR_1_TO_2_BUFPTR
+	    declare STR_1_TO_2_BUFLEN
+	    declare NBYTES_SENT_BY_SOCKFD1
 
-# 	HINTS_ADDRINFO_ARRAY[AI_FLAGS]=$(( RR(mmux_libc_AI_V4MAPPED) | RR(mmux_libc_AI_ADDRCONFIG) | RR(mmux_libc_AI_CANONNAME) ))
-# 	HINTS_ADDRINFO_ARRAY[AI_FAMILY]=RR(mmux_libc_AF_INET)
-# 	HINTS_ADDRINFO_ARRAY[AI_SOCKTYPE]=RR(mmux_libc_SOCK_STREAM)
+	    mbfl_location_leave_when_failure( mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR WW(STR_1_TO_2) )
+	    mbfl_location_leave_when_failure( mmux_libc_strlen STR_1_TO_2_BUFLEN WW(STR_1_TO_2_BUFPTR) )
+	    mbfl_location_leave_when_failure( mmux_libc_send NBYTES_SENT_BY_SOCKFD1 \
+							     RR(SOCKFD1) RR(STR_1_TO_2_BUFPTR) RR(STR_1_TO_2_BUFLEN) \
+							     RR(mmux_libc_MSG_ZERO) )
+	    dotest-debug SOCKFD1=RR(SOCKFD1) sent to SOCKFD2=RR(SOCKFD2) STR=\"WW(STR_1_TO_2)\"
+	}
 
-# 	dotest-option-debug && mbfl_array_dump HINTS_ADDRINFO_ARRAY
+	# Socket 2.
+	{
+	    declare NBYTES_RECV_BY_SOCKFD2
+	    declare STR_2_FROM_1_BUFLEN='4096'
+	    declare STR_2_FROM_1_BUFPTR
+	    declare STR_2_FROM_1
 
-# 	mbfl_location_leave_when_failure( mmux_libc_bind RR(SERVER_SOCK) \
-# 							 RR(SERVER_ADDRINFO_ARRAY,AI_ADDR) \
-# 							 RR(SERVER_ADDRINFO_ARRAY,AI_ADDRLEN) )
+	    mbfl_location_compensate( mmux_libc_calloc STR_2_FROM_1_BUFPTR 1 RR(STR_2_FROM_1_BUFLEN),
+				      mmux_libc_free RR(STR_2_FROM_1_BUFPTR) )
 
-# 	ADDRINFO_PTR=RR(ADDRINFO_LINKED_LIST_PTR)
-# 	until mmux_pointer_is_zero RR(ADDRINFO_PTR)
-# 	do
+	    mbfl_location_leave_when_failure( mmux_libc_recv NBYTES_RECV_BY_SOCKFD2 \
+							     RR(SOCKFD2) RR(STR_2_FROM_1_BUFPTR) RR(STR_2_FROM_1_BUFLEN) \
+							     RR(mmux_libc_MSG_ZERO) )
+	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR_2_FROM_1 RR(STR_2_FROM_1_BUFPTR) RR(NBYTES_RECV_BY_SOCKFD2) )
+	    dotest-debug SOCKFD2=RR(SOCKFD2) recv from SOCKFD1=RR(SOCKFD1) STR=\"WW(STR_2_FROM_1)\"
+	}
 
-# 	    dotest-option-debug && mbfl_array_dump OUPUT_ADDRINFO_ARRAY
-# 	    mbfl_location_leave_when_failure( mmux_libc_ai_next_ref ADDRINFO_PTR RR(ADDRINFO_PTR) )
-# 	done
-#     }
-#     mbfl_location_leave
-# }
+	dotest-equal RR(STR_1_TO_2_BUFLEN) RR(NBYTES_SENT_BY_SOCKFD1) &&
+	    dotest-equal RR(STR_1_TO_2_BUFLEN) RR(NBYTES_RECV_BY_SOCKFD2) &&
+	    dotest-equal WW(STR_1_TO_2) WW(STR_2_FROM_1)
+    }
+    mbfl_location_leave
+}
 
-# ### ------------------------------------------------------------------------
+
+#### client/server connection: sockaddr_un, socket, bind, listen, connect, read, write, close
 
-# function mmux_server_inet_array_init_defaults () {
-#     declare -r mmux_p_SERVER_INET_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_INET_ARRAY=RR(mmux_p_SERVER_INET_ARRYNAME)
+function sockets-connection-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+	mbfl_location_handler dotest-clean-files
 
-#     # Server inet information.  Keys:
-#     #
-#     # SERVER_SOCKFD - File descriptor of the server socket listening to connection.
-#     #
-#     # SERVER_SOCKADDR_POINTER - Pointer to a "struct sockaddr" representing the server address.
-#     #
-#     # SERVER_SOCKADDR_LENGTH -  Length in  bytes of  the "struct  sockaddr" representing  the server
-#     # address.
-#     #
-#     mmux_p_SERVER_INET_ARRAY([SERVER_SOCKFD]='-1'
-# 			     [SERVER_SOCKADDR_POINTER]='0x0'
-# 			     [SERVER_SOCKADDR_LENGTH]='0')
-# }
-# function mmux_server_inet_array_finalise () {
-#     declare -r mmux_p_SERVER_INET_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_INET_ARRAY=RR(mmux_p_SERVER_INET_ARRYNAME)
+	declare ERRNO
 
-#     if test RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKFD) != '-1'
-#     then mmux_libc_close RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKFD)
-#     fi
+	# NOTE Override  the TMPDIR  set by  the Makefile.  We  know that  using "/tmp"  works here,
+	# because "sockaddr_un"  does not  require the  pathneme to  be executable,  so it  does not
+	# matter if "/tmp" is mounted "noexec".  We override it because tha maximum path length of a
+	# "sockaddr_un"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
+	# directories.  (Marco Maggi; Dec  1, 2024)
+	declare -r TMPDIR='/tmp'
+	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
+	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-1.1')
+	declare SOCKADDR_UN
+	declare SOCKADDR_UN_LENGTH
+	declare CLIENT_PID
 
-#     if mmux_pointer_is_positive RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKADDR_POINTER)
-#     then mmux_libc_free RR(mmux_p_SERVER_INET_ARRAY,SERVER_SOCKADDR_POINTER)
-#     fi
+	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(mmux_libc_AF_LOCAL) WW(PATHNAME),
+				  mmux_libc_free RR(SOCKADDR_UN) )
 
-#     mmux_server_inet_array_init_defaults WW(mmux_p_SERVER_INET_ARRYNAME)
-# }
-# function mmux_server_inet_array_ () {
-#     declare -r mmux_p_SERVER_INET_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_INET_ARRAY=RR(mmux_p_SERVER_INET_ARRYNAME)
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_dump RR(SOCKADDR_UN) >&2 )
 
-#     declare -r mmux_p_NODE=PP(2, shell string representing the node)
-#     declare -r mmux_p_SERVICE=PP(3, shell string representing the service)
+	dotest-debug 'running client in background'
+	mbfl_location_leave_when_failure( client-sockets-connection-1.1 ) &
+	CLIENT_PID=$!
 
-#     declare -r mmux_p_HINTS_ADDRINFO_ARRYNAME=PP(4, hints addrinfo array name)
-#     declare -n mmux_p_HINTS_ADDRINFO_ARRAY=RR(mmux_p_HINTS_ADDRINFO_ARRYNAME)
+	dotest-debug 'running server in foreground'
+	mbfl_location_leave_when_failure( server-sockets-connection-1.1 )
 
-#     mmux_libc_addrinfo_calloc_with_array HINTS_ADDRINFO_PTR HINTS_ADDRINFO_ARRAY,
-#     mmux_libc_getaddrinfo WW(mmux_p_NODE) WW(mmux_p_SERVICE) RR(HINTS_ADDRINFO_PTR) ADDRINFO_PTR,
-#     mmux_libc_socket SERVER_SOCK RR(mmux_libc_AF_PFINET) 0,
+	dotest-debug "waiting for client pid RR(CLIENT_PID)"
+	wait RR(CLIENT_PID)
+	dotest-debug "client terminated"
+	true
+    }
+    mbfl_location_leave
+}
+function server-sockets-connection-1.1 () {
+    mbfl_location_enter
+    {
+	declare SOCKFD
 
-#     mmux_libc_free RR(HINTS_ADDRINFO_PTR)
-#     mmux_libc_freeaddrinfo RR(ADDRINFO_PTR)
-#     mmux_libc_close RR(SERVER_SOCK)
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SOCKFD) )
 
-#     mbfl_location_leave_when_failure( mmux_libc_addrinfo_array_init_from_pointer SERVER_ADDRINFO_ARRAY RR(ADDRINFO_PTR) )
-# }
+	if false
+	then
+	    {
+		dotest-debug 'setting socket option REUSEADDR'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+	    }
+	fi
 
-# ### ------------------------------------------------------------------------
+	dotest-debug 'binding'
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
+	dotest-debug 'listening'
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
 
-# function mmux_server_connection_array_init_defaults () {
-#     declare -r mmux_p_SERVER_CONNECTION_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_CONNECTION_ARRAY=RR(mmux_p_SERVER_CONNECTION_ARRYNAME)
+	{
+	    declare CONNECTED_SOCKFD
+	    declare CONNECTED_SOCKADDR_LEN
+	    declare CONNECTED_SOCKADDR_PTR
+	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
 
-#     # Server connection information.  Keys:
-#     #
-#     # SERVER_SOCKFD - File descriptor of the server connected socket.
-#     #
-#     # CLIENT_SOCKADDR_POINTER - Pointer to a "struct sockaddr" representing the server connection.
-#     #
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
 
-#     # CLIENT_SOCKADDR_LENGTH -  Length in  bytes of  the "struct  sockaddr" representing  the server
-#     # connection.
-#     #
-#     # CLIENT_SOCKADDR_LENGTH_ALLOCATED -  Length in bytes of  the memory block allocated  to contain
-#     # the  "struct  sockaddr_in",  "struct  sockaddr_in6",  or  whatever,  representing  the  server
-#     # connection address.
-#     #
-#     mmux_p_SERVER_CONNECTION_ARRAY([SERVER_SOCKFD]='-1'
-# 				   [CLIENT_SOCKADDR_POINTER]='0x0'
-# 				   [CLIENT_SOCKADDR_LENGTH]='0'
-# 				   [CLIENT_SOCKADDR_LENGTH_ALLOCATED]='0')
-# }
-# function mmux_server_connection_array_finalise () {
-#     declare -r mmux_p_SERVER_CONNECTION_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_CONNECTION_ARRAY=RR(mmux_p_SERVER_CONNECTION_ARRYNAME)
+	    dotest-debug 'accepting'
+	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+						       RR(SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_close RR(CONNECTED_SOCKFD) )
+	    if false
+	    then
+		{
+		    declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		    dotest-debug 'setting socket option LINGER'
+		    mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(CONNECTED_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+									   RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+		}
+	    fi
 
-#     if test RR(mmux_p_SERVER_CONNECTION_ARRAY,SERVER_SOCKFD) != '-1'
-#     then mmux_libc_close RR(mmux_p_SERVER_CONNECTION_ARRAY,SERVER_SOCKFD)
-#     fi
+	    # Reading fron client.
+	    {
+		declare DONEVAR
+		declare BUFLEN='4096'
+		declare BUFPTR
+		declare BUFSTR
 
-#     if mmux_pointer_is_positive RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER)
-#     then mmux_libc_free RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER)
-#     fi
+		mbfl_location_compensate( mmux_libc_calloc BUFPTR 1 RR(BUFLEN), mmux_libc_free RR(BUFPTR) )
+		dotest-debug 'reading' CONNECTED_SOCKFD=RR(CONNECTED_SOCKFD) BUFPTR=RR(BUFPTR) BUFLEN=RR(BUFLEN)
+		mbfl_location_leave_when_failure( mmux_libc_read DONEVAR RR(CONNECTED_SOCKFD) RR(BUFPTR) RR(BUFLEN) )
+		dotest-debug DONEVAR=QQ(DONEVAR)
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string BUFSTR RR(BUFPTR) RR(DONEVAR) )
+		dotest-debug BUFSTR="$BUFSTR"
+	    }
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function client-sockets-connection-1.1 () {
+    mbfl_location_enter
+    {
+	declare ERRNO
+	declare SOCKFD
 
-#     mmux_server_connection_array_init_defaults WW(mmux_p_SERVER_CONNECTION_ARRYNAME)
-# }
-# function mmux_server_connection_array_allocate_sockaddr () {
-#     declare -r mmux_p_SERVER_CONNECTION_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_CONNECTION_ARRAY=RR(mmux_p_SERVER_CONNECTION_ARRYNAME)
+	dotest-debug 'give the parent process the time to listen'
+	mbfl_location_leave_when_failure( client-sockets-connection-1.1-sleep )
 
-#     SS(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_LENGTH_ALLOCATED)='1024'
-#     mmux_libc_calloc SS(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER) 1 \
-# 		     RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_LENGTH_ALLOCATED)
-# }
-# function mmux_server_connection_array_accept () {
-#     declare -r mmux_p_SERVER_CONNECTION_ARRYNAME=PP(1, server connection array name)
-#     declare -n mmux_p_SERVER_CONNECTION_ARRAY=RR(mmux_p_SERVER_CONNECTION_ARRYNAME)
-#     declare -r mmux_p_SERVER_SOCKET=PP(2, server socket file descriptor)
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SOCKFD) )
 
-#     mmux_libc_accept SS(mmux_p_SERVER_CONNECTION_ARRAY,SERVER_SOCKFD)			\
-# 		     SS(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_LENGTH)		\
-# 		     RR(mmux_p_SERVER_SOCKET)						\
-# 		     RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_POINTER)		\
-# 		     RR(mmux_p_SERVER_CONNECTION_ARRAY,CLIENT_SOCKADDR_LENGTH_ALLOCATED)
-# }
+	if false
+	then
+	    {
+		declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		dotest-debug 'setting socket option LINGER'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+	    }
+	fi
+
+	dotest-debug 'connecting'
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
+	dotest-debug 'connected'
+
+	# Writing to server.
+	{
+	    declare DONEVAR
+	    declare BUFSTR='hello world'
+	    declare BUFLEN=mbfl_string_len(BUFSTR)
+	    declare BUFPTR
+
+	    mbfl_location_compensate( mmux_pointer_from_bash_string BUFPTR WW(BUFSTR), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'writing'
+	    mbfl_location_leave_when_failure( mmux_libc_write DONEVAR RR(SOCKFD) RR(BUFPTR) RR(BUFLEN) )
+	    dotest-debug written DONEVAR=QQ(DONEVAR)
+	}
+	true
+    }
+    mbfl_location_leave
+    dotest-debug 'exiting client process'
+    mbfl_exit
+}
+function client-sockets-connection-1.1-sleep () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+    }
+    mbfl_location_leave
+}
+
+
+#### client/server connection: sockaddr_un, socket, bind, listen, connect, send, recv, shutdown
+
+function sockets-connection-1.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+	mbfl_location_handler dotest-clean-files
+
+	declare ERRNO
+
+	# NOTE Override  the TMPDIR  set by  the Makefile.  We  know that  using "/tmp"  works here,
+	# because "sockaddr_un"  does not  require the  pathneme to  be executable,  so it  does not
+	# matter if "/tmp" is mounted "noexec".  We override it because tha maximum path length of a
+	# "sockaddr_un"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
+	# directories.  (Marco Maggi; Dec  1, 2024)
+	declare -r TMPDIR='/tmp'
+	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
+	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-1.2')
+	declare SOCKADDR_UN
+	declare SOCKADDR_UN_LENGTH
+	declare CLIENT_PID
+
+	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(mmux_libc_AF_LOCAL) WW(PATHNAME),
+				  mmux_libc_free RR(SOCKADDR_UN) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_dump RR(SOCKADDR_UN) >&2 )
+
+	dotest-debug 'running client in background'
+	mbfl_location_leave_when_failure( client-sockets-connection-1.2 ) &
+	CLIENT_PID=$!
+
+	dotest-debug 'running server in foreground'
+	mbfl_location_leave_when_failure( server-sockets-connection-1.2 )
+
+	dotest-debug "waiting for client pid RR(CLIENT_PID)"
+	wait RR(CLIENT_PID)
+	dotest-debug "client terminated"
+	true
+    }
+    mbfl_location_leave
+}
+function server-sockets-connection-1.2 () {
+    mbfl_location_enter
+    {
+	declare SOCKFD
+
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SOCKFD) )
+
+	if false
+	then
+	    {
+		dotest-debug 'setting socket option REUSEADDR'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+	    }
+	fi
+
+	dotest-debug 'binding'
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
+	dotest-debug 'listening'
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
+
+	{
+	    declare CONNECTED_SOCKFD
+	    declare CONNECTED_SOCKADDR_LEN
+	    declare CONNECTED_SOCKADDR_PTR
+	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
+
+	    dotest-debug 'accepting'
+	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+						       RR(SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+	    if false
+	    then
+		{
+		    declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		    dotest-debug 'setting socket option LINGER'
+		    mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(CONNECTED_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+									   RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+		}
+	    fi
+
+	    # Reading fron client.
+	    {
+		declare DONEVAR
+		declare BUFLEN='4096'
+		declare BUFPTR
+		declare BUFSTR
+
+		mbfl_location_compensate( mmux_libc_calloc BUFPTR 1 RR(BUFLEN), mmux_libc_free RR(BUFPTR) )
+		dotest-debug 'receiving' CONNECTED_SOCKFD=RR(CONNECTED_SOCKFD) BUFPTR=RR(BUFPTR) BUFLEN=RR(BUFLEN)
+		mbfl_location_leave_when_failure( mmux_libc_recv DONEVAR RR(CONNECTED_SOCKFD) \
+								 RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+		dotest-debug DONEVAR=QQ(DONEVAR)
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string BUFSTR RR(BUFPTR) RR(DONEVAR) )
+		dotest-debug BUFSTR="$BUFSTR"
+	    }
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function client-sockets-connection-1.2 () {
+    mbfl_location_enter
+    {
+	declare ERRNO
+	declare SOCKFD
+
+	dotest-debug 'give the parent process the time to listen'
+	mbfl_location_leave_when_failure( client-sockets-connection-1.2-sleep )
+
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_shutdown RR(SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+
+	if false
+	then
+	    {
+		declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		dotest-debug 'setting socket option LINGER'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+	    }
+	fi
+
+	dotest-debug 'connecting'
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
+	dotest-debug 'connected'
+
+	# Writing to server.
+	{
+	    declare DONEVAR
+	    declare BUFSTR='hello world'
+	    declare BUFLEN=mbfl_string_len(BUFSTR)
+	    declare BUFPTR
+
+	    mbfl_location_compensate( mmux_pointer_from_bash_string BUFPTR WW(BUFSTR), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'sending'
+	    mbfl_location_leave_when_failure( mmux_libc_send DONEVAR RR(SOCKFD) RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+	    dotest-debug written DONEVAR=QQ(DONEVAR)
+	}
+    }
+    mbfl_location_leave
+    dotest-debug 'exiting client process'
+    mbfl_exit
+}
+function client-sockets-connection-1.2-sleep () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+    }
+    mbfl_location_leave
+}
+
+
+#### client/server connection: sockaddr_in, socket, bind, listen, connect, send, recv, shutdown
+
+function sockets-connection-2.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+	mbfl_location_handler dotest-clean-files
+
+	declare ERRNO
+
+	# NOTE Override  the TMPDIR  set by  the Makefile.  We  know that  using "/tmp"  works here,
+	# because "sockaddr_in"  does not  require the  pathneme to  be executable,  so it  does not
+	# matter if "/tmp" is mounted "noexec".  We override it because tha maximum path length of a
+	# "sockaddr_in"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
+	# directories.  (Marco Maggi; Dec  1, 2024)
+	declare -r TMPDIR='/tmp'
+	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
+	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-2.1')
+	declare SOCKADDR_IN
+	declare SIN_ADDR
+	declare CLIENT_PID
+
+	mbfl_location_compensate( mmux_libc_sockaddr_in_calloc SOCKADDR_IN RR(mmux_libc_AF_INET) SIN_ADDR 8080,
+				  mmux_libc_free RR(SOCKADDR_IN) )
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET) '127.0.0.1' RR(SIN_ADDR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_in_dump RR(SOCKADDR_IN) >&2 )
+
+	dotest-debug 'running client in background'
+	mbfl_location_leave_when_failure( client-sockets-connection-2.1 ) &
+	CLIENT_PID=$!
+
+	dotest-debug 'running server in foreground'
+	mbfl_location_leave_when_failure( server-sockets-connection-2.1 )
+
+	dotest-debug "waiting for client pid RR(CLIENT_PID)"
+	wait RR(CLIENT_PID)
+	dotest-debug "client terminated"
+	true
+    }
+    mbfl_location_leave
+}
+function server-sockets-connection-2.1 () {
+    mbfl_location_enter
+    {
+	declare SOCKFD
+
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
+				  mmux_libc_close RR(SOCKFD) )
+
+	if true
+	then
+	    {
+		dotest-debug 'setting socket option REUSEADDR'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+	    }
+	fi
+
+	dotest-debug 'binding'
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
+	dotest-debug 'listening'
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
+
+	{
+	    declare CONNECTED_SOCKFD
+	    declare CONNECTED_SOCKADDR_LEN
+	    declare CONNECTED_SOCKADDR_PTR
+	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
+
+	    dotest-debug 'accepting'
+	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+						       RR(SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+	    if true
+	    then
+		{
+		    declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		    dotest-debug 'setting socket option LINGER'
+		    mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(CONNECTED_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+									   RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+		}
+	    fi
+
+	    # Reading fron client.
+	    {
+		declare DONEVAR
+		declare BUFLEN='4096'
+		declare BUFPTR
+		declare BUFSTR
+
+		mbfl_location_compensate( mmux_libc_calloc BUFPTR 1 RR(BUFLEN), mmux_libc_free RR(BUFPTR) )
+		dotest-debug 'receiving' CONNECTED_SOCKFD=RR(CONNECTED_SOCKFD) BUFPTR=RR(BUFPTR) BUFLEN=RR(BUFLEN)
+		mbfl_location_leave_when_failure( mmux_libc_recv DONEVAR RR(CONNECTED_SOCKFD) \
+								 RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+		dotest-debug DONEVAR=QQ(DONEVAR)
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string BUFSTR RR(BUFPTR) RR(DONEVAR) )
+		dotest-debug BUFSTR="$BUFSTR"
+	    }
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function client-sockets-connection-2.1 () {
+    mbfl_location_enter
+    {
+	declare ERRNO
+	declare SOCKFD
+
+	dotest-debug 'give the parent process the time to listen'
+	mbfl_location_leave_when_failure( client-sockets-connection-2.1-sleep )
+
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
+				  mmux_libc_shutdown RR(SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+
+	if true
+	then
+	    {
+		declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		dotest-debug 'setting socket option LINGER'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+	    }
+	fi
+
+	dotest-debug 'connecting'
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
+	dotest-debug 'connected'
+
+	# Writing to server.
+	{
+	    declare DONEVAR
+	    declare BUFSTR='hello world'
+	    declare BUFLEN=mbfl_string_len(BUFSTR)
+	    declare BUFPTR
+
+	    mbfl_location_compensate( mmux_pointer_from_bash_string BUFPTR WW(BUFSTR), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'sending'
+	    mbfl_location_leave_when_failure( mmux_libc_send DONEVAR RR(SOCKFD) RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+	    dotest-debug written DONEVAR=QQ(DONEVAR)
+	}
+    }
+    mbfl_location_leave
+    dotest-debug 'exiting client process'
+    mbfl_exit
+}
+function client-sockets-connection-2.1-sleep () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+    }
+    mbfl_location_leave
+}
+
+
+#### client/server connection: sockaddr_in6, socket, bind, listen, connect, send, recv, shutdown
+
+function sockets-connection-3.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+	mbfl_location_handler dotest-clean-files
+
+	declare ERRNO
+
+	# NOTE Override  the TMPDIR  set by  the Makefile.  We  know that  using "/tmp"  works here,
+	# because "sockaddr_in6"  does not  require the  pathneme to  be executable,  so it  does not
+	# matter if "/tmp" is mounted "noexec".  We override it because tha maximum path length of a
+	# "sockaddr_in6"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
+	# directories.  (Marco Maggi; Dec  1, 2024)
+	declare -r TMPDIR='/tmp'
+	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
+	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-3.1')
+	declare SOCKADDR_IN6
+	declare SIN_ADDR
+	declare CLIENT_PID
+
+	mbfl_location_compensate( mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 RR(mmux_libc_AF_INET6) SIN_ADDR 0 0 8080,
+				  mmux_libc_free RR(SOCKADDR_IN6) )
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET6) '::1' RR(SIN_ADDR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_in6_dump RR(SOCKADDR_IN6) >&2 )
+
+	dotest-debug 'running client in background'
+	mbfl_location_leave_when_failure( client-sockets-connection-3.1 ) &
+	CLIENT_PID=$!
+
+	dotest-debug 'running server in foreground'
+	mbfl_location_leave_when_failure( server-sockets-connection-3.1 )
+
+	dotest-debug "waiting for client pid RR(CLIENT_PID)"
+	wait RR(CLIENT_PID)
+	dotest-debug "client terminated"
+	true
+    }
+    mbfl_location_leave
+}
+function server-sockets-connection-3.1 () {
+    mbfl_location_enter
+    {
+	declare SOCKFD
+
+	dotest-debug 'creating server socket'
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SOCKFD) )
+
+	if true
+	then
+	    {
+		dotest-debug 'setting socket option REUSEADDR'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+	    }
+	fi
+
+	dotest-debug 'binding'
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
+	dotest-debug 'listening'
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
+
+	{
+	    declare CONNECTED_SOCKFD
+	    declare CONNECTED_SOCKADDR_LEN
+	    declare CONNECTED_SOCKADDR_PTR
+	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
+
+	    dotest-debug 'accepting'
+	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+						       RR(SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+
+	    if true
+	    then
+		{
+		    declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		    dotest-debug 'setting socket option LINGER'
+		    mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(CONNECTED_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+									   RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+		}
+	    fi
+
+	    # Reading fron client.
+	    {
+		declare DONEVAR
+		declare BUFLEN='4096'
+		declare BUFPTR
+		declare BUFSTR
+
+		mbfl_location_compensate( mmux_libc_calloc BUFPTR 1 RR(BUFLEN), mmux_libc_free RR(BUFPTR) )
+		dotest-debug 'receiving' CONNECTED_SOCKFD=RR(CONNECTED_SOCKFD) BUFPTR=RR(BUFPTR) BUFLEN=RR(BUFLEN)
+		mbfl_location_leave_when_failure( mmux_libc_recv DONEVAR RR(CONNECTED_SOCKFD) \
+								 RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+		dotest-debug DONEVAR=QQ(DONEVAR)
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string BUFSTR RR(BUFPTR) RR(DONEVAR) )
+		dotest-debug BUFSTR="$BUFSTR"
+	    }
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function client-sockets-connection-3.1 () {
+    mbfl_location_enter
+    {
+	declare ERRNO
+	declare SOCKFD
+
+	dotest-debug 'give the parent process the time to listen'
+	mbfl_location_leave_when_failure( client-sockets-connection-3.1-sleep )
+
+	dotest-debug 'creating client socket'
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_shutdown RR(SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+
+	if true
+	then
+	    {
+		declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		dotest-debug 'setting socket option LINGER'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+	    }
+	fi
+
+	dotest-debug 'connecting'
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
+	dotest-debug 'connected'
+
+	# Writing to server.
+	{
+	    declare DONEVAR
+	    declare BUFSTR='hello world'
+	    declare BUFLEN=mbfl_string_len(BUFSTR)
+	    declare BUFPTR
+
+	    mbfl_location_compensate( mmux_pointer_from_bash_string BUFPTR WW(BUFSTR), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'sending'
+	    mbfl_location_leave_when_failure( mmux_libc_send DONEVAR RR(SOCKFD) RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+	    dotest-debug written DONEVAR=QQ(DONEVAR)
+	}
+    }
+    mbfl_location_leave
+    dotest-debug 'exiting client process'
+    mbfl_exit
+}
+function client-sockets-connection-3.1-sleep () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+    }
+    mbfl_location_leave
+}
 
 
 #### let's go

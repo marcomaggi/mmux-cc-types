@@ -7125,6 +7125,8 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
 * sockets pair::                Interface to @cfunc{socketpair}.
+* sockets shutdown::            Interface to @cfunc{shutdown}.
+* sockets stream::              Sending and receiving data through a stream socket.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -7193,8 +7195,8 @@ declare SUN_FAMILY SUN_PATH
 
 mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH @RR{FAMILY} @WW{PATHNAME}
 @{
-    mmux_libc_sockaddr_un_sun_family_ref SUN_FAMILY @RR{SOCKADDR_UN}
-    mmux_libc_sockaddr_un_sun_path_ref   SUN_PATH   @RR{SOCKADDR_UN}
+    mmux_libc_sun_family_ref SUN_FAMILY @RR{SOCKADDR_UN}
+    mmux_libc_sun_path_ref   SUN_PATH   @RR{SOCKADDR_UN}
 
     @WW{SUN_FAMILY}     @result{} [whatever AF_LOCAL is]
     @WW{SUN_PATH}       @result{} /tmp/sock.ext
@@ -7229,16 +7231,28 @@ maximum length of the pathname is platform--specific.
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_un_sun_family_ref @var{SUN_FAMILY_VAR} @var{SOCKADDR_UN_POINTER}
+@deffn Builtin mmux_libc_sun_family_ref @var{SUN_FAMILY_VAR} @var{SOCKADDR_UN_POINTER}
 Bind to the shell variable whose name is @var{SUN_FAMILY_VAR} the string representation of the field
 @code{sun_family} in the @MmuxCStruct{sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_sockaddr_un_sun_path_ref @var{SUN_PATH_VAR} @var{SOCKADDR_UN_POINTER}
+@deffn Builtin mmux_libc_sun_path_ref @var{SUN_PATH_VAR} @var{SOCKADDR_UN_POINTER}
 Bind to the shell variable whose name is @var{SUN_PATH_VAR} the string representation of the field
 @code{sun_path} in the @MmuxCStruct{sockaddr_un} value referenced by @var{SOCKADDR_UN_POINTER}.
 @end deffn
+
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_sockaddr_un_dump @var{SOCKADDR_UN_PTR}
+@defunx mmux_libc_sockaddr_un_dump @var{SOCKADDR_UN_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct sockaddr_un}: print to @stdout{} a description of each field,
+then return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct sockaddr_un}.
+@end defun
 
 @c page
 @node sockets sockaddr_in
@@ -7248,7 +7262,7 @@ Bind to the shell variable whose name is @var{SUN_PATH_VAR} the string represent
 To use values of type @MmuxCStruct{sockaddr_in} we do:
 
 @example
-declare SOCKADDR_IN_POINTER SIN_ADDR_POINTER
+declare SOCKADDR_IN_POINTER IN_ADDR_POINTER
 declare -r SIN_FAMILY=@RR{mmux_libc_AF_INET}
 declare -r SIN_PORT='8080'
 
@@ -7256,8 +7270,18 @@ mmux_libc_sockaddr_in_calloc SOCKADDR_IN_POINTER @RR{SIN_FAMILY} IN_ADDR_POINTER
 @{
     mmux_libc_inet_pton @RR{SIN_FAMILY} '1.2.3.4' @RR{IN_ADDR_POINTER}
     # ...
+    mmux_libc_sockaddr_in_dump @RR{SOCKADDR_IN_POINTER}
 @}
 mmux_libc_free RR(SOCKADDR_IN_POINTER)
+@end example
+
+@noindent
+which prints:
+
+@example
+struct sockaddr_in.sin_family = "2" (AF_INET)
+struct sockaddr_in.sin_addr = "127.0.0.1"
+struct sockaddr_in.sin_port = "8080"
 @end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -7413,6 +7437,17 @@ mmux_libc_calloc SOCKADDR_IN_POINTER 1 @RR{mmux_libc_sockaddr_in_SIZEOF}
 mmux_libc_free @RR{SOCKADDR_IN_POINTER}
 @end example
 @end deffn
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_sockaddr_in_dump @var{SOCKADDR_IN_PTR}
+@defunx mmux_libc_sockaddr_in_dump @var{SOCKADDR_IN_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct sockaddr_in}: print to @stdout{} a description of each field,
+then return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct sockaddr_in}.
+@end defun
 
 @c page
 @node sockets sockaddr_in6
@@ -7618,6 +7653,17 @@ Global variable holding the value of a pointer to the C language constant @code{
 in6addr_any}.  We can the pointer to this data structure to initialise a @MmuxCStruct{sockaddr_in6}.
 @glibcref{Host Address Data Type, in6addr_any}.
 @end defvar
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_sockaddr_in6_dump @var{SOCKADDR_IN6_PTR}
+@defunx mmux_libc_sockaddr_in6_dump @var{SOCKADDR_IN6_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct sockaddr_in6}: print to @stdout{} a description of each field,
+then return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct sockaddr_in6}.
+@end defun
 
 @c page
 @node sockets sockaddr
@@ -9268,10 +9314,11 @@ mmux_libc_socketpair SOCKFD1 SOCKFD2 \
         declare STR_1_TO_2_BUFLEN
         declare NBYTES_SENT_BY_SOCKFD1
 
-        mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR @WW{STR_1_TO_2}
-        mmux_libc_strlen              STR_1_TO_2_BUFLEN @WW{STR_1_TO_2_BUFPTR}
-        mmux_libc_send NBYTES_SENT_BY_SOCKFD1 \
-            @RR{SOCKFD1} @RR{STR_1_TO_2_BUFPTR} @RR{STR_1_TO_2_BUFLEN} @RR{mmux_libc_MSG_ZERO}
+        mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR   @WW{STR_1_TO_2}
+        mmux_libc_strlen              STR_1_TO_2_BUFLEN   @WW{STR_1_TO_2_BUFPTR}
+
+        mmux_libc_send NBYTES_SENT_BY_SOCKFD1 @RR{SOCKFD1} \
+            @RR{STR_1_TO_2_BUFPTR} @RR{STR_1_TO_2_BUFLEN} @RR{mmux_libc_MSG_ZERO}
     @}
 
     # Socket 2.
@@ -9304,6 +9351,103 @@ Interface to the standard C language function @cfunc{socketpair}, @glibcref{Sock
 socketpair}.
 @end deffn
 
+@c page
+@node sockets shutdown
+@section Interface to @cfunc{shutdown}
+
+
+We can use @MmuxBuiltin{mmux_libc_shutdown} to selectively shut down sending and/or receiving data
+through a socket; in the following example: @var{SOCKFD1} is used only for sending, so we
+immediately shut down the receving side; @var{SOCKFD2} is used only for receiving, so we immediately
+shut down the sending side.
+
+@example
+declare SOCKFD1 SOCKFD2
+
+mmux_libc_socketpair SOCKFD1 SOCKFD2 \
+    @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_IP}
+@{
+    # Socket 1.
+    @{
+        declare STR_1_TO_2='hello world'
+        declare STR_1_TO_2_BUFPTR
+        declare STR_1_TO_2_BUFLEN
+        declare NBYTES_SENT_BY_SOCKFD1
+
+        mmux_libc_shutdown @RR{SOCKFD1} @RR{mmux_libc_SHUT_RD}
+
+        mmux_pointer_from_bash_string STR_1_TO_2_BUFPTR   @WW{STR_1_TO_2}
+        mmux_libc_strlen              STR_1_TO_2_BUFLEN   @WW{STR_1_TO_2_BUFPTR}
+
+        mmux_libc_send NBYTES_SENT_BY_SOCKFD1 @RR{SOCKFD1} \
+            @RR{STR_1_TO_2_BUFPTR} @RR{STR_1_TO_2_BUFLEN} @RR{mmux_libc_MSG_ZERO}
+    @}
+
+    # Socket 2.
+    @{
+        declare NBYTES_RECV_BY_SOCKFD2
+        declare STR_2_FROM_1_BUFLEN='4096'
+        declare STR_2_FROM_1_BUFPTR
+        declare STR_2_FROM_1
+
+        mmux_libc_shutdown @RR{SOCKFD2} @RR{mmux_libc_SHUT_WR}
+
+        mmux_libc_calloc STR_2_FROM_1_BUFPTR 1 @RR{STR_2_FROM_1_BUFLEN}
+        @{
+            mmux_libc_recv NBYTES_RECV_BY_SOCKFD2 \
+                @RR{SOCKFD2} @RR{STR_2_FROM_1_BUFPTR} @RR{STR_2_FROM_1_BUFLEN} \
+                @RR{mmux_libc_MSG_ZERO}
+            mmux_pointer_to_bash_string STR_2_FROM_1 @RR{STR_2_FROM_1_BUFPTR} @RR{NBYTES_RECV_BY_SOCKFD2}
+            printf 'received: %s\n' @WW{STR_2_FROM_1}
+        @}
+        mmux_libc_free @RR{STR_2_FROM_1_BUFPTR}
+    @}
+@}
+mmux_libc_shutdown @RR{SOCKFD1} @RR{mmux_libc_SHUT_WR}
+mmux_libc_shutdown @RR{SOCKFD2} @RR{mmux_libc_SHUT_RD}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_shutdown @var{SOCK} @var{HOW}
+Interface to the standard C language function @cfunc{shutdown}, @glibcref{Closing a Socket, shutdown}.
+
+The argument @var{HOW} must be one of the @code{mmux_libc_SHUT_*} constants.
+@end deffn
+
+@c page
+@node sockets stream
+@section Sending and receiving data through a stream socket
+
+
+We can look at the coding example for socket pairs for how to use the interfaces to the standard C
+language functions @cfunc{send} and @cfunc{recv}, @ref{sockets pair, Interface to
+@cfunc{socketpair}}.
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_send @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS}
+Interface to the standard C language function @cfunc{send}, @glibcref{Sending Data, send}.
+
+Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_SENT_VAR} a string representation of
+the number of bytes actually sent.
+
+The argument @var{FLAGS} must be one among the @code{mmux_libc_MSG_*} constants; it is often set to
+zero, which is the constant @code{mmux_libc_MSG_ZERO}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_recv @var{NUMBER_OF_BYTES_RECEIVED_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS}
+Interface to the standard C language function @cfunc{recv}, @glibcref{Recving Data, recv}.
+
+Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_RECEIVED_VAR} a string representation
+of the number of bytes actually received.
+
+The argument @var{FLAGS} must be one among the @code{mmux_libc_MSG_*} constants; it is often set to
+zero, which is the constant @code{mmux_libc_MSG_ZERO}.
+@end deffn
 
 @c page
 @node sockets creating
@@ -9327,11 +9471,6 @@ block referenced by @var{SOCKADDR_POINTER}.
 @deffn Builtin mmux_libc_socket @var{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}
 Interface to the standard C language function @cfunc{socket}, @glibcref{Creating a Socket, socket}.
 When successful: bind to the shell variable whose name is @var{SOCK_VAR} the socket descriptor.
-@end deffn
-
-
-@deffn Builtin mmux_libc_shutdown @var{SOCK} @var{HOW}
-Interface to the standard C language function @cfunc{shutdown}, @glibcref{Closing a Socket, shutdown}.
 @end deffn
 
 
@@ -9389,22 +9528,6 @@ sockaddr} value, wide enough to contain an address data structure.
 The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
 bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
 If we allocate @math{512} bytes for this: it will probably be enough.
-@end deffn
-
-
-@deffn Builtin mmux_libc_send @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS}
-Interface to the standard C language function @cfunc{send}, @glibcref{Sending Data, send}.
-
-Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_SENT_VAR} a string representation of
-the number of bytes actually sent.
-@end deffn
-
-
-@deffn Builtin mmux_libc_recv @var{NUMBER_OF_BYTES_RECEIVED_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS}
-Interface to the standard C language function @cfunc{recv}, @glibcref{Recving Data, recv}.
-
-Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_RECEIVED_VAR} a string representation
-of the number of bytes actually received.
 @end deffn
 
 
