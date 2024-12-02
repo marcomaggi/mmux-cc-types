@@ -2483,7 +2483,7 @@ function sockets-shutdown-1.1 () {
 }
 
 
-#### client/server connection: sockaddr_un, socket, bind, listen, connect, read, write, close
+#### client/server connection: sockaddr_un, socket, bind, listen, accept, connect, read, write, close
 
 function sockets-connection-1.1 () {
     mbfl_location_enter
@@ -2644,7 +2644,7 @@ function client-sockets-connection-1.1-sleep () {
 }
 
 
-#### client/server connection: sockaddr_un, socket, bind, listen, connect, send, recv, shutdown
+#### client/server connection: sockaddr_un, socket, bind, listen, accept, connect, send, recv, shutdown
 
 function sockets-connection-1.2 () {
     mbfl_location_enter
@@ -2806,7 +2806,7 @@ function client-sockets-connection-1.2-sleep () {
 }
 
 
-#### client/server connection: sockaddr_in, socket, bind, listen, connect, send, recv, shutdown
+#### client/server connection: sockaddr_in, socket, bind, listen, accept, connect, send, recv, shutdown
 
 function sockets-connection-2.1 () {
     mbfl_location_enter
@@ -2961,7 +2961,163 @@ function client-sockets-connection-2.1-sleep () {
 }
 
 
-#### client/server connection: sockaddr_in6, socket, bind, listen, connect, send, recv, shutdown
+#### client/server connection: sockaddr_in, socket, bind, listen, accept4, connect, send, recv, shutdown
+
+function sockets-connection-2.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+	mbfl_location_handler dotest-clean-files
+
+	declare ERRNO
+	declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1'
+	declare CLIENT_PID
+
+	mbfl_location_compensate( mmux_libc_sockaddr_in_calloc SOCKADDR_IN RR(mmux_libc_AF_INET) SIN_ADDR RR(SIN_PORT),
+				  mmux_libc_free RR(SOCKADDR_IN) )
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET) WW(ASCII_ADDR) RR(SIN_ADDR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_in_dump RR(SOCKADDR_IN) >&2 )
+
+	dotest-debug 'running client in background'
+	mbfl_location_leave_when_failure( client-sockets-connection-2.2 ) &
+	CLIENT_PID=$!
+
+	dotest-debug 'running server in foreground'
+	mbfl_location_leave_when_failure( server-sockets-connection-2.2 )
+
+	dotest-debug "waiting for client pid RR(CLIENT_PID)"
+	wait RR(CLIENT_PID)
+	dotest-debug "client terminated"
+	true
+    }
+    mbfl_location_leave
+}
+function server-sockets-connection-2.2 () {
+    mbfl_location_enter
+    {
+	declare SERVER_SOCKFD
+
+	mbfl_location_compensate( mmux_libc_socket SERVER_SOCKFD RR(mmux_libc_PF_INET) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
+				  mmux_libc_close RR(SERVER_SOCKFD) )
+
+	if true
+	then
+	    {
+		dotest-debug 'setting socket option REUSEADDR'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SERVER_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_REUSEADDR) 1 )
+	    }
+	fi
+
+	dotest-debug 'binding'
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SERVER_SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
+	dotest-debug 'listening'
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SERVER_SOCKFD) 10 )
+
+	{
+	    declare CONNECTED_SOCKFD CONNECTED_SOCKADDR_PTR CONNECTED_SOCKADDR_LEN='1024'
+
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN),
+				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
+
+	    dotest-debug 'accepting4'
+	    mbfl_location_compensate( mmux_libc_accept4 CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+							RR(SERVER_SOCKFD) \
+							RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN) \
+							RR(mmux_libc_SOCK_CLOEXEC),
+				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+	    	dotest-option-debug &&
+		    mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
+
+	    if true
+	    then
+		{
+		    declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		    dotest-debug 'setting socket option LINGER'
+		    mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(CONNECTED_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+									   RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+		}
+	    fi
+
+	    # Reading fron client.
+	    {
+		declare DONEVAR
+		declare BUFLEN='4096'
+		declare BUFPTR
+		declare BUFSTR
+
+		mbfl_location_compensate( mmux_libc_calloc BUFPTR 1 RR(BUFLEN), mmux_libc_free RR(BUFPTR) )
+		dotest-debug 'receiving' CONNECTED_SOCKFD=RR(CONNECTED_SOCKFD) BUFPTR=RR(BUFPTR) BUFLEN=RR(BUFLEN)
+		mbfl_location_leave_when_failure( mmux_libc_recv DONEVAR RR(CONNECTED_SOCKFD) \
+								 RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+		dotest-debug DONEVAR=QQ(DONEVAR)
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string BUFSTR RR(BUFPTR) RR(DONEVAR) )
+		dotest-debug BUFSTR="$BUFSTR"
+	    }
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function client-sockets-connection-2.2 () {
+    mbfl_location_enter
+    {
+	declare ERRNO
+	declare SOCKFD
+
+	dotest-debug 'give the parent process the time to listen'
+	mbfl_location_leave_when_failure( client-sockets-connection-2.2-sleep )
+
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
+				  mmux_libc_shutdown RR(SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+
+	if true
+	then
+	    {
+		declare -A SOCKOPT_LINGER=([ONOFF]=1 [LINGER]=1)
+		dotest-debug 'setting socket option LINGER'
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_LINGER) SOCKOPT_LINGER )
+	    }
+	fi
+
+	dotest-debug 'connecting'
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
+	dotest-debug 'connected'
+
+	# Writing to server.
+	{
+	    declare DONEVAR
+	    declare BUFSTR='hello world'
+	    declare BUFLEN=mbfl_string_len(BUFSTR)
+	    declare BUFPTR
+
+	    mbfl_location_compensate( mmux_pointer_from_bash_string BUFPTR WW(BUFSTR), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'sending'
+	    mbfl_location_leave_when_failure( mmux_libc_send DONEVAR RR(SOCKFD) RR(BUFPTR) RR(BUFLEN) RR(mmux_libc_MSG_ZERO) )
+	    dotest-debug written DONEVAR=QQ(DONEVAR)
+	}
+    }
+    mbfl_location_leave
+    dotest-debug 'exiting client process'
+    mbfl_exit
+}
+function client-sockets-connection-2.2-sleep () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+    }
+    mbfl_location_leave
+}
+
+
+#### client/server connection: sockaddr_in6, socket, bind, listen, accept, connect, send, recv, shutdown
 
 function sockets-connection-3.1 () {
     mbfl_location_enter

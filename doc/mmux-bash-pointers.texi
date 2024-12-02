@@ -9571,6 +9571,76 @@ mmux_libc_listen @RR{SERVER_SOCKFD} 10
 @}
 @end example
 
+@c ------------------------------------------------------------------------
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_socket @var{SOCKFD_VAR} @var{PF_NAMESPACE} @var{SOCK_STYLE} @var{IPPROTO_PROTOCOL}
+Interface to the standard C language function @cfunc{socket}, @glibcref{Creating a Socket, socket}.
+When successful: bind to the shell variable whose name is @var{SOCKFD_VAR} the socket descriptor.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_bind @var{SERVER_SOCKFD} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{bind}, @glibcref{Socket Addresses, bind}.
+
+The argument @var{SOCKADDR_POINTER} must be a pointer to a memory block containing a @code{struct
+sockaddr} value.
+
+The argument @var{SOCKADDR_LENGTH} must be the string representation of the number of bytes in the
+block referenced by @var{SOCKADDR_POINTER}.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_listen @var{SERVER_SOCKFD} @var{SINT_N}
+Interface to the standard C language function @cfunc{listen}, @glibcref{Listening, listen}.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_accept @var{CONNECTED_SERVER_SOCKFD_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SERVER_SOCKFD} @var{CONNECTED_SOCKADDR_POINTER} @var{CONNECTED_SOCKADDR_ALLOCATED_LENGTH}
+Interface to the standard C language function @cfunc{accept}, @glibcref{Accepting Connections,
+accept}.  Arguments:
+
+@table @var
+@item CONNECTED_SERVER_SOCKFD_VAR
+It must be the name of a shell variable: the new, connected, socket descriptor is bound to this
+variable.
+
+@item CONNECTED_SOCKADDR_LENGTH_VAR
+It must be the name of a shell variable: the length, measured in bytes, of the connected address is
+bound to this variable; it is probably different from @var{CONNECTED_SOCKADDR_ALLOCATED_LENGTH}.
+
+@item SERVER_SOCKFD
+It must be the string representation of the server socket descriptor.
+
+@item CONNECTED_SOCKADDR_POINTER
+It must be the string representation of a pointer to a @code{struct sockaddr} value, wide enough to
+contain an address data structure.
+
+@item CONNECTED_SOCKADDR_ALLOCATED_LENGTH
+It must be the string representation of the number of bytes allocated to contain the
+@MmuxCStruct{sockaddr} value referenced by @var{CONNECTED_SOCKADDR_POINTER}.  If we allocate
+@math{512} bytes for this: it will probably be enough.
+@end table
+@end deffn
+
+
+@deffn {Linux Builtin} mmux_libc_accept4 @var{CONNECTED_SERVER_SOCK_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SERVER_SOCKFD} @var{CONNECTED_SOCKADDR_POINTER} @var{CONNECTED_SOCKADDR_ALLOCATED_LENGTH} @var{FLAGS}
+Interface to the extension C language function @cfunc{accept4}, @cfuncpage{accept4}.  This is like
+@cfunc{mmux_libc_accept}, but provides the additional argument @var{FLAGS}.
+
+The argument @var{FLAGS} must be zero or a bitwise OR combination of the following flags:
+
+@example
+mmux_libc_SOCK_NONBLOCK
+mmux_libc_SOCK_CLOEXEC
+@end example
+@end deffn
+
 @c page
 @node sockets creating
 @section Creating sockets
@@ -9579,77 +9649,8 @@ mmux_libc_listen @RR{SERVER_SOCKFD} 10
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deffn Builtin mmux_libc_bind @var{SOCKFD} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
-Interface to the standard C language function @cfunc{bind}, @glibcref{Socket Addresses, bind}.
-
-The argument @var{SOCKADDR_POINTER} must be a pointer to a memory block containing a @code{struct
-sockaddr} value.
-
-The argument @var{SOCKADDR_SIZE} must be the string representation of the number of bytes in the
-block referenced by @var{SOCKADDR_POINTER}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_socket @var{SOCK_VAR} @var{NAMESPACE} @var{STYLE} @var{PROTOCOL}
-Interface to the standard C language function @cfunc{socket}, @glibcref{Creating a Socket, socket}.
-When successful: bind to the shell variable whose name is @var{SOCK_VAR} the socket descriptor.
-@end deffn
-
-
 @deffn Builtin mmux_libc_connect @var{SOCK} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
 Interface to the standard C language function @cfunc{connect}, @glibcref{Connecting, connect}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_listen @var{SOCK} @var{SINT_N}
-Interface to the standard C language function @cfunc{listen}, @glibcref{Listening, listen}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_accept @var{CONNECTED_SOCK_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
-Interface to the standard C language function @cfunc{accept}, @glibcref{Accepting Connections,
-accept}.
-
-The argument @var{CONNECTED_SOCK_VAR} must be the name of a shell variable: the new, connected,
-socket descriptor is bound to this variable.
-
-The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
-measured in bytes, of the connected address is bound to this variable; it is probably different from
-@var{ALLOCATED_SOCKADDR_LENGTH}.
-
-The argument @var{SOCK} must be the string representation of the server socket descriptor.
-
-The argument @var{SOCKADDR_POINTER} must be the string representation of a pointer to a @code{struct
-sockaddr} value, wide enough to contain an address data structure.
-
-The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
-bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
-If we allocate @math{512} bytes for this: it will probably be enough.
-@end deffn
-
-
-@deffn {Linux Builtin} mmux_libc_accept4 @var{CONNECTED_SOCK_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH} @var{FLAGS}
-Interface to the extension C language function @cfunc{accept4}, @cfuncpage{accept4}.  This is like
-@cfunc{mmux_libc_accept}, but provides the additional argument @var{FLAGS}.
-@end deffn
-
-
-@deffn Builtin mmux_libc_getpeername @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
-Interface to the standard C language function @cfunc{getpeername}, @glibcref{Who is Connected,
-getpeername}.
-
-The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
-measured in bytes, of the connected address is bound to this variable; it is probably different from
-@var{ALLOCATED_SOCKADDR_LENGTH}.
-
-The argument @var{SOCK} must be the string representation of the socket descriptor.
-
-The argument @var{SOCKADDR_POINTER} must be the string representation of a pointer to a @code{struct
-sockaddr} value, wide enough to contain an address data structure.
-
-The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
-bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
-If we allocate @math{512} bytes for this: it will probably be enough.
 @end deffn
 
 
@@ -9671,6 +9672,24 @@ of the number of bytes actually received.
 The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
 measured in bytes, of the connected address is bound to this variable; it is probably different from
 @var{ALLOCATED_SOCKADDR_LENGTH}.
+@end deffn
+
+@deffn Builtin mmux_libc_getpeername @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{getpeername}, @glibcref{Who is Connected,
+getpeername}.
+
+The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
+measured in bytes, of the connected address is bound to this variable; it is probably different from
+@var{ALLOCATED_SOCKADDR_LENGTH}.
+
+The argument @var{SOCK} must be the string representation of the socket descriptor.
+
+The argument @var{SOCKADDR_POINTER} must be the string representation of a pointer to a @code{struct
+sockaddr} value, wide enough to contain an address data structure.
+
+The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
+bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
+If we allocate @math{512} bytes for this: it will probably be enough.
 @end deffn
 
 @c page
