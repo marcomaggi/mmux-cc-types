@@ -14,6 +14,8 @@
 
 * Add a builtin interfacing the CMSG macros?  (See the manual page cmsg(3).)
 
+* Add a builtin interfacing "getifaddrs(3)"?  (Documented in a manual page.)
+
 ### end of file
 # Local Variables:
 # mode: text
