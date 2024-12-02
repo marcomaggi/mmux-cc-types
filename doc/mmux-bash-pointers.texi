@@ -7127,6 +7127,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets pair::                Interface to @cfunc{socketpair}.
 * sockets shutdown::            Interface to @cfunc{shutdown}.
 * sockets stream::              Sending and receiving data through a stream socket.
+* sockets server::              Stream socket servers.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -7677,6 +7678,31 @@ structure; when not given: it defaults to @samp{struct sockaddr_in6}.
 Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string representation of the field
 @code{sa_family} in the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
 @end deffn
+
+@c ------------------------------------------------------------------------
+
+@defun mmux_libc_sockaddr_dump @var{SOCKADDR_PTR}
+@defunx mmux_libc_sockaddr_dump @var{SOCKADDR_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct sockaddr}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct sockaddr}.
+
+This function relies on the value of the @code{sa_family} field to offload the work to other dumping
+functions and builtins; if the field is:
+
+@table @samp
+@item AF_LOCAL
+Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_un_dump}.
+
+@item AF_INET
+Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_in_dump}.
+
+@item AF_INET6
+Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_in6_dump}.
+@end table
+@end defun
 
 @c page
 @node sockets addrinfo
@@ -9448,6 +9474,102 @@ of the number of bytes actually received.
 The argument @var{FLAGS} must be one among the @code{mmux_libc_MSG_*} constants; it is often set to
 zero, which is the constant @code{mmux_libc_MSG_ZERO}.
 @end deffn
+
+@c page
+@node sockets server
+@section Stream socket servers
+
+
+Let's see how we can create a server socket in the @samp{AF_LOCAL} namespace, in this raw example in
+which allocated resources are not released (to make the code shorter):
+
+@example
+declare -r PATHNAME='/tmp/filename.ext'
+declare SOCKADDR_UN_PTR
+declare SOCKADDR_UN_LEN
+declare SERVER_SOCKFD
+
+mmux_libc_sockaddr_un_calloc SOCKADDR_UN_PTR SOCKADDR_UN_LEN @RR{mmux_libc_AF_LOCAL} @WW{PATHNAME}
+mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_UN_PTR} @RR{SOCKADDR_UN_LEN}
+mmux_libc_listen @RR{SERVER_SOCKFD} 10
+@{
+    declare CONNECTED_SOCKFD
+    declare CONNECTED_SOCKADDR_LEN='1024'
+    declare CONNECTED_SOCKADDR_PTR
+
+    mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 @RR{CONNECTED_SOCKADDR_LEN}
+    mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+        @RR{SERVER_SOCKFD} \
+        @RR{CONNECTED_SOCKADDR_PTR} @RR{CONNECTED_SOCKADDR_LEN}
+    @{
+        declare DONEVAR BUFLEN='4096' BUFPTR
+
+        mmux_libc_calloc BUFPTR 1 @RR{BUFLEN}
+        mmux_libc_read DONEVAR @RR{CONNECTED_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+    @}
+@}
+@end example
+
+Let's see how we can create a server socket in the @samp{AF_INET} namespace, in this raw example in
+which allocated resources are not released (to make the code shorter):
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1'
+declare SERVER_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_TCP}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+mmux_libc_listen @RR{SERVER_SOCKFD} 10
+@{
+    declare CONNECTED_SOCKFD
+    declare CONNECTED_SOCKADDR_LEN='1024'
+    declare CONNECTED_SOCKADDR_PTR
+
+    mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 @RR{CONNECTED_SOCKADDR_LEN}
+    mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+        @RR{SERVER_SOCKFD} \
+        @RR{CONNECTED_SOCKADDR_PTR} @RR{CONNECTED_SOCKADDR_LEN}
+    @{
+        declare DONEVAR BUFLEN='4096' BUFPTR
+
+        mmux_libc_calloc BUFPTR 1 @RR{BUFLEN}
+        mmux_libc_recv DONEVAR @RR{CONNECTED_SOCKFD} @RR{BUFPTR} @RR{BUFLEN} @RR{mmux_libc_MSG_ZERO}
+    @}
+@}
+@end example
+
+Let's see how we can create a server socket in the @samp{AF_INET6} namespace, in this raw example in
+which allocated resources are not released (to make the code shorter):
+
+@example
+declare SOCKADDR_IN6 SIN6_ADDR SIN6_PORT='8080' ASCII_ADDR='::1'
+declare SERVER_SOCKFD
+
+mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 @RR{mmux_libc_AF_INET6} SIN6_ADDR 0 0 @RR{SIN6_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET6} @WW{ASCII_ADDR} @RR{SIN6_ADDR}
+mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_INET6} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_IN6} @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_listen @RR{SERVER_SOCKFD} 10
+@{
+    declare CONNECTED_SOCKFD
+    declare CONNECTED_SOCKADDR_LEN='1024'
+    declare CONNECTED_SOCKADDR_PTR
+
+    mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN)
+    mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
+        @RR{SERVER_SOCKFD} \
+        @RR{CONNECTED_SOCKADDR_PTR} @RR{CONNECTED_SOCKADDR_LEN}
+    @{
+        declare DONEVAR BUFLEN='4096' BUFPTR
+
+        mmux_libc_calloc BUFPTR 1 @RR{BUFLEN}
+        mmux_libc_recv DONEVAR @RR{CONNECTED_SOCKFD} @RR{BUFPTR} @RR{BUFLEN} @RR{mmux_libc_MSG_ZERO}
+    @}
+@}
+@end example
 
 @c page
 @node sockets creating

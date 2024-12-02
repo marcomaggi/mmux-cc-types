@@ -33,6 +33,140 @@
 
 
 /** --------------------------------------------------------------------
+ ** Helpers.
+ ** ----------------------------------------------------------------- */
+
+static void
+sa_family_to_asciiz_name(char const ** name_p, int sa_family)
+{
+  switch (sa_family) {
+#if (defined MMUX_HAVE_AF_ALG)
+  case AF_ALG:
+    *name_p = "AF_ALG";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_APPLETALK)
+  case AF_APPLETALK:
+    *name_p = "AF_APPLETALK";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_AX25)
+  case AF_AX25:
+    *name_p = "AF_AX25";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_BLUETOOTH)
+  case AF_BLUETOOTH:
+    *name_p = "AF_BLUETOOTH";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_CAN)
+  case AF_CAN:
+    *name_p = "AF_CAN";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_DECnet)
+  case AF_DECnet:
+    *name_p = "AF_DECnet";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_IB)
+  case AF_IB:
+    *name_p = "AF_IB";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_INET6)
+  case AF_INET6:
+    *name_p = "AF_INET6";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_INET)
+  case AF_INET:
+    *name_p = "AF_INET";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_IPX)
+  case AF_IPX:
+    *name_p = "AF_IPX";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_KCM)
+  case AF_KCM:
+    *name_p = "AF_KCM";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_KEY)
+  case AF_KEY:
+    *name_p = "AF_KEY";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_LLC)
+  case AF_LLC:
+    *name_p = "AF_LLC";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_LOCAL)
+  case AF_LOCAL:
+    *name_p = "AF_LOCAL";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_MPLS)
+  case AF_MPLS:
+    *name_p = "AF_MPLS";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_NETLINK)
+  case AF_NETLINK:
+    *name_p = "AF_NETLINK";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_PACKET)
+  case AF_PACKET:
+    *name_p = "AF_PACKET";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_PPPOX)
+  case AF_PPPOX:
+    *name_p = "AF_PPPOX";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_RDS)
+  case AF_RDS:
+    *name_p = "AF_RDS";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_TIPC)
+  case AF_TIPC:
+    *name_p = "AF_TIPC";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_UNSPEC)
+  case AF_UNSPEC:
+    *name_p = "AF_UNSPEC";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_VSOCK)
+  case AF_VSOCK:
+    *name_p = "AF_VSOCK";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_X25)
+  case AF_X25:
+    *name_p = "AF_X25";
+    break;
+#endif
+#if (defined MMUX_HAVE_AF_XDP)
+  case AF_XDP:
+    *name_p = "AF_XDP";
+    break;
+#endif
+  default:
+    break;
+  }
+}
+
+
+/** --------------------------------------------------------------------
  ** Sockets: struct sockaddr.
  ** ----------------------------------------------------------------- */
 
@@ -53,7 +187,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sa_family_ref]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SA_FAMILY_VAR SOCKADDR_POINTER"]]])
-
 
 
 /** --------------------------------------------------------------------
@@ -169,16 +302,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_dump]]])
     struct sockaddr_un *	sockaddr_un_pointer = _sockaddr_un_pointer;
 
     {
-      const char *	family_name = ((AF_LOCAL == sockaddr_un_pointer->sun_family)? "AF_LOCAL" : NULL);
+      char const *	sun_name = "unknown";
 
-      printf("%s.sun_family = \"%d\"", struct_name, sockaddr_un_pointer->sun_family);
-      if (family_name) {
-	printf(" (%s)\n", family_name);
-      } else {
-	printf(" (not AF_LOCAL !!!)\n");
-      }
+      sa_family_to_asciiz_name(&sun_name, sockaddr_un_pointer->sun_family);
+      printf("%s.sun_family = \"%d\" (%s)\n", struct_name, sockaddr_un_pointer->sun_family, sun_name);
     }
-
     printf("%s.sun_path = \"%s\"\n", struct_name, sockaddr_un_pointer->sun_path);
     return MMUX_SUCCESS;
   }
@@ -396,128 +524,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_dump]]])
     {
       char const *	sin_name = "unknown";
 
-      switch (sockaddr_in_pointer->sin_family) {
-#if (defined MMUX_HAVE_AF_ALG)
-      case AF_ALG:
-	sin_name = "AF_ALG";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_APPLETALK)
-      case AF_APPLETALK:
-	sin_name = "AF_APPLETALK";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_AX25)
-      case AF_AX25:
-	sin_name = "AF_AX25";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_BLUETOOTH)
-      case AF_BLUETOOTH:
-	sin_name = "AF_BLUETOOTH";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_CAN)
-      case AF_CAN:
-	sin_name = "AF_CAN";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_DECnet)
-      case AF_DECnet:
-	sin_name = "AF_DECnet";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_IB)
-      case AF_IB:
-	sin_name = "AF_IB";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_INET6)
-      case AF_INET6:
-	sin_name = "AF_INET6";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_INET)
-      case AF_INET:
-	sin_name = "AF_INET";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_IPX)
-      case AF_IPX:
-	sin_name = "AF_IPX";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_KCM)
-      case AF_KCM:
-	sin_name = "AF_KCM";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_KEY)
-      case AF_KEY:
-	sin_name = "AF_KEY";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_LLC)
-      case AF_LLC:
-	sin_name = "AF_LLC";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_MPLS)
-      case AF_MPLS:
-	sin_name = "AF_MPLS";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_NETLINK)
-      case AF_NETLINK:
-	sin_name = "AF_NETLINK";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_PACKET)
-      case AF_PACKET:
-	sin_name = "AF_PACKET";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_PPPOX)
-      case AF_PPPOX:
-	sin_name = "AF_PPPOX";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_RDS)
-      case AF_RDS:
-	sin_name = "AF_RDS";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_TIPC)
-      case AF_TIPC:
-	sin_name = "AF_TIPC";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_UNIX)
-      case AF_UNIX:
-	sin_name = "AF_UNIX";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_UNSPEC)
-      case AF_UNSPEC:
-	sin_name = "AF_UNSPEC";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_VSOCK)
-      case AF_VSOCK:
-	sin_name = "AF_VSOCK";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_X25)
-      case AF_X25:
-	sin_name = "AF_X25";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_XDP)
-      case AF_XDP:
-	sin_name = "AF_XDP";
-	break;
-#endif
-      }
+      sa_family_to_asciiz_name(&sin_name, sockaddr_in_pointer->sin_family);
       printf("%s.sin_family = \"%d\" (%s)\n", struct_name, sockaddr_in_pointer->sin_family, sin_name);
     }
 
@@ -797,128 +804,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_dump]]])
     {
       char const *	sin6_name = "unknown";
 
-      switch (sockaddr_in6_pointer->sin6_family) {
-#if (defined MMUX_HAVE_AF_ALG)
-      case AF_ALG:
-	sin6_name = "AF_ALG";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_APPLETALK)
-      case AF_APPLETALK:
-	sin6_name = "AF_APPLETALK";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_AX25)
-      case AF_AX25:
-	sin6_name = "AF_AX25";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_BLUETOOTH)
-      case AF_BLUETOOTH:
-	sin6_name = "AF_BLUETOOTH";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_CAN)
-      case AF_CAN:
-	sin6_name = "AF_CAN";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_DECnet)
-      case AF_DECnet:
-	sin6_name = "AF_DECnet";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_IB)
-      case AF_IB:
-	sin6_name = "AF_IB";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_INET6)
-      case AF_INET6:
-	sin6_name = "AF_INET6";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_INET)
-      case AF_INET:
-	sin6_name = "AF_INET";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_IPX)
-      case AF_IPX:
-	sin6_name = "AF_IPX";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_KCM)
-      case AF_KCM:
-	sin6_name = "AF_KCM";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_KEY)
-      case AF_KEY:
-	sin6_name = "AF_KEY";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_LLC)
-      case AF_LLC:
-	sin6_name = "AF_LLC";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_MPLS)
-      case AF_MPLS:
-	sin6_name = "AF_MPLS";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_NETLINK)
-      case AF_NETLINK:
-	sin6_name = "AF_NETLINK";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_PACKET)
-      case AF_PACKET:
-	sin6_name = "AF_PACKET";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_PPPOX)
-      case AF_PPPOX:
-	sin6_name = "AF_PPPOX";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_RDS)
-      case AF_RDS:
-	sin6_name = "AF_RDS";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_TIPC)
-      case AF_TIPC:
-	sin6_name = "AF_TIPC";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_UNIX)
-      case AF_UNIX:
-	sin6_name = "AF_UNIX";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_UNSPEC)
-      case AF_UNSPEC:
-	sin6_name = "AF_UNSPEC";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_VSOCK)
-      case AF_VSOCK:
-	sin6_name = "AF_VSOCK";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_X25)
-      case AF_X25:
-	sin6_name = "AF_X25";
-	break;
-#endif
-#if (defined MMUX_HAVE_AF_XDP)
-      case AF_XDP:
-	sin6_name = "AF_XDP";
-	break;
-#endif
-      }
+      sa_family_to_asciiz_name(&sin6_name, sockaddr_in6_pointer->sin6_family);
       printf("%s.sin6_family = \"%d\" (%s)\n", struct_name, sockaddr_in6_pointer->sin6_family, sin6_name);
     }
 

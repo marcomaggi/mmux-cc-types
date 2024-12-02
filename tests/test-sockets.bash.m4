@@ -2499,16 +2499,15 @@ function sockets-connection-1.1 () {
 	# "sockaddr_un"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
 	# directories.  (Marco Maggi; Dec  1, 2024)
 	declare -r TMPDIR='/tmp'
-	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
 	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-1.1')
-	declare SOCKADDR_UN
-	declare SOCKADDR_UN_LENGTH
+	declare SOCKADDR_UN_PTR
+	declare SOCKADDR_UN_LEN
 	declare CLIENT_PID
 
-	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN SOCKADDR_UN_LENGTH RR(mmux_libc_AF_LOCAL) WW(PATHNAME),
-				  mmux_libc_free RR(SOCKADDR_UN) )
+	mbfl_location_compensate( mmux_libc_sockaddr_un_calloc SOCKADDR_UN_PTR SOCKADDR_UN_LEN RR(mmux_libc_AF_LOCAL) WW(PATHNAME),
+				  mmux_libc_free RR(SOCKADDR_UN_PTR) )
 
-	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_dump RR(SOCKADDR_UN) >&2 )
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_un_dump RR(SOCKADDR_UN_PTR) >&2 )
 
 	dotest-debug 'running client in background'
 	mbfl_location_leave_when_failure( client-sockets-connection-1.1 ) &
@@ -2527,38 +2526,38 @@ function sockets-connection-1.1 () {
 function server-sockets-connection-1.1 () {
     mbfl_location_enter
     {
-	declare SOCKFD
+	declare SERVER_SOCKFD
 
-	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
-				  mmux_libc_close RR(SOCKFD) )
+	mbfl_location_compensate( mmux_libc_socket SERVER_SOCKFD RR(mmux_libc_PF_LOCAL) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SERVER_SOCKFD) )
 
 	if false
 	then
 	    {
 		dotest-debug 'setting socket option REUSEADDR'
-		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SERVER_SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
 	    }
 	fi
 
 	dotest-debug 'binding'
-	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SERVER_SOCKFD) RR(SOCKADDR_UN_PTR) RR(SOCKADDR_UN_LEN) )
 	dotest-debug 'listening'
-	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SERVER_SOCKFD) 10 )
 
 	{
-	    declare CONNECTED_SOCKFD
-	    declare CONNECTED_SOCKADDR_LEN
-	    declare CONNECTED_SOCKADDR_PTR
-	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+	    declare CONNECTED_SOCKFD CONNECTED_SOCKADDR_PTR CONNECTED_SOCKADDR_LEN='1024'
 
-	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
 
 	    dotest-debug 'accepting'
 	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
-						       RR(SOCKFD) \
-						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+						       RR(SERVER_SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_close RR(CONNECTED_SOCKFD) )
+	    	dotest-option-debug &&
+		    mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
+
 	    if false
 	    then
 		{
@@ -2611,7 +2610,7 @@ function client-sockets-connection-1.1 () {
 	fi
 
 	dotest-debug 'connecting'
-	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_UN_PTR) RR(SOCKADDR_UN_LEN) )
 	dotest-debug 'connected'
 
 	# Writing to server.
@@ -2708,19 +2707,19 @@ function server-sockets-connection-1.2 () {
 	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
 
 	{
-	    declare CONNECTED_SOCKFD
-	    declare CONNECTED_SOCKADDR_LEN
-	    declare CONNECTED_SOCKADDR_PTR
-	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+	    declare CONNECTED_SOCKFD CONNECTED_SOCKADDR_PTR CONNECTED_SOCKADDR_LEN='1024'
 
-	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
 
 	    dotest-debug 'accepting'
 	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
 						       RR(SOCKFD) \
-						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+	    	dotest-option-debug &&
+		    mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
+
 	    if false
 	    then
 		{
@@ -2816,23 +2815,13 @@ function sockets-connection-2.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	declare ERRNO
-
-	# NOTE Override  the TMPDIR  set by  the Makefile.  We  know that  using "/tmp"  works here,
-	# because "sockaddr_in"  does not  require the  pathneme to  be executable,  so it  does not
-	# matter if "/tmp" is mounted "noexec".  We override it because tha maximum path length of a
-	# "sockaddr_in"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
-	# directories.  (Marco Maggi; Dec  1, 2024)
-	declare -r TMPDIR='/tmp'
-	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
-	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-2.1')
-	declare SOCKADDR_IN
-	declare SIN_ADDR
+	declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1'
 	declare CLIENT_PID
 
-	mbfl_location_compensate( mmux_libc_sockaddr_in_calloc SOCKADDR_IN RR(mmux_libc_AF_INET) SIN_ADDR 8080,
+	mbfl_location_compensate( mmux_libc_sockaddr_in_calloc SOCKADDR_IN RR(mmux_libc_AF_INET) SIN_ADDR RR(SIN_PORT),
 				  mmux_libc_free RR(SOCKADDR_IN) )
 
-	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET) '127.0.0.1' RR(SIN_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET) WW(ASCII_ADDR) RR(SIN_ADDR) )
 
 	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_in_dump RR(SOCKADDR_IN) >&2 )
 
@@ -2853,38 +2842,39 @@ function sockets-connection-2.1 () {
 function server-sockets-connection-2.1 () {
     mbfl_location_enter
     {
-	declare SOCKFD
+	declare SERVER_SOCKFD
 
-	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
-				  mmux_libc_close RR(SOCKFD) )
+	mbfl_location_compensate( mmux_libc_socket SERVER_SOCKFD RR(mmux_libc_PF_INET) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
+				  mmux_libc_close RR(SERVER_SOCKFD) )
 
 	if true
 	then
 	    {
 		dotest-debug 'setting socket option REUSEADDR'
-		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SERVER_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_REUSEADDR) 1 )
 	    }
 	fi
 
 	dotest-debug 'binding'
-	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SERVER_SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
 	dotest-debug 'listening'
-	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SERVER_SOCKFD) 10 )
 
 	{
-	    declare CONNECTED_SOCKFD
-	    declare CONNECTED_SOCKADDR_LEN
-	    declare CONNECTED_SOCKADDR_PTR
-	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+	    declare CONNECTED_SOCKFD CONNECTED_SOCKADDR_PTR CONNECTED_SOCKADDR_LEN='1024'
 
-	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
 
 	    dotest-debug 'accepting'
 	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
-						       RR(SOCKFD) \
-						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+						       RR(SERVER_SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+	    	dotest-option-debug &&
+		    mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
+
 	    if true
 	    then
 		{
@@ -2980,23 +2970,13 @@ function sockets-connection-3.1 () {
 	mbfl_location_handler dotest-clean-files
 
 	declare ERRNO
-
-	# NOTE Override  the TMPDIR  set by  the Makefile.  We  know that  using "/tmp"  works here,
-	# because "sockaddr_in6"  does not  require the  pathneme to  be executable,  so it  does not
-	# matter if "/tmp" is mounted "noexec".  We override it because tha maximum path length of a
-	# "sockaddr_in6"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
-	# directories.  (Marco Maggi; Dec  1, 2024)
-	declare -r TMPDIR='/tmp'
-	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
-	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-3.1')
-	declare SOCKADDR_IN6
-	declare SIN_ADDR
+	declare SOCKADDR_IN6 SIN6_ADDR SIN6_PORT='8080' ASCII_ADDR='::1'
 	declare CLIENT_PID
 
-	mbfl_location_compensate( mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 RR(mmux_libc_AF_INET6) SIN_ADDR 0 0 8080,
+	mbfl_location_compensate( mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 RR(mmux_libc_AF_INET6) SIN6_ADDR 0 0 RR(SIN6_PORT),
 				  mmux_libc_free RR(SOCKADDR_IN6) )
 
-	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET6) '::1' RR(SIN_ADDR) )
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET6) WW(ASCII_ADDR) RR(SIN6_ADDR) )
 
 	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_in6_dump RR(SOCKADDR_IN6) >&2 )
 
@@ -3017,39 +2997,40 @@ function sockets-connection-3.1 () {
 function server-sockets-connection-3.1 () {
     mbfl_location_enter
     {
-	declare SOCKFD
+	declare SERVER_SOCKFD
 
 	dotest-debug 'creating server socket'
-	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
-				  mmux_libc_close RR(SOCKFD) )
+	mbfl_location_compensate( mmux_libc_socket SERVER_SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SERVER_SOCKFD) )
 
 	if true
 	then
 	    {
 		dotest-debug 'setting socket option REUSEADDR'
-		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SERVER_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_REUSEADDR) 1 )
 	    }
 	fi
 
 	dotest-debug 'binding'
-	mbfl_location_leave_when_failure( mmux_libc_bind RR(SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SERVER_SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
 	dotest-debug 'listening'
-	mbfl_location_leave_when_failure( mmux_libc_listen RR(SOCKFD) 10 )
+	mbfl_location_leave_when_failure( mmux_libc_listen RR(SERVER_SOCKFD) 10 )
 
 	{
-	    declare CONNECTED_SOCKFD
-	    declare CONNECTED_SOCKADDR_LEN
-	    declare CONNECTED_SOCKADDR_PTR
-	    declare CONNECTED_SOCKADDR_LEN_ALLOCATED='1024'
+	    declare CONNECTED_SOCKFD CONNECTED_SOCKADDR_PTR CONNECTED_SOCKADDR_LEN='1024'
 
-	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+	    mbfl_location_compensate( mmux_libc_calloc CONNECTED_SOCKADDR_PTR 1 RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_free RR(CONNECTED_SOCKADDR_PTR) )
 
 	    dotest-debug 'accepting'
 	    mbfl_location_compensate( mmux_libc_accept CONNECTED_SOCKFD CONNECTED_SOCKADDR_LEN \
-						       RR(SOCKFD) \
-						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN_ALLOCATED),
+						       RR(SERVER_SOCKFD) \
+						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
+
+	    dotest-option-debug &&
+		mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
 
 	    if true
 	    then
