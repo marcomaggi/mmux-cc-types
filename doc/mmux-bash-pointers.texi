@@ -7130,7 +7130,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets stream::              Sending and receiving data through a stream socket.
 * sockets server::              Stream socket servers.
 * sockets client::              Stream socket clients.
-* sockets dgran::               Sending and receiving data through a datagram socket.
+* sockets dgram::               Sending and receiving data through a datagram socket.
 * sockets options::             Socket options.
 @end menu
 
@@ -9804,31 +9804,203 @@ Interface to the standard C language function @cfunc{connect}, @glibcref{Connect
 @end deffn
 
 @c page
-@node sockets dgran
+@node sockets dgram
 @section Sending and receiving data through a datagram socket
 
+
+Let's see how we can create a datagram server socket in the @samp{AF_LOCAL} namespace, using
+@cfunc{bind} and @cfunc{read}, in this raw example in which allocated resources are not released (to
+make the code shorter):
+
+@example
+declare -r PATHNAME='/tmp/filename.ext'
+declare SOCKADDR_UN_PTR SOCKADDR_UN_LEN SERVER_SOCKFD
+
+mmux_libc_sockaddr_un_calloc SOCKADDR_UN_PTR SOCKADDR_UN_LEN @RR{mmux_libc_AF_LOCAL} @WW{PATHNAME}
+mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_DGRAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_UN_PTR} @RR{SOCKADDR_UN_LEN}
+@{
+    declare DONEVAR BUFLEN='4096' BUFPTR
+
+    mmux_libc_calloc BUFPTR 1 @RR{BUFLEN}
+    mmux_libc_read DONEVAR @RR{SERVER_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+@}
+@end example
+
+@noindent
+and here is the corresponding client, using @cfunc{connect} to establish a default destination for
+packets, so we can use @cfunc{write} to send them:
+
+@example
+declare -r PATHNAME='/tmp/filename.ext'
+declare SOCKADDR_UN_PTR SOCKADDR_UN_LEN CLIENT_SOCKFD
+
+mmux_libc_sockaddr_un_calloc SOCKADDR_UN_PTR SOCKADDR_UN_LEN @RR{mmux_libc_AF_LOCAL} @WW{PATHNAME}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_DGRAM} @RR{mmux_libc_IPPROTO_IP}
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR @WW{BUFSTR}
+    mmux_libc_write DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
+
+Let's see how we can create a datagram server socket in the @samp{AF_INET} namespace, using
+@cfunc{bind} and @cfunc{recv}, in this raw example in which allocated resources are not released (to
+make the code shorter):
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1' SERVER_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_DGRAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    declare DONEVAR BUFLEN='4096' BUFPTR
+
+    mmux_libc_calloc BUFPTR 1 @RR{BUFLEN}
+    mmux_libc_recv DONEVAR @RR{SERVER_SOCKFD} @RR{BUFPTR} @RR{BUFLEN} @RR{mmux_libc_MSG_ZERO}
+@}
+@end example
+
+@noindent
+and here is the corresponding client, using @cfunc{connect} to establish a default destination for
+packets, so we can use @cfunc{send} to send them:
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1' CLIENT_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_DGRAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR @WW{BUFSTR}
+    mmux_libc_send DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN} @RR{mmux_libc_MSG_ZERO}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
+
+Let's see how we can create a datagram server socket in the @samp{AF_INET} namespace, using
+@cfunc{bind} and @cfunc{recvfrom}, in this raw example in which allocated resources are not released
+(to make the code shorter):
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1' SERVER_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_DGRAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN='4096'
+    declare DONEVAR BUFLEN='4096' BUFPTR
+
+    mmux_libc_calloc PEER_SOCKADDR_PTR 1 @RR{PEER_SOCKADDR_LEN}
+    mmux_libc_calloc BUFPTR 1 @RR{BUFLEN}
+
+    mmux_libc_recvfrom DONEVAR PEER_SOCKADDR_LEN @RR{SERVER_SOCKFD} \
+        @RR{BUFPTR} @RR{BUFLEN} @RR{mmux_libc_MSG_ZERO} \
+        @RR{PEER_SOCKADDR_PTR} @RR{PEER_SOCKADDR_LEN}
+@}
+@end example
+
+@noindent
+and here is the corresponding client, using @cfunc{sendto} to send them:
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1' CLIENT_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_DGRAM} @RR{mmux_libc_IPPROTO_IP}
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR @WW{BUFSTR}
+    mmux_libc_sendto DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN} \
+        @RR{mmux_libc_MSG_ZERO} \
+        @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deffn Builtin mmux_libc_sendto @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
+@deffn Builtin mmux_libc_sendto @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCKFD} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{PEER_SOCKADDR_POINTER} @var{PEER_SOCKADDR_LENGTH}
 Interface to the standard C language function @cfunc{sendto}, @glibcref{Sending Datagrams, sendto}.
+Arguments:
 
-Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_SENT_VAR} a string representation of
-the number of bytes actually sent.
+@table @var
+@item NUMBER_OF_BYTES_SENT_VAR
+A shell variable name: the number of bytes actually sent to the peer socket is bound to it.
+
+@item SOCKFD
+The receiving socket file descriptor.
+
+@item BUFFER_POINTER
+Pointer to the buffer in which data to be sent is stored.
+
+@item BUFFER_LENGTH
+Size, measured in bytes, of the buffer referenced by @var{BUFFER_POINTER}.
+
+@item FLAGS
+An exact integer representing a bitwise OR combination of @code{mmux_libc_MSG_*} constants; it can
+be zero, which is the value of @code{mmux_libc_MSG_ZERO}.
+
+@item PEER_SOCKADDR_POINTER
+Pointer to a block of memory containing @MmuxCStruct{sockaddr} representing the address of the
+socket we must send the data to.
+
+@item PEER_SOCKADDR_LENGTH
+Size, measured in bytes, of the block referenced by @var{PEER_SOCKADDR_POINTER}.
+@end table
 @end deffn
 
+@c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_recvfrom @var{NUMBER_OF_BYTES_RECEIVED_VAR} @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
+@deffn Builtin mmux_libc_recvfrom @var{NUMBER_OF_BYTES_RECEIVED_VAR} @var{PEER_SOCKADDR_LENGTH_VAR} @var{SOCKFD} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{PEER_SOCKADDR_POINTER} @var{PEER_SOCKADDR_LENGTH}
 Interface to the standard C language function @cfunc{recvfrom}, @glibcref{Receiving Datagrams,
-recvfrom}.
+recvfrom}.  Arguments:
 
-Bind to the shell variable whose name is @var{NUMBER_OF_BYTES_RECEIVED_VAR} a string representation
-of the number of bytes actually received.
+@table @var
+@item NUMBER_OF_BYTES_RECEIVED_VAR
+A shell variable name: the number of bytes actually received from the peer socket is bound to it.
 
-The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
-measured in bytes, of the connected address is bound to this variable; it is probably different from
-@var{ALLOCATED_SOCKADDR_LENGTH}.
+@item PEER_SOCKADDR_LENGTH_VAR
+A shell variable name: the length, measured in bytes, of the @MmuxCStruct{sockaddr} representing the
+address of the peer socket from which the data originated.  It is probably different from
+@var{PEER_SOCKADDR_LENGTH}.
+
+@item SOCKFD
+The receiving socket file descriptor.
+
+@item BUFFER_POINTER
+Pointer to the buffer in which received data will be stored.
+
+@item BUFFER_LENGTH
+Size, measured in bytes, of the buffer in which received data will be stored.
+
+@item FLAGS
+An exact integer representing a bitwise OR combination of @code{mmux_libc_MSG_*} constants; it can
+be zero, which is the value of @code{mmux_libc_MSG_ZERO}.
+
+@item PEER_SOCKADDR_POINTER
+Pointer to a block of memory we have allocated to contain the @MmuxCStruct{sockaddr} representing
+the address of the socket that sent the data we are receiving.
+
+@item PEER_SOCKADDR_LENGTH
+Size, measured in bytes, of the block referenced by @var{PEER_SOCKADDR_POINTER}.  If we allocate
+@samp{1024} bytes: it will probably be enough.
+@end table
 @end deffn
 
 @c page
