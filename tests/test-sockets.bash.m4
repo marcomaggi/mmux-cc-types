@@ -2499,7 +2499,7 @@ function sockets-connection-1.1 () {
 	# "sockaddr_un"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
 	# directories.  (Marco Maggi; Dec  1, 2024)
 	declare -r TMPDIR='/tmp'
-	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-1.1')
+	declare -r PATHNAME=$(dotest-mkpathname 'mmux-sockets-connection-1.1')
 	declare SOCKADDR_UN_PTR
 	declare SOCKADDR_UN_LEN
 	declare CLIENT_PID
@@ -2535,7 +2535,8 @@ function server-sockets-connection-1.1 () {
 	then
 	    {
 		dotest-debug 'setting socket option REUSEADDR'
-		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SERVER_SOCKFD) RR(mmux_libc_SOL_SOCKET) RR(mmux_libc_SO_REUSEADDR) 1 )
+		mbfl_location_leave_when_failure( mmux_libc_setsockopt RR(SERVER_SOCKFD) RR(mmux_libc_SOL_SOCKET) \
+								       RR(mmux_libc_SO_REUSEADDR) 1 )
 	    }
 	fi
 
@@ -2613,6 +2614,26 @@ function client-sockets-connection-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_UN_PTR) RR(SOCKADDR_UN_LEN) )
 	dotest-debug 'connected'
 
+	# Get peer socket's address informations.
+	{
+	    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+	    dotest-debug 'getpeering address'
+	    mbfl_location_compensate( mmux_libc_getpeername RR(SOCKFD) PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN,
+				      mmux_libc_free RR(PEER_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(PEER_SOCKADDR_PTR) 'peer_address' >&2 )
+	}
+
+	# Get client socket's own address informations.
+	{
+	    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+	    dotest-debug 'getsockname address'
+	    mbfl_location_compensate( mmux_libc_getsockname RR(SOCKFD) OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN,
+				      mmux_libc_free RR(OWN_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(OWN_SOCKADDR_PTR) 'own_address' >&2 )
+	}
+
 	# Writing to server.
 	{
 	    declare DONEVAR
@@ -2660,8 +2681,7 @@ function sockets-connection-1.2 () {
 	# "sockaddr_un"  is  quite  short;  I  overflow  it on  my  system,  because  I  use  nested
 	# directories.  (Marco Maggi; Dec  1, 2024)
 	declare -r TMPDIR='/tmp'
-	declare -r THE_TMPDIR=$(dotest-echo-tmpdir)
-	declare -r PATHNAME=$(dotest-mkpathname 'mmux-socketa-connection-1.2')
+	declare -r PATHNAME=$(dotest-mkpathname 'mmux-sockets-connection-1.2')
 	declare SOCKADDR_UN
 	declare SOCKADDR_UN_LENGTH
 	declare CLIENT_PID
@@ -2717,8 +2737,9 @@ function server-sockets-connection-1.2 () {
 						       RR(SOCKFD) \
 						       RR(CONNECTED_SOCKADDR_PTR) RR(CONNECTED_SOCKADDR_LEN),
 				      mmux_libc_shutdown RR(CONNECTED_SOCKFD) RR(mmux_libc_SHUT_RDWR) )
-	    	dotest-option-debug &&
-		    mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
+	    dotest-debug 'accepted'
+	    dotest-option-debug &&
+		mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(CONNECTED_SOCKADDR_PTR) 'server_connection_sockaddr' >&2 )
 
 	    if false
 	    then
@@ -2775,6 +2796,26 @@ function client-sockets-connection-1.2 () {
 	dotest-debug 'connecting'
 	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_UN) RR(SOCKADDR_UN_LENGTH) )
 	dotest-debug 'connected'
+
+	# Get peer socket's address informations.
+	{
+	    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+	    dotest-debug 'getpeering address'
+	    mbfl_location_compensate( mmux_libc_getpeername RR(SOCKFD) PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN,
+				      mmux_libc_free RR(PEER_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(PEER_SOCKADDR_PTR) 'peer_address' >&2 )
+	}
+
+	# Get client socket's own address informations.
+	{
+	    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+	    dotest-debug 'getsockname address'
+	    mbfl_location_compensate( mmux_libc_getsockname RR(SOCKFD) OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN,
+				      mmux_libc_free RR(OWN_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(OWN_SOCKADDR_PTR) 'own_address' >&2 )
+	}
 
 	# Writing to server.
 	{
@@ -2931,6 +2972,26 @@ function client-sockets-connection-2.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
 	dotest-debug 'connected'
 
+	# Get peer socket's address informations.
+	{
+	    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+	    dotest-debug 'getpeering address'
+	    mbfl_location_compensate( mmux_libc_getpeername RR(SOCKFD) PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN,
+				      mmux_libc_free RR(PEER_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(PEER_SOCKADDR_PTR) 'peer_address' >&2 )
+	}
+
+	# Get client socket's own address informations.
+	{
+	    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+	    dotest-debug 'getsockname address'
+	    mbfl_location_compensate( mmux_libc_getsockname RR(SOCKFD) OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN,
+				      mmux_libc_free RR(OWN_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(OWN_SOCKADDR_PTR) 'own_address' >&2 )
+	}
+
 	# Writing to server.
 	{
 	    declare DONEVAR
@@ -3086,6 +3147,26 @@ function client-sockets-connection-2.2 () {
 	dotest-debug 'connecting'
 	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_IN) RR(mmux_libc_sockaddr_in_SIZEOF) )
 	dotest-debug 'connected'
+
+	# Get peer socket's address informations.
+	{
+	    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+	    dotest-debug 'getpeering address'
+	    mbfl_location_compensate( mmux_libc_getpeername RR(SOCKFD) PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN,
+				      mmux_libc_free RR(PEER_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(PEER_SOCKADDR_PTR) 'peer_address' >&2 )
+	}
+
+	# Get client socket's own address informations.
+	{
+	    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+	    dotest-debug 'getsockname address'
+	    mbfl_location_compensate( mmux_libc_getsockname RR(SOCKFD) OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN,
+				      mmux_libc_free RR(OWN_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(OWN_SOCKADDR_PTR) 'own_address' >&2 )
+	}
 
 	# Writing to server.
 	{
@@ -3244,6 +3325,26 @@ function client-sockets-connection-3.1 () {
 	dotest-debug 'connecting'
 	mbfl_location_leave_when_failure( mmux_libc_connect RR(SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
 	dotest-debug 'connected'
+
+	# Get peer socket's address informations.
+	{
+	    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+	    dotest-debug 'getpeering address'
+	    mbfl_location_compensate( mmux_libc_getpeername RR(SOCKFD) PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN,
+				      mmux_libc_free RR(PEER_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(PEER_SOCKADDR_PTR) 'peer_address' >&2 )
+	}
+
+	# Get client socket's own address informations.
+	{
+	    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+	    dotest-debug 'getsockname address'
+	    mbfl_location_compensate( mmux_libc_getsockname RR(SOCKFD) OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN,
+				      mmux_libc_free RR(OWN_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(OWN_SOCKADDR_PTR) 'own_address' >&2 )
+	}
 
 	# Writing to server.
 	{

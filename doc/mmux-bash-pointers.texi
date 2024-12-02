@@ -7125,11 +7125,12 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets getaddrinfo::         Interface to @cfunc{getaddrinfo}.
 * sockets getnameinfo::         Interface to @cfunc{getnameinfo}.
 * sockets pair::                Interface to @cfunc{socketpair}.
+* sockets creating::            Creating sockets and inspecting.
 * sockets shutdown::            Interface to @cfunc{shutdown}.
 * sockets stream::              Sending and receiving data through a stream socket.
 * sockets server::              Stream socket servers.
 * sockets client::              Stream socket clients.
-* sockets creating::            Creating sockets.
+* sockets dgran::               Sending and receiving data through a datagram socket.
 * sockets options::             Socket options.
 @end menu
 
@@ -9379,6 +9380,97 @@ socketpair}.
 @end deffn
 
 @c page
+@node sockets creating
+@section Creating sockets and inspecting
+
+
+Let's see how we can create a client socket in the @samp{AF_INET} namespace, then inspect its
+address, in this raw example in which allocated resources are not released (to make the code
+shorter):
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1'
+declare CLIENT_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_TCP}
+mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+
+# Let's inspect the peer address with "getpeername()".
+@{
+    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+    mmux_libc_getpeername @RR{CLIENT_SOCKFD} PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+    mmux_libc_sockaddr_dump @RR{PEER_SOCKADDR_PTR} 'peer_address'
+@}
+
+# Get client socket's own address informations.
+@{
+    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+    mmux_libc_getsockname @RR{CLIENT_SOCKFD} OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+    mmux_libc_sockaddr_dump @RR{OWN_SOCKADDR_PTR} 'own_address'
+@}
+
+# Let's write something.
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR WW(BUFSTR)
+    mmux_libc_write DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+@}
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_socket @var{SOCKFD_VAR} @var{PF_NAMESPACE} @var{SOCK_STYLE} @var{IPPROTO_PROTOCOL}
+Interface to the standard C language function @cfunc{socket}, @glibcref{Creating a Socket, socket}.
+When successful: bind to the shell variable whose name is @var{SOCKFD_VAR} the socket descriptor.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_getpeername @var{SOCKFD} @var{PEER_SOCKADDR_PTR_VAR} @var{PEER_SOCKADDR_LEN_VAR}
+Interface to the standard C language function @cfunc{getpeername}, @glibcref{Who is Connected,
+getpeername}.  Arguments:
+
+@table @var
+@item SOCKFD
+It must be the string representation of the socket descriptor.
+
+@item PEER_SOCKADDR_PTR_VAR
+It must be the name of a shell variable: the pointer to the @MmuxCStruct{sockaddr} is bound to this
+variable; we will have to release this memory using @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+
+@item PEER_SOCKADDR_LENGTH_VAR
+It must be the name of a shell variable: the length, measured in bytes, of the peer address is bound
+to this variable.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_getsockname @var{SOCKFD} @var{OWN_SOCKADDR_PTR_VAR} @var{OWN_SOCKADDR_LEN_VAR}
+Interface to the standard C language function @cfunc{getsockname}, @glibcref{Reading Address,
+getsockname}.  Arguments:
+
+@table @var
+@item SOCKFD
+It must be the string representation of the socket descriptor.
+
+@item OWN_SOCKADDR_PTR_VAR
+It must be the name of a shell variable: the pointer to the @MmuxCStruct{sockaddr} is bound to this
+variable; we will have to release this memory using @MmuxBuiltin{mmux_libc_free} or @cfunc{free}.
+
+@item OWN_SOCKADDR_LEN_VAR
+It must be the name of a shell variable: the length, measured in bytes, of the address is bound to
+this variable.
+@end table
+@end deffn
+
+@c page
 @node sockets shutdown
 @section Interface to @cfunc{shutdown}
 
@@ -9577,13 +9669,6 @@ mmux_libc_listen @RR{SERVER_SOCKFD} 10
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deffn Builtin mmux_libc_socket @var{SOCKFD_VAR} @var{PF_NAMESPACE} @var{SOCK_STYLE} @var{IPPROTO_PROTOCOL}
-Interface to the standard C language function @cfunc{socket}, @glibcref{Creating a Socket, socket}.
-When successful: bind to the shell variable whose name is @var{SOCKFD_VAR} the socket descriptor.
-@end deffn
-
-@c ------------------------------------------------------------------------
-
 @deffn Builtin mmux_libc_bind @var{SERVER_SOCKFD} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
 Interface to the standard C language function @cfunc{bind}, @glibcref{Socket Addresses, bind}.
 
@@ -9625,7 +9710,7 @@ contain an address data structure.
 @item CONNECTED_SOCKADDR_ALLOCATED_LENGTH
 It must be the string representation of the number of bytes allocated to contain the
 @MmuxCStruct{sockaddr} value referenced by @var{CONNECTED_SOCKADDR_POINTER}.  If we allocate
-@math{512} bytes for this: it will probably be enough.
+@math{1024} bytes for this: it will probably be enough.
 @end table
 @end deffn
 
@@ -9719,8 +9804,8 @@ Interface to the standard C language function @cfunc{connect}, @glibcref{Connect
 @end deffn
 
 @c page
-@node sockets creating
-@section Creating sockets
+@node sockets dgran
+@section Sending and receiving data through a datagram socket
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -9744,24 +9829,6 @@ of the number of bytes actually received.
 The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
 measured in bytes, of the connected address is bound to this variable; it is probably different from
 @var{ALLOCATED_SOCKADDR_LENGTH}.
-@end deffn
-
-@deffn Builtin mmux_libc_getpeername @var{CONNECTED_SOCKADDR_LENGTH_VAR} @var{SOCK} @var{SOCKADDR_POINTER} @var{ALLOCATED_SOCKADDR_LENGTH}
-Interface to the standard C language function @cfunc{getpeername}, @glibcref{Who is Connected,
-getpeername}.
-
-The argument @var{CONNECTED_SOCKADDR_LENGTH_VAR} must be the name of a shell variable: the length,
-measured in bytes, of the connected address is bound to this variable; it is probably different from
-@var{ALLOCATED_SOCKADDR_LENGTH}.
-
-The argument @var{SOCK} must be the string representation of the socket descriptor.
-
-The argument @var{SOCKADDR_POINTER} must be the string representation of a pointer to a @code{struct
-sockaddr} value, wide enough to contain an address data structure.
-
-The argument @var{ALLOCATED_SOCKADDR_LENGTH} must be the string representation of the number of
-bytes allocated to contain the @MmuxCStruct{sockaddr} value referenced by @var{SOCKADDR_POINTER}.
-If we allocate @math{512} bytes for this: it will probably be enough.
 @end deffn
 
 @c page

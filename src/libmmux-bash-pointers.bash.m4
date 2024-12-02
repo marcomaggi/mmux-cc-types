@@ -217,7 +217,7 @@ function mmux_libc_addrinfo_dump_ai_socktype () {
     then
 	declare FLAG_NAME
 
-	for FLAG_NAME in SOCK_DCCP SOCK_DGRAM SOCK_NONBLOCK SOCK_PACKET SOCK_RAW SOCK_RDM SOCK_SEQPACKET SOCK_STREAM
+	for FLAG_NAME in SOCK_DCCP SOCK_DGRAM SOCK_PACKET SOCK_RAW SOCK_RDM SOCK_SEQPACKET SOCK_STREAM
 	do
 	    declare VAR_NAME=mmux_libc_${FLAG_NAME:?}
 	    if test -v WW(VAR_NAME)
