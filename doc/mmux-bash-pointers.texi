@@ -7128,6 +7128,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets shutdown::            Interface to @cfunc{shutdown}.
 * sockets stream::              Sending and receiving data through a stream socket.
 * sockets server::              Stream socket servers.
+* sockets client::              Stream socket clients.
 * sockets creating::            Creating sockets.
 * sockets options::             Socket options.
 @end menu
@@ -9642,16 +9643,87 @@ mmux_libc_SOCK_CLOEXEC
 @end deffn
 
 @c page
+@node sockets client
+@section Stream socket clients
+
+
+Let's see how we can create a client socket in the @samp{AF_LOCAL} namespace, in this raw example in
+which allocated resources are not released (to make the code shorter):
+
+@example
+declare -r PATHNAME='/tmp/filename.ext'
+declare SOCKADDR_UN_PTR
+declare SOCKADDR_UN_LEN
+declare CLIENT_SOCKFD
+
+mmux_libc_sockaddr_un_calloc SOCKADDR_UN_PTR SOCKADDR_UN_LEN @RR{mmux_libc_AF_LOCAL} @WW{PATHNAME}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_LOCAL} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_IP}
+mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_UN_PTR} @RR{SOCKADDR_UN_LEN}
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR WW(BUFSTR)
+    mmux_libc_write DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
+
+Let's see how we can create a client socket in the @samp{AF_INET} namespace, in this raw example in
+which allocated resources are not released (to make the code shorter):
+
+@example
+declare SOCKADDR_IN SIN_ADDR SIN_PORT='8080' ASCII_ADDR='127.0.0.1'
+declare CLIENT_SOCKFD
+
+mmux_libc_sockaddr_in_calloc SOCKADDR_IN @RR{mmux_libc_AF_INET} SIN_ADDR @RR{SIN_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET} @WW{ASCII_ADDR} @RR{SIN_ADDR}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_INET} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_TCP}
+mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_IN} @RR{mmux_libc_sockaddr_in_SIZEOF}
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR WW(BUFSTR)
+    mmux_libc_write DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
+
+Let's see how we can create a client socket in the @samp{AF_INET6} namespace, in this raw example in
+which allocated resources are not released (to make the code shorter):
+
+@example
+declare SOCKADDR_IN6 SIN6_ADDR SIN6_PORT='8080' ASCII_ADDR='::1'
+declare CLIENT_SOCKFD
+
+mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 @RR{mmux_libc_AF_INET6} SIN6_ADDR 0 0 @RR{SIN6_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET6} @WW{ASCII_ADDR} @RR{SIN6_ADDR}
+mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_INET6} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_TCP}
+mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_IN6} @RR{mmux_libc_sockaddr_in6_SIZEOF}
+@{
+    declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
+
+    mmux_pointer_from_bash_string BUFPTR WW(BUFSTR)
+    mmux_libc_write DONEVAR @RR{CLIENT_SOCKFD} @RR{BUFPTR} @RR{BUFLEN}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_connect @var{CLIENT_SOCKFD} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
+Interface to the standard C language function @cfunc{connect}, @glibcref{Connecting, connect}.
+@end deffn
+
+@c page
 @node sockets creating
 @section Creating sockets
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
-
-
-@deffn Builtin mmux_libc_connect @var{SOCK} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}
-Interface to the standard C language function @cfunc{connect}, @glibcref{Connecting, connect}.
-@end deffn
 
 
 @deffn Builtin mmux_libc_sendto @var{NUMBER_OF_BYTES_SENT_VAR} @var{SOCK} @var{BUFFER_POINTER} @var{BUFFER_LENGTH} @var{FLAGS} @var{SOCKADDR_POINTER} @var{SOCKADDR_LENGTH}

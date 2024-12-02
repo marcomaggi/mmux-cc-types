@@ -3228,7 +3228,7 @@ function client-sockets-connection-3.1 () {
 	mbfl_location_leave_when_failure( client-sockets-connection-3.1-sleep )
 
 	dotest-debug 'creating client socket'
-	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_IP),
+	mbfl_location_compensate( mmux_libc_socket SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_STREAM) RR(mmux_libc_IPPROTO_TCP),
 				  mmux_libc_shutdown RR(SOCKFD) RR(mmux_libc_SHUT_RDWR) )
 
 	if true
