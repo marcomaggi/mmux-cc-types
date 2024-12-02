@@ -3883,6 +3883,136 @@ function client-sockets-dgram-2.3-sleep () {
 }
 
 
+#### client/server datagram: sockaddr_in6, socket, bind, connect, write, read, close
+
+function sockets-dgram-3.1 () {
+    mbfl_location_enter
+    {
+	dotest-set-debug
+
+	declare ERRNO
+	declare SOCKADDR_IN6 SIN6_ADDR SIN6_PORT='8080' ASCII_ADDR='::1'
+	declare CLIENT_PID
+
+	mbfl_location_compensate( mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 RR(mmux_libc_AF_INET6) SIN6_ADDR 0 0 RR(SIN6_PORT),
+				  mmux_libc_free RR(SOCKADDR_IN6) )
+
+	mbfl_location_leave_when_failure( mmux_libc_inet_pton RR(mmux_libc_AF_INET6) WW(ASCII_ADDR) RR(SIN6_ADDR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_in6_dump RR(SOCKADDR_IN6) >&2 )
+
+	dotest-debug 'running client in background'
+	mbfl_location_leave_when_failure( client-sockets-dgram-3.1 ) &
+	CLIENT_PID=$!
+
+	dotest-debug 'running server in foreground'
+	mbfl_location_leave_when_failure( server-sockets-dgram-3.1 )
+
+	dotest-debug "waiting for client pid RR(CLIENT_PID)"
+	wait RR(CLIENT_PID)
+	dotest-debug "client terminated"
+	true
+    }
+    mbfl_location_leave
+}
+function server-sockets-dgram-3.1 () {
+    mbfl_location_enter
+    {
+	declare SERVER_SOCKFD
+
+	mbfl_location_compensate( mmux_libc_socket SERVER_SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_DGRAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(SERVER_SOCKFD) )
+
+	dotest-debug 'binding'
+	mbfl_location_leave_when_failure( mmux_libc_bind RR(SERVER_SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
+
+	# Reading from client.
+	{
+	    declare DONEVAR
+	    declare BUFLEN='4096'
+	    declare BUFPTR
+	    declare BUFSTR
+
+	    mbfl_location_compensate( mmux_libc_calloc BUFPTR 1 RR(BUFLEN), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'reading' SERVER_SOCKFD=RR(SERVER_SOCKFD) BUFPTR=RR(BUFPTR) BUFLEN=RR(BUFLEN)
+	    mbfl_location_leave_when_failure( mmux_libc_read DONEVAR RR(SERVER_SOCKFD) RR(BUFPTR) RR(BUFLEN) )
+	    dotest-debug DONEVAR=QQ(DONEVAR)
+	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string BUFSTR RR(BUFPTR) RR(DONEVAR) )
+	    dotest-debug BUFSTR="$BUFSTR"
+	}
+	true
+    }
+    mbfl_location_leave
+}
+function client-sockets-dgram-3.1 () {
+    mbfl_location_enter
+    {
+	declare ERRNO
+	declare CLIENT_SOCKFD
+
+	dotest-debug 'give the parent process the time to listen'
+	mbfl_location_leave_when_failure( client-sockets-dgram-3.1-sleep )
+
+	mbfl_location_compensate( mmux_libc_socket CLIENT_SOCKFD RR(mmux_libc_PF_INET6) RR(mmux_libc_SOCK_DGRAM) RR(mmux_libc_IPPROTO_IP),
+				  mmux_libc_close RR(CLIENT_SOCKFD) )
+
+	# We call "connect()" to establish a default  destination for CLIENT_SOCKFD; this way we can
+	# use "write()" to send data.
+	dotest-debug 'connecting'
+	mbfl_location_leave_when_failure( mmux_libc_connect RR(CLIENT_SOCKFD) RR(SOCKADDR_IN6) RR(mmux_libc_sockaddr_in6_SIZEOF) )
+	dotest-debug 'connected'
+
+	# Get peer socket's address informations.
+	{
+	    declare PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN
+
+	    dotest-debug 'getpeering address'
+	    mbfl_location_compensate( mmux_libc_getpeername RR(CLIENT_SOCKFD) PEER_SOCKADDR_PTR PEER_SOCKADDR_LEN,
+				      mmux_libc_free RR(PEER_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(PEER_SOCKADDR_PTR) 'peer_address' >&2 )
+	}
+
+	# Get client socket's own address informations.
+	{
+	    declare OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN
+
+	    dotest-debug 'getsockname address'
+	    mbfl_location_compensate( mmux_libc_getsockname RR(CLIENT_SOCKFD) OWN_SOCKADDR_PTR OWN_SOCKADDR_LEN,
+				      mmux_libc_free RR(OWN_SOCKADDR_PTR))
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_sockaddr_dump RR(OWN_SOCKADDR_PTR) 'own_address' >&2 )
+	}
+
+	# Writing to server.
+	{
+	    declare DONEVAR
+	    declare BUFSTR='hello world'
+	    declare BUFLEN=mbfl_string_len(BUFSTR)
+	    declare BUFPTR
+
+	    mbfl_location_compensate( mmux_pointer_from_bash_string BUFPTR WW(BUFSTR), mmux_libc_free RR(BUFPTR) )
+	    dotest-debug 'writing'
+	    mbfl_location_leave_when_failure( mmux_libc_write DONEVAR RR(CLIENT_SOCKFD) RR(BUFPTR) RR(BUFLEN) )
+	    dotest-debug written DONEVAR=QQ(DONEVAR)
+	}
+	true
+    }
+    mbfl_location_leave
+    dotest-debug 'exiting client process'
+    mbfl_exit
+}
+function client-sockets-dgram-3.1-sleep () {
+    mbfl_location_enter
+    {
+	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
+
+	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest sockets-
