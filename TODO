@@ -1,5 +1,7 @@
 -*- coding: utf-8-unix -*-
 
+* Add a builtin interfacing "sendfile(2)"? (Documented in a manual page.)
+
 * Add a builtin interfacing Linux's "openat2()"?
 
 * Add a builtin interfacing "pselect()"?
