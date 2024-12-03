@@ -75,7 +75,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   time localtime gmtime mktime timegm asctime ctime strftime strptime sleep nanosleep
 			   islower isupper isalpha isdigit isalnum isxdigit ispunct isspace isblank isgraph isprint
 			   iscntrl isascii tolower toupper
-			   sa_family_ref
+			   sa_family_ref sockaddr_dump
 			   sockaddr_un_calloc sun_family_ref sun_path_ref sockaddr_un_dump
 			   sockaddr_in_calloc sockaddr_in_dump
 			   sin_family_ref sin_family_set sin_addr_ref sin_addr_set sin_addr_pointer_ref sin_port_ref sin_port_set

@@ -75,32 +75,6 @@ declare -gi mmux_libc_MSG_ZERO='0'
 #page
 #### after loading hook: socket helpers
 
-function mmux_libc_sockaddr_dump () {
-    declare -r SOCKADDR_PTR=PP(1, pointer to a struct sockaddr)
-    declare -r SOCKADDR_NAME=${2:-'struct sockaddr'}
-    declare SA_FAMILY SA_FAMILY_NAME
-
-    if ! mmux_libc_sa_family_ref SA_FAMILY RR(SOCKADDR_PTR)
-    then return 1
-    fi
-
-    case RR(SA_FAMILY) in
-	RR(mmux_libc_AF_LOCAL))		SA_FAMILY_NAME='AF_LOCAL'  ;;
-	RR(mmux_libc_AF_INET))		SA_FAMILY_NAME='AF_INET'   ;;
-	RR(mmux_libc_AF_INET6))		SA_FAMILY_NAME='AF_INET6'  ;;
-	RR(mmux_libc_AF_UNSPEC))	SA_FAMILY_NAME='AF_UNSPEC' ;;
-        *)				SA_FAMILY_NAME='unknown'   ;;
-    esac
-
-    printf '%s.sa_family = "%d" (%s)\n' WW(SOCKADDR_NAME) RR(SA_FAMILY) RR(SA_FAMILY_NAME)
-
-    case RR(SA_FAMILY) in
-	RR(mmux_libc_AF_LOCAL))		mmux_libc_sockaddr_un_dump  RR(SOCKADDR_PTR) WW(SOCKADDR_NAME) ;;
-	RR(mmux_libc_AF_INET))		mmux_libc_sockaddr_in_dump  RR(SOCKADDR_PTR) WW(SOCKADDR_NAME) ;;
-	RR(mmux_libc_AF_INET6))		mmux_libc_sockaddr_in6_dump RR(SOCKADDR_PTR) WW(SOCKADDR_NAME) ;;
-    esac
-}
-
 m4_define([[[DEFINE_STRUCT_ADDRINFO_FIELD_PRINTER]]],[[[
 function mmux_libc_ai_$1_print () {
     declare -r ADDRINFO_PTR=PP(1, pointer to a struct addrinfo)

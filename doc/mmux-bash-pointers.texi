@@ -7683,15 +7683,15 @@ Bind to the shell variable whose name is @var{SA_FAMILY_VAR} the string represen
 
 @c ------------------------------------------------------------------------
 
-@defun mmux_libc_sockaddr_dump @var{SOCKADDR_PTR}
-@defunx mmux_libc_sockaddr_dump @var{SOCKADDR_PTR} @var{STRUCT_NAME}
+@deffn Builtin mmux_libc_sockaddr_dump @var{SOCKADDR_PTR}
+@deffnx Builtin mmux_libc_sockaddr_dump @var{SOCKADDR_PTR} @var{STRUCT_NAME}
 Applied to a pointer to @code{struct sockaddr}: print to @stdout{} a description of each field, then
 return true.  If an error occurs: print a message to @stderr{}, then return false.
 
 The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
 structure; when not given: it defaults to @samp{struct sockaddr}.
 
-This function relies on the value of the @code{sa_family} field to offload the work to other dumping
+This builtin relies on the value of the @code{sa_family} field to offload the work to other dumping
 functions and builtins; if the field is:
 
 @table @samp
@@ -7704,7 +7704,7 @@ Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_in_dump}.
 @item AF_INET6
 Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_in6_dump}.
 @end table
-@end defun
+@end deffn
 
 @c page
 @node sockets addrinfo

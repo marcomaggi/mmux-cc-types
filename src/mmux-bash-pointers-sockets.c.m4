@@ -460,6 +460,36 @@ mmux_libc_netent_dump (mmux_libc_stream_t stream, mmux_libc_netent_t netent_poin
   return MMUX_SUCCESS;
 }
 
+/* ------------------------------------------------------------------ */
+
+static bool
+mmux_libc_sockaddr_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_t sockaddr_pointer, char const * const struct_name)
+{
+  int	rv;
+
+  {
+    char const *	family_name = "unknown";
+
+    sa_family_to_asciiz_name(&family_name, sockaddr_pointer->sa_family);
+    rv = fprintf(stream, "%s.sa_family = \"%d\" (%s)\n", struct_name, (sockaddr_pointer->sa_family), family_name);
+    if (0 > rv) { return true; }
+  }
+
+  switch (sockaddr_pointer->sa_family) {
+  case AF_INET:
+    return mmux_libc_sockaddr_in_dump(stream, (mmux_libc_sockaddr_in_t)sockaddr_pointer, struct_name);
+
+  case AF_INET6:
+    return mmux_libc_sockaddr_insix_dump(stream, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
+
+  case AF_LOCAL:
+    return mmux_libc_sockaddr_un_dump(stream, (mmux_libc_sockaddr_un_t)sockaddr_pointer, struct_name);
+
+  default:
+    return false;
+  }
+}
+
 
 /** --------------------------------------------------------------------
  ** Sockets: struct sockaddr.
@@ -481,6 +511,28 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sa_family_ref]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SA_FAMILY_VAR SOCKADDR_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_dump]]])
+{
+  mmux_pointer_t	_sockaddr_pointer;
+  char const *		struct_name = "struct sockaddr";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    mmux_libc_sockaddr_t	sockaddr_pointer = _sockaddr_pointer;
+    bool			rv = mmux_libc_sockaddr_dump(stdout, sockaddr_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------
