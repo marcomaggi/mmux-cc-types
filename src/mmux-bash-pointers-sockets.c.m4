@@ -38,6 +38,9 @@
 
 typedef FILE *					mmux_libc_stream_t;
 
+typedef struct addrinfo				mmux_libc_addrinfo_tag_t;
+typedef mmux_libc_addrinfo_tag_t *		mmux_libc_addrinfo_t;
+
 typedef struct sockaddr				mmux_libc_sockaddr_tag_t;
 typedef mmux_libc_sockaddr_tag_t *		mmux_libc_sockaddr_t;
 
@@ -192,6 +195,234 @@ sa_family_to_asciiz_name(char const ** name_p, int sa_family)
     break;
   }
 }
+
+/* ------------------------------------------------------------------ */
+
+static void
+sa_socktype_to_asciiz_name(char const ** name_p, int sa_socktype)
+{
+  switch (sa_socktype) {
+#if (defined MMUX_HAVE_SOCK_STREAM)
+  case SOCK_STREAM:
+    *name_p = "SOCK_STREAM";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_SOCK_DGRAM)
+  case SOCK_DGRAM:
+    *name_p = "SOCK_DGRAM";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_SOCK_DCCP)
+  case SOCK_DCCP:
+    *name_p = "SOCK_DCCP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_SOCK_PACKET)
+  case SOCK_PACKET:
+    *name_p = "SOCK_PACKET";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_SOCK_RAW)
+  case SOCK_RAW:
+    *name_p = "SOCK_RAW";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_SOCK_RDM)
+  case SOCK_RDM:
+    *name_p = "SOCK_RDM";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_SOCK_SEQPACKET)
+  case SOCK_SEQPACKET:
+    *name_p = "SOCK_SEQPACKET";
+    break;
+#endif
+
+  default:
+    break;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+static void
+sa_ipproto_to_asciiz_name(char const ** name_p, int sa_ipproto)
+{
+  switch (sa_ipproto) {
+#if (defined MMUX_HAVE_IPPROTO_AH)
+  case IPPROTO_AH:
+    *name_p = "IPPROTO_AH";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_BEETPH)
+  case IPPROTO_BEETPH:
+    *name_p = "IPPROTO_BEETPH";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_COMP)
+  case IPPROTO_COMP:
+    *name_p = "IPPROTO_COMP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_DCCP)
+  case IPPROTO_DCCP:
+    *name_p = "IPPROTO_DCCP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_EGP)
+  case IPPROTO_EGP:
+    *name_p = "IPPROTO_EGP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_ENCAP)
+  case IPPROTO_ENCAP:
+    *name_p = "IPPROTO_ENCAP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_ESP)
+  case IPPROTO_ESP:
+    *name_p = "IPPROTO_ESP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_ETHERNET)
+  case IPPROTO_ETHERNET:
+    *name_p = "IPPROTO_ETHERNET";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_GRE)
+  case IPPROTO_GRE:
+    *name_p = "IPPROTO_GRE";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_ICMP)
+  case IPPROTO_ICMP:
+    *name_p = "IPPROTO_ICMP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_IDP)
+  case IPPROTO_IDP:
+    *name_p = "IPPROTO_IDP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_IGMP)
+  case IPPROTO_IGMP:
+    *name_p = "IPPROTO_IGMP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_IP)
+  case IPPROTO_IP:
+    *name_p = "IPPROTO_IP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_IPIP)
+  case IPPROTO_IPIP:
+    *name_p = "IPPROTO_IPIP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_IPV6)
+  case IPPROTO_IPV6:
+    *name_p = "IPPROTO_IPV6";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_MPLS)
+  case IPPROTO_MPLS:
+    *name_p = "IPPROTO_MPLS";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_MPTCP)
+  case IPPROTO_MPTCP:
+    *name_p = "IPPROTO_MPTCP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_MTP)
+  case IPPROTO_MTP:
+    *name_p = "IPPROTO_MTP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_PIM)
+  case IPPROTO_PIM:
+    *name_p = "IPPROTO_PIM";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_PUP)
+  case IPPROTO_PUP:
+    *name_p = "IPPROTO_PUP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_RAW)
+  case IPPROTO_RAW:
+    *name_p = "IPPROTO_RAW";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_RSVP)
+  case IPPROTO_RSVP:
+    *name_p = "IPPROTO_RSVP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_SCTP)
+  case IPPROTO_SCTP:
+    *name_p = "IPPROTO_SCTP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_TCP)
+  case IPPROTO_TCP:
+    *name_p = "IPPROTO_TCP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_TP)
+  case IPPROTO_TP:
+    *name_p = "IPPROTO_TP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_UDP)
+  case IPPROTO_UDP:
+    *name_p = "IPPROTO_UDP";
+    break;
+#endif
+
+#if (defined MMUX_HAVE_IPPROTO_UDPLITE)
+  case IPPROTO_UDPLITE:
+    *name_p = "IPPROTO_UDPLITE";
+    break;
+#endif
+
+  default:
+    break;
+  }
+}
+
+/* ------------------------------------------------------------------ */
 
 static bool
 mmux_libc_sockaddr_un_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_un_t sockaddr_un_pointer, char const * struct_name)
@@ -488,6 +719,200 @@ mmux_libc_sockaddr_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_t sockadd
   default:
     return false;
   }
+}
+
+/* ------------------------------------------------------------------ */
+
+static bool
+mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinfo_pointer, char const * struct_name)
+{
+  int	rv;
+
+  /* Inspect the field: ai_flags */
+  {
+    bool	not_first_flags = false;
+
+    rv = fprintf(stream, "%s.ai_flags = \"%d\"", struct_name, addrinfo_pointer->ai_flags);
+    if (0 > rv) { return true; }
+
+    if (AI_ADDRCONFIG & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_ADDRCONFIG");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_ADDRCONFIG");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_ALL & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_ALL");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_ALL");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_CANONIDN & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_CANONIDN");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_CANONIDN");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_CANONNAME & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_CANONNAME");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_CANONNAME");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_IDN & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_IDN");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_IDN");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_NUMERICSERV & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_NUMERICSERV");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_NUMERICSERV");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_PASSIVE & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_PASSIVE");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_PASSIVE");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (AI_V4MAPPED & addrinfo_pointer->ai_flags ) {
+      if (not_first_flags) {
+	rv = fprintf(stream, " | AI_V4MAPPED");
+	if (0 > rv) { return true; }
+      } else {
+	rv = fprintf(stream, " (AI_V4MAPPED");
+	if (0 > rv) { return true; }
+	not_first_flags = true;
+      }
+    }
+
+    if (not_first_flags) {
+      rv = fprintf(stream, ")\n");
+      if (0 > rv) { return true; }
+    } else {
+      rv = fprintf(stream, "\n");
+      if (0 > rv) { return true; }
+    }
+  }
+
+  /* Inspect the field: ai_family */
+  {
+    char const *	ai_name = "unknown";
+
+    sa_family_to_asciiz_name(&ai_name, addrinfo_pointer->ai_family);
+    rv = fprintf(stream, "%s.ai_family = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_family, ai_name);
+    if (0 > rv) { return true; }
+  }
+
+  /* Inspect the field: ai_socktype */
+  {
+    char const *	ai_name = "unknown";
+
+    sa_socktype_to_asciiz_name(&ai_name, addrinfo_pointer->ai_socktype);
+    rv = fprintf(stream, "%s.ai_socktype = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_socktype, ai_name);
+    if (0 > rv) { return true; }
+  }
+
+  /* Inspect the field: ai_protocol */
+  {
+    char const *	ai_name = "unknown";
+
+    sa_ipproto_to_asciiz_name(&ai_name, addrinfo_pointer->ai_protocol);
+    rv = fprintf(stream, "%s.ai_protocol = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_protocol, ai_name);
+    if (0 > rv) { return true; }
+  }
+
+  /* Inspect the field: ai_addrlen */
+  {
+    char const *	known_struct_name = "unknown struct type";
+
+    switch (addrinfo_pointer->ai_addrlen) {
+    case sizeof(mmux_libc_sockaddr_in_tag_t):
+      known_struct_name ="struct sockaddr_in";
+      break;
+
+    case sizeof(mmux_libc_sockaddr_insix_tag_t):
+      known_struct_name ="struct sockaddr_in6";
+      break;
+
+    case sizeof(mmux_libc_sockaddr_un_tag_t):
+      known_struct_name ="struct sockaddr_un";
+      break;
+    }
+
+    rv = fprintf(stream, "%s.ai_addrlen = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_addrlen, known_struct_name);
+    if (0 > rv) { return true; }
+  }
+
+  /* Inspect the field: ai_addr, it is a pointer to "struct sockaddr" */
+  {
+    size_t	buflen = 1024;
+    char	bufstr[buflen];
+
+    memset(bufstr, '\0', buflen);
+    inet_ntop(addrinfo_pointer->ai_family, &(addrinfo_pointer->ai_addr), bufstr, buflen);
+
+    rv = fprintf(stream, "%s.ai_addr = \"%p\" (%s)\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_addr), bufstr);
+    if (0 > rv) { return true; }
+  }
+
+  /* Inspect the field: ai_canonname */
+  {
+    if (addrinfo_pointer->ai_canonname) {
+      rv = fprintf(stream, "%s.ai_canonname = \"%p\" (%s)\n", struct_name,
+		   (mmux_pointer_t)(addrinfo_pointer->ai_canonname),
+		   addrinfo_pointer->ai_canonname);
+      if (0 > rv) { return true; }
+    } else {
+      rv = fprintf(stream, "%s.ai_canonname = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_canonname));
+      if (0 > rv) { return true; }
+    }
+  }
+
+  /* Inspect the field: ai_next */
+  {
+    rv = fprintf(stream, "%s.ai_next = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_next));
+    if (0 > rv) { return true; }
+  }
+
+  return false;
 }
 
 
@@ -1139,8 +1564,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
   {
     struct sockaddr *	ai_addr           = addr_pointer;
     char *		ai_canonname      = canonname_pointer;
-    struct addrinfo *	ai_next           = next_pointer;
-    struct addrinfo *	addrinfo_pointer  = calloc(1, sizeof(struct addrinfo));
+    mmux_libc_addrinfo_t	ai_next           = next_pointer;
+    mmux_libc_addrinfo_t	addrinfo_pointer  = calloc(1, sizeof(struct addrinfo));
     mmux_bash_rv_t	brv;
 
     addrinfo_pointer->ai_flags		= ai_flags;
@@ -1177,7 +1602,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_addrinfo_pointer,	2);
   {
-    struct addrinfo *	addrinfo_pointer = _addrinfo_pointer;
+    mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, addrinfo_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1194,7 +1619,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_set]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_addrinfo_pointer,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_$3($1,				2);
   {
-    struct addrinfo *	addrinfo_pointer = _addrinfo_pointer;
+    mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
 
     addrinfo_pointer->$1 = $1;
     return MMUX_SUCCESS;
@@ -1213,6 +1638,28 @@ DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addrlen]]],		[[[socklen]]],[[[SOCKLEN
 DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addr]]],		[[[pointer]]],[[[POINTER]]])
 DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_canonname]]],	[[[pointer]]],[[[POINTER]]])
 DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_next]]],		[[[pointer]]],[[[POINTER]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_dump]]])
+{
+  mmux_pointer_t	_addrinfo_pointer;
+  char const *		struct_name = "struct addrinfo";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_addrinfo_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
+    bool			rv = mmux_libc_addrinfo_dump(stdout, addrinfo_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER ADDRINFO_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------
@@ -1814,8 +2261,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getaddrinfo]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_hints_pointer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(addrinfo_linked_list_varname,	4);
   {
-    struct addrinfo *	hints_pointer = _hints_pointer;
-    struct addrinfo *	addrinfo_linked_list;
+    mmux_libc_addrinfo_t	hints_pointer = _hints_pointer;
+    mmux_libc_addrinfo_t	addrinfo_linked_list;
 
     if (0 == strlen(node))    { node    = NULL; }
     if (0 == strlen(service)) { service = NULL; }

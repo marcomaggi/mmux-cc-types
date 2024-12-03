@@ -8050,10 +8050,14 @@ mmux_libc_free @RR{ADDRINFO_PTR}
 
 @c ------------------------------------------------------------------------
 
-@defun mmux_libc_addrinfo_dump @var{ADDRINFO_PTR}
+@deffn Builtin mmux_libc_addrinfo_dump @var{ADDRINFO_PTR}
+@deffnx Builtin mmux_libc_addrinfo_dump @var{ADDRINFO_PTR} @var{STRUCT_NAME}
 Applied to a pointer to @code{struct addrinfo}: print to @stdout{} a description of each field, then
 return true.  If an error occurs: print a message to @stderr{}, then return false.
-@end defun
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct addrinfo}.
+@end deffn
 
 @c page
 @node sockets hostsdb
@@ -8151,10 +8155,14 @@ whose name is @var{H_ADDR_VAR} the field of the @code{struct hostent} value refe
 @end deffn
 
 
-@defun mmux_libc_hostent_dump @var{HOSTENT_PTR}
+@deffn Builtin mmux_libc_hostent_dump @var{HOSTENT_PTR}
+@deffnx Builtin mmux_libc_hostent_dump @var{HOSTENT_PTR} @var{STRUCT_NAME}
 Applied to a pointer to @code{struct hostent}: print to @stdout{} a description of each field, then
 return true.  If an error occurs: print a message to @stderr{}, then return false.
-@end defun
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct hostent}.
+@end deffn
 
 
 @deffn Builtin mmux_libc_sethostent @var{STAYOPEN}
