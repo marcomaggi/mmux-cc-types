@@ -306,7 +306,7 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_bind (mmux_bash_ind
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_index_array_ref (mmux_bash_index_array_variable_t index_array_variable,
 								  mmux_bash_index_array_key_t index_array_key,
 								  char const ** index_array_value_p,
-								  char const * const caller_name)
+								  char const * caller_name)
   __attribute__((__nonnull__(1,3)));
 
 
@@ -339,7 +339,7 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_bind (mmux_bash_ass
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_ref (mmux_bash_assoc_array_variable_t assoc_array_variable,
 								  mmux_bash_assoc_array_key_t assoc_array_key,
 								  char const ** assoc_array_value_p,
-								  char const * const caller_name)
+								  char const * caller_name)
   __attribute__((__nonnull__(1,2,3)));
 
 
@@ -348,10 +348,10 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_ref (mmux_bash_asso
  ** ----------------------------------------------------------------- */
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_set_ERRNO (int errnum, char const * who);
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * const who);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * who);
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_error_parsing_argument_at_index \
-    (char const * const stemstr, char const * const argstr, mmux_uint_t argidx, char const * const caller_name)
+    (char const * stemstr, char const * argstr, mmux_uint_t argidx, char const * caller_name)
   __attribute__((__nonnull__(1,2,4)));
 
 
