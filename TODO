@@ -16,6 +16,14 @@
 
 * Add a builtin interfacing "getifaddrs(3)"?  (Documented in a manual page.)
 
+* Add a builtin interfacing "sendmsg(3)"?  (Documented in a manual page.)
+
+* Add a builtin interfacing "sendmmsg(2)"?  (Documented in a manual page.)
+
+* Add a builtin interfacing "recvmsg(3)"?  (Documented in a manual page.)
+
+* Add a builtin interfacing "recvmmsg(2)"?  (Documented in a manual page.)
+
 ### end of file
 # Local Variables:
 # mode: text
