@@ -1173,7 +1173,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(hostent_pointer_varname,	1);
   {
-    struct hostent *	ptr = calloc(1, sizeof(struct hostent));
+    mmux_libc_hostent_t	ptr = calloc(1, sizeof(struct hostent));
 
     return mmux_pointer_bind_to_bash_variable(hostent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1193,7 +1193,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_hostent_pointer,	2);
   {
-    struct hostent *	hostent_pointer = _hostent_pointer;
+    mmux_libc_hostent_t	hostent_pointer = _hostent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, hostent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1222,7 +1222,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    struct hostent *	hostent_pointer = _hostent_pointer;
+    mmux_libc_hostent_t	hostent_pointer = _hostent_pointer;
     bool		rv = mmux_libc_hostent_dump(stdout, hostent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
@@ -1243,7 +1243,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   {
-    struct servent *	ptr = calloc(1, sizeof(struct servent));
+    mmux_libc_servent_t	ptr = calloc(1, sizeof(struct servent));
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1263,7 +1263,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_servent_pointer,	2);
   {
-    struct servent *	servent_pointer = _servent_pointer;
+    mmux_libc_servent_t	servent_pointer = _servent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, servent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1290,7 +1290,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    struct servent *	servent_pointer = _servent_pointer;
+    mmux_libc_servent_t	servent_pointer = _servent_pointer;
     bool		rv = mmux_libc_servent_dump(stdout, servent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
@@ -1311,7 +1311,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   {
-    struct protoent *	ptr = calloc(1, sizeof(struct protoent));
+    mmux_libc_protoent_t	ptr = calloc(1, sizeof(struct protoent));
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1331,7 +1331,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_protoent_pointer,	2);
   {
-    struct protoent *	protoent_pointer = _protoent_pointer;
+    mmux_libc_protoent_t	protoent_pointer = _protoent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, protoent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1357,7 +1357,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    struct protoent *	protoent_pointer = _protoent_pointer;
+    mmux_libc_protoent_t	protoent_pointer = _protoent_pointer;
     bool		rv = mmux_libc_protoent_dump(stdout, protoent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
@@ -1378,7 +1378,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   {
-    struct netent *	ptr = calloc(1, sizeof(struct netent));
+    mmux_libc_netent_t	ptr = calloc(1, sizeof(struct netent));
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1398,7 +1398,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_netent_pointer,	2);
   {
-    struct netent *	netent_pointer = _netent_pointer;
+    mmux_libc_netent_t	netent_pointer = _netent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, netent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1425,7 +1425,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    struct netent *	netent_pointer = _netent_pointer;
+    mmux_libc_netent_t	netent_pointer = _netent_pointer;
     bool		rv = mmux_libc_netent_dump(stdout, netent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
@@ -1888,7 +1888,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gethostent]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(hostent_pointer_varname,	1);
   {
-    struct hostent *	he = gethostent();
+    mmux_libc_hostent_t	he = gethostent();
 
     return mmux_pointer_bind_to_bash_variable(hostent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1935,7 +1935,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservent]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   {
-    struct servent *	he = getservent();
+    mmux_libc_servent_t	he = getservent();
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1958,7 +1958,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyname]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(proto,	3);
   }
   {
-    struct servent *	he = getservbyname(name, proto);
+    mmux_libc_servent_t	he = getservbyname(name, proto);
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1981,7 +1981,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyport]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(proto,	3);
   }
   {
-    struct servent *	he = getservbyport(port, proto);
+    mmux_libc_servent_t	he = getservbyport(port, proto);
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2028,7 +2028,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotoent]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   {
-    struct protoent *	he = getprotoent();
+    mmux_libc_protoent_t	he = getprotoent();
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2047,7 +2047,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobyname]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(name,	2);
   {
-    struct protoent *	he = getprotobyname(name);
+    mmux_libc_protoent_t	he = getprotobyname(name);
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2066,7 +2066,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobynumber]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(proto,	2);
   {
-    struct protoent *	he = getprotobynumber(proto);
+    mmux_libc_protoent_t	he = getprotobynumber(proto);
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2113,7 +2113,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetent]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   {
-    struct netent *	he = getnetent();
+    mmux_libc_netent_t	he = getnetent();
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2132,7 +2132,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyname]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(name,	2);
   {
-    struct netent *	he = getnetbyname(name);
+    mmux_libc_netent_t	he = getnetbyname(name);
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2153,7 +2153,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyaddr]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(net,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(type,	3);
   {
-    struct netent *	he = getnetbyaddr(net, type);
+    mmux_libc_netent_t	he = getnetbyaddr(net, type);
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
