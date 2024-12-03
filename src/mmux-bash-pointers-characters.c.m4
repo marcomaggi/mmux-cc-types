@@ -39,10 +39,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_from_string]]])
   char const *	string;
   mmux_usize_t	idx = 0;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(schar_varname,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(string,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(schar_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(string,	2);
   if (4 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARG_USIZE(idx,		argv[3]);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(idx,	3);
   }
   {
     mmux_usize_t	len = strlen(string);
@@ -56,7 +56,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_from_string]]])
       return mmux_schar_bind_to_bash_variable(schar_varname, ch, MMUX_BASH_BUILTIN_STRING_NAME);
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[((3 == argc) || (4 == argc))]]],
@@ -69,8 +68,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_to_string]]])
   char const *	string_varname;
   mmux_schar_t	ch;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(string_varname,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(ch,				argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(string_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SCHAR(ch,	2);
   {
     char	str[2];
 
@@ -78,7 +77,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_to_string]]])
     str[1] = '\0';
     return mmux_string_bind_to_bash_variable(string_varname, str, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -93,13 +91,12 @@ m4_define([[[DEFINE_CHARACTER_PREDICATE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[
 {
   mmux_schar_t	ch;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(ch,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SCHAR(ch,	1);
   {
     int		rv = $1(ch);
 
     return (rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -126,14 +123,13 @@ m4_define([[[DEFINE_CHARACTER_CASE_CONVERSION_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MA
   char const *	output_ch_varname;
   mmux_schar_t	input_ch;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(output_ch_varname,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SCHAR(input_ch,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(output_ch_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SCHAR(input_ch,	2);
   {
     mmux_schar_t	output_ch = $1(input_ch);
 
     return mmux_schar_bind_to_bash_variable(output_ch_varname, output_ch, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],

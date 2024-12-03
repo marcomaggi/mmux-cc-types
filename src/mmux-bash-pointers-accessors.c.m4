@@ -39,8 +39,8 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *	ptr;
   ptrdiff_t	offset;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,    argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(offset, argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_PTRDIFF(offset,	3);
   {
     uint8_t *	ptr_byte;
     mmux_$1_t *	ptr_value;
@@ -52,7 +52,6 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     value     = *ptr_value;
     return mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
@@ -72,8 +71,8 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   void *	ptr;
   ptrdiff_t	index;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(index,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_PTRDIFF(index,	3);
   {
     mmux_$1_t *	ptr_value;
     mmux_$1_t	value;
@@ -82,7 +81,6 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     value     = ptr_value[index];
     return mmux_$1_bind_to_bash_variable(argv[1], value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);

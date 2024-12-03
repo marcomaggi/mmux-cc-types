@@ -38,13 +38,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_and]]])
   mmux_pointer_t	op;
   mmux_uintptr_t	mask;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINTPTR(mask,	3);
   {
     op = mmux_pointer_bitwise_and(op, mask);
     return mmux_pointer_bind_to_bash_variable(argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -58,13 +57,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_or]]])
   mmux_pointer_t	op;
   mmux_uintptr_t	mask;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINTPTR(mask,	3);
   {
     op = mmux_pointer_bitwise_or(op, mask);
     return mmux_pointer_bind_to_bash_variable(argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -78,13 +76,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_xor]]])
   mmux_pointer_t	op;
   mmux_uintptr_t	mask;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_UINTPTR(mask,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINTPTR(mask,	3);
   {
     op = mmux_pointer_bitwise_xor(op, mask);
     return mmux_pointer_bind_to_bash_variable(argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -97,12 +94,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_not]]])
 {
   mmux_pointer_t	op;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
   {
     op = mmux_pointer_bitwise_not(op);
     return mmux_pointer_bind_to_bash_variable(argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -116,13 +112,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shl]]])
   mmux_pointer_t	op;
   mmux_sint_t		nbits;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(nbits,	3);
   {
     op = mmux_pointer_bitwise_shl(op, nbits);
     return mmux_pointer_bind_to_bash_variable (argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -136,13 +131,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_bitwise_shr]]])
   mmux_pointer_t	op;
   mmux_sint_t		nbits;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(nbits,	3);
   {
     op = mmux_pointer_bitwise_shr(op, nbits);
     return mmux_pointer_bind_to_bash_variable (argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -187,13 +181,12 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_t	op;
   mmux_sint_t	nbits;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_STEM($1, op, argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(nbits,  argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM($1, op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(nbits,	3);
   {
     op = mmux_$1_bitwise_$3(op, nbits);
     return mmux_$1_bind_to_bash_variable (argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);

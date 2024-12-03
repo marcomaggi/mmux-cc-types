@@ -201,7 +201,7 @@ function sockets-struct-sockaddr_un-1.2 () {
 				  mmux_libc_free RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sun_family_ref SUN_FAMILY RR(SOCKADDR_UN) )
 	mbfl_location_leave_when_failure( mmux_libc_sun_path_ref   SUN_PATH   RR(SOCKADDR_UN) )
-	mbfl_location_leave_when_failure( mmux_libc_sa_family_ref              SA_FAMILY  RR(SOCKADDR_UN) )
+	mbfl_location_leave_when_failure( mmux_libc_sa_family_ref  SA_FAMILY  RR(SOCKADDR_UN) )
 
 	dotest-debug ,WW(SUN_FAMILY),WW(SUN_PATH), ${#SUN_PATH} ${#PATHNAME}
 

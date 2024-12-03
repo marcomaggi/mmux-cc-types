@@ -138,7 +138,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setuid]]])
 {
   mmux_uid_t	uid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UID(uid,	1);
   {
     int		rv = setuid(uid);
 
@@ -149,7 +149,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setuid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -161,7 +160,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_seteuid]]])
 {
   mmux_uid_t	uid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UID(uid,	1);
   {
     int		rv = seteuid(uid);
 
@@ -172,7 +171,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_seteuid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -184,8 +182,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setreuid]]])
 {
   mmux_uid_t	ruid, euid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_UID(ruid,		argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_UID(euid,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UID(ruid,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UID(euid,	2);
   {
     int		rv = setreuid(ruid, euid);
 
@@ -196,7 +194,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setreuid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -208,7 +205,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setegid]]])
 {
   mmux_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(gid,	1);
   {
     int		rv = setegid(gid);
 
@@ -219,7 +216,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setegid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -231,7 +227,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setgid]]])
 {
   mmux_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,		argv[1]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(gid,	1);
   {
     int		rv = setgid(gid);
 
@@ -242,7 +238,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setgid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -254,8 +249,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setregid]]])
 {
   mmux_gid_t	rgid, egid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(rgid,		argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(egid,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(rgid,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(egid,	2);
   {
     int		rv = setregid(rgid, egid);
 
@@ -266,7 +261,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setregid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -279,8 +273,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrouplist]]])
   char const *	username;
   mmux_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(username,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,			argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(username,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(gid,	3);
   {
     mmux_sint_t		ngroups = 0;
 
@@ -328,7 +322,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrouplist]]])
     mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     return MMUX_FAILURE;
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -340,13 +333,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_group_member]]])
 {
   mmux_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(gid,	2);
   {
     int		rv = group_member(gid);
 
     return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -388,7 +380,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpwuid]]])
 {
   mmux_uid_t	uid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_UID(uid,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UID(uid,	2);
   {
     struct passwd *	P = getpwuid(uid);
 
@@ -398,7 +390,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpwuid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -410,7 +401,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpwnam]]])
 {
   char const *	username;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(username,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(username,	2);
   {
     struct passwd *	P = getpwnam(username);
 
@@ -466,13 +457,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_name]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_string_bind_to_bash_variable(argv[1], P->pw_name, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -484,13 +474,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_passwd]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_string_bind_to_bash_variable(argv[1], P->pw_passwd, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -502,13 +491,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_uid]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_uid_bind_to_bash_variable(argv[1], P->pw_uid, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -520,13 +508,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_gid]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_gid_bind_to_bash_variable(argv[1], P->pw_gid, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -538,13 +525,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_gecos]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_string_bind_to_bash_variable(argv[1], P->pw_gecos, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -556,13 +542,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_dir]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_string_bind_to_bash_variable(argv[1], P->pw_dir, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -574,13 +559,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pw_shell]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct passwd *	P = ptr;
 
     return mmux_string_bind_to_bash_variable(argv[1], P->pw_shell, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -595,7 +579,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrgid]]])
 {
   mmux_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_GID(gid,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(gid,	2);
   {
     struct group *	P = getgrgid(gid);
 
@@ -605,7 +589,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrgid]]])
       return MMUX_FAILURE;
     }
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -617,7 +600,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgrnam]]])
 {
   char const *	username;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(username,	argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(username,	2);
   {
     struct group *	P = getgrnam(username);
 
@@ -673,13 +656,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_name]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct group *	P = ptr;
 
     return mmux_string_bind_to_bash_variable(argv[1], P->gr_name, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -691,13 +673,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_gid]]])
 {
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,		argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct group *	P = ptr;
 
     return mmux_gid_bind_to_bash_variable(argv[1], P->gr_gid, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -710,8 +691,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_mem]]])
   char const *		index_array_name;
   mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM(index_array_name,	argv[1]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr,			argv[2]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(index_array_name,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
   {
     struct group *			P = ptr;
     mmux_bash_index_array_variable_t	index_array_variable;
@@ -729,7 +710,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_mem]]])
     }
     return MMUX_SUCCESS;
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],

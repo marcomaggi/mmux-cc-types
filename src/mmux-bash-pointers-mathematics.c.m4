@@ -97,12 +97,10 @@ MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   mmux_$1_t	rop, op;
 
   if (0) { fprintf(stderr, "%s: ROPVAR=%s, OP=%s\n", __func__, argv[1], argv[2]); }
-  $4(op, argv[2]);
+  $4(op, 2);
 
   rop = mmux_$1_$2(op);
   return mmux_$1_bind_to_bash_variable(argv[1], rop, MMUX_BASH_BUILTIN_STRING_NAME);
-
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
@@ -126,13 +124,11 @@ m4_define([[[DEFINE_BINARY_BUILTIN]]],[[[m4_ifelse([[[$3]]],,,[[[MMUX_BASH_BUILT
 MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   mmux_$1_t	rop, op1, op2;
 
-  $4(op1, argv[2]);
-  $4(op2, argv[3]);
+  $4(op1, 2);
+  $4(op2, 3);
 
   rop = mmux_$1_$2(op1, op2);
   return mmux_$1_bind_to_bash_variable(argv[1], rop, MMUX_BASH_BUILTIN_STRING_NAME);
-
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
@@ -157,13 +153,11 @@ MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   mmux_$1_t	rop, op;
   mmux_sint_t	N;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_SINT(N, argv[2]);
-  $4(op, argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(N,	2);
+  $4(op, 3);
 
   rop = mmux_$1_$2(N, op);
   return mmux_$1_bind_to_bash_variable(argv[1], rop, MMUX_BASH_BUILTIN_STRING_NAME);
-
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
   fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
@@ -272,7 +266,7 @@ DEFINE_BINARYN_BUILTIN([[[$1]]],[[[yn]]],	[[[$39]]], [[[$2]]], [[[$3]]])
 /* ------------------------------------------------------------------ */
 
 DEFINE_BUILTINS([[[float]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT]]],	[[[]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT]]],	[[[]]],
 		  [[[sinf]]],		[[[cosf]]],		[[[tanf]]],
 		  [[[asinf]]],		[[[acosf]]],		[[[atanf]]],		[[[atan2f]]],
 		  [[[sinhf]]],		[[[coshf]]],		[[[tanhf]]],
@@ -286,7 +280,7 @@ DEFINE_BUILTINS([[[float]]],
 		  [[[j0f]]],		[[[j1f]]],		[[[jnf]]],
 		  [[[y0f]]],		[[[y1f]]],		[[[ynf]]])
 DEFINE_BUILTINS([[[double]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_DOUBLE]]],	[[[]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_DOUBLE]]],	[[[]]],
 		  [[[sin]]],		[[[cos]]],		[[[tan]]],
 		  [[[asin]]],		[[[acos]]],		[[[atan]]],		[[[atan2f]]],
 		  [[[sinh]]],		[[[cosh]]],		[[[tanh]]],
@@ -300,7 +294,7 @@ DEFINE_BUILTINS([[[double]]],
 		  [[[j0]]],		[[[j1]]],		[[[jn]]],
 		  [[[y0]]],		[[[y1]]],		[[[yn]]])
 DEFINE_BUILTINS([[[ldouble]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_LDOUBLE]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LDOUBLE]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],
 		  [[[sinl]]],		[[[cosl]]],		[[[tanl]]],
 		  [[[asinl]]],		[[[acosl]]],		[[[atanl]]],		[[[atan2l]]],
 		  [[[sinhl]]],		[[[coshl]]],		[[[tanhl]]],
@@ -315,7 +309,7 @@ DEFINE_BUILTINS([[[ldouble]]],
 		  [[[y0l]]],		[[[y1l]]],		[[[ynl]]])
 
 DEFINE_BUILTINS([[[float32]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]],
 		  [[[sinf32]]],		[[[cosf32]]],		[[[tanf32]]],
 		  [[[asinf32]]],	[[[acosf32]]],		[[[atanf32]]],		[[[atan2f32]]],
 		  [[[sinhf32]]],	[[[coshf32]]],		[[[tanhf32]]],
@@ -329,7 +323,7 @@ DEFINE_BUILTINS([[[float32]]],
 		  [[[j0f32]]],		[[[j1f32]]],		[[[jnf32]]],
 		  [[[y0f32]]],		[[[y1f32]]],		[[[ynf32]]])
 DEFINE_BUILTINS([[[float64]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT64]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT64]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64]]],
 		  [[[sinf64]]],		[[[cosf64]]],		[[[tanf64]]],
 		  [[[asinf64]]],	[[[acosf64]]],		[[[atanf64]]],		[[[atan2f64]]],
 		  [[[sinhf64]]],	[[[coshf64]]],		[[[tanhf64]]],
@@ -343,7 +337,7 @@ DEFINE_BUILTINS([[[float64]]],
 		  [[[j0f64]]],		[[[j1f64]]],		[[[jnf64]]],
 		  [[[y0f64]]],		[[[y1f64]]],		[[[ynf64]]])
 DEFINE_BUILTINS([[[float128]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT128]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT128]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128]]],
 		  [[[sinf128]]],	[[[cosf128]]],		[[[tanf128]]],
 		  [[[asinf128]]],	[[[acosf128]]],		[[[atanf128]]],		[[[atan2f128]]],
 		  [[[sinhf128]]],	[[[coshf128]]],		[[[tanhf128]]],
@@ -358,7 +352,7 @@ DEFINE_BUILTINS([[[float128]]],
 		  [[[y0f128]]],		[[[y1f128]]],		[[[ynf128]]])
 
 DEFINE_BUILTINS([[[float32x]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT32X]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT32X]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],
 		  [[[sinf32x]]],	[[[cosf32x]]],		[[[tanf32x]]],
 		  [[[asinf32x]]],	[[[acosf32x]]],		[[[atanf32x]]],		[[[atan2f32x]]],
 		  [[[sinhf32x]]],	[[[coshf32x]]],		[[[tanhf32x]]],
@@ -372,7 +366,7 @@ DEFINE_BUILTINS([[[float32x]]],
 		  [[[j0f32x]]],		[[[j1f32x]]],		[[[jnf32x]]],
 		  [[[y0f32x]]],		[[[y1f32x]]],		[[[ynf32x]]])
 DEFINE_BUILTINS([[[float64x]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT64X]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT64X]]],  [[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],
 		  [[[sinf64x]]],	[[[cosf64x]]],		[[[tanf64x]]],
 		  [[[asinf64x]]],	[[[acosf64x]]],		[[[atanf64x]]],		[[[atan2f64x]]],
 		  [[[sinhf64x]]],	[[[coshf64x]]],		[[[tanhf64x]]],
@@ -386,7 +380,7 @@ DEFINE_BUILTINS([[[float64x]]],
 		  [[[j0f64x]]],		[[[j1f64x]]],		[[[jnf64x]]],
 		  [[[y0f64x]]],		[[[y1f64x]]],		[[[ynf64x]]])
 DEFINE_BUILTINS([[[float128x]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_FLOAT128X]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FLOAT128X]]], [[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],
 		  [[[sinf128x]]],	[[[cosf128x]]],		[[[tanf128x]]],
 		  [[[asinf128x]]],	[[[acosf128x]]],	[[[atanf128x]]],	[[[atan2f128x]]],
 		  [[[sinhf128x]]],	[[[coshf128x]]],	[[[tanhf128x]]],
@@ -401,7 +395,7 @@ DEFINE_BUILTINS([[[float128x]]],
 		  [[[y0f128x]]],	[[[y1f128x]]],		[[[ynf128x]]])
 
 DEFINE_BUILTINS([[[decimal32]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_DECIMAL32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_DECIMAL32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],
 		  [[[sind32]]],		[[[cosd32]]],		[[[tand32]]],
 		  [[[asind32]]],	[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
 		  [[[sinhd32]]],	[[[coshd32]]],		[[[tanhd32]]],
@@ -415,7 +409,7 @@ DEFINE_BUILTINS([[[decimal32]]],
 		  [[[j0d32]]],		[[[j1d32]]],		[[[jnd32]]],
 		  [[[y0d32]]],		[[[y1d32]]],		[[[ynd32]]])
 DEFINE_BUILTINS([[[decimal64]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_DECIMAL64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_DECIMAL64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],
 		  [[[sind64]]],		[[[cosd64]]],		[[[tand64]]],
 		  [[[asind64]]],	[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
 		  [[[sinhd64]]],	[[[coshd64]]],		[[[tanhd64]]],
@@ -429,7 +423,7 @@ DEFINE_BUILTINS([[[decimal64]]],
 		  [[[j0d64]]],		[[[j1d64]]],		[[[jnd64]]],
 		  [[[y0d64]]],		[[[y1d64]]],		[[[ynd64]]])
 DEFINE_BUILTINS([[[decimal128]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_DECIMAL128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_DECIMAL128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],
 		  [[[sind128]]],	[[[cosd128]]],		[[[tand128]]],
 		  [[[asind128]]],	[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
 		  [[[sinhd128]]],	[[[coshd128]]],		[[[tanhd128]]],
@@ -444,7 +438,7 @@ DEFINE_BUILTINS([[[decimal128]]],
 		  [[[y0d128]]],		[[[y1d128]]],		[[[ynd128]]])
 
 DEFINE_BUILTINS([[[complexf]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF]]],	[[[]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF]]],	[[[]]],
 		  [[[csinf]]],		[[[ccosf]]],		[[[ctanf]]],
 		  [[[casinf]]],		[[[cacosf]]],		[[[catanf]]],		[[[]]],
 		  [[[csinhf]]],		[[[ccoshf]]],		[[[ctanhf]]],
@@ -458,7 +452,7 @@ DEFINE_BUILTINS([[[complexf]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexd]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXD]]],	[[[]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXD]]],	[[[]]],
 		  [[[csin]]],		[[[ccos]]],		[[[ctan]]],
 		  [[[casin]]],		[[[cacos]]],		[[[catan]]],		[[[]]],
 		  [[[csinh]]],		[[[ccosh]]],		[[[ctanh]]],
@@ -472,7 +466,7 @@ DEFINE_BUILTINS([[[complexd]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexld]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXLD]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXLD]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]],
 		  [[[csinl]]],		[[[ccosl]]],		[[[ctanl]]],
 		  [[[casinl]]],		[[[cacosl]]],		[[[catanl]]],		[[[]]],
 		  [[[csinhl]]],		[[[ccoshl]]],		[[[ctanhl]]],
@@ -487,7 +481,7 @@ DEFINE_BUILTINS([[[complexld]]],
 		  [[[]]],		[[[]]],			[[[]]])
 
 DEFINE_BUILTINS([[[complexf32]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF32]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF32]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]],
 		  [[[csinf32]]],	[[[ccosf32]]],		[[[ctanf32]]],
 		  [[[casinf32]]],	[[[cacosf32]]],		[[[catanf32]]],		[[[]]],
 		  [[[csinhf32]]],	[[[ccoshf32]]],		[[[ctanhf32]]],
@@ -501,7 +495,7 @@ DEFINE_BUILTINS([[[complexf32]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexf64]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF64]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF64]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]],
 		  [[[csinf64]]],	[[[ccosf64]]],		[[[ctanf64]]],
 		  [[[casinf64]]],	[[[cacosf64]]],		[[[catanf64]]],		[[[]]],
 		  [[[csinhf64]]],	[[[ccoshf64]]],		[[[ctanhf64]]],
@@ -515,7 +509,7 @@ DEFINE_BUILTINS([[[complexf64]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexf128]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF128]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF128]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]],
 		  [[[csinf128]]],	[[[ccosf128]]],		[[[ctanf128]]],
 		  [[[casinf128]]],	[[[cacosf128]]],	[[[catanf128]]],	[[[]]],
 		  [[[csinhf128]]],	[[[ccoshf128]]],	[[[ctanhf128]]],
@@ -530,7 +524,7 @@ DEFINE_BUILTINS([[[complexf128]]],
 		  [[[]]],		[[[]]],			[[[]]])
 
 DEFINE_BUILTINS([[[complexf32x]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF32X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF32X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]],
 		  [[[csinf32x]]],	[[[ccosf32x]]],		[[[ctanf32x]]],
 		  [[[casinf32x]]],	[[[cacosf32x]]],	[[[catanf32x]]],	[[[]]],
 		  [[[csinhf32x]]],	[[[ccoshf32x]]],	[[[ctanhf32x]]],
@@ -544,7 +538,7 @@ DEFINE_BUILTINS([[[complexf32x]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexf64x]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF64X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF64X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]],
 		  [[[csinf64x]]],	[[[ccosf64x]]],		[[[ctanf64x]]],
 		  [[[casinf64x]]],	[[[cacosf64x]]],	[[[catanf64x]]],	[[[]]],
 		  [[[csinhf64x]]],	[[[ccoshf64x]]],	[[[ctanhf64x]]],
@@ -558,7 +552,7 @@ DEFINE_BUILTINS([[[complexf64x]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexf128x]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXF128X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXF128X]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]],
 		  [[[csinf128x]]],	[[[ccosf128x]]],	[[[ctanf128x]]],
 		  [[[casinf128x]]],	[[[cacosf128x]]],	[[[catanf128x]]],	[[[]]],
 		  [[[csinhf128x]]],	[[[ccoshf128x]]],	[[[ctanhf128x]]],
@@ -573,7 +567,7 @@ DEFINE_BUILTINS([[[complexf128x]]],
 		  [[[]]],		[[[]]],			[[[]]])
 
 DEFINE_BUILTINS([[[complexd32]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXD32]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD32_UNIMPLEMENTED]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXD32]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD32_UNIMPLEMENTED]]],
 		  [[[csind32]]],	[[[ccosd32]]],		[[[ctand32]]],
 		  [[[casind32]]],	[[[cacosd32]]],		[[[catand32]]],		[[[]]],
 		  [[[csinhd32]]],	[[[ccoshd32]]],		[[[ctanhd32]]],
@@ -587,7 +581,7 @@ DEFINE_BUILTINS([[[complexd32]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexd64]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXD64]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD64_UNIMPLEMENTED]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXD64]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD64_UNIMPLEMENTED]]],
 		  [[[csind64]]],	[[[ccosd64]]],		[[[ctand64]]],
 		  [[[casind64]]],	[[[cacosd64]]],		[[[catand64]]],		[[[]]],
 		  [[[csinhd64]]],	[[[ccoshd64]]],		[[[ctanhd64]]],
@@ -601,7 +595,7 @@ DEFINE_BUILTINS([[[complexd64]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
 DEFINE_BUILTINS([[[complexd128]]],
-		  [[[MMUX_BASH_PARSE_BUILTIN_ARG_COMPLEXD128]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXD128_UNIMPLEMENTED]]],
+		  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_COMPLEXD128]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXD128_UNIMPLEMENTED]]],
 		  [[[csind128]]],	[[[ccosd128]]],		[[[ctand128]]],
 		  [[[casind128]]],	[[[cacosd128]]],	[[[catand128]]],	[[[]]],
 		  [[[csinhd128]]],	[[[ccoshd128]]],	[[[ctanhd128]]],

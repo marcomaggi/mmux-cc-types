@@ -350,6 +350,10 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_ref (mmux_bash_asso
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_set_ERRNO (int errnum, char const * who);
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * const who);
 
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_error_parsing_argument_at_index \
+    (char const * const stemstr, char const * const argstr, mmux_uint_t argidx, char const * const caller_name)
+  __attribute__((__nonnull__(1,2,4)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

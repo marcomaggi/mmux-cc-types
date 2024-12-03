@@ -84,7 +84,7 @@ function memory-1.3 () {
 }
 function memory-1.4 () {
     declare PTR ERRNO SYM MSG
-    declare EXPECTED_SYM='EINVAL' EXPECTED_MSG='mmux_libc_malloc: error: invalid argument, expected "ulong": "ciao"'
+    declare EXPECTED_SYM='EINVAL' EXPECTED_MSG='mmux_libc_malloc: error parsing argument: expected "usize" value at index 2, got: "ciao"'
 
     dotest-unset-debug
 

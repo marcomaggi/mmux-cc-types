@@ -38,13 +38,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_add]]])
   mmux_pointer_t	op;
   mmux_ptrdiff_t	delta;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(op,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_PTRDIFF(delta,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(op,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_PTRDIFF(delta,	3);
   {
     op = mmux_pointer_add(op, delta);
     return mmux_pointer_bind_to_bash_variable(argv[1], op, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -57,13 +56,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_diff]]])
 {
   mmux_pointer_t	ptr1, ptr2;
 
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr1,	argv[2]);
-  MMUX_BASH_PARSE_BUILTIN_ARG_POINTER(ptr2,	argv[3]);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	3);
   {
     mmux_ptrdiff_t	delta = mmux_pointer_diff(ptr1, ptr2);
     return mmux_ptrdiff_bind_to_bash_variable(argv[1], delta, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],

@@ -473,4 +473,19 @@ mmux_bash_assoc_array_ref (mmux_bash_assoc_array_variable_t assoc_array_variable
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Handlers of builtin argument parser errors.
+ ** ----------------------------------------------------------------- */
+
+mmux_bash_rv_t
+mmux_bash_pointers_error_parsing_argument_at_index (char const * const stemstr, char const * const argstr,
+						    mmux_uint_t argidx, char const * const caller_name)
+{
+  fprintf(stderr, "%s: error parsing argument: expected \"%s\" value at index %d, got: \"%s\"\n",
+	  caller_name, stemstr, argidx, argstr);
+  mmux_bash_pointers_set_ERRNO(EINVAL, caller_name);
+  return MMUX_FAILURE;
+}
+
 /* end of file */
