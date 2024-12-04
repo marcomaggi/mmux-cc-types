@@ -198,19 +198,31 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM]]],[[[{
 
 # $1 - name of the target variable
 # $2 - expression evaluating to the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM]]],[[[{ $1 = $2; }]]])
+
+# $1 - name of the target variable
+# $2 - index in the array "argv" of the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM]]],[[[{ $1 = argv[$2]; }]]])
+
+# --------------------------------------------------------------------
+
+# $1 - name of the target variable
+# $2 - expression evaluating to the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_POINTER]]],[[[MMUX_BASH_PARSE_BUILTIN_ARG_STEM([[[pointer]]],[[[$1]]],[[[$2]]])]]])
 
 # $1 - name of the target variable
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[pointer]]],[[[$1]]],[[[$2]]])]]])
 
-# $1 - name of the target variable
-# $2 - expression evaluating to the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_BASH_PARM]]],[[[{ $1 = $2; }]]])
-
-# $1 - name of the target variable
-# $2 - index in the array "argv" of the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM]]],[[[{ $1 = argv[$2]; }]]])
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER]]],[[[{
+  mmux_pointer_t  the_pointer;
+  bool            mmux_retval = mmux_pointer_parse(&the_pointer, argv[$2], NULL);
+  if (false == mmux_retval) {
+    $1 = the_pointer;
+  } else {
+    return mmux_bash_pointers_error_parsing_argument_at_index("pointer", argv[$2], $2, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}]]])
 
 # --------------------------------------------------------------------
 

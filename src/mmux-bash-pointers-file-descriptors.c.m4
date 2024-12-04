@@ -28,6 +28,30 @@
 
 #include "mmux-bash-pointers-internals.h"
 
+typedef FILE *					mmux_libc_stream_t;
+typedef struct iovec				mmux_libc_iovec_tag_t;
+typedef mmux_libc_iovec_tag_t *			mmux_libc_iovec_t;
+
+static bool
+mmux_libc_iovec_dump (mmux_libc_stream_t stream, mmux_libc_iovec_t iovec_pointer, char const * const struct_name)
+{
+  int	rv;
+
+  rv = fprintf(stream, "%s->iov_base = %p\n", struct_name, iovec_pointer->iov_base);
+  if (0 > rv) { return true; }
+
+  {
+    int		len = mmux_usize_sprint_size(iovec_pointer->iov_len);
+    char	str[len];
+
+    mmux_usize_sprint(str, len, iovec_pointer->iov_len);
+    rv = fprintf(stream, "%s->iov_len = %s\n", struct_name, str);
+    if (0 > rv) { return true; }
+  }
+
+  return false;
+}
+
 
 /** --------------------------------------------------------------------
  ** Opening.
@@ -776,6 +800,202 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Struct iovec.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_iovec_calloc]]])
+{
+  char const *		iovec_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(iovec_pointer_varname,	1);
+  {
+    mmux_libc_iovec_t	iovec_pointer = calloc(1, sizeof(mmux_libc_iovec_tag_t));
+
+    if (iovec_pointer) {
+      if (4 == argc) {
+	mmux_pointer_t	iov_base_value;
+	mmux_usize_t	iov_len_value;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(iov_base_value,	2);
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iov_len_value,	3);
+	iovec_pointer->iov_base = iov_base_value;
+	iovec_pointer->iov_len  = iov_len_value;
+      }
+      {
+	int	rv = mmux_pointer_bind_to_bash_variable(iovec_pointer_varname, iovec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+
+	if (MMUX_SUCCESS != rv) {
+	  free(iovec_pointer);
+	}
+	return rv;
+      }
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (4 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IOVEC_POINTER_VAR [IOV_BASE IOV_LEN]"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_iovec_array_calloc]]])
+{
+  char const *	iovec_array_pointer_varname;
+  mmux_usize_t	iovec_array_length;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(iovec_array_pointer_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array_length,		2);
+  {
+    mmux_libc_iovec_t	iovec_array_pointer = calloc(iovec_array_length, sizeof(mmux_libc_iovec_tag_t));
+
+    if (iovec_array_pointer) {
+      int	rv = mmux_pointer_bind_to_bash_variable(iovec_array_pointer_varname, iovec_array_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+
+      if (MMUX_SUCCESS != rv) {
+	free(iovec_array_pointer);
+      }
+      return rv;
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IOVEC_ARRAY_POINTER_VAR IOVEC_ARRAY_LENGTH"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_IOVEC_FIELD_SETTER_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
+{
+  char const *		$1_varname;
+  mmux_libc_iovec_t	iovec_array_pointer;
+  mmux_uint_t		iovec_array_index = 0;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,			1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array_pointer,	2);
+  if (4 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT(iovec_array_index,		3);
+  }
+  {
+    mmux_$2_t	$1 = iovec_array_pointer[iovec_array_index].$1;
+
+    return mmux_$2_bind_to_bash_variable($1_varname, $1, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((3 == argc) || (4 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER($1)_VAR IOVEC_POINTER [IOVEC_ARRAY_INDEX]"]]])
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_set]]])
+{
+  mmux_libc_iovec_t	iovec_array_pointer;
+  mmux_uint_t		iovec_array_index = 0;
+  mmux_$2_t		$1_value;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array_pointer,	1);
+  $3($1_value, 2);
+  if (4 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT(iovec_array_index,		3);
+  }
+  {
+    iovec_array_pointer[iovec_array_index].$1 = $1_value;
+
+    return MMUX_SUCCESS;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((3 == argc) || (4 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IOVEC_POINTER MMUX_M4_TOUPPER($1) [IOVEC_ARRAY_INDEX]"]]])
+]]])
+
+DEFINE_IOVEC_FIELD_SETTER_GETTER([[[iov_base]]],	[[[pointer]]],	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER]]])
+DEFINE_IOVEC_FIELD_SETTER_GETTER([[[iov_len]]],		[[[usize]]],	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_iovec_dump]]])
+{
+  mmux_libc_iovec_t	iovec_pointer;
+  char const *		struct_name = "struct iovec";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    bool	rv = mmux_libc_iovec_dump(stdout, iovec_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER IOVEC_POINTER [STRUCT_NAME]"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_readv]]])
+{
+  char const *		done_varname;
+  int			fd;
+  mmux_libc_iovec_t	iovec_array_pointer;
+  mmux_sint_t		iovec_array_length;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,				2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array_pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(iovec_array_length,		4);
+  {
+    mmux_ssize_t	rv = readv(fd, iovec_array_pointer, iovec_array_length);
+
+    if (-1 != rv) {
+      return mmux_ssize_bind_to_bash_variable(done_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD IOVEC_ARRAY_POINTER IOVEC_ARRAY_LENGTH"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_writev]]])
+{
+  char const *		done_varname;
+  int			fd;
+  mmux_libc_iovec_t	iovec_array_pointer;
+  mmux_sint_t		iovec_array_length;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,				2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array_pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(iovec_array_length,		4);
+  {
+    mmux_ssize_t	rv = writev(fd, iovec_array_pointer, iovec_array_length);
+
+    if (-1 != rv) {
+      return mmux_ssize_bind_to_bash_variable(done_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(5 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD IOVEC_ARRAY_POINTER IOVEC_ARRAY_LENGTH"]]])
+
+
+/** --------------------------------------------------------------------
  ** Module initialisation.
  ** ----------------------------------------------------------------- */
 
@@ -788,6 +1008,9 @@ mmux_bash_pointers_init_file_descriptors_module (void)
   if (MMUX_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_create_global_sint_variable("mmux_libc_fd_set_SIZEOF", sizeof(fd_set), NULL);
+  if (MMUX_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_iovec_SIZEOF", sizeof(mmux_libc_iovec_tag_t), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   return MMUX_SUCCESS;

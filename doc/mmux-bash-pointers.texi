@@ -4283,6 +4283,11 @@ mmux_libc_memcpy $PTR_TO $PTR_FROM $SIZE
 @end deffn
 
 
+@deffn Builtin mmux_libc_memcpy_from_bash_string @var{PTR_TO} @var{STRING_FROM} @var{SIZE}
+Like @MmuxBuiltin{mmux_libc_memcpy}, but @var{STRING_FROM} is a shell string rather than a pointer.
+@end deffn
+
+
 @deffn {@gnu{} Builtin} mmux_libc_mempcpy @var{NEXT_PTR_TO_VAR} @var{PTR_TO} @var{PTR_FROM} @var{SIZE}
 Like @MmuxBuiltin{mmux_libc_memcpy}, but store in the shell variable @var{NEXT_PTR_TO_VAR} the
 string representation of the sum between @var{PTR_TO} and @var{SIZE}.
@@ -5228,6 +5233,7 @@ Interface to the standard C function @cfunc{\FUNC\}.  Bind to the shell variable
 * fds duplicating::             Duplicating file descriptors.
 * fds piping::                  Opening file descriptor pipes.
 * fds selecting::               Selecting file descriptors.
+* fds scatter-gather::          Scatter--gather input and output.
 @end menu
 
 @c page
@@ -5653,6 +5659,231 @@ selected operation.
 
 The argument @var{NFDS} must be the maximum file descriptor number that is checked by the builtin;
 it is usually @code{mmux_libc_FD_SETSIZE}.
+@end deffn
+
+@c page
+@node fds scatter-gather
+@section Scatter--gather input and output
+
+
+To scatter data into a vector of buffers and the write it to file descriptor: we so as in the
+following raw script, in which allocated resources are not released to keep the code short:
+
+@example
+declare -r WRITE_STR='0123456789ABCDEFGHILabcde'
+decalre -r WRITE_FD=$(open-output-file-descriptor)
+declare -r BUFLEN='10' IOVEC_LEN='3'
+declare -i WRITEV_DONE
+declare IOVEC_PTR BUFPTR0 BUFPTR1 BUFPTR2
+
+mmux_libc_iovec_array_calloc IOVEC_PTR @RR{IOVEC_LEN}
+mmux_libc_malloc BUFPTR0 @RR{BUFLEN}
+mmux_libc_malloc BUFPTR1 @RR{BUFLEN}
+mmux_libc_malloc BUFPTR2 @RR{BUFLEN}
+
+mmux_libc_iov_base_set @RR{IOVEC_PTR} @RR{BUFPTR0} 0
+mmux_libc_iov_base_set @RR{IOVEC_PTR} @RR{BUFPTR1} 1
+mmux_libc_iov_base_set @RR{IOVEC_PTR} @RR{BUFPTR2} 2
+
+# Scatter.
+@{
+    declare -ir WRITE_STRLEN=$@{#WRITE_STR@}
+    declare -i IOVEC_IDX WRITE_STROFF=0 TMPLEN
+    declare TMPSTR BUFPTR
+
+    for ((IOVEC_IDX=0; IOVEC_IDX < IOVEC_LEN; ++IOVEC_IDX))
+    do
+        mmux_libc_iov_base_ref BUFPTR @RR{IOVEC_PTR} @RR{IOVEC_IDX}
+
+        TMPLEN=$(( ((WRITE_STRLEN - WRITE_STROFF) >= BUFLEN)? BUFLEN : (WRITE_STRLEN - WRITE_STROFF) ))
+        TMPSTR=$@{WRITE_STR:$WRITE_STROFF:$TMPLEN@}
+        mmux_libc_memcpy_from_bash_string @RR{BUFPTR} @WW{TMPSTR} @RR{TMPLEN}
+        mmux_libc_iov_len_set @RR{IOVEC_PTR} @RR{TMPLEN} @RR{IOVEC_IDX}
+        let WRITE_STROFF+=TMPLEN
+done
+@}
+
+mmux_libc_writev WRITEV_DONE @RR{WRITE_FD} @RR{IOVEC_PTR} @RR{IOVEC_LEN}
+@end example
+
+To read data from a file descriptor into a vector of buffer and gather the data: we so as in the
+following raw script, in which allocated resources are not released to keep the code short:
+
+@example
+declare READ_STR
+decalre -r READ_FD=$(open-input-file-descriptor)
+declare -r BUFLEN='10' IOVEC_LEN='3'
+declare -i READV_DONE
+declare IOVEC_PTR BUFPTR0 BUFPTR1 BUFPTR2
+
+mmux_libc_iovec_array_calloc IOVEC_PTR @RR{IOVEC_LEN}
+
+mmux_libc_malloc BUFPTR0 @RR{BUFLEN}
+mmux_libc_malloc BUFPTR1 @RR{BUFLEN}
+mmux_libc_malloc BUFPTR2 @RR{BUFLEN}
+
+mmux_libc_iov_base_set @RR{IOVEC_PTR} @RR{BUFPTR0} 0
+mmux_libc_iov_base_set @RR{IOVEC_PTR} @RR{BUFPTR1} 1
+mmux_libc_iov_base_set @RR{IOVEC_PTR} @RR{BUFPTR2} 2
+
+mmux_libc_iov_len_set  @RR{IOVEC_PTR} @RR{BUFLEN}  0
+mmux_libc_iov_len_set  @RR{IOVEC_PTR} @RR{BUFLEN}  1
+mmux_libc_iov_len_set  @RR{IOVEC_PTR} @RR{BUFLEN}  2
+
+mmux_libc_readv READV_DONE @RR{READ_FD} @RR{IOVEC_PTR} @RR{IOVEC_LEN}
+
+# Gather.
+@{
+    declare -i IOVEC_IDX AMOUNT=@RR{READV_DONE}
+    declare TMPSTR TMPLEN BUFPTR
+
+    for ((IOVEC_IDX=0; IOVEC_IDX < IOVEC_LEN; ++IOVEC_IDX))
+    do
+        mmux_libc_iov_base_ref BUFPTR @RR{IOVEC_PTR} @RR{IOVEC_IDX}
+
+        TMPLEN=$(( (BUFLEN <= AMOUNT)? BUFLEN : AMOUNT ))
+        mmux_pointer_to_bash_string TMPSTR @RR{BUFPTR} @RR{TMPLEN}
+        mmux_libc_iov_len_set @RR{IOVEC_PTR} @RR{TMPLEN} @RR{IOVEC_IDX}
+        READ_STR+=@QQ{TMPSTR}
+        let AMOUNT-=TMPLEN
+    done
+@}
+
+# Do something with "READ_STR".
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_iovec_SIZEOF
+Size, measured in bytes, of values of type @MmuxCStruct{iovec}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_iovec_calloc @var{IOVEC_POINTER_VAR}
+@deffnx Builtin mmux_libc_iovec_calloc @var{IOVEC_POINTER_VAR} @var{IOV_BASE} @var{IOV_LEN}
+Use @cfunc{calloc} to allocate a block of memory wide enough to contain a value of type
+@MmuxCStruct{iovec}, @glibcref{Scatter-Gather, struct iovec}.  Arguments:
+
+@table @var
+@item IOVEC_POINTER_VAR
+Shell variable name: the pointer referencing the newly allocated data structure is bound to this
+variable.
+
+@item IOV_BASE
+Optional argument; a pointer to a buffer set as value of the field @code{iov_base} of the newly
+allocated data structure; when not given: it defaults to @cnull{}.
+
+@item IOV_LEN
+Optional argument; the size, measured in bytes of the buffer referenced by @var{IOV_BASE}; it is set
+as value of the field @code{iov_len} of the newly allocated data structure; when not given: it
+defaults to zero.
+@end table
+@end deffn
+
+
+@deffn Builtin mmux_libc_iovec_array_calloc @var{IOVEC_ARRAY_POINTER_VAR} @var{IOVEC_ARRAY_LENGTH}
+Use @cfunc{calloc} to allocate a block of memory wide enough to contain an array of
+@var{IOVEC_ARRAY_LENGTH} values of type @MmuxCStruct{iovec}; bind the pointer referencing the array
+tot he shell variable whose name is @var{IOVEC_ARRAY_POINTER_VAR}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_iov_base_set @var{IOVEC_PTR} @var{IOV_BASE}
+@deffnx Builtin mmux_libc_iov_base_set @var{IOVEC_PTR} @var{IOV_BASE} @var{IOVEC_ARRAY_INDEX}
+@deffnx Builtin mmux_libc_iov_base_ref @var{IOV_BASE_VAR} @var{IOVEC_PTR}
+@deffnx Builtin mmux_libc_iov_base_ref @var{IOV_BASE_VAR} @var{IOVEC_PTR} @var{IOVEC_ARRAY_INDEX}
+Setter and getter for the field @code{iov_base} of @MmuxCStruct{iovec} values.  Arguments:
+
+@table @var
+@item IOVEC_PTR
+Pointer to a value of type @MmuxCStruct{iovec}.  When the optional argument @var{IOVEC_ARRAY_INDEX}
+is used: @var{IOVEC_PTR} is meant to be a pointer to an array of @MmuxCStruct{iovec} values.
+
+@item IOV_BASE_VAR
+Shell variable name; the getter binds the value of the field @code{iov_base} to this variable.
+
+@item IOV_BASE
+Shell variable name; the setter sets this value in the field @code{iov_base}.
+
+@item IOVEC_ARRAY_INDEX
+Optional argument: when used, the operation is performed on the @MmuxCStruct{iovec} value at
+@var{IOVEC_ARRAY_INDEX} of the array referenced by @var{IOVEC_PTR}.
+@end table
+@end deffn
+
+
+@deffn Builtin mmux_libc_iov_len_set @var{IOVEC_PTR} @var{IOV_LEN}
+@deffnx Builtin mmux_libc_iov_len_set @var{IOVEC_PTR} @var{IOV_LEN} @var{IOVEC_ARRAY_INDEX}
+@deffnx Builtin mmux_libc_iov_len_ref @var{IOV_LEN_VAR} @var{IOVEC_PTR}
+@deffnx Builtin mmux_libc_iov_len_ref @var{IOV_LEN_VAR} @var{IOVEC_PTR} @var{IOVEC_ARRAY_INDEX}
+Setter and getter for the field @code{iov_len} of @MmuxCStruct{iovec} values.  Arguments:
+
+@table @var
+@item IOVEC_PTR
+Pointer to a value of type @MmuxCStruct{iovec}.  When the optional argument @var{IOVEC_ARRAY_INDEX}
+is used: @var{IOVEC_PTR} is meant to be a pointer to an array of @MmuxCStruct{iovec} values.
+
+@item IOV_LEN_VAR
+Shell variable name; the getter binds the value of the field @code{iov_len} to this variable.
+
+@item IOV_LEN
+Shell variable name; the setter sets this value in the field @code{iov_len}.
+
+@item IOVEC_ARRAY_INDEX
+Optional argument: when used, the operation is performed on the @MmuxCStruct{iovec} value at
+@var{IOVEC_ARRAY_INDEX} of the array referenced by @var{IOVEC_PTR}.
+@end table
+@end deffn
+
+
+@deffn Builtin mmux_libc_iovec_dump @var{IOVEC_PTR}
+@deffnx Builtin mmux_libc_iovec_dump @var{IOVEC_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct iovec}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct iovec}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_readv @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH}
+Interface to the standard C language function @cfunc{readv}, @glibcref{Scatter-Gather, readv}.
+Arguments:
+
+@table @var
+@item DONEVAR
+Shell variable name; the number of bytes actually read is bound to this variable.
+
+@item READFD
+The file descriptor from which data is read.
+
+@item IOVEC_ARRAY_POINTER
+Pointer to an array of @MmuxCStruct{iovec} values in which data is stored.
+
+@item IOVEC_ARRAY_LENGTH
+Number of @MmuxCStruct{iovec} values in the array referenced by @var{IOVEC_ARRAY_POINTER}.
+@end table
+@end deffn
+
+
+@deffn Builtin mmux_libc_writev @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH}
+Interface to the standard C language function @cfunc{writev}, @glibcref{Scatter-Gather, writev}.
+Arguments:
+
+@table @var
+@item DONEVAR
+Shell variable name; the number of bytes actually written is bound to this variable.
+
+@item READFD
+The file descriptor to which data is written.
+
+@item IOVEC_ARRAY_POINTER
+Pointer to an array of @MmuxCStruct{iovec} values from which data is read.
+
+@item IOVEC_ARRAY_LENGTH
+Number of @MmuxCStruct{iovec} values in the array referenced by @var{IOVEC_ARRAY_POINTER}.
+@end table
 @end deffn
 
 @c page

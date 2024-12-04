@@ -153,13 +153,34 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcpy]]])
 {
-  void *	ptr_from;
   void *	ptr_to;
+  void *	ptr_from;
   size_t	len;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr_to,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr_from,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,		3);
+  {
+    memcpy(ptr_to, ptr_from, len);
+    return MMUX_SUCCESS;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER POINTER_TO POINTER_FROM SIZE"]]],
+    [[["Copy SIZE bytes from POINTER_FROM to POINTER_TO."]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcpy_from_bash_string]]])
+{
+  void *	ptr_to;
+  char const *	ptr_from;
+  size_t	len;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr_to,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ptr_from,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,		3);
   {
     memcpy(ptr_to, ptr_from, len);
     return MMUX_SUCCESS;
