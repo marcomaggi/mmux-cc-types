@@ -994,6 +994,66 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD IOVEC_ARRAY_POINTER IOVEC_ARRAY_LENGTH"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_preadv]]])
+{
+  char const *		done_varname;
+  int			fd;
+  mmux_libc_iovec_t	iovec_array_pointer;
+  mmux_sint_t		iovec_array_length;
+  mmux_off_t		offset;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,				2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array_pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(iovec_array_length,		4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,				5);
+  {
+    mmux_ssize_t	rv = preadv(fd, iovec_array_pointer, iovec_array_length, offset);
+
+    if (-1 != rv) {
+      return mmux_ssize_bind_to_bash_variable(done_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD IOVEC_ARRAY_POINTER IOVEC_ARRAY_LENGTH OFFSET"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwritev]]])
+{
+  char const *		done_varname;
+  int			fd;
+  mmux_libc_iovec_t	iovec_array_pointer;
+  mmux_sint_t		iovec_array_length;
+  mmux_off_t		offset;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,				2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array_pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(iovec_array_length,		4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,				5);
+  {
+    mmux_ssize_t	rv = pwritev(fd, iovec_array_pointer, iovec_array_length, offset);
+
+    if (-1 != rv) {
+      return mmux_ssize_bind_to_bash_variable(done_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    } else {
+      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+      return MMUX_FAILURE;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(6 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER DONEVAR FD IOVEC_ARRAY_POINTER IOVEC_ARRAY_LENGTH OFFSET"]]])
+
 
 /** --------------------------------------------------------------------
  ** Module initialisation.

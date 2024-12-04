@@ -50,7 +50,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   open openat close read write pread pwrite lseek dup dup2 fcntl ioctl pipe
 			   fd_set_malloc fd_set_malloc_triplet FD_ZERO FD_SET FD_CLR FD_ISSET select
 			   iovec_calloc iovec_array_calloc iov_base_ref iov_base_set iov_len_ref iov_len_set iovec_dump
-			   readv writev
+			   readv writev preadv pwritev
 			   strlen strcpy strncpy strdup stpcpy strcat strncat strcmp strncmp strcoll strxfrm
 			   strchr strrchr strstr strcasestr strspn strcspn strpbrk strtok
 			   link linkat symlink readlink realpath unlink unlinkat remove rmdir rename renameat

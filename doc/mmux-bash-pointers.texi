@@ -5886,6 +5886,18 @@ Number of @MmuxCStruct{iovec} values in the array referenced by @var{IOVEC_ARRAY
 @end table
 @end deffn
 
+
+@deffn Builtin mmux_libc_preadv @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH} @var{OFF}
+Interface to the standard C language function @cfunc{readv}, @glibcref{Scatter-Gather, preadv}.
+Like @MmuxBuiltin{mmux_libc_preadv}, but supports the offset argument @var{OFF}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pwritev @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH} @var{OFF}
+Interface to the standard C language function @cfunc{readv}, @glibcref{Scatter-Gather, pwritev}.
+Like @MmuxBuiltin{mmux_libc_pwritev}, but supports the offset argument @var{OFF}.
+@end deffn
+
 @c page
 @node fs
 @chapter File system interface
