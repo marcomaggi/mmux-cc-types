@@ -2,6 +2,8 @@
 
 * Add a builtin interfacing "strfmon()"?
 
+* Add a builtin interfacing "copy_file_range()"?
+
 * Add a builtin interfacing "sendfile(2)"? (Documented in a manual page.)
 
 * Add a builtin interfacing Linux's "openat2()"?
