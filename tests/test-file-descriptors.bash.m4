@@ -767,7 +767,8 @@ function file-descriptors-scatter-gather-1.1 () {
     mbfl_location_leave
 }
 
-### ------------------------------------------------------------------------
+
+#### scatter-gather input/output
 
 function file-descriptors-scatter-gather-1.2 () {
     mbfl_location_enter
@@ -1029,7 +1030,7 @@ function file-descriptors-scatter-gather-2.1 () {
 	declare -r WRITE_STR='0123456789ABCDEFGHILabcde'
 	declare READ_STR
 
-	dotest-set-debug
+	dotest-unset-debug
 
 	mbfl_location_leave_when_failure( scatter-file-descriptors-scatter-gather-2.1 )
 	mbfl_location_leave_when_failure(  gather-file-descriptors-scatter-gather-2.1 )
@@ -1130,6 +1131,145 @@ function gather-file-descriptors-scatter-gather-2.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_iov_len_set RR(IOVEC_PTR) RR(BUFLEN) 2 )
 
 	mbfl_location_leave_when_failure( mmux_libc_preadv READV_DONE RR(READ_FD) RR(IOVEC_PTR) RR(IOVEC_LEN) 0 )
+
+	# Gather.
+	{
+	    declare -i IOVEC_IDX AMOUNT=RR(READV_DONE)
+	    declare TMPSTR TMPLEN BUFPTR
+
+	    for ((IOVEC_IDX=0; IOVEC_IDX < IOVEC_LEN; ++IOVEC_IDX))
+	    do
+		mbfl_location_leave_when_failure( mmux_libc_iov_base_ref BUFPTR RR(IOVEC_PTR) RR(IOVEC_IDX) )
+
+		TMPLEN=$(( (BUFLEN <= AMOUNT)? BUFLEN : AMOUNT ))
+		mbfl_location_leave_when_failure( mmux_pointer_to_bash_string TMPSTR RR(BUFPTR) RR(TMPLEN) )
+		mbfl_location_leave_when_failure( mmux_libc_iov_len_set RR(IOVEC_PTR) RR(TMPLEN) RR(IOVEC_IDX) )
+		dotest-debug gathering IOVEC_IDX=RR(IOVEC_IDX) AMOUNT=RR(AMOUNT) TMPLEN=RR(TMPLEN) TMPSTR=WW(TMPSTR)
+		READ_STR+=QQ(TMPSTR)
+		let AMOUNT-=TMPLEN
+	    done
+	}
+
+	dotest-equal mbfl_string_len(WRITE_STR) RR(READV_DONE)
+    }
+    mbfl_location_leave
+}
+
+
+#### scatter-gather input/output: preadv2, pwritev2
+
+function file-descriptors-scatter-gather-3.1 () {
+    mbfl_location_enter
+    {
+	declare -r FILENAME=$(dotest-mkfile 'name.ext')
+	mbfl_location_handler dotest-clean-files
+
+	declare -r WRITE_STR='0123456789ABCDEFGHILabcde'
+	declare READ_STR
+
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( scatter-file-descriptors-scatter-gather-3.1 )
+	mbfl_location_leave_when_failure(  gather-file-descriptors-scatter-gather-3.1 )
+
+	dotest-debug READ_STR=WW(READ_STR)
+	dotest-equal WW(WRITE_STR) WW(READ_STR)
+    }
+    mbfl_location_leave
+}
+function scatter-file-descriptors-scatter-gather-3.1 () {
+    mbfl_location_enter
+    {
+	declare WRITE_FD
+	{
+	    declare -i FLAGS=$((mmux_libc_O_WRONLY | mmux_libc_O_CREAT))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	    mbfl_location_compensate( mmux_libc_open WRITE_FD WW(FILENAME) RR(FLAGS) RR(MODE),
+				      mmux_libc_close RR(WRITE_FD) )
+	}
+
+	declare -r BUFLEN='10' IOVEC_LEN='3'
+	declare -i WRITEV_DONE
+	declare IOVEC_PTR BUFPTR0 BUFPTR1 BUFPTR2
+
+	dotest-debug writing
+
+	mbfl_location_compensate( mmux_libc_iovec_array_calloc IOVEC_PTR RR(IOVEC_LEN),
+				  mmux_libc_free RR(IOVEC_PTR) )
+
+	mbfl_location_compensate( mmux_libc_malloc BUFPTR0 RR(BUFLEN), mmux_libc_free RR(BUFPTR0) )
+	mbfl_location_compensate( mmux_libc_malloc BUFPTR1 RR(BUFLEN), mmux_libc_free RR(BUFPTR1) )
+	mbfl_location_compensate( mmux_libc_malloc BUFPTR2 RR(BUFLEN), mmux_libc_free RR(BUFPTR2) )
+
+	mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(IOVEC_PTR) RR(BUFPTR0) 0)
+	mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(IOVEC_PTR) RR(BUFPTR1) 1)
+	mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(IOVEC_PTR) RR(BUFPTR2) 2)
+
+	# Scatter.
+	{
+	    declare -ir WRITE_STRLEN=mbfl_string_len(WRITE_STR)
+	    declare -i IOVEC_IDX WRITE_STROFF=0 TMPLEN
+	    declare TMPSTR BUFPTR
+
+	    dotest-debug scattering WRITE_STRLEN=RR(WRITE_STRLEN) WRITE_STR=WW(WRITE_STR)
+
+	    for ((IOVEC_IDX=0; IOVEC_IDX < IOVEC_LEN; ++IOVEC_IDX))
+	    do
+		mbfl_location_leave_when_failure( mmux_libc_iov_base_ref BUFPTR RR(IOVEC_PTR) RR(IOVEC_IDX) )
+
+		TMPLEN=$(( ((WRITE_STRLEN - WRITE_STROFF) >= BUFLEN)? BUFLEN : (WRITE_STRLEN - WRITE_STROFF) ))
+		TMPSTR=${WRITE_STR:$WRITE_STROFF:$TMPLEN}
+		dotest-debug scattering IOVEC_IDX=RR(IOVEC_IDX) TMPSTR=WW(TMPSTR) WRITE_STROFF=RR(WRITE_STROFF) TMPLEN=RR(TMPLEN)
+		mbfl_location_leave_when_failure( mmux_libc_memcpy_from_bash_string RR(BUFPTR) WW(TMPSTR) RR(TMPLEN) )
+		mbfl_location_leave_when_failure( mmux_libc_iov_len_set RR(IOVEC_PTR) RR(TMPLEN) RR(IOVEC_IDX) )
+		let WRITE_STROFF+=TMPLEN
+	    done
+	}
+
+	mbfl_location_leave_when_failure( mmux_libc_pwritev2 WRITEV_DONE RR(WRITE_FD) RR(IOVEC_PTR) RR(IOVEC_LEN) \
+							     0 RR(mmux_libc_RWF_SYNC) )
+
+	dotest-debug WRITEV_DONE=RR(WRITEV_DONE)
+	dotest-equal mbfl_string_len(WRITE_STR) RR(WRITEV_DONE)
+    }
+    mbfl_location_leave
+}
+function gather-file-descriptors-scatter-gather-3.1 () {
+    mbfl_location_enter
+    {
+	declare READ_FD
+	{
+	    declare -i FLAGS=$((mmux_libc_O_RDONLY ))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	    mbfl_location_compensate( mmux_libc_open READ_FD WW(FILENAME) RR(FLAGS) RR(MODE),
+				      mmux_libc_close RR(READ_FD) )
+	}
+
+	declare -r BUFLEN='10' IOVEC_LEN='3'
+	declare -i READV_DONE
+	declare IOVEC_PTR BUFPTR0 BUFPTR1 BUFPTR2
+
+	dotest-debug reading
+
+	mbfl_location_compensate( mmux_libc_iovec_array_calloc IOVEC_PTR RR(IOVEC_LEN),
+				  mmux_libc_free RR(IOVEC_PTR) )
+
+	mbfl_location_compensate( mmux_libc_malloc BUFPTR0 RR(BUFLEN), mmux_libc_free RR(BUFPTR0) )
+	mbfl_location_compensate( mmux_libc_malloc BUFPTR1 RR(BUFLEN), mmux_libc_free RR(BUFPTR1) )
+	mbfl_location_compensate( mmux_libc_malloc BUFPTR2 RR(BUFLEN), mmux_libc_free RR(BUFPTR2) )
+
+	mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(IOVEC_PTR) RR(BUFPTR0) 0)
+	mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(IOVEC_PTR) RR(BUFPTR1) 1)
+	mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(IOVEC_PTR) RR(BUFPTR2) 2)
+
+	mbfl_location_leave_when_failure( mmux_libc_iov_len_set RR(IOVEC_PTR) RR(BUFLEN) 0 )
+	mbfl_location_leave_when_failure( mmux_libc_iov_len_set RR(IOVEC_PTR) RR(BUFLEN) 1 )
+	mbfl_location_leave_when_failure( mmux_libc_iov_len_set RR(IOVEC_PTR) RR(BUFLEN) 2 )
+
+	mbfl_location_leave_when_failure( mmux_libc_preadv2 READV_DONE RR(READ_FD) RR(IOVEC_PTR) RR(IOVEC_LEN) \
+							    0 RR(mmux_libc_RWF_SYNC) )
 
 	# Gather.
 	{

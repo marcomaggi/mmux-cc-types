@@ -1024,6 +1024,12 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{NI_NUMERICHOST}
 @MmuxDefineGlobalVarSystemConstant{NI_NUMERICSERV}
 
+@MmuxDefineGlobalVarSystemConstant{RWF_APPEND}
+@MmuxDefineGlobalVarSystemConstant{RWF_DSYNC}
+@MmuxDefineGlobalVarSystemConstant{RWF_HIPRI}
+@MmuxDefineGlobalVarSystemConstant{RWF_NOWAIT}
+@MmuxDefineGlobalVarSystemConstant{RWF_SYNC}
+
 @MmuxDefineGlobalVarSystemConstant{IPPROTO_AH}
 @MmuxDefineGlobalVarSystemConstant{IPPROTO_BEETPH}
 @MmuxDefineGlobalVarSystemConstant{IPPROTO_COMP}
@@ -5896,6 +5902,22 @@ Like @MmuxBuiltin{mmux_libc_preadv}, but supports the offset argument @var{OFF}.
 @deffn Builtin mmux_libc_pwritev @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH} @var{OFF}
 Interface to the standard C language function @cfunc{readv}, @glibcref{Scatter-Gather, pwritev}.
 Like @MmuxBuiltin{mmux_libc_pwritev}, but supports the offset argument @var{OFF}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_preadv2 @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH} @var{OFF} @var{FLAGS}
+Interface to the standard C language function @cfunc{readv}, @glibcref{Scatter-Gather, preadv2}.
+Like @MmuxBuiltin{mmux_libc_preadv2}, but supports the offset argument @var{OFF} and the flags
+argument @var{FLAGS}, which must be a bitwise OR combination of the @code{mmux_libc_RWF_*}
+constants.
+@end deffn
+
+
+@deffn Builtin mmux_libc_pwritev2 @var{DONEVAR} @var{READFD} @var{IOVEC_ARRAY_POINTER} @var{IOVEC_ARRAY_LENGTH} @var{OFF} @var{FLAGS}
+Interface to the standard C language function @cfunc{readv}, @glibcref{Scatter-Gather, pwritev2}.
+Like @MmuxBuiltin{mmux_libc_pwritev2}, but supports the offset argument @var{OFF} and the flags
+argument @var{FLAGS}, which must be a bitwise OR combination of the @code{mmux_libc_RWF_*}
+constants.
 @end deffn
 
 @c page
