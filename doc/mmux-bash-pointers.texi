@@ -5241,6 +5241,7 @@ Interface to the standard C function @cfunc{\FUNC\}.  Bind to the shell variable
 * fds selecting::               Selecting file descriptors.
 * fds scatter-gather::          Scatter--gather input and output.
 * fds range-copying::           Copying ranges from file to file.
+* fds flock::                   File locks.
 @end menu
 
 @c page
@@ -6003,6 +6004,183 @@ beginning of the file; notice that the actual output file descriptor cursor is n
 @end table
 @end deffn
 
+@c page
+@node fds flock
+@section File locks
+
+
+To allocate, initialise and inspect a value of type @MmuxCStruct{flock} we can do:
+
+@example
+declare -r EXPECTED_L_TYPE=
+declare FLOCK_PTR
+declare L_TYPE L_WHENCE L_START L_LEN L_PID
+
+mmux_libc_flock_calloc FLOCK_PTR \
+    @RR{mmux_libc_F_RDLCK} @RR{mmux_libc_SEEK_CUR} 11 33 0
+@{
+    mmux_libc_l_type_ref   L_TYPE   @RR{FLOCK_PTR}
+    mmux_libc_l_whence_ref L_WHENCE @RR{FLOCK_PTR}
+    mmux_libc_l_start_ref  L_START  @RR{FLOCK_PTR}
+    mmux_libc_l_len_ref    L_LEN    @RR{FLOCK_PTR}
+    mmux_libc_l_pid_ref    L_PID    @RR{FLOCK_PTR}
+    mmux_libc_flock_dump @RR{FLOCK_PTR}
+@}
+mmux_libc_free @RR{FLOCK_PTR}
+@end example
+
+@noindent
+which prints something like:
+
+@example
+struct flock.l_type = "0" (F_RDLCK)
+struct flock.l_whence = "1" (SEEK_CUR)
+struct flock.l_start = "11"
+struct flock.l_len = "33"
+struct flock.l_pid = "0"
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_flock_SIZEOF
+Size, measured in bytes, of values of type @MmuxCStruct{flock}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_flock_calloc @var{FLOCK_PTR_VAR}
+@deffnx Builtin mmux_libc_flock_calloc @var{FLOCK_PTR_VAR} @var{L_TYPE} @var{L_WHENCE} @var{L_START} @var{L_LEN} @var{L_PID}
+Use @cfunc{calloc} to allocate a block of memory wide enough to contain a value of type
+@MmuxCStruct{flock}, @glibcref{File Locks, struct flock}.  Arguments:
+
+@table @var
+@item FLOCK_PTR_VAR
+Shell variable name; the pointer to the allocated block is bound to this variable.
+
+@item L_TYPE
+Optional argument.  When given: it must be a constant among @code{mmux_libc_F_RDLCK},
+@code{mmux_libc_F_WRLCK}, @code{mmux_libc_F_UNLCK}.
+
+@item L_WHENCE
+Optional argument.  When given: it must be a constant among @code{mmux_libc_SEEK_SET},
+@code{mmux_libc_SEEK_END}, @code{mmux_libc_SEEK_CUR}.
+
+@item L_START
+Optional argument.  When given: it must a valid value for the field @code{l_start} of values of type
+@MmuxCStruct{flock}; it must be compatible with @objtype{mmux_off_t}.
+
+@item L_LEN
+Optional argument.  When given: it must a valid value for the field @code{l_len} of values of type
+@MmuxCStruct{flock}; it must be compatible with @objtype{mmux_off_t}.
+
+@item L_PID
+Optional argument.  When given: it must a valid value for the field @code{l_pid} of values of type
+@MmuxCStruct{flock}; it must be compatible with @objtype{mmux_pid_t}.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_l_type_set @var{FLOCK_PTR} @var{L_TYPE}
+@deffnx Builtin mmux_libc_l_type_ref @var{L_TYPE_VAR} @var{FLOCK_PTR}
+Setter and getter for the field @code{l_type} of values of type @MmuxCStruct{flock}.  Arguments:
+
+@table @var
+@item FLOCK_PTR
+Pointer referencing a value of type @MmuxCStruct{flock}.
+
+@item L_TYPE
+Value to store in the field @code{l_type}; it must be compatible with @objtype{mmux_sshort_t}.
+
+@item L_TYPE_VAR
+Shell variable name: the getter builtin binds the value of the field @code{l_type} to this variable.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_l_whence_set @var{FLOCK_PTR} @var{L_WHENCE}
+@deffnx Builtin mmux_libc_l_whence_ref @var{L_WHENCE_VAR} @var{FLOCK_PTR}
+Setter and getter for the field @code{l_whence} of values of whence @MmuxCStruct{flock}.  Arguments:
+
+@table @var
+@item FLOCK_PTR
+Pointer referencing a value of whence @MmuxCStruct{flock}.
+
+@item L_WHENCE
+Value to store in the field @code{l_whence}; it must be compatible with @objtype{mmux_sshort_t}.
+
+@item L_WHENCE_VAR
+Shell variable name: the getter builtin binds the value of the field @code{l_whence} to this
+variable.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_l_start_set @var{FLOCK_PTR} @var{L_START}
+@deffnx Builtin mmux_libc_l_start_ref @var{L_START_VAR} @var{FLOCK_PTR}
+Setter and getter for the field @code{l_start} of values of type @MmuxCStruct{flock}.  Arguments:
+
+@table @var
+@item FLOCK_PTR
+Pointer referencing a value of type @MmuxCStruct{flock}.
+
+@item L_START
+Value to store in the field @code{l_start}; it must be compatible with @objtype{mmux_off_t}.
+
+@item L_START_VAR
+Shell variable name: the getter builtin binds the value of the field @code{l_start} to this
+variable.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_l_len_set @var{FLOCK_PTR} @var{L_LEN}
+@deffnx Builtin mmux_libc_l_len_ref @var{L_LEN_VAR} @var{FLOCK_PTR}
+Setter and getter for the field @code{l_len} of values of type @MmuxCStruct{flock}.  Arguments:
+
+@table @var
+@item FLOCK_PTR
+Pointer referencing a value of type @MmuxCStruct{flock}.
+
+@item L_LEN
+Value to store in the field @code{l_len}; it must be compatible with @objtype{mmux_off_t}.
+
+@item L_LEN_VAR
+Shell variable name: the getter builtin binds the value of the field @code{l_len} to this variable.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_l_pid_set @var{FLOCK_PTR} @var{L_PID}
+@deffnx Builtin mmux_libc_l_pid_ref @var{L_PID_VAR} @var{FLOCK_PTR}
+Setter and getter for the field @code{l_pid} of values of type @MmuxCStruct{flock}.  Arguments:
+
+@table @var
+@item FLOCK_PTR
+Pointer referencing a value of type @MmuxCStruct{flock}.
+
+@item L_PID
+Value to store in the field @code{l_pid}; it must be compatible with @objtype{mmux_pid_t}.
+
+@item L_PID_VAR
+Shell variable name: the getter builtin binds the value of the field @code{l_pid} to this variable.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_flock_dump @var{FLOCK_PTR}
+@deffnx Builtin mmux_libc_flock_dump @var{FLOCK_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct flock}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct flock}.
+@end deffn
 
 @c page
 @node fs

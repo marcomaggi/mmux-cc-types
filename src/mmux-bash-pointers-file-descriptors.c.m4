@@ -28,10 +28,14 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-typedef mmux_sint_t				mmux_libc_file_descriptor_t;
-typedef FILE *					mmux_libc_stream_t;
-typedef struct iovec				mmux_libc_iovec_tag_t;
-typedef mmux_libc_iovec_tag_t *			mmux_libc_iovec_t;
+typedef mmux_sint_t			mmux_libc_file_descriptor_t;
+typedef FILE *				mmux_libc_stream_t;
+typedef struct iovec			mmux_libc_iovec_tag_t;
+typedef mmux_libc_iovec_tag_t *		mmux_libc_iovec_t;
+typedef struct flock			mmux_libc_flock_tag_t;
+typedef mmux_libc_flock_tag_t *		mmux_libc_flock_t;
+
+/* ------------------------------------------------------------------ */
 
 static bool
 mmux_libc_iovec_dump (mmux_libc_stream_t stream, mmux_libc_iovec_t iovec_pointer, char const * const struct_name)
@@ -48,6 +52,157 @@ mmux_libc_iovec_dump (mmux_libc_stream_t stream, mmux_libc_iovec_t iovec_pointer
     mmux_usize_sprint(str, len, iovec_pointer->iov_len);
     rv = fprintf(stream, "%s->iov_len = %s\n", struct_name, str);
     if (0 > rv) { return true; }
+  }
+
+  return false;
+}
+
+/* ------------------------------------------------------------------ */
+
+static bool
+mmux_libc_flock_dump (mmux_libc_stream_t stream, mmux_libc_flock_t flock_pointer, char const * struct_name)
+{
+  /* Print l_type. */
+  {
+    mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_pointer->l_type);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_sshort_sprint(str, required_nbytes, flock_pointer->l_type);
+
+      if (error_when_true) {
+	fprintf(stderr, "%s: error converting \"l_type\" to string\n", __func__);
+	return true;
+      } else {
+	char const *	symstr;
+
+	switch (flock_pointer->l_type) {
+	case MMUX_VALUEOF_F_RDLCK:
+	  symstr = "F_RDLCK";
+	  break;
+	case MMUX_VALUEOF_F_WRLCK:
+	  symstr = "F_WRLCK";
+	  break;
+	case MMUX_VALUEOF_F_UNLCK:
+	  symstr = "F_UNLCK";
+	  break;
+	default:
+	  symstr = "unknown";
+	  break;
+	}
+
+	rv = fprintf(stream, "%s.l_type = \"%s\" (%s)\n", struct_name, str, symstr);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_whence. */
+  {
+    mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_pointer->l_whence);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      fprintf(stderr, "%s: error converting \"l_whence\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_sshort_sprint(str, required_nbytes, flock_pointer->l_whence);
+
+      if (error_when_true) {
+	fprintf(stderr, "%s: error converting \"l_whence\" to string\n", __func__);
+	return true;
+      } else {
+	char const *	symstr;
+
+	switch (flock_pointer->l_whence) {
+	case MMUX_VALUEOF_SEEK_SET:
+	  symstr = "SEEK_SET";
+	  break;
+	case MMUX_VALUEOF_SEEK_END:
+	  symstr = "SEEK_END";
+	  break;
+	case MMUX_VALUEOF_SEEK_CUR:
+	  symstr = "SEEK_CUR";
+	  break;
+	default:
+	  symstr = "unknown";
+	  break;
+	}
+
+	rv = fprintf(stream, "%s.l_whence = \"%s\" (%s)\n", struct_name, str, symstr);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_start. */
+  {
+    mmux_sint_t	required_nbytes = mmux_off_sprint_size(flock_pointer->l_start);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      fprintf(stderr, "%s: error converting \"l_start\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_off_sprint(str, required_nbytes, flock_pointer->l_start);
+
+      if (error_when_true) {
+	fprintf(stderr, "%s: error converting \"l_start\" to string\n", __func__);
+	return true;
+      } else {
+	rv = fprintf(stream, "%s.l_start = \"%s\"\n", struct_name, str);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_len. */
+  {
+    mmux_sint_t	required_nbytes = mmux_off_sprint_size(flock_pointer->l_len);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      fprintf(stderr, "%s: error converting \"l_len\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_off_sprint(str, required_nbytes, flock_pointer->l_len);
+
+      if (error_when_true) {
+	fprintf(stderr, "%s: error converting \"l_len\" to string\n", __func__);
+	return true;
+      } else {
+	rv = fprintf(stream, "%s.l_len = \"%s\"\n", struct_name, str);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_pid. */
+  {
+    mmux_sint_t	required_nbytes = mmux_pid_sprint_size(flock_pointer->l_pid);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      fprintf(stderr, "%s: error converting \"l_pid\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_pid_sprint(str, required_nbytes, flock_pointer->l_pid);
+
+      if (error_when_true) {
+	fprintf(stderr, "%s: error converting \"l_pid\" to string\n", __func__);
+	return true;
+      } else {
+	rv = fprintf(stream, "%s.l_pid = \"%s\"\n", struct_name, str);
+	if (0 > rv) { return true; }
+      }
+    }
   }
 
   return false;
@@ -494,7 +649,24 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #if ((defined MMUX_HAVE_F_GETLK) && (1 == MMUX_HAVE_F_GETLK))
   case F_GETLK:
     {
-      goto mmux_error_parsing_builtin_argument;
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	mmux_pointer_t	_flock_pointer;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_flock_pointer,	4);
+	{
+	  mmux_libc_flock_t	flock_pointer = _flock_pointer;
+	  int			rv;
+
+	  rv = fcntl(fd, command, flock_pointer);
+	  if (-1 != rv) {
+	    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	  } else {
+	    return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	  }
+	}
+      }
     }
     break;
 #endif
@@ -548,14 +720,48 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #if ((defined MMUX_HAVE_F_SETLKW) && (1 == MMUX_HAVE_F_SETLKW))
   case F_SETLKW:
     {
-      goto mmux_error_parsing_builtin_argument;
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	mmux_pointer_t	_flock_pointer;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_flock_pointer,	4);
+	{
+	  mmux_libc_flock_t	flock_pointer = _flock_pointer;
+	  int			rv;
+
+	  rv = fcntl(fd, command, flock_pointer);
+	  if (-1 != rv) {
+	    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	  } else {
+	    return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	  }
+	}
+      }
     }
     break;
 #endif
 #if ((defined MMUX_HAVE_F_SETLK) && (1 == MMUX_HAVE_F_SETLK))
   case F_SETLK:
     {
-      goto mmux_error_parsing_builtin_argument;
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	mmux_pointer_t	_flock_pointer;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_flock_pointer,	4);
+	{
+	  mmux_libc_flock_t	flock_pointer = _flock_pointer;
+	  int			rv;
+
+	  rv = fcntl(fd, command, flock_pointer);
+	  if (-1 != rv) {
+	    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	  } else {
+	    return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	  }
+	}
+      }
     }
     break;
 #endif
@@ -1390,6 +1596,119 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
+ ** Struct flock.
+ ** ----------------------------------------------------------------- */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_flock_calloc]]])
+{
+  char const *		flock_pointer_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(flock_pointer_varname,	1);
+  {
+    mmux_libc_flock_tag_t	flock_struct;
+
+    memset(&flock_struct, '\0', sizeof(mmux_libc_flock_tag_t));
+    if (2 != argc) {
+      mmux_sshort_t	l_type;
+      mmux_sshort_t	l_whence;
+      mmux_off_t	l_start;
+      mmux_off_t	l_len;
+      mmux_pid_t	l_pid;
+
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(l_type,	2);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(l_whence,	3);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(l_start,	4);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(l_len,		5);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_PID(l_pid,		6);
+
+      flock_struct.l_type	= l_type;
+      flock_struct.l_whence	= l_whence;
+      flock_struct.l_start	= l_start;
+      flock_struct.l_len	= l_len;
+      flock_struct.l_pid	= l_pid;
+    }
+
+    {
+      mmux_libc_flock_t	flock_pointer = calloc(1, sizeof(mmux_libc_flock_tag_t));
+
+      *flock_pointer = flock_struct;
+      return mmux_pointer_bind_to_bash_variable(flock_pointer_varname, flock_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (7 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FLOCK_POINTER_VAR [L_TYPE L_WHENCE L_START L_LEN L_PID]"]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_FLOCK_SETTER_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
+{
+  char const *		$1_varname;
+  mmux_pointer_t	pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
+  {
+    mmux_libc_flock_t	flock_pointer = pointer;
+
+    return mmux_$2_bind_to_bash_variable($1_varname, flock_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+ }
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER($1)_var FLOCK_POINTER"]]])
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_set]]])
+{
+  mmux_pointer_t	pointer;
+  mmux_$2_t		$1;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
+  $3($1,						2);
+  {
+    mmux_libc_flock_t	flock_pointer = pointer;
+
+    flock_pointer->$1 = $1;
+    return MMUX_SUCCESS;
+  }
+ }
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FLOCK_POINTER MMUX_M4_TOUPPER($1)"]]])
+]]])
+
+DEFINE_FLOCK_SETTER_GETTER(l_type,	sshort,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
+DEFINE_FLOCK_SETTER_GETTER(l_whence,	sshort,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
+DEFINE_FLOCK_SETTER_GETTER(l_start,	off,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF]]])
+DEFINE_FLOCK_SETTER_GETTER(l_len,	off,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF]]])
+DEFINE_FLOCK_SETTER_GETTER(l_pid,	pid,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_PID]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_flock_dump]]])
+{
+  mmux_pointer_t	_flock_pointer;
+  char const *		struct_name = "struct flock";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_flock_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    mmux_libc_flock_t	flock_pointer = _flock_pointer;
+    bool		rv            = mmux_libc_flock_dump(stdout, flock_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FLOCK_POINTER [STRUCT_NAME]"]]])
+
+
+/** --------------------------------------------------------------------
  ** Module initialisation.
  ** ----------------------------------------------------------------- */
 
@@ -1405,6 +1724,9 @@ mmux_bash_pointers_init_file_descriptors_module (void)
   if (MMUX_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_create_global_sint_variable("mmux_libc_iovec_SIZEOF", sizeof(mmux_libc_iovec_tag_t), NULL);
+  if (MMUX_SUCCESS != rv) { return rv; }
+
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_flock_SIZEOF", sizeof(mmux_libc_flock_tag_t), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   return MMUX_SUCCESS;
