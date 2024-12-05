@@ -1295,6 +1295,118 @@ function gather-file-descriptors-scatter-gather-3.1 () {
 }
 
 
+#### copy_file_range
+
+# With input and output position.
+#
+function file-descriptors-copy_file_range-1.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	mbfl_location_handler dotest-clean-files
+	declare -r FILENAME1=$(dotest-mkfile 'name1.ext')
+	declare -r FILENAME2=$(dotest-mkfile 'name2.ext')
+
+	#       0         1         2         3
+	#       0123456789012345678901234567890123456789
+	printf '0123456789abcdefghilmnopqrstuvz987654321' >WW(FILENAME1)
+	printf '01234ABCDEFGHILMNOPQRSTUVZ98765432109876' >WW(FILENAME2)
+
+	mbfl_location_enter
+	{
+	    declare INPUT_FD OUPUT_FD
+	    declare -i FLAGS=$((mmux_libc_O_RDWR ))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	    mbfl_location_compensate( mmux_libc_open INPUT_FD WW(FILENAME1) RR(FLAGS) RR(MODE), mmux_libc_close RR(INPUT_FD) )
+	    mbfl_location_compensate( mmux_libc_open OUPUT_FD WW(FILENAME2) RR(FLAGS) RR(MODE), mmux_libc_close RR(OUPUT_FD) )
+
+	    declare -A STUFF=([INPUT_FD]=RR(INPUT_FD)
+			      [OUPUT_FD]=RR(OUPUT_FD)
+			      [INPUT_POSITION]=10
+			      [OUPUT_POSITION]=5
+			      [NUMBER_OF_BYTES_TO_COPY]=21
+			      [FLAGS]=0)
+
+	    mbfl_location_leave_when_failure( mmux_libc_copy_file_range STUFF )
+
+	    dotest-option-debug && mbfl_array_dump STUFF
+
+	    dotest-equal     RR(INPUT_FD) RR(STUFF, INPUT_FD) &&
+		dotest-equal RR(OUPUT_FD) RR(STUFF, OUPUT_FD) &&
+		dotest-equal 21 RR(STUFF,NUMBER_OF_BYTES_TO_COPY) &&
+		dotest-equal 0  RR(STUFF,FLAGS) &&
+		dotest-equal 21 RR(STUFF, NUMBER_OF_BYTES_COPIED) &&
+		dotest-equal $(( 10 + 21 )) RR(STUFF, INPUT_POSITION) &&
+		dotest-equal $((  5 + 21 )) RR(STUFF, OUPUT_POSITION)
+	}
+	mbfl_location_leave_when_failure( mbfl_location_leave )
+
+	dotest-debug WW(FILENAME1) contents "$(< RR(FILENAME1))"
+	dotest-debug WW(FILENAME2) contents "$(< RR(FILENAME2))"
+
+	dotest-equal     '0123456789abcdefghilmnopqrstuvz987654321' "$(< RR(FILENAME1))" &&
+	    dotest-equal '01234abcdefghilmnopqrstuvz98765432109876' "$(< RR(FILENAME2))"
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+# Without input and output position, without flags.
+#
+function file-descriptors-copy_file_range-1.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+
+	mbfl_location_handler dotest-clean-files
+	declare -r FILENAME1=$(dotest-mkfile 'name1.ext')
+	declare -r FILENAME2=$(dotest-mkfile 'name2.ext')
+
+	#       0         1         2         3
+	#       0123456789012345678901234567890123456789
+	printf '0123456789abcdefghilmnopqrstuvz987654321' >WW(FILENAME1)
+	printf '01234ABCDEFGHILMNOPQRSTUVZ98765432109876' >WW(FILENAME2)
+
+	mbfl_location_enter
+	{
+	    declare INPUT_FD OUPUT_FD RESULT_OFFSET1 RESULT_OFFSET2
+	    declare -i FLAGS=$((mmux_libc_O_RDWR ))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	    mbfl_location_compensate( mmux_libc_open INPUT_FD WW(FILENAME1) RR(FLAGS) RR(MODE), mmux_libc_close RR(INPUT_FD) )
+	    mbfl_location_compensate( mmux_libc_open OUPUT_FD WW(FILENAME2) RR(FLAGS) RR(MODE), mmux_libc_close RR(OUPUT_FD) )
+
+	    mbfl_location_leave_when_failure( mmux_libc_lseek RESULT_OFFSET1 RR(INPUT_FD) 10 RR(mmux_libc_SEEK_SET) )
+	    mbfl_location_leave_when_failure( mmux_libc_lseek RESULT_OFFSET2 RR(OUPUT_FD)  5 RR(mmux_libc_SEEK_SET) )
+
+	    declare -A STUFF=([INPUT_FD]=RR(INPUT_FD)
+			      [OUPUT_FD]=RR(OUPUT_FD)
+			      [NUMBER_OF_BYTES_TO_COPY]=21)
+
+	    mbfl_location_leave_when_failure( mmux_libc_copy_file_range STUFF )
+
+	    dotest-option-debug && mbfl_array_dump STUFF
+
+	    dotest-equal     RR(INPUT_FD) RR(STUFF, INPUT_FD) &&
+		dotest-equal RR(OUPUT_FD) RR(STUFF, OUPUT_FD) &&
+		dotest-equal 21 RR(STUFF,NUMBER_OF_BYTES_TO_COPY) &&
+		dotest-equal 21 RR(STUFF, NUMBER_OF_BYTES_COPIED)
+	}
+	mbfl_location_leave_when_failure( mbfl_location_leave )
+
+	dotest-debug WW(FILENAME1) contents "$(< RR(FILENAME1))"
+	dotest-debug WW(FILENAME2) contents "$(< RR(FILENAME2))"
+
+	dotest-equal     '0123456789abcdefghilmnopqrstuvz987654321' "$(< RR(FILENAME1))" &&
+	    dotest-equal '01234abcdefghilmnopqrstuvz98765432109876' "$(< RR(FILENAME2))"
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest file-descriptors-

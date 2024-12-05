@@ -5240,6 +5240,7 @@ Interface to the standard C function @cfunc{\FUNC\}.  Bind to the shell variable
 * fds piping::                  Opening file descriptor pipes.
 * fds selecting::               Selecting file descriptors.
 * fds scatter-gather::          Scatter--gather input and output.
+* fds range-copying::           Copying ranges from file to file.
 @end menu
 
 @c page
@@ -5919,6 +5920,89 @@ Like @MmuxBuiltin{mmux_libc_pwritev2}, but supports the offset argument @var{OFF
 argument @var{FLAGS}, which must be a bitwise OR combination of the @code{mmux_libc_RWF_*}
 constants.
 @end deffn
+
+@c page
+@node fds range-copying
+@section Copying ranges from file to file
+
+
+Let's see how to copy a range of bytes from an input file to an output file; in  the following raw
+example the allocated resources are not released to make the code shorter:
+
+@example
+declare -r FILENAME1='/path/to/name1.ext'
+declare -r FILENAME2='/path/to/name2.ext'
+
+declare INPUT_FD OUPUT_FD
+declare -ri FLAGS=@RR{mmux_libc_O_RDWR}
+declare -ri MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR ))
+
+mmux_libc_open INPUT_FD @WW{FILENAME1} @RR{FLAGS} @RR{MODE}
+mmux_libc_open OUPUT_FD @WW{FILENAME2} @RR{FLAGS} @RR{MODE}
+
+declare -A STUFF=([INPUT_FD]=@RR{INPUT_FD}
+                  [OUPUT_FD]=@RR{OUPUT_FD}
+                  [INPUT_POSITION]=10
+                  [OUPUT_POSITION]=5
+                  [NUMBER_OF_BYTES_TO_COPY]=21)
+
+mmux_libc_copy_file_range STUFF
+@end example
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn {@gnu{} Builtin} mmux_libc_copy_file_range @var{ARRAY_VARNAME}
+Interface to the Linux C language function @cfunc{copy_file_range}, @glibcref{Copying File Data,
+copy_file_range}.  The argument @var{ARRAY_VARNAME} must be a shell associative array variable name
+with the following keys:
+
+@table @code
+@item INPUT_FD
+The input file descriptor.
+
+@item OUPUT_FD
+The output file descriptor
+
+@item INPUT_POSITION
+Optional key.  When set: it must be an exact integer representing the position from the beginning of
+the input file from which data is read for copying; it must be compatible with the type
+@objtype{mmux_uint64_t}.  When not set: the corresponding argument to @cfunc{copy_file_range} is set
+to @cnull{}.
+
+@item OUPUT_POSITION
+Optional key.  When set: it must be an exact integer representing the position from the beginning of
+the output file to which data is written for copying; it must be compatible with the type
+@objtype{mmux_uint64_t}.  When not set: the corresponding argument to @cfunc{copy_file_range} is set
+to @cnull{}.
+
+@item NUMBER_OF_BYTES_TO_COPY
+Exact positive integer representing the number of bytes to copy from the input file to the output
+file; it must be compatible with the type @objtype{mmux_ssize_t}.
+
+@item FLAGS
+Optional key. When set: it must be an exact integer representing the flags argument of
+@cfunc{copy_file_range}.  When not set: the corresponding argument to @cfunc{copy_file_range} is set
+to zero.
+@end table
+
+When the builtin returns with success status, the @var{ARRAY_VARNAME} is updated as follows:
+
+@table @code
+@item NUMBER_OF_BYTES_COPIED
+New key added to the array.  Its value is the number of actual bytes copied from the input to the
+output.
+
+@item INPUT_POSITION
+If this key was set before calling the builtin: its value is updated to the new offset from the
+beginning of the file; notice that the actual input file descriptor cursor is not updated.
+
+@item INPUT_POSITION
+If this key was set before calling the builtin: its value is updated to the new offset from the
+beginning of the file; notice that the actual output file descriptor cursor is not updated.
+@end table
+@end deffn
+
 
 @c page
 @node fs
