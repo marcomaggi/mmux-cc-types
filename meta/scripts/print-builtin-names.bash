@@ -103,7 +103,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   if_nametoindex if_indextoname if_nameindex_to_array
 			   getaddrinfo freeaddrinfo getnameinfo
 			   bind getsockname socket shutdown socketpair connect listen accept getpeername
-			   send recv sendto recvfrom getsockopt setsockopt)
+			   send recv sendto recvfrom getsockopt setsockopt
+			   getpid)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh

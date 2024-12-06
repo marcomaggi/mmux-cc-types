@@ -195,6 +195,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * constants::                   Values of system constants.
 * cctypes::                     Interface to supported C language data types.
 * memory::                      Raw memory operations.
+* processes::                   Processes.
 * strings::                     @asciiz{} strings.
 * characters::                  Characters operations.
 * fds::                         Core file descriptor operations.
@@ -4714,6 +4715,20 @@ shell variable @var{PTRVAR} the value returned by the function.
 @deffn {@gnu{} Builtin} mmux_libc_memmem @var{PTRVAR} @var{HAYSTACK_PTR} @var{HAYSTACK_LEN} @var{NEEDLE_PTR} @var{NEEDLE_LEN}
 Interface to the extension C language function @cfunc{memmem}; @cfuncpage{memmem}.  Bind to the
 shell variable @var{PTRVAR} the value returned by the function.
+@end deffn
+
+@c page
+@node processes
+@chapter Processes
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_getpid @var{PID_VAR}
+Interface to the standard C language function @cfunc{getpid}, @glibcref{Process Identification,
+getpid}.  The argument @var{PID_VAR} must be a shell variable name: the exact integer representing
+the process id is bound to this variable.
 @end deffn
 
 @c page

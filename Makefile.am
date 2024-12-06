@@ -158,6 +158,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-mutators.c.m4		\
 	src/mmux-bash-pointers-persona.c.m4		\
 	src/mmux-bash-pointers-predicates.c.m4		\
+	src/mmux-bash-pointers-processes.c.m4		\
 	src/mmux-bash-pointers-sockets.c.m4		\
 	src/mmux-bash-pointers-strings.c.m4		\
 	src/mmux-bash-pointers-time.c.m4
@@ -181,6 +182,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-misc-builtins.c		\
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-persona.c		\
+	src/mmux-bash-pointers-processes.c		\
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-bash-pointers-sockets.c		\
 	src/mmux-bash-pointers-strings.c		\
@@ -225,6 +227,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-mutators.c		\
 	src/mmux-bash-pointers-persona.c		\
 	src/mmux-bash-pointers-predicates.c		\
+	src/mmux-bash-pointers-processes.c		\
 	src/mmux-bash-pointers-sockets.c		\
 	src/mmux-bash-pointers-strings.c		\
 	src/mmux-bash-pointers-time.c
@@ -265,6 +268,7 @@ EXTRA_DIST		+= \
 	tests/test-persona.bash.m4		\
 	tests/test-pointers.bash.m4		\
 	tests/test-predicates.bash.m4		\
+	tests/test-processes.bash.m4		\
 	tests/test-sockets.bash.m4		\
 	tests/test-strings.bash.m4		\
 	tests/test-structs.bash.m4		\
@@ -296,6 +300,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/test-persona.bash			\
 	tests/test-pointers.bash		\
 	tests/test-predicates.bash		\
+	tests/test-processes.bash		\
 	tests/test-sockets.bash			\
 	tests/test-strings.bash			\
 	tests/test-structs.bash			\
