@@ -6040,6 +6040,37 @@ struct flock.l_len = "33"
 struct flock.l_pid = "0"
 @end example
 
+Let's see how we can request exclusive access to a portion of a file with the following raw example,
+in which allocated resources are not released to make the code shorter:
+
+@example
+declare -r FILENAME='filename.ext'
+
+printf '0123456789abcdefghilmnopqrstuvz987654321' >@WW{FILENAME}
+
+declare FD
+declare -i FLAGS=$(( mmux_libc_O_RDWR ))
+declare -i MODE=$(( mmux_libc_S_IRUSR | mmux_libc_S_IWUSR ))
+
+mmux_libc_open FD @WW{FILENAME} @RR{FLAGS} @RR{MODE}
+
+declare RV1 RV2 FLOCK_PTR1 FLOCK_PTR2
+
+# Prepare a request for exclusive access to the first bytes of the file.
+mmux_libc_flock_calloc FLOCK_PTR1 @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+
+# Prepare another request for exclusive access to the first bytes of the file.
+mmux_libc_flock_calloc FLOCK_PTR2 @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+
+# Lock the first bytes of the file.
+mmux_libc_fcntl RV1 @RR{FD} @RR{mmux_libc_F_SETLK} @RR{FLOCK_PTR1}
+
+# Retrieve informations about any lock that blocks the request referenced by FLOCK_PTR2;
+# if there are no locks that block it: the "l_type" field is set to "F_UNLCK".  This
+# request comes from the same process: there will be no locks that block it.
+mmux_libc_fcntl RV2 @RR{FD} @RR{mmux_libc_F_GETLK} @RR{FLOCK_PTR2}
+@end example
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
 

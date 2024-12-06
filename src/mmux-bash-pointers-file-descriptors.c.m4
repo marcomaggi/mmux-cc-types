@@ -60,8 +60,33 @@ mmux_libc_iovec_dump (mmux_libc_stream_t stream, mmux_libc_iovec_t iovec_pointer
 /* ------------------------------------------------------------------ */
 
 static bool
+mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** str_p, mmux_sint_t flag)
+{
+  /* We use the if statement, rather than  the switch statement, because there may be
+     duplicates in the symbols. */
+  if (F_RDLCK == flag) {
+    *str_p = "F_RDLCK";
+    return false;
+  } else if (F_WRLCK == flag) {
+    *str_p = "F_WRLCK";
+    return false;
+  } else if (F_UNLCK == flag) {
+    *str_p = "F_UNLCK";
+    return false;
+  } else {
+    *str_p = "unknown";
+    return true;
+  }
+}
+
+static bool
 mmux_libc_flock_dump (mmux_libc_stream_t stream, mmux_libc_flock_t flock_pointer, char const * struct_name)
 {
+  {
+    int		rv = fprintf(stream, "%s = \"%p\"\n", struct_name, (mmux_pointer_t)flock_pointer);
+    if (0 > rv) { return true; }
+  }
+
   /* Print l_type. */
   {
     mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_pointer->l_type);
@@ -79,21 +104,7 @@ mmux_libc_flock_dump (mmux_libc_stream_t stream, mmux_libc_flock_t flock_pointer
       } else {
 	char const *	symstr;
 
-	switch (flock_pointer->l_type) {
-	case MMUX_VALUEOF_F_RDLCK:
-	  symstr = "F_RDLCK";
-	  break;
-	case MMUX_VALUEOF_F_WRLCK:
-	  symstr = "F_WRLCK";
-	  break;
-	case MMUX_VALUEOF_F_UNLCK:
-	  symstr = "F_UNLCK";
-	  break;
-	default:
-	  symstr = "unknown";
-	  break;
-	}
-
+	mmux_libc_flag_to_symbol_struct_flock_l_type(&symstr, flock_pointer->l_type);
 	rv = fprintf(stream, "%s.l_type = \"%s\" (%s)\n", struct_name, str, symstr);
 	if (0 > rv) { return true; }
       }
@@ -580,12 +591,54 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 
 /** --------------------------------------------------------------------
- ** Stuff.
+ ** Interface to "fcntl".
  ** ----------------------------------------------------------------- */
+
+static bool
+mmux_libc_flag_to_symbol_fcntl_command (char const ** str_p, mmux_sint_t flag)
+{
+  /* We use the if statement, rather than  the switch statement, because there may be
+     duplicates in the symbols. */
+  if (F_DUPFD == flag) {
+    *str_p = "F_DUPFD";
+    return false;
+  } else if (F_GETFD == flag) {
+    *str_p = "F_GETFD";
+    return false;
+  } else if (F_GETFL == flag) {
+    *str_p = "F_GETFL";
+    return false;
+  } else if (F_GETLK == flag) {
+    *str_p = "F_GETLK";
+    return false;
+  } else if (F_GETOWN == flag) {
+    *str_p = "F_GETOWN";
+    return false;
+  } else if (F_SETFD == flag) {
+    *str_p = "F_SETFD";
+    return false;
+  } else if (F_SETFL == flag) {
+    *str_p = "F_SETFL";
+    return false;
+  } else if (F_SETLKW == flag) {
+    *str_p = "F_SETLKW";
+    return false;
+  } else if (F_SETLK == flag) {
+    *str_p = "F_SETLK";
+    return false;
+  } else if (F_SETOWN == flag) {
+    *str_p = "F_SETOWN";
+    return false;
+  } else {
+    *str_p = "unknown";
+    return true;
+  }
+}
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 {
-  int	fd, command;
+  mmux_libc_file_descriptor_t		fd;
+  mmux_sint_t				command;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,	3);
@@ -658,6 +711,14 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 	{
 	  mmux_libc_flock_t	flock_pointer = _flock_pointer;
 	  int			rv;
+
+	  if (1) {
+	    char const * sym;
+
+	    mmux_libc_flag_to_symbol_fcntl_command(&sym, command);
+	    fprintf(stderr, "%s: fd=%d command=%d (%s) flock_pointer=%p\n", __func__,
+		    fd, command, sym, (mmux_pointer_t)flock_pointer);
+	  }
 
 	  rv = fcntl(fd, command, flock_pointer);
 	  if (-1 != rv) {
@@ -754,6 +815,14 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 	  mmux_libc_flock_t	flock_pointer = _flock_pointer;
 	  int			rv;
 
+	  if (1) {
+	    char const * sym;
+
+	    mmux_libc_flag_to_symbol_fcntl_command(&sym, command);
+	    fprintf(stderr, "%s: fd=%d command=%d (%s) flock_pointer=%p\n", __func__,
+		    fd, command, sym, (mmux_pointer_t)flock_pointer);
+	  }
+
 	  rv = fcntl(fd, command, flock_pointer);
 	  if (-1 != rv) {
 	    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -784,7 +853,10 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER RVAR FD COMMAND ARG ..."]]],
     [[["Call fcntl with the given arguments, store the result in RVAR."]]])
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Interface to "ioctl".
+ ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
 {
