@@ -38,6 +38,10 @@
 
 * Add a builtin interfacing "sendfile(2)"?  (Documented in a manual page.)
 
+* Scan the manual page of "fcntl()" for additional commands.
+
+* Add builtins interfacing "inotify(7)"?  (Documented in a manual page.)
+
 ### end of file
 # Local Variables:
 # mode: text
