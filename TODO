@@ -1,5 +1,7 @@
 -*- coding: utf-8-unix -*-
 
+* Add a builtin interfacing "flock(2)"? (Documented in a manual page.)
+
 * Add a builtin interfacing "strfmon()"?
 
 * Add a builtin interfacing "copy_file_range()"?
