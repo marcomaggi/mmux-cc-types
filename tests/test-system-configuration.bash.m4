@@ -92,25 +92,149 @@ function system-configuration-pathconf-1.1 () {
 }
 
 
-#### fpathconf
+#### struct rlimit
 
-function system-configuration-fpathconf-1.1 () {
+function system-configuration-struct-rlimit-1.1 () {
     mbfl_location_enter
     {
-	declare FD VALUE
-	declare -i FLAGS=$((mmux_libc_O_RDONLY ))
-	declare -i MODE=0
+	declare RLIMIT_PTR RLIM_CUR RLIM_MAX
 
 	dotest-unset-debug
 
-	mbfl_location_compensate( mmux_libc_open FD '/bin/sh' WW(FLAGS) WW(MODE),
-				  mmux_libc_close RR(FD) )
+	mbfl_location_compensate( mmux_libc_rlimit_calloc RLIMIT_PTR 1 2,
+				  mmux_libc_free RR(RLIMIT_PTR) )
 
-	mbfl_location_leave_when_failure( mmux_libc_fpathconf VALUE RR(FD) RR(mmux_libc__PC_LINK_MAX) )
-	dotest-debug VALUE=RR(VALUE)
-	dotest-predicate mmux_string_is_slong RR(VALUE)
+	mbfl_location_leave_when_failure( mmux_libc_rlim_cur_ref RLIM_CUR RR(RLIMIT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_rlim_max_ref RLIM_MAX RR(RLIMIT_PTR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_rlimit_dump RR(RLIMIT_PTR) >&2 )
+
+	dotest-debug RLIM_CUR=RR(RLIM_CUR)
+	dotest-debug RLIM_MAX=RR(RLIM_MAX)
+
+	dotest-equal     1 RR(RLIM_CUR) &&
+	    dotest-equal 2 RR(RLIM_MAX)
     }
     mbfl_location_leave
+}
+function system-configuration-struct-rlimit-1.2 () {
+    mbfl_location_enter
+    {
+	declare RLIMIT_PTR RLIM_CUR RLIM_MAX
+
+	dotest-unset-debug
+
+	mbfl_location_compensate( mmux_libc_rlimit_calloc RLIMIT_PTR,
+				  mmux_libc_free RR(RLIMIT_PTR) )
+
+	mbfl_location_leave_when_failure( mmux_libc_rlim_cur_set RR(RLIMIT_PTR) 1 )
+	mbfl_location_leave_when_failure( mmux_libc_rlim_max_set RR(RLIMIT_PTR) 2 )
+
+	mbfl_location_leave_when_failure( mmux_libc_rlim_cur_ref RLIM_CUR RR(RLIMIT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_rlim_max_ref RLIM_MAX RR(RLIMIT_PTR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_rlimit_dump RR(RLIMIT_PTR) >&2 )
+
+	dotest-debug RLIM_CUR=RR(RLIM_CUR)
+	dotest-debug RLIM_MAX=RR(RLIM_MAX)
+
+	dotest-equal     1 RR(RLIM_CUR) &&
+	    dotest-equal 2 RR(RLIM_MAX)
+    }
+    mbfl_location_leave
+}
+
+
+#### getrlimit
+
+function system-configuration-getrlimit-1.1 () {
+    mbfl_location_enter
+    {
+	declare RLIMIT_PTR RLIM_CUR RLIM_MAX
+
+	dotest-unset-debug
+
+	mbfl_location_compensate( mmux_libc_rlimit_calloc RLIMIT_PTR,
+				  mmux_libc_free RR(RLIMIT_PTR) )
+
+	mbfl_location_leave_when_failure( mmux_libc_getrlimit RR(mmux_libc_RLIMIT_STACK) RR(RLIMIT_PTR) )
+
+	mbfl_location_leave_when_failure( mmux_libc_rlim_cur_ref RLIM_CUR RR(RLIMIT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_rlim_max_ref RLIM_MAX RR(RLIMIT_PTR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_rlimit_dump RR(RLIMIT_PTR) >&2 )
+
+	dotest-debug RLIM_CUR=RR(RLIM_CUR)
+	dotest-debug RLIM_MAX=RR(RLIM_MAX)
+
+	dotest-equal RR(mmux_libc_RLIM_INFINITY) RR(RLIM_MAX)
+    }
+    mbfl_location_leave
+}
+
+
+#### setrlimit
+
+function system-configuration-setrlimit-1.1 () {
+    mbfl_location_enter
+    {
+	declare RLIMIT_PTR RLIM_CUR=10000000 RLIM_MAX=RR(mmux_libc_RLIM_INFINITY)
+
+	dotest-unset-debug
+
+	mbfl_location_compensate( mmux_libc_rlimit_calloc RLIMIT_PTR RR(RLIM_CUR) RR(RLIM_MAX),
+				  mmux_libc_free RR(RLIMIT_PTR) )
+
+	mbfl_location_leave_when_failure( mmux_libc_setrlimit RR(mmux_libc_RLIMIT_STACK) RR(RLIMIT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_setrlimit RR(mmux_libc_RLIMIT_STACK) RR(RLIMIT_PTR) )
+
+	mbfl_location_leave_when_failure( mmux_libc_rlim_cur_ref RLIM_CUR RR(RLIMIT_PTR) )
+	mbfl_location_leave_when_failure( mmux_libc_rlim_max_ref RLIM_MAX RR(RLIMIT_PTR) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_rlimit_dump RR(RLIMIT_PTR) >&2 )
+
+	dotest-debug RLIM_CUR=RR(RLIM_CUR)
+	dotest-debug RLIM_MAX=RR(RLIM_MAX)
+
+	dotest-equal RR(mmux_libc_RLIM_INFINITY) RR(RLIM_MAX)
+    }
+    mbfl_location_leave
+}
+
+
+#### prlimit
+
+function system-configuration-prlimit-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc_prlimit
+    then
+	mbfl_location_enter
+	{
+	    declare PID=0 RLIM_CUR=12300000 RLIM_MAX=RR(mmux_libc_RLIM_INFINITY)
+	    declare NEW_RLIMIT_PTR OLD_RLIMIT_PTR
+
+	    dotest-unset-debug
+
+	    mbfl_location_compensate( mmux_libc_rlimit_calloc NEW_RLIMIT_PTR RR(RLIM_CUR) RR(RLIM_MAX),
+				      mmux_libc_free RR(NEW_RLIMIT_PTR) )
+
+	    mbfl_location_compensate( mmux_libc_rlimit_calloc OLD_RLIMIT_PTR,
+				      mmux_libc_free RR(OLD_RLIMIT_PTR) )
+
+	    mbfl_location_leave_when_failure( mmux_libc_prlimit RR(PID) RR(mmux_libc_RLIMIT_STACK) RR(NEW_RLIMIT_PTR) RR(OLD_RLIMIT_PTR) )
+
+	    mbfl_location_leave_when_failure( mmux_libc_rlim_cur_ref RLIM_CUR RR(OLD_RLIMIT_PTR) )
+	    mbfl_location_leave_when_failure( mmux_libc_rlim_max_ref RLIM_MAX RR(OLD_RLIMIT_PTR) )
+
+	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_rlimit_dump RR(NEW_RLIMIT_PTR) >&2 )
+
+	    dotest-debug RLIM_CUR=RR(RLIM_CUR)
+	    dotest-debug RLIM_MAX=RR(RLIM_MAX)
+
+	    dotest-equal RR(mmux_libc_RLIM_INFINITY) RR(RLIM_MAX)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
 }
 
 

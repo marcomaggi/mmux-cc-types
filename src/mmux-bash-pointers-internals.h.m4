@@ -217,6 +217,7 @@ mmux_bash_pointers_private_decl mmux_bash_rv_t mmux_bash_pointers_init_time_modu
 mmux_bash_pointers_private_decl mmux_bash_rv_t mmux_bash_pointers_init_file_descriptors_module (void);
 mmux_bash_pointers_private_decl mmux_bash_rv_t mmux_bash_pointers_init_file_system_module (void);
 mmux_bash_pointers_private_decl mmux_bash_rv_t mmux_bash_pointers_init_sockets_module (void);
+mmux_bash_pointers_private_decl mmux_bash_rv_t mmux_bash_pointers_init_system_configuration_module (void);
 
 
 /** --------------------------------------------------------------------

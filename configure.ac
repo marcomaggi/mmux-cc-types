@@ -131,7 +131,7 @@ AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/uio.h sys/socket.h sys/un.h netinet/in
 
 AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
-                renameat2 group_member dup3 accept4 copy_file_range gettid])
+                renameat2 group_member dup3 accept4 copy_file_range gettid prlimit])
 
 
 #### inspecting errno constants
@@ -227,6 +227,7 @@ MMUX_CONSTANT_TESTS([IPPROTO_IP IPPROTO_IPIP IPPROTO_IPV6 IPPROTO_MPLS IPPROTO_M
 MMUX_CONSTANT_TESTS([IPPROTO_PIM IPPROTO_PUP IPPROTO_RAW IPPROTO_RSVP IPPROTO_SCTP IPPROTO_TCP])
 MMUX_CONSTANT_TESTS([IPPROTO_TP IPPROTO_UDP IPPROTO_UDPLITE])
 
+## system configuration
 MMUX_CONSTANT_TESTS([_SC_2_CHAR_TERM _SC_2_C_BIND _SC_2_C_DEV _SC_2_C_VERSION _SC_2_FORT_DEV _SC_2_FORT_RUN
                      _SC_2_LOCALEDEF_SC_2_PBS _SC_2_PBS_ACCOUNTING _SC_2_PBS_CHECKPOINT _SC_2_PBS_LOCATE _SC_2_PBS_MESSAGE
                      _SC_2_PBS_TRACK _SC_2_SW_DEV _SC_2_UPE _SC_2_VERSION _SC_ADVISORY_INFO _SC_AIO_LISTIO_MAX
@@ -271,6 +272,10 @@ MMUX_CONSTANT_TESTS([_PC_ASYNC_IO _PC_CHOWN_RESTRICTED _PC_FILESIZEBITS _PC_LINK
                      _PC_MAX_INPUT _PC_NAME_MAX _PC_NO_TRUNC _PC_PATH_MAX _PC_PIPE_BUF _PC_PRIO_IO
                      _PC_REC_INCR_XFER_SIZE _PC_REC_MAX_XFER_SIZE _PC_REC_MIN_XFER_SIZE _PC_REC_XFER_ALIGN
                      _PC_SYNC_IO _PC_VDISABLE])
+
+MMUX_CONSTANT_TESTS([RLIMIT_AS RLIMIT_CORE RLIMIT_CPU RLIMIT_DATA RLIMIT_FSIZE RLIMIT_LOCKS RLIMIT_MEMLOCK
+                     RLIMIT_MSGQUEUE RLIMIT_NICE RLIMIT_NOFILE RLIMIT_NPROC RLIMIT_RSS RLIMIT_RTPRIO
+                     RLIMIT_RTTIME RLIMIT_SIGPENDING RLIMIT_STACK RLIM_INFINITY])
 
 ## miscellaneous
 MMUX_CONSTANT_TESTS([EOF])

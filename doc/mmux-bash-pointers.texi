@@ -1342,6 +1342,24 @@ are available for the operation.
 @MmuxDefineGlobalVarSystemConstant{_PC_SYNC_IO}
 @MmuxDefineGlobalVarSystemConstant{_PC_VDISABLE}
 
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_AS}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_CORE}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_CPU}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_DATA}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_FSIZE}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_LOCKS}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_MEMLOCK}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_MSGQUEUE}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_NICE}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_NOFILE}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_NPROC}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_RSS}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_RTPRIO}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_RTTIME}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_SIGPENDING}
+@MmuxDefineGlobalVarSystemConstant{RLIMIT_STACK}
+@MmuxDefineGlobalVarSystemConstant{RLIM_INFINITY}
+
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -4392,6 +4410,16 @@ mmux_schar_from_string ASCII_CODE @WW{STRING}
 @chapter System configuration
 
 
+@menu
+* system parameters::           Configuration parameters.
+* system rlimit::               Configuring with @MmuxCStruct{rlimit}.
+@end menu
+
+@c page
+@node system parameters
+@section Configuration parameters
+
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
@@ -4451,6 +4479,89 @@ Bind to the shell variable whose name is @var{LONG_VAR} the value requested by @
 
 The argument @var{PARAMETER} must be one of the @code{mmux_libc__PC_*} constants (notice the double
 underscore).
+@end deffn
+
+@c page
+@node system rlimit
+@section Configuring with @MmuxCStruct{rlimit}
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@defvr Constant mmux_libc_rlimit_SIZEOF
+Size, measured in bytes, of values of type @MmuxCStruct{rlimit}.
+@end defvr
+
+
+@deffn Builtin mmux_libc_rlimit_calloc @var{RLIMIT_PTR}
+@deffnx Builtin mmux_libc_rlimit_calloc @var{RLIMIT_PTR} @var{RLIM_CUR} @var{RLIM_MAX}
+Use @cfunc{calloc} to allocate a block of memory wide enough to contain value of type
+@MmuxCStruct{rlimit}.  Arguments:
+
+@table @var
+@item RLIMIT_PTR
+Shell variable name: a pointer to the newly allocated data structure is bound to this variable.
+
+@item RLIM_CUR
+Optional argument.  Initialisation value for the field @code{rlim_cur}; when not given: it defaults
+to zero.
+
+@item RLIM_MAX
+Optional argument.  Initialisation value for the field @code{rlim_max}; when not given: it defaults
+to zero.
+@end table
+@end deffn
+
+
+@macro MmuxDefineRlimitSetterGetter{FIELD, UPFIELD}
+@deffn Builtin mmux_libc_\FIELD\_set @var{RLIMIT_PTR} @var{\UPFIELD\}
+@deffnx Builtin mmux_libc_\FIELD\_ref @var{\UPFIELD\_VAR} @var{RLIMIT_PTR}
+Setter and getter for the field @code{\FIELD\} of data structures of type @MmuxCStruct{rlimit}.
+Arguments:
+
+@table @var
+@item RLIMIT_PTR
+Pointer to a data structure of type @MmuxCStruct{rlimit}.
+
+@item \UPFIELD\
+The setter sets the field to this value.
+
+@item \UPFIELD\_VAR
+Shell variable name: the getter binds to this variable the value of the field.
+@end table
+@end deffn
+
+@end macro
+
+@MmuxDefineRlimitSetterGetter{rlim_cur, RLIM_CUR}
+@MmuxDefineRlimitSetterGetter{rlim_max, RLIM_MAX}
+
+@deffn Builtin mmux_libc_rlimit_dump @var{RLIMIT_PTR}
+@deffnx Builtin mmux_libc_rlimit_dump @var{RLIMIT_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @MmuxCStruct{rlimit}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct rlimit}.
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@deffn Builtin mmux_libc_getrlimit @var{RESOURCE} @var{RLIMIT_PTR}
+Interface to the standard C language function @cfunc{getrlimit}, @glibcref{Limits on Resources,
+getrlimit}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_setrlimit @var{RESOURCE} @var{RLIMIT_PTR}
+Interface to the standard C language function @cfunc{setrlimit}, @glibcref{Limits on Resources,
+setrlimit}.
+@end deffn
+
+
+@deffn {Linux Builtin} mmux_libc_prlimit @var{PID} @var{RESOURCE} @var{NEW_RLIMIT_PTR} @var{OLD_RLIMIT_PTR}
+Interface to the Linux C language function @cfunc{prlimit}, @cfuncpage{prlimit}.
 @end deffn
 
 @c page

@@ -105,7 +105,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   bind getsockname socket shutdown socketpair connect listen accept getpeername
 			   send recv sendto recvfrom getsockopt setsockopt
 			   getpid getppid
-			   sysconf confstr pathconf fpathconf)
+			   sysconf confstr pathconf fpathconf setrlimit getrlimit
+			   rlimit_calloc rlimit_dump rlim_cur_set rlim_cur_ref rlim_max_set rlim_max_ref)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
@@ -343,7 +344,7 @@ function have_cfunc () {
 {
     for ITEM in mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
 			rawmemchr memmem strchrnul basename dirname canonicalize_file_name \
-			renameat2 group_member dup3 accept4 gettid
+			renameat2 group_member dup3 accept4 gettid prlimit
     do
 	if have_cfunc "$ITEM"
 	then
