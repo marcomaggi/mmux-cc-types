@@ -4551,6 +4551,15 @@ structure; when not given: it defaults to @samp{struct rlimit}.
 @deffn Builtin mmux_libc_getrlimit @var{RESOURCE} @var{RLIMIT_PTR}
 Interface to the standard C language function @cfunc{getrlimit}, @glibcref{Limits on Resources,
 getrlimit}.
+
+@example
+declare RLIMIT_PTR RLIM_CUR RLIM_MAX
+
+mmux_libc_rlimit_calloc RLIMIT_PTR
+mmux_libc_getrlimit @RR{mmux_libc_RLIMIT_STACK} @RR{RLIMIT_PTR}
+
+mmux_libc_rlimit_dump @RR{RLIMIT_PTR}
+@end example
 @end deffn
 
 
@@ -4562,6 +4571,17 @@ setrlimit}.
 
 @deffn {Linux Builtin} mmux_libc_prlimit @var{PID} @var{RESOURCE} @var{NEW_RLIMIT_PTR} @var{OLD_RLIMIT_PTR}
 Interface to the Linux C language function @cfunc{prlimit}, @cfuncpage{prlimit}.
+
+@example
+declare PID=0 RLIM_CUR=12300000 RLIM_MAX=@RR{mmux_libc_RLIM_INFINITY}
+declare NEW_RLIMIT_PTR OLD_RLIMIT_PTR
+
+mmux_libc_rlimit_calloc NEW_RLIMIT_PTR @RR{RLIM_CUR} @RR{RLIM_MAX}
+mmux_libc_rlimit_calloc OLD_RLIMIT_PTR
+
+mmux_libc_prlimit @RR{PID} @RR{mmux_libc_RLIMIT_STACK} @RR{NEW_RLIMIT_PTR} @RR{OLD_RLIMIT_PTR}
+mmux_libc_rlimit_dump @RR{NEW_RLIMIT_PTR}
+@end example
 @end deffn
 
 @c page
