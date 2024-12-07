@@ -76,4 +76,46 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VAR PARAMETER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pathconf]]])
+{
+  char const *	value_varname;
+  char const *	pathname;
+  mmux_sint_t	parameter;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(parameter,		3);
+  {
+    mmux_slong_t	value = pathconf(pathname, parameter);
+
+    return mmux_slong_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VAR PATHNAME PARAMETER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fpathconf]]])
+{
+  char const *	value_varname;
+  mmux_sint_t	fd;
+  mmux_sint_t	parameter;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(parameter,		3);
+  {
+    mmux_slong_t	value = fpathconf(fd, parameter);
+
+    return mmux_slong_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VAR FD PARAMETER"]]])
+
 /* end of file */

@@ -75,6 +75,45 @@ function system-configuration-confstr-1.1 () {
 }
 
 
+#### pathconf
+
+function system-configuration-pathconf-1.1 () {
+    mbfl_location_enter
+    {
+	declare VALUE
+
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_pathconf VALUE '/bin/sh' RR(mmux_libc__PC_LINK_MAX) )
+	dotest-debug VALUE=RR(VALUE)
+	dotest-predicate mmux_string_is_slong RR(VALUE)
+    }
+    mbfl_location_leave
+}
+
+
+#### fpathconf
+
+function system-configuration-fpathconf-1.1 () {
+    mbfl_location_enter
+    {
+	declare FD VALUE
+	declare -i FLAGS=$((mmux_libc_O_RDONLY ))
+	declare -i MODE=0
+
+	dotest-unset-debug
+
+	mbfl_location_compensate( mmux_libc_open FD '/bin/sh' WW(FLAGS) WW(MODE),
+				  mmux_libc_close RR(FD) )
+
+	mbfl_location_leave_when_failure( mmux_libc_fpathconf VALUE RR(FD) RR(mmux_libc__PC_LINK_MAX) )
+	dotest-debug VALUE=RR(VALUE)
+	dotest-predicate mmux_string_is_slong RR(VALUE)
+    }
+    mbfl_location_leave
+}
+
+
 #### let's go
 
 dotest system-configuration-

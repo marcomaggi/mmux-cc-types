@@ -1318,6 +1318,24 @@ are available for the operation.
 @MmuxDefineGlobalVarSystemConstant{_CS_LFS_LINTFLAGS}
 @MmuxDefineGlobalVarSystemConstant{_CS_PATH}
 
+@MmuxDefineGlobalVarSystemConstant{_PC_ASYNC_IO}
+@MmuxDefineGlobalVarSystemConstant{_PC_CHOWN_RESTRICTED}
+@MmuxDefineGlobalVarSystemConstant{_PC_FILESIZEBITS}
+@MmuxDefineGlobalVarSystemConstant{_PC_LINK_MAX}
+@MmuxDefineGlobalVarSystemConstant{_PC_MAX_CANON}
+@MmuxDefineGlobalVarSystemConstant{_PC_MAX_INPUT}
+@MmuxDefineGlobalVarSystemConstant{_PC_NAME_MAX}
+@MmuxDefineGlobalVarSystemConstant{_PC_NO_TRUNC}
+@MmuxDefineGlobalVarSystemConstant{_PC_PATH_MAX}
+@MmuxDefineGlobalVarSystemConstant{_PC_PIPE_BUF}
+@MmuxDefineGlobalVarSystemConstant{_PC_PRIO_IO}
+@MmuxDefineGlobalVarSystemConstant{_PC_REC_INCR_XFER_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_PC_REC_MAX_XFER_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_PC_REC_MIN_XFER_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_PC_REC_XFER_ALIGN}
+@MmuxDefineGlobalVarSystemConstant{_PC_SYNC_IO}
+@MmuxDefineGlobalVarSystemConstant{_PC_VDISABLE}
+
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -4375,6 +4393,31 @@ declare VALUE
 mmux_libc_confstr VALUE @RR{mmux_libc__CS_PATH}
 @WW{VALUE}      @result{} /bin:/usr/bin
 @end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_pathconf @var{LONG_VAR} @var{PATHNAME} @var{PARAMETER}
+Interface to the standard C language function @cfunc{pathconf}, @glibcref{Pathconf, pathconf}.  Bind
+to the shell variable whose name is @var{LONG_VAR} the value requested by @var{PARAMETER}.
+
+The argument @var{PARAMETER} must be one of the @code{mmux_libc__PC_*} constants (notice the double
+underscore).
+
+@example
+declare VALUE
+
+mmux_libc_pathconf VALUE '/bin/sh' @RR{mmux_libc__PC_LINK_MAX}
+@RR{VALUE}      @result{} 65000
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_fpathconf @var{LONG_VAR} @var{FD} @var{PARAMETER}
+Interface to the standard C language function @cfunc{fpathconf}, @glibcref{Pathconf, fpathconf}.
+Bind to the shell variable whose name is @var{LONG_VAR} the value requested by @var{PARAMETER}.
+
+The argument @var{PARAMETER} must be one of the @code{mmux_libc__PC_*} constants (notice the double
+underscore).
 @end deffn
 
 @c page
