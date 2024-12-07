@@ -144,6 +144,7 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wchar]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[time]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[socklen]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[rlim]]])
 
 
 /** --------------------------------------------------------------------
@@ -240,6 +241,7 @@ MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wchar]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[wint]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[time]]])
 MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[socklen]]])
+MMUX_BASH_DEFINE_COMPARISON_BUILTINS([[[rlim]]])
 
 
 /** --------------------------------------------------------------------

@@ -2503,6 +2503,85 @@ function predicates-is-nan-socklen-1.2 () {
 }
 
 
+#### type variables: rlim
+
+function predicates-is-zero-rlim-1.1 () {
+    mmux_rlim_is_zero 0
+}
+function predicates-is-zero-rlim-1.2 () {
+    ! mmux_rlim_is_zero WW(mmux_rlim_MAX)
+}
+function predicates-is-zero-rlim-1.3 () {
+    mmux_rlim_is_zero WW(mmux_rlim_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-positive-rlim-1.1 () {
+    ! mmux_rlim_is_positive 0
+}
+function predicates-is-positive-rlim-1.2 () {
+    mmux_rlim_is_positive WW(mmux_rlim_MAX)
+}
+function predicates-is-positive-rlim-1.3 () {
+    ! mmux_rlim_is_positive WW(mmux_rlim_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-negative-rlim-1.1 () {
+    ! mmux_rlim_is_negative 0
+}
+function predicates-is-negative-rlim-1.2 () {
+    ! mmux_rlim_is_negative WW(mmux_rlim_MAX)
+}
+function predicates-is-negative-rlim-1.3 () {
+    ! mmux_rlim_is_negative WW(mmux_rlim_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-positive-rlim-1.1 () {
+    mmux_rlim_is_non_positive 0
+}
+function predicates-is-non-positive-rlim-1.2 () {
+    ! mmux_rlim_is_non_positive WW(mmux_rlim_MAX)
+}
+function predicates-is-non-positive-rlim-1.3 () {
+    mmux_rlim_is_non_positive WW(mmux_rlim_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-non-negative-rlim-1.1 () {
+    mmux_rlim_is_non_negative 0
+}
+function predicates-is-non-negative-rlim-1.2 () {
+    mmux_rlim_is_non_negative WW(mmux_rlim_MAX)
+}
+function predicates-is-non-negative-rlim-1.3 () {
+    mmux_rlim_is_non_negative WW(mmux_rlim_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-infinite-rlim-1.1 () {
+    ! mmux_rlim_is_infinite WW(mmux_rlim_MAX)
+}
+function predicates-is-infinite-rlim-1.2 () {
+    ! mmux_rlim_is_infinite WW(mmux_rlim_MIN)
+}
+
+### ------------------------------------------------------------------------
+
+function predicates-is-nan-rlim-1.1 () {
+    ! mmux_rlim_is_nan WW(mmux_rlim_MAX)
+}
+function predicates-is-nan-rlim-1.2 () {
+    ! mmux_rlim_is_nan WW(mmux_rlim_MIN)
+}
+
+
 #### type variables: float
 
 function predicates-is-zero-float-1.1 () {

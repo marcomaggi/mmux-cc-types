@@ -27,7 +27,7 @@ declare -ra SIGNED_INTEGER_STEMS=(schar sshort sint slong sllong
 				  sintmax sintptr ptrdiff off uid gid wchar time)
 declare -ra UNSIGNED_INTEGER_STEMS=(uchar ushort uint ulong ullong
 				    uint8 uint16 uint32 uint64 usize
-				    uintmax uintptr mode pid wint socklen)
+				    uintmax uintptr mode pid wint socklen rlim)
 declare -ra INTEGER_STEMS=("${SIGNED_INTEGER_STEMS[@]}" "${UNSIGNED_INTEGER_STEMS[@]}")
 
 declare -ra REAL_FLOAT_STEMS=(float double ldouble

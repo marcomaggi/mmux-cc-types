@@ -164,5 +164,6 @@ DEFINE_POINTER_ACCESSOR([[[wchar]]])
 DEFINE_POINTER_ACCESSOR([[[wint]]])
 DEFINE_POINTER_ACCESSOR([[[time]]])
 DEFINE_POINTER_ACCESSOR([[[socklen]]])
+DEFINE_POINTER_ACCESSOR([[[rlim]]])
 
 /* end of file */

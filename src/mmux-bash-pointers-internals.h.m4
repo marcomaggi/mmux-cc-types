@@ -168,6 +168,10 @@
 #  include <sys/un.h>
 #endif
 
+#ifdef HAVE_SYS_RESOURCE_H
+#  include <sys/resource.h>
+#endif
+
 #ifdef HAVE_WCHAR_H
 #  include <wchar.h>
 #endif

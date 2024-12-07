@@ -50,7 +50,7 @@ function mmux_bash_pointers_library_after_loading_hook () {
     declare -ga MMUX_BASH_POINTERS_SIGNED_INTEGER_STEMS=(schar sshort sint slong sllong sint8 sint16 sint32 sint64 ssize \
 							       sintmax sintptr ptrdiff off uid gid wchar)
     declare -ga MMUX_BASH_POINTERS_UNSIGNED_INTEGER_STEMS=(uchar ushort uint ulong ullong uint8 uint16 uint32 uint64 usize \
-								 uintmax uintptr mode pid wint socklen)
+								 uintmax uintptr mode pid wint socklen rlim)
     declare -ga MMUX_BASH_POINTERS_INTEGER_STEMS=("${MMUX_BASH_POINTERS_SIGNED_INTEGER_STEMS[@]}" \
 						      "${MMUX_BASH_POINTERS_UNSIGNED_INTEGER_STEMS[@]}")
 

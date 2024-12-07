@@ -781,6 +781,16 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_SOCKLEN]]],[[[MMUX_BASH_PARSE_BUILTIN_A
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[socklen]]],[[[$1]]],[[[$2]]])]]])
 
+# --------------------------------------------------------------------
+
+# $1 - name of the target variable
+# $2 - expression evaluating to the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_RLIM]]],[[[MMUX_BASH_PARSE_BUILTIN_ARG_STEM([[[rlim]]],[[[$1]]],[[[$2]]])]]])
+
+# $1 - name of the target variable
+# $2 - index in the array "argv" of the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_RLIM]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[rlim]]],[[[$1]]],[[[$2]]])]]])
+
 
 m4_dnl let's go
 
