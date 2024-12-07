@@ -194,6 +194,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * descriptor::                  Package descriptors.
 * constants::                   Values of system constants.
 * cctypes::                     Interface to supported C language data types.
+* system::                      System configuration.
 * memory::                      Raw memory operations.
 * processes::                   Processes.
 * strings::                     @asciiz{} strings.
@@ -1101,6 +1102,211 @@ Set to zero.  To be used as @var{FLAGS} value for @MmuxBuiltin{mmux_libc_send} w
 @code{mmux_libc_MSG_*} flags is needed; it gives the reader of the code a remainder of which flags
 are available for the operation.
 @end defvr
+
+@MmuxDefineGlobalVarSystemConstant{_SC_2_CHAR_TERM}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_C_BIND}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_C_DEV}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_C_VERSION}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_FORT_DEV}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_FORT_RUN}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_LOCALEDEF}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_PBS}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_PBS_ACCOUNTING}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_PBS_CHECKPOINT}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_PBS_LOCATE}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_PBS_MESSAGE}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_PBS_TRACK}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_SW_DEV}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_UPE}
+@MmuxDefineGlobalVarSystemConstant{_SC_2_VERSION}
+@MmuxDefineGlobalVarSystemConstant{_SC_ADVISORY_INFO}
+@MmuxDefineGlobalVarSystemConstant{_SC_AIO_LISTIO_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_AIO_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_AIO_PRIO_DELTA_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_ARG_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_ASYNCHRONOUS_IO}
+@MmuxDefineGlobalVarSystemConstant{_SC_ATEXIT_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_AVPHYS_PAGES}
+@MmuxDefineGlobalVarSystemConstant{_SC_BARRIERS}
+@MmuxDefineGlobalVarSystemConstant{_SC_BASE}
+@MmuxDefineGlobalVarSystemConstant{_SC_BC_BASE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_BC_DIM_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_BC_SCALE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_BC_STRING_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_CHARCLASS_NAME_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_CHAR_BIT}
+@MmuxDefineGlobalVarSystemConstant{_SC_CHAR_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_CHAR_MIN}
+@MmuxDefineGlobalVarSystemConstant{_SC_CHILD_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_CLK_TCK}
+@MmuxDefineGlobalVarSystemConstant{_SC_CLOCK_SELECTION}
+@MmuxDefineGlobalVarSystemConstant{_SC_COLL_WEIGHTS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_CPUTIME}
+@MmuxDefineGlobalVarSystemConstant{_SC_C_LANG_SUPPORT}
+@MmuxDefineGlobalVarSystemConstant{_SC_C_LANG_SUPPORT_R}
+@MmuxDefineGlobalVarSystemConstant{_SC_DELAYTIMER_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_DEVICE_IO}
+@MmuxDefineGlobalVarSystemConstant{_SC_DEVICE_SPECIFIC}
+@MmuxDefineGlobalVarSystemConstant{_SC_DEVICE_SPECIFIC_R}
+@MmuxDefineGlobalVarSystemConstant{_SC_EQUIV_CLASS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_EXPR_NEST_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_FD_MGMT}
+@MmuxDefineGlobalVarSystemConstant{_SC_FIFO}
+@MmuxDefineGlobalVarSystemConstant{_SC_FILE_ATTRIBUTES}
+@MmuxDefineGlobalVarSystemConstant{_SC_FILE_LOCKING}
+@MmuxDefineGlobalVarSystemConstant{_SC_FILE_SYSTEM}
+@MmuxDefineGlobalVarSystemConstant{_SC_FSYNC}
+@MmuxDefineGlobalVarSystemConstant{_SC_GETGR_R_SIZE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_GETPW_R_SIZE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_HOST_NAME_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_INT_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_INT_MIN}
+@MmuxDefineGlobalVarSystemConstant{_SC_IOV_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_IPV6}
+@MmuxDefineGlobalVarSystemConstant{_SC_JOB_CONTROL}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL1_DCACHE_ASSOC}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL1_DCACHE_LINESIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL1_DCACHE_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL1_ICACHE_ASSOC}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL1_ICACHE_LINESIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL1_ICACHE_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL2_CACHE_ASSOC}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL2_CACHE_LINESIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL2_CACHE_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL3_CACHE_ASSOC}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL3_CACHE_LINESIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL3_CACHE_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL4_CACHE_ASSOC}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL4_CACHE_LINESIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LEVEL4_CACHE_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_LINE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_LOGIN_NAME_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_LONG_BIT}
+@MmuxDefineGlobalVarSystemConstant{_SC_MAPPED_FILES}
+@MmuxDefineGlobalVarSystemConstant{_SC_MB_LEN_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_MEMLOCK}
+@MmuxDefineGlobalVarSystemConstant{_SC_MEMLOCK_RANGE}
+@MmuxDefineGlobalVarSystemConstant{_SC_MEMORY_PROTECTION}
+@MmuxDefineGlobalVarSystemConstant{_SC_MESSAGE_PASSING}
+@MmuxDefineGlobalVarSystemConstant{_SC_MONOTONIC_CLOCK}
+@MmuxDefineGlobalVarSystemConstant{_SC_MQ_OPEN_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_MQ_PRIO_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_MULTI_PROCESS}
+@MmuxDefineGlobalVarSystemConstant{_SC_NETWORKING}
+@MmuxDefineGlobalVarSystemConstant{_SC_NGROUPS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NL_ARGMAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NL_LANGMAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NL_MSGMAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NL_NMAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NL_SETMAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NL_TEXTMAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_NPROCESSORS_CONF}
+@MmuxDefineGlobalVarSystemConstant{_SC_NPROCESSORS_ONLN}
+@MmuxDefineGlobalVarSystemConstant{_SC_NZERO}
+@MmuxDefineGlobalVarSystemConstant{_SC_OPEN_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_PAGESIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_PAGE_SIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_PASS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_PHYS_PAGES}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_INTERNET}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_INTERNET_DGRAM}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_INTERNET_STREAM}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_OSI}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_OSI_CLTS}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_OSI_COTS}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_OSI_M}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_SOCKET}
+@MmuxDefineGlobalVarSystemConstant{_SC_PII_XTI}
+@MmuxDefineGlobalVarSystemConstant{_SC_PIPE}
+@MmuxDefineGlobalVarSystemConstant{_SC_POLL}
+@MmuxDefineGlobalVarSystemConstant{_SC_PRIORITIZED_IO}
+@MmuxDefineGlobalVarSystemConstant{_SC_PRIORITY_SCHEDULING}
+@MmuxDefineGlobalVarSystemConstant{_SC_RAW_SOCKETS}
+@MmuxDefineGlobalVarSystemConstant{_SC_READER_WRITER_LOCKS}
+@MmuxDefineGlobalVarSystemConstant{_SC_REALTIME_SIGNALS}
+@MmuxDefineGlobalVarSystemConstant{_SC_REGEXP}
+@MmuxDefineGlobalVarSystemConstant{_SC_REGEX_VERSION}
+@MmuxDefineGlobalVarSystemConstant{_SC_RE_DUP_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_RTSIG_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SAVED_IDS}
+@MmuxDefineGlobalVarSystemConstant{_SC_SCHAR_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SCHAR_MIN}
+@MmuxDefineGlobalVarSystemConstant{_SC_SELECT}
+@MmuxDefineGlobalVarSystemConstant{_SC_SEMAPHORES}
+@MmuxDefineGlobalVarSystemConstant{_SC_SEM_NSEMS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SEM_VALUE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SHARED_MEMORY_OBJECTS}
+@MmuxDefineGlobalVarSystemConstant{_SC_SHELL}
+@MmuxDefineGlobalVarSystemConstant{_SC_SHRT_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SHRT_MIN}
+@MmuxDefineGlobalVarSystemConstant{_SC_SIGNALS}
+@MmuxDefineGlobalVarSystemConstant{_SC_SIGQUEUE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SINGLE_PROCESS}
+@MmuxDefineGlobalVarSystemConstant{_SC_SPAWN}
+@MmuxDefineGlobalVarSystemConstant{_SC_SPIN_LOCKS}
+@MmuxDefineGlobalVarSystemConstant{_SC_SPORADIC_SERVER}
+@MmuxDefineGlobalVarSystemConstant{_SC_SSIZE_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_STREAMS}
+@MmuxDefineGlobalVarSystemConstant{_SC_STREAM_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SYMLOOP_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_SYNCHRONIZED_IO}
+@MmuxDefineGlobalVarSystemConstant{_SC_SYSTEM_DATABASE}
+@MmuxDefineGlobalVarSystemConstant{_SC_SYSTEM_DATABASE_R}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREADS}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_ATTR_STACKADDR}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_ATTR_STACKSIZE}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_CPUTIME}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_DESTRUCTOR_ITERATIONS}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_KEYS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_PRIORITY_SCHEDULING}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_PRIO_INHERIT}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_PRIO_PROTECT}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_PROCESS_SHARED}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_SAFE_FUNCTIONS}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_SPORADIC_SERVER}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_STACK_MIN}
+@MmuxDefineGlobalVarSystemConstant{_SC_THREAD_THREADS_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_TIMEOUTS}
+@MmuxDefineGlobalVarSystemConstant{_SC_TIMERS}
+@MmuxDefineGlobalVarSystemConstant{_SC_TIMER_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_TRACE}
+@MmuxDefineGlobalVarSystemConstant{_SC_TRACE_EVENT_FILTER}
+@MmuxDefineGlobalVarSystemConstant{_SC_TRACE_INHERIT}
+@MmuxDefineGlobalVarSystemConstant{_SC_TRACE_LOG}
+@MmuxDefineGlobalVarSystemConstant{_SC_TTY_NAME_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_TYPED_MEMORY_OBJECTS}
+@MmuxDefineGlobalVarSystemConstant{_SC_TZNAME_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_T_IOV_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_UCHAR_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_UINT_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_UIO_MAXIOV}
+@MmuxDefineGlobalVarSystemConstant{_SC_ULONG_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_USER_GROUPS}
+@MmuxDefineGlobalVarSystemConstant{_SC_USER_GROUPS_R}
+@MmuxDefineGlobalVarSystemConstant{_SC_USHRT_MAX}
+@MmuxDefineGlobalVarSystemConstant{_SC_V6_ILP32_OFF32}
+@MmuxDefineGlobalVarSystemConstant{_SC_V6_ILP32_OFFBIG}
+@MmuxDefineGlobalVarSystemConstant{_SC_V6_LP64_OFF64}
+@MmuxDefineGlobalVarSystemConstant{_SC_V6_LPBIG_OFFBIG}
+@MmuxDefineGlobalVarSystemConstant{_SC_VERSION}
+@MmuxDefineGlobalVarSystemConstant{_SC_WORD_BIT}
+@MmuxDefineGlobalVarSystemConstant{_SC_XBS5_ILP32_OFF32}
+@MmuxDefineGlobalVarSystemConstant{_SC_XBS5_ILP32_OFFBIG}
+@MmuxDefineGlobalVarSystemConstant{_SC_XBS5_LP64_OFF64}
+@MmuxDefineGlobalVarSystemConstant{_SC_XBS5_LPBIG_OFFBIG}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_CRYPT}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_ENH_I18N}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_LEGACY}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_REALTIME}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_REALTIME_THREADS}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_SHM}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_UNIX}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_VERSION}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_XCU_VERSION}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_XPG2}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_XPG3}
+@MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_XPG4}
 
 @c page
 @node cctypes
@@ -4118,6 +4324,23 @@ declare -i ASCII_CODE
 
 mmux_schar_from_string ASCII_CODE @WW{STRING}
 @end example
+@end deffn
+
+@c page
+@node system
+@chapter System configuration
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_sysconf @var{LONG_VAR} @var{PARAMETER}
+Interface to the standard C language function @cfunc{sysconf}, @glibcref{Sysconf Definition,
+sysconf}.  Bind to the shell variable whose name is @var{LONG_VAR} the value requested by
+@var{PARAMETER}.
+
+The argument @var{PARAMETER} must be one of the @code{mmux_libc__SC_*} constants (notice the double
+underscore).
 @end deffn
 
 @c page

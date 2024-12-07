@@ -161,6 +161,7 @@ EXTRA_DIST	+= \
 	src/mmux-bash-pointers-processes.c.m4		\
 	src/mmux-bash-pointers-sockets.c.m4		\
 	src/mmux-bash-pointers-strings.c.m4		\
+	src/mmux-bash-pointers-system.c.m4		\
 	src/mmux-bash-pointers-time.c.m4
 
 MMUX_BASH_POINTERS_BUILT_SOURCES	= \
@@ -186,6 +187,7 @@ MMUX_BASH_POINTERS_BUILT_SOURCES	= \
 	src/mmux-bash-pointers-predicates.c		\
 	src/mmux-bash-pointers-sockets.c		\
 	src/mmux-bash-pointers-strings.c		\
+	src/mmux-bash-pointers-system.c			\
 	src/mmux-bash-pointers-time.c
 
 BUILT_SOURCES	+= $(MMUX_BASH_POINTERS_BUILT_SOURCES)
@@ -230,6 +232,7 @@ libmmux_bash_pointers_la_SOURCES	= \
 	src/mmux-bash-pointers-processes.c		\
 	src/mmux-bash-pointers-sockets.c		\
 	src/mmux-bash-pointers-strings.c		\
+	src/mmux-bash-pointers-system.c			\
 	src/mmux-bash-pointers-time.c
 
 .PHONY: library
@@ -272,6 +275,7 @@ EXTRA_DIST		+= \
 	tests/test-sockets.bash.m4		\
 	tests/test-strings.bash.m4		\
 	tests/test-structs.bash.m4		\
+	tests/test-system-configuration.bash.m4	\
 	tests/test-time.bash.m4			\
 	tests/test-types.bash.m4		\
 	tests/test-version.bash.m4
@@ -304,6 +308,7 @@ MMUX_CHECK_BUILT_TESTS	= \
 	tests/test-sockets.bash			\
 	tests/test-strings.bash			\
 	tests/test-structs.bash			\
+	tests/test-system-configuration.bash	\
 	tests/test-time.bash			\
 	tests/test-types.bash			\
 	tests/test-version.bash
