@@ -4731,6 +4731,20 @@ getpid}.  The argument @var{PID_VAR} must be a shell variable name: the exact in
 the process id is bound to this variable.
 @end deffn
 
+
+@deffn Builtin mmux_libc_getppid @var{PPID_VAR}
+Interface to the standard C language function @cfunc{getppid}, @glibcref{Process Identification,
+getppid}.  The argument @var{PID_VAR} must be a shell variable name: the exact integer representing
+the parent's process id is bound to this variable.
+@end deffn
+
+
+@deffn {Linux Builtin} mmux_libc_gettid @var{PPID_VAR}
+Interface to the Linux C language function @cfunc{gettid}, @glibcref{Process Identification,
+gettid}.  The argument @var{PID_VAR} must be a shell variable name: the exact integer representing
+the thread's process id is bound to this variable.
+@end deffn
+
 @c page
 @node strings
 @chapter @asciiz{} strings

@@ -51,6 +51,30 @@ function processes-getpid-1.1 () {
 }
 
 
+#### getppid
+
+function processes-getppid-1.1 () {
+    declare THE_PID
+
+    mmux_libc_getppid THE_PID
+    dotest-predicate mmux_string_is_pid WW(THE_PID)
+}
+
+
+#### getttid
+
+function processes-gettid-1.1 () {
+    if mmux_bash_pointers_builtin_p mmux_libc>_gettid
+    then
+	declare THE_PID
+
+	mmux_libc_gettid THE_PID
+	dotest-equal $PPID WW(THE_PID)
+    else dotest-skipped
+    fi
+}
+
+
 #### let's go
 
 dotest processes-
