@@ -48,11 +48,28 @@ function system-configuration-sysconf-1.1 () {
     {
 	declare VALUE
 
-	dotest-set-debug
+	dotest-unset-debug
 
 	mbfl_location_leave_when_failure( mmux_libc_sysconf VALUE RR(mmux_libc__SC_PAGESIZE) )
 	dotest-debug VALUE=RR(VALUE)
 	dotest-predicate mmux_string_is_slong RR(VALUE)
+    }
+    mbfl_location_leave
+}
+
+
+#### confstr
+
+function system-configuration-confstr-1.1 () {
+    mbfl_location_enter
+    {
+	declare VALUE
+
+	dotest-unset-debug
+
+	mbfl_location_leave_when_failure( mmux_libc_confstr VALUE RR(mmux_libc__CS_PATH) )
+	dotest-debug VALUE=RR(VALUE)
+	true
     }
     mbfl_location_leave
 }

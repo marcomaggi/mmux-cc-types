@@ -1308,6 +1308,16 @@ are available for the operation.
 @MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_XPG3}
 @MmuxDefineGlobalVarSystemConstant{_SC_XOPEN_XPG4}
 
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS64_CFLAGS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS64_LDFLAGS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS64_LIBS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS64_LINTFLAGS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS_CFLAGS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS_LDFLAGS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS_LIBS}
+@MmuxDefineGlobalVarSystemConstant{_CS_LFS_LINTFLAGS}
+@MmuxDefineGlobalVarSystemConstant{_CS_PATH}
+
 @c page
 @node cctypes
 @chapter Interface to supported data types
@@ -4341,6 +4351,30 @@ sysconf}.  Bind to the shell variable whose name is @var{LONG_VAR} the value req
 
 The argument @var{PARAMETER} must be one of the @code{mmux_libc__SC_*} constants (notice the double
 underscore).
+
+@example
+declare VALUE
+
+mmux_libc_sysconf VALUE @RR{mmux_libc__SC_PAGESIZE}
+@RR{VALUE}      @result{} 4096
+@end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_confstr @var{STR_VAR} @var{PARAMETER}
+Interface to the standard C language function @cfunc{confstr}, @glibcref{String Parameters,
+confstr}.  Bind to the shell variable whose name is @var{STR_VAR} the value requested by
+@var{PARAMETER}.
+
+The argument @var{PARAMETER} must be one of the @code{mmux_libc__CS_*} constants (notice the double
+underscore).
+
+@example
+declare VALUE
+
+mmux_libc_confstr VALUE @RR{mmux_libc__CS_PATH}
+@WW{VALUE}      @result{} /bin:/usr/bin
+@end example
 @end deffn
 
 @c page

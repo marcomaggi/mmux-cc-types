@@ -50,4 +50,30 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VAR PARAMETER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_confstr]]])
+{
+  char const *	value_varname;
+  mmux_sint_t	parameter;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(parameter,		2);
+  {
+    mmux_usize_t	required_nbytes = confstr(parameter, NULL, 0);
+
+    if (0 == required_nbytes) {
+      return MMUX_FAILURE;
+    } else {
+      char	value[required_nbytes];
+
+      confstr(parameter, value, required_nbytes);
+      return mmux_string_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER VALUE_VAR PARAMETER"]]])
+
 /* end of file */
