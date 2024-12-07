@@ -1,5 +1,7 @@
 -*- coding: utf-8-unix -*-
 
+* Develop the system configuration module.
+
 * Add a builtin interfacing "flock(2)"? (Documented in a manual page.)
 
 * Add a builtin interfacing "strfmon()"?
