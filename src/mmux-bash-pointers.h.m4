@@ -110,6 +110,7 @@ typedef enum {
 } mmux_bash_rv_t;
 
 #include <mmux-cc-types.h>
+#include <mmux-cc-libc.h>
 
 
 /** --------------------------------------------------------------------

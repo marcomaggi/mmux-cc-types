@@ -256,6 +256,7 @@ AC_CONFIG_FILES([Makefile]
   [meta/scripts/mmux-cc-libc.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT
+AC_CONFIG_SUBDIRS([mmux-cc-types])
 AC_OUTPUT
 
 ### end of file

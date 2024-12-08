@@ -10,6 +10,8 @@ CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
 
+SUBDIRS			= $(subdirs)
+
 ## --------------------------------------------------------------------
 
 nodist_pkgconfig_DATA	= meta/scripts/mmux-cc-libc.pc
@@ -46,10 +48,10 @@ src/m4/$(am__dirstamp):
 
 #### support for GNU Emacs
 
-if WANT_EMACS
-sharelispdir		= $(datadir)/emacs/site-lisp
-dist_sharelisp_LISP	= src/emacs/mmux-cc-libc.el
-endif
+# if WANT_EMACS
+# sharelispdir		= $(datadir)/emacs/site-lisp
+# dist_sharelisp_LISP	= src/emacs/mmux-cc-libc.el
+# endif
 
 
 #### documentation
@@ -117,7 +119,7 @@ lib_LTLIBRARIES			= libmmux-cc-libc.la
 libmmux_cc_libc_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_cc_libc_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS)
 libmmux_cc_libc_la_LDFLAGS	= $(mmux_cc_libc_LINKER_VERSION) $(AM_LDFLAGS)
-libmmux_cc_libc_la_LIBADD	= libmmux-cc-types.la
+libmmux_cc_libc_la_LIBADD	= mmux-cc-types/libmmux-cc-types.la
 libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc.h				\
 	src/mmux-cc-libc-config.h			\
