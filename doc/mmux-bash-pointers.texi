@@ -4486,6 +4486,24 @@ underscore).
 @section Configuring with @MmuxCStruct{rlimit}
 
 
+Let's see how we can allocate a @MmuxCStruct{rlimit} and inspect its fields:
+
+@example
+declare RLIMIT_PTR RLIM_CUR RLIM_MAX
+
+mmux_libc_rlimit_calloc RLIMIT_PTR
+@{
+    mmux_libc_rlim_cur_set @RR{RLIMIT_PTR} 1
+    mmux_libc_rlim_max_set @RR{RLIMIT_PTR} 2
+
+    mmux_libc_rlim_cur_ref RLIM_CUR @RR{RLIMIT_PTR}
+    mmux_libc_rlim_max_ref RLIM_MAX @RR{RLIMIT_PTR}
+
+    mmux_libc_rlimit_dump @RR{RLIMIT_PTR}
+@}
+mmux_libc_free @RR{RLIMIT_PTR}
+@end example
+
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
