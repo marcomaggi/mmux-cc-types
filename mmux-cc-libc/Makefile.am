@@ -93,12 +93,12 @@ install-html-local:
 EXTRA_DIST	+= \
 	src/mmux-cc-libc.h.m4				\
 	src/mmux-cc-libc-internals.h.m4			\
-	src/mmux-cc-libc-constants.c.m4
+	src/mmux-cc-libc-library.c.m4
 
 MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc.h				\
 	src/mmux-cc-libc-internals.h			\
-	src/mmux-cc-libc-constants.c
+	src/mmux-cc-libc-library.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
@@ -122,7 +122,7 @@ libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc.h				\
 	src/mmux-cc-libc-config.h			\
 	src/mmux-cc-libc-internals.h			\
-	src/mmux-cc-libc-constants.c
+	src/mmux-cc-libc-library.c
 
 .PHONY: library
 

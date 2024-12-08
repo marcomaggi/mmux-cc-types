@@ -306,7 +306,8 @@ AC_CONFIG_FILES([Makefile]
   [meta/scripts/mmux-bash-pointers.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT
-AC_CONFIG_SUBDIRS([mmux-cc-types mmux-cc-libs])
+AC_CONFIG_SUBDIRS([mmux-cc-types])
+AC_CONFIG_SUBDIRS([mmux-cc-libc])
 AC_OUTPUT
 
 ### end of file

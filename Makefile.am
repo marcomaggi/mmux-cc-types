@@ -10,7 +10,7 @@ CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
 
-SUBDIRS			= mmux-cc-types mmux-cc-libc
+SUBDIRS			= $(subdirs)
 
 ## --------------------------------------------------------------------
 
