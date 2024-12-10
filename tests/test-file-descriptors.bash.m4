@@ -702,14 +702,18 @@ function file-descriptors-scatter-gather-1.1 () {
 	{
 	    declare WRITE_IOVEC_PTR WRITE_BUFPTR0 WRITE_BUFPTR1 WRITE_BUFPTR2
 
-	    dotest-debug writing
+	    dotest-debug start writing
 
 	    mbfl_location_compensate( mmux_libc_iovec_array_calloc WRITE_IOVEC_PTR RR(IOVEC_LEN),
 				      mmux_libc_free RR(WRITE_IOVEC_PTR) )
 
+	    dotest-debug malloc buffers
+
 	    mbfl_location_compensate( mmux_libc_malloc WRITE_BUFPTR0 RR(BUFLEN), mmux_libc_free RR(WRITE_BUFPTR0) )
 	    mbfl_location_compensate( mmux_libc_malloc WRITE_BUFPTR1 RR(BUFLEN), mmux_libc_free RR(WRITE_BUFPTR1) )
 	    mbfl_location_compensate( mmux_libc_malloc WRITE_BUFPTR2 RR(BUFLEN), mmux_libc_free RR(WRITE_BUFPTR2) )
+
+	    dotest-debug init buffers
 
 	    mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(WRITE_IOVEC_PTR) RR(WRITE_BUFPTR0) 0)
 	    mbfl_location_leave_when_failure( mmux_libc_iov_len_set  RR(WRITE_IOVEC_PTR) RR(BUFLEN)        0)
@@ -722,6 +726,8 @@ function file-descriptors-scatter-gather-1.1 () {
 	    mbfl_location_leave_when_failure( mmux_libc_memcpy_from_bash_string RR(WRITE_BUFPTR1) 'ABCDEFGHIL' 10)
 	    mbfl_location_leave_when_failure( mmux_libc_memcpy_from_bash_string RR(WRITE_BUFPTR2) 'abcde'       5)
 
+	    dotest-debug call writev
+
 	    mbfl_location_leave_when_failure( mmux_libc_writev WRITEV_DONE RR(WRITING_FD) RR(WRITE_IOVEC_PTR) RR(IOVEC_LEN) )
 	}
 
@@ -729,14 +735,18 @@ function file-descriptors-scatter-gather-1.1 () {
 	{
 	    declare READ_IOVEC_PTR READ_BUFPTR0 READ_BUFPTR1 READ_BUFPTR2
 
-	    dotest-debug reading
+	    dotest-debug start reading
 
 	    mbfl_location_compensate( mmux_libc_iovec_array_calloc READ_IOVEC_PTR RR(IOVEC_LEN),
 				      mmux_libc_free RR(READ_IOVEC_PTR) )
 
+	    dotest-debug malloc buffers
+
 	    mbfl_location_compensate( mmux_libc_malloc READ_BUFPTR0 RR(BUFLEN), mmux_libc_free RR(READ_BUFPTR0) )
 	    mbfl_location_compensate( mmux_libc_malloc READ_BUFPTR1 RR(BUFLEN), mmux_libc_free RR(READ_BUFPTR1) )
 	    mbfl_location_compensate( mmux_libc_malloc READ_BUFPTR2 RR(BUFLEN), mmux_libc_free RR(READ_BUFPTR2) )
+
+	    dotest-debug init buffers
 
 	    mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(READ_IOVEC_PTR) RR(READ_BUFPTR0) 0)
 	    mbfl_location_leave_when_failure( mmux_libc_iov_len_set  RR(READ_IOVEC_PTR) RR(BUFLEN)        0)
@@ -745,7 +755,11 @@ function file-descriptors-scatter-gather-1.1 () {
 	    mbfl_location_leave_when_failure( mmux_libc_iov_base_set RR(READ_IOVEC_PTR) RR(READ_BUFPTR2) 2)
 	    mbfl_location_leave_when_failure( mmux_libc_iov_len_set  RR(READ_IOVEC_PTR) RR(BUFLEN)        2)
 
+	    dotest-debug call readv
+
 	    mbfl_location_leave_when_failure( mmux_libc_readv READV_DONE RR(READING_FD) RR(READ_IOVEC_PTR) RR(IOVEC_LEN) )
+
+	    dotest-debug convert buffers to strings
 
 	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR0 RR(READ_BUFPTR0) 10)
 	    mbfl_location_leave_when_failure( mmux_pointer_to_bash_string STR1 RR(READ_BUFPTR1) 10)

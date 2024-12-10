@@ -85,7 +85,10 @@ extern "C" {
  ** Headers.
  ** ----------------------------------------------------------------- */
 
+#include <stdarg.h>
+#include <stdbool.h>
 #include <mmux-cc-libc-config.h>
+#include <mmux-cc-libc-constants.h>
 #include <mmux-cc-types.h>
 
 
@@ -110,6 +113,67 @@ mmux_cc_libc_decl int		mmux_cc_libc_version_interface_age	(void);
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
+typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
+
+typedef struct mmux_libc_stream_tag_t { mmux_uint8_t dummy; }	mmux_libc_stream_tag_t;
+typedef mmux_libc_stream_tag_t *				mmux_libc_stream_t;
+
+
+/** --------------------------------------------------------------------
+ ** File descriptor and input/output functions.
+ ** ----------------------------------------------------------------- */
+
+typedef struct mmux_libc_iovec_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_IOVEC]; } mmux_libc_iovec_t;
+typedef struct mmux_libc_flock_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_FLOCK]; } mmux_libc_flock_t;
+
+typedef struct mmux_libc_iovec_array_t {
+  mmux_libc_iovec_t *	iova_pointer;
+  mmux_usize_t		iova_length;
+} mmux_libc_iovec_array_t;
+
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdin (void);
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdou (void);
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stder (void);
+
+#define MMUX_LIBC_STDIN		(mmux_libc_stdin())
+#define MMUX_LIBC_STDOU		(mmux_libc_stdou())
+#define MMUX_LIBC_STDER		(mmux_libc_stder())
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(iovec,	iov_base,	mmux_pointer_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(iovec,	iov_len,	mmux_usize_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(iovec_array,	iova_pointer,	mmux_pointer_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(iovec_array,	iova_length,	mmux_usize_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_type,		mmux_sshort_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_whence,	mmux_sshort_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_start,	mmux_off_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_len,		mmux_off_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_pid,		mmux_pid_t)
+
+mmux_cc_libc_decl bool mmux_libc_readv (mmux_usize_t * nbytes_read_p, mmux_libc_file_descriptor_t fd, mmux_libc_iovec_array_t iovec_array)
+  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_writev (mmux_usize_t * nbytes_written_p, mmux_libc_file_descriptor_t fd, mmux_libc_iovec_array_t iovec_array)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_preadv (mmux_usize_t * nbytes_read_p, mmux_libc_file_descriptor_t fd,
+					 mmux_libc_iovec_array_t iovec_array, mmux_off_t offset)
+  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_pwritev (mmux_usize_t * nbytes_written_p, mmux_libc_file_descriptor_t fd,
+					  mmux_libc_iovec_array_t iovec_array, mmux_off_t offset)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_preadv2 (mmux_usize_t * nbytes_read_p, mmux_libc_file_descriptor_t fd,
+					  mmux_libc_iovec_array_t iovec_array, mmux_off_t offset, mmux_sint_t flags)
+  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_pwritev2 (mmux_usize_t * nbytes_written_p, mmux_libc_file_descriptor_t fd,
+					   mmux_libc_iovec_array_t iovec_array, mmux_off_t offset, mmux_sint_t flags)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * iovec_p, char const * struct_name);
+mmux_cc_libc_decl bool mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * flock_p, char const * struct_name);
+mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** const str_p, mmux_sint_t flag);
+mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol       (char const ** const str_p, mmux_sint_t flag);
 
 
 /** --------------------------------------------------------------------

@@ -28,21 +28,18 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-typedef mmux_sint_t			mmux_libc_file_descriptor_t;
-typedef FILE *				mmux_libc_stream_t;
-
 typedef struct rlimit			mmux_libc_rlimit_tag_t;
 typedef mmux_libc_rlimit_tag_t *	mmux_libc_rlimit_t;
 
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_rlimit_dump (mmux_libc_stream_t stream, mmux_libc_rlimit_t rlimit_pointer, char const * const struct_name)
+mmux_libc_rlimit_dump (mmux_libc_file_descriptor_t fd, mmux_libc_rlimit_t rlimit_pointer, char const * const struct_name)
 {
   int	rv;
 
   {
-    rv = fprintf(stream, "%s = %p\n", struct_name, (mmux_pointer_t)rlimit_pointer);
+    rv = dprintf(fd.value, "%s = %p\n", struct_name, (mmux_pointer_t)rlimit_pointer);
     if (0 > rv) { return true; }
   }
 
@@ -51,7 +48,7 @@ mmux_libc_rlimit_dump (mmux_libc_stream_t stream, mmux_libc_rlimit_t rlimit_poin
     char	str[len];
 
     mmux_rlim_sprint(str, len, rlimit_pointer->rlim_cur);
-    rv = fprintf(stream, "%s->rlim_cur = %s\n", struct_name, str);
+    rv = dprintf(fd.value, "%s->rlim_cur = %s\n", struct_name, str);
     if (0 > rv) { return true; }
   }
 
@@ -60,7 +57,7 @@ mmux_libc_rlimit_dump (mmux_libc_stream_t stream, mmux_libc_rlimit_t rlimit_poin
     char	str[len];
 
     mmux_rlim_sprint(str, len, rlimit_pointer->rlim_max);
-    rv = fprintf(stream, "%s->rlim_max = %s\n", struct_name, str);
+    rv = dprintf(fd.value, "%s->rlim_max = %s\n", struct_name, str);
     if (0 > rv) { return true; }
   }
 
@@ -243,7 +240,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rlimit_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    bool	rv = mmux_libc_rlimit_dump(stdout, rlimit_pointer, struct_name);
+    bool	rv = mmux_libc_rlimit_dump(MMUX_LIBC_STDOU, rlimit_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }

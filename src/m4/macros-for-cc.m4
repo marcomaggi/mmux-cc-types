@@ -279,6 +279,12 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_UINT]]],[[[MMUX_BASH_PARSE_BUILTIN_ARG_
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[uint]]],[[[$1]]],[[[$2]]])]]])
 
+# $1 - name of the target variable, a value of type "mmux_libc_file_descriptor_t".
+# $2 - index in the array "argv" of the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD]]],[[[{
+MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[sint]]],[[[$1.value]]],[[[$2]]])
+}]]])
+
 # --------------------------------------------------------------------
 
 # $1 - name of the target variable

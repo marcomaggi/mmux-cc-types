@@ -36,8 +36,6 @@
  ** Helpers.
  ** ----------------------------------------------------------------- */
 
-typedef FILE *					mmux_libc_stream_t;
-
 typedef struct addrinfo				mmux_libc_addrinfo_tag_t;
 typedef mmux_libc_addrinfo_tag_t *		mmux_libc_addrinfo_t;
 
@@ -425,7 +423,7 @@ sa_ipproto_to_asciiz_name(char const ** name_p, int sa_ipproto)
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_sockaddr_un_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_un_t sockaddr_un_pointer, char const * struct_name)
+mmux_libc_sockaddr_un_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_un_t sockaddr_un_pointer, char const * struct_name)
 {
   int	rv;
 
@@ -433,12 +431,12 @@ mmux_libc_sockaddr_un_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_un_t s
     char const *	sun_name = "unknown";
 
     sa_family_to_asciiz_name(&sun_name, sockaddr_un_pointer->sun_family);
-    rv = fprintf(stream, "%s.sun_family = \"%d\" (%s)\n", struct_name, sockaddr_un_pointer->sun_family, sun_name);
+    rv = dprintf(fd.value, "%s.sun_family = \"%d\" (%s)\n", struct_name, sockaddr_un_pointer->sun_family, sun_name);
     if (0 > rv) { return true; }
   }
 
   {
-    rv = fprintf(stream, "%s.sun_path = \"%s\"\n", struct_name, sockaddr_un_pointer->sun_path);
+    rv = dprintf(fd.value, "%s.sun_path = \"%s\"\n", struct_name, sockaddr_un_pointer->sun_path);
     if (0 > rv) { return true; }
   }
   return false;
@@ -447,7 +445,7 @@ mmux_libc_sockaddr_un_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_un_t s
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_sockaddr_in_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_in_t sockaddr_in_pointer, char const * struct_name)
+mmux_libc_sockaddr_in_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_in_t sockaddr_in_pointer, char const * struct_name)
 {
   int	rv;
 
@@ -455,7 +453,7 @@ mmux_libc_sockaddr_in_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_in_t s
     char const *	sin_name = "unknown";
 
     sa_family_to_asciiz_name(&sin_name, sockaddr_in_pointer->sin_family);
-    rv = fprintf(stream, "%s.sin_family = \"%d\" (%s)\n", struct_name, sockaddr_in_pointer->sin_family, sin_name);
+    rv = dprintf(fd.value, "%s.sin_family = \"%d\" (%s)\n", struct_name, sockaddr_in_pointer->sin_family, sin_name);
     if (0 > rv) { return true; }
   }
 
@@ -466,12 +464,12 @@ mmux_libc_sockaddr_in_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_in_t s
 
     inet_ntop(sockaddr_in_pointer->sin_family, &(sockaddr_in_pointer->sin_addr), presentation_buf, presentation_len);
     presentation_buf[presentation_len-1] = '\0';
-    rv = fprintf(stream, "%s.sin_addr = \"%s\"\n", struct_name, presentation_buf);
+    rv = dprintf(fd.value, "%s.sin_addr = \"%s\"\n", struct_name, presentation_buf);
     if (0 > rv) { return true; }
   }
 
   {
-    rv = fprintf(stream, "%s.sin_port = \"%d\"\n", struct_name, ntohs(sockaddr_in_pointer->sin_port));
+    rv = dprintf(fd.value, "%s.sin_port = \"%d\"\n", struct_name, ntohs(sockaddr_in_pointer->sin_port));
     if (0 > rv) { return true; }
   }
   return false;
@@ -480,7 +478,7 @@ mmux_libc_sockaddr_in_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_in_t s
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_sockaddr_insix_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_insix_t sockaddr_in6_pointer, char const * const struct_name)
+mmux_libc_sockaddr_insix_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_insix_t sockaddr_in6_pointer, char const * const struct_name)
 {
   int	rv;
 
@@ -488,7 +486,7 @@ mmux_libc_sockaddr_insix_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_ins
     char const *	sin6_name = "unknown";
 
     sa_family_to_asciiz_name(&sin6_name, sockaddr_in6_pointer->sin6_family);
-    rv = fprintf(stream, "%s.sin6_family = \"%d\" (%s)\n", struct_name, sockaddr_in6_pointer->sin6_family, sin6_name);
+    rv = dprintf(fd.value, "%s.sin6_family = \"%d\" (%s)\n", struct_name, sockaddr_in6_pointer->sin6_family, sin6_name);
     if (0 > rv) { return true; }
   }
 
@@ -499,17 +497,17 @@ mmux_libc_sockaddr_insix_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_ins
 
     inet_ntop(sockaddr_in6_pointer->sin6_family, &(sockaddr_in6_pointer->sin6_addr), presentation_buf, presentation_len);
     presentation_buf[presentation_len-1] = '\0';
-    rv = fprintf(stream, "%s.sin6_addr = \"%s\"\n", struct_name, presentation_buf);
+    rv = dprintf(fd.value, "%s.sin6_addr = \"%s\"\n", struct_name, presentation_buf);
     if (0 > rv) { return true; }
   }
 
-  rv = fprintf(stream, "%s.sin6_flowinfo = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_flowinfo));
+  rv = dprintf(fd.value, "%s.sin6_flowinfo = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_flowinfo));
   if (0 > rv) { return true; }
 
-  rv = fprintf(stream, "%s.sin6_scope_id = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_scope_id));
+  rv = dprintf(fd.value, "%s.sin6_scope_id = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_scope_id));
   if (0 > rv) { return true; }
 
-  rv = fprintf(stream, "%s.sin6_port = \"%d\"\n", struct_name, ntohs(sockaddr_in6_pointer->sin6_port));
+  rv = dprintf(fd.value, "%s.sin6_port = \"%d\"\n", struct_name, ntohs(sockaddr_in6_pointer->sin6_port));
   if (0 > rv) { return true; }
 
   return false;
@@ -518,44 +516,44 @@ mmux_libc_sockaddr_insix_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_ins
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_hostent_dump (mmux_libc_stream_t stream, mmux_libc_hostent_t hostent_pointer, char const * struct_name)
+mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t hostent_pointer, char const * struct_name)
 {
   int	aliases_idx   = 0;
   int	addr_list_idx = 0;
   int	rv;
 
-  rv = fprintf(stream, "%s.h_name = \"%s\"\n", struct_name, hostent_pointer->h_name);
+  rv = dprintf(fd.value, "%s.h_name = \"%s\"\n", struct_name, hostent_pointer->h_name);
 
   if (NULL != hostent_pointer->h_aliases) {
     for (; hostent_pointer->h_aliases[aliases_idx]; ++aliases_idx) {
-      rv = fprintf(stream, "%s.h_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, hostent_pointer->h_aliases[aliases_idx]);
+      rv = dprintf(fd.value, "%s.h_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, hostent_pointer->h_aliases[aliases_idx]);
       if (0 > rv) { return true; }
     }
   }
   if (0 == aliases_idx) {
-    rv = fprintf(stream, "%s.h_aliases = \"0x0\"\n", struct_name);
+    rv = dprintf(fd.value, "%s.h_aliases = \"0x0\"\n", struct_name);
     if (0 > rv) { return true; }
   }
 
-  rv = fprintf(stream, "%s.h_addrtype = \"%d\"", struct_name, hostent_pointer->h_addrtype);
+  rv = dprintf(fd.value, "%s.h_addrtype = \"%d\"", struct_name, hostent_pointer->h_addrtype);
   if (0 > rv) { return true; }
 
   switch (hostent_pointer->h_addrtype) {
   case AF_INET:
-    rv = fprintf(stream, " (AF_INET)\n");
+    rv = dprintf(fd.value, " (AF_INET)\n");
     if (0 > rv) { return true; }
     break;
   case AF_INET6:
-    rv = fprintf(stream, " (AF_INET6)\n");
+    rv = dprintf(fd.value, " (AF_INET6)\n");
     if (0 > rv) { return true; }
     break;
   default:
-    rv = fprintf(stream, "\n");
+    rv = dprintf(fd.value, "\n");
     if (0 > rv) { return true; }
     break;
   }
 
-  rv = fprintf(stream, "%s.h_length = \"%d\"\n", struct_name, hostent_pointer->h_length);
+  rv = dprintf(fd.value, "%s.h_length = \"%d\"\n", struct_name, hostent_pointer->h_length);
   if (0 > rv) { return true; }
 
   if (NULL != hostent_pointer->h_addr_list) {
@@ -566,12 +564,12 @@ mmux_libc_hostent_dump (mmux_libc_stream_t stream, mmux_libc_hostent_t hostent_p
 
       inet_ntop(hostent_pointer->h_addrtype, hostent_pointer->h_addr_list[addr_list_idx], presentation_buf, presentation_len);
       presentation_buf[presentation_len-1] = '\0';
-      rv = fprintf(stream, "%s.h_addr_list[%d] = \"%s\"\n", struct_name, addr_list_idx, presentation_buf);
+      rv = dprintf(fd.value, "%s.h_addr_list[%d] = \"%s\"\n", struct_name, addr_list_idx, presentation_buf);
       if (0 > rv) { return true; }
     }
   }
   if (0 == addr_list_idx) {
-    rv = fprintf(stream, "%s.h_addr_list = \"0x0\"\n", struct_name);
+    rv = dprintf(fd.value, "%s.h_addr_list = \"0x0\"\n", struct_name);
     if (0 > rv) { return true; }
   }
 
@@ -582,10 +580,10 @@ mmux_libc_hostent_dump (mmux_libc_stream_t stream, mmux_libc_hostent_t hostent_p
 
     inet_ntop(hostent_pointer->h_addrtype, hostent_pointer->h_addr, presentation_buf, presentation_len);
     presentation_buf[presentation_len-1] = '\0';
-    rv = fprintf(stream, "%s.h_addr = \"%s\"\n", struct_name, presentation_buf);
+    rv = dprintf(fd.value, "%s.h_addr = \"%s\"\n", struct_name, presentation_buf);
     if (0 > rv) { return true; }
   } else {
-    rv = fprintf(stream, "%s.h_addr = \"0x0\"\n", struct_name);
+    rv = dprintf(fd.value, "%s.h_addr = \"0x0\"\n", struct_name);
     if (0 > rv) { return true; }
   }
 
@@ -595,29 +593,29 @@ mmux_libc_hostent_dump (mmux_libc_stream_t stream, mmux_libc_hostent_t hostent_p
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_servent_dump (mmux_libc_stream_t stream, mmux_libc_servent_t servent_pointer, char const * const struct_name)
+mmux_libc_servent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_servent_t servent_pointer, char const * const struct_name)
 {
   int	aliases_idx = 0;
   int	rv;
 
-  rv = fprintf(stream, "%s.s_name = \"%s\"\n", struct_name, servent_pointer->s_name);
+  rv = dprintf(fd.value, "%s.s_name = \"%s\"\n", struct_name, servent_pointer->s_name);
   if (0 > rv) { return true; }
 
   if (NULL != servent_pointer->s_aliases) {
     for (; servent_pointer->s_aliases[aliases_idx]; ++aliases_idx) {
-      rv = fprintf(stream, "%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, servent_pointer->s_aliases[aliases_idx]);
+      rv = dprintf(fd.value, "%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, servent_pointer->s_aliases[aliases_idx]);
       if (0 > rv) { return true; }
     }
   }
   if (0 == aliases_idx) {
-    rv = fprintf(stream, "%s.s_aliases = \"0x0\"\n", struct_name);
+    rv = dprintf(fd.value, "%s.s_aliases = \"0x0\"\n", struct_name);
     if (0 > rv) { return true; }
   }
 
-  rv = fprintf(stream, "%s.s_port = \"%d\"\n", struct_name, ntohs(servent_pointer->s_port));
+  rv = dprintf(fd.value, "%s.s_port = \"%d\"\n", struct_name, ntohs(servent_pointer->s_port));
   if (0 > rv) { return true; }
 
-  rv = fprintf(stream, "%s.s_proto = \"%s\"\n", struct_name, servent_pointer->s_proto);
+  rv = dprintf(fd.value, "%s.s_proto = \"%s\"\n", struct_name, servent_pointer->s_proto);
   if (0 > rv) { return true; }
 
   return false;
@@ -626,26 +624,26 @@ mmux_libc_servent_dump (mmux_libc_stream_t stream, mmux_libc_servent_t servent_p
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_protoent_dump (mmux_libc_stream_t stream, mmux_libc_protoent_t protoent_pointer, char const * struct_name)
+mmux_libc_protoent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_protoent_t protoent_pointer, char const * struct_name)
 {
   int	aliases_idx = 0;
   int	rv;
 
-  rv = fprintf(stream, "%s.s_name = \"%s\"\n", struct_name, protoent_pointer->p_name);
+  rv = dprintf(fd.value, "%s.s_name = \"%s\"\n", struct_name, protoent_pointer->p_name);
   if (0 > rv) { return true; }
 
   if (NULL != protoent_pointer->p_aliases) {
     for (; protoent_pointer->p_aliases[aliases_idx]; ++aliases_idx) {
-      rv = fprintf(stream, "%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, protoent_pointer->p_aliases[aliases_idx]);
+      rv = dprintf(fd.value, "%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, protoent_pointer->p_aliases[aliases_idx]);
       if (0 > rv) { return true; }
     }
   }
   if (0 == aliases_idx) {
-    rv = fprintf(stream, "%s.s_aliases = \"0x0\"\n", struct_name);
+    rv = dprintf(fd.value, "%s.s_aliases = \"0x0\"\n", struct_name);
     if (0 > rv) { return true; }
   }
 
-  rv = fprintf(stream, "%s.s_proto = \"%d\"\n", struct_name, protoent_pointer->p_proto);
+  rv = dprintf(fd.value, "%s.s_proto = \"%d\"\n", struct_name, protoent_pointer->p_proto);
   if (0 > rv) { return true; }
 
   return false;
@@ -654,26 +652,26 @@ mmux_libc_protoent_dump (mmux_libc_stream_t stream, mmux_libc_protoent_t protoen
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_netent_dump (mmux_libc_stream_t stream, mmux_libc_netent_t netent_pointer, char const * struct_name)
+mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t netent_pointer, char const * struct_name)
 {
   int	aliases_idx = 0;
   int	rv;
 
-  rv = fprintf(stream, "%s.n_name = \"%s\"\n", struct_name, netent_pointer->n_name);
+  rv = dprintf(fd.value, "%s.n_name = \"%s\"\n", struct_name, netent_pointer->n_name);
   if (0 > rv) { return true; }
 
   if (NULL != netent_pointer->n_aliases) {
     for (; netent_pointer->n_aliases[aliases_idx]; ++aliases_idx) {
-      rv = fprintf(stream, "%s.n_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, netent_pointer->n_aliases[aliases_idx]);
+      rv = dprintf(fd.value, "%s.n_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, netent_pointer->n_aliases[aliases_idx]);
       if (0 > rv) { return true; }
     }
   }
   if (0 == aliases_idx) {
-    rv = fprintf(stream, "%s.n_aliases = \"0x0\"\n", struct_name);
+    rv = dprintf(fd.value, "%s.n_aliases = \"0x0\"\n", struct_name);
     if (0 > rv) { return true; }
   }
 
-  rv = fprintf(stream, "%s.n_addrtype = \"%d\"\n", struct_name, netent_pointer->n_addrtype);
+  rv = dprintf(fd.value, "%s.n_addrtype = \"%d\"\n", struct_name, netent_pointer->n_addrtype);
   if (0 > rv) { return true; }
 
   /* The value "netent_pointer->n_net" is in host byte order. */
@@ -685,7 +683,7 @@ mmux_libc_netent_dump (mmux_libc_stream_t stream, mmux_libc_netent_t netent_poin
 
     inet_ntop(netent_pointer->n_addrtype, &(network_byteorder_net), net_str, (mmux_socklen_t)IS_THIS_ENOUGH_QUESTION_MARK);
 
-    rv = fprintf(stream, "%s.n_net = \"%lu\" (%s)\n", struct_name, (mmux_ulong_t)(netent_pointer->n_net), net_str);
+    rv = dprintf(fd.value, "%s.n_net = \"%lu\" (%s)\n", struct_name, (mmux_ulong_t)(netent_pointer->n_net), net_str);
     if (0 > rv) { return true; }
   }
   return MMUX_SUCCESS;
@@ -694,7 +692,7 @@ mmux_libc_netent_dump (mmux_libc_stream_t stream, mmux_libc_netent_t netent_poin
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_sockaddr_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_t sockaddr_pointer, char const * const struct_name)
+mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t sockaddr_pointer, char const * const struct_name)
 {
   int	rv;
 
@@ -702,20 +700,14 @@ mmux_libc_sockaddr_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_t sockadd
     char const *	family_name = "unknown";
 
     sa_family_to_asciiz_name(&family_name, sockaddr_pointer->sa_family);
-    rv = fprintf(stream, "%s.sa_family = \"%d\" (%s)\n", struct_name, (sockaddr_pointer->sa_family), family_name);
+    rv = dprintf(fd.value, "%s.sa_family = \"%d\" (%s)\n", struct_name, (sockaddr_pointer->sa_family), family_name);
     if (0 > rv) { return true; }
   }
 
   switch (sockaddr_pointer->sa_family) {
-  case AF_INET:
-    return mmux_libc_sockaddr_in_dump(stream, (mmux_libc_sockaddr_in_t)sockaddr_pointer, struct_name);
-
-  case AF_INET6:
-    return mmux_libc_sockaddr_insix_dump(stream, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
-
-  case AF_LOCAL:
-    return mmux_libc_sockaddr_un_dump(stream, (mmux_libc_sockaddr_un_t)sockaddr_pointer, struct_name);
-
+  case AF_INET:		return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t)   sockaddr_pointer, struct_name);
+  case AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
+  case AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t)   sockaddr_pointer, struct_name);
   default:
     return false;
   }
@@ -724,7 +716,7 @@ mmux_libc_sockaddr_dump (mmux_libc_stream_t stream, mmux_libc_sockaddr_t sockadd
 /* ------------------------------------------------------------------ */
 
 static bool
-mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinfo_pointer, char const * struct_name)
+mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t addrinfo_pointer, char const * struct_name)
 {
   int	rv;
 
@@ -732,15 +724,15 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
   {
     bool	not_first_flags = false;
 
-    rv = fprintf(stream, "%s.ai_flags = \"%d\"", struct_name, addrinfo_pointer->ai_flags);
+    rv = dprintf(fd.value, "%s.ai_flags = \"%d\"", struct_name, addrinfo_pointer->ai_flags);
     if (0 > rv) { return true; }
 
     if (AI_ADDRCONFIG & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_ADDRCONFIG");
+	rv = dprintf(fd.value, " | AI_ADDRCONFIG");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_ADDRCONFIG");
+	rv = dprintf(fd.value, " (AI_ADDRCONFIG");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -748,10 +740,10 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_ALL & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_ALL");
+	rv = dprintf(fd.value, " | AI_ALL");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_ALL");
+	rv = dprintf(fd.value, " (AI_ALL");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -759,10 +751,10 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_CANONIDN & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_CANONIDN");
+	rv = dprintf(fd.value, " | AI_CANONIDN");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_CANONIDN");
+	rv = dprintf(fd.value, " (AI_CANONIDN");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -770,10 +762,10 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_CANONNAME & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_CANONNAME");
+	rv = dprintf(fd.value, " | AI_CANONNAME");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_CANONNAME");
+	rv = dprintf(fd.value, " (AI_CANONNAME");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -781,10 +773,10 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_IDN & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_IDN");
+	rv = dprintf(fd.value, " | AI_IDN");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_IDN");
+	rv = dprintf(fd.value, " (AI_IDN");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -792,10 +784,10 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_NUMERICSERV & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_NUMERICSERV");
+	rv = dprintf(fd.value, " | AI_NUMERICSERV");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_NUMERICSERV");
+	rv = dprintf(fd.value, " (AI_NUMERICSERV");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -803,10 +795,10 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_PASSIVE & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_PASSIVE");
+	rv = dprintf(fd.value, " | AI_PASSIVE");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_PASSIVE");
+	rv = dprintf(fd.value, " (AI_PASSIVE");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
@@ -814,20 +806,20 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
 
     if (AI_V4MAPPED & addrinfo_pointer->ai_flags ) {
       if (not_first_flags) {
-	rv = fprintf(stream, " | AI_V4MAPPED");
+	rv = dprintf(fd.value, " | AI_V4MAPPED");
 	if (0 > rv) { return true; }
       } else {
-	rv = fprintf(stream, " (AI_V4MAPPED");
+	rv = dprintf(fd.value, " (AI_V4MAPPED");
 	if (0 > rv) { return true; }
 	not_first_flags = true;
       }
     }
 
     if (not_first_flags) {
-      rv = fprintf(stream, ")\n");
+      rv = dprintf(fd.value, ")\n");
       if (0 > rv) { return true; }
     } else {
-      rv = fprintf(stream, "\n");
+      rv = dprintf(fd.value, "\n");
       if (0 > rv) { return true; }
     }
   }
@@ -837,7 +829,7 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
     char const *	ai_name = "unknown";
 
     sa_family_to_asciiz_name(&ai_name, addrinfo_pointer->ai_family);
-    rv = fprintf(stream, "%s.ai_family = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_family, ai_name);
+    rv = dprintf(fd.value, "%s.ai_family = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_family, ai_name);
     if (0 > rv) { return true; }
   }
 
@@ -846,7 +838,7 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
     char const *	ai_name = "unknown";
 
     sa_socktype_to_asciiz_name(&ai_name, addrinfo_pointer->ai_socktype);
-    rv = fprintf(stream, "%s.ai_socktype = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_socktype, ai_name);
+    rv = dprintf(fd.value, "%s.ai_socktype = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_socktype, ai_name);
     if (0 > rv) { return true; }
   }
 
@@ -855,7 +847,7 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
     char const *	ai_name = "unknown";
 
     sa_ipproto_to_asciiz_name(&ai_name, addrinfo_pointer->ai_protocol);
-    rv = fprintf(stream, "%s.ai_protocol = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_protocol, ai_name);
+    rv = dprintf(fd.value, "%s.ai_protocol = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_protocol, ai_name);
     if (0 > rv) { return true; }
   }
 
@@ -877,7 +869,7 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
       break;
     }
 
-    rv = fprintf(stream, "%s.ai_addrlen = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_addrlen, known_struct_name);
+    rv = dprintf(fd.value, "%s.ai_addrlen = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_addrlen, known_struct_name);
     if (0 > rv) { return true; }
   }
 
@@ -889,26 +881,26 @@ mmux_libc_addrinfo_dump (mmux_libc_stream_t stream, mmux_libc_addrinfo_t addrinf
     memset(bufstr, '\0', buflen);
     inet_ntop(addrinfo_pointer->ai_family, &(addrinfo_pointer->ai_addr), bufstr, buflen);
 
-    rv = fprintf(stream, "%s.ai_addr = \"%p\" (%s)\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_addr), bufstr);
+    rv = dprintf(fd.value, "%s.ai_addr = \"%p\" (%s)\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_addr), bufstr);
     if (0 > rv) { return true; }
   }
 
   /* Inspect the field: ai_canonname */
   {
     if (addrinfo_pointer->ai_canonname) {
-      rv = fprintf(stream, "%s.ai_canonname = \"%p\" (%s)\n", struct_name,
+      rv = dprintf(fd.value, "%s.ai_canonname = \"%p\" (%s)\n", struct_name,
 		   (mmux_pointer_t)(addrinfo_pointer->ai_canonname),
 		   addrinfo_pointer->ai_canonname);
       if (0 > rv) { return true; }
     } else {
-      rv = fprintf(stream, "%s.ai_canonname = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_canonname));
+      rv = dprintf(fd.value, "%s.ai_canonname = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_canonname));
       if (0 > rv) { return true; }
     }
   }
 
   /* Inspect the field: ai_next */
   {
-    rv = fprintf(stream, "%s.ai_next = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_next));
+    rv = dprintf(fd.value, "%s.ai_next = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_next));
     if (0 > rv) { return true; }
   }
 
@@ -950,7 +942,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_dump]]])
   }
   {
     mmux_libc_sockaddr_t	sockaddr_pointer = _sockaddr_pointer;
-    bool			rv = mmux_libc_sockaddr_dump(stdout, sockaddr_pointer, struct_name);
+    bool			rv = mmux_libc_sockaddr_dump(MMUX_LIBC_STDOU, sockaddr_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1068,7 +1060,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_dump]]])
   }
   {
     mmux_libc_sockaddr_un_t	sockaddr_un_pointer = _sockaddr_un_pointer;
-    bool			rv = mmux_libc_sockaddr_un_dump(stdout, sockaddr_un_pointer, struct_name);
+    bool			rv = mmux_libc_sockaddr_un_dump(MMUX_LIBC_STDOU, sockaddr_un_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1273,7 +1265,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_dump]]])
   }
   {
     mmux_libc_sockaddr_in_t	sockaddr_in_pointer = _sockaddr_in_pointer;
-    bool			rv = mmux_libc_sockaddr_in_dump(stdout, sockaddr_in_pointer, struct_name);
+    bool			rv = mmux_libc_sockaddr_in_dump(MMUX_LIBC_STDOU, sockaddr_in_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1524,7 +1516,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_dump]]])
   }
   {
     mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = _sockaddr_in6_pointer;
-    bool			rv = mmux_libc_sockaddr_insix_dump(stdout, sockaddr_in6_pointer, struct_name);
+    bool			rv = mmux_libc_sockaddr_insix_dump(MMUX_LIBC_STDOU, sockaddr_in6_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1652,7 +1644,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_dump]]])
   }
   {
     mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
-    bool			rv = mmux_libc_addrinfo_dump(stdout, addrinfo_pointer, struct_name);
+    bool			rv = mmux_libc_addrinfo_dump(MMUX_LIBC_STDOU, addrinfo_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1722,7 +1714,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_dump]]])
   }
   {
     mmux_libc_hostent_t	hostent_pointer = _hostent_pointer;
-    bool		rv = mmux_libc_hostent_dump(stdout, hostent_pointer, struct_name);
+    bool		rv = mmux_libc_hostent_dump(MMUX_LIBC_STDOU, hostent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1790,7 +1782,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_dump]]])
   }
   {
     mmux_libc_servent_t	servent_pointer = _servent_pointer;
-    bool		rv = mmux_libc_servent_dump(stdout, servent_pointer, struct_name);
+    bool		rv = mmux_libc_servent_dump(MMUX_LIBC_STDOU, servent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1857,7 +1849,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_dump]]])
   }
   {
     mmux_libc_protoent_t	protoent_pointer = _protoent_pointer;
-    bool		rv = mmux_libc_protoent_dump(stdout, protoent_pointer, struct_name);
+    bool		rv = mmux_libc_protoent_dump(MMUX_LIBC_STDOU, protoent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
@@ -1925,7 +1917,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_dump]]])
   }
   {
     mmux_libc_netent_t	netent_pointer = _netent_pointer;
-    bool		rv = mmux_libc_netent_dump(stdout, netent_pointer, struct_name);
+    bool		rv = mmux_libc_netent_dump(MMUX_LIBC_STDOU, netent_pointer, struct_name);
 
     return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }

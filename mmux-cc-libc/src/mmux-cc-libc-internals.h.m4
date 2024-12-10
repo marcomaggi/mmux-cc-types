@@ -27,6 +27,61 @@
 
 
 /** --------------------------------------------------------------------
+ ** Preliminary definitions.
+ ** ----------------------------------------------------------------- */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* The  macro MMUX_CC_LIBC_UNUSED  indicates that  a function,  function argument  or
+   variable may potentially be unused. Usage examples:
+
+   static int unused_function (char arg) MMUX_CC_LIBC_UNUSED;
+   int foo (char unused_argument MMUX_CC_LIBC_UNUSED);
+   int unused_variable MMUX_CC_LIBC_UNUSED;
+*/
+#ifdef __GNUC__
+#  define MMUX_CC_LIBC_UNUSED		__attribute__((__unused__))
+#else
+#  define MMUX_CC_LIBC_UNUSED		/* empty */
+#endif
+
+#ifndef __GNUC__
+#  define __attribute__(...)	/* empty */
+#endif
+
+#ifndef __GNUC__
+#  define __builtin_expect(...)	/* empty */
+#endif
+
+#if defined _WIN32 || defined __CYGWIN__
+#  ifdef BUILDING_DLL
+#    ifdef __GNUC__
+#      define mmux_cc_libc_decl		__attribute__((__dllexport__)) extern
+#    else
+#      define mmux_cc_libc_decl		__declspec(dllexport) extern
+#    endif
+#  else
+#    ifdef __GNUC__
+#      define mmux_cc_libc_decl		__attribute__((__dllimport__)) extern
+#    else
+#      define mmux_cc_libc_decl		__declspec(dllimport) extern
+#    endif
+#  endif
+#  define mmux_cc_libc_private_decl	extern
+#else
+#  if __GNUC__ >= 4
+#    define mmux_cc_libc_decl		__attribute__((__visibility__("default"))) extern
+#    define mmux_cc_libc_private_decl	__attribute__((__visibility__("hidden")))  extern
+#  else
+#    define mmux_cc_libc_decl		extern
+#    define mmux_cc_libc_private_decl	extern
+#  endif
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Headers.
  ** ----------------------------------------------------------------- */
 
@@ -36,7 +91,9 @@
 #  include <config.h>
 #endif
 
-#include <mmux-cc-libc.h>
+#include <mmux-cc-types.h>
+#include <mmux-cc-libc-config.h>
+#include <mmux-cc-libc-constants.h>
 
 #ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
@@ -188,6 +245,22 @@
 
 
 /** --------------------------------------------------------------------
+ ** Type definition.
+ ** ----------------------------------------------------------------- */
+
+typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
+typedef FILE *			mmux_libc_stream_t;
+
+typedef struct iovec		mmux_libc_iovec_t;
+typedef struct flock		mmux_libc_flock_t;
+
+typedef struct mmux_libc_iovec_array_t {
+  mmux_libc_iovec_t *	iova_pointer;
+  mmux_usize_t		iova_length;
+} mmux_libc_iovec_array_t;
+
+
+/** --------------------------------------------------------------------
  ** Constants and variables.
  ** ----------------------------------------------------------------- */
 
@@ -197,6 +270,9 @@
  ** Functions.
  ** ----------------------------------------------------------------- */
 
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdin (void);
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdou (void);
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stder (void);
 
 
 /** --------------------------------------------------------------------

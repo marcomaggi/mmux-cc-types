@@ -35,6 +35,40 @@ m4_define([[[MMUX_M4_TOUPPER]]],[[[m4_translit([[[$1]]],[[[abcdefghijklmnopqrstu
 m4_define([[[MMUX_M4_TOLOWER]]],[[[m4_translit([[[$1]]],[[[ABCDEFGHIJKLMNOPQRSTUVWXYZ]]],[[[abcdefghijklmnopqrstuvwxyz]]])]]])
 
 
+m4_dnl common functions generation
+
+m4_dnl $1 - data structure name
+m4_dnl $2 - field name
+m4_dnl $3 - field type
+m4_dnl
+m4_dnl Usage example:
+m4_dnl
+m4_dnl   DEFINE_STRUCT_SETTER_GETTER(flock, l_type, mmux_sshort_t)
+m4_dnl
+m4_define([[[DEFINE_STRUCT_SETTER_GETTER]]],[[[void
+mmux_libc_$2_set (mmux_libc_$1_t * const P, $3 value)
+{
+  P->$2 = value;
+}
+$3
+mmux_libc_$2_ref (mmux_libc_$1_t const * const P)
+{
+  return P->$2;
+}]]])
+
+m4_dnl $1 - data structure name
+m4_dnl $2 - field name
+m4_dnl $3 - field type
+m4_dnl
+m4_dnl Usage example:
+m4_dnl
+m4_dnl
+m4_define([[[DEFINE_STRUCT_SETTER_GETTER_PROTOS]]],
+[[[mmux_cc_libc_decl void mmux_libc_$2_set (mmux_libc_$1_t * P, $3 value);
+mmux_cc_libc_decl $3 mmux_libc_$2_ref (mmux_libc_$1_t const * P);
+]]])
+
+
 m4_dnl let's go
 
 m4_dnl end of file
