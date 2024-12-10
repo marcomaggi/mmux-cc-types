@@ -195,6 +195,10 @@ extern "C" {
 #  include <utime.h>
 #endif
 
+#ifdef HAVE_STDARG_H
+#  include <stdarg.h>
+#endif
+
 #ifdef HAVE_STDBOOL_H
 #  include <stdbool.h>
 #endif
@@ -239,20 +243,25 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
- ** Preprocessor macros.
- ** ----------------------------------------------------------------- */
-
-
-
-/** --------------------------------------------------------------------
- ** Type definition.
+ ** Input/output: file descriptor core API.
  ** ----------------------------------------------------------------- */
 
 typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
-typedef FILE *			mmux_libc_stream_t;
+
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdin (void);
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdou (void);
+mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stder (void);
+
+mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...);
+mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...);
+mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...);
+
+
+/** --------------------------------------------------------------------
+ ** Input/output: file descriptor scatter-gather API.
+ ** ----------------------------------------------------------------- */
 
 typedef struct iovec		mmux_libc_iovec_t;
-typedef struct flock		mmux_libc_flock_t;
 
 typedef struct mmux_libc_iovec_array_t {
   mmux_libc_iovec_t *	iova_pointer;
@@ -261,18 +270,11 @@ typedef struct mmux_libc_iovec_array_t {
 
 
 /** --------------------------------------------------------------------
- ** Constants and variables.
+ ** Input/output: file locking API.
  ** ----------------------------------------------------------------- */
 
+typedef struct flock		mmux_libc_flock_t;
 
-
-/** --------------------------------------------------------------------
- ** Functions.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdin (void);
-mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdou (void);
-mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stder (void);
 
 
 /** --------------------------------------------------------------------

@@ -348,7 +348,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_DUP3]]],[[[
     }
   }
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -588,7 +588,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     break;
 #endif
   default:
-    fprintf(stderr, "%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[3]);
+    mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[3]);
     goto mmux_error_parsing_builtin_argument;
   }
 
@@ -632,7 +632,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
     break;
 #endif
   default:
-    fprintf(stderr, "%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[3]);
+    mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[3]);
     goto mmux_error_parsing_builtin_argument;
   }
 
@@ -1191,7 +1191,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  bool	true_when_error = mmux_sint_parse(&input_fd.value, assoc_array_value, NULL);
 
 	  if (true_when_error) {
-	    fprintf(stderr, "%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
+	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
 		    assoc_array_varname, assoc_array_key, "sint", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
@@ -1212,7 +1212,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  bool	true_when_error = mmux_sint64_parse(&input_position, assoc_array_value, NULL);
 
 	  if (true_when_error) {
-	    fprintf(stderr, "%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
+	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
 		    assoc_array_varname, assoc_array_key, "sint64", assoc_array_value);
 	    return MMUX_FAILURE;
 	  } else {
@@ -1233,7 +1233,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  bool	true_when_error = mmux_sint_parse(&ouput_fd.value, assoc_array_value, NULL);
 
 	  if (true_when_error) {
-	    fprintf(stderr, "%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
+	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
 		    assoc_array_varname, assoc_array_key, "sint", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
@@ -1254,7 +1254,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  bool	true_when_error = mmux_sint64_parse(&ouput_position, assoc_array_value, NULL);
 
 	  if (true_when_error) {
-	    fprintf(stderr, "%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
+	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
 		    assoc_array_varname, assoc_array_key, "sint64", assoc_array_value);
 	    return MMUX_FAILURE;
 	  } else {
@@ -1278,7 +1278,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  bool	true_when_error = mmux_usize_parse(&number_of_bytes_to_copy, assoc_array_value, NULL);
 
 	  if (true_when_error) {
-	    fprintf(stderr, "%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
+	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
 		    assoc_array_varname, assoc_array_key, "usize", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
@@ -1301,7 +1301,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  bool	true_when_error = mmux_sint_parse(&flags, assoc_array_value, NULL);
 
 	  if (true_when_error) {
-	    fprintf(stderr, "%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
+	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
 		    assoc_array_varname, assoc_array_key, "usize", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
@@ -1323,7 +1323,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	    mmux_sint_t		required_nbytes = mmux_sint_sprint_size(number_of_bytes_copied);
 
 	    if (0 > required_nbytes) {
-	      fprintf(stderr, "%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	      mmux_libc_dprintfer("%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 	      return MMUX_FAILURE;
 	    } else {
 	      mmux_bash_assoc_array_key_t	assoc_array_key = "NUMBER_OF_BYTES_COPIED";
@@ -1331,7 +1331,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	      bool	error_when_true = mmux_sint_sprint(assoc_array_value, required_nbytes, number_of_bytes_copied);
 
 	      if (error_when_true) {
-		fprintf(stderr, "%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+		mmux_libc_dprintfer("%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 		return MMUX_FAILURE;
 	      } else {
 		brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -1345,7 +1345,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	    mmux_sint_t		required_nbytes = mmux_sint64_sprint_size(*input_position_p);
 
 	    if (0 > required_nbytes) {
-	      fprintf(stderr, "%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	      mmux_libc_dprintfer("%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 	      return MMUX_FAILURE;
 	    } else {
 	      mmux_bash_assoc_array_key_t	assoc_array_key = "INPUT_POSITION";
@@ -1353,7 +1353,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	      bool	error_when_true = mmux_sint_sprint(assoc_array_value, required_nbytes, *input_position_p);
 
 	      if (error_when_true) {
-		fprintf(stderr, "%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+		mmux_libc_dprintfer("%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 		return MMUX_FAILURE;
 	      } else {
 		brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -1367,7 +1367,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	    mmux_sint_t		required_nbytes = mmux_sint64_sprint_size(*ouput_position_p);
 
 	    if (0 > required_nbytes) {
-	      fprintf(stderr, "%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	      mmux_libc_dprintfer("%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 	      return MMUX_FAILURE;
 	    } else {
 	      mmux_bash_assoc_array_key_t	assoc_array_key = "OUPUT_POSITION";
@@ -1375,7 +1375,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	      bool	error_when_true = mmux_sint_sprint(assoc_array_value, required_nbytes, *ouput_position_p);
 
 	      if (error_when_true) {
-		fprintf(stderr, "%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+		mmux_libc_dprintfer("%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 		return MMUX_FAILURE;
 	      } else {
 		brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -1389,8 +1389,8 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
       }
     }
   }
-    ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
+]]],[[[
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])

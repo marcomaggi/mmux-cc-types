@@ -592,7 +592,7 @@ AC_DEFUN([MMUX_CC_CHECK_COMMON_HEADERS],
   [AC_HEADER_ASSERT
    AC_HEADER_STDBOOL
    AC_HEADER_SYS_WAIT
-   AC_CHECK_HEADERS([complex.h ctype.h errno.h fcntl.h float.h limits.h math.h regex.h stddef.h
+   AC_CHECK_HEADERS([complex.h ctype.h errno.h fcntl.h float.h limits.h math.h regex.h stddef.h stdarg.h
                      time.h wchar.h sys/ioctl.h sys/time.h sys/resource.h])
    AC_CACHE_SAVE])
 
@@ -686,6 +686,10 @@ AC_INCLUDES_DEFAULT([
 
 #ifdef HAVE_SIGNAL_H
 #  include <signal.h>
+#endif
+
+#ifdef HAVE_STDARG_H
+#  include <stdarg.h>
 #endif
 
 #ifdef HAVE_STDBOOL_H

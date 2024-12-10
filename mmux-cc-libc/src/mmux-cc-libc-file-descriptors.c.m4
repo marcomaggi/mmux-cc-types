@@ -30,58 +30,78 @@
 
 
 /** --------------------------------------------------------------------
- ** Input/output functions.
+ ** Input/output: file descriptor core API.
  ** ----------------------------------------------------------------- */
 
-static const mmux_libc_file_descriptor_t stdin_value = { .value = 0 };
-static const mmux_libc_file_descriptor_t stdou_value = { .value = 1 };
-static const mmux_libc_file_descriptor_t stder_value = { .value = 2 };
+static const mmux_libc_file_descriptor_t stdin_fd = { .value = 0 };
+static const mmux_libc_file_descriptor_t stdou_fd = { .value = 1 };
+static const mmux_libc_file_descriptor_t stder_fd = { .value = 2 };
 
 mmux_libc_file_descriptor_t
 mmux_libc_stdin (void)
 {
-  return stdin_value;
+  return stdin_fd;
 }
 mmux_libc_file_descriptor_t
 mmux_libc_stdou (void)
 {
-  return stdou_value;
+  return stdou_fd;
 }
 mmux_libc_file_descriptor_t
 mmux_libc_stder (void)
 {
-  return stder_value;
+  return stder_fd;
 }
-
-
-/** --------------------------------------------------------------------
- ** Flag to string functions for debugging purposes.
- ** ----------------------------------------------------------------- */
 
 bool
-mmux_libc_flag_to_symbol_struct_flock_l_type (char const * * const str_p, mmux_sint_t flag)
+mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
 {
-  /* We use the if statement, rather than  the switch statement, because there may be
-     duplicates in the symbols. */
-  if (F_RDLCK == flag) {
-    *str_p = "F_RDLCK";
-    return false;
-  } else if (F_WRLCK == flag) {
-    *str_p = "F_WRLCK";
-    return false;
-  } else if (F_UNLCK == flag) {
-    *str_p = "F_UNLCK";
-    return false;
-  } else {
-    *str_p = "unknown";
-    return true;
+  va_list	ap;
+  int		rv;
+
+  va_start(ap, template);
+  {
+    rv = vdprintf(fd.value, template, ap);
   }
+  va_end(ap);
+  return ((0 <= rv)? false : true);
+}
+bool
+mmux_libc_dprintfou (char const * template, ...)
+{
+  va_list	ap;
+  int		rv;
+
+  va_start(ap, template);
+  {
+    rv = vdprintf(stdou_fd.value, template, ap);
+  }
+  va_end(ap);
+  return ((0 <= rv)? false : true);
+}
+bool
+mmux_libc_dprintfer (char const * template, ...)
+{
+  va_list	ap;
+  int		rv;
+
+  va_start(ap, template);
+  {
+    rv = vdprintf(stder_fd.value, template, ap);
+  }
+  va_end(ap);
+  return ((0 <= rv)? false : true);
 }
 
 
 /** --------------------------------------------------------------------
- ** Data structures dumping functions for debugging purposes.
+ ** Input/output: file descriptor scatter-gather API.
  ** ----------------------------------------------------------------- */
+
+DEFINE_STRUCT_SETTER_GETTER(iovec,		iov_base,	mmux_pointer_t);
+DEFINE_STRUCT_SETTER_GETTER(iovec,		iov_len,	mmux_usize_t);
+DEFINE_STRUCT_SETTER_GETTER(iovec_array,	iova_pointer,	mmux_pointer_t)
+DEFINE_STRUCT_SETTER_GETTER(iovec_array,	iova_length,	mmux_usize_t)
 
 bool
 mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * const iovec_p, char const * const struct_name)
@@ -102,156 +122,6 @@ mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * 
 
   return false;
 }
-
-bool
-mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * const flock_p, char const * const struct_name)
-{
-  {
-    int		rv = dprintf(fd.value, "%s = \"%p\"\n", struct_name, (mmux_pointer_t)flock_p);
-    if (0 > rv) { return true; }
-  }
-
-  /* Print l_type. */
-  {
-    mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_p->l_type);
-    int		rv;
-
-    if (0 > required_nbytes) {
-      return true;
-    } else {
-      char	str[required_nbytes];
-      bool	error_when_true = mmux_sshort_sprint(str, required_nbytes, flock_p->l_type);
-
-      if (error_when_true) {
-	dprintf(stder_value.value, "%s: error converting \"l_type\" to string\n", __func__);
-	return true;
-      } else {
-	char const *	symstr;
-
-	mmux_libc_flag_to_symbol_struct_flock_l_type(&symstr, flock_p->l_type);
-	rv = dprintf(fd.value, "%s.l_type = \"%s\" (%s)\n", struct_name, str, symstr);
-	if (0 > rv) { return true; }
-      }
-    }
-  }
-
-  /* Print l_whence. */
-  {
-    mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_p->l_whence);
-    int		rv;
-
-    if (0 > required_nbytes) {
-      dprintf(stder_value.value, "%s: error converting \"l_whence\" to string\n", __func__);
-      return true;
-    } else {
-      char	str[required_nbytes];
-      bool	error_when_true = mmux_sshort_sprint(str, required_nbytes, flock_p->l_whence);
-
-      if (error_when_true) {
-	dprintf(stder_value.value, "%s: error converting \"l_whence\" to string\n", __func__);
-	return true;
-      } else {
-	char const *	symstr;
-
-	switch (flock_p->l_whence) {
-	case MMUX_VALUEOF_SEEK_SET:
-	  symstr = "SEEK_SET";
-	  break;
-	case MMUX_VALUEOF_SEEK_END:
-	  symstr = "SEEK_END";
-	  break;
-	case MMUX_VALUEOF_SEEK_CUR:
-	  symstr = "SEEK_CUR";
-	  break;
-	default:
-	  symstr = "unknown";
-	  break;
-	}
-
-	rv = dprintf(fd.value, "%s.l_whence = \"%s\" (%s)\n", struct_name, str, symstr);
-	if (0 > rv) { return true; }
-      }
-    }
-  }
-
-  /* Print l_start. */
-  {
-    mmux_sint_t	required_nbytes = mmux_off_sprint_size(flock_p->l_start);
-    int		rv;
-
-    if (0 > required_nbytes) {
-      dprintf(stder_value.value, "%s: error converting \"l_start\" to string\n", __func__);
-      return true;
-    } else {
-      char	str[required_nbytes];
-      bool	error_when_true = mmux_off_sprint(str, required_nbytes, flock_p->l_start);
-
-      if (error_when_true) {
-	dprintf(stder_value.value, "%s: error converting \"l_start\" to string\n", __func__);
-	return true;
-      } else {
-	rv = dprintf(fd.value, "%s.l_start = \"%s\"\n", struct_name, str);
-	if (0 > rv) { return true; }
-      }
-    }
-  }
-
-  /* Print l_len. */
-  {
-    mmux_sint_t	required_nbytes = mmux_off_sprint_size(flock_p->l_len);
-    int		rv;
-
-    if (0 > required_nbytes) {
-      dprintf(stder_value.value, "%s: error converting \"l_len\" to string\n", __func__);
-      return true;
-    } else {
-      char	str[required_nbytes];
-      bool	error_when_true = mmux_off_sprint(str, required_nbytes, flock_p->l_len);
-
-      if (error_when_true) {
-	dprintf(stder_value.value, "%s: error converting \"l_len\" to string\n", __func__);
-	return true;
-      } else {
-	rv = dprintf(fd.value, "%s.l_len = \"%s\"\n", struct_name, str);
-	if (0 > rv) { return true; }
-      }
-    }
-  }
-
-  /* Print l_pid. */
-  {
-    mmux_sint_t	required_nbytes = mmux_pid_sprint_size(flock_p->l_pid);
-    int		rv;
-
-    if (0 > required_nbytes) {
-      dprintf(stder_value.value, "%s: error converting \"l_pid\" to string\n", __func__);
-      return true;
-    } else {
-      char	str[required_nbytes];
-      bool	error_when_true = mmux_pid_sprint(str, required_nbytes, flock_p->l_pid);
-
-      if (error_when_true) {
-	dprintf(stder_value.value, "%s: error converting \"l_pid\" to string\n", __func__);
-	return true;
-      } else {
-	rv = dprintf(fd.value, "%s.l_pid = \"%s\"\n", struct_name, str);
-	if (0 > rv) { return true; }
-      }
-    }
-  }
-
-  return false;
-}
-
-
-/** --------------------------------------------------------------------
- ** Struct iovec.
- ** ----------------------------------------------------------------- */
-
-DEFINE_STRUCT_SETTER_GETTER(iovec,		iov_base,	mmux_pointer_t);
-DEFINE_STRUCT_SETTER_GETTER(iovec,		iov_len,	mmux_usize_t);
-DEFINE_STRUCT_SETTER_GETTER(iovec_array,	iova_pointer,	mmux_pointer_t)
-DEFINE_STRUCT_SETTER_GETTER(iovec_array,	iova_length,	mmux_usize_t)
 
 /* ------------------------------------------------------------------ */
 
@@ -340,7 +210,7 @@ mmux_libc_pwritev2 (mmux_usize_t * number_of_bytes_read_p, mmux_libc_file_descri
 
 
 /** --------------------------------------------------------------------
- ** Struct flock.
+ ** Input/output: file locking.
  ** ----------------------------------------------------------------- */
 
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_type,		mmux_sshort_t)
@@ -348,6 +218,165 @@ DEFINE_STRUCT_SETTER_GETTER(flock,	l_whence,	mmux_sshort_t)
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_start,	mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_len,		mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_pid,		mmux_pid_t)
+
+bool
+mmux_libc_flag_to_symbol_struct_flock_l_type (char const * * const str_p, mmux_sint_t flag)
+{
+  /* We use the if statement, rather than  the switch statement, because there may be
+     duplicates in the symbols. */
+  if (F_RDLCK == flag) {
+    *str_p = "F_RDLCK";
+    return false;
+  } else if (F_WRLCK == flag) {
+    *str_p = "F_WRLCK";
+    return false;
+  } else if (F_UNLCK == flag) {
+    *str_p = "F_UNLCK";
+    return false;
+  } else {
+    *str_p = "unknown";
+    return true;
+  }
+}
+bool
+mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * const flock_p, char const * const struct_name)
+{
+  {
+    int		rv = dprintf(fd.value, "%s = \"%p\"\n", struct_name, (mmux_pointer_t)flock_p);
+    if (0 > rv) { return true; }
+  }
+
+  /* Print l_type. */
+  {
+    mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_p->l_type);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_sshort_sprint(str, required_nbytes, flock_p->l_type);
+
+      if (error_when_true) {
+	mmux_libc_dprintfer("%s: error converting \"l_type\" to string\n", __func__);
+	return true;
+      } else {
+	char const *	symstr;
+
+	mmux_libc_flag_to_symbol_struct_flock_l_type(&symstr, flock_p->l_type);
+	rv = dprintf(fd.value, "%s.l_type = \"%s\" (%s)\n", struct_name, str, symstr);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_whence. */
+  {
+    mmux_sint_t	required_nbytes = mmux_sshort_sprint_size(flock_p->l_whence);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      mmux_libc_dprintfer("%s: error converting \"l_whence\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_sshort_sprint(str, required_nbytes, flock_p->l_whence);
+
+      if (error_when_true) {
+	mmux_libc_dprintfer("%s: error converting \"l_whence\" to string\n", __func__);
+	return true;
+      } else {
+	char const *	symstr;
+
+	switch (flock_p->l_whence) {
+	case MMUX_VALUEOF_SEEK_SET:
+	  symstr = "SEEK_SET";
+	  break;
+	case MMUX_VALUEOF_SEEK_END:
+	  symstr = "SEEK_END";
+	  break;
+	case MMUX_VALUEOF_SEEK_CUR:
+	  symstr = "SEEK_CUR";
+	  break;
+	default:
+	  symstr = "unknown";
+	  break;
+	}
+
+	rv = dprintf(fd.value, "%s.l_whence = \"%s\" (%s)\n", struct_name, str, symstr);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_start. */
+  {
+    mmux_sint_t	required_nbytes = mmux_off_sprint_size(flock_p->l_start);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      mmux_libc_dprintfer("%s: error converting \"l_start\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_off_sprint(str, required_nbytes, flock_p->l_start);
+
+      if (error_when_true) {
+	mmux_libc_dprintfer("%s: error converting \"l_start\" to string\n", __func__);
+	return true;
+      } else {
+	rv = dprintf(fd.value, "%s.l_start = \"%s\"\n", struct_name, str);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_len. */
+  {
+    mmux_sint_t	required_nbytes = mmux_off_sprint_size(flock_p->l_len);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      mmux_libc_dprintfer("%s: error converting \"l_len\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_off_sprint(str, required_nbytes, flock_p->l_len);
+
+      if (error_when_true) {
+	mmux_libc_dprintfer("%s: error converting \"l_len\" to string\n", __func__);
+	return true;
+      } else {
+	rv = dprintf(fd.value, "%s.l_len = \"%s\"\n", struct_name, str);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  /* Print l_pid. */
+  {
+    mmux_sint_t	required_nbytes = mmux_pid_sprint_size(flock_p->l_pid);
+    int		rv;
+
+    if (0 > required_nbytes) {
+      mmux_libc_dprintfer("%s: error converting \"l_pid\" to string\n", __func__);
+      return true;
+    } else {
+      char	str[required_nbytes];
+      bool	error_when_true = mmux_pid_sprint(str, required_nbytes, flock_p->l_pid);
+
+      if (error_when_true) {
+	mmux_libc_dprintfer("%s: error converting \"l_pid\" to string\n", __func__);
+	return true;
+      } else {
+	rv = dprintf(fd.value, "%s.l_pid = \"%s\"\n", struct_name, str);
+	if (0 > rv) { return true; }
+      }
+    }
+  }
+
+  return false;
+}
 
 
 /** --------------------------------------------------------------------
