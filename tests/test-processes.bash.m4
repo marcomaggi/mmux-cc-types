@@ -64,7 +64,7 @@ function processes-getppid-1.1 () {
 #### getttid
 
 function processes-gettid-1.1 () {
-    if mmux_bash_pointers_builtin_p mmux_libc>_gettid
+    if mmux_bash_pointers_builtin_p mmux_libc_gettid
     then
 	declare THE_PID
 
