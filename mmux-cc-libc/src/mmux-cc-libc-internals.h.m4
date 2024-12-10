@@ -272,6 +272,25 @@ mmux_cc_libc_decl bool mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_
 
 mmux_cc_libc_decl bool mmux_libc_close (mmux_libc_file_descriptor_t fd);
 
+mmux_cc_libc_decl bool mmux_libc_read (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd,
+				       mmux_pointer_t bufptr, mmux_usize_t buflen)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_write (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd,
+					mmux_pointer_t bufptr, mmux_usize_t buflen)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_pread (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd,
+					mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_off_t offset)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_pwrite (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd,
+					 mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_off_t offset)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_lseek (mmux_libc_file_descriptor_t fd, mmux_off_t * offset_p, mmux_sint_t whence)
+  __attribute__((__nonnull__(2)));
+
 
 /** --------------------------------------------------------------------
  ** Input/output: file descriptor scatter-gather API.

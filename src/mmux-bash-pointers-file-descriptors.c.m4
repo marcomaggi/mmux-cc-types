@@ -133,20 +133,22 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_read]]])
 {
-  int		fd;
-  void *	buffer;
-  size_t	size;
+  char const *			donevar;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_pointer_t		buffer;
+  mmux_usize_t			size;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   {
-    ssize_t	done = read(fd, buffer, size);
-    if (-1 != done) {
-      return mmux_ssize_bind_to_bash_variable(argv[1], done, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
+    mmux_usize_t	nbytes_done;
+
+    if (mmux_libc_read(&nbytes_done, fd, buffer, size)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return mmux_usize_bind_to_bash_variable(donevar, nbytes_done, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -158,22 +160,24 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pread]]])
 {
-  int		fd;
-  void *	buffer;
-  size_t	size;
+  char const *			donevar;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_pointer_t		buffer;
+  mmux_usize_t			size;
   mmux_off_t	offset;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,	5);
   {
-    ssize_t	done = pread(fd, buffer, size, offset);
-    if (-1 != done) {
-      return mmux_ssize_bind_to_bash_variable(argv[1], done, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
+    mmux_usize_t	nbytes_done;
+
+    if (mmux_libc_pread(&nbytes_done, fd, buffer, size, offset)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return mmux_usize_bind_to_bash_variable(donevar, nbytes_done, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -188,23 +192,23 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_write]]])
 {
-  int		fd;
-  void *	buffer;
-  size_t	size;
+  char const *			donevar;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_pointer_t		buffer;
+  mmux_usize_t			size;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,	4);
-
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   {
-    ssize_t	done = write(fd, buffer, size);
-    if (-1 != done) {
-      return mmux_ssize_bind_to_bash_variable(argv[1], done, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
+    mmux_usize_t	nbytes_done;
+
+    if (mmux_libc_write(&nbytes_done, fd, buffer, size)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return mmux_usize_bind_to_bash_variable(donevar, nbytes_done, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
@@ -215,25 +219,25 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwrite]]])
 {
-  int		fd;
-  void *	buffer;
-  size_t	size;
+  char const *			donevar;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_pointer_t		buffer;
+  mmux_usize_t			size;
   mmux_off_t	offset;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,	5);
-
   {
-    ssize_t	done = pwrite(fd, buffer, size, offset);
-    if (-1 != done) {
-      return mmux_ssize_bind_to_bash_variable(argv[1], done, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
+    mmux_usize_t	nbytes_done;
+
+    if (mmux_libc_pwrite(&nbytes_done, fd, buffer, size, offset)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return mmux_usize_bind_to_bash_variable(donevar, nbytes_done, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
@@ -247,19 +251,20 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lseek]]])
 {
-  int		fd, whence;
-  mmux_off_t	offset;
+  char const *			offvar;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_sint_t			whence;
+  mmux_off_t			offset;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(whence,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(offvar,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,		3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(whence,		4);
   {
-    offset = lseek(fd, offset, whence);
-    if (-1 != offset) {
-      return mmux_off_bind_to_bash_variable(argv[1], offset, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
+    if (mmux_libc_lseek(fd, &offset, whence)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return mmux_off_bind_to_bash_variable(offvar, offset, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],

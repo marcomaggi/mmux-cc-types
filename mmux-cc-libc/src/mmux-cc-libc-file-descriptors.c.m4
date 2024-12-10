@@ -128,6 +128,77 @@ mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_libc_file_descriptor_t 
   }
 }
 
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_read (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd, mmux_pointer_t bufptr, mmux_usize_t buflen)
+{
+  ssize_t	nbytes_done = read(fd.value, bufptr, buflen);
+
+  if (0 <= nbytes_done) {
+    *nbytes_done_p = nbytes_done;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_write (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd, mmux_pointer_t bufptr, mmux_usize_t buflen)
+{
+  ssize_t	nbytes_done = write(fd.value, bufptr, buflen);
+
+  if (0 <= nbytes_done) {
+    *nbytes_done_p = nbytes_done;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_pread (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd, mmux_pointer_t bufptr, mmux_usize_t buflen,
+		 mmux_off_t offset)
+{
+  ssize_t	nbytes_done = pread(fd.value, bufptr, buflen, offset);
+
+  if (0 <= nbytes_done) {
+    *nbytes_done_p = nbytes_done;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_pwrite (mmux_usize_t * nbytes_done_p, mmux_libc_file_descriptor_t fd, mmux_pointer_t bufptr, mmux_usize_t buflen,
+		  mmux_off_t offset)
+{
+  ssize_t	nbytes_done = pwrite(fd.value, bufptr, buflen, offset);
+
+  if (0 <= nbytes_done) {
+    *nbytes_done_p = nbytes_done;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_lseek (mmux_libc_file_descriptor_t fd, mmux_off_t * offset_p, mmux_sint_t whence)
+{
+  mmux_off_t	offset = lseek(fd.value, *offset_p, whence);
+
+  if (-1 != offset) {
+    *offset_p = offset;
+    return false;
+  } else {
+    return true;
+  }
+}
+
 
 /** --------------------------------------------------------------------
  ** Input/output: file descriptor scatter-gather API.
