@@ -71,32 +71,32 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
 {
-  char const *	fd_varname;;
-  int		dirfd, flags;
-  char const *	pathname;
-  mode_t	mode = 0;
+  char const *			fd_varname;
+  mmux_libc_file_descriptor_t	dirfd;
+  int				flags;
+  char const *			pathname;
+  mode_t			mode = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(fd_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(dirfd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(dirfd,		2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,		4);
   if (6 == argc) {
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_MODE(mode,	5);
   }
-
   {
-    int		fd = openat(dirfd, pathname, flags, mode);
-    if (-1 != fd) {
-      mmux_bash_rv_t	brv;
+    mmux_libc_file_descriptor_t		fd;
+    mmux_bash_rv_t			brv;
 
-      brv = mmux_sint_bind_to_bash_variable(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
-      if (MMUX_SUCCESS != brv) {
-	close(fd);
-      }
-      return brv;
-    } else {
+    if (mmux_libc_openat(&fd, dirfd, pathname, flags, mode)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+
+    brv = mmux_fd_bind_to_bash_variable(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
+    if (MMUX_SUCCESS != brv) {
+      mmux_libc_close(fd);
+    }
+    return brv;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],

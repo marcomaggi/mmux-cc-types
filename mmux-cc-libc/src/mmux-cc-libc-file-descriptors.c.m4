@@ -114,6 +114,19 @@ mmux_libc_close (mmux_libc_file_descriptor_t fd)
 
   return ((-1 != rv)? false : true);
 }
+bool
+mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_libc_file_descriptor_t dirfd,
+		  char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+{
+  int	fdval = openat(dirfd.value, pathname, flags, mode);
+
+  if (-1 != fdval) {
+    fd->value = fdval;
+    return false;
+  } else {
+    return true;
+  }
+}
 
 
 /** --------------------------------------------------------------------

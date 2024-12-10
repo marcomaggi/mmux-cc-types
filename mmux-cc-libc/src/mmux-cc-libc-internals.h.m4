@@ -266,6 +266,10 @@ mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...)
 mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
   __attribute__((__nonnull__(1,2)));
 
+mmux_cc_libc_decl bool mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_libc_file_descriptor_t dirfd,
+					 char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+  __attribute__((__nonnull__(1,3)));
+
 mmux_cc_libc_decl bool mmux_libc_close (mmux_libc_file_descriptor_t fd);
 
 
