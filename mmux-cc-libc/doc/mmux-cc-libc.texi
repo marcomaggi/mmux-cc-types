@@ -80,7 +80,7 @@
 
 @copying
 This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C11 language
-library implementing an interface to the @gnu{} C Library that makes it easier to interface it to
+library implementing a wrapper to the @gnu{} C Library that makes it easier to interface it to
 high--level platforms.
 
 The package targets @posix{} platforms.

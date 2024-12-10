@@ -57,14 +57,14 @@ src/m4/$(am__dirstamp):
 #### documentation
 
 AM_MAKEINFOFLAGS	= --no-split
-AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 --css-ref=mmux-bash-pointers.css \
+AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 --css-ref=mmux-cc-libc.css \
 	-c PRE_BODY_CLOSE="<p>This document describes version <tt>$(PACKAGE_VERSION)</tt> of <em>$(PACKAGE_NAME)</em>.</p>"
 
 info_TEXINFOS		= doc/mmux-cc-libc.texi
 EXTRA_DIST		+= doc/mmux-cc-libc.style.css
 CLEANFILES		+= doc/mmux-cc-libc.css
 
-doc_mmux_cc_types_TEXINFOS	= \
+doc_mmux_cc_libc_TEXINFOS	= \
 	doc/macros.texi			\
 	doc/overview-linking.texi	\
 	doc/mmux-version.texi		\
