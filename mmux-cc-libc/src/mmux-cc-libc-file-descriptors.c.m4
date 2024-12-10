@@ -199,6 +199,54 @@ mmux_libc_lseek (mmux_libc_file_descriptor_t fd, mmux_off_t * offset_p, mmux_sin
   }
 }
 
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_dup (mmux_libc_file_descriptor_t * new_fd_p, mmux_libc_file_descriptor_t old_fd)
+{
+  mmux_libc_file_descriptor_t	new_fd = { .value = dup(old_fd.value) };
+
+  if (-1 != new_fd.value) {
+    *new_fd_p = new_fd;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_dup2 (mmux_libc_file_descriptor_t old_fd, mmux_libc_file_descriptor_t new_fd)
+{
+  int	rv = dup2(old_fd.value, new_fd.value);
+
+  return ((-1 != rv)? false : true);
+}
+#ifdef HAVE_DUP3
+bool
+mmux_libc_dup3 (mmux_libc_file_descriptor_t old_fd, mmux_libc_file_descriptor_t new_fd, mmux_sint_t flags)
+{
+  int	rv = dup3(old_fd.value, new_fd.value, flags);
+
+  return ((-1 != rv)? false : true);
+}
+#endif
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_pipe (mmux_libc_file_descriptor_t fds[2])
+{
+  int		fdvals[2];
+  int		rv = pipe(fdvals);
+
+  if (-1 != rv) {
+    fds[0].value = fdvals[0];
+    fds[1].value = fdvals[1];
+    return false;
+  } else {
+    return true;
+  }
+}
+
 
 /** --------------------------------------------------------------------
  ** Input/output: file descriptor scatter-gather API.

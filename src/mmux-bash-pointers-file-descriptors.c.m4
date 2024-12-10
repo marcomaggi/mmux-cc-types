@@ -279,27 +279,25 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup]]])
 {
-  char const *	new_fd_varname;
-  int		old_fd;
+  char const *			new_fd_varname;
+  mmux_libc_file_descriptor_t	old_fd;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(new_fd_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(old_fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(old_fd,			2);
   {
-    int		new_fd = dup(old_fd);
+    mmux_libc_file_descriptor_t		new_fd;
+    mmux_bash_rv_t			brv;
 
-    if (-1 != new_fd) {
-      mmux_bash_rv_t	brv;
-
-      brv = mmux_sint_bind_to_bash_variable(new_fd_varname, new_fd, MMUX_BASH_BUILTIN_STRING_NAME);
-      if (MMUX_SUCCESS != brv) {
-	close(new_fd);
-      }
-      return brv;
-    } else {
+    if (mmux_libc_dup(&new_fd, old_fd)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
-  }
 
+    brv = mmux_fd_bind_to_bash_variable(new_fd_varname, new_fd, MMUX_BASH_BUILTIN_STRING_NAME);
+    if (MMUX_SUCCESS != brv) {
+      mmux_libc_close(new_fd);
+    }
+    return brv;
+  }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -310,20 +308,17 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup2]]])
 {
-  int	old_fd, new_fd;
+  mmux_libc_file_descriptor_t	old_fd;
+  mmux_libc_file_descriptor_t	new_fd;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(old_fd,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(new_fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(old_fd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(new_fd,	2);
   {
-    int		rv = dup2(old_fd, new_fd);
-
-    if (-1 != rv) {
-      return MMUX_SUCCESS;
-    } else {
+    if (mmux_libc_dup2(old_fd, new_fd)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return MMUX_SUCCESS;
   }
-
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -335,19 +330,18 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup3]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[HAVE_DUP3]]],[[[
-  int	old_fd, new_fd, flags;
+  mmux_libc_file_descriptor_t	old_fd;
+  mmux_libc_file_descriptor_t	new_fd;
+  mmux_sint_t			flags;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(old_fd,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(new_fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(old_fd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(new_fd,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	3);
   {
-    int		rv = dup3(old_fd, new_fd, flags);
-
-    if (-1 != rv) {
-      return MMUX_SUCCESS;
-    } else {
+    if (mmux_libc_dup3(old_fd, new_fd, flags)) {
       return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
+    return MMUX_SUCCESS;
   }
 ]]],[[[
   mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
@@ -373,26 +367,27 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pipe]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(reading_fd_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(writing_fd_varname,	2);
   {
-    int		fds[2];
-    int		rv = pipe(fds);
+    mmux_libc_file_descriptor_t	fds[2];
 
-    if (-1 != rv) {
+    if (mmux_libc_pipe(fds)) {
+      return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+    }
+
+    {
       mmux_bash_rv_t	brv;
 
-      brv = mmux_sint_bind_to_bash_variable(reading_fd_varname, fds[0], MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_fd_bind_to_bash_variable(reading_fd_varname, fds[0], MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-      brv = mmux_sint_bind_to_bash_variable(writing_fd_varname, fds[1], MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_fd_bind_to_bash_variable(writing_fd_varname, fds[1], MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
       return MMUX_SUCCESS;
 
     error_binding_variables:
-      close(fds[0]);
-      close(fds[1]);
+      mmux_libc_close(fds[0]);
+      mmux_libc_close(fds[1]);
       return brv;
-    } else {
-      return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
     }
   }
 }
