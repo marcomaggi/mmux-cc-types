@@ -123,9 +123,17 @@ mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stder (void);
 #define MMUX_LIBC_STDOU		(mmux_libc_stdou())
 #define MMUX_LIBC_STDER		(mmux_libc_stder())
 
-mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...);
-mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...);
-mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...);
+mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
+  __attribute__((__nonnull__(2)));
+mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...)
+  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_close (mmux_libc_file_descriptor_t fd);
 
 
 /** --------------------------------------------------------------------

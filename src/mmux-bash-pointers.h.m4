@@ -193,6 +193,9 @@ DEFINE_PROTOS([[[time]]])
 DEFINE_PROTOS([[[socklen]]])
 DEFINE_PROTOS([[[rlim]]])
 
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_fd_bind_to_bash_variable (char const * fd_varname, mmux_libc_file_descriptor_t fd,
+								      char const * caller_name);
+
 
 /** --------------------------------------------------------------------
  ** GNU Bash interface: word list.

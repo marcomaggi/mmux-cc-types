@@ -128,4 +128,10 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[time]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[socklen]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[rlim]]])
 
+mmux_bash_rv_t
+mmux_fd_bind_to_bash_variable (char const * fd_varname, mmux_libc_file_descriptor_t fd, char const * caller_name)
+{
+  return mmux_sint_bind_to_bash_variable(fd_varname, fd.value, caller_name);
+}
+
 /* end of file */

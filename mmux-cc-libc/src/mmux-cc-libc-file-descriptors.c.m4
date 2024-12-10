@@ -93,6 +93,28 @@ mmux_libc_dprintfer (char const * template, ...)
   return ((0 <= rv)? false : true);
 }
 
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+{
+  int	fdval = open(pathname, flags, mode);
+
+  if (-1 != fdval) {
+    fd->value = fdval;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_close (mmux_libc_file_descriptor_t fd)
+{
+  int	rv = close(fd.value);
+
+  return ((-1 != rv)? false : true);
+}
+
 
 /** --------------------------------------------------------------------
  ** Input/output: file descriptor scatter-gather API.
