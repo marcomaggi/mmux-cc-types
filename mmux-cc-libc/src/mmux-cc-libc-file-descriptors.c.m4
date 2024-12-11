@@ -736,6 +736,32 @@ mmux_libc_fcntl_command_flag_to_symbol (char const ** str_p, mmux_sint_t flag)
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Ioctl.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p)
+{
+  switch (command) {
+
+#ifdef MMUX_HAVE_LIBC_SIOCATMARK
+  case MMUX_LIBC_SIOCATMARK: { /* synopsis: mmux_libc_ioctl FD SIOCATMARK ATMARK_POINTER */
+    mmux_sint_t *	atmark_p = parameter_p;
+    mmux_sint_t		rv = ioctl(fd.value, command, atmark_p);
+
+    return ((-1 != rv)? false : true);
+  }
+#endif
+
+    /* ------------------------------------------------------------------ */
+
+  default:
+    errno = MMUX_LIBC_EINVAL;
+    return true;
+  }
+}
 
 
 /* end of file */

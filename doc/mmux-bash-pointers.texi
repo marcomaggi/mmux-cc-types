@@ -5756,7 +5756,8 @@ Interface to the standard C function @cfunc{\FUNC\}.  Bind to the shell variable
 * fds scatter-gather::          Scatter--gather input and output.
 * fds range-copying::           Copying ranges from file to file.
 * fds flock::                   File locks.
-* fds control::                 File descriptors control.
+* fds fun control::             File descriptors functionality ontrol.
+* fds io control::              File descriptors input/output control.
 @end menu
 
 @c page
@@ -6729,8 +6730,8 @@ structure; when not given: it defaults to @samp{struct flock}.
 @end deffn
 
 @c page
-@node fds control
-@section File descriptors control
+@node fds fun control
+@section File descriptors functionality control
 
 
 @ref{overview conventions, Conventions in coding and documentation}.
@@ -6973,6 +6974,37 @@ mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
 mmux_libc_getpid THE_PID
 mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_GETOWN} @RR{THE_PID}
 @end example
+@end defvr
+
+@c page
+@node fds io control
+@section File descriptors input/output control
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_ioctl @var{FD} @var{COMMAND}
+@deffnx Builtin mmux_libc_ioctl @var{FD} @var{COMMAND} @var{PARAMETER}
+Interface to the standard C language function @cfunc{ioctl}, @cfuncpage{ioctl}.  Arguments:
+
+@table @var
+@item FD
+A file descriptor.
+
+@item COMMAND
+A constant representing a command for @cfunc{ioctl}.
+
+@item PARAMETER
+A parameter that can be input or output depending on the @var{COMMAND}.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_SIOCATMARK
+Detect if the data received through a socket has reached the mark; @var{PARAMETER} must be a shell
+variable name which will be bound to the exact integer provided by the call to @cfunc{ioctl}.
 @end defvr
 
 @c page

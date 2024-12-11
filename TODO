@@ -42,6 +42,8 @@
 
 * Scan the manual page of "fcntl()" for additional commands.
 
+* Scan the manual page of "iontl()" for additional commands.
+
 * Add builtins interfacing "inotify(7)"?  (Documented in a manual page.)
 
 * Add builtins interfacing "fallocate(2)"?  (Documented in a manual page.)

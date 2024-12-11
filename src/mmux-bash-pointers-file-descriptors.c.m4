@@ -405,8 +405,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
   mmux_libc_file_descriptor_t	fd;
   mmux_sint_t			command;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,	2);
   switch (command) {
 
 #ifdef MMUX_HAVE_LIBC_F_DUPFD
@@ -463,7 +463,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_HAVE_LIBC_F_GETFL
-  case MMUX_LIBC_F_GETFL: {
+  case MMUX_LIBC_F_GETFL: { /* synopsis: mmux_libc_fcntl FD F_GETFL FLAGSVAR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -480,7 +480,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #endif
 
 #ifdef MMUX_HAVE_LIBC_F_SETFL
-  case MMUX_LIBC_F_SETFL: {
+  case MMUX_LIBC_F_SETFL: { /* synopsis: mmux_libc_fcntl FD F_SETFL FLAGS */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -498,7 +498,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_HAVE_LIBC_F_GETLK
-  case MMUX_LIBC_F_GETLK: {
+  case MMUX_LIBC_F_GETLK: { /* synopsis: mmux_libc_fcntl FD F_GETLK FLOCK_PTR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -514,7 +514,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #endif
 
 #ifdef MMUX_HAVE_LIBC_F_SETLK
-  case MMUX_LIBC_F_SETLK: {
+  case MMUX_LIBC_F_SETLK: { /* synopsis: mmux_libc_fcntl FD F_SETLK FLOCK_PTR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -530,7 +530,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #endif
 
 #ifdef MMUX_HAVE_LIBC_F_SETLKW
-  case MMUX_LIBC_F_SETLKW: {
+  case MMUX_LIBC_F_SETLKW: { /* synopsis: mmux_libc_fcntl FD F_SETLKW FLOCK_PTR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -548,7 +548,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_HAVE_LIBC_F_OFD_GETLK
-  case MMUX_LIBC_F_OFD_GETLK: {
+  case MMUX_LIBC_F_OFD_GETLK: { /* synopsis: mmux_libc_fcntl FD F_OFD_GETLK FLOCK_PTR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -564,7 +564,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #endif
 
 #ifdef MMUX_HAVE_LIBC_F_OFD_SETLK
-  case MMUX_LIBC_F_OFD_SETLK: {
+  case MMUX_LIBC_F_OFD_SETLK: { /* synopsis: mmux_libc_fcntl FD F_OFD_SETLK FLOCK_PTR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -580,7 +580,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #endif
 
 #ifdef MMUX_HAVE_LIBC_F_OFD_SETLKW
-  case MMUX_LIBC_F_OFD_SETLKW: {
+  case MMUX_LIBC_F_OFD_SETLKW: { /* synopsis: mmux_libc_fcntl FD F_OFD_SETLKW FLOCK_PTR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -598,7 +598,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_HAVE_LIBC_F_GETOWN
-  case MMUX_LIBC_F_GETOWN: {
+  case MMUX_LIBC_F_GETOWN: { /* synopsis: mmux_libc_fcntl FD F_GETOWN PIDVAR */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -615,7 +615,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 #endif
 
 #ifdef MMUX_HAVE_LIBC_F_SETOWN
-  case MMUX_LIBC_F_SETOWN: {
+  case MMUX_LIBC_F_SETOWN: { /* synopsis: mmux_libc_fcntl FD F_SETOWN PID */
     if (4 != argc) {
       return mmux_bash_builtin_wrong_num_of_args();
     } else {
@@ -633,11 +633,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 /* ------------------------------------------------------------------ */
 
   default:
-    mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[3]);
-    goto mmux_error_parsing_builtin_argument;
+    mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[2]);
+    mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+    return MMUX_FAILURE;
   }
-
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[((3 == argc) || (4 == argc))]]],
@@ -651,42 +650,40 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
 {
-  int	fd, command;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_sint_t			command;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,	3);
-
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,	2);
   switch (command) {
-#if ((defined MMUX_HAVE_SIOCATMARK) && (1 == MMUX_HAVE_SIOCATMARK))
-  case SIOCATMARK:
-    {
-      if (5 != argc) {
-	return mmux_bash_builtin_wrong_num_of_args();
-      } else {
-	int	rv, atmark;
 
-	rv = ioctl(fd, command, &atmark);
-	if (-1 != rv) {
-	  mmux_sint_bind_to_bash_variable(argv[4], atmark, MMUX_BASH_BUILTIN_STRING_NAME);
-	  return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
-	} else {
-	  return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-	}
+#ifdef MMUX_HAVE_LIBC_SIOCATMARK
+  case MMUX_LIBC_SIOCATMARK: { /* synopsis: mmux_libc_ioctl FD SIOCATMARK SINT_ATMARK_VAR */
+    if (4 != argc) {
+      return mmux_bash_builtin_wrong_num_of_args();
+    } else {
+      char const *	atmark_varname;
+      mmux_sint_t	atmark;
+
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_BAHS_PARM(atmark_varname,	3);
+      if (mmux_libc_ioctl(fd, command, &atmark)) {
+	return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       }
+      return mmux_sint_bind_to_bash_variable(atmark_varname, atmark, MMUX_BASH_BUILTIN_STRING_NAME);
     }
-    break;
-#endif
-  default:
-    mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[3]);
-    goto mmux_error_parsing_builtin_argument;
   }
+#endif
 
-  MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
+  default:
+    mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[2]);
+    mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+    return MMUX_FAILURE;
+  }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(4 <= argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER RVAR FD COMMAND ARG ..."]]],
-    [[["Call ioctl with the given arguments, store the result in RVAR."]]])
+    [[[((3 == argc) || (4 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER FD COMMAND [PARAMETER]"]]],
+    [[["Call ioctl with the given arguments."]]])
 
 
 /** --------------------------------------------------------------------
