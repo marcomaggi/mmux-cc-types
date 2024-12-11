@@ -66,10 +66,11 @@ function processes-getppid-1.1 () {
 function processes-gettid-1.1 () {
     if mmux_bash_pointers_builtin_p mmux_libc_gettid
     then
-	declare THE_PID
+	declare THE_PID THE_TPID
 
-	mmux_libc_gettid THE_PID
-	dotest-equal $PPID WW(THE_PID)
+	mmux_libc_getpid THE_PID
+	mmux_libc_gettid THE_TPID
+	dotest-equal WW(THE_PID) WW(THE_TPID)
     else dotest-skipped
     fi
 }
