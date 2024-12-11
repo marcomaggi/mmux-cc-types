@@ -318,6 +318,24 @@ typedef struct mmux_libc_iovec_array_t {
 
 typedef struct flock		mmux_libc_flock_t;
 
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_type,		mmux_sshort_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_whence,	mmux_sshort_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_start,	mmux_off_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_len,		mmux_off_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_pid,		mmux_pid_t)
+
+mmux_cc_libc_decl bool mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * flock_p, char const * struct_name);
+mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** const str_p, mmux_sint_t flag);
+
+
+/** --------------------------------------------------------------------
+ ** Miscellaneous.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
+mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** const str_p, mmux_sint_t flag);
+
+mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
 
 
 /** --------------------------------------------------------------------

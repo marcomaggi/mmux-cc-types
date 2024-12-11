@@ -227,7 +227,10 @@ mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const 
  ** Miscellaneous.
  ** ----------------------------------------------------------------- */
 
+mmux_cc_libc_decl bool mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
 mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** const str_p, mmux_sint_t flag);
+
+mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
 
 
 /** --------------------------------------------------------------------

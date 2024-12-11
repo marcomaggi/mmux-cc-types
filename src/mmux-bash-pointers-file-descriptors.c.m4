@@ -411,28 +411,25 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,		3);
 
   switch (command) {
-#if ((defined MMUX_HAVE_F_DUPFD) && (1 == MMUX_HAVE_F_DUPFD))
-  case F_DUPFD:
+#ifdef MMUX_HAVE_LIBC_F_DUPFD
+  case MMUX_LIBC_F_DUPFD:
     {
       if (5 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
       } else {
 	mmux_libc_file_descriptor_t	new_fd;
-	int				rv;
 
 	MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(new_fd,	4);
-	rv = fcntl(fd.value, command, new_fd.value);
-	if (-1 != rv) {
-	  return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
-	} else {
+	if (mmux_libc_fcntl(fd, command, &new_fd)) {
 	  return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
 	}
+	return mmux_fd_bind_to_bash_variable(resultvar, new_fd, MMUX_BASH_BUILTIN_STRING_NAME);
       }
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_GETFD) && (1 == MMUX_HAVE_F_GETFD))
-  case F_GETFD:
+#ifdef MMUX_HAVE_LIBC_F_GETFD
+  case MMUX_LIBC_F_GETFD:
     {
       if (4 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -449,8 +446,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_GETFL) && (1 == MMUX_HAVE_F_GETFL))
-  case F_GETFL:
+#ifdef MMUX_HAVE_LIBC_F_GETFL
+  case MMUX_LIBC_F_GETFL:
     {
       if (4 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -467,8 +464,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_GETLK) && (1 == MMUX_HAVE_F_GETLK))
-  case F_GETLK:
+#ifdef MMUX_HAVE_LIBC_F_GETLK
+  case MMUX_LIBC_F_GETLK:
     {
       if (5 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -488,15 +485,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_GETOWN) && (1 == MMUX_HAVE_F_GETOWN))
-  case F_GETOWN:
+#ifdef MMUX_HAVE_LIBC_F_GETOWN
+  case MMUX_LIBC_F_GETOWN:
     {
       goto mmux_error_parsing_builtin_argument;
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_SETFD) && (1 == MMUX_HAVE_F_SETFD))
-  case F_SETFD:
+#ifdef MMUX_HAVE_LIBC_F_SETFD
+  case MMUX_LIBC_F_SETFD:
     {
       if (5 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -515,8 +512,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_SETFL) && (1 == MMUX_HAVE_F_SETFL))
-  case F_SETFL:
+#ifdef MMUX_HAVE_LIBC_F_SETFL
+  case MMUX_LIBC_F_SETFL:
     {
       if (5 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -535,8 +532,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_SETLKW) && (1 == MMUX_HAVE_F_SETLKW))
-  case F_SETLKW:
+#ifdef MMUX_HAVE_LIBC_F_SETLKW
+  case MMUX_LIBC_F_SETLKW:
     {
       if (5 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -557,8 +554,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_SETLK) && (1 == MMUX_HAVE_F_SETLK))
-  case F_SETLK:
+#ifdef MMUX_HAVE_LIBC_F_SETLK
+  case MMUX_LIBC_F_SETLK:
     {
       if (5 != argc) {
 	return mmux_bash_builtin_wrong_num_of_args();
@@ -579,8 +576,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     }
     break;
 #endif
-#if ((defined MMUX_HAVE_F_SETOWN) && (1 == MMUX_HAVE_F_SETOWN))
-  case F_SETOWN:
+#ifdef MMUX_HAVE_LIBC_F_SETOWN
+  case MMUX_LIBC_F_SETOWN:
     {
       goto mmux_error_parsing_builtin_argument;
     }
