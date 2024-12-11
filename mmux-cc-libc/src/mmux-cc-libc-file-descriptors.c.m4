@@ -557,7 +557,14 @@ mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_point
   case MMUX_LIBC_F_GETFD: {
     mmux_sint_t	rv = fcntl(fd.value, command);
 
-    return ((-1 != rv)? false : true);
+    if (-1 != rv) {
+      mmux_sint_t *	flags_p = parameter_p;
+
+      *flags_p = rv;
+      return false;
+    } else {
+      return true;
+    }
   }
 #endif
 
@@ -576,7 +583,14 @@ mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_point
   case MMUX_LIBC_F_GETFL: {
     mmux_sint_t	rv = fcntl(fd.value, command);
 
-    return ((-1 != rv)? false : true);
+    if (-1 != rv) {
+      mmux_sint_t *	flags_p = parameter_p;
+
+      *flags_p = rv;
+      return false;
+    } else {
+      return true;
+    }
   }
 #endif
 

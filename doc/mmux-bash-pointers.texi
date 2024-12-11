@@ -892,6 +892,9 @@ Global variable holding the value of the C language constant @code{\NAME\}.
 @MmuxDefineGlobalVarSystemConstant{F_GETFL}
 @MmuxDefineGlobalVarSystemConstant{F_GETLK}
 @MmuxDefineGlobalVarSystemConstant{F_GETOWN}
+@MmuxDefineGlobalVarSystemConstant{F_OFD_SETLK}
+@MmuxDefineGlobalVarSystemConstant{F_OFD_SETLKW}
+@MmuxDefineGlobalVarSystemConstant{F_OFD_GETLK}
 @MmuxDefineGlobalVarSystemConstant{F_OK}
 @MmuxDefineGlobalVarSystemConstant{F_RDLCK}
 @MmuxDefineGlobalVarSystemConstant{F_SETFD}

@@ -330,7 +330,7 @@ function file-descriptors-dup3-1.1 () {
 function file-descriptors-fcntl-F_DUPFD-1.1 () {
     mbfl_location_enter
     {
-	declare -i rv FD DONE OFFSET SIZE=5
+	declare -i FD DONE OFFSET SIZE=5
 	declare BUFFER
 	mbfl_declare_index_array_varref(RESULT)
 	mbfl_declare_index_array_varref(ORIGIN_DATA,(11 22 33 44 55))
@@ -361,7 +361,7 @@ function file-descriptors-fcntl-F_DUPFD-1.1 () {
 	# I'm so dirty...
 	NEW_FD=$(( FD + 1 ))
 
-	if mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_DUPFD) WW(NEW_FD)
+	if mmux_libc_fcntl WW(FD) WW(mmux_libc_F_DUPFD) WW(NEW_FD)
 	then mbfl_location_replace_handler_by_id WW(ID) "mmux_libc_close WW(FD)"
 	else mbfl_location_leave_then_return_failure
 	fi
@@ -385,111 +385,133 @@ function file-descriptors-fcntl-F_DUPFD-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-if test -v mmux_libc_F_GETFD -a -v mmux_libc_F_SETFD -a -v mmux_libc_FD_CLOEXEC
-then
-
 function file-descriptors-fcntl-F_GETFD-1.1 () {
-    dotest-unset-debug
-    mbfl_location_enter
-    {
-	declare -i FD RV ERRNO=0
-	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
-	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
-	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
-	mbfl_location_handler dotest-clean-files
+    if test -v mmux_libc_F_GETFD -a -v mmux_libc_F_SETFD -a -v mmux_libc_FD_CLOEXEC
+    then
+	dotest-unset-debug
+	mbfl_location_enter
+	{
+	    declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	    declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	    declare -i FD RESULT ERRNO
 
-	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD"
-	else mbfl_location_leave_then_return_failure
-	fi
+	    declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	    mbfl_location_handler dotest-clean-files
 
-	dotest-debug opened
+	    mbfl_location_compensate( mmux_libc_open FD WW(FILENAME) RR(FLAGS) RR(MODE),
+				      mmux_libc_close RR(FD) )
 
-	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_SETFD) WW(mmux_libc_FD_CLOEXEC)
-	then mbfl_location_leave_then_return_failure
-	fi
+	    dotest-debug opened
 
-	dotest-debug setted
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_SETFD) WW(mmux_libc_FD_CLOEXEC) )
 
-	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_GETFD)
-	then mbfl_location_leave_then_return_failure
-	fi
+	    dotest-debug setted
 
-	dotest-debug getted
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_GETFD) RESULT )
 
-	dotest-equal WW(mmux_libc_FD_CLOEXEC) WW(RV)
-    }
-    mbfl_location_leave
+	    dotest-debug getted
+
+	    dotest-equal WW(mmux_libc_FD_CLOEXEC) WW(RESULT)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
 }
-
-fi
 
 ### ------------------------------------------------------------------------
 
-if test -v mmux_libc_F_GETFL -a -v mmux_libc_F_SETFL -a -v mmux_libc_FD_CLOEXEC
-then
-
 function file-descriptors-fcntl-F_GETFL-1.1 () {
-    dotest-unset-debug
-    mbfl_location_enter
-    {
-	declare -i FD RV ERRNO=0
-	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
-	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
-	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
-	mbfl_location_handler dotest-clean-files
+    if test -v mmux_libc_F_GETFL -a -v mmux_libc_F_SETFL
+    then
+	dotest-unset-debug
+	mbfl_location_enter
+	{
+	    declare -i FD RESULT ERRNO=0
+	    declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	    declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	    mbfl_location_handler dotest-clean-files
 
-	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD"
-	else mbfl_location_leave_then_return_failure
-	fi
+	    mbfl_location_compensate( mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE),
+				      mmux_libc_close RR(FD) )
 
-	dotest-debug opened
+	    dotest-debug opened
 
-	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_GETFL)
-	then mbfl_location_leave_then_return_failure
-	fi
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_GETFL) RESULT )
 
-	dotest-debug getted
-	dotest-equal WW(mmux_libc_O_RDWR) $(( WW(RV) & WW(mmux_libc_O_RDWR) ))
-    }
-    mbfl_location_leave
+	    dotest-debug getted
+	    dotest-equal WW(mmux_libc_O_RDWR) $(( WW(RESULT) & WW(mmux_libc_O_RDWR) ))
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
 }
 
 function file-descriptors-fcntl-F_GETFL-1.2 () {
-    dotest-unset-debug
-    mbfl_location_enter
-    {
-	declare -i FD RV ERRNO=0
-	declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
-	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
-	declare -r FILENAME=$(dotest-mkpathname 'name.ext')
-	mbfl_location_handler dotest-clean-files
+    if test -v mmux_libc_F_GETFL -a -v mmux_libc_F_SETFL
+    then
+	dotest-unset-debug
+	mbfl_location_enter
+	{
+	    declare -i FD RESULT ERRNO=0
+	    declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	    declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	    mbfl_location_handler dotest-clean-files
 
-	if mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE)
-	then mbfl_location_handler "mmux_libc_close $FD"
-	else mbfl_location_leave_then_return_failure
-	fi
+	    mbfl_location_compensate( mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE),
+				      mmux_libc_close RR(FD) )
 
-	dotest-debug opened
+	    dotest-debug opened
 
-	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_SETFL) WW(mmux_libc_O_APPEND)
-	then mbfl_location_leave_then_return_failure
-	fi
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_SETFL) WW(mmux_libc_O_APPEND) )
 
-	dotest-debug setted
+	    dotest-debug setted
 
-	if ! mmux_libc_fcntl RV WW(FD) WW(mmux_libc_F_GETFL)
-	then mbfl_location_leave_then_return_failure
-	fi
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_GETFL) RESULT )
 
-	dotest-debug getted
-	dotest-equal WW(mmux_libc_O_RDWR) $(( WW(RV) & WW(mmux_libc_O_RDWR) ))
-    }
-    mbfl_location_leave
+	    dotest-debug getted
+	    dotest-equal WW(mmux_libc_O_RDWR) $(( WW(RESULT) & WW(mmux_libc_O_RDWR) ))
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
 }
 
-fi
+### ------------------------------------------------------------------------
+
+function file-descriptors-fcntl-F_GETOWN-1.1 () {
+    if test -v mmux_libc_F_GETOWN -a -v mmux_libc_F_SETOWN
+    then
+	dotest-unset-debug
+	mbfl_location_enter
+	{
+	    declare -i FD RESULT ERRNO=0 THE_PID
+	    declare -i FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT | mmux_libc_O_EXCL))
+	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+	    declare -r FILENAME=$(dotest-mkpathname 'name.ext')
+	    mbfl_location_handler dotest-clean-files
+
+	    mbfl_location_compensate( mmux_libc_open FD QQ(FILENAME) WW(FLAGS) WW(MODE),
+				      mmux_libc_close RR(FD) )
+
+	    mbfl_location_leave_when_failure( mmux_libc_getpid THE_PID )
+
+	    dotest-debug opened
+
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_SETOWN) WW(THE_PID) )
+
+	    dotest-debug setted
+
+	    mbfl_location_leave_when_failure( mmux_libc_fcntl WW(FD) WW(mmux_libc_F_GETOWN) RESULT )
+
+	    dotest-debug getted
+	    dotest-equal WW(THE_PID) WW(RESULT)
+	}
+	mbfl_location_leave
+    else dotest-skipped
+    fi
+}
 
 
 #### pipe
@@ -1496,7 +1518,7 @@ function file-descriptors-struct-flock-1.2 () {
 
 #### struct flock
 
-# Requests from the same process.
+# Requests from the same process: F_SETLK, F_GETLK.
 #
 function file-descriptors-struct-flock-2.1 () {
     mbfl_location_enter
@@ -1518,8 +1540,8 @@ function file-descriptors-struct-flock-2.1 () {
 
 	mbfl_location_compensate( mmux_libc_open FD WW(FILENAME) RR(FLAGS) RR(MODE), mmux_libc_close RR(FD) )
 
-	declare RV1 FLOCK_PTR1 L_TYPE1 L_WHENCE1 L_START1 L_LEN1 L_PID1
-	declare RV2 FLOCK_PTR2 L_TYPE2 L_WHENCE2 L_START2 L_LEN2 L_PID2
+	declare FLOCK_PTR1 L_TYPE1 L_WHENCE1 L_START1 L_LEN1 L_PID1
+	declare FLOCK_PTR2 L_TYPE2 L_WHENCE2 L_START2 L_LEN2 L_PID2
 
 	# Prepare a request for exclusive access to the first bytes of the file.
 	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR1 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
@@ -1533,13 +1555,11 @@ function file-descriptors-struct-flock-2.1 () {
 	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'getter-flock' >&2 )
 
 	# Lock the first bytes of the file.
-	mbfl_location_leave_when_failure( mmux_libc_fcntl RV1 RR(FD) RR(mmux_libc_F_SETLK) RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_SETLK) RR(FLOCK_PTR1) )
 
 	# Retrieve informations  about any lock that  blocks the request represented  by FLOCK_PTR2.
 	# If there are no locks that block it: the "l_type" field is set to "F_UNLCK".
-	mbfl_location_leave_when_failure( mmux_libc_fcntl RV2 RR(FD) RR(mmux_libc_F_GETLK) RR(FLOCK_PTR2) )
-
-	dotest-debug RV1=RR(RV1) RV2=RR(RV2)
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_GETLK) RR(FLOCK_PTR2) )
 
 	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'after-flock' >&2 )
 
@@ -1563,6 +1583,207 @@ function file-descriptors-struct-flock-2.1 () {
     }
     mbfl_location_leave
 }
+
+# Requests from the same process: F_SETLKW, F_GETLK.
+#
+function file-descriptors-struct-flock-2.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+ 	mbfl_location_handler dotest-clean-files
+
+	declare -r FILENAME=$(dotest-mkfile 'file-lock-one.ext')
+
+	#       0         1         2         3
+	#       0123456789012345678901234567890123456789
+	printf '0123456789abcdefghilmnopqrstuvz987654321' >WW(FILENAME)
+
+	#cat WW(FILENAME) >&2
+
+	declare FD
+	declare -i FLAGS=$((mmux_libc_O_RDWR ))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	mbfl_location_compensate( mmux_libc_open FD WW(FILENAME) RR(FLAGS) RR(MODE), mmux_libc_close RR(FD) )
+
+	declare FLOCK_PTR1 L_TYPE1 L_WHENCE1 L_START1 L_LEN1 L_PID1
+	declare FLOCK_PTR2 L_TYPE2 L_WHENCE2 L_START2 L_LEN2 L_PID2
+
+	# Prepare a request for exclusive access to the first bytes of the file.
+	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR1 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
+				  mmux_libc_free RR(FLOCK_PTR1) )
+
+	# Prepare a request for exclusive access to the first bytes of the file.
+	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR2 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
+				  mmux_libc_free RR(FLOCK_PTR2) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR1) 'setter-flock' >&2 )
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'getter-flock' >&2 )
+
+	# Lock the first bytes of the file.
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_SETLKW) RR(FLOCK_PTR1) )
+
+	# Retrieve informations  about any lock that  blocks the request represented  by FLOCK_PTR2.
+	# If there are no locks that block it: the "l_type" field is set to "F_UNLCK".
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_GETLK) RR(FLOCK_PTR2) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'after-flock' >&2 )
+
+	mbfl_location_leave_when_failure( mmux_libc_l_type_ref   L_TYPE1   RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_whence_ref L_WHENCE1 RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_start_ref  L_START1  RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_len_ref    L_LEN1    RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_pid_ref    L_PID1    RR(FLOCK_PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_libc_l_type_ref   L_TYPE2   RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_whence_ref L_WHENCE2 RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_start_ref  L_START2  RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_len_ref    L_LEN2    RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_pid_ref    L_PID2    RR(FLOCK_PTR2) )
+
+	dotest-equal     RR(mmux_libc_F_UNLCK)	RR(L_TYPE2)	'l_type'	&&
+	    dotest-equal RR(L_WHENCE1)	RR(L_WHENCE2)	'l_whence'	&&
+	    dotest-equal RR(L_START1)	RR(L_START2)	'l_start'	&&
+	    dotest-equal RR(L_LEN1)	RR(L_LEN2)	'l_len'		&&
+	    dotest-equal RR(L_PID1)	RR(L_PID2)	'l_pid'
+    }
+    mbfl_location_leave
+}
+
+### ------------------------------------------------------------------------
+
+# Requests from the same process: F_OFD_SETLK, F_OFD_GETLK.
+#
+function file-descriptors-struct-flock-3.1 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+ 	mbfl_location_handler dotest-clean-files
+
+	declare -r FILENAME=$(dotest-mkfile 'file-lock-one.ext')
+
+	#       0         1         2         3
+	#       0123456789012345678901234567890123456789
+	printf '0123456789abcdefghilmnopqrstuvz987654321' >WW(FILENAME)
+
+	#cat WW(FILENAME) >&2
+
+	declare FD
+	declare -i FLAGS=$((mmux_libc_O_RDWR ))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	mbfl_location_compensate( mmux_libc_open FD WW(FILENAME) RR(FLAGS) RR(MODE), mmux_libc_close RR(FD) )
+
+	declare FLOCK_PTR1 L_TYPE1 L_WHENCE1 L_START1 L_LEN1 L_PID1
+	declare FLOCK_PTR2 L_TYPE2 L_WHENCE2 L_START2 L_LEN2 L_PID2
+
+	# Prepare a request for exclusive access to the first bytes of the file.
+	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR1 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
+				  mmux_libc_free RR(FLOCK_PTR1) )
+
+	# Prepare a request for exclusive access to the first bytes of the file.
+	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR2 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
+				  mmux_libc_free RR(FLOCK_PTR2) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR1) 'setter-flock' >&2 )
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'getter-flock' >&2 )
+
+	# Lock the first bytes of the file.
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_OFD_SETLK) RR(FLOCK_PTR1) )
+
+	# Retrieve informations  about any lock that  blocks the request represented  by FLOCK_PTR2.
+	# If there are no locks that block it: the "l_type" field is set to "F_UNLCK".
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_OFD_GETLK) RR(FLOCK_PTR2) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'after-flock' >&2 )
+
+	mbfl_location_leave_when_failure( mmux_libc_l_type_ref   L_TYPE1   RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_whence_ref L_WHENCE1 RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_start_ref  L_START1  RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_len_ref    L_LEN1    RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_pid_ref    L_PID1    RR(FLOCK_PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_libc_l_type_ref   L_TYPE2   RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_whence_ref L_WHENCE2 RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_start_ref  L_START2  RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_len_ref    L_LEN2    RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_pid_ref    L_PID2    RR(FLOCK_PTR2) )
+
+	dotest-equal     RR(mmux_libc_F_UNLCK)	RR(L_TYPE2)	'l_type'	&&
+	    dotest-equal RR(L_WHENCE1)	RR(L_WHENCE2)	'l_whence'	&&
+	    dotest-equal RR(L_START1)	RR(L_START2)	'l_start'	&&
+	    dotest-equal RR(L_LEN1)	RR(L_LEN2)	'l_len'		&&
+	    dotest-equal RR(L_PID1)	RR(L_PID2)	'l_pid'
+    }
+    mbfl_location_leave
+}
+
+# Requests from the same process: F_OFD_SETLKW, F_OFD_GETLK.
+#
+function file-descriptors-struct-flock-3.2 () {
+    mbfl_location_enter
+    {
+	dotest-unset-debug
+ 	mbfl_location_handler dotest-clean-files
+
+	declare -r FILENAME=$(dotest-mkfile 'file-lock-one.ext')
+
+	#       0         1         2         3
+	#       0123456789012345678901234567890123456789
+	printf '0123456789abcdefghilmnopqrstuvz987654321' >WW(FILENAME)
+
+	#cat WW(FILENAME) >&2
+
+	declare FD
+	declare -i FLAGS=$((mmux_libc_O_RDWR ))
+	declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+
+	mbfl_location_compensate( mmux_libc_open FD WW(FILENAME) RR(FLAGS) RR(MODE), mmux_libc_close RR(FD) )
+
+	declare FLOCK_PTR1 L_TYPE1 L_WHENCE1 L_START1 L_LEN1 L_PID1
+	declare FLOCK_PTR2 L_TYPE2 L_WHENCE2 L_START2 L_LEN2 L_PID2
+
+	# Prepare a request for exclusive access to the first bytes of the file.
+	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR1 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
+				  mmux_libc_free RR(FLOCK_PTR1) )
+
+	# Prepare a request for exclusive access to the first bytes of the file.
+	mbfl_location_compensate( mmux_libc_flock_calloc FLOCK_PTR2 RR(mmux_libc_F_WRLCK) RR(mmux_libc_SEEK_SET) 0 10 0,
+				  mmux_libc_free RR(FLOCK_PTR2) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR1) 'setter-flock' >&2 )
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'getter-flock' >&2 )
+
+	# Lock the first bytes of the file.
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_OFD_SETLKW) RR(FLOCK_PTR1) )
+
+	# Retrieve informations  about any lock that  blocks the request represented  by FLOCK_PTR2.
+	# If there are no locks that block it: the "l_type" field is set to "F_UNLCK".
+	mbfl_location_leave_when_failure( mmux_libc_fcntl RR(FD) RR(mmux_libc_F_OFD_GETLK) RR(FLOCK_PTR2) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_flock_dump RR(FLOCK_PTR2) 'after-flock' >&2 )
+
+	mbfl_location_leave_when_failure( mmux_libc_l_type_ref   L_TYPE1   RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_whence_ref L_WHENCE1 RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_start_ref  L_START1  RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_len_ref    L_LEN1    RR(FLOCK_PTR1) )
+	mbfl_location_leave_when_failure( mmux_libc_l_pid_ref    L_PID1    RR(FLOCK_PTR1) )
+
+	mbfl_location_leave_when_failure( mmux_libc_l_type_ref   L_TYPE2   RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_whence_ref L_WHENCE2 RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_start_ref  L_START2  RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_len_ref    L_LEN2    RR(FLOCK_PTR2) )
+	mbfl_location_leave_when_failure( mmux_libc_l_pid_ref    L_PID2    RR(FLOCK_PTR2) )
+
+	dotest-equal     RR(mmux_libc_F_UNLCK)	RR(L_TYPE2)	'l_type'	&&
+	    dotest-equal RR(L_WHENCE1)	RR(L_WHENCE2)	'l_whence'	&&
+	    dotest-equal RR(L_START1)	RR(L_START2)	'l_start'	&&
+	    dotest-equal RR(L_LEN1)	RR(L_LEN2)	'l_len'		&&
+	    dotest-equal RR(L_PID1)	RR(L_PID2)	'l_pid'
+    }
+    mbfl_location_leave
+}
+
 
 
 #### let's go
