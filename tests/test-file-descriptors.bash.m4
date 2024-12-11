@@ -330,7 +330,7 @@ function file-descriptors-dup3-1.1 () {
 function file-descriptors-fcntl-F_DUPFD-1.1 () {
     mbfl_location_enter
     {
-	declare -i FD DONE OFFSET SIZE=5
+	declare -i FD NEW_FD DONE OFFSET SIZE=5
 	declare BUFFER
 	mbfl_declare_index_array_varref(RESULT)
 	mbfl_declare_index_array_varref(ORIGIN_DATA,(11 22 33 44 55))

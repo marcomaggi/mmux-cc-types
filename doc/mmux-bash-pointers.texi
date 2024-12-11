@@ -5756,6 +5756,7 @@ Interface to the standard C function @cfunc{\FUNC\}.  Bind to the shell variable
 * fds scatter-gather::          Scatter--gather input and output.
 * fds range-copying::           Copying ranges from file to file.
 * fds flock::                   File locks.
+* fds control::                 File descriptors control.
 @end menu
 
 @c page
@@ -6726,6 +6727,253 @@ return true.  If an error occurs: print a message to @stderr{}, then return fals
 The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
 structure; when not given: it defaults to @samp{struct flock}.
 @end deffn
+
+@c page
+@node fds control
+@section File descriptors control
+
+
+@ref{overview conventions, Conventions in coding and documentation}.
+
+
+@deffn Builtin mmux_libc_fcntl @var{FD} @var{COMMAND}
+@deffnx Builtin mmux_libc_fcntl @var{FD} @var{COMMAND} @var{PARAMETER}
+Interface to the standard C language function @cfunc{fcntl}, @cfuncpage{fcntl}.  Arguments:
+
+@table @var
+@item FD
+A file descriptor.
+
+@item COMMAND
+A constant representing a command for @cfunc{fcntl}.
+
+@item PARAMETER
+A parameter that can be input or output depending on the @var{COMMAND}.
+@end table
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_DUPFD
+Duplicate a file descriptor; @var{PARAMETER} must be the new file descriptor.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD NEW_FD
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+let NEW_FD=1+FD
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_DUPFD} @WW{NEW_FD}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_GETFD
+Get file descriptor flags, like @samp{FD_CLOEXEC}; @var{PARAMETER} must be a shell variable name
+which is bound to the flags value.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FDFLAGS
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_GETFD} FDFLAGS
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_SETFD
+Set file descriptor flags, like @samp{FD_CLOEXEC}; @var{PARAMETER} must be a bitwise OR combination
+of flags.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_SETFD} @WW{mmux_libc_FD_CLOEXEC}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_GETFL
+Get open file descriptor flags, like @samp{O_RDWR}; @var{PARAMETER} must be a shell variable name
+which is bound to the flags value.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD OUFLAGS
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_GETFL} OUFLAGS
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_SETFL
+Set open file descriptor flags, like @samp{O_APPEND}; @var{PARAMETER} must be a bitwise OR
+combination of flags.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_SETFL} @WW{mmux_libc_O_APPEND}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_GETLK
+Get a @MmuxCStruct{flock} describing a lock that blocks a requested lock; @var{PARAMETER} must be a
+pointer to a @MmuxCStruct{flock}.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FLOCK_PTR
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_flock_calloc FLOCK_PTR @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_GETLK} @WW{FLOCK_PTR}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_SETLK
+Set or clear file lock; @var{PARAMETER} must be a pointer to a @MmuxCStruct{flock}.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FLOCK_PTR
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_flock_calloc FLOCK_PTR @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_SETLK} @WW{FLOCK_PTR}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_SETLKW
+Set or clear file lock; @var{PARAMETER} must be a pointer to a @MmuxCStruct{flock}.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FLOCK_PTR
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_flock_calloc FLOCK_PTR @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_SETLKW} @WW{FLOCK_PTR}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_OFD_GETLK
+Get a @MmuxCStruct{flock} describing a lock that blocks a requested lock; @var{PARAMETER} must be a
+pointer to a @MmuxCStruct{flock}.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FLOCK_PTR
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_flock_calloc FLOCK_PTR @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_OFD_GETLK} @WW{FLOCK_PTR}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_OFD_SETLK
+Set or clear file lock; @var{PARAMETER} must be a pointer to a @MmuxCStruct{flock}.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FLOCK_PTR
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_flock_calloc FLOCK_PTR @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_OFD_SETLK} @WW{FLOCK_PTR}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_OFD_SETLKW
+Set or clear file lock; @var{PARAMETER} must be a pointer to a @MmuxCStruct{flock}.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD FLOCK_PTR
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_flock_calloc FLOCK_PTR @RR{mmux_libc_F_WRLCK} @RR{mmux_libc_SEEK_SET} 0 10 0
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_OFD_SETLKW} @WW{FLOCK_PTR}
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_GETOWN
+Get the process or group id that receives the signal @samp{SIGIO}; @var{PARAMETER} must be a shell
+variable name which is bound to the PID value.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD THE_PID
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_GETOWN} THE_PID
+@end example
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} mmux_libc_F_SETOWN
+Set the process or group id that receives the signal @samp{SIGIO}; @var{PARAMETER} must be a PID.
+
+@example
+declare -r  FILENAME='/path/to/name.ext'
+declare -ri FLAGS=$((mmux_libc_O_RDWR | mmux_libc_O_CREAT))
+declare -ri MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
+declare -i  FD THE_PID
+
+mmux_libc_open FD @WW{FILENAME} @WW{FLAGS} @WW{MODE}
+mmux_libc_getpid THE_PID
+mmux_libc_fcntl @WW{FD} @WW{mmux_libc_F_GETOWN} @RR{THE_PID}
+@end example
+@end defvr
 
 @c page
 @node fs
