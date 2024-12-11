@@ -38,7 +38,7 @@
    floating-point numbers.  */
 static regex_t mmux_cc_types_float_format_rex;
 
-m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 #undef  MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])
 #define MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])	[[[$2]]]
 
@@ -81,7 +81,7 @@ mmux_cc_types_init_sprint_module (void)
     return true;
   }
 
-  m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+  m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_set_output_format(MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]]), "MMUX CC Types");
   mmux_cc_types_output_format_$1[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN] = '\0';
   ]]])]]])
@@ -110,7 +110,7 @@ mmux_cc_types_init_sprint_module (void)
  ** Selecting printf output format for floating-pont numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
 {
@@ -232,7 +232,7 @@ mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
  ** Type string printers: raw C standard types, signed and unsigned integers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_CORE_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_CORE_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 int
 mmux_$1_sprint_size (mmux_$1_t value)
 {
@@ -279,7 +279,7 @@ DEFINE_CORE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_HAVE_CC_TYPE_ULLONG]]])
  ** Type string printers: raw C standard types, real floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 int
 mmux_$1_sprint_size (mmux_$1_t value)
 {
@@ -351,7 +351,7 @@ DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[[MMUX_HAVE_CC_
 m4_dnl $1 - The stem of the complex number.
 m4_dnl $2 - The stem of the real and imaginary parts.
 m4_dnl $3 - An optional C preprocessor symbol used to exclude the code if the type is not supported.
-m4_define([[[DEFINE_COMPLEX_SPRINTER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_COMPLEX_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 int
 mmux_$1_sprint_size (mmux_$1_t value)
 {

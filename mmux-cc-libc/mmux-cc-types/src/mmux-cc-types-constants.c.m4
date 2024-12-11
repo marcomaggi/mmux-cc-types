@@ -33,7 +33,7 @@
  ** Constants.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_MATH_CONSTANTS_FUNCS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_MATH_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 __extension__ mmux_$1_t mmux_$1_constant_E		(void) { return M_E$2; }
 __extension__ mmux_$1_t mmux_$1_constant_LOG2E		(void) { return M_LOG2E$2; }
 __extension__ mmux_$1_t mmux_$1_constant_LOG10E		(void) { return M_LOG10E$2; }

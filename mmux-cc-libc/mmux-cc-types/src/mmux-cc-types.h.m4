@@ -96,47 +96,47 @@ extern "C" {
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
 #undef  MMUX_FLOAT32_LITERAL
 #define MMUX_FLOAT32_LITERAL(X)		(X ## f32)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
 #undef  MMUX_FLOAT64_LITERAL
 #define MMUX_FLOAT64_LITERAL(X)		(X ## f64)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
 #undef  MMUX_FLOAT128_LITERAL
 #define MMUX_FLOAT128_LITERAL(X)	(X ## f128)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],[[[
 #undef  MMUX_FLOAT32X_LITERAL
 #define MMUX_FLOAT32X_LITERAL(X)	(X ## f32x)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],[[[
 #undef  MMUX_FLOAT64X_LITERAL
 #define MMUX_FLOAT64X_LITERAL(X)	(X ## f64x)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
 #undef  MMUX_FLOAT128X_LITERAL
 #define MMUX_FLOAT128X_LITERAL(X)	(X ## f128x)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
 #undef  MMUX_DECIMAL32_LITERAL
 #define MMUX_DECIMAL32_LITERAL(X)	(X ## DF)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
 #undef  MMUX_DECIMAL64_LITERAL
 #define MMUX_DECIMAL64_LITERAL(X)	(X ## DD)
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
 #undef  MMUX_DECIMAL128_LITERAL
 #define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
 ]]])
@@ -174,8 +174,8 @@ typedef signed int			mmux_sint_t;
 typedef unsigned int			mmux_uint_t;
 typedef signed long			mmux_slong_t;
 typedef unsigned long			mmux_ulong_t;
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[typedef signed long long	      mmux_sllong_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[typedef unsigned long long int   mmux_ullong_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[typedef signed long long	      mmux_sllong_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[typedef unsigned long long int   mmux_ullong_t;]]])
 
 typedef int8_t				mmux_sint8_t;
 typedef uint8_t				mmux_uint8_t;
@@ -188,56 +188,56 @@ typedef uint64_t			mmux_uint64_t;
 
 typedef float				mmux_float_t;
 typedef double				mmux_double_t;
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],  [[[typedef long double		mmux_ldouble_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],  [[[typedef long double		mmux_ldouble_t;]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],  [[[__extension__ typedef _Float32	mmux_float32_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],  [[[__extension__ typedef _Float64	mmux_float64_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]], [[[__extension__ typedef _Float128	mmux_float128_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],  [[[__extension__ typedef _Float32	mmux_float32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],  [[[__extension__ typedef _Float64	mmux_float64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]], [[[__extension__ typedef _Float128	mmux_float128_t;]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]], [[[__extension__ typedef _Float32x	mmux_float32x_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]], [[[__extension__ typedef _Float64x	mmux_float64x_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[__extension__ typedef _Float128x mmux_float128x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]], [[[__extension__ typedef _Float32x	mmux_float32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]], [[[__extension__ typedef _Float64x	mmux_float64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[__extension__ typedef _Float128x mmux_float128x_t;]]])
 
 typedef float complex		mmux_complexf_t;
 typedef mmux_float_t		mmux_complexf_part_t;
 typedef double complex		mmux_complexd_t;
 typedef mmux_double_t		mmux_complexd_part_t;
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]],[[[
 typedef long double complex	mmux_complexld_t;
 typedef mmux_ldouble_t	mmux_complexld_part_t;
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]],[[[
 __extension__ typedef _Float32x complex		mmux_complexf32_t;
 typedef mmux_float32_t				mmux_complexf32_part_t;
 ]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]],[[[
 __extension__ typedef _Float64x complex		mmux_complexf64_t;
 typedef mmux_float64_t				mmux_complexf64_part_t;
 ]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]],[[[
 __extension__ typedef _Float128 complex		mmux_complexf128_t;
 typedef mmux_float128_t				mmux_complexf128_part_t;
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]],[[[
 __extension__ typedef _Float32x complex	mmux_complexf32x_t;
 typedef mmux_float32x_t	mmux_complexf32x_part_t;
 ]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]],[[[
 __extension__ typedef _Float64x complex	mmux_complexf64x_t;
 typedef mmux_float64x_t	mmux_complexf64x_part_t;
 ]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]],[[[
 __extension__ typedef _Float128x complex	mmux_complexf128x_t;
 typedef mmux_float128x_t	mmux_complexf128x_part_t;
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]],  [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]],  [[[
 struct mmux_complexd32_tag_t {
   mmux_decimal32_t		re;
   mmux_decimal32_t		im;
@@ -245,7 +245,7 @@ struct mmux_complexd32_tag_t {
 typedef struct mmux_complexd32_tag_t mmux_complexd32_t;
 typedef mmux_decimal32_t	mmux_complexd32_part_t;
 ]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]],  [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]],  [[[
 struct mmux_complexd64_tag_t {
   mmux_decimal64_t		re;
   mmux_decimal64_t		im;
@@ -253,7 +253,7 @@ struct mmux_complexd64_tag_t {
 typedef struct mmux_complexd64_tag_t mmux_complexd64_t;
 typedef mmux_decimal64_t	mmux_complexd64_part_t;
 ]]])
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]], [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]], [[[
 struct mmux_complexd128_tag_t {
   mmux_decimal128_t	re;
   mmux_decimal128_t	im;
@@ -291,21 +291,21 @@ DEFINE_ALIAS_TYPEDEF([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]]);
  ** Prototypes of functions not implemented by the C compiler or the C library.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
 mmux_cc_types_decl mmux_decimal32_t mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
 mmux_cc_types_decl int mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, mmux_decimal32_t value)
   __attribute__((__nonnull__(3)));
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
 mmux_cc_types_decl mmux_decimal64_t mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
 mmux_cc_types_decl int mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, mmux_decimal64_t value)
   __attribute__((__nonnull__(3)));
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
 mmux_cc_types_decl mmux_decimal128_t mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
 mmux_cc_types_decl int mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, mmux_decimal128_t value)
@@ -317,7 +317,7 @@ mmux_cc_types_decl int mmux_strfromd128 (char * s_value, size_t size, char const
  ** Basic functions for complex floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
   __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_part_t mmux_$1_real_part (mmux_$1_t Z)	__attribute__((__const__));
@@ -385,7 +385,7 @@ m4_dnl ----------------------------------------------------------------
 
 m4_dnl $1 - type stem
 m4_dnl $2 - C preprocessor symbol for conditional code
-m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
+m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
 mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_minimum __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_maximum __attribute__((__const__));
@@ -398,7 +398,7 @@ m4_dnl ----------------------------------------------------------------
 
 m4_dnl $1 - type stem
 m4_dnl $2 - C preprocessor symbol for conditional code
-m4_define([[[DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
 ]]])]]])
 
@@ -480,7 +480,7 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[rlim]]])
  ** Type predicate prototypes.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
@@ -496,14 +496,14 @@ mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__a
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
 ]]])]]])
 
-m4_define([[[DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
 ]]])]]])
 
-m4_define([[[DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon __attribute__((__const__));
 ]]])]]])
@@ -623,7 +623,7 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_T
 #undef  MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN
 #define MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN		(1+8)
 
-m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl bool mmux_$1_set_output_format (char const * new_result_format, char const * who)
   __attribute__((__nonnull__(1)));
 
@@ -669,7 +669,7 @@ mmux_pointer_diff (mmux_pointer_t ptr1, mmux_pointer_t ptr2)
   return delta;
 }
 
-m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
 {
@@ -771,7 +771,7 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[rlim]]])
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
 {
@@ -848,7 +848,7 @@ DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TY
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__)) static inline mmux_$1_t
 mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
 {
@@ -910,7 +910,7 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[rlim]]])
  ** Mathematical constants.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG10E	(void) __attribute__((__const__));
@@ -955,7 +955,7 @@ m4_dnl $4 - type parser macro
 m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_UNARY_CPROTO]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_$1_t op);
 ]]])]]])]]])
 
@@ -966,7 +966,7 @@ m4_dnl $4 - type parser macro
 m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARY_CPROTO]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2);
 ]]])]]])]]])
 
@@ -977,7 +977,7 @@ m4_dnl $4 - type parser macro
 m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARYN_CPROTO]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op);
 ]]])]]])]]])
 
@@ -1436,7 +1436,7 @@ mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shr (mmux_pointer_t op, m
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_BITWISE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_BITWISE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
   __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_or  (mmux_$1_t op1, mmux_$1_t op2)

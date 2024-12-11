@@ -213,7 +213,7 @@ mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_so
  ** Parsing complex numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 static bool parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
 
 bool
@@ -343,7 +343,7 @@ DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_
  ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
 {
@@ -413,7 +413,7 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[
 bool
 mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
@@ -503,7 +503,7 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[
 bool
 mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {

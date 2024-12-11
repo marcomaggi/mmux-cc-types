@@ -41,7 +41,7 @@ m4_dnl helpers
 m4_dnl $1 - Preprocessor symbol: if defined to 1, include the body of code; otherwise include the alternative body.
 m4_dnl $2 - The body of code.
 m4_dnl $3 - The alternative of code.
-m4_define([[[MMUX_BASH_CONDITIONAL_CODE]]],[[[m4_ifelse([[[$1]]],,[[[$2]]],[[[m4_dnl
+m4_define([[[MMUX_CONDITIONAL_CODE]]],[[[m4_ifelse([[[$1]]],,[[[$2]]],[[[m4_dnl
 #if ((defined $1) && (1 == $1))
 $2
 m4_ifelse([[[$3]]],,,[[[m4_dnl

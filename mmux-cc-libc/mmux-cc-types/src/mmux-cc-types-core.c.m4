@@ -36,49 +36,49 @@ m4_define([[[MMUX_INTEGER_ZERO]]],[[[((mmux_$1_t)0)]]])
  ** Some maximum/minimum values.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
 __extension__ static const _Float32   mmux_libc_maximum_float32=FLT32_MAX;
 __extension__ static const _Float32   mmux_libc_minimum_float32=-(mmux_libc_maximum_float32);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
 __extension__ static const _Float64   mmux_libc_maximum_float64=FLT64_MAX;
 __extension__ static const _Float64   mmux_libc_minimum_float64=-(mmux_libc_maximum_float64);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
 __extension__ static const _Float128 mmux_libc_maximum_float128=FLT128_MAX;
 __extension__ static const _Float128 mmux_libc_minimum_float128=-(mmux_libc_maximum_float128);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]], [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]], [[[
 __extension__ static const _Float32x  mmux_libc_maximum_float32x=FLT32X_MAX;
 __extension__ static const _Float32x  mmux_libc_minimum_float32x=-(mmux_libc_maximum_float32x);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]], [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]], [[[
 __extension__ static const _Float64x  mmux_libc_maximum_float64x=FLT64X_MAX;
 __extension__ static const _Float64x  mmux_libc_minimum_float64x=-(mmux_libc_maximum_float64);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
 __extension__ static const _Float128x mmux_libc_maximum_float128x=FLT128X_MAX;
 __extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_maximum_float128x);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
 /* Should we do something with "DEC32_MIN" defined by GCC? */
 __extension__ static const _Decimal32   mmux_libc_maximum_decimal32=DEC32_MAX;
 __extension__ static const _Decimal32   mmux_libc_minimum_decimal32=-(mmux_libc_maximum_decimal32);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
 /* Should we do something with "DEC64_MIN" defined by GCC? */
 __extension__ static const _Decimal64   mmux_libc_maximum_decimal64=DEC64_MAX;
 __extension__ static const _Decimal64   mmux_libc_minimum_decimal64=-(mmux_libc_maximum_decimal64);
 ]]])
 
-MMUX_BASH_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
 /* Should we do something with "DEC128_MIN" defined by GCC? */
 __extension__ static const _Decimal128 mmux_libc_maximum_decimal128=DEC128_MAX;
 __extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_maximum_decimal128);
@@ -132,7 +132,7 @@ m4_dnl $1 - Stem of the type.
 m4_dnl $2 - C language expression evaluating to the maximum value.
 m4_dnl $3 - C language expression evaluating to the minimum value.
 m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
-m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
+m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$4]]],[[[
 bool
 mmux_string_is_$1 (char const * s_value)
 {
@@ -204,7 +204,7 @@ DEFINE_REAL_TYPE_FUNCTIONS(uint64,	UINT64_MAX,	0)
  ** Integer non-alias number functions: abs, min, max.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_STYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+m4_define([[[DEFINE_STYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
 mmux_$1_t
 mmux_$1_abs (mmux_$1_t op)
 {
@@ -222,7 +222,7 @@ mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
 }
 ]]])]]])
 
-m4_define([[[DEFINE_UTYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+m4_define([[[DEFINE_UTYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
 mmux_$1_t
 mmux_$1_abs (mmux_$1_t op)
 {
@@ -268,7 +268,7 @@ DEFINE_UTYPE_FUNCTIONS([[[uint64]]])
  ** Real non-alias floating-point number functions: abs, min, max.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
 inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return $2(X);    }
 inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
 inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
@@ -363,7 +363,7 @@ m4_dnl $6 - argument function
 m4_dnl $7 - conjugate function
 m4_dnl $8 - atan2 function
 m4_dnl $9 - C preprocessor symbol used to exclude the code if the type is not supported.
-m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$9]]],[[[
+m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$9]]],[[[
 bool
 mmux_string_is_$1 (char const * s_value)
 {
@@ -453,7 +453,7 @@ DEFINE_COMPLEX_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]],[[[cimagf128x]]],[
  ** Complex decimal basic functions.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_COMPLEX_DECIMAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
+m4_define([[[DEFINE_COMPLEX_DECIMAL_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
 bool
 mmux_string_is_$1 (char const * s_value)
 {
@@ -472,7 +472,7 @@ DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEX
  ** Core C language predicate: signed integer numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_SIGNED_INTEGER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_SIGNED_INTEGER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
@@ -536,7 +536,7 @@ DEFINE_SIGNED_INTEGER_PREDICATES([[[time]]])
  ** Core C language predicate: unsigned integer numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_UNSIGNED_INTEGER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_UNSIGNED_INTEGER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
@@ -602,7 +602,7 @@ DEFINE_UNSIGNED_INTEGER_PREDICATES([[[rlim]]])
  ** Core C language predicates: floating-point real numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_REAL_FLOAT_NUMBER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_REAL_FLOAT_NUMBER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
@@ -689,7 +689,7 @@ DEFINE_REAL_FLOAT_NUMBER_PREDICATES([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT1
  ** Core C language predicates: complex floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_COMPLEX_NUMBER_PREDICATES]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_COMPLEX_NUMBER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool
 mmux_$1_is_zero (mmux_$1_t Z)
 {
@@ -733,11 +733,11 @@ DEFINE_COMPLEX_NUMBER_PREDICATES([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HA
 #undef  DECL
 #define DECL		__attribute__((__const__))
 
-m4_define([[[DEFINE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == op2)? true : false; }
 ]]])]]])
 
-m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
 DECL int
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
@@ -756,7 +756,7 @@ DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (op1 >= 
 DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <= op2)? true : false; }
 ]]])]]])
 
-m4_define([[[DEFINE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
 DECL int
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
@@ -847,7 +847,7 @@ DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[rlim]]])
 
 m4_dnl $1 - complex type stem
 m4_dnl $2 - preprocessor symbol for conditional definition
-m4_define([[[DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
@@ -865,7 +865,7 @@ mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
 m4_dnl $1 - complex type stem
 m4_dnl $2 - real part type stem
 m4_dnl $3 - preprocessor symbol for conditional definition
-m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool
 mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
@@ -938,7 +938,7 @@ m4_dnl $4 - type parser macro
 m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_UNARY_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
 mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return $3(op); }
 ]]])]]])]]])
 
@@ -949,7 +949,7 @@ m4_dnl $4 - type parser macro
 m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARY_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
 mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return $3(op1, op2); }
 ]]])]]])]]])
 
@@ -960,7 +960,7 @@ m4_dnl $4 - type parser macro
 m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARYN_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
+)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
 mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op) { return $3(N, op); }
 ]]])]]])]]])
 
@@ -1382,7 +1382,7 @@ mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_BITWISE_FUNCS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_BITWISE_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_$1_t
 mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
 {
