@@ -538,6 +538,187 @@ mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * 
  ** ----------------------------------------------------------------- */
 
 bool
+mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, ...)
+{
+  switch (command) {
+#ifdef MMUX_LIBC_F_DUPFD
+  case MMUX_LIBC_F_DUPFD:
+    {
+      mmux_libc_file_descriptor_t	new_fd;
+      mmux_sint_t			rv = fcntl(fd.value, command, new_fd.value);
+
+      if (-1 != rv) {
+	return false;
+      } else {
+	return true;
+      }
+    }
+    break;
+#endif
+#if 0
+#if ((defined MMUX_HAVE_F_GETFD) && (1 == MMUX_HAVE_F_GETFD))
+  case F_GETFD:
+    {
+      if (4 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv;
+
+	rv = fcntl(fd.value, command);
+	if (-1 != rv) {
+	  return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETFL) && (1 == MMUX_HAVE_F_GETFL))
+  case F_GETFL:
+    {
+      if (4 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv;
+
+	rv = fcntl(fd.value, command);
+	if (-1 != rv) {
+	  return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETLK) && (1 == MMUX_HAVE_F_GETLK))
+  case F_GETLK:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	mmux_libc_flock_t *	flock_pointer;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(flock_pointer,	4);
+	{
+	  int	rv = fcntl(fd.value, command, flock_pointer);
+	  if (-1 != rv) {
+	    return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	  } else {
+	    return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	  }
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_GETOWN) && (1 == MMUX_HAVE_F_GETOWN))
+  case F_GETOWN:
+    {
+      goto mmux_error_parsing_builtin_argument;
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETFD) && (1 == MMUX_HAVE_F_SETFD))
+  case F_SETFD:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv, flags;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	4);
+
+	rv = fcntl(fd.value, command, flags);
+	if (-1 != rv) {
+	  return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETFL) && (1 == MMUX_HAVE_F_SETFL))
+  case F_SETFL:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	int	rv, flags;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	4);
+
+	rv = fcntl(fd.value, command, flags);
+	if (-1 != rv) {
+	  return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	} else {
+	  return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETLKW) && (1 == MMUX_HAVE_F_SETLKW))
+  case F_SETLKW:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	mmux_libc_flock_t *	flock_pointer;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(flock_pointer,	4);
+	{
+	  int	rv = fcntl(fd.value, command, flock_pointer);
+
+	  if (-1 != rv) {
+	    return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	  } else {
+	    return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	  }
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETLK) && (1 == MMUX_HAVE_F_SETLK))
+  case F_SETLK:
+    {
+      if (5 != argc) {
+	return mmux_bash_builtin_wrong_num_of_args();
+      } else {
+	mmux_libc_flock_t *	flock_pointer;
+
+	MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(flock_pointer,	4);
+	{
+	  int	rv = fcntl(fd.value, command, flock_pointer);
+
+	  if (-1 != rv) {
+	    return mmux_sint_bind_to_bash_variable(resultvar, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	  } else {
+	    return mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	  }
+	}
+      }
+    }
+    break;
+#endif
+#if ((defined MMUX_HAVE_F_SETOWN) && (1 == MMUX_HAVE_F_SETOWN))
+  case F_SETOWN:
+    {
+      goto mmux_error_parsing_builtin_argument;
+    }
+    break;
+#endif
+#endif
+  default:
+    errno = MMUX_LIBC_EINVAL;
+    return true;
+  }
+}
+
+bool
 mmux_libc_fcntl_command_flag_to_symbol (char const ** str_p, mmux_sint_t flag)
 {
   /* We use the if statement, rather than  the switch statement, because there may be

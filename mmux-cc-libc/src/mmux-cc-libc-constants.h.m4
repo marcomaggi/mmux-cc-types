@@ -30,17 +30,17 @@
  ** Enumerations.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[MMUX_LIBC_DEFINE_ENUM_CONSTANT]]],[[[m4_dnl
-#define HAVE_MMUX_LIBC_$1	m4_ifelse(mmux_libc_VALUEOF_$1,[[[MMUX_META_VALUE_UNDEFINED]]],0,1)
-#if (1 == HAVE_MMUX_LIBC_$1)
-  MMUX_LIBC_$1 = mmux_libc_VALUEOF_$1,
-#endif]]])
+m4_divert(-1)
+m4_define([[[MMUX_LIBC_DEFINE_ENUM_CONSTANT]]],[[[m4_ifelse(mmux_libc_VALUEOF_$1,[[[MMUX_META_VALUE_UNDEFINED]]],m4_dnl
+[[[/* #undef MMUX_HAVE_LIBC_$1 */]]],m4_dnl
+[[[#define MMUX_HAVE_LIBC_$1	1
+  MMUX_LIBC_$1 = mmux_libc_VALUEOF_$1,]]])]]])
 
-m4_define([[[MMUX_LIBC_DEFINE_CPP_CONSTANT]]],[[[m4_dnl
-#define HAVE_MMUX_LIBC_$1	m4_ifelse(mmux_libc_VALUEOF_$1,[[[MMUX_META_VALUE_UNDEFINED]]],0,1)
-#if (1 == HAVE_MMUX_LIBC_$1)
-#define MMUX_LIBC_$1		mmux_libc_VALUEOF_$1
-#endif]]])
+m4_define([[[MMUX_LIBC_DEFINE_CPP_CONSTANT]]],[[[m4_ifelse(mmux_libc_VALUEOF_$1,[[[MMUX_META_VALUE_UNDEFINED]]],m4_dnl
+[[[/* #undef MMUX_HAVE_LIBC_$1 */]]],m4_dnl
+[[[#define MMUX_HAVE_LIBC_$1	1
+#define MMUX_LIBC_$1		mmux_libc_VALUEOF_$1]]])]]])
+m4_divert(0)m4_dnl
 
 typedef enum mmux_libc_errno_t {
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(EPERM)
