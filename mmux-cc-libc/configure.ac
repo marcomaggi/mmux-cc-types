@@ -73,7 +73,7 @@ AC_SEARCH_LIBS(cos, m,, [AC_MSG_ERROR([Cannot find libm])])
 AC_CACHE_SAVE
 
 
-#### inspecting functions
+#### inspecting functions and data structured
 
 # These are not checked in the "mmux.m4" file, even though the common includes have them.
 AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/uio.h sys/socket.h sys/un.h netinet/in.h net/if.h arpa/inet.h
@@ -83,11 +83,18 @@ AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscm
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
                 renameat2 group_member dup3 accept4 copy_file_range gettid prlimit])
 
-
-#### inspecting data structures
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_RLIMIT],[sizeof(struct rlimit)])
+
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_TIMEVAL], [sizeof(struct timeval)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_TIMESPEC],[sizeof(struct timespec)])
 
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_IOVEC],[sizeof(struct iovec)])
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_FLOCK],[sizeof(struct flock)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_FD_SET],[sizeof(fd_set)])
+
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_UN],[sizeof(struct sockaddr_un)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_IN],[sizeof(struct sockaddr_in)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_IN6],[sizeof(struct sockaddr_in6)])
 
 
 #### inspecting errno constants

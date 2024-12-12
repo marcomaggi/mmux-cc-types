@@ -5,7 +5,8 @@ AUTOMAKE_OPTIONS	= foreign
 EXTRA_DIST		= INSTALL
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
-AM_CPPFLAGS		= -I$(srcdir)/src/ -I$(builddir)/src/
+AM_CPPFLAGS		=  -I$(srcdir)/src/ -I$(builddir)/src/
+AM_CPPFLAGS		+= -I$(builddir)/mmux-cc-types/src
 CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
@@ -97,14 +98,16 @@ EXTRA_DIST	+= \
 	src/mmux-cc-libc-internals.h.m4			\
 	src/mmux-cc-libc-constants.h.m4			\
 	src/mmux-cc-libc-file-descriptors.c.m4		\
-	src/mmux-cc-libc-library.c.m4
+	src/mmux-cc-libc-library.c.m4			\
+	src/mmux-cc-libc-system-configuration.c.m4
 
 MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc.h				\
 	src/mmux-cc-libc-internals.h			\
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
-	src/mmux-cc-libc-library.c
+	src/mmux-cc-libc-library.c			\
+	src/mmux-cc-libc-system-configuration.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
@@ -130,7 +133,8 @@ libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc-internals.h			\
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
-	src/mmux-cc-libc-library.c
+	src/mmux-cc-libc-library.c			\
+	src/mmux-cc-libc-system-configuration.c
 
 .PHONY: library
 

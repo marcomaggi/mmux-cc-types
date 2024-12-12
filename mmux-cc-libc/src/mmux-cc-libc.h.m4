@@ -224,6 +224,50 @@ mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const 
 
 
 /** --------------------------------------------------------------------
+ ** Input/output: selecting file descriptors.
+ ** ----------------------------------------------------------------- */
+
+typedef struct mmux_libc_fd_set_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_FD_SET]; } mmux_libc_fd_set_t;
+
+
+mmux_cc_libc_decl bool mmux_libc_fd_set_dump (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t const * fd_set_p, char const * struct_name);
+
+
+/** --------------------------------------------------------------------
+ ** System configuration.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_sysconf (mmux_slong_t * result_p, mmux_sint_t parameter)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_confstr_size (mmux_usize_t * required_nbytes_p, mmux_sint_t parameter);
+mmux_cc_libc_decl bool mmux_libc_confstr (mmux_sint_t parameter, char * bufptr, mmux_usize_t buflen)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_pathconf (mmux_slong_t * result_p, char const * pathname, mmux_sint_t parameter)
+  __attribute__((__nonnull__(1,2)));
+
+/* ------------------------------------------------------------------ */
+
+typedef struct mmux_libc_rlimit_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_RLIMIT]; } mmux_libc_rlimit_t;
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_cur,	mmux_rlim_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_max,	mmux_rlim_t)
+
+mmux_cc_libc_decl bool mmux_libc_rlimit_dump (mmux_libc_file_descriptor_t fd, mmux_libc_rlimit_t * rlimit_pointer,
+					      char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_getrlimit (mmux_sint_t resource, mmux_libc_rlimit_t * rlimit_p)
+  __attribute__((__nonnull__(2)));
+mmux_cc_libc_decl bool mmux_libc_setrlimit (mmux_sint_t resource, mmux_libc_rlimit_t * rlimit_p)
+  __attribute__((__nonnull__(2)));
+mmux_cc_libc_decl bool mmux_libc_prlimit (mmux_pid_t pid, mmux_sint_t resource,
+					  mmux_libc_rlimit_t * new_rlimit_p, mmux_libc_rlimit_t * old_rlimit_p)
+  __attribute__((__nonnull__(3,4)));
+
+
+/** --------------------------------------------------------------------
  ** Miscellaneous.
  ** ----------------------------------------------------------------- */
 

@@ -73,6 +73,45 @@
 @ref{\NODE\,\TITLE\,\TITLE\,mmux-cc-types}
 @end macro
 
+@macro Cinterface{FUNCNAME}
+Interface to the function @cfunc{\FUNCNAME\}, @cfuncpage{\FUNCNAME\}
+@end macro
+
+@macro cfuncpage{FUNCNAME}
+@ref{\FUNCNAME\,\FUNCNAME\,\FUNCNAME\,*manpages*}
+@end macro
+
+@macro MmuxCStruct{NAME}
+@code{struct \NAME\}
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxStructOpaqueTypedef{STRUCT_NAME}
+@deftp {Struct Typedef} mmux_libc_\STRUCT_NAME\_t
+An opaque alias for @MmuxCStruct{\STRUCT_NAME\}.
+@end deftp
+
+@end macro
+
+@macro MmuxSetterGetter{STRUCT_NAME, FIELD_NAME}
+@deftypefun void mmux_libc_\FIELD_NAME\_set (mmux_libc_\STRUCT_NAME\_t * @var{\STRUCT_NAME\_p}, mmux_rlim_t @var{\FIELD_NAME\})
+@deftypefunx mmux_rlim_t mmux_libc_\FIELD_NAME\_ref (mmux_libc_\STRUCT_NAME\_t * @var{\STRUCT_NAME\_p})
+Setter and getter for the field @code{\FIELD_NAME\} of @objtype{mmux_libc_\STRUCT_NAME\_t}.
+@end deftypefun
+
+@end macro
+
+@macro MmuxStructDumper{STRUCT_NAME}
+@deftypefun bool mmux_libc_\STRUCT_NAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCT_NAME\_t * @var{struct_p}, char const * @var{struct_name})
+Write to @var{fd} a description of the fields of the @MmuxCStruct{\STRUCT_NAME\} referenced by
+@var{struct_p}.  @var{struct_name} must be a pointer to an @asciiz{} string representing the name of
+the data structure used in the description; when @cnull{}: it defaults to @samp{struct
+\STRUCT_NAME\}.
+@end deftypefun
+
+@end macro
+
 @c page
 @c ------------------------------------------------------------
 @c Copyright notice.
@@ -145,6 +184,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * overview::                    Overview of the package.
 * version::                     Version functions.
 * initialisation::              Library initialisation.
+* system::                      System configuration.
 
 Appendices
 
@@ -193,6 +233,7 @@ C language header files are installed under @code{$includedir}, for example:
 @menu
 * overview stems::              Specifying C language types with their stem.
 * overview errors::             Error handling.
+* overview results::            Results handling.
 * overview linking::            Linking code with the shared library.
 @end menu
 
@@ -209,8 +250,27 @@ C language header files are installed under @code{$includedir}, for example:
 @section Error handling
 
 
-Most of the functions that can fail return a @objtype{bool} value: @cfalse{} when successful;
-@ctrue{} when an error occurs.
+Unless otherwise specified, the functions that can fail return a @objtype{bool} value: @cfalse{}
+when successful; @ctrue{} when an error occurs.
+
+@c page
+@node overview results
+@section Results handling
+
+
+Unless otherwise specified, if the first argument of a function is a pointer named @var{result_p}:
+the function will store in the referenced location the result of the call.
+
+For example, we can write:
+
+@example
+mmux_slong_t    result;
+
+if (mmux_libc_sysconf(&result, MMUX_LIBC__SC_PAGESIZE)) @{
+  /* error */
+@}
+/* the result is in "result" */
+@end example
 
 @c page
 
@@ -253,6 +313,84 @@ Return an integer representing the library interface current age.
 
 @deftypefun bool mmux_cc_libc_init (void)
 Initialise library's internal state.  When successful return @cfalse{}; otherwise return @ctrue{}.
+@end deftypefun
+
+@c page
+@node system
+@chapter System configuration
+
+
+@menu
+* system parameters::           Configuration parameters.
+* system limits::               Configuration limits.
+@end menu
+
+@c page
+@node system parameters
+@section Configuration parameters
+
+
+@cindex @samp{MMUX_LIBC_SC_} constants
+@cindex @samp{MMUX_LIBC_CS_} constants
+@cindex Constants @samp{MMUX_LIBC_SC_}
+@cindex Constants @samp{MMUX_LIBC_CS_}
+
+
+@deftypefun bool mmux_libc_sysconf (mmux_slong_t * @var{result_p}, mmux_sint_t @var{parameter})
+@Cinterface{sysconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__SC_*} constants.
+
+@example
+mmux_slong_t    result;
+
+if (mmux_libc_sysconf(&result, MMUX_LIBC__SC_PAGESIZE)) @{
+  /* error */
+@}
+/* the result is in "result" */
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_confstr_size (mmux_usize_t * @var{result_required_nbytes_p}, mmux_sint_t @var{parameter})
+@deftypefunx bool mmux_libc_confstr (mmux_sint_t @var{parameter}, char * @var{bufptr}, mmux_usize_t @var{buflen})
+@Cinterface{pathconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__CS_*} constants.
+
+@example
+mmux_sint_t     parameter = MMUX_LIBC__CS_PATH;
+mmux_usize_t    required_nbytes;
+
+if (mmux_libc_confstr_size(&required_nbytes, parameter)) @{ /* error */ @}
+@{
+  char value[required_nbytes];
+
+  if (mmux_libc_confstr(parameter, value, required_nbytes)) @{ /* error */ @}
+  /* the result is in "value" */
+@}
+@end example
+@end deftypefun
+
+@c page
+@node system limits
+@section Configuration limits
+
+
+@MmuxStructOpaqueTypedef{rlimit}
+@MmuxSetterGetter{rlimit, rlim_cur}
+@MmuxSetterGetter{rlimit, rlim_max}
+@MmuxStructDumper{rlimit}
+
+
+@deftypefun bool mmux_libc_getrlimit (mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{rlimit_p})
+@Cinterface{getrlimit}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setrlimit (mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{rlimit_p})
+@Cinterface{setrlimit}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_prlimit (mmux_pid_t @var{pid}, mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{new_rlimit_p}, mmux_libc_rlimit_t * @var{old_rlimit_p})
+@Cinterface{prlimit}.
 @end deftypefun
 
 @c page
