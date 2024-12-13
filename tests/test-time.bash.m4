@@ -78,6 +78,8 @@ function time-struct-timeval-1.2 () {
 	mbfl_location_compensate(mmux_libc_timeval_calloc TIMEVAL RR(INIT_SECONDS) RR(INIT_MICROSECONDS), mmux_libc_free RR(TIMEVAL))
 	mbfl_location_leave_when_failure( mmux_libc_timeval_ref SECONDS MICROSECONDS RR(TIMEVAL))
 
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_timeval_dump RR(TIMEVAL) >&2 )
+
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
 	    dotest-equal RR(INIT_MICROSECONDS) RR(MICROSECONDS)
     }
@@ -167,6 +169,8 @@ function time-struct-timespec-1.2 () {
 	mbfl_location_compensate(mmux_libc_timespec_calloc TIMESPEC RR(INIT_SECONDS) RR(INIT_NANOSECONDS), mmux_libc_free RR(TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_timespec_ref SECONDS NANOSECONDS RR(TIMESPEC))
 
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_timespec_dump RR(TIMESPEC) >&2 )
+
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
 	    dotest-equal RR(INIT_NANOSECONDS) RR(NANOSECONDS)
     }
@@ -255,6 +259,9 @@ function time-struct-tm-1.1 () {
 	dotest-debug YDAY=QQ(YDAY)
 	dotest-debug ISDST=QQ(ISDST)
 	dotest-debug GMTOFF=QQ(GMTOFF)
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_tm_dump RR(TM) >&2 )
+
 	true
     }
     mbfl_location_leave

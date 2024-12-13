@@ -117,10 +117,10 @@ typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file
 
 
 /** --------------------------------------------------------------------
- ** Times and dates.
+ ** Times and dates: mmux_libc_timeval_t.
  ** ----------------------------------------------------------------- */
 
-typedef struct mmux_libc_timeval_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_TIMEVAL]; } mmux_libc_timeval_t;
+typedef struct mmux_libc_timeval_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_TIMEVAL]; } mmux_libc_timeval_t;
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(timeval,	tv_sec,		mmux_time_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(timeval,	tv_usec,	mmux_slong_t)
@@ -151,12 +151,15 @@ mmux_cc_libc_decl bool mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, m
 					       char const * struct_name)
   __attribute__((__nonnull__(2)));
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Times and dates: mmux_libc_timespec_t.
+ ** ----------------------------------------------------------------- */
 
-typedef struct mmux_libc_timespec_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_TIMESPEC]; } mmux_libc_timespec_t;
+typedef struct mmux_libc_timespec_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_TIMESPEC]; } mmux_libc_timespec_t;
 
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(timespec,	ts_sec,		mmux_rlim_t)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(timespec,	ts_nsec,	mmux_rlim_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(timespec,	ts_sec,		mmux_time_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(timespec,	ts_nsec,	mmux_slong_t)
 
 __attribute__((__nonnull__(1))) static inline mmux_time_t
 mmux_libc_timespec_seconds_ref (mmux_libc_timespec_t const * timespec_p)
@@ -184,7 +187,33 @@ mmux_cc_libc_decl bool mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, 
 					       char const * struct_name)
   __attribute__((__nonnull__(2)));
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Times and dates: mmux_libc_tm_t.
+ ** ----------------------------------------------------------------- */
+
+typedef struct mmux_libc_tm_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_TM]; } mmux_libc_tm_t;
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_sec,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_min,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_hour,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_mday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_mon,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_year,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_wday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_yday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_isdst,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_gmtoff,	mmux_slong_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_zone,	char const *)
+
+mmux_cc_libc_decl bool mmux_libc_tm_dump (mmux_libc_file_descriptor_t fd, mmux_libc_tm_t const * tm_p,
+					  char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+
+/** --------------------------------------------------------------------
+ ** Times and dates: functions.
+ ** ----------------------------------------------------------------- */
 
 mmux_cc_libc_decl bool mmux_libc_nanosleep (mmux_libc_timespec_t * requested_time, mmux_libc_timespec_t * remaining_time)
   __attribute__((__nonnull__(1,2)));
@@ -250,7 +279,7 @@ mmux_cc_libc_decl bool mmux_libc_pipe (mmux_libc_file_descriptor_t fds[2]);
  ** Input/output: file descriptor scatter-gather API.
  ** ----------------------------------------------------------------- */
 
-typedef struct mmux_libc_iovec_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_IOVEC]; } mmux_libc_iovec_t;
+typedef struct mmux_libc_iovec_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_IOVEC]; } mmux_libc_iovec_t;
 
 typedef struct mmux_libc_iovec_array_t {
   mmux_libc_iovec_t *	iova_pointer;
@@ -290,7 +319,7 @@ mmux_cc_libc_decl bool mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmu
  ** Input/output: file locking API.
  ** ----------------------------------------------------------------- */
 
-typedef struct mmux_libc_flock_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_FLOCK]; } mmux_libc_flock_t;
+typedef struct mmux_libc_flock_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_FLOCK]; } mmux_libc_flock_t;
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_type,		mmux_sshort_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_whence,	mmux_sshort_t)
@@ -306,7 +335,7 @@ mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const 
  ** Input/output: selecting file descriptors.
  ** ----------------------------------------------------------------- */
 
-typedef struct mmux_libc_fd_set_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_FD_SET]; } mmux_libc_fd_set_t;
+typedef struct mmux_libc_fd_set_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_FD_SET]; } mmux_libc_fd_set_t;
 
 
 mmux_cc_libc_decl bool mmux_libc_fd_set_dump (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t const * fd_set_p, char const * struct_name);
@@ -328,7 +357,7 @@ mmux_cc_libc_decl bool mmux_libc_pathconf (mmux_slong_t * result_p, char const *
 
 /* ------------------------------------------------------------------ */
 
-typedef struct mmux_libc_rlimit_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_RLIMIT]; } mmux_libc_rlimit_t;
+typedef struct mmux_libc_rlimit_t { mmux_uint8_t value[MMUX_LIBC_SIZEOF_RLIMIT]; } mmux_libc_rlimit_t;
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_cur,	mmux_rlim_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_max,	mmux_rlim_t)

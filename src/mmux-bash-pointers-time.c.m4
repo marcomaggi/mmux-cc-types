@@ -187,6 +187,27 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SLONG_MICROSECONDS_VAR TIMEVAL_POINTER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_dump]]])
+{
+  mmux_libc_timeval_t *	timeval_pointer;
+  char const *		struct_name = "struct timeval";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    bool	rv = mmux_libc_timeval_dump(MMUX_LIBC_STDOU, timeval_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TIMEVAL_POINTER [STRUCT_NAME]"]]])
+
 
 /** --------------------------------------------------------------------
  ** Struct timespec.
@@ -346,6 +367,27 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SLONG_NANOSECONDS_VAR TIMESPEC_POINTER"]]])
 
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_dump]]])
+{
+  mmux_libc_timespec_t *	timespec_pointer;
+  char const *		struct_name = "struct timespec";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    bool	rv = mmux_libc_timespec_dump(MMUX_LIBC_STDOU, timespec_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TIMESPEC_POINTER [STRUCT_NAME]"]]])
+
 
 /** --------------------------------------------------------------------
  ** Struct tm.
@@ -496,6 +538,27 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_reset]]])
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_dump]]])
+{
+  mmux_libc_tm_t *	tm_pointer;
+  char const *		struct_name = "struct tm";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(tm_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    bool	rv = mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_pointer, struct_name);
+
+    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER TM_POINTER [STRUCT_NAME]"]]])
 
 
 /** --------------------------------------------------------------------

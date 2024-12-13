@@ -250,7 +250,7 @@ typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file
 
 
 /** --------------------------------------------------------------------
- ** Times and dates.
+ ** Times and dates: mmux_libc_timeval_t.
  ** ----------------------------------------------------------------- */
 
 typedef struct timeval		mmux_libc_timeval_t;
@@ -284,7 +284,10 @@ mmux_cc_libc_decl bool mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, m
 					       char const * struct_name)
   __attribute__((__nonnull__(2)));
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Times and dates: mmux_libc_timespec_t.
+ ** ----------------------------------------------------------------- */
 
 typedef struct timespec		mmux_libc_timespec_t;
 
@@ -317,7 +320,33 @@ mmux_cc_libc_decl bool mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, 
 					       char const * struct_name)
   __attribute__((__nonnull__(2)));
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Times and dates: mmux_libc_tm_t.
+ ** ----------------------------------------------------------------- */
+
+typedef struct tm		mmux_libc_tm_t;
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_sec,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_min,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_hour,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_mday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_mon,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_year,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_wday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_yday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_isdst,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_gmtoff,	mmux_slong_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_zone,	char const *)
+
+mmux_cc_libc_decl bool mmux_libc_tm_dump (mmux_libc_file_descriptor_t fd, mmux_libc_tm_t const * tm_p,
+					  char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+
+/** --------------------------------------------------------------------
+ ** Times and dates: functions.
+ ** ----------------------------------------------------------------- */
 
 mmux_cc_libc_decl bool mmux_libc_nanosleep (mmux_libc_timespec_t * requested_time, mmux_libc_timespec_t * remaining_time)
   __attribute__((__nonnull__(1,2)));

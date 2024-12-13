@@ -176,18 +176,7 @@ function mmux_bash_pointers_library_before_unloading_hook () {
 	  mmux_libc_ai_addrlen_print				\
 	  mmux_libc_ai_addr_print				\
 	  mmux_libc_ai_canonname_print				\
-	  mmux_libc_ai_next_print				\
-	  mmux_libc_addrinfo_dump				\
-	  mmux_libc_addrinfo_dump_ai_flags			\
-	  mmux_libc_addrinfo_dump_ai_family			\
-	  mmux_libc_addrinfo_dump_ai_socktype			\
-	  mmux_libc_addrinfo_dump_ai_protocol			\
-	  mmux_libc_addrinfo_dump_ai_addrlen			\
-	  mmux_libc_addrinfo_dump_ai_addr			\
-	  mmux_libc_addrinfo_dump_ai_canonname			\
-	  mmux_libc_addrinfo_dump_ai_next			\
-	  mmux_libc_addrinfo_dump_error_inspecting_field	\
-	  mmux_libc_addrinfo_dump_error_expected_pointer
+	  mmux_libc_ai_next_print
 }
 
 #page

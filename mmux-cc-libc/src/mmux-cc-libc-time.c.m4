@@ -115,7 +115,7 @@ mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timespec_t co
     char	str[len];
 
     mmux_time_sprint(str, len, timespec_p->tv_sec);
-    rv = dprintf(fd.value, "%s->tv_sec = %s\n", struct_name, str);
+    rv = dprintf(fd.value, "%s->ts_sec = %s\n", struct_name, str);
     if (0 > rv) { return true; }
   }
 
@@ -124,7 +124,68 @@ mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timespec_t co
     char	str[len];
 
     mmux_time_sprint(str, len, timespec_p->tv_nsec);
-    rv = dprintf(fd.value, "%s->tv_nsec = %s\n", struct_name, str);
+    rv = dprintf(fd.value, "%s->ts_nsec = %s\n", struct_name, str);
+    if (0 > rv) { return true; }
+  }
+
+  return false;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Struct tm.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_sec,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_min,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_hour,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_mday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_mon,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_year,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_wday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_yday,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_isdst,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_gmtoff,	mmux_slong_t)
+DEFINE_STRUCT_SETTER_GETTER(tm,	tm_zone,	char const *)
+
+bool
+mmux_libc_tm_dump (mmux_libc_file_descriptor_t fd, mmux_libc_tm_t const * tm_p, char const * struct_name)
+{
+  int	rv;
+
+  if (NULL == struct_name) {
+    struct_name = "struct tm";
+  }
+
+  /* Dump the pointer itself. */
+  {
+    rv = dprintf(fd.value, "%s = %p\n", struct_name, (mmux_pointer_t)tm_p);
+    if (0 > rv) { return true; }
+  }
+
+m4_define([[[DEFINE_TM_FIELD_DUMPER]]],[[[
+  {
+    int		len = mmux_$2_sprint_size(tm_p->$1);
+    char	str[len];
+
+    mmux_$2_sprint(str, len, tm_p->$1);
+    rv = dprintf(fd.value, "%s->$1 = %s\n", struct_name, str);
+    if (0 > rv) { return true; }
+  }
+]]])
+DEFINE_TM_FIELD_DUMPER(tm_sec,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_min,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_hour,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_mday,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_mon,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_year,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_wday,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_yday,		sint)
+DEFINE_TM_FIELD_DUMPER(tm_isdst,	sint)
+DEFINE_TM_FIELD_DUMPER(tm_gmtoff,	slong)
+
+  {
+    rv = dprintf(fd.value, "%s->tm_zone = %s\n", struct_name, tm_p->tm_zone);
     if (0 > rv) { return true; }
   }
 

@@ -8076,6 +8076,16 @@ Given a pointer @var{TIMEVAL_POINTER} to a @MmuxCStruct{timeval} store in its @c
 the value @var{SLONG_MICROSECONDS} converted to a @objtype{mmux_slong_t}.
 @end deffn
 
+
+@deffn Builtin mmux_libc_timeval_dump @var{TIMEVAL_PTR}
+@deffnx Builtin mmux_libc_timeval_dump @var{TIMEVAL_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @MmuxCStruct{timeval}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct timeval}.
+@end deffn
+
 @c page
 @node time timespec
 @section Handling @MmuxCStruct{timespec}
@@ -8157,6 +8167,16 @@ the value @var{TIME_SECONDS} converted to a @objtype{mmux_time_t}.
 @deffn Builtin mmux_libc_timespec_nanoseconds_set @var{TIMESPEC_POINTER} @var{SLONG_NANOSECONDS}
 Given a pointer @var{TIMESPEC_POINTER} to a @MmuxCStruct{timespec} store in its @code{tv_nsec} field
 the value @var{SLONG_NANOSECONDS} converted to a @objtype{mmux_slong_t}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_timespec_dump @var{TIMESPEC_PTR}
+@deffnx Builtin mmux_libc_timespec_dump @var{TIMESPEC_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @MmuxCStruct{timespec}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct timespec}.
 @end deffn
 
 @c page
@@ -8267,6 +8287,16 @@ tm_yday   = 0
 tm_isdst  = 0
 tm_gmtoff = 0
 @end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_tm_dump @var{TM_PTR}
+@deffnx Builtin mmux_libc_tm_dump @var{TM_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @MmuxCStruct{tm}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct tm}.
 @end deffn
 
 @c page
