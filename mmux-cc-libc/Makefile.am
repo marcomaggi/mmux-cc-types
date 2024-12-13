@@ -61,7 +61,7 @@ AM_MAKEINFOFLAGS	= --no-split
 AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 --css-ref=mmux-cc-libc.css \
 	-c PRE_BODY_CLOSE="<p>This document describes version <tt>$(PACKAGE_VERSION)</tt> of <em>$(PACKAGE_NAME)</em>.</p>"
 
-info_TEXINFOS		= doc/mmux-cc-libc.texi
+info_TEXINFOS		=  doc/mmux-cc-libc.texi
 EXTRA_DIST		+= doc/mmux-cc-libc.style.css
 CLEANFILES		+= doc/mmux-cc-libc.css
 
@@ -99,7 +99,8 @@ EXTRA_DIST	+= \
 	src/mmux-cc-libc-constants.h.m4			\
 	src/mmux-cc-libc-file-descriptors.c.m4		\
 	src/mmux-cc-libc-library.c.m4			\
-	src/mmux-cc-libc-system-configuration.c.m4
+	src/mmux-cc-libc-system-configuration.c.m4	\
+	src/mmux-cc-libc-time.c.m4
 
 MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc.h				\
@@ -107,7 +108,8 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-library.c			\
-	src/mmux-cc-libc-system-configuration.c
+	src/mmux-cc-libc-system-configuration.c		\
+	src/mmux-cc-libc-time.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
@@ -134,7 +136,8 @@ libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-library.c			\
-	src/mmux-cc-libc-system-configuration.c
+	src/mmux-cc-libc-system-configuration.c		\
+	src/mmux-cc-libc-time.c
 
 .PHONY: library
 

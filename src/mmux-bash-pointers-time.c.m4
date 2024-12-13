@@ -41,17 +41,17 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_malloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
   if (4 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,	2);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,	3);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,		2);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,		3);
   }
   {
-    struct timeval *	timeval_pointer = calloc(1, sizeof(struct timeval));
+    mmux_libc_timeval_t *	timeval_pointer = calloc(1, sizeof(mmux_libc_timeval_t));
 
     if (timeval_pointer) {
       mmux_bash_rv_t	rv;
 
-      timeval_pointer->tv_sec  = seconds;
-      timeval_pointer->tv_usec = microseconds;
+      mmux_libc_tv_sec_set(timeval_pointer, seconds);
+      mmux_libc_tv_usec_set(timeval_pointer, microseconds);
       rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timeval_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv) {
 	free(timeval_pointer);
@@ -71,18 +71,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_set]]])
 {
-  void *	pointer;
-  mmux_time_t	seconds;
-  mmux_slong_t	microseconds;
+  mmux_libc_timeval_t *	timeval_pointer;
+  mmux_time_t		seconds;
+  mmux_slong_t		microseconds;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,		3);
   {
-    struct timeval *	timeval_pointer	= pointer;
-
-    timeval_pointer->tv_sec  = seconds;
-    timeval_pointer->tv_usec = microseconds;
+    mmux_libc_tv_sec_set(timeval_pointer, seconds);
+    mmux_libc_tv_usec_set(timeval_pointer, microseconds);
     return MMUX_SUCCESS;
   }
 }
@@ -94,15 +92,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_seconds_set]]])
 {
-  void *	pointer;
-  mmux_time_t	seconds;
+  mmux_libc_timeval_t *	timeval_pointer;
+  mmux_time_t		seconds;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,			2);
   {
-    struct timeval *	timeval_pointer	= pointer;
-
-    timeval_pointer->tv_sec = seconds;
+    mmux_libc_tv_sec_set(timeval_pointer, seconds);
     return MMUX_SUCCESS;
   }
 }
@@ -114,15 +110,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_microseconds_set]]])
 {
-  void *	pointer;
-  mmux_slong_t	microseconds;
+  mmux_libc_timeval_t *	timeval_pointer;
+  mmux_time_t		microseconds;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,		2);
   {
-    struct timeval *	timeval_pointer	= pointer;
-
-    timeval_pointer->tv_usec = microseconds;
+    mmux_libc_tv_usec_set(timeval_pointer, microseconds);
     return MMUX_SUCCESS;
   }
 }
@@ -134,20 +128,19 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_ref]]])
 {
-  char const *	seconds_varname;
-  char const *	microseconds_varname;
-  void *	pointer;
+  char const *		seconds_varname;
+  char const *		microseconds_varname;
+  mmux_libc_timeval_t *	timeval_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(microseconds_varname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,		3);
   {
-    struct timeval *	timeval_pointer	= pointer;
-    mmux_time_t		seconds		= timeval_pointer->tv_sec;
-    mmux_slong_t	microseconds	= timeval_pointer->tv_usec;
+    mmux_time_t		seconds		= mmux_libc_tv_sec_ref(timeval_pointer);
+    mmux_slong_t	microseconds	= mmux_libc_tv_usec_ref(timeval_pointer);
     mmux_bash_rv_t	rv;
 
-    rv = mmux_slong_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+    rv = mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != rv) { return rv; }
     return mmux_slong_bind_to_bash_variable(microseconds_varname, microseconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -160,16 +153,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_seconds_ref]]])
 {
-  char const *	seconds_varname;
-  void *	pointer;
+  char const *		seconds_varname;
+  mmux_libc_timeval_t *	timeval_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,	2);
   {
-    struct timeval *	timeval_pointer	= pointer;
-    mmux_slong_t	seconds		= timeval_pointer->tv_sec;
+    mmux_time_t		seconds = mmux_libc_tv_sec_ref(timeval_pointer);
 
-    return mmux_slong_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+    return mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -180,14 +172,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_microseconds_ref]]])
 {
-  char const *	microseconds_varname;
-  void *	pointer;
+  char const *		microseconds_varname;
+  mmux_libc_timeval_t *	timeval_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(microseconds_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,		2);
   {
-    struct timeval *	timeval_pointer	= pointer;
-    mmux_slong_t	microseconds	= timeval_pointer->tv_usec;
+    mmux_time_t		microseconds = mmux_libc_tv_usec_ref(timeval_pointer);
 
     return mmux_slong_bind_to_bash_variable(microseconds_varname, microseconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -205,21 +196,21 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_malloc]]])
 {
   char const *	pointer_varname;
   mmux_time_t	seconds      = 0;
-  mmux_slong_t	nanoseconds  = 0;
+  mmux_slong_t	nanoseconds = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
   if (4 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,	2);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,	3);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,		2);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,		3);
   }
   {
-    struct timespec *	timespec_pointer = calloc(1, sizeof(struct timespec));
+    mmux_libc_timespec_t *	timespec_pointer = calloc(1, sizeof(mmux_libc_timespec_t));
 
     if (timespec_pointer) {
       mmux_bash_rv_t	rv;
 
-      timespec_pointer->tv_sec  = seconds;
-      timespec_pointer->tv_nsec = nanoseconds;
+      mmux_libc_ts_sec_set(timespec_pointer, seconds);
+      mmux_libc_ts_nsec_set(timespec_pointer, nanoseconds);
       rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timespec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv) {
 	free(timespec_pointer);
@@ -239,18 +230,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_set]]])
 {
-  void *	pointer;
-  mmux_time_t	seconds;
-  mmux_slong_t	nanoseconds;
+  mmux_libc_timespec_t *	timespec_pointer;
+  mmux_time_t		seconds;
+  mmux_slong_t		nanoseconds;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,		3);
   {
-    struct timespec *	timespec_pointer= pointer;
-
-    timespec_pointer->tv_sec  = seconds;
-    timespec_pointer->tv_nsec = nanoseconds;
+    mmux_libc_ts_sec_set(timespec_pointer, seconds);
+    mmux_libc_ts_nsec_set(timespec_pointer, nanoseconds);
     return MMUX_SUCCESS;
   }
 }
@@ -262,15 +251,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_seconds_set]]])
 {
-  void *	pointer;
-  mmux_time_t	seconds;
+  mmux_libc_timespec_t *	timespec_pointer;
+  mmux_time_t			seconds;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME(seconds,				2);
   {
-    struct timespec *	timespec_pointer	= pointer;
-
-    timespec_pointer->tv_sec = seconds;
+    mmux_libc_ts_sec_set(timespec_pointer, seconds);
     return MMUX_SUCCESS;
   }
 }
@@ -282,15 +269,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_nanoseconds_set]]])
 {
-  void *	pointer;
-  mmux_slong_t	nanoseconds;
+  mmux_libc_timespec_t *	timespec_pointer;
+  mmux_time_t			nanoseconds;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,			2);
   {
-    struct timespec *	timespec_pointer	= pointer;
-
-    timespec_pointer->tv_nsec = nanoseconds;
+    mmux_libc_ts_nsec_set(timespec_pointer, nanoseconds);
     return MMUX_SUCCESS;
   }
 }
@@ -302,20 +287,19 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_ref]]])
 {
-  char const *	seconds_varname;
-  char const *	nanoseconds_varname;
-  void *	pointer;
+  char const *			seconds_varname;
+  char const *			nanoseconds_varname;
+  mmux_libc_timespec_t *	timespec_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(nanoseconds_varname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(nanoseconds_varname,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	3);
   {
-    struct timespec *	timespec_pointer= pointer;
-    mmux_time_t		seconds		= timespec_pointer->tv_sec;
-    mmux_slong_t	nanoseconds	= timespec_pointer->tv_nsec;
+    mmux_time_t		seconds		= mmux_libc_ts_sec_ref(timespec_pointer);
+    mmux_slong_t	nanoseconds	= mmux_libc_ts_nsec_ref(timespec_pointer);
     mmux_bash_rv_t	rv;
 
-    rv = mmux_slong_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+    rv = mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != rv) { return rv; }
     return mmux_slong_bind_to_bash_variable(nanoseconds_varname, nanoseconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -328,16 +312,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_seconds_ref]]])
 {
-  char const *	seconds_varname;
-  void *	pointer;
+  char const *			seconds_varname;
+  mmux_libc_timespec_t *	timespec_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(seconds_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	2);
   {
-    struct timespec *	timespec_pointer	= pointer;
-    mmux_time_t		seconds			= timespec_pointer->tv_sec;
+    mmux_time_t		seconds = mmux_libc_ts_sec_ref(timespec_pointer);
 
-    return mmux_slong_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+    return mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -348,14 +331,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_nanoseconds_ref]]])
 {
-  char const *	nanoseconds_varname;
-  void *	pointer;
+  char const *			nanoseconds_varname;
+  mmux_libc_timespec_t *	timespec_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(nanoseconds_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(nanoseconds_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	2);
   {
-    struct timespec *	timespec_pointer= pointer;
-    mmux_slong_t	nanoseconds	= timespec_pointer->tv_nsec;
+    mmux_time_t		nanoseconds = mmux_libc_ts_nsec_ref(timespec_pointer);
 
     return mmux_slong_bind_to_bash_variable(nanoseconds_varname, nanoseconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -739,21 +721,17 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_nanosleep]]])
 {
-  mmux_pointer_t	requested_time, remaining_time;
+  mmux_libc_timespec_t *	timespec_requested_time;
+  mmux_libc_timespec_t *	timespec_remaining_time;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(requested_time,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(remaining_time,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_requested_time,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_remaining_time,	2);
   {
-    struct timespec *	timespec_requested_time = requested_time;
-    struct timespec *	timespec_remaining_time = remaining_time;
-    mmux_sint_t		rv = nanosleep(timespec_requested_time, timespec_remaining_time);
-
-    if (-1 == rv) {
+    if (mmux_libc_nanosleep(timespec_requested_time, timespec_remaining_time)) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
-    } else {
-      return MMUX_SUCCESS;
     }
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -770,10 +748,10 @@ mmux_bash_pointers_init_time_module (void)
 {
   mmux_bash_rv_t	rv;
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_timeval_SIZEOF",  sizeof(struct timeval), NULL);
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_timeval_SIZEOF",  sizeof(mmux_libc_timeval_t), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_timespec_SIZEOF", sizeof(struct timespec), NULL);
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_timespec_SIZEOF", sizeof(mmux_libc_timespec_t), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_create_global_sint_variable("mmux_libc_tm_SIZEOF",       sizeof(struct tm), NULL);

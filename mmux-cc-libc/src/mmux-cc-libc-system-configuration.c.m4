@@ -102,9 +102,13 @@ DEFINE_STRUCT_SETTER_GETTER(rlimit,	rlim_cur,	mmux_rlim_t)
 DEFINE_STRUCT_SETTER_GETTER(rlimit,	rlim_max,	mmux_rlim_t)
 
 bool
-mmux_libc_rlimit_dump (mmux_libc_file_descriptor_t fd, mmux_libc_rlimit_t * rlimit_pointer, char const * const struct_name)
+mmux_libc_rlimit_dump (mmux_libc_file_descriptor_t fd, mmux_libc_rlimit_t * rlimit_pointer, char const * struct_name)
 {
   int	rv;
+
+  if (NULL == struct_name) {
+    struct_name = "struct rlimit";
+  }
 
   {
     rv = dprintf(fd.value, "%s = %p\n", struct_name, (mmux_pointer_t)rlimit_pointer);

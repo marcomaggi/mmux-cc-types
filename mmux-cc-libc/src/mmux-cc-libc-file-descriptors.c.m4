@@ -258,12 +258,23 @@ DEFINE_STRUCT_SETTER_GETTER(iovec_array,	iova_pointer,	mmux_pointer_t)
 DEFINE_STRUCT_SETTER_GETTER(iovec_array,	iova_length,	mmux_usize_t)
 
 bool
-mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * const iovec_p, char const * const struct_name)
+mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * const iovec_p, char const * struct_name)
 {
   int	rv;
 
-  rv = dprintf(fd.value, "%s->iov_base = %p\n", struct_name, iovec_p->iov_base);
-  if (0 > rv) { return true; }
+  if (NULL == struct_name) {
+    struct_name = "struct iovec";
+  }
+
+  {
+    rv = dprintf(fd.value, "%s = %p\n", struct_name, (mmux_pointer_t)iovec_p);
+    if (0 > rv) { return true; }
+  }
+
+  {
+    rv = dprintf(fd.value, "%s->iov_base = %p\n", struct_name, iovec_p->iov_base);
+    if (0 > rv) { return true; }
+  }
 
   {
     int		len = mmux_usize_sprint_size(iovec_p->iov_len);
@@ -393,8 +404,12 @@ mmux_libc_flag_to_symbol_struct_flock_l_type (char const * * const str_p, mmux_s
   }
 }
 bool
-mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * const flock_p, char const * const struct_name)
+mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * const flock_p, char const * struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct flock";
+  }
+
   {
     int		rv = dprintf(fd.value, "%s = \"%p\"\n", struct_name, (mmux_pointer_t)flock_p);
     if (0 > rv) { return true; }

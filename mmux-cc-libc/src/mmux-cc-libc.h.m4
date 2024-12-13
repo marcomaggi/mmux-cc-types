@@ -110,10 +110,89 @@ mmux_cc_libc_decl int		mmux_cc_libc_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
- ** Input/output: file descriptor core API.
+ ** Preliminary type definitions.
  ** ----------------------------------------------------------------- */
 
 typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
+
+
+/** --------------------------------------------------------------------
+ ** Times and dates.
+ ** ----------------------------------------------------------------- */
+
+typedef struct mmux_libc_timeval_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_TIMEVAL]; } mmux_libc_timeval_t;
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(timeval,	tv_sec,		mmux_time_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(timeval,	tv_usec,	mmux_slong_t)
+
+__attribute__((__nonnull__(1))) static inline mmux_time_t
+mmux_libc_timeval_seconds_ref (mmux_libc_timeval_t const * timeval_p)
+{
+  return mmux_libc_tv_sec_ref(timeval_p);
+}
+__attribute__((__nonnull__(1))) static inline void
+mmux_libc_timeval_seconds_set (mmux_libc_timeval_t * timeval_p, mmux_time_t seconds)
+{
+  mmux_libc_tv_sec_set(timeval_p, seconds);
+}
+
+__attribute__((__nonnull__(1))) static inline mmux_time_t
+mmux_libc_timeval_microseconds_ref (mmux_libc_timeval_t const * timeval_p)
+{
+  return mmux_libc_tv_usec_ref(timeval_p);
+}
+__attribute__((__nonnull__(1))) static inline void
+mmux_libc_timeval_microseconds_set (mmux_libc_timeval_t * timeval_p, mmux_slong_t microseconds)
+{
+  mmux_libc_tv_usec_set(timeval_p, microseconds);
+}
+
+mmux_cc_libc_decl bool mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timeval_t const * timeval_p,
+					       char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+/* ------------------------------------------------------------------ */
+
+typedef struct mmux_libc_timespec_t { mmux_uint8_t value[mmux_libc_sizeof_STRUCT_TIMESPEC]; } mmux_libc_timespec_t;
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(timespec,	ts_sec,		mmux_rlim_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(timespec,	ts_nsec,	mmux_rlim_t)
+
+__attribute__((__nonnull__(1))) static inline mmux_time_t
+mmux_libc_timespec_seconds_ref (mmux_libc_timespec_t const * timespec_p)
+{
+  return mmux_libc_ts_sec_ref(timespec_p);
+}
+__attribute__((__nonnull__(1))) static inline void
+mmux_libc_timespec_seconds_set (mmux_libc_timespec_t * timespec_p, mmux_time_t seconds)
+{
+  mmux_libc_ts_sec_set(timespec_p, seconds);
+}
+
+__attribute__((__nonnull__(1))) static inline mmux_time_t
+mmux_libc_timespec_nanoseconds_ref (mmux_libc_timespec_t const * timespec_p)
+{
+  return mmux_libc_ts_nsec_ref(timespec_p);
+}
+__attribute__((__nonnull__(1))) static inline void
+mmux_libc_timespec_nanoseconds_set (mmux_libc_timespec_t * timespec_p, mmux_slong_t nanoseconds)
+{
+  mmux_libc_ts_nsec_set(timespec_p, nanoseconds);
+}
+
+mmux_cc_libc_decl bool mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timespec_t const * timespec_p,
+					       char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_nanosleep (mmux_libc_timespec_t * requested_time, mmux_libc_timespec_t * remaining_time)
+  __attribute__((__nonnull__(1,2)));
+
+
+/** --------------------------------------------------------------------
+ ** Input/output: file descriptor core API.
+ ** ----------------------------------------------------------------- */
 
 mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdin (void);
 mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdou (void);

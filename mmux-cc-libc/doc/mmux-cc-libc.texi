@@ -94,16 +94,16 @@ An opaque alias for @MmuxCStruct{\STRUCT_NAME\}.
 
 @end macro
 
-@macro MmuxSetterGetter{STRUCT_NAME, FIELD_NAME}
-@deftypefun void mmux_libc_\FIELD_NAME\_set (mmux_libc_\STRUCT_NAME\_t * @var{\STRUCT_NAME\_p}, mmux_rlim_t @var{\FIELD_NAME\})
-@deftypefunx mmux_rlim_t mmux_libc_\FIELD_NAME\_ref (mmux_libc_\STRUCT_NAME\_t * @var{\STRUCT_NAME\_p})
+@macro MmuxSetterGetter{STRUCT_NAME, FIELD_NAME, FIELD_TYPE}
+@deftypefun void mmux_libc_\FIELD_NAME\_set (mmux_libc_\STRUCT_NAME\_t * @var{\STRUCT_NAME\_p}, \FIELD_TYPE\ @var{\FIELD_NAME\})
+@deftypefunx \FIELD_TYPE\ mmux_libc_\FIELD_NAME\_ref (mmux_libc_\STRUCT_NAME\_t const * @var{\STRUCT_NAME\_p})
 Setter and getter for the field @code{\FIELD_NAME\} of @objtype{mmux_libc_\STRUCT_NAME\_t}.
 @end deftypefun
 
 @end macro
 
 @macro MmuxStructDumper{STRUCT_NAME}
-@deftypefun bool mmux_libc_\STRUCT_NAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCT_NAME\_t * @var{struct_p}, char const * @var{struct_name})
+@deftypefun bool mmux_libc_\STRUCT_NAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCT_NAME\_t const * @var{struct_p}, char const * @var{struct_name})
 Write to @var{fd} a description of the fields of the @MmuxCStruct{\STRUCT_NAME\} referenced by
 @var{struct_p}.  @var{struct_name} must be a pointer to an @asciiz{} string representing the name of
 the data structure used in the description; when @cnull{}: it defaults to @samp{struct
@@ -184,6 +184,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * overview::                    Overview of the package.
 * version::                     Version functions.
 * initialisation::              Library initialisation.
+* time::                        Times and dates.
 * system::                      System configuration.
 
 Appendices
@@ -313,6 +314,64 @@ Return an integer representing the library interface current age.
 
 @deftypefun bool mmux_cc_libc_init (void)
 Initialise library's internal state.  When successful return @cfalse{}; otherwise return @ctrue{}.
+@end deftypefun
+
+@c page
+@node time
+@chapter Times and dates
+
+
+@menu
+* time timeval::                The @objtype{mmux_libc_timeval_t} type.
+* time timespec::               The @objtype{mmux_libc_timespec_t} type.
+@end menu
+
+@c page
+@node time timeval
+@section The @objtype{mmux_libc_timeval_t} type
+
+
+@MmuxStructOpaqueTypedef{timeval}
+@MmuxSetterGetter{timeval, tv_sec,  mmux_time_t}
+@MmuxSetterGetter{timeval, tv_usec, mmux_slong_t}
+@MmuxStructDumper{timeval}
+
+
+@deftypefun void mmux_libc_tv_seconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds})
+@deftypefunx mmux_time_t mmux_libc_tv_seconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
+Aliases for the setter and getter of the field @code{tv_sec}.
+@end deftypefun
+
+
+@deftypefun void mmux_libc_tv_microseconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_slong_t @var{microseconds})
+@deftypefunx mmux_slong_t mmux_libc_tv_microseconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
+Aliases for the setter and getter of the field @code{tv_usec}.
+@end deftypefun
+
+@c page
+@node time timespec
+@section The @objtype{mmux_libc_timespec_t} type
+
+
+To have more expressive names: in this @api{} we ``rename'' the fields @samp{tv_sec} and
+@samp{tv_nsec} of @MmuxCStruct{timespec} to @samp{ts_sec} and @samp{ts_nsec}.
+
+
+@MmuxStructOpaqueTypedef{timespec}
+@MmuxSetterGetter{timespec, ts_sec,  mmux_time_t}
+@MmuxSetterGetter{timespec, ts_nsec, mmux_slong_t}
+@MmuxStructDumper{timespec}
+
+
+@deftypefun void mmux_libc_ts_seconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds})
+@deftypefunx mmux_time_t mmux_libc_ts_seconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
+Aliases for the setter and getter of the field @code{ts_sec}.
+@end deftypefun
+
+
+@deftypefun void mmux_libc_ts_nanoseconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_slong_t @var{nanoseconds})
+@deftypefunx mmux_slong_t mmux_libc_ts_nanoseconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
+Aliases for the setter and getter of the field @code{ts_sec}.
 @end deftypefun
 
 @c page
