@@ -516,22 +516,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_reset]]])
 {
-  mmux_pointer_t	pointer;
+  mmux_libc_tm_t *	tm_p;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(tm_p,	1);
   {
-    struct tm *	tm_pointer	= pointer;
-
-    tm_pointer->tm_sec    = 0;
-    tm_pointer->tm_min    = 0;
-    tm_pointer->tm_hour   = 0;
-    tm_pointer->tm_mday   = 1;
-    tm_pointer->tm_mon    = 0;
-    tm_pointer->tm_year   = 0;
-    tm_pointer->tm_wday   = 0;
-    tm_pointer->tm_yday   = 0;
-    tm_pointer->tm_isdst  = 0;
-    tm_pointer->tm_gmtoff = 0;
+    mmux_libc_tm_reset(tm_p);
     return MMUX_SUCCESS;
   }
 }

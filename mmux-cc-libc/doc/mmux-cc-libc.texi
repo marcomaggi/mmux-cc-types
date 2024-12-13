@@ -324,6 +324,7 @@ Initialise library's internal state.  When successful return @cfalse{}; otherwis
 @menu
 * time timeval::                The @objtype{mmux_libc_timeval_t} type.
 * time timespec::               The @objtype{mmux_libc_timespec_t} type.
+* time tm::                     The @objtype{mmux_libc_tm_t} type.
 @end menu
 
 @c page
@@ -372,6 +373,44 @@ Aliases for the setter and getter of the field @code{ts_sec}.
 @deftypefun void mmux_libc_ts_nanoseconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_slong_t @var{nanoseconds})
 @deftypefunx mmux_slong_t mmux_libc_ts_nanoseconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
 Aliases for the setter and getter of the field @code{ts_sec}.
+@end deftypefun
+
+@c page
+@node time tm
+@section The @objtype{mmux_libc_tm_t} type
+
+
+@MmuxStructOpaqueTypedef{tm}
+@MmuxSetterGetter{tm, tm_sec,         mmux_sint_t}
+@MmuxSetterGetter{tm, tm_min,         mmux_sint_t}
+@MmuxSetterGetter{tm, tm_hour,        mmux_sint_t}
+@MmuxSetterGetter{tm, tm_mday,        mmux_sint_t}
+@MmuxSetterGetter{tm, tm_mon,         mmux_sint_t}
+@MmuxSetterGetter{tm, tm_year,        mmux_sint_t}
+@MmuxSetterGetter{tm, tm_wday,        mmux_sint_t}
+@MmuxSetterGetter{tm, tm_yday,        mmux_sint_t}
+@MmuxSetterGetter{tm, tm_isdst,       mmux_sint_t}
+@MmuxSetterGetter{tm, tm_gmtoff,      mmux_slong_t}
+@MmuxSetterGetter{tm, tm_zone,        char const *}
+@MmuxStructDumper{tm}
+
+
+@deftypefun void mmux_libc_tm_reset (mmux_libc_tm_t * @var{TM_P})
+Reset the fields to:
+
+@example
+tm_sec    = 0
+tm_min    = 0
+tm_hour   = 0
+tm_mday   = 1
+tm_mon    = 0
+tm_year   = 0
+tm_wday   = 0
+tm_yday   = 0
+tm_isdst  = 0
+tm_gmtoff = 0
+tm_zone   = NULL
+@end example
 @end deftypefun
 
 @c page

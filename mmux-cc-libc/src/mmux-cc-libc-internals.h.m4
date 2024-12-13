@@ -343,6 +343,9 @@ mmux_cc_libc_decl bool mmux_libc_tm_dump (mmux_libc_file_descriptor_t fd, mmux_l
 					  char const * struct_name)
   __attribute__((__nonnull__(2)));
 
+mmux_cc_libc_decl void mmux_libc_tm_reset (mmux_libc_tm_t * tm_p)
+  __attribute__((__nonnull__(1)));
+
 
 /** --------------------------------------------------------------------
  ** Times and dates: functions.

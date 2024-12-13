@@ -192,6 +192,22 @@ DEFINE_TM_FIELD_DUMPER(tm_gmtoff,	slong)
   return false;
 }
 
+void
+mmux_libc_tm_reset (mmux_libc_tm_t * tm_p)
+{
+  tm_p->tm_sec    = 0;
+  tm_p->tm_min    = 0;
+  tm_p->tm_hour   = 0;
+  tm_p->tm_mday   = 1;
+  tm_p->tm_mon    = 0;
+  tm_p->tm_year   = 0;
+  tm_p->tm_wday   = 0;
+  tm_p->tm_yday   = 0;
+  tm_p->tm_isdst  = 0;
+  tm_p->tm_gmtoff = 0;
+  tm_p->tm_zone   = NULL;
+}
+
 
 /** --------------------------------------------------------------------
  ** Sleeping.
