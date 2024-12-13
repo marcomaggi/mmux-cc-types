@@ -36,6 +36,12 @@
 DEFINE_STRUCT_SETTER_GETTER(timeval,	tv_sec,		mmux_time_t)
 DEFINE_STRUCT_SETTER_GETTER(timeval,	tv_usec,	mmux_slong_t)
 
+void
+mmux_libc_timeval_set (mmux_libc_timeval_t * timeval_p, mmux_time_t seconds, mmux_slong_t microseconds)
+{
+  timeval_p->tv_sec  = seconds;
+  timeval_p->tv_usec = microseconds;
+}
 bool
 mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timeval_t const * const timeval_p, char const * struct_name)
 {
@@ -95,6 +101,12 @@ mmux_slong_t
 mmux_libc_ts_nsec_ref (mmux_libc_timespec_t const * const P)
 {
   return P->tv_nsec;
+}
+void
+mmux_libc_timespec_set (mmux_libc_timespec_t * timespec_p, mmux_time_t seconds, mmux_slong_t nanoseconds)
+{
+  timespec_p->tv_sec  = seconds;
+  timespec_p->tv_nsec = nanoseconds;
 }
 bool
 mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timespec_t const * const timespec_p, char const * struct_name)
@@ -249,18 +261,22 @@ mmux_libc_ctime (mmux_time_t T)
   return ctime(&T);
 }
 bool
-mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen, char const * template, mmux_libc_tm_t * tm_p)
+mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen_p, char const * template, mmux_libc_tm_t * tm_p)
 {
-  mmux_usize_t	required_nbytes;
+  if (0 < *buflen_p) {
+    mmux_usize_t	required_nbytes;
 
-  /* See the documentation of "strftime()" in  the GLIBC manual for an explanation of
-     this nonsense. */
-  bufptr[0]       = '\1';
-  required_nbytes = strftime(bufptr, *buflen, template, tm_p);
-  if ((0 == required_nbytes) && ('\0' != bufptr[0])) {
-    return true;
+    /* See the documentation  of "strftime()" in the GLIBC manual  for an explanation
+       of this nonsense. */
+    bufptr[0]       = '\1';
+    required_nbytes = strftime(bufptr, *buflen_p, template, tm_p);
+    if ((0 == required_nbytes) && ('\0' != bufptr[0])) {
+      return true;
+    } else {
+      *buflen_p = required_nbytes;
+      return false;
+    }
   } else {
-    *buflen = required_nbytes;
     return false;
   }
 }

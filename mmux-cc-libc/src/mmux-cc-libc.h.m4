@@ -147,6 +147,9 @@ mmux_libc_timeval_microseconds_set (mmux_libc_timeval_t * timeval_p, mmux_slong_
   mmux_libc_tv_usec_set(timeval_p, microseconds);
 }
 
+mmux_cc_libc_decl void mmux_libc_timeval_set (mmux_libc_timeval_t * timeval_p, mmux_time_t seconds, mmux_slong_t microseconds)
+  __attribute__((__nonnull__(1)));
+
 mmux_cc_libc_decl bool mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timeval_t const * timeval_p,
 					       char const * struct_name)
   __attribute__((__nonnull__(2)));
@@ -182,6 +185,9 @@ mmux_libc_timespec_nanoseconds_set (mmux_libc_timespec_t * timespec_p, mmux_slon
 {
   mmux_libc_ts_nsec_set(timespec_p, nanoseconds);
 }
+
+mmux_cc_libc_decl void mmux_libc_timespec_set (mmux_libc_timespec_t * timespec_p, mmux_time_t seconds, mmux_slong_t nanoseconds)
+  __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timespec_t const * timespec_p,
 					       char const * struct_name)
@@ -226,7 +232,7 @@ mmux_cc_libc_decl mmux_time_t      mmux_libc_mktime    (mmux_libc_tm_t * tm_p);
 mmux_cc_libc_decl mmux_time_t      mmux_libc_timegm    (mmux_libc_tm_t * tm_p);
 mmux_cc_libc_decl char const *     mmux_libc_asctime   (mmux_libc_tm_t * tm_p);
 
-mmux_cc_libc_decl bool mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen, char const * template, mmux_libc_tm_t * tm_p)
+mmux_cc_libc_decl bool mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen_p, char const * template, mmux_libc_tm_t * tm_p)
   __attribute__((__nonnull__(1,2,3,4)));
 
 mmux_cc_libc_decl bool mmux_libc_strptime (char ** first_unprocessed_after_timestamp_p,

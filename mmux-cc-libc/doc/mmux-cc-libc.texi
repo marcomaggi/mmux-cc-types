@@ -325,6 +325,7 @@ Initialise library's internal state.  When successful return @cfalse{}; otherwis
 * time timeval::                The @objtype{mmux_libc_timeval_t} type.
 * time timespec::               The @objtype{mmux_libc_timespec_t} type.
 * time tm::                     The @objtype{mmux_libc_tm_t} type.
+* time functions::              Handling time.
 @end menu
 
 @c page
@@ -349,6 +350,11 @@ Aliases for the setter and getter of the field @code{tv_sec}.
 Aliases for the setter and getter of the field @code{tv_usec}.
 @end deftypefun
 
+
+@deftypefun void mmux_libc_timeval_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds}, mmux_slong_t @var{microseconds})
+Initialise the fields of a @MmuxCStruct{timeval}.
+@end deftypefun
+
 @c page
 @node time timespec
 @section The @objtype{mmux_libc_timespec_t} type
@@ -362,6 +368,11 @@ To have more expressive names: in this @api{} we ``rename'' the fields @samp{tv_
 @MmuxSetterGetter{timespec, ts_sec,  mmux_time_t}
 @MmuxSetterGetter{timespec, ts_nsec, mmux_slong_t}
 @MmuxStructDumper{timespec}
+
+
+@deftypefun void mmux_libc_timespec_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds}, mmux_slong_t @var{nanoseconds})
+Initialise the fields of a @MmuxCStruct{timespec}.
+@end deftypefun
 
 
 @deftypefun void mmux_libc_ts_seconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds})
@@ -410,6 +421,150 @@ tm_yday   = 0
 tm_isdst  = 0
 tm_gmtoff = 0
 tm_zone   = NULL
+@end example
+@end deftypefun
+
+@c page
+@node time functions
+@section Handling time
+
+
+@deftypefun mmux_time_t mmux_libc_time (void)
+@Cinterface{time}.
+@end deftypefun
+
+
+@deftypefun {mmux_libc_tm_t *} mmux_libc_localtime (mmux_time_t @var{T})
+@Cinterface{localtime}.
+
+@example
+mmux_time_t       T    = mmux_libc_time();
+mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
+@end example
+@end deftypefun
+
+
+@deftypefun {mmux_libc_tm_t *} mmux_libc_gmtime (mmux_time_t @var{T})
+@Cinterface{gmtime}.
+
+@example
+mmux_time_t       T    = mmux_libc_time();
+mmux_libc_tm_t *  tm_p = mmux_libc_gmtime(T);
+@end example
+@end deftypefun
+
+
+@deftypefun {char const *} mmux_libc_ctime (mmux_time_t @var{T})
+@Cinterface{ctime}.
+
+@example
+mmux_time_t  T   = mmux_libc_time();
+char const * str = mmux_libc_ctime(T);
+
+mmux_libc_dprintfou("%s\n", str);
+@end example
+@end deftypefun
+
+
+@deftypefun mmux_time_t mmux_libc_mktime (mmux_libc_tm_t * @var{tm_p})
+@Cinterface{mktime}.
+
+@example
+mmux_time_t       T1   = mmux_libc_time();
+mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T1);
+mmux_time_t       T2   = mmux_libc_mktime(tm_p);
+@end example
+@end deftypefun
+
+
+@deftypefun mmux_time_t mmux_libc_timegm (mmux_libc_tm_t * @var{tm_p})
+@Cinterface{timegm}.
+
+@example
+mmux_time_t       T1   = mmux_libc_time();
+mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T1);
+mmux_time_t       T2   = mmux_libc_timegm(tm_p);
+@end example
+@end deftypefun
+
+
+@deftypefun {char const *} mmux_libc_asctime (mmux_libc_tm_t * @var{tm_p})
+@Cinterface{asctime}.
+
+@example
+mmux_time_t       T    = mmux_libc_time();
+mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
+char const *      str  = mmux_libc_asctime(tm_p);
+
+mmux_libc_dprintfou("%s\n", str);
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strftime (char * @var{bufptr}, mmux_usize_t * @var{buflen_p}, char const * @var{template}, mmux_libc_tm_t * @var{tm_p})
+@Cinterface{strftime}.  Format an output string representation of the timestamp referenced by
+@var{TM_P} and store it in the buffer referenced by @var{bufptr}.
+
+@itemize
+@item
+Upon calling this function: @var{buflen_p} must reference a location containing the number of bytes
+in the buffer referenced by @var{bufptr}.
+
+@item
+Upon successfully returning from a function call: the location referenced by @var{buflen_p} is set
+to the number of characters in the output string, including the terminating null byte.
+@end itemize
+
+@example
+mmux_time_t       T    = mmux_libc_time();
+mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
+
+#undef  IS_THIS_ENOUGH_QUESTION_MARK
+#define IS_THIS_ENOUGH_QUESTION_MARK	4096
+mmux_usize_t  buflen = IS_THIS_ENOUGH_QUESTION_MARK;
+char          bufstr[buflen];
+
+if (mmux_libc_strftime(bufstr, &buflen, template, tm_p)) @{
+  /* error */
+@}
+mmux_libc_dprintfou("%s\n", bufstr);
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strptime (char ** @var{first_unprocessed_after_timestamp_p}, char const * @var{input_string}, char const * @var{template}, mmux_libc_tm_t * @var{tm_p})
+@Cinterface{strptime}.
+
+@example
+char const *      template     = "%a, %d %b %Y %H:%M:%S %z";
+char const *      input_string = "Fri, 15 Nov 2024 23:11:20 +0100";
+mmux_libc_tm_t *  tm_p         = calloc(1, sizeof(mmux_libc_tm_t));
+char *            first_unprocessed_after_timestamp;
+
+if (mmux_libc_strptime(&first_unprocessed_after_timestamp, input_string, template, tm_p)) @{
+  /* error */
+@}
+mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_p, NULL);
+@end example
+@end deftypefun
+
+
+@deftypefun mmux_uint_t mmux_libc_sleep (mmux_uint_t seconds)
+@Cinterface{sleep}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_nanosleep (mmux_libc_timespec_t * @var{requested_time}, mmux_libc_timespec_t * @var{remaining_time})
+@Cinterface{nanosleep}.
+
+@example
+mmux_libc_timespec_t    requested_time;
+mmux_libc_timespec_t    remaining_time;
+
+mmux_libc_timespec_set(&requested_time, 12, 34);
+if (mmux_libc_nanosleep(&requested_time, &remaining_time)) @{
+  /* error or interruption */
+@}
 @end example
 @end deftypefun
 

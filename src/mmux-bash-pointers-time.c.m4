@@ -50,8 +50,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_calloc]]])
     if (timeval_pointer) {
       mmux_bash_rv_t	rv;
 
-      mmux_libc_tv_sec_set(timeval_pointer, seconds);
-      mmux_libc_tv_usec_set(timeval_pointer, microseconds);
+      mmux_libc_timeval_set(timeval_pointer, seconds, microseconds);
       rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timeval_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv) {
 	free(timeval_pointer);
@@ -230,8 +229,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_calloc]]])
     if (timespec_pointer) {
       mmux_bash_rv_t	rv;
 
-      mmux_libc_ts_sec_set(timespec_pointer, seconds);
-      mmux_libc_ts_nsec_set(timespec_pointer, nanoseconds);
+      mmux_libc_timespec_set(timespec_pointer, seconds, nanoseconds);
       rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timespec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv) {
 	free(timespec_pointer);
