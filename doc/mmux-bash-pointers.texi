@@ -6077,7 +6077,7 @@ declare -i READY_FDS_NUM NFDS=@RR{mmux_libc_FD_SETSIZE}
 mmux_libc_fd_set_malloc READ_FD_SET
 mmux_libc_fd_set_malloc WRIT_FD_SET
 mmux_libc_fd_set_malloc EXCE_FD_SET
-mmux_libc_timeval_malloc TIMEOUT 1 0
+mmux_libc_timeval_calloc TIMEOUT 1 0
 @{
     declare -i READING_FD WRITING_FD
 
@@ -7581,8 +7581,8 @@ Interface to the standard C language function @cfunc{utimes}, @glibcref{File Tim
 declare -r PATHNAME='spiffy.ext'
 declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
 
-mmux_libc_timeval_malloc ACCESS_TIMEVAL
-mmux_libc_timeval_malloc MODIFICATION_TIMEVAL
+mmux_libc_timeval_calloc ACCESS_TIMEVAL
+mmux_libc_timeval_calloc MODIFICATION_TIMEVAL
 @{
     mmux_libc_timeval_seconds_set      @RR{ACCESS_TIMEVAL} 123
     mmux_libc_timeval_microseconds_set @RR{ACCESS_TIMEVAL} 456
@@ -7614,8 +7614,8 @@ declare ACCESS_TIMEVAL MODIFICATION_TIMEVAL
 
 mmux_libc_open FD @WW{PATHNAME} @RR{FLAGS}
 @{
-    mmux_libc_timeval_malloc ACCESS_TIMEVAL
-    mmux_libc_timeval_malloc MODIFICATION_TIMEVAL
+    mmux_libc_timeval_calloc ACCESS_TIMEVAL
+    mmux_libc_timeval_calloc MODIFICATION_TIMEVAL
     @{
         mmux_libc_timeval_seconds_set      @RR{ACCESS_TIMEVAL} 123
         mmux_libc_timeval_microseconds_set @RR{ACCESS_TIMEVAL} 456
@@ -8003,7 +8003,7 @@ To use a standard @MmuxCStruct{timeval} value, we can do:
 @example
 declare TIMEVAL
 
-mmux_libc_timeval_malloc TIMEVAL
+mmux_libc_timeval_calloc TIMEVAL
 @{
     mmux_libc_timeval_seconds_set      @RR{TIMEVAL} 123
     mmux_libc_timeval_microseconds_set @RR{TIMEVAL} 456
@@ -8020,8 +8020,8 @@ Shell variable bound to the number of bytes required to contain a @MmuxCStruct{t
 @end defvr
 
 
-@deffn Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR}
-@deffnx Builtin mmux_libc_timeval_malloc @var{TIMEVAL_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_MICROSECONDS}
+@deffn Builtin mmux_libc_timeval_calloc @var{TIMEVAL_POINTER_VAR}
+@deffnx Builtin mmux_libc_timeval_calloc @var{TIMEVAL_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_MICROSECONDS}
 Allocate a data structure of type @MmuxCStruct{timeval} using @cfunc{malloc} and initialise it with
 the given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TIMEVAL_POINTER_VAR}.  @glibcref{Time Types, struct timeval}.
@@ -8086,7 +8086,7 @@ To use a standard @MmuxCStruct{timespec} value, we can do:
 @example
 declare TIMESPEC
 
-mmux_libc_timespec_malloc TIMESPEC
+mmux_libc_timespec_calloc TIMESPEC
 @{
     mmux_libc_timespec_seconds_set     @RR{TIMESPEC} 123
     mmux_libc_timespec_nanoseconds_set @RR{TIMESPEC} 456
@@ -8103,8 +8103,8 @@ Shell variable bound to the number of bytes required to contain a @MmuxCStruct{t
 @end defvr
 
 
-@deffn Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR}
-@deffnx Builtin mmux_libc_timespec_malloc @var{TIMESPEC_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_NANOSECONDS}
+@deffn Builtin mmux_libc_timespec_calloc @var{TIMESPEC_POINTER_VAR}
+@deffnx Builtin mmux_libc_timespec_calloc @var{TIMESPEC_POINTER_VAR} @var{TIME_SECONDS} @var{SLONG_NANOSECONDS}
 Allocate a data structure of type @MmuxCStruct{timespec} using @cfunc{malloc} and initialise it with
 the given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TIMESPEC_POINTER_VAR}.  @glibcref{Time Types, struct timespec}.
@@ -8170,7 +8170,7 @@ To use a standard @MmuxCStruct{tm} value, we can do:
 declare TM
 declare -i SEC MIN HOUR MDAY MON YEAR WDAY YDAY ISDST GMTOFF
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     mmux_libc_tm_sec_ref    SEC    @RR{TM}
     mmux_libc_tm_min_ref    MIN    @RR{TM}
@@ -8195,7 +8195,7 @@ Shell variable bound to the number of bytes required to contain a @MmuxCStruct{t
 @end defvr
 
 
-@deffn Builtin mmux_libc_tm_malloc @var{TM_POINTER_VAR}
+@deffn Builtin mmux_libc_tm_calloc @var{TM_POINTER_VAR}
 Allocate a data structure of type @MmuxCStruct{tm} using @cfunc{malloc} and initialise it with the
 given values; bind a string representation of its pointer to the shell variable whose name is
 @var{TM_POINTER_VAR}.  @glibcref{Time Types, struct tm}.
@@ -8307,7 +8307,7 @@ broken--down time computed from @var{TIME}, which can be a value from a call to
 declare -i THE_TIME
 declare TM
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     mmux_libc_time THE_TIME
     mmux_libc_gmtime @RR{TM} @RR{THE_TIME}
@@ -8326,7 +8326,7 @@ data structure @MmuxCStruct{tm} referenced by @var{TM_POINTER}.
 @example
 declare TM
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     declare -i THE_TIME
 
@@ -8346,7 +8346,7 @@ data structure @MmuxCStruct{tm} referenced by @var{TM_POINTER}.
 @example
 declare TM
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     declare -i THE_TIME
 
@@ -8366,7 +8366,7 @@ broken--down time represented by the data structure @MmuxCStruct{tm} referenced 
 @example
 declare TM STRING
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     mmux_libc_asctime STRING @RR{TM}
     ...
@@ -8400,7 +8400,7 @@ the broken--down time represented by the data structure @MmuxCStruct{tm} referen
 declare -r TEMPLATE="%a, %d %b %Y %H:%M:%S %z"
 declare TM STRING
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     mmux_libc_strftime STRING @WW{TEMPLATE} @RR{TM}
     ...
@@ -8420,7 +8420,7 @@ declare -r TEMPLATE='%a, %d %b %Y %H:%M:%S %z'
 declare -r INPUT_STRING='Fri, 15 Nov 2024 23:11:20 +0100'
 declare TM
 
-mmux_libc_tm_malloc TM
+mmux_libc_tm_calloc TM
 @{
     mmux_libc_strptime @QQ{INPUT_STRING} @WW{TEMPLATE} @RR{TM}
     ...
@@ -8443,9 +8443,9 @@ Interface to the standard C language function @cfunc{nanosleep}, @glibcref{Sleep
 @example
 declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 1
+mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 1
 @{
-    mmux_libc_timespec_malloc REMAINING_TIMESPEC
+    mmux_libc_timespec_calloc REMAINING_TIMESPEC
     @{
         mmux_libc_nanosleep @RR{REQUESTED_TIMESPEC} @RR{REMAINING_TIMESPEC}
         ...

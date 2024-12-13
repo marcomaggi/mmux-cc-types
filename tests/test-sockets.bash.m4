@@ -2657,8 +2657,8 @@ function client-sockets-stream-1.1-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -2839,8 +2839,8 @@ function client-sockets-stream-1.2-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3013,8 +3013,8 @@ function client-sockets-stream-2.1-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3188,8 +3188,8 @@ function client-sockets-stream-2.2-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3365,8 +3365,8 @@ function client-sockets-stream-3.1-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3503,8 +3503,8 @@ function client-sockets-dgram-1.1-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3633,8 +3633,8 @@ function client-sockets-dgram-2.1-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3764,8 +3764,8 @@ function client-sockets-dgram-2.2-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -3875,8 +3875,8 @@ function client-sockets-dgram-2.3-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave
@@ -4005,8 +4005,8 @@ function client-sockets-dgram-3.1-sleep () {
     {
 	declare REQUESTED_TIMESPEC REMAINING_TIMESPEC
 
-	mbfl_location_compensate(mmux_libc_timespec_malloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
-	mbfl_location_compensate(mmux_libc_timespec_malloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REQUESTED_TIMESPEC 1 0, mmux_libc_free RR(REQUESTED_TIMESPEC))
+	mbfl_location_compensate(mmux_libc_timespec_calloc REMAINING_TIMESPEC,     mmux_libc_free RR(REMAINING_TIMESPEC))
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
     }
     mbfl_location_leave

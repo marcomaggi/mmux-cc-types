@@ -1080,8 +1080,8 @@ function file-system-utimes-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_timeval_malloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
-	mbfl_location_compensate( mmux_libc_timeval_malloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_calloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_calloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
 
 	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
 	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
@@ -1110,8 +1110,8 @@ function file-system-lutimes-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_timeval_malloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
-	mbfl_location_compensate( mmux_libc_timeval_malloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_calloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_calloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
 
 	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
 	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
@@ -1143,8 +1143,8 @@ function file-system-futimes-1.1 () {
 
 	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) RR(FLAGS) 0, mmux_libc_close RR(FD) )
 
-	mbfl_location_compensate( mmux_libc_timeval_malloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
-	mbfl_location_compensate( mmux_libc_timeval_malloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_calloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
+	mbfl_location_compensate( mmux_libc_timeval_calloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
 
 	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
 	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
