@@ -210,9 +210,86 @@ mmux_libc_tm_reset (mmux_libc_tm_t * tm_p)
 
 
 /** --------------------------------------------------------------------
+ ** Time handling.
+ ** ----------------------------------------------------------------- */
+
+mmux_time_t
+mmux_libc_time (void)
+{
+  return time(NULL);
+}
+mmux_libc_tm_t *
+mmux_libc_localtime (mmux_time_t T)
+{
+  return localtime(&T);
+}
+mmux_libc_tm_t *
+mmux_libc_gmtime (mmux_time_t T)
+{
+  return gmtime(&T);
+}
+mmux_time_t
+mmux_libc_mktime (mmux_libc_tm_t * tm_p)
+{
+  return mktime(tm_p);
+}
+mmux_time_t
+mmux_libc_timegm (mmux_libc_tm_t * tm_p)
+{
+  return timegm(tm_p);
+}
+char const *
+mmux_libc_asctime (mmux_libc_tm_t * tm_p)
+{
+  return asctime(tm_p);
+}
+char const *
+mmux_libc_ctime (mmux_time_t T)
+{
+  return ctime(&T);
+}
+bool
+mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen, char const * template, mmux_libc_tm_t * tm_p)
+{
+  mmux_usize_t	required_nbytes;
+
+  /* See the documentation of "strftime()" in  the GLIBC manual for an explanation of
+     this nonsense. */
+  bufptr[0]       = '\1';
+  required_nbytes = strftime(bufptr, *buflen, template, tm_p);
+  if ((0 == required_nbytes) && ('\0' != bufptr[0])) {
+    return true;
+  } else {
+    *buflen = required_nbytes;
+    return false;
+  }
+}
+bool
+mmux_libc_strptime (char ** first_unprocessed_after_timestamp_p,
+		    char const * input_string, char const * template, mmux_libc_tm_t * tm_p)
+{
+  char *	first_unprocessed_after_timestamp = strptime(input_string, template, tm_p);
+
+  if (first_unprocessed_after_timestamp) {
+    if (first_unprocessed_after_timestamp_p) {
+      *first_unprocessed_after_timestamp_p = first_unprocessed_after_timestamp;
+    }
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+/** --------------------------------------------------------------------
  ** Sleeping.
  ** ----------------------------------------------------------------- */
 
+mmux_uint_t
+mmux_libc_sleep (mmux_uint_t seconds)
+{
+  return sleep(seconds);
+}
 bool
 mmux_libc_nanosleep (mmux_libc_timespec_t * requested_time, mmux_libc_timespec_t * remaining_time)
 {

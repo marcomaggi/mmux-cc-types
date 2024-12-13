@@ -458,6 +458,9 @@ function time-strptime-1.1 () {
 	mbfl_location_compensate(mmux_libc_tm_calloc TM, mmux_libc_free RR(TM))
 	mbfl_location_leave_when_failure( mmux_libc_strptime WW(INPUT_STRING) WW(TEMPLATE) RR(TM) )
 	mbfl_location_leave_when_failure( mmux_libc_strftime OUTPUT_STRING WW(TEMPLATE) RR(TM) )
+
+	dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_tm_dump RR(TM) >&2 )
+
 	dotest-debug QQ(OUTPUT_STRING)
 	dotest-equal WW(INPUT_STRING) WW(OUTPUT_STRING)
     }

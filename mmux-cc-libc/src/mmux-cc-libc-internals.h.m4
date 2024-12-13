@@ -351,6 +351,22 @@ mmux_cc_libc_decl void mmux_libc_tm_reset (mmux_libc_tm_t * tm_p)
  ** Times and dates: functions.
  ** ----------------------------------------------------------------- */
 
+mmux_cc_libc_decl mmux_time_t      mmux_libc_time      (void);
+mmux_cc_libc_decl mmux_libc_tm_t * mmux_libc_localtime (mmux_time_t T);
+mmux_cc_libc_decl mmux_libc_tm_t * mmux_libc_gmtime    (mmux_time_t T);
+mmux_cc_libc_decl char const *     mmux_libc_ctime     (mmux_time_t T);
+mmux_cc_libc_decl mmux_time_t      mmux_libc_mktime    (mmux_libc_tm_t * tm_p);
+mmux_cc_libc_decl mmux_time_t      mmux_libc_timegm    (mmux_libc_tm_t * tm_p);
+mmux_cc_libc_decl char const *     mmux_libc_asctime   (mmux_libc_tm_t * tm_p);
+
+mmux_cc_libc_decl bool mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen, char const * template, mmux_libc_tm_t * tm_p)
+  __attribute__((__nonnull__(1,2,3,4)));
+
+mmux_cc_libc_decl bool mmux_libc_strptime (char ** first_unprocessed_after_timestamp_p,
+					   char const * input_string, char const * template, mmux_libc_tm_t * tm_p)
+  __attribute__((__nonnull__(2,3,4)));
+
+mmux_cc_libc_decl mmux_uint_t mmux_libc_sleep (mmux_uint_t seconds);
 mmux_cc_libc_decl bool mmux_libc_nanosleep (mmux_libc_timespec_t * requested_time, mmux_libc_timespec_t * remaining_time)
   __attribute__((__nonnull__(1,2)));
 
