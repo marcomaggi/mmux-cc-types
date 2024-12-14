@@ -421,60 +421,59 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Memory operations
 
 
-@deftypefun void mmux_libc_memset (mmux_pointer_t ptr, mmux_uint8_t octet, mmux_usize_t @var{nbytes})
+@deftypefun void mmux_libc_memset (mmux_pointer_t @var{ptr}, mmux_uint8_t @var{octet}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memset}.
 @end deftypefun
 
 
-@deftypefun void mmux_libc_memzero (mmux_pointer_t ptr, mmux_usize_t @var{nbytes})
+@deftypefun void mmux_libc_memzero (mmux_pointer_t @var{ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memzero}.
 @end deftypefun
 
 
-@deftypefun void mmux_libc_memcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@deftypefun void mmux_libc_memcpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memcpy}.
 @end deftypefun
 
 
-@deftypefun mmux_pointer_t mmux_libc_mempcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_mempcpy (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{mempcpy}.
 @end deftypefun
 
 
-@deftypefun mmux_pointer_t mmux_libc_memccpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_uint8_t octet, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memccpy (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_uint8_t @var{octet}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memccpy}.
 @end deftypefun
 
 
-@deftypefun void mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@deftypefun void mmux_libc_memmove (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memmove}.
 @end deftypefun
 
 
-@deftypefun mmux_sint_t mmux_libc_memcmp (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@deftypefun mmux_sint_t mmux_libc_memcmp (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memcmp}.
 @end deftypefun
 
 
-@deftypefun mmux_pointer_t mmux_libc_memchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memchr (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{ptr}, mmux_octet_t @var{octet}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memchr}.
 @end deftypefun
 
 
-@deftypefun mmux_pointer_t mmux_libc_rawmemchr (mmux_pointer_t ptr, mmux_octet_t octet)
+@deftypefun bool mmux_libc_rawmemchr (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{ptr}, mmux_octet_t @var{octet})
 @MmuxCInterface{rawmemchr}.
 @end deftypefun
 
 
-@deftypefun mmux_pointer_t mmux_libc_memrchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memrchr (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{ptr}, mmux_octet_t @var{octet}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memrchr}.
 @end deftypefun
 
 
-@deftypefun mmux_pointer_t mmux_libc_memmem (mmux_pointer_t haystack_ptr, mmux_usize_t haystack_len, mmux_pointer_t needle_ptr, mmux_usize_t needle_len)
+@deftypefun bool mmux_libc_memmem (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{haystack_ptr}, mmux_usize_t @var{haystack_len}, mmux_pointer_t @var{needle_ptr}, mmux_usize_t @var{needle_len})
 @MmuxCInterface{memmem}.
 @end deftypefun
-
 
 @c page
 @node time

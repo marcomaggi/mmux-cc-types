@@ -79,7 +79,7 @@ AC_CACHE_SAVE
 AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/uio.h sys/socket.h sys/un.h netinet/in.h net/if.h arpa/inet.h
                   netdb.h sys/resource.h])
 
-AC_CHECK_FUNCS([mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
+AC_CHECK_FUNCS([mempcpy memrchr strnlen strndup stpncpy strcasecmp strncasecmp strverscmp
                 rawmemchr memmem strchrnul basename dirname canonicalize_file_name
                 renameat2 group_member dup3 accept4 copy_file_range gettid prlimit])
 

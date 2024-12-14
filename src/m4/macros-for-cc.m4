@@ -154,6 +154,12 @@ $3
 #endif
 ]]])]]])
 
+m4_dnl $1 - mmux-cc-libc function call
+m4_define([[[MMUX_LIBC_FUNCALL]]],[[[if ($1) {
+  mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+  return MMUX_FAILURE;
+}]]])
+
 
 #### parsing arguments
 

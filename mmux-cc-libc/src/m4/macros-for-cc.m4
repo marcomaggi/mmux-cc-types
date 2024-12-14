@@ -84,6 +84,13 @@ $3
 #endif
 ]]])]]])
 
+m4_dnl $1 - Preprocessor symbol: if defined to 1, include the body of code; otherwise include the alternative body.
+m4_dnl $2 - The body of code.
+m4_dnl $3 - The alternative of code.
+m4_define([[[MMUX_CONDITIONAL_FUNCTION_BODY]]],[[[MMUX_CONDITIONAL_CODE([[[$1]]],[[[$2]]],[[[errno = MMUX_LIBC_ENOSYS;
+return true;
+]]])]]])
+
 
 m4_dnl let's go
 

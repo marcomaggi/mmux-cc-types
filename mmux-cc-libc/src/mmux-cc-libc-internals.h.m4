@@ -282,11 +282,12 @@ mmux_cc_libc_decl void mmux_libc_memzero (mmux_pointer_t ptr, mmux_usize_t len)
 mmux_cc_libc_decl void mmux_libc_memcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl mmux_pointer_t mmux_libc_mempcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
-  __attribute__((__nonnull__(1,2),__returns_nonnull__));
+mmux_cc_libc_decl bool mmux_libc_mempcpy (mmux_pointer_t * result_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
+  __attribute__((__nonnull__(1,2,3)));
 
-mmux_cc_libc_decl mmux_pointer_t mmux_libc_memccpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_uint8_t octet, mmux_usize_t nbytes)
-  __attribute__((__nonnull__(1,2)));
+mmux_cc_libc_decl bool mmux_libc_memccpy (mmux_pointer_t * result_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr,
+					  mmux_uint8_t octet, mmux_usize_t nbytes)
+  __attribute__((__nonnull__(1,2,3)));
 
 mmux_cc_libc_decl void mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
   __attribute__((__nonnull__(1,2)));
@@ -294,18 +295,19 @@ mmux_cc_libc_decl void mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t
 mmux_cc_libc_decl mmux_sint_t mmux_libc_memcmp (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl mmux_pointer_t mmux_libc_memchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t nbytes)
-  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_memchr (mmux_pointer_t * result_p, mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t nbytes)
+  __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl mmux_pointer_t mmux_libc_rawmemchr (mmux_pointer_t ptr, mmux_octet_t octet)
-  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_rawmemchr (mmux_pointer_t * result_p, mmux_pointer_t ptr, mmux_octet_t octet)
+  __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl mmux_pointer_t mmux_libc_memrchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t nbytes)
-  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_memrchr (mmux_pointer_t * result_p, mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t nbytes)
+  __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl mmux_pointer_t mmux_libc_memmem (mmux_pointer_t haystack_ptr, mmux_usize_t haystack_len,
-						   mmux_pointer_t needle_ptr,   mmux_usize_t needle_len)
-  __attribute__((__nonnull__(1,3)));
+mmux_cc_libc_decl bool mmux_libc_memmem (mmux_pointer_t * result_p,
+					 mmux_pointer_t haystack_ptr, mmux_usize_t haystack_len,
+					 mmux_pointer_t needle_ptr,   mmux_usize_t needle_len)
+  __attribute__((__nonnull__(1,2,4)));
 
 
 /** --------------------------------------------------------------------

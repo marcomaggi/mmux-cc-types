@@ -45,7 +45,8 @@ declare -ga MMUX_BASH_POINTERS_COMPLEX_STEMS=("${COMPLEX_FLOAT_STEMS[@]}")
 declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}")
 
 declare -ra LIBC_BUILTINS=(malloc realloc calloc free
-			   memset memzero memcpy memccpy memmove memcmp memchr memrchr memcpy_from_bash_string
+			   memset memzero memcpy mempcpy memccpy memmove memcmp memchr memrchr memcpy_from_bash_string
+			   memmem rawmemchr
 			   strerror errno_to_string
 			   open openat close read write pread pwrite lseek dup dup2 fcntl ioctl pipe
 			   fd_set_malloc fd_set_malloc_triplet FD_ZERO FD_SET FD_CLR FD_ISSET select
@@ -342,8 +343,8 @@ function have_cfunc () {
 
 # Builtin wrapping C language functions that may not be available.
 {
-    for ITEM in mempcpy strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
-			rawmemchr memmem strchrnul basename dirname canonicalize_file_name \
+    for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
+			strchrnul basename dirname canonicalize_file_name \
 			renameat2 group_member dup3 accept4 gettid prlimit
     do
 	if have_cfunc "$ITEM"
