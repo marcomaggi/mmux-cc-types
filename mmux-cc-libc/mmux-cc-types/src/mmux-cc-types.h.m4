@@ -186,6 +186,9 @@ typedef uint32_t			mmux_uint32_t;
 typedef int64_t				mmux_sint64_t;
 typedef uint64_t			mmux_uint64_t;
 
+typedef mmux_sint8_t			mmux_byte_t;
+typedef mmux_uint8_t			mmux_octet_t;
+
 typedef float				mmux_float_t;
 typedef double				mmux_double_t;
 MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_LDOUBLE]]],  [[[typedef long double		mmux_ldouble_t;]]])

@@ -733,6 +733,14 @@ parts are values of type @objtype{mmux_decimal128_t}.
 @MmuxDefineCAliasTypedef{sint64,int64_t}
 @MmuxDefineCAliasTypedef{uint64,uint64_t}
 
+@deftp {Typedef Alias} mmux_byte_t
+An alias for @objtype{mmux_sint8_t}.
+@end deftp
+
+@deftp {Typedef Alias} mmux_octet_t
+An alias for @objtype{mmux_uint8_t}.
+@end deftp
+
 @MmuxDefineCAliasTypedef{ssize,ssize_t}
 @MmuxDefineCAliasTypedef{usize,size_t}
 @MmuxDefineCAliasTypedef{sintmax, intmax_t}

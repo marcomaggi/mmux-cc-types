@@ -114,7 +114,6 @@ mmux_cc_libc_decl int		mmux_cc_libc_version_interface_age	(void);
  ** ----------------------------------------------------------------- */
 
 typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
-typedef mmux_uint8_t		mmux_octet_t;
 
 
 /** --------------------------------------------------------------------
