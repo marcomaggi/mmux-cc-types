@@ -146,16 +146,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rlimit_calloc]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_RLIM(rlim_max,			3);
   }
   {
-    mmux_libc_rlimit_t *	rlimit_pointer = calloc(1, sizeof(mmux_libc_rlimit_t));
+    mmux_libc_rlimit_t *	rlimit_pointer;
 
-    if (rlimit_pointer) {
-      mmux_libc_rlim_cur_set(rlimit_pointer, rlim_cur);
-      mmux_libc_rlim_max_set(rlimit_pointer, rlim_max);
-      return mmux_pointer_bind_to_bash_variable(rlimit_pointer_varname, rlimit_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
+    if (mmux_libc_calloc(&rlimit_pointer, 1, sizeof(mmux_libc_rlimit_t))) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
     }
+    mmux_libc_rlim_cur_set(rlimit_pointer, rlim_cur);
+    mmux_libc_rlim_max_set(rlimit_pointer, rlim_max);
+    return mmux_pointer_bind_to_bash_variable(rlimit_pointer_varname, rlimit_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],

@@ -45,7 +45,7 @@ declare -ga MMUX_BASH_POINTERS_COMPLEX_STEMS=("${COMPLEX_FLOAT_STEMS[@]}")
 declare -ga MMUX_BASH_POINTERS_STEMS=("${MMUX_BASH_POINTERS_REAL_STEMS[@]}" "${MMUX_BASH_POINTERS_COMPLEX_STEMS[@]}")
 
 declare -ra LIBC_BUILTINS=(malloc realloc calloc free
-			   memset memcpy memccpy memmove memcmp memchr memrchr memcpy_from_bash_string
+			   memset memzero memcpy memccpy memmove memcmp memchr memrchr memcpy_from_bash_string
 			   strerror errno_to_string
 			   open openat close read write pread pwrite lseek dup dup2 fcntl ioctl pipe
 			   fd_set_malloc fd_set_malloc_triplet FD_ZERO FD_SET FD_CLR FD_ISSET select

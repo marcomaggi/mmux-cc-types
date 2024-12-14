@@ -184,6 +184,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * overview::                    Overview of the package.
 * version::                     Version functions.
 * initialisation::              Library initialisation.
+* memory::                      Memory management.
 * time::                        Times and dates.
 * system::                      System configuration.
 
@@ -313,8 +314,167 @@ Return an integer representing the library interface current age.
 
 
 @deftypefun bool mmux_cc_libc_init (void)
-Initialise library's internal state.  When successful return @cfalse{}; otherwise return @ctrue{}.
+Initialise library's internal state; we can safely call this function multimple times.  When
+successful return @cfalse{}; otherwise return @ctrue{}.
 @end deftypefun
+
+@c page
+@node memory
+@chapter Memory management
+
+
+@menu
+* memory allocation::           Memory allocation.
+* memory operations::           Memory operations.
+@end menu
+
+@c page
+@node memory allocation
+@section Memory allocation
+
+
+@deftypefn {Preprocessor Macro} bool mmux_libc_malloc (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{len})
+@deftypefnx {Function} bool mmux_libc_malloc_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{len})
+@Cinterface{malloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
+*}.  Upon successful return: the pointer variable referenced by @var{P_p} is set to the pointer
+referencing the newly allocated memory block.
+
+@example
+mmux_libc_tm_t *  tm;
+
+if (mmux_libc_malloc(&tm, sizeof(mmux_libc_tm_t))) @{
+  /* error */
+@}
+@end example
+@end deftypefn
+
+
+@deftypefn {Preprocessor Macro} bool mmux_libc_calloc (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
+@deftypefnx Function bool mmux_libc_calloc_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
+@Cinterface{calloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
+*}.  Upon successful return: the pointer variable referenced by @var{P_p} is set to the pointer
+referencing the newly allocated memory block.
+
+@example
+mmux_double_t *  P;
+
+if (mmux_libc_calloc(&P, 123, sizeof(mmux_double_t))) @{
+  /* error */
+@}
+@end example
+@end deftypefn
+
+
+@deftypefn {Preprocessor Macro} bool mmux_libc_realloc (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{newlen})
+@deftypefnx Function bool mmux_libc_realloc_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{newlen})
+@Cinterface{realloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
+*}.
+
+@itemize
+@item
+Upon calling this function: @var{P_p} must reference a pointer variable holding the pointer to the
+memory block to reallocate.
+
+@item
+Upon successfully returning from this function: the pointer variable referenced by @var{P_p} holds
+the new pointer.
+@end itemize
+
+@example
+mmux_libc_tm_t *  tm;
+
+if (mmux_libc_malloc(&tm, 1024)) @{
+  /* error */
+@}
+if (mmux_libc_realloc(&tm, 4096)) @{
+  /* error */
+@}
+@end example
+@end deftypefn
+
+
+@deftypefn {Preprocessor Macro} bool mmux_libc_reallocarray (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
+@deftypefnx Function bool mmux_libc_reallocarray_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
+@Cinterface{reallocarray}.  The macro just casts a pointer @var{P_p} of any type to
+@code{mmux_pointer_t *}.  Upon successful return: the pointer variable referenced by @var{P_p} is
+set to the pointer referencing the newly allocated memory block.
+
+@example
+mmux_double_t *  P;
+
+if (mmux_libc_calloc(&P, 123, sizeof(mmux_double_t))) @{
+  /* error */
+@}
+if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
+  /* error */
+@}
+@end example
+@end deftypefn
+
+
+@deftypefun void mmux_libc_free (mmux_pointer_t @var{P})
+@Cinterface{free}.
+@end deftypefun
+
+@c page
+@node memory operations
+@section Memory operations
+
+
+@deftypefun void mmux_libc_memset (mmux_pointer_t ptr, mmux_uint8_t octet, mmux_usize_t @var{nbytes})
+@Cinterface{memset}.
+@end deftypefun
+
+
+@deftypefun void mmux_libc_memzero (mmux_pointer_t ptr, mmux_usize_t @var{nbytes})
+@Cinterface{memzero}.
+@end deftypefun
+
+
+@deftypefun void mmux_libc_memcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@Cinterface{memcpy}.
+@end deftypefun
+
+
+@deftypefun mmux_pointer_t mmux_libc_mempcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@Cinterface{mempcpy}.
+@end deftypefun
+
+
+@deftypefun mmux_pointer_t mmux_libc_memccpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_uint8_t octet, mmux_usize_t @var{nbytes})
+@Cinterface{memccpy}.
+@end deftypefun
+
+
+@deftypefun void mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@Cinterface{memmove}.
+@end deftypefun
+
+
+@deftypefun mmux_sint_t mmux_libc_memcmp (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
+@Cinterface{memcmp}.
+@end deftypefun
+
+
+@deftypefun mmux_pointer_t mmux_libc_memchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t @var{nbytes})
+@Cinterface{memchr}.
+@end deftypefun
+
+
+@deftypefun mmux_pointer_t mmux_libc_rawmemchr (mmux_pointer_t ptr, mmux_octet_t octet)
+@Cinterface{rawmemchr}.
+@end deftypefun
+
+
+@deftypefun mmux_pointer_t mmux_libc_memrchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t @var{nbytes})
+@Cinterface{memrchr}.
+@end deftypefun
+
+
+@deftypefun mmux_pointer_t mmux_libc_memmem (mmux_pointer_t haystack_ptr, mmux_usize_t haystack_len, mmux_pointer_t needle_ptr, mmux_usize_t needle_len)
+@Cinterface{memmem}.
+@end deftypefun
+
 
 @c page
 @node time

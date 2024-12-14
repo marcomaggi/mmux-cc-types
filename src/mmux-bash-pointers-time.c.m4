@@ -45,20 +45,20 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_calloc]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(microseconds,		3);
   }
   {
-    mmux_libc_timeval_t *	timeval_pointer = calloc(1, sizeof(mmux_libc_timeval_t));
+    mmux_libc_timeval_t *	timeval_pointer;
 
-    if (timeval_pointer) {
-      mmux_bash_rv_t	rv;
-
-      mmux_libc_timeval_set(timeval_pointer, seconds, microseconds);
-      rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timeval_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-      if (MMUX_SUCCESS != rv) {
-	free(timeval_pointer);
-      }
-      return rv;
-    } else {
+    if (mmux_libc_calloc(&timeval_pointer, 1, sizeof(mmux_libc_timeval_t))) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
+    }
+    mmux_libc_timeval_set(timeval_pointer, seconds, microseconds);
+    {
+      mmux_bash_rv_t	rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timeval_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+
+      if (MMUX_SUCCESS != rv) {
+	mmux_libc_free(timeval_pointer);
+      }
+      return rv;
     }
   }
 }
@@ -215,7 +215,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_calloc]]])
 {
   char const *	pointer_varname;
-  mmux_time_t	seconds      = 0;
+  mmux_time_t	seconds     = 0;
   mmux_slong_t	nanoseconds = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
@@ -224,20 +224,19 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_calloc]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_SLONG(nanoseconds,		3);
   }
   {
-    mmux_libc_timespec_t *	timespec_pointer = calloc(1, sizeof(mmux_libc_timespec_t));
+    mmux_libc_timespec_t *	timespec_pointer;
 
-    if (timespec_pointer) {
-      mmux_bash_rv_t	rv;
-
-      mmux_libc_timespec_set(timespec_pointer, seconds, nanoseconds);
-      rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timespec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-      if (MMUX_SUCCESS != rv) {
-	free(timespec_pointer);
-      }
-      return rv;
-    } else {
+    if (mmux_libc_calloc(&timespec_pointer, 1, sizeof(mmux_libc_timespec_t))) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
+    }
+    mmux_libc_timespec_set(timespec_pointer, seconds, nanoseconds);
+    {
+      mmux_bash_rv_t	rv = mmux_pointer_bind_to_bash_variable(pointer_varname, timespec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != rv) {
+	mmux_libc_free(timespec_pointer);
+      }
+      return rv;
     }
   }
 }
@@ -397,21 +396,20 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
   {
-    mmux_libc_tm_t *	tm_pointer = calloc(1, sizeof(mmux_libc_tm_t));
+    mmux_libc_tm_t *	tm_pointer;
 
-    if (tm_pointer) {
-      *tm_pointer = *mmux_libc_localtime(mmux_libc_time());
-      {
-	mmux_bash_rv_t	rv;
-	rv = mmux_pointer_bind_to_bash_variable(pointer_varname, tm_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-	if (MMUX_SUCCESS != rv) {
-	  free(tm_pointer);
-	}
-	return rv;
-      }
-    } else {
+    if (mmux_libc_calloc(&tm_pointer, 1, sizeof(mmux_libc_tm_t))) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
+    }
+    *tm_pointer = *mmux_libc_localtime(mmux_libc_time());
+    {
+      mmux_bash_rv_t	rv = mmux_pointer_bind_to_bash_variable(pointer_varname, tm_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+
+      if (MMUX_SUCCESS != rv) {
+	mmux_libc_free(tm_pointer);
+      }
+      return rv;
     }
   }
 }

@@ -4726,7 +4726,7 @@ representation; in this case the @code{ERRNO} error code is @samp{EINVAL}.  @ref
 conventions, Conventions in coding and documentation}.
 
 
-@deffn Builtin mmux_libc_memset @var{PTR} @var{BYTE} @var{SIZE}
+@deffn Builtin mmux_libc_memset @var{PTR} @var{UINT8} @var{SIZE}
 Interface to the standard C language function @cfunc{memset}; if successful return true, otherwise
 return false and set the shell variable @code{ERRNO} to the string representation of an exact
 integer, itself representing an @code{errno} error code.
@@ -4734,11 +4734,11 @@ integer, itself representing an @code{errno} error code.
 The argument @var{PTR} must be the string representation of a pointer referencing a previously
 allocated memory block.
 
-The argument @var{BYTE} must be the string representation of an exact, positive, integer itself
+The argument @var{UINT8} must be the string representation of an exact, positive, integer itself
 representing the value to which memory bytes must be set; it must fit an unsigned 8-bit integer.
 
 The argument @var{SIZE} must be the string representation of an exact, positive, integer itself
-representing the number of bytes to set to @var{BYTE}; it must fit the C language type
+representing the number of bytes to set to @var{UINT8}; it must fit the C language type
 @objtype{size_t}.
 
 @example
@@ -4747,6 +4747,11 @@ declare PTR SIZE=123
 mmux_libc_malloc PTR $SIZE
 mmux_libc_memset $PTR 1 $SIZE
 @end example
+@end deffn
+
+
+@deffn Builtin mmux_libc_memzero @var{PTR} @var{SIZE}
+Like @MmuxBuiltin{mmux_libc_memset} but reset the memory to zero.
 @end deffn
 
 

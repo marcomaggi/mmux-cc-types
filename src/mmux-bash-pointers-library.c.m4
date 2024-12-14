@@ -163,6 +163,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     return MMUX_FAILURE;
   }
 
+  if (mmux_cc_libc_init()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising MMUX CC Libc\n");
+    return MMUX_FAILURE;
+  }
+
   if (MMUX_SUCCESS != mmux_bash_pointers_init_time_module()) {
     fprintf(stderr, "MMUX Bash Pointers: internal error: initialising time module\n");
     return MMUX_FAILURE;

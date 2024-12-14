@@ -876,29 +876,28 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_iovec_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(iovec_pointer_varname,	1);
   {
-    mmux_libc_iovec_t *	iovec_pointer = calloc(1, sizeof(mmux_libc_iovec_t));
+    mmux_libc_iovec_t *	iovec_pointer;
 
-    if (iovec_pointer) {
-      if (4 == argc) {
-	mmux_pointer_t	iov_base_value;
-	mmux_usize_t	iov_len_value;
-
-	MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(iov_base_value,	2);
-	MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iov_len_value,	3);
-	mmux_libc_iov_base_set(iovec_pointer, iov_base_value);
-	mmux_libc_iov_len_set (iovec_pointer, iov_len_value);
-      }
-      {
-	int	rv = mmux_pointer_bind_to_bash_variable(iovec_pointer_varname, iovec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-
-	if (MMUX_SUCCESS != rv) {
-	  free(iovec_pointer);
-	}
-	return rv;
-      }
-    } else {
+    if (mmux_libc_calloc(&iovec_pointer, 1, sizeof(mmux_libc_iovec_t))) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
+    }
+    if (4 == argc) {
+      mmux_pointer_t	iov_base_value;
+      mmux_usize_t	iov_len_value;
+
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(iov_base_value,	2);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iov_len_value,	3);
+      mmux_libc_iov_base_set(iovec_pointer, iov_base_value);
+      mmux_libc_iov_len_set (iovec_pointer, iov_len_value);
+    }
+    {
+      mmux_bash_rv_t	brv = mmux_pointer_bind_to_bash_variable(iovec_pointer_varname, iovec_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+
+      if (MMUX_SUCCESS != brv) {
+	mmux_libc_free(iovec_pointer);
+      }
+      return brv;
     }
   }
 }
@@ -916,18 +915,19 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_iovec_array_calloc]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(iovec_array_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array_length,		2);
   {
-    mmux_libc_iovec_t *	iovec_array_pointer = calloc(iovec_array_length, sizeof(mmux_libc_iovec_t));
+    mmux_libc_iovec_t *	iovec_array_pointer;
 
-    if (iovec_array_pointer) {
-      int	rv = mmux_pointer_bind_to_bash_variable(iovec_array_pointer_varname, iovec_array_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-
-      if (MMUX_SUCCESS != rv) {
-	free(iovec_array_pointer);
-      }
-      return rv;
-    } else {
+    if (mmux_libc_calloc(&iovec_array_pointer, iovec_array_length, sizeof(mmux_libc_iovec_t))) {
       mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
       return MMUX_FAILURE;
+    }
+    {
+      mmux_bash_rv_t	brv = mmux_pointer_bind_to_bash_variable(iovec_array_pointer_varname, iovec_array_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+
+      if (MMUX_SUCCESS != brv) {
+	mmux_libc_free(iovec_array_pointer);
+      }
+      return brv;
     }
   }
 }
@@ -1476,8 +1476,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_flock_calloc]]])
     }
 
     {
-      mmux_libc_flock_t *	flock_pointer = calloc(1, sizeof(mmux_libc_flock_t));
+      mmux_libc_flock_t *	flock_pointer;
 
+      if (mmux_libc_calloc(&flock_pointer, 1, sizeof(mmux_libc_flock_t))) {
+	mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
+	return MMUX_FAILURE;
+      }
       *flock_pointer = flock_struct;
       return mmux_pointer_bind_to_bash_variable(flock_pointer_varname, (mmux_pointer_t)flock_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
     }

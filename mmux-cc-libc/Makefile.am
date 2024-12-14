@@ -99,6 +99,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-libc-constants.h.m4			\
 	src/mmux-cc-libc-file-descriptors.c.m4		\
 	src/mmux-cc-libc-library.c.m4			\
+	src/mmux-cc-libc-memory.c.m4			\
 	src/mmux-cc-libc-system-configuration.c.m4	\
 	src/mmux-cc-libc-time.c.m4
 
@@ -108,6 +109,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-library.c			\
+	src/mmux-cc-libc-memory.c			\
 	src/mmux-cc-libc-system-configuration.c		\
 	src/mmux-cc-libc-time.c
 
@@ -136,6 +138,7 @@ libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-library.c			\
+	src/mmux-cc-libc-memory.c			\
 	src/mmux-cc-libc-system-configuration.c		\
 	src/mmux-cc-libc-time.c
 
