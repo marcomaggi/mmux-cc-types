@@ -73,11 +73,7 @@
 @ref{\NODE\,\TITLE\,\TITLE\,mmux-cc-types}
 @end macro
 
-@macro Cinterface{FUNCNAME}
-Interface to the function @cfunc{\FUNCNAME\}, @cfuncpage{\FUNCNAME\}
-@end macro
-
-@macro cfuncpage{FUNCNAME}
+@macro MmuxCFuncpage{FUNCNAME}
 @ref{\FUNCNAME\,\FUNCNAME\,\FUNCNAME\,*manpages*}
 @end macro
 
@@ -85,29 +81,33 @@ Interface to the function @cfunc{\FUNCNAME\}, @cfuncpage{\FUNCNAME\}
 @code{struct \NAME\}
 @end macro
 
+@macro MmuxCInterface{FUNCNAME}
+Interface to the function @cfunc{\FUNCNAME\}, @MmuxCFuncpage{\FUNCNAME\}
+@end macro
+
 @c ------------------------------------------------------------------------
 
-@macro MmuxStructOpaqueTypedef{STRUCT_NAME}
-@deftp {Struct Typedef} mmux_libc_\STRUCT_NAME\_t
-An opaque alias for @MmuxCStruct{\STRUCT_NAME\}.
+@macro MmuxCStructOpaqueTypedef{STRUCTNAME}
+@deftp {Opaque Struct Typedef} mmux_libc_\STRUCTNAME\_t
+An alias for @MmuxCStruct{\STRUCTNAME\}.
 @end deftp
 
 @end macro
 
-@macro MmuxSetterGetter{STRUCT_NAME, FIELD_NAME, FIELD_TYPE}
-@deftypefun void mmux_libc_\FIELD_NAME\_set (mmux_libc_\STRUCT_NAME\_t * @var{\STRUCT_NAME\_p}, \FIELD_TYPE\ @var{\FIELD_NAME\})
-@deftypefunx \FIELD_TYPE\ mmux_libc_\FIELD_NAME\_ref (mmux_libc_\STRUCT_NAME\_t const * @var{\STRUCT_NAME\_p})
-Setter and getter for the field @code{\FIELD_NAME\} of @objtype{mmux_libc_\STRUCT_NAME\_t}.
+@macro MmuxSetterGetter{STRUCTNAME, FIELDNAME, FIELDTYPE}
+@deftypefun void mmux_libc_\FIELDNAME\_set (mmux_libc_\STRUCTNAME\_t * @var{\STRUCTNAME\_p}, \FIELDTYPE\ @var{\FIELDNAME\})
+@deftypefunx \FIELDTYPE\ mmux_libc_\FIELDNAME\_ref (mmux_libc_\STRUCTNAME\_t const * @var{\STRUCTNAME\_p})
+Setter and getter for the field @code{\FIELDNAME\} of @objtype{mmux_libc_\STRUCTNAME\_t}.
 @end deftypefun
 
 @end macro
 
-@macro MmuxStructDumper{STRUCT_NAME}
-@deftypefun bool mmux_libc_\STRUCT_NAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCT_NAME\_t const * @var{struct_p}, char const * @var{struct_name})
-Write to @var{fd} a description of the fields of the @MmuxCStruct{\STRUCT_NAME\} referenced by
+@macro MmuxStructDumper{STRUCTNAME}
+@deftypefun bool mmux_libc_\STRUCTNAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCTNAME\_t const * @var{struct_p}, char const * @var{struct_name})
+Write to @var{fd} a description of the fields of the @MmuxCStruct{\STRUCTNAME\} referenced by
 @var{struct_p}.  @var{struct_name} must be a pointer to an @asciiz{} string representing the name of
 the data structure used in the description; when @cnull{}: it defaults to @samp{struct
-\STRUCT_NAME\}.
+\STRUCTNAME\}.
 @end deftypefun
 
 @end macro
@@ -335,7 +335,7 @@ successful return @cfalse{}; otherwise return @ctrue{}.
 
 @deftypefn {Preprocessor Macro} bool mmux_libc_malloc (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{len})
 @deftypefnx {Function} bool mmux_libc_malloc_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{len})
-@Cinterface{malloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
+@MmuxCInterface{malloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
 *}.  Upon successful return: the pointer variable referenced by @var{P_p} is set to the pointer
 referencing the newly allocated memory block.
 
@@ -351,7 +351,7 @@ if (mmux_libc_malloc(&tm, sizeof(mmux_libc_tm_t))) @{
 
 @deftypefn {Preprocessor Macro} bool mmux_libc_calloc (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
 @deftypefnx Function bool mmux_libc_calloc_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
-@Cinterface{calloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
+@MmuxCInterface{calloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
 *}.  Upon successful return: the pointer variable referenced by @var{P_p} is set to the pointer
 referencing the newly allocated memory block.
 
@@ -367,7 +367,7 @@ if (mmux_libc_calloc(&P, 123, sizeof(mmux_double_t))) @{
 
 @deftypefn {Preprocessor Macro} bool mmux_libc_realloc (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{newlen})
 @deftypefnx Function bool mmux_libc_realloc_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{newlen})
-@Cinterface{realloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
+@MmuxCInterface{realloc}.  The macro just casts a pointer @var{P_p} of any type to @code{mmux_pointer_t
 *}.
 
 @itemize
@@ -395,7 +395,7 @@ if (mmux_libc_realloc(&tm, 4096)) @{
 
 @deftypefn {Preprocessor Macro} bool mmux_libc_reallocarray (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
 @deftypefnx Function bool mmux_libc_reallocarray_ (mmux_pointer_t * @var{P_p}, mmux_usize_t @var{item_num}, mmux_usize_t @var{item_len})
-@Cinterface{reallocarray}.  The macro just casts a pointer @var{P_p} of any type to
+@MmuxCInterface{reallocarray}.  The macro just casts a pointer @var{P_p} of any type to
 @code{mmux_pointer_t *}.  Upon successful return: the pointer variable referenced by @var{P_p} is
 set to the pointer referencing the newly allocated memory block.
 
@@ -413,7 +413,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 
 
 @deftypefun void mmux_libc_free (mmux_pointer_t @var{P})
-@Cinterface{free}.
+@MmuxCInterface{free}.
 @end deftypefun
 
 @c page
@@ -422,57 +422,57 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 
 
 @deftypefun void mmux_libc_memset (mmux_pointer_t ptr, mmux_uint8_t octet, mmux_usize_t @var{nbytes})
-@Cinterface{memset}.
+@MmuxCInterface{memset}.
 @end deftypefun
 
 
 @deftypefun void mmux_libc_memzero (mmux_pointer_t ptr, mmux_usize_t @var{nbytes})
-@Cinterface{memzero}.
+@MmuxCInterface{memzero}.
 @end deftypefun
 
 
 @deftypefun void mmux_libc_memcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
-@Cinterface{memcpy}.
+@MmuxCInterface{memcpy}.
 @end deftypefun
 
 
 @deftypefun mmux_pointer_t mmux_libc_mempcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
-@Cinterface{mempcpy}.
+@MmuxCInterface{mempcpy}.
 @end deftypefun
 
 
 @deftypefun mmux_pointer_t mmux_libc_memccpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_uint8_t octet, mmux_usize_t @var{nbytes})
-@Cinterface{memccpy}.
+@MmuxCInterface{memccpy}.
 @end deftypefun
 
 
 @deftypefun void mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
-@Cinterface{memmove}.
+@MmuxCInterface{memmove}.
 @end deftypefun
 
 
 @deftypefun mmux_sint_t mmux_libc_memcmp (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t @var{nbytes})
-@Cinterface{memcmp}.
+@MmuxCInterface{memcmp}.
 @end deftypefun
 
 
 @deftypefun mmux_pointer_t mmux_libc_memchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t @var{nbytes})
-@Cinterface{memchr}.
+@MmuxCInterface{memchr}.
 @end deftypefun
 
 
 @deftypefun mmux_pointer_t mmux_libc_rawmemchr (mmux_pointer_t ptr, mmux_octet_t octet)
-@Cinterface{rawmemchr}.
+@MmuxCInterface{rawmemchr}.
 @end deftypefun
 
 
 @deftypefun mmux_pointer_t mmux_libc_memrchr (mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t @var{nbytes})
-@Cinterface{memrchr}.
+@MmuxCInterface{memrchr}.
 @end deftypefun
 
 
 @deftypefun mmux_pointer_t mmux_libc_memmem (mmux_pointer_t haystack_ptr, mmux_usize_t haystack_len, mmux_pointer_t needle_ptr, mmux_usize_t needle_len)
-@Cinterface{memmem}.
+@MmuxCInterface{memmem}.
 @end deftypefun
 
 
@@ -493,7 +493,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section The @objtype{mmux_libc_timeval_t} type
 
 
-@MmuxStructOpaqueTypedef{timeval}
+@MmuxCStructOpaqueTypedef{timeval}
 @MmuxSetterGetter{timeval, tv_sec,  mmux_time_t}
 @MmuxSetterGetter{timeval, tv_usec, mmux_slong_t}
 @MmuxStructDumper{timeval}
@@ -524,7 +524,7 @@ To have more expressive names: in this @api{} we ``rename'' the fields @samp{tv_
 @samp{tv_nsec} of @MmuxCStruct{timespec} to @samp{ts_sec} and @samp{ts_nsec}.
 
 
-@MmuxStructOpaqueTypedef{timespec}
+@MmuxCStructOpaqueTypedef{timespec}
 @MmuxSetterGetter{timespec, ts_sec,  mmux_time_t}
 @MmuxSetterGetter{timespec, ts_nsec, mmux_slong_t}
 @MmuxStructDumper{timespec}
@@ -551,7 +551,7 @@ Aliases for the setter and getter of the field @code{ts_sec}.
 @section The @objtype{mmux_libc_tm_t} type
 
 
-@MmuxStructOpaqueTypedef{tm}
+@MmuxCStructOpaqueTypedef{tm}
 @MmuxSetterGetter{tm, tm_sec,         mmux_sint_t}
 @MmuxSetterGetter{tm, tm_min,         mmux_sint_t}
 @MmuxSetterGetter{tm, tm_hour,        mmux_sint_t}
@@ -590,12 +590,12 @@ tm_zone   = NULL
 
 
 @deftypefun mmux_time_t mmux_libc_time (void)
-@Cinterface{time}.
+@MmuxCInterface{time}.
 @end deftypefun
 
 
 @deftypefun {mmux_libc_tm_t *} mmux_libc_localtime (mmux_time_t @var{T})
-@Cinterface{localtime}.
+@MmuxCInterface{localtime}.
 
 @example
 mmux_time_t       T    = mmux_libc_time();
@@ -605,7 +605,7 @@ mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
 
 
 @deftypefun {mmux_libc_tm_t *} mmux_libc_gmtime (mmux_time_t @var{T})
-@Cinterface{gmtime}.
+@MmuxCInterface{gmtime}.
 
 @example
 mmux_time_t       T    = mmux_libc_time();
@@ -615,7 +615,7 @@ mmux_libc_tm_t *  tm_p = mmux_libc_gmtime(T);
 
 
 @deftypefun {char const *} mmux_libc_ctime (mmux_time_t @var{T})
-@Cinterface{ctime}.
+@MmuxCInterface{ctime}.
 
 @example
 mmux_time_t  T   = mmux_libc_time();
@@ -627,7 +627,7 @@ mmux_libc_dprintfou("%s\n", str);
 
 
 @deftypefun mmux_time_t mmux_libc_mktime (mmux_libc_tm_t * @var{tm_p})
-@Cinterface{mktime}.
+@MmuxCInterface{mktime}.
 
 @example
 mmux_time_t       T1   = mmux_libc_time();
@@ -638,7 +638,7 @@ mmux_time_t       T2   = mmux_libc_mktime(tm_p);
 
 
 @deftypefun mmux_time_t mmux_libc_timegm (mmux_libc_tm_t * @var{tm_p})
-@Cinterface{timegm}.
+@MmuxCInterface{timegm}.
 
 @example
 mmux_time_t       T1   = mmux_libc_time();
@@ -649,7 +649,7 @@ mmux_time_t       T2   = mmux_libc_timegm(tm_p);
 
 
 @deftypefun {char const *} mmux_libc_asctime (mmux_libc_tm_t * @var{tm_p})
-@Cinterface{asctime}.
+@MmuxCInterface{asctime}.
 
 @example
 mmux_time_t       T    = mmux_libc_time();
@@ -662,7 +662,7 @@ mmux_libc_dprintfou("%s\n", str);
 
 
 @deftypefun bool mmux_libc_strftime (char * @var{bufptr}, mmux_usize_t * @var{buflen_p}, char const * @var{template}, mmux_libc_tm_t * @var{tm_p})
-@Cinterface{strftime}.  Format an output string representation of the timestamp referenced by
+@MmuxCInterface{strftime}.  Format an output string representation of the timestamp referenced by
 @var{TM_P} and store it in the buffer referenced by @var{bufptr}.
 
 @itemize
@@ -693,7 +693,7 @@ mmux_libc_dprintfou("%s\n", bufstr);
 
 
 @deftypefun bool mmux_libc_strptime (char ** @var{first_unprocessed_after_timestamp_p}, char const * @var{input_string}, char const * @var{template}, mmux_libc_tm_t * @var{tm_p})
-@Cinterface{strptime}.
+@MmuxCInterface{strptime}.
 
 @example
 char const *      template     = "%a, %d %b %Y %H:%M:%S %z";
@@ -710,12 +710,12 @@ mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_p, NULL);
 
 
 @deftypefun mmux_uint_t mmux_libc_sleep (mmux_uint_t seconds)
-@Cinterface{sleep}.
+@MmuxCInterface{sleep}.
 @end deftypefun
 
 
 @deftypefun bool mmux_libc_nanosleep (mmux_libc_timespec_t * @var{requested_time}, mmux_libc_timespec_t * @var{remaining_time})
-@Cinterface{nanosleep}.
+@MmuxCInterface{nanosleep}.
 
 @example
 mmux_libc_timespec_t    requested_time;
@@ -750,7 +750,7 @@ if (mmux_libc_nanosleep(&requested_time, &remaining_time)) @{
 
 
 @deftypefun bool mmux_libc_sysconf (mmux_slong_t * @var{result_p}, mmux_sint_t @var{parameter})
-@Cinterface{sysconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__SC_*} constants.
+@MmuxCInterface{sysconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__SC_*} constants.
 
 @example
 mmux_slong_t    result;
@@ -765,7 +765,7 @@ if (mmux_libc_sysconf(&result, MMUX_LIBC__SC_PAGESIZE)) @{
 
 @deftypefun bool mmux_libc_confstr_size (mmux_usize_t * @var{result_required_nbytes_p}, mmux_sint_t @var{parameter})
 @deftypefunx bool mmux_libc_confstr (mmux_sint_t @var{parameter}, char * @var{bufptr}, mmux_usize_t @var{buflen})
-@Cinterface{pathconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__CS_*} constants.
+@MmuxCInterface{pathconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__CS_*} constants.
 
 @example
 mmux_sint_t     parameter = MMUX_LIBC__CS_PATH;
@@ -786,24 +786,24 @@ if (mmux_libc_confstr_size(&required_nbytes, parameter)) @{ /* error */ @}
 @section Configuration limits
 
 
-@MmuxStructOpaqueTypedef{rlimit}
-@MmuxSetterGetter{rlimit, rlim_cur}
-@MmuxSetterGetter{rlimit, rlim_max}
+@MmuxCStructOpaqueTypedef{rlimit}
+@MmuxSetterGetter{rlimit, rlim_cur, mmux_rlim_t}
+@MmuxSetterGetter{rlimit, rlim_max, mmux_rlim_t}
 @MmuxStructDumper{rlimit}
 
 
 @deftypefun bool mmux_libc_getrlimit (mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{rlimit_p})
-@Cinterface{getrlimit}.
+@MmuxCInterface{getrlimit}.
 @end deftypefun
 
 
 @deftypefun bool mmux_libc_setrlimit (mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{rlimit_p})
-@Cinterface{setrlimit}.
+@MmuxCInterface{setrlimit}.
 @end deftypefun
 
 
 @deftypefun bool mmux_libc_prlimit (mmux_pid_t @var{pid}, mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{new_rlimit_p}, mmux_libc_rlimit_t * @var{old_rlimit_p})
-@Cinterface{prlimit}.
+@MmuxCInterface{prlimit}.
 @end deftypefun
 
 @c page
