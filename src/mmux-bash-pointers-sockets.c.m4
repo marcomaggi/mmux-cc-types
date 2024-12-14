@@ -69,123 +69,123 @@ static void
 sa_family_to_asciiz_name(char const ** name_p, int sa_family)
 {
   switch (sa_family) {
-#if (defined MMUX_HAVE_AF_ALG)
-  case AF_ALG:
+#if (defined MMUX_HAVE_LIBC_AF_ALG)
+  case MMUX_LIBC_AF_ALG:
     *name_p = "AF_ALG";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_APPLETALK)
-  case AF_APPLETALK:
+#if (defined MMUX_HAVE_LIBC_AF_APPLETALK)
+  case MMUX_LIBC_AF_APPLETALK:
     *name_p = "AF_APPLETALK";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_AX25)
-  case AF_AX25:
+#if (defined MMUX_HAVE_LIBC_AF_AX25)
+  case MMUX_LIBC_AF_AX25:
     *name_p = "AF_AX25";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_BLUETOOTH)
-  case AF_BLUETOOTH:
+#if (defined MMUX_HAVE_LIBC_AF_BLUETOOTH)
+  case MMUX_LIBC_AF_BLUETOOTH:
     *name_p = "AF_BLUETOOTH";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_CAN)
-  case AF_CAN:
+#if (defined MMUX_HAVE_LIBC_AF_CAN)
+  case MMUX_LIBC_AF_CAN:
     *name_p = "AF_CAN";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_DECnet)
-  case AF_DECnet:
+#if (defined MMUX_HAVE_LIBC_AF_DECnet)
+  case MMUX_LIBC_AF_DECnet:
     *name_p = "AF_DECnet";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_IB)
-  case AF_IB:
+#if (defined MMUX_HAVE_LIBC_AF_IB)
+  case MMUX_LIBC_AF_IB:
     *name_p = "AF_IB";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_INET6)
-  case AF_INET6:
+#if (defined MMUX_HAVE_LIBC_AF_INET6)
+  case MMUX_LIBC_AF_INET6:
     *name_p = "AF_INET6";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_INET)
-  case AF_INET:
+#if (defined MMUX_HAVE_LIBC_AF_INET)
+  case MMUX_LIBC_AF_INET:
     *name_p = "AF_INET";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_IPX)
-  case AF_IPX:
+#if (defined MMUX_HAVE_LIBC_AF_IPX)
+  case MMUX_LIBC_AF_IPX:
     *name_p = "AF_IPX";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_KCM)
-  case AF_KCM:
+#if (defined MMUX_HAVE_LIBC_AF_KCM)
+  case MMUX_LIBC_AF_KCM:
     *name_p = "AF_KCM";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_KEY)
-  case AF_KEY:
+#if (defined MMUX_HAVE_LIBC_AF_KEY)
+  case MMUX_LIBC_AF_KEY:
     *name_p = "AF_KEY";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_LLC)
-  case AF_LLC:
+#if (defined MMUX_HAVE_LIBC_AF_LLC)
+  case MMUX_LIBC_AF_LLC:
     *name_p = "AF_LLC";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_LOCAL)
-  case AF_LOCAL:
+#if (defined MMUX_HAVE_LIBC_AF_LOCAL)
+  case MMUX_LIBC_AF_LOCAL:
     *name_p = "AF_LOCAL";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_MPLS)
-  case AF_MPLS:
+#if (defined MMUX_HAVE_LIBC_AF_MPLS)
+  case MMUX_LIBC_AF_MPLS:
     *name_p = "AF_MPLS";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_NETLINK)
-  case AF_NETLINK:
+#if (defined MMUX_HAVE_LIBC_AF_NETLINK)
+  case MMUX_LIBC_AF_NETLINK:
     *name_p = "AF_NETLINK";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_PACKET)
-  case AF_PACKET:
+#if (defined MMUX_HAVE_LIBC_AF_PACKET)
+  case MMUX_LIBC_AF_PACKET:
     *name_p = "AF_PACKET";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_PPPOX)
-  case AF_PPPOX:
+#if (defined MMUX_HAVE_LIBC_AF_PPPOX)
+  case MMUX_LIBC_AF_PPPOX:
     *name_p = "AF_PPPOX";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_RDS)
-  case AF_RDS:
+#if (defined MMUX_HAVE_LIBC_AF_RDS)
+  case MMUX_LIBC_AF_RDS:
     *name_p = "AF_RDS";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_TIPC)
-  case AF_TIPC:
+#if (defined MMUX_HAVE_LIBC_AF_TIPC)
+  case MMUX_LIBC_AF_TIPC:
     *name_p = "AF_TIPC";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_UNSPEC)
-  case AF_UNSPEC:
+#if (defined MMUX_HAVE_LIBC_AF_UNSPEC)
+  case MMUX_LIBC_AF_UNSPEC:
     *name_p = "AF_UNSPEC";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_VSOCK)
-  case AF_VSOCK:
+#if (defined MMUX_HAVE_LIBC_AF_VSOCK)
+  case MMUX_LIBC_AF_VSOCK:
     *name_p = "AF_VSOCK";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_X25)
-  case AF_X25:
+#if (defined MMUX_HAVE_LIBC_AF_X25)
+  case MMUX_LIBC_AF_X25:
     *name_p = "AF_X25";
     break;
 #endif
-#if (defined MMUX_HAVE_AF_XDP)
-  case AF_XDP:
+#if (defined MMUX_HAVE_LIBC_AF_XDP)
+  case MMUX_LIBC_AF_XDP:
     *name_p = "AF_XDP";
     break;
 #endif
@@ -200,44 +200,44 @@ static void
 sa_socktype_to_asciiz_name(char const ** name_p, int sa_socktype)
 {
   switch (sa_socktype) {
-#if (defined MMUX_HAVE_SOCK_STREAM)
-  case SOCK_STREAM:
+#if (defined MMUX_HAVE_LIBC_SOCK_STREAM)
+  case MMUX_LIBC_SOCK_STREAM:
     *name_p = "SOCK_STREAM";
     break;
 #endif
 
-#if (defined MMUX_HAVE_SOCK_DGRAM)
-  case SOCK_DGRAM:
+#if (defined MMUX_HAVE_LIBC_SOCK_DGRAM)
+  case MMUX_LIBC_SOCK_DGRAM:
     *name_p = "SOCK_DGRAM";
     break;
 #endif
 
-#if (defined MMUX_HAVE_SOCK_DCCP)
-  case SOCK_DCCP:
+#if (defined MMUX_HAVE_LIBC_SOCK_DCCP)
+  case MMUX_LIBC_SOCK_DCCP:
     *name_p = "SOCK_DCCP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_SOCK_PACKET)
-  case SOCK_PACKET:
+#if (defined MMUX_HAVE_LIBC_SOCK_PACKET)
+  case MMUX_LIBC_SOCK_PACKET:
     *name_p = "SOCK_PACKET";
     break;
 #endif
 
-#if (defined MMUX_HAVE_SOCK_RAW)
-  case SOCK_RAW:
+#if (defined MMUX_HAVE_LIBC_SOCK_RAW)
+  case MMUX_LIBC_SOCK_RAW:
     *name_p = "SOCK_RAW";
     break;
 #endif
 
-#if (defined MMUX_HAVE_SOCK_RDM)
-  case SOCK_RDM:
+#if (defined MMUX_HAVE_LIBC_SOCK_RDM)
+  case MMUX_LIBC_SOCK_RDM:
     *name_p = "SOCK_RDM";
     break;
 #endif
 
-#if (defined MMUX_HAVE_SOCK_SEQPACKET)
-  case SOCK_SEQPACKET:
+#if (defined MMUX_HAVE_LIBC_SOCK_SEQPACKET)
+  case MMUX_LIBC_SOCK_SEQPACKET:
     *name_p = "SOCK_SEQPACKET";
     break;
 #endif
@@ -253,164 +253,164 @@ static void
 sa_ipproto_to_asciiz_name(char const ** name_p, int sa_ipproto)
 {
   switch (sa_ipproto) {
-#if (defined MMUX_HAVE_IPPROTO_AH)
-  case IPPROTO_AH:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_AH)
+  case MMUX_LIBC_IPPROTO_AH:
     *name_p = "IPPROTO_AH";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_BEETPH)
-  case IPPROTO_BEETPH:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_BEETPH)
+  case MMUX_LIBC_IPPROTO_BEETPH:
     *name_p = "IPPROTO_BEETPH";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_COMP)
-  case IPPROTO_COMP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_COMP)
+  case MMUX_LIBC_IPPROTO_COMP:
     *name_p = "IPPROTO_COMP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_DCCP)
-  case IPPROTO_DCCP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_DCCP)
+  case MMUX_LIBC_IPPROTO_DCCP:
     *name_p = "IPPROTO_DCCP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_EGP)
-  case IPPROTO_EGP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_EGP)
+  case MMUX_LIBC_IPPROTO_EGP:
     *name_p = "IPPROTO_EGP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_ENCAP)
-  case IPPROTO_ENCAP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_ENCAP)
+  case MMUX_LIBC_IPPROTO_ENCAP:
     *name_p = "IPPROTO_ENCAP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_ESP)
-  case IPPROTO_ESP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_ESP)
+  case MMUX_LIBC_IPPROTO_ESP:
     *name_p = "IPPROTO_ESP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_ETHERNET)
-  case IPPROTO_ETHERNET:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_ETHERNET)
+  case MMUX_LIBC_IPPROTO_ETHERNET:
     *name_p = "IPPROTO_ETHERNET";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_GRE)
-  case IPPROTO_GRE:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_GRE)
+  case MMUX_LIBC_IPPROTO_GRE:
     *name_p = "IPPROTO_GRE";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_ICMP)
-  case IPPROTO_ICMP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_ICMP)
+  case MMUX_LIBC_IPPROTO_ICMP:
     *name_p = "IPPROTO_ICMP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_IDP)
-  case IPPROTO_IDP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_IDP)
+  case MMUX_LIBC_IPPROTO_IDP:
     *name_p = "IPPROTO_IDP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_IGMP)
-  case IPPROTO_IGMP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_IGMP)
+  case MMUX_LIBC_IPPROTO_IGMP:
     *name_p = "IPPROTO_IGMP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_IP)
-  case IPPROTO_IP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_IP)
+  case MMUX_LIBC_IPPROTO_IP:
     *name_p = "IPPROTO_IP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_IPIP)
-  case IPPROTO_IPIP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_IPIP)
+  case MMUX_LIBC_IPPROTO_IPIP:
     *name_p = "IPPROTO_IPIP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_IPV6)
-  case IPPROTO_IPV6:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_IPV6)
+  case MMUX_LIBC_IPPROTO_IPV6:
     *name_p = "IPPROTO_IPV6";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_MPLS)
-  case IPPROTO_MPLS:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_MPLS)
+  case MMUX_LIBC_IPPROTO_MPLS:
     *name_p = "IPPROTO_MPLS";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_MPTCP)
-  case IPPROTO_MPTCP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_MPTCP)
+  case MMUX_LIBC_IPPROTO_MPTCP:
     *name_p = "IPPROTO_MPTCP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_MTP)
-  case IPPROTO_MTP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_MTP)
+  case MMUX_LIBC_IPPROTO_MTP:
     *name_p = "IPPROTO_MTP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_PIM)
-  case IPPROTO_PIM:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_PIM)
+  case MMUX_LIBC_IPPROTO_PIM:
     *name_p = "IPPROTO_PIM";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_PUP)
-  case IPPROTO_PUP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_PUP)
+  case MMUX_LIBC_IPPROTO_PUP:
     *name_p = "IPPROTO_PUP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_RAW)
-  case IPPROTO_RAW:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_RAW)
+  case MMUX_LIBC_IPPROTO_RAW:
     *name_p = "IPPROTO_RAW";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_RSVP)
-  case IPPROTO_RSVP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_RSVP)
+  case MMUX_LIBC_IPPROTO_RSVP:
     *name_p = "IPPROTO_RSVP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_SCTP)
-  case IPPROTO_SCTP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_SCTP)
+  case MMUX_LIBC_IPPROTO_SCTP:
     *name_p = "IPPROTO_SCTP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_TCP)
-  case IPPROTO_TCP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_TCP)
+  case MMUX_LIBC_IPPROTO_TCP:
     *name_p = "IPPROTO_TCP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_TP)
-  case IPPROTO_TP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_TP)
+  case MMUX_LIBC_IPPROTO_TP:
     *name_p = "IPPROTO_TP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_UDP)
-  case IPPROTO_UDP:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_UDP)
+  case MMUX_LIBC_IPPROTO_UDP:
     *name_p = "IPPROTO_UDP";
     break;
 #endif
 
-#if (defined MMUX_HAVE_IPPROTO_UDPLITE)
-  case IPPROTO_UDPLITE:
+#if (defined MMUX_HAVE_LIBC_IPPROTO_UDPLITE)
+  case MMUX_LIBC_IPPROTO_UDPLITE:
     *name_p = "IPPROTO_UDPLITE";
     break;
 #endif
@@ -539,11 +539,11 @@ mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t host
   if (0 > rv) { return true; }
 
   switch (hostent_pointer->h_addrtype) {
-  case AF_INET:
+  case MMUX_LIBC_AF_INET:
     rv = dprintf(fd.value, " (AF_INET)\n");
     if (0 > rv) { return true; }
     break;
-  case AF_INET6:
+  case MMUX_LIBC_AF_INET6:
     rv = dprintf(fd.value, " (AF_INET6)\n");
     if (0 > rv) { return true; }
     break;
@@ -705,9 +705,9 @@ mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t so
   }
 
   switch (sockaddr_pointer->sa_family) {
-  case AF_INET:		return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t)   sockaddr_pointer, struct_name);
-  case AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
-  case AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t)   sockaddr_pointer, struct_name);
+  case MMUX_LIBC_AF_INET:		return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t)   sockaddr_pointer, struct_name);
+  case MMUX_LIBC_AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
+  case MMUX_LIBC_AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t)   sockaddr_pointer, struct_name);
   default:
     return false;
   }

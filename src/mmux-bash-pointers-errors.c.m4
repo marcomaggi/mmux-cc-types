@@ -41,7 +41,6 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strerror]]])
   {
     char *	errmsg = strerror(errnum);
 
-    if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errmsg);}
     return mmux_string_bind_to_bash_variable(argv[1], errmsg, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -52,8 +51,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_strerror]]],
 
 
 m4_define([[[MMUX_DEFINE_ERRNO_CASE]]],[[[
-#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
-  if ($1 == errnum) {
+#if ((defined MMUX_HAVE_LIBC_$1) && (1 == MMUX_HAVE_LIBC_$1))
+  if (MMUX_LIBC_$1 == errnum) {
     errsym = "$1";
   } else
 #endif
@@ -67,8 +66,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_errno_to_string]]])
   {
     char *	errsym = strerror(errnum);
 
-    if (0) {fprintf(stderr, "%s: errnum=%d, message=\"%s\"\n", __func__, errnum, errsym);}
-    /* We  use this  chain  of ifs  rather  than  a big  switch  because the  compile
+    /* We  use this  chain of  ifs  rather than  a  big switch  because the  compiler
        complains if  there are cases  with the same constant;  using ifs we  only get
        some warnings. */
     MMUX_DEFINE_ERRNO_CASE([[[EPERM]]])

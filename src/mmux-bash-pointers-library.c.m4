@@ -118,26 +118,27 @@ m4_define([[[MMUX_DEFINE_MINIMUM_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
-  mmux_bash_create_global_sint_variable("mmux_libc_$1",	$1, MMUX_BASH_BUILTIN_STRING_NAME);
+m4_define([[[MMUX_DEFINE_ERRNO_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_LIBC_$1) && (1 == MMUX_HAVE_LIBC_$1))
+  mmux_bash_create_global_sint_variable("mmux_libc_$1",	MMUX_LIBC_$1, MMUX_BASH_BUILTIN_STRING_NAME);
 #endif
 ]]])
 
-m4_define([[[MMUX_DEFINE_INT_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
-  mmux_bash_create_global_sint_variable("mmux_libc_$1",	$1, MMUX_BASH_BUILTIN_STRING_NAME);
+m4_define([[[MMUX_DEFINE_INT_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_LIBC_$1) && (1 == MMUX_HAVE_LIBC_$1))
+  mmux_bash_create_global_sint_variable("mmux_libc_$1",	MMUX_LIBC_$1, MMUX_BASH_BUILTIN_STRING_NAME);
 #endif
 ]]])
 
-m4_define([[[MMUX_DEFINE_ULONG_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_$1) && (1 == MMUX_HAVE_$1))
+m4_define([[[MMUX_DEFINE_ULONG_CONSTANT_VARIABLE]]],[[[#if ((defined MMUX_HAVE_LIBC_$1) && (1 == MMUX_HAVE_LIBC_$1))
 {
-  int requested_nbytes = mmux_ulong_sprint_size($1);
+  const mmux_ulong_t	value = MMUX_LIBC_$1;
+  mmux_sint_t		requested_nbytes = mmux_ulong_sprint_size(value);
 
   if (0 > requested_nbytes) {
     return MMUX_FAILURE;
   } else {
     char	str[requested_nbytes];
 
-    mmux_ulong_sprint(str, requested_nbytes, $1);
+    mmux_ulong_sprint(str, requested_nbytes, value);
     mmux_bash_create_global_string_variable("mmux_libc_$1", str, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }

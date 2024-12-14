@@ -329,7 +329,6 @@ m4_define([[[mmux_libc_VALUEOF_SO_OOBINLINE]]],			[[[@MMUX_VALUEOF_SO_OOBINLINE@
 m4_define([[[mmux_libc_VALUEOF_SO_RCVBUF]]],			[[[@MMUX_VALUEOF_SO_RCVBUF@]]])
 m4_define([[[mmux_libc_VALUEOF_SO_REUSEADDR]]],			[[[@MMUX_VALUEOF_SO_REUSEADDR@]]])
 m4_define([[[mmux_libc_VALUEOF_SO_SNDBUF]]],			[[[@MMUX_VALUEOF_SO_SNDBUF@]]])
-m4_define([[[mmux_libc_VALUEOF_SO_STYLE]]],			[[[@MMUX_VALUEOF_SO_STYLE@]]])
 m4_define([[[mmux_libc_VALUEOF_SO_TYPE]]],			[[[@MMUX_VALUEOF_SO_TYPE@]]])
 m4_define([[[mmux_libc_VALUEOF_INADDR_ANY]]],			[[[@MMUX_VALUEOF_INADDR_ANY@]]])
 m4_define([[[mmux_libc_VALUEOF_AI_ADDRCONFIG]]],		[[[@MMUX_VALUEOF_AI_ADDRCONFIG@]]])
