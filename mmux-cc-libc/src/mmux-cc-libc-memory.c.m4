@@ -121,10 +121,11 @@ mmux_libc_memccpy (mmux_pointer_t * result_p, mmux_pointer_t dst_ptr, mmux_point
   *result_p = memccpy(dst_ptr, src_ptr, octet, nbytes);
   return false;
 }
-void
+bool
 mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
 {
   memmove(dst_ptr, src_ptr, nbytes);
+  return false;
 }
 mmux_sint_t
 mmux_libc_memcmp (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)

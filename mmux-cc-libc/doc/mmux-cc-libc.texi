@@ -255,6 +255,10 @@ C language header files are installed under @code{$includedir}, for example:
 Unless otherwise specified, the functions that can fail return a @objtype{bool} value: @cfalse{}
 when successful; @ctrue{} when an error occurs.
 
+If a function may not be implemented by the system or the C library: the corresponding
+@value{PACKAGE} function is always implemented; its return value is a @objtype{bool} and it is
+always @cfalse{}; it sets @code{errno} to @samp{MMUX_LIBC_ENOSYS}.
+
 @c page
 @node overview results
 @section Results handling
@@ -446,7 +450,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @end deftypefun
 
 
-@deftypefun void mmux_libc_memmove (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memmove (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memmove}.
 @end deftypefun
 

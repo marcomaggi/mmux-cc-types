@@ -97,6 +97,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-libc.h.m4				\
 	src/mmux-cc-libc-internals.h.m4			\
 	src/mmux-cc-libc-constants.h.m4			\
+	src/mmux-cc-libc-functions.h.m4			\
 	src/mmux-cc-libc-file-descriptors.c.m4		\
 	src/mmux-cc-libc-library.c.m4			\
 	src/mmux-cc-libc-memory.c.m4			\
@@ -107,6 +108,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc.h				\
 	src/mmux-cc-libc-internals.h			\
 	src/mmux-cc-libc-constants.h			\
+	src/mmux-cc-libc-functions.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-library.c			\
 	src/mmux-cc-libc-memory.c			\
@@ -123,8 +125,10 @@ mmux_cc_libc_AGE		= @mmux_cc_libc_VERSION_INTERFACE_AGE@
 mmux_cc_libc_LINKER_VERSION	= -version-info $(mmux_cc_libc_CURRENT):$(mmux_cc_libc_REVISION):$(mmux_cc_libc_AGE)
 
 include_HEADERS				= \
-	src/mmux-cc-libc.h				\
-	src/mmux-cc-libc-config.h
+	src/mmux-cc-libc.h			\
+	src/mmux-cc-libc-config.h		\
+	src/mmux-cc-libc-constants.h		\
+	src/mmux-cc-libc-functions.h
 
 lib_LTLIBRARIES			= libmmux-cc-libc.la
 libmmux_cc_libc_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
@@ -136,6 +140,7 @@ libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc-config.h			\
 	src/mmux-cc-libc-internals.h			\
 	src/mmux-cc-libc-constants.h			\
+	src/mmux-cc-libc-functions.h			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-library.c			\
 	src/mmux-cc-libc-memory.c			\
@@ -153,9 +158,9 @@ src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
 src/%.$(OBJEXT): \
-	src/mmux-cc-libc.h			\
 	src/mmux-cc-libc-internals.h		\
 	src/mmux-cc-libc-constants.h		\
+	src/mmux-cc-libc-functions.h		\
 	src/mmux-cc-libc-config.h
 
 
