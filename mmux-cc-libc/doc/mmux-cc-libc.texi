@@ -416,7 +416,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @end deftypefn
 
 
-@deftypefun void mmux_libc_free (mmux_pointer_t @var{P})
+@deftypefun bool mmux_libc_free (mmux_pointer_t @var{P})
 @MmuxCInterface{free}.
 @end deftypefun
 
