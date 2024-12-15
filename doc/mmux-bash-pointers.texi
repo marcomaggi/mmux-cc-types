@@ -12088,6 +12088,30 @@ builtin.
 @MmuxDefineCFunctionBindToVariable{socklen}
 @MmuxDefineCFunctionBindToVariable{rlim}
 
+@c ------------------------------------------------------------------------
+
+@deftypefun mmux_bash_rv_t mmux_fd_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_file_descriptor_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+
+When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
+@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
+builtin.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_pointer_bind_to_bash_variable_or_free (char const * @var{variable_name}, mmux_pointer_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+
+When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
+@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
+builtin.
+
+If binding the string description of @var{pointer} fails: the memory referenced by the pointer
+itself is released with a call to @cfunc{mmux_libc_free}.
+@end deftypefun
+
 @c page
 @node shared library arrays
 @appendixsec Handling array variables
@@ -12412,6 +12436,11 @@ Call @cfunc{mmux_bash_pointers_set_ERRNO} to deal with the current value of the 
 otherwise return @samp{MMUX_FAILURE}.
 
 If an error occurs and @var{who} is not @cnull{}: print an error message to @stderr{}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_pointers_consume_errno_return_failure (char const * @var{who})
+Wrapper for @cfunc{mmux_bash_pointers_consume_errno} which always returns @samp{MMUX_FAILURE}.
 @end deftypefun
 
 @c page

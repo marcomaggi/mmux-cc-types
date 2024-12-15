@@ -69,10 +69,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   getuid getgid geteuid getegid getgroups getgrouplist getlogin cuserid
 			   getpwuid getpwnam setpwent getpwent endpwent pw_name pw_passwd pw_uid pw_gid pw_gecos pw_dir pw_shell
 			   getgrgid getgrnam setgrent getgrent endgrent gr_name gr_gid gr_mem
-			   timeval_calloc timeval_set timeval_ref timeval_seconds_set timeval_microseconds_set
-			   timeval_seconds_ref timeval_microseconds_ref timeval_dump
-			   timespec_calloc timespec_set timespec_ref timespec_seconds_set timespec_nanoseconds_set
-			   timespec_seconds_ref timespec_nanoseconds_ref timespec_dump
+			   timeval_calloc timeval_set timeval_ref tv_sec_set tv_sec_ref tv_usec_set tv_usec_ref timeval_dump
+			   timespec_calloc timespec_set timespec_ref ts_sec_set ts_sec_ref ts_nsec_set ts_nsec_ref timespec_dump
 			   tm_calloc tm_sec_set tm_sec_ref tm_min_set tm_min_ref tm_hour_set tm_hour_ref
 			   tm_mday_set tm_mday_ref tm_mon_set tm_mon_ref tm_year_set tm_year_ref
 			   tm_wday_set tm_wday_ref tm_yday_set tm_yday_ref tm_isdst_set tm_isdst_ref

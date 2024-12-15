@@ -425,17 +425,17 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Memory operations
 
 
-@deftypefun void mmux_libc_memset (mmux_pointer_t @var{ptr}, mmux_uint8_t @var{octet}, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memset (mmux_pointer_t @var{ptr}, mmux_uint8_t @var{octet}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memset}.
 @end deftypefun
 
 
-@deftypefun void mmux_libc_memzero (mmux_pointer_t @var{ptr}, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memzero (mmux_pointer_t @var{ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memzero}.
 @end deftypefun
 
 
-@deftypefun void mmux_libc_memcpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memcpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memcpy}.
 @end deftypefun
 
@@ -455,7 +455,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @end deftypefun
 
 
-@deftypefun mmux_sint_t mmux_libc_memcmp (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
+@deftypefun bool mmux_libc_memcmp (mmux_sint_t * @var{result_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{nbytes})
 @MmuxCInterface{memcmp}.
 @end deftypefun
 
@@ -502,19 +502,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @MmuxStructDumper{timeval}
 
 
-@deftypefun void mmux_libc_tv_seconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds})
-@deftypefunx mmux_time_t mmux_libc_tv_seconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
-Aliases for the setter and getter of the field @code{tv_sec}.
-@end deftypefun
-
-
-@deftypefun void mmux_libc_tv_microseconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_slong_t @var{microseconds})
-@deftypefunx mmux_slong_t mmux_libc_tv_microseconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
-Aliases for the setter and getter of the field @code{tv_usec}.
-@end deftypefun
-
-
-@deftypefun void mmux_libc_timeval_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds}, mmux_slong_t @var{microseconds})
+@deftypefun bool mmux_libc_timeval_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds}, mmux_slong_t @var{microseconds})
 Initialise the fields of a @MmuxCStruct{timeval}.
 @end deftypefun
 
@@ -533,20 +521,8 @@ To have more expressive names: in this @api{} we ``rename'' the fields @samp{tv_
 @MmuxStructDumper{timespec}
 
 
-@deftypefun void mmux_libc_timespec_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds}, mmux_slong_t @var{nanoseconds})
+@deftypefun bool mmux_libc_timespec_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds}, mmux_slong_t @var{nanoseconds})
 Initialise the fields of a @MmuxCStruct{timespec}.
-@end deftypefun
-
-
-@deftypefun void mmux_libc_ts_seconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_time_t @var{seconds})
-@deftypefunx mmux_time_t mmux_libc_ts_seconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
-Aliases for the setter and getter of the field @code{ts_sec}.
-@end deftypefun
-
-
-@deftypefun void mmux_libc_ts_nanoseconds_set (mmux_libc_timeval_t * @var{timeval_p}, mmux_slong_t @var{nanoseconds})
-@deftypefunx mmux_slong_t mmux_libc_ts_nanoseconds_ref (mmux_libc_timeval_t const * @var{timeval_p})
-Aliases for the setter and getter of the field @code{ts_sec}.
 @end deftypefun
 
 @c page
@@ -569,7 +545,7 @@ Aliases for the setter and getter of the field @code{ts_sec}.
 @MmuxStructDumper{tm}
 
 
-@deftypefun void mmux_libc_tm_reset (mmux_libc_tm_t * @var{TM_P})
+@deftypefun bool mmux_libc_tm_reset (mmux_libc_tm_t * @var{TM_P})
 Reset the fields to:
 
 @example
@@ -592,73 +568,96 @@ tm_zone   = NULL
 @section Handling time
 
 
-@deftypefun mmux_time_t mmux_libc_time (void)
+@deftypefun bool mmux_libc_time (mmuc_time_t * @var{result_p})
 @MmuxCInterface{time}.
+
+@example
+mmux_time_t       T;
+
+mmux_libc_time(&T);
+@end example
 @end deftypefun
 
 
-@deftypefun {mmux_libc_tm_t *} mmux_libc_localtime (mmux_time_t @var{T})
+@deftypefun bool mmux_libc_localtime (mmux_libc_tm_t * * @var{result_p}, mmux_time_t @var{T})
 @MmuxCInterface{localtime}.
 
 @example
-mmux_time_t       T    = mmux_libc_time();
-mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
+mmux_time_t       T;
+mmux_libc_tm_t *  tm_p;
+
+mmux_libc_time(&T);
+mmux_libc_localtime(&tm_p, T);
 @end example
 @end deftypefun
 
 
-@deftypefun {mmux_libc_tm_t *} mmux_libc_gmtime (mmux_time_t @var{T})
+@deftypefun bool mmux_libc_gmtime (mmux_libc_tm_t * * @var{result_p}, mmux_time_t @var{T})
 @MmuxCInterface{gmtime}.
 
 @example
-mmux_time_t       T    = mmux_libc_time();
-mmux_libc_tm_t *  tm_p = mmux_libc_gmtime(T);
+mmux_time_t       T;
+mmux_libc_tm_t *  tm_p;
+
+mmux_libc_time(&T);
+mmux_libc_gmtime(&tm_p, T);
 @end example
 @end deftypefun
 
 
-@deftypefun {char const *} mmux_libc_ctime (mmux_time_t @var{T})
+@deftypefun bool mmux_libc_ctime (char const * * @var{result_p}, mmux_time_t @var{T})
 @MmuxCInterface{ctime}.
 
 @example
-mmux_time_t  T   = mmux_libc_time();
-char const * str = mmux_libc_ctime(T);
+mmux_time_t     T;
+char const *    str;
 
+mmux_libc_time(&T);
+mmux_libc_ctime(&str, T);
 mmux_libc_dprintfou("%s\n", str);
 @end example
 @end deftypefun
 
 
-@deftypefun mmux_time_t mmux_libc_mktime (mmux_libc_tm_t * @var{tm_p})
+@deftypefun bool mmux_libc_mktime (mmux_time_t * @var{result_p}, mmux_libc_tm_t * @var{tm_p})
 @MmuxCInterface{mktime}.
 
 @example
-mmux_time_t       T1   = mmux_libc_time();
-mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T1);
-mmux_time_t       T2   = mmux_libc_mktime(tm_p);
+mmux_time_t       T1, T2;
+mmux_libc_tm_t *  tm_p;
+
+mmux_libc_time(&T1);
+mmux_libc_localtime(&tm_p, T1);
+mmux_libc_mktime(&T2, tm_p);
 @end example
 @end deftypefun
 
 
-@deftypefun mmux_time_t mmux_libc_timegm (mmux_libc_tm_t * @var{tm_p})
+@deftypefun bool mmux_libc_timegm (mmux_time_t * @var{result_p}, mmux_libc_tm_t * @var{tm_p})
 @MmuxCInterface{timegm}.
 
 @example
-mmux_time_t       T1   = mmux_libc_time();
-mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T1);
-mmux_time_t       T2   = mmux_libc_timegm(tm_p);
+mmux_time_t       T1, T2;
+mmux_libc_tm_t *  tm_p;
+
+mmux_libc_time(&T1);
+mmux_libc_localtime(&tm_p, T1);
+mmux_libc_timegm(&T2, tm_p);
 @end example
 @end deftypefun
 
 
-@deftypefun {char const *} mmux_libc_asctime (mmux_libc_tm_t * @var{tm_p})
+@deftypefun bool mmux_libc_asctime (char const * * @var{result_p}, mmux_libc_tm_t * @var{tm_p})
 @MmuxCInterface{asctime}.
 
 @example
-mmux_time_t       T    = mmux_libc_time();
-mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
-char const *      str  = mmux_libc_asctime(tm_p);
+mmux_time_t       T;
+mmux_libc_tm_t *  tm_p;
+char const *      str;
 
+mmux_libc_time(&T);
+mmux_libc_localtime(&tm_p, T);
+mmux_libc_asctime(&str, tm_p);
 mmux_libc_dprintfou("%s\n", str);
 @end example
 @end deftypefun
@@ -679,14 +678,16 @@ to the number of characters in the output string, including the terminating null
 @end itemize
 
 @example
-mmux_time_t       T    = mmux_libc_time();
-mmux_libc_tm_t *  tm_p = mmux_libc_localtime(T);
+mmux_time_t       T;
+mmux_libc_tm_t *  tm_p;
 
 #undef  IS_THIS_ENOUGH_QUESTION_MARK
 #define IS_THIS_ENOUGH_QUESTION_MARK	4096
 mmux_usize_t  buflen = IS_THIS_ENOUGH_QUESTION_MARK;
 char          bufstr[buflen];
 
+mmux_libc_time(&T);
+mmux_libc_localtime(&tm_p, T);
 if (mmux_libc_strftime(bufstr, &buflen, template, tm_p)) @{
   /* error */
 @}
@@ -701,9 +702,12 @@ mmux_libc_dprintfou("%s\n", bufstr);
 @example
 char const *      template     = "%a, %d %b %Y %H:%M:%S %z";
 char const *      input_string = "Fri, 15 Nov 2024 23:11:20 +0100";
-mmux_libc_tm_t *  tm_p         = calloc(1, sizeof(mmux_libc_tm_t));
+mmux_libc_tm_t *  tm_p;
 char *            first_unprocessed_after_timestamp;
 
+if (mmux_libc_calloc(&tm_p, 1, sizeof(mmux_libc_tm_t)) @{
+  /* error */
+@}
 if (mmux_libc_strptime(&first_unprocessed_after_timestamp, input_string, template, tm_p)) @{
   /* error */
 @}
@@ -712,7 +716,7 @@ mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_p, NULL);
 @end deftypefun
 
 
-@deftypefun mmux_uint_t mmux_libc_sleep (mmux_uint_t seconds)
+@deftypefun mmux_uint_t mmux_libc_sleep (mmux_uint_t * @var{leftover_result_p}, mmux_uint_t @var{seconds})
 @MmuxCInterface{sleep}.
 @end deftypefun
 

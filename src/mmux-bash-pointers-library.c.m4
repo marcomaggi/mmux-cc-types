@@ -67,8 +67,16 @@ mmux_bash_pointers_set_ERRNO (int errnum, char const * const who)
 mmux_bash_rv_t
 mmux_bash_pointers_consume_errno (char const * const who)
 {
-  mmux_bash_pointers_set_ERRNO(errno, who);
+  mmux_bash_rv_t	brv;
+
+  brv = mmux_bash_pointers_set_ERRNO(errno, who);
   errno = 0;
+  return brv;
+}
+mmux_bash_rv_t
+mmux_bash_pointers_consume_errno_return_failure (char const * const who)
+{
+  mmux_bash_pointers_consume_errno(who);
   return MMUX_FAILURE;
 }
 
@@ -154,13 +162,8 @@ m4_divert(0)m4_dnl
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
 {
-  if (mmux_cc_types_init_parsers_module()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising parsers module\n");
-    return MMUX_FAILURE;
-  }
-
-  if (mmux_cc_types_init_sprint_module ()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising sprinters module\n");
+  if (mmux_cc_types_init()) {
+    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising MMUX CC Types\n");
     return MMUX_FAILURE;
   }
 

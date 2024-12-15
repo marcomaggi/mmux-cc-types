@@ -156,9 +156,51 @@ $3
 
 m4_dnl $1 - mmux-cc-libc function call
 m4_define([[[MMUX_LIBC_FUNCALL]]],[[[if ($1) {
-  mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
+  return mmux_bash_pointers_consume_errno_return_failure(MMUX_BASH_BUILTIN_STRING_NAME);
 }]]])
+
+m4_dnl $1 - data structure type
+m4_dnl $2 - field name
+m4_dnl $3 - field type stem
+m4_dnl $4 - field value parser macro from Bash parameter
+m4_dnl
+m4_dnl Example:
+m4_dnl
+m4_dnl DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_tm_t]]],[[[tm_sec]]],
+m4_dnl       [[[sint]]], [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT]]])
+m4_dnl
+m4_define([[[DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$2_set]]])
+{
+  $1 *			struct_pointer;
+  mmux_$3_t		value;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(struct_pointer,	1);
+  $4(value,							2);
+  {
+    mmux_libc_$2_set(struct_pointer, value);
+    return MMUX_SUCCESS;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRUCT_POINTER MMUX_M4_TOUPPER($3)_VALUE"]]])
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$2_ref]]])
+{
+  char const *		varname;
+  $1 *			struct_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(struct_pointer,	2);
+  {
+    return mmux_$3_bind_to_bash_variable(varname, mmux_libc_$2_ref(struct_pointer), MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRUCT_POINTER MMUX_M4_TOUPPER($3)_VALUE"]]])
+]]])
 
 
 #### parsing arguments

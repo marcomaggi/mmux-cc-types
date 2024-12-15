@@ -1083,11 +1083,11 @@ function file-system-utimes-1.1 () {
 	mbfl_location_compensate( mmux_libc_timeval_calloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
 	mbfl_location_compensate( mmux_libc_timeval_calloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set  RR(ACCESS_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(ACCESS_TIMEVAL) 456 )
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(MODIFICATION_TIMEVAL) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(MODIFICATION_TIMEVAL) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set  RR(MODIFICATION_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(MODIFICATION_TIMEVAL) 456 )
 
 	mbfl_location_leave_when_failure( mmux_libc_utimes WW(PATHNAME) RR(ACCESS_TIMEVAL) RR(MODIFICATION_TIMEVAL) )
     }
@@ -1113,11 +1113,11 @@ function file-system-lutimes-1.1 () {
 	mbfl_location_compensate( mmux_libc_timeval_calloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
 	mbfl_location_compensate( mmux_libc_timeval_calloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set      RR(ACCESS_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(ACCESS_TIMEVAL) 456 )
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(MODIFICATION_TIMEVAL) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(MODIFICATION_TIMEVAL) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set      RR(MODIFICATION_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(MODIFICATION_TIMEVAL) 456 )
 
 	mbfl_location_leave_when_failure( mmux_libc_lutimes WW(PATHNAME) RR(ACCESS_TIMEVAL) RR(MODIFICATION_TIMEVAL) )
     }
@@ -1146,11 +1146,11 @@ function file-system-futimes-1.1 () {
 	mbfl_location_compensate( mmux_libc_timeval_calloc ACCESS_TIMEVAL, mmux_libc_free RR(ACCESS_TIMEVAL) )
 	mbfl_location_compensate( mmux_libc_timeval_calloc MODIFICATION_TIMEVAL, mmux_libc_free RR(MODIFICATION_TIMEVAL) )
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(ACCESS_TIMEVAL) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(ACCESS_TIMEVAL) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set      RR(ACCESS_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(ACCESS_TIMEVAL) 456 )
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(MODIFICATION_TIMEVAL) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(MODIFICATION_TIMEVAL) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set      RR(MODIFICATION_TIMEVAL) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(MODIFICATION_TIMEVAL) 456 )
 
 	mbfl_location_leave_when_failure( mmux_libc_futimes WW(FD) RR(ACCESS_TIMEVAL) RR(MODIFICATION_TIMEVAL) )
     }

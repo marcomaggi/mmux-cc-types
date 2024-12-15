@@ -119,7 +119,8 @@ typedef enum {
 
 m4_dnl $1 - type stem
 m4_define([[[DEFINE_PROTOS]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_bind_to_bash_variable (char const * variable_name, mmux_$1_t value, char const * who);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_$1_bind_to_bash_variable (char const * variable_name, mmux_$1_t value, char const * who)
+  __attribute__((__nonnull__(1)));
 ]]])]]])
 
 DEFINE_PROTOS([[[pointer]]])
@@ -194,7 +195,13 @@ DEFINE_PROTOS([[[socklen]]])
 DEFINE_PROTOS([[[rlim]]])
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_fd_bind_to_bash_variable (char const * fd_varname, mmux_libc_file_descriptor_t fd,
-								      char const * caller_name);
+								      char const * caller_name)
+  __attribute__((__nonnull__(1)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_pointer_bind_to_bash_variable_or_free (char const * pointer_varname,
+										   mmux_pointer_t pointer,
+										   char const * caller_name)
+  __attribute__((__nonnull__(1,2)));
 
 
 /** --------------------------------------------------------------------
@@ -354,6 +361,7 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_assoc_array_ref (mmux_bash_asso
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_set_ERRNO (int errnum, char const * who);
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_consume_errno (char const * who);
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_consume_errno_return_failure (char const * who);
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_pointers_error_parsing_argument_at_index \
     (char const * stemstr, char const * argstr, mmux_uint_t argidx, char const * caller_name)

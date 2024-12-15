@@ -120,10 +120,10 @@ function time-struct-timeval-3.1 () {
 	# No init values.
 	mbfl_location_compensate(mmux_libc_timeval_calloc TIMEVAL, mmux_libc_free RR(TIMEVAL))
 
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_set      RR(TIMEVAL)  RR(INIT_SECONDS))
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_set RR(TIMEVAL)  RR(INIT_MICROSECONDS))
-	mbfl_location_leave_when_failure( mmux_libc_timeval_seconds_ref      SECONDS      RR(TIMEVAL))
-	mbfl_location_leave_when_failure( mmux_libc_timeval_microseconds_ref MICROSECONDS RR(TIMEVAL))
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_set  RR(TIMEVAL)  RR(INIT_SECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_set RR(TIMEVAL)  RR(INIT_MICROSECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_tv_sec_ref  SECONDS      RR(TIMEVAL))
+	mbfl_location_leave_when_failure( mmux_libc_tv_usec_ref MICROSECONDS RR(TIMEVAL))
 
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
 	    dotest-equal RR(INIT_MICROSECONDS) RR(MICROSECONDS)
@@ -211,10 +211,10 @@ function time-struct-timespec-3.1 () {
 	# No init values.
 	mbfl_location_compensate(mmux_libc_timespec_calloc TIMESPEC, mmux_libc_free RR(TIMESPEC))
 
-	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_set      RR(TIMESPEC)  RR(INIT_SECONDS))
-	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_set RR(TIMESPEC)  RR(INIT_NANOSECONDS))
-	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_ref      SECONDS      RR(TIMESPEC))
-	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_ref NANOSECONDS RR(TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_ts_sec_set  RR(TIMESPEC) RR(INIT_SECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_ts_nsec_set RR(TIMESPEC) RR(INIT_NANOSECONDS))
+	mbfl_location_leave_when_failure( mmux_libc_ts_sec_ref  SECONDS      RR(TIMESPEC))
+	mbfl_location_leave_when_failure( mmux_libc_ts_nsec_ref NANOSECONDS  RR(TIMESPEC))
 
 	dotest-equal RR(INIT_SECONDS) RR(SECONDS) &&
 	    dotest-equal RR(INIT_NANOSECONDS) RR(NANOSECONDS)
@@ -499,8 +499,8 @@ function time-nanosleep-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_nanosleep RR(REQUESTED_TIMESPEC) RR(REMAINING_TIMESPEC) )
 
-	mbfl_location_leave_when_failure( mmux_libc_timespec_seconds_ref     SECONDS     RR(REMAINING_TIMESPEC) )
-	mbfl_location_leave_when_failure( mmux_libc_timespec_nanoseconds_ref NANOSECONDS RR(REMAINING_TIMESPEC) )
+	mbfl_location_leave_when_failure( mmux_libc_ts_sec_ref  SECONDS     RR(REMAINING_TIMESPEC) )
+	mbfl_location_leave_when_failure( mmux_libc_ts_nsec_ref NANOSECONDS RR(REMAINING_TIMESPEC) )
 
 	dotest-equal 0 RR(SECONDS) &&
 	    dotest-equal 0 RR(NANOSECONDS)

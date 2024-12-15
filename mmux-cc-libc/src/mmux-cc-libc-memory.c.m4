@@ -81,10 +81,11 @@ mmux_libc_reallocarray_ (mmux_pointer_t * P_p, mmux_usize_t item_num, mmux_usize
     return true;
   }
 }
-void
+bool
 mmux_libc_free (mmux_pointer_t P)
 {
   free(P);
+  return false;
 }
 
 
@@ -92,20 +93,23 @@ mmux_libc_free (mmux_pointer_t P)
  ** Common operations.
  ** ----------------------------------------------------------------- */
 
-void
+bool
 mmux_libc_memset (mmux_pointer_t ptr, mmux_uint8_t octet, mmux_usize_t len)
 {
   memset(ptr, octet, len);
+  return false;
 }
-void
+bool
 mmux_libc_memzero (mmux_pointer_t ptr, mmux_usize_t len)
 {
   memset(ptr, '\0', len);
+  return false;
 }
-void
+bool
 mmux_libc_memcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
 {
   memcpy(dst_ptr, src_ptr, nbytes);
+  return false;
 }
 bool
 mmux_libc_mempcpy (mmux_pointer_t * result_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
@@ -127,10 +131,11 @@ mmux_libc_memmove (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t 
   memmove(dst_ptr, src_ptr, nbytes);
   return false;
 }
-mmux_sint_t
-mmux_libc_memcmp (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
+bool
+mmux_libc_memcmp (mmux_sint_t * result_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t nbytes)
 {
-  return memcmp(dst_ptr, src_ptr, nbytes);
+  *result_p = memcmp(dst_ptr, src_ptr, nbytes);
+  return false;
 }
 bool
 mmux_libc_memchr (mmux_pointer_t * result_p, mmux_pointer_t ptr, mmux_octet_t octet, mmux_usize_t nbytes)

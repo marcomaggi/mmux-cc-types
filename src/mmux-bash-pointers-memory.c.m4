@@ -296,7 +296,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_memcmp]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,			4);
   {
-    int		rv = mmux_libc_memcmp(ptr2, ptr1, len);
+    mmux_sint_t		rv;
+
+    mmux_libc_memcmp(&rv, ptr2, ptr1, len);
     return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }

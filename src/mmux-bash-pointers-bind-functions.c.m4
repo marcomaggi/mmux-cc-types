@@ -133,5 +133,15 @@ mmux_fd_bind_to_bash_variable (char const * fd_varname, mmux_libc_file_descripto
 {
   return mmux_sint_bind_to_bash_variable(fd_varname, fd.value, caller_name);
 }
+mmux_bash_rv_t
+mmux_pointer_bind_to_bash_variable_or_free (char const * pointer_varname, mmux_pointer_t pointer, char const * caller_name)
+{
+  mmux_bash_rv_t	brv = mmux_pointer_bind_to_bash_variable(pointer_varname, pointer, caller_name);
+
+  if (MMUX_SUCCESS != brv) {
+    mmux_libc_free(pointer);
+  }
+  return brv;
+}
 
 /* end of file */
