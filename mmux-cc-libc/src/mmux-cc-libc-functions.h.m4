@@ -326,6 +326,9 @@ mmux_cc_libc_decl bool mmux_libc_confstr (mmux_sint_t parameter, char * bufptr, 
 mmux_cc_libc_decl bool mmux_libc_pathconf (mmux_slong_t * result_p, char const * pathname, mmux_sint_t parameter)
   __attribute__((__nonnull__(1,2)));
 
+mmux_cc_libc_decl bool mmux_libc_fpathconf (mmux_slong_t * result_p, mmux_libc_file_descriptor_t fd, mmux_sint_t parameter)
+  __attribute__((__nonnull__(1)));
+
 /* ------------------------------------------------------------------ */
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_cur,	mmux_rlim_t)

@@ -95,8 +95,8 @@ An alias for @MmuxCStruct{\STRUCTNAME\}.
 @end macro
 
 @macro MmuxSetterGetter{STRUCTNAME, FIELDNAME, FIELDTYPE}
-@deftypefun void mmux_libc_\FIELDNAME\_set (mmux_libc_\STRUCTNAME\_t * @var{\STRUCTNAME\_p}, \FIELDTYPE\ @var{\FIELDNAME\})
-@deftypefunx \FIELDTYPE\ mmux_libc_\FIELDNAME\_ref (mmux_libc_\STRUCTNAME\_t const * @var{\STRUCTNAME\_p})
+@deftypefun bool mmux_libc_\FIELDNAME\_set (mmux_libc_\STRUCTNAME\_t * @var{\STRUCTNAME\_p}, \FIELDTYPE\ @var{\FIELDNAME\})
+@deftypefunx bool mmux_libc_\FIELDNAME\_ref (\FIELDTYPE\ * @var{result_p}, mmux_libc_\STRUCTNAME\_t const * @var{\STRUCTNAME\_p})
 Setter and getter for the field @code{\FIELDNAME\} of @objtype{mmux_libc_\STRUCTNAME\_t}.
 @end deftypefun
 
@@ -772,7 +772,7 @@ if (mmux_libc_sysconf(&result, MMUX_LIBC__SC_PAGESIZE)) @{
 
 @deftypefun bool mmux_libc_confstr_size (mmux_usize_t * @var{result_required_nbytes_p}, mmux_sint_t @var{parameter})
 @deftypefunx bool mmux_libc_confstr (mmux_sint_t @var{parameter}, char * @var{bufptr}, mmux_usize_t @var{buflen})
-@MmuxCInterface{pathconf}.  @var{parameter} must be one of the @samp{MMUX_LIBC__CS_*} constants.
+@MmuxCInterface{confstr}.  @var{parameter} must be one of the @samp{MMUX_LIBC__CS_*} constants.
 
 @example
 mmux_sint_t     parameter = MMUX_LIBC__CS_PATH;
@@ -786,6 +786,16 @@ if (mmux_libc_confstr_size(&required_nbytes, parameter)) @{ /* error */ @}
   /* the result is in "value" */
 @}
 @end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pathconf (mmux_slong_t * @var{result_p}, char const * @var{pathname}, mmux_sint_t @var{parameter})
+@MmuxCInterface{pathconf}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fpathconf (mmux_slong_t * @var{result_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_sint_t @var{parameter})
+@MmuxCInterface{fpathconf}.
 @end deftypefun
 
 @c page

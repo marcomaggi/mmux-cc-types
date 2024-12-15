@@ -45,15 +45,17 @@ m4_dnl Usage example:
 m4_dnl
 m4_dnl   DEFINE_STRUCT_SETTER_GETTER(flock, l_type, mmux_sshort_t)
 m4_dnl
-m4_define([[[DEFINE_STRUCT_SETTER_GETTER]]],[[[void
+m4_define([[[DEFINE_STRUCT_SETTER_GETTER]]],[[[bool
 mmux_libc_$2_set (mmux_libc_$1_t * const P, $3 value)
 {
   P->$2 = value;
+  return false;
 }
-$3
-mmux_libc_$2_ref (mmux_libc_$1_t const * const P)
+bool
+mmux_libc_$2_ref ($3 * result_p, mmux_libc_$1_t const * const P)
 {
-  return P->$2;
+  *result_p = P->$2;
+  return false;
 }]]])
 
 m4_dnl $1 - data structure name
@@ -64,8 +66,8 @@ m4_dnl Usage example:
 m4_dnl
 m4_dnl
 m4_define([[[DEFINE_STRUCT_SETTER_GETTER_PROTOS]]],
-[[[mmux_cc_libc_decl void mmux_libc_$2_set (mmux_libc_$1_t * P, $3 value);
-mmux_cc_libc_decl $3 mmux_libc_$2_ref (mmux_libc_$1_t const * P);
+[[[mmux_cc_libc_decl bool mmux_libc_$2_set (mmux_libc_$1_t * P, $3 value);
+mmux_cc_libc_decl bool mmux_libc_$2_ref ($3 * result_p, mmux_libc_$1_t const * P);
 ]]])
 
 

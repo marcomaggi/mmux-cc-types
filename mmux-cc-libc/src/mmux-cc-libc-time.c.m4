@@ -83,25 +83,29 @@ mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timeval_t cons
  ** Struct timespec.
  ** ----------------------------------------------------------------- */
 
-void
+bool
 mmux_libc_ts_sec_set (mmux_libc_timespec_t * const P, mmux_time_t value)
 {
   P->tv_sec = value;
+  return false;
 }
-mmux_time_t
-mmux_libc_ts_sec_ref (mmux_libc_timespec_t const * const P)
+bool
+mmux_libc_ts_sec_ref (mmux_time_t * result_p, mmux_libc_timespec_t const * const P)
 {
-  return P->tv_sec;
+  *result_p = P->tv_sec;
+  return false;
 }
-void
+bool
 mmux_libc_ts_nsec_set (mmux_libc_timespec_t * const P, mmux_slong_t value)
 {
   P->tv_nsec = value;
+  return false;
 }
-mmux_slong_t
-mmux_libc_ts_nsec_ref (mmux_libc_timespec_t const * const P)
+bool
+mmux_libc_ts_nsec_ref (mmux_slong_t * result_p, mmux_libc_timespec_t const * const P)
 {
-  return P->tv_nsec;
+  *result_p = P->tv_nsec;
+  return false;
 }
 bool
 mmux_libc_timespec_set (mmux_libc_timespec_t * timespec_p, mmux_time_t seconds, mmux_slong_t nanoseconds)

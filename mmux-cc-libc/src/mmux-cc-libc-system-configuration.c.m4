@@ -92,6 +92,26 @@ mmux_libc_pathconf (mmux_slong_t * result_p, char const * pathname, mmux_sint_t 
   *result_p = result;
   return false;
 }
+bool
+mmux_libc_fpathconf (mmux_slong_t * result_p, mmux_libc_file_descriptor_t fd, mmux_sint_t parameter)
+{
+  mmux_slong_t	result;
+
+  errno = 0;
+  result = fpathconf(fd.value, parameter);
+  if (-1 == result) {
+    if (0 == errno) {
+      /* No error: the system does not impose a limit. */
+      goto no_error;
+    } else {
+      /* Error. */
+      return true;
+    }
+  }
+ no_error:
+  *result_p = result;
+  return false;
+}
 
 
 /** --------------------------------------------------------------------

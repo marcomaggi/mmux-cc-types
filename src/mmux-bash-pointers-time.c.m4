@@ -94,12 +94,16 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(microseconds_varname,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timeval_pointer,		3);
   {
-    mmux_time_t		seconds		= mmux_libc_tv_sec_ref(timeval_pointer);
-    mmux_slong_t	microseconds	= mmux_libc_tv_usec_ref(timeval_pointer);
-    mmux_bash_rv_t	rv;
+    mmux_time_t		seconds;
+    mmux_slong_t	microseconds;
 
-    rv = mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
-    if (MMUX_SUCCESS != rv) { return rv; }
+    mmux_libc_tv_sec_ref (&seconds,      timeval_pointer);
+    mmux_libc_tv_usec_ref(&microseconds, timeval_pointer);
+    {
+      mmux_bash_rv_t	brv = mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+
+      if (MMUX_SUCCESS != brv) { return brv; }
+    }
     return mmux_slong_bind_to_bash_variable(microseconds_varname, microseconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -119,9 +123,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    bool	rv = mmux_libc_timeval_dump(MMUX_LIBC_STDOU, timeval_pointer, struct_name);
-
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    MMUX_LIBC_FUNCALL(mmux_libc_timeval_dump(MMUX_LIBC_STDOU, timeval_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -194,12 +197,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(nanoseconds_varname,		2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	3);
   {
-    mmux_time_t		seconds		= mmux_libc_ts_sec_ref(timespec_pointer);
-    mmux_slong_t	nanoseconds	= mmux_libc_ts_nsec_ref(timespec_pointer);
-    mmux_bash_rv_t	rv;
+    mmux_time_t		seconds;
+    mmux_slong_t	nanoseconds;
 
-    rv = mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
-    if (MMUX_SUCCESS != rv) { return rv; }
+    mmux_libc_ts_sec_ref (&seconds,     timespec_pointer);
+    mmux_libc_ts_nsec_ref(&nanoseconds, timespec_pointer);
+    {
+      mmux_bash_rv_t	brv = mmux_time_bind_to_bash_variable(seconds_varname, seconds, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) { return brv; }
+    }
     return mmux_slong_bind_to_bash_variable(nanoseconds_varname, nanoseconds, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -216,12 +222,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_dump]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(timespec_pointer,	1);
   if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,		2);
   }
   {
-    bool	rv = mmux_libc_timespec_dump(MMUX_LIBC_STDOU, timespec_pointer, struct_name);
-
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    MMUX_LIBC_FUNCALL(mmux_libc_timespec_dump(MMUX_LIBC_STDOU, timespec_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -294,9 +299,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    bool	rv = mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_pointer, struct_name);
-
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    MMUX_LIBC_FUNCALL(mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],

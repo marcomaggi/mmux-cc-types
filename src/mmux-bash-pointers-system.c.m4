@@ -43,10 +43,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sysconf]]])
   {
     mmux_slong_t	value;
 
-    if (mmux_libc_sysconf(&value, parameter)) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_sysconf(&value, parameter));
     return mmux_slong_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -66,17 +63,13 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_confstr]]])
   {
     mmux_usize_t	required_nbytes;
 
-    if (mmux_libc_confstr_size(&required_nbytes, parameter)) { goto error; }
+    MMUX_LIBC_FUNCALL(mmux_libc_confstr_size(&required_nbytes, parameter));
     {
       char	value[required_nbytes];
 
-      if (mmux_libc_confstr(parameter, value, required_nbytes)) { goto error; }
+      MMUX_LIBC_FUNCALL(mmux_libc_confstr(parameter, value, required_nbytes));
       return mmux_string_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
     }
-
-  error:
-    mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-    return MMUX_FAILURE;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -97,10 +90,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pathconf]]])
   {
     mmux_slong_t	value;
 
-    if (mmux_libc_pathconf(&value, pathname, parameter)) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_pathconf(&value, pathname, parameter));
     return mmux_slong_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -112,16 +102,17 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fpathconf]]])
 {
-  char const *	value_varname;
-  mmux_sint_t	fd;
-  mmux_sint_t	parameter;
+  char const *			value_varname;
+  mmux_libc_file_descriptor_t	fd;
+  mmux_sint_t			parameter;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,				2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(parameter,		3);
   {
-    mmux_slong_t	value = fpathconf(fd, parameter);
+    mmux_slong_t	value;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_fpathconf(&value, fd, parameter));
     return mmux_slong_bind_to_bash_variable(value_varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -148,10 +139,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rlimit_calloc]]])
   {
     mmux_libc_rlimit_t *	rlimit_pointer;
 
-    if (mmux_libc_calloc(&rlimit_pointer, 1, sizeof(mmux_libc_rlimit_t))) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&rlimit_pointer, 1, sizeof(mmux_libc_rlimit_t)));
     mmux_libc_rlim_cur_set(rlimit_pointer, rlim_cur);
     mmux_libc_rlim_max_set(rlimit_pointer, rlim_max);
     return mmux_pointer_bind_to_bash_variable(rlimit_pointer_varname, rlimit_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -163,41 +151,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_RLIMIT_FIELD_SETTER_GETTER]]],[[[
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_set]]])
-{
-  mmux_libc_rlimit_t *	rlimit_pointer;
-  mmux_rlim_t		$1;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(rlimit_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_RLIM($1,			2);
-  {
-    mmux_libc_$1_set(rlimit_pointer, $1);
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER RLIMIT_POINTER MMUX_M4_TOUPPER($1)"]]])
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
-{
-  char const *		$1_varname;
-  mmux_libc_rlimit_t *	rlimit_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(rlimit_pointer,	2);
-  {
-    return mmux_rlim_bind_to_bash_variable($1_varname, mmux_libc_$1_ref(rlimit_pointer), MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER RLIMIT_POINTER MMUX_M4_TOUPPER($1)"]]])
-]]])
-
-DEFINE_RLIMIT_FIELD_SETTER_GETTER(rlim_cur)
-DEFINE_RLIMIT_FIELD_SETTER_GETTER(rlim_max)
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_rlimit_t,rlim_cur,rlim, [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_RLIM]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_rlimit_t,rlim_max,rlim, [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_RLIM]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -211,9 +166,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rlimit_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    bool	rv = mmux_libc_rlimit_dump(MMUX_LIBC_STDOU, rlimit_pointer, struct_name);
-
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    MMUX_LIBC_FUNCALL(mmux_libc_rlimit_dump(MMUX_LIBC_STDOU, rlimit_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -230,10 +184,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getrlimit]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(resource,			1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(rlimit_pointer,	2);
   {
-    if (mmux_libc_getrlimit(resource, rlimit_pointer)) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_getrlimit(resource, rlimit_pointer));
     return MMUX_SUCCESS;
   }
 }
@@ -251,10 +202,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setrlimit]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(resource,			1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(rlimit_pointer,	2);
   {
-    if (mmux_libc_setrlimit(resource, rlimit_pointer)) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_setrlimit(resource, rlimit_pointer));
     return MMUX_SUCCESS;
   }
 }
@@ -277,10 +225,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_PRLIMIT]]],[[[
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(new_rlimit_pointer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(old_rlimit_pointer,	4);
   {
-    if (mmux_libc_prlimit(pid, resource, new_rlimit_pointer, old_rlimit_pointer)) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_prlimit(pid, resource, new_rlimit_pointer, old_rlimit_pointer));
     return MMUX_SUCCESS;
   }
 ]]],[[[

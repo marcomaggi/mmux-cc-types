@@ -178,7 +178,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$2_set]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(struct_pointer,	1);
   $4(value,							2);
   {
-    mmux_libc_$2_set(struct_pointer, value);
+    MMUX_LIBC_FUNCALL(mmux_libc_$2_set(struct_pointer, value));
     return MMUX_SUCCESS;
   }
 }
@@ -194,7 +194,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$2_ref]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(struct_pointer,	2);
   {
-    return mmux_$3_bind_to_bash_variable(varname, mmux_libc_$2_ref(struct_pointer), MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_$3_t	value;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_$2_ref(&value, struct_pointer));
+    return mmux_$3_bind_to_bash_variable(varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
