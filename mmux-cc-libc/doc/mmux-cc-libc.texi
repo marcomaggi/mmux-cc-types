@@ -1402,6 +1402,13 @@ Pointer to a variable representing a parameter that can be input or output depen
 @end table
 @end deftypefun
 
+@c ------------------------------------------------------------------------
+
+@defvr {Iontl Command} MMUX_LIBC_SIOCATMARK
+Detect if the data received through a socket has reached the mark; @var{parameter_p} must reference
+a variable of type @objtype{mmux_sint_t}.
+@end defvr
+
 @c page
 @c ------------------------------------------------------------
 @c Appendices.

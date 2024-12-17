@@ -7014,7 +7014,7 @@ A parameter that can be input or output depending on the @var{COMMAND}.
 
 @c ------------------------------------------------------------------------
 
-@defvr {Fcntl Command} mmux_libc_SIOCATMARK
+@defvr {Iontl Command} mmux_libc_SIOCATMARK
 Detect if the data received through a socket has reached the mark; @var{PARAMETER} must be a shell
 variable name which will be bound to the exact integer provided by the call to @cfunc{ioctl}.
 @end defvr
