@@ -1065,29 +1065,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Copying file ranges.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
-static bool
-mmux_libc_copy_file_range (mmux_ssize_t * number_of_bytes_copied_p,
-			   mmux_libc_file_descriptor_t input_fd, mmux_sint64_t * input_position_p,
-			   mmux_libc_file_descriptor_t ouput_fd, mmux_sint64_t * ouput_position_p,
-			   mmux_usize_t number_of_bytes_to_copy, mmux_sint_t flags)
-{
-  mmux_ssize_t	number_of_bytes_copied = copy_file_range(input_fd.value, input_position_p,
-							 ouput_fd.value, ouput_position_p,
-							 number_of_bytes_to_copy, flags);
-
-  if (-1 != number_of_bytes_copied) {
-    *number_of_bytes_copied_p = number_of_bytes_copied;
-    return false;
-  } else {
-    return true;
-  }
-}
-]]])
-
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_copy_file_range]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
   char const *	assoc_array_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(assoc_array_varname,	1);
@@ -1099,13 +1078,13 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
     if (MMUX_SUCCESS != brv) {
       return brv;
     } else {
-      mmux_ssize_t			number_of_bytes_copied;
+      mmux_usize_t			number_of_bytes_copied;
       mmux_libc_file_descriptor_t	input_fd;
-      mmux_sint64_t			input_position;
-      mmux_sint64_t *			input_position_p;
+      mmux_sint64_t			input_position   = 0;
+      mmux_sint64_t *			input_position_p = NULL;
       mmux_libc_file_descriptor_t	ouput_fd;
-      mmux_sint64_t			ouput_position;
-      mmux_sint64_t *			ouput_position_p;
+      mmux_sint64_t			ouput_position   = 0;
+      mmux_sint64_t *			ouput_position_p = NULL;
       mmux_usize_t			number_of_bytes_to_copy;
       mmux_sint_t			flags;
 
@@ -1118,32 +1097,25 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	if (MMUX_SUCCESS != brv) {
 	  return brv;
 	} else {
-	  bool	true_when_error = mmux_sint_parse(&input_fd.value, assoc_array_value, NULL);
-
-	  if (true_when_error) {
+	  if (mmux_sint_parse(&input_fd.value, assoc_array_value, NULL)) {
 	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
-		    assoc_array_varname, assoc_array_key, "sint", assoc_array_value);
+				assoc_array_varname, assoc_array_key, "sint", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
 	}
       }
 
-      /* Extract from the array the value of "input_position". */
+      /* Extract from the array the value of "input_position".  If the input position
+	 is not set: this is fine.*/
       {
 	mmux_bash_assoc_array_key_t	assoc_array_key = "INPUT_POSITION";
 	char const *			assoc_array_value;
 
 	brv = mmux_bash_assoc_array_ref(assoc_array_variable, assoc_array_key, &assoc_array_value, NULL);
-	if (MMUX_SUCCESS != brv) {
-	  /* The input position is not set: this is fine. */
-	  input_position   = 0;
-	  input_position_p = NULL;
-	} else {
-	  bool	true_when_error = mmux_sint64_parse(&input_position, assoc_array_value, NULL);
-
-	  if (true_when_error) {
+	if (MMUX_SUCCESS == brv) {
+	  if (mmux_sint64_parse(&input_position, assoc_array_value, NULL)) {
 	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
-		    assoc_array_varname, assoc_array_key, "sint64", assoc_array_value);
+				assoc_array_varname, assoc_array_key, "sint64", assoc_array_value);
 	    return MMUX_FAILURE;
 	  } else {
 	    input_position_p = &input_position;
@@ -1160,32 +1132,25 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	if (MMUX_SUCCESS != brv) {
 	  return brv;
 	} else {
-	  bool	true_when_error = mmux_sint_parse(&ouput_fd.value, assoc_array_value, NULL);
-
-	  if (true_when_error) {
+	  if (mmux_sint_parse(&ouput_fd.value, assoc_array_value, NULL)) {
 	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
-		    assoc_array_varname, assoc_array_key, "sint", assoc_array_value);
+				assoc_array_varname, assoc_array_key, "sint", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
 	}
       }
 
-      /* Extract from the array the value of "ouput_position". */
+      /* Extract from the array the value of "ouput_position".  If the input position
+	 is not set: this is fine. */
       {
 	mmux_bash_assoc_array_key_t	assoc_array_key = "OUPUT_POSITION";
 	char const *			assoc_array_value;
 
 	brv = mmux_bash_assoc_array_ref(assoc_array_variable, assoc_array_key, &assoc_array_value, NULL);
-	if (MMUX_SUCCESS != brv) {
-	  /* The input position is not set: this is fine. */
-	  ouput_position   = 0;
-	  ouput_position_p = NULL;
-	} else {
-	  bool	true_when_error = mmux_sint64_parse(&ouput_position, assoc_array_value, NULL);
-
-	  if (true_when_error) {
+	if (MMUX_SUCCESS == brv) {
+	  if (mmux_sint64_parse(&ouput_position, assoc_array_value, NULL)) {
 	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
-		    assoc_array_varname, assoc_array_key, "sint64", assoc_array_value);
+				assoc_array_varname, assoc_array_key, "sint64", assoc_array_value);
 	    return MMUX_FAILURE;
 	  } else {
 	    ouput_position_p = &ouput_position;
@@ -1205,11 +1170,9 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  /* NOTE The  GLIBC documentation  in Texinfo  format states  the this  is a
 	     "ssize_t"; the manual page states that this is a "size_t".  We stay with
 	     the manual page.  (Marco Maggi; Dec 5, 2024) */
-	  bool	true_when_error = mmux_usize_parse(&number_of_bytes_to_copy, assoc_array_value, NULL);
-
-	  if (true_when_error) {
+	  if (mmux_usize_parse(&number_of_bytes_to_copy, assoc_array_value, NULL)) {
 	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
-		    assoc_array_varname, assoc_array_key, "usize", assoc_array_value);
+				assoc_array_varname, assoc_array_key, "usize", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
 	}
@@ -1225,105 +1188,86 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_COPY_FILE_RANGE]]],[[[
 	  /* The flags key is not set: this is fine. */
 	  flags = 0;
 	} else {
-	  /* NOTE The  GLIBC documentation  in Texinfo  format states  the this  is a
-	     "ssize_t"; the manual page states that this is a "size_t".  We stay with
-	     the manual page.  (Marco Maggi; Dec 5, 2024) */
-	  bool	true_when_error = mmux_sint_parse(&flags, assoc_array_value, NULL);
-
-	  if (true_when_error) {
+	  if (mmux_sint_parse(&flags, assoc_array_value, NULL)) {
 	    mmux_libc_dprintfer("%s: error parsing \"%s[%s]\": expected %s value, got: \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME,
-		    assoc_array_varname, assoc_array_key, "usize", assoc_array_value);
+				assoc_array_varname, assoc_array_key, "usize", assoc_array_value);
 	    return MMUX_FAILURE;
 	  }
 	}
       }
 
       {
-	bool	error_if_true = mmux_libc_copy_file_range(&number_of_bytes_copied,
-							  input_fd, input_position_p,
-							  ouput_fd, ouput_position_p,
-							  number_of_bytes_to_copy, flags);
+	MMUX_LIBC_FUNCALL(mmux_libc_copy_file_range(&number_of_bytes_copied,
+						    input_fd, input_position_p,
+						    ouput_fd, ouput_position_p,
+						    number_of_bytes_to_copy, flags));
 
-	if (error_if_true) {
-	  mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-	  return MMUX_FAILURE;
-	} else {
-	  /* Bind in the array the key "NUMBER_OF_BYTES_COPIED". */
-	  {
-	    mmux_sint_t		required_nbytes = mmux_sint_sprint_size(number_of_bytes_copied);
+	/* Bind in the array the key "NUMBER_OF_BYTES_COPIED". */
+	{
+	  mmux_sint_t		required_nbytes = mmux_usize_sprint_size(number_of_bytes_copied);
 
-	    if (0 > required_nbytes) {
+	  if (0 > required_nbytes) {
+	    mmux_libc_dprintfer("%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	    return MMUX_FAILURE;
+	  } else {
+	    mmux_bash_assoc_array_key_t	assoc_array_key = "NUMBER_OF_BYTES_COPIED";
+	    char			assoc_array_value[required_nbytes];
+
+	    if (mmux_usize_sprint(assoc_array_value, required_nbytes, number_of_bytes_copied)) {
 	      mmux_libc_dprintfer("%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 	      return MMUX_FAILURE;
 	    } else {
-	      mmux_bash_assoc_array_key_t	assoc_array_key = "NUMBER_OF_BYTES_COPIED";
-	      char				assoc_array_value[required_nbytes];
-	      bool	error_when_true = mmux_sint_sprint(assoc_array_value, required_nbytes, number_of_bytes_copied);
-
-	      if (error_when_true) {
-		mmux_libc_dprintfer("%s: error converting \"number_of_bytes_copied\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
-		return MMUX_FAILURE;
-	      } else {
-		brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
-		if (MMUX_SUCCESS != brv) { return brv; }
-	      }
+	      brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
 	    }
 	  }
+	}
 
-	  /* When required: update value bound to the key "INPUT_POSITION". */
-	  if (NULL != input_position_p) {
-	    mmux_sint_t		required_nbytes = mmux_sint64_sprint_size(*input_position_p);
+	/* When required: update value bound to the key "INPUT_POSITION". */
+	if (input_position_p) {
+	  mmux_sint_t		required_nbytes = mmux_sint64_sprint_size(*input_position_p);
 
-	    if (0 > required_nbytes) {
+	  if (0 > required_nbytes) {
+	    mmux_libc_dprintfer("%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	    return MMUX_FAILURE;
+	  } else {
+	    mmux_bash_assoc_array_key_t	assoc_array_key = "INPUT_POSITION";
+	    char			assoc_array_value[required_nbytes];
+
+	    if (mmux_sint_sprint(assoc_array_value, required_nbytes, *input_position_p)) {
 	      mmux_libc_dprintfer("%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 	      return MMUX_FAILURE;
 	    } else {
-	      mmux_bash_assoc_array_key_t	assoc_array_key = "INPUT_POSITION";
-	      char				assoc_array_value[required_nbytes];
-	      bool	error_when_true = mmux_sint_sprint(assoc_array_value, required_nbytes, *input_position_p);
-
-	      if (error_when_true) {
-		mmux_libc_dprintfer("%s: error converting \"input_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
-		return MMUX_FAILURE;
-	      } else {
-		brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
-		if (MMUX_SUCCESS != brv) { return brv; }
-	      }
+	      brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
 	    }
 	  }
+	}
 
-	  /* When required: update value bound to the key "OUPUT_POSITION". */
-	  if (NULL != ouput_position_p) {
-	    mmux_sint_t		required_nbytes = mmux_sint64_sprint_size(*ouput_position_p);
+	/* When required: update value bound to the key "OUPUT_POSITION". */
+	if (ouput_position_p) {
+	  mmux_sint_t		required_nbytes = mmux_sint64_sprint_size(*ouput_position_p);
 
-	    if (0 > required_nbytes) {
+	  if (0 > required_nbytes) {
+	    mmux_libc_dprintfer("%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	    return MMUX_FAILURE;
+	  } else {
+	    mmux_bash_assoc_array_key_t		assoc_array_key = "OUPUT_POSITION";
+	    char				assoc_array_value[required_nbytes];
+	    if (mmux_sint_sprint(assoc_array_value, required_nbytes, *ouput_position_p)) {
 	      mmux_libc_dprintfer("%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
 	      return MMUX_FAILURE;
 	    } else {
-	      mmux_bash_assoc_array_key_t	assoc_array_key = "OUPUT_POSITION";
-	      char				assoc_array_value[required_nbytes];
-	      bool	error_when_true = mmux_sint_sprint(assoc_array_value, required_nbytes, *ouput_position_p);
-
-	      if (error_when_true) {
-		mmux_libc_dprintfer("%s: error converting \"ouput_position\" to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
-		return MMUX_FAILURE;
-	      } else {
-		brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
-		if (MMUX_SUCCESS != brv) { return brv; }
-	      }
+	      brv = mmux_bash_assoc_array_bind(assoc_array_variable, assoc_array_key, assoc_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
 	    }
 	  }
-
-	  return MMUX_SUCCESS;
 	}
+
+	return MMUX_SUCCESS;
       }
     }
   }
-]]],[[[
-  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],

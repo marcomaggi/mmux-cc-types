@@ -879,4 +879,29 @@ mmux_libc_select (mmux_uint_t * nfds_ready, mmux_uint_t maximum_nfds_to_check,
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Copying file ranges.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_copy_file_range (mmux_usize_t * number_of_bytes_copied_p,
+			   mmux_libc_file_descriptor_t input_fd, mmux_sint64_t * input_position_p,
+			   mmux_libc_file_descriptor_t ouput_fd, mmux_sint64_t * ouput_position_p,
+			   mmux_usize_t number_of_bytes_to_copy, mmux_sint_t flags)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_COPY_FILE_RANGE]]],[[[
+  mmux_ssize_t	number_of_bytes_copied = copy_file_range(input_fd.value, input_position_p,
+							 ouput_fd.value, ouput_position_p,
+							 number_of_bytes_to_copy, flags);
+
+  if (0 <= number_of_bytes_copied) {
+    *number_of_bytes_copied_p = number_of_bytes_copied;
+    return false;
+  } else {
+    return true;
+  }
+]]])
+}
+
 /* end of file */

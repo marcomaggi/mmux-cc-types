@@ -1259,6 +1259,10 @@ Number of slots in the array.
 @section Copying ranges from file to file
 
 
+@deftypefun bool mmux_libc_copy_file_range (mmux_usize_t * @var{number_of_bytes_copied_p}, mmux_libc_file_descriptor_t @var{input_fd}, mmux_sint64_t * @var{input_position_p}, mmux_libc_file_descriptor_t @var{ouput_fd}, mmux_sint64_t * @var{ouput_position_p}, mmux_usize_t @var{number_of_bytes_to_copy}, mmux_sint_t @var{flags})
+@MmuxCInterface{copy_file_range}.
+@end deftypefun
+
 @c page
 @node fds flock
 @section File locks
@@ -1271,6 +1275,12 @@ Number of slots in the array.
 @MmuxSetterGetter{flock, l_len,    mmux_off_t}
 @MmuxSetterGetter{flock, l_pid,    mmux_libc_pid_t}
 @MmuxStructDumper{flock}
+
+@deftypefun bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** @var{str_p}, mmux_sint_t @var{flag})
+Identify @var{flag} as a value for the field @code{l_type} of @objtype{mmux_libc_flock_t}; store in
+the variable referenced by @var{str_p} a pointer to a statically allocated @asciiz{} string
+representing the name of the value.
+@end deftypefun
 
 @c page
 @node fds fun control

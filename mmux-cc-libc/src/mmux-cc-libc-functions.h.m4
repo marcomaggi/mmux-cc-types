@@ -335,8 +335,22 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_start,	mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_len,		mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_pid,		mmux_libc_pid_t)
 
-mmux_cc_libc_decl bool mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * flock_p, char const * struct_name);
-mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** const str_p, mmux_sint_t flag);
+mmux_cc_libc_decl bool mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * flock_p, char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** str_p, mmux_sint_t flag)
+  __attribute__((__nonnull__(1)));
+
+
+/** --------------------------------------------------------------------
+ ** Input/output: file locking API.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_copy_file_range (mmux_usize_t * number_of_bytes_copied_p,
+						  mmux_libc_file_descriptor_t input_fd, mmux_sint64_t * input_position_p,
+						  mmux_libc_file_descriptor_t ouput_fd, mmux_sint64_t * ouput_position_p,
+						  mmux_usize_t number_of_bytes_to_copy, mmux_sint_t flags)
+  __attribute__((__nonnull__(1)));
 
 
 /** --------------------------------------------------------------------
