@@ -1258,9 +1258,19 @@ Number of slots in the array.
 @node fds range-copying
 @section Copying ranges from file to file
 
+
 @c page
 @node fds flock
 @section File locks
+
+
+@MmuxCStructOpaqueTypedef{flock}
+@MmuxSetterGetter{flock, l_type,   mmux_sshort_t}
+@MmuxSetterGetter{flock, l_whence, mmux_sshort_t}
+@MmuxSetterGetter{flock, l_start,  mmux_off_t}
+@MmuxSetterGetter{flock, l_len,    mmux_off_t}
+@MmuxSetterGetter{flock, l_pid,    mmux_libc_pid_t}
+@MmuxStructDumper{flock}
 
 @c page
 @node fds fun control

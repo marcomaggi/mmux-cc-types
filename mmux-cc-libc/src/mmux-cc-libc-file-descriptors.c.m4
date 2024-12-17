@@ -408,7 +408,20 @@ DEFINE_STRUCT_SETTER_GETTER(flock,	l_type,		mmux_sshort_t)
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_whence,	mmux_sshort_t)
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_start,	mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER(flock,	l_len,		mmux_off_t)
-DEFINE_STRUCT_SETTER_GETTER(flock,	l_pid,		mmux_pid_t)
+
+bool
+mmux_libc_l_pid_set (mmux_libc_flock_t * const P, mmux_libc_pid_t value)
+{
+  P->l_pid = value.value;
+  return false;
+}
+bool
+mmux_libc_l_pid_ref (mmux_libc_pid_t * result_p, mmux_libc_flock_t const * const P)
+{
+  return mmux_libc_make_pid(result_p, P->l_pid);
+}
+
+/* ------------------------------------------------------------------ */
 
 bool
 mmux_libc_flag_to_symbol_struct_flock_l_type (char const * * const str_p, mmux_sint_t flag)

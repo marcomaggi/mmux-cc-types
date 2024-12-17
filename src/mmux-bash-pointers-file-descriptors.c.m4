@@ -1348,28 +1348,25 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_flock_calloc]]])
       mmux_sshort_t	l_whence;
       mmux_off_t	l_start;
       mmux_off_t	l_len;
-      mmux_pid_t	l_pid;
+      mmux_libc_pid_t	l_pid;
 
       MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(l_type,	2);
       MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(l_whence,	3);
       MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(l_start,	4);
       MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(l_len,		5);
-      MMUX_BASH_PARSE_BUILTIN_ARGNUM_PID(l_pid,		6);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PID(l_pid,	6);
 
-      mmux_libc_l_type_set	(&flock_struct, l_type);
-      mmux_libc_l_whence_set	(&flock_struct, l_whence);
-      mmux_libc_l_start_set	(&flock_struct, l_start);
-      mmux_libc_l_len_set	(&flock_struct, l_len);
-      mmux_libc_l_pid_set	(&flock_struct, l_pid);
+      MMUX_LIBC_FUNCALL(mmux_libc_l_type_set	(&flock_struct, l_type));
+      MMUX_LIBC_FUNCALL(mmux_libc_l_whence_set	(&flock_struct, l_whence));
+      MMUX_LIBC_FUNCALL(mmux_libc_l_start_set	(&flock_struct, l_start));
+      MMUX_LIBC_FUNCALL(mmux_libc_l_len_set	(&flock_struct, l_len));
+      MMUX_LIBC_FUNCALL(mmux_libc_l_pid_set	(&flock_struct, l_pid));
     }
 
     {
       mmux_libc_flock_t *	flock_pointer;
 
-      if (mmux_libc_calloc(&flock_pointer, 1, sizeof(mmux_libc_flock_t))) {
-	mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-	return MMUX_FAILURE;
-      }
+      MMUX_LIBC_FUNCALL(mmux_libc_calloc(&flock_pointer, 1, sizeof(mmux_libc_flock_t)));
       *flock_pointer = flock_struct;
       return mmux_pointer_bind_to_bash_variable(flock_pointer_varname, (mmux_pointer_t)flock_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
     }
@@ -1381,11 +1378,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_type,	sshort,	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
-DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_whence,	sshort,	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
-DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_start,	off,	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF]]])
-DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_len,	off,	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF]]])
-DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_pid,	pid,	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_PID]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_type,	sshort,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_whence,	sshort,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_start,	off,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_len,	off,		[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_flock_t,l_pid,	libc_pid,	[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PID]]])
 
 /* ------------------------------------------------------------------ */
 

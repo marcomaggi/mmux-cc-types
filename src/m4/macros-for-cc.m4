@@ -266,10 +266,10 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_POINTER]]],[[[MMUX_BASH_PARSE_BUILTIN_A
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[pointer]]],[[[$1]]],[[[$2]]])]]])
 
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER]]],[[[{
-  mmux_pointer_t  the_pointer;
-  bool            mmux_retval = mmux_pointer_parse(&the_pointer, argv[$2], NULL);
+  mmux_pointer_t  the_argument_value;
+  bool            mmux_retval = mmux_pointer_parse(&the_argument_value, argv[$2], NULL);
   if (false == mmux_retval) {
-    $1 = the_pointer;
+    $1 = the_argument_value;
   } else {
     return mmux_bash_pointers_error_parsing_argument_at_index("pointer", argv[$2], $2, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -333,10 +333,10 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT]]],[[[MMUX_BASH_PARSE_BUILTIN_A
 # $1 - name of the target variable, a value of type "mmux_libc_file_descriptor_t".
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD]]],[[[{
-mmux_sint_t	value;
+mmux_sint_t	the_argument_value;
 
-MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[sint]]],[[[value]]],[[[$2]]])
-MMUX_LIBC_FUNCALL(mmux_libc_make_fd(&$1, value));
+MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[sint]]],[[[the_argument_value]]],[[[$2]]])
+MMUX_LIBC_FUNCALL(mmux_libc_make_fd(&$1, the_argument_value));
 }]]])
 
 # --------------------------------------------------------------------
@@ -784,10 +784,10 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_PID]]],[[[MMUX_BASH_PARSE_BUILTIN_AR
 # $1 - name of the target variable
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PID]]],[[[{
-   mmux_pid_t	value;
+   mmux_pid_t	the_argument_value;
 
-   MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[pid]]],[[[value]]],[[[$2]]])
-   MMUX_LIBC_FUNCALL(mmux_libc_make_pid(&$1, value));
+   MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[pid]]],[[[the_argument_value]]],[[[$2]]])
+   MMUX_LIBC_FUNCALL(mmux_libc_make_pid(&$1, the_argument_value));
 }]]])
 
 # --------------------------------------------------------------------
@@ -803,10 +803,10 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UID]]],[[[MMUX_BASH_PARSE_BUILTIN_AR
 # $1 - name of the target variable
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_UID]]],[[[{
-   mmux_uid_t	value;
+   mmux_uid_t	the_argument_value;
 
-   MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[uid]]],[[[value]]],[[[$2]]])
-   MMUX_LIBC_FUNCALL(mmux_libc_make_uid(&$1, value));
+   MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[uid]]],[[[the_argument_value]]],[[[$2]]])
+   MMUX_LIBC_FUNCALL(mmux_libc_make_uid(&$1, the_argument_value));
 }]]])
 
 # --------------------------------------------------------------------
@@ -822,10 +822,10 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID]]],[[[MMUX_BASH_PARSE_BUILTIN_AR
 # $1 - name of the target variable
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_GID]]],[[[{
-   mmux_gid_t	value;
+   mmux_gid_t	the_argument_value;
 
-   MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[gid]]],[[[value]]],[[[$2]]])
-   MMUX_LIBC_FUNCALL(mmux_libc_make_gid(&$1, value));
+   MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[gid]]],[[[the_argument_value]]],[[[$2]]])
+   MMUX_LIBC_FUNCALL(mmux_libc_make_gid(&$1, the_argument_value));
 }]]])
 
 # --------------------------------------------------------------------
