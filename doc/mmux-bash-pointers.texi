@@ -5982,27 +5982,34 @@ the offset from the start of the file for the write operation; it must be compat
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@deffn Builtin mmux_libc_lseek @var{OFFVAR} @var{FD} @var{OFFSET} @var{WHENCE}
+@deffn Builtin mmux_libc_lseek @var{FD} @var{OFFSET_VAR} @var{WHENCE}
 Interface to the standard C function @cfunc{lseek}.  When successful: return true; otherwise set the
 shell variable @env{ERRNO} to a string representation of the @code{errno} code, then return false.
 
-The argument @var{OFFVAR} must be the name of a shell variable in which the return value of
-@cfunc{lseek} will be stored.
-
 The argument @var{FD} must be the string representation of a file descriptor.
 
-The argument @var{OFFSET} must be the string representation of an exact, non-negative, integer being
-the offset from the position selected by @var{WHENCE}; it must be compatible with the type
-@objtype{off}.
+The argument @var{OFFSET_VAR} must be the name of a shell variable:
+
+@itemize
+@item
+Upon calling this builtin: the shell variable must be bound to a string representing the offset from
+the position selected by @var{WHENCE}.  It must be compatible with the type @objtype{mmux_off_t}.
+
+@item
+Upon successfully returning from this builtin: the shell variable is bound to the new position,
+measured in bytes, from the beginning of the file.
+@end itemize
 
 The argument @var{WHENCE} must be the string representation of an exact, non-negative, integer being
 one of the constants @code{mmux_libc_SEEK_SET}, @code{mmux_libc_SEEK_CUR},
 @code{mmux_libc_SEEK_END}, and others if supported.
 
 @example
-declare -i RESULT_OFFSET ERRNO FD=$(gimme-an-fd)
+declare -i ERRNO
+declare -i FD=$(gimme-an-fd)
+declare -i OFFSET=123
 
-if ! mmux_libc_lseek RESULT_OFFSET $FD 123 $mmux_libc_SEEK_CUR
+if ! mmux_libc_lseek @RR{FD} OFFSET @RR{mmux_libc_SEEK_CUR}
 then # error
 fi
 @end example
@@ -6079,9 +6086,9 @@ declare READ_FD_SET WRIT_FD_SET EXCE_FD_SET
 declare TIMEOUT
 declare -i READY_FDS_NUM NFDS=@RR{mmux_libc_FD_SETSIZE}
 
-mmux_libc_fd_set_malloc READ_FD_SET
-mmux_libc_fd_set_malloc WRIT_FD_SET
-mmux_libc_fd_set_malloc EXCE_FD_SET
+mmux_libc_fd_set_calloc READ_FD_SET
+mmux_libc_fd_set_calloc WRIT_FD_SET
+mmux_libc_fd_set_calloc EXCE_FD_SET
 mmux_libc_timeval_calloc TIMEOUT 1 0
 @{
     declare -i READING_FD WRITING_FD
@@ -6123,7 +6130,7 @@ The size, measured in bytes, of values of type @objtype{fd_set}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_fd_set_malloc @var{FD_SET_POINTER_VAR}
+@deffn Builtin mmux_libc_fd_set_calloc @var{FD_SET_POINTER_VAR}
 Use @cfunc{malloc} to allocate a block of memory wide enough to contain a @objtype{fd_set} value;
 bind a string representation of the pointer referencing it to the shell variable whose name is
 @var{FD_SET_POINTER_VAR}.  The value @objtype{fs_set} is reset using the macro @cfunc{FD_ZERO}.
@@ -6132,7 +6139,7 @@ To release the memory we just apply @MmuxBuiltin{mmux_libc_free} or @cfunc{free}
 @end deffn
 
 
-@deffn Builtin mmux_libc_fd_set_malloc_triplet @var{READ_FD_SET_POINTER_VAR} @var{WRITE_FD_SET_POINTER_VAR} @var{EXCEPTION_FD_SET_POINTER_VAR}
+@deffn Builtin mmux_libc_fd_set_calloc_triplet @var{READ_FD_SET_POINTER_VAR} @var{WRITE_FD_SET_POINTER_VAR} @var{EXCEPTION_FD_SET_POINTER_VAR}
 Use @cfunc{malloc} to allocate a block of memory wide enough to contain three @objtype{fd_set}
 values, effectively allocating an array of three elements; then:
 
@@ -11819,6 +11826,7 @@ installed along with this package.  Refer to its documentation for details.
 * shared library version::      Version functions.
 * shared library retvals::      Return values of C language functions.
 * shared library bindings::     Binding values to variables.
+* shared library variables::    Handling variables.
 * shared library arrays::       Handling array variables.
 * shared library errors::       Handling errors.
 @end menu
@@ -11976,14 +11984,15 @@ Return value used to signal a failed function call.
 @cindex Assigning a global shell variable with C functions
 
 
+The following functions accept an argument @var{WHO}; when @var{who} is not @cnull{} and an error
+occurs: an error message is printed on @stderr{}, and @var{who} is used as ``subject'' that
+signalled the error.  @var{who} is usually the name of a builtin.
+
+
 @deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
 Assign @var{s_value} to the shell @var{variable_name}; the @asciiz{} string referenced by
 @var{s_value} is duplicated internally by Bash, so Bash does @strong{not} own the memory referenced
 by @var{s_value}.  When successful return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
-
-When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
-@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
-builtin.
 @end deftypefun
 
 
@@ -12009,10 +12018,6 @@ representation and bind that string to the shell variable.
 @deftypefun mmux_bash_rv_t mmux_\STEM\_bind_to_bash_variable (char const * @var{variable_name}, mmux_\STEM\_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
-
-When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
-@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
-builtin.
 @end deftypefun
 
 @end macro
@@ -12093,10 +12098,6 @@ builtin.
 @deftypefun mmux_bash_rv_t mmux_fd_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_file_descriptor_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
-
-When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
-@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
-builtin.
 @end deftypefun
 
 
@@ -12104,12 +12105,58 @@ builtin.
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
 
-When @var{who} is not @cnull{} and an error occurs: an error message is printed on @stderr{}, and
-@var{who} is used as ``subject'' that signalled the error.  @var{who} is usually the name of a
-builtin.
-
 If binding the string description of @var{pointer} fails: the memory referenced by the pointer
 itself is released with a call to @cfunc{mmux_libc_free}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_libc_pid_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_pid_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_libc_uid_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_uid_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_libc_gid_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_gid_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+@end deftypefun
+
+@c page
+@node shared library variables
+@appendixsec Handling variables
+
+
+Some of the following functions accept an argument @var{WHO}: it is either @cnull{} or a pointer to
+the the @asciiz{} string representing the name of the calling entity.  In case of failure and if
+@var{WHO} is not @cnull{}: the function prints an error message to @stderr{} describing the error;
+it uses the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the error;
+usually @var{WHO} references the name of a builtin.
+
+
+@deftypefun mmux_bash_rv_t mmux_bash_get_shell_variable_string_value (char const ** @var{variable_value_p}, char const * @var{variable_name}, char const * @var{who})
+Search the current context for an existent variable whose name is the @asciiz{} string referenced by
+@var{variable_name}; retrieve its value and store a pointer to it in the location referenced by
+@var{variable_value_p}.  When successful return @samp{MMUX_SUCCESS}; otherwise return
+@samp{MMUX_FAILURE}.
+
+@example
+char const *	var_name = "MY_VAR_NAME";
+char const *	var_value;
+mmux_bash_rv_t	brv;
+
+brv = mmux_bash_get_shell_variable_string_value(&var_value, var_name, NULL);
+if (MMUX_SUCCESS != brv) @{
+  /* error */
+@}
+
+/* use the string value "var_value" */
+@end example
 @end deftypefun
 
 @c page
@@ -12146,8 +12193,8 @@ if (MMUX_SUCCESS != rv) @{ /* handle the error */ @}
 Some of the following functions accept an argument @var{WHO}: it is either @cnull{} or a pointer to
 the the @asciiz{} string representing the name of the calling entity.  In case of failure and if
 @var{WHO} is not @cnull{}: the function prints an error message to @stderr{} describing the error;
-it uses use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
-error; usually @var{WHO} references the name of a builtin.
+it uses the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the error;
+usually @var{WHO} references the name of a builtin.
 
 
 @deftp {Opaque Pointer Typedef} mmux_bash_index_array_variable_t
@@ -12293,8 +12340,8 @@ if (MMUX_SUCCESS != rv) @{ /* handle the error */ @}
 Some of the following functions accept an argument @var{WHO}: it is either @cnull{} or a pointer to
 the the @asciiz{} string representing the name of the calling entity.  In case of failure and if
 @var{WHO} is not @cnull{}: the function prints an error message to @stderr{} describing the error;
-it uses use the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the
-error; usually @var{WHO} references the name of a builtin.
+it uses the @asciiz{} string referenced by @var{WHO} as name of the entity that signals the error;
+usually @var{WHO} references the name of a builtin.
 
 
 @deftp {Opaque Pointer Typedef} mmux_bash_assoc_array_variable_t

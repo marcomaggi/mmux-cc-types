@@ -39,9 +39,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpid]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pid_varname,	1);
   {
-    mmux_pid_t	rv = getpid();
+    mmux_libc_pid_t	result;
 
-    return mmux_pid_bind_to_bash_variable(pid_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_getpid(&result));
+    return mmux_libc_pid_bind_to_bash_variable(pid_varname, result, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -56,9 +57,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getppid]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pid_varname,	1);
   {
-    mmux_pid_t	rv = getppid();
+    mmux_libc_pid_t	result;
 
-    return mmux_pid_bind_to_bash_variable(pid_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_getppid(&result));
+    return mmux_libc_pid_bind_to_bash_variable(pid_varname, result, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -69,21 +71,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gettid]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_GETTID]]],[[[
-
   char const *	pid_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pid_varname,	1);
   {
-    mmux_pid_t	rv = gettid();
+    mmux_libc_pid_t	result;
 
-    return mmux_pid_bind_to_bash_variable(pid_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_gettid(&result));
+    return mmux_libc_pid_bind_to_bash_variable(pid_varname, result, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],

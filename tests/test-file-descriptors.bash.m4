@@ -134,7 +134,8 @@ function file-descriptors-read-write-1.1 () {
 
 	mmux_index_array_to_memory WW(BUFFER) UU(ORIGIN_DATA) WW(SIZE)
 
-	if ! mmux_libc_lseek OFFSET $FD 0 $mmux_libc_SEEK_SET
+	OFFSET=0
+	if ! mmux_libc_lseek $FD OFFSET $mmux_libc_SEEK_SET
 	then mbfl_location_leave_then_return_failure
 	fi
 
@@ -142,7 +143,8 @@ function file-descriptors-read-write-1.1 () {
 	then mbfl_location_leave_then_return_failure
 	fi
 
-	if ! mmux_libc_lseek OFFSET $FD 0 $mmux_libc_SEEK_SET
+	OFFSET=0
+	if ! mmux_libc_lseek $FD OFFSET $mmux_libc_SEEK_SET
 	then mbfl_location_leave_then_return_failure
 	fi
 
@@ -552,9 +554,9 @@ function file-descriptors-select-1.1 () {
 
 	dotest-unset-debug
 
-	mbfl_location_compensate(mmux_libc_fd_set_malloc READ_FD_SET,  mmux_libc_free RR(READ_FD_SET))
-	mbfl_location_compensate(mmux_libc_fd_set_malloc WRIT_FD_SET,  mmux_libc_free RR(WRIT_FD_SET))
-	mbfl_location_compensate(mmux_libc_fd_set_malloc EXEC_FD_SET,  mmux_libc_free RR(EXEC_FD_SET))
+	mbfl_location_compensate(mmux_libc_fd_set_calloc READ_FD_SET,  mmux_libc_free RR(READ_FD_SET))
+	mbfl_location_compensate(mmux_libc_fd_set_calloc WRIT_FD_SET,  mmux_libc_free RR(WRIT_FD_SET))
+	mbfl_location_compensate(mmux_libc_fd_set_calloc EXEC_FD_SET,  mmux_libc_free RR(EXEC_FD_SET))
 	mbfl_location_compensate(mmux_libc_timeval_calloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
 
 	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
@@ -588,7 +590,7 @@ function file-descriptors-select-1.2 () {
 
 	dotest-unset-debug
 
-	mbfl_location_compensate(mmux_libc_fd_set_malloc_triplet READ_FD_SET WRIT_FD_SET EXEC_FD_SET,  mmux_libc_free RR(READ_FD_SET))
+	mbfl_location_compensate(mmux_libc_fd_set_calloc_triplet READ_FD_SET WRIT_FD_SET EXEC_FD_SET,  mmux_libc_free RR(READ_FD_SET))
 	mbfl_location_compensate(mmux_libc_timeval_calloc TIMEOUT 1 0, mmux_libc_free RR(TIMEOUT))
 
 	mbfl_location_leave_when_failure( mmux_libc_pipe READING_FD WRITING_FD )
@@ -1408,15 +1410,15 @@ function file-descriptors-copy_file_range-1.2 () {
 
 	mbfl_location_enter
 	{
-	    declare INPUT_FD OUPUT_FD RESULT_OFFSET1 RESULT_OFFSET2
+	    declare INPUT_FD OUPUT_FD OFFSET1=10 OFFSET2=5
 	    declare -i FLAGS=$((mmux_libc_O_RDWR ))
 	    declare -i MODE=$((mmux_libc_S_IRUSR | mmux_libc_S_IWUSR))
 
 	    mbfl_location_compensate( mmux_libc_open INPUT_FD WW(FILENAME1) RR(FLAGS) RR(MODE), mmux_libc_close RR(INPUT_FD) )
 	    mbfl_location_compensate( mmux_libc_open OUPUT_FD WW(FILENAME2) RR(FLAGS) RR(MODE), mmux_libc_close RR(OUPUT_FD) )
 
-	    mbfl_location_leave_when_failure( mmux_libc_lseek RESULT_OFFSET1 RR(INPUT_FD) 10 RR(mmux_libc_SEEK_SET) )
-	    mbfl_location_leave_when_failure( mmux_libc_lseek RESULT_OFFSET2 RR(OUPUT_FD)  5 RR(mmux_libc_SEEK_SET) )
+	    mbfl_location_leave_when_failure( mmux_libc_lseek RR(INPUT_FD) OFFSET1 RR(mmux_libc_SEEK_SET) )
+	    mbfl_location_leave_when_failure( mmux_libc_lseek RR(OUPUT_FD) OFFSET2 RR(mmux_libc_SEEK_SET) )
 
 	    declare -A STUFF=([INPUT_FD]=RR(INPUT_FD)
 			      [OUPUT_FD]=RR(OUPUT_FD)

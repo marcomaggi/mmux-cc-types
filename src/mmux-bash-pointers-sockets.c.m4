@@ -705,7 +705,7 @@ mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t so
   }
 
   switch (sockaddr_pointer->sa_family) {
-  case MMUX_LIBC_AF_INET:		return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t)   sockaddr_pointer, struct_name);
+  case MMUX_LIBC_AF_INET:	return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t)   sockaddr_pointer, struct_name);
   case MMUX_LIBC_AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
   case MMUX_LIBC_AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t)   sockaddr_pointer, struct_name);
   default:
@@ -941,10 +941,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    mmux_libc_sockaddr_t	sockaddr_pointer = _sockaddr_pointer;
-    bool			rv = mmux_libc_sockaddr_dump(MMUX_LIBC_STDOU, sockaddr_pointer, struct_name);
+    mmux_libc_sockaddr_t		sockaddr_pointer = _sockaddr_pointer;
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_dump(fd, sockaddr_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1060,9 +1062,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_dump]]])
   }
   {
     mmux_libc_sockaddr_un_t	sockaddr_un_pointer = _sockaddr_un_pointer;
-    bool			rv = mmux_libc_sockaddr_un_dump(MMUX_LIBC_STDOU, sockaddr_un_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_un_dump(fd, sockaddr_un_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1265,9 +1269,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_dump]]])
   }
   {
     mmux_libc_sockaddr_in_t	sockaddr_in_pointer = _sockaddr_in_pointer;
-    bool			rv = mmux_libc_sockaddr_in_dump(MMUX_LIBC_STDOU, sockaddr_in_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_in_dump(fd, sockaddr_in_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1516,9 +1522,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_dump]]])
   }
   {
     mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = _sockaddr_in6_pointer;
-    bool			rv = mmux_libc_sockaddr_insix_dump(MMUX_LIBC_STDOU, sockaddr_in6_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_insix_dump(fd, sockaddr_in6_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1644,9 +1652,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_dump]]])
   }
   {
     mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
-    bool			rv = mmux_libc_addrinfo_dump(MMUX_LIBC_STDOU, addrinfo_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_addrinfo_dump(fd, addrinfo_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1714,9 +1724,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_dump]]])
   }
   {
     mmux_libc_hostent_t	hostent_pointer = _hostent_pointer;
-    bool		rv = mmux_libc_hostent_dump(MMUX_LIBC_STDOU, hostent_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_hostent_dump(fd, hostent_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1782,9 +1794,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_dump]]])
   }
   {
     mmux_libc_servent_t	servent_pointer = _servent_pointer;
-    bool		rv = mmux_libc_servent_dump(MMUX_LIBC_STDOU, servent_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_servent_dump(fd, servent_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1849,9 +1863,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_dump]]])
   }
   {
     mmux_libc_protoent_t	protoent_pointer = _protoent_pointer;
-    bool		rv = mmux_libc_protoent_dump(MMUX_LIBC_STDOU, protoent_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_protoent_dump(fd, protoent_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1917,9 +1933,11 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_dump]]])
   }
   {
     mmux_libc_netent_t	netent_pointer = _netent_pointer;
-    bool		rv = mmux_libc_netent_dump(MMUX_LIBC_STDOU, netent_pointer, struct_name);
+    mmux_libc_file_descriptor_t		fd;
 
-    return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_netent_dump(fd, netent_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],

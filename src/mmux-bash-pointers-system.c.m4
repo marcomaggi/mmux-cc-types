@@ -166,7 +166,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rlimit_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    MMUX_LIBC_FUNCALL(mmux_libc_rlimit_dump(MMUX_LIBC_STDOU, rlimit_pointer, struct_name));
+    mmux_libc_file_descriptor_t		fd;
+
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_rlimit_dump(fd, rlimit_pointer, struct_name));
     return MMUX_SUCCESS;
   }
 }
@@ -214,13 +217,12 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_prlimit]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_PRLIMIT]]],[[[
-  mmux_pid_t		pid;
+  mmux_libc_pid_t	pid;
   mmux_sint_t		resource;
   mmux_libc_rlimit_t *	new_rlimit_pointer;
   mmux_libc_rlimit_t *	old_rlimit_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(pid,				1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PID(pid,				1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(resource,				2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(new_rlimit_pointer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(old_rlimit_pointer,	4);
@@ -228,11 +230,6 @@ MMUX_BASH_CONDITIONAL_CODE([[[HAVE_PRLIMIT]]],[[[
     MMUX_LIBC_FUNCALL(mmux_libc_prlimit(pid, resource, new_rlimit_pointer, old_rlimit_pointer));
     return MMUX_SUCCESS;
   }
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],

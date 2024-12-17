@@ -123,7 +123,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timeval_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    MMUX_LIBC_FUNCALL(mmux_libc_timeval_dump(MMUX_LIBC_STDOU, timeval_pointer, struct_name));
+    mmux_libc_file_descriptor_t		fd;
+
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_timeval_dump(fd, timeval_pointer, struct_name));
     return MMUX_SUCCESS;
   }
 }
@@ -225,7 +228,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_timespec_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,		2);
   }
   {
-    MMUX_LIBC_FUNCALL(mmux_libc_timespec_dump(MMUX_LIBC_STDOU, timespec_pointer, struct_name));
+    mmux_libc_file_descriptor_t		fd;
+
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_timespec_dump(fd, timespec_pointer, struct_name));
     return MMUX_SUCCESS;
   }
 }
@@ -299,7 +305,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_tm_dump]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
   }
   {
-    MMUX_LIBC_FUNCALL(mmux_libc_tm_dump(MMUX_LIBC_STDOU, tm_pointer, struct_name));
+    mmux_libc_file_descriptor_t		fd;
+
+    mmux_libc_stdou(&fd);
+    MMUX_LIBC_FUNCALL(mmux_libc_tm_dump(fd, tm_pointer, struct_name));
     return MMUX_SUCCESS;
   }
 }

@@ -144,4 +144,20 @@ mmux_pointer_bind_to_bash_variable_or_free (char const * pointer_varname, mmux_p
   return brv;
 }
 
+mmux_bash_rv_t
+mmux_libc_pid_bind_to_bash_variable (char const * pid_varname, mmux_libc_pid_t pid, char const * caller_name)
+{
+  return mmux_sint_bind_to_bash_variable(pid_varname, pid.value, caller_name);
+}
+mmux_bash_rv_t
+mmux_libc_uid_bind_to_bash_variable (char const * uid_varname, mmux_libc_uid_t uid, char const * caller_name)
+{
+  return mmux_sint_bind_to_bash_variable(uid_varname, uid.value, caller_name);
+}
+mmux_bash_rv_t
+mmux_libc_gid_bind_to_bash_variable (char const * gid_varname, mmux_libc_gid_t gid, char const * caller_name)
+{
+  return mmux_sint_bind_to_bash_variable(gid_varname, gid.value, caller_name);
+}
+
 /* end of file */

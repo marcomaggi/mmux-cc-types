@@ -169,14 +169,14 @@ mmux_libc_setrlimit (mmux_sint_t resource, mmux_libc_rlimit_t * rlimit_p)
 
   return ((0 == rv)? false : true);
 }
-MMUX_CONDITIONAL_CODE([[[HAVE_PRLIMIT]]],[[[
 bool
-mmux_libc_prlimit (mmux_pid_t pid, mmux_sint_t resource, mmux_libc_rlimit_t * new_rlimit_p, mmux_libc_rlimit_t * old_rlimit_p)
+mmux_libc_prlimit (mmux_libc_pid_t pid, mmux_sint_t resource, mmux_libc_rlimit_t * new_rlimit_p, mmux_libc_rlimit_t * old_rlimit_p)
 {
-  int		rv = prlimit(pid, resource, new_rlimit_p, old_rlimit_p);
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_PRLIMIT]]],[[[
+  int		rv = prlimit(pid.value, resource, new_rlimit_p, old_rlimit_p);
 
   return ((0 == rv)? false : true);
-}
 ]]])
+}
 
 /* end of file */

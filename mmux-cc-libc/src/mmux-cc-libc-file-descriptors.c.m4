@@ -36,22 +36,40 @@
 static const mmux_libc_file_descriptor_t stdin_fd = { .value = 0 };
 static const mmux_libc_file_descriptor_t stdou_fd = { .value = 1 };
 static const mmux_libc_file_descriptor_t stder_fd = { .value = 2 };
+static const mmux_libc_file_descriptor_t at_fdcwd_fd = { .value = mmux_libc_VALUEOF_AT_FDCWD };
 
-mmux_libc_file_descriptor_t
-mmux_libc_stdin (void)
+bool
+mmux_libc_stdin (mmux_libc_file_descriptor_t * result_p)
 {
-  return stdin_fd;
+  *result_p = stdin_fd;
+  return false;
 }
-mmux_libc_file_descriptor_t
-mmux_libc_stdou (void)
+bool
+mmux_libc_stdou (mmux_libc_file_descriptor_t * result_p)
 {
-  return stdou_fd;
+  *result_p = stdou_fd;
+  return false;
 }
-mmux_libc_file_descriptor_t
-mmux_libc_stder (void)
+bool
+mmux_libc_stder (mmux_libc_file_descriptor_t * result_p)
 {
-  return stder_fd;
+  *result_p = stder_fd;
+  return false;
 }
+bool
+mmux_libc_at_fdcwd (mmux_libc_file_descriptor_t * result_p)
+{
+  *result_p = at_fdcwd_fd;
+  return false;
+}
+bool
+mmux_libc_make_fd (mmux_libc_file_descriptor_t * result_p, mmux_sint_t fd_num)
+{
+  result_p->value = fd_num;
+  return false;
+}
+
+/* ------------------------------------------------------------------ */
 
 bool
 mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
@@ -96,7 +114,7 @@ mmux_libc_dprintfer (char const * template, ...)
 /* ------------------------------------------------------------------ */
 
 bool
-mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_mode_t mode)
 {
   int	fdval = open(pathname, flags, mode);
 
@@ -116,7 +134,7 @@ mmux_libc_close (mmux_libc_file_descriptor_t fd)
 }
 bool
 mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_libc_file_descriptor_t dirfd,
-		  char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+		  char const * pathname, mmux_sint_t flags, mmux_mode_t mode)
 {
   int	fdval = openat(dirfd.value, pathname, flags, mode);
 
@@ -220,15 +238,15 @@ mmux_libc_dup2 (mmux_libc_file_descriptor_t old_fd, mmux_libc_file_descriptor_t 
 
   return ((-1 != rv)? false : true);
 }
-#ifdef HAVE_DUP3
 bool
 mmux_libc_dup3 (mmux_libc_file_descriptor_t old_fd, mmux_libc_file_descriptor_t new_fd, mmux_sint_t flags)
 {
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_DUP3]]],[[[
   int	rv = dup3(old_fd.value, new_fd.value, flags);
 
   return ((-1 != rv)? false : true);
+]]])
 }
-#endif
 
 /* ------------------------------------------------------------------ */
 
@@ -245,6 +263,14 @@ mmux_libc_pipe (mmux_libc_file_descriptor_t fds[2])
   } else {
     return true;
   }
+}
+bool
+mmux_libc_close_pipe (mmux_libc_file_descriptor_t fds[2])
+{
+  bool	rv1 = mmux_libc_close(fds[0]);
+  bool	rv2 = mmux_libc_close(fds[1]);
+
+  return ((rv1 || rv2)? true : false);
 }
 
 
@@ -683,9 +709,9 @@ mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_point
     mmux_pid_t	rv = fcntl(fd.value, command);
 
     if (-1 != rv) {
-      mmux_pid_t *	pid_p = parameter_p;
+      mmux_libc_pid_t *	pid_p = parameter_p;
 
-      *pid_p = rv;
+      pid_p->value = rv;
       return false;
     } else {
       return true;
@@ -695,8 +721,8 @@ mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_point
 
 #ifdef MMUX_HAVE_LIBC_F_SETOWN
   case MMUX_LIBC_F_SETOWN: {
-    mmux_pid_t *	pid_p = parameter_p;
-    mmux_sint_t		rv = fcntl(fd.value, command, *pid_p);
+    mmux_libc_pid_t *	pid_p = parameter_p;
+    mmux_sint_t		rv = fcntl(fd.value, command, pid_p->value);
 
     return ((-1 != rv)? false : true);
   }
@@ -778,5 +804,66 @@ mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_point
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Selecting file descriptors.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_FD_ZERO (mmux_libc_fd_set_t * fd_set_p)
+{
+  FD_ZERO(fd_set_p);
+  return false;
+}
+bool
+mmux_libc_FD_SET (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t * fd_set_p)
+{
+  FD_SET(fd.value, fd_set_p);
+  return false;
+}
+bool
+mmux_libc_FD_CLR (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t * fd_set_p)
+{
+  FD_CLR(fd.value, fd_set_p);
+  return false;
+}
+bool
+mmux_libc_FD_ISSET (bool * result_p, mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t const * fd_set_p)
+{
+  *result_p = FD_ISSET(fd.value, fd_set_p);
+  return false;
+}
+bool
+mmux_libc_select (mmux_uint_t * nfds_ready, mmux_uint_t maximum_nfds_to_check,
+		  mmux_libc_fd_set_t * read_fd_set_p, mmux_libc_fd_set_t * write_fd_set_p, mmux_libc_fd_set_t * except_fd_set_p,
+		  mmux_libc_timeval_t * timeout_p)
+{
+  mmux_libc_fd_set_t	default_read_fd_set;
+  mmux_libc_fd_set_t	default_write_fd_set;
+  mmux_libc_fd_set_t	default_except_fd_set;
+
+  if (NULL == read_fd_set_p) {
+    FD_ZERO(&default_read_fd_set);
+    read_fd_set_p = &default_read_fd_set;
+  }
+  if (NULL == write_fd_set_p) {
+    FD_ZERO(&default_write_fd_set);
+    write_fd_set_p = &default_write_fd_set;
+  }
+  if (NULL == except_fd_set_p) {
+    FD_ZERO(&default_except_fd_set);
+    except_fd_set_p = &default_except_fd_set;
+  }
+  {
+    mmux_sint_t		rv = select(maximum_nfds_to_check, read_fd_set_p, write_fd_set_p, except_fd_set_p, timeout_p);
+
+    if (-1 < rv) {
+      *nfds_ready = rv;
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
 
 /* end of file */

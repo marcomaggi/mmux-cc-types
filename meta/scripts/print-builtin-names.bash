@@ -48,8 +48,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   memset memzero memcpy mempcpy memccpy memmove memcmp memchr memrchr memcpy_from_bash_string
 			   memmem rawmemchr
 			   strerror errno_to_string
-			   open openat close read write pread pwrite lseek dup dup2 fcntl ioctl pipe
-			   fd_set_malloc fd_set_malloc_triplet FD_ZERO FD_SET FD_CLR FD_ISSET select
+			   open openat close read write pread pwrite lseek dup dup2 dup3 fcntl ioctl pipe
+			   fd_set_calloc fd_set_calloc_triplet FD_ZERO FD_SET FD_CLR FD_ISSET select
 			   iovec_calloc iovec_array_calloc iov_base_ref iov_base_set iov_len_ref iov_len_set iovec_dump
 			   readv writev preadv pwritev preadv2 pwritev2 copy_file_range
 			   flock_calloc flock_dump l_type_set l_type_ref l_whence_set l_whence_ref
@@ -103,8 +103,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   getaddrinfo freeaddrinfo getnameinfo
 			   bind getsockname socket shutdown socketpair connect listen accept getpeername
 			   send recv sendto recvfrom getsockopt setsockopt
-			   getpid getppid
-			   sysconf confstr pathconf fpathconf setrlimit getrlimit
+			   getpid getppid gettid
+			   sysconf confstr pathconf fpathconf setrlimit getrlimit prlimit
 			   rlimit_calloc rlimit_dump rlim_cur_set rlim_cur_ref rlim_max_set rlim_max_ref)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
@@ -343,7 +343,7 @@ function have_cfunc () {
 {
     for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
 			strchrnul basename dirname canonicalize_file_name \
-			renameat2 group_member dup3 accept4 gettid prlimit
+			renameat2 group_member accept4
     do
 	if have_cfunc "$ITEM"
 	then

@@ -248,25 +248,25 @@ extern "C" {
  ** ----------------------------------------------------------------- */
 
 typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
+typedef struct mmux_libc_pid_t             { mmux_pid_t  value; } mmux_libc_pid_t;
+typedef struct mmux_libc_uid_t             { mmux_uid_t  value; } mmux_libc_uid_t;
+typedef struct mmux_libc_gid_t             { mmux_gid_t  value; } mmux_libc_gid_t;
 
 typedef struct timeval		mmux_libc_timeval_t;
-
 typedef struct timespec		mmux_libc_timespec_t;
-
 typedef struct tm		mmux_libc_tm_t;
-
 typedef struct iovec		mmux_libc_iovec_t;
+typedef struct flock		mmux_libc_flock_t;
+typedef fd_set			mmux_libc_fd_set_t;
+typedef struct rlimit		mmux_libc_rlimit_t;
 
 typedef struct mmux_libc_iovec_array_t {
   mmux_libc_iovec_t *	iova_pointer;
   mmux_usize_t		iova_length;
 } mmux_libc_iovec_array_t;
 
-typedef struct flock		mmux_libc_flock_t;
-
-typedef fd_set			mmux_libc_fd_set_t;
-
-typedef struct rlimit		mmux_libc_rlimit_t;
+typedef mmux_libc_file_descriptor_t	mmux_libc_fd_t;
+typedef mmux_libc_file_descriptor_t	mmux_libc_network_socket_t;
 
 
 /** --------------------------------------------------------------------

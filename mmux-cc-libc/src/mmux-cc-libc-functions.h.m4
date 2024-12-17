@@ -207,13 +207,20 @@ mmux_cc_libc_decl bool mmux_libc_nanosleep (mmux_libc_timespec_t * requested_tim
  ** Input/output: file descriptor core API.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdin (void);
-mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stdou (void);
-mmux_cc_libc_decl mmux_libc_file_descriptor_t mmux_libc_stder (void);
+mmux_cc_libc_decl bool mmux_libc_make_fd (mmux_libc_file_descriptor_t * result_p, mmux_sint_t fd_num)
+  __attribute__((__nonnull__(1)));
 
-#define MMUX_LIBC_STDIN		(mmux_libc_stdin())
-#define MMUX_LIBC_STDOU		(mmux_libc_stdou())
-#define MMUX_LIBC_STDER		(mmux_libc_stder())
+mmux_cc_libc_decl bool mmux_libc_stdin (mmux_libc_file_descriptor_t * result_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_stdou (mmux_libc_file_descriptor_t * result_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_stder (mmux_libc_file_descriptor_t * result_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_at_fdcwd (mmux_libc_file_descriptor_t * result_p)
+  __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
   __attribute__((__nonnull__(2)));
@@ -222,11 +229,11 @@ mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...)
 mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_mode_t mode)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_libc_file_descriptor_t dirfd,
-					 char const * pathname, mmux_sint_t flags, mmux_sint_t mode)
+					 char const * pathname, mmux_sint_t flags, mmux_mode_t mode)
   __attribute__((__nonnull__(1,3)));
 
 mmux_cc_libc_decl bool mmux_libc_close (mmux_libc_file_descriptor_t fd);
@@ -258,6 +265,32 @@ mmux_cc_libc_decl bool mmux_libc_dup3 (mmux_libc_file_descriptor_t old_fd, mmux_
 
 mmux_cc_libc_decl bool mmux_libc_pipe (mmux_libc_file_descriptor_t fds[2]);
 
+mmux_cc_libc_decl bool mmux_libc_close_pipe (mmux_libc_file_descriptor_t fds[2]);
+
+
+/** --------------------------------------------------------------------
+ ** Input/output: selecting file descriptors.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_FD_ZERO  (mmux_libc_fd_set_t * fd_set_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_FD_SET   (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t * fd_set_p)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_FD_CLR   (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t * fd_set_p)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_FD_ISSET (bool * result_p, mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t const * fd_set_p)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_select (mmux_uint_t * nfds_ready,
+					 mmux_uint_t maximum_nfds_to_check,
+					 mmux_libc_fd_set_t * read_fd_set_p,
+					 mmux_libc_fd_set_t * write_fd_set_p,
+					 mmux_libc_fd_set_t * except_fd_set_p,
+					 mmux_libc_timeval_t * timeout_p);
+
 
 /** --------------------------------------------------------------------
  ** Input/output: file descriptor scatter-gather API.
@@ -271,6 +304,7 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(iovec_array,	iova_length,	mmux_usize_t)
 
 mmux_cc_libc_decl bool mmux_libc_readv (mmux_usize_t * nbytes_read_p, mmux_libc_file_descriptor_t fd, mmux_libc_iovec_array_t iovec_array)
   __attribute__((__nonnull__(1)));
+
 mmux_cc_libc_decl bool mmux_libc_writev (mmux_usize_t * nbytes_written_p, mmux_libc_file_descriptor_t fd, mmux_libc_iovec_array_t iovec_array)
   __attribute__((__nonnull__(1)));
 
@@ -306,13 +340,6 @@ mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const 
 
 
 /** --------------------------------------------------------------------
- ** Input/output: selecting file descriptors.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_libc_decl bool mmux_libc_fd_set_dump (mmux_libc_file_descriptor_t fd, mmux_libc_fd_set_t const * fd_set_p, char const * struct_name);
-
-
-/** --------------------------------------------------------------------
  ** System configuration.
  ** ----------------------------------------------------------------- */
 
@@ -342,9 +369,37 @@ mmux_cc_libc_decl bool mmux_libc_getrlimit (mmux_sint_t resource, mmux_libc_rlim
   __attribute__((__nonnull__(2)));
 mmux_cc_libc_decl bool mmux_libc_setrlimit (mmux_sint_t resource, mmux_libc_rlimit_t * rlimit_p)
   __attribute__((__nonnull__(2)));
-mmux_cc_libc_decl bool mmux_libc_prlimit (mmux_pid_t pid, mmux_sint_t resource,
+mmux_cc_libc_decl bool mmux_libc_prlimit (mmux_libc_pid_t pid, mmux_sint_t resource,
 					  mmux_libc_rlimit_t * new_rlimit_p, mmux_libc_rlimit_t * old_rlimit_p)
   __attribute__((__nonnull__(3,4)));
+
+
+/** --------------------------------------------------------------------
+ ** Processes.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_make_pid (mmux_libc_pid_t * result_p, mmux_pid_t pid_num)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_getpid  (mmux_libc_pid_t * result_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_getppid (mmux_libc_pid_t * result_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_gettid (mmux_libc_pid_t * result_p)
+  __attribute__((__nonnull__(1)));
+
+
+/** --------------------------------------------------------------------
+ ** Persona.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_make_uid (mmux_libc_uid_t * result_p, mmux_uid_t uid_num)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
+  __attribute__((__nonnull__(1)));
 
 
 /** --------------------------------------------------------------------
@@ -352,7 +407,7 @@ mmux_cc_libc_decl bool mmux_libc_prlimit (mmux_pid_t pid, mmux_sint_t resource,
  ** ----------------------------------------------------------------- */
 
 mmux_cc_libc_decl bool mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
-mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** const str_p, mmux_sint_t flag);
+mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** str_p, mmux_sint_t flag);
 
 mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
 

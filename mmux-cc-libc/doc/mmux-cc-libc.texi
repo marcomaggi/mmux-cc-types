@@ -187,6 +187,9 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * memory::                      Memory management.
 * time::                        Times and dates.
 * system::                      System configuration.
+* persona::                     Persona operations.
+* processes::                   Processes.
+* fds::                         File descriptors.
 
 Appendices
 
@@ -819,8 +822,584 @@ if (mmux_libc_confstr_size(&required_nbytes, parameter)) @{ /* error */ @}
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_prlimit (mmux_pid_t @var{pid}, mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{new_rlimit_p}, mmux_libc_rlimit_t * @var{old_rlimit_p})
+@deftypefun bool mmux_libc_prlimit (mmux_libc_pid_t @var{pid}, mmux_sint_t @var{resource}, mmux_libc_rlimit_t * @var{new_rlimit_p}, mmux_libc_rlimit_t * @var{old_rlimit_p})
 @MmuxCInterface{prlimit}.
+@end deftypefun
+
+@c page
+@node persona
+@chapter Persona operations
+
+
+@MmuxCStructOpaqueTypedef{uid}
+@MmuxCStructOpaqueTypedef{gid}
+
+
+@deftypefun bool mmux_libc_make_uid (mmux_libc_uid_t * @var{result_p}, mmux_uid_t @var{uid_num})
+Build a new value of type @objtype{mmux_libc_uid_t}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_make_gid (mmux_libc_gid_t * @var{result_p}, mmux_gid_t @var{gid_num})
+Build a new value of type @objtype{mmux_libc_gid_t}.
+@end deftypefun
+
+@c page
+@node processes
+@chapter Processes
+
+
+@MmuxCStructOpaqueTypedef{pid}
+
+
+@deftypefun bool mmux_libc_make_pid (mmux_libc_pid_t * @var{result_p}, mmux_pid_t @var{pid_num})
+Build a new value of type @objtype{mmux_libc_pid_t}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getpid  (mmux_libc_pid_t * @var{result_p})
+@MmuxCInterface{gitpid}.
+@end deftypefun
+
+
+@deftypefun  bool mmux_libc_getppid (mmux_libc_pid_t * @var{result_p})
+@MmuxCInterface{gitppid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_gettid (mmux_libc_pid_t * @var{result_p})
+@MmuxCInterface{gittid}.
+@end deftypefun
+
+@c page
+@node fds
+@chapter File descriptors
+
+
+@menu
+* fds fds::                     File descriptors type.
+* fds printing::                Printing formatted output.
+* fds opening::                 Opening file descriptors.
+* fds closing::                 Closing file descriptors.
+* fds reading::                 Reading from file descriptors.
+* fds writing::                 Writing to file descriptors.
+* fds seeking::                 Seeking position in file descriptors.
+* fds duplicating::             Duplicating file descriptors.
+* fds piping::                  Opening file descriptor pipes.
+* fds selecting::               Selecting file descriptors.
+* fds scatter-gather::          Scatter--gather input and output.
+* fds range-copying::           Copying ranges from file to file.
+* fds flock::                   File locks.
+* fds fun control::             File descriptors functionality ontrol.
+* fds io control::              File descriptors input/output control.
+@end menu
+
+@c page
+@node fds fds
+@section File descriptors type
+
+
+@deftp {Opaque Type} mmux_libc_file_descriptor_t
+@deftpx {Opaque Type} mmux_libc_fd_t
+Opaque type representing file descriptors.  It must be passed by value.
+@end deftp
+
+
+@deftypefun bool mmux_libc_stdin (mmux_libc_file_descriptor_t * @var{fd_p})
+Return the file descriptor associated to the standard input.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_stdou (mmux_libc_file_descriptor_t * @var{fd_p})
+Return the file descriptor associated to the standard output.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_stder (mmux_libc_file_descriptor_t * @var{fd_p})
+Return the file descriptor associated to the standard error.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_at_fdcwd (mmux_libc_file_descriptor_t * @var{result_p})
+Return the file descriptor associated to the constant @code{AT_FDCWD}.  We can use it with
+@cfunc{mmux_libc_openat} and similar functions.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_make_fd (mmux_libc_file_descriptor_t * @var{result_p}, mmux_sint_t @var{fd_num})
+Make a new file descriptor value.
+@end deftypefun
+
+@c page
+@node fds printing
+@section Printing formatted output
+
+
+@deftypefun bool mmux_libc_dprintf (mmux_libc_file_descriptor_t @var{fd}, char const * @var{template}, ...)
+@MmuxCInterface{dprintf}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_dprintfou (char const * template, ...)
+Like @cfunc{mmux_libc_dprintf} but prints on @stdout{}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_dprintfer (char const * template, ...)
+Like @cfunc{mmux_libc_dprintf} but prints on @stderr{}.
+@end deftypefun
+
+@c page
+@node fds opening
+@section Opening file descriptors
+
+
+@deftypefun bool mmux_libc_open (mmux_libc_file_descriptor_t * @var{result_p}, char const * @var{pathname}, mmux_sint_t @var{flags}, mmux_mode_t @var{mode})
+@MmuxCInterface{open}.
+
+@example
+char const *    pathname = "/path/to/file.ext";
+mmux_sint_t     flags    = MMUX_LIBC_O_RDWR | MMUX_LIBC_O_CREAT | MMUX_LIBC_O_EXCL;
+mmux_mode_t     mode     = MMUX_LIBC_S_IRUSR | MMUX_LIBC_S_IWUSR;
+
+mmux_libc_file_descriptor_t     fd;
+
+if (mmux_libc_open(&fd, pathname, flags, mode)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_openat (mmux_libc_file_descriptor_t * @var{result_p}, mmux_libc_file_descriptor_t @var{dirfd}, char const * @var{pathname}, mmux_sint_t @var{flags}, mmux_mode_t @var{mode})
+@MmuxCInterface{openat}.
+
+@example
+char const *    pathname = "path/to/file.ext";
+mmux_sint_t     flags    = MMUX_LIBC_O_RDWR | MMUX_LIBC_O_CREAT | MMUX_LIBC_O_EXCL;
+mmux_mode_t     mode     = MMUX_LIBC_S_IRUSR | MMUX_LIBC_S_IWUSR;
+
+mmux_libc_file_descriptor_t     dirfd;
+mmux_libc_file_descriptor_t     fd;
+
+mmux_libc_at_fdcwd(&dirfd);
+if (mmux_libc_openat(&fd, dirfd, pathname, flags, mode)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+@c page
+@node fds closing
+@section Closing file descriptors
+
+
+@deftypefun bool mmux_libc_close (mmux_libc_file_descriptor_t @var{fd})
+@MmuxCInterface{close}.
+@end deftypefun
+
+@c page
+@node fds reading
+@section Reading from file descriptors
+
+
+@deftypefun bool mmux_libc_read (mmux_usize_t * @var{nbytes_done_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen})
+@MmuxCInterface{read}.
+
+@example
+mmux_libc_file_descriptor_t     fd;
+mmux_usize_t                    nbytes_done;
+mmux_usize_t                    buflen = 4096;
+mmux_uint8_t                    bufptr[buflen];
+
+mmux_libc_stdin(&fd);
+if (mmux_libc_read(&nbytes_done, fd, bufptr, bulen)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pread (mmux_usize_t * @var{nbytes_done_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen}, mmux_off_t @var{offset})
+@MmuxCInterface{pread}.
+@end deftypefun
+
+@c page
+@node fds writing
+@section Writing to file descriptors
+
+
+@deftypefun bool mmux_libc_write (mmux_usize_t * @var{nbytes_done_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen})
+@MmuxCInterface{write}.
+
+@example
+mmux_libc_file_descriptor_t     fd;
+mmux_usize_t                    nbytes_done;
+char const *                    bufptr = "ciao";
+
+mmux_libc_stdou(&fd);
+if (mmux_libc_write(&nbytes_done, fd, bufptr, strlen(bufptr))) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pwrite (mmux_usize_t * @var{nbytes_done_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen}, mmux_off_t @var{offset})
+@MmuxCInterface{pwrite}.
+@end deftypefun
+
+@c page
+@node fds seeking
+@section Seeking position in file descriptors
+
+
+@deftypefun bool mmux_libc_lseek (mmux_libc_file_descriptor_t @var{fd}, mmux_off_t * @var{offset_p}, mmux_sint_t @var{whence})
+@MmuxCInterface{lseek}.
+
+Upon calling this function: @var{offset_p} must reference a variable whose value represents the
+offset from the position selected by @var{whence}.
+
+Upon successfully returning from this function: the variable referenced by @var{offset_p} has been
+updated to represent the resulting position, measured in bytes, from the beginning of the file.
+
+@example
+mmux_libc_fd_t  fd     = get_some_fd();
+mmux_off_t      offset = 123;
+mmux_sint_t     whence = MMUX_LIBC_SEEK_SET;
+
+if (mmux_libc_lseek(fd, &offset, whence)) @{
+  /* error */
+@}
+
+/* now "offset" has been updated */
+@end example
+@end deftypefun
+
+@c page
+@node fds duplicating
+@section Duplicating file descriptors
+
+
+@deftypefun bool mmux_libc_dup (mmux_libc_file_descriptor_t * @var{new_fd_p}, mmux_libc_file_descriptor_t @var{old_fd})
+@MmuxCInterface{dup}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_dup2 (mmux_libc_file_descriptor_t @var{old_fd}, mmux_libc_file_descriptor_t @var{new_fd})
+@MmuxCInterface{dup2}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_dup3 (mmux_libc_file_descriptor_t @var{old_fd}, mmux_libc_file_descriptor_t @var{new_fd}, mmux_sint_t @var{flags})
+@MmuxCInterface{dup3}.
+
+@example
+char const *    pathname = "/path/to/file.ext";
+mmux_sint_t     flags    = MMUX_LIBC_O_RDWR | MMUX_LIBC_O_CREAT | MMUX_LIBC_O_EXCL;
+mmux_mode_t     mode     = MMUX_LIBC_S_IRUSR | MMUX_LIBC_S_IWUSR;
+
+mmux_libc_fd_t  fd1, fd2;
+
+if (mmux_libc_open(&fd1, pathname, flags, mode)) @{
+  /* error */
+@}
+
+/* I'm so dirty. */
+mmux_libc_make_fd(&fd2, 5);
+
+if (mmux_libc_dup3(fd1, fd2, MMUX_LIBC_O_CLOEXEC)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+@c page
+@node fds piping
+@section Opening file descriptor pipes
+
+
+@deftypefun bool mmux_libc_pipe (mmux_libc_file_descriptor_t @var{fds}[2])
+@MmuxCInterface{pipe}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_close_pipe (mmux_libc_file_descriptor_t @var{fds}[2])
+Close both the file descriptors in @var{fds}.  If both closures succeed: return @cfalse{}; otherwise
+return @ctrue{}.  If closing the first fails: this function still closes the second.
+
+This function might be useful when an error occurs after we have created a pipe.
+@end deftypefun
+
+@c page
+@node fds selecting
+@section Selecting file descriptors
+
+
+Example:
+
+@example
+mmux_libc_fd_set_t      read_fd_set, writ_fd_set, exce_fd_set;
+mmux_uint_t             nfds_ready;
+mmux_uint_t             maximum_nfds_to_check = MMUX_LIBC_FD_SETSIZE;
+mmux_libc_timeval_t     timeout;
+mmux_libc_fd_t          in, ou;
+bool                    isset;
+
+mmux_libc_stdin(&in);
+mmux_libc_stdou(&ou);
+
+mmux_libc_FD_ZERO(read_fd_set);
+mmux_libc_FD_ZERO(writ_fd_set);
+mmux_libc_FD_ZERO(exce_fd_set);
+
+mmux_libc_FD_SET(in, read_fd_set);
+mmux_libc_FD_SET(ou, writ_fd_set);
+
+mmux_timeval_set(&timeout, 1, 0);
+
+if (mmux_libc_select(&nfds_ready, maximum_nfds_to_check,
+                     &read_fd_set, &writ_fd_set, &exce_fd_set,
+                     &timeout)) @{
+  /* error */
+@}
+
+mmux_libc_FD_ISSET(&isset, in, read_fd_set);
+/* do something */
+mmux_libc_FD_ISSET(&isset, ou, writ_fd_set);
+/* do something */
+@end example
+
+
+@deftypefun bool mmux_libc_FD_ZERO (mmux_libc_fd_set_t * @var{fd_set_p})
+@MmuxCInterface{FD_ZERO}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_FD_SET (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_fd_set_t * @var{fd_set_p})
+@MmuxCInterface{FD_SET}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_FD_CLR (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_fd_set_t * @var{fd_set_p})
+@MmuxCInterface{FD_CLR}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_FD_ISSET (bool * @var{result_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_fd_set_t const * @var{fd_set_p})
+@MmuxCInterface{FD_ISSET}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_select (mmux_uint_t * @var{nfds_ready_p}, mmux_uint_t @var{maximum_nfds_to_check}, mmux_libc_fd_set_t * @var{read_fd_set_p}, mmux_libc_fd_set_t * @var{write_fd_set_p}, mmux_libc_fd_set_t * @var{except_fd_set_p}, mmux_libc_timeval_t * @var{timeout_p})
+@MmuxCInterface{select}.
+@end deftypefun
+
+@c page
+@node fds scatter-gather
+@section Scatter--gather input and output
+
+
+@MmuxCStructOpaqueTypedef{iovec}
+
+
+@deftp {Opaque Struct Typedef} mmux_libc_iovec_array_t
+Data structure type representing an array of @objtype{mmux_libc_iovec_t} data structures.  It has
+the following fields:
+
+@table @code
+@item iova_base
+Pointer to the array.
+
+@item iova_len
+Number of slots in the array.
+@end table
+@end deftp
+
+@MmuxSetterGetter{iovec, iov_base, mmux_pointer_t}
+@MmuxSetterGetter{iovec, iov_len,  mmux_usize_t}
+@MmuxStructDumper{iovec}
+
+@MmuxSetterGetter{iovec_array, iova_base, mmux_pointer_t}
+@MmuxSetterGetter{iovec_array, iova_len,  mmux_usize_t}
+@MmuxStructDumper{iovec_array}
+
+
+@deftypefun bool mmux_libc_readv (mmux_usize_t * @var{nbytes_read_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_iovec_array_t @var{iovec_array})
+@MmuxStructDumper{readv}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_writev (mmux_usize_t * @var{nbytes_written_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_iovec_array_t @var{iovec_array})
+@MmuxStructDumper{writev}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_preadv (mmux_usize_t * @var{nbytes_read_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_iovec_array_t @var{iovec_array}, mmux_off_t @var{offset})
+@MmuxStructDumper{preadv}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pwritev (mmux_usize_t * @var{nbytes_written_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_iovec_array_t @var{iovec_array}, mmux_off_t @var{offset})
+@MmuxStructDumper{pwritev}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_preadv2 (mmux_usize_t * @var{nbytes_read_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_iovec_array_t @var{iovec_array}, mmux_off_t @var{offset}, mmux_sint_t @var{flags})
+@MmuxStructDumper{preadv2}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pwritev2 (mmux_usize_t * @var{nbytes_written_p}, mmux_libc_file_descriptor_t @var{fd}, mmux_libc_iovec_array_t @var{iovec_array}, mmux_off_t @var{offset}, mmux_sint_t @var{flags})
+@MmuxStructDumper{pwritev2}.
+@end deftypefun
+
+@c page
+@node fds range-copying
+@section Copying ranges from file to file
+
+@c page
+@node fds flock
+@section File locks
+
+@c page
+@node fds fun control
+@section File descriptors functionality ontrol
+
+
+@deftypefun bool mmux_libc_fcntl (mmux_libc_file_descriptor_t @var{fd}, mmux_sint_t @var{command}, mmux_pointer_t @var{parameter_p})
+@MmuxCInterface{fcntl}.  Arguments:
+
+@table @var
+@item fd
+A file descriptor.
+
+@item command
+A constant representing a command for @cfunc{fcntl}.
+
+@item parameter_p
+Pointer to a variable representing a parameter that can be input or output depending on the
+@var{command}.
+@end table
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fcntl_command_flag_to_symbol (char const ** @var{str_p}, mmux_sint_t @var{command})
+Identify @var{command} as a command argument for @cfunc{mmux_libc_fcntl}; store in the variable
+referenced by @var{str_p} a pointer to a statically allocated @asciiz{} string representing a string
+representation of the @var{command}.
+@end deftypefun
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_DUPFD
+Duplicate a file descriptor; @var{parameter_p} reference a variable of type
+@objtype{mmux_libc_file_descriptor_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_GETFD
+Get file descriptor flags, like @samp{MMUX_LIBC_FD_CLOEXEC}; @var{parameter_p} reference a variable
+of type @objtype{mmux_sint_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_SETFD
+Set file descriptor flags, like @samp{MMUX_LIBC_FD_CLOEXEC}; @var{parameter_p} reference a variable
+of type @objtype{mmux_sint_t} holding a bitwise OF combination of flags.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_GETFL
+Get open file descriptor flags, like @samp{O_RDWR}; @var{parameter_p} reference a variable of type
+@objtype{mmux_sint_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_SETFL
+Set open file descriptor flags, like @samp{O_APPEND}; @var{parameter_p} reference a variable of type
+@objtype{mmux_sint_t} holding a bitwise OF combination of flags.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_GETLK
+Get a @MmuxCStruct{flock} describing a lock that blocks a requested lock; @var{parameter_p} must
+reference a value of type @objtype{mmux_libc_flock_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_SETLK
+Set or clear file lock; @var{parameter_p} must reference a value of type
+@objtype{mmux_libc_flock_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_SETLKW
+Set or clear file lock; @var{parameter_p} must reference a value of type
+@objtype{mmux_libc_flock_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_OFD_GETLK
+Get a @MmuxCStruct{flock} describing a lock that blocks a requested lock; @var{parameter_p} must
+reference a value of type @objtype{mmux_libc_flock_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_OFD_SETLK
+Set or clear file lock; @var{parameter_p} must reference a value of type
+@objtype{mmux_libc_flock_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_OFD_SETLKW
+Set or clear file lock; @var{parameter_p} must reference a value of type
+@objtype{mmux_libc_flock_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_GETOWN
+Get the process or group id that receives the signal @samp{SIGIO}; @var{parameter_p} must reference
+a variable of type @objtype{mmux_libc_pid_t}.
+@end defvr
+
+@c ------------------------------------------------------------------------
+
+@defvr {Fcntl Command} MMUX_LIBC_F_SETOWN
+Set the process or group id that receives the signal @samp{SIGIO}; @var{parameter_p} must reference
+a variable of type @objtype{mmux_libc_pid_t}.
+@end defvr
+
+@c page
+@node fds io control
+@section File descriptors input/output control
+
+
+@deftypefun bool mmux_libc_ioctl (mmux_libc_file_descriptor_t @var{fd}, mmux_sint_t @var{command}, mmux_pointer_t @var{parameter_p})
+@MmuxCInterface{ioctl}.  Arguments:
+
+@table @var
+@item fd
+A file descriptor.
+
+@item command
+A constant representing a command for @cfunc{ioctl}.
+
+@item parameter_p
+Pointer to a variable representing a parameter that can be input or output depending on the
+@var{command}.
+@end table
 @end deftypefun
 
 @c page
