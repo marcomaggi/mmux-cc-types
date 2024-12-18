@@ -35,8 +35,15 @@
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getuid]]])
 {
-  mmux_uid_t	uid = getuid();
-  return mmux_uid_bind_to_bash_variable(argv[1], uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  char const *		uid_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uid_varname,	1);
+  {
+    mmux_libc_uid_t	uid;
+
+    mmux_libc_getuid(&uid);
+    return mmux_libc_uid_bind_to_bash_variable(uid_varname, uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -46,19 +53,33 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgid]]])
 {
-  mmux_uid_t	uid = getgid();
-  return mmux_uid_bind_to_bash_variable(argv[1], uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  char const *		gid_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(gid_varname,	1);
+  {
+    mmux_libc_gid_t	gid;
+
+    mmux_libc_getgid(&gid);
+    return mmux_libc_gid_bind_to_bash_variable(gid_varname, gid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER UIDVAR"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER GIDVAR"]]])
 
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_geteuid]]])
 {
-  mmux_uid_t	uid = geteuid();
-  return mmux_uid_bind_to_bash_variable(argv[1], uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  char const *		uid_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uid_varname,	1);
+  {
+    mmux_libc_uid_t	uid;
+
+    mmux_libc_geteuid(&uid);
+    return mmux_libc_uid_bind_to_bash_variable(uid_varname, uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -68,8 +89,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getegid]]])
 {
-  mmux_uid_t	uid = getegid();
-  return mmux_uid_bind_to_bash_variable(argv[1], uid, MMUX_BASH_BUILTIN_STRING_NAME);
+  char const *		gid_varname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(gid_varname,	1);
+  {
+    mmux_libc_gid_t	gid;
+
+    mmux_libc_getegid(&gid);
+    return mmux_libc_gid_bind_to_bash_variable(gid_varname, gid, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(2 == argc)]]],
@@ -79,49 +107,47 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getgroups]]])
 {
-  mmux_sint_t	ngroups = getgroups(0, NULL);
+  char const *	index_array_varname = argv[1];
 
-  if (-1 == ngroups ) {
-    mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-    return MMUX_FAILURE;
-  } else {
-    mmux_gid_t	gids[ngroups];
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(index_array_varname,	1);
+  {
+    mmux_usize_t	ngroups;
 
-    ngroups = getgroups(ngroups, gids);
-    if (-1 == ngroups ) {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    } else {
-      char const *			index_array_name = argv[1];
-      mmux_bash_index_array_variable_t	index_array_variable;
-      mmux_bash_rv_t			rv;
+    MMUX_LIBC_FUNCALL(mmux_libc_getgroups_size(&ngroups));
+    {
+      mmux_libc_gid_t	gids[ngroups];
 
-      rv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
-      if (MMUX_SUCCESS != rv) { return rv; }
+      MMUX_LIBC_FUNCALL(mmux_libc_getgroups(&ngroups, gids));
+      {
+	mmux_bash_index_array_variable_t	index_array_variable;
+	mmux_bash_rv_t				brv;
 
-      for (mmux_sint_t i=0; i<ngroups; ++i) {
-	mmux_bash_index_array_key_t	index_array_key = i;
-	mmux_sint_t			required_bytes = mmux_gid_sprint_size(gids[i]);
+	brv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_varname, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { return brv; }
 
-	if (required_bytes < 0) {
-	  goto error_converting_gid_to_string;
-	} else {
-	  char	index_array_value[required_bytes];
+	for (mmux_usize_t i=0; i<ngroups; ++i) {
+	  mmux_bash_index_array_key_t	index_array_key = i;
+	  mmux_usize_t			required_nchars;
 
-	  if (mmux_gid_sprint(index_array_value, required_bytes, gids[i])) {
+	  if (mmux_libc_gid_sprint_size(&required_nchars, gids[i])) {
 	    goto error_converting_gid_to_string;
 	  } else {
-	    rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value,
-					    MMUX_BASH_BUILTIN_STRING_NAME);
-	    if (MMUX_SUCCESS != rv) { return rv; }
+	    char	index_array_value[required_nchars];
+
+	    if (mmux_libc_gid_sprint(index_array_value, required_nchars, gids[i])) {
+	      goto error_converting_gid_to_string;
+	    } else {
+	      brv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	      if (MMUX_SUCCESS != brv) { return brv; }
+	    }
 	  }
 	}
-      }
-      return MMUX_SUCCESS;
+	return MMUX_SUCCESS;
 
-    error_converting_gid_to_string:
-      fprintf(stderr, "%s: error: cannot convert GID value to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
+      error_converting_gid_to_string:
+	mmux_libc_dprintfer("%s: error: cannot convert GID value to string\n", MMUX_BASH_BUILTIN_STRING_NAME);
+	return MMUX_FAILURE;
+      }
     }
   }
 }

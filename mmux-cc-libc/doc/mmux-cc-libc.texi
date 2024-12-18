@@ -831,8 +831,44 @@ if (mmux_libc_confstr_size(&required_nbytes, parameter)) @{ /* error */ @}
 @chapter Persona operations
 
 
-@MmuxCStructOpaqueTypedef{uid}
-@MmuxCStructOpaqueTypedef{gid}
+@menu
+* persona uids::                Representing UIDs.
+* persona gids::                Representing GIDs.
+* persona getting::             Getting users and groups.
+* persona setting::             Setting users and groups.
+* persona login::               Identifying who logged in.
+* persona database user::       User database.
+* persona database group::      Group database.
+@end menu
+
+@c page
+@node persona uids
+@section Representing UIDs
+
+
+To obtain a UID value and convert it to string, we can do:
+
+@example
+mmux_libc_uid_t         the_uid;
+mmux_usize_t            required_nchars;
+
+mmux_libc_getuid(&the_uid);
+
+if (mmux_libc_uid_sprint_size(&required_nchars, the_uid) @{
+  /* error */
+@} else @{
+  char  str[required_nchars];
+
+  if (mmux_libc_uid_sprint(str, required_nchars, the_uid) @{
+    /* error */
+  @}
+@}
+@end example
+
+
+@deftp {Opaque Struct Alias} mmux_libc_uid_t
+Type of data structure containing a value of type @objtype{mmux_uid_t}.
+@end deftp
 
 
 @deftypefun bool mmux_libc_make_uid (mmux_libc_uid_t * @var{result_p}, mmux_uid_t @var{uid_num})
@@ -840,9 +876,123 @@ Build a new value of type @objtype{mmux_libc_uid_t}.
 @end deftypefun
 
 
+@deftypefun bool mmux_libc_uid_parse (mmux_libc_uid_t * @var{uid_p}, char const * @var{str}, char const * @var{who})
+Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_uid_t}
+value; store the value in the location referenced by @var{uid_p}.  If an error occurs and @var{who}
+is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
+performed the function call.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_uid_sprint_size (mmux_usize_t * @var{required_nchars_p}, mmux_libc_uid_t @var{uid})
+Determine the number of characters required to contain the string representation of @var{uid} as
+@asciiz{} string, @strong{including} the terminating nul character, and store it in the location
+referenced by @var{required_nchars_p}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_uid_sprint (char * @var{str}, mmux_usize_t @var{nchars}, mmux_libc_uid_t @var{uid})
+Convert @var{uid} to its @asciiz{} string representation and store the result, @strong{including}
+the terminating nul character, in the array referenced by @var{str}, which must be @var{nchars}
+wide.
+@end deftypefun
+
+@c page
+@node persona gids
+@section Representing GIDs
+
+
+To obtain a UID value and convert it to string, we can do:
+
+@example
+mmux_libc_uid_t         the_uid;
+mmux_usize_t            required_nchars;
+
+mmux_libc_getuid(&the_uid);
+
+if (mmux_libc_uid_sprint_size(&required_nchars, the_uid) @{
+  /* error */
+@} else @{
+  char  str[required_nchars];
+
+  if (mmux_libc_uid_sprint(str, required_nchars, the_uid) @{
+    /* error */
+  @}
+@}
+@end example
+
+
+@deftp {Opaque Struct Alias} mmux_libc_gid_t
+Type of data structure containing a value of type @objtype{mmux_gid_t}.
+@end deftp
+
+
 @deftypefun bool mmux_libc_make_gid (mmux_libc_gid_t * @var{result_p}, mmux_gid_t @var{gid_num})
 Build a new value of type @objtype{mmux_libc_gid_t}.
 @end deftypefun
+
+
+@deftypefun bool mmux_libc_gid_parse (mmux_libc_gid_t * @var{gid_p}, char const * @var{str}, char const * @var{who})
+Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_gid_t}
+value; store the value in the location referenced by @var{gid_p}.  If an error occurs and @var{who}
+is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
+performed the function call.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_gid_sprint_size (mmux_usize_t * @var{required_nchars_p}, mmux_libc_gid_t @var{gid})
+Determine the number of characters required to contain the string representation of @var{gid} as
+@asciiz{} string, @strong{including} the terminating nul character, and store it in the location
+referenced by @var{required_nchars_p}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_gid_sprint (char * @var{str}, mmux_usize_t @var{nchars}, mmux_libc_gid_t @var{gid})
+Convert @var{gid} to its @asciiz{} string representation and store the result, @strong{including}
+the terminating nul character, in the array referenced by @var{str}, which must be @var{nchars}
+wide.
+@end deftypefun
+
+@c page
+@node persona getting
+@section Getting users and groups
+
+
+@deftypefun bool mmux_libc_getuid (mmux_libc_uid_t * @var{result_p})
+@MmuxCInterface{getuid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getgid (mmux_libc_gid_t * @var{result_p})
+@MmuxCInterface{getgid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_geteuid (mmux_libc_uid_t * @var{result_p})
+@MmuxCInterface{geteuid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getegid (mmux_libc_gid_t * @var{result_p})
+@MmuxCInterface{getegid}.
+@end deftypefun
+
+@c page
+@node persona setting
+@section Setting users and groups
+
+@c page
+@node persona login
+@section Identifying who logged in
+
+@c page
+@node persona database user
+@section User database
+
+@c page
+@node persona database group
+@section Group database
+
 
 @c page
 @node processes

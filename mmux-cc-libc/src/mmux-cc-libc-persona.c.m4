@@ -28,6 +28,8 @@
 
 #include <mmux-cc-libc-internals.h>
 
+#define MMUX_LIBC_UGID_MAXIMUM_STRING_REPRESENTATION_LENGTH	32
+
 
 /** --------------------------------------------------------------------
  ** Identifier functions.
@@ -48,6 +50,128 @@ mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
 {
   if (0 <= gid_num) {
     result_p->value = gid_num;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_uid_parse (mmux_libc_uid_t * p_value, char const * s_value, char const * who)
+{
+  mmux_libc_uid_t	the_uid;
+
+  if (mmux_uid_parse(&the_uid.value, s_value, who)) {
+    return true;
+  }
+  *p_value = the_uid;
+  return false;
+}
+bool
+mmux_libc_uid_sprint (char * ptr, mmux_usize_t len, mmux_libc_uid_t uid)
+{
+  if (MMUX_LIBC_UGID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
+    errno = MMUX_LIBC_EINVAL;
+    return true;
+  }
+  return mmux_uid_sprint(ptr, len, uid.value);
+}
+bool
+mmux_libc_uid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_uid_t uid)
+{
+  mmux_sint_t	required_nchars = mmux_uid_sprint_size(uid.value);
+
+  if (0 <= required_nchars) {
+    *required_nchars_p = required_nchars;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_gid_parse (mmux_libc_gid_t * p_value, char const * s_value, char const * who)
+{
+  mmux_libc_gid_t	the_gid;
+
+  if (mmux_gid_parse(&the_gid.value, s_value, who)) {
+    return true;
+  }
+  *p_value = the_gid;
+  return false;
+}
+bool
+mmux_libc_gid_sprint (char * ptr, mmux_usize_t len, mmux_libc_gid_t gid)
+{
+  if (MMUX_LIBC_UGID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
+    errno = MMUX_LIBC_EINVAL;
+    return true;
+  }
+  return mmux_gid_sprint(ptr, len, gid.value);
+}
+bool
+mmux_libc_gid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_gid_t gid)
+{
+  mmux_sint_t	required_nchars = mmux_gid_sprint_size(gid.value);
+
+  if (0 <= required_nchars) {
+    *required_nchars_p = required_nchars;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_getuid (mmux_libc_uid_t * result_p)
+{
+  return mmux_libc_make_uid(result_p, getuid());
+}
+bool
+mmux_libc_getgid (mmux_libc_gid_t * result_p)
+{
+  return mmux_libc_make_gid(result_p, getgid());
+}
+bool
+mmux_libc_geteuid (mmux_libc_uid_t * result_p)
+{
+  return mmux_libc_make_uid(result_p, geteuid());
+}
+bool
+mmux_libc_getegid (mmux_libc_gid_t * result_p)
+{
+  return mmux_libc_make_gid(result_p, getegid());
+}
+bool
+mmux_libc_getgroups_size (mmux_usize_t * ngroups_p)
+{
+  mmux_sint_t	ngroups = getgroups(0, NULL);
+
+  if (0 <= ngroups) {
+    *ngroups_p = ngroups;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_getgroups (mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
+{
+  mmux_sint_t	ngroups1 = *ngroups_p;
+  mmux_gid_t	gids[ngroups1];
+  mmux_sint_t	ngroups2 = getgroups(ngroups1, gids);
+
+  if (0 <= ngroups2) {
+    for (mmux_sint_t i=0; i<ngroups1; ++i) {
+      mmux_libc_make_gid(&(groups_p[i]), gids[i]);
+    }
+    *ngroups_p = ngroups2;
     return false;
   } else {
     return true;
