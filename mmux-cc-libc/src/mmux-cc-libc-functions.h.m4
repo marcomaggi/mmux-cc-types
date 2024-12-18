@@ -367,6 +367,16 @@ mmux_cc_libc_decl bool mmux_libc_copy_file_range (mmux_usize_t * number_of_bytes
 
 
 /** --------------------------------------------------------------------
+ ** Input/output: control.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
+mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** str_p, mmux_sint_t flag);
+
+mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
+
+
+/** --------------------------------------------------------------------
  ** System configuration.
  ** ----------------------------------------------------------------- */
 
@@ -478,16 +488,6 @@ mmux_cc_libc_decl bool mmux_libc_getgroups_size (mmux_usize_t * ngroups_p)
 
 mmux_cc_libc_decl bool mmux_libc_getgroups (mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
   __attribute__((__nonnull__(1,2)));
-
-
-/** --------------------------------------------------------------------
- ** Miscellaneous.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_libc_decl bool mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
-mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** str_p, mmux_sint_t flag);
-
-mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
 
 
 /** --------------------------------------------------------------------
