@@ -47,6 +47,41 @@ mmux_libc_make_pid (mmux_libc_pid_t * result_p, mmux_pid_t pid_num)
 /* ------------------------------------------------------------------ */
 
 bool
+mmux_libc_pid_parse (mmux_libc_pid_t * p_value, char const * s_value, char const * who)
+{
+  mmux_libc_pid_t	the_pid;
+
+  if (mmux_pid_parse(&the_pid.value, s_value, who)) {
+    return true;
+  }
+  *p_value = the_pid;
+  return false;
+}
+bool
+mmux_libc_pid_sprint (char * ptr, mmux_usize_t len, mmux_libc_pid_t pid)
+{
+  if (MMUX_LIBC_PID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
+    errno = MMUX_LIBC_EINVAL;
+    return true;
+  }
+  return mmux_pid_sprint(ptr, len, pid.value);
+}
+bool
+mmux_libc_pid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_pid_t pid)
+{
+  mmux_sint_t	required_nchars = mmux_pid_sprint_size(pid.value);
+
+  if (0 <= required_nchars) {
+    *required_nchars_p = required_nchars;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
 mmux_libc_getpid (mmux_libc_pid_t * result_p)
 {
   mmux_pid_t	rv = getpid();

@@ -28,8 +28,6 @@
 
 #include <mmux-cc-libc-internals.h>
 
-#define MMUX_LIBC_UGID_MAXIMUM_STRING_REPRESENTATION_LENGTH	32
-
 
 /** --------------------------------------------------------------------
  ** Identifier functions.
@@ -72,7 +70,7 @@ mmux_libc_uid_parse (mmux_libc_uid_t * p_value, char const * s_value, char const
 bool
 mmux_libc_uid_sprint (char * ptr, mmux_usize_t len, mmux_libc_uid_t uid)
 {
-  if (MMUX_LIBC_UGID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
+  if (MMUX_LIBC_UID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
     errno = MMUX_LIBC_EINVAL;
     return true;
   }
@@ -107,7 +105,7 @@ mmux_libc_gid_parse (mmux_libc_gid_t * p_value, char const * s_value, char const
 bool
 mmux_libc_gid_sprint (char * ptr, mmux_usize_t len, mmux_libc_gid_t gid)
 {
-  if (MMUX_LIBC_UGID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
+  if (MMUX_LIBC_GID_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
     errno = MMUX_LIBC_EINVAL;
     return true;
   }

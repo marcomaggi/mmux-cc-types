@@ -72,6 +72,41 @@ mmux_libc_make_fd (mmux_libc_file_descriptor_t * result_p, mmux_sint_t fd_num)
 /* ------------------------------------------------------------------ */
 
 bool
+mmux_libc_fd_parse (mmux_libc_fd_t * p_value, char const * s_value, char const * who)
+{
+  mmux_libc_fd_t	the_fd;
+
+  if (mmux_sint_parse(&the_fd.value, s_value, who)) {
+    return true;
+  }
+  *p_value = the_fd;
+  return false;
+}
+bool
+mmux_libc_fd_sprint (char * ptr, mmux_usize_t len, mmux_libc_fd_t fd)
+{
+  if (MMUX_LIBC_FD_MAXIMUM_STRING_REPRESENTATION_LENGTH < len) {
+    errno = MMUX_LIBC_EINVAL;
+    return true;
+  }
+  return mmux_sint_sprint(ptr, len, fd.value);
+}
+bool
+mmux_libc_fd_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_fd_t fd)
+{
+  mmux_sint_t	required_nchars = mmux_sint_sprint_size(fd.value);
+
+  if (0 <= required_nchars) {
+    *required_nchars_p = required_nchars;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
 mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
 {
   va_list	ap;

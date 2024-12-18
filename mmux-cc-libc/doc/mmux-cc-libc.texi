@@ -902,20 +902,20 @@ wide.
 @section Representing GIDs
 
 
-To obtain a UID value and convert it to string, we can do:
+To obtain a GID value and convert it to string, we can do:
 
 @example
-mmux_libc_uid_t         the_uid;
+mmux_libc_gid_t         the_gid;
 mmux_usize_t            required_nchars;
 
-mmux_libc_getuid(&the_uid);
+mmux_libc_getgid(&the_gid);
 
-if (mmux_libc_uid_sprint_size(&required_nchars, the_uid) @{
+if (mmux_libc_gid_sprint_size(&required_nchars, the_gid) @{
   /* error */
 @} else @{
   char  str[required_nchars];
 
-  if (mmux_libc_uid_sprint(str, required_nchars, the_uid) @{
+  if (mmux_libc_gid_sprint(str, required_nchars, the_gid) @{
     /* error */
   @}
 @}
@@ -999,12 +999,70 @@ wide.
 @chapter Processes
 
 
-@MmuxCStructOpaqueTypedef{pid}
+@menu
+* processes pids::              Representing PIDs.
+* processes getting::           Getting PIDs.
+@end menu
+
+@c page
+@node processes pids
+@section Representing PIDs
+
+
+@deftp {Opaque Struct Typedef} mmux_libc_pid_t
+Opaque data structure type representing a @objtype{mmux_pid_t}.
+@end deftp
 
 
 @deftypefun bool mmux_libc_make_pid (mmux_libc_pid_t * @var{result_p}, mmux_pid_t @var{pid_num})
 Build a new value of type @objtype{mmux_libc_pid_t}.
 @end deftypefun
+
+
+To convert a file descriptor to string we can do:
+
+@example
+mmux_libc_pid_t the_pid;
+mmux_usize_t    required_nchars;
+
+mmux_libc_getpid (&the_pid);
+
+if (mmux_libc_pid_sprint_size(&required_nchars, the_pid) @{
+  /* error */
+@} else @{
+  char  str[required_nchars];
+
+  if (mmux_libc_pid_sprint(str, required_nchars, the_pid) @{
+    /* error */
+  @}
+@}
+@end example
+
+
+@deftypefun bool mmux_libc_pid_parse (mmux_libc_pid_t * @var{pid_p}, char const * @var{str}, char const * @var{who})
+Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_pid_t}
+value; store the value in the location referenced by @var{pid_p}.  If an error occurs and @var{who}
+is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
+performed the function call.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pid_sprint_size (mmux_usize_t * @var{required_nchars_p}, mmux_libc_pid_t @var{pid})
+Determine the number of characters required to contain the string representation of @var{pid} as
+@asciiz{} string, @strong{including} the terminating nul character, and store it in the location
+referenced by @var{required_nchars_p}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_pid_sprint (char * @var{str}, mmux_usize_t @var{nchars}, mmux_libc_pid_t @var{pid})
+Convert @var{pid} to its @asciiz{} string representation and store the result, @strong{including}
+the terminating nul character, in the array referenced by @var{str}, which must be @var{nchars}
+wide.
+@end deftypefun
+
+@c page
+@node processes getting
+@section Getting PIDs
 
 
 @deftypefun bool mmux_libc_getpid  (mmux_libc_pid_t * @var{result_p})
@@ -1078,6 +1136,45 @@ Return the file descriptor associated to the constant @code{AT_FDCWD}.  We can u
 
 @deftypefun bool mmux_libc_make_fd (mmux_libc_file_descriptor_t * @var{result_p}, mmux_sint_t @var{fd_num})
 Make a new file descriptor value.
+@end deftypefun
+
+To convert a file descriptor to string we can do:
+
+@example
+mmux_libc_fd_t  the_fd = gimme_an_fd();
+mmux_usize_t    required_nchars;
+
+if (mmux_libc_fd_sprint_size(&required_nchars, the_fd) @{
+  /* error */
+@} else @{
+  char  str[required_nchars];
+
+  if (mmux_libc_fd_sprint(str, required_nchars, the_fd) @{
+    /* error */
+  @}
+@}
+@end example
+
+
+@deftypefun bool mmux_libc_fd_parse (mmux_libc_fd_t * @var{fd_p}, char const * @var{str}, char const * @var{who})
+Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_fd_t}
+value; store the value in the location referenced by @var{fd_p}.  If an error occurs and @var{who}
+is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
+performed the function call.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fd_sprint_size (mmux_usize_t * @var{required_nchars_p}, mmux_libc_fd_t @var{fd})
+Determine the number of characters required to contain the string representation of @var{fd} as
+@asciiz{} string, @strong{including} the terminating nul character, and store it in the location
+referenced by @var{required_nchars_p}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fd_sprint (char * @var{str}, mmux_usize_t @var{nchars}, mmux_libc_fd_t @var{fd})
+Convert @var{fd} to its @asciiz{} string representation and store the result, @strong{including}
+the terminating nul character, in the array referenced by @var{str}, which must be @var{nchars}
+wide.
 @end deftypefun
 
 @c page

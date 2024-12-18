@@ -222,6 +222,19 @@ mmux_cc_libc_decl bool mmux_libc_stder (mmux_libc_file_descriptor_t * result_p)
 mmux_cc_libc_decl bool mmux_libc_at_fdcwd (mmux_libc_file_descriptor_t * result_p)
   __attribute__((__nonnull__(1)));
 
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_fd_parse (mmux_libc_fd_t * p_value, char const * s_value, char const * who)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_fd_sprint (char * ptr, mmux_usize_t len, mmux_libc_fd_t fd)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_fd_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_fd_t fd)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
 mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
   __attribute__((__nonnull__(2)));
 mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...)
@@ -395,6 +408,17 @@ mmux_cc_libc_decl bool mmux_libc_prlimit (mmux_libc_pid_t pid, mmux_sint_t resou
 mmux_cc_libc_decl bool mmux_libc_make_pid (mmux_libc_pid_t * result_p, mmux_pid_t pid_num)
   __attribute__((__nonnull__(1)));
 
+mmux_cc_libc_decl bool mmux_libc_pid_parse (mmux_libc_pid_t * p_value, char const * s_value, char const * who)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_pid_sprint (char * ptr, mmux_usize_t len, mmux_libc_pid_t pid)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_pid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_pid_t pid)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
 mmux_cc_libc_decl bool mmux_libc_getpid  (mmux_libc_pid_t * result_p)
   __attribute__((__nonnull__(1)));
 
@@ -412,9 +436,6 @@ mmux_cc_libc_decl bool mmux_libc_gettid (mmux_libc_pid_t * result_p)
 mmux_cc_libc_decl bool mmux_libc_make_uid (mmux_libc_uid_t * result_p, mmux_uid_t uid_num)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
-  __attribute__((__nonnull__(1)));
-
 mmux_cc_libc_decl bool mmux_libc_uid_parse (mmux_libc_uid_t * p_value, char const * s_value, char const * who)
   __attribute__((__nonnull__(1,2)));
 
@@ -422,6 +443,11 @@ mmux_cc_libc_decl bool mmux_libc_uid_sprint (char * ptr, mmux_usize_t len, mmux_
   __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_uid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_uid_t uid)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
   __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_gid_parse (mmux_libc_gid_t * p_value, char const * s_value, char const * who)

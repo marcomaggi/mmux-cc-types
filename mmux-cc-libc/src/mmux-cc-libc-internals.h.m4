@@ -244,6 +244,16 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
+ ** Constants.
+ ** ----------------------------------------------------------------- */
+
+#define MMUX_LIBC_FD_MAXIMUM_STRING_REPRESENTATION_LENGTH	256
+#define MMUX_LIBC_PID_MAXIMUM_STRING_REPRESENTATION_LENGTH	256
+#define MMUX_LIBC_UID_MAXIMUM_STRING_REPRESENTATION_LENGTH	256
+#define MMUX_LIBC_GID_MAXIMUM_STRING_REPRESENTATION_LENGTH	256
+
+
+/** --------------------------------------------------------------------
  ** type definitions.
  ** ----------------------------------------------------------------- */
 
