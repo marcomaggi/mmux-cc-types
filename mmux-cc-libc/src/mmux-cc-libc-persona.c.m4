@@ -30,7 +30,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Identifier functions.
+ ** Identifier functions: UID.
  ** ----------------------------------------------------------------- */
 
 bool
@@ -43,19 +43,6 @@ mmux_libc_make_uid (mmux_libc_uid_t * result_p, mmux_uid_t uid_num)
     return true;
   }
 }
-bool
-mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
-{
-  if (0 <= gid_num) {
-    result_p->value = gid_num;
-    return false;
-  } else {
-    return true;
-  }
-}
-
-/* ------------------------------------------------------------------ */
-
 bool
 mmux_libc_uid_parse (mmux_libc_uid_t * p_value, char const * s_value, char const * who)
 {
@@ -89,8 +76,21 @@ mmux_libc_uid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_uid_t uid
   }
 }
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Identifier functions: GID.
+ ** ----------------------------------------------------------------- */
 
+bool
+mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
+{
+  if (0 <= gid_num) {
+    result_p->value = gid_num;
+    return false;
+  } else {
+    return true;
+  }
+}
 bool
 mmux_libc_gid_parse (mmux_libc_gid_t * p_value, char const * s_value, char const * who)
 {
@@ -124,7 +124,10 @@ mmux_libc_gid_sprint_size (mmux_usize_t * required_nchars_p, mmux_libc_gid_t gid
   }
 }
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Getting UIDs and GIDs.
+ ** ----------------------------------------------------------------- */
 
 bool
 mmux_libc_getuid (mmux_libc_uid_t * result_p)
@@ -146,6 +149,9 @@ mmux_libc_getegid (mmux_libc_gid_t * result_p)
 {
   return mmux_libc_make_gid(result_p, getegid());
 }
+
+/* ------------------------------------------------------------------ */
+
 bool
 mmux_libc_getgroups_size (mmux_usize_t * ngroups_p)
 {
@@ -173,6 +179,44 @@ mmux_libc_getgroups (mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
     return false;
   } else {
     return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_getgrouplist_size (mmux_usize_t * result_ngroups_p, char const * username, mmux_libc_gid_t gid)
+{
+  mmux_sint_t		ngroups = 0;
+
+  getgrouplist(username, gid.value, NULL, &ngroups);
+  if ((0 <= ngroups) && (ngroups <= MMUX_LIBC_GETGROUPLIST_MAXIMUM_GROUPS_NUMBER)) {
+    *result_ngroups_p = ngroups;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_getgrouplist (char const * username, mmux_libc_gid_t gid, mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
+{
+  if (MMUX_LIBC_GETGROUPLIST_MAXIMUM_GROUPS_NUMBER < *ngroups_p) {
+    return true;
+  } else {
+    mmux_sint_t		ngroups1 = *ngroups_p;
+    mmux_gid_t		gids[ngroups1];
+    mmux_sint_t		ngroups2;
+
+    ngroups2 = getgrouplist(username, gid.value, gids, &ngroups1);
+    if (0 <= ngroups2) {
+      for (mmux_sint_t i=0; i<ngroups1; ++i) {
+	mmux_libc_make_gid(&(groups_p[i]), gids[i]);
+      }
+      *ngroups_p = ngroups2;
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 

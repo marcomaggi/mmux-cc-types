@@ -489,6 +489,13 @@ mmux_cc_libc_decl bool mmux_libc_getgroups_size (mmux_usize_t * ngroups_p)
 mmux_cc_libc_decl bool mmux_libc_getgroups (mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
   __attribute__((__nonnull__(1,2)));
 
+mmux_cc_libc_decl bool mmux_libc_getgrouplist_size (mmux_usize_t * result_ngroups_p, char const * username, mmux_libc_gid_t gid)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_getgrouplist (char const * username, mmux_libc_gid_t gid,
+					       mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
+  __attribute__((__nonnull__(1,3,4)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

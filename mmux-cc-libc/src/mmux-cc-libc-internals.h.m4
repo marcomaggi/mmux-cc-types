@@ -252,6 +252,8 @@ extern "C" {
 #define MMUX_LIBC_UID_MAXIMUM_STRING_REPRESENTATION_LENGTH	256
 #define MMUX_LIBC_GID_MAXIMUM_STRING_REPRESENTATION_LENGTH	256
 
+#define MMUX_LIBC_GETGROUPLIST_MAXIMUM_GROUPS_NUMBER		4096
+
 
 /** --------------------------------------------------------------------
  ** type definitions.
