@@ -120,10 +120,6 @@
 #  include <net/if.h>
 #endif
 
-#ifdef HAVE_PWD_H
-#  include <pwd.h>
-#endif
-
 #ifdef HAVE_UTIME_H
 #  include <utime.h>
 #endif
