@@ -551,6 +551,9 @@ mmux_cc_libc_decl bool mmux_libc_getgrgid (mmux_libc_group_t * * result_group_pp
 mmux_cc_libc_decl bool mmux_libc_getgrnam (mmux_libc_group_t * * result_group_pp, char const * username)
   __attribute__((__nonnull__(1,2)));
 
+mmux_cc_libc_decl bool mmux_libc_group_member (bool * result_is_member_p, mmux_libc_gid_t gid)
+  __attribute__((__nonnull__(1)));
+
 mmux_cc_libc_decl bool mmux_libc_setpwent (void);
 mmux_cc_libc_decl bool mmux_libc_endpwent (void);
 mmux_cc_libc_decl bool mmux_libc_getpwent (mmux_libc_passwd_t * * result_passwd_pp)
@@ -559,8 +562,6 @@ mmux_cc_libc_decl bool mmux_libc_setgrent (void);
 mmux_cc_libc_decl bool mmux_libc_endgrent (void);
 mmux_cc_libc_decl bool mmux_libc_getgrent (mmux_libc_group_t * * result_group_pp)
   __attribute__((__nonnull__(1)));
-
-
 
 
 /** --------------------------------------------------------------------

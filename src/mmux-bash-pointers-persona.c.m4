@@ -218,13 +218,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_group_member]]])
 {
-  mmux_gid_t	gid;
+  mmux_asciizcp_t	bool_varname;
+  mmux_libc_gid_t	gid;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_GID(gid,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(bool_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_GID(gid,			2);
   {
-    int		rv = group_member(gid);
+    bool	is_member;
 
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_group_member(&is_member, gid));
+    return mmux_sint_bind_to_bash_variable(bool_varname, is_member, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -580,7 +583,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-DEFINE_MMUX_LIBC_STRUCT_GETTER([[[mmux_libc_group_t]]],[[[gr_name]]],	[[[string]]])
+DEFINE_MMUX_LIBC_STRUCT_GETTER([[[mmux_libc_group_t]]],[[[gr_name]]],	[[[asciizcp]]])
 DEFINE_MMUX_LIBC_STRUCT_GETTER([[[mmux_libc_group_t]]],[[[gr_gid]]],	[[[libc_gid]]])
 
 /* ------------------------------------------------------------------ */
@@ -597,17 +600,17 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gr_mem_ref]]])
     mmux_bash_index_array_key_t		index_array_key = 0;
     mmux_asciizcp_t			index_array_value;
     mmux_asciizcp_t *			mem;
-    mmux_bash_rv_t			rv;
+    mmux_bash_rv_t			brv;
 
-    rv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
-    if (MMUX_SUCCESS != rv) { return rv; }
+    brv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
+    if (MMUX_SUCCESS != brv) { return brv; }
 
-    mmux_libc_gr_mem_ref(&mem, group_pointer);
+    MMUX_LIBC_FUNCALL(mmux_libc_gr_mem_ref(&mem, group_pointer));
 
     for (; *mem; ++mem, ++index_array_key) {
       index_array_value = *mem;
-      rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
-      if (MMUX_SUCCESS != rv) { return rv; }
+      brv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+      if (MMUX_SUCCESS != brv) { return brv; }
     }
     return MMUX_SUCCESS;
   }

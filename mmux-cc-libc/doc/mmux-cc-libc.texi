@@ -1119,6 +1119,31 @@ the actual number of values stored in the array.
 @MmuxSetterGetter{passwd,	pw_shell,	char const *}
 @MmuxStructDumper{passwd}
 
+
+@deftypefun bool mmux_libc_getpwuid (mmux_libc_passwd_t * * @var{result_passwd_pp}, mmux_libc_uid_t @var{uid})
+@MmuxCInterface{getpwuid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getpwnam (mmux_libc_passwd_t * * @var{result_passwd_pp}, char const * @var{username})
+@MmuxCInterface{getpwnam}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setpwent (void)
+@MmuxCInterface{setpwent}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_endpwent (void)
+@MmuxCInterface{endpwent}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getpwent (mmux_libc_passwd_t * * @var{result_passwd_pp})
+@MmuxCInterface{getpwent}.
+@end deftypefun
+
 @c page
 @node persona database group
 @section Group database
@@ -1129,6 +1154,36 @@ the actual number of values stored in the array.
 @MmuxSetterGetter{group,	gr_gid,		mmux_libc_gid_t}
 @MmuxSetterGetter{group,	gr_mem,		char const **}
 @MmuxStructDumper{group}
+
+
+@deftypefun bool mmux_libc_getgrgid (mmux_libc_passwd_t * * @var{result_passwd_pp}, mmux_libc_gid_t @var{gid})
+@MmuxCInterface{getgrgid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getgrnam (mmux_libc_passwd_t * * @var{result_passwd_pp}, char const * @var{groupname})
+@MmuxCInterface{getgrnam}.
+@end deftypefun
+
+
+@deftypefn {@gnu{} Function} bool mmux_libc_group_member (bool * @var{result_is_member_p}, mmux_libc_gid_t @var{gid})
+@MmuxCInterface{group_member}.
+@end deftypefn
+
+
+@deftypefun bool mmux_libc_setgrent (void)
+@MmuxCInterface{setgrent}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_endgrent (void)
+@MmuxCInterface{endgrent}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getgrent (mmux_libc_group_t * * @var{result_group_pp})
+@MmuxCInterface{getgrent}.
+@end deftypefun
 
 @c page
 @node processes

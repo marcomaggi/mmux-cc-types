@@ -150,8 +150,11 @@ function persona-group_member-1.1 () {
 	    declare THE_GID
 	    declare -i BOOL
 
+	    dotest-unset-debug
+
 	    mbfl_location_leave_when_failure( mmux_libc_getgid THE_GID )
 	    mbfl_location_leave_when_failure( mmux_libc_group_member BOOL RR(THE_GID) )
+	    dotest-debug BOOL=RR(BOOL)
 	    (( 1 == RR(BOOL) ))
 	}
 	mbfl_location_leave

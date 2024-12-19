@@ -510,6 +510,16 @@ mmux_libc_getgrnam (mmux_libc_group_t * * result_group_pp, char const * username
     return true;
   }
 }
+bool
+mmux_libc_group_member (bool * is_member_p, mmux_libc_gid_t gid)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_GROUP_MEMBER]]],[[[
+  mmux_sint_t	is_member = group_member(gid.value);
+
+  *is_member_p = ((0 != is_member)? true : false);
+  return false;
+]]])
+}
 
 /* ------------------------------------------------------------------ */
 

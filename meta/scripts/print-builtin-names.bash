@@ -69,7 +69,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   getuid getgid geteuid getegid getgroups getgrouplist getlogin
 			   getpwuid getpwnam setpwent getpwent endpwent
 			   pw_name_ref pw_passwd_ref pw_uid_ref pw_gid_ref pw_gecos_ref pw_dir_ref pw_shell_ref passwd_dump
-			   getgrgid getgrnam setgrent getgrent endgrent
+			   getgrgid getgrnam setgrent getgrent endgrent group_member
 			   gr_name_ref gr_gid_ref gr_mem_ref group_dump
 			   timeval_calloc timeval_set timeval_ref tv_sec_set tv_sec_ref tv_usec_set tv_usec_ref timeval_dump
 			   timespec_calloc timespec_set timespec_ref ts_sec_set ts_sec_ref ts_nsec_set ts_nsec_ref timespec_dump
@@ -345,7 +345,7 @@ function have_cfunc () {
 {
     for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
 			strchrnul basename dirname canonicalize_file_name \
-			renameat2 group_member accept4
+			renameat2 accept4
     do
 	if have_cfunc "$ITEM"
 	then
