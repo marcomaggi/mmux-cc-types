@@ -40,14 +40,6 @@
 
 #include <mmux-bash-pointers.h>
 
-#ifdef HAVE_INTTYPES_H
-#  include <inttypes.h>
-#endif
-
-#ifdef HAVE_STDINT_H
-#  include <stdint.h>
-#endif
-
 #ifdef HAVE_STDIO_H
 #  include <stdio.h>
 #endif
@@ -108,10 +100,6 @@
 #  include <float.h>
 #endif
 
-#ifdef HAVE_GRP_H
-#  include <grp.h>
-#endif
-
 #ifdef HAVE_LIMITS_H
 #  include <limits.h>
 #endif
@@ -166,14 +154,6 @@
 
 #ifdef HAVE_SYS_UN_H
 #  include <sys/un.h>
-#endif
-
-#ifdef HAVE_SYS_RESOURCE_H
-#  include <sys/resource.h>
-#endif
-
-#ifdef HAVE_WCHAR_H
-#  include <wchar.h>
 #endif
 
 /* ------------------------------------------------------------------ */
