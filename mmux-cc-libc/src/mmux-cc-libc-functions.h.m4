@@ -443,6 +443,33 @@ mmux_cc_libc_decl bool mmux_libc_gettid (mmux_libc_pid_t * result_p)
  ** Persona.
  ** ----------------------------------------------------------------- */
 
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_name,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_passwd,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_uid,		mmux_libc_uid_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_gid,		mmux_libc_gid_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_gecos,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_dir,		char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_shell,	char const *)
+
+mmux_cc_libc_decl bool mmux_libc_passwd_dump (mmux_libc_file_descriptor_t fd, mmux_libc_passwd_t const * passw_p,
+					      char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(group,	gr_name,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(group,	gr_gid,		mmux_libc_gid_t)
+
+mmux_cc_libc_decl bool mmux_libc_gr_mem_set (mmux_libc_group_t * const P, mmux_asciizcp_t * value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_gr_mem_ref (mmux_asciizcp_t * * result_p, mmux_libc_group_t const * const P)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_group_dump (mmux_libc_file_descriptor_t fd, mmux_libc_group_t const * passw_p,
+					     char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
+/* ------------------------------------------------------------------ */
+
 mmux_cc_libc_decl bool mmux_libc_make_uid (mmux_libc_uid_t * result_p, mmux_uid_t uid_num)
   __attribute__((__nonnull__(1)));
 
@@ -495,6 +522,45 @@ mmux_cc_libc_decl bool mmux_libc_getgrouplist_size (mmux_usize_t * result_ngroup
 mmux_cc_libc_decl bool mmux_libc_getgrouplist (char const * username, mmux_libc_gid_t gid,
 					       mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
   __attribute__((__nonnull__(1,3,4)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_setuid   (mmux_libc_uid_t uid);
+mmux_cc_libc_decl bool mmux_libc_seteuid  (mmux_libc_uid_t uid);
+mmux_cc_libc_decl bool mmux_libc_setreuid (mmux_libc_uid_t uid, mmux_libc_uid_t euid);
+
+mmux_cc_libc_decl bool mmux_libc_setgid   (mmux_libc_gid_t gid);
+mmux_cc_libc_decl bool mmux_libc_setegid  (mmux_libc_gid_t gid);
+mmux_cc_libc_decl bool mmux_libc_setregid (mmux_libc_gid_t gid, mmux_libc_gid_t egid);
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_getlogin (char const * * username_p);
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_getpwuid (mmux_libc_passwd_t * * result_passwd_pp, mmux_libc_uid_t uid)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_getpwnam (mmux_libc_passwd_t * * result_passwd_pp, char const * username)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_getgrgid (mmux_libc_group_t * * result_group_pp, mmux_libc_gid_t gid)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_getgrnam (mmux_libc_group_t * * result_group_pp, char const * username)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_setpwent (void);
+mmux_cc_libc_decl bool mmux_libc_endpwent (void);
+mmux_cc_libc_decl bool mmux_libc_getpwent (mmux_libc_passwd_t * * result_passwd_pp)
+  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_setgrent (void);
+mmux_cc_libc_decl bool mmux_libc_endgrent (void);
+mmux_cc_libc_decl bool mmux_libc_getgrent (mmux_libc_group_t * * result_group_pp)
+  __attribute__((__nonnull__(1)));
+
+
 
 
 /** --------------------------------------------------------------------

@@ -205,6 +205,34 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER STRUCT_POINTER MMUX_M4_TOUPPER($3)_VALUE"]]])
 ]]])
 
+m4_dnl $1 - data structure type
+m4_dnl $2 - field name
+m4_dnl $3 - field type stem
+m4_dnl
+m4_dnl Example:
+m4_dnl
+m4_dnl DEFINE_MMUX_LIBC_STRUCT_GETTER([[[mmux_libc_tm_t]]],[[[tm_sec]]],[[[sint]]])
+m4_dnl
+m4_define([[[DEFINE_MMUX_LIBC_STRUCT_GETTER]]],[[[
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$2_ref]]])
+{
+  char const *		varname;
+  $1 *			struct_pointer;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(struct_pointer,	2);
+  {
+    mmux_$3_t	value;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_$2_ref(&value, struct_pointer));
+    return mmux_$3_bind_to_bash_variable(varname, value, MMUX_BASH_BUILTIN_STRING_NAME);
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(3 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STRUCT_POINTER MMUX_M4_TOUPPER($3)_VALUE"]]])
+]]])
+
 
 #### parsing arguments
 

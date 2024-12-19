@@ -89,7 +89,7 @@ Interface to the function @cfunc{\FUNCNAME\}, @MmuxCFuncpage{\FUNCNAME\}
 
 @macro MmuxCStructOpaqueTypedef{STRUCTNAME}
 @deftp {Opaque Struct Typedef} mmux_libc_\STRUCTNAME\_t
-An alias for @MmuxCStruct{\STRUCTNAME\}.
+An opaque alias for @MmuxCStruct{\STRUCTNAME\}.
 @end deftp
 
 @end macro
@@ -1065,18 +1065,70 @@ the actual number of values stored in the array.
 @node persona setting
 @section Setting users and groups
 
+
+@deftypefun bool mmux_libc_setuid (mmux_libc_uid_t @var{uid})
+@MmuxCInterface{setuid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_seteuid (mmux_libc_uid_t @var{uid})
+@MmuxCInterface{seteuid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setreuid (mmux_libc_uid_t @var{uid}, mmux_libc_uid_t @var{euid})
+@MmuxCInterface{setreuid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setgid (mmux_libc_gid_t @var{gid})
+@MmuxCInterface{setgid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setegid (mmux_libc_gid_t @var{gid})
+@MmuxCInterface{setegid}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setregid (mmux_libc_gid_t @var{gid}, mmux_libc_gid_t @var{egid})
+@MmuxCInterface{setregid}.
+@end deftypefun
+
 @c page
 @node persona login
 @section Identifying who logged in
+
+
+@deftypefun bool mmux_libc_getlogin (char const * * @var{result_username_p})
+@MmuxCInterface{getlogin}.
+@end deftypefun
 
 @c page
 @node persona database user
 @section User database
 
+
+@MmuxCStructOpaqueTypedef{passwd}
+@MmuxSetterGetter{passwd,	pw_name,	char const *}
+@MmuxSetterGetter{passwd,	pw_passwd,	char const *}
+@MmuxSetterGetter{passwd,	pw_uid,		mmux_libc_uid_t}
+@MmuxSetterGetter{passwd,	pw_gid,		mmux_libc_gid_t}
+@MmuxSetterGetter{passwd,	pw_gecos,	char const *}
+@MmuxSetterGetter{passwd,	pw_dir,		char const *}
+@MmuxSetterGetter{passwd,	pw_shell,	char const *}
+@MmuxStructDumper{passwd}
+
 @c page
 @node persona database group
 @section Group database
 
+
+@MmuxCStructOpaqueTypedef{group}
+@MmuxSetterGetter{group,	gr_name,	char const *}
+@MmuxSetterGetter{group,	gr_gid,		mmux_libc_gid_t}
+@MmuxSetterGetter{group,	gr_mem,		char const **}
+@MmuxStructDumper{group}
 
 @c page
 @node processes

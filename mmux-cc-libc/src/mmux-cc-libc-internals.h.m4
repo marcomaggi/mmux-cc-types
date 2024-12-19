@@ -271,6 +271,8 @@ typedef struct iovec		mmux_libc_iovec_t;
 typedef struct flock		mmux_libc_flock_t;
 typedef fd_set			mmux_libc_fd_set_t;
 typedef struct rlimit		mmux_libc_rlimit_t;
+typedef struct passwd		mmux_libc_passwd_t;
+typedef struct group		mmux_libc_group_t;
 
 typedef struct mmux_libc_iovec_array_t {
   mmux_libc_iovec_t *	iova_pointer;

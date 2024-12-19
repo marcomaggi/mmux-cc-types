@@ -66,9 +66,11 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   S_ISDIR S_ISCHR S_ISBLK S_ISREG S_ISFIFO S_ISLNK S_ISSOCK S_TYPEISMQ S_TYPEISSEM S_TYPEISSHM
 			   utimbuf_malloc utimbuf_actime_set utimbuf_actime_ref utimbuf_modtime_set utimbuf_modtime_ref
 			   utime utimes futimes lutimes
-			   getuid getgid geteuid getegid getgroups getgrouplist getlogin cuserid
-			   getpwuid getpwnam setpwent getpwent endpwent pw_name pw_passwd pw_uid pw_gid pw_gecos pw_dir pw_shell
-			   getgrgid getgrnam setgrent getgrent endgrent gr_name gr_gid gr_mem
+			   getuid getgid geteuid getegid getgroups getgrouplist getlogin
+			   getpwuid getpwnam setpwent getpwent endpwent
+			   pw_name_ref pw_passwd_ref pw_uid_ref pw_gid_ref pw_gecos_ref pw_dir_ref pw_shell_ref passwd_dump
+			   getgrgid getgrnam setgrent getgrent endgrent
+			   gr_name_ref gr_gid_ref gr_mem_ref group_dump
 			   timeval_calloc timeval_set timeval_ref tv_sec_set tv_sec_ref tv_usec_set tv_usec_ref timeval_dump
 			   timespec_calloc timespec_set timespec_ref ts_sec_set ts_sec_ref ts_nsec_set ts_nsec_ref timespec_dump
 			   tm_calloc tm_sec_set tm_sec_ref tm_min_set tm_min_ref tm_hour_set tm_hour_ref

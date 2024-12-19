@@ -47,7 +47,7 @@ mmux_$1_bind_to_bash_variable (char const * variable_name, mmux_$1_t value, char
 
     rv = mmux_$1_sprint(s_value, required_nbytes, value);
     if (false == rv) {
-      return mmux_string_bind_to_bash_variable(variable_name, s_value, caller_name);
+      return mmux_asciizcp_bind_to_bash_variable(variable_name, s_value, caller_name);
     } else {
       return MMUX_FAILURE;
     }

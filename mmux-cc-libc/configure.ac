@@ -84,6 +84,8 @@ AC_CHECK_FUNCS([mempcpy memrchr strnlen strndup stpncpy strcasecmp strncasecmp s
                 renameat2 group_member dup3 accept4 copy_file_range gettid prlimit])
 
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_RLIMIT],[sizeof(struct rlimit)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_PASSWD],[sizeof(struct passwd)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_GROUP], [sizeof(struct group)])
 
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_TIMEVAL], [sizeof(struct timeval)])
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_TIMESPEC],[sizeof(struct timespec)])

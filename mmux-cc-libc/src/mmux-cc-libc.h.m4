@@ -108,6 +108,8 @@ typedef struct mmux_libc_iovec_t    { mmux_uint8_t value[MMUX_LIBC_SIZEOF_IOVEC]
 typedef struct mmux_libc_flock_t    { mmux_uint8_t value[MMUX_LIBC_SIZEOF_FLOCK];    } mmux_libc_flock_t;
 typedef struct mmux_libc_fd_set_t   { mmux_uint8_t value[MMUX_LIBC_SIZEOF_FD_SET];   } mmux_libc_fd_set_t;
 typedef struct mmux_libc_rlimit_t   { mmux_uint8_t value[MMUX_LIBC_SIZEOF_RLIMIT];   } mmux_libc_rlimit_t;
+typedef struct mmux_libc_passwd_t   { mmux_uint8_t value[MMUX_LIBC_SIZEOF_PASSWD];   } mmux_libc_passwd_t;
+typedef struct mmux_libc_group_t    { mmux_uint8_t value[MMUX_LIBC_SIZEOF_GROUP];    } mmux_libc_group_t;
 
 typedef struct mmux_libc_iovec_array_t {
   mmux_libc_iovec_t *	iova_pointer;

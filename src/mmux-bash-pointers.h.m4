@@ -265,6 +265,14 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_string_bind_to_bash_global_variable
   (char const * v, char const * s_value, char const * caller_name)
   __attribute__((__nonnull__(1,2)));
 
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_asciizcp_bind_to_bash_variable
+  (mmux_asciizcp_t variable_name, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_asciizcp_bind_to_bash_global_variable
+  (mmux_asciizcp_t v, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
+  __attribute__((__nonnull__(1,2)));
+
 /* ------------------------------------------------------------------ */
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_bash_store_string_in_variable (char const * variable_name, char const * s_value,

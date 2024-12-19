@@ -7784,11 +7784,6 @@ mmux_libc_getlogin USERNAME
 @end example
 @end deffn
 
-
-@deffn Builtin mmux_libc_cuserid @var{USERNAMEVAR}
-Interface to the standard C language function @cfunc{cuserid}, @glibcref{Who Logged In, cuserid}.
-@end deffn
-
 @c page
 @node persona database user
 @section User database
@@ -7809,13 +7804,13 @@ declare PASSWD
 declare PW_NAME PW_PASSWD PW_UID PW_GID PW_GECOS PW_DIR PW_SHELL
 
 mmux_libc_getpwuid PASSWD @RR{UID}
-mmux_libc_pw_name   PW_NAME   @RR{PASSWD}
-mmux_libc_pw_passwd PW_PASSWD @RR{PASSWD}
-mmux_libc_pw_uid    PW_UID    @RR{PASSWD}
-mmux_libc_pw_gid    PW_GID    @RR{PASSWD}
-mmux_libc_pw_gecos  PW_GECOS  @RR{PASSWD}
-mmux_libc_pw_dir    PW_DIR    @RR{PASSWD}
-mmux_libc_pw_shell  PW_SHELL  @RR{PASSWD}
+mmux_libc_pw_name_ref   PW_NAME   @RR{PASSWD}
+mmux_libc_pw_passwd_ref PW_PASSWD @RR{PASSWD}
+mmux_libc_pw_uid_ref    PW_UID    @RR{PASSWD}
+mmux_libc_pw_gid_ref    PW_GID    @RR{PASSWD}
+mmux_libc_pw_gecos_ref  PW_GECOS  @RR{PASSWD}
+mmux_libc_pw_dir_ref    PW_DIR    @RR{PASSWD}
+mmux_libc_pw_shell_ref  PW_SHELL  @RR{PASSWD}
 @end example
 @end deffn
 
@@ -7849,7 +7844,7 @@ mmux_libc_setpwent
 mmux_libc_getpwent PASSWD
 until mmux_pointer_is_zero @RR{PASSWD}
 do
-    mmux_libc_pw_name PW_NAME @RR{PASSWD}
+    mmux_libc_pw_name_ref PW_NAME @RR{PASSWD}
     echo @WW{PW_NAME}
     mmux_libc_getpwent PASSWD
 done
@@ -7863,43 +7858,43 @@ Interface to the standard C language function @cfunc{endpwent}, @glibcref{Scanni
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_name @var{PW_NAME_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_name_ref @var{PW_NAME_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_NAME_VAR} a string representation of the field
 @code{pw_name} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_passwd @var{PW_PASSWD_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_passwd_ref @var{PW_PASSWD_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_PASSWD_VAR} a string representation of the field
 @code{pw_passwd} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_uid @var{PW_UID_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_uid_ref @var{PW_UID_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_UID_VAR} a string representation of the field
 @code{pw_uid} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_gid @var{PW_GID_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_gid_ref @var{PW_GID_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_GID_VAR} a string representation of the field
 @code{pw_gid} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_gecos @var{PW_GECOS_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_gecos_ref @var{PW_GECOS_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_GECOS_VAR} a string representation of the field
 @code{pw_gecos} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_dir @var{PW_DIR_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_dir_ref @var{PW_DIR_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_DIR_VAR} a string representation of the field
 @code{pw_dir} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_pw_shell @var{PW_SHELL_VAR} @var{PASSWD_POINTER}
+@deffn Builtin mmux_libc_pw_shell_ref @var{PW_SHELL_VAR} @var{PASSWD_POINTER}
 Bind to the shell variable whose name is @var{PW_SHELL_VAR} a string representation of the field
 @code{pw_shell} in the @MmuxCStruct{passwd} referenced by the pointer @var{PASSWD_POINTER}.
 @end deffn
@@ -7925,9 +7920,9 @@ declare GR_NAME GR_GID
 declare -a GR_MEM
 
 mmux_libc_getgrgid GROUP @RR{SOME_GID}
-mmux_libc_gr_name GR_NAME   @RR{GROUP}
-mmux_libc_gr_gid  GR_GID    @RR{GROUP}
-mmux_libc_gr_mem  GR_MEM    @RR{GROUP}
+mmux_libc_gr_name_ref GR_NAME   @RR{GROUP}
+mmux_libc_gr_gid_ref  GR_GID    @RR{GROUP}
+mmux_libc_gr_mem_ref  GR_MEM    @RR{GROUP}
 @end example
 @end deffn
 
@@ -7961,7 +7956,7 @@ mmux_libc_setgrent
 mmux_libc_getgrent GROUP
 until mmux_pointer_is_zero @RR{GROUP}
 do
-    mmux_libc_gr_name GR_NAME @RR{GROUP}
+    mmux_libc_gr_name_ref GR_NAME @RR{GROUP}
     echo @WW{GR_NAME}
     mmux_libc_getgrent GROUP
 done
@@ -7975,19 +7970,19 @@ Interface to the standard C language function @cfunc{endgrent}, @glibcref{Scanni
 @end deffn
 
 
-@deffn Builtin mmux_libc_gr_name @var{GR_NAME_VAR} @var{GROUP_POINTER}
+@deffn Builtin mmux_libc_gr_name_ref @var{GR_NAME_VAR} @var{GROUP_POINTER}
 Bind to the shell variable whose name is @var{GR_NAME_VAR} a string representation of the field
 @code{gr_name} in the @MmuxCStruct{group} referenced by the pointer @var{GROUP_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_gr_gid @var{GR_GID_VAR} @var{GROUP_POINTER}
+@deffn Builtin mmux_libc_gr_gid_ref @var{GR_GID_VAR} @var{GROUP_POINTER}
 Bind to the shell variable whose name is @var{GR_GID_VAR} a string representation of the field
 @code{gr_gid} in the @MmuxCStruct{group} referenced by the pointer @var{GROUP_POINTER}.
 @end deffn
 
 
-@deffn Builtin mmux_libc_gr_mem @var{GR_MEM_INDEX_ARRAY_VAR} @var{GROUP_POINTER}
+@deffn Builtin mmux_libc_gr_mem_ref @var{GR_MEM_INDEX_ARRAY_VAR} @var{GROUP_POINTER}
 Bind to the elements of the shell index array variable whose name is @var{GR_MEM_INDEX_ARRAY_VAR}
 the string representations of the elements in the vector field @code{gr_mem} in the @code{struct
 group} referenced by the pointer @var{GROUP_POINTER}.
@@ -11990,6 +11985,7 @@ signalled the error.  @var{who} is usually the name of a builtin.
 
 
 @deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
+@deftypefunx mmux_bash_rv_t mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t @var{variable_name}, mmux_asciizcp_t @var{s_value}, mmux_asciizcp_t @var{who})
 Assign @var{s_value} to the shell @var{variable_name}; the @asciiz{} string referenced by
 @var{s_value} is duplicated internally by Bash, so Bash does @strong{not} own the memory referenced
 by @var{s_value}.  When successful return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
@@ -11997,6 +11993,7 @@ by @var{s_value}.  When successful return @code{MMUX_SUCCESS}; otherwise return 
 
 
 @deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_global_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
+@deftypefunx mmux_bash_rv_t mmux_asciizcp_bind_to_bash_global_variable (mmux_asciizcp_t @var{variable_name}, mmux_asciizcp_t @var{s_value}, mmux_asciizcp_t @var{who})
 Like @cfunc{mmux_string_bind_to_bash_variable} but bind the value to a global shell variable.
 @end deftypefun
 

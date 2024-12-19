@@ -140,20 +140,6 @@ function persona-getlogin-1.1 () {
 }
 
 
-#### cuserid
-
-function persona-cuserid-1.1 () {
-    mbfl_location_enter
-    {
-	declare USERNAME
-
-	mbfl_location_leave_when_failure( mmux_libc_cuserid USERNAME )
-	dotest-equal WW(USER) WW(USERNAME)
-    }
-    mbfl_location_leave
-}
-
-
 #### group_member
 
 function persona-group_member-1.1 () {
@@ -183,13 +169,16 @@ function persona-getpwuid-1.1 () {
 	dotest-unset-debug
 
 	mbfl_location_leave_when_failure( mmux_libc_getpwuid PASSWD RR(UID) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+
+	mbfl_location_leave_when_failure( mmux_libc_pw_name_ref PW_NAME RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_passwd_ref PW_PASSWD RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_uid_ref PW_UID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gid_ref PW_GID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gecos_ref PW_GECOS RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_dir_ref PW_DIR RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_shell_ref PW_SHELL RR(PASSWD) )
+
+	mmux_libc_passwd_dump RR(PASSWD)
 
 	# If we are here: it was a success.
 	dotest-debug PASSWD=WW(PASSWD)
@@ -215,13 +204,16 @@ function persona-getpwnam-1.1 () {
 	dotest-unset-debug
 
 	mbfl_location_leave_when_failure( mmux_libc_getpwnam PASSWD WW(USER) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+
+	mbfl_location_leave_when_failure( mmux_libc_pw_name_ref PW_NAME RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_passwd_ref PW_PASSWD RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_uid_ref PW_UID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gid_ref PW_GID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gecos_ref PW_GECOS RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_dir_ref PW_DIR RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_shell_ref PW_SHELL RR(PASSWD) )
+
+	mmux_libc_passwd_dump RR(PASSWD)
 
 	# If we are here: it was a success.
 	dotest-debug PASSWD=WW(PASSWD)
@@ -249,13 +241,13 @@ function persona-getpwent-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_setpwent )
 	mbfl_location_leave_when_failure( mmux_libc_getpwent PASSWD )
 
-	mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
-	mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_name_ref PW_NAME RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_passwd_ref PW_PASSWD RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_uid_ref PW_UID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gid_ref PW_GID RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_gecos_ref PW_GECOS RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_dir_ref PW_DIR RR(PASSWD) )
+	mbfl_location_leave_when_failure( mmux_libc_pw_shell_ref PW_SHELL RR(PASSWD) )
 
 	mbfl_location_leave_when_failure( mmux_libc_endpwent )
 
@@ -283,13 +275,13 @@ function persona-getpwent-1.2 () {
 	mbfl_location_leave_when_failure( mmux_libc_getpwent PASSWD )
 	until mmux_pointer_is_zero RR(PASSWD)
 	do
-	    mbfl_location_leave_when_failure( mmux_libc_pw_name PW_NAME RR(PASSWD) )
-	    mbfl_location_leave_when_failure( mmux_libc_pw_passwd PW_PASSWD RR(PASSWD) )
-	    mbfl_location_leave_when_failure( mmux_libc_pw_uid PW_UID RR(PASSWD) )
-	    mbfl_location_leave_when_failure( mmux_libc_pw_gid PW_GID RR(PASSWD) )
-	    mbfl_location_leave_when_failure( mmux_libc_pw_gecos PW_GECOS RR(PASSWD) )
-	    mbfl_location_leave_when_failure( mmux_libc_pw_dir PW_DIR RR(PASSWD) )
-	    mbfl_location_leave_when_failure( mmux_libc_pw_shell PW_SHELL RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_name_ref PW_NAME RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_passwd_ref PW_PASSWD RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_uid_ref PW_UID RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_gid_ref PW_GID RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_gecos_ref PW_GECOS RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_dir_ref PW_DIR RR(PASSWD) )
+	    mbfl_location_leave_when_failure( mmux_libc_pw_shell_ref PW_SHELL RR(PASSWD) )
 
 	    dotest-debug PASSWD=WW(PASSWD)
 	    dotest-debug PW_NAME=WW(PW_NAME)
@@ -319,9 +311,11 @@ function persona-getgrgid-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getgid GID )
 	mbfl_location_leave_when_failure( mmux_libc_getgrgid GROUP RR(UID) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_name  GR_NAME RR(GROUP) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_gid   GR_GID  RR(GROUP) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_mem   GR_MEM RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_name_ref  GR_NAME RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_gid_ref   GR_GID  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_mem_ref   GR_MEM RR(GROUP) )
+
+	mmux_libc_group_dump RR(GROUP)
 
 	# If we are here: it was a success.
 	dotest-debug GID=WW(GID)
@@ -351,9 +345,11 @@ function persona-getgrnam-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getgid GID )
 	mbfl_location_leave_when_failure( mmux_libc_getgrnam GROUP RR(USER) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_name  GR_NAME RR(GROUP) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_gid   GR_GID  RR(GROUP) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_mem   GR_MEM RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_name_ref  GR_NAME RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_gid_ref   GR_GID  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_mem_ref   GR_MEM RR(GROUP) )
+
+	mmux_libc_group_dump RR(GROUP)
 
 	# If we are here: it was a success.
 	dotest-debug GID=WW(GID)
@@ -384,9 +380,9 @@ function persona-getgrent-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_setgrent )
 	mbfl_location_leave_when_failure( mmux_libc_getgrent GROUP )
 
-	mbfl_location_leave_when_failure( mmux_libc_gr_name GR_NAME RR(GROUP) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_gid  GR_GID  RR(GROUP) )
-	mbfl_location_leave_when_failure( mmux_libc_gr_mem  GR_MEM  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_name_ref  GR_NAME RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_gid_ref   GR_GID  RR(GROUP) )
+	mbfl_location_leave_when_failure( mmux_libc_gr_mem_ref   GR_MEM RR(GROUP) )
 
 	mbfl_location_leave_when_failure( mmux_libc_endgrent )
 
@@ -416,9 +412,9 @@ function persona-getgrent-1.2 () {
 
 	until mmux_pointer_is_zero RR(GROUP)
 	do
-	    mbfl_location_leave_when_failure( mmux_libc_gr_name GR_NAME RR(GROUP) )
-	    mbfl_location_leave_when_failure( mmux_libc_gr_gid  GR_GID  RR(GROUP) )
-	    mbfl_location_leave_when_failure( mmux_libc_gr_mem  GR_MEM  RR(GROUP) )
+	    mbfl_location_leave_when_failure( mmux_libc_gr_name_ref  GR_NAME RR(GROUP) )
+	    mbfl_location_leave_when_failure( mmux_libc_gr_gid_ref   GR_GID  RR(GROUP) )
+	    mbfl_location_leave_when_failure( mmux_libc_gr_mem_ref   GR_MEM RR(GROUP) )
 
 	    dotest-debug GROUP=WW(GROUP)
 	    dotest-debug GR_NAME=WW(GR_NAME)
