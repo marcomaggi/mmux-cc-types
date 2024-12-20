@@ -35,20 +35,14 @@
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_link]]])
 {
-  char const *	oldname;
-  char const *	newname;
+  mmux_asciizcp_t	oldname;
+  mmux_asciizcp_t	newname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	2);
   {
-    int		rv = link(oldname, newname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_link(oldname, newname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -59,26 +53,20 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_linkat]]])
 {
-  int		oldfd;
-  char const *	oldname;
-  int		newfd;
-  char const *	newname;
-  int		flags;
+  mmux_libc_fd_t	oldfd;
+  mmux_asciizcp_t	oldname;
+  mmux_libc_fd_t	newfd;
+  mmux_asciizcp_t	newname;
+  mmux_sint_t		flags;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(oldfd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(oldfd,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(newfd,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(newfd,		3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	4);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	5);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,		5);
   {
-    int		rv = linkat(oldfd, oldname, newfd, newname, flags);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_linkat(oldfd, oldname, newfd, newname, flags));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -98,14 +86,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_symlink]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	2);
   {
-    int		rv = symlink(oldname, newname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_symlink(oldname, newname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -116,36 +98,55 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_readlink]]])
 {
-  char const *	filename;
+  mmux_asciizcp_t	pathname_varname;
+  mmux_asciizcp_t	linkname;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(filename,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(linkname,		2);
   {
-    ssize_t	provided_size = 0;
+    mmux_asciizcp_t	pathname;
 
-    while (true) {
-      provided_size += 1024;
-      {
-	char	buffer[provided_size];
-	ssize_t	required_size;
+    MMUX_LIBC_FUNCALL(mmux_libc_readlink_malloc(&pathname, linkname));
+    {
+      mmux_bash_rv_t	brv;
 
-	memset(buffer, '\0', provided_size);
-	required_size = readlink(filename, buffer, provided_size-1);
-
-	if (required_size < 0) {
-	  mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-	  return MMUX_FAILURE;
-	} else if (required_size == provided_size) {
-	  continue;
-	} else {
-	  return mmux_string_bind_to_bash_variable(argv[1], buffer, MMUX_BASH_BUILTIN_STRING_NAME);
-	}
-      }
+      brv = mmux_string_bind_to_bash_variable(pathname_varname, pathname, MMUX_BASH_BUILTIN_STRING_NAME);
+      mmux_libc_free((mmux_pointer_t)pathname);
+      return brv;
     }
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER REAL_PATHNAME_VAR PATHNAME"]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_readlinkat]]])
+{
+  mmux_asciizcp_t		pathname_varname;
+  mmux_libc_file_descriptor_t	dirfd;
+  mmux_asciizcp_t		linkname;
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(dirfd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(linkname,		3);
+  {
+    mmux_asciizcp_t	pathname;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_readlinkat_malloc(&pathname, dirfd, linkname));
+    {
+      mmux_bash_rv_t	brv;
+
+      brv = mmux_string_bind_to_bash_variable(pathname_varname, pathname, MMUX_BASH_BUILTIN_STRING_NAME);
+      mmux_libc_free((mmux_pointer_t)pathname);
+      return brv;
+    }
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[(4 == argc)]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER REAL_PATHNAME_VAR DIRFD PATHNAME"]]])
 
 /* ------------------------------------------------------------------ */
 

@@ -190,6 +190,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * persona::                     Persona operations.
 * processes::                   Processes.
 * fds::                         File descriptors.
+* fs::                          File system.
 
 Appendices
 
@@ -1866,6 +1867,99 @@ Pointer to a variable representing a parameter that can be input or output depen
 Detect if the data received through a socket has reached the mark; @var{parameter_p} must reference
 a variable of type @objtype{mmux_sint_t}.
 @end defvr
+
+@c page
+@node fs
+@chapter File system
+
+
+@menu
+* fs links::                    Hard and symbolic links.
+* fs deleting::                 Deleting links.
+* fs renaming::                 Renaming links.
+* fs directories::              Directories.
+* fs ownership::                File ownership.
+* fs permissions::              File access permissions.
+* fs attributes::               File attributes.
+* fs truncating::               Truncating files.
+* fs times::                    File system times.
+@end menu
+
+@c page
+@node fs links
+@section Hard and symbolic links
+
+
+@deftypefun bool mmux_libc_link (mmux_asciizcp_t @var{oldname}, mmux_asciizcp_t @var{newname})
+@MmuxCInterface{link}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_linkat (mmux_libc_file_descriptor_t @var{oldfd}, mmux_asciizcp_t @var{oldname}, mmux_libc_file_descriptor_t @var{newfd}, mmux_asciizcp_t @var{newname}, mmux_sint_t @var{flags})
+@MmuxCInterface{linkat}
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_symlink (mmux_asciizcp_t @var{oldname}, mmux_asciizcp_t @var{newname})
+@MmuxCInterface{symlink}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_readlink (mmux_usize_t * @var{required_nbytes_p}, mmux_asciizcp_t @var{linkname}, mmux_asciizp_t @var{buffer}, mmux_usize_t @var{provided_nbytes})
+@MmuxCInterface{readlink}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_readlink_malloc (mmux_asciizcp_t * @var{result_pathname_p}, mmux_asciizcp_t @var{linkname})
+Like @cfunc{mmux_libc_readlink} but when successful: allocate a memory block, using
+@cfunc{mmux_libc_malloc}, and store the resulting pathname @asciiz{} string in it, including the
+terminating nul character; we must release the allocated memory using @cfunc{mmux_libc_free}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_readlinkat (mmux_usize_t * @var{required_nbytes_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_asciizcp_t @var{linkname}, mmux_asciizp_t @var{buffer}, mmux_usize_t @var{provided_nbytes})
+@MmuxCInterface{readlinkat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_readlinkat_malloc (mmux_asciizcp_t * @var{result_pathname_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_asciizcp_t @var{linkname})
+Like @cfunc{mmux_libc_readlinkat} but when successful: allocate a memory block, using
+@cfunc{mmux_libc_malloc}, and store the resulting pathname @asciiz{} string in it, including the
+terminating nul character; we must release the allocated memory using @cfunc{mmux_libc_free}.
+@end deftypefun
+
+@c page
+@node fs deleting
+@section Deleting links
+
+@c page
+@node fs renaming
+@section Renaming links
+
+@c page
+@node fs directories
+@section Directories
+
+@c page
+@node fs ownership
+@section File ownership
+
+@c page
+@node fs permissions
+@section File access permissions
+
+@c page
+@node fs attributes
+@section File attributes
+
+@c page
+@node fs truncating
+@section Truncating files
+
+@c page
+@node fs times
+@section File system times
+
 
 @c page
 @c ------------------------------------------------------------

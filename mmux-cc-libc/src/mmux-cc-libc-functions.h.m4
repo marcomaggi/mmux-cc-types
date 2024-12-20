@@ -565,6 +565,39 @@ mmux_cc_libc_decl bool mmux_libc_getgrent (mmux_libc_group_t * * result_group_pp
 
 
 /** --------------------------------------------------------------------
+ ** File system.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_link (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_linkat (mmux_libc_file_descriptor_t oldfd, mmux_asciizcp_t oldname,
+					 mmux_libc_file_descriptor_t newfd, mmux_asciizcp_t newname,
+					 mmux_sint_t flags)
+  __attribute__((__nonnull__(2,4)));
+
+mmux_cc_libc_decl bool mmux_libc_symlink (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_readlink (mmux_usize_t * required_nbytes_p, mmux_asciizcp_t linkname,
+					   mmux_asciizp_t buffer, mmux_usize_t provided_nbytes)
+  __attribute__((__nonnull__(1,2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_readlink_malloc (mmux_asciizcp_t * result_pathname_p, mmux_asciizcp_t linkname)
+  __attribute__((__nonnull__(1,2)));
+
+/* The argument "linkname" can be NULL on some versions of Linux. */
+mmux_cc_libc_decl bool mmux_libc_readlinkat (mmux_usize_t * required_nbytes_p, mmux_libc_file_descriptor_t dirfd,
+					     mmux_asciizcp_t linkname, mmux_asciizp_t buffer, mmux_usize_t provided_nbytes)
+  __attribute__((__nonnull__(1,4)));
+
+/* The argument "linkname" can be NULL on some versions of Linux. */
+mmux_cc_libc_decl bool mmux_libc_readlinkat_malloc (mmux_asciizcp_t * result_pathname_p, mmux_libc_file_descriptor_t dirfd,
+						    mmux_asciizcp_t linkname)
+  __attribute__((__nonnull__(1)));
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

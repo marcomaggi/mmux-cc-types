@@ -7107,6 +7107,19 @@ mmux_libc_readlink PATHNAME 'newname.ext'
 @end deffn
 
 
+@deffn Builtin mmux_libc_readlinkat @var{REAL_PATHNAME_VAR} @var{dirfd} @var{PATHNAME}
+Interface to the standard C language function @cfunc{readlinkat}, @cfuncpage{readlinkat}.
+
+@example
+declare PATHNAME
+
+mmux_libc_symlink 'oldname.ext' 'newname.ext'
+mmux_libc_readlinkat PATHNAME @RR{mmux_libc_AT_FDCWD} 'newname.ext'
+@WW{PATHNAME}      @result{} oldname.ext
+@end example
+@end deffn
+
+
 @deffn {@gnu{} Builtin} mmux_libc_canonicalize_file_name @var{REAL_PATHNAME_VAR} @var{PATHNAME}
 Interface to the extension C language function @cfunc{canonicalize_file_name}, @glibcref{Symbolic
 Links, canonicalize_file_name}.

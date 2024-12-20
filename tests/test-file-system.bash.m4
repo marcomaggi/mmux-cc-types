@@ -181,6 +181,31 @@ function file-system-readlink-1.1 () {
 }
 
 
+#### readlinkat
+
+function file-system-readlinkat-1.1 () {
+    mbfl_location_enter
+    {
+	mbfl_location_handler dotest-clean-files
+
+	dotest-unset-debug
+	declare -r TMP=$(dotest-echo-tmpdir)
+	declare OLDNAME='Makefile'
+	declare NEWNAME REALNAME
+
+	printf -v NEWNAME '%s/%s' WW(TMP) 'spiffy.ext'
+	dotest-debug NEWNAME=WW(NEWNAME)
+
+	dotest-mktmpdir
+	mbfl_location_leave_when_failure( mmux_libc_symlink WW(OLDNAME) WW(NEWNAME) )
+	mbfl_location_leave_when_failure( mmux_libc_readlinkat REALNAME RR(mmux_libc_AT_FDCWD) WW(NEWNAME) )
+
+	dotest-equal WW(OLDNAME) WW(REALNAME)
+    }
+    mbfl_location_leave
+}
+
+
 #### canonicalize_file_name
 
 function file-system-canonicalize_file_name-1.1 () {
