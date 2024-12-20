@@ -602,6 +602,30 @@ mmux_cc_libc_decl bool mmux_libc_canonicalize_file_name (mmux_asciizp_t * result
 mmux_cc_libc_decl bool mmux_libc_realpath (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
   __attribute__((__nonnull__(1,2)));
 
+mmux_cc_libc_decl bool mmux_libc_unlink (mmux_asciizcp_t pathname)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd, mmux_asciizcp_t pathname, mmux_sint_t flags)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_rmdir (mmux_asciizcp_t pathname)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_remove (mmux_asciizcp_t pathname)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_rename (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_renameat (mmux_libc_file_descriptor_t olddirfd, mmux_asciizcp_t oldname,
+					   mmux_libc_file_descriptor_t newdirfd, mmux_asciizcp_t newname)
+  __attribute__((__nonnull__(2,4)));
+
+mmux_cc_libc_decl bool mmux_libc_renameat2 (mmux_libc_file_descriptor_t olddirfd, mmux_asciizcp_t oldname,
+					    mmux_libc_file_descriptor_t newdirfd, mmux_asciizcp_t newname,
+					    mmux_uint_t flags)
+  __attribute__((__nonnull__(2,4)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

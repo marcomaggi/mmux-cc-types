@@ -171,4 +171,60 @@ mmux_libc_realpath (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pa
   }
 }
 
+bool
+mmux_libc_unlink (mmux_asciizcp_t pathname)
+{
+  int	rv = unlink(pathname);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd, mmux_asciizcp_t pathname, mmux_sint_t flags)
+{
+  int	rv = unlinkat(dirfd.value, pathname, flags);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_rmdir (mmux_asciizcp_t pathname)
+{
+  int	rv = rmdir(pathname);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_remove (mmux_asciizcp_t pathname)
+{
+  int	rv = remove(pathname);
+
+  return ((0 == rv)? false : true);
+}
+
+bool
+mmux_libc_rename (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
+{
+  int	rv = rename(oldname, newname);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_renameat (mmux_libc_file_descriptor_t olddirfd, mmux_asciizcp_t oldname,
+		    mmux_libc_file_descriptor_t newdirfd, mmux_asciizcp_t newname)
+{
+  int	rv = renameat(olddirfd.value, oldname, newdirfd.value, newname);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_renameat2 (mmux_libc_file_descriptor_t olddirfd, mmux_asciizcp_t oldname,
+		     mmux_libc_file_descriptor_t newdirfd, mmux_asciizcp_t newname,
+		     mmux_uint_t flags)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_RENAMEAT2]]],[[[
+  int	rv = renameat2(olddirfd.value, oldname, newdirfd.value, newname, flags);
+
+  return ((0 == rv)? false : true);
+]]])
+}
+
 /* end of file */

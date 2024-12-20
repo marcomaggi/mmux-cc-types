@@ -57,7 +57,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   strlen strcpy strncpy strdup stpcpy strcat strncat strcmp strncmp strcoll strxfrm
 			   strchr strrchr strstr strcasestr strspn strcspn strpbrk strtok
 			   link linkat symlink readlink readlinkat realpath canonicalize_file_name
-			   unlink unlinkat remove rmdir rename renameat
+			   unlink unlinkat remove rmdir rename renameat renameat2
 			   mkdir mkdirat
 			   chown fchown lchown fchownat umask getumask chmod fchmod fchmodat access faccessat
 			   truncate ftruncate stat fstat lstat fstatat stat_malloc
@@ -346,7 +346,7 @@ function have_cfunc () {
 {
     for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
 			strchrnul basename dirname  \
-			renameat2 accept4
+			accept4
     do
 	if have_cfunc "$ITEM"
 	then

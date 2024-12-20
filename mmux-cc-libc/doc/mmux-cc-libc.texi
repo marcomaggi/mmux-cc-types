@@ -1948,9 +1948,44 @@ responsibility of the caller to release the buffer with a call to @cfunc{mmux_li
 @node fs deleting
 @section Deleting links
 
+
+@deftypefun bool mmux_libc_unlink (mmux_asciizcp_t pathname)
+@MmuxCInterface{unlink}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd, mmux_asciizcp_t pathname, mmux_sint_t flags)
+@MmuxCInterface{unlinkat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_rmdir (mmux_asciizcp_t pathname)
+@MmuxCInterface{rmdir}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_remove (mmux_asciizcp_t pathname)
+@MmuxCInterface{remove}.
+@end deftypefun
+
 @c page
 @node fs renaming
 @section Renaming links
+
+
+@deftypefun mmux_cc_libc_decl bool mmux_libc_rename (mmux_asciizcp_t @var{oldname}, mmux_asciizcp_t @var{newname})
+@MmuxCInterface{rename}.
+@end deftypefun
+
+
+@deftypefun mmux_cc_libc_decl bool mmux_libc_renameat (mmux_libc_file_descriptor_t @var{olddirfd}, mmux_asciizcp_t @var{oldname}, mmux_libc_file_descriptor_t @var{newdirfd}, mmux_asciizcp_t @var{newname})
+@MmuxCInterface{renameat}.
+@end deftypefun
+
+
+@deftypefn {Linux Function} mmux_cc_libc_decl bool mmux_libc_renameat2 (mmux_libc_file_descriptor_t @var{olddirfd}, mmux_asciizcp_t @var{oldname}, mmux_libc_file_descriptor_t @var{newdirfd}, mmux_asciizcp_t @var{newname}, mmux_uint_t flags)
+@MmuxCInterface{renameat2}.
+@end deftypefn
 
 @c page
 @node fs directories

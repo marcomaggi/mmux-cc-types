@@ -205,14 +205,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_unlink]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
   {
-    int		rv = unlink(pathname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_unlink(pathname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -223,22 +217,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_unlinkat]]])
 {
-  int		dirfd;
-  mmux_asciizcp_t	pathname;
-  int		flags;
+  mmux_libc_file_descriptor_t	dirfd;
+  mmux_asciizcp_t		pathname;
+  mmux_sint_t			flags;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(dirfd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(dirfd,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,		3);
   {
-    int		rv = unlinkat(dirfd, pathname, flags);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_unlinkat(dirfd, pathname, flags));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -253,14 +241,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rmdir]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
   {
-    int		rv = rmdir(pathname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_rmdir(pathname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -275,14 +257,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_remove]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
   {
-    int		rv = remove(pathname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_remove(pathname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -302,14 +278,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rename]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	2);
   {
-    int		rv = rename(oldname, newname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_rename(oldname, newname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -320,24 +290,18 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_renameat]]])
 {
-  int		olddirfd;
-  mmux_asciizcp_t	oldname;
-  int		newdirfd;
-  mmux_asciizcp_t	newname;
+  mmux_libc_file_descriptor_t	olddirfd;
+  mmux_asciizcp_t		oldname;
+  mmux_libc_file_descriptor_t	newdirfd;
+  mmux_asciizcp_t		newname;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(olddirfd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(olddirfd,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(newdirfd,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(newdirfd,		3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	4);
   {
-    int		rv = renameat(olddirfd, oldname, newdirfd, newname);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_renameat(olddirfd, oldname, newdirfd, newname));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -348,33 +312,21 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_renameat2]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_RENAMEAT2]]],[[[
-  int		olddirfd;
-  mmux_asciizcp_t	oldname;
-  int		newdirfd;
-  mmux_asciizcp_t	newname;
-  mmux_uint_t	flags;
+  mmux_libc_file_descriptor_t	olddirfd;
+  mmux_asciizcp_t		oldname;
+  mmux_libc_file_descriptor_t	newdirfd;
+  mmux_asciizcp_t		newname;
+  mmux_uint_t			flags;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(olddirfd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(olddirfd,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(newdirfd,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(newdirfd,		3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	4);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT(flags,	5);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT(flags,		5);
   {
-    int		rv = renameat2(olddirfd, oldname, newdirfd, newname, flags);
-
-    if (0 == rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_renameat2(olddirfd, oldname, newdirfd, newname, flags));
+    return MMUX_SUCCESS;
   }
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
