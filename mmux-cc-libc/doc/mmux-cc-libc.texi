@@ -1928,6 +1928,22 @@ Like @cfunc{mmux_libc_readlinkat} but when successful: allocate a memory block, 
 terminating nul character; we must release the allocated memory using @cfunc{mmux_libc_free}.
 @end deftypefun
 
+
+@deftypefun bool mmux_libc_canonicalize_file_name (mmux_asciizp_t * @var{result_pathname_p}, mmux_asciizcp_t @var{input_pathname})
+@MmuxCInterface{canonicalize_file_name}.  When successful: a memory buffer is allocated, using
+@cfunc{mmux_libc_malloc}, and the resulting pathname is stored in it, including the terminating nul;
+a pointer to the buffer is stored in the location referenced by @var{result_pathname_p}.  It is
+responsibility of the caller to release the buffer with a call to @cfunc{mmux_libc_free}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_realpath (mmux_asciizp_t * @var{result_pathname_p}, mmux_asciizcp_t @var{input_pathname})
+@MmuxCInterface{realpath}.  When successful: a memory buffer is allocated, using
+@cfunc{mmux_libc_malloc}, and the resulting pathname is stored in it, including the terminating nul;
+a pointer to the buffer is stored in the location referenced by @var{result_pathname_p}.  It is
+responsibility of the caller to release the buffer with a call to @cfunc{mmux_libc_free}.
+@end deftypefun
+
 @c page
 @node fs deleting
 @section Deleting links
