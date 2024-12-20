@@ -152,27 +152,20 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_canonicalize_file_name]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_CANONICALIZE_FILE_NAME]]],[[[
-  char const *	in;
+  mmux_asciizcp_t	result_pathname_varname;
+  mmux_asciizcp_t	in;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_pathname_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in,				2);
   {
-    char *	ou = canonicalize_file_name(in);
+    mmux_asciizp_t	ou;
+    mmux_bash_rv_t	brv;
 
-    if (ou) {
-      mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], ou, MMUX_BASH_BUILTIN_STRING_NAME);
-      free(ou);
-      return rv;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_canonicalize_file_name(&ou, in));
+    brv = mmux_string_bind_to_bash_variable(result_pathname_varname, ou, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_libc_free(ou);
+    return brv;
   }
-]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
@@ -182,20 +175,19 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_realpath]]])
 {
-  char const *	in;
+  mmux_asciizcp_t	result_pathname_varname;
+  mmux_asciizcp_t	in;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_pathname_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in,				2);
   {
-    char *	ou = realpath(in, NULL);
+    mmux_asciizp_t	ou;
+    mmux_bash_rv_t	brv;
 
-    if (ou) {
-      mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], ou, MMUX_BASH_BUILTIN_STRING_NAME);
-      free(ou);
-      return rv;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_realpath(&ou, in));
+    brv = mmux_string_bind_to_bash_variable(result_pathname_varname, ou, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_libc_free(ou);
+    return brv;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -209,7 +201,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_unlink]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
   {
@@ -232,7 +224,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_unlinkat]]])
 {
   int		dirfd;
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   int		flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(dirfd,	1);
@@ -257,7 +249,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rmdir]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
   {
@@ -279,7 +271,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_remove]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
   {
@@ -304,8 +296,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_rename]]])
 {
-  char const *	oldname;
-  char const *	newname;
+  mmux_asciizcp_t	oldname;
+  mmux_asciizcp_t	newname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(newname,	2);
@@ -329,9 +321,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_renameat]]])
 {
   int		olddirfd;
-  char const *	oldname;
+  mmux_asciizcp_t	oldname;
   int		newdirfd;
-  char const *	newname;
+  mmux_asciizcp_t	newname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(olddirfd,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(oldname,	2);
@@ -358,9 +350,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_renameat2]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[HAVE_RENAMEAT2]]],[[[
   int		olddirfd;
-  char const *	oldname;
+  mmux_asciizcp_t	oldname;
   int		newdirfd;
-  char const *	newname;
+  mmux_asciizcp_t	newname;
   mmux_uint_t	flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(olddirfd,	1);
@@ -395,7 +387,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_mkdir]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_mode_t	mode;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -420,7 +412,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_mkdirat]]])
 {
   mmux_sint_t	dirfd;
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_mode_t	mode;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(dirfd,	1);
@@ -448,7 +440,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_chown]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_uid_t	uid;
   mmux_gid_t	gid;
 
@@ -500,7 +492,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lchown]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_uid_t	uid;
   mmux_gid_t	gid;
 
@@ -527,7 +519,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fchownat]]])
 {
   mmux_sint_t	dirfd;
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_uid_t	uid;
   mmux_gid_t	gid;
   mmux_sint_t	flags;
@@ -559,7 +551,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_umask]]])
 {
-  char const *	old_mask_varname;
+  mmux_asciizcp_t	old_mask_varname;
   mmux_mode_t	new_mask;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(old_mask_varname,	1);
@@ -578,7 +570,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getumask]]])
 {
-  char const *	old_mask_varname;
+  mmux_asciizcp_t	old_mask_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(old_mask_varname,	1);
   {
@@ -596,7 +588,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_chmod]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_mode_t	mode;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -645,7 +637,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fchmodat]]])
 {
   mmux_sint_t	dirfd;
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_mode_t	mode;
   mmux_sint_t	flags;
 
@@ -672,7 +664,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_access]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_sint_t	how;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -697,7 +689,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_faccessat]]])
 {
   mmux_sint_t	dirfd;
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_sint_t	how;
   mmux_sint_t	flags;
 
@@ -727,7 +719,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_truncate]]])
 {
-  char const *	pathname;
+  mmux_asciizcp_t	pathname;
   mmux_off_t	len;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -778,7 +770,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat_malloc]]])
 {
-  char const *	pointer_varname;
+  mmux_asciizcp_t	pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
   {
@@ -800,7 +792,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_mode_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -820,7 +812,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_uid_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -840,7 +832,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_gid_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -860,7 +852,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_size_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -880,7 +872,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 m4_define([[[DEFINE_STAT_GETTER_UINTMAX]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_$1_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -906,7 +898,7 @@ DEFINE_STAT_GETTER_UINTMAX([[[blksize]]])
 
 m4_define([[[DEFINE_STAT_GETTER_TIME]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_$1_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -930,7 +922,7 @@ DEFINE_STAT_GETTER_TIME([[[ctime]]])
 
 m4_define([[[DEFINE_STAT_GETTER_ULONG]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_st_$1e_nsec_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -954,7 +946,7 @@ DEFINE_STAT_GETTER_ULONG([[[ctim]]])
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat]]])
 {
-  char const *		pathname;
+  mmux_asciizcp_t		pathname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -1004,7 +996,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lstat]]])
 {
-  char const *		pathname;
+  mmux_asciizcp_t		pathname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -1030,7 +1022,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fstatat]]])
 {
   mmux_sint_t		dirfd;
-  char const *		pathname;
+  mmux_asciizcp_t		pathname;
   mmux_pointer_t	pointer;
   mmux_sint_t		flags;
 
@@ -1106,7 +1098,7 @@ DEFINE_STAT_PTR_PREDICATE([[[TYPEISSHM]]])
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utimbuf_malloc]]])
 {
-  char const *	pointer_varname;
+  mmux_asciizcp_t	pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
   {
@@ -1128,7 +1120,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 m4_define([[[DEFINE_UTIMBUF_FIELD_GET_SET]]],[[[MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utimbuf_$1_ref]]])
 {
-  char const *		value_varname;
+  mmux_asciizcp_t		value_varname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
@@ -1169,7 +1161,7 @@ DEFINE_UTIMBUF_FIELD_GET_SET([[[modtime]]])
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utime]]])
 {
-  char const *		pathname;
+  mmux_asciizcp_t		pathname;
   mmux_pointer_t	pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	1);
@@ -1194,7 +1186,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utimes]]])
 {
-  char const *		pathname;
+  mmux_asciizcp_t		pathname;
   mmux_pointer_t	access_pointer;
   mmux_pointer_t	modification_pointer;
 
@@ -1223,7 +1215,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lutimes]]])
 {
-  char const *		pathname;
+  mmux_asciizcp_t		pathname;
   mmux_pointer_t	access_pointer;
   mmux_pointer_t	modification_pointer;
 

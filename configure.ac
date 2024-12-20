@@ -120,8 +120,7 @@ AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/uio.h sys/socket.h sys/un.h netinet/in
                   netdb.h sys/resource.h])
 
 AC_CHECK_FUNCS([strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul
-                basename dirname canonicalize_file_name
-                renameat2 accept4])
+                basename dirname renameat2 accept4])
 
 
 #### external packages

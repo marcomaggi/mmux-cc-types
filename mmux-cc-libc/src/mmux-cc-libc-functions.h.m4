@@ -596,6 +596,12 @@ mmux_cc_libc_decl bool mmux_libc_readlinkat_malloc (mmux_asciizcp_t * result_pat
 						    mmux_asciizcp_t linkname)
   __attribute__((__nonnull__(1)));
 
+mmux_cc_libc_decl bool mmux_libc_canonicalize_file_name (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_realpath (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
+  __attribute__((__nonnull__(1,2)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

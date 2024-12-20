@@ -144,4 +144,31 @@ mmux_libc_readlinkat_malloc (mmux_asciizcp_t * result_pathname_p, mmux_libc_file
   }
 }
 
+bool
+mmux_libc_canonicalize_file_name (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_CANONICALIZE_FILE_NAME]]],[[[
+  mmux_asciizp_t	output_pathname = canonicalize_file_name(input_pathname);
+
+  if (output_pathname) {
+    *result_pathname_p = output_pathname;
+    return false;
+  } else {
+    return true;
+  }
+]]])
+}
+bool
+mmux_libc_realpath (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
+{
+  mmux_asciizp_t	output_pathname = realpath(input_pathname, NULL);
+
+  if (output_pathname) {
+    *result_pathname_p = output_pathname;
+    return false;
+  } else {
+    return true;
+  }
+}
+
 /* end of file */
