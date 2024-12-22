@@ -202,10 +202,20 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_libc_fd_bind_to_bash_variable (char 
 									   char const * caller_name)
   __attribute__((__nonnull__(1)));
 
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_libc_fd_bind_to_bash_variable_or_close (char const * fd_varname,
+										    mmux_libc_file_descriptor_t fd,
+										    char const * caller_name)
+  __attribute__((__nonnull__(1)));
+
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_libc_ptn_bind_to_bash_variable (mmux_asciizcp_t ptn_varname,
 									    mmux_libc_file_system_pathname_t ptn,
 									    char const * caller_name)
   __attribute__((__nonnull__(1)));
+
+mmux_bash_pointers_decl mmux_bash_rv_t mmux_libc_ptn_bind_to_bash_variable_then_free (mmux_asciizcp_t pathname_varname,
+										      mmux_libc_file_system_pathname_t pathname,
+										      char const * caller_name)
+  __attribute__((__nonnull__(1,3)));
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_pointer_bind_to_bash_variable_or_free (char const * pointer_varname,
 										   mmux_pointer_t pointer,

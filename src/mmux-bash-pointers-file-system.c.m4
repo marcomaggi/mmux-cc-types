@@ -28,17 +28,6 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-static mmux_bash_rv_t
-mmux_libc_ptn_bind_to_bash_variable_then_free (mmux_asciizcp_t pathname_varname,
-					       mmux_libc_file_system_pathname_t pathname,
-					       char const * caller_name)
-{
-  mmux_bash_rv_t	brv = mmux_libc_ptn_bind_to_bash_variable(pathname_varname, pathname, caller_name);
-
-  mmux_libc_file_system_pathname_free(pathname);
-  return brv;
-}
-
 
 /** --------------------------------------------------------------------
  ** Hard links.
@@ -673,6 +662,29 @@ DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_stat_t]]],[[[st_ctime_nse
 
 /* ------------------------------------------------------------------ */
 
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat_dump]]])
+{
+  mmux_libc_stat_t *	stat_pointer;
+  char const *		struct_name = "struct stat";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(stat_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    mmux_libc_file_descriptor_t		fd;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_stdou(&fd));
+    MMUX_LIBC_FUNCALL(mmux_libc_stat_dump(fd, stat_pointer, struct_name));
+    return MMUX_SUCCESS;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER STAT_POINTER [STRUCT_NAME]"]]])
+
+/* ------------------------------------------------------------------ */
+
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_stat]]])
 {
   mmux_libc_file_system_pathname_t	pathname;
@@ -824,6 +836,29 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_utimbuf_t]]],[[[actime]]], [[[time]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME]]])
 DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_utimbuf_t]]],[[[modtime]]],[[[time]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TIME]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utimbuf_dump]]])
+{
+  mmux_libc_utimbuf_t *	utimbuf_pointer;
+  char const *		struct_name = "struct utimbuf";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(utimbuf_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    mmux_libc_file_descriptor_t		fd;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_stdou(&fd));
+    MMUX_LIBC_FUNCALL(mmux_libc_utimbuf_dump(fd, utimbuf_pointer, struct_name));
+    return MMUX_SUCCESS;
+  }
+}
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER UTIMBUF_POINTER [STRUCT_NAME]"]]])
 
 /* ------------------------------------------------------------------ */
 

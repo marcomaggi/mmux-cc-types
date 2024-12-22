@@ -2092,7 +2092,7 @@ current mask.
 
 
 @MmuxCStructOpaqueTypedef{stat}
-@MmuxSetterGetter{stat, st_mode,   mmux_mode_t}
+@MmuxSetterGetter{stat, st_mode,        mmux_mode_t}
 @MmuxSetterGetter{stat,	st_ino,		mmux_uintmax_t}
 @MmuxSetterGetter{stat,	st_dev,		mmux_uintmax_t}
 @MmuxSetterGetter{stat,	st_nlink,	mmux_uintmax_t}
@@ -2107,6 +2107,7 @@ current mask.
 @MmuxSetterGetter{stat,	st_ctime_nsec,	mmux_slong_t}
 @MmuxSetterGetter{stat,	st_blocks,	mmux_uintmax_t}
 @MmuxSetterGetter{stat,	st_blksize,	mmux_uint_t}
+@MmuxStructDumper{stat}
 
 
 @deftypefun bool mmux_libc_stat (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_stat_t * @var{stat_p})
@@ -2196,6 +2197,30 @@ current mask.
 @node fs times
 @section File system times
 
+
+@MmuxCStructOpaqueTypedef{utimbuf}
+@MmuxSetterGetter{utimbuf, actime,   mmux_time_t}
+@MmuxSetterGetter{utimbuf, modtime,   mmux_time_t}
+@MmuxStructDumper{utimbuf}
+
+
+@deftypefun bool mmux_libc_utime (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_utimbuf_t * @var{utimbuf_p})
+@MmuxCInterface{utime}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_utimes (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_timeval_t * @var{access_p}, mmux_libc_timeval_t * @var{modification_p})
+@MmuxCInterface{utimes}.
+@end deftypefun
+
+@deftypefun bool mmux_libc_lutimes (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_timeval_t * @var{access_p}, mmux_libc_timeval_t * @var{modification_p})
+@MmuxCInterface{lutimes}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_futimes (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_timeval_t * @var{access_p}, mmux_libc_timeval_t * @var{modification_p})
+@MmuxCInterface{futimes}.
+@end deftypefun
 
 @c page
 @c ------------------------------------------------------------

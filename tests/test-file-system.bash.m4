@@ -798,6 +798,8 @@ function file-system-stat-1.1 () {
 	dotest-debug ST_BLOCKS=QQ(ST_BLOCKS)
 	dotest-debug ST_BLKSIZE=QQ(ST_BLKSIZE)
 
+	mbfl_location_leave_when_failure( mmux_libc_stat_dump RR(STAT) >&2 )
+
 	dotest-predicate mmux_string_is_uintmax RR(ST_MODE) &&
 	dotest-predicate mmux_string_is_uintmax RR(ST_INO) &&
 	dotest-predicate mmux_string_is_uintmax RR(ST_DEV) &&
@@ -1085,6 +1087,10 @@ function file-system-utime-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_modtime_set RR(UTIMBUF) 456 )
 
 	mbfl_location_leave_when_failure( mmux_libc_utime WW(PATHNAME) RR(UTIMBUF) )
+
+	mbfl_location_leave_when_failure( mmux_libc_utimbuf_dump RR(UTIMBUF) >&2 )
+
+	true
     }
     mbfl_location_leave
 }

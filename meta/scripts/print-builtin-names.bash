@@ -60,7 +60,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   unlink unlinkat remove rmdir rename renameat renameat2
 			   mkdir mkdirat
 			   chown fchown lchown fchownat umask getumask chmod fchmod fchmodat access faccessat
-			   truncate ftruncate stat fstat lstat fstatat stat_calloc
+			   truncate ftruncate stat fstat lstat fstatat stat_calloc stat_dump
 			   st_mode_ref st_mode_set
 			   st_ino_ref st_ino_set
 			   st_dev_ref st_dev_set
@@ -77,7 +77,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   st_blocks_ref st_blocks_set
 			   st_blksize_ref st_blksize_set
 			   S_ISDIR S_ISCHR S_ISBLK S_ISREG S_ISFIFO S_ISLNK S_ISSOCK S_TYPEISMQ S_TYPEISSEM S_TYPEISSHM
-			   utimbuf_calloc actime_set actime_ref modtime_set modtime_ref
+			   utimbuf_calloc utimbuf_dump actime_set actime_ref modtime_set modtime_ref
 			   utime utimes futimes lutimes
 			   getuid getgid geteuid getegid getgroups getgrouplist getlogin
 			   getpwuid getpwnam setpwent getpwent endpwent

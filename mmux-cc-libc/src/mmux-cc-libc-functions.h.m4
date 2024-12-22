@@ -693,6 +693,10 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_ctime_nsec,	mmux_slong_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_blocks,	mmux_uintmax_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_blksize,	mmux_uint_t)
 
+mmux_cc_libc_decl bool mmux_libc_stat_dump (mmux_libc_file_descriptor_t fd, mmux_libc_stat_t const * stat_p,
+					    char const * struct_name)
+  __attribute__((__nonnull__(2)));
+
 mmux_cc_libc_decl bool mmux_libc_stat (mmux_libc_file_system_pathname_t pathname, mmux_libc_stat_t * stat_p)
   __attribute__((__nonnull__(2)));
 
@@ -744,6 +748,10 @@ mmux_cc_libc_decl bool mmux_libc_S_ISSOCK (bool * result_p, mmux_mode_t mode)
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(utimbuf, actime,  mmux_time_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(utimbuf, modtime, mmux_time_t)
+
+mmux_cc_libc_decl bool mmux_libc_utimbuf_dump (mmux_libc_file_descriptor_t fd, mmux_libc_utimbuf_t const * utimbuf_p,
+					       char const * struct_name)
+  __attribute__((__nonnull__(2)));
 
 mmux_cc_libc_decl bool mmux_libc_utime (mmux_libc_file_system_pathname_t pathname, mmux_libc_utimbuf_t * utimbuf_p)
   __attribute__((__nonnull__(2)));

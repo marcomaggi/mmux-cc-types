@@ -7441,6 +7441,15 @@ Given a pointer @var{STAT_POINTER} to a @MmuxCStruct{stat}: bind to the shell va
 @MmuxDefineStructStatFieldGetter{BLOCKS,st_blocks}
 @MmuxDefineStructStatFieldGetter{BLKSIZE,st_blksize}
 
+@deffn Builtin mmux_libc_stat_dump @var{STAT_PTR}
+@deffnx Builtin mmux_libc_stat_dump @var{STAT_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @MmuxCStruct{stat}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct stat}.
+@end deffn
+
 @c ------------------------------------------------------------------------
 
 @deffn Builtin mmux_libc_stat @var{PATHNAME} @var{STAT_POINTER}
@@ -7577,6 +7586,16 @@ field @code{modtime} in the @MmuxCStruct{utimbuf} value referenced by @var{UTIMB
 
 The setter converts the string @var{MODTIME} to a value of type @objtype{mmux_time_t} and store it in
 the field @code{modtime} of the @MmuxCStruct{utimbuf} value referenced by @var{UTIMBUF_POINTER}.
+@end deffn
+
+
+@deffn Builtin mmux_libc_utimbuf_dump @var{UTIMBUF_PTR}
+@deffnx Builtin mmux_libc_utimbuf_dump @var{UTIMBUF_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @MmuxCStruct{utimbuf}: print to @stdout{} a description of each field, then
+return true.  If an error occurs: print a message to @stderr{}, then return false.
+
+The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
+structure; when not given: it defaults to @samp{struct utimbuf}.
 @end deffn
 
 

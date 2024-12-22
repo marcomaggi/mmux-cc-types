@@ -28,17 +28,6 @@
 
 #include "mmux-bash-pointers-internals.h"
 
-static mmux_bash_rv_t
-mmux_libc_fd_bind_to_bash_variable_or_close (char const * fd_varname, mmux_libc_file_descriptor_t fd, char const * caller_name)
-{
-  mmux_bash_rv_t	brv = mmux_libc_fd_bind_to_bash_variable(fd_varname, fd, caller_name);
-
-  if (MMUX_SUCCESS != brv) {
-    mmux_libc_close(fd);
-  }
-  return brv;
-}
-
 
 /** --------------------------------------------------------------------
  ** Opening.
