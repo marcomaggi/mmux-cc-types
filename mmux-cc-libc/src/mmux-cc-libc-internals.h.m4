@@ -264,6 +264,8 @@ typedef struct mmux_libc_pid_t             { mmux_pid_t  value; } mmux_libc_pid_
 typedef struct mmux_libc_uid_t             { mmux_uid_t  value; } mmux_libc_uid_t;
 typedef struct mmux_libc_gid_t             { mmux_gid_t  value; } mmux_libc_gid_t;
 
+typedef struct mmux_libc_file_system_pathname_t { mmux_asciizcp_t value; } mmux_libc_file_system_pathname_t;
+
 typedef struct timeval		mmux_libc_timeval_t;
 typedef struct timespec		mmux_libc_timespec_t;
 typedef struct tm		mmux_libc_tm_t;
@@ -273,6 +275,8 @@ typedef fd_set			mmux_libc_fd_set_t;
 typedef struct rlimit		mmux_libc_rlimit_t;
 typedef struct passwd		mmux_libc_passwd_t;
 typedef struct group		mmux_libc_group_t;
+typedef struct stat		mmux_libc_stat_t;
+typedef struct utimbuf		mmux_libc_utimbuf_t;
 
 typedef struct mmux_libc_iovec_array_t {
   mmux_libc_iovec_t *	iova_pointer;

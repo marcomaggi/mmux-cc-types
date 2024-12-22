@@ -7367,10 +7367,10 @@ To use a standard @MmuxCStruct{stat} value, we can do:
 @example
 declare STAT
 declare ST_MODE ST_INO ST_DEV ST_NLINK ST_UID ST_GID ST_SIZE
-declare ST_ATIME ST_ATIME_NSEC ST_MTIME ST_MTIME_NSEC ST_CTIME ST_CTIME_NSEC
+declare ST_ATIME_SEC ST_ATIME_NSEC ST_MTIME_SEC ST_MTIME_NSEC ST_CTIME_SEC ST_CTIME_NSEC
 declare ST_BLOCKS ST_BLKSIZE
 
-mmux_libc_stat_malloc STAT
+mmux_libc_stat_calloc STAT
 @{
     mmux_libc_stat @WW{PATHNAME} @RR{STAT}
 
@@ -7381,11 +7381,11 @@ mmux_libc_stat_malloc STAT
     mmux_libc_st_uid_ref        ST_UID          @RR{STAT}
     mmux_libc_st_gid_ref        ST_GID          @RR{STAT}
     mmux_libc_st_size_ref       ST_SIZE         @RR{STAT}
-    mmux_libc_st_atime_ref      ST_ATIME        @RR{STAT}
+    mmux_libc_st_atime_sec_ref  ST_ATIME_SEC    @RR{STAT}
     mmux_libc_st_atime_nsec_ref ST_ATIME_NSEC   @RR{STAT}
-    mmux_libc_st_mtime_ref      ST_MTIME        @RR{STAT}
+    mmux_libc_st_mtime_sec_ref  ST_MTIME_SEC    @RR{STAT}
     mmux_libc_st_mtime_nsec_ref ST_MTIME_NSEC   @RR{STAT}
-    mmux_libc_st_ctime_ref      ST_CTIME        @RR{STAT}
+    mmux_libc_st_ctime_sec_ref  ST_CTIME_SEC    @RR{STAT}
     mmux_libc_st_ctime_nsec_ref ST_CTIME_NSEC   @RR{STAT}
     mmux_libc_st_blocks_ref     ST_BLOCKS       @RR{STAT}
     mmux_libc_st_blksize_ref    ST_BLKSIZE      @RR{STAT}
@@ -7407,7 +7407,7 @@ Shell variable bound to the number of bytes required to contain a @MmuxCStruct{s
 @end defvr
 
 
-@deffn Builtin mmux_libc_stat_malloc @var{STAT_POINTER_VAR}
+@deffn Builtin mmux_libc_stat_calloc @var{STAT_POINTER_VAR}
 Allocate a data structure of type @MmuxCStruct{stat} using @cfunc{malloc} and initialise it all zero
 values; bind a string representation of its pointer to the shell variable whose name is
 @var{STAT_POINTER_VAR}.
@@ -7432,11 +7432,11 @@ Given a pointer @var{STAT_POINTER} to a @MmuxCStruct{stat}: bind to the shell va
 @MmuxDefineStructStatFieldGetter{UID,st_uid}
 @MmuxDefineStructStatFieldGetter{GID,st_gid}
 @MmuxDefineStructStatFieldGetter{SIZE,st_size}
-@MmuxDefineStructStatFieldGetter{ATIME,st_atime}
+@MmuxDefineStructStatFieldGetter{ATIME_SEC,st_atime_sec}
 @MmuxDefineStructStatFieldGetter{ATIME_NSEC,st_atime_nsec}
-@MmuxDefineStructStatFieldGetter{MTIME,st_mtime}
+@MmuxDefineStructStatFieldGetter{MTIME_SEC,st_mtime_sec}
 @MmuxDefineStructStatFieldGetter{MTIME_NSEC,st_mtime_nsec}
-@MmuxDefineStructStatFieldGetter{CTIME,st_ctime}
+@MmuxDefineStructStatFieldGetter{CTIME_SEC,st_ctime_sec}
 @MmuxDefineStructStatFieldGetter{CTIME_NSEC,st_ctime_nsec}
 @MmuxDefineStructStatFieldGetter{BLOCKS,st_blocks}
 @MmuxDefineStructStatFieldGetter{BLKSIZE,st_blksize}
@@ -7547,7 +7547,7 @@ Shell variable bound to the number of bytes required to contain a @MmuxCStruct{u
 @end defvr
 
 
-@deffn Builtin mmux_libc_utimbuf_malloc @var{UTIMBUF_POINTER_VAR}
+@deffn Builtin mmux_libc_utimbuf_calloc @var{UTIMBUF_POINTER_VAR}
 Allocate a block of memory, using @cfunc{malloc}, wide enough to contain a @MmuxCStruct{utimbuf}
 value; bind to the shell variable whose name is @var{UTIMBUF_POINTER_VAR} a string representation of
 the pointer referencing it.  @glibcref{File Times, struct utimbuf}.
@@ -7556,8 +7556,8 @@ To release the allocated memory we can just use @MmuxBuiltin{mmux_libc_free} or 
 @end deffn
 
 
-@deffn Builtin mmux_libc_utimbuf_actime_ref @var{ACTIME_VAR} @var{UTIMBUF_POINTER}
-@deffnx Builtin mmux_libc_utimbuf_actime_set @var{UTIMBUF_POINTER} @var{ACTIME}
+@deffn Builtin mmux_libc_actime_ref @var{ACTIME_VAR} @var{UTIMBUF_POINTER}
+@deffnx Builtin mmux_libc_actime_set @var{UTIMBUF_POINTER} @var{ACTIME}
 Setter and getter for the field @code{actime} of @MmuxCStruct{utimbuf} values.
 
 The getter binds to the shell variable whose name is @var{ACTIME_VAR} a string representation of the
@@ -7568,8 +7568,8 @@ the field @code{actime} of the @MmuxCStruct{utimbuf} value referenced by @var{UT
 @end deffn
 
 
-@deffn Builtin mmux_libc_utimbuf_modtime_ref @var{MODTIME_VAR} @var{UTIMBUF_POINTER}
-@deffnx Builtin mmux_libc_utimbuf_modtime_set @var{UTIMBUF_POINTER} @var{MODTIME}
+@deffn Builtin mmux_libc_modtime_ref @var{MODTIME_VAR} @var{UTIMBUF_POINTER}
+@deffnx Builtin mmux_libc_modtime_set @var{UTIMBUF_POINTER} @var{MODTIME}
 Setter and getter for the field @code{modtime} of @MmuxCStruct{utimbuf} values.
 
 The getter binds to the shell variable whose name is @var{MODTIME_VAR} a string representation of the
@@ -7587,10 +7587,10 @@ Interface to the standard C language function @cfunc{utime}, @glibcref{File Time
 declare -r PATHNAME='spiffy.ext'
 declare UTIMBUF
 
-mmux_libc_utimbuf_malloc UTIMBUF
+mmux_libc_utimbuf_calloc UTIMBUF
 @{
-    mmux_libc_utimbuf_actime_set  @RR{UTIMBUF} 123
-    mmux_libc_utimbuf_modtime_set @RR{UTIMBUF} 456
+    mmux_libc_actime_set  @RR{UTIMBUF} 123
+    mmux_libc_modtime_set @RR{UTIMBUF} 456
 
     mmux_libc_utime WW(PATHNAME) @RR{UTIMBUF}
 @}
@@ -12105,7 +12105,13 @@ otherwise return @code{MMUX_FAILURE}.
 
 @c ------------------------------------------------------------------------
 
-@deftypefun mmux_bash_rv_t mmux_fd_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_file_descriptor_t @var{value}, char const * @var{who})
+@deftypefun mmux_bash_rv_t mmux_libc_fd_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_file_descriptor_t @var{value}, char const * @var{who})
+Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
+otherwise return @code{MMUX_FAILURE}.
+@end deftypefun
+
+
+@deftypefun mmux_bash_rv_t mmux_libc_ptn_bind_to_bash_variable (mmux_asciizcp_t @var{variable_name}, mmux_libc_file_system_pathname_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
 @end deftypefun

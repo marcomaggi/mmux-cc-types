@@ -762,7 +762,7 @@ function file-system-stat-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+	mbfl_location_compensate( mmux_libc_stat_calloc STAT, mmux_libc_free RR(STAT) )
 
 	mbfl_location_leave_when_failure( mmux_libc_stat WW(PATHNAME) RR(STAT) )
 
@@ -773,11 +773,11 @@ function file-system-stat-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_sec_ref	ST_ATIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_sec_ref	ST_MTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_sec_ref	ST_CTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
@@ -835,7 +835,7 @@ function file-system-fstat-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+	mbfl_location_compensate( mmux_libc_stat_calloc STAT, mmux_libc_free RR(STAT) )
 	mbfl_location_compensate( mmux_libc_open FD WW(PATHNAME) RR(FLAGS) 0, mmux_libc_close RR(FD) )
 	mbfl_location_leave_when_failure( mmux_libc_fstat RR(FD) RR(STAT) )
 
@@ -846,11 +846,11 @@ function file-system-fstat-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_sec_ref	ST_ATIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_sec_ref	ST_MTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_sec_ref	ST_CTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
@@ -907,7 +907,7 @@ function file-system-lstat-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+	mbfl_location_compensate( mmux_libc_stat_calloc STAT, mmux_libc_free RR(STAT) )
 
 	mbfl_location_leave_when_failure( mmux_libc_lstat WW(PATHNAME) RR(STAT) )
 
@@ -918,11 +918,11 @@ function file-system-lstat-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_sec_ref	ST_ATIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_sec_ref	ST_MTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_sec_ref	ST_CTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
@@ -980,7 +980,7 @@ function file-system-fstatat-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+	mbfl_location_compensate( mmux_libc_stat_calloc STAT, mmux_libc_free RR(STAT) )
 
 	mbfl_location_leave_when_failure( mmux_libc_fstatat RR(mmux_libc_AT_FDCWD) WW(PATHNAME) RR(STAT) RR(FLAGS) )
 
@@ -991,11 +991,11 @@ function file-system-fstatat-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_st_uid_ref		ST_UID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_gid_ref		ST_GID RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_size_ref		ST_SIZE RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_atime_ref	ST_ATIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_atime_sec_ref	ST_ATIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_atime_nsec_ref	ST_ATIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_mtime_ref	ST_MTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_mtime_sec_ref	ST_MTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_mtime_nsec_ref	ST_MTIME_NSEC RR(STAT) )
-	mbfl_location_leave_when_failure( mmux_libc_st_ctime_ref	ST_CTIME RR(STAT) )
+	mbfl_location_leave_when_failure( mmux_libc_st_ctime_sec_ref	ST_CTIME RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_ctime_nsec_ref	ST_CTIME_NSEC RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blocks_ref	ST_BLOCKS RR(STAT) )
 	mbfl_location_leave_when_failure( mmux_libc_st_blksize_ref	ST_BLKSIZE RR(STAT) )
@@ -1052,7 +1052,7 @@ function file-system-S_ISREG-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_stat_malloc STAT, mmux_libc_free RR(STAT) )
+	mbfl_location_compensate( mmux_libc_stat_calloc STAT, mmux_libc_free RR(STAT) )
 
 	mbfl_location_leave_when_failure( mmux_libc_stat WW(PATHNAME) RR(STAT) )
 
@@ -1079,10 +1079,10 @@ function file-system-utime-1.1 () {
 
 	dotest-debug PATHNAME=WW(PATHNAME)
 
-	mbfl_location_compensate( mmux_libc_utimbuf_malloc UTIMBUF, mmux_libc_free RR(UTIMBUF) )
+	mbfl_location_compensate( mmux_libc_utimbuf_calloc UTIMBUF, mmux_libc_free RR(UTIMBUF) )
 
-	mbfl_location_leave_when_failure( mmux_libc_utimbuf_actime_set  RR(UTIMBUF) 123 )
-	mbfl_location_leave_when_failure( mmux_libc_utimbuf_modtime_set RR(UTIMBUF) 456 )
+	mbfl_location_leave_when_failure( mmux_libc_actime_set  RR(UTIMBUF) 123 )
+	mbfl_location_leave_when_failure( mmux_libc_modtime_set RR(UTIMBUF) 456 )
 
 	mbfl_location_leave_when_failure( mmux_libc_utime WW(PATHNAME) RR(UTIMBUF) )
     }

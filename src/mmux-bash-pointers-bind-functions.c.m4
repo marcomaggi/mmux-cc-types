@@ -129,11 +129,6 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[socklen]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[rlim]]])
 
 mmux_bash_rv_t
-mmux_fd_bind_to_bash_variable (char const * fd_varname, mmux_libc_file_descriptor_t fd, char const * caller_name)
-{
-  return mmux_sint_bind_to_bash_variable(fd_varname, fd.value, caller_name);
-}
-mmux_bash_rv_t
 mmux_pointer_bind_to_bash_variable_or_free (char const * pointer_varname, mmux_pointer_t pointer, char const * caller_name)
 {
   mmux_bash_rv_t	brv = mmux_pointer_bind_to_bash_variable(pointer_varname, pointer, caller_name);
@@ -144,6 +139,11 @@ mmux_pointer_bind_to_bash_variable_or_free (char const * pointer_varname, mmux_p
   return brv;
 }
 
+mmux_bash_rv_t
+mmux_libc_fd_bind_to_bash_variable (char const * fd_varname, mmux_libc_file_descriptor_t fd, char const * caller_name)
+{
+  return mmux_sint_bind_to_bash_variable(fd_varname, fd.value, caller_name);
+}
 mmux_bash_rv_t
 mmux_libc_pid_bind_to_bash_variable (char const * pid_varname, mmux_libc_pid_t pid, char const * caller_name)
 {
@@ -158,6 +158,11 @@ mmux_bash_rv_t
 mmux_libc_gid_bind_to_bash_variable (char const * gid_varname, mmux_libc_gid_t gid, char const * caller_name)
 {
   return mmux_sint_bind_to_bash_variable(gid_varname, gid.value, caller_name);
+}
+mmux_bash_rv_t
+mmux_libc_ptn_bind_to_bash_variable (mmux_asciizcp_t ptn_varname, mmux_libc_file_system_pathname_t ptn, char const * caller_name)
+{
+  return mmux_string_bind_to_bash_variable(ptn_varname, ptn.value, caller_name);
 }
 
 /* end of file */

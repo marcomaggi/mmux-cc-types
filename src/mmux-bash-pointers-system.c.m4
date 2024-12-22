@@ -107,7 +107,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fpathconf]]])
   mmux_sint_t			parameter;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,				2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(parameter,		3);
   {
     mmux_slong_t	value;

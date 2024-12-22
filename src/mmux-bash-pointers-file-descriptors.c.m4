@@ -29,9 +29,9 @@
 #include "mmux-bash-pointers-internals.h"
 
 static mmux_bash_rv_t
-mmux_fd_bind_to_bash_variable_or_close (char const * fd_varname, mmux_libc_file_descriptor_t fd, char const * caller_name)
+mmux_libc_fd_bind_to_bash_variable_or_close (char const * fd_varname, mmux_libc_file_descriptor_t fd, char const * caller_name)
 {
-  mmux_bash_rv_t	brv = mmux_fd_bind_to_bash_variable(fd_varname, fd, caller_name);
+  mmux_bash_rv_t	brv = mmux_libc_fd_bind_to_bash_variable(fd_varname, fd, caller_name);
 
   if (MMUX_SUCCESS != brv) {
     mmux_libc_close(fd);
@@ -61,7 +61,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_open]]])
     mmux_libc_file_descriptor_t		fd;
 
     MMUX_LIBC_FUNCALL(mmux_libc_open(&fd, pathname, flags, mode));
-    return mmux_fd_bind_to_bash_variable_or_close(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
+    return mmux_libc_fd_bind_to_bash_variable_or_close(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -80,7 +80,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
   mmux_mode_t			mode = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(fd_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(dirfd,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(dirfd,		2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,		4);
   if (6 == argc) {
@@ -90,7 +90,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
     mmux_libc_file_descriptor_t		fd;
 
     MMUX_LIBC_FUNCALL(mmux_libc_openat(&fd, dirfd, pathname, flags, mode));
-    return mmux_fd_bind_to_bash_variable_or_close(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
+    return mmux_libc_fd_bind_to_bash_variable_or_close(fd_varname, fd, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -107,7 +107,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_close]]])
 {
   mmux_libc_file_descriptor_t	fd;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,	1);
   {
     MMUX_LIBC_FUNCALL(mmux_libc_close(fd));
     return MMUX_SUCCESS;
@@ -131,7 +131,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_read]]])
   mmux_usize_t			size;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   {
@@ -157,7 +157,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pread]]])
   mmux_off_t	offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,		5);
@@ -186,7 +186,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_write]]])
   mmux_usize_t			size;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   {
@@ -212,7 +212,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwrite]]])
   mmux_off_t			offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(donevar,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(size,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,		5);
@@ -239,7 +239,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_lseek]]])
   char const *			offset_varname;
   mmux_sint_t			whence;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,				1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,				1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(offset_varname,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(whence,			3);
   {
@@ -279,12 +279,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup]]])
   mmux_libc_file_descriptor_t	old_fd;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(new_fd_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(old_fd,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(old_fd,			2);
   {
     mmux_libc_file_descriptor_t		new_fd;
 
     MMUX_LIBC_FUNCALL(mmux_libc_dup(&new_fd, old_fd));
-    return mmux_fd_bind_to_bash_variable_or_close(new_fd_varname, new_fd, MMUX_BASH_BUILTIN_STRING_NAME);
+    return mmux_libc_fd_bind_to_bash_variable_or_close(new_fd_varname, new_fd, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -299,8 +299,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup2]]])
   mmux_libc_file_descriptor_t	old_fd;
   mmux_libc_file_descriptor_t	new_fd;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(old_fd,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(new_fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(old_fd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(new_fd,	2);
   {
     MMUX_LIBC_FUNCALL(mmux_libc_dup2(old_fd, new_fd));
     return MMUX_SUCCESS;
@@ -319,8 +319,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_dup3]]])
   mmux_libc_file_descriptor_t	new_fd;
   mmux_sint_t			flags;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(old_fd,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(new_fd,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(old_fd,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(new_fd,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	3);
   {
     MMUX_LIBC_FUNCALL(mmux_libc_dup3(old_fd, new_fd, flags));
@@ -351,10 +351,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pipe]]])
     {
       mmux_bash_rv_t	brv;
 
-      brv = mmux_fd_bind_to_bash_variable(reading_fd_varname, fds[0], MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_libc_fd_bind_to_bash_variable(reading_fd_varname, fds[0], MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-      brv = mmux_fd_bind_to_bash_variable(writing_fd_varname, fds[1], MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_libc_fd_bind_to_bash_variable(writing_fd_varname, fds[1], MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
       return MMUX_SUCCESS;
@@ -379,7 +379,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
   mmux_libc_file_descriptor_t	fd;
   mmux_sint_t			command;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,	2);
   switch (command) {
 
@@ -390,7 +390,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
     } else {
       mmux_libc_file_descriptor_t	new_fd;
 
-      MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(new_fd,		3);
+      MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(new_fd,		3);
       MMUX_LIBC_FUNCALL(mmux_libc_fcntl(fd, command, &new_fd));
       return MMUX_SUCCESS;
     }
@@ -601,7 +601,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
   mmux_libc_file_descriptor_t	fd;
   mmux_sint_t			command;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(command,	2);
   switch (command) {
 
@@ -709,7 +709,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_FD_SET]]])
   mmux_libc_file_descriptor_t	fd;
   mmux_libc_fd_set_t *		fd_set_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,				1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,				1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(fd_set_pointer,	2);
   {
     mmux_libc_FD_SET(fd, fd_set_pointer);
@@ -727,7 +727,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_FD_CLR]]])
   mmux_libc_file_descriptor_t	fd;
   mmux_libc_fd_set_t *		fd_set_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,				1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,				1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(fd_set_pointer,	2);
   {
     mmux_libc_FD_CLR(fd, fd_set_pointer);
@@ -745,7 +745,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_FD_ISSET]]])
   mmux_libc_file_descriptor_t	fd;
   mmux_libc_fd_set_t *		fd_set_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,				1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,				1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(fd_set_pointer,	2);
   {
     bool	result;
@@ -919,7 +919,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_readv]]])
   mmux_libc_iovec_array_t	iovec_array;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,					2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array.iova_pointer,3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array.iova_length,		4);
   {
@@ -942,7 +942,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_writev]]])
   mmux_libc_iovec_array_t	iovec_array;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,					2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array.iova_pointer,3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array.iova_length,		4);
   {
@@ -966,7 +966,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_preadv]]])
   mmux_off_t			offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,					2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array.iova_pointer,3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array.iova_length,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,				5);
@@ -991,7 +991,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwritev]]])
   mmux_off_t			offset;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,					2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array.iova_pointer,3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array.iova_length,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,				5);
@@ -1017,7 +1017,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_preadv2]]])
   mmux_sint_t			flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,					2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array.iova_pointer,3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array.iova_length,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,				5);
@@ -1044,7 +1044,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pwritev2]]])
   mmux_sint_t			flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(done_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD(fd,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(fd,				2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(iovec_array.iova_pointer,3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(iovec_array.iova_length,		4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_OFF(offset,				5);
@@ -1286,7 +1286,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_flock_calloc]]])
   {
     mmux_libc_flock_t	flock_struct;
 
-    memset(&flock_struct, '\0', sizeof(mmux_libc_flock_t));
+    mmux_libc_memset(&flock_struct, '\0', sizeof(mmux_libc_flock_t));
     if (2 != argc) {
       mmux_sshort_t	l_type;
       mmux_sshort_t	l_whence;

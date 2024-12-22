@@ -60,12 +60,24 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   unlink unlinkat remove rmdir rename renameat renameat2
 			   mkdir mkdirat
 			   chown fchown lchown fchownat umask getumask chmod fchmod fchmodat access faccessat
-			   truncate ftruncate stat fstat lstat fstatat stat_malloc
-			   st_mode_ref st_ino_ref st_dev_ref st_nlink_ref st_uid_ref st_gid_ref st_size_ref
-			   st_atime_ref st_atime_nsec_ref st_mtime_ref st_mtime_nsec_ref st_ctime_ref st_ctime_nsec_ref
-			   st_blocks_ref st_blksize_ref
+			   truncate ftruncate stat fstat lstat fstatat stat_calloc
+			   st_mode_ref st_mode_set
+			   st_ino_ref st_ino_set
+			   st_dev_ref st_dev_set
+			   st_nlink_ref st_nlink_set
+			   st_uid_ref st_uid_set
+			   st_gid_ref st_gid_set
+			   st_size_ref st_size_set
+			   st_atime_sec_ref st_atime_sec_set
+			   st_atime_nsec_ref st_atime_nsec_set
+			   st_mtime_sec_ref st_mtime_sec_set
+			   st_mtime_nsec_ref st_mtime_nsec_set
+			   st_ctime_sec_ref st_ctime_sec_set
+			   st_ctime_nsec_ref st_ctime_nsec_set
+			   st_blocks_ref st_blocks_set
+			   st_blksize_ref st_blksize_set
 			   S_ISDIR S_ISCHR S_ISBLK S_ISREG S_ISFIFO S_ISLNK S_ISSOCK S_TYPEISMQ S_TYPEISSEM S_TYPEISSHM
-			   utimbuf_malloc utimbuf_actime_set utimbuf_actime_ref utimbuf_modtime_set utimbuf_modtime_ref
+			   utimbuf_calloc actime_set actime_ref modtime_set modtime_ref
 			   utime utimes futimes lutimes
 			   getuid getgid geteuid getegid getgroups getgrouplist getlogin
 			   getpwuid getpwnam setpwent getpwent endpwent

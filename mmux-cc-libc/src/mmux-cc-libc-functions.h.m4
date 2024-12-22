@@ -568,63 +568,197 @@ mmux_cc_libc_decl bool mmux_libc_getgrent (mmux_libc_group_t * * result_group_pp
  ** File system.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_libc_decl bool mmux_libc_link (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
+mmux_cc_libc_decl bool mmux_libc_make_file_system_pathname (mmux_libc_file_system_pathname_t * pathname_p,
+							    mmux_asciizcp_t asciiz_pathname)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_linkat (mmux_libc_file_descriptor_t oldfd, mmux_asciizcp_t oldname,
-					 mmux_libc_file_descriptor_t newfd, mmux_asciizcp_t newname,
-					 mmux_sint_t flags)
-  __attribute__((__nonnull__(2,4)));
+mmux_cc_libc_decl bool mmux_libc_file_system_pathname_asciizp_ref (mmux_asciizcp_t * asciiz_pathname_p,
+								   mmux_libc_file_system_pathname_t pathname)
+  __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_symlink (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
-  __attribute__((__nonnull__(1,2)));
+mmux_cc_libc_decl bool mmux_libc_file_system_pathname_free (mmux_libc_file_system_pathname_t pathname);
 
-mmux_cc_libc_decl bool mmux_libc_readlink (mmux_usize_t * required_nbytes_p, mmux_asciizcp_t linkname,
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_link (mmux_libc_file_system_pathname_t oldname, mmux_libc_file_system_pathname_t newname);
+
+mmux_cc_libc_decl bool mmux_libc_linkat (mmux_libc_file_descriptor_t oldfd, mmux_libc_file_system_pathname_t oldname,
+					 mmux_libc_file_descriptor_t newfd, mmux_libc_file_system_pathname_t newname,
+					 mmux_sint_t flags);
+
+mmux_cc_libc_decl bool mmux_libc_symlink (mmux_libc_file_system_pathname_t oldname, mmux_libc_file_system_pathname_t newname);
+
+mmux_cc_libc_decl bool mmux_libc_readlink (mmux_usize_t * required_nbytes_p, mmux_libc_file_system_pathname_t linkname,
 					   mmux_asciizp_t buffer, mmux_usize_t provided_nbytes)
-  __attribute__((__nonnull__(1,2,3)));
+  __attribute__((__nonnull__(1,3)));
 
-mmux_cc_libc_decl bool mmux_libc_readlink_malloc (mmux_asciizcp_t * result_pathname_p, mmux_asciizcp_t linkname)
-  __attribute__((__nonnull__(1,2)));
+mmux_cc_libc_decl bool mmux_libc_readlink_malloc (mmux_libc_file_system_pathname_t * result_pathname_p,
+						  mmux_libc_file_system_pathname_t linkname)
+  __attribute__((__nonnull__(1)));
 
 /* The argument "linkname" can be NULL on some versions of Linux. */
 mmux_cc_libc_decl bool mmux_libc_readlinkat (mmux_usize_t * required_nbytes_p, mmux_libc_file_descriptor_t dirfd,
-					     mmux_asciizcp_t linkname, mmux_asciizp_t buffer, mmux_usize_t provided_nbytes)
+					     mmux_libc_file_system_pathname_t linkname,
+					     mmux_asciizp_t buffer, mmux_usize_t provided_nbytes)
   __attribute__((__nonnull__(1,4)));
 
 /* The argument "linkname" can be NULL on some versions of Linux. */
-mmux_cc_libc_decl bool mmux_libc_readlinkat_malloc (mmux_asciizcp_t * result_pathname_p, mmux_libc_file_descriptor_t dirfd,
-						    mmux_asciizcp_t linkname)
+mmux_cc_libc_decl bool mmux_libc_readlinkat_malloc (mmux_libc_file_system_pathname_t * result_pathname_p,
+						    mmux_libc_file_descriptor_t dirfd,
+						    mmux_libc_file_system_pathname_t linkname)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_canonicalize_file_name (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_cc_libc_decl bool mmux_libc_realpath (mmux_asciizp_t * result_pathname_p, mmux_asciizcp_t input_pathname)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_cc_libc_decl bool mmux_libc_unlink (mmux_asciizcp_t pathname)
+mmux_cc_libc_decl bool mmux_libc_canonicalize_file_name (mmux_libc_file_system_pathname_t * result_pathname_p,
+							 mmux_libc_file_system_pathname_t input_pathname)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd, mmux_asciizcp_t pathname, mmux_sint_t flags)
+mmux_cc_libc_decl bool mmux_libc_realpath (mmux_libc_file_system_pathname_t * result_pathname_p,
+					   mmux_libc_file_system_pathname_t input_pathname)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_unlink (mmux_libc_file_system_pathname_t pathname);
+
+mmux_cc_libc_decl bool mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd,
+					   mmux_libc_file_system_pathname_t pathname, mmux_sint_t flags);
+
+mmux_cc_libc_decl bool mmux_libc_rmdir (mmux_libc_file_system_pathname_t pathname);
+
+mmux_cc_libc_decl bool mmux_libc_remove (mmux_libc_file_system_pathname_t pathname);
+
+mmux_cc_libc_decl bool mmux_libc_rename (mmux_libc_file_system_pathname_t oldname, mmux_libc_file_system_pathname_t newname);
+
+mmux_cc_libc_decl bool mmux_libc_renameat (mmux_libc_file_descriptor_t olddirfd, mmux_libc_file_system_pathname_t oldname,
+					   mmux_libc_file_descriptor_t newdirfd, mmux_libc_file_system_pathname_t newname);
+
+mmux_cc_libc_decl bool mmux_libc_renameat2 (mmux_libc_file_descriptor_t olddirfd, mmux_libc_file_system_pathname_t oldname,
+					    mmux_libc_file_descriptor_t newdirfd, mmux_libc_file_system_pathname_t newname,
+					    mmux_uint_t flags);
+
+mmux_cc_libc_decl bool mmux_libc_mkdir (mmux_libc_file_system_pathname_t pathname, mmux_mode_t mode);
+
+mmux_cc_libc_decl bool mmux_libc_mkdirat (mmux_libc_file_descriptor_t dirfd, mmux_libc_file_system_pathname_t pathname, mmux_mode_t mode);
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_chown (mmux_libc_file_system_pathname_t pathname, mmux_libc_uid_t uid, mmux_libc_gid_t gid);
+
+mmux_cc_libc_decl bool mmux_libc_fchown (mmux_libc_file_descriptor_t fd, mmux_libc_uid_t uid, mmux_libc_gid_t gid);
+
+mmux_cc_libc_decl bool mmux_libc_lchown (mmux_libc_file_system_pathname_t pathname, mmux_libc_uid_t uid, mmux_libc_gid_t gid);
+
+mmux_cc_libc_decl bool mmux_libc_fchownat (mmux_libc_file_descriptor_t dirfd, mmux_libc_file_system_pathname_t pathname,
+					   mmux_libc_uid_t uid, mmux_libc_gid_t gid, mmux_sint_t flags);
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_umask (mmux_mode_t * old_mask_p, mmux_mode_t new_mask)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_getumask (mmux_mode_t * current_mask_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_chmod (mmux_libc_file_system_pathname_t pathname, mmux_mode_t mode);
+
+mmux_cc_libc_decl bool mmux_libc_fchmod (mmux_libc_file_descriptor_t fd, mmux_mode_t mode);
+
+mmux_cc_libc_decl bool mmux_libc_fchmodat (mmux_libc_file_descriptor_t dirfd, mmux_libc_file_system_pathname_t pathname,
+					   mmux_mode_t mode, mmux_sint_t flags);
+
+mmux_cc_libc_decl bool mmux_libc_access (mmux_libc_file_system_pathname_t pathname, mmux_sint_t how);
+
+mmux_cc_libc_decl bool mmux_libc_faccessat (mmux_libc_file_descriptor_t dirfd, mmux_libc_file_system_pathname_t pathname,
+					    mmux_sint_t how, mmux_sint_t flags);
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_truncate (mmux_libc_file_system_pathname_t pathname, mmux_off_t len);
+
+mmux_cc_libc_decl bool mmux_libc_ftruncate (mmux_libc_file_descriptor_t fd, mmux_off_t len);
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_mode,	mmux_mode_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_ino,		mmux_uintmax_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_dev,		mmux_uintmax_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_nlink,	mmux_uintmax_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_uid,		mmux_libc_uid_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_gid,		mmux_libc_gid_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_size,	mmux_off_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_atime_sec,	mmux_time_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_atime_nsec,	mmux_slong_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_mtime_sec,	mmux_time_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_mtime_nsec,	mmux_slong_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_ctime_sec,	mmux_time_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_ctime_nsec,	mmux_slong_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_blocks,	mmux_uintmax_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_blksize,	mmux_uint_t)
+
+mmux_cc_libc_decl bool mmux_libc_stat (mmux_libc_file_system_pathname_t pathname, mmux_libc_stat_t * stat_p)
   __attribute__((__nonnull__(2)));
 
-mmux_cc_libc_decl bool mmux_libc_rmdir (mmux_asciizcp_t pathname)
-  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_fstat (mmux_libc_file_descriptor_t fd, mmux_libc_stat_t * stat_p)
+  __attribute__((__nonnull__(2)));
 
-mmux_cc_libc_decl bool mmux_libc_remove (mmux_asciizcp_t pathname)
-  __attribute__((__nonnull__(1)));
+mmux_cc_libc_decl bool mmux_libc_lstat (mmux_libc_file_system_pathname_t pathname, mmux_libc_stat_t * stat_p)
+  __attribute__((__nonnull__(2)));
 
-mmux_cc_libc_decl bool mmux_libc_rename (mmux_asciizcp_t oldname, mmux_asciizcp_t newname)
+mmux_cc_libc_decl bool mmux_libc_fstatat (mmux_libc_file_descriptor_t dirfd, mmux_libc_file_system_pathname_t pathname,
+					  mmux_libc_stat_t * stat_p, mmux_sint_t flags)
+  __attribute__((__nonnull__(3)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_S_TYPEISMQ (bool * result_p, mmux_libc_stat_t * stat_p)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_renameat (mmux_libc_file_descriptor_t olddirfd, mmux_asciizcp_t oldname,
-					   mmux_libc_file_descriptor_t newdirfd, mmux_asciizcp_t newname)
-  __attribute__((__nonnull__(2,4)));
+mmux_cc_libc_decl bool mmux_libc_S_TYPEISSEM (bool * result_p, mmux_libc_stat_t * stat_p)
+  __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_renameat2 (mmux_libc_file_descriptor_t olddirfd, mmux_asciizcp_t oldname,
-					    mmux_libc_file_descriptor_t newdirfd, mmux_asciizcp_t newname,
-					    mmux_uint_t flags)
-  __attribute__((__nonnull__(2,4)));
+mmux_cc_libc_decl bool mmux_libc_S_TYPEISSHM (bool * result_p, mmux_libc_stat_t * stat_p)
+  __attribute__((__nonnull__(1,2)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_S_ISDIR (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_S_ISCHR (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_S_ISBLK (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_S_ISREG (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_S_ISFIFO (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_S_ISLNK (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_S_ISSOCK (bool * result_p, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(utimbuf, actime,  mmux_time_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(utimbuf, modtime, mmux_time_t)
+
+mmux_cc_libc_decl bool mmux_libc_utime (mmux_libc_file_system_pathname_t pathname, mmux_libc_utimbuf_t * utimbuf_p)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_utimes (mmux_libc_file_system_pathname_t pathname,
+					 mmux_libc_timeval_t * access_timeval_pointer, mmux_libc_timeval_t * modification_timeval_pointer)
+  __attribute__((__nonnull__(2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_lutimes (mmux_libc_file_system_pathname_t pathname,
+					  mmux_libc_timeval_t * access_timeval_pointer, mmux_libc_timeval_t * modification_timeval_pointer)
+  __attribute__((__nonnull__(2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_futimes (mmux_libc_file_descriptor_t fd,
+					  mmux_libc_timeval_t * access_timeval_pointer, mmux_libc_timeval_t * modification_timeval_pointer)
+  __attribute__((__nonnull__(2,3)));
 
 
 /** --------------------------------------------------------------------

@@ -684,6 +684,10 @@ AC_INCLUDES_DEFAULT([
 #  include <pwd.h>
 #endif
 
+#ifdef HAVE_UTIME_H
+#  include <utime.h>
+#endif
+
 #ifdef HAVE_SIGNAL_H
 #  include <signal.h>
 #endif

@@ -360,7 +360,7 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT]]],[[[MMUX_BASH_PARSE_BUILTIN_A
 
 # $1 - name of the target variable, a value of type "mmux_libc_file_descriptor_t".
 # $2 - index in the array "argv" of the string to parse
-m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_FD]]],[[[{
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD]]],[[[{
 mmux_sint_t	the_argument_value;
 
 MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[sint]]],[[[the_argument_value]]],[[[$2]]])
@@ -905,6 +905,17 @@ m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARG_RLIM]]],[[[MMUX_BASH_PARSE_BUILTIN_ARG_
 # $1 - name of the target variable
 # $2 - index in the array "argv" of the string to parse
 m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_RLIM]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_STEM([[[rlim]]],[[[$1]]],[[[$2]]])]]])
+
+# --------------------------------------------------------------------
+
+# $1 - name of the target variable, a value of type "mmux_libc_file_system_pathname_t".
+# $2 - index in the array "argv" of the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PTN]]],[[[{
+mmux_asciizcp_t		the_argument_value;
+
+MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM([[[the_argument_value]]],[[[$2]]])
+MMUX_LIBC_FUNCALL(mmux_libc_make_file_system_pathname(&$1, the_argument_value));
+}]]])
 
 
 m4_dnl let's go

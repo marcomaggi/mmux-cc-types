@@ -1306,17 +1306,17 @@ Opaque type representing file descriptors.  It must be passed by value.
 
 
 @deftypefun bool mmux_libc_stdin (mmux_libc_file_descriptor_t * @var{fd_p})
-Return the file descriptor associated to the standard input.
+Retrieve the file descriptor value associated to the standard input.
 @end deftypefun
 
 
 @deftypefun bool mmux_libc_stdou (mmux_libc_file_descriptor_t * @var{fd_p})
-Return the file descriptor associated to the standard output.
+Retrieve the file descriptor value associated to the standard output.
 @end deftypefun
 
 
 @deftypefun bool mmux_libc_stder (mmux_libc_file_descriptor_t * @var{fd_p})
-Return the file descriptor associated to the standard error.
+Retrieve the file descriptor value associated to the standard error.
 @end deftypefun
 
 
@@ -1874,6 +1874,7 @@ a variable of type @objtype{mmux_sint_t}.
 
 
 @menu
+* fs types::                    Type definitions for file system operations.
 * fs links::                    Hard and symbolic links.
 * fs deleting::                 Deleting links.
 * fs renaming::                 Renaming links.
@@ -1886,50 +1887,70 @@ a variable of type @objtype{mmux_sint_t}.
 @end menu
 
 @c page
+@node fs types
+@section Type definitions for file system operations
+
+
+@deftp {Opaque Struct Type} mmux_libc_file_system_pathname_t
+@deftpx {Opaque Struct Type} mmux_libc_ptn_t
+Data type representing a file system pathname as a non--@cnull{} pointer to @asciiz{} string.
+@end deftp
+
+
+@deftypefun bool mmux_libc_make_file_system_pathname (mmux_libc_file_system_pathname_t * @var{pathname_p}, mmux_asciizcp_t @var{asciiz_pathname})
+Make a new file system pathname value.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_file_system_pathname_free (mmux_libc_file_system_pathname_t @var{pathname})
+Release the memory holding the pathname as @asciiz{} string using @cfunc{mmux_libc_free}.
+@end deftypefun
+
+@c page
 @node fs links
 @section Hard and symbolic links
 
 
-@deftypefun bool mmux_libc_link (mmux_asciizcp_t @var{oldname}, mmux_asciizcp_t @var{newname})
+@deftypefun bool mmux_libc_link (mmux_libc_file_system_pathname_t @var{oldname}, mmux_libc_file_system_pathname_t @var{newname})
 @MmuxCInterface{link}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_linkat (mmux_libc_file_descriptor_t @var{oldfd}, mmux_asciizcp_t @var{oldname}, mmux_libc_file_descriptor_t @var{newfd}, mmux_asciizcp_t @var{newname}, mmux_sint_t @var{flags})
+@deftypefun bool mmux_libc_linkat (mmux_libc_file_descriptor_t @var{oldfd}, mmux_libc_file_system_pathname_t @var{oldname}, mmux_libc_file_descriptor_t @var{newfd}, mmux_libc_file_system_pathname_t @var{newname}, mmux_sint_t @var{flags})
 @MmuxCInterface{linkat}
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_symlink (mmux_asciizcp_t @var{oldname}, mmux_asciizcp_t @var{newname})
+@deftypefun bool mmux_libc_symlink (mmux_libc_file_system_pathname_t @var{oldname}, mmux_libc_file_system_pathname_t @var{newname})
 @MmuxCInterface{symlink}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_readlink (mmux_usize_t * @var{required_nbytes_p}, mmux_asciizcp_t @var{linkname}, mmux_asciizp_t @var{buffer}, mmux_usize_t @var{provided_nbytes})
+@deftypefun bool mmux_libc_readlink (mmux_usize_t * @var{required_nbytes_p}, mmux_libc_file_system_pathname_t @var{linkname}, mmux_asciizp_t @var{buffer}, mmux_usize_t @var{provided_nbytes})
 @MmuxCInterface{readlink}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_readlink_malloc (mmux_asciizcp_t * @var{result_pathname_p}, mmux_asciizcp_t @var{linkname})
+@deftypefun bool mmux_libc_readlink_malloc (mmux_libc_file_system_pathname_t * @var{result_pathname_p}, mmux_libc_file_system_pathname_t @var{linkname})
 Like @cfunc{mmux_libc_readlink} but when successful: allocate a memory block, using
 @cfunc{mmux_libc_malloc}, and store the resulting pathname @asciiz{} string in it, including the
 terminating nul character; we must release the allocated memory using @cfunc{mmux_libc_free}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_readlinkat (mmux_usize_t * @var{required_nbytes_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_asciizcp_t @var{linkname}, mmux_asciizp_t @var{buffer}, mmux_usize_t @var{provided_nbytes})
+@deftypefun bool mmux_libc_readlinkat (mmux_usize_t * @var{required_nbytes_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{linkname}, mmux_asciizp_t @var{buffer}, mmux_usize_t @var{provided_nbytes})
 @MmuxCInterface{readlinkat}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_readlinkat_malloc (mmux_asciizcp_t * @var{result_pathname_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_asciizcp_t @var{linkname})
+@deftypefun bool mmux_libc_readlinkat_malloc (mmux_libc_file_system_pathname_t * @var{result_pathname_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{linkname})
 Like @cfunc{mmux_libc_readlinkat} but when successful: allocate a memory block, using
 @cfunc{mmux_libc_malloc}, and store the resulting pathname @asciiz{} string in it, including the
 terminating nul character; we must release the allocated memory using @cfunc{mmux_libc_free}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_canonicalize_file_name (mmux_asciizp_t * @var{result_pathname_p}, mmux_asciizcp_t @var{input_pathname})
+@deftypefun bool mmux_libc_canonicalize_file_name (mmux_libc_file_system_pathname_t * @var{result_pathname_p}, mmux_libc_file_system_pathname_t @var{input_pathname})
 @MmuxCInterface{canonicalize_file_name}.  When successful: a memory buffer is allocated, using
 @cfunc{mmux_libc_malloc}, and the resulting pathname is stored in it, including the terminating nul;
 a pointer to the buffer is stored in the location referenced by @var{result_pathname_p}.  It is
@@ -1937,7 +1958,7 @@ responsibility of the caller to release the buffer with a call to @cfunc{mmux_li
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_realpath (mmux_asciizp_t * @var{result_pathname_p}, mmux_asciizcp_t @var{input_pathname})
+@deftypefun bool mmux_libc_realpath (mmux_asciizp_t * @var{result_pathname_p}, mmux_libc_file_system_pathname_t @var{input_pathname})
 @MmuxCInterface{realpath}.  When successful: a memory buffer is allocated, using
 @cfunc{mmux_libc_malloc}, and the resulting pathname is stored in it, including the terminating nul;
 a pointer to the buffer is stored in the location referenced by @var{result_pathname_p}.  It is
@@ -1949,22 +1970,22 @@ responsibility of the caller to release the buffer with a call to @cfunc{mmux_li
 @section Deleting links
 
 
-@deftypefun bool mmux_libc_unlink (mmux_asciizcp_t pathname)
+@deftypefun bool mmux_libc_unlink (mmux_libc_file_system_pathname_t pathname)
 @MmuxCInterface{unlink}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd, mmux_asciizcp_t pathname, mmux_sint_t flags)
+@deftypefun bool mmux_libc_unlinkat (mmux_libc_file_descriptor_t dirfd, mmux_libc_file_system_pathname_t pathname, mmux_sint_t flags)
 @MmuxCInterface{unlinkat}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_rmdir (mmux_asciizcp_t pathname)
+@deftypefun bool mmux_libc_rmdir (mmux_libc_file_system_pathname_t pathname)
 @MmuxCInterface{rmdir}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_remove (mmux_asciizcp_t pathname)
+@deftypefun bool mmux_libc_remove (mmux_libc_file_system_pathname_t pathname)
 @MmuxCInterface{remove}.
 @end deftypefun
 
@@ -1973,17 +1994,17 @@ responsibility of the caller to release the buffer with a call to @cfunc{mmux_li
 @section Renaming links
 
 
-@deftypefun mmux_cc_libc_decl bool mmux_libc_rename (mmux_asciizcp_t @var{oldname}, mmux_asciizcp_t @var{newname})
+@deftypefun mmux_cc_libc_decl bool mmux_libc_rename (mmux_libc_file_system_pathname_t @var{oldname}, mmux_libc_file_system_pathname_t @var{newname})
 @MmuxCInterface{rename}.
 @end deftypefun
 
 
-@deftypefun mmux_cc_libc_decl bool mmux_libc_renameat (mmux_libc_file_descriptor_t @var{olddirfd}, mmux_asciizcp_t @var{oldname}, mmux_libc_file_descriptor_t @var{newdirfd}, mmux_asciizcp_t @var{newname})
+@deftypefun mmux_cc_libc_decl bool mmux_libc_renameat (mmux_libc_file_descriptor_t @var{olddirfd}, mmux_libc_file_system_pathname_t @var{oldname}, mmux_libc_file_descriptor_t @var{newdirfd}, mmux_libc_file_system_pathname_t @var{newname})
 @MmuxCInterface{renameat}.
 @end deftypefun
 
 
-@deftypefn {Linux Function} mmux_cc_libc_decl bool mmux_libc_renameat2 (mmux_libc_file_descriptor_t @var{olddirfd}, mmux_asciizcp_t @var{oldname}, mmux_libc_file_descriptor_t @var{newdirfd}, mmux_asciizcp_t @var{newname}, mmux_uint_t flags)
+@deftypefn {Linux Function} mmux_cc_libc_decl bool mmux_libc_renameat2 (mmux_libc_file_descriptor_t @var{olddirfd}, mmux_libc_file_system_pathname_t @var{oldname}, mmux_libc_file_descriptor_t @var{newdirfd}, mmux_libc_file_system_pathname_t @var{newname}, mmux_uint_t flags)
 @MmuxCInterface{renameat2}.
 @end deftypefn
 
@@ -1991,21 +2012,117 @@ responsibility of the caller to release the buffer with a call to @cfunc{mmux_li
 @node fs directories
 @section Directories
 
+
+@deftypefun bool mmux_libc_mkdir (mmux_libc_file_system_pathname_t @var{pathname}, mmux_mode_t mode)
+@MmuxCInterface{mkdir}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_mkdirat (mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_mode_t @var{mode})
+@MmuxCInterface{mkdirat}.
+@end deftypefun
+
 @c page
 @node fs ownership
 @section File ownership
+
+
+@deftypefun bool mmux_libc_chown (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_uid_t @var{uid}, mmux_libc_gid_t @var{gid});
+@MmuxCInterface{chown}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fchown (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_uid_t @var{uid}, mmux_libc_gid_t @var{gid});
+@MmuxCInterface{fchown}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_lchown (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_uid_t @var{uid}, mmux_libc_gid_t @var{gid});
+@MmuxCInterface{lchown}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fchownat (mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_uid_t @var{uid}, mmux_libc_gid_t @var{gid}, mmux_sint_t flags);
+@MmuxCInterface{fchownat}.
+@end deftypefun
 
 @c page
 @node fs permissions
 @section File access permissions
 
+
+@deftypefun bool mmux_libc_umask (mmux_mode_t * @var{old_mask_p}, mmux_mode_t @var{new_mask})
+@MmuxCInterface{umask}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_getumask (mmux_mode_t * @var{current_mask_p})
+Store the current mask in the location referenced by @var{current_mask_p}.  Do not change the
+current mask.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_chmod (mmux_libc_file_system_pathname_t @var{pathname}, mmux_mode_t @var{mode})
+@MmuxCInterface{chmod}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fchmod (mmux_libc_file_descriptor_t @var{fd}, mmux_mode_t @var{mode})
+@MmuxCInterface{fchmod}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fchmodat (mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_mode_t @var{mode}, mmux_sint_t @var{flags})
+@MmuxCInterface{fchmodat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_access (mmux_libc_file_system_pathname_t @var{pathname}, mmux_sint_t @var{how})
+@MmuxCInterface{access}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_faccessat (mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_sint_t @var{how}, mmux_sint_t @var{flags})
+@MmuxCInterface{faccessat}.
+@end deftypefun
+
 @c page
 @node fs attributes
 @section File attributes
 
+
+@deftypefun bool mmux_libc_stat (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_stat_t * @var{stat_p})
+@MmuxCInterface{stat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fstat (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_stat_t * @var{stat_p})
+@MmuxCInterface{fstat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_lstat (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_stat_t * @var{stat_p})
+@MmuxCInterface{lstat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_fstatat (mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_stat_t * @var{stat_p}, mmux_sint_t flags)
+@MmuxCInterface{fstatat}.
+@end deftypefun
+
 @c page
 @node fs truncating
 @section Truncating files
+
+
+@deftypefun bool mmux_libc_truncate (mmux_libc_file_system_pathname_t pathname, mmux_off_t len)
+@MmuxCInterface{truncate}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_ftruncate (mmux_libc_file_descriptor_t fd, mmux_off_t len);
+@MmuxCInterface{ftruncate}.
+@end deftypefun
 
 @c page
 @node fs times
