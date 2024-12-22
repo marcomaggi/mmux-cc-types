@@ -242,12 +242,13 @@ mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...)
 mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, char const * pathname, mmux_sint_t flags, mmux_mode_t mode)
-  __attribute__((__nonnull__(1,2)));
+mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, mmux_libc_file_system_pathname_t pathname,
+				       mmux_sint_t flags, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_openat (mmux_libc_file_descriptor_t * fd, mmux_libc_file_descriptor_t dirfd,
-					 char const * pathname, mmux_sint_t flags, mmux_mode_t mode)
-  __attribute__((__nonnull__(1,3)));
+					 mmux_libc_file_system_pathname_t pathname, mmux_sint_t flags, mmux_mode_t mode)
+  __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_close (mmux_libc_file_descriptor_t fd);
 
@@ -387,8 +388,8 @@ mmux_cc_libc_decl bool mmux_libc_confstr_size (mmux_usize_t * required_nbytes_p,
 mmux_cc_libc_decl bool mmux_libc_confstr (mmux_sint_t parameter, char * bufptr, mmux_usize_t buflen)
   __attribute__((__nonnull__(2)));
 
-mmux_cc_libc_decl bool mmux_libc_pathconf (mmux_slong_t * result_p, char const * pathname, mmux_sint_t parameter)
-  __attribute__((__nonnull__(1,2)));
+mmux_cc_libc_decl bool mmux_libc_pathconf (mmux_slong_t * result_p, mmux_libc_file_system_pathname_t pathname, mmux_sint_t parameter)
+  __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_fpathconf (mmux_slong_t * result_p, mmux_libc_file_descriptor_t fd, mmux_sint_t parameter)
   __attribute__((__nonnull__(1)));

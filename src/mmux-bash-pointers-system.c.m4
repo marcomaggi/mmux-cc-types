@@ -80,12 +80,12 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_pathconf]]])
 {
-  char const *	value_varname;
-  char const *	pathname;
-  mmux_sint_t	parameter;
+  char const *				value_varname;
+  mmux_libc_file_system_pathname_t	pathname;
+  mmux_sint_t				parameter;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(value_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PTN(pathname,		2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(parameter,		3);
   {
     mmux_slong_t	value;

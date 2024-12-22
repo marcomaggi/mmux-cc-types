@@ -35,13 +35,13 @@
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_open]]])
 {
-  char const *		fd_varname;
-  char const *		pathname;
-  mmux_sint_t		flags;
-  mmux_mode_t		mode = 0;
+  char const *				fd_varname;
+  mmux_libc_file_system_pathname_t	pathname;
+  mmux_sint_t				flags;
+  mmux_mode_t				mode = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(fd_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PTN(pathname,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,		3);
   if (5 == argc) {
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_MODE(mode,	4);
@@ -62,15 +62,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_openat]]])
 {
-  char const *			fd_varname;
-  mmux_libc_file_descriptor_t	dirfd;
-  mmux_sint_t			flags;
-  char const *			pathname;
-  mmux_mode_t			mode = 0;
+  char const *				fd_varname;
+  mmux_libc_file_descriptor_t		dirfd;
+  mmux_libc_file_system_pathname_t	pathname;
+  mmux_sint_t				flags;
+  mmux_mode_t				mode = 0;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(fd_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(dirfd,		2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PTN(pathname,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,		4);
   if (6 == argc) {
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_MODE(mode,	5);

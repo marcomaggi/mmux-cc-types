@@ -793,7 +793,7 @@ if (mmux_libc_confstr_size(&required_nbytes, parameter)) @{ /* error */ @}
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_pathconf (mmux_slong_t * @var{result_p}, char const * @var{pathname}, mmux_sint_t @var{parameter})
+@deftypefun bool mmux_libc_pathconf (mmux_slong_t * @var{result_p}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_sint_t @var{parameter})
 @MmuxCInterface{pathconf}.
 @end deftypefun
 
@@ -1393,15 +1393,19 @@ Like @cfunc{mmux_libc_dprintf} but prints on @stderr{}.
 @section Opening file descriptors
 
 
-@deftypefun bool mmux_libc_open (mmux_libc_file_descriptor_t * @var{result_p}, char const * @var{pathname}, mmux_sint_t @var{flags}, mmux_mode_t @var{mode})
+@deftypefun bool mmux_libc_open (mmux_libc_file_descriptor_t * @var{result_p}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_sint_t @var{flags}, mmux_mode_t @var{mode})
 @MmuxCInterface{open}.
 
 @example
-char const *    pathname = "/path/to/file.ext";
+mmux_libc_file_system_pathname_t pathname;
+mmux_libc_file_descriptor_t      fd;
+
 mmux_sint_t     flags    = MMUX_LIBC_O_RDWR | MMUX_LIBC_O_CREAT | MMUX_LIBC_O_EXCL;
 mmux_mode_t     mode     = MMUX_LIBC_S_IRUSR | MMUX_LIBC_S_IWUSR;
 
-mmux_libc_file_descriptor_t     fd;
+if (mmux_libc_make_file_system_pathname(&pathname, "/path/to/file.ext")) @{
+  /* error */
+@};
 
 if (mmux_libc_open(&fd, pathname, flags, mode)) @{
   /* error */
@@ -1410,18 +1414,23 @@ if (mmux_libc_open(&fd, pathname, flags, mode)) @{
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_openat (mmux_libc_file_descriptor_t * @var{result_p}, mmux_libc_file_descriptor_t @var{dirfd}, char const * @var{pathname}, mmux_sint_t @var{flags}, mmux_mode_t @var{mode})
+@deftypefun bool mmux_libc_openat (mmux_libc_file_descriptor_t * @var{result_p}, mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_sint_t @var{flags}, mmux_mode_t @var{mode})
 @MmuxCInterface{openat}.
 
 @example
-char const *    pathname = "path/to/file.ext";
+mmux_libc_file_system_pathname_t pathname;
+mmux_libc_file_descriptor_t      dirfd;
+mmux_libc_file_descriptor_t      fd;
+
 mmux_sint_t     flags    = MMUX_LIBC_O_RDWR | MMUX_LIBC_O_CREAT | MMUX_LIBC_O_EXCL;
 mmux_mode_t     mode     = MMUX_LIBC_S_IRUSR | MMUX_LIBC_S_IWUSR;
 
-mmux_libc_file_descriptor_t     dirfd;
-mmux_libc_file_descriptor_t     fd;
+if (mmux_libc_make_file_system_pathname(&pathname, "/path/to/file.ext")) @{
+  /* error */
+@};
 
 mmux_libc_at_fdcwd(&dirfd);
+
 if (mmux_libc_openat(&fd, dirfd, pathname, flags, mode)) @{
   /* error */
 @}
