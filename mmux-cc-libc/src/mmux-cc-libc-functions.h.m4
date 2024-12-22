@@ -43,7 +43,7 @@ mmux_cc_libc_decl bool mmux_cc_libc_init (void);
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_libc_decl char const *	mmux_cc_libc_version_string		(void);
+mmux_cc_libc_decl mmux_asciizcp_t	mmux_cc_libc_version_string		(void);
 mmux_cc_libc_decl int		mmux_cc_libc_version_interface_current	(void);
 mmux_cc_libc_decl int		mmux_cc_libc_version_interface_revision	(void);
 mmux_cc_libc_decl int		mmux_cc_libc_version_interface_age	(void);
@@ -121,7 +121,7 @@ mmux_cc_libc_decl bool mmux_libc_timeval_set (mmux_libc_timeval_t * timeval_p, m
   __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_timeval_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timeval_t const * timeval_p,
-					       char const * struct_name)
+					       mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 
@@ -136,7 +136,7 @@ mmux_cc_libc_decl bool mmux_libc_timespec_set (mmux_libc_timespec_t * timespec_p
   __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_timespec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_timespec_t const * timespec_p,
-					       char const * struct_name)
+					       mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 
@@ -154,10 +154,10 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_wday,	mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_yday,	mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_isdst,	mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_gmtoff,	mmux_slong_t)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_zone,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(tm,	tm_zone,	mmux_asciizcp_t)
 
 mmux_cc_libc_decl bool mmux_libc_tm_dump (mmux_libc_file_descriptor_t fd, mmux_libc_tm_t const * tm_p,
-					  char const * struct_name)
+					  mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 mmux_cc_libc_decl bool mmux_libc_tm_reset (mmux_libc_tm_t * tm_p)
@@ -177,7 +177,7 @@ mmux_cc_libc_decl bool mmux_libc_localtime (mmux_libc_tm_t * * result_p, mmux_ti
 mmux_cc_libc_decl bool mmux_libc_gmtime    (mmux_libc_tm_t * * result_p, mmux_time_t T)
        __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_ctime     (char const * * result_p, mmux_time_t T)
+mmux_cc_libc_decl bool mmux_libc_ctime     (mmux_asciizcp_t * result_p, mmux_time_t T)
        __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_mktime    (mmux_time_t * result_p, mmux_libc_tm_t * tm_p)
@@ -186,14 +186,14 @@ mmux_cc_libc_decl bool mmux_libc_mktime    (mmux_time_t * result_p, mmux_libc_tm
 mmux_cc_libc_decl bool mmux_libc_timegm    (mmux_time_t * result_p, mmux_libc_tm_t * tm_p)
        __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_asctime   (char const * * result_p, mmux_libc_tm_t * tm_p)
+mmux_cc_libc_decl bool mmux_libc_asctime   (mmux_asciizcp_t * result_p, mmux_libc_tm_t * tm_p)
        __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen_p, char const * template, mmux_libc_tm_t * tm_p)
+mmux_cc_libc_decl bool mmux_libc_strftime (char * bufptr, mmux_usize_t * buflen_p, mmux_asciizcp_t template, mmux_libc_tm_t * tm_p)
   __attribute__((__nonnull__(1,2,3,4)));
 
 mmux_cc_libc_decl bool mmux_libc_strptime (char ** first_unprocessed_after_timestamp_p,
-					   char const * input_string, char const * template, mmux_libc_tm_t * tm_p)
+					   mmux_asciizcp_t input_string, mmux_asciizcp_t template, mmux_libc_tm_t * tm_p)
   __attribute__((__nonnull__(2,3,4)));
 
 mmux_cc_libc_decl bool mmux_libc_sleep     (mmux_uint_t * result_p, mmux_uint_t seconds)
@@ -224,7 +224,7 @@ mmux_cc_libc_decl bool mmux_libc_at_fdcwd (mmux_libc_file_descriptor_t * result_
 
 /* ------------------------------------------------------------------ */
 
-mmux_cc_libc_decl bool mmux_libc_fd_parse (mmux_libc_fd_t * p_value, char const * s_value, char const * who)
+mmux_cc_libc_decl bool mmux_libc_fd_parse (mmux_libc_fd_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_fd_sprint (char * ptr, mmux_usize_t len, mmux_libc_fd_t fd)
@@ -235,11 +235,11 @@ mmux_cc_libc_decl bool mmux_libc_fd_sprint_size (mmux_usize_t * required_nchars_
 
 /* ------------------------------------------------------------------ */
 
-mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, char const * template, ...)
+mmux_cc_libc_decl bool mmux_libc_dprintf (mmux_libc_file_descriptor_t fd, mmux_asciizcp_t template, ...)
   __attribute__((__nonnull__(2)));
-mmux_cc_libc_decl bool mmux_libc_dprintfou (char const * template, ...)
+mmux_cc_libc_decl bool mmux_libc_dprintfou (mmux_asciizcp_t template, ...)
   __attribute__((__nonnull__(1)));
-mmux_cc_libc_decl bool mmux_libc_dprintfer (char const * template, ...)
+mmux_cc_libc_decl bool mmux_libc_dprintfer (mmux_asciizcp_t template, ...)
   __attribute__((__nonnull__(1)));
 
 mmux_cc_libc_decl bool mmux_libc_open (mmux_libc_file_descriptor_t * fd, mmux_libc_file_system_pathname_t pathname,
@@ -336,7 +336,7 @@ mmux_cc_libc_decl bool mmux_libc_pwritev2 (mmux_usize_t * nbytes_written_p, mmux
 					   mmux_libc_iovec_array_t iovec_array, mmux_off_t offset, mmux_sint_t flags)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * iovec_p, char const * struct_name);
+mmux_cc_libc_decl bool mmux_libc_iovec_dump (mmux_libc_file_descriptor_t fd, mmux_libc_iovec_t const * iovec_p, mmux_asciizcp_t struct_name);
 
 
 /** --------------------------------------------------------------------
@@ -349,10 +349,10 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_start,	mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_len,		mmux_off_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock,	l_pid,		mmux_libc_pid_t)
 
-mmux_cc_libc_decl bool mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * flock_p, char const * struct_name)
+mmux_cc_libc_decl bool mmux_libc_flock_dump (mmux_libc_file_descriptor_t fd, mmux_libc_flock_t const * flock_p, mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
-mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** str_p, mmux_sint_t flag)
+mmux_cc_libc_decl bool mmux_libc_flag_to_symbol_struct_flock_l_type (mmux_asciizcp_t* str_p, mmux_sint_t flag)
   __attribute__((__nonnull__(1)));
 
 
@@ -372,7 +372,7 @@ mmux_cc_libc_decl bool mmux_libc_copy_file_range (mmux_usize_t * number_of_bytes
  ** ----------------------------------------------------------------- */
 
 mmux_cc_libc_decl bool mmux_libc_fcntl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
-mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (char const ** str_p, mmux_sint_t flag);
+mmux_cc_libc_decl bool mmux_libc_fcntl_command_flag_to_symbol (mmux_asciizcp_t* str_p, mmux_sint_t flag);
 
 mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sint_t command, mmux_pointer_t parameter_p);
 
@@ -400,7 +400,7 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_cur,	mmux_rlim_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(rlimit,	rlim_max,	mmux_rlim_t)
 
 mmux_cc_libc_decl bool mmux_libc_rlimit_dump (mmux_libc_file_descriptor_t fd, mmux_libc_rlimit_t * rlimit_pointer,
-					      char const * struct_name)
+					      mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 mmux_cc_libc_decl bool mmux_libc_getrlimit (mmux_sint_t resource, mmux_libc_rlimit_t * rlimit_p)
@@ -419,7 +419,7 @@ mmux_cc_libc_decl bool mmux_libc_prlimit (mmux_libc_pid_t pid, mmux_sint_t resou
 mmux_cc_libc_decl bool mmux_libc_make_pid (mmux_libc_pid_t * result_p, mmux_pid_t pid_num)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_pid_parse (mmux_libc_pid_t * p_value, char const * s_value, char const * who)
+mmux_cc_libc_decl bool mmux_libc_pid_parse (mmux_libc_pid_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_pid_sprint (char * ptr, mmux_usize_t len, mmux_libc_pid_t pid)
@@ -444,19 +444,19 @@ mmux_cc_libc_decl bool mmux_libc_gettid (mmux_libc_pid_t * result_p)
  ** Persona.
  ** ----------------------------------------------------------------- */
 
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_name,	char const *)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_passwd,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_name,	mmux_asciizcp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_passwd,	mmux_asciizcp_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_uid,		mmux_libc_uid_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_gid,		mmux_libc_gid_t)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_gecos,	char const *)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_dir,		char const *)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_shell,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_gecos,	mmux_asciizcp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_dir,		mmux_asciizcp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(passwd,	pw_shell,	mmux_asciizcp_t)
 
 mmux_cc_libc_decl bool mmux_libc_passwd_dump (mmux_libc_file_descriptor_t fd, mmux_libc_passwd_t const * passw_p,
-					      char const * struct_name)
+					      mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(group,	gr_name,	char const *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(group,	gr_name,	mmux_asciizcp_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(group,	gr_gid,		mmux_libc_gid_t)
 
 mmux_cc_libc_decl bool mmux_libc_gr_mem_set (mmux_libc_group_t * const P, mmux_asciizcp_t * value)
@@ -466,7 +466,7 @@ mmux_cc_libc_decl bool mmux_libc_gr_mem_ref (mmux_asciizcp_t * * result_p, mmux_
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_group_dump (mmux_libc_file_descriptor_t fd, mmux_libc_group_t const * passw_p,
-					     char const * struct_name)
+					     mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 /* ------------------------------------------------------------------ */
@@ -474,7 +474,7 @@ mmux_cc_libc_decl bool mmux_libc_group_dump (mmux_libc_file_descriptor_t fd, mmu
 mmux_cc_libc_decl bool mmux_libc_make_uid (mmux_libc_uid_t * result_p, mmux_uid_t uid_num)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_uid_parse (mmux_libc_uid_t * p_value, char const * s_value, char const * who)
+mmux_cc_libc_decl bool mmux_libc_uid_parse (mmux_libc_uid_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_uid_sprint (char * ptr, mmux_usize_t len, mmux_libc_uid_t uid)
@@ -488,7 +488,7 @@ mmux_cc_libc_decl bool mmux_libc_uid_sprint_size (mmux_usize_t * required_nchars
 mmux_cc_libc_decl bool mmux_libc_make_gid (mmux_libc_gid_t * result_p, mmux_gid_t gid_num)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_gid_parse (mmux_libc_gid_t * p_value, char const * s_value, char const * who)
+mmux_cc_libc_decl bool mmux_libc_gid_parse (mmux_libc_gid_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_gid_sprint (char * ptr, mmux_usize_t len, mmux_libc_gid_t gid)
@@ -517,10 +517,10 @@ mmux_cc_libc_decl bool mmux_libc_getgroups_size (mmux_usize_t * ngroups_p)
 mmux_cc_libc_decl bool mmux_libc_getgroups (mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_getgrouplist_size (mmux_usize_t * result_ngroups_p, char const * username, mmux_libc_gid_t gid)
+mmux_cc_libc_decl bool mmux_libc_getgrouplist_size (mmux_usize_t * result_ngroups_p, mmux_asciizcp_t username, mmux_libc_gid_t gid)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_libc_decl bool mmux_libc_getgrouplist (char const * username, mmux_libc_gid_t gid,
+mmux_cc_libc_decl bool mmux_libc_getgrouplist (mmux_asciizcp_t username, mmux_libc_gid_t gid,
 					       mmux_usize_t * ngroups_p, mmux_libc_gid_t * groups_p)
   __attribute__((__nonnull__(1,3,4)));
 
@@ -536,20 +536,20 @@ mmux_cc_libc_decl bool mmux_libc_setregid (mmux_libc_gid_t gid, mmux_libc_gid_t 
 
 /* ------------------------------------------------------------------ */
 
-mmux_cc_libc_decl bool mmux_libc_getlogin (char const * * username_p);
+mmux_cc_libc_decl bool mmux_libc_getlogin (mmux_asciizcp_t * username_p);
 
 /* ------------------------------------------------------------------ */
 
 mmux_cc_libc_decl bool mmux_libc_getpwuid (mmux_libc_passwd_t * * result_passwd_pp, mmux_libc_uid_t uid)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_getpwnam (mmux_libc_passwd_t * * result_passwd_pp, char const * username)
+mmux_cc_libc_decl bool mmux_libc_getpwnam (mmux_libc_passwd_t * * result_passwd_pp, mmux_asciizcp_t username)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_getgrgid (mmux_libc_group_t * * result_group_pp, mmux_libc_gid_t gid)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_libc_decl bool mmux_libc_getgrnam (mmux_libc_group_t * * result_group_pp, char const * username)
+mmux_cc_libc_decl bool mmux_libc_getgrnam (mmux_libc_group_t * * result_group_pp, mmux_asciizcp_t username)
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_group_member (bool * result_is_member_p, mmux_libc_gid_t gid)
@@ -695,7 +695,7 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_blocks,	mmux_uintmax_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(stat,	st_blksize,	mmux_uint_t)
 
 mmux_cc_libc_decl bool mmux_libc_stat_dump (mmux_libc_file_descriptor_t fd, mmux_libc_stat_t const * stat_p,
-					    char const * struct_name)
+					    mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 mmux_cc_libc_decl bool mmux_libc_stat (mmux_libc_file_system_pathname_t pathname, mmux_libc_stat_t * stat_p)
@@ -751,7 +751,7 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(utimbuf, actime,  mmux_time_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(utimbuf, modtime, mmux_time_t)
 
 mmux_cc_libc_decl bool mmux_libc_utimbuf_dump (mmux_libc_file_descriptor_t fd, mmux_libc_utimbuf_t const * utimbuf_p,
-					       char const * struct_name)
+					       mmux_asciizcp_t struct_name)
   __attribute__((__nonnull__(2)));
 
 mmux_cc_libc_decl bool mmux_libc_utime (mmux_libc_file_system_pathname_t pathname, mmux_libc_utimbuf_t * utimbuf_p)

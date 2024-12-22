@@ -103,7 +103,7 @@ Setter and getter for the field @code{\FIELDNAME\} of @objtype{mmux_libc_\STRUCT
 @end macro
 
 @macro MmuxStructDumper{STRUCTNAME}
-@deftypefun bool mmux_libc_\STRUCTNAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCTNAME\_t const * @var{struct_p}, char const * @var{struct_name})
+@deftypefun bool mmux_libc_\STRUCTNAME\_dump (mmux_libc_file_descriptor_t @var{fd}, mmux_libc_\STRUCTNAME\_t const * @var{struct_p}, mmux_asciizcp_t @var{struct_name})
 Write to @var{fd} a description of the fields of the @MmuxCStruct{\STRUCTNAME\} referenced by
 @var{struct_p}.  @var{struct_name} must be a pointer to an @asciiz{} string representing the name of
 the data structure used in the description; when @cnull{}: it defaults to @samp{struct
@@ -296,7 +296,7 @@ explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool vers
 Libtool's versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@deftypefun {char const *} mmux_cc_libc_version_string (void)
+@deftypefun {mmux_asciizcp_t} mmux_cc_libc_version_string (void)
 Return a pointer to a statically allocated @asciiz{} string representing the interface version
 number.
 @end deftypefun
@@ -545,7 +545,7 @@ Initialise the fields of a @MmuxCStruct{timespec}.
 @MmuxSetterGetter{tm, tm_yday,        mmux_sint_t}
 @MmuxSetterGetter{tm, tm_isdst,       mmux_sint_t}
 @MmuxSetterGetter{tm, tm_gmtoff,      mmux_slong_t}
-@MmuxSetterGetter{tm, tm_zone,        char const *}
+@MmuxSetterGetter{tm, tm_zone,        mmux_asciizcp_t}
 @MmuxStructDumper{tm}
 
 
@@ -609,12 +609,12 @@ mmux_libc_gmtime(&tm_p, T);
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_ctime (char const * * @var{result_p}, mmux_time_t @var{T})
+@deftypefun bool mmux_libc_ctime (mmux_asciizcp_t * @var{result_p}, mmux_time_t @var{T})
 @MmuxCInterface{ctime}.
 
 @example
 mmux_time_t     T;
-char const *    str;
+mmux_asciizcp_t    str;
 
 mmux_libc_time(&T);
 mmux_libc_ctime(&str, T);
@@ -651,13 +651,13 @@ mmux_libc_timegm(&T2, tm_p);
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_asctime (char const * * @var{result_p}, mmux_libc_tm_t * @var{tm_p})
+@deftypefun bool mmux_libc_asctime (mmux_asciizcp_t * @var{result_p}, mmux_libc_tm_t * @var{tm_p})
 @MmuxCInterface{asctime}.
 
 @example
 mmux_time_t       T;
 mmux_libc_tm_t *  tm_p;
-char const *      str;
+mmux_asciizcp_t      str;
 
 mmux_libc_time(&T);
 mmux_libc_localtime(&tm_p, T);
@@ -667,7 +667,7 @@ mmux_libc_dprintfou("%s\n", str);
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_strftime (char * @var{bufptr}, mmux_usize_t * @var{buflen_p}, char const * @var{template}, mmux_libc_tm_t * @var{tm_p})
+@deftypefun bool mmux_libc_strftime (char * @var{bufptr}, mmux_usize_t * @var{buflen_p}, mmux_asciizcp_t @var{template}, mmux_libc_tm_t * @var{tm_p})
 @MmuxCInterface{strftime}.  Format an output string representation of the timestamp referenced by
 @var{TM_P} and store it in the buffer referenced by @var{bufptr}.
 
@@ -700,12 +700,12 @@ mmux_libc_dprintfou("%s\n", bufstr);
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_strptime (char ** @var{first_unprocessed_after_timestamp_p}, char const * @var{input_string}, char const * @var{template}, mmux_libc_tm_t * @var{tm_p})
+@deftypefun bool mmux_libc_strptime (char ** @var{first_unprocessed_after_timestamp_p}, mmux_asciizcp_t @var{input_string}, mmux_asciizcp_t @var{template}, mmux_libc_tm_t * @var{tm_p})
 @MmuxCInterface{strptime}.
 
 @example
-char const *      template     = "%a, %d %b %Y %H:%M:%S %z";
-char const *      input_string = "Fri, 15 Nov 2024 23:11:20 +0100";
+mmux_asciizcp_t      template     = "%a, %d %b %Y %H:%M:%S %z";
+mmux_asciizcp_t      input_string = "Fri, 15 Nov 2024 23:11:20 +0100";
 mmux_libc_tm_t *  tm_p;
 char *            first_unprocessed_after_timestamp;
 
@@ -877,7 +877,7 @@ Build a new value of type @objtype{mmux_libc_uid_t}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_uid_parse (mmux_libc_uid_t * @var{uid_p}, char const * @var{str}, char const * @var{who})
+@deftypefun bool mmux_libc_uid_parse (mmux_libc_uid_t * @var{uid_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{who})
 Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_uid_t}
 value; store the value in the location referenced by @var{uid_p}.  If an error occurs and @var{who}
 is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
@@ -933,7 +933,7 @@ Build a new value of type @objtype{mmux_libc_gid_t}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_gid_parse (mmux_libc_gid_t * @var{gid_p}, char const * @var{str}, char const * @var{who})
+@deftypefun bool mmux_libc_gid_parse (mmux_libc_gid_t * @var{gid_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{who})
 Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_gid_t}
 value; store the value in the location referenced by @var{gid_p}.  If an error occurs and @var{who}
 is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
@@ -1023,7 +1023,7 @@ the actual number of values stored in the array.
 To retrieve the groups a user belongs to we do:
 
 @example
-char const *    user_name = gimme_a_username();
+mmux_asciizcp_t    user_name = gimme_a_username();
 mmux_libc_git_t user_gid  = gimme_its_gid(user_name);
 mmux_usize_t    ngroups;
 
@@ -1041,13 +1041,13 @@ if (mmux_libc_getgrouplist_size(&ngroups, user_name, user_gid)) @{
 @end example
 
 
-@deftypefun bool mmux_libc_getgrouplist_size (mmux_usize_t * @var{result_ngroups_p}, char const * @var{username}, mmux_libc_gid_t @var{gid})
+@deftypefun bool mmux_libc_getgrouplist_size (mmux_usize_t * @var{result_ngroups_p}, mmux_asciizcp_t @var{username}, mmux_libc_gid_t @var{gid})
 Determine the number of groups a user belongs to and store it in the location referenced by
 @var{ngroups_p}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_getgrouplist (char const * @var{username}, mmux_libc_gid_t @var{gid}, mmux_usize_t * @var{ngroups_p}, mmux_libc_gid_t * @var{groups_p})
+@deftypefun bool mmux_libc_getgrouplist (mmux_asciizcp_t @var{username}, mmux_libc_gid_t @var{gid}, mmux_usize_t * @var{ngroups_p}, mmux_libc_gid_t * @var{groups_p})
 @MmuxCInterface{getgrouplist}.  Fill the array referenced by @var{groups_p} with values representing
 the groups a user belongs to.
 
@@ -1101,7 +1101,7 @@ the actual number of values stored in the array.
 @section Identifying who logged in
 
 
-@deftypefun bool mmux_libc_getlogin (char const * * @var{result_username_p})
+@deftypefun bool mmux_libc_getlogin (mmux_asciizcp_t * @var{result_username_p})
 @MmuxCInterface{getlogin}.
 @end deftypefun
 
@@ -1111,13 +1111,13 @@ the actual number of values stored in the array.
 
 
 @MmuxCStructOpaqueTypedef{passwd}
-@MmuxSetterGetter{passwd,	pw_name,	char const *}
-@MmuxSetterGetter{passwd,	pw_passwd,	char const *}
+@MmuxSetterGetter{passwd,	pw_name,	mmux_asciizcp_t}
+@MmuxSetterGetter{passwd,	pw_passwd,	mmux_asciizcp_t}
 @MmuxSetterGetter{passwd,	pw_uid,		mmux_libc_uid_t}
 @MmuxSetterGetter{passwd,	pw_gid,		mmux_libc_gid_t}
-@MmuxSetterGetter{passwd,	pw_gecos,	char const *}
-@MmuxSetterGetter{passwd,	pw_dir,		char const *}
-@MmuxSetterGetter{passwd,	pw_shell,	char const *}
+@MmuxSetterGetter{passwd,	pw_gecos,	mmux_asciizcp_t}
+@MmuxSetterGetter{passwd,	pw_dir,		mmux_asciizcp_t}
+@MmuxSetterGetter{passwd,	pw_shell,	mmux_asciizcp_t}
 @MmuxStructDumper{passwd}
 
 
@@ -1126,7 +1126,7 @@ the actual number of values stored in the array.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_getpwnam (mmux_libc_passwd_t * * @var{result_passwd_pp}, char const * @var{username})
+@deftypefun bool mmux_libc_getpwnam (mmux_libc_passwd_t * * @var{result_passwd_pp}, mmux_asciizcp_t @var{username})
 @MmuxCInterface{getpwnam}.
 @end deftypefun
 
@@ -1151,9 +1151,9 @@ the actual number of values stored in the array.
 
 
 @MmuxCStructOpaqueTypedef{group}
-@MmuxSetterGetter{group,	gr_name,	char const *}
+@MmuxSetterGetter{group,	gr_name,	mmux_asciizcp_t}
 @MmuxSetterGetter{group,	gr_gid,		mmux_libc_gid_t}
-@MmuxSetterGetter{group,	gr_mem,		char const **}
+@MmuxSetterGetter{group,	gr_mem,		mmux_asciizcp_t*}
 @MmuxStructDumper{group}
 
 
@@ -1162,7 +1162,7 @@ the actual number of values stored in the array.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_getgrnam (mmux_libc_passwd_t * * @var{result_passwd_pp}, char const * @var{groupname})
+@deftypefun bool mmux_libc_getgrnam (mmux_libc_passwd_t * * @var{result_passwd_pp}, mmux_asciizcp_t @var{groupname})
 @MmuxCInterface{getgrnam}.
 @end deftypefun
 
@@ -1231,7 +1231,7 @@ if (mmux_libc_pid_sprint_size(&required_nchars, the_pid) @{
 @end example
 
 
-@deftypefun bool mmux_libc_pid_parse (mmux_libc_pid_t * @var{pid_p}, char const * @var{str}, char const * @var{who})
+@deftypefun bool mmux_libc_pid_parse (mmux_libc_pid_t * @var{pid_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{who})
 Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_pid_t}
 value; store the value in the location referenced by @var{pid_p}.  If an error occurs and @var{who}
 is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
@@ -1348,7 +1348,7 @@ if (mmux_libc_fd_sprint_size(&required_nchars, the_fd) @{
 @end example
 
 
-@deftypefun bool mmux_libc_fd_parse (mmux_libc_fd_t * @var{fd_p}, char const * @var{str}, char const * @var{who})
+@deftypefun bool mmux_libc_fd_parse (mmux_libc_fd_t * @var{fd_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{who})
 Parse the @asciiz{} string referenced by @var{str} and convert it into a @objtype{mmux_libc_fd_t}
 value; store the value in the location referenced by @var{fd_p}.  If an error occurs and @var{who}
 is not @cnull{}: print an error message to @stderr{} using @var{who} as name of the entity that
@@ -1374,17 +1374,17 @@ wide.
 @section Printing formatted output
 
 
-@deftypefun bool mmux_libc_dprintf (mmux_libc_file_descriptor_t @var{fd}, char const * @var{template}, ...)
+@deftypefun bool mmux_libc_dprintf (mmux_libc_file_descriptor_t @var{fd}, mmux_asciizcp_t @var{template}, ...)
 @MmuxCInterface{dprintf}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_dprintfou (char const * template, ...)
+@deftypefun bool mmux_libc_dprintfou (mmux_asciizcp_t template, ...)
 Like @cfunc{mmux_libc_dprintf} but prints on @stdout{}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_dprintfer (char const * template, ...)
+@deftypefun bool mmux_libc_dprintfer (mmux_asciizcp_t template, ...)
 Like @cfunc{mmux_libc_dprintf} but prints on @stderr{}.
 @end deftypefun
 
@@ -1483,7 +1483,7 @@ if (mmux_libc_read(&nbytes_done, fd, bufptr, bulen)) @{
 @example
 mmux_libc_file_descriptor_t     fd;
 mmux_usize_t                    nbytes_done;
-char const *                    bufptr = "ciao";
+mmux_asciizcp_t                    bufptr = "ciao";
 
 mmux_libc_stdou(&fd);
 if (mmux_libc_write(&nbytes_done, fd, bufptr, strlen(bufptr))) @{
@@ -1543,7 +1543,7 @@ if (mmux_libc_lseek(fd, &offset, whence)) @{
 @MmuxCInterface{dup3}.
 
 @example
-char const *    pathname = "/path/to/file.ext";
+mmux_asciizcp_t    pathname = "/path/to/file.ext";
 mmux_sint_t     flags    = MMUX_LIBC_O_RDWR | MMUX_LIBC_O_CREAT | MMUX_LIBC_O_EXCL;
 mmux_mode_t     mode     = MMUX_LIBC_S_IRUSR | MMUX_LIBC_S_IWUSR;
 
@@ -1724,7 +1724,7 @@ Number of slots in the array.
 @MmuxSetterGetter{flock, l_pid,    mmux_libc_pid_t}
 @MmuxStructDumper{flock}
 
-@deftypefun bool mmux_libc_flag_to_symbol_struct_flock_l_type (char const ** @var{str_p}, mmux_sint_t @var{flag})
+@deftypefun bool mmux_libc_flag_to_symbol_struct_flock_l_type (mmux_asciizcp_t* @var{str_p}, mmux_sint_t @var{flag})
 Identify @var{flag} as a value for the field @code{l_type} of @objtype{mmux_libc_flock_t}; store in
 the variable referenced by @var{str_p} a pointer to a statically allocated @asciiz{} string
 representing the name of the value.
@@ -1752,7 +1752,7 @@ Pointer to a variable representing a parameter that can be input or output depen
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_fcntl_command_flag_to_symbol (char const ** @var{str_p}, mmux_sint_t @var{command})
+@deftypefun bool mmux_libc_fcntl_command_flag_to_symbol (mmux_asciizcp_t* @var{str_p}, mmux_sint_t @var{command})
 Identify @var{command} as a command argument for @cfunc{mmux_libc_fcntl}; store in the variable
 referenced by @var{str_p} a pointer to a statically allocated @asciiz{} string representing a string
 representation of the @var{command}.
