@@ -2091,6 +2091,24 @@ current mask.
 @section File attributes
 
 
+@MmuxCStructOpaqueTypedef{stat}
+@MmuxSetterGetter{stat, st_mode,   mmux_mode_t}
+@MmuxSetterGetter{stat,	st_ino,		mmux_uintmax_t}
+@MmuxSetterGetter{stat,	st_dev,		mmux_uintmax_t}
+@MmuxSetterGetter{stat,	st_nlink,	mmux_uintmax_t}
+@MmuxSetterGetter{stat,	st_uid,		mmux_libc_uid_t}
+@MmuxSetterGetter{stat,	st_gid,		mmux_libc_gid_t}
+@MmuxSetterGetter{stat,	st_size,	mmux_off_t}
+@MmuxSetterGetter{stat,	st_atime_sec,	mmux_time_t}
+@MmuxSetterGetter{stat,	st_atime_nsec,	mmux_slong_t}
+@MmuxSetterGetter{stat,	st_mtime_sec,	mmux_time_t}
+@MmuxSetterGetter{stat,	st_mtime_nsec,	mmux_slong_t}
+@MmuxSetterGetter{stat,	st_ctime_sec,	mmux_time_t}
+@MmuxSetterGetter{stat,	st_ctime_nsec,	mmux_slong_t}
+@MmuxSetterGetter{stat,	st_blocks,	mmux_uintmax_t}
+@MmuxSetterGetter{stat,	st_blksize,	mmux_uint_t}
+
+
 @deftypefun bool mmux_libc_stat (mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_stat_t * @var{stat_p})
 @MmuxCInterface{stat}.
 @end deftypefun
@@ -2108,6 +2126,56 @@ current mask.
 
 @deftypefun bool mmux_libc_fstatat (mmux_libc_file_descriptor_t @var{dirfd}, mmux_libc_file_system_pathname_t @var{pathname}, mmux_libc_stat_t * @var{stat_p}, mmux_sint_t flags)
 @MmuxCInterface{fstatat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_TYPEISMQ (bool * @var{result_p}, mmux_libc_stat_t * @var{stat_p})
+@MmuxCInterface{S_TYPESIMQ}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_TYPEISSEM (bool * @var{result_p}, mmux_libc_stat_t * @var{stat_p})
+@MmuxCInterface{S_TYPEISSEM}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_TYPEISSHM (bool * @var{result_p}, mmux_libc_stat_t * @var{stat_p})
+@MmuxCInterface{S_TYPEISSHM}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISDIR (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISDIR}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISCHR (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISCHR}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISBLK (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISBLK}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISREG (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISREG}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISFIFO (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISFIFO}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISLNK (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISLNK}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_S_ISSOCK (bool * @var{result_p}, mmux_mode_t @var{mode})
+@MmuxCInterface{S_ISSOCK}.
 @end deftypefun
 
 @c page
