@@ -68,6 +68,7 @@ PKG_INSTALLDIR
 MMUX_CHECK_PKG_CONFIG_MACROS
 PKG_CHECK_MODULES([BASH],[bash],,[AC_MSG_WARN([package GNU Bash not found])])
 
+# This is for the "basename()" and similar functions from GNU C Library.
 AC_CHECK_HEADERS([libgen.h])
 
 AC_SEARCH_LIBS(cos, m,, [AC_MSG_ERROR([Cannot find libm])])
