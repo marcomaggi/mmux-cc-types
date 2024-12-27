@@ -61,13 +61,50 @@ mmux_libc_$2_ref ($3 * result_p, mmux_libc_$1_t const * const P)
 m4_dnl $1 - data structure name
 m4_dnl $2 - field name
 m4_dnl $3 - field type
+m4_dnl $4 - functionstem
 m4_dnl
 m4_dnl Usage example:
 m4_dnl
+m4_dnl   DEFINE_STRUCT_SETTER_GETTER_SPLIT(sockaddr_insix, sin6_family, mmux_sshort_t, sinsix_family)
+m4_dnl
+m4_define([[[DEFINE_STRUCT_SETTER_GETTER_SPLIT]]],[[[bool
+mmux_libc_$4_set (mmux_libc_$1_t * const P, $3 value)
+{
+  P->$2 = value;
+  return false;
+}
+bool
+mmux_libc_$4_ref ($3 * result_p, mmux_libc_$1_t const * const P)
+{
+  *result_p = P->$2;
+  return false;
+}]]])
+
+m4_dnl $1 - data structure name
+m4_dnl $2 - field name
+m4_dnl $3 - field type
+m4_dnl
+m4_dnl Usage example:
+m4_dnl
+m4_dnl   DEFINE_STRUCT_SETTER_GETTER_PROTOS(flock, l_type, mmux_sshort_t)
 m4_dnl
 m4_define([[[DEFINE_STRUCT_SETTER_GETTER_PROTOS]]],
 [[[mmux_cc_libc_decl bool mmux_libc_$2_set (mmux_libc_$1_t * P, $3 value);
 mmux_cc_libc_decl bool mmux_libc_$2_ref ($3 * result_p, mmux_libc_$1_t const * P);
+]]])
+
+m4_dnl $1 - data structure name
+m4_dnl $2 - field name
+m4_dnl $3 - field type
+m4_dnl $4 - functionstem
+m4_dnl
+m4_dnl Usage example:
+m4_dnl
+m4_dnl   DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS(sockaddr_insix, sin6_family, mmux_sshort_t, sinsix_family)
+m4_dnl
+m4_define([[[DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS]]],
+[[[mmux_cc_libc_decl bool mmux_libc_$4_set (mmux_libc_$1_t * P, $3 value);
+mmux_cc_libc_decl bool mmux_libc_$4_ref ($3 * result_p, mmux_libc_$1_t const * P);
 ]]])
 
 

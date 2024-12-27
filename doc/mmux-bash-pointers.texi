@@ -8534,7 +8534,7 @@ mmux_libc_free @RR{REQUESTED_TIMESPEC}
 * sockets inames::              Socket interface names.
 * sockets sockaddr_un::         Interface to @MmuxCStruct{sockaddr_un}.
 * sockets sockaddr_in::         Interface to @MmuxCStruct{sockaddr_in}.
-* sockets sockaddr_in6::        Interface to @MmuxCStruct{sockaddr_in6}.
+* sockets sockaddr_insix::      Interface to @MmuxCStruct{sockaddr_in6}.
 * sockets sockaddr::            Interface to @MmuxCStruct{sockaddr}.
 * sockets addrinfo::            Interface to @MmuxCStruct{addrinfo}.
 * sockets hostsdb::             Hosts database.
@@ -8874,219 +8874,219 @@ structure; when not given: it defaults to @samp{struct sockaddr_in}.
 @end defun
 
 @c page
-@node sockets sockaddr_in6
+@node sockets sockaddr_insix
 @section Interface to @MmuxCStruct{sockaddr_in6}
 
 
 To use values of type @MmuxCStruct{sockaddr_in6} we do:
 
 @example
-declare SOCKADDR_IN6 SIN6_ADDR_POINTER
-declare -r SIN6_FAMILY=@RR{mmux_libc_AF_INET6}
-declare -r SIN6_FLOWINFO=0
-declare -r SIN6_SCOPE_ID=0
-declare -r SIN6_PORT=8080
+declare SOCKADDR_INSIX SINSIX_ADDR_POINTER
+declare -r SINSIX_FAMILY=@RR{mmux_libc_AF_INET6}
+declare -r SINSIX_FLOWINFO=0
+declare -r SINSIX_SCOPE_ID=0
+declare -r SINSIX_PORT=8080
 
-mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 @RR{SIN6_FAMILY} SIN6_ADDR_POINTER \
-    @RR{SIN6_FLOWINFO} @RR{SIN6_SCOPE_ID} @RR{SIN6_PORT}
+mmux_libc_sockaddr_insix_calloc SOCKADDR_INSIX @RR{SINSIX_FAMILY} SINSIX_ADDR_POINTER \
+    @RR{SINSIX_FLOWINFO} @RR{SINSIX_SCOPE_ID} @RR{SINSIX_PORT}
 @{
-    mmux_libc_inet_pton @RR{INPUT_SIN6_FAMILY} '1:2:3:4:5:6:7:8' @RR{SIN6_ADDR_POINTER}
+    mmux_libc_inet_pton @RR{INPUT_SINSIX_FAMILY} '1:2:3:4:5:6:7:8' @RR{SINSIX_ADDR_POINTER}
     # ...
 @}
-mmux_libc_free @RR{SOCKADDR_IN6}
+mmux_libc_free @RR{SOCKADDR_INSIX}
 @end example
 
 @ref{overview conventions, Conventions in coding and documentation}.
 
 
-@defvr Constant mmux_libc_sockaddr_in6_SIZEOF
-Size, measured in bytes, of a value of type @MmuxCStruct{sockaddr_in6}.
+@defvr Constant mmux_libc_sockaddr_insix_SIZEOF
+Size, measured in bytes, of a value of type @MmuxCStruct{sockaddr_insix}.
 @end defvr
 
 
-@defvr Constant mmux_libc_in6_addr_SIZEOF
-Size, measured in bytes, of a value of type @MmuxCStruct{in6_addr}.
+@defvr Constant mmux_libc_insix_addr_SIZEOF
+Size, measured in bytes, of a value of type @MmuxCStruct{insix_addr}.
 @end defvr
 
 
-@deffn Builtin mmux_libc_sockaddr_in6_calloc @var{SOCKADDR_IN6_POINTER_VAR} @var{SIN6_FAMILY} @var{SIN6_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} @var{HOST_BYTEORDER_SIN6_PORT}
-Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_in6}
+@deffn Builtin mmux_libc_sockaddr_insix_calloc @var{SOCKADDR_INSIX_POINTER_VAR} @var{SINSIX_FAMILY} @var{SINSIX_ADDR_POINTER_VAR} @var{NETWORK_BYTEORDER_SINSIX_FLOWINFO} @var{NETWORK_BYTEORDER_SINSIX_SCOPE_ID} @var{HOST_BYTEORDER_SINSIX_PORT}
+Allocate a memory block, using @cfunc{calloc}, wide enough to contain a @MmuxCStruct{sockaddr_insix}
 value and initialise it.  Arguments:
 
 @table @var
-@item SOCKADDR_IN6_POINTER_VAR
+@item SOCKADDR_INSIX_POINTER_VAR
 The name of a shell variable: when successful, this builtin binds to this variable a string
-representation of the pointer referencing the @MmuxCStruct{sockaddr_in6} value.
+representation of the pointer referencing the @MmuxCStruct{sockaddr_insix} value.
 
-@item SIN6_FAMILY
+@item SINSIX_FAMILY
 The string representation of the family argument; it is usually the value of
 @samp{mmux_libc_AF_INET6}.
 
-@item SIN6_ADDR_POINTER_VAR
+@item SINSIX_ADDR_POINTER_VAR
 The name of a shell variable: when successful, this builtin binds to this variable a string
-representation of the pointer referencing the field @code{sin6_addr} of the @code{struct
-sockaddr_in6} value.  We can use the pointer to fill the field, for example with
+representation of the pointer referencing the field @code{sinsix_addr} of the @code{struct
+sockaddr_insix} value.  We can use the pointer to fill the field, for example with
 @MmuxBuiltin{mmux_libc_memcpy} or @cfunc{memcpy}.
 
-@item NETWORK_BYTEORDER_SIN6_FLOWINFO
+@item NETWORK_BYTEORDER_SINSIX_FLOWINFO
 The string representation, in network byte order, of a @objtype{mmux_uint32_t} integer representing
-the field @code{sin6_flowinfo} of the @MmuxCStruct{sockaddr_in6} value.
+the field @code{sinsix_flowinfo} of the @MmuxCStruct{sockaddr_insix} value.
 
-@item NETWORK_BYTEORDER_SIN6_SCOPE_ID
+@item NETWORK_BYTEORDER_SINSIX_SCOPE_ID
 The string representation, in network byte order, of a @objtype{mmux_uint32_t} integer representing
-the field @code{sin6_scope_id} of the @MmuxCStruct{sockaddr_in6} value.
+the field @code{sinsix_scope_id} of the @MmuxCStruct{sockaddr_insix} value.
 
-@item HOST_BYTEORDER_SIN6_PORT
+@item HOST_BYTEORDER_SINSIX_PORT
 The string representation, in host byte order, of a @objtype{mmux_uint16_t} integer representing a
 port number.  Internally this value is converted from host to network byte ordering, using
-@cfunc{htons}, then stored in the @MmuxCStruct{sockaddr_in6}.
+@cfunc{htons}, then stored in the @MmuxCStruct{sockaddr_insix}.
 @end table
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_family_ref @var{SIN6_FAMILY_VAR} @var{SOCKADDR_IN6_POINTER}
-@deffnx Builtin mmux_libc_sin6_family_set @var{SOCKADDR_IN6_POINTER} @var{SIN6_FAMILY}
-Setter and getter for the field @code{sin6_family} of the @MmuxCStruct{sockaddr_in6} referenced by
-@var{SOCKADDR_IN6_POINTER}; it is usually the value of @samp{mmux_libc_AF_INET6}.
+@deffn Builtin mmux_libc_sinsix_family_ref @var{SINSIX_FAMILY_VAR} @var{SOCKADDR_INSIX_POINTER}
+@deffnx Builtin mmux_libc_sinsix_family_set @var{SOCKADDR_INSIX_POINTER} @var{SINSIX_FAMILY}
+Setter and getter for the field @code{sinsix_family} of the @MmuxCStruct{sockaddr_insix} referenced by
+@var{SOCKADDR_INSIX_POINTER}; it is usually the value of @samp{mmux_libc_AF_INET6}.
 
-The getter binds the shell variable whose name is @var{SIN6_FAMILY_VAR} to the string representation
-of the field @code{sin6_family} as is, without any byte reordering.
+The getter binds the shell variable whose name is @var{SINSIX_FAMILY_VAR} to the string representation
+of the field @code{sinsix_family} as is, without any byte reordering.
 
-The setter sets the field @code{sin6_family} to the value @var{SIN6_FAMILY} as is, without any byte
+The setter sets the field @code{sinsix_family} to the value @var{SINSIX_FAMILY} as is, without any byte
 reordering.
 
 @example
-declare SOCKADDR_IN6_POINTER
-declare -r INPUT_SIN6_FAMILY=RR(mmux_libc_AF_INET)
-declare    OUPUT_SIN6_FAMILY
+declare SOCKADDR_INSIX_POINTER
+declare -r INPUT_SINSIX_FAMILY=RR(mmux_libc_AF_INET)
+declare    OUPUT_SINSIX_FAMILY
 
-mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_calloc SOCKADDR_INSIX_POINTER 1 @RR{mmux_libc_sockaddr_insix_SIZEOF}
 @{
-    mmux_libc_sin6_family_set @RR{SOCKADDR_IN6_POINTER} @RR{INPUT_SIN6_FAMILY}
-    mmux_libc_sin6_family_ref OUPUT_SIN6_FAMILY @RR{SOCKADDR_IN6_POINTER}
+    mmux_libc_sinsix_family_set @RR{SOCKADDR_INSIX_POINTER} @RR{INPUT_SINSIX_FAMILY}
+    mmux_libc_sinsix_family_ref OUPUT_SINSIX_FAMILY @RR{SOCKADDR_INSIX_POINTER}
 @}
-mmux_libc_free @RR{SOCKADDR_IN6_POINTER}
+mmux_libc_free @RR{SOCKADDR_INSIX_POINTER}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_addr_pointer_ref @var{SIN6_ADDR_POINTER_VAR} @var{SOCKADDR_IN6_POINTER}
-Bind the shell variable whose name is @var{SIN6_ADDR_POINTER_VAR} to the string representation of a
-pointer to the field @code{sin6_addr} in the @MmuxCStruct{sockaddr_in6} value referenced by
-@var{SOCKADDR_IN6_POINTER}.
+@deffn Builtin mmux_libc_sinsix_addr_pointer_ref @var{SINSIX_ADDR_POINTER_VAR} @var{SOCKADDR_INSIX_POINTER}
+Bind the shell variable whose name is @var{SINSIX_ADDR_POINTER_VAR} to the string representation of a
+pointer to the field @code{sinsix_addr} in the @MmuxCStruct{sockaddr_insix} value referenced by
+@var{SOCKADDR_INSIX_POINTER}.
 
 @example
-declare SOCKADDR_IN6_POINTER SIN6_ADDR_POINTER
+declare SOCKADDR_INSIX_POINTER SINSIX_ADDR_POINTER
 
-mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_calloc SOCKADDR_INSIX_POINTER 1 @RR{mmux_libc_sockaddr_insix_SIZEOF}
 @{
-    mmux_libc_sin6_addr_pointer_ref SIN6_ADDR_POINTER @RR{SOCKADDR_IN6_POINTER}
-    mmux_libc_memcpy @RR{SIN6_ADDR_POINTER} @RR{mmux_libc_in6addr_loopback_pointer} \
-        @RR{mmux_libc_in6_addr_SIZEOF}
+    mmux_libc_sinsix_addr_pointer_ref SINSIX_ADDR_POINTER @RR{SOCKADDR_INSIX_POINTER}
+    mmux_libc_memcpy @RR{SINSIX_ADDR_POINTER} @RR{mmux_libc_insixaddr_loopback_pointer} \
+        @RR{mmux_libc_insix_addr_SIZEOF}
 @}
-mmux_libc_free @RR{SOCKADDR_IN6_POINTER}
+mmux_libc_free @RR{SOCKADDR_INSIX_POINTER}
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_flowinfo_ref @var{NETWORK_BYTEORDER_SIN6_FLOWINFO_VAR} @var{SOCKADDR_IN6_POINTER}
-@deffnx Builtin mmux_libc_sin6_flowinfo_set @var{SOCKADDR_IN6_POINTER} @var{NETWORK_BYTEORDER_SIN6_FLOWINFO}
-Setter and getter for the field @code{sin6_flowinfo} of the @MmuxCStruct{sockaddr_in6} referenced by
-@var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
+@deffn Builtin mmux_libc_sinsix_flowinfo_ref @var{NETWORK_BYTEORDER_SINSIX_FLOWINFO_VAR} @var{SOCKADDR_INSIX_POINTER}
+@deffnx Builtin mmux_libc_sinsix_flowinfo_set @var{SOCKADDR_INSIX_POINTER} @var{NETWORK_BYTEORDER_SINSIX_FLOWINFO}
+Setter and getter for the field @code{sinsix_flowinfo} of the @MmuxCStruct{sockaddr_insix} referenced by
+@var{SOCKADDR_INSIX_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
 usually the value @samp{0}.
 
-The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SIN6_FLOWINFO_VAR} to the
-string representation of the field @code{sin6_flowinfo} as is, without any byte reordering.
+The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SINSIX_FLOWINFO_VAR} to the
+string representation of the field @code{sinsix_flowinfo} as is, without any byte reordering.
 
-The setter sets the field @code{sin6_flowinfo} to the value @var{NETWORK_BYTEORDER_SIN6_FLOWINFO} as
+The setter sets the field @code{sinsix_flowinfo} to the value @var{NETWORK_BYTEORDER_SINSIX_FLOWINFO} as
 is, without any byte reordering.
 
 @example
-declare SOCKADDR_IN6_POINTER
-declare -r INPUT_SIN6_FLOWINFO=0
-declare    OUPUT_SIN6_FLOWINFO
+declare SOCKADDR_INSIX_POINTER
+declare -r INPUT_SINSIX_FLOWINFO=0
+declare    OUPUT_SINSIX_FLOWINFO
 
-mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_calloc SOCKADDR_INSIX_POINTER 1 @RR{mmux_libc_sockaddr_insix_SIZEOF}
 @{
-    mmux_libc_sin6_flowinfo_set @RR{SOCKADDR_IN6_POINTER} @RR{INPUT_SIN6_FLOWINFO}
-    mmux_libc_sin6_flowinfo_ref OUPUT_SIN6_FLOWINFO @RR{SOCKADDR_IN6_POINTER}
+    mmux_libc_sinsix_flowinfo_set @RR{SOCKADDR_INSIX_POINTER} @RR{INPUT_SINSIX_FLOWINFO}
+    mmux_libc_sinsix_flowinfo_ref OUPUT_SINSIX_FLOWINFO @RR{SOCKADDR_INSIX_POINTER}
 @}
-mmux_libc_free RR(SOCKADDR_IN6_POINTER)
+mmux_libc_free RR(SOCKADDR_INSIX_POINTER)
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_scope_id_ref @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID_VAR} @var{SOCKADDR_IN6_POINTER}
-@deffnx Builtin mmux_libc_sin6_scope_id_set @var{SOCKADDR_IN6_POINTER} @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID}
-Setter and getter for the field @code{sin6_scope_id} of the @MmuxCStruct{sockaddr_in6} referenced by
-@var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
+@deffn Builtin mmux_libc_sinsix_scope_id_ref @var{NETWORK_BYTEORDER_SINSIX_SCOPE_ID_VAR} @var{SOCKADDR_INSIX_POINTER}
+@deffnx Builtin mmux_libc_sinsix_scope_id_set @var{SOCKADDR_INSIX_POINTER} @var{NETWORK_BYTEORDER_SINSIX_SCOPE_ID}
+Setter and getter for the field @code{sinsix_scope_id} of the @MmuxCStruct{sockaddr_insix} referenced by
+@var{SOCKADDR_INSIX_POINTER}; the value is the representation of a @objtype{mmux_uint32_t}; it is
 usually the value @samp{0}.
 
-The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID_VAR} to the
-string representation of the field @code{sin6_scope_id} as is, without any byte reordering.
+The getter binds the shell variable whose name is @var{NETWORK_BYTEORDER_SINSIX_SCOPE_ID_VAR} to the
+string representation of the field @code{sinsix_scope_id} as is, without any byte reordering.
 
-The setter sets the field @code{sin6_scope_id} to the value @var{NETWORK_BYTEORDER_SIN6_SCOPE_ID} as
+The setter sets the field @code{sinsix_scope_id} to the value @var{NETWORK_BYTEORDER_SINSIX_SCOPE_ID} as
 is, without any byte reordering.
 
 @example
-declare SOCKADDR_IN6_POINTER
-declare -r INPUT_SIN6_SCOPE_ID=0
-declare    OUPUT_SIN6_SCOPE_ID
+declare SOCKADDR_INSIX_POINTER
+declare -r INPUT_SINSIX_SCOPE_ID=0
+declare    OUPUT_SINSIX_SCOPE_ID
 
-mmux_libc_calloc SOCKADDR_IN6_POINTER 1 @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_calloc SOCKADDR_INSIX_POINTER 1 @RR{mmux_libc_sockaddr_insix_SIZEOF}
 @{
-    mmux_libc_sin6_scope_id_set @RR{SOCKADDR_IN6_POINTER} @RR{INPUT_SIN6_SCOPE_ID}
-    mmux_libc_sin6_scope_id_ref OUPUT_SIN6_SCOPE_ID @RR{SOCKADDR_IN6_POINTER}
+    mmux_libc_sinsix_scope_id_set @RR{SOCKADDR_INSIX_POINTER} @RR{INPUT_SINSIX_SCOPE_ID}
+    mmux_libc_sinsix_scope_id_ref OUPUT_SINSIX_SCOPE_ID @RR{SOCKADDR_INSIX_POINTER}
 @}
-mmux_libc_free RR(SOCKADDR_IN6_POINTER)
+mmux_libc_free RR(SOCKADDR_INSIX_POINTER)
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@deffn Builtin mmux_libc_sin6_port_ref @var{HOST_BYTEORDER_SIN6_PORT_VAR} @var{SOCKADDR_IN6_POINTER}
-@deffnx Builtin mmux_libc_sin6_port_set @var{SOCKADDR_IN6_POINTER} @var{HOST_BYTEORDER_SIN6_PORT}
-Setter and getter for the field @code{sin6_port} of the @MmuxCStruct{sockaddr_in6} referenced by
-@var{SOCKADDR_IN6_POINTER}; the value is the representation of a @objtype{mmux_uint16_t}; it is
+@deffn Builtin mmux_libc_sinsix_port_ref @var{HOST_BYTEORDER_SINSIX_PORT_VAR} @var{SOCKADDR_INSIX_POINTER}
+@deffnx Builtin mmux_libc_sinsix_port_set @var{SOCKADDR_INSIX_POINTER} @var{HOST_BYTEORDER_SINSIX_PORT}
+Setter and getter for the field @code{sinsix_port} of the @MmuxCStruct{sockaddr_insix} referenced by
+@var{SOCKADDR_INSIX_POINTER}; the value is the representation of a @objtype{mmux_uint16_t}; it is
 usually @samp{0}.
 
-The getter binds the shell variable whose name is @var{HOST_BYTEORDER_SIN6_PORT_VAR} to the string
-representation of the field @code{sin6_port}; before binding: it converts the binary value from
+The getter binds the shell variable whose name is @var{HOST_BYTEORDER_SINSIX_PORT_VAR} to the string
+representation of the field @code{sinsix_port}; before binding: it converts the binary value from
 network to host byte order using the standard C language function @cfunc{ntohs}.
 
-The setter sets the field @code{sin6_port} to the value @var{HOST_BYTEORDER_SIN6_PORT}; before
+The setter sets the field @code{sinsix_port} to the value @var{HOST_BYTEORDER_SINSIX_PORT}; before
 setting: the binary value is converted from host to network byte order using the standard C language
 function @cfunc{htons}.
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@defvar mmux_libc_in6addr_loopback_pointer
-Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
-in6addr_loopback}.  We can the pointer to this data structure to initialise a @code{struct
-sockaddr_in6}.  @glibcref{Host Address Data Type, in6addr_loopback}.
+@defvar mmux_libc_insixaddr_loopback_pointer
+Global variable holding the value of a pointer to the C language constant @code{struct insix_addr
+insixaddr_loopback}.  We can the pointer to this data structure to initialise a @code{struct
+sockaddr_insix}.  @glibcref{Host Address Data Type, insixaddr_loopback}.
 @end defvar
 
 
-@defvar mmux_libc_in6addr_any_pointer
-Global variable holding the value of a pointer to the C language constant @code{struct in6_addr
-in6addr_any}.  We can the pointer to this data structure to initialise a @MmuxCStruct{sockaddr_in6}.
-@glibcref{Host Address Data Type, in6addr_any}.
+@defvar mmux_libc_insixaddr_any_pointer
+Global variable holding the value of a pointer to the C language constant @code{struct insix_addr
+insixaddr_any}.  We can the pointer to this data structure to initialise a @MmuxCStruct{sockaddr_insix}.
+@glibcref{Host Address Data Type, insixaddr_any}.
 @end defvar
 
 @c ------------------------------------------------------------------------
 
-@defun mmux_libc_sockaddr_in6_dump @var{SOCKADDR_IN6_PTR}
-@defunx mmux_libc_sockaddr_in6_dump @var{SOCKADDR_IN6_PTR} @var{STRUCT_NAME}
-Applied to a pointer to @code{struct sockaddr_in6}: print to @stdout{} a description of each field,
+@defun mmux_libc_sockaddr_insix_dump @var{SOCKADDR_INSIX_PTR}
+@defunx mmux_libc_sockaddr_insix_dump @var{SOCKADDR_INSIX_PTR} @var{STRUCT_NAME}
+Applied to a pointer to @code{struct sockaddr_insix}: print to @stdout{} a description of each field,
 then return true.  If an error occurs: print a message to @stderr{}, then return false.
 
 The optional argument @var{STRUCT_NAME} must be a shell string representing the name of the data
-structure; when not given: it defaults to @samp{struct sockaddr_in6}.
+structure; when not given: it defaults to @samp{struct sockaddr_insix}.
 @end defun
 
 @c page
@@ -9123,7 +9123,7 @@ Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_un_dump}.
 Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_in_dump}.
 
 @item AF_INET6
-Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_in6_dump}.
+Dumping is performed by @MmuxBuiltin{mmux_libc_sockaddr_insix_dump}.
 @end table
 @end deffn
 
@@ -10400,7 +10400,7 @@ The argument @var{ADDR_POINTER} must be a pointer to an address data structure; 
 Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in}.
 
 @item mmux_libc_AF_INET6
-Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in6}.
+Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_insix}.
 @end table
 
 We can just store the binary format in a raw memory block; for IPv4 addresses:
@@ -10425,17 +10425,17 @@ for IPv6 addresses:
 
 @example
 declare -r AF_TYPE=@RR{mmux_libc_AF_INET6}
-declare -r INPUT_ASCII_IN6_ADDR='1:2:3:4:5:6:7:8'
-declare IN6_ADDR_POINTER
-declare OUTPUT_ASCII_IN6_ADDR
+declare -r INPUT_ASCII_INSIX_ADDR='1:2:3:4:5:6:7:8'
+declare INSIX_ADDR_POINTER
+declare OUTPUT_ASCII_INSIX_ADDR
 
-mmux_libc_calloc IN6_ADDR_POINTER 1 @RR{mmux_libc_in6_addr_SIZEOF}
+mmux_libc_calloc INSIX_ADDR_POINTER 1 @RR{mmux_libc_insix_addr_SIZEOF}
 @{
-    mmux_libc_inet_pton @RR{AF_TYPE} @WW{INPUT_ASCII_IN6_ADDR} @RR{IN6_ADDR_POINTER}
-    mmux_libc_inet_ntop @RR{AF_TYPE} @RR{IN6_ADDR_POINTER} OUTPUT_ASCII_IN6_ADDR
-    @WW{OUTPUT_ASCII_IN6_ADDR}  @result{} 1:2:3:4:5:6:7:8
+    mmux_libc_inet_pton @RR{AF_TYPE} @WW{INPUT_ASCII_INSIX_ADDR} @RR{INSIX_ADDR_POINTER}
+    mmux_libc_inet_ntop @RR{AF_TYPE} @RR{INSIX_ADDR_POINTER} OUTPUT_ASCII_INSIX_ADDR
+    @WW{OUTPUT_ASCII_INSIX_ADDR}  @result{} 1:2:3:4:5:6:7:8
 @}
-mmux_libc_free @RR{IN6_ADDR_POINTER}
+mmux_libc_free @RR{INSIX_ADDR_POINTER}
 @end example
 @end deffn
 
@@ -10455,7 +10455,7 @@ The argument @var{ADDR_POINTER} must be a pointer to an address data structure; 
 Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in}.
 
 @item mmux_libc_AF_INET6
-Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_in6}.
+Then @var{ADDR_POINTER} must reference a data structure of type @MmuxCStruct{sockaddr_insix}.
 @end table
 
 The argument @var{ASCII_ADDR_VAR} must be the name of a shell variable: when successful, this
@@ -11067,13 +11067,13 @@ Let's see how we can create a server socket in the @samp{AF_INET6} namespace, in
 which allocated resources are not released (to make the code shorter):
 
 @example
-declare SOCKADDR_IN6 SIN6_ADDR SIN6_PORT='8080' ASCII_ADDR='::1'
+declare SOCKADDR_INSIX SINSIX_ADDR SINSIX_PORT='8080' ASCII_ADDR='::1'
 declare SERVER_SOCKFD
 
-mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 @RR{mmux_libc_AF_INET6} SIN6_ADDR 0 0 @RR{SIN6_PORT}
-mmux_libc_inet_pton @RR{mmux_libc_AF_INET6} @WW{ASCII_ADDR} @RR{SIN6_ADDR}
+mmux_libc_sockaddr_insix_calloc SOCKADDR_INSIX @RR{mmux_libc_AF_INET6} SINSIX_ADDR 0 0 @RR{SINSIX_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET6} @WW{ASCII_ADDR} @RR{SINSIX_ADDR}
 mmux_libc_socket SERVER_SOCKFD @RR{mmux_libc_PF_INET6} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_IP}
-mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_IN6} @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_bind @RR{SERVER_SOCKFD} @RR{SOCKADDR_INSIX} @RR{mmux_libc_sockaddr_insix_SIZEOF}
 mmux_libc_listen @RR{SERVER_SOCKFD} 10
 @{
     declare CONNECTED_SOCKFD
@@ -11208,13 +11208,13 @@ Let's see how we can create a client socket in the @samp{AF_INET6} namespace, in
 which allocated resources are not released (to make the code shorter):
 
 @example
-declare SOCKADDR_IN6 SIN6_ADDR SIN6_PORT='8080' ASCII_ADDR='::1'
+declare SOCKADDR_INSIX SINSIX_ADDR SINSIX_PORT='8080' ASCII_ADDR='::1'
 declare CLIENT_SOCKFD
 
-mmux_libc_sockaddr_in6_calloc SOCKADDR_IN6 @RR{mmux_libc_AF_INET6} SIN6_ADDR 0 0 @RR{SIN6_PORT}
-mmux_libc_inet_pton @RR{mmux_libc_AF_INET6} @WW{ASCII_ADDR} @RR{SIN6_ADDR}
+mmux_libc_sockaddr_insix_calloc SOCKADDR_INSIX @RR{mmux_libc_AF_INET6} SINSIX_ADDR 0 0 @RR{SINSIX_PORT}
+mmux_libc_inet_pton @RR{mmux_libc_AF_INET6} @WW{ASCII_ADDR} @RR{SINSIX_ADDR}
 mmux_libc_socket CLIENT_SOCKFD @RR{mmux_libc_PF_INET6} @RR{mmux_libc_SOCK_STREAM} @RR{mmux_libc_IPPROTO_TCP}
-mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_IN6} @RR{mmux_libc_sockaddr_in6_SIZEOF}
+mmux_libc_connect @RR{CLIENT_SOCKFD} @RR{SOCKADDR_INSIX} @RR{mmux_libc_sockaddr_insix_SIZEOF}
 @{
     declare DONEVAR BUFSTR='hello world' BUFLEN=$@{#BUFSTR@} BUFPTR
 
@@ -12017,7 +12017,6 @@ signalled the error.  @var{who} is usually the name of a builtin.
 
 
 @deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
-@deftypefunx mmux_bash_rv_t mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t @var{variable_name}, mmux_asciizcp_t @var{s_value}, mmux_asciizcp_t @var{who})
 Assign @var{s_value} to the shell @var{variable_name}; the @asciiz{} string referenced by
 @var{s_value} is duplicated internally by Bash, so Bash does @strong{not} own the memory referenced
 by @var{s_value}.  When successful return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
@@ -12025,7 +12024,6 @@ by @var{s_value}.  When successful return @code{MMUX_SUCCESS}; otherwise return 
 
 
 @deftypefun mmux_bash_rv_t mmux_string_bind_to_bash_global_variable (char const * @var{variable_name}, char const * @var{s_value}, char const * @var{who})
-@deftypefunx mmux_bash_rv_t mmux_asciizcp_bind_to_bash_global_variable (mmux_asciizcp_t @var{variable_name}, mmux_asciizcp_t @var{s_value}, mmux_asciizcp_t @var{who})
 Like @cfunc{mmux_string_bind_to_bash_variable} but bind the value to a global shell variable.
 @end deftypefun
 
@@ -12160,6 +12158,14 @@ otherwise return @code{MMUX_FAILURE}.
 @deftypefun mmux_bash_rv_t mmux_libc_gid_bind_to_bash_variable (char const * @var{variable_name}, mmux_libc_gid_t @var{value}, char const * @var{who})
 Assign @var{value} to the shell @var{variable_name}.  When successful return @code{MMUX_SUCCESS};
 otherwise return @code{MMUX_FAILURE}.
+@end deftypefun
+
+@c ------------------------------------------------------------------------
+
+@deftypefun mmux_bash_rv_t mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t @var{variable_name}, mmux_asciizcp_t @var{value}, mmux_asciizcp_t @var{who})
+@deftypefunx mmux_bash_rv_t mmux_asciizp_bind_to_bash_variable (mmux_asciizcp_t @var{variable_name}, mmux_asciizp_t @var{value}, mmux_asciizcp_t @var{who})
+Assign @var{value}, interpreted as pointer, to the shell @var{variable_name}.  When successful
+return @code{MMUX_SUCCESS}; otherwise return @code{MMUX_FAILURE}.
 @end deftypefun
 
 @c page

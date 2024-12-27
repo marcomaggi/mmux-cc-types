@@ -378,6 +378,97 @@ mmux_cc_libc_decl bool mmux_libc_ioctl (mmux_libc_file_descriptor_t fd, mmux_sin
 
 
 /** --------------------------------------------------------------------
+ ** Printing types.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_PRINTER_PROTO]]],
+  [[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[mmux_cc_libc_decl bool mmux_$1_dprintf (mmux_libc_file_descriptor_t fd, mmux_$1_t value);]]])]]])
+
+DEFINE_PRINTER_PROTO([[[pointer]]])
+
+DEFINE_PRINTER_PROTO([[[schar]]])
+DEFINE_PRINTER_PROTO([[[uchar]]])
+DEFINE_PRINTER_PROTO([[[sshort]]])
+DEFINE_PRINTER_PROTO([[[ushort]]])
+DEFINE_PRINTER_PROTO([[[sint]]])
+DEFINE_PRINTER_PROTO([[[uint]]])
+DEFINE_PRINTER_PROTO([[[slong]]])
+DEFINE_PRINTER_PROTO([[[ulong]]])
+DEFINE_PRINTER_PROTO([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_PRINTER_PROTO([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_PRINTER_PROTO([[[sint8]]])
+DEFINE_PRINTER_PROTO([[[uint8]]])
+DEFINE_PRINTER_PROTO([[[sint16]]])
+DEFINE_PRINTER_PROTO([[[uint16]]])
+DEFINE_PRINTER_PROTO([[[sint32]]])
+DEFINE_PRINTER_PROTO([[[uint32]]])
+DEFINE_PRINTER_PROTO([[[sint64]]])
+DEFINE_PRINTER_PROTO([[[uint64]]])
+
+DEFINE_PRINTER_PROTO([[[float]]])
+DEFINE_PRINTER_PROTO([[[double]]])
+DEFINE_PRINTER_PROTO([[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_PRINTER_PROTO([[[float32]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_PRINTER_PROTO([[[float64]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_PRINTER_PROTO([[[float128]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_PRINTER_PROTO([[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_PRINTER_PROTO([[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_PRINTER_PROTO([[[float128x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_PRINTER_PROTO([[[decimal32]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_PRINTER_PROTO([[[decimal64]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_PRINTER_PROTO([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+DEFINE_PRINTER_PROTO([[[complexf]]])
+DEFINE_PRINTER_PROTO([[[complexd]]])
+DEFINE_PRINTER_PROTO([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
+
+DEFINE_PRINTER_PROTO([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
+DEFINE_PRINTER_PROTO([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
+DEFINE_PRINTER_PROTO([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+
+DEFINE_PRINTER_PROTO([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
+DEFINE_PRINTER_PROTO([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
+DEFINE_PRINTER_PROTO([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+
+DEFINE_PRINTER_PROTO([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
+DEFINE_PRINTER_PROTO([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
+DEFINE_PRINTER_PROTO([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+
+DEFINE_PRINTER_PROTO([[[usize]]])
+DEFINE_PRINTER_PROTO([[[ssize]]])
+
+DEFINE_PRINTER_PROTO([[[sintmax]]])
+DEFINE_PRINTER_PROTO([[[uintmax]]])
+DEFINE_PRINTER_PROTO([[[sintptr]]])
+DEFINE_PRINTER_PROTO([[[uintptr]]])
+DEFINE_PRINTER_PROTO([[[ptrdiff]]])
+DEFINE_PRINTER_PROTO([[[mode]]])
+DEFINE_PRINTER_PROTO([[[off]]])
+DEFINE_PRINTER_PROTO([[[pid]]])
+DEFINE_PRINTER_PROTO([[[uid]]])
+DEFINE_PRINTER_PROTO([[[gid]]])
+DEFINE_PRINTER_PROTO([[[wchar]]])
+DEFINE_PRINTER_PROTO([[[wint]]])
+DEFINE_PRINTER_PROTO([[[time]]])
+DEFINE_PRINTER_PROTO([[[socklen]]])
+DEFINE_PRINTER_PROTO([[[rlim]]])
+
+mmux_cc_libc_decl bool mmux_libc_fd_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_file_descriptor_t value);
+
+mmux_cc_libc_decl bool mmux_libc_pid_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_pid_t value);
+
+mmux_cc_libc_decl bool mmux_libc_uid_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_uid_t value);
+
+mmux_cc_libc_decl bool mmux_libc_gid_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_gid_t value);
+
+mmux_cc_libc_decl bool mmux_libc_ptn_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_file_system_pathname_t value);
+
+
+/** --------------------------------------------------------------------
  ** System configuration.
  ** ----------------------------------------------------------------- */
 
@@ -768,6 +859,197 @@ mmux_cc_libc_decl bool mmux_libc_lutimes (mmux_libc_file_system_pathname_t pathn
 mmux_cc_libc_decl bool mmux_libc_futimes (mmux_libc_file_descriptor_t fd,
 					  mmux_libc_timeval_t * access_timeval_pointer, mmux_libc_timeval_t * modification_timeval_pointer)
   __attribute__((__nonnull__(2,3)));
+
+
+/** --------------------------------------------------------------------
+ ** Sockets.
+ ** ----------------------------------------------------------------- */
+
+typedef struct in_addr		mmux_libc_in_addr_t;
+typedef struct in6_addr		mmux_libc_insix_addr_t;
+
+typedef struct addrinfo		mmux_libc_addrinfo_t;
+typedef struct sockaddr		mmux_libc_sockaddr_t;
+typedef struct sockaddr_un	mmux_libc_sockaddr_un_t;
+typedef struct sockaddr_in	mmux_libc_sockaddr_in_t;
+typedef struct sockaddr_in6	mmux_libc_sockaddr_insix_t;
+typedef struct hostent		mmux_libc_hostent_t;
+typedef struct servent		mmux_libc_servent_t;
+typedef struct protoent		mmux_libc_protoent_t;
+typedef struct netent		mmux_libc_netent_t;
+
+typedef mmux_libc_in_addr_t *		mmux_libc_in_addr_ptr_t;
+typedef mmux_libc_insix_addr_t *	mmux_libc_insix_addr_ptr_t;
+
+typedef mmux_libc_addrinfo_t *		mmux_libc_addrinfo_ptr_t;
+typedef mmux_libc_sockaddr_t *		mmux_libc_sockaddr_ptr_t;
+typedef mmux_libc_sockaddr_un_t *	mmux_libc_sockaddr_un_ptr_t;
+typedef mmux_libc_sockaddr_in_t *	mmux_libc_sockaddr_in_ptr_t;
+typedef mmux_libc_sockaddr_insix_t *	mmux_libc_sockaddr_insix_ptr_t;
+typedef mmux_libc_hostent_t *		mmux_libc_hostent_ptr_t;
+typedef mmux_libc_servent_t *		mmux_libc_servent_ptr_t;
+typedef mmux_libc_protoent_t *		mmux_libc_protoent_ptr_t;
+typedef mmux_libc_netent_t *		mmux_libc_netent_ptr_t;
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(in_addr, s_addr,	mmux_uint32_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr, sa_family,	mmux_sshort_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr_un, sun_family,	mmux_sshort_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr_un, sun_path,	mmux_libc_file_system_pathname_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr_in, sin_family,	mmux_sshort_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr_in, sin_addr,	mmux_libc_in_addr_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr_in, sin_port,	mmux_host_byteorder_ushort_t)
+
+mmux_cc_libc_decl bool mmux_libc_sin_addr_p_ref (mmux_libc_in_addr_t ** sin_addr_pp, mmux_libc_sockaddr_in_t * sockaddr_p)
+  __attribute__((__nonnull__(1,2)));
+
+DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS(sockaddr_insix, sin6_family,   mmux_sshort_t,          sinsix_family)
+DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS(sockaddr_insix, sin6_addr,     mmux_libc_insix_addr_t, sinsix_addr)
+DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS(sockaddr_insix, sin6_flowinfo, mmux_uint32_t,          sinsix_flowinfo)
+DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS(sockaddr_insix, sin6_scope_id, mmux_uint32_t,          sinsix_scope_id)
+DEFINE_STRUCT_SETTER_GETTER_SPLIT_PROTOS(sockaddr_insix, sin6_port,     mmux_host_byteorder_uint16_t, sinsix_port)
+
+mmux_cc_libc_decl bool mmux_libc_sinsix_addr_p_ref (mmux_libc_insix_addr_t ** sinsix_addr_pp, mmux_libc_sockaddr_insix_t * sockaddr_p)
+  __attribute__((__nonnull__(1,2)));
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_flags,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_family,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_socktype,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_protocol,	mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_addrlen,	mmux_socklen_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_addr,		mmux_libc_sockaddr_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_canonname,	mmux_asciizcp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_next,		mmux_libc_addrinfo_t *)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_name,		mmux_asciizp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_aliases,		mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addrtype,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_length,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addr_list,	mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addr,		mmux_asciizp_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(servent, s_name,		mmux_asciizp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(servent, s_aliases,		mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(servent, s_port,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(servent, s_proto,		mmux_asciizp_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(protoent, p_name,		mmux_asciizp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(protoent, p_aliases,		mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(protoent, p_proto,		mmux_sint_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_name,		mmux_asciizp_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_aliases,		mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_addrtype,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_net,		mmux_ulong_t)
+
+mmux_cc_libc_decl mmux_usize_t mmux_libc_SUN_LEN (mmux_libc_sockaddr_un_t const * sockaddr_un_p)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_in_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_in_addr_t * in_addr_p,
+					       mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_insix_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_insix_addr_t * insix_addr_p,
+						  mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t * sockaddr_p,
+						mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_sockaddr_un_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_un_t * sockaddr_un_p,
+						   mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_sockaddr_in_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_in_t * sockaddr_in_p,
+						   mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_sockaddr_insix_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_insix_t * sockaddr_insix_p,
+						      mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t * addrinfo_p,
+						mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t * hostent_p,
+					       mmux_asciizcp_t struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_servent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_servent_t * servent_p,
+					       mmux_asciizcp_t const struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_protoent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_protoent_t * protoent_p,
+						mmux_asciizcp_t const struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t * netent_p,
+					      mmux_asciizcp_t const struct_name)
+  __attribute__((__nonnull__(2)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_make_in_addr (mmux_libc_in_addr_t * in_addr_p, mmux_uint32_t network_byteorder_value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_make_in_addr_none (mmux_libc_in_addr_t * in_addr_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_make_in_addr_any (mmux_libc_in_addr_t * in_addr_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_make_in_addr_broadcast (mmux_libc_in_addr_t * in_addr_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_make_in_addr_loopback (mmux_libc_in_addr_t * in_addr_p)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_make_insix_addr_loopback (mmux_libc_insix_addr_t * insix_addr_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_make_insix_addr_any (mmux_libc_insix_addr_t * insix_addr_p)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_htons (mmux_uint16_t * netw_byteorder_value_p, mmux_uint16_t host_byteorder_value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_ntohs (mmux_uint16_t * host_byteorder_value_p, mmux_uint16_t netw_byteorder_value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_htonl (mmux_uint32_t * netw_byteorder_value_p, mmux_uint32_t host_byteorder_value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_ntohl (mmux_uint32_t * host_byteorder_value_p, mmux_uint32_t netw_byteorder_value)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_inet_aton (mmux_libc_in_addr_ptr_t ouput_addr_p, mmux_asciizcp_t input_presentation_p)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_ntoa (mmux_asciizp_t ouput_presentation_p, mmux_usize_t ouput_presentation_provided_nchars,
+					    mmux_libc_in_addr_ptr_t input_addr_p)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_pton (mmux_pointer_t ouput_addr_p,
+					    mmux_sint_t input_af_family, mmux_asciizcp_t input_presentation_p)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_ntop (mmux_asciizp_t ouput_presentation_p, mmux_usize_t ouput_presentation_provided_nchars,
+					    mmux_sint_t input_af_family, mmux_pointer_t input_addr_p)
+  __attribute__((__nonnull__(1,4)));
 
 
 /** --------------------------------------------------------------------

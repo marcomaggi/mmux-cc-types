@@ -1,10 +1,14 @@
 -*- coding: utf-8-unix -*-
 
+* Add builtins interfacing functions in the "endian(3)" manual page?
+
 * Add a builtin interfacing "flock(2)"? (Documented in a manual page.)
 
 * Add a builtin interfacing "strfmon()"?
 
 * Add a builtin interfacing "copy_file_range()"?
+
+* Add a builtin interfacing "statx(2)"? (Documented in a manual page.)
 
 * Add a builtin interfacing "sendfile(2)"? (Documented in a manual page.)
 

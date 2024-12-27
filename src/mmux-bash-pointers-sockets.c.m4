@@ -31,880 +31,62 @@
 #undef  IS_POINTER_REPRESENTATION
 #define IS_POINTER_REPRESENTATION(ARGVJ)	((2 < strlen(ARGVJ)) && ('0' == ARGVJ[0]) && ('1' == ARGVJ[1]))
 
-
-/** --------------------------------------------------------------------
- ** Helpers.
- ** ----------------------------------------------------------------- */
-
-typedef struct addrinfo				mmux_libc_addrinfo_tag_t;
-typedef mmux_libc_addrinfo_tag_t *		mmux_libc_addrinfo_t;
-
-typedef struct sockaddr				mmux_libc_sockaddr_tag_t;
-typedef mmux_libc_sockaddr_tag_t *		mmux_libc_sockaddr_t;
-
-typedef struct sockaddr_un			mmux_libc_sockaddr_un_tag_t;
-typedef mmux_libc_sockaddr_un_tag_t *		mmux_libc_sockaddr_un_t;
-
-typedef struct sockaddr_in			mmux_libc_sockaddr_in_tag_t;
-typedef mmux_libc_sockaddr_in_tag_t *		mmux_libc_sockaddr_in_t;
-
-typedef struct sockaddr_in6			mmux_libc_sockaddr_insix_tag_t;
-typedef mmux_libc_sockaddr_insix_tag_t *	mmux_libc_sockaddr_insix_t;
-
-typedef struct hostent				mmux_libc_hostent_tag_t;
-typedef mmux_libc_hostent_tag_t *		mmux_libc_hostent_t;
-
-typedef struct servent				mmux_libc_servent_tag_t;
-typedef mmux_libc_servent_tag_t *		mmux_libc_servent_t;
-
-typedef struct protoent				mmux_libc_protoent_tag_t;
-typedef mmux_libc_protoent_tag_t *		mmux_libc_protoent_t;
-
-typedef struct netent				mmux_libc_netent_tag_t;
-typedef mmux_libc_netent_tag_t *		mmux_libc_netent_t;
-
 /* ------------------------------------------------------------------ */
 
-static void
-sa_family_to_asciiz_name(char const ** name_p, int sa_family)
+m4_dnl $1 - stem of the Bash builtin
+m4_dnl $2 - optional stem of the MMUX Libc data structure, it defaults to $1
+m4_define([[[DEFINE_MMUX_LIBC_STRUCT_DUMPER]]],[[[m4_define([[[THE_STEM]]],m4_ifelse([[[$2]]],,[[[$1]]],[[[$2]]]))
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_dump]]])
 {
-  switch (sa_family) {
-#if (defined MMUX_HAVE_LIBC_AF_ALG)
-  case MMUX_LIBC_AF_ALG:
-    *name_p = "AF_ALG";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_APPLETALK)
-  case MMUX_LIBC_AF_APPLETALK:
-    *name_p = "AF_APPLETALK";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_AX25)
-  case MMUX_LIBC_AF_AX25:
-    *name_p = "AF_AX25";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_BLUETOOTH)
-  case MMUX_LIBC_AF_BLUETOOTH:
-    *name_p = "AF_BLUETOOTH";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_CAN)
-  case MMUX_LIBC_AF_CAN:
-    *name_p = "AF_CAN";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_DECnet)
-  case MMUX_LIBC_AF_DECnet:
-    *name_p = "AF_DECnet";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_IB)
-  case MMUX_LIBC_AF_IB:
-    *name_p = "AF_IB";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_INET6)
-  case MMUX_LIBC_AF_INET6:
-    *name_p = "AF_INET6";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_INET)
-  case MMUX_LIBC_AF_INET:
-    *name_p = "AF_INET";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_IPX)
-  case MMUX_LIBC_AF_IPX:
-    *name_p = "AF_IPX";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_KCM)
-  case MMUX_LIBC_AF_KCM:
-    *name_p = "AF_KCM";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_KEY)
-  case MMUX_LIBC_AF_KEY:
-    *name_p = "AF_KEY";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_LLC)
-  case MMUX_LIBC_AF_LLC:
-    *name_p = "AF_LLC";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_LOCAL)
-  case MMUX_LIBC_AF_LOCAL:
-    *name_p = "AF_LOCAL";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_MPLS)
-  case MMUX_LIBC_AF_MPLS:
-    *name_p = "AF_MPLS";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_NETLINK)
-  case MMUX_LIBC_AF_NETLINK:
-    *name_p = "AF_NETLINK";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_PACKET)
-  case MMUX_LIBC_AF_PACKET:
-    *name_p = "AF_PACKET";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_PPPOX)
-  case MMUX_LIBC_AF_PPPOX:
-    *name_p = "AF_PPPOX";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_RDS)
-  case MMUX_LIBC_AF_RDS:
-    *name_p = "AF_RDS";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_TIPC)
-  case MMUX_LIBC_AF_TIPC:
-    *name_p = "AF_TIPC";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_UNSPEC)
-  case MMUX_LIBC_AF_UNSPEC:
-    *name_p = "AF_UNSPEC";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_VSOCK)
-  case MMUX_LIBC_AF_VSOCK:
-    *name_p = "AF_VSOCK";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_X25)
-  case MMUX_LIBC_AF_X25:
-    *name_p = "AF_X25";
-    break;
-#endif
-#if (defined MMUX_HAVE_LIBC_AF_XDP)
-  case MMUX_LIBC_AF_XDP:
-    *name_p = "AF_XDP";
-    break;
-#endif
-  default:
-    break;
+  mmux_libc_[[[]]]THE_STEM[[[]]]_t *	$1_pointer;
+  mmux_asciizcp_t	struct_name = "struct THE_STEM";
+
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER($1_pointer,	1);
+  if (3 == argc) {
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
+  }
+  {
+    mmux_libc_file_descriptor_t		fd;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_stdou(&fd));
+    MMUX_LIBC_FUNCALL(mmux_libc_[[[]]]THE_STEM[[[]]]_dump(fd, $1_pointer, struct_name));
+    return MMUX_SUCCESS;
   }
 }
+MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
+    [[[((2 == argc) || (3 == argc))]]],
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_POINTER [STRUCT_NAME]"]]])]]])
 
 /* ------------------------------------------------------------------ */
 
-static void
-sa_socktype_to_asciiz_name(char const ** name_p, int sa_socktype)
+m4_dnl $1 - name of the target variable, a value of type "mmux_libc_in_addr_t".
+m4_dnl $2 - index in the array "argv" of the string to parse
+m4_define([[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_IN_ADDR]]],[[[{
+mmux_uint32_t	the_argument_value;
+
+MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32([[[the_argument_value]]],[[[$2]]])
+MMUX_LIBC_FUNCALL(mmux_libc_make_in_addr(&$1, the_argument_value));
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+static mmux_bash_rv_t
+mmux_libc_in_addr_bind_to_bash_variable (mmux_asciizcp_t varname, mmux_libc_in_addr_t value, char const * caller_name)
 {
-  switch (sa_socktype) {
-#if (defined MMUX_HAVE_LIBC_SOCK_STREAM)
-  case MMUX_LIBC_SOCK_STREAM:
-    *name_p = "SOCK_STREAM";
-    break;
-#endif
+  mmux_uint32_t		field_value;
 
-#if (defined MMUX_HAVE_LIBC_SOCK_DGRAM)
-  case MMUX_LIBC_SOCK_DGRAM:
-    *name_p = "SOCK_DGRAM";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_SOCK_DCCP)
-  case MMUX_LIBC_SOCK_DCCP:
-    *name_p = "SOCK_DCCP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_SOCK_PACKET)
-  case MMUX_LIBC_SOCK_PACKET:
-    *name_p = "SOCK_PACKET";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_SOCK_RAW)
-  case MMUX_LIBC_SOCK_RAW:
-    *name_p = "SOCK_RAW";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_SOCK_RDM)
-  case MMUX_LIBC_SOCK_RDM:
-    *name_p = "SOCK_RDM";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_SOCK_SEQPACKET)
-  case MMUX_LIBC_SOCK_SEQPACKET:
-    *name_p = "SOCK_SEQPACKET";
-    break;
-#endif
-
-  default:
-    break;
-  }
+  mmux_libc_s_addr_ref(&field_value, &value);
+  return mmux_uint32_bind_to_bash_variable(varname, field_value, caller_name);
 }
-
-/* ------------------------------------------------------------------ */
-
-static void
-sa_ipproto_to_asciiz_name(char const ** name_p, int sa_ipproto)
+static mmux_bash_rv_t
+mmux_libc_sockaddr_ptr_bind_to_bash_variable (mmux_asciizcp_t varname, mmux_libc_sockaddr_ptr_t ptr, char const * caller_name)
 {
-  switch (sa_ipproto) {
-#if (defined MMUX_HAVE_LIBC_IPPROTO_AH)
-  case MMUX_LIBC_IPPROTO_AH:
-    *name_p = "IPPROTO_AH";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_BEETPH)
-  case MMUX_LIBC_IPPROTO_BEETPH:
-    *name_p = "IPPROTO_BEETPH";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_COMP)
-  case MMUX_LIBC_IPPROTO_COMP:
-    *name_p = "IPPROTO_COMP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_DCCP)
-  case MMUX_LIBC_IPPROTO_DCCP:
-    *name_p = "IPPROTO_DCCP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_EGP)
-  case MMUX_LIBC_IPPROTO_EGP:
-    *name_p = "IPPROTO_EGP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_ENCAP)
-  case MMUX_LIBC_IPPROTO_ENCAP:
-    *name_p = "IPPROTO_ENCAP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_ESP)
-  case MMUX_LIBC_IPPROTO_ESP:
-    *name_p = "IPPROTO_ESP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_ETHERNET)
-  case MMUX_LIBC_IPPROTO_ETHERNET:
-    *name_p = "IPPROTO_ETHERNET";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_GRE)
-  case MMUX_LIBC_IPPROTO_GRE:
-    *name_p = "IPPROTO_GRE";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_ICMP)
-  case MMUX_LIBC_IPPROTO_ICMP:
-    *name_p = "IPPROTO_ICMP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_IDP)
-  case MMUX_LIBC_IPPROTO_IDP:
-    *name_p = "IPPROTO_IDP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_IGMP)
-  case MMUX_LIBC_IPPROTO_IGMP:
-    *name_p = "IPPROTO_IGMP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_IP)
-  case MMUX_LIBC_IPPROTO_IP:
-    *name_p = "IPPROTO_IP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_IPIP)
-  case MMUX_LIBC_IPPROTO_IPIP:
-    *name_p = "IPPROTO_IPIP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_IPV6)
-  case MMUX_LIBC_IPPROTO_IPV6:
-    *name_p = "IPPROTO_IPV6";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_MPLS)
-  case MMUX_LIBC_IPPROTO_MPLS:
-    *name_p = "IPPROTO_MPLS";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_MPTCP)
-  case MMUX_LIBC_IPPROTO_MPTCP:
-    *name_p = "IPPROTO_MPTCP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_MTP)
-  case MMUX_LIBC_IPPROTO_MTP:
-    *name_p = "IPPROTO_MTP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_PIM)
-  case MMUX_LIBC_IPPROTO_PIM:
-    *name_p = "IPPROTO_PIM";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_PUP)
-  case MMUX_LIBC_IPPROTO_PUP:
-    *name_p = "IPPROTO_PUP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_RAW)
-  case MMUX_LIBC_IPPROTO_RAW:
-    *name_p = "IPPROTO_RAW";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_RSVP)
-  case MMUX_LIBC_IPPROTO_RSVP:
-    *name_p = "IPPROTO_RSVP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_SCTP)
-  case MMUX_LIBC_IPPROTO_SCTP:
-    *name_p = "IPPROTO_SCTP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_TCP)
-  case MMUX_LIBC_IPPROTO_TCP:
-    *name_p = "IPPROTO_TCP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_TP)
-  case MMUX_LIBC_IPPROTO_TP:
-    *name_p = "IPPROTO_TP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_UDP)
-  case MMUX_LIBC_IPPROTO_UDP:
-    *name_p = "IPPROTO_UDP";
-    break;
-#endif
-
-#if (defined MMUX_HAVE_LIBC_IPPROTO_UDPLITE)
-  case MMUX_LIBC_IPPROTO_UDPLITE:
-    *name_p = "IPPROTO_UDPLITE";
-    break;
-#endif
-
-  default:
-    break;
-  }
+  return mmux_pointer_bind_to_bash_variable(varname, (mmux_pointer_t)ptr, caller_name);
 }
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_sockaddr_un_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_un_t sockaddr_un_pointer, char const * struct_name)
+static mmux_bash_rv_t
+mmux_libc_addrinfo_ptr_bind_to_bash_variable (mmux_asciizcp_t varname, mmux_libc_addrinfo_ptr_t ptr, char const * caller_name)
 {
-  int	rv;
-
-  {
-    char const *	sun_name = "unknown";
-
-    sa_family_to_asciiz_name(&sun_name, sockaddr_un_pointer->sun_family);
-    rv = dprintf(fd.value, "%s.sun_family = \"%d\" (%s)\n", struct_name, sockaddr_un_pointer->sun_family, sun_name);
-    if (0 > rv) { return true; }
-  }
-
-  {
-    rv = dprintf(fd.value, "%s.sun_path = \"%s\"\n", struct_name, sockaddr_un_pointer->sun_path);
-    if (0 > rv) { return true; }
-  }
-  return false;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_sockaddr_in_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_in_t sockaddr_in_pointer, char const * struct_name)
-{
-  int	rv;
-
-  {
-    char const *	sin_name = "unknown";
-
-    sa_family_to_asciiz_name(&sin_name, sockaddr_in_pointer->sin_family);
-    rv = dprintf(fd.value, "%s.sin_family = \"%d\" (%s)\n", struct_name, sockaddr_in_pointer->sin_family, sin_name);
-    if (0 > rv) { return true; }
-  }
-
-  {
-#undef  presentation_len
-#define presentation_len	512
-    char	presentation_buf[presentation_len];
-
-    inet_ntop(sockaddr_in_pointer->sin_family, &(sockaddr_in_pointer->sin_addr), presentation_buf, presentation_len);
-    presentation_buf[presentation_len-1] = '\0';
-    rv = dprintf(fd.value, "%s.sin_addr = \"%s\"\n", struct_name, presentation_buf);
-    if (0 > rv) { return true; }
-  }
-
-  {
-    rv = dprintf(fd.value, "%s.sin_port = \"%d\"\n", struct_name, ntohs(sockaddr_in_pointer->sin_port));
-    if (0 > rv) { return true; }
-  }
-  return false;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_sockaddr_insix_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_insix_t sockaddr_in6_pointer, char const * const struct_name)
-{
-  int	rv;
-
-  {
-    char const *	sin6_name = "unknown";
-
-    sa_family_to_asciiz_name(&sin6_name, sockaddr_in6_pointer->sin6_family);
-    rv = dprintf(fd.value, "%s.sin6_family = \"%d\" (%s)\n", struct_name, sockaddr_in6_pointer->sin6_family, sin6_name);
-    if (0 > rv) { return true; }
-  }
-
-  {
-#undef  presentation_len
-#define presentation_len	512
-    char	presentation_buf[presentation_len];
-
-    inet_ntop(sockaddr_in6_pointer->sin6_family, &(sockaddr_in6_pointer->sin6_addr), presentation_buf, presentation_len);
-    presentation_buf[presentation_len-1] = '\0';
-    rv = dprintf(fd.value, "%s.sin6_addr = \"%s\"\n", struct_name, presentation_buf);
-    if (0 > rv) { return true; }
-  }
-
-  rv = dprintf(fd.value, "%s.sin6_flowinfo = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_flowinfo));
-  if (0 > rv) { return true; }
-
-  rv = dprintf(fd.value, "%s.sin6_scope_id = \"%lu\"\n", struct_name, (mmux_ulong_t)(sockaddr_in6_pointer->sin6_scope_id));
-  if (0 > rv) { return true; }
-
-  rv = dprintf(fd.value, "%s.sin6_port = \"%d\"\n", struct_name, ntohs(sockaddr_in6_pointer->sin6_port));
-  if (0 > rv) { return true; }
-
-  return false;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t hostent_pointer, char const * struct_name)
-{
-  int	aliases_idx   = 0;
-  int	addr_list_idx = 0;
-  int	rv;
-
-  rv = dprintf(fd.value, "%s.h_name = \"%s\"\n", struct_name, hostent_pointer->h_name);
-
-  if (NULL != hostent_pointer->h_aliases) {
-    for (; hostent_pointer->h_aliases[aliases_idx]; ++aliases_idx) {
-      rv = dprintf(fd.value, "%s.h_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, hostent_pointer->h_aliases[aliases_idx]);
-      if (0 > rv) { return true; }
-    }
-  }
-  if (0 == aliases_idx) {
-    rv = dprintf(fd.value, "%s.h_aliases = \"0x0\"\n", struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  rv = dprintf(fd.value, "%s.h_addrtype = \"%d\"", struct_name, hostent_pointer->h_addrtype);
-  if (0 > rv) { return true; }
-
-  switch (hostent_pointer->h_addrtype) {
-  case MMUX_LIBC_AF_INET:
-    rv = dprintf(fd.value, " (AF_INET)\n");
-    if (0 > rv) { return true; }
-    break;
-  case MMUX_LIBC_AF_INET6:
-    rv = dprintf(fd.value, " (AF_INET6)\n");
-    if (0 > rv) { return true; }
-    break;
-  default:
-    rv = dprintf(fd.value, "\n");
-    if (0 > rv) { return true; }
-    break;
-  }
-
-  rv = dprintf(fd.value, "%s.h_length = \"%d\"\n", struct_name, hostent_pointer->h_length);
-  if (0 > rv) { return true; }
-
-  if (NULL != hostent_pointer->h_addr_list) {
-    for (; hostent_pointer->h_addr_list[addr_list_idx]; ++addr_list_idx) {
-#undef  presentation_len
-#define presentation_len	512
-      char	presentation_buf[presentation_len];
-
-      inet_ntop(hostent_pointer->h_addrtype, hostent_pointer->h_addr_list[addr_list_idx], presentation_buf, presentation_len);
-      presentation_buf[presentation_len-1] = '\0';
-      rv = dprintf(fd.value, "%s.h_addr_list[%d] = \"%s\"\n", struct_name, addr_list_idx, presentation_buf);
-      if (0 > rv) { return true; }
-    }
-  }
-  if (0 == addr_list_idx) {
-    rv = dprintf(fd.value, "%s.h_addr_list = \"0x0\"\n", struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  if (NULL != hostent_pointer->h_addr) {
-#undef  presentation_len
-#define presentation_len	512
-    char	presentation_buf[presentation_len];
-
-    inet_ntop(hostent_pointer->h_addrtype, hostent_pointer->h_addr, presentation_buf, presentation_len);
-    presentation_buf[presentation_len-1] = '\0';
-    rv = dprintf(fd.value, "%s.h_addr = \"%s\"\n", struct_name, presentation_buf);
-    if (0 > rv) { return true; }
-  } else {
-    rv = dprintf(fd.value, "%s.h_addr = \"0x0\"\n", struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  return false;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_servent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_servent_t servent_pointer, char const * const struct_name)
-{
-  int	aliases_idx = 0;
-  int	rv;
-
-  rv = dprintf(fd.value, "%s.s_name = \"%s\"\n", struct_name, servent_pointer->s_name);
-  if (0 > rv) { return true; }
-
-  if (NULL != servent_pointer->s_aliases) {
-    for (; servent_pointer->s_aliases[aliases_idx]; ++aliases_idx) {
-      rv = dprintf(fd.value, "%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, servent_pointer->s_aliases[aliases_idx]);
-      if (0 > rv) { return true; }
-    }
-  }
-  if (0 == aliases_idx) {
-    rv = dprintf(fd.value, "%s.s_aliases = \"0x0\"\n", struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  rv = dprintf(fd.value, "%s.s_port = \"%d\"\n", struct_name, ntohs(servent_pointer->s_port));
-  if (0 > rv) { return true; }
-
-  rv = dprintf(fd.value, "%s.s_proto = \"%s\"\n", struct_name, servent_pointer->s_proto);
-  if (0 > rv) { return true; }
-
-  return false;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_protoent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_protoent_t protoent_pointer, char const * struct_name)
-{
-  int	aliases_idx = 0;
-  int	rv;
-
-  rv = dprintf(fd.value, "%s.s_name = \"%s\"\n", struct_name, protoent_pointer->p_name);
-  if (0 > rv) { return true; }
-
-  if (NULL != protoent_pointer->p_aliases) {
-    for (; protoent_pointer->p_aliases[aliases_idx]; ++aliases_idx) {
-      rv = dprintf(fd.value, "%s.s_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, protoent_pointer->p_aliases[aliases_idx]);
-      if (0 > rv) { return true; }
-    }
-  }
-  if (0 == aliases_idx) {
-    rv = dprintf(fd.value, "%s.s_aliases = \"0x0\"\n", struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  rv = dprintf(fd.value, "%s.s_proto = \"%d\"\n", struct_name, protoent_pointer->p_proto);
-  if (0 > rv) { return true; }
-
-  return false;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t netent_pointer, char const * struct_name)
-{
-  int	aliases_idx = 0;
-  int	rv;
-
-  rv = dprintf(fd.value, "%s.n_name = \"%s\"\n", struct_name, netent_pointer->n_name);
-  if (0 > rv) { return true; }
-
-  if (NULL != netent_pointer->n_aliases) {
-    for (; netent_pointer->n_aliases[aliases_idx]; ++aliases_idx) {
-      rv = dprintf(fd.value, "%s.n_aliases[%d] = \"%s\"\n", struct_name, aliases_idx, netent_pointer->n_aliases[aliases_idx]);
-      if (0 > rv) { return true; }
-    }
-  }
-  if (0 == aliases_idx) {
-    rv = dprintf(fd.value, "%s.n_aliases = \"0x0\"\n", struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  rv = dprintf(fd.value, "%s.n_addrtype = \"%d\"\n", struct_name, netent_pointer->n_addrtype);
-  if (0 > rv) { return true; }
-
-  /* The value "netent_pointer->n_net" is in host byte order. */
-  {
-#undef  IS_THIS_ENOUGH_QUESTION_MARK
-#define IS_THIS_ENOUGH_QUESTION_MARK	512
-    char		net_str[IS_THIS_ENOUGH_QUESTION_MARK];
-    mmux_uint32_t	network_byteorder_net = htonl(netent_pointer->n_net);
-
-    inet_ntop(netent_pointer->n_addrtype, &(network_byteorder_net), net_str, (mmux_socklen_t)IS_THIS_ENOUGH_QUESTION_MARK);
-
-    rv = dprintf(fd.value, "%s.n_net = \"%lu\" (%s)\n", struct_name, (mmux_ulong_t)(netent_pointer->n_net), net_str);
-    if (0 > rv) { return true; }
-  }
-  return MMUX_SUCCESS;
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t sockaddr_pointer, char const * const struct_name)
-{
-  int	rv;
-
-  {
-    char const *	family_name = "unknown";
-
-    sa_family_to_asciiz_name(&family_name, sockaddr_pointer->sa_family);
-    rv = dprintf(fd.value, "%s.sa_family = \"%d\" (%s)\n", struct_name, (sockaddr_pointer->sa_family), family_name);
-    if (0 > rv) { return true; }
-  }
-
-  switch (sockaddr_pointer->sa_family) {
-  case MMUX_LIBC_AF_INET:	return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t)   sockaddr_pointer, struct_name);
-  case MMUX_LIBC_AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t)sockaddr_pointer, struct_name);
-  case MMUX_LIBC_AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t)   sockaddr_pointer, struct_name);
-  default:
-    return false;
-  }
-}
-
-/* ------------------------------------------------------------------ */
-
-static bool
-mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t addrinfo_pointer, char const * struct_name)
-{
-  int	rv;
-
-  /* Inspect the field: ai_flags */
-  {
-    bool	not_first_flags = false;
-
-    rv = dprintf(fd.value, "%s.ai_flags = \"%d\"", struct_name, addrinfo_pointer->ai_flags);
-    if (0 > rv) { return true; }
-
-    if (AI_ADDRCONFIG & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_ADDRCONFIG");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_ADDRCONFIG");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_ALL & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_ALL");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_ALL");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_CANONIDN & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_CANONIDN");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_CANONIDN");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_CANONNAME & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_CANONNAME");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_CANONNAME");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_IDN & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_IDN");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_IDN");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_NUMERICSERV & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_NUMERICSERV");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_NUMERICSERV");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_PASSIVE & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_PASSIVE");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_PASSIVE");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (AI_V4MAPPED & addrinfo_pointer->ai_flags ) {
-      if (not_first_flags) {
-	rv = dprintf(fd.value, " | AI_V4MAPPED");
-	if (0 > rv) { return true; }
-      } else {
-	rv = dprintf(fd.value, " (AI_V4MAPPED");
-	if (0 > rv) { return true; }
-	not_first_flags = true;
-      }
-    }
-
-    if (not_first_flags) {
-      rv = dprintf(fd.value, ")\n");
-      if (0 > rv) { return true; }
-    } else {
-      rv = dprintf(fd.value, "\n");
-      if (0 > rv) { return true; }
-    }
-  }
-
-  /* Inspect the field: ai_family */
-  {
-    char const *	ai_name = "unknown";
-
-    sa_family_to_asciiz_name(&ai_name, addrinfo_pointer->ai_family);
-    rv = dprintf(fd.value, "%s.ai_family = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_family, ai_name);
-    if (0 > rv) { return true; }
-  }
-
-  /* Inspect the field: ai_socktype */
-  {
-    char const *	ai_name = "unknown";
-
-    sa_socktype_to_asciiz_name(&ai_name, addrinfo_pointer->ai_socktype);
-    rv = dprintf(fd.value, "%s.ai_socktype = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_socktype, ai_name);
-    if (0 > rv) { return true; }
-  }
-
-  /* Inspect the field: ai_protocol */
-  {
-    char const *	ai_name = "unknown";
-
-    sa_ipproto_to_asciiz_name(&ai_name, addrinfo_pointer->ai_protocol);
-    rv = dprintf(fd.value, "%s.ai_protocol = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_protocol, ai_name);
-    if (0 > rv) { return true; }
-  }
-
-  /* Inspect the field: ai_addrlen */
-  {
-    char const *	known_struct_name = "unknown struct type";
-
-    switch (addrinfo_pointer->ai_addrlen) {
-    case sizeof(mmux_libc_sockaddr_in_tag_t):
-      known_struct_name ="struct sockaddr_in";
-      break;
-
-    case sizeof(mmux_libc_sockaddr_insix_tag_t):
-      known_struct_name ="struct sockaddr_in6";
-      break;
-
-    case sizeof(mmux_libc_sockaddr_un_tag_t):
-      known_struct_name ="struct sockaddr_un";
-      break;
-    }
-
-    rv = dprintf(fd.value, "%s.ai_addrlen = \"%d\" (%s)\n", struct_name, addrinfo_pointer->ai_addrlen, known_struct_name);
-    if (0 > rv) { return true; }
-  }
-
-  /* Inspect the field: ai_addr, it is a pointer to "struct sockaddr" */
-  {
-    size_t	buflen = 1024;
-    char	bufstr[buflen];
-
-    memset(bufstr, '\0', buflen);
-    inet_ntop(addrinfo_pointer->ai_family, &(addrinfo_pointer->ai_addr), bufstr, buflen);
-
-    rv = dprintf(fd.value, "%s.ai_addr = \"%p\" (%s)\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_addr), bufstr);
-    if (0 > rv) { return true; }
-  }
-
-  /* Inspect the field: ai_canonname */
-  {
-    if (addrinfo_pointer->ai_canonname) {
-      rv = dprintf(fd.value, "%s.ai_canonname = \"%p\" (%s)\n", struct_name,
-		   (mmux_pointer_t)(addrinfo_pointer->ai_canonname),
-		   addrinfo_pointer->ai_canonname);
-      if (0 > rv) { return true; }
-    } else {
-      rv = dprintf(fd.value, "%s.ai_canonname = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_canonname));
-      if (0 > rv) { return true; }
-    }
-  }
-
-  /* Inspect the field: ai_next */
-  {
-    rv = dprintf(fd.value, "%s.ai_next = \"%p\"\n", struct_name, (mmux_pointer_t)(addrinfo_pointer->ai_next));
-    if (0 > rv) { return true; }
-  }
-
-  return false;
+  return mmux_pointer_bind_to_bash_variable(varname, (mmux_pointer_t)ptr, caller_name);
 }
 
 
@@ -912,97 +94,57 @@ mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t ad
  ** Sockets: struct sockaddr.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sa_family_ref]]])
-{
-  char const *		sa_family_varname;
-  mmux_pointer_t	_sockaddr_pointer;
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_sockaddr_t, sa_family, sshort, [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sa_family_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_pointer,	2);
-  {
-    struct sockaddr *	sockaddr_pointer = _sockaddr_pointer;
-
-    return mmux_sshort_bind_to_bash_variable(sa_family_varname, sockaddr_pointer->sa_family, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SA_FAMILY_VAR SOCKADDR_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_dump]]])
-{
-  mmux_pointer_t	_sockaddr_pointer;
-  char const *		struct_name = "struct sockaddr";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_sockaddr_t		sockaddr_pointer = _sockaddr_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_dump(fd, sockaddr_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[sockaddr]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct sockaddr_un.
+ ** Sockets: mmux_libc_sockaddr_un_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_calloc]]])
 {
-  char const *		sockaddr_un_pointer_varname;
-  char const *		sockaddr_un_length_varname;
-  mmux_sint_t		family;
-  char const *		pathname;
+  mmux_asciizcp_t			sockaddr_un_pointer_varname;
+  mmux_asciizcp_t			sockaddr_un_length_varname;
+  mmux_sint_t				family;
+  mmux_libc_file_system_pathname_t	pathname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sockaddr_un_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sockaddr_un_length_varname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(family,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pathname,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(family,				3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PTN(pathname,			4);
   {
-    struct sockaddr_un	name;
+    mmux_libc_sockaddr_un_t	name;
 
-    /* This chunk comes from the documentation of GLIBC. */
+    MMUX_LIBC_FUNCALL(mmux_libc_sun_family_set(&name, family));
+    MMUX_LIBC_FUNCALL(mmux_libc_sun_path_set  (&name, pathname));
     {
-      name.sun_family = family;
-      strncpy(name.sun_path, pathname, sizeof(name.sun_path));
-      name.sun_path[sizeof(name.sun_path) - 1] = '\0';
-    }
-    {
-      /* NOTE: It  appears that "SUN_LEN()" does  not include the terminating  nul of
-	 "sun_path" in its computation;  at least this is what I  observe.  So we add
-	 it to the memory  block to be able to extract the path  as an ASCIIZ string.
-	 The reported length is still the value computed by "SUN_LEN()", because that
-	 is what  is needed  to pass  when calling "bind()".   (Marco Maggi;  Nov 18,
-	 2024) */
-      size_t			addr_len = SUN_LEN(&name);
-      mmux_libc_sockaddr_un_t	addr_ptr = calloc(1, 1+addr_len);
+      /* NOTE: "SUN_LEN()" does not include the  terminating nul of "sun_path" in its
+	 computation; at least this  is what I observe.  So we add  one to the memory
+	 block allocated  size to be  able to extract the  path as an  ASCIIZ string.
+	 The  length  reported in  "sockaddr_un_length_varname"  is  still the  value
+	 computed by "SUN_LEN()", because that is what is needed to pass when calling
+	 "bind()".  (Marco Maggi; Nov 18, 2024) */
+      mmux_usize_t		addr_len = mmux_libc_SUN_LEN(&name);
+      mmux_libc_sockaddr_un_t *	addr_ptr;
 
-      memcpy(addr_ptr, &name, 1+addr_len);
+      MMUX_LIBC_FUNCALL(mmux_libc_calloc(&addr_ptr, 1, 1+addr_len));
+      MMUX_LIBC_FUNCALL(mmux_libc_memcpy(addr_ptr, &name, 1+addr_len));
       {
-	mmux_bash_rv_t	rv;
+	mmux_bash_rv_t	brv;
 
-	rv = mmux_pointer_bind_to_bash_variable(sockaddr_un_pointer_varname, addr_ptr, MMUX_BASH_BUILTIN_STRING_NAME);
-	if (MMUX_SUCCESS != rv) { goto error_binding_variables; }
+	brv = mmux_pointer_bind_to_bash_variable(sockaddr_un_pointer_varname, addr_ptr, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-	rv = mmux_usize_bind_to_bash_variable(sockaddr_un_length_varname, addr_len, MMUX_BASH_BUILTIN_STRING_NAME);
-	if (MMUX_SUCCESS != rv) { goto error_binding_variables; }
+	brv = mmux_usize_bind_to_bash_variable(sockaddr_un_length_varname, addr_len, MMUX_BASH_BUILTIN_STRING_NAME);
+	if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-	return rv;
+	return brv;
 
       error_binding_variables:
-	free(addr_ptr);
-	return rv;
+	mmux_libc_free(addr_ptr);
+	return brv;
       }
     }
   }
@@ -1013,102 +155,55 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sun_family_ref]]])
-{
-  char const *		sun_family_varname;
-  mmux_pointer_t	pointer;
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_un_t]]],[[[sun_family]]],
+					  [[[sshort]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sun_family_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
-  {
-    mmux_libc_sockaddr_un_t	sockaddr_un_pointer = pointer;
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_un_t]]],[[[sun_path]]],
+					  [[[libc_ptn]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_PTN]]])
 
-    return mmux_sshort_bind_to_bash_variable(sun_family_varname, sockaddr_un_pointer->sun_family, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SUN_FAMILY_VAR SOCKADDR_UN_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sun_path_ref]]])
-{
-  char const *		sun_path_varname;
-  mmux_pointer_t	pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sun_path_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(pointer,	2);
-  {
-    mmux_libc_sockaddr_un_t	sockaddr_un_pointer = pointer;
-
-    return mmux_string_bind_to_bash_variable(sun_path_varname, sockaddr_un_pointer->sun_path, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SUN_PATH_VAR SOCKADDR_UN_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_un_dump]]])
-{
-  mmux_pointer_t	_sockaddr_un_pointer;
-  char const *		struct_name = "struct sockaddr_un";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_un_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_sockaddr_un_t	sockaddr_un_pointer = _sockaddr_un_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_un_dump(fd, sockaddr_un_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_UN_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[sockaddr_un]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct sockaddr_in.
+ ** Sockets: mmux_libc_sockaddr_in_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_calloc]]])
 {
-  char const *		sockaddr_in_pointer_varname;
-  mmux_sshort_t		sin_family;
-  char const *		sin_addr_pointer_varname;
-  mmux_ushort_t		host_byteorder_sin_port;
+  mmux_asciizcp_t		sockaddr_in_pointer_varname;
+  mmux_sshort_t			sin_family;
+  mmux_asciizcp_t		sin_addr_pointer_varname;
+  mmux_host_byteorder_ushort_t	host_byteorder_sin_port;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sockaddr_in_pointer_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(sin_family,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(sin_family,			2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sin_addr_pointer_varname,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_USHORT(host_byteorder_sin_port,	4);
   {
-    mmux_uint32_t		network_byteorder_sin_addr	= INADDR_NONE;
-    mmux_ushort_t		network_byteorder_sin_port	= htons(host_byteorder_sin_port);
-    mmux_libc_sockaddr_in_t	name				= calloc(1, sizeof(struct sockaddr_in));
-    mmux_bash_rv_t		brv;
+    mmux_libc_in_addr_t			sin_addr;
+    mmux_libc_in_addr_t *		sin_addr_p;
+    mmux_libc_sockaddr_in_t *		sockaddr_p;
+    mmux_bash_rv_t			brv;
 
-    name->sin_family      = (sa_family_t)sin_family;
-    name->sin_addr.s_addr = network_byteorder_sin_addr;
-    name->sin_port        = network_byteorder_sin_port;
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&sockaddr_p, 1, sizeof(mmux_libc_sockaddr_in_t)));
+    mmux_libc_make_in_addr_none(&sin_addr);
 
-    brv = mmux_pointer_bind_to_bash_variable(sockaddr_in_pointer_varname, name, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_libc_sin_family_set(sockaddr_p, sin_family);
+    mmux_libc_sin_addr_set  (sockaddr_p, sin_addr);
+    mmux_libc_sin_port_set  (sockaddr_p, host_byteorder_sin_port);
+
+    mmux_libc_sin_addr_p_ref(&sin_addr_p, sockaddr_p);
+
+    brv = mmux_pointer_bind_to_bash_variable(sockaddr_in_pointer_varname, sockaddr_p, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-    brv = mmux_pointer_bind_to_bash_variable(sin_addr_pointer_varname, &(name->sin_addr), MMUX_BASH_BUILTIN_STRING_NAME);
+    brv = mmux_pointer_bind_to_bash_variable(sin_addr_pointer_varname, sin_addr_p, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
     return brv;
 
   error_binding_variables:
-    free(name);
+    mmux_libc_free(sockaddr_p);
     return brv;
   }
 }
@@ -1118,464 +213,166 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_family_ref]]])
-{
-  char const *		sin_family_varname;
-  mmux_pointer_t	addr_pointer;
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_in_t]]],[[[sin_family]]],
+					  [[[sshort]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sin_family_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer = addr_pointer;
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_in_t]]],[[[sin_addr]]],
+					  [[[libc_in_addr]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_IN_ADDR]]])
 
-    return mmux_sshort_bind_to_bash_variable(sin_family_varname, sockaddr_in_pointer->sin_family, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SIN_FAMILY_VAR SOCKADDR_IN_POINTER"]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_in_t]]],[[[sin_port]]],
+					  [[[ushort]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_USHORT]]])
 
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_family_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_sint_t		sin_family;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(sin_family,	2);
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer = addr_pointer;
-
-    sockaddr_in_pointer->sin_family = sin_family;
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN_POINTER SIN_FAMILY"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_addr_ref]]])
-{
-  char const *		network_byteorder_sin_addr_varname;
-  mmux_pointer_t	addr_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_byteorder_sin_addr_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer        = addr_pointer;
-    mmux_uint32_t		network_byteorder_sin_addr = sockaddr_in_pointer->sin_addr.s_addr;
-
-    return mmux_uint32_bind_to_bash_variable(network_byteorder_sin_addr_varname, network_byteorder_sin_addr, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETWORK_BYTEORDER_SIN_ADDR_VAR SOCKADDR_IN_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_addr_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_uint32_t		network_byteorder_sin_addr;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_sin_addr,	2);
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer = addr_pointer;
-
-    sockaddr_in_pointer->sin_addr.s_addr = network_byteorder_sin_addr;
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN_POINTER NETWORK_BYTEORDER_SIN_ADDR"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[sockaddr_in]]])
 
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_addr_pointer_ref]]])
 {
-  char const *		sin_addr_pointer_varname;
-  mmux_pointer_t	addr_pointer;
+  mmux_asciizcp_t		sin_addr_pointer_varname;
+  mmux_libc_sockaddr_in_t *	sockaddr_in_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sin_addr_pointer_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(sockaddr_in_pointer,	2);
   {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer = addr_pointer;
-    mmux_pointer_t		sin_addr_pointer    = &(sockaddr_in_pointer->sin_addr.s_addr);
+    mmux_libc_in_addr_t *	sin_addr_p;
 
-    return mmux_pointer_bind_to_bash_variable(sin_addr_pointer_varname, sin_addr_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_sin_addr_p_ref(&sin_addr_p, sockaddr_in_pointer));
+    return mmux_pointer_bind_to_bash_variable(sin_addr_pointer_varname, sin_addr_p, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
     [[["MMUX_BASH_BUILTIN_IDENTIFIER SIN_ADDR_POINTER_VAR SOCKADDR_IN_POINTER"]]])
 
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_port_ref]]])
-{
-  char const *		host_byteorder_sin_port_varname;
-  mmux_pointer_t	addr_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(host_byteorder_sin_port_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer        = addr_pointer;
-    mmux_uint16_t		network_byteorder_sin_port = sockaddr_in_pointer->sin_port;
-    mmux_uint16_t		host_byteorder_sin_port    = ntohs(network_byteorder_sin_port);
-
-    return mmux_uint16_bind_to_bash_variable(host_byteorder_sin_port_varname, host_byteorder_sin_port, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER HOST_BYTEORDER_SIN_PORT_VAR SOCKADDR_IN_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin_port_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_uint16_t		host_byte_order_sin_port;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(host_byte_order_sin_port,	2);
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer = addr_pointer;
-
-    sockaddr_in_pointer->sin_port = htons(host_byte_order_sin_port);
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN_POINTER HOST_BYTEORDER_SIN_PORT"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in_dump]]])
-{
-  mmux_pointer_t	_sockaddr_in_pointer;
-  char const *		struct_name = "struct sockaddr_in";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_in_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_sockaddr_in_t	sockaddr_in_pointer = _sockaddr_in_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_in_dump(fd, sockaddr_in_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN_POINTER [STRUCT_NAME]"]]])
-
 
 /** --------------------------------------------------------------------
- ** Sockets: struct sockaddr_in6.
+ ** Sockets: mmux_libc_sockaddr_insix_t.
  ** ----------------------------------------------------------------- */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_calloc]]])
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_insix_calloc]]])
 {
-  char const *		sockaddr_in6_pointer_varname;
-  mmux_sshort_t		sin6_family;
-  char const *		sin6_addr_pointer_varname;
-  mmux_uint32_t		network_byteorder_sin6_flowinfo;
-  mmux_uint32_t		network_byteorder_sin6_scope_id;
-  mmux_uint16_t		host_byteorder_sin6_port;
+  mmux_asciizcp_t	sockaddr_insix_pointer_varname;
+  mmux_sshort_t		sinsix_family;
+  mmux_asciizcp_t	sinsix_addr_pointer_varname;
+  mmux_uint32_t		network_byteorder_sinsix_flowinfo;
+  mmux_uint32_t		network_byteorder_sinsix_scope_id;
+  mmux_uint16_t		host_byteorder_sinsix_port;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sockaddr_in6_pointer_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(sin6_family,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sin6_addr_pointer_varname,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_sin6_flowinfo,	4);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_sin6_scope_id,	5);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(host_byteorder_sin6_port,	6);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sockaddr_insix_pointer_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT(sinsix_family,				2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sinsix_addr_pointer_varname,		3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_sinsix_flowinfo,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_sinsix_scope_id,	5);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(host_byteorder_sinsix_port,		6);
   {
-    mmux_ushort_t		network_byteorder_sin6_port	= htons(host_byteorder_sin6_port);
-    mmux_libc_sockaddr_insix_t	name				= calloc(1, sizeof(struct sockaddr_in6));
-    mmux_bash_rv_t		brv;
+    mmux_libc_sockaddr_insix_t *	sockaddr_p;
+    mmux_libc_insix_addr_t *		sinsix_addr_p;
+    mmux_bash_rv_t			brv;
 
-    name->sin6_family      = (sa_family_t)sin6_family;
-    name->sin6_flowinfo    = network_byteorder_sin6_flowinfo;
-    name->sin6_scope_id    = network_byteorder_sin6_scope_id;
-    name->sin6_port        = network_byteorder_sin6_port;
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&sockaddr_p, 1, sizeof(mmux_libc_sockaddr_insix_t)));
 
-    brv = mmux_pointer_bind_to_bash_variable(sockaddr_in6_pointer_varname, name, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_libc_sinsix_family_set  (sockaddr_p, sinsix_family);
+    mmux_libc_sinsix_flowinfo_set(sockaddr_p, network_byteorder_sinsix_flowinfo);
+    mmux_libc_sinsix_scope_id_set(sockaddr_p, network_byteorder_sinsix_scope_id);
+    mmux_libc_sinsix_port_set    (sockaddr_p, host_byteorder_sinsix_port);
+
+    mmux_libc_sinsix_addr_p_ref(&sinsix_addr_p, sockaddr_p);
+
+    brv = mmux_pointer_bind_to_bash_variable(sockaddr_insix_pointer_varname, sockaddr_p, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-    brv = mmux_pointer_bind_to_bash_variable(sin6_addr_pointer_varname, &(name->sin6_addr), MMUX_BASH_BUILTIN_STRING_NAME);
+    brv = mmux_pointer_bind_to_bash_variable(sinsix_addr_pointer_varname, sinsix_addr_p, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
     return brv;
 
   error_binding_variables:
-    free(name);
+    mmux_libc_free(sockaddr_p);
     return brv;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(7 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER_VAR SIN6_FAMILY SIN6_ADDR_POINTER_VAR SIN6_FLOWINFO SIN6_SCOPE_ID SIN6_PORT"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_INSIX_POINTER_VAR SINSIX_FAMILY SINSIX_ADDR_POINTER_VAR SINSIX_FLOWINFO SINSIX_SCOPE_ID SINSIX_PORT"]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_family_ref]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_insix_t]]],[[[sinsix_family]]],
+					  [[[sshort]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SSHORT]]])
+
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_insix_t]]],[[[sinsix_flowinfo]]],
+					  [[[uint32]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32]]])
+
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_insix_t]]],[[[sinsix_scope_id]]],
+					  [[[uint32]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32]]])
+
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER([[[mmux_libc_sockaddr_insix_t]]],[[[sinsix_port]]],
+					  [[[uint16]]],[[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16]]])
+
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[sockaddr_insix]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sinsix_addr_pointer_ref]]])
 {
-  char const *		sin6_family_varname;
-  mmux_pointer_t	addr_pointer;
+  mmux_asciizcp_t		sinsix_addr_pointer_varname;
+  mmux_libc_sockaddr_insix_t *	sockaddr_p;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sin6_family_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sinsix_addr_pointer_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(sockaddr_p,		2);
   {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = addr_pointer;
+    mmux_libc_insix_addr_t *	sinsix_addr_p;
 
-    return mmux_sshort_bind_to_bash_variable(sin6_family_varname, sockaddr_in6_pointer->sin6_family, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_sinsix_addr_p_ref(&sinsix_addr_p, sockaddr_p));
+    return mmux_pointer_bind_to_bash_variable(sinsix_addr_pointer_varname, sinsix_addr_p, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SIN6_FAMILY_VAR SOCKADDR_IN6_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_family_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_sint_t		sin6_family;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(sin6_family,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = addr_pointer;
-
-    sockaddr_in6_pointer->sin6_family = sin6_family;
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER SIN6_FAMILY"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_addr_pointer_ref]]])
-{
-  char const *		sin6_addr_pointer_varname;
-  mmux_pointer_t	addr_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sin6_addr_pointer_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = addr_pointer;
-    struct in6_addr *		sin6_addr_pointer    = &(sockaddr_in6_pointer->sin6_addr);
-
-    return mmux_pointer_bind_to_bash_variable(sin6_addr_pointer_varname, sin6_addr_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER HOST_BYTEORDER_SIN6_ADDR_VAR SOCKADDR_IN6_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_flowinfo_ref]]])
-{
-  char const *		network_byteorder_sin6_flowinfo_varname;
-  mmux_pointer_t	addr_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_byteorder_sin6_flowinfo_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer            = addr_pointer;
-    mmux_uint32_t		network_byteorder_sin6_flowinfo = sockaddr_in6_pointer->sin6_flowinfo;
-
-    return mmux_uint32_bind_to_bash_variable(network_byteorder_sin6_flowinfo_varname, network_byteorder_sin6_flowinfo,
-					     MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETWORK_BYTEORDER_SIN6_FLOWINFO_VAR SOCKADDR_IN6_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_flowinfo_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_uint32_t		sin6_flowinfo;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(sin6_flowinfo,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = addr_pointer;
-
-    sockaddr_in6_pointer->sin6_flowinfo = sin6_flowinfo;
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER SIN6_FLOWINFO"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_scope_id_ref]]])
-{
-  char const *		network_byteorder_sin6_scope_id_varname;
-  mmux_pointer_t	addr_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_byteorder_sin6_scope_id_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer            = addr_pointer;
-    mmux_uint32_t		network_byteorder_sin6_scope_id = sockaddr_in6_pointer->sin6_scope_id;
-
-    return mmux_uint32_bind_to_bash_variable(network_byteorder_sin6_scope_id_varname, network_byteorder_sin6_scope_id,
-					     MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETWORK_BYTEORDER_SIN6_SCOPE_ID_VAR SOCKADDR_IN6_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_scope_id_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_uint32_t		sin6_scope_id;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(sin6_scope_id,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = addr_pointer;
-
-    sockaddr_in6_pointer->sin6_scope_id = sin6_scope_id;
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER SIN6_SCOPE_ID"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_port_ref]]])
-{
-  char const *		host_byteorder_sin6_port_varname;
-  mmux_pointer_t	addr_pointer;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(host_byteorder_sin6_port_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer        = addr_pointer;
-    mmux_uint16_t		network_byteorder_sin6_port = sockaddr_in6_pointer->sin6_port;
-    mmux_uint16_t		host_byteorder_sin6_port    = ntohs(network_byteorder_sin6_port);
-
-    return mmux_uint16_bind_to_bash_variable(host_byteorder_sin6_port_varname, host_byteorder_sin6_port, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER HOST_BYTEORDER_SIN6_PORT_VAR SOCKADDR_IN6_POINTER"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sin6_port_set]]])
-{
-  mmux_pointer_t	addr_pointer;
-  mmux_uint16_t		sin6_port;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(sin6_port,	2);
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = addr_pointer;
-
-    sockaddr_in6_pointer->sin6_port = htons(sin6_port);
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER SIN6_PORT"]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sockaddr_in6_dump]]])
-{
-  mmux_pointer_t	_sockaddr_in6_pointer;
-  char const *		struct_name = "struct sockaddr_in6";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_in6_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_sockaddr_insix_t	sockaddr_in6_pointer = _sockaddr_in6_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_sockaddr_insix_dump(fd, sockaddr_in6_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SOCKADDR_IN6_POINTER [STRUCT_NAME]"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER HOST_BYTEORDER_SINSIX_ADDR_VAR SOCKADDR_INSIX_POINTER"]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct addrinfo.
+ ** Sockets: mmux_libc_addrinfo_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
 {
-  char const *		addrinfo_pointer_varname;
-  mmux_sint_t		ai_flags		= 0;
-  mmux_sint_t		ai_family		= AF_UNSPEC;
-  mmux_sint_t		ai_socktype		= 0;
-  mmux_sint_t		ai_protocol		= 0;
-  mmux_socklen_t	ai_addrlen		= 0;
-  mmux_pointer_t	addr_pointer		= NULL;
-  mmux_pointer_t	canonname_pointer	= NULL;
-  mmux_pointer_t	next_pointer		= NULL;
+  mmux_asciizcp_t		addrinfo_pointer_varname;
+  mmux_sint_t			ai_flags		= 0;
+  mmux_sint_t			ai_family		= AF_UNSPEC;
+  mmux_sint_t			ai_socktype		= 0;
+  mmux_sint_t			ai_protocol		= 0;
+  mmux_socklen_t		ai_addrlen		= 0;
+  mmux_libc_sockaddr_t *	ai_addr			= NULL;
+  mmux_asciizcp_t		ai_canonname		= NULL;
+  mmux_libc_addrinfo_t *	ai_next			= NULL;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(addrinfo_pointer_varname,	1);
   if (10 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_flags,	2);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_family,	3);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_socktype,	4);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_protocol,	5);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(ai_addrlen,	6);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	7);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(canonname_pointer,	8);
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(next_pointer,	9);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_flags,		2);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_family,		3);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_socktype,		4);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(ai_protocol,		5);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(ai_addrlen,		6);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(ai_addr,	7);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(ai_canonname,	8);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(ai_next,	9);
   }
   {
-    struct sockaddr *	ai_addr           = addr_pointer;
-    char *		ai_canonname      = canonname_pointer;
-    mmux_libc_addrinfo_t	ai_next           = next_pointer;
-    mmux_libc_addrinfo_t	addrinfo_pointer  = calloc(1, sizeof(struct addrinfo));
-    mmux_bash_rv_t	brv;
+    mmux_libc_addrinfo_t *	addrinfo_pointer;
+    mmux_bash_rv_t		brv;
 
-    addrinfo_pointer->ai_flags		= ai_flags;
-    addrinfo_pointer->ai_family		= ai_family;
-    addrinfo_pointer->ai_socktype	= ai_socktype;
-    addrinfo_pointer->ai_protocol	= ai_protocol;
-    addrinfo_pointer->ai_addrlen	= ai_addrlen;
-    addrinfo_pointer->ai_addr		= ai_addr;
-    addrinfo_pointer->ai_canonname	= ai_canonname;
-    addrinfo_pointer->ai_next		= ai_next;
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&addrinfo_pointer, 1, sizeof(mmux_libc_addrinfo_t)));
+
+    mmux_libc_ai_flags_set	(addrinfo_pointer, ai_flags);
+    mmux_libc_ai_family_set	(addrinfo_pointer, ai_family);
+    mmux_libc_ai_socktype_set	(addrinfo_pointer, ai_socktype);
+    mmux_libc_ai_protocol_set	(addrinfo_pointer, ai_protocol);
+    mmux_libc_ai_addrlen_set	(addrinfo_pointer, ai_addrlen);
+    mmux_libc_ai_addr_set	(addrinfo_pointer, ai_addr);
+    mmux_libc_ai_canonname_set	(addrinfo_pointer, ai_canonname);
+    mmux_libc_ai_next_set	(addrinfo_pointer, ai_next);
 
     brv = mmux_pointer_bind_to_bash_variable(addrinfo_pointer_varname, addrinfo_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
@@ -1583,7 +380,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
     return brv;
 
   error_binding_variables:
-    free(addrinfo_pointer);
+    mmux_libc_free(addrinfo_pointer);
     return brv;
   }
 }
@@ -1593,88 +390,32 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_STRUCT_ADDRINFO_SETTER_GETTER]]],[[[
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
-{
-  char const *		$1_varname;
-  mmux_pointer_t	_addrinfo_pointer;
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_flags,    sint,    [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_family,   sint,    [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_socktype, sint,    [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_protocol, sint,    [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_addrlen,  socklen, [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_addr, libc_sockaddr_ptr,
+					  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_canonname, asciizcp,
+					  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER]]])
+DEFINE_MMUX_LIBC_STRUCT_SETTER_AND_GETTER(mmux_libc_addrinfo_t, ai_next, libc_addrinfo_ptr,
+					  [[[MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER]]])
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_addrinfo_pointer,	2);
-  {
-    mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
-
-    return mmux_$2_bind_to_bash_variable($1_varname, addrinfo_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR ADDRINFO_POINTER"]]])
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_set]]])
-{
-  mmux_pointer_t	_addrinfo_pointer;
-  mmux_$2_t		$1;
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_addrinfo_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_$3($1,				2);
-  {
-    mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
-
-    addrinfo_pointer->$1 = $1;
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[(3 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER MMUX_M4_TOUPPER([[[$1]]])_VAR ADDRINFO_POINTER"]]])
-]]])
-
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_flags]]],		[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_family]]],		[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_socktype]]],		[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_protocol]]],		[[[sint]]],[[[SINT]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addrlen]]],		[[[socklen]]],[[[SOCKLEN]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_addr]]],		[[[pointer]]],[[[POINTER]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_canonname]]],	[[[pointer]]],[[[POINTER]]])
-DEFINE_STRUCT_ADDRINFO_SETTER_GETTER([[[ai_next]]],		[[[pointer]]],[[[POINTER]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_dump]]])
-{
-  mmux_pointer_t	_addrinfo_pointer;
-  char const *		struct_name = "struct addrinfo";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_addrinfo_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_addrinfo_t	addrinfo_pointer = _addrinfo_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_addrinfo_dump(fd, addrinfo_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER ADDRINFO_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[addrinfo]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct hostent.
+ ** Sockets: mmux_libc_hostent_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_calloc]]])
 {
-  char const *		hostent_pointer_varname;
+  mmux_asciizcp_t		hostent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(hostent_pointer_varname,	1);
   {
-    mmux_libc_hostent_t	ptr = calloc(1, sizeof(struct hostent));
+    mmux_libc_hostent_t *	ptr = calloc(1, sizeof(mmux_libc_hostent_t));
 
     return mmux_pointer_bind_to_bash_variable(hostent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1688,13 +429,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 m4_define([[[DEFINE_STRUCT_HOSTENT_GETTER]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
 {
-  char const *		$1_varname;
+  mmux_asciizcp_t		$1_varname;
   mmux_pointer_t	_hostent_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_hostent_pointer,	2);
   {
-    mmux_libc_hostent_t	hostent_pointer = _hostent_pointer;
+    mmux_libc_hostent_t *	hostent_pointer = _hostent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, hostent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1713,40 +454,20 @@ DEFINE_STRUCT_HOSTENT_GETTER([[[h_addr]]],		[[[pointer]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_hostent_dump]]])
-{
-  mmux_pointer_t	_hostent_pointer;
-  char const *		struct_name = "struct hostent";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_hostent_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_hostent_t	hostent_pointer = _hostent_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_hostent_dump(fd, hostent_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER HOSTENT_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[hostent]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct servent.
+ ** Sockets: mmux_libc_servent_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_calloc]]])
 {
-  char const *		servent_pointer_varname;
+  mmux_asciizcp_t		servent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   {
-    mmux_libc_servent_t	ptr = calloc(1, sizeof(struct servent));
+    mmux_libc_servent_t *	ptr = calloc(1, sizeof(mmux_libc_servent_t));
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1760,13 +481,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 m4_define([[[DEFINE_STRUCT_SERVENT_GETTER]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
 {
-  char const *		$1_varname;
+  mmux_asciizcp_t		$1_varname;
   mmux_pointer_t	_servent_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_servent_pointer,	2);
   {
-    mmux_libc_servent_t	servent_pointer = _servent_pointer;
+    mmux_libc_servent_t *	servent_pointer = _servent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, servent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1783,40 +504,20 @@ DEFINE_STRUCT_SERVENT_GETTER([[[s_proto]]],		[[[string]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_dump]]])
-{
-  mmux_pointer_t	_servent_pointer;
-  char const *		struct_name = "struct servent";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_servent_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_servent_t	servent_pointer = _servent_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_servent_dump(fd, servent_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER SERVENT_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[servent]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct protoent.
+ ** Sockets: mmux_libc_protoent_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_calloc]]])
 {
-  char const *		protoent_pointer_varname;
+  mmux_asciizcp_t		protoent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   {
-    mmux_libc_protoent_t	ptr = calloc(1, sizeof(struct protoent));
+    mmux_libc_protoent_t *	ptr = calloc(1, sizeof(mmux_libc_protoent_t));
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1830,13 +531,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 m4_define([[[DEFINE_STRUCT_PROTOENT_GETTER]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
 {
-  char const *		$1_varname;
+  mmux_asciizcp_t		$1_varname;
   mmux_pointer_t	_protoent_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_protoent_pointer,	2);
   {
-    mmux_libc_protoent_t	protoent_pointer = _protoent_pointer;
+    mmux_libc_protoent_t *	protoent_pointer = _protoent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, protoent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1852,40 +553,20 @@ DEFINE_STRUCT_PROTOENT_GETTER([[[p_proto]]],		[[[sint]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_dump]]])
-{
-  mmux_pointer_t	_protoent_pointer;
-  char const *		struct_name = "struct protoent";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_protoent_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_protoent_t	protoent_pointer = _protoent_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_protoent_dump(fd, protoent_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER PROTOENT_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[protoent]]])
 
 
 /** --------------------------------------------------------------------
- ** Sockets: struct netent.
+ ** Sockets: mmux_libc_netent_t.
  ** ----------------------------------------------------------------- */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_calloc]]])
 {
-  char const *		netent_pointer_varname;
+  mmux_asciizcp_t		netent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   {
-    mmux_libc_netent_t	ptr = calloc(1, sizeof(struct netent));
+    mmux_libc_netent_t *	ptr = calloc(1, sizeof(mmux_libc_netent_t));
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1899,13 +580,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 m4_define([[[DEFINE_STRUCT_NETENT_GETTER]]],[[[
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_$1_ref]]])
 {
-  char const *		$1_varname;
+  mmux_asciizcp_t		$1_varname;
   mmux_pointer_t	_netent_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM($1_varname,		1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_netent_pointer,	2);
   {
-    mmux_libc_netent_t	netent_pointer = _netent_pointer;
+    mmux_libc_netent_t *	netent_pointer = _netent_pointer;
 
     return mmux_$2_bind_to_bash_variable($1_varname, netent_pointer->$1, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -1920,29 +601,7 @@ DEFINE_STRUCT_NETENT_GETTER([[[n_aliases]]],		[[[pointer]]])
 DEFINE_STRUCT_NETENT_GETTER([[[n_addrtype]]],		[[[sint]]])
 DEFINE_STRUCT_NETENT_GETTER([[[n_net]]],		[[[ulong]]])
 
-/* ------------------------------------------------------------------ */
-
-MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_dump]]])
-{
-  mmux_pointer_t	_netent_pointer;
-  char const *		struct_name = "struct netent";
-
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_netent_pointer,	1);
-  if (3 == argc) {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(struct_name,	2);
-  }
-  {
-    mmux_libc_netent_t	netent_pointer = _netent_pointer;
-    mmux_libc_file_descriptor_t		fd;
-
-    mmux_libc_stdou(&fd);
-    MMUX_LIBC_FUNCALL(mmux_libc_netent_dump(fd, netent_pointer, struct_name));
-    return MMUX_SUCCESS;
-  }
-}
-MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
-    [[[((2 == argc) || (3 == argc))]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NETENT_POINTER [STRUCT_NAME]"]]])
+DEFINE_MMUX_LIBC_STRUCT_DUMPER([[[netent]]])
 
 
 /** --------------------------------------------------------------------
@@ -1952,14 +611,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Host-to-network short int. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_htons]]])
 {
-  char const *		network_byteorder_number_varname;
+  mmux_asciizcp_t	network_byteorder_number_varname;
   mmux_uint16_t		host_byteorder_number;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_byteorder_number_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(host_byteorder_number,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(host_byteorder_number,			2);
   {
-    mmux_uint16_t	network_byteorder_number = htons(host_byteorder_number);
+    mmux_uint16_t	network_byteorder_number;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_htons(&network_byteorder_number, host_byteorder_number));
     return mmux_uint16_bind_to_bash_variable(network_byteorder_number_varname, network_byteorder_number, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -1972,14 +632,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Network-to-host short int. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ntohs]]])
 {
-  char const *		host_byteorder_number_varname;
+  mmux_asciizcp_t	host_byteorder_number_varname;
   mmux_uint16_t		network_byteorder_number;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(host_byteorder_number_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(network_byteorder_number,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT16(network_byteorder_number,		2);
   {
-    mmux_uint16_t	host_byteorder_number = ntohs(network_byteorder_number);
+    mmux_uint16_t	host_byteorder_number;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_ntohs(&host_byteorder_number, network_byteorder_number));
     return mmux_uint16_bind_to_bash_variable(host_byteorder_number_varname, host_byteorder_number, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -1992,14 +653,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Host-to-network long int. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_htonl]]])
 {
-  char const *		network_byteorder_number_varname;
+  mmux_asciizcp_t	network_byteorder_number_varname;
   mmux_uint32_t		host_byteorder_number;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_byteorder_number_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(host_byteorder_number,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(host_byteorder_number,			2);
   {
-    mmux_uint32_t	network_byteorder_number = htonl(host_byteorder_number);
+    mmux_uint32_t	network_byteorder_number;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_htonl(&network_byteorder_number, host_byteorder_number));
     return mmux_uint32_bind_to_bash_variable(network_byteorder_number_varname, network_byteorder_number, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -2012,14 +674,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Network-to-host long int. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ntohl]]])
 {
-  char const *		host_byteorder_number_varname;
+  mmux_asciizcp_t	host_byteorder_number_varname;
   mmux_uint32_t		network_byteorder_number;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(host_byteorder_number_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_number,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(network_byteorder_number,		2);
   {
-    mmux_uint32_t	host_byteorder_number = ntohl(network_byteorder_number);
+    mmux_uint32_t	host_byteorder_number;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_ntohl(&host_byteorder_number, network_byteorder_number));
     return mmux_uint32_bind_to_bash_variable(host_byteorder_number_varname, host_byteorder_number, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -2032,26 +695,19 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
  ** Sockets: host address conversion.
  ** ----------------------------------------------------------------- */
 
-/* ASCII-to-network */
+/* ASCII presentation-to-network */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_aton]]])
 {
-  char const *		in_addr_varname;
-  char const *		ascii_in_addr;
+  mmux_asciizcp_t		ouput_addr_varname;
+  mmux_asciizcp_t		input_presentation_addr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in_addr_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ascii_in_addr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ouput_addr_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(input_presentation_addr,	2);
   {
-    struct in_addr	name;
-    int			rv   = inet_aton(ascii_in_addr, &name);
+    mmux_libc_in_addr_t		ouput_addr;
 
-    if (0 != rv) {
-      mmux_uint32_t	addr = name.s_addr;
-
-      return mmux_uint32_bind_to_bash_variable(in_addr_varname, addr, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
-      mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_inet_aton(&ouput_addr, input_presentation_addr));
+    return mmux_libc_in_addr_bind_to_bash_variable(ouput_addr_varname, ouput_addr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -2062,8 +718,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_addr]]])
 {
-  char const *		in_addr_varname;
-  char const *		ascii_in_addr;
+  mmux_asciizcp_t		in_addr_varname;
+  mmux_asciizcp_t		ascii_in_addr;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in_addr_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ascii_in_addr,	2);
@@ -2082,14 +738,14 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Network to ASCII. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_ntoa]]])
 {
-  char const *		ascii_in_addr_varname;
+  mmux_asciizcp_t		ascii_in_addr_varname;
   mmux_uint32_t		addr;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ascii_in_addr_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(addr,	2);
   {
-    struct in_addr	name          = { .s_addr = addr };
-    char const *	ascii_in_addr = inet_ntoa(name);
+    mmux_libc_in_addr_t	name          = { .s_addr = addr };
+    mmux_asciizcp_t	ascii_in_addr = inet_ntoa(name);
 
     return mmux_string_bind_to_bash_variable(ascii_in_addr_varname, ascii_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2102,8 +758,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_network]]])
 {
-  char const *		network_in_addr_varname;
-  char const *		ascii_in_addr;
+  mmux_asciizcp_t		network_in_addr_varname;
+  mmux_asciizcp_t		ascii_in_addr;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_in_addr_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ascii_in_addr,	2);
@@ -2126,7 +782,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_makeaddr]]])
 {
-  char const *		uint32_in_addr_varname;
+  mmux_asciizcp_t		uint32_in_addr_varname;
   mmux_uint32_t		uint32_net_in_addr;
   mmux_uint32_t		uint32_local_in_addr;
 
@@ -2148,13 +804,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Local network address of. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_lnaof]]])
 {
-  char const *		uint32_local_in_addr_varname;
+  mmux_asciizcp_t		uint32_local_in_addr_varname;
   mmux_uint32_t		uint32_in_addr;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uint32_local_in_addr_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(uint32_in_addr,	2);
   {
-    struct in_addr	name          = { .s_addr = uint32_in_addr };
+    mmux_libc_in_addr_t	name          = { .s_addr = uint32_in_addr };
     mmux_uint32_t	local_in_addr = inet_lnaof(name);
 
     return mmux_uint32_bind_to_bash_variable(uint32_local_in_addr_varname, local_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -2169,13 +825,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* network part address of. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_netof]]])
 {
-  char const *		uint32_local_in_addr_varname;
+  mmux_asciizcp_t		uint32_local_in_addr_varname;
   mmux_uint32_t		uint32_in_addr;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uint32_local_in_addr_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(uint32_in_addr,	2);
   {
-    struct in_addr	name          = { .s_addr = uint32_in_addr };
+    mmux_libc_in_addr_t	name          = { .s_addr = uint32_in_addr };
     mmux_uint32_t	local_in_addr = inet_netof(name);
 
     return mmux_uint32_bind_to_bash_variable(uint32_local_in_addr_varname, local_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -2191,7 +847,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_pton]]])
 {
   mmux_sint_t		af_type;
-  char const *		ascii_addr;
+  mmux_asciizcp_t		ascii_addr;
   mmux_pointer_t	addr_pointer;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(af_type,	1);
@@ -2219,7 +875,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_ntop]]])
 {
   mmux_sint_t		af_type;
   mmux_pointer_t	addr_pointer;
-  char const *		ascii_addr_varname;
+  mmux_asciizcp_t		ascii_addr_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(af_type,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
@@ -2228,7 +884,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_ntop]]])
 #undef  IS_THIS_ENOUGH_QUESTION_MARK
 #define IS_THIS_ENOUGH_QUESTION_MARK	512
     char		ascii_addr[IS_THIS_ENOUGH_QUESTION_MARK];
-    char const *	rv = inet_ntop(af_type, addr_pointer, (char *)ascii_addr, (socklen_t)IS_THIS_ENOUGH_QUESTION_MARK);
+    mmux_asciizcp_t	rv = inet_ntop(af_type, addr_pointer, (char *)ascii_addr, (socklen_t)IS_THIS_ENOUGH_QUESTION_MARK);
 
     if (NULL != rv) {
       return mmux_string_bind_to_bash_variable(ascii_addr_varname, ascii_addr, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -2249,10 +905,10 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getaddrinfo]]])
 {
-  char const *		node;
-  char const *		service;
+  mmux_asciizcp_t		node;
+  mmux_asciizcp_t		service;
   mmux_pointer_t	_hints_pointer;
-  char const *		addrinfo_linked_list_varname;
+  mmux_asciizcp_t		addrinfo_linked_list_varname;
 
   if (IS_POINTER_REPRESENTATION(argv[1])) {
     mmux_pointer_t	_node;
@@ -2271,8 +927,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getaddrinfo]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_hints_pointer,	3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(addrinfo_linked_list_varname,	4);
   {
-    mmux_libc_addrinfo_t	hints_pointer = _hints_pointer;
-    mmux_libc_addrinfo_t	addrinfo_linked_list;
+    mmux_libc_addrinfo_t *	hints_pointer = _hints_pointer;
+    mmux_libc_addrinfo_t *	addrinfo_linked_list;
 
     if (0 == strlen(node))    { node    = NULL; }
     if (0 == strlen(service)) { service = NULL; }
@@ -2318,8 +974,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnameinfo]]])
 {
   mmux_pointer_t	_sockaddr_pointer;
   mmux_socklen_t	socklen;
-  char const *		host_varname;
-  char const *		serv_varname;
+  mmux_asciizcp_t		host_varname;
+  mmux_asciizcp_t		serv_varname;
   mmux_sint_t		flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_pointer,	1);
@@ -2393,11 +1049,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_gethostent]]])
 {
-  char const *		hostent_pointer_varname;
+  mmux_asciizcp_t		hostent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(hostent_pointer_varname,	1);
   {
-    mmux_libc_hostent_t	he = gethostent();
+    mmux_libc_hostent_t *	he = gethostent();
 
     return mmux_pointer_bind_to_bash_variable(hostent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2440,11 +1096,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservent]]])
 {
-  char const *		servent_pointer_varname;
+  mmux_asciizcp_t		servent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   {
-    mmux_libc_servent_t	he = getservent();
+    mmux_libc_servent_t *	he = getservent();
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2457,9 +1113,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyname]]])
 {
-  char const *		servent_pointer_varname;
-  char const *		name;
-  char const *		proto = NULL;
+  mmux_asciizcp_t		servent_pointer_varname;
+  mmux_asciizcp_t		name;
+  mmux_asciizcp_t		proto = NULL;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(name,	2);
@@ -2467,7 +1123,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyname]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(proto,	3);
   }
   {
-    mmux_libc_servent_t	he = getservbyname(name, proto);
+    mmux_libc_servent_t *	he = getservbyname(name, proto);
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2480,9 +1136,9 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyport]]])
 {
-  char const *		servent_pointer_varname;
+  mmux_asciizcp_t		servent_pointer_varname;
   mmux_sint_t		port;
-  char const *		proto = NULL;
+  mmux_asciizcp_t		proto = NULL;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(port,	2);
@@ -2490,7 +1146,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getservbyport]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(proto,	3);
   }
   {
-    mmux_libc_servent_t	he = getservbyport(port, proto);
+    mmux_libc_servent_t *	he = getservbyport(port, proto);
 
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2533,11 +1189,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotoent]]])
 {
-  char const *		protoent_pointer_varname;
+  mmux_asciizcp_t		protoent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   {
-    mmux_libc_protoent_t	he = getprotoent();
+    mmux_libc_protoent_t *	he = getprotoent();
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2550,13 +1206,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobyname]]])
 {
-  char const *		protoent_pointer_varname;
-  char const *		name;
+  mmux_asciizcp_t		protoent_pointer_varname;
+  mmux_asciizcp_t		name;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(name,	2);
   {
-    mmux_libc_protoent_t	he = getprotobyname(name);
+    mmux_libc_protoent_t *	he = getprotobyname(name);
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2569,13 +1225,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getprotobynumber]]])
 {
-  char const *		protoent_pointer_varname;
+  mmux_asciizcp_t		protoent_pointer_varname;
   mmux_sint_t		proto;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(proto,	2);
   {
-    mmux_libc_protoent_t	he = getprotobynumber(proto);
+    mmux_libc_protoent_t *	he = getprotobynumber(proto);
 
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2618,11 +1274,11 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetent]]])
 {
-  char const *		netent_pointer_varname;
+  mmux_asciizcp_t		netent_pointer_varname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   {
-    mmux_libc_netent_t	he = getnetent();
+    mmux_libc_netent_t *	he = getnetent();
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2635,13 +1291,13 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyname]]])
 {
-  char const *		netent_pointer_varname;
-  char const *		name;
+  mmux_asciizcp_t		netent_pointer_varname;
+  mmux_asciizcp_t		name;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(name,	2);
   {
-    mmux_libc_netent_t	he = getnetbyname(name);
+    mmux_libc_netent_t *	he = getnetbyname(name);
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2654,7 +1310,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyaddr]]])
 {
-  char const *		netent_pointer_varname;
+  mmux_asciizcp_t		netent_pointer_varname;
   mmux_uint32_t		net;
   mmux_sint_t		type;
 
@@ -2662,7 +1318,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnetbyaddr]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(net,	2);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(type,	3);
   {
-    mmux_libc_netent_t	he = getnetbyaddr(net, type);
+    mmux_libc_netent_t *	he = getnetbyaddr(net, type);
 
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, he, MMUX_BASH_BUILTIN_STRING_NAME);
   }
@@ -2678,8 +1334,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_nametoindex]]])
 {
-  char const *		ifindex_varname;
-  char const *		ifname;
+  mmux_asciizcp_t		ifindex_varname;
+  mmux_asciizcp_t		ifname;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifindex_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifname,	2);
@@ -2701,7 +1357,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_indextoname]]])
 {
-  char const *		ifname_varname;
+  mmux_asciizcp_t		ifname_varname;
   mmux_uint_t		ifindex;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifname_varname,	1);
@@ -2725,7 +1381,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_nameindex_to_array]]])
 {
-  char const *		index_array_name;
+  mmux_asciizcp_t		index_array_name;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(index_array_name,	1);
   {
@@ -2760,7 +1416,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_socket]]])
 {
-  char const *	sock_varname;
+  mmux_asciizcp_t	sock_varname;
   mmux_sint_t	namespace, style, protocol;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sock_varname,	1);
@@ -2815,8 +1471,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_socketpair]]])
 {
-  char const *	sock_varname1;
-  char const *	sock_varname2;
+  mmux_asciizcp_t	sock_varname1;
+  mmux_asciizcp_t	sock_varname2;
   mmux_sint_t	namespace, style, protocol;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sock_varname1,	1);
@@ -2889,8 +1545,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getpeername]]])
 {
   mmux_sint_t		sock;
-  char const *		addr_pointer_var;
-  char const *		addr_length_var;
+  mmux_asciizcp_t		addr_pointer_var;
+  mmux_asciizcp_t		addr_length_var;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(sock,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(addr_pointer_var,	2);
@@ -2941,8 +1597,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockname]]])
 {
   mmux_sint_t		sock;
-  char const *		addr_pointer_var;
-  char const *		addr_length_var;
+  mmux_asciizcp_t		addr_pointer_var;
+  mmux_asciizcp_t		addr_length_var;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(sock,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(addr_pointer_var,	2);
@@ -3047,8 +1703,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_accept]]])
 {
-  char const *		connected_sock_varname;
-  char const *		connected_sockaddr_length_varname;
+  mmux_asciizcp_t		connected_sock_varname;
+  mmux_asciizcp_t		connected_sockaddr_length_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	addr_pointer;
   mmux_socklen_t	allocated_sockaddr_length;
@@ -3092,8 +1748,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_accept4]]])
 {
 MMUX_BASH_CONDITIONAL_CODE([[[HAVE_ACCEPT4]]],[[[
-  char const *		connected_sock_varname;
-  char const *		connected_sockaddr_length_varname;
+  mmux_asciizcp_t		connected_sock_varname;
+  mmux_asciizcp_t		connected_sockaddr_length_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	addr_pointer;
   mmux_socklen_t	allocated_sockaddr_length;
@@ -3146,7 +1802,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_send]]])
 {
-  char const *		number_of_bytes_sent_varname;
+  mmux_asciizcp_t		number_of_bytes_sent_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	buffer_pointer;
   mmux_usize_t		buffer_length;
@@ -3176,7 +1832,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recv]]])
 {
-  char const *		number_of_bytes_received_varname;
+  mmux_asciizcp_t		number_of_bytes_received_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	buffer_pointer;
   mmux_usize_t		buffer_length;
@@ -3206,7 +1862,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sendto]]])
 {
-  char const *		number_of_bytes_sent_varname;
+  mmux_asciizcp_t		number_of_bytes_sent_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	buffer_pointer;
   mmux_usize_t		buffer_length;
@@ -3241,8 +1897,8 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recvfrom]]])
 {
-  char const *		number_of_bytes_received_varname;
-  char const *		peer_sockaddr_length_varname;
+  mmux_asciizcp_t		number_of_bytes_received_varname;
+  mmux_asciizcp_t		peer_sockaddr_length_varname;
   mmux_sint_t		sock;
   mmux_pointer_t	buffer_pointer;
   mmux_usize_t		buffer_length;
@@ -3294,7 +1950,7 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockopt]]])
 {
-  char const *		option_value_varname;
+  mmux_asciizcp_t		option_value_varname;
   mmux_sint_t		sock;
   mmux_sint_t		level;
   mmux_sint_t		optname;
@@ -3462,12 +2118,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setsockopt]]])
     case SO_LINGER:
       /* The option value is a "struct linger". */
       {
-	char const *	option_value_array_varname;
+	mmux_asciizcp_t	option_value_array_varname;
 
 	MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(option_value_array_varname,	4);
 	{
 	    mmux_bash_assoc_array_variable_t	assoc_array_variable;
-	    char const *			assoc_array_value;
+	    mmux_asciizcp_t			assoc_array_value;
 	    struct linger			optval;
 	    mmux_bash_rv_t			brv;
 
@@ -3538,36 +2194,47 @@ mmux_bash_pointers_init_sockets_module (void)
   mmux_bash_rv_t	brv;
 
   {
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_in_addr_SIZEOF",  sizeof(struct in_addr), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_in_addr_SIZEOF",  sizeof(mmux_libc_in_addr_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_in6_addr_SIZEOF",  sizeof(struct in6_addr), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_insix_addr_SIZEOF",  sizeof(mmux_libc_insix_addr_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in_SIZEOF",  sizeof(struct sockaddr_in), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in_SIZEOF",  sizeof(mmux_libc_sockaddr_in_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_in6_SIZEOF",  sizeof(struct sockaddr_in6), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_insix_SIZEOF",  sizeof(mmux_libc_sockaddr_insix_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_un_SIZEOF",  sizeof(struct sockaddr_un), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_sockaddr_un_SIZEOF",  sizeof(mmux_libc_sockaddr_un_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_addrinfo_SIZEOF", sizeof(struct addrinfo), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_addrinfo_SIZEOF", sizeof(mmux_libc_addrinfo_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_hostent_SIZEOF", sizeof(struct hostent), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_hostent_SIZEOF", sizeof(mmux_libc_hostent_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_bash_create_global_sint_variable("mmux_libc_servent_SIZEOF", sizeof(struct servent), NULL);
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_servent_SIZEOF", sizeof(mmux_libc_servent_t), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_protoent_SIZEOF", sizeof(mmux_libc_protoent_t), NULL);
+    if (MMUX_SUCCESS != brv) { return brv; }
+
+    brv = mmux_bash_create_global_sint_variable("mmux_libc_netent_SIZEOF", sizeof(mmux_libc_netent_t), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
   }
 
   {
-    brv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_loopback_pointer", (mmux_pointer_t)&(in6addr_loopback), NULL);
+    static mmux_libc_insix_addr_t	insix_addr_loopback;
+    static mmux_libc_insix_addr_t	insix_addr_any;
+
+    MMUX_LIBC_FUNCALL(mmux_libc_make_insix_addr_loopback(&insix_addr_loopback));
+    brv = mmux_pointer_bind_to_bash_variable("mmux_libc_insixaddr_loopback_pointer", (mmux_pointer_t)&(insix_addr_loopback), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
 
-    brv = mmux_pointer_bind_to_bash_variable("mmux_libc_in6addr_any_pointer", (mmux_pointer_t)&(in6addr_any), NULL);
+    MMUX_LIBC_FUNCALL(mmux_libc_make_insix_addr_any(&insix_addr_any));
+    brv = mmux_pointer_bind_to_bash_variable("mmux_libc_insixaddr_any_pointer", (mmux_pointer_t)&(insix_addr_loopback), NULL);
     if (MMUX_SUCCESS != brv) { return brv; }
   }
 

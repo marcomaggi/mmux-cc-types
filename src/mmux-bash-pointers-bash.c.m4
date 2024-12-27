@@ -152,16 +152,6 @@ mmux_string_bind_to_bash_global_variable (char const * variable_name, char const
 {
   return string_bind_to_bash_variable(variable_name, s_value, caller_name, true);
 }
-mmux_bash_rv_t
-mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizcp_t const s_value, mmux_asciizcp_t const caller_name)
-{
-  return string_bind_to_bash_variable(variable_name, s_value, caller_name, false);
-}
-mmux_bash_rv_t
-mmux_asciizcp_bind_to_bash_global_variable (mmux_asciizcp_t variable_name, mmux_asciizcp_t const s_value, mmux_asciizcp_t const caller_name)
-{
-  return string_bind_to_bash_variable(variable_name, s_value, caller_name, true);
-}
 
 /* ------------------------------------------------------------------ */
 

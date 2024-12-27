@@ -47,7 +47,7 @@ mmux_$1_bind_to_bash_variable (char const * variable_name, mmux_$1_t value, char
 
     rv = mmux_$1_sprint(s_value, required_nbytes, value);
     if (false == rv) {
-      return mmux_asciizcp_bind_to_bash_variable(variable_name, s_value, caller_name);
+      return mmux_string_bind_to_bash_variable(variable_name, s_value, caller_name);
     } else {
       return MMUX_FAILURE;
     }
@@ -66,7 +66,7 @@ MMUX_BASH_DEFINE_VALUE_STORER([[[uint]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[slong]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[ulong]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
-MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+MMUX_BASH_DEFINE_VALUE_STORER([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
 
 MMUX_BASH_DEFINE_VALUE_STORER([[[sint8]]])
 MMUX_BASH_DEFINE_VALUE_STORER([[[uint8]]])
@@ -183,6 +183,19 @@ mmux_libc_ptn_bind_to_bash_variable_then_free (mmux_asciizcp_t pathname_varname,
 
   mmux_libc_file_system_pathname_free(pathname);
   return brv;
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_bash_rv_t
+mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizcp_t const s_value, mmux_asciizcp_t const caller_name)
+{
+  return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
+}
+mmux_bash_rv_t
+mmux_asciizp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizp_t const s_value, mmux_asciizcp_t const caller_name)
+{
+  return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
 }
 
 /* end of file */

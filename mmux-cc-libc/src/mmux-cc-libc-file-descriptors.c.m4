@@ -939,4 +939,130 @@ MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_COPY_FILE_RANGE]]],[[[
 ]]])
 }
 
+
+/** --------------------------------------------------------------------
+ ** Printing types.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_PRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+bool
+mmux_$1_dprintf (mmux_libc_file_descriptor_t fd, mmux_$1_t value)
+{
+  int		rv, required_nbytes;
+
+  required_nbytes = mmux_$1_sprint_size(value);
+  if (0 > required_nbytes) {
+    return true;
+  } else {
+    char	s_value[required_nbytes];
+
+    rv = mmux_$1_sprint(s_value, required_nbytes, value);
+    if (false == rv) {
+      return mmux_libc_dprintf(fd, "%s", s_value);
+    } else {
+      return true;
+    }
+  }
+}
+]]])]]])
+
+DEFINE_PRINTER([[[pointer]]])
+
+DEFINE_PRINTER([[[schar]]])
+DEFINE_PRINTER([[[uchar]]])
+DEFINE_PRINTER([[[sshort]]])
+DEFINE_PRINTER([[[ushort]]])
+DEFINE_PRINTER([[[sint]]])
+DEFINE_PRINTER([[[uint]]])
+DEFINE_PRINTER([[[slong]]])
+DEFINE_PRINTER([[[ulong]]])
+DEFINE_PRINTER([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_PRINTER([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_PRINTER([[[sint8]]])
+DEFINE_PRINTER([[[uint8]]])
+DEFINE_PRINTER([[[sint16]]])
+DEFINE_PRINTER([[[uint16]]])
+DEFINE_PRINTER([[[sint32]]])
+DEFINE_PRINTER([[[uint32]]])
+DEFINE_PRINTER([[[sint64]]])
+DEFINE_PRINTER([[[uint64]]])
+
+DEFINE_PRINTER([[[float]]])
+DEFINE_PRINTER([[[double]]])
+DEFINE_PRINTER([[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_PRINTER([[[float32]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_PRINTER([[[float64]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_PRINTER([[[float128]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_PRINTER([[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_PRINTER([[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_PRINTER([[[float128x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_PRINTER([[[decimal32]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_PRINTER([[[decimal64]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_PRINTER([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+DEFINE_PRINTER([[[complexf]]])
+DEFINE_PRINTER([[[complexd]]])
+DEFINE_PRINTER([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
+
+DEFINE_PRINTER([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
+DEFINE_PRINTER([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
+DEFINE_PRINTER([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+
+DEFINE_PRINTER([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
+DEFINE_PRINTER([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
+DEFINE_PRINTER([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+
+DEFINE_PRINTER([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
+DEFINE_PRINTER([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
+DEFINE_PRINTER([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+
+DEFINE_PRINTER([[[usize]]])
+DEFINE_PRINTER([[[ssize]]])
+
+DEFINE_PRINTER([[[sintmax]]])
+DEFINE_PRINTER([[[uintmax]]])
+DEFINE_PRINTER([[[sintptr]]])
+DEFINE_PRINTER([[[uintptr]]])
+DEFINE_PRINTER([[[ptrdiff]]])
+DEFINE_PRINTER([[[mode]]])
+DEFINE_PRINTER([[[off]]])
+DEFINE_PRINTER([[[pid]]])
+DEFINE_PRINTER([[[uid]]])
+DEFINE_PRINTER([[[gid]]])
+DEFINE_PRINTER([[[wchar]]])
+DEFINE_PRINTER([[[wint]]])
+DEFINE_PRINTER([[[time]]])
+DEFINE_PRINTER([[[socklen]]])
+DEFINE_PRINTER([[[rlim]]])
+
+bool
+mmux_libc_fd_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_file_descriptor_t value)
+{
+  return mmux_sint_dprintf(fd, value.value);
+}
+bool
+mmux_libc_pid_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_pid_t value)
+{
+  return mmux_sint_dprintf(fd, value.value);
+}
+bool
+mmux_libc_uid_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_uid_t value)
+{
+  return mmux_sint_dprintf(fd, value.value);
+}
+bool
+mmux_libc_gid_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_gid_t value)
+{
+  return mmux_sint_dprintf(fd, value.value);
+}
+bool
+mmux_libc_ptn_dprintf (mmux_libc_file_descriptor_t fd, mmux_libc_file_system_pathname_t value)
+{
+  return mmux_libc_dprintf(fd, "%s", value.value);
+}
+
 /* end of file */

@@ -96,6 +96,12 @@ extern "C" {
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
+typedef mmux_ushort_t			mmux_host_byteorder_ushort_t;
+typedef mmux_ushort_t			mmux_network_byteorder_ushort_t;
+
+typedef mmux_uint16_t			mmux_host_byteorder_uint16_t;
+typedef mmux_uint16_t			mmux_network_byteorder_uint16_t;
+
 typedef struct mmux_libc_file_descriptor_t { mmux_sint_t value; } mmux_libc_file_descriptor_t;
 typedef struct mmux_libc_pid_t             { mmux_pid_t  value; } mmux_libc_pid_t;
 typedef struct mmux_libc_uid_t             { mmux_uid_t  value; } mmux_libc_uid_t;
