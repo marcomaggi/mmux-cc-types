@@ -166,7 +166,11 @@ mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
  ** ----------------------------------------------------------------- */
 
 typedef char *				mmux_asciizp_t;
+typedef char **				mmux_asciizpp_t;
+typedef char ***			mmux_asciizppp_t;
 typedef char const *			mmux_asciizcp_t;
+typedef char const **			mmux_asciizcpp_t;
+typedef char const ***			mmux_asciizcppp_t;
 
 typedef void *				mmux_pointer_t;
 typedef signed char			mmux_schar_t;

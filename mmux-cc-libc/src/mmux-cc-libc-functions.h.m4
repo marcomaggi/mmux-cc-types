@@ -926,10 +926,10 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_canonname,	mmux_asciizcp_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(addrinfo, ai_next,		mmux_libc_addrinfo_t *)
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_name,		mmux_asciizp_t)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_aliases,		mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_aliases,		mmux_asciizpp_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addrtype,		mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_length,		mmux_sint_t)
-DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addr_list,	mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addr_list,	mmux_asciizpp_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(hostent, h_addr,		mmux_asciizp_t)
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(servent, s_name,		mmux_asciizp_t)
@@ -1050,6 +1050,12 @@ mmux_cc_libc_decl bool mmux_libc_inet_pton (mmux_pointer_t ouput_addr_p,
 mmux_cc_libc_decl bool mmux_libc_inet_ntop (mmux_asciizp_t ouput_presentation_p, mmux_usize_t ouput_presentation_provided_nchars,
 					    mmux_sint_t input_af_family, mmux_pointer_t input_addr_p)
   __attribute__((__nonnull__(1,4)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_addr (mmux_libc_in_addr_ptr_t result_in_addr_p, mmux_asciizcp_t presentation_in_addr_p)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_network (mmux_libc_in_addr_ptr_t result_in_addr_p, mmux_asciizcp_t presentation_in_addr_p)
+  __attribute__((__nonnull__(1,2)));
 
 
 /** --------------------------------------------------------------------

@@ -194,6 +194,14 @@ DEFINE_PROTOS([[[time]]])
 DEFINE_PROTOS([[[socklen]]])
 DEFINE_PROTOS([[[rlim]]])
 
+DEFINE_PROTOS([[[asciizp]]])
+DEFINE_PROTOS([[[asciizpp]]])
+DEFINE_PROTOS([[[asciizppp]]])
+
+DEFINE_PROTOS([[[asciizcp]]])
+DEFINE_PROTOS([[[asciizcpp]]])
+DEFINE_PROTOS([[[asciizcppp]]])
+
 DEFINE_PROTOS([[[libc_pid]]])
 DEFINE_PROTOS([[[libc_uid]]])
 DEFINE_PROTOS([[[libc_gid]]])
@@ -278,14 +286,6 @@ mmux_bash_pointers_decl mmux_bash_rv_t mmux_string_bind_to_bash_variable
 
 mmux_bash_pointers_decl mmux_bash_rv_t mmux_string_bind_to_bash_global_variable
   (char const * v, char const * s_value, char const * caller_name)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_asciizcp_bind_to_bash_variable
-  (mmux_asciizcp_t variable_name, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_bash_pointers_decl mmux_bash_rv_t mmux_asciizp_bind_to_bash_variable
-  (mmux_asciizcp_t variable_name, mmux_asciizp_t s_value, mmux_asciizcp_t caller_name)
   __attribute__((__nonnull__(1,2)));
 
 /* ------------------------------------------------------------------ */

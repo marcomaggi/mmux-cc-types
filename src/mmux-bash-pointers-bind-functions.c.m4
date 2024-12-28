@@ -185,7 +185,10 @@ mmux_libc_ptn_bind_to_bash_variable_then_free (mmux_asciizcp_t pathname_varname,
   return brv;
 }
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Pointers to ASCIIZ strings.
+ ** ----------------------------------------------------------------- */
 
 mmux_bash_rv_t
 mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizcp_t const s_value, mmux_asciizcp_t const caller_name)
@@ -193,7 +196,30 @@ mmux_asciizcp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizc
   return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
 }
 mmux_bash_rv_t
+mmux_asciizcpp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizcpp_t const s_value, mmux_asciizcp_t const caller_name)
+{
+  return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
+}
+mmux_bash_rv_t
+mmux_asciizcppp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizcppp_t const s_value, mmux_asciizcp_t const caller_name)
+{
+  return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_bash_rv_t
 mmux_asciizp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizp_t const s_value, mmux_asciizcp_t const caller_name)
+{
+  return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
+}
+mmux_bash_rv_t
+mmux_asciizpp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizpp_t const s_value, mmux_asciizcp_t const caller_name)
+{
+  return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
+}
+mmux_bash_rv_t
+mmux_asciizppp_bind_to_bash_variable (mmux_asciizcp_t variable_name, mmux_asciizppp_t const s_value, mmux_asciizcp_t const caller_name)
 {
   return mmux_pointer_bind_to_bash_variable(variable_name, (mmux_pointer_t)s_value, caller_name);
 }

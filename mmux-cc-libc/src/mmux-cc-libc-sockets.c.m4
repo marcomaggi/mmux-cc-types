@@ -908,11 +908,13 @@ mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t * 
  ** ----------------------------------------------------------------- */
 
 DEFINE_STRUCT_SETTER_GETTER(hostent, h_name,		mmux_asciizp_t)
-DEFINE_STRUCT_SETTER_GETTER(hostent, h_aliases,		mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER(hostent, h_aliases,		mmux_asciizpp_t)
 DEFINE_STRUCT_SETTER_GETTER(hostent, h_addrtype,	mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER(hostent, h_length,		mmux_sint_t)
-DEFINE_STRUCT_SETTER_GETTER(hostent, h_addr_list,	mmux_asciizp_t *)
+DEFINE_STRUCT_SETTER_GETTER(hostent, h_addr_list,	mmux_asciizpp_t)
 DEFINE_STRUCT_SETTER_GETTER(hostent, h_addr,		mmux_asciizp_t)
+
+/* ------------------------------------------------------------------ */
 
 bool
 mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t * hostent_p, mmux_asciizcp_t struct_name)
@@ -1172,6 +1174,31 @@ mmux_libc_inet_ntop (mmux_asciizp_t ouput_presentation_p, mmux_usize_t ouput_pre
     }
   }
   return true;
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
+mmux_libc_inet_addr (mmux_libc_in_addr_ptr_t result_in_addr_p, mmux_asciizcp_t presentation_in_addr_p)
+{
+  mmux_uint32_t		network_byteorder_s_addr = inet_addr(presentation_in_addr_p);
+
+  if (MMUX_LIBC_INADDR_NONE != network_byteorder_s_addr) {
+    return mmux_libc_make_in_addr(result_in_addr_p, network_byteorder_s_addr);
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_inet_network (mmux_libc_in_addr_ptr_t result_in_addr_p, mmux_asciizcp_t presentation_in_addr_p)
+{
+  mmux_uint32_t		network_byteorder_s_addr = inet_network(presentation_in_addr_p);
+
+  if (MMUX_LIBC_INADDR_NONE != network_byteorder_s_addr) {
+    return mmux_libc_make_in_addr(result_in_addr_p, network_byteorder_s_addr);
+  } else {
+    return true;
+  }
 }
 
 /* end of file */

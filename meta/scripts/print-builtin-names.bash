@@ -104,13 +104,16 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   addrinfo_dump
 			   ai_protocol_ref ai_protocol_set ai_addrlen_ref ai_addrlen_set ai_addr_ref ai_addr_set
 			   ai_canonname_ref ai_canonname_set ai_next_ref ai_next_set
-			   hostent_calloc h_name_ref h_aliases_ref h_addrtype_ref h_length_ref h_addr_list_ref h_addr_ref hostent_dump
+			   hostent_calloc h_name_ref h_name_set h_aliases_ref h_aliases_set h_addrtype_ref h_addrtype_set
+			   h_length_ref h_length_set h_addr_list_ref h_addr_list_set h_addr_ref h_addr_set hostent_dump
 			   sethostent gethostent endhostent
-			   servent_calloc s_name_ref s_aliases_ref s_port_ref s_proto_ref servent_dump
+			   servent_calloc s_name_ref s_name_set s_aliases_ref s_aliases_set
+			   s_port_ref s_port_set s_proto_ref s_proto_set servent_dump
 			   setservent getservent endservent getservbyname getservbyport
 			   protoent_calloc p_name_ref p_aliases_ref p_proto_ref protoent_dump
 			   setprotoent getprotoent endprotoent getprotobyname getprotobynumber
-			   netent_calloc n_name_ref n_aliases_ref n_addrtype_ref n_net_ref netent_dump
+			   netent_calloc n_name_ref n_name_set n_aliases_ref n_aliases_set
+			   n_addrtype_ref n_addrtype_set n_net_ref n_net_set netent_dump
 			   setnetent getnetent endnetent getnetbyname getnetbyaddr
 			   htons ntohs htonl ntohl inet_aton inet_addr inet_ntoa inet_network inet_makeaddr
 			   inet_lnaof inet_netof inet_pton inet_ntop

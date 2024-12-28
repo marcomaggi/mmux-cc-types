@@ -9537,7 +9537,7 @@ and bind to the shell variable whose name is @var{HOSTENT_PTR_VAR} a pointer to 
 @deffn Builtin mmux_libc_h_name_ref @var{H_NAME_VAR} @var{HOSTENT_PTR}
 Getter for the field @code{h_name} of a @code{struct hostent} value.  Bind to the shell variable
 whose name is @var{H_NAME_VAR} the field of the @code{struct hostent} value referenced by
-@var{HOSTENT_PTR}.  The value is a shell string.
+@var{HOSTENT_PTR}.  The value is an @asciiz{} pointer.
 @end deffn
 
 
@@ -9660,7 +9660,7 @@ and bind to the shell variable whose name is @var{SERVENT_PTR_VAR} a pointer to 
 @deffn Builtin mmux_libc_s_name_ref @var{S_NAME_VAR} @var{SERVENT_PTR}
 Getter for the field @code{s_name} of a @code{struct servent} value.  Bind to the shell variable
 whose name is @var{S_NAME_VAR} the field of the @code{struct servent} value referenced by
-@var{SERVENT_PTR}.  The value is a shell string.
+@var{SERVENT_PTR}.  The value is an @asciiz{} pointer.
 
 @example
 declare SERVENT_PTR S_NAME
@@ -9900,7 +9900,7 @@ and bind to the shell variable whose name is @var{PROTOENT_PTR_VAR} a pointer to
 @deffn Builtin mmux_libc_p_name_ref @var{P_NAME_VAR} @var{PROTOENT_PTR}
 Getter for the field @code{p_name} of a @code{struct protoent} value.  Bind to the shell variable
 whose name is @var{P_NAME_VAR} the field of the @code{struct protoent} value referenced by
-@var{PROTOENT_PTR}.  The value is a shell string.
+@var{PROTOENT_PTR}.  The value is an @asciiz{} pointer.
 
 @example
 declare PROTOENT_PTR P_NAME
@@ -10113,7 +10113,7 @@ and bind to the shell variable whose name is @var{NETENT_PTR_VAR} a pointer to i
 @deffn Builtin mmux_libc_n_name_ref @var{N_NAME_VAR} @var{NETENT_PTR}
 Getter for the field @code{n_name} of a @code{struct netent} value.  Bind to the shell variable
 whose name is @var{N_NAME_VAR} the field of the @code{struct netent} value referenced by
-@var{NETENT_PTR}.  The value is a shell string.
+@var{NETENT_PTR}.  The value is an @asciiz{} pointer.
 
 @example
 declare NETENT_PTR N_NAME
@@ -10501,22 +10501,20 @@ inet_ntoa}.  Convert the @objtype{mmux_uint32_t} representation of an IPv4 addre
 
 @deffn Builtin mmux_libc_inet_addr @var{UINT32_IN_ADDR_VAR} @var{ASCII_IN_ADDR}
 Interface to the standard C language function @cfunc{inet_addr}, @glibcref{Host Address Functions,
-inet_addr}.  This builtin behaves like @MmuxBuiltin{mmux_libc_aton}, but, because of the definition
-of @cfunc{inet_addr}, if the input string is invalid: the resulting @objtype{mmux_uint32_t} value is
-equal to @code{INADDR_NONE}.
+inet_addr}.  Convert an string presentation of an IPv4 address into its binary format as
+@objtype{mmux_uint32_t} value; if an error occurs the return value is false and the variable
+@var{UINT32_IN_ADDR_VAR} is left untouched.
 
 @example
-declare -r INPUT_ASCII_ADDR='ciao'
-declare UINT32_ADDR
-declare OUTPUT_ASCII_ADDR
+declare -r INPUT_ASCII_ADDR='127.0.0.1'
+declare UINT32_ADDR OUTPUT_ASCII_ADDR
 
 mmux_libc_inet_addr UINT32_ADDR @WW{INPUT_ASCII_ADDR}
 mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR @RR{UINT32_ADDR}
 
-@WW{UINT32_ADDR}        @result{} 4294967295
-@WW{OUTPUT_ASCII_ADDR}  @result{} 255.255.255.255
-
-printf '%x\n' @WW{UINT32_ADDR}  @print{} ffffffff
+@WW{UINT32_ADDR}                @result{} 16777343
+@WW{OUTPUT_ASCII_ADDR}          @result{} 127.0.0.1
+printf '%x\n' @WW{UINT32_ADDR}  @print{} 100007f
 @end example
 @end deffn
 

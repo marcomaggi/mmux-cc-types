@@ -254,7 +254,7 @@ function sockets-struct-sockaddr_in-1.1 () {
 	dotest-debug OUTPUT_ASCII_SIN_ADDR=WW(OUTPUT_ASCII_SIN_ADDR)
 	dotest-debug OUTPUT_HOST_BYTEORDER_SIN_PORT=WW(OUTPUT_HOST_BYTEORDER_SIN_PORT)
 
-	mbfl_location_leave_when_failure( mmux_libc_sockaddr_in_dump RR(SOCKADDR_IN_POINTER) )
+	mbfl_location_leave_when_failure( mmux_libc_sockaddr_in_dump RR(SOCKADDR_IN_POINTER) >&2 )
 
 	dotest-equal RR(INPUT_SIN_FAMILY) WW(OUTPUT_SIN_FAMILY) &&
 	    dotest-equal RR(INPUT_ASCII_SIN_ADDR) RR(OUTPUT_ASCII_SIN_ADDR) &&
@@ -378,6 +378,8 @@ function sockets-struct-sockaddr_insix-1.1 () {
 	mbfl_location_leave_when_failure( mmux_libc_sinsix_flowinfo_ref OUTPUT_HOST_BYTEORDER_SINSIX_FLOWINFO RR(SOCKADDR_INSIX) )
 	mbfl_location_leave_when_failure( mmux_libc_sinsix_scope_id_ref OUTPUT_HOST_BYTEORDER_SINSIX_SCOPE_ID RR(SOCKADDR_INSIX) )
 	mbfl_location_leave_when_failure( mmux_libc_sinsix_port_ref     OUTPUT_HOST_BYTEORDER_SINSIX_PORT     RR(SOCKADDR_INSIX) )
+
+	mbfl_location_leave_when_failure( mmux_libc_sockaddr_insix_dump RR(SOCKADDR_INSIX) >&2 )
 
 	dotest-debug OUTPUT_SINSIX_FAMILY=WW(OUTPUT_SINSIX_FAMILY)
 	dotest-debug OUTPUT_ASCII_ADDR=WW(OUTPUT_ASCII_ADDR)
@@ -765,7 +767,7 @@ function sockets-struct-addrinfo-ai_next-1.1 () {
 
 #### struct addrinfo: setters and printers
 
-function sockets-struct-addrinfo-ai_flags-1.1 () {
+function sockets-struct-addrinfo-printer-ai_flags-1.1 () {
     declare ADDRINFO_POINTER
     declare -ri INPUT_AI_FLAGS=$(( mmux_libc_AI_V4MAPPED | mmux_libc_AI_ADDRCONFIG ))
     declare     OUPUT_AI_FLAGS
@@ -783,7 +785,7 @@ function sockets-struct-addrinfo-ai_flags-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_family-1.1 () {
+function sockets-struct-addrinfo-printer-ai_family-1.1 () {
     declare ADDRINFO_POINTER
     declare -r INPUT_AI_FAMILY=RR(mmux_libc_AF_INET)
     declare    OUPUT_AI_FAMILY
@@ -801,7 +803,7 @@ function sockets-struct-addrinfo-ai_family-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_socktype-1.1 () {
+function sockets-struct-addrinfo-printer-ai_socktype-1.1 () {
     declare ADDRINFO_POINTER
     declare -r INPUT_AI_SOCKTYPE=RR(mmux_libc_SOCK_STREAM)
     declare    OUPUT_AI_SOCKTYPE
@@ -819,7 +821,7 @@ function sockets-struct-addrinfo-ai_socktype-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_protocol-1.1 () {
+function sockets-struct-addrinfo-printer-ai_protocol-1.1 () {
     declare ADDRINFO_POINTER
     declare -r INPUT_AI_PROTOCOL=0
     declare    OUPUT_AI_PROTOCOL
@@ -837,7 +839,7 @@ function sockets-struct-addrinfo-ai_protocol-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_addrlen-1.1 () {
+function sockets-struct-addrinfo-printer-ai_addrlen-1.1 () {
     declare ADDRINFO_POINTER
     declare -r INPUT_AI_ADDRLEN=RR(mmux_libc_sockaddr_in_SIZEOF)
     declare    OUPUT_AI_ADDRLEN
@@ -855,7 +857,7 @@ function sockets-struct-addrinfo-ai_addrlen-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_addr-1.1 () {
+function sockets-struct-addrinfo-printer-ai_addr-1.1 () {
     declare ADDRINFO_POINTER
     declare -r INPUT_AI_ADDR='0x0'
     declare    OUPUT_AI_ADDR
@@ -873,7 +875,7 @@ function sockets-struct-addrinfo-ai_addr-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_canonname-1.1 () {
+function sockets-struct-addrinfo-printer-ai_canonname-1.1 () {
     declare ADDRINFO_POINTER
 
     declare -r INPUT_ASCII_CANONNAME='ciao.ciao'
@@ -899,7 +901,7 @@ function sockets-struct-addrinfo-ai_canonname-1.1 () {
 
 ### ------------------------------------------------------------------------
 
-function sockets-struct-addrinfo-ai_next-1.1 () {
+function sockets-struct-addrinfo-printer-ai_next-1.1 () {
     declare ADDRINFO_POINTER
     declare -r INPUT_AI_NEXT='0x0'
     declare    OUPUT_AI_NEXT
@@ -972,19 +974,18 @@ function sockets-inet_addr-1.1 () {
     }
     mbfl_location_leave
 }
-function sockets-inet_addr-1.2 () {
+
+# Invalid input: detect false exit status.
+#
+function sockets-inet_addr-2.1 () {
     mbfl_location_enter
     {
 	dotest-unset-debug
 
 	declare -r INPUT_ASCII_ADDR='ciao'
-	declare UINT32_ADDR OUTPUT_ASCII_ADDR
+	declare UINT32_ADDR
 
-	mbfl_location_leave_when_failure( mmux_libc_inet_addr UINT32_ADDR WW(INPUT_ASCII_ADDR) )
-	mbfl_location_leave_when_failure( mmux_libc_inet_ntoa OUTPUT_ASCII_ADDR RR(UINT32_ADDR) )
-
-	dotest-debug UINT32_ADDR=WW(UINT32_ADDR) OUTPUT_ASCII_ADDR=WW(OUTPUT_ASCII_ADDR) UINT32_ADDR_HEX=$(printf '%x\n' WW(UINT32_ADDR))
-	dotest-equal WW(mmux_libc_INADDR_NONE) WW(UINT32_ADDR)
+	! mmux_libc_inet_addr UINT32_ADDR WW(INPUT_ASCII_ADDR)
     }
     mbfl_location_leave
 }

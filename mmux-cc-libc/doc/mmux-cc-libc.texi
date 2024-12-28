@@ -2562,10 +2562,10 @@ of the data structure referenced by @var{sockaddr_p}.
 
 @MmuxCStructOpaqueTypedef{hostent}
 @MmuxSetterGetter{hostent, h_name,              mmux_asciizp_t}
-@MmuxSetterGetter{hostent, h_aliases,           mmux_asciizp_t *}
+@MmuxSetterGetter{hostent, h_aliases,           mmux_asciizpp_t}
 @MmuxSetterGetter{hostent, h_addrtype,          mmux_sint_t}
 @MmuxSetterGetter{hostent, h_length,            mmux_sint_t}
-@MmuxSetterGetter{hostent, h_addr_list,         mmux_asciizp_t *}
+@MmuxSetterGetter{hostent, h_addr_list,         mmux_asciizpp_t}
 @MmuxSetterGetter{hostent, h_addr,              mmux_asciizp_t}
 @MmuxStructDumper{hostent}
 
@@ -2576,7 +2576,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 @MmuxCStructOpaqueTypedef{servent}
 @MmuxSetterGetter{servent, s_name,		mmux_asciizp_t}
-@MmuxSetterGetter{servent, s_aliases,		mmux_asciizp_t *}
+@MmuxSetterGetter{servent, s_aliases,		mmux_asciizpp_t}
 @MmuxSetterGetter{servent, s_port,		mmux_sint_t}
 @MmuxSetterGetter{servent, s_proto,		mmux_asciizp_t}
 @MmuxStructDumper{servent}
@@ -2588,7 +2588,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 @MmuxCStructOpaqueTypedef{protoent}
 @MmuxSetterGetter{protoent, p_name,		mmux_asciizp_t}
-@MmuxSetterGetter{protoent, p_aliases,		mmux_asciizp_t *}
+@MmuxSetterGetter{protoent, p_aliases,		mmux_asciizpp_t}
 @MmuxSetterGetter{protoent, p_proto,		mmux_sint_t}
 @MmuxStructDumper{protoent}
 
@@ -2599,7 +2599,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 @MmuxCStructOpaqueTypedef{netent}
 @MmuxSetterGetter{netent, n_name,		mmux_asciizp_t}
-@MmuxSetterGetter{netent, n_aliases,		mmux_asciizp_t *}
+@MmuxSetterGetter{netent, n_aliases,		mmux_asciizpp_t}
 @MmuxSetterGetter{netent, n_addrtype,		mmux_sint_t}
 @MmuxSetterGetter{netent, n_net,		mmux_ulong_t}
 @MmuxStructDumper{netent}
@@ -2791,6 +2791,31 @@ if (mmux_libc_make_in_addr_broadcast(&in_addr)) @{
   /* do something with the presentation in "str" */
 @}
 @end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_inet_addr (mmux_libc_in_addr_ptr_t @var{result_in_addr_p}, mmux_asciizcp_t @var{presentation_in_addr_p})
+@MmuxCInterface{inet_addr}.
+
+If an error occurs: the location referenced by @var{result_in_addr_p} is left untouched; the return
+value if @ctrue{}.
+
+@example
+mmux_asciizcp_t         dotted_quad = "127.0.0.1";
+mmux_libc_in_addr_t     address;
+
+if (mmux_libc_inet_addr(&address, dotted_quad)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_inet_network (mmux_libc_in_addr_ptr_t @var{result_in_addr_p}, mmux_asciizcp_t @var{presentation_in_addr_p})
+@MmuxCInterface{inet_addr}.
+
+If an error occurs: the location referenced by @var{result_in_addr_p} is left untouched; the return
+value if @ctrue{}.
 @end deftypefun
 
 @c page

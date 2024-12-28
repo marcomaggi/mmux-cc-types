@@ -648,6 +648,13 @@ Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using 
 @cindex @code{socklen}, type stem
 @cindex @code{rlim}, type stem
 
+@cindex @code{asciizp}, type stem
+@cindex @code{asciizpp}, type stem
+@cindex @code{asciizppp}, type stem
+@cindex @code{asciizcp}, type stem
+@cindex @code{asciizcpp}, type stem
+@cindex @code{asciizcppp}, type stem
+
 The following type definitions just alias the corresponding C language type; the type name is
 composed from a ``stem'': a single word representing the name of the type.  Such uniform names are
 useful when using preprocessor macros to generate code.
@@ -774,6 +781,26 @@ An alias for @objtype{mmux_uint8_t}.
 @MmuxDefineCAliasTypedefPart{complexd32, decimal32}
 @MmuxDefineCAliasTypedefPart{complexd64, decimal64}
 @MmuxDefineCAliasTypedefPart{complexd128, decimal128}
+
+@c ------------------------------------------------------------------------
+
+@deftp {Typedef} mmux_asciizp_t
+@deftpx {Typedef} mmux_asciizcp_t
+Type definitions aliasing, respectively, the C language types @objtype{char *} and @objtype{char
+const *}; they are meant to reference an @asciiz{} string.
+@end deftp
+
+
+@deftp {Typedef} mmux_asciizpp_t
+@deftpx {Typedef} mmux_asciizcpp_t
+Type definition aliasing the C language types @objtype{char * *} and  @objtype{char const * *}.
+@end deftp
+
+
+@deftp {Typedef} mmux_asciizppp_t
+@deftpx {Typedef} mmux_asciizcppp_t
+Type definition aliasing the C language types @objtype{char * * *} and  @objtype{char const * * *}.
+@end deftp
 
 @c page
 @node sizeof
