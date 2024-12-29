@@ -1057,6 +1057,16 @@ mmux_cc_libc_decl bool mmux_libc_inet_addr (mmux_libc_in_addr_ptr_t result_in_ad
 mmux_cc_libc_decl bool mmux_libc_inet_network (mmux_libc_in_addr_ptr_t result_in_addr_p, mmux_asciizcp_t presentation_in_addr_p)
   __attribute__((__nonnull__(1,2)));
 
+mmux_cc_libc_decl bool mmux_libc_inet_makeaddr (mmux_libc_in_addr_ptr_t result_in_addr,
+						mmux_libc_in_addr_ptr_t net_in_addr, mmux_libc_in_addr_ptr_t local_in_addr)
+  __attribute__((__nonnull__(1,2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_lnaof (mmux_libc_in_addr_ptr_t local_in_addr_p, mmux_libc_in_addr_ptr_t in_addr_p)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_inet_netof (mmux_libc_in_addr_ptr_t net_in_addr_p, mmux_libc_in_addr_ptr_t in_addr_p)
+  __attribute__((__nonnull__(1,2)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

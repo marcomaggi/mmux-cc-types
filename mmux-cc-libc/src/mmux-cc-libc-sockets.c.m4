@@ -1200,5 +1200,29 @@ mmux_libc_inet_network (mmux_libc_in_addr_ptr_t result_in_addr_p, mmux_asciizcp_
     return true;
   }
 }
+bool
+mmux_libc_inet_makeaddr (mmux_libc_in_addr_ptr_t result_in_addr_p,
+			 mmux_libc_in_addr_ptr_t net_in_addr_p, mmux_libc_in_addr_ptr_t local_in_addr_p)
+{
+  mmux_libc_in_addr_t	in_addr = inet_makeaddr(net_in_addr_p->s_addr, local_in_addr_p->s_addr);
+
+  *result_in_addr_p = in_addr;
+  return false;
+}
+bool
+mmux_libc_inet_lnaof (mmux_libc_in_addr_ptr_t local_in_addr_p, mmux_libc_in_addr_ptr_t in_addr_p)
+{
+  mmux_uint32_t		uint32_local_in_addr = inet_lnaof(*in_addr_p);
+
+  return mmux_libc_make_in_addr(local_in_addr_p, uint32_local_in_addr);
+}
+bool
+mmux_libc_inet_netof (mmux_libc_in_addr_ptr_t net_in_addr_p, mmux_libc_in_addr_ptr_t in_addr_p)
+{
+  mmux_uint32_t		uint32_net_in_addr = inet_netof(*in_addr_p);
+
+  return mmux_libc_make_in_addr(net_in_addr_p, uint32_net_in_addr);
+}
+
 
 /* end of file */

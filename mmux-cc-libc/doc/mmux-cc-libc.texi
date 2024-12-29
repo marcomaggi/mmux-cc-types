@@ -98,6 +98,13 @@ An opaque alias for @MmuxCStruct{\STRUCTNAME\}.
 
 @end macro
 
+@macro MmuxCStructPointerOpaqueTypedef{STRUCTNAME}
+@deftp {Opaque Struct Pointer Typedef} mmux_libc_\STRUCTNAME\_ptr_t
+An opaque alias for @code{mmux_libc_\STRUCTNAME\_t *}.
+@end deftp
+
+@end macro
+
 @macro MmuxSetterGetter{STRUCTNAME, FIELDNAME, FIELDTYPE}
 @deftypefun bool mmux_libc_\FIELDNAME\_set (mmux_libc_\STRUCTNAME\_t * @var{\STRUCTNAME\_p}, \FIELDTYPE\ @var{\FIELDNAME\})
 @deftypefunx bool mmux_libc_\FIELDNAME\_ref (\FIELDTYPE\ * @var{result_p}, mmux_libc_\STRUCTNAME\_t const * @var{\STRUCTNAME\_p})
@@ -2391,6 +2398,7 @@ Data structures of type @objtype{mmux_libc_in_addr_t} represent IPv4 addresses i
 
 
 @MmuxCStructOpaqueTypedef{in_addr}
+@MmuxCStructPointerOpaqueTypedef{in_addr}
 @MmuxSetterGetter{in_addr, s_addr, mmux_uint32_t}
 @MmuxStructDumper{in_addr}
 
@@ -2436,6 +2444,7 @@ Data structures of type @objtype{mmux_libc_insix_addr_t} represent IPv6 addresse
 An opaque alias for @code{struct in6_addr}.
 @end deftp
 
+@MmuxCStructPointerOpaqueTypedef{insix_addr}
 @MmuxStructDumper{insix_addr}
 
 
@@ -2456,6 +2465,7 @@ Initialise the data structure referenced by @var{insix_addr_p} to the predefined
 
 
 @MmuxCStructOpaqueTypedef{sockaddr_un}
+@MmuxCStructPointerOpaqueTypedef{sockaddr_un}
 @MmuxSetterGetter{sockaddr_un, sun_family, mmux_sshort_t}
 @MmuxSetterGetter{sockaddr_un, sun_path,   mmux_libc_file_system_pathname_t}
 @MmuxStructDumper{sockaddr_un}
@@ -2491,6 +2501,7 @@ The returned size is the correct value to hand to functions requiring the addres
 
 
 @MmuxCStructOpaqueTypedef{sockaddr_in}
+@MmuxCStructPointerOpaqueTypedef{sockaddr_in}
 @MmuxSetterGetter{sockaddr_in, sin_family, mmux_sshort_t}
 @MmuxSetterGetter{sockaddr_in, sin_addr,   mmux_libc_in_addr_t}
 @MmuxSetterGetter{sockaddr_in, sin_port,   mmux_host_byteorder_ushort_t}
@@ -2517,6 +2528,7 @@ An opaque alias for @code{struct sockaddr_in6}.
 @end deftp
 
 
+@MmuxCStructPointerOpaqueTypedef{sockaddr_insix}
 @MmuxSetterGetter{sockaddr_insix, sinsix_family,   mmux_sshort_t}
 @MmuxSetterGetter{sockaddr_insix, sinsix_addr,     mmux_libc_insix_addr_t}
 @MmuxSetterGetter{sockaddr_insix, sinsix_flowinfo, mmux_uint32_t}
@@ -2536,6 +2548,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 
 @MmuxCStructOpaqueTypedef{sockaddr}
+@MmuxCStructPointerOpaqueTypedef{sockaddr}
 @MmuxSetterGetter{sockaddr, sa_family,   mmux_sshort_t}
 @MmuxStructDumper{sockaddr}
 
@@ -2545,6 +2558,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 
 @MmuxCStructOpaqueTypedef{addrinfo}
+@MmuxCStructPointerOpaqueTypedef{addrinfo}
 @MmuxSetterGetter{addrinfo, ai_flags,           mmux_sint_t}
 @MmuxSetterGetter{addrinfo, ai_family,          mmux_sint_t}
 @MmuxSetterGetter{addrinfo, ai_socktype,        mmux_sint_t}
@@ -2561,6 +2575,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 
 @MmuxCStructOpaqueTypedef{hostent}
+@MmuxCStructPointerOpaqueTypedef{hostent}
 @MmuxSetterGetter{hostent, h_name,              mmux_asciizp_t}
 @MmuxSetterGetter{hostent, h_aliases,           mmux_asciizpp_t}
 @MmuxSetterGetter{hostent, h_addrtype,          mmux_sint_t}
@@ -2575,6 +2590,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 
 @MmuxCStructOpaqueTypedef{servent}
+@MmuxCStructPointerOpaqueTypedef{servent}
 @MmuxSetterGetter{servent, s_name,		mmux_asciizp_t}
 @MmuxSetterGetter{servent, s_aliases,		mmux_asciizpp_t}
 @MmuxSetterGetter{servent, s_port,		mmux_sint_t}
@@ -2587,6 +2603,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 
 @MmuxCStructOpaqueTypedef{protoent}
+@MmuxCStructPointerOpaqueTypedef{protoent}
 @MmuxSetterGetter{protoent, p_name,		mmux_asciizp_t}
 @MmuxSetterGetter{protoent, p_aliases,		mmux_asciizpp_t}
 @MmuxSetterGetter{protoent, p_proto,		mmux_sint_t}
@@ -2598,6 +2615,7 @@ of the data structure referenced by @var{sockaddr_p}.
 
 
 @MmuxCStructOpaqueTypedef{netent}
+@MmuxCStructPointerOpaqueTypedef{netent}
 @MmuxSetterGetter{netent, n_name,		mmux_asciizp_t}
 @MmuxSetterGetter{netent, n_aliases,		mmux_asciizpp_t}
 @MmuxSetterGetter{netent, n_addrtype,		mmux_sint_t}
@@ -2816,6 +2834,21 @@ if (mmux_libc_inet_addr(&address, dotted_quad)) @{
 
 If an error occurs: the location referenced by @var{result_in_addr_p} is left untouched; the return
 value if @ctrue{}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_inet_makeaddr (mmux_libc_in_addr_ptr_t @var{result_in_addr_p}, mmux_libc_in_addr_ptr_t @var{net_in_addr_p}, mmux_libc_in_addr_ptr_t @var{local_in_addr_p})
+@MmuxCInterface{inet_makeaddr}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_inet_lnaof (mmux_libc_in_addr_ptr_t @var{local_in_addr_p}, mmux_libc_in_addr_ptr_t @var{in_addr_p})
+@MmuxCInterface{inet_lnaof}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_inet_netof (mmux_libc_in_addr_ptr_t @var{net_in_addr_p}, mmux_libc_in_addr_ptr_t @var{in_addr_p})
+@MmuxCInterface{inet_netof}.
 @end deftypefun
 
 @c page

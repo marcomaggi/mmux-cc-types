@@ -718,17 +718,18 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_makeaddr]]])
 {
-  mmux_asciizcp_t		uint32_in_addr_varname;
-  mmux_uint32_t		uint32_net_in_addr;
-  mmux_uint32_t		uint32_local_in_addr;
+  mmux_asciizcp_t	in_addr_varname;
+  mmux_libc_in_addr_t	net_in_addr;
+  mmux_libc_in_addr_t	local_in_addr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uint32_in_addr_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(uint32_net_in_addr,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(uint32_local_in_addr,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(in_addr_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_IN_ADDR(net_in_addr,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_IN_ADDR(local_in_addr,		3);
   {
-    struct	in_addr	addr = inet_makeaddr(uint32_net_in_addr, uint32_local_in_addr);
+    mmux_libc_in_addr_t		in_addr;
 
-    return mmux_uint32_bind_to_bash_variable(uint32_in_addr_varname, addr.s_addr, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_inet_makeaddr(&in_addr, &net_in_addr, &local_in_addr));
+    return mmux_libc_in_addr_bind_to_bash_variable(in_addr_varname, in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -740,16 +741,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* Local network address of. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_lnaof]]])
 {
-  mmux_asciizcp_t		uint32_local_in_addr_varname;
-  mmux_uint32_t		uint32_in_addr;
+  mmux_asciizcp_t	local_in_addr_varname;
+  mmux_libc_in_addr_t	in_addr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uint32_local_in_addr_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(uint32_in_addr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(local_in_addr_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_IN_ADDR(in_addr,			2);
   {
-    mmux_libc_in_addr_t	name          = { .s_addr = uint32_in_addr };
-    mmux_uint32_t	local_in_addr = inet_lnaof(name);
+    mmux_libc_in_addr_t		local_in_addr;
 
-    return mmux_uint32_bind_to_bash_variable(uint32_local_in_addr_varname, local_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_inet_lnaof(&local_in_addr, &in_addr));
+    return mmux_libc_in_addr_bind_to_bash_variable(local_in_addr_varname, local_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -761,16 +762,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 /* network part address of. */
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_netof]]])
 {
-  mmux_asciizcp_t		uint32_local_in_addr_varname;
-  mmux_uint32_t		uint32_in_addr;
+  mmux_asciizcp_t	net_in_addr_varname;
+  mmux_libc_in_addr_t	in_addr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(uint32_local_in_addr_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT32(uint32_in_addr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(net_in_addr_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_IN_ADDR(in_addr,		2);
   {
-    mmux_libc_in_addr_t	name          = { .s_addr = uint32_in_addr };
-    mmux_uint32_t	local_in_addr = inet_netof(name);
+    mmux_libc_in_addr_t		net_in_addr;
 
-    return mmux_uint32_bind_to_bash_variable(uint32_local_in_addr_varname, local_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_inet_netof(&net_in_addr, &in_addr));
+    return mmux_libc_in_addr_bind_to_bash_variable(net_in_addr_varname, net_in_addr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -783,21 +784,15 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_pton]]])
 {
   mmux_sint_t		af_type;
-  mmux_asciizcp_t		ascii_addr;
-  mmux_pointer_t	addr_pointer;
+  mmux_asciizcp_t	input_presentation_addr;
+  mmux_pointer_t	ouput_addr_pointer;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(af_type,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ascii_addr,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(af_type,				1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(input_presentation_addr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ouput_addr_pointer,		3);
   {
-    int		rv = inet_pton(af_type, ascii_addr, addr_pointer);
-
-    if (rv) {
-      return MMUX_SUCCESS;
-    } else {
-      mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_inet_pton(ouput_addr_pointer, af_type, input_presentation_addr));
+    return MMUX_SUCCESS;
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -810,24 +805,21 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_inet_ntop]]])
 {
   mmux_sint_t		af_type;
-  mmux_pointer_t	addr_pointer;
-  mmux_asciizcp_t		ascii_addr_varname;
+  mmux_pointer_t	input_addr_pointer;
+  mmux_asciizcp_t	ouput_presentation_addr_varname;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(af_type,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ascii_addr_varname,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(af_type,					1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(input_addr_pointer,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ouput_presentation_addr_varname,	3);
   {
 #undef  IS_THIS_ENOUGH_QUESTION_MARK
 #define IS_THIS_ENOUGH_QUESTION_MARK	512
-    char		ascii_addr[IS_THIS_ENOUGH_QUESTION_MARK];
-    mmux_asciizcp_t	rv = inet_ntop(af_type, addr_pointer, (char *)ascii_addr, (socklen_t)IS_THIS_ENOUGH_QUESTION_MARK);
+    char	ouput_presentation_addr[IS_THIS_ENOUGH_QUESTION_MARK];
 
-    if (NULL != rv) {
-      return mmux_string_bind_to_bash_variable(ascii_addr_varname, ascii_addr, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_inet_ntop(ouput_presentation_addr, IS_THIS_ENOUGH_QUESTION_MARK,
+					  af_type, input_addr_pointer));
+
+    return mmux_string_bind_to_bash_variable(ouput_presentation_addr_varname, ouput_presentation_addr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
