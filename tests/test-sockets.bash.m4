@@ -1550,6 +1550,7 @@ function sockets-getaddrinfo-1.1 () {
 	    mbfl_location_leave_when_failure( mmux_libc_ai_flags_set     RR(HINTS_ADDRINFO_PTR) RR(HINTS_AI_FLAGS) )
 	    mbfl_location_leave_when_failure( mmux_libc_ai_family_set    RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_AF_UNSPEC) )
 	    mbfl_location_leave_when_failure( mmux_libc_ai_socktype_set  RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_SOCK_STREAM) )
+	    mbfl_location_leave_when_failure( mmux_libc_ai_protocol_set  RR(HINTS_ADDRINFO_PTR) RR(mmux_libc_IPPROTO_TCP) )
 	    dotest-option-debug && mbfl_location_leave_when_failure( mmux_libc_addrinfo_dump RR(HINTS_ADDRINFO_PTR) 'hints' >&2 )
 	}
 

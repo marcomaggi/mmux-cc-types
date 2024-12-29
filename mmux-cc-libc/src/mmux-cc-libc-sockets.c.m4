@@ -1224,5 +1224,55 @@ mmux_libc_inet_netof (mmux_libc_in_addr_ptr_t net_in_addr_p, mmux_libc_in_addr_p
   return mmux_libc_make_in_addr(net_in_addr_p, uint32_net_in_addr);
 }
 
+
+/** --------------------------------------------------------------------
+ ** Address informations.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_getaddrinfo (mmux_libc_addrinfo_ptr_t * result_addrinfo_linked_list_pp,
+		       mmux_sint_t * result_error_code_p,
+		       mmux_asciizcp_t node, mmux_asciizcp_t service, mmux_libc_addrinfo_ptr_t hints_pointer)
+{
+  int	rv = getaddrinfo(node, service, hints_pointer, result_addrinfo_linked_list_pp);
+
+  if (0 == rv) {
+    return false;
+  } else {
+    *result_error_code_p = rv;
+    return true;
+  }
+}
+bool
+mmux_libc_freeaddrinfo (mmux_libc_addrinfo_ptr_t addrinfo_linked_list_p)
+{
+  freeaddrinfo(addrinfo_linked_list_p);
+  return false;
+}
+bool
+mmux_libc_gai_strerror (mmux_asciizcp_t * result_error_message_p, mmux_sint_t errnum)
+{
+  *result_error_message_p = gai_strerror(errnum);
+  return false;
+}
+bool
+mmux_libc_getnameinfo (mmux_asciizcp_t result_hostname_p, mmux_socklen_t provided_hostname_len,
+		       mmux_asciizcp_t result_servname_p, mmux_socklen_t provided_servname_len,
+		       mmux_sint_t * result_error_code_p,
+		       mmux_libc_sockaddr_ptr_t input_sockaddr_p, mmux_socklen_t input_sockaddr_size,
+		       mmux_sint_t flags)
+{
+  int	rv = getnameinfo(input_sockaddr_p, input_sockaddr_size,
+			 (mmux_asciizp_t)result_hostname_p, provided_hostname_len,
+			 (mmux_asciizp_t)result_servname_p, provided_servname_len,
+			 flags);
+
+  if (0 == rv) {
+    return false;
+  } else {
+    *result_error_code_p = rv;
+    return true;
+  }
+}
 
 /* end of file */

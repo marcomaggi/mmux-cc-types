@@ -835,43 +835,41 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getaddrinfo]]])
 {
   mmux_asciizcp_t		node;
   mmux_asciizcp_t		service;
-  mmux_pointer_t	_hints_pointer;
+  mmux_libc_addrinfo_ptr_t	hints_pointer;
   mmux_asciizcp_t		addrinfo_linked_list_varname;
 
   if (IS_POINTER_REPRESENTATION(argv[1])) {
-    mmux_pointer_t	_node;
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_node,	1);
-    node = _node;
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(node,		1);
   } else {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(node,	1);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(node,		1);
   }
   if (IS_POINTER_REPRESENTATION(argv[2])) {
-    mmux_pointer_t	_service;
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_service,	2);
-    service = _service;
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(service,	2);
   } else {
-    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(service,	2);
+    MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(service,		2);
   }
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_hints_pointer,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(hints_pointer,			3);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(addrinfo_linked_list_varname,	4);
   {
-    mmux_libc_addrinfo_t *	hints_pointer = _hints_pointer;
-    mmux_libc_addrinfo_t *	addrinfo_linked_list;
-
     if (0 == strlen(node))    { node    = NULL; }
     if (0 == strlen(service)) { service = NULL; }
     {
-      int	rv = getaddrinfo(node, service, hints_pointer, &addrinfo_linked_list);
+      mmux_libc_addrinfo_ptr_t	addrinfo_linked_list;
+      mmux_sint_t		error_code;
 
-      if (0 == rv) {
+      if (false == mmux_libc_getaddrinfo(&addrinfo_linked_list, &error_code,
+					 node, service, hints_pointer)) {
 	return mmux_pointer_bind_to_bash_variable(addrinfo_linked_list_varname, addrinfo_linked_list, MMUX_BASH_BUILTIN_STRING_NAME);
       } else {
-	mmux_bash_rv_t	brv;
+	mmux_asciizcp_t		error_message;
+	mmux_bash_rv_t		brv;
 
-	brv = mmux_sint_bind_to_bash_variable("GAI_ERRNUM", rv, MMUX_BASH_BUILTIN_STRING_NAME);
+	MMUX_LIBC_FUNCALL(mmux_libc_gai_strerror(&error_message, error_code));
+
+	brv = mmux_sint_bind_to_bash_variable("GAI_ERRNUM", error_code, MMUX_BASH_BUILTIN_STRING_NAME);
 	if (MMUX_SUCCESS != brv) { return brv; }
 
-	return mmux_string_bind_to_bash_variable("GAI_ERRMSG", gai_strerror(rv), MMUX_BASH_BUILTIN_STRING_NAME);
+	return mmux_string_bind_to_bash_variable("GAI_ERRMSG", error_message, MMUX_BASH_BUILTIN_STRING_NAME);
       }
     }
   }
@@ -888,7 +886,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_freeaddrinfo]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addrinfo_pointer,	1);
   {
-    free(addrinfo_pointer);
+    MMUX_LIBC_FUNCALL(mmux_libc_freeaddrinfo(addrinfo_pointer));
     return MMUX_SUCCESS;
   }
 }
@@ -900,29 +898,28 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnameinfo]]])
 {
-  mmux_pointer_t	_sockaddr_pointer;
-  mmux_socklen_t	socklen;
+  mmux_libc_sockaddr_ptr_t	sockaddr_pointer;
+  mmux_socklen_t		socklen;
   mmux_asciizcp_t		host_varname;
   mmux_asciizcp_t		serv_varname;
-  mmux_sint_t		flags;
+  mmux_sint_t			flags;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_sockaddr_pointer,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(socklen,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(host_varname,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(serv_varname,	4);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	5);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(sockaddr_pointer,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(socklen,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(host_varname,		3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(serv_varname,		4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,				5);
   {
-    struct sockaddr *	sockaddr_pointer = _sockaddr_pointer;
 #undef  IS_THIS_ENOUGH_QUESTION_MARK
 #define IS_THIS_ENOUGH_QUESTION_MARK	512
     char		host[IS_THIS_ENOUGH_QUESTION_MARK];
     char		serv[IS_THIS_ENOUGH_QUESTION_MARK];
-    int			rv = getnameinfo(sockaddr_pointer, socklen,
-					 host, IS_THIS_ENOUGH_QUESTION_MARK,
-					 serv, IS_THIS_ENOUGH_QUESTION_MARK,
-					 flags);
+    mmux_sint_t		error_code;
 
-    if (0 == rv) {
+    if (false == mmux_libc_getnameinfo(host, IS_THIS_ENOUGH_QUESTION_MARK,
+				       serv, IS_THIS_ENOUGH_QUESTION_MARK,
+				       &error_code,
+				       sockaddr_pointer, socklen, flags)) {
       mmux_bash_rv_t	brv;
 
       brv = mmux_string_bind_to_bash_variable(host_varname, host, MMUX_BASH_BUILTIN_STRING_NAME);
@@ -930,12 +927,15 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getnameinfo]]])
 
       return mmux_string_bind_to_bash_variable(serv_varname, serv, MMUX_BASH_BUILTIN_STRING_NAME);
     } else {
-      mmux_bash_rv_t	brv;
+      mmux_asciizcp_t		error_message;
+      mmux_bash_rv_t		brv;
 
-      brv = mmux_sint_bind_to_bash_variable("GAI_ERRNUM", rv, MMUX_BASH_BUILTIN_STRING_NAME);
+      MMUX_LIBC_FUNCALL(mmux_libc_gai_strerror(&error_message, error_code));
+
+      brv = mmux_sint_bind_to_bash_variable("GAI_ERRNUM", error_code, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { return brv; }
 
-      return mmux_string_bind_to_bash_variable("GAI_ERRMSG", gai_strerror(rv), MMUX_BASH_BUILTIN_STRING_NAME);
+      return mmux_string_bind_to_bash_variable("GAI_ERRMSG", error_message, MMUX_BASH_BUILTIN_STRING_NAME);
     }
   }
 }

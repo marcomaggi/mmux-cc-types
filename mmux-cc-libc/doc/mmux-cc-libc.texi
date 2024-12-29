@@ -2856,12 +2856,84 @@ value if @ctrue{}.
 @section Getting address informations
 
 
+Usage example:
+
+@example
+mmux_asciizcp_t                 node    = "localhost";
+mmux_asciizcp_t                 service = "smtp";
+mmux_libc_addrinfo_t            hints;
+
+mmux_libc_addrinfo_ptr_t        addrinfo_linked_list_p;
+mmux_sint_t                     error_code;
+
+mmux_libc_ai_flags_set    (&hints, MMUX_LIBC_AI_V4MAPPED | MMUX_LIBC_AI_ADDRCONFIG | MMUX_LIBC_AI_CANONNAME);
+mmux_libc_ai_family_set   (&hints, MMUX_LIBC_AF_UNSPEC);
+mmux_libc_ai_socktype_set (&hints, MMUX_LIBC_SOCK_STREAM);
+mmux_libc_ai_protocol_set (&hints, MMUX_LIBC_IPPROTO_TCP);
+
+if (mmux_libc_getaddrinfo(&addrinfo_linked_list, &error_code, node, service, &hints)) @{
+  mmux_asciizcp_t      error_message;
+
+  mmux_libc_gai_strerror(&error_message, error_code);
+  /* handle the error */
+@} else @{
+  /* do something with "addrinfo_linked_list_p" */
+
+  mmux_libc_freeaddrinfo(addrinfo_linked_list_p);
+@}
+@end example
+
+
+@deftypefun bool mmux_libc_getaddrinfo (mmux_libc_addrinfo_ptr_t * @var{result_addrinfo_linked_list_pp}, mmux_sint_t * @var{result_error_code_p}, mmux_asciizcp_t @var{node}, mmux_asciizcp_t @var{service}, mmux_libc_addrinfo_ptr_t @var{hints_p})
+@MmuxCInterface{getaddrinfo}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_freeaddrinfo (mmux_libc_addrinfo_ptr_t @var{addrinfo_linked_list_p})
+@MmuxCInterface{freeaddrinfo}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_gai_strerror (mmux_asciizcp_t * @var{result_error_message_p}, mmux_sint_t @var{errnum})
+@MmuxCInterface{gai_strerror}.
+@end deftypefun
 
 @c page
 @node sockets getnameinfo
 @section Getting address name informations
 
 
+Usage example:
+
+@example
+mmux_libc_sockaddr_in_t input_sockaddr;
+mmux_sint_t             error_code;
+mmux_sint_t             flags = 0;
+
+#undef  IS_THIS_ENOUGH_QUESTION_MARK
+#define IS_THIS_ENOUGH_QUESTION_MARK	512
+char                    hostname[IS_THIS_ENOUGH_QUESTION_MARK];
+char                    servname[IS_THIS_ENOUGH_QUESTION_MARK];
+
+gimme_an_address(&input_sockaddr);
+
+if (mmux_libc_getnameinfo (hostname, IS_THIS_ENOUGH_QUESTION_MARK,
+                           servname, IS_THIS_ENOUGH_QUESTION_MARK,
+                           &error_code,
+                           &input_sockaddr, sizeof(mmux_libc_sockaddr_in_t), flags)) @{
+  mmux_asciizcp_t      error_message;
+
+  mmux_libc_gai_strerror(&error_message, error_code);
+  /* handle the error */
+@} else @{
+  /* do something with "hostname" and "servname" */
+@}
+@end example
+
+
+@deftypefun bool mmux_libc_getnameinfo (mmux_asciizcp_t @var{result_hostname_p}, mmux_socklen_t @var{provided_hostname_len}, mmux_asciizcp_t @var{result_servname_p}, mmux_socklen_t @var{provided_servname_len}, mmux_sint_t * @var{result_error_code_p}, mmux_libc_sockaddr_ptr_t @var{input_sockaddr_p}, mmux_socklen_t @var{input_sockaddr_size}, mmux_sint_t @var{flags})
+@MmuxCInterface{getnameinfo}.
+@end deftypefun
 
 @c page
 @node sockets pair
