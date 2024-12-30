@@ -1183,6 +1183,16 @@ mmux_cc_libc_decl bool mmux_libc_getsockname (mmux_libc_network_socket_t sock, m
 					      mmux_socklen_t * sockaddr_all_size)
   __attribute__((__nonnull__(2,3)));
 
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_send (mmux_usize_t * result_number_of_bytes_sent_p,
+				       mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
+  __attribute__((__nonnull__(1,3)));
+
+mmux_cc_libc_decl bool mmux_libc_recv (mmux_usize_t * result_number_of_bytes_received_p,
+				       mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
+  __attribute__((__nonnull__(1,3)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

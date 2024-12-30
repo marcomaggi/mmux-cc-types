@@ -3266,6 +3266,15 @@ if (mmux_libc_getsockname(sock, &sockaddr, &sockaddr_size)) @{
 @section Sending and receiving data through a stream socket
 
 
+@deftypefun bool mmux_libc_send (mmux_usize_t * @var{result_number_of_bytes_sent_p}, mmux_libc_network_socket_t @var{sock}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen}, mmux_sint_t @var{flags})
+@MmuxCInterface{send}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_recv (mmux_usize_t * @var{result_number_of_bytes_received_p}, mmux_libc_network_socket_t @var{sock}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen}, mmux_sint_t @var{flags})
+@MmuxCInterface{recv}.
+@end deftypefun
+
 @c page
 @node sockets server
 @section Stream socket servers

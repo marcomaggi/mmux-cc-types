@@ -1694,5 +1694,36 @@ mmux_libc_getsockname (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t
   return ((0 == rv)? false : true);
 }
 
+
+/** --------------------------------------------------------------------
+ ** Sending and receiving data.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_send (mmux_usize_t * result_number_of_bytes_sent_p,
+		mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
+{
+  mmux_ssize_t	number_of_bytes_sent = send(sock.value, bufptr, buflen, flags);
+
+  if (-1 != number_of_bytes_sent) {
+    *result_number_of_bytes_sent_p = number_of_bytes_sent;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_recv (mmux_usize_t * result_number_of_bytes_received_p,
+		mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
+{
+  mmux_ssize_t	number_of_bytes_received = recv(sock.value, bufptr, buflen, flags);
+
+  if (-1 != number_of_bytes_received) {
+    *result_number_of_bytes_received_p = number_of_bytes_received;
+    return false;
+  } else {
+    return true;
+  }
+}
 
 /* end of file */
