@@ -868,6 +868,7 @@ mmux_cc_libc_decl bool mmux_libc_futimes (mmux_libc_file_descriptor_t fd,
 typedef struct in_addr		mmux_libc_in_addr_t;
 typedef struct in6_addr		mmux_libc_insix_addr_t;
 
+typedef struct if_nameindex	mmux_libc_if_nameindex_t;
 typedef struct addrinfo		mmux_libc_addrinfo_t;
 typedef struct sockaddr		mmux_libc_sockaddr_t;
 typedef struct sockaddr_un	mmux_libc_sockaddr_un_t;
@@ -881,6 +882,7 @@ typedef struct netent		mmux_libc_netent_t;
 typedef mmux_libc_in_addr_t *		mmux_libc_in_addr_ptr_t;
 typedef mmux_libc_insix_addr_t *	mmux_libc_insix_addr_ptr_t;
 
+typedef mmux_libc_if_nameindex_t *	mmux_libc_if_nameindex_ptr_t;
 typedef mmux_libc_addrinfo_t *		mmux_libc_addrinfo_ptr_t;
 typedef mmux_libc_sockaddr_t *		mmux_libc_sockaddr_ptr_t;
 typedef mmux_libc_sockaddr_un_t *	mmux_libc_sockaddr_un_ptr_t;
@@ -894,6 +896,9 @@ typedef mmux_libc_netent_t *		mmux_libc_netent_ptr_t;
 /* ------------------------------------------------------------------ */
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(in_addr, s_addr,	mmux_uint32_t)
+
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(if_nameindex, if_index,	mmux_uint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(if_nameindex, if_name,	mmux_asciizcp_t)
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(sockaddr, sa_family,	mmux_sshort_t)
 
@@ -1143,6 +1148,20 @@ mmux_cc_libc_decl bool mmux_libc_getnetbyname (mmux_libc_netent_t const * * resu
   __attribute__((__nonnull__(1,2)));
 
 mmux_cc_libc_decl bool mmux_libc_getnetbyaddr (mmux_libc_netent_t const * * result_netent_pp, mmux_uint32_t n_net, mmux_sint_t af_type)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_if_nametoindex (mmux_uint_t * index_p, mmux_asciizcp_t network_interface_name)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_if_indextoname (mmux_asciizp_t buffer, mmux_uint_t network_interface_index)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_if_nameindex (mmux_libc_if_nameindex_t const * * result_nameindex_array_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_if_freenameindex (mmux_libc_if_nameindex_t const * nameindex_array)
   __attribute__((__nonnull__(1)));
 
 

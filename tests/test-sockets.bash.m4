@@ -50,7 +50,8 @@ function sockets-if_nameindex-1.1 () {
 
 	dotest-unset-debug
 	mbfl_location_leave_when_failure( mmux_libc_if_nameindex_to_array ARRY )
-	#mbfl_array_dump ARRY
+	mbfl_array_dump ARRY
+	true
     }
     mbfl_location_leave
 }

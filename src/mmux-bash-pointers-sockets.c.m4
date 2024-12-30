@@ -1274,19 +1274,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_nametoindex]]])
 {
-  mmux_asciizcp_t		ifindex_varname;
-  mmux_asciizcp_t		ifname;
+  mmux_asciizcp_t	ifindex_varname;
+  mmux_asciizcp_t	network_interface_name;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifindex_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifname,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifindex_varname,		1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(network_interface_name,	2);
   {
-    int		rv = if_nametoindex(ifname);
+    mmux_uint_t		index;
 
-    if (0 == rv) {
-      return MMUX_FAILURE;
-    } else {
-      return mmux_uint_bind_to_bash_variable(ifindex_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_if_nametoindex(&index, network_interface_name));
+    return mmux_uint_bind_to_bash_variable(ifindex_varname, index, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1297,20 +1294,16 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_indextoname]]])
 {
-  mmux_asciizcp_t		ifname_varname;
-  mmux_uint_t		ifindex;
+  mmux_asciizcp_t	ifname_varname;
+  mmux_uint_t		network_interface_index;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(ifname_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT(ifindex,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_UINT(network_interface_index,	2);
   {
-    char	buffer[IFNAMSIZ];
-    char *	rv = if_indextoname(ifindex, buffer);
+    char	buffer[MMUX_LIBC_IFNAMSIZ];
 
-    if (NULL == rv) {
-      return MMUX_FAILURE;
-    } else {
-      return mmux_string_bind_to_bash_variable(ifname_varname, buffer, MMUX_BASH_BUILTIN_STRING_NAME);
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_if_indextoname(buffer, network_interface_index));
+    return mmux_string_bind_to_bash_variable(ifname_varname, buffer, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -1331,16 +1324,28 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_nameindex_to_array]]])
     rv = mmux_bash_index_array_find_or_make_mutable(&index_array_variable, index_array_name, MMUX_BASH_BUILTIN_STRING_NAME);
     if (MMUX_SUCCESS != rv) { return rv; }
     {
-      struct if_nameindex * A = if_nameindex();
+      mmux_libc_if_nameindex_t const *	A;
 
-      for (int i=0; NULL != A[i].if_name; ++i) {
-	mmux_bash_index_array_key_t	index_array_key   = A[i].if_index;
-	char *				index_array_value = A[i].if_name;
+      MMUX_LIBC_FUNCALL(mmux_libc_if_nameindex(&A));
 
-	rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
-	if (MMUX_SUCCESS != rv) { break; }
+      for (int i=0; true; ++i) {
+	mmux_uint_t           if_index;
+	mmux_asciizcp_t       if_name;
+
+	mmux_libc_if_index_ref(&if_index, A + i);
+	mmux_libc_if_name_ref (&if_name,  A + i);
+
+	if (if_index) {
+	  mmux_bash_index_array_key_t	index_array_key   = if_index;
+	  mmux_asciizcp_t		index_array_value = if_name;
+
+	  rv = mmux_bash_index_array_bind(index_array_variable, index_array_key, index_array_value, MMUX_BASH_BUILTIN_STRING_NAME);
+	  if (MMUX_SUCCESS != rv) { break; }
+	} else {
+	  break;
+	}
       }
-      if_freenameindex(A);
+      mmux_libc_if_freenameindex(A);
       return rv;
     }
   }

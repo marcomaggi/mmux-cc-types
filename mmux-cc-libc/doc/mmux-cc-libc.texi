@@ -2387,6 +2387,73 @@ current mask.
 @section Socket interface names
 
 
+@MmuxCStructOpaqueTypedef{if_nameindex}
+@MmuxCStructPointerOpaqueTypedef{if_nameindex}
+@MmuxSetterGetter{if_nameindex, if_index, mmux_uint_t}
+@MmuxSetterGetter{if_nameindex, if_name,  mmux_asciizcp_t}
+@MmuxStructDumper{if_nameindex}
+
+
+@deftypefun bool mmux_libc_if_nametoindex (mmux_uint_t * @var{index_p}, mmux_asciizcp_t @var{network_interface_name})
+@MmuxCInterface{if_nametoindex}.
+
+@example
+mmux_asciizcp_t         network_interface_name = "eth0";
+mmux_uint_t             network_interface_index;
+
+if (mmux_libc_if_nametoindex(&network_interface_index, network_interface_name)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_if_indextoname (mmux_asciizp_t @var{result_network_interface_name}, mmux_uint_t @var{network_interface_index})
+@MmuxCInterface{if_indextoname}.
+
+@example
+mmux_uint_t     network_interface_index = 2;
+char            network_interface_name[MMUX_LIBC_IFNAMSIZ];
+
+if (mmux_libc_if_indextoname(network_interface_name, network_interface_index) @{
+  /* error */
+@}
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_if_nameindex (mmux_libc_if_nameindex_t const * * @var{result_nameindex_array_p})
+@MmuxCInterface{if_nameindex}.
+
+@example
+mmux_libc_if_nameindex_t const *        nameindex_array;
+
+if (mmux_libc_if_nameindex(&nameindex_array)) @{
+  /* error */
+@}
+
+for (int i=0; true; ++i) @{
+  mmux_uint_t           if_index;
+  mmux_asciizcp_t       if_name;
+
+  mmux_libc_if_index_ref(&if_index, A + i);
+  mmux_libc_if_name_ref (&if_name,  A + i);
+
+  if (if_index) @{
+    /* do something with "if_index" and "if_name" */
+  @} else @{
+    break;
+  @}
+@}
+
+mmux_libc_if_freenameindex(nameindex_array);
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_if_freenameindex (mmux_libc_if_nameindex_t const * @var{nameindex_array})
+@MmuxCInterface{if_freenameindex}.
+@end deftypefun
 
 @c page
 @node sockets in_addr

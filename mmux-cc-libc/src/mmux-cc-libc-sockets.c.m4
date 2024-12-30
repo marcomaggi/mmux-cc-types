@@ -1458,4 +1458,62 @@ mmux_libc_getnetbyaddr (mmux_libc_netent_t const * * result_netent_pp, mmux_uint
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Interface naming.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_STRUCT_SETTER_GETTER(if_nameindex, if_index,	mmux_uint_t)
+
+bool
+mmux_libc_if_name_set (mmux_libc_if_nameindex_t * const P, mmux_asciizcp_t value)
+{
+  P->if_name = (mmux_asciizp_t)value;
+  return false;
+}
+bool
+mmux_libc_if_name_ref (mmux_asciizcp_t * result_p, mmux_libc_if_nameindex_t const * const P)
+{
+  *result_p = P->if_name;
+  return false;
+}
+
+bool
+mmux_libc_if_nametoindex (mmux_uint_t * index_p, mmux_asciizcp_t network_interface_name)
+{
+  int	rv = if_nametoindex(network_interface_name);
+
+  if (0 < rv) {
+    *index_p = rv;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_if_indextoname (mmux_asciizp_t buffer, mmux_uint_t network_interface_index)
+{
+  char *	rv = if_indextoname(network_interface_index, buffer);
+
+  return ((NULL != rv)? false : true);
+}
+bool
+mmux_libc_if_nameindex (mmux_libc_if_nameindex_t const * * result_nameindex_p)
+{
+  mmux_libc_if_nameindex_t const *	nameindex_p = if_nameindex();
+
+  if (NULL != nameindex_p) {
+    *result_nameindex_p = nameindex_p;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_if_freenameindex (mmux_libc_if_nameindex_t const * nameindex_array)
+{
+  if_freenameindex((mmux_libc_if_nameindex_ptr_t)nameindex_array);
+  return false;
+}
+
 /* end of file */
