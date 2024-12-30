@@ -1573,4 +1573,57 @@ mmux_libc_if_freenameindex (mmux_libc_if_nameindex_t const * nameindex_array)
   return false;
 }
 
+
+/** --------------------------------------------------------------------
+ ** Sockets, pairs.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_make_network_socket (mmux_libc_network_socket_t * result_p, mmux_sint_t sock_num)
+{
+  result_p->value = sock_num;
+  return false;
+}
+bool
+mmux_libc_socket (mmux_libc_network_socket_t * result_sock_p, mmux_sint_t pf_namespace, mmux_sint_t sock_style, mmux_sint_t ipproto)
+{
+  int		sock = socket(pf_namespace, sock_style, ipproto);
+
+  if (-1 != sock) {
+    return mmux_libc_make_network_socket(result_sock_p, sock);
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_shutdown (mmux_libc_network_socket_t sock, mmux_sint_t how)
+{
+  int	rv = shutdown(sock.value, how);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_socketpair (mmux_libc_network_socket_t * result_sock1_p, mmux_libc_network_socket_t * result_sock2_p,
+		      mmux_sint_t pf_namespace, mmux_sint_t sock_style, mmux_sint_t ipproto)
+{
+  int	socks[2];
+  int	rv = socketpair(pf_namespace, sock_style, ipproto, socks);
+
+  if (0 == rv) {
+    mmux_libc_make_network_socket(result_sock1_p, socks[0]);
+    mmux_libc_make_network_socket(result_sock2_p, socks[1]);
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_getpeername (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_any, mmux_socklen_t * sockaddr_any_size)
+{
+  int	rv = getpeername(sock.value, sockaddr_any, sockaddr_any_size);
+
+  return ((0 == rv)? false : true);
+}
+
+
 /* end of file */

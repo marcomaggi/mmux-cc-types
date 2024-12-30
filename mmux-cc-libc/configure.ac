@@ -97,9 +97,20 @@ MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_IOVEC],[sizeof(struct iovec)])
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_FLOCK],[sizeof(struct flock)])
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_FD_SET],[sizeof(fd_set)])
 
-MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_UN],[sizeof(struct sockaddr_un)])
-MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_IN],[sizeof(struct sockaddr_in)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_IN_ADDR],     [sizeof(struct in_addr)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_IN6_ADDR],    [sizeof(struct in6_addr)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_UN], [sizeof(struct sockaddr_un)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_IN], [sizeof(struct sockaddr_in)])
 MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SOCKADDR_IN6],[sizeof(struct sockaddr_in6)])
+
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_HOSTENT],      [sizeof(struct hostent)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_SERVENT],      [sizeof(struct servent)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_PROTOENT],     [sizeof(struct protoent)])
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_NETENT],       [sizeof(struct netent)])
+
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_IF_NAMEINDEX], [sizeof(struct if_nameindex)])
+
+MMUX_CC_DETERMINE_VALUEOF([SIZEOF_STRUCT_ADDRINFO], [sizeof(struct addrinfo)])
 
 
 #### inspecting errno constants

@@ -865,36 +865,6 @@ mmux_cc_libc_decl bool mmux_libc_futimes (mmux_libc_file_descriptor_t fd,
  ** Sockets.
  ** ----------------------------------------------------------------- */
 
-typedef struct in_addr		mmux_libc_in_addr_t;
-typedef struct in6_addr		mmux_libc_insix_addr_t;
-
-typedef struct if_nameindex	mmux_libc_if_nameindex_t;
-typedef struct addrinfo		mmux_libc_addrinfo_t;
-typedef struct sockaddr		mmux_libc_sockaddr_t;
-typedef struct sockaddr_un	mmux_libc_sockaddr_un_t;
-typedef struct sockaddr_in	mmux_libc_sockaddr_in_t;
-typedef struct sockaddr_in6	mmux_libc_sockaddr_insix_t;
-typedef struct hostent		mmux_libc_hostent_t;
-typedef struct servent		mmux_libc_servent_t;
-typedef struct protoent		mmux_libc_protoent_t;
-typedef struct netent		mmux_libc_netent_t;
-
-typedef mmux_libc_in_addr_t *		mmux_libc_in_addr_ptr_t;
-typedef mmux_libc_insix_addr_t *	mmux_libc_insix_addr_ptr_t;
-
-typedef mmux_libc_if_nameindex_t *	mmux_libc_if_nameindex_ptr_t;
-typedef mmux_libc_addrinfo_t *		mmux_libc_addrinfo_ptr_t;
-typedef mmux_libc_sockaddr_t *		mmux_libc_sockaddr_ptr_t;
-typedef mmux_libc_sockaddr_un_t *	mmux_libc_sockaddr_un_ptr_t;
-typedef mmux_libc_sockaddr_in_t *	mmux_libc_sockaddr_in_ptr_t;
-typedef mmux_libc_sockaddr_insix_t *	mmux_libc_sockaddr_insix_ptr_t;
-typedef mmux_libc_hostent_t *		mmux_libc_hostent_ptr_t;
-typedef mmux_libc_servent_t *		mmux_libc_servent_ptr_t;
-typedef mmux_libc_protoent_t *		mmux_libc_protoent_ptr_t;
-typedef mmux_libc_netent_t *		mmux_libc_netent_ptr_t;
-
-/* ------------------------------------------------------------------ */
-
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(in_addr, s_addr,	mmux_uint32_t)
 
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(if_nameindex, if_index,	mmux_uint_t)
@@ -1167,6 +1137,25 @@ mmux_cc_libc_decl bool mmux_libc_if_nameindex (mmux_libc_if_nameindex_t const * 
 
 mmux_cc_libc_decl bool mmux_libc_if_freenameindex (mmux_libc_if_nameindex_t const * nameindex_array)
   __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_make_network_socket (mmux_libc_network_socket_t * result_p, mmux_sint_t sock_num)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_socket (mmux_libc_network_socket_t * result_sock_p,
+					 mmux_sint_t pf_namespace, mmux_sint_t sock_style, mmux_sint_t ipproto)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_shutdown (mmux_libc_network_socket_t sock, mmux_sint_t how);
+
+mmux_cc_libc_decl bool mmux_libc_socketpair (mmux_libc_network_socket_t * result_sock1_p, mmux_libc_network_socket_t * result_sock2_p,
+					     mmux_sint_t pf_namespace, mmux_sint_t sock_style, mmux_sint_t ipproto)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_getpeername (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_all,
+					      mmux_socklen_t * sockaddr_all_size)
+  __attribute__((__nonnull__(2,3)));
 
 
 /** --------------------------------------------------------------------

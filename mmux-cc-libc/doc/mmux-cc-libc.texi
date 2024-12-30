@@ -2372,9 +2372,7 @@ current mask.
 * sockets convaddr::            Converting socket addresses between formats.
 * sockets getaddrinfo::         Getting address informations.
 * sockets getnameinfo::         Getting address name informations.
-* sockets pair::                Socket pairs.
-* sockets creating::            Creating sockets and inspecting.
-* sockets shutdown::            Shutting down sockets.
+* sockets creating::            Sockets: creating, pairs shutting down, inspecting.
 * sockets stream::              Sending and receiving data through a stream socket.
 * sockets server::              Stream socket servers.
 * sockets client::              Stream socket clients.
@@ -2614,7 +2612,12 @@ of the data structure referenced by @var{sockaddr_p}.
 @section Address format @objtype{mmux_libc_sockaddr_t}
 
 
-@MmuxCStructOpaqueTypedef{sockaddr}
+@deftp {Opaque Struct Typedef} mmux_libc_sockaddr_t
+An opaque alias for a non--standard data structure type: we can handle this type as being big enough
+to contain any of the data structure types @code{struct sockaddr_*}.  @value{PACKAGE} uses this data
+type as alias for @MmuxCStruct{sockaddr}.
+@end deftp
+
 @MmuxCStructPointerOpaqueTypedef{sockaddr}
 @MmuxSetterGetter{sockaddr, sa_family,   mmux_sshort_t}
 @MmuxStructDumper{sockaddr}
@@ -3172,22 +3175,51 @@ if (mmux_libc_getnameinfo (hostname, IS_THIS_ENOUGH_QUESTION_MARK,
 @end deftypefun
 
 @c page
-@node sockets pair
-@section Socket pairs
-
-
-
-@c page
 @node sockets creating
-@section Creating sockets and inspecting
+@section Sockets: creating, pairs shutting down, inspecting
 
 
+@deftp {Opaque Typedef} mmux_libc_network_socket_t
+An alias for @objtype{mmux_libc_file_descriptor_t} representing a networking socket.
+@end deftp
 
-@c page
-@node sockets shutdown
-@section Shutting down sockets
+
+@deftypefun bool mmux_libc_make_network_socket (mmux_libc_network_socket_t * @var{result_p}, mmux_sint_t @var{sock_num})
+Initialise the value referenced by @var{result_p} with the given integer.
+@end deftypefun
 
 
+@deftypefun bool mmux_libc_socket (mmux_libc_network_socket_t * @var{result_sock_p}, mmux_sint_t @var{pf_namespace}, mmux_sint_t @var{sock_style}, mmux_sint_t @var{ipproto})
+@MmuxCInterface{socket}.
+
+@example
+mmux_libc_network_socket_t      sock;
+
+if (mmux_libc_socket(&sock, MMUX_LIBC_PF_INET, MMUX_LIBC_SOCK_STREAM, MMUX_LIBC_IPPROTO_TCP)) @{
+  /* error */
+@}
+
+mmux_libc_shutdown(sock, MMUX_LIBC_SHUT_RDWR);
+@end example
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_shutdown (mmux_libc_network_socket_t @var{sock}, mmux_sint_t @var{shut_how})
+@MmuxCInterface{shutdown}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_socketpair (mmux_libc_network_socket_t * @var{result_sock1_p}, mmux_libc_network_socket_t * @var{result_sock2_p}, mmux_sint_t @var{pf_namespace}, mmux_sint_t @var{sock_style}, mmux_sint_t @var{ipproto})
+@MmuxCInterface{socketpair}.
+
+@example
+mmux_libc_network_socket_t      sock1, sock2;
+
+if (mmux_libc_socketpair(&sock1, &sock2, MMUX_LIBC_PF_LOCAL, MMUX_LIBC_SOCK_STREAM, MMUX_LIBC_IPPROTO_IP)) @{
+  /* error */
+@}
+@end example
+@end deftypefun
 
 @c page
 @node sockets stream

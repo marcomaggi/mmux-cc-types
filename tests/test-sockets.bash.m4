@@ -490,7 +490,7 @@ function sockets-struct-sockaddr_insix-sinsix_port-1.1 () {
 function sockets-struct-addrinfo-1.1 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare ADDRINFO_PTR
 
@@ -519,7 +519,7 @@ function sockets-struct-addrinfo-1.1 () {
 							    WW(INPUT,AI_ADDR)		\
 							    WW(INPUT,AI_CANONNAME)	\
 							    WW(INPUT,AI_NEXT),
-				  mmux_libc_freeaddrinfo RR(ADDRINFO_PTR) )
+				  mmux_libc_free RR(ADDRINFO_PTR) )
 
 	mbfl_location_leave_when_failure( mmux_libc_ai_flags_ref	OUPUT[AI_FLAGS]	    RR(ADDRINFO_PTR) )
 	mbfl_location_leave_when_failure( mmux_libc_ai_family_ref	OUPUT[AI_FAMILY]    RR(ADDRINFO_PTR) )
@@ -3893,7 +3893,7 @@ function client-sockets-dgram-2.3-sleep () {
 function sockets-dgram-3.1 () {
     mbfl_location_enter
     {
-	dotest-set-debug
+	dotest-unset-debug
 
 	declare ERRNO
 	declare SOCKADDR_INSIX SINSIX_ADDR SINSIX_PORT='8080' ASCII_ADDR='::1'
