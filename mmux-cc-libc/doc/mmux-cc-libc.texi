@@ -2372,7 +2372,7 @@ current mask.
 * sockets convaddr::            Converting socket addresses between formats.
 * sockets getaddrinfo::         Getting address informations.
 * sockets getnameinfo::         Getting address name informations.
-* sockets creating::            Sockets: creating, pairs shutting down, inspecting.
+* sockets creating::            Sockets: creating, pairs, shutting down, inspecting.
 * sockets stream::              Sending and receiving data through a stream socket.
 * sockets server::              Stream socket servers.
 * sockets client::              Stream socket clients.
@@ -3176,7 +3176,7 @@ if (mmux_libc_getnameinfo (hostname, IS_THIS_ENOUGH_QUESTION_MARK,
 
 @c page
 @node sockets creating
-@section Sockets: creating, pairs shutting down, inspecting
+@section Sockets: creating, pairs, shutting down, inspecting
 
 
 @deftp {Opaque Typedef} mmux_libc_network_socket_t
@@ -3221,10 +3221,49 @@ if (mmux_libc_socketpair(&sock1, &sock2, MMUX_LIBC_PF_LOCAL, MMUX_LIBC_SOCK_STRE
 @end example
 @end deftypefun
 
+@c ------------------------------------------------------------------------
+
+@deftypefun bool mmux_libc_getpeername (mmux_libc_network_socket_t @var{sock}, mmux_libc_sockaddr_ptr_t @var{sockaddr_p}, mmux_socklen_t * @var{provided_sockaddr_size})
+@MmuxCInterface{getpeername}.
+
+@example
+mmux_libc_network_socket_t      sock;
+mmux_libc_sockaddr_t            sockaddr;
+mmux_socklen_t                  sockaddr_size = sizeof(mmux_libc_sockaddr_t);
+
+gimme_a_stream_sock(&sock);
+
+if (mmux_libc_getpeername(sock, &sockaddr, &sockaddr_size)) @{
+  /* error */
+@}
+
+/* do something with "sockaddr", whose real size is "sockaddr_size" */
+@end example
+@end deftypefun
+
+@c ------------------------------------------------------------------------
+
+@deftypefun bool mmux_libc_getsockname (mmux_libc_network_socket_t @var{sock}, mmux_libc_sockaddr_ptr_t @var{sockaddr_p}, mmux_socklen_t * @var{provided_sockaddr_size})
+@MmuxCInterface{getsockname}.
+
+@example
+mmux_libc_network_socket_t      sock;
+mmux_libc_sockaddr_t            sockaddr;
+mmux_socklen_t                  sockaddr_size = sizeof(mmux_libc_sockaddr_t);
+
+gimme_a_stream_sock(&sock);
+
+if (mmux_libc_getsockname(sock, &sockaddr, &sockaddr_size)) @{
+  /* error */
+@}
+
+/* do something with "sockaddr", whose real size is "sockaddr_size" */
+@end example
+@end deftypefun
+
 @c page
 @node sockets stream
 @section Sending and receiving data through a stream socket
-
 
 
 @c page
@@ -3232,12 +3271,53 @@ if (mmux_libc_socketpair(&sock1, &sock2, MMUX_LIBC_PF_LOCAL, MMUX_LIBC_SOCK_STRE
 @section Stream socket servers
 
 
+@deftypefun bool mmux_libc_bind (mmux_libc_network_socket_t @var{sock}, mmux_libc_sockaddr_ptr_t @var{sockaddr_p}, mmux_socklen_t @var{sockaddr_size})
+@MmuxCInterface{bind}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_listen (mmux_libc_network_socket_t @var{sock}, mmux_uint_t @var{pending_connections_queue_length}a)
+@MmuxCInterface{listen}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_accept (mmux_libc_network_socket_t * @var{result_connected_sock_p}, mmux_libc_sockaddr_ptr_t @var{result_client_sockaddr_p}, mmux_socklen_t * @var{result_client_sockaddr_size_p}, mmux_libc_network_socket_t @var{server_sock})
+@MmuxCInterface{accept}.
+
+@itemize
+@item
+Upon calling: the location referenced by @var{result_client_sockaddr_size_p} must be set to the
+number of bytes allocated for the address referenced by @var{result_client_sockaddr_p}.
+
+@item
+Upon successfully returning: the location referenced by @var{result_client_sockaddr_size_p} is reset
+to the actual size of the client address.
+@end itemize
+@end deftypefun
+
+
+@deftypefn {Linux Function} bool mmux_libc_accept4 (mmux_libc_network_socket_t * @var{result_connected_sock_p}, mmux_libc_sockaddr_ptr_t @var{result_client_sockaddr_p}, mmux_socklen_t * @var{result_client_sockaddr_size_p}, mmux_libc_network_socket_t @var{server_sock}, mmux_sint_t @var{flags})
+@MmuxCInterface{accept4}.
+
+@itemize
+@item
+Upon calling: the location referenced by @var{result_client_sockaddr_size_p} must be set to the
+number of bytes allocated for the address referenced by @var{result_client_sockaddr_p}.
+
+@item
+Upon successfully returning: the location referenced by @var{result_client_sockaddr_size_p} is reset
+to the actual size of the client address.
+@end itemize
+@end deftypefn
 
 @c page
 @node sockets client
 @section Stream socket clients
 
 
+@deftypefun bool mmux_libc_connect (mmux_libc_network_socket_t @var{sock}, mmux_libc_sockaddr_ptr_t @var{sockaddr_p}, mmux_socklen_t @var{sockaddr_size})
+@MmuxCInterface{connect}.
+@end deftypefun
 
 @c page
 @node sockets dgram

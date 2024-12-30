@@ -1153,7 +1153,33 @@ mmux_cc_libc_decl bool mmux_libc_socketpair (mmux_libc_network_socket_t * result
 					     mmux_sint_t pf_namespace, mmux_sint_t sock_style, mmux_sint_t ipproto)
   __attribute__((__nonnull__(1,2)));
 
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_connect (mmux_libc_network_socket_t sock,
+					  mmux_libc_sockaddr_ptr_t sockaddr_pointer, mmux_socklen_t sockaddr_size)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_bind (mmux_libc_network_socket_t sock,
+				       mmux_libc_sockaddr_ptr_t sockaddr_pointer, mmux_socklen_t sockaddr_size)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_listen (mmux_libc_network_socket_t sock, mmux_uint_t pending_connections_queue_length);
+
+mmux_cc_libc_decl bool mmux_libc_accept (mmux_libc_network_socket_t * result_connected_sock_p,
+					 mmux_libc_sockaddr_ptr_t result_client_sockaddr_p, mmux_socklen_t * result_client_sockaddr_size_p,
+					 mmux_libc_network_socket_t server_sock)
+  __attribute__((__nonnull__(1,2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_accept4 (mmux_libc_network_socket_t * result_connected_sock_p,
+					  mmux_libc_sockaddr_ptr_t result_client_sockaddr_p, mmux_socklen_t * result_client_sockaddr_size_p,
+					  mmux_libc_network_socket_t server_sock, mmux_sint_t flags)
+  __attribute__((__nonnull__(1,2,3)));
+
 mmux_cc_libc_decl bool mmux_libc_getpeername (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_all,
+					      mmux_socklen_t * sockaddr_all_size)
+  __attribute__((__nonnull__(2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_getsockname (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_all,
 					      mmux_socklen_t * sockaddr_all_size)
   __attribute__((__nonnull__(2,3)));
 

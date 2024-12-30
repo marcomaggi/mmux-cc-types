@@ -1575,7 +1575,7 @@ mmux_libc_if_freenameindex (mmux_libc_if_nameindex_t const * nameindex_array)
 
 
 /** --------------------------------------------------------------------
- ** Sockets, pairs.
+ ** Sockets: creation, pairs, shutdown.
  ** ----------------------------------------------------------------- */
 
 bool
@@ -1617,10 +1617,79 @@ mmux_libc_socketpair (mmux_libc_network_socket_t * result_sock1_p, mmux_libc_net
     return true;
   }
 }
+
+
+/** --------------------------------------------------------------------
+ ** Stream sockets.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_connect (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_pointer, mmux_socklen_t sockaddr_size)
+{
+  int	rv = connect(sock.value, sockaddr_pointer, sockaddr_size);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_bind (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_pointer, mmux_socklen_t sockaddr_size)
+{
+  int	rv = bind(sock.value, sockaddr_pointer, sockaddr_size);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_listen (mmux_libc_network_socket_t sock, mmux_uint_t pending_connections_queue_length)
+{
+  int	rv = listen(sock.value, pending_connections_queue_length);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_accept (mmux_libc_network_socket_t * result_connected_sock_p,
+		  mmux_libc_sockaddr_ptr_t result_client_sockaddr_p, mmux_socklen_t * result_client_sockaddr_size_p,
+		  mmux_libc_network_socket_t server_sock)
+/* Upon calling:  the location referenced by  "result_client_sockaddr_size_p" must be
+ * set  to   the  number   of  bytes   allocated  for   the  address   referenced  by
+ * "result_client_sockaddr_p".
+ *
+ * Upon      successfully     returning:      the     location      referenced     by
+ * "result_client_sockaddr_size_p" is reset to the actual size of the client address.
+ */
+{
+  int	connected_sock = accept(server_sock.value, result_client_sockaddr_p, result_client_sockaddr_size_p);
+
+  if (-1 != connected_sock) {
+    return mmux_libc_make_network_socket(result_connected_sock_p, connected_sock);
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_accept4 (mmux_libc_network_socket_t * result_connected_sock_p,
+		   mmux_libc_sockaddr_ptr_t result_client_sockaddr_p, mmux_socklen_t * result_client_sockaddr_size_p,
+		   mmux_libc_network_socket_t server_sock, mmux_sint_t flags)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_ACCEPT4]]],[[[
+  int	connected_sock = accept4(server_sock.value, result_client_sockaddr_p, result_client_sockaddr_size_p, flags);
+
+  if (-1 != connected_sock) {
+    return mmux_libc_make_network_socket(result_connected_sock_p, connected_sock);
+  } else {
+    return true;
+  }
+]]])
+}
 bool
 mmux_libc_getpeername (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_any, mmux_socklen_t * sockaddr_any_size)
 {
   int	rv = getpeername(sock.value, sockaddr_any, sockaddr_any_size);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_getsockname (mmux_libc_network_socket_t sock, mmux_libc_sockaddr_ptr_t sockaddr_any, mmux_socklen_t * sockaddr_any_size)
+{
+  int	rv = getsockname(sock.value, sockaddr_any, sockaddr_any_size);
 
   return ((0 == rv)? false : true);
 }
