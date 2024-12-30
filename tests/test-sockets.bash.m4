@@ -2121,13 +2121,11 @@ function sockets-getnetbyname-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
 	mbfl_location_leave_when_failure( mmux_libc_n_name_ref N_NAME RR(NETENT_PTR) )
+	mbfl_location_leave_when_failure( mmux_pointer_to_bash_string N_NAME RR(N_NAME) )
 	mbfl_location_leave_when_failure( mmux_libc_getnetbyname NETENT_PTR RR(N_NAME) )
 
-	if mmux_pointer_is_positive RR(NETENT_PTR)
-	then
-	    if dotest-option-debug
-	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
-	    fi
+	if dotest-option-debug
+	then mmux_libc_netent_dump RR(NETENT_PTR) >&2
 	fi
 	true
     }
@@ -2148,13 +2146,11 @@ function sockets-getnetbyaddr-1.1 () {
 
 	mbfl_location_leave_when_failure( mmux_libc_getnetent NETENT_PTR )
 	mbfl_location_leave_when_failure( mmux_libc_n_net_ref N_NET RR(NETENT_PTR) )
+	dotest-debug N_NET=RR(N_NET)
 	mbfl_location_leave_when_failure( mmux_libc_getnetbyaddr NETENT_PTR RR(N_NET)  RR(mmux_libc_AF_INET))
 
-	if mmux_pointer_is_positive RR(NETENT_PTR)
-	then
-	    if dotest-option-debug
-	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
-	    fi
+	if dotest-option-debug
+	then mmux_libc_netent_dump RR(NETENT_PTR) >&2
 	fi
 	true
     }
@@ -2178,12 +2174,10 @@ function sockets-getnetbyaddr-1.2 () {
 	mbfl_location_leave_when_failure( mmux_libc_ntohl N_NET_HOST_BYTEORDER RR(N_NET_NETWORK_BYTEORDER)  )
 	mbfl_location_leave_when_failure( mmux_libc_getnetbyaddr NETENT_PTR RR(N_NET_HOST_BYTEORDER) RR(mmux_libc_AF_INET))
 
-	if mmux_pointer_is_positive RR(NETENT_PTR)
-	then
-	    if dotest-option-debug
-	    then mmux_libc_netent_dump RR(NETENT_PTR) >&2
-	    fi
+	if dotest-option-debug
+	then mmux_libc_netent_dump RR(NETENT_PTR) >&2
 	fi
+
 	true
     }
     mbfl_location_leave

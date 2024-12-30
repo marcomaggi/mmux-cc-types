@@ -9802,9 +9802,8 @@ endservent}.
 Interface to the standard C language function @cfunc{getservbyname}, @glibcref{Services Database,
 getservbyname}.
 
-The argument @var{SERVENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct servent} in the database; when there are no matching entries: the
-pointer is null.
+The argument @var{SERVENT_PTR_VAR} is a shell variable name: when successful, this builtin binds to
+this variable a pointer to a matching @code{struct servent} in the database.
 
 The optional argument @var{PROTO} must be a shell string representing the protocol; when not given:
 @cfunc{getservbyname} is called with the corresponding argument set to @cnull{}.
@@ -9813,9 +9812,7 @@ The optional argument @var{PROTO} must be a shell string representing the protoc
 declare SERVENT_PTR
 
 mmux_libc_getservbyname SERVENT_PTR 'smtp' 'tcp'
-if mmux_pointer_is_positive @RR{SERVENT_PTR}
-then mmux_libc_servent_dump @RR{SERVENT_PTR}
-fi
+mmux_libc_servent_dump @RR{SERVENT_PTR}
 @end example
 @end deffn
 
@@ -9825,9 +9822,8 @@ fi
 Interface to the standard C language function @cfunc{getservbyport}, @glibcref{Services Database,
 getservbyport}.
 
-The argument @var{SERVENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct servent} in the database; when there are no matching entries: the
-pointer is null.
+The argument @var{SERVENT_PTR_VAR} is a shell variable name: when successful, this builtin binds to
+this variable a pointer to a matching @code{struct servent} in the database.
 
 The optional argument @var{PROTO} must be a shell string representing the protocol; when not given:
 @cfunc{getservbyport} is called with the corresponding argument set to @cnull{}.
@@ -9839,9 +9835,7 @@ declare -i NETWORK_BYTEORDER_PORT
 
 mmux_libc_htons NETWORK_BYTEORDER_PORT @RR{HOST_BYTEORDER_PORT}
 mmux_libc_getservbyport SERVENT_PTR @RR{NETWORK_BYTEORDER_PORT} 'tcp'
-if mmux_pointer_is_positive @RR{SERVENT_PTR}
-then mmux_libc_servent_dump @RR{SERVENT_PTR}
-fi
+mmux_libc_servent_dump @RR{SERVENT_PTR}
 @end example
 @end deffn
 
@@ -10017,18 +10011,14 @@ endprotoent}.
 Interface to the standard C language function @cfunc{getprotobyname}, @glibcref{Protocols Database,
 getprotobyname}.
 
-The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct protoent} in the database; when there are no matching entries:
-the pointer is null.
+The argument @var{PROTOENT_PTR_VAR} is a shell variable name: when successful, this builtin binds to
+this variable a pointer to a matching @code{struct protoent} in the database.
 
 @example
 declare PROTOENT_PTR
 
 mmux_libc_getprotobyname PROTOENT_PTR 'igmp'
-
-if mmux_pointer_is_positive @RR{PROTOENT_PTR}
-then mmux_libc_protoent_dump @RR{PROTOENT_PTR}
-fi
+mmux_libc_protoent_dump @RR{PROTOENT_PTR}
 @print{} struct protoent.s_name = "igmp"
 @print{} struct protoent.s_aliases[0] = "IGMP"
 @print{} struct protoent.s_proto = "2"
@@ -10040,18 +10030,14 @@ fi
 Interface to the standard C language function @cfunc{getprotobynumber}, @glibcref{Protocols
 Database, getprotobynumber}.
 
-The argument @var{PROTOENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct protoent} in the database; when there are no matching entries:
-the pointer is null.
+The argument @var{PROTOENT_PTR_VAR} is a shell variable name: when successful, this builtin binds to
+this variable a pointer to a matching @code{struct protoent} in the database.
 
 @example
 declare PROTOENT_PTR
 
 mmux_libc_getprotobynumber PROTOENT_PTR @RR{mmux_libc_IPPROTO_TCP}
-
-if mmux_pointer_is_positive @RR{PROTOENT_PTR}
-then mmux_libc_protoent_dump @RR{PROTOENT_PTR}
-fi
+mmux_libc_protoent_dump @RR{PROTOENT_PTR}
 @print{} struct protoent.s_name = "tcp"
 @print{} struct protoent.s_aliases[0] = "TCP"
 @print{} struct protoent.s_proto = "6"
@@ -10264,16 +10250,13 @@ endnetent}.
 Interface to the standard C language function @cfunc{getnetbyname}, @glibcref{Networks Database,
 getnetbyname}.
 
-The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct netent} in the database; when there are no matching entries: the
-pointer is null.
+The argument @var{NETENT_PTR_VAR} is a shell variable name: when successful, this builtin binds to
+this variable a pointer to a matching @code{struct netent} in the database.
 
 @example
 declare NETENT_PTR
 
-mmux_libc_getnetbyname NETENT_PTR 'loopback'
-
-if mmux_pointer_is_positive @RR{NETENT_PTR}
+if mmux_libc_getnetbyname NETENT_PTR 'loopback'
 then mmux_libc_netent_dump @RR{NETENT_PTR}
 fi
 @end example
@@ -10284,9 +10267,8 @@ fi
 Interface to the standard C language function @cfunc{getnetbyaddr}, @glibcref{Networks Database,
 getnetbyaddr}.
 
-The argument @var{NETENT_PTR_VAR} is a shell variable name: this builtin binds to this variable a
-pointer to a matching @code{struct netent} in the database; when there are no matching entries: the
-pointer is null.
+The argument @var{NETENT_PTR_VAR} is a shell variable name: when successful, this builtin binds to
+this variable a pointer to a matching @code{struct netent} in the database.
 
 @example
 declare NETENT_PTR
@@ -10301,9 +10283,8 @@ mmux_libc_calloc IN_ADDR_POINTER 1 @RR{mmux_libc_in_addr_SIZEOF}
 
         mmux_uint32_pointer_ref N_NET_NETWORK_BYTEORDER @RR{IN_ADDR_POINTER} 0
         mmux_libc_ntohl N_NET_HOST_BYTEORDER @RR{N_NET_NETWORK_BYTEORDER}
-        mmux_libc_getnetbyaddr NETENT_PTR @RR{N_NET_HOST_BYTEORDER} @RR{mmux_libc_AF_INET}
 
-        if mmux_pointer_is_positive @RR{NETENT_PTR}
+        if mmux_libc_getnetbyaddr NETENT_PTR @RR{N_NET_HOST_BYTEORDER} @RR{mmux_libc_AF_INET}
         then mmux_libc_netent_dump @RR{NETENT_PTR}
         fi
     @}

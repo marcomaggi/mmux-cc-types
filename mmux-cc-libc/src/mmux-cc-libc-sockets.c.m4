@@ -1069,7 +1069,12 @@ mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t * nete
     DPRINTF(fd, "%s.n_aliases = \"0x0\"\n", struct_name);
   }
 
-  DPRINTF(fd, "%s.n_addrtype = \"%d\"\n", struct_name, netent_p->n_addrtype);
+  {
+    mmux_asciizcp_t	name;
+
+    sa_family_to_asciiz_name(&name, netent_p->n_addrtype);
+    DPRINTF(fd, "%s.n_addrtype = \"%d\" (%s)\n", struct_name, netent_p->n_addrtype, name);
+  }
 
   /* The value "netent_p->n_net" is in host byte order. */
   {
@@ -1271,6 +1276,184 @@ mmux_libc_getnameinfo (mmux_asciizcp_t result_hostname_p, mmux_socklen_t provide
     return false;
   } else {
     *result_error_code_p = rv;
+    return true;
+  }
+}
+
+
+/** --------------------------------------------------------------------
+ ** Host database.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_sethostent (mmux_sint_t stayopen)
+{
+  sethostent(stayopen);
+  return false;
+}
+bool
+mmux_libc_endhostent (void)
+{
+  endhostent();
+  return false;
+}
+bool
+mmux_libc_gethostent (mmux_libc_hostent_t const * * result_hostent_pp)
+{
+  mmux_libc_hostent_ptr_t	hostent_p = gethostent();
+
+  *result_hostent_pp = hostent_p;
+  return false;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Services database.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_setservent (mmux_sint_t stayopen)
+{
+  setservent(stayopen);
+  return false;
+}
+bool
+mmux_libc_endservent (void)
+{
+  endservent();
+  return false;
+}
+bool
+mmux_libc_getservent (mmux_libc_servent_t const * * result_servent_pp)
+{
+  mmux_libc_servent_t const *	servent_p = getservent();
+
+  *result_servent_pp = servent_p;
+  return false;
+}
+bool
+mmux_libc_getservbyname (mmux_libc_servent_t const * * result_servent_pp,
+			 mmux_asciizcp_t service_name_p, mmux_asciizcp_t protocol_name_p)
+{
+  mmux_libc_servent_t const *	 servent_p = getservbyname(service_name_p, protocol_name_p);
+
+  if (NULL != servent_p) {
+    *result_servent_pp = servent_p;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_getservbyport (mmux_libc_servent_t const * * result_servent_pp,
+			 mmux_sint_t port, mmux_asciizcp_t protocol_name_p)
+{
+  mmux_libc_servent_t const *	 servent_p = getservbyport(port, protocol_name_p);
+
+  if (NULL != servent_p) {
+    *result_servent_pp = servent_p;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+/** --------------------------------------------------------------------
+ ** Protocols database.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_setprotoent (mmux_sint_t stayopen)
+{
+  setprotoent(stayopen);
+  return false;
+}
+bool
+mmux_libc_endprotoent (void)
+{
+  endprotoent();
+  return false;
+}
+bool
+mmux_libc_getprotoent (mmux_libc_protoent_t const * * result_protoent_pp)
+{
+  mmux_libc_protoent_ptr_t	protoent_p = getprotoent();
+
+  *result_protoent_pp = protoent_p;
+  return false;
+}
+bool
+mmux_libc_getprotobyname (mmux_libc_protoent_t const * * result_protoent_pp, mmux_asciizcp_t protocol_name_p)
+{
+  mmux_libc_protoent_t const *	protoent_p = getprotobyname(protocol_name_p);
+
+  if (NULL != protoent_p) {
+    *result_protoent_pp = protoent_p;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_getprotobynumber (mmux_libc_protoent_t const * * result_protoent_pp, mmux_sint_t proto)
+{
+  mmux_libc_protoent_t const *	protoent_p = getprotobynumber(proto);
+
+  if (NULL != protoent_p) {
+    *result_protoent_pp = protoent_p;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+/** --------------------------------------------------------------------
+ ** Networks database.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_setnetent (mmux_sint_t stayopen)
+{
+  setnetent(stayopen);
+  return false;
+}
+bool
+mmux_libc_endnetent (void)
+{
+  endnetent();
+  return false;
+}
+bool
+mmux_libc_getnetent (mmux_libc_netent_t const * * result_netent_pp)
+{
+  mmux_libc_netent_ptr_t	netent_p = getnetent();
+
+  *result_netent_pp = netent_p;
+  return false;
+}
+bool
+mmux_libc_getnetbyname (mmux_libc_netent_t const * * result_netent_pp, mmux_asciizcp_t network_name_p)
+{
+  mmux_libc_netent_t const *	netent_p = getnetbyname(network_name_p);
+
+  if (netent_p) {
+    *result_netent_pp = netent_p;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_getnetbyaddr (mmux_libc_netent_t const * * result_netent_pp, mmux_uint32_t n_net, mmux_sint_t af_type)
+{
+  mmux_libc_netent_t const *	netent_p = getnetbyaddr(n_net, af_type);
+
+  if (netent_p) {
+    *result_netent_pp = netent_p;
+    return false;
+  } else {
     return true;
   }
 }
