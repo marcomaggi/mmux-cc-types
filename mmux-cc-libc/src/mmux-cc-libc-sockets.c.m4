@@ -438,8 +438,12 @@ mmux_libc_make_in_addr_loopback (mmux_libc_in_addr_t * in_addr_p)
 /* ------------------------------------------------------------------ */
 
 bool
-mmux_libc_in_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_in_addr_t * in_addr_p, mmux_asciizcp_t struct_name)
+mmux_libc_in_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_in_addr_t const * in_addr_p, mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct in_addr";
+  }
+
   DPRINTF(fd, "%s * = %p\n", struct_name, in_addr_p);
 
   {
@@ -456,7 +460,7 @@ mmux_libc_in_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_in_addr_t * in
 #define IS_THIS_ENOUGH_QUESTION_MARK	32
       char	str[IS_THIS_ENOUGH_QUESTION_MARK];
 
-      if (mmux_libc_inet_ntop(str, IS_THIS_ENOUGH_QUESTION_MARK, MMUX_LIBC_AF_INET, in_addr_p)) {
+      if (mmux_libc_inet_ntop(str, IS_THIS_ENOUGH_QUESTION_MARK, MMUX_LIBC_AF_INET, (mmux_pointer_t)in_addr_p)) {
 	return false;
       }
       DPRINTF(fd, " (%s)\n", str);
@@ -483,8 +487,12 @@ mmux_libc_make_insix_addr_any (mmux_libc_insix_addr_t * insix_addr_p)
 }
 
 bool
-mmux_libc_insix_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_insix_addr_t * insix_addr_p, mmux_asciizcp_t struct_name)
+mmux_libc_insix_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_insix_addr_t const * insix_addr_p, mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct in6_addr";
+  }
+
   DPRINTF(fd, "%s * = %p\n", struct_name, insix_addr_p);
 
   {
@@ -492,7 +500,7 @@ mmux_libc_insix_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_insix_addr_
 #define IS_THIS_ENOUGH_QUESTION_MARK	256
     char	str[IS_THIS_ENOUGH_QUESTION_MARK];
 
-    if (mmux_libc_inet_ntop(str, IS_THIS_ENOUGH_QUESTION_MARK, MMUX_LIBC_AF_INET6, insix_addr_p)) {
+    if (mmux_libc_inet_ntop(str, IS_THIS_ENOUGH_QUESTION_MARK, MMUX_LIBC_AF_INET6, (mmux_pointer_t)insix_addr_p)) {
       return false;
     }
     DPRINTF(fd, "%s = (%s)\n", struct_name, str);
@@ -507,8 +515,12 @@ mmux_libc_insix_addr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_insix_addr_
 DEFINE_STRUCT_SETTER_GETTER(sockaddr, sa_family,	mmux_sshort_t);
 
 bool
-mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t * sockaddr_p, mmux_asciizcp_t const struct_name)
+mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t const * sockaddr_p, mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct sockaddr";
+  }
+
   {
     mmux_sshort_t	sa_family;
     mmux_asciizcp_t	family_name = "unknown";
@@ -519,9 +531,9 @@ mmux_libc_sockaddr_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_t * 
   }
 
   switch (sockaddr_p->sa_family) {
-  case MMUX_LIBC_AF_INET:	return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t    *) sockaddr_p, struct_name);
-  case MMUX_LIBC_AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t *) sockaddr_p, struct_name);
-  case MMUX_LIBC_AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t    *) sockaddr_p, struct_name);
+  case MMUX_LIBC_AF_INET:	return mmux_libc_sockaddr_in_dump   (fd, (mmux_libc_sockaddr_in_t    const *) sockaddr_p, struct_name);
+  case MMUX_LIBC_AF_INET6:	return mmux_libc_sockaddr_insix_dump(fd, (mmux_libc_sockaddr_insix_t const *) sockaddr_p, struct_name);
+  case MMUX_LIBC_AF_LOCAL:	return mmux_libc_sockaddr_un_dump   (fd, (mmux_libc_sockaddr_un_t    const *) sockaddr_p, struct_name);
   default:
     return false;
   }
@@ -567,8 +579,12 @@ mmux_libc_SUN_LEN (mmux_libc_sockaddr_un_t const * P)
 }
 
 bool
-mmux_libc_sockaddr_un_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_un_t * sockaddr_un_p, mmux_asciizcp_t struct_name)
+mmux_libc_sockaddr_un_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_un_t const * sockaddr_un_p, mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct sockaddr_un";
+  }
+
   {
     mmux_asciizcp_t	sun_name = "unknown";
 
@@ -616,8 +632,12 @@ mmux_libc_sin_addr_p_ref (mmux_libc_in_addr_t ** sin_addr_pp, mmux_libc_sockaddr
 }
 
 bool
-mmux_libc_sockaddr_in_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_in_t * sockaddr_in_p, mmux_asciizcp_t struct_name)
+mmux_libc_sockaddr_in_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_in_t const * sockaddr_in_p, mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct sockaddr_in";
+  }
+
   {
     mmux_asciizcp_t	sin_name = "unknown";
 
@@ -683,9 +703,13 @@ mmux_libc_sinsix_addr_p_ref (mmux_libc_insix_addr_t ** sinsix_addr_pp, mmux_libc
 /* ------------------------------------------------------------------ */
 
 bool
-mmux_libc_sockaddr_insix_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_insix_t * sockaddr_in6_p,
-			       mmux_asciizcp_t const struct_name)
+mmux_libc_sockaddr_insix_dump (mmux_libc_file_descriptor_t fd, mmux_libc_sockaddr_insix_t const * sockaddr_in6_p,
+			       mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct sockaddr_in6";
+  }
+
   {
     mmux_asciizcp_t	sin6_name = "unknown";
 
@@ -742,8 +766,12 @@ mmux_libc_ai_canonname_ref (mmux_asciizcp_t * result_p, mmux_libc_addrinfo_t con
 /* ------------------------------------------------------------------ */
 
 bool
-mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t * addrinfo_p, mmux_asciizcp_t struct_name)
+mmux_libc_addrinfo_dump (mmux_libc_file_descriptor_t fd, mmux_libc_addrinfo_t const * addrinfo_p, mmux_asciizcp_t struct_name)
 {
+  if (NULL == struct_name) {
+    struct_name = "struct addrinfo";
+  }
+
   /* Inspect the field: ai_flags */
   {
     bool	not_first_flags = false;
@@ -917,10 +945,14 @@ DEFINE_STRUCT_SETTER_GETTER(hostent, h_addr,		mmux_asciizp_t)
 /* ------------------------------------------------------------------ */
 
 bool
-mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t * hostent_p, mmux_asciizcp_t struct_name)
+mmux_libc_hostent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_hostent_t const * hostent_p, mmux_asciizcp_t struct_name)
 {
   int	aliases_idx   = 0;
   int	addr_list_idx = 0;
+
+  if (NULL == struct_name) {
+    struct_name = "struct hostent";
+  }
 
   DPRINTF(fd, "%s.h_name = \"%s\"\n", struct_name, hostent_p->h_name);
 
@@ -990,9 +1022,13 @@ DEFINE_STRUCT_SETTER_GETTER(servent, s_port,		mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER(servent, s_proto,		mmux_asciizp_t)
 
 bool
-mmux_libc_servent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_servent_t * servent_p, mmux_asciizcp_t const struct_name)
+mmux_libc_servent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_servent_t const * servent_p, mmux_asciizcp_t struct_name)
 {
   int	aliases_idx = 0;
+
+  if (NULL == struct_name) {
+    struct_name = "struct servent";
+  }
 
   DPRINTF(fd, "%s.s_name = \"%s\"\n", struct_name, servent_p->s_name);
 
@@ -1021,10 +1057,14 @@ DEFINE_STRUCT_SETTER_GETTER(protoent, p_aliases,	mmux_asciizp_t *)
 DEFINE_STRUCT_SETTER_GETTER(protoent, p_proto,		mmux_sint_t)
 
 bool
-mmux_libc_protoent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_protoent_t * protoent_p, mmux_asciizcp_t struct_name)
+mmux_libc_protoent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_protoent_t const * protoent_p, mmux_asciizcp_t struct_name)
 {
   int	aliases_idx = 0;
   int	rv;
+
+  if (NULL == struct_name) {
+    struct_name = "struct protoent";
+  }
 
   DPRINTF(fd, "%s.s_name = \"%s\"\n", struct_name, protoent_p->p_name);
 
@@ -1053,10 +1093,14 @@ DEFINE_STRUCT_SETTER_GETTER(netent, n_addrtype,		mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER(netent, n_net,		mmux_ulong_t)
 
 bool
-mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t * netent_p, mmux_asciizcp_t struct_name)
+mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t const * netent_p, mmux_asciizcp_t struct_name)
 {
   int	aliases_idx = 0;
   int	rv;
+
+  if (NULL == struct_name) {
+    struct_name = "struct netent";
+  }
 
   DPRINTF(fd, "%s.n_name = \"%s\"\n", struct_name, netent_p->n_name);
 
@@ -1477,6 +1521,19 @@ mmux_libc_if_name_ref (mmux_asciizcp_t * result_p, mmux_libc_if_nameindex_t cons
   *result_p = P->if_name;
   return false;
 }
+
+bool
+mmux_libc_if_nameindex_dump (mmux_libc_file_descriptor_t fd, mmux_libc_if_nameindex_t const * nameindex_p, mmux_asciizcp_t struct_name)
+{
+  if (NULL == struct_name) {
+    struct_name = "struct if_nameindex";
+  }
+
+  DPRINTF(fd, "%s.if_index = \"%d\"\n", struct_name, nameindex_p->if_index);
+  DPRINTF(fd, "%s.if_name  = \"%s\"\n", struct_name, nameindex_p->if_name);
+}
+
+/* ------------------------------------------------------------------ */
 
 bool
 mmux_libc_if_nametoindex (mmux_uint_t * index_p, mmux_asciizcp_t network_interface_name)

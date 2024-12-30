@@ -1332,6 +1332,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_if_nameindex_to_array]]])
 	mmux_uint_t           if_index;
 	mmux_asciizcp_t       if_name;
 
+	if (0) {
+	  mmux_libc_fd_t	fd;
+	  mmux_libc_stder(&fd);
+	  mmux_libc_if_nameindex_dump(fd, A + i, NULL);
+	}
+
 	mmux_libc_if_index_ref(&if_index, A + i);
 	mmux_libc_if_name_ref (&if_name,  A + i);
 
