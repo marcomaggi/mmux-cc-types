@@ -644,11 +644,63 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Searching in @asciiz{} strings
 
 
+@deftypefun bool mmux_libc_strchr (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{ptr}, mmux_schar_t @var{schar})
+@MmuxCInterface{strchr}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strchrnul (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{ptr}, mmux_schar_t @var{schar})
+@MmuxCInterface{strchrnul}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strrchr (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{ptr}, mmux_schar_t @var{schar})
+@MmuxCInterface{strrchr}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strstr (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{haystack}, mmux_asciizcp_t @var{needle})
+@MmuxCInterface{strstr}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strcasestr (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{haystack}, mmux_asciizcp_t @var{needle})
+@MmuxCInterface{strcasestr}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strspn (mmux_usize_t * @var{result_len_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{skipset})
+@MmuxCInterface{strspn}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strcspn (mmux_usize_t * @var{result_len_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{stopset})
+@MmuxCInterface{strcspn}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strpbrk (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{str}, mmux_asciizcp_t @var{stopset})
+@MmuxCInterface{strpbrk}.
+@end deftypefun
+
 @c page
 @node strings tokens
 @section Finding tokens in @asciiz{} strings
 
 
+@deftypefun bool mmux_libc_strtok (mmux_asciizcp_t * @var{result_p}, mmux_asciizp_t @var{newstring}, mmux_asciizcp_t @var{delimiters})
+@MmuxCInterface{strtok}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_basename (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{pathname})
+@MmuxCInterface{basename}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_dirname (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{pathname})
+@MmuxCInterface{dirname}.
+@end deftypefun
 
 @c page
 @node time

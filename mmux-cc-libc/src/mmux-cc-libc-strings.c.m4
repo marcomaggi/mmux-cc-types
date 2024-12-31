@@ -28,6 +28,17 @@
 
 #include <mmux-cc-libc-internals.h>
 
+/* If possible we  do not want to include "libgen.h":  according to the documentation
+   of GLIBC, including it replaces the GNU version of "basename" with another version
+   I do not want.  (Marco Maggi; Dec 31, 2024) */
+#if 0
+#  if ((defined HAVE_LIBGEN_H) && (1 == HAVE_LIBGEN_H))
+#    include <libgen.h>
+#  endif
+#else
+extern char const * dirname (char const * path);
+#endif
+
 
 /** --------------------------------------------------------------------
  ** Inspection.
@@ -190,5 +201,88 @@ mmux_libc_strxfrm (mmux_usize_t * result_size_p, mmux_asciizp_t dst_ptr, mmux_as
   return false;
 }
 
+
+/** --------------------------------------------------------------------
+ ** Searching.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_strchr (mmux_asciizcp_t * result_p, mmux_asciizcp_t ptr, mmux_schar_t schar)
+{
+  *result_p = strchr(ptr, schar);
+  return false;
+}
+bool
+mmux_libc_strchrnul (mmux_asciizcp_t * result_p, mmux_asciizcp_t ptr, mmux_schar_t schar)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STRCHRNUL]]],[[[
+  *result_p = strchrnul(ptr, schar);
+  return false;
+]]])
+}
+bool
+mmux_libc_strrchr (mmux_asciizcp_t * result_p, mmux_asciizcp_t ptr, mmux_schar_t schar)
+{
+  *result_p = strrchr(ptr, schar);
+  return false;
+}
+bool
+mmux_libc_strstr (mmux_asciizcp_t * result_p, mmux_asciizcp_t haystack, mmux_asciizcp_t needle)
+{
+  *result_p = strstr(haystack, needle);
+  return false;
+}
+bool
+mmux_libc_strcasestr (mmux_asciizcp_t * result_p, mmux_asciizcp_t haystack, mmux_asciizcp_t needle)
+{
+  *result_p = strcasestr(haystack, needle);
+  return false;
+}
+bool
+mmux_libc_strspn (mmux_usize_t * result_len_p, mmux_asciizcp_t str, mmux_asciizcp_t skipset)
+{
+  *result_len_p = strspn(str, skipset);
+  return false;
+}
+bool
+mmux_libc_strcspn (mmux_usize_t * result_len_p, mmux_asciizcp_t str, mmux_asciizcp_t stopset)
+{
+  *result_len_p = strcspn(str, stopset);
+  return false;
+}
+bool
+mmux_libc_strpbrk (mmux_asciizcp_t * result_p, mmux_asciizcp_t str, mmux_asciizcp_t stopset)
+{
+  *result_p = strpbrk(str, stopset);
+  return false;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Tokens.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_strtok (mmux_asciizcp_t * result_p, mmux_asciizp_t newstring, mmux_asciizcp_t delimiters)
+{
+  *result_p = strtok(newstring, delimiters);
+  return false;
+}
+bool
+mmux_libc_basename (mmux_asciizcp_t * result_p, mmux_asciizcp_t pathname)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_BASENAME]]],[[[
+  *result_p = basename(pathname);
+  return false;
+]]])
+}
+bool
+mmux_libc_dirname (mmux_asciizcp_t * result_p, mmux_asciizcp_t pathname)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_DIRNAME]]],[[[
+  *result_p = dirname(pathname);
+  return false;
+]]])
+}
 
 /* end of file */
