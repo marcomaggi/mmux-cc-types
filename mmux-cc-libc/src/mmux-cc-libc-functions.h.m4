@@ -167,6 +167,58 @@ mmux_cc_libc_decl bool mmux_libc_dirname (mmux_asciizcp_t * result_p, mmux_ascii
 
 
 /** --------------------------------------------------------------------
+ ** Characters.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_islower (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isupper (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isalpha (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isdigit (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isalnum (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isxdigit (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_ispunct (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isspace (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isblank (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isgraph (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isprint (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_iscntrl (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_isascii (bool * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_tolower (mmux_schar_t * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_toupper (mmux_schar_t * result_p, mmux_schar_t ch)
+  __attribute__((__nonnull__(1)));
+
+
+/** --------------------------------------------------------------------
  ** Memory.
  ** ----------------------------------------------------------------- */
 

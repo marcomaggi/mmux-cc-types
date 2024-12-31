@@ -114,11 +114,6 @@ MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $BASH_CFLAGS"],
 AC_CACHE_SAVE
 
 
-#### inspecting functions
-
-AC_CHECK_FUNCS([strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul basename dirname])
-
-
 #### external packages
 
 AC_ARG_WITH([emacs],

@@ -123,7 +123,8 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   send recv sendto recvfrom getsockopt setsockopt
 			   getpid getppid gettid
 			   sysconf confstr pathconf fpathconf setrlimit getrlimit prlimit
-			   rlimit_calloc rlimit_dump rlim_cur_set rlim_cur_ref rlim_max_set rlim_max_ref)
+			   rlimit_calloc rlimit_dump rlim_cur_set rlim_cur_ref rlim_max_set rlim_max_ref
+			   strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul basename dirname)
 
 declare -ra MATH_REAL_BUILTINS=(sin cos tan asin acos atan atan2
 				sinh cosh tanh asinh acosh atanh
@@ -358,18 +359,18 @@ function have_cfunc () {
 }
 
 # Builtin wrapping C language functions that may not be available.
-{
-    for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul basename dirname
-    do
-	if have_cfunc "$ITEM"
-	then
-	    printf '%s: present: %s\n' "$0" "$ITEM" >&2
-	    printf -v NAME 'mmux_libc_%s' "$ITEM"
-	    print_builtin_name "$NAME"
-	else printf '%s: missing: %s\n' "$0" "$ITEM" >&2
-	fi
-    done
-}
+# {
+#     for ITEM in
+#     do
+# 	if have_cfunc "$ITEM"
+# 	then
+# 	    printf '%s: present: %s\n' "$0" "$ITEM" >&2
+# 	    printf -v NAME 'mmux_libc_%s' "$ITEM"
+# 	    print_builtin_name "$NAME"
+# 	else printf '%s: missing: %s\n' "$0" "$ITEM" >&2
+# 	fi
+#     done
+# }
 
 ### end of file
 # Local Variables:

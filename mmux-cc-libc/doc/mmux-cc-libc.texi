@@ -198,6 +198,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * errors::                      Errors management.
 * memory::                      Memory management.
 * strings::                     String operations.
+* characters::                  Character operations.
 * time::                        Times and dates.
 * system::                      System configuration.
 * persona::                     Persona operations.
@@ -700,6 +701,99 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 
 @deftypefun bool mmux_libc_dirname (mmux_asciizcp_t * @var{result_p}, mmux_asciizcp_t @var{pathname})
 @MmuxCInterface{dirname}.
+@end deftypefun
+
+@c page
+@node characters
+@chapter Character operations
+
+
+@menu
+* characters classes::          Character classes.
+* characters capital::          Character capitalisation.
+@end menu
+
+@c page
+@node characters classes
+@section Character classes
+
+
+@deftypefun bool mmux_libc_islower (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{islower}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isupper (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isupper}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isalpha (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isalpha}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isdigit (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isdigit}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isalnum (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isalnum}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isxdigit (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isxdigit}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_ispunct (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{ispunct}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isspace (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isspace}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isblank (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isblank}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isgraph (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isgraph}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isprint (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isprint}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_iscntrl (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{iscntrl}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_isascii (bool * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{isascii}.
+@end deftypefun
+
+@c page
+@node characters capital
+@section Character capitalisation
+
+
+@deftypefun bool mmux_libc_tolower (mmux_schar_t * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{tolower}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_toupper (mmux_schar_t * @var{result_p}, mmux_schar_t @var{ch})
+@MmuxCInterface{toupper}.
 @end deftypefun
 
 @c page

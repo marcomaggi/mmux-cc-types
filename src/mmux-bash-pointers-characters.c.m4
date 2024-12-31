@@ -93,8 +93,9 @@ m4_define([[[DEFINE_CHARACTER_PREDICATE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([[[
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SCHAR(ch,	1);
   {
-    int		rv = $1(ch);
+    bool	rv;
 
+    mmux_libc_$1(&rv, ch);
     return (rv)? MMUX_SUCCESS : MMUX_FAILURE;
   }
 }

@@ -98,6 +98,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-libc-internals.h.m4			\
 	src/mmux-cc-libc-constants.h.m4			\
 	src/mmux-cc-libc-functions.h.m4			\
+	src/mmux-cc-libc-characters.c.m4		\
 	src/mmux-cc-libc-errors.c.m4			\
 	src/mmux-cc-libc-file-descriptors.c.m4		\
 	src/mmux-cc-libc-file-system.c.m4		\
@@ -115,6 +116,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-libc-internals.h			\
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-functions.h			\
+	src/mmux-cc-libc-characters.c			\
 	src/mmux-cc-libc-errors.c			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-file-system.c			\
@@ -153,6 +155,7 @@ libmmux_cc_libc_la_SOURCES	= \
 	src/mmux-cc-libc-internals.h			\
 	src/mmux-cc-libc-constants.h			\
 	src/mmux-cc-libc-functions.h			\
+	src/mmux-cc-libc-characters.c			\
 	src/mmux-cc-libc-errors.c			\
 	src/mmux-cc-libc-file-descriptors.c		\
 	src/mmux-cc-libc-file-system.c			\
