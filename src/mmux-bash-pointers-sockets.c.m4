@@ -1702,25 +1702,25 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_send]]])
 {
   mmux_asciizcp_t		number_of_bytes_sent_varname;
   mmux_libc_network_socket_t	sock;
-  mmux_pointer_t		buffer_pointer;
-  mmux_usize_t			buffer_length;
+  mmux_pointer_t		bufptr;
+  mmux_usize_t			buflen;
   mmux_sint_t			flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(number_of_bytes_sent_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(sock,					2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer_pointer,			3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buffer_length,				4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(bufptr,				3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buflen,					4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,					5);
   {
     mmux_usize_t	number_of_bytes_sent;
 
-    MMUX_LIBC_FUNCALL(mmux_libc_send(&number_of_bytes_sent, sock, buffer_pointer, buffer_length, flags));
+    MMUX_LIBC_FUNCALL(mmux_libc_send(&number_of_bytes_sent, sock, bufptr, buflen, flags));
     return mmux_usize_bind_to_bash_variable(number_of_bytes_sent_varname, number_of_bytes_sent, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_SENT_VAR SOCK BUFFER_POINTER BUFFER_LENGTH FLAGS"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_SENT_VAR SOCK BUFPTR BUFLEN FLAGS"]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -1728,110 +1728,111 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recv]]])
 {
   mmux_asciizcp_t		number_of_bytes_received_varname;
   mmux_libc_network_socket_t	sock;
-  mmux_pointer_t		buffer_pointer;
-  mmux_usize_t			buffer_length;
+  mmux_pointer_t		bufptr;
+  mmux_usize_t			buflen;
   mmux_sint_t			flags;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(number_of_bytes_received_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(sock,					2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer_pointer,			3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buffer_length,				4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(bufptr,				3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buflen,					4);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,					5);
   {
     mmux_usize_t	number_of_bytes_received;
 
-    MMUX_LIBC_FUNCALL(mmux_libc_recv(&number_of_bytes_received, sock, buffer_pointer, buffer_length, flags));
+    MMUX_LIBC_FUNCALL(mmux_libc_recv(&number_of_bytes_received, sock, bufptr, buflen, flags));
     return mmux_usize_bind_to_bash_variable(number_of_bytes_received_varname, number_of_bytes_received, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(6 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_RECEIVED_VAR SOCK BUFFER_POINTER BUFFER_LENGTH FLAGS"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_RECEIVED_VAR SOCK BUFPTR BUFLEN FLAGS"]]])
 
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_sendto]]])
 {
   mmux_asciizcp_t		number_of_bytes_sent_varname;
-  mmux_sint_t		sock;
-  mmux_pointer_t	buffer_pointer;
-  mmux_usize_t		buffer_length;
-  mmux_sint_t		flags;
-  mmux_pointer_t	addr_pointer;
-  mmux_socklen_t	sockaddr_length;
+  mmux_libc_network_socket_t	sock;
+  mmux_pointer_t		bufptr;
+  mmux_usize_t			buflen;
+  mmux_sint_t			flags;
+  mmux_libc_sockaddr_ptr_t	destinatin_sockaddr_pointer;
+  mmux_socklen_t		destinatin_sockaddr_size;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(number_of_bytes_sent_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(sock,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer_pointer,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buffer_length,	4);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	5);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(addr_pointer,	6);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(sockaddr_length,	7);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(sock,					2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(bufptr,				3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buflen,					4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,					5);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(destinatin_sockaddr_pointer,	6);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(destinatin_sockaddr_size,		7);
   {
-    struct sockaddr *	sockaddr_pointer     = addr_pointer;
-    mmux_ssize_t	number_of_bytes_sent = sendto(sock, buffer_pointer, buffer_length, flags, sockaddr_pointer, sockaddr_length);
+    mmux_usize_t	number_of_bytes_sent;
 
-    if (-1 != number_of_bytes_sent) {
-      return mmux_ssize_bind_to_bash_variable(number_of_bytes_sent_varname, number_of_bytes_sent, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_sendto(&number_of_bytes_sent, sock, bufptr, buflen, flags,
+				       destinatin_sockaddr_pointer, destinatin_sockaddr_size));
+    return mmux_usize_bind_to_bash_variable(number_of_bytes_sent_varname, number_of_bytes_sent, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(8 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_SENT_VAR SOCK BUFFER_POINTER BUFFER_LENGTH FLAGS SOCKADDR_POINTER SOCKADDR_LENGTH"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_SENT_VAR SOCK BUFPTR BUFLEN FLAGS DESTINATIN_SOCKADDR_POINTER DESTINATIN_SOCKADDR_SIZE"]]])
 
 /* ------------------------------------------------------------------ */
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_recvfrom]]])
 {
   mmux_asciizcp_t		number_of_bytes_received_varname;
-  mmux_asciizcp_t		peer_sockaddr_length_varname;
-  mmux_sint_t		sock;
-  mmux_pointer_t	buffer_pointer;
-  mmux_usize_t		buffer_length;
-  mmux_sint_t		flags;
-  mmux_pointer_t	_peer_sockaddr_pointer;
-  mmux_socklen_t	peer_sockaddr_allocated_length;
+  mmux_asciizcp_t		sender_sockaddr_size_varname;
+  mmux_libc_network_socket_t	sock;
+  mmux_pointer_t		bufptr;
+  mmux_usize_t			buflen;
+  mmux_sint_t			flags;
+  mmux_libc_sockaddr_ptr_t	sender_sockaddr_pointer;
+  mmux_socklen_t		sender_sockaddr_size;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(number_of_bytes_received_varname,	1);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(peer_sockaddr_length_varname,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(sock,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(buffer_pointer,	4);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buffer_length,	5);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,	6);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(_peer_sockaddr_pointer,	7);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(peer_sockaddr_allocated_length,	8);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(sender_sockaddr_size_varname,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_LIBC_FD(sock,					3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(bufptr,				4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(buflen,					5);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(flags,					6);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_TYPED_POINTER(sender_sockaddr_pointer,		7);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SOCKLEN(sender_sockaddr_size,			8);
   {
-    struct sockaddr *	peer_sockaddr_pointer     = _peer_sockaddr_pointer;
-    mmux_socklen_t	peer_sockaddr_length      = peer_sockaddr_allocated_length;
-    mmux_ssize_t	number_of_bytes_received  = recvfrom(sock, buffer_pointer, buffer_length, flags,
-							     peer_sockaddr_pointer, &peer_sockaddr_length);
+    /* Upon entering  the call "sender_sockaddr_size"  must be  set to the  number of
+     * bytes allocated to contain the sender address.
+     *
+     * Upon successfully returning  from the call "sender_sockaddr_size"  is reset to
+     * the actual number of bytes required to contain the sender address.
+     *
+     * The arguments  "sender_sockaddr_pointer" and "&sender_sockaddr_size"  can be
+     * NULL if we are not interested in retrieving the sender address.
+     */
+    mmux_usize_t	number_of_bytes_received;
 
-    if (-1 != number_of_bytes_received) {
+    MMUX_LIBC_FUNCALL(mmux_libc_recvfrom(&number_of_bytes_received, sender_sockaddr_pointer, &sender_sockaddr_size,
+					 sock, bufptr, buflen, flags));
+    {
       mmux_bash_rv_t	brv;
 
-      brv =  mmux_ssize_bind_to_bash_variable(number_of_bytes_received_varname, number_of_bytes_received, MMUX_BASH_BUILTIN_STRING_NAME);
+      brv =  mmux_usize_bind_to_bash_variable(number_of_bytes_received_varname, number_of_bytes_received, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
-      brv = mmux_socklen_bind_to_bash_variable(peer_sockaddr_length_varname, peer_sockaddr_length, MMUX_BASH_BUILTIN_STRING_NAME);
+      brv = mmux_socklen_bind_to_bash_variable(sender_sockaddr_size_varname, sender_sockaddr_size, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != brv) { goto error_binding_variables; }
 
       return brv;
 
     error_binding_variables:
       return brv;
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
     }
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(9 == argc)]]],
-    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_RECEIVED_VAR CONNECTED_SOCKADDR_LENGTH_VAR SOCK BUFFER_POINTER BUFFER_LENGTH FLAGS SOCKADDR_POINTER ALLOCATED_SOCKADDR_LENGTH"]]])
+    [[["MMUX_BASH_BUILTIN_IDENTIFIER NUMBER_OF_BYTES_RECEIVED_VAR CONNECTED_SOCKADDR_SIZE_VAR SOCK BUFPTR BUFLEN FLAGS SOCKADDR_POINTER ALLOCATED_SOCKADDR_SIZE"]]])
 
 
 /** --------------------------------------------------------------------

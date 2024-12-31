@@ -1713,10 +1713,45 @@ mmux_libc_send (mmux_usize_t * result_number_of_bytes_sent_p,
   }
 }
 bool
+mmux_libc_sendto (mmux_usize_t * result_number_of_bytes_sent_p,
+		  mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags,
+		  mmux_libc_sockaddr_ptr_t destination_sockaddr_p, mmux_socklen_t destination_sockaddr_size)
+{
+  mmux_ssize_t	number_of_bytes_sent = sendto(sock.value, bufptr, buflen, flags,
+					      destination_sockaddr_p, destination_sockaddr_size);
+
+  if (-1 != number_of_bytes_sent) {
+    *result_number_of_bytes_sent_p = number_of_bytes_sent;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
 mmux_libc_recv (mmux_usize_t * result_number_of_bytes_received_p,
 		mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
 {
   mmux_ssize_t	number_of_bytes_received = recv(sock.value, bufptr, buflen, flags);
+
+  if (-1 != number_of_bytes_received) {
+    *result_number_of_bytes_received_p = number_of_bytes_received;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool
+mmux_libc_recvfrom (mmux_usize_t * result_number_of_bytes_received_p,
+		    mmux_libc_sockaddr_ptr_t result_sender_sockaddr_p, mmux_socklen_t * result_sender_sockaddr_size_p,
+		    mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
+{
+  /* The arguments "result_sender_sockaddr_p" and "result_sender_sockaddr_size_p" can
+     be NULL if we are not interested in retrieving the sender address. */
+  mmux_ssize_t	number_of_bytes_received  = recvfrom(sock.value, bufptr, buflen, flags,
+						     result_sender_sockaddr_p, result_sender_sockaddr_size_p);
 
   if (-1 != number_of_bytes_received) {
     *result_number_of_bytes_received_p = number_of_bytes_received;

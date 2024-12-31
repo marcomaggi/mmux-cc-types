@@ -1193,6 +1193,20 @@ mmux_cc_libc_decl bool mmux_libc_recv (mmux_usize_t * result_number_of_bytes_rec
 				       mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
   __attribute__((__nonnull__(1,3)));
 
+mmux_cc_libc_decl bool mmux_libc_sendto (mmux_usize_t * result_number_of_bytes_sent_p,
+					 mmux_libc_network_socket_t sock, mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags,
+					 mmux_libc_sockaddr_ptr_t destination_sockaddr_p, mmux_socklen_t destination_sockaddr_size)
+  __attribute__((__nonnull__(1,3,6)));
+
+/* The arguments  "result_sender_sockaddr_p" and  "result_sender_sockaddr_size_p" can
+   be NULL if we are not interested in retrieving the sender address. */
+mmux_cc_libc_decl bool mmux_libc_recvfrom (mmux_usize_t * result_number_of_bytes_received_p,
+					   mmux_libc_sockaddr_ptr_t result_sender_sockaddr_p,
+					   mmux_socklen_t *         result_sender_sockaddr_size_p,
+					   mmux_libc_network_socket_t sock,
+					   mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
+  __attribute__((__nonnull__(1,5)));
+
 
 /** --------------------------------------------------------------------
  ** Done.

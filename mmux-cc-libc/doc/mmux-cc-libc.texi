@@ -3333,6 +3333,28 @@ to the actual size of the client address.
 @section Sending and receiving data through a datagram socket
 
 
+@deftypefun bool mmux_libc_sendto (mmux_usize_t * @var{result_number_of_bytes_sent_p}, mmux_libc_network_socket_t @var{sock}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen}, mmux_sint_t @var{flags}, mmux_libc_sockaddr_ptr_t @var{destination_sockaddr_p}, mmux_socklen_t @var{destination_sockaddr_size})
+@MmuxCInterface{sendto}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_recvfrom (mmux_usize_t * @var{result_number_of_bytes_received_p}, mmux_libc_sockaddr_ptr_t @var{result_sender_sockaddr_p}, mmux_socklen_t * @var{result_sender_sockaddr_size_p}, mmux_libc_network_socket_t @var{sock}, mmux_pointer_t @var{bufptr}, mmux_usize_t @var{buflen}, mmux_sint_t @var{flags})
+@MmuxCInterface{recvfrom}.
+
+The arguments @var{result_sender_sockaddr_p} and @var{result_sender_sockaddr_size_p} can be
+@cnull{} if we are not interested in retrieving the sender address; if they are not @cnull{}:
+
+@itemize
+@item
+Upon entering the call: the location referenced by @var{result_sender_sockaddr_size_p} must be set
+to the number of bytes allocated to contain the sender address.
+
+@item
+Upon successfully returning from the call: the location referenced by
+@var{result_sender_sockaddr_size_p} is reset to the actual number of bytes required to contain the
+sender address.
+@end itemize
+@end deftypefun
 
 @c page
 @node sockets options
