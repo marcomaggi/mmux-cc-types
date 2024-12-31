@@ -304,6 +304,7 @@ typedef struct hostent				mmux_libc_hostent_t;
 typedef struct servent				mmux_libc_servent_t;
 typedef struct protoent				mmux_libc_protoent_t;
 typedef struct netent				mmux_libc_netent_t;
+typedef struct linger				mmux_libc_linger_t;
 
 typedef mmux_libc_in_addr_t *			mmux_libc_in_addr_ptr_t;
 typedef mmux_libc_insix_addr_t *		mmux_libc_insix_addr_ptr_t;
@@ -318,6 +319,7 @@ typedef mmux_libc_hostent_t *			mmux_libc_hostent_ptr_t;
 typedef mmux_libc_servent_t *			mmux_libc_servent_ptr_t;
 typedef mmux_libc_protoent_t *			mmux_libc_protoent_ptr_t;
 typedef mmux_libc_netent_t *			mmux_libc_netent_ptr_t;
+typedef mmux_libc_linger_t *			mmux_libc_linger_ptr_t;
 
 
 /** --------------------------------------------------------------------

@@ -921,6 +921,9 @@ DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_aliases,		mmux_asciizp_t *)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_addrtype,		mmux_sint_t)
 DEFINE_STRUCT_SETTER_GETTER_PROTOS(netent, n_net,		mmux_ulong_t)
 
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(linger, l_onoff,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER_PROTOS(linger, l_linger,		mmux_sint_t)
+
 mmux_cc_libc_decl mmux_usize_t mmux_libc_SUN_LEN (mmux_libc_sockaddr_un_t const * sockaddr_un_p)
   __attribute__((__nonnull__(1)));
 
@@ -971,6 +974,10 @@ mmux_cc_libc_decl bool mmux_libc_protoent_dump (mmux_libc_file_descriptor_t fd, 
   __attribute__((__nonnull__(2)));
 
 mmux_cc_libc_decl bool mmux_libc_netent_dump (mmux_libc_file_descriptor_t fd, mmux_libc_netent_t const * netent_p,
+					      mmux_asciizcp_t const struct_name)
+  __attribute__((__nonnull__(2)));
+
+mmux_cc_libc_decl bool mmux_libc_linger_dump (mmux_libc_file_descriptor_t fd, mmux_libc_linger_t const * linger_p,
 					      mmux_asciizcp_t const struct_name)
   __attribute__((__nonnull__(2)));
 
@@ -1206,6 +1213,16 @@ mmux_cc_libc_decl bool mmux_libc_recvfrom (mmux_usize_t * result_number_of_bytes
 					   mmux_libc_network_socket_t sock,
 					   mmux_pointer_t bufptr, mmux_usize_t buflen, mmux_sint_t flags)
   __attribute__((__nonnull__(1,5)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_getsockopt (mmux_pointer_t result_optval_p, mmux_socklen_t * result_optlen_p,
+					     mmux_libc_network_socket_t sock, mmux_sint_t level, mmux_sint_t optname)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_setsockopt (mmux_libc_network_socket_t sock, mmux_sint_t level, mmux_sint_t optname,
+					     mmux_pointer_t optval_p, mmux_socklen_t optlen)
+  __attribute__((__nonnull__(4)));
 
 
 /** --------------------------------------------------------------------

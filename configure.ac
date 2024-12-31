@@ -120,8 +120,7 @@ AC_CACHE_SAVE
 AC_CHECK_HEADERS([grp.h pwd.h utime.h sys/uio.h sys/socket.h sys/un.h netinet/in.h net/if.h arpa/inet.h
                   netdb.h sys/resource.h])
 
-AC_CHECK_FUNCS([strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul
-                basename dirname accept4])
+AC_CHECK_FUNCS([strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul basename dirname])
 
 
 #### external packages

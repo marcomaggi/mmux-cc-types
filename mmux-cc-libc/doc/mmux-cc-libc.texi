@@ -3361,6 +3361,21 @@ sender address.
 @section Socket options
 
 
+@MmuxCStructOpaqueTypedef{linger}
+@MmuxCStructPointerOpaqueTypedef{linger}
+@MmuxSetterGetter{linger, l_onoff,		mmux_sint_t}
+@MmuxSetterGetter{linger, l_linger,		mmux_sint_t}
+@MmuxStructDumper{linger}
+
+
+@deftypefun bool mmux_libc_getsockopt (mmux_pointer_t @var{result_optval_p}, mmux_socklen_t * @var{result_optlen_p}, mmux_libc_network_socket_t @var{sock}, mmux_sint_t @var{level}, mmux_sint_t @var{optname})
+@MmuxCInterface{getsockopt}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_setsockopt (mmux_libc_network_socket_t @var{sock}, mmux_sint_t @var{level}, mmux_sint_t @var{optname}, mmux_pointer_t @var{optval_p}, mmux_socklen_t @var{optlen})
+@MmuxCInterface{setsockopt}.
+@end deftypefun
 
 @c page
 @c ------------------------------------------------------------

@@ -1761,4 +1761,38 @@ mmux_libc_recvfrom (mmux_usize_t * result_number_of_bytes_received_p,
   }
 }
 
+
+/** --------------------------------------------------------------------
+ ** Options.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_STRUCT_SETTER_GETTER(linger, l_onoff,		mmux_sint_t)
+DEFINE_STRUCT_SETTER_GETTER(linger, l_linger,		mmux_sint_t)
+
+bool
+mmux_libc_linger_dump (mmux_libc_file_descriptor_t fd, mmux_libc_linger_t const * linger_p, mmux_asciizcp_t struct_name)
+{
+  if (NULL == struct_name) {
+    struct_name = "struct linger";
+  }
+  DPRINTF(fd, "%s.l_onoff  = \"%s\"\n", struct_name, linger_p->l_onoff);
+  DPRINTF(fd, "%s.l_linger = \"%s\"\n", struct_name, linger_p->l_linger);
+}
+bool
+mmux_libc_getsockopt (mmux_pointer_t result_optval_p, mmux_socklen_t * result_optlen_p,
+		      mmux_libc_network_socket_t sock, mmux_sint_t level, mmux_sint_t optname)
+{
+  int	rv = getsockopt(sock.value, level, optname, result_optval_p, result_optlen_p);
+
+  return ((0 == rv)? false : true);
+}
+bool
+mmux_libc_setsockopt (mmux_libc_network_socket_t sock, mmux_sint_t level, mmux_sint_t optname,
+		      mmux_pointer_t optval_p, mmux_socklen_t optlen)
+{
+  int	rv = setsockopt(sock.value, level, optname, optval_p, optlen);
+
+  return ((0 == rv)? false : true);
+}
+
 /* end of file */

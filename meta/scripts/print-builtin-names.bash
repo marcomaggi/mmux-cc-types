@@ -119,7 +119,7 @@ declare -ra LIBC_BUILTINS=(malloc realloc calloc free
 			   inet_lnaof inet_netof inet_pton inet_ntop
 			   if_nametoindex if_indextoname if_nameindex_to_array
 			   getaddrinfo freeaddrinfo getnameinfo
-			   bind getsockname socket shutdown socketpair connect listen accept getpeername
+			   bind getsockname socket shutdown socketpair connect listen accept accept4 getpeername
 			   send recv sendto recvfrom getsockopt setsockopt
 			   getpid getppid gettid
 			   sysconf confstr pathconf fpathconf setrlimit getrlimit prlimit
@@ -359,9 +359,7 @@ function have_cfunc () {
 
 # Builtin wrapping C language functions that may not be available.
 {
-    for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp \
-			strchrnul basename dirname  \
-			accept4
+    for ITEM in strnlen strndup stpncpy strcasecmp strncasecmp strverscmp strchrnul basename dirname
     do
 	if have_cfunc "$ITEM"
 	then
