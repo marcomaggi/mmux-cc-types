@@ -112,4 +112,83 @@ MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STRNDUP]]],[[[
 ]]])
 }
 
+
+/** --------------------------------------------------------------------
+ ** Concatenating.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_strcat (mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr)
+{
+  strcat(dst_ptr, src_ptr);
+  return false;
+}
+bool
+mmux_libc_strncat (mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr, mmux_usize_t len)
+{
+  strncat(dst_ptr, src_ptr, len);
+  return false;
+}
+
+
+/** --------------------------------------------------------------------
+ ** Comparing.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_strcmp (mmux_sint_t * result_p, mmux_asciizcp_t ptr2, mmux_asciizcp_t ptr1)
+{
+  *result_p = strcmp(ptr2, ptr1);
+  return false;
+}
+bool
+mmux_libc_strncmp (mmux_sint_t * result_p, mmux_asciizcp_t ptr2, mmux_asciizcp_t ptr1, mmux_usize_t len)
+{
+  *result_p = strncmp(ptr2, ptr1, len);
+  return false;
+}
+bool
+mmux_libc_strcasecmp (mmux_sint_t * result_p, mmux_asciizcp_t ptr2, mmux_asciizcp_t ptr1)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STRCASECMP]]],[[[
+  *result_p = strcasecmp(ptr2, ptr1);
+  return false;
+]]])
+}
+bool
+mmux_libc_strncasecmp (mmux_sint_t * result_p, mmux_asciizcp_t ptr2, mmux_asciizcp_t ptr1, mmux_usize_t len)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STRNCASECMP]]],[[[
+  *result_p = strncasecmp(ptr2, ptr1, len);
+  return false;
+]]])
+}
+bool
+mmux_libc_strverscmp (mmux_sint_t * result_p, mmux_asciizcp_t ptr2, mmux_asciizcp_t ptr1)
+{
+MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STRVERSCMP]]],[[[
+  *result_p = strverscmp(ptr2, ptr1);
+  return false;
+]]])
+}
+
+
+/** --------------------------------------------------------------------
+ ** Collation.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_libc_strcoll (mmux_sint_t * result_p, mmux_asciizcp_t ptr2, mmux_asciizcp_t ptr1)
+{
+  *result_p = strcoll(ptr2, ptr1);
+  return false;
+}
+bool
+mmux_libc_strxfrm (mmux_usize_t * result_size_p, mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr, mmux_usize_t len)
+{
+  *result_size_p = strxfrm(dst_ptr, src_ptr, len);
+  return false;
+}
+
+
 /* end of file */

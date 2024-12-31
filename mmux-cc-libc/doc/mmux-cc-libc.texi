@@ -539,7 +539,7 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Inspecting @asciiz{} strings
 
 
-@deftypefun bool mmux_libc_strlen (mmux_usize_t * result_len_p, mmux_asciizcp_t ptr)
+@deftypefun bool mmux_libc_strlen (mmux_usize_t * @var{result_len_p}, mmux_asciizcp_t @var{ptr})
 @MmuxCInterface{strlen}.
 @end deftypefun
 
@@ -553,32 +553,32 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Duplicating @asciiz{} strings
 
 
-@deftypefun bool mmux_libc_strcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+@deftypefun bool mmux_libc_strcpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr})
 @MmuxCInterface{strcpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_strncpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+@deftypefun bool mmux_libc_strncpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{len})
 @MmuxCInterface{strncpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_stpcpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+@deftypefun bool mmux_libc_stpcpy(mmux_asciizp_t * @var{result_after_ptr_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr})
 @MmuxCInterface{stpcpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_stpncpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+@deftypefun bool mmux_libc_stpncpy(mmux_asciizp_t * @var{result_after_ptr_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{len})
 @MmuxCInterface{stpncpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_strdup (mmux_asciizcp_t * result_oustr_p, mmux_asciizcp_t instr)
+@deftypefun bool mmux_libc_strdup (mmux_asciizcp_t * @var{result_oustr_p}, mmux_asciizcp_t @var{instr})
 @MmuxCInterface{strdup}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_strndup (mmux_asciizcp_t * result_oustr_p, mmux_asciizcp_t instr, mmux_usize_t len)
+@deftypefun bool mmux_libc_strndup (mmux_asciizcp_t * @var{result_oustr_p}, mmux_asciizcp_t @var{instr}, mmux_usize_t @var{len})
 @MmuxCInterface{strndup}.
 @end deftypefun
 
@@ -587,15 +587,57 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Concatenating @asciiz{} strings
 
 
+@deftypefun bool mmux_libc_strcat (mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr})
+@MmuxCInterface{strcat}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strncat (mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr}, mmux_usize_t @var{len})
+@MmuxCInterface{strncat}.
+@end deftypefun
+
 @c page
 @node strings comparison
 @section Comparing @asciiz{} strings
 
 
+@deftypefun bool mmux_libc_strcmp (mmux_sint_t * @var{result_p}, mmux_asciizcp_t @varii{ptr}, mmux_asciizcp_t @vari{ptr})
+@MmuxCInterface{strcmp}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strncmp (mmux_sint_t * @var{result_p}, mmux_asciizcp_t @varii{ptr}, mmux_asciizcp_t @vari{ptr}, mmux_usize_t @var{len})
+@MmuxCInterface{strncmp}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strcasecmp (mmux_sint_t * @var{result_p}, mmux_asciizcp_t @varii{ptr}, mmux_asciizcp_t @vari{ptr})
+@MmuxCInterface{strcasecmp}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strncasecmp (mmux_sint_t * @var{result_p}, mmux_asciizcp_t @varii{ptr}, mmux_asciizcp_t @vari{ptr}, mmux_usize_t @var{len})
+@MmuxCInterface{strncasecmp}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strverscmp (mmux_sint_t * @var{result_p}, mmux_asciizcp_t @varii{ptr}, mmux_asciizcp_t @vari{ptr})
+@MmuxCInterface{strverscmp}.
+@end deftypefun
+
 @c page
 @node strings collation
 @section Collation builtins for @asciiz{} strings
 
+
+@deftypefun bool mmux_libc_strcoll (mmux_sint_t * @var{result_p}, mmux_asciizcp_t @vari{ptr}, mmux_asciizcp_t @varii{ptr})
+@MmuxCInterface{strcoll}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strxfrm (mmux_usize_t * @var{result_size_p}, mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr}, mmux_usize_t @var{len})
+@MmuxCInterface{strxfrm}.
+@end deftypefun
 
 @c page
 @node strings searching

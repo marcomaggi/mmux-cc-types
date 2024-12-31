@@ -308,7 +308,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcat]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(dst_ptr,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(src_ptr,	2);
   {
-    strcat(dst_ptr, src_ptr);
+    mmux_libc_strcat(dst_ptr, src_ptr);
     return MMUX_SUCCESS;
   }
 }
@@ -323,13 +323,13 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncat]]])
 {
   mmux_pointer_t	dst_ptr;
   mmux_pointer_t	src_ptr;
-  mmux_usize_t	len;
+  mmux_usize_t		len;
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(dst_ptr,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(src_ptr,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,		3);
   {
-    strncat(dst_ptr, src_ptr, len);
+    mmux_libc_strncat(dst_ptr, src_ptr, len);
     return MMUX_SUCCESS;
   }
 }
@@ -345,14 +345,18 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcmp]]])
 {
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	ptr1;
   mmux_pointer_t	ptr2;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
   {
-    int		rv = strcmp(ptr2, ptr1);
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_sint_t		rv;
+
+    mmux_libc_strcmp(&rv, ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -364,16 +368,20 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncmp]]])
 {
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	ptr1;
   mmux_pointer_t	ptr2;
-  mmux_usize_t	len;
+  mmux_usize_t		len;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,			4);
   {
-    int		rv = strncmp(ptr2, ptr1, len);
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_sint_t		rv;
+
+    mmux_libc_strncmp(&rv, ptr2, ptr1, len);
+    return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -385,21 +393,19 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcasecmp]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRCASECMP]]],[[[
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	ptr1;
   mmux_pointer_t	ptr2;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
   {
-    int		rv = strcasecmp(ptr2, ptr1);
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_sint_t		rv;
+
+    mmux_libc_strcasecmp(&rv, ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-]]],[[[
-  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -410,23 +416,21 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strncasecmp]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRNCASECMP]]],[[[
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	ptr1;
   mmux_pointer_t	ptr2;
-  mmux_usize_t	len;
+  mmux_usize_t		len;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,			4);
   {
-    int		rv = strncasecmp(ptr2, ptr1, len);
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_sint_t		rv;
+
+    mmux_libc_strncasecmp(&rv, ptr2, ptr1, len);
+    return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-]]],[[[
-  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(5 == argc)]]],
@@ -437,21 +441,19 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strverscmp]]])
 {
-MMUX_BASH_CONDITIONAL_CODE([[[HAVE_STRVERSCMP]]],[[[
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	ptr1;
   mmux_pointer_t	ptr2;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
   {
-    int		rv = strverscmp(ptr2, ptr1);
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_sint_t		rv;
+
+    mmux_libc_strverscmp(&rv, ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
-]]],[[[
-  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language function not available.\n",
-	  MMUX_BASH_BUILTIN_STRING_NAME);
-  return MMUX_FAILURE;
-]]])
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
     [[[(4 == argc)]]],
@@ -465,14 +467,18 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strcoll]]])
 {
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	ptr1;
   mmux_pointer_t	ptr2;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,	3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr2,			2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr1,			3);
   {
-    int		rv = strcoll(ptr2, ptr1);
-    return mmux_sint_bind_to_bash_variable(argv[1], rv, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_sint_t		rv;
+
+    mmux_libc_strcoll(&rv, ptr2, ptr1);
+    return mmux_sint_bind_to_bash_variable(result_varname, rv, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -484,16 +490,20 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strxfrm]]])
 {
+  mmux_asciizcp_t	result_varname;
   mmux_pointer_t	dst_ptr;
   mmux_pointer_t	src_ptr;
   mmux_usize_t		len;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(dst_ptr,	2);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(src_ptr,	3);
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,	4);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(result_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(dst_ptr,		2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(src_ptr,		3);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,			4);
   {
-    mmux_usize_t	result_size = strxfrm(dst_ptr, src_ptr, len);
-    return mmux_usize_bind_to_bash_variable(argv[1], result_size, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_usize_t	result_size;
+
+    mmux_libc_strxfrm(&result_size, dst_ptr, src_ptr, len);
+    return mmux_usize_bind_to_bash_variable(result_varname, result_size, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
