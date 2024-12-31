@@ -56,9 +56,9 @@
 #  include <strings.h>
 #endif
 
-#ifdef HAVE_SYS_STAT_H
-#  include <sys/stat.h>
-#endif
+/* #ifdef HAVE_SYS_STAT_H */
+/* #  include <sys/stat.h> */
+/* #endif */
 
 /* for the type: mode_t, uid_t, gid_t */
 #ifdef HAVE_SYS_TYPES_H
@@ -72,17 +72,17 @@
 
 /* ------------------------------------------------------------------ */
 
-#ifdef HAVE_ARPA_INET_H
-#  include <arpa/inet.h>
-#endif
+/* #ifdef HAVE_ARPA_INET_H */
+/* #  include <arpa/inet.h> */
+/* #endif */
 
-#ifdef HAVE_ASSERT_H
-#  include <assert.h>
-#endif
+/* #ifdef HAVE_ASSERT_H */
+/* #  include <assert.h> */
+/* #endif */
 
-#ifdef HAVE_COMPLEX_H
-#  include <complex.h>
-#endif
+/* #ifdef HAVE_COMPLEX_H */
+/* #  include <complex.h> */
+/* #endif */
 
 #ifdef HAVE_CTYPE_H
 #  include <ctype.h>
@@ -92,65 +92,65 @@
 #  include <errno.h>
 #endif
 
-#ifdef HAVE_FCNTL_H
-#  include <fcntl.h>
-#endif
+/* #ifdef HAVE_FCNTL_H */
+/* #  include <fcntl.h> */
+/* #endif */
 
-#ifdef HAVE_FLOAT_H
-#  include <float.h>
-#endif
+/* #ifdef HAVE_FLOAT_H */
+/* #  include <float.h> */
+/* #endif */
 
-#ifdef HAVE_LIMITS_H
-#  include <limits.h>
-#endif
+/* #ifdef HAVE_LIMITS_H */
+/* #  include <limits.h> */
+/* #endif */
 
-#ifdef HAVE_MATH_H
-#  include <math.h>
-#endif
+/* #ifdef HAVE_MATH_H */
+/* #  include <math.h> */
+/* #endif */
 
-#ifdef HAVE_NETDB_H
-#  include <netdb.h>
-#endif
+/* #ifdef HAVE_NETDB_H */
+/* #  include <netdb.h> */
+/* #endif */
 
-#ifdef HAVE_NETINET_IN_H
-#  include <netinet/in.h>
-#endif
+/* #ifdef HAVE_NETINET_IN_H */
+/* #  include <netinet/in.h> */
+/* #endif */
 
-#ifdef HAVE_NET_IF_H
-#  include <net/if.h>
-#endif
+/* #ifdef HAVE_NET_IF_H */
+/* #  include <net/if.h> */
+/* #endif */
 
-#ifdef HAVE_UTIME_H
-#  include <utime.h>
-#endif
+/* #ifdef HAVE_UTIME_H */
+/* #  include <utime.h> */
+/* #endif */
 
-#ifdef HAVE_STDBOOL_H
-#  include <stdbool.h>
-#endif
+/* #ifdef HAVE_STDBOOL_H */
+/* #  include <stdbool.h> */
+/* #endif */
 
-#ifdef HAVE_SYS_IOCTL_H
-#  include <sys/ioctl.h>
-#endif
+/* #ifdef HAVE_SYS_IOCTL_H */
+/* #  include <sys/ioctl.h> */
+/* #endif */
 
-#ifdef HAVE_SYS_SOCKET_H
-#  include <sys/socket.h>
-#endif
+/* #ifdef HAVE_SYS_SOCKET_H */
+/* #  include <sys/socket.h> */
+/* #endif */
 
-#ifdef HAVE_SYS_TIME_H
-#  include <sys/time.h>
-#endif
+/* #ifdef HAVE_SYS_TIME_H */
+/* #  include <sys/time.h> */
+/* #endif */
 
-#ifdef HAVE_TIME_H
-#  include <time.h>
-#endif
+/* #ifdef HAVE_TIME_H */
+/* #  include <time.h> */
+/* #endif */
 
-#ifdef HAVE_SYS_UIO_H
-#  include <sys/uio.h>
-#endif
+/* #ifdef HAVE_SYS_UIO_H */
+/* #  include <sys/uio.h> */
+/* #endif */
 
-#ifdef HAVE_SYS_UN_H
-#  include <sys/un.h>
-#endif
+/* #ifdef HAVE_SYS_UN_H */
+/* #  include <sys/un.h> */
+/* #endif */
 
 /* ------------------------------------------------------------------ */
 

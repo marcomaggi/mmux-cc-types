@@ -484,7 +484,7 @@ mmux_bash_pointers_error_parsing_argument_at_index (char const * const stemstr, 
 {
   fprintf(stderr, "%s: error parsing argument: expected \"%s\" value at index %d, got: \"%s\"\n",
 	  caller_name, stemstr, argidx, argstr);
-  mmux_bash_pointers_set_ERRNO(EINVAL, caller_name);
+  mmux_bash_pointers_set_ERRNO(MMUX_LIBC_EINVAL, caller_name);
   return MMUX_FAILURE;
 }
 

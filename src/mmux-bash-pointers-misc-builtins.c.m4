@@ -52,7 +52,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
       mmux_bash_rv_t	rv2 = mmux_string_bind_to_bash_variable(argv[2], old_format, MMUX_BASH_BUILTIN_STRING_NAME);
       if (MMUX_SUCCESS != rv2) {
 	mmux_$1_set_output_format(old_format, NULL);
-	mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+	mmux_bash_pointers_set_ERRNO(MMUX_LIBC_EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
 	return rv2;
       }
     }

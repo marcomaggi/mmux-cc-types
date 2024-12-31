@@ -571,7 +571,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_fcntl]]])
 
   default:
     mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[2]);
-    mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_bash_pointers_set_ERRNO(MMUX_LIBC_EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
     return MMUX_FAILURE;
   }
 }
@@ -611,7 +611,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_ioctl]]])
 
   default:
     mmux_libc_dprintfer("%s: error: invalid command parameter \"%s\"\n", MMUX_BASH_BUILTIN_STRING_NAME, argv[2]);
-    mmux_bash_pointers_set_ERRNO(EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
+    mmux_bash_pointers_set_ERRNO(MMUX_LIBC_EINVAL, MMUX_BASH_BUILTIN_STRING_NAME);
     return MMUX_FAILURE;
   }
 }

@@ -340,7 +340,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_addrinfo_calloc]]])
 {
   mmux_asciizcp_t		addrinfo_pointer_varname;
   mmux_sint_t			ai_flags		= 0;
-  mmux_sint_t			ai_family		= AF_UNSPEC;
+  mmux_sint_t			ai_family		= MMUX_LIBC_AF_UNSPEC;
   mmux_sint_t			ai_socktype		= 0;
   mmux_sint_t			ai_protocol		= 0;
   mmux_socklen_t		ai_addrlen		= 0;
@@ -1852,14 +1852,14 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockopt]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(optname,				4);
   {
     switch (optname) {
-    case SO_BROADCAST:
-    case SO_DEBUG:
-    case SO_DONTROUTE:
-    case SO_ERROR:
-    case SO_KEEPALIVE:
-    case SO_OOBINLINE:
-    case SO_REUSEADDR:
-    case SO_TYPE: /* case SO_STYLE: it is an alias for SO_TYPE */
+    case MMUX_LIBC_SO_BROADCAST:
+    case MMUX_LIBC_SO_DEBUG:
+    case MMUX_LIBC_SO_DONTROUTE:
+    case MMUX_LIBC_SO_ERROR:
+    case MMUX_LIBC_SO_KEEPALIVE:
+    case MMUX_LIBC_SO_OOBINLINE:
+    case MMUX_LIBC_SO_REUSEADDR:
+    case MMUX_LIBC_SO_TYPE: /* case MMUX_LIBC_SO_STYLE: it is an alias for SO_TYPE */
       /* The option value is an "int". */
       {
 	mmux_sint_t	optval;
@@ -1869,8 +1869,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockopt]]])
 	return mmux_sint_bind_to_bash_variable(option_value_varname, optval, MMUX_BASH_BUILTIN_STRING_NAME);
       }
 
-    case SO_RCVBUF: /* size of receiving buffer */
-    case SO_SNDBUF: /* size of sending buffer */
+    case MMUX_LIBC_SO_RCVBUF: /* size of receiving buffer */
+    case MMUX_LIBC_SO_SNDBUF: /* size of sending buffer */
       /* The option value is a "size_t". */
       {
 	mmux_usize_t	optval = 0;
@@ -1880,7 +1880,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockopt]]])
 	return mmux_sint_bind_to_bash_variable(option_value_varname, optval, MMUX_BASH_BUILTIN_STRING_NAME);
       }
 
-    case SO_LINGER:
+    case MMUX_LIBC_SO_LINGER:
       /* The option value is a "struct linger". */
       {
 	mmux_libc_linger_t	optval;
@@ -1947,12 +1947,12 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setsockopt]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(optname,	3);
   {
     switch (optname) {
-    case SO_BROADCAST:
-    case SO_DEBUG:
-    case SO_DONTROUTE:
-    case SO_KEEPALIVE:
-    case SO_OOBINLINE:
-    case SO_REUSEADDR:
+    case MMUX_LIBC_SO_BROADCAST:
+    case MMUX_LIBC_SO_DEBUG:
+    case MMUX_LIBC_SO_DONTROUTE:
+    case MMUX_LIBC_SO_KEEPALIVE:
+    case MMUX_LIBC_SO_OOBINLINE:
+    case MMUX_LIBC_SO_REUSEADDR:
       /* The  option  SO_TYPE  ==  SO_STYLE   and  SO_ERROR  are  not  available  for
 	 setting. */
       {
@@ -1967,8 +1967,8 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setsockopt]]])
 	}
       }
 
-    case SO_RCVBUF: /* size of receiving buffer */
-    case SO_SNDBUF: /* size of sending buffer */
+    case MMUX_LIBC_SO_RCVBUF: /* size of receiving buffer */
+    case MMUX_LIBC_SO_SNDBUF: /* size of sending buffer */
       /* The option value is a "size_t". */
       {
 	mmux_usize_t	optval;
@@ -1982,7 +1982,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_setsockopt]]])
 	}
       }
 
-    case SO_LINGER:
+    case MMUX_LIBC_SO_LINGER:
       /* The option value is a "struct linger". */
       {
 	mmux_asciizcp_t	option_value_array_varname;

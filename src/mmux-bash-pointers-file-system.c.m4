@@ -455,7 +455,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_umask]]])
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(old_mask_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_MODE(new_mask,			2);
   {
-    mmux_mode_t		old_mask = umask(new_mask);
+    mmux_mode_t		old_mask;
 
     MMUX_LIBC_FUNCALL(mmux_libc_umask(&old_mask, new_mask));
     return mmux_mode_bind_to_bash_variable(old_mask_varname, old_mask, MMUX_BASH_BUILTIN_STRING_NAME);
