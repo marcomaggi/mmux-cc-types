@@ -66,6 +66,39 @@ mmux_cc_libc_decl bool mmux_libc_strerror (mmux_asciizcp_t * result_error_messag
 
 
 /** --------------------------------------------------------------------
+ ** Strings.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_strlen (mmux_usize_t * result_len_p, mmux_asciizcp_t ptr)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_strnlen (mmux_usize_t * result_len_p, mmux_asciizcp_t ptr, mmux_usize_t maxlen)
+  __attribute__((__nonnull__(1,2)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_strcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_strncpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_stpcpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+  __attribute__((__nonnull__(1,2,3)));
+
+mmux_cc_libc_decl bool mmux_libc_stpncpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+  __attribute__((__nonnull__(1,2,3)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_libc_decl bool mmux_libc_strdup (mmux_asciizcp_t * result_oustr_p, mmux_asciizcp_t instr)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_libc_decl bool mmux_libc_strndup (mmux_asciizcp_t * result_oustr_p, mmux_asciizcp_t instr, mmux_usize_t len)
+  __attribute__((__nonnull__(1,2)));
+
+
+/** --------------------------------------------------------------------
  ** Memory.
  ** ----------------------------------------------------------------- */
 

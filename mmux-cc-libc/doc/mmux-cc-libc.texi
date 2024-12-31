@@ -197,6 +197,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * initialisation::              Library initialisation.
 * errors::                      Errors management.
 * memory::                      Memory management.
+* strings::                     String operations.
 * time::                        Times and dates.
 * system::                      System configuration.
 * persona::                     Persona operations.
@@ -517,6 +518,95 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @deftypefun bool mmux_libc_memmem (mmux_pointer_t * @var{result_p}, mmux_pointer_t @var{haystack_ptr}, mmux_usize_t @var{haystack_len}, mmux_pointer_t @var{needle_ptr}, mmux_usize_t @var{needle_len})
 @MmuxCInterface{memmem}.
 @end deftypefun
+
+@c page
+@node strings
+@chapter String operations
+
+
+@menu
+* strings inspection::          Inspecting @asciiz{} strings.
+* strings duplication::         Duplicating @asciiz{} strings.
+* strings concatenation::       Concatenating @asciiz{} strings.
+* strings comparison::          Comparing @asciiz{} strings.
+* strings collation::           Collation builtins for @asciiz{} strings.
+* strings searching::           Searching in @asciiz{} strings.
+* strings tokens::              Finding tokens in @asciiz{} strings.
+@end menu
+
+@c page
+@node strings inspection
+@section Inspecting @asciiz{} strings
+
+
+@deftypefun bool mmux_libc_strlen (mmux_usize_t * result_len_p, mmux_asciizcp_t ptr)
+@MmuxCInterface{strlen}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strnlen (mmux_usize_t * @var{result_len_p}, mmux_asciizcp_t @var{ptr}, mmux_usize_t @var{maxlen})
+@MmuxCInterface{strnlen}.
+@end deftypefun
+
+@c page
+@node strings duplication
+@section Duplicating @asciiz{} strings
+
+
+@deftypefun bool mmux_libc_strcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+@MmuxCInterface{strcpy}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strncpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+@MmuxCInterface{strncpy}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_stpcpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+@MmuxCInterface{stpcpy}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_stpncpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+@MmuxCInterface{stpncpy}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strdup (mmux_asciizcp_t * result_oustr_p, mmux_asciizcp_t instr)
+@MmuxCInterface{strdup}.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strndup (mmux_asciizcp_t * result_oustr_p, mmux_asciizcp_t instr, mmux_usize_t len)
+@MmuxCInterface{strndup}.
+@end deftypefun
+
+@c page
+@node strings concatenation
+@section Concatenating @asciiz{} strings
+
+
+@c page
+@node strings comparison
+@section Comparing @asciiz{} strings
+
+
+@c page
+@node strings collation
+@section Collation builtins for @asciiz{} strings
+
+
+@c page
+@node strings searching
+@section Searching in @asciiz{} strings
+
+
+@c page
+@node strings tokens
+@section Finding tokens in @asciiz{} strings
+
+
 
 @c page
 @node time
