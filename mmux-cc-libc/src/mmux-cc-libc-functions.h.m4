@@ -43,10 +43,26 @@ mmux_cc_libc_decl bool mmux_cc_libc_init (void);
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_libc_decl mmux_asciizcp_t	mmux_cc_libc_version_string		(void);
-mmux_cc_libc_decl int		mmux_cc_libc_version_interface_current	(void);
-mmux_cc_libc_decl int		mmux_cc_libc_version_interface_revision	(void);
-mmux_cc_libc_decl int		mmux_cc_libc_version_interface_age	(void);
+mmux_cc_libc_decl mmux_asciizcp_t	 mmux_cc_libc_version_string		(void);
+mmux_cc_libc_decl mmux_sint_t		mmux_cc_libc_version_interface_current	(void);
+mmux_cc_libc_decl mmux_sint_t		mmux_cc_libc_version_interface_revision	(void);
+mmux_cc_libc_decl mmux_sint_t		mmux_cc_libc_version_interface_age	(void);
+
+
+/** --------------------------------------------------------------------
+ ** Errors.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_libc_decl bool mmux_libc_errno_ref (mmux_sint_t * result_errnum_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_errno_set (mmux_sint_t errnum);
+
+mmux_cc_libc_decl bool mmux_libc_errno_consume (mmux_sint_t * result_errnum_p)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_libc_decl bool mmux_libc_strerror (mmux_asciizcp_t * result_error_message_p, mmux_sint_t errnum)
+  __attribute__((__nonnull__(1)));
 
 
 /** --------------------------------------------------------------------

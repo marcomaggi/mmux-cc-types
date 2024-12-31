@@ -42,7 +42,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
 
   return (false == rv)? MMUX_SUCCESS : MMUX_FAILURE;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return MMUX_FAILURE;
 ]]])
@@ -141,7 +141,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$4]]],[[[
   }
   MMUX_BASH_BUILTIN_ARG_PARSER_ERROR_BRANCH;
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: predicate \"%s\" not implemented because underlying C language type not available.\n",
 	  __func__);
   return MMUX_FAILURE;
 ]]])

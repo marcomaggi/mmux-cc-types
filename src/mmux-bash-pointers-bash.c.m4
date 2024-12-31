@@ -72,7 +72,7 @@ mmux_bash_builtin_implementation_function (mmux_bash_word_list_t word_list,
     }
     free(argv);
   } else {
-    fprintf(stderr, "MMUX Bash Pointers: error: internal error accessing list of builtin operands\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: error: internal error accessing list of builtin operands\n");
     rv = MMUX_BASH_EXECUTION_FAILURE;
   }
   return rv;
@@ -101,7 +101,7 @@ mmux_bash_builtin_implementation_function_no_options (mmux_bash_word_list_t word
       }
       free(argv);
     } else {
-      fprintf(stderr, "MMUX Bash Pointers: error: internal error accessing list of builtin operands\n");
+      mmux_libc_dprintfer("MMUX Bash Pointers: error: internal error accessing list of builtin operands\n");
       rv = MMUX_BASH_EXECUTION_FAILURE;
     }
     return rv;
@@ -136,7 +136,7 @@ string_bind_to_bash_variable (char const * variable_name, char const * const s_v
     return MMUX_BASH_EXECUTION_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: failed binding value to %s shell variable: \"%s\"=\"%s\"\n",
+      mmux_libc_dprintfer("%s: failed binding value to %s shell variable: \"%s\"=\"%s\"\n",
 	      caller_name, ((global_variable)? " global" : ""), variable_name, s_value);
     }
     return MMUX_BASH_EXECUTION_FAILURE;
@@ -180,7 +180,7 @@ mmux_bash_create_global_string_variable (char const * const variable_name, char 
     return mmux_string_bind_to_bash_variable(variable_name, s_value, caller_name);
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: failed creation of global variable, it already exists: \"%s\"\n", caller_name, variable_name);
+      mmux_libc_dprintfer("%s: failed creation of global variable, it already exists: \"%s\"\n", caller_name, variable_name);
     }
     return MMUX_BASH_EXECUTION_FAILURE;
   }
@@ -192,31 +192,24 @@ mmux_bash_create_global_sint_variable (char const * const variable_name, int val
 
   /* Compute the number of required characters, INCLUDING the terminating zero. */
   {
-    /* According to  the documentation,  when the  output is  truncated: "snprintf()"
-       returns the number of required bytes, EXCLUDING the terminating null byte. */
-    required_nbytes = snprintf(NULL, 0, "%d", value);
+    required_nbytes = mmux_sint_sprint_size(value);
     if (0 > required_nbytes) {
       return MMUX_BASH_EXECUTION_FAILURE;
     }
-    ++required_nbytes;
   }
 
   /* Convert the value to string then store it. */
   {
     char	s_value[required_nbytes];
-    int		to_be_written_chars;
 
-    /* According  to  the documentation:  "snprintf()"  writes  the terminating  null
-       byte. */
-    to_be_written_chars = snprintf(s_value, required_nbytes, "%d", value);
-    if (required_nbytes == (1+to_be_written_chars)) {
-      return mmux_bash_create_global_string_variable(variable_name, s_value, caller_name);
-    } else {
+    if (mmux_sint_sprint(s_value, required_nbytes, value)) {
       if (caller_name) {
-	fprintf(stderr, "%s: failed creation of global sint variable, conversion error: \"%s\"=\"%d\"\n",
-		caller_name, variable_name, value);
+	mmux_libc_dprintfer("%s: failed creation of global sint variable, conversion error: \"%s\"=\"%d\"\n",
+			    caller_name, variable_name, value);
       }
       return MMUX_BASH_EXECUTION_FAILURE;
+    } else {
+      return mmux_bash_create_global_string_variable(variable_name, s_value, caller_name);
     }
   }
 }
@@ -238,7 +231,7 @@ mmux_bash_get_shell_variable_string_value (char const ** p_variable_value, char 
     return MMUX_BASH_EXECUTION_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: failed access to shell variable: \"%s\"\n", caller_name, variable_name);
+      mmux_libc_dprintfer("%s: error: failed access to shell variable: \"%s\"\n", caller_name, variable_name);
     }
     return MMUX_BASH_EXECUTION_FAILURE;
   }
@@ -273,7 +266,7 @@ mmux_bash_index_array_find_existent (mmux_bash_index_array_variable_t * index_ar
     return MMUX_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: could not find existent index array: \"%s\"\n", caller_name, index_array_name);
+      mmux_libc_dprintfer("%s: error: could not find existent index array: \"%s\"\n", caller_name, index_array_name);
     }
     return MMUX_FAILURE;
   }
@@ -300,7 +293,7 @@ mmux_bash_index_array_find_or_make_mutable (mmux_bash_index_array_variable_t * i
     return MMUX_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: failed access to shell array variable: \"%s\"\n", caller_name, index_array_name);
+      mmux_libc_dprintfer("%s: error: failed access to shell array variable: \"%s\"\n", caller_name, index_array_name);
     }
     return MMUX_BASH_EXECUTION_FAILURE;
   }
@@ -317,7 +310,7 @@ mmux_bash_index_array_bind (mmux_bash_index_array_variable_t index_array_variabl
   v = bind_array_element(index_array_variable, index_array_key, (char *)index_array_value, flags);
   if (NULL == v) {
     if (caller_name) {
-      fprintf(stderr, "%s: error: failure while binding index array element\n", caller_name);
+      mmux_libc_dprintfer("%s: error: failure while binding index array element\n", caller_name);
     }
     return MMUX_FAILURE;
   }
@@ -339,7 +332,7 @@ mmux_bash_index_array_ref (mmux_bash_index_array_variable_t index_array_variable
     return MMUX_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: missing requested key '%jd' from index array: '%s'\n", caller_name, index_array_key, var->name);
+      mmux_libc_dprintfer("%s: error: missing requested key '%jd' from index array: '%s'\n", caller_name, index_array_key, var->name);
     }
     return MMUX_FAILURE;
   }
@@ -374,7 +367,7 @@ mmux_bash_assoc_array_find_existent (mmux_bash_assoc_array_variable_t * assoc_ar
     return MMUX_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: could not find existent assoc array: \"%s\"\n", caller_name, assoc_array_name);
+      mmux_libc_dprintfer("%s: error: could not find existent assoc array: \"%s\"\n", caller_name, assoc_array_name);
     }
     return MMUX_FAILURE;
   }
@@ -407,7 +400,7 @@ mmux_bash_assoc_array_find_or_make_mutable (mmux_bash_assoc_array_variable_t * a
     return MMUX_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: failed access to shell array variable: \"%s\"\n", caller_name, assoc_array_name);
+      mmux_libc_dprintfer("%s: error: failed access to shell array variable: \"%s\"\n", caller_name, assoc_array_name);
     }
     return MMUX_BASH_EXECUTION_FAILURE;
   }
@@ -444,7 +437,7 @@ mmux_bash_assoc_array_bind (mmux_bash_assoc_array_variable_t assoc_array_variabl
   rv = bind_assoc_variable(assoc_array_variable, var->name, (char *)internal_assoc_array_key, (char *)assoc_array_value, flags);
   if (NULL == rv) {
     if (caller_name) {
-      fprintf(stderr, "%s: error: failure while binding assoc array element\n", caller_name);
+      mmux_libc_dprintfer("%s: error: failure while binding assoc array element\n", caller_name);
     }
     return MMUX_FAILURE;
   }
@@ -467,7 +460,7 @@ mmux_bash_assoc_array_ref (mmux_bash_assoc_array_variable_t assoc_array_variable
     return MMUX_SUCCESS;
   } else {
     if (caller_name) {
-      fprintf(stderr, "%s: error: missing requested key '%s' from associative array: '%s'\n", caller_name, assoc_array_key, var->name);
+      mmux_libc_dprintfer("%s: error: missing requested key '%s' from associative array: '%s'\n", caller_name, assoc_array_key, var->name);
     }
     return MMUX_FAILURE;
   }
@@ -482,7 +475,7 @@ mmux_bash_rv_t
 mmux_bash_pointers_error_parsing_argument_at_index (char const * const stemstr, char const * const argstr,
 						    mmux_uint_t argidx, char const * const caller_name)
 {
-  fprintf(stderr, "%s: error parsing argument: expected \"%s\" value at index %d, got: \"%s\"\n",
+  mmux_libc_dprintfer("%s: error parsing argument: expected \"%s\" value at index %d, got: \"%s\"\n",
 	  caller_name, stemstr, argidx, argstr);
   mmux_bash_pointers_set_ERRNO(MMUX_LIBC_EINVAL, caller_name);
   return MMUX_FAILURE;

@@ -38,7 +38,7 @@ m4_define([[[DEFINE_MATH_CONSTANTS_SINGLE_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MAIN([
 MMUX_BASH_CONDITIONAL_CODE([[[$3]]],[[[
   return mmux_$1_bind_to_bash_variable(argv[1], mmux_$1_constant_$2(), MMUX_BASH_BUILTIN_STRING_NAME);
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -96,13 +96,13 @@ m4_define([[[DEFINE_UNARY_BUILTIN]]],[[[m4_ifelse([[[$3]]],,,[[[MMUX_BASH_BUILTI
 MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   mmux_$1_t	rop, op;
 
-  if (0) { fprintf(stderr, "%s: ROPVAR=%s, OP=%s\n", __func__, argv[1], argv[2]); }
+  if (0) { mmux_libc_dprintfer("%s: ROPVAR=%s, OP=%s\n", __func__, argv[1], argv[2]); }
   $4(op, 2);
 
   rop = mmux_$1_$2(op);
   return mmux_$1_bind_to_bash_variable(argv[1], rop, MMUX_BASH_BUILTIN_STRING_NAME);
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -130,7 +130,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   rop = mmux_$1_$2(op1, op2);
   return mmux_$1_bind_to_bash_variable(argv[1], rop, MMUX_BASH_BUILTIN_STRING_NAME);
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -159,7 +159,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$5]]],[[[
   rop = mmux_$1_$2(N, op);
   return mmux_$1_bind_to_bash_variable(argv[1], rop, MMUX_BASH_BUILTIN_STRING_NAME);
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: builtin \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])

@@ -195,6 +195,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * overview::                    Overview of the package.
 * version::                     Version functions.
 * initialisation::              Library initialisation.
+* errors::                      Errors management.
 * memory::                      Memory management.
 * time::                        Times and dates.
 * system::                      System configuration.
@@ -337,6 +338,27 @@ Return an integer representing the library interface current age.
 @deftypefun bool mmux_cc_libc_init (void)
 Initialise library's internal state; we can safely call this function multimple times.  When
 successful return @cfalse{}; otherwise return @ctrue{}.
+@end deftypefun
+
+@c page
+@node errors
+@chapter Errors management
+
+
+@deftypefun bool mmux_libc_errno_set (mmux_sint_t @var{errnum})
+@deftypefunx bool mmux_libc_errno_ref (mmux_sint_t * @var{result_errnum_p})
+Setter and getter for the standard @code{errno} variable.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_errno_consume (mmux_sint_t * @var{result_errnum_p})
+Store the current value of @code{errno} in the location referenced by @var{result_errnum_p}, then
+reset @code{errno} to zero.
+@end deftypefun
+
+
+@deftypefun bool mmux_libc_strerror (mmux_asciizcp_t * @var{result_error_message_p}, mmux_sint_t @var{errnum})
+@MmuxCInterface{strerror}.
 @end deftypefun
 
 @c page

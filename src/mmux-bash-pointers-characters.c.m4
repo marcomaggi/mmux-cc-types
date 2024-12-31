@@ -48,7 +48,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_from_string]]])
     mmux_usize_t	len = strlen(string);
 
     if (idx >= len) {
-      fprintf(stderr, "%s: the index %lu is too big for the string length %lu\n", MMUX_BASH_BUILTIN_STRING_NAME, idx, len);
+      mmux_libc_dprintfer("%s: the index %lu is too big for the string length %lu\n", MMUX_BASH_BUILTIN_STRING_NAME, idx, len);
       return MMUX_FAILURE;
     } else {
       mmux_schar_t	ch = string[idx];

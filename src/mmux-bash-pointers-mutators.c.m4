@@ -56,7 +56,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     return MMUX_SUCCESS;
   }
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])
@@ -85,7 +85,7 @@ MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
     return MMUX_SUCCESS;
   }
 ]]],[[[
-  fprintf(stderr, "MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
+  mmux_libc_dprintfer("MMUX Bash Pointers: error: mutator \"%s\" not implemented because underlying C language type not available.\n",
 	  MMUX_BASH_BUILTIN_STRING_NAME);
   return MMUX_FAILURE;
 ]]])

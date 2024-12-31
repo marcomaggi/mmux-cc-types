@@ -60,21 +60,23 @@ mmux_bash_pointers_version_interface_age (void)
  ** ----------------------------------------------------------------- */
 
 mmux_bash_rv_t
-mmux_bash_pointers_set_ERRNO (int errnum, char const * const who)
+mmux_bash_pointers_set_ERRNO (int errnum, mmux_asciizcp_t const who)
 {
   return mmux_sint_bind_to_bash_variable("ERRNO", errnum, who);
 }
 mmux_bash_rv_t
-mmux_bash_pointers_consume_errno (char const * const who)
+mmux_bash_pointers_consume_errno (mmux_asciizcp_t const who)
 {
-  mmux_bash_rv_t	brv;
+  mmux_sint_t		errnum;
 
-  brv = mmux_bash_pointers_set_ERRNO(errno, who);
-  errno = 0;
-  return brv;
+  if (mmux_libc_errno_consume(&errnum)) {
+    return MMUX_FAILURE;
+  } else {
+    return mmux_bash_pointers_set_ERRNO(errnum, who);
+  }
 }
 mmux_bash_rv_t
-mmux_bash_pointers_consume_errno_return_failure (char const * const who)
+mmux_bash_pointers_consume_errno_return_failure (mmux_asciizcp_t const who)
 {
   mmux_bash_pointers_consume_errno(who);
   return MMUX_FAILURE;
@@ -87,7 +89,7 @@ m4_dnl Helper macros for library initialisation.
 m4_dnl --------------------------------------------------------------------
 
 m4_define([[[MMUX_DEFINE_SIZEOF_VARIABLE]]],[[[MMUX_BASH_CONDITIONAL_CODE([[[$2]]],[[[
-  if (0) { fprintf(stderr, "%s: sizeof %s\n", __func__, "$1"); }
+  if (0) { mmux_libc_dprintfer("%s: sizeof %s\n", __func__, "$1"); }
   mmux_bash_create_global_sint_variable("mmux_[[[]]]MMUX_M4_TOLOWER([[[$1]]])[[[]]]_SIZEOF", mmux_$1_sizeof(),
                                         MMUX_BASH_BUILTIN_STRING_NAME);
 ]]])]]])
@@ -163,37 +165,37 @@ m4_divert(0)m4_dnl
 MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
 {
   if (mmux_cc_types_init()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising MMUX CC Types\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising MMUX CC Types\n");
     return MMUX_FAILURE;
   }
 
   if (mmux_cc_libc_init()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising MMUX CC Libc\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising MMUX CC Libc\n");
     return MMUX_FAILURE;
   }
 
   if (MMUX_SUCCESS != mmux_bash_pointers_init_time_module()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising time module\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising time module\n");
     return MMUX_FAILURE;
   }
 
   if (MMUX_SUCCESS != mmux_bash_pointers_init_file_descriptors_module()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising file descriptors module\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising file descriptors module\n");
     return MMUX_FAILURE;
   }
 
   if (MMUX_SUCCESS != mmux_bash_pointers_init_file_system_module()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising file system module\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising file system module\n");
     return MMUX_FAILURE;
   }
 
   if (MMUX_SUCCESS != mmux_bash_pointers_init_sockets_module()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising sockets module\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising sockets module\n");
     return MMUX_FAILURE;
   }
 
   if (MMUX_SUCCESS != mmux_bash_pointers_init_system_configuration_module()) {
-    fprintf(stderr, "MMUX Bash Pointers: internal error: initialising system configuration module\n");
+    mmux_libc_dprintfer("MMUX Bash Pointers: internal error: initialising system configuration module\n");
     return MMUX_FAILURE;
   }
 

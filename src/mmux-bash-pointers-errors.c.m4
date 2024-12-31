@@ -35,13 +35,16 @@
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_strerror]]])
 {
-  int	errnum;
+  mmux_asciizcp_t	errmsg_varname;
+  mmux_sint_t		errnum;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(errnum,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(errmsg_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(errnum,			2);
   {
-    char *	errmsg = strerror(errnum);
+    mmux_asciizcp_t	errmsg;
 
-    return mmux_string_bind_to_bash_variable(argv[1], errmsg, MMUX_BASH_BUILTIN_STRING_NAME);
+    MMUX_LIBC_FUNCALL(mmux_libc_strerror(&errmsg, errnum));
+    return mmux_string_bind_to_bash_variable(errmsg_varname, errmsg, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[mmux_libc_strerror]]],
@@ -64,7 +67,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_errno_to_string]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SINT(errnum,	2);
   {
-    char *	errsym = strerror(errnum);
+    mmux_asciizcp_t	errsym;
 
     /* We  use this  chain of  ifs  rather than  a  big switch  because the  compiler
        complains if  there are cases  with the same constant;  using ifs we  only get
