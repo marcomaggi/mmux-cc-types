@@ -4204,6 +4204,11 @@ development takes place at:
 
 @center @value{GithubUrl}
 
+@noindent
+the package @mmux{} CC Types is available online:
+
+@center @url{https://github.com/marcomaggi/mmux-cc-types/}
+
 @c page
 @node concept index
 @appendix An entry for each concept

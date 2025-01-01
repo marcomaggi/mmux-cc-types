@@ -20,7 +20,7 @@ Topics
 ---------------
 
 This package implements loadable builtins for  the GNU Bash shell; to do
-so it installs a C11 language library  and a shell script which is meant
+so it installs a C11 language  library and shell scripts which are meant
 to be sourced in a GNU Bash session or script.
 
   This package makes raw memory  pointers available in shell scripts; it
@@ -42,12 +42,16 @@ standard library.
 
   The package targets POSIX systems.
 
-  To  support  the  decimal  floating-point  numeric  types  _Decimal32,
-_Decimal64,  _Decimal128, this  package relies  on the  external package
-"libdfp" (see Resources).
+  This package depends upon external packages (see Resources):
+
+* MMUX CC Types at least version v0.1.0-devel.0, it implements a unified
+  API to use the standard C11 language numeric data types;
+
+* MMUX CC Libc at least  version v0.1.0-devel.0, it implements a unified
+  API to the facilities implemented by the C language standard library.
 
   Only for  testing: this package  depends on the external  package MBFL
-(at least version v3.0.0-devel.9).
+(see Resources), at least version v3.0.0-devel.9.
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
 systems;  only to  build from  a  repository checkout:  it requires  the
@@ -66,7 +70,7 @@ system.
 2. License
 ----------
 
-Copyright (c) 2024 Marco Maggi
+Copyright (c) 2024, 2025 Marco Maggi
 <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it
@@ -187,13 +191,17 @@ the documentation is available online:
 
       <https://marcomaggi.github.io/docs/mmux-bash-pointers.html>
 
+the package MMUX CC Types is available online:
+
+	     <https://github.com/marcomaggi/mmux-cc-types/>
+
+the package MMUX CC Libc is available online:
+
+	     <https://github.com/marcomaggi/mmux-cc-libc/>
+
 the package MBFL is available online:
 
 		 <https://github.com/marcomaggi/mbfl/>
-
-the package "libdfp" is available online:
-
-		   <https://github.com/libdfp/libdfp>
 
 the GNU Project software can be found here:
 

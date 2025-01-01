@@ -2,14 +2,14 @@
 #
 
 AC_PREREQ([2.72])
-MMUX_PKG_VERSIONS([0],[1],[0],[devel.1])
+MMUX_PKG_VERSIONS([0],[1],[0],[devel.0])
 AC_INIT([MMUX CC Libc],[MMUX_PACKAGE_VERSION],
   [mrc.mgg@gmail.com],
   [mmux-cc-libc],[https://github.com/marcomaggi/mmux-cc-libc])
 MMUX_INIT
 MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_cc_libc],0,0,0)
 AC_REVISION([0.1])
-AC_COPYRIGHT([Copyright (c) 2024 Marco Maggi <mrc.mgg@gmail.com>
+AC_COPYRIGHT([Copyright (c) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it
 under  the  terms of  the GNU  General Public  License as  published  by

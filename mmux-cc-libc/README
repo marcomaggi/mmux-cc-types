@@ -37,7 +37,7 @@ the new  packages of today  will be the  old packages of  tomorrow.  The
 package relies on "pkg-config" to find the dependencies installed on the
 system.
 
-  The package depends upon the external packages:
+  The package depends upon the external packages (see Resources):
 
 * MMUX CC Types at least version 0.1.0-devel.0.
 
@@ -45,7 +45,7 @@ system.
 2. License
 ----------
 
-Copyright (c) 2024 Marco Maggi
+Copyright (c) 2024, 2025 Marco Maggi
 <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it

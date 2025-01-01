@@ -34,7 +34,7 @@
 
 @c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
 @c list of copyright years.
-@set COPYRIGHT_YEARS            2024
+@set COPYRIGHT_YEARS            2024, 2025
 
 @c ------------------------------------------------------------
 
@@ -13168,13 +13168,19 @@ development takes place at:
 @center @value{GithubUrl}
 
 @noindent
+the package @mmux{} CC Types is available online:
+
+@center @url{https://github.com/marcomaggi/mmux-cc-types/}
+
+@noindent
+the package @mmux{} CC Libc is available online:
+
+@center @url{https://github.com/marcomaggi/mmux-cc-libc/}
+
+@noindent
 the package @mbfl{} is available online:
 
 @center @url{http://github.com/marcomaggi/mbfl/}
-
-the package @code{libdfp} is available online:
-
-@center @url{https://github.com/libdfp/libdfp}
 
 @c page
 @node concept index
