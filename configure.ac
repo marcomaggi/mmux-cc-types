@@ -2,12 +2,12 @@
 #
 
 AC_PREREQ([2.72])
-MMUX_PKG_VERSIONS([0],[1],[0],[devel.1])
-AC_INIT([MMUX Bash Pointers],[MMUX_PACKAGE_VERSION],
+MMUX_PKG_VERSIONS([0],[1],[0],[devel.0])
+AC_INIT([MMUX CC Types],[MMUX_PACKAGE_VERSION],
   [mrc.mgg@gmail.com],
-  [mmux-bash-pointers],[https://github.com/marcomaggi/mmux-bash-pointers])
+  [mmux-cc-types],[https://github.com/marcomaggi/mmux-cc-types])
 MMUX_INIT
-MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_bash_pointers],0,0,0)
+MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_cc_types],0,0,0)
 AC_REVISION([0.1])
 AC_COPYRIGHT([Copyright (c) 2024 Marco Maggi <mrc.mgg@gmail.com>
 
@@ -66,52 +66,20 @@ AC_CACHE_SAVE
 PKG_PREREQ([0.29])
 PKG_INSTALLDIR
 MMUX_CHECK_PKG_CONFIG_MACROS
-PKG_CHECK_MODULES([BASH],[bash],,[AC_MSG_WARN([package GNU Bash not found])])
-
-# This is for the "basename()" and similar functions from GNU C Library.
-AC_CHECK_HEADERS([libgen.h])
 
 AC_SEARCH_LIBS(cos, m,, [AC_MSG_ERROR([Cannot find libm])])
-MBFL_SETUP_FOR_TESTING([v3.0.0])
 
 AC_CACHE_SAVE
 
 
-#### inspect GNU Bash header files
+#### check for C language types
 
-m4_define([MMUX_BASH_INCLUDE_FILES],[
-#ifdef HAVE_BASHTYPES_H
-#  include <bashtypes.h>
-#endif
+MMUX_CC_CHECK_STANDARD_TYPES
+MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_FLOAT
+MMUX_CC_CHECK_STANDARD_TYPE_EXTENSION_DECIMAL_FLOAT
 
-#ifdef HAVE_BASHJMP_H
-#  include <bashjmp.h>
-#endif
-
-#ifdef HAVE_BUILTINS_H
-#  include <builtins.h>
-#endif
-
-#ifdef HAVE_SHELL_H
-#  include <shell.h>
-#endif
-
-#ifdef HAVE_COMMON_H
-#  include <common.h>
-#endif
-])
-
-AC_DEFUN([MMUX_BASH_CONSTANT_TEST],[MMUX_CC_DETERMINE_VALUEOF([$1],[$1],[MMUX_BASH_INCLUDE_FILES])])
-AC_DEFUN([MMUX_BASH_CONSTANT_TESTS],[m4_map_args_w($1,[MMUX_BASH_CONSTANT_TEST(],[)])])
-
-MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([CFLAGS],[" $BASH_CFLAGS"],
-  [MMUX_AUTOCONF_SAVE_SHELL_VARIABLE_WHILE_APPENDING([LIBS],[" $BASH_LIBS"],
-     [AC_CHECK_HEADERS([bashtypes.h bashjmp.h builtins.h shell.h common.h],,
-        [AC_MSG_ERROR([unable to find all the GNU Bash header files])],
-        [MMUX_BASH_INCLUDE_FILES])
-      MMUX_BASH_CONSTANT_TESTS([BUILTIN_ENABLED EXECUTION_SUCCESS EXECUTION_FAILURE EX_USAGE])])])
-
-AC_CACHE_SAVE
+MMUX_CC_INSPECT_STANDARD_TYPES
+MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES
 
 
 #### external packages
@@ -132,14 +100,12 @@ AS_VAR_IF(with_emacs,'yes',
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
-  [src/mmux-bash-pointers-config.h]
-  [src/m4/mmux-bash-pointers-config.m4]
+  [src/mmux-cc-types-config.h]
+  [src/m4/mmux-cc-types-config.m4]
   [doc/mmux-version.texi]
-  [meta/scripts/mmux-bash-pointers.pc]
+  [meta/scripts/mmux-cc-types.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT
-#AC_CONFIG_SUBDIRS([mmux-cc-types])
-AC_CONFIG_SUBDIRS([mmux-cc-libc])
 AC_OUTPUT
 
 ### end of file
