@@ -7,7 +7,7 @@
 
 	This module implements file system interface builtins.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -818,14 +818,10 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_utimbuf_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
   {
-    mmux_libc_utimbuf_t *	utimbuf_pointer = calloc(1, sizeof(mmux_libc_utimbuf_t));
+    mmux_libc_utimbuf_t *	utimbuf_pointer;
 
-    if (utimbuf_pointer) {
-      return mmux_pointer_bind_to_bash_variable(pointer_varname, utimbuf_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&utimbuf_pointer, 1, sizeof(mmux_libc_utimbuf_t)));
+    return mmux_pointer_bind_to_bash_variable(pointer_varname, utimbuf_pointer, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],

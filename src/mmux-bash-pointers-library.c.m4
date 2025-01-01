@@ -7,7 +7,7 @@
 
 	This module implements library initialisation and version numbers inspection.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -549,6 +549,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_bash_pointers_library_init]]])
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[F_SETOWN]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[F_UNLCK]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[F_WRLCK]]]);
+    MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[FD_SETSIZE]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[MAXSYMLINKS]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[O_ACCMODE]]]);
     MMUX_DEFINE_INT_CONSTANT_VARIABLE([[[O_APPEND]]]);

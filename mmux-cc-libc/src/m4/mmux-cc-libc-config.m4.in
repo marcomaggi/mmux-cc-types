@@ -8,7 +8,7 @@ m4_dnl Abstract
 m4_dnl
 m4_dnl		This library defines macros to configure the package.
 m4_dnl
-m4_dnl Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+m4_dnl Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 m4_dnl
 m4_dnl
 m4_dnl This program is free  software: you can redistribute it and/or  modify it under the
@@ -226,6 +226,7 @@ m4_define([[[mmux_libc_VALUEOF_F_SETLKW]]],			[[[@MMUX_VALUEOF_F_SETLKW@]]])
 m4_define([[[mmux_libc_VALUEOF_F_SETOWN]]],			[[[@MMUX_VALUEOF_F_SETOWN@]]])
 m4_define([[[mmux_libc_VALUEOF_F_UNLCK]]],			[[[@MMUX_VALUEOF_F_UNLCK@]]])
 m4_define([[[mmux_libc_VALUEOF_F_WRLCK]]],			[[[@MMUX_VALUEOF_F_WRLCK@]]])
+m4_define([[[mmux_libc_VALUEOF_FD_SETSIZE]]],			[[[@MMUX_VALUEOF_FD_SETSIZE@]]])
 m4_define([[[mmux_libc_VALUEOF_MAXSYMLINKS]]],			[[[@MMUX_VALUEOF_MAXSYMLINKS@]]])
 m4_define([[[mmux_libc_VALUEOF_O_ACCMODE]]],			[[[@MMUX_VALUEOF_O_ACCMODE@]]])
 m4_define([[[mmux_libc_VALUEOF_O_APPEND]]],			[[[@MMUX_VALUEOF_O_APPEND@]]])

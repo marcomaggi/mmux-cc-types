@@ -8,7 +8,7 @@
 	This heaser  defines constants.  It must  be included in both  the public and
 	the private headder files.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -206,6 +206,7 @@ MMUX_LIBC_DEFINE_ENUM_CONSTANT(F_SETLKW)
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(F_SETOWN)
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(F_UNLCK)
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(F_WRLCK)
+MMUX_LIBC_DEFINE_ENUM_CONSTANT(FD_SETSIZE)
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(MAXSYMLINKS)
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(O_ACCMODE)
 MMUX_LIBC_DEFINE_ENUM_CONSTANT(O_APPEND)

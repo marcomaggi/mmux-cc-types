@@ -8,7 +8,7 @@
 	This header file is for internal definitions.  It must be included by all the
 	source files in this package.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -38,24 +38,9 @@
 
 #include <mmux-bash-pointers.h>
 
-#ifdef HAVE_STDLIB_H
-#  include <stdlib.h>
-#endif
-
+/* We need this for "strlen()". */
 #ifdef HAVE_STRING_H
 #  include <string.h>
-#endif
-
-#ifdef HAVE_STRINGS_H
-#  include <strings.h>
-#endif
-
-#ifdef HAVE_CTYPE_H
-#  include <ctype.h>
-#endif
-
-#ifdef HAVE_REGEX_H
-#  include <regex.h>
 #endif
 
 

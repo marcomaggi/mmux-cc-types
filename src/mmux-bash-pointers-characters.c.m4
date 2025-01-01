@@ -7,7 +7,7 @@
 
 	This module implements character builtins.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -45,7 +45,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_schar_from_string]]])
     MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(idx,	3);
   }
   {
-    mmux_usize_t	len = strlen(string);
+    mmux_usize_t	len;
+
+    mmux_libc_strlen(&len, string);
 
     if (idx >= len) {
       mmux_libc_dprintfer("%s: the index %lu is too big for the string length %lu\n", MMUX_BASH_BUILTIN_STRING_NAME, idx, len);
@@ -127,8 +129,9 @@ m4_define([[[DEFINE_CHARACTER_CASE_CONVERSION_BUILTIN]]],[[[MMUX_BASH_BUILTIN_MA
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(output_ch_varname,	1);
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_SCHAR(input_ch,	2);
   {
-    mmux_schar_t	output_ch = $1(input_ch);
+    mmux_schar_t	output_ch;
 
+    mmux_libc_$1(&output_ch, input_ch);
     return mmux_schar_bind_to_bash_variable(output_ch_varname, output_ch, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }

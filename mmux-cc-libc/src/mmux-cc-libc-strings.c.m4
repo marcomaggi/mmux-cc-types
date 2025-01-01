@@ -7,7 +7,7 @@
 
 	This module implements the strings API.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -65,25 +65,25 @@ MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STRNLEN]]],[[[
  ** ----------------------------------------------------------------- */
 
 bool
-mmux_libc_strcpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+mmux_libc_strcpy (mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr)
 {
   strcpy(dst_ptr, src_ptr);
   return false;
 }
 bool
-mmux_libc_strncpy (mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+mmux_libc_strncpy (mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr, mmux_usize_t len)
 {
   strncpy(dst_ptr, src_ptr, len);
   return false;
 }
 bool
-mmux_libc_stpcpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr)
+mmux_libc_stpcpy (mmux_asciizp_t * result_after_ptr_p, mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr)
 {
   *result_after_ptr_p = stpcpy(dst_ptr, src_ptr);
   return false;
 }
 bool
-mmux_libc_stpncpy(mmux_asciizp_t * result_after_ptr_p, mmux_pointer_t dst_ptr, mmux_pointer_t src_ptr, mmux_usize_t len)
+mmux_libc_stpncpy (mmux_asciizp_t * result_after_ptr_p, mmux_asciizp_t dst_ptr, mmux_asciizcp_t src_ptr, mmux_usize_t len)
 {
 MMUX_CONDITIONAL_FUNCTION_BODY([[[HAVE_STPNCPY]]],[[[
   *result_after_ptr_p = stpncpy(dst_ptr, src_ptr, len);

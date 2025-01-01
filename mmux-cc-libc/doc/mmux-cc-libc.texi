@@ -1059,22 +1059,22 @@ if (mmux_libc_reallocarray(&P, 456, sizeof(mmux_double_t))) @{
 @section Duplicating @asciiz{} strings
 
 
-@deftypefun bool mmux_libc_strcpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr})
+@deftypefun bool mmux_libc_strcpy (mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr})
 @MmuxCInterface{strcpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_strncpy (mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{len})
+@deftypefun bool mmux_libc_strncpy (mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr}, mmux_usize_t @var{len})
 @MmuxCInterface{strncpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_stpcpy(mmux_asciizp_t * @var{result_after_ptr_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr})
+@deftypefun bool mmux_libc_stpcpy(mmux_asciizp_t * @var{result_after_ptr_p}, mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr})
 @MmuxCInterface{stpcpy}.
 @end deftypefun
 
 
-@deftypefun bool mmux_libc_stpncpy(mmux_asciizp_t * @var{result_after_ptr_p}, mmux_pointer_t @var{dst_ptr}, mmux_pointer_t @var{src_ptr}, mmux_usize_t @var{len})
+@deftypefun bool mmux_libc_stpncpy(mmux_asciizp_t * @var{result_after_ptr_p}, mmux_asciizp_t @var{dst_ptr}, mmux_asciizcp_t @var{src_ptr}, mmux_usize_t @var{len})
 @MmuxCInterface{stpncpy}.
 @end deftypefun
 

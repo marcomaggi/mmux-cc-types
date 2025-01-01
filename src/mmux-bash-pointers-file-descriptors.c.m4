@@ -7,7 +7,7 @@
 
 	This module implements core file descriptor builtins.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -1350,10 +1350,7 @@ mmux_bash_pointers_init_file_descriptors_module (void)
 {
   mmux_bash_rv_t	rv;
 
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_FD_SETSIZE", FD_SETSIZE, NULL);
-  if (MMUX_SUCCESS != rv) { return rv; }
-
-  rv = mmux_bash_create_global_sint_variable("mmux_libc_fd_set_SIZEOF", sizeof(fd_set), NULL);
+  rv = mmux_bash_create_global_sint_variable("mmux_libc_fd_set_SIZEOF", sizeof(mmux_libc_fd_set_t), NULL);
   if (MMUX_SUCCESS != rv) { return rv; }
 
   rv = mmux_bash_create_global_sint_variable("mmux_libc_iovec_SIZEOF", sizeof(mmux_libc_iovec_t), NULL);

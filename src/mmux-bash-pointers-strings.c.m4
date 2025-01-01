@@ -7,7 +7,7 @@
 
 	This module implements ASCIIZ string builtins.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -35,20 +35,18 @@
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_from_bash_string]]])
 {
-  char const *	str;
+  mmux_asciizcp_t	pointer_varname;
+  mmux_asciizcp_t	str;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(str,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(pointer_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(str,			2);
   {
     size_t	len = strlen(str);
-    void *	ptr = malloc(1+len);
+    void *	ptr;
 
-    if (ptr) {
-      memcpy(ptr, str, 1+len);
-      return mmux_pointer_bind_to_bash_variable(argv[1], ptr, MMUX_BASH_BUILTIN_STRING_NAME);
-    } else {
-      mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-      return MMUX_FAILURE;
-    }
+    MMUX_LIBC_FUNCALL(mmux_libc_malloc(&ptr, 1+len));
+    mmux_libc_strncpy(ptr, str, 1+len);
+    return mmux_pointer_bind_to_bash_variable(pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
 MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
@@ -60,15 +58,17 @@ MMUX_BASH_DEFINE_TYPICAL_BUILTIN_FUNCTION([[[MMUX_BASH_BUILTIN_IDENTIFIER]]],
 
 MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_to_bash_string]]])
 {
-  void *	ptr;
+  mmux_asciizcp_t	string_varname;
+  mmux_pointer_t	ptr;
 
-  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,	2);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(string_varname,	1);
+  MMUX_BASH_PARSE_BUILTIN_ARGNUM_POINTER(ptr,			2);
   {
     if (3 == argc) {
       char *	str = ptr;
-      return mmux_string_bind_to_bash_variable(argv[1], str, MMUX_BASH_BUILTIN_STRING_NAME);
+      return mmux_string_bind_to_bash_variable(string_varname, str, MMUX_BASH_BUILTIN_STRING_NAME);
     } else {
-      size_t	len;
+      mmux_usize_t	len;
 
       MMUX_BASH_PARSE_BUILTIN_ARGNUM_USIZE(len,	3);
       {
@@ -79,19 +79,17 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_pointer_to_bash_string]]])
 	 * I  really want  it.  But  who knows  how big  this string  can be?   Uffa!
 	 * (Marco Maggi; Nov 6, 2024)
 	 */
-	char *	str = malloc(1+len);
+	char *	str;
 
-	if (str) {
-	  memcpy(str, ptr, len);
+	MMUX_LIBC_FUNCALL(mmux_libc_malloc(&str, 1+len));
+	{
+	  mmux_libc_strncpy(str, ptr, len);
 	  str[len] = '\0';
 	  {
-	    mmux_bash_rv_t	rv = mmux_string_bind_to_bash_variable(argv[1], str, MMUX_BASH_BUILTIN_STRING_NAME);
-	    free(str);
-	    return rv;
+	    mmux_bash_rv_t	brv = mmux_string_bind_to_bash_variable(string_varname, str, MMUX_BASH_BUILTIN_STRING_NAME);
+	    mmux_libc_free(str);
+	    return brv;
 	  }
-	} else {
-	  mmux_bash_pointers_consume_errno(MMUX_BASH_BUILTIN_STRING_NAME);
-	  return MMUX_FAILURE;
 	}
       }
     }

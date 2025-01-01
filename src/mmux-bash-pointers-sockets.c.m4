@@ -7,7 +7,7 @@
 
 	This module implements sockets builtins.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -452,8 +452,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_servent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(servent_pointer_varname,	1);
   {
-    mmux_libc_servent_t *	ptr = calloc(1, sizeof(mmux_libc_servent_t));
+    mmux_libc_servent_t *	ptr;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&ptr, 1, sizeof(mmux_libc_servent_t)));
     return mmux_pointer_bind_to_bash_variable(servent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -486,8 +487,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_protoent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(protoent_pointer_varname,	1);
   {
-    mmux_libc_protoent_t *	ptr = calloc(1, sizeof(mmux_libc_protoent_t));
+    mmux_libc_protoent_t *	ptr;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&ptr, 1, sizeof(mmux_libc_protoent_t)));
     return mmux_pointer_bind_to_bash_variable(protoent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -519,8 +521,9 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_netent_calloc]]])
 
   MMUX_BASH_PARSE_BUILTIN_ARGNUM_BASH_PARM(netent_pointer_varname,	1);
   {
-    mmux_libc_netent_t *	ptr = calloc(1, sizeof(mmux_libc_netent_t));
+    mmux_libc_netent_t *	ptr;
 
+    MMUX_LIBC_FUNCALL(mmux_libc_calloc(&ptr, 1, sizeof(mmux_libc_netent_t)));
     return mmux_pointer_bind_to_bash_variable(netent_pointer_varname, ptr, MMUX_BASH_BUILTIN_STRING_NAME);
   }
 }
@@ -1548,7 +1551,7 @@ MMUX_BASH_BUILTIN_MAIN([[[mmux_libc_getsockname]]])
 	return brv;
 
       error_binding_variables:
-	free(sockaddr_pointer);
+	mmux_libc_free(sockaddr_pointer);
 	return brv;
       }
     }

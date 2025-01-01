@@ -8,7 +8,7 @@
 	This is the public  header file of the library, defining  the public API.  It
 	must be included in all the code that uses the library.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -88,6 +88,8 @@ extern "C" {
 #include <mmux-bash-pointers-config.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <mmux-cc-types.h>
+#include <mmux-cc-libc.h>
 
 
 /** --------------------------------------------------------------------
@@ -108,9 +110,6 @@ typedef enum {
   MMUX_SUCCESS=MMUX_BASH_EXECUTION_SUCCESS,
   MMUX_FAILURE=MMUX_BASH_EXECUTION_FAILURE
 } mmux_bash_rv_t;
-
-#include <mmux-cc-types.h>
-#include <mmux-cc-libc.h>
 
 
 /** --------------------------------------------------------------------
