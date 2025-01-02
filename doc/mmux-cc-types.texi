@@ -34,7 +34,7 @@
 
 @c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
 @c list of copyright years.
-@set COPYRIGHT_YEARS            2024
+@set COPYRIGHT_YEARS            2024, 2025
 
 @c ------------------------------------------------------------
 
@@ -1037,7 +1037,7 @@ This package's ``official'' representation of complex numbers is like this:
 @noindent
 in which both the real part @samp{1.2} and the imaginary part @samp{3.4} are enclosed in
 parentheses; this way any format for the real numbers can be used in the string representation of
-complex numbers reducing the work needed by human eyes parse the expression.  Example:
+complex numbers reducing the work needed by human eyes to parse the expression.  Example:
 
 @example
 (0x1.3333333333333p+0)+i*(0x1.b333333333333p+1)
@@ -1191,7 +1191,8 @@ The format--saving functions expect the destination buffer to be capable of hold
 
 
 @defvr {C Preprocessor Symbol} MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN
-The number of bytes required to hold a format specification string.
+The number of bytes required to hold a format specification string, @strong{including} the
+terminating nul character.
 @end defvr
 
 @c ------------------------------------------------------------------------

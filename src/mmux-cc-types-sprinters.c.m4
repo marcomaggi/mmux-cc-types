@@ -7,7 +7,7 @@
 
 	This module implements functions to print values to string.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -160,7 +160,7 @@ mmux_$1_ref_output_format (void)
 void
 mmux_$1_save_output_format (char * const dest)
 {
-  /* We tell  "strncpy()" to copy  the from internal  state and fill  everything else
+  /* We tell  "strncpy()" to copy  from the internal  state and fill  everything else
      with nul bytes.  See the documentation of "strncpy()". */
   strncpy(dest, mmux_cc_types_output_format_$1, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN);
 }
