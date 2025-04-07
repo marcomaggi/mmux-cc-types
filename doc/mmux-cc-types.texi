@@ -1145,7 +1145,7 @@ To select an output format for the result of the @cfunc{mmux_double_sprint} func
 @example
 char const * fmt = "%.4f";
 
-if (mmux_double_set_output_format(fmt)) @{
+if (mmux_double_set_output_format(fmt, __func__)) @{
   /* error: invalid format */
 @}
 
@@ -1161,12 +1161,12 @@ mmux_double_save_output_format(saved_fmt);
 @{
   char const * fmt = "%.4f";
 
-  if (mmux_double_set_output_format(fmt)) @{
+  if (mmux_double_set_output_format(fmt, __func__)) @{
     /* error: invalid format */
   @}
   /* call "mmux_double_sprint()" */
 @}
-mmux_double_set_output_format(saved_fmt);
+mmux_double_set_output_format(saved_fmt, __func__);
 @end example
 
 
@@ -1198,11 +1198,15 @@ terminating nul character.
 @c ------------------------------------------------------------------------
 
 @macro MmuxRealSelectOutputFormatFunction{STEM,DEFAULTFORMAT}
-@deftypefun bool mmux_\STEM\_set_output_format (char const * @var{OUTPUT_FORMAT})
+@deftypefun bool mmux_\STEM\_set_output_format (char const * @var{OUTPUT_FORMAT}, char const * @var{CALLER_NAME})
 @deftypefunx {char const *} mmux_\STEM\_ref_output_format (void)
 @deftypefunx void mmux_\STEM\_save_output_format (char * @var{DEST})
 Select, retrieve or save the current format for string representations of floating--point numbers of
 type @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
+
+If the argument @var{CALLER_NAME} is not @cnull{}: when an error occurs an error message is
+displayed on @stderr{} using @var{CALLER_NAME} as source of the message itself; it is meant to be
+the expansion of the preprocessor macro @code{__func__} or something similar.
 @end deftypefun
 
 @end macro
