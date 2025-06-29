@@ -8,7 +8,7 @@
 	This is the public  header file of the library, defining  the public API.  It
 	must be included in all the code that uses the library.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -152,16 +152,6 @@ mmux_cc_types_decl bool mmux_cc_types_init_parsers_module (void);
 
 
 /** --------------------------------------------------------------------
- ** Version functions.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_types_decl char const *	mmux_cc_types_version_string		(void);
-mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
-mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
-mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
-
-
-/** --------------------------------------------------------------------
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
@@ -173,6 +163,7 @@ typedef char const **			mmux_asciizcpp_t;
 typedef char const ***			mmux_asciizcppp_t;
 
 typedef void *				mmux_pointer_t;
+typedef void const *			mmux_pointerc_t;
 typedef signed char			mmux_schar_t;
 typedef unsigned char			mmux_uchar_t;
 typedef signed short int		mmux_sshort_t;
@@ -295,6 +286,16 @@ DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]]);
 DEFINE_ALIAS_TYPEDEF([[[time]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]]);
 DEFINE_ALIAS_TYPEDEF([[[socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]]);
 DEFINE_ALIAS_TYPEDEF([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]]);
+
+
+/** --------------------------------------------------------------------
+ ** Version functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl mmux_asciizcp_t	mmux_cc_types_version_string		(void);
+mmux_cc_types_decl mmux_sint_t		mmux_cc_types_version_interface_current	(void);
+mmux_cc_types_decl mmux_sint_t		mmux_cc_types_version_interface_revision(void);
+mmux_cc_types_decl mmux_sint_t		mmux_cc_types_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------

@@ -232,6 +232,7 @@ package--configuration time.  This package relies on the availability of the ext
 
 @cindex Type stems
 @cindex @code{pointer}, type stem
+@cindex @code{pointerc}, type stem
 @cindex @code{schar}, type stem
 @cindex @code{uchar}, type stem
 @cindex @code{sshort}, type stem
@@ -317,6 +318,7 @@ language type @code{\TYPE\}.
 
 
 @MmuxDefineTypeStem{pointer,void *}
+@MmuxDefineTypeStem{pointerc,void const *}
 
 @MmuxDefineTypeStem{schar,signed char}
 @MmuxDefineTypeStem{uchar,unsigned char}
@@ -426,23 +428,23 @@ explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool vers
 Libtool's versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@deftypefun {char const *} mmux_cc_types_version_string (void)
+@deftypefun {mmux_asciizcp_t} mmux_cc_types_version_string (void)
 Return a pointer to a statically allocated @asciiz{} string representing the interface version
 number.
 @end deftypefun
 
 
-@deftypefun int mmux_cc_types_version_interface_current (void)
+@deftypefun mmux_sint_t mmux_cc_types_version_interface_current (void)
 Return an integer representing the library interface current number.
 @end deftypefun
 
 
-@deftypefun int mmux_cc_types_version_interface_revision (void)
+@deftypefun mmux_sint_t mmux_cc_types_version_interface_revision (void)
 Return an integer representing the library interface current revision number.
 @end deftypefun
 
 
-@deftypefun int mmux_cc_types_version_interface_age (void)
+@deftypefun mmux_sint_t mmux_cc_types_version_interface_age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
 
@@ -580,6 +582,7 @@ Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using 
 
 @cindex Type stems
 @cindex @code{pointer}, type stem
+@cindex @code{pointerc}, type stem
 @cindex @code{schar}, type stem
 @cindex @code{uchar}, type stem
 @cindex @code{sshort}, type stem
@@ -677,6 +680,7 @@ imaginary parts type of @objtype{mmux_\COMPLEXSTEM\_t}.
 @c ------------------------------------------------------------------------
 
 @MmuxDefineCAliasTypedef{pointer,void *}
+@MmuxDefineCAliasTypedef{pointerc,void const *}
 
 @MmuxDefineCAliasTypedef{schar,signed char}
 @MmuxDefineCAliasTypedef{uchar,unsigned char}

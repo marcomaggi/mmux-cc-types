@@ -7,7 +7,7 @@
 
 	This module implements core type functions.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -89,22 +89,22 @@ __extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-char const *
+mmux_asciizcp_t
 mmux_cc_types_version_string (void)
 {
   return mmux_cc_types_VERSION_INTERFACE_STRING;
 }
-int
+mmux_sint_t
 mmux_cc_types_version_interface_current (void)
 {
   return mmux_cc_types_VERSION_INTERFACE_CURRENT;
 }
-int
+mmux_sint_t
 mmux_cc_types_version_interface_revision (void)
 {
   return mmux_cc_types_VERSION_INTERFACE_REVISION;
 }
-int
+mmux_sint_t
 mmux_cc_types_version_interface_age (void)
 {
   return mmux_cc_types_VERSION_INTERFACE_AGE;
