@@ -11,7 +11,7 @@
 #
 #               m4_include(path/to/mmux.m4)
 #
-# Copyright (c) 2018, 2019, 2024 Marco Maggi <mrc.mgg@gmail.com>
+# Copyright (c) 2018, 2019, 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 # General Public  License as  published by  the Free Software  Foundation, either  version 3  of the
@@ -572,6 +572,9 @@ AC_DEFUN([MMUX_LANG_C11],[
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation], [MMUX_CFLAGS], [-Werror])])])
 
+  # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
+  AC_C_CHAR_UNSIGNED
+
   MMUX_CC_CHECK_COMMON_HEADERS])
 
 
@@ -937,6 +940,7 @@ AC_DEFUN([MMUX_CC_INSPECT_STANDARD_TYPES],
 
    MMUX_CC_DETERMINE_TYPE_SIZEOF([POINTER],    [void *])
 
+   MMUX_CC_DETERMINE_TYPE_SIZEOF([CHAR],       [char])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([SCHAR],      [signed char])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([UCHAR],      [unsigned char])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([SSHORT],     [signed short int])

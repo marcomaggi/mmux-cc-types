@@ -233,6 +233,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex Type stems
 @cindex @code{pointer}, type stem
 @cindex @code{pointerc}, type stem
+@cindex @code{char}, type stem
 @cindex @code{schar}, type stem
 @cindex @code{uchar}, type stem
 @cindex @code{sshort}, type stem
@@ -320,6 +321,7 @@ language type @code{\TYPE\}.
 @MmuxDefineTypeStem{pointer,void *}
 @MmuxDefineTypeStem{pointerc,void const *}
 
+@MmuxDefineTypeStem{char,char}
 @MmuxDefineTypeStem{schar,signed char}
 @MmuxDefineTypeStem{uchar,unsigned char}
 @MmuxDefineTypeStem{sshort,signed short int}
@@ -826,6 +828,7 @@ Return a positive integer representing the size in bytes of the C language type
 
 @MmuxDefineCFunctionSizeof{pointer}
 
+@MmuxDefineCFunctionSizeof{char}
 @MmuxDefineCFunctionSizeof{schar}
 @MmuxDefineCFunctionSizeof{uchar}
 @MmuxDefineCFunctionSizeof{sshort}
@@ -918,7 +921,7 @@ Return the maximum and minimum values representable by the range of values of th
 
 @MmuxDefineCFunctionMaximum{pointer}
 
-@MmuxDefineCFunctionMaximum{schar}
+@MmuxDefineCFunctionMaximum{char}
 @MmuxDefineCFunctionMaximum{uchar}
 @MmuxDefineCFunctionMaximum{sshort}
 @MmuxDefineCFunctionMaximum{ushort}
@@ -1067,6 +1070,7 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 
 @MmuxDefineCFunctionPredicate{pointer}
 
+@MmuxDefineCFunctionPredicate{char}
 @MmuxDefineCFunctionPredicate{schar}
 @MmuxDefineCFunctionPredicate{uchar}
 @MmuxDefineCFunctionPredicate{sshort}
@@ -1268,6 +1272,7 @@ the parsing operation, for example: the name of a C function.
 
 @MmuxDefineCFunctionParser{pointer}
 
+@MmuxDefineCFunctionParser{char}
 @MmuxDefineCFunctionParser{schar}
 @MmuxDefineCFunctionParser{uchar}
 @MmuxDefineCFunctionParser{sshort}
@@ -1378,6 +1383,7 @@ the terminating zero}; otherwise return @samp{-1}.
 
 @MmuxDefineCFunctionSprinter{pointer}
 
+@MmuxDefineCFunctionSprinter{char}
 @MmuxDefineCFunctionSprinter{schar}
 @MmuxDefineCFunctionSprinter{uchar}
 @MmuxDefineCFunctionSprinter{sshort}
@@ -1616,6 +1622,7 @@ nan; otherwise return @cfalse{}.
 
 @MmuxDefineTypePredicates{pointer}
 
+@MmuxDefineTypePredicates{char}
 @MmuxDefineTypePredicates{schar}
 @MmuxDefineTypePredicates{uchar}
 @MmuxDefineTypePredicates{sshort}
@@ -1729,6 +1736,7 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 
 @MmuxDefineTypeComparisonExactFunction{pointer}
 
+@MmuxDefineTypeComparisonExactFunction{char}
 @MmuxDefineTypeComparisonExactFunction{schar}
 @MmuxDefineTypeComparisonExactFunction{uchar}
 @MmuxDefineTypeComparisonExactFunction{sshort}
@@ -1813,6 +1821,7 @@ Return the maximum or minimum value between the operands.
 
 @MmuxDefineTypeComparisonMinMaxFunction{pointer}
 
+@MmuxDefineTypeComparisonMinMaxFunction{char}
 @MmuxDefineTypeComparisonMinMaxFunction{schar}
 @MmuxDefineTypeComparisonMinMaxFunction{uchar}
 @MmuxDefineTypeComparisonMinMaxFunction{sshort}
@@ -2061,6 +2070,7 @@ remainder, increment, decrement.
 @end macro
 
 
+@MmuxDefineIntegerArithmeticsFunc{char}
 @MmuxDefineIntegerArithmeticsFunc{schar}
 @MmuxDefineIntegerArithmeticsFunc{uchar}
 @MmuxDefineIntegerArithmeticsFunc{sshort}
@@ -2308,6 +2318,7 @@ Perform the bitwise operations.
 
 @end macro
 
+@MmuxDefineBitwiseFuncs{char}
 @MmuxDefineBitwiseFuncs{schar}
 @MmuxDefineBitwiseFuncs{uchar}
 @MmuxDefineBitwiseFuncs{sshort}

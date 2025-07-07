@@ -263,6 +263,7 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
   }
 }]]])]]])
 
+DEFINE_CORE_SPRINTER([[[char]]],	[[["%c"]]])
 DEFINE_CORE_SPRINTER([[[schar]]],	[[["%hhd"]]])
 DEFINE_CORE_SPRINTER([[[uchar]]],	[[["%hhu"]]])
 DEFINE_CORE_SPRINTER([[[sshort]]],	[[["%hd"]]])

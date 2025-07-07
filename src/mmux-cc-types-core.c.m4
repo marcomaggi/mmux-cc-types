@@ -161,6 +161,7 @@ DEFINE_REAL_TYPE_FUNCTIONS([[[pointer]]],
 			   [[[(mmux_pointer_t)mmux_uintptr_maximum()]]],
 			   [[[(mmux_pointer_t)mmux_uintptr_minimum()]]])
 
+DEFINE_REAL_TYPE_FUNCTIONS(char,	CHAR_MAX,	CHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)
 DEFINE_REAL_TYPE_FUNCTIONS(sshort,	SHRT_MAX,	SHRT_MIN)
@@ -1452,5 +1453,22 @@ DEFINE_BITWISE_FUNCS([[[wint]]])
 DEFINE_BITWISE_FUNCS([[[time]]])
 DEFINE_BITWISE_FUNCS([[[socklen]]])
 DEFINE_BITWISE_FUNCS([[[rlim]]])
+
+
+/** --------------------------------------------------------------------
+ ** Char support.
+ ** ----------------------------------------------------------------- */
+
+#ifdef __CHAR_UNSIGNED__
+DEFINE_SIGNED_INTEGER_PREDICATES([[[char]]])
+DEFINE_STYPE_FUNCTIONS([[[char]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
+DEFINE_BITWISE_FUNCS([[[char]]])
+#else
+DEFINE_UNSIGNED_INTEGER_PREDICATES([[[char]]])
+DEFINE_UTYPE_FUNCTIONS([[[char]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
+DEFINE_BITWISE_FUNCS([[[char]]])
+#endif
 
 /* end of file */

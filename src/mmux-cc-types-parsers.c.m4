@@ -7,7 +7,7 @@
 
 	This module implements parsers from strings to internal values.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -590,5 +590,16 @@ DEFINE_TYPEDEF_PARSER([[[wint]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
 DEFINE_TYPEDEF_PARSER([[[time]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
 DEFINE_TYPEDEF_PARSER([[[socklen]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
 DEFINE_TYPEDEF_PARSER([[[rlim]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
+
+
+/** --------------------------------------------------------------------
+ ** Char support.
+ ** ----------------------------------------------------------------- */
+
+#ifdef __CHAR_UNSIGNED__
+DEFINE_SIGNED_INTEGER_PARSER([[[char]]])
+#else
+DEFINE_UNSIGNED_INTEGER_PARSER([[[char]]])
+#endif
 
 /* end of file */

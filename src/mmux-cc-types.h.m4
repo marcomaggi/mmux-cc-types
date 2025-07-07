@@ -419,6 +419,7 @@ DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
 m4_dnl ----------------------------------------------------------------
 
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[pointer]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[char]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[schar]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uchar]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sshort]]])
@@ -525,6 +526,7 @@ mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon
 /* ------------------------------------------------------------------ */
 
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[pointer]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[char]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[schar]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uchar]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sshort]]])
@@ -716,6 +718,7 @@ mmux_$1_inv (mmux_$1_t A)
 }
 ]]])]]])
 
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[char]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[schar]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uchar]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sshort]]])
@@ -880,6 +883,7 @@ mmux_$1_decr (mmux_$1_t A)
 }
 ]]])]]])
 
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[char]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[schar]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uchar]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sshort]]])
@@ -1465,6 +1469,7 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbit
   __attribute__((__const__));
 ]]])]]])
 
+DEFINE_BITWISE_PROTOS([[[char]]])
 DEFINE_BITWISE_PROTOS([[[schar]]])
 DEFINE_BITWISE_PROTOS([[[uchar]]])
 DEFINE_BITWISE_PROTOS([[[sshort]]])
