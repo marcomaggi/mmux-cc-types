@@ -155,15 +155,9 @@ mmux_cc_types_decl bool mmux_cc_types_init_parsers_module (void);
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
-typedef char *				mmux_asciizp_t;
-typedef char **				mmux_asciizpp_t;
-typedef char ***			mmux_asciizppp_t;
-typedef char const *			mmux_asciizcp_t;
-typedef char const **			mmux_asciizcpp_t;
-typedef char const ***			mmux_asciizcppp_t;
-
 typedef void *				mmux_pointer_t;
 typedef void const *			mmux_pointerc_t;
+typedef char				mmux_char_t;
 typedef signed char			mmux_schar_t;
 typedef unsigned char			mmux_uchar_t;
 typedef signed short int		mmux_sshort_t;
@@ -286,6 +280,15 @@ DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]]);
 DEFINE_ALIAS_TYPEDEF([[[time]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]]);
 DEFINE_ALIAS_TYPEDEF([[[socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]]);
 DEFINE_ALIAS_TYPEDEF([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]]);
+
+/* ------------------------------------------------------------------ */
+
+typedef mmux_char_t *				mmux_asciizp_t;
+typedef mmux_char_t **				mmux_asciizpp_t;
+typedef mmux_char_t ***				mmux_asciizppp_t;
+typedef mmux_char_t const *			mmux_asciizcp_t;
+typedef mmux_char_t const **			mmux_asciizcpp_t;
+typedef mmux_char_t const ***			mmux_asciizcppp_t;
 
 
 /** --------------------------------------------------------------------

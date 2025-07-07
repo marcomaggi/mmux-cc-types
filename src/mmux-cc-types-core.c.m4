@@ -92,7 +92,7 @@ __extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_
 mmux_asciizcp_t
 mmux_cc_types_version_string (void)
 {
-  return mmux_cc_types_VERSION_INTERFACE_STRING;
+  return (mmux_asciizcp_t)mmux_cc_types_VERSION_INTERFACE_STRING;
 }
 mmux_sint_t
 mmux_cc_types_version_interface_current (void)

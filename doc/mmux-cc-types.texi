@@ -583,6 +583,7 @@ Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using 
 @cindex Type stems
 @cindex @code{pointer}, type stem
 @cindex @code{pointerc}, type stem
+@cindex @code{char}, type stem
 @cindex @code{schar}, type stem
 @cindex @code{uchar}, type stem
 @cindex @code{sshort}, type stem
@@ -682,6 +683,7 @@ imaginary parts type of @objtype{mmux_\COMPLEXSTEM\_t}.
 @MmuxDefineCAliasTypedef{pointer,void *}
 @MmuxDefineCAliasTypedef{pointerc,void const *}
 
+@MmuxDefineCAliasTypedef{char,char}
 @MmuxDefineCAliasTypedef{schar,signed char}
 @MmuxDefineCAliasTypedef{uchar,unsigned char}
 @MmuxDefineCAliasTypedef{sshort,signed short int}
@@ -790,20 +792,22 @@ An alias for @objtype{mmux_uint8_t}.
 
 @deftp {Typedef} mmux_asciizp_t
 @deftpx {Typedef} mmux_asciizcp_t
-Type definitions aliasing, respectively, the C language types @objtype{char *} and @objtype{char
-const *}; they are meant to reference an @asciiz{} string.
+Type definitions aliasing, respectively, the C language types @objtype{mmux_schar_t *} and
+@objtype{mmux_schar_t const *}; they are meant to reference an @asciiz{} string.
 @end deftp
 
 
 @deftp {Typedef} mmux_asciizpp_t
 @deftpx {Typedef} mmux_asciizcpp_t
-Type definition aliasing the C language types @objtype{char * *} and  @objtype{char const * *}.
+Type definition aliasing the C language types @objtype{mmux_char_t * *} and @objtype{mmux_char_t
+const * *}.
 @end deftp
 
 
 @deftp {Typedef} mmux_asciizppp_t
 @deftpx {Typedef} mmux_asciizcppp_t
-Type definition aliasing the C language types @objtype{char * * *} and  @objtype{char const * * *}.
+Type definition aliasing the C language types @objtype{mmux_char_t * * *} and @objtype{mmux_char_t
+const * * *}.
 @end deftp
 
 @c page
