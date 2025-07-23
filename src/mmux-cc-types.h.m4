@@ -291,6 +291,10 @@ typedef mmux_char_t *				mmux_asciizp_t;
 typedef mmux_char_t **				mmux_asciizpp_t;
 typedef mmux_char_t ***				mmux_asciizppp_t;
 
+typedef mmux_char_t const *			mmux_asciicp_t;
+typedef mmux_char_t const **			mmux_asciicpp_t;
+typedef mmux_char_t const ***			mmux_asciicppp_t;
+
 typedef mmux_char_t const *			mmux_asciizcp_t;
 typedef mmux_char_t const **			mmux_asciizcpp_t;
 typedef mmux_char_t const ***			mmux_asciizcppp_t;
