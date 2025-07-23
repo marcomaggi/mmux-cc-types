@@ -283,9 +283,14 @@ DEFINE_ALIAS_TYPEDEF([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]]);
 
 /* ------------------------------------------------------------------ */
 
+typedef mmux_char_t *				mmux_asciip_t;
+typedef mmux_char_t **				mmux_asciipp_t;
+typedef mmux_char_t ***				mmux_asciippp_t;
+
 typedef mmux_char_t *				mmux_asciizp_t;
 typedef mmux_char_t **				mmux_asciizpp_t;
 typedef mmux_char_t ***				mmux_asciizppp_t;
+
 typedef mmux_char_t const *			mmux_asciizcp_t;
 typedef mmux_char_t const **			mmux_asciizcpp_t;
 typedef mmux_char_t const ***			mmux_asciizcppp_t;
