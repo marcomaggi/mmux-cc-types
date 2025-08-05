@@ -8,7 +8,7 @@ m4_dnl Abstract
 m4_dnl
 m4_dnl		This library defines macros to configure the package.
 m4_dnl
-m4_dnl Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+m4_dnl Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 m4_dnl
 m4_dnl
 m4_dnl This program is free  software: you can redistribute it and/or  modify it under the
@@ -33,7 +33,6 @@ m4_define([[[mmux_cc_types_VERSION_INTERFACE_CURRENT]]],  [[[@mmux_cc_types_VERS
 m4_define([[[mmux_cc_types_VERSION_INTERFACE_REVISION]]], [[[@mmux_cc_types_VERSION_INTERFACE_REVISION@]]])
 m4_define([[[mmux_cc_types_VERSION_INTERFACE_AGE]]],      [[[@mmux_cc_types_VERSION_INTERFACE_AGE@]]])
 
-
 m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]],		[[[@MMUX_CC_TYPE_STANDARD_STEM_ALIAS_OF_SSIZE@]]])
 m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]],		[[[@MMUX_CC_TYPE_STANDARD_STEM_ALIAS_OF_USIZE@]]])
 m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]],	[[[@MMUX_CC_TYPE_STANDARD_STEM_ALIAS_OF_SINTMAX@]]])
@@ -51,6 +50,36 @@ m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]],		[[[@MMUX_CC_TYPE_STANDARD_STEM_A
 m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]],		[[[@MMUX_CC_TYPE_STANDARD_STEM_ALIAS_OF_TIME@]]])
 m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]],	[[[@MMUX_CC_TYPE_STANDARD_STEM_ALIAS_OF_SOCKLEN@]]])
 m4_define([[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]],		[[[@MMUX_CC_TYPE_STANDARD_STEM_ALIAS_OF_RLIM@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_SLLONG_M4]]],		[[[@MMUX_HAVE_CC_TYPE_SLLONG@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_ULLONG_M4]]],		[[[@MMUX_HAVE_CC_TYPE_ULLONG@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_LDOUBLE_M4]]],		[[[@MMUX_HAVE_CC_TYPE_LDOUBLE@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_FLOAT32_M4]]],		[[[@MMUX_HAVE_CC_TYPE_FLOAT32@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_FLOAT64_M4]]],		[[[@MMUX_HAVE_CC_TYPE_FLOAT64@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_FLOAT128_M4]]],		[[[@MMUX_HAVE_CC_TYPE_FLOAT128@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_FLOAT32X_M4]]],		[[[@MMUX_HAVE_CC_TYPE_FLOAT32X@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_FLOAT64X_M4]]],		[[[@MMUX_HAVE_CC_TYPE_FLOAT64X@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_FLOAT128X_M4]]],		[[[@MMUX_HAVE_CC_TYPE_FLOAT128X@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXLD_M4]]],		[[[@MMUX_HAVE_CC_TYPE_COMPLEXLD@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXF32_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXF32@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXF64_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXF64@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXF128_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXF128@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXF32X_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXF32X@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXF64X_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXF64X@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXF128X_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXF128X@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_DECIMAL32_M4]]],		[[[@MMUX_HAVE_CC_TYPE_DECIMAL32@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_DECIMAL64_M4]]],		[[[@MMUX_HAVE_CC_TYPE_DECIMAL64@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_DECIMAL128_M4]]],	[[[@MMUX_HAVE_CC_TYPE_DECIMAL128@]]])
+
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXD32_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXD32@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXD64_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXD64@]]])
+m4_define([[[MMUX_HAVE_CC_TYPE_COMPLEXD128_M4]]],	[[[@MMUX_HAVE_CC_TYPE_COMPLEXD128@]]])
 
 m4_dnl end of file
 m4_dnl Local Variables:

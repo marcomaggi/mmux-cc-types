@@ -1471,4 +1471,16 @@ DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
 DEFINE_BITWISE_FUNCS([[[char]]])
 #endif
 
+
+/** --------------------------------------------------------------------
+ ** Miscellaneous.
+ ** ----------------------------------------------------------------- */
+
+mmux_sint_t
+mmux_ctype_generic_error (mmux_sint_t X)
+/* This function is used in "mmux-cc-types-generics.h". */
+{
+  return X;
+}
+
 /* end of file */

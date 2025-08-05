@@ -9,7 +9,7 @@ AC_INIT([MMUX CC Types],[MMUX_PACKAGE_VERSION],
 MMUX_INIT
 MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_cc_types],0,0,0)
 AC_REVISION([0.1])
-AC_COPYRIGHT([Copyright (c) 2024 Marco Maggi <mrc.mgg@gmail.com>
+AC_COPYRIGHT([Copyright (c) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it
 under  the  terms of  the GNU  General Public  License as  published  by
@@ -100,7 +100,7 @@ AS_VAR_IF(with_emacs,'yes',
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
-  [src/mmux-cc-types-config.h]
+  [src/mmux-cc-types-config.h.m4]
   [src/m4/mmux-cc-types-config.m4]
   [doc/mmux-version.texi]
   [meta/scripts/mmux-cc-types.pc]

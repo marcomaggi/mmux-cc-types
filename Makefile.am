@@ -122,6 +122,7 @@ endif
 
 EXTRA_DIST	+= \
 	src/mmux-cc-types.h.m4				\
+	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-internals.h.m4		\
 	src/mmux-cc-types-constants.c.m4		\
 	src/mmux-cc-types-core.c.m4			\
@@ -130,6 +131,7 @@ EXTRA_DIST	+= \
 
 MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
@@ -147,6 +149,7 @@ mmux_cc_types_LINKER_VERSION	= -version-info $(mmux_cc_types_CURRENT):$(mmux_cc_
 
 include_HEADERS				= \
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-config.h
 
 lib_LTLIBRARIES			= libmmux-cc-types.la
@@ -158,6 +161,7 @@ libmmux_cc_types_la_LIBADD	= libmmux-cc-types-libdfp.la
 endif
 libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-constants.c			\
@@ -177,6 +181,7 @@ src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 
 src/%.$(OBJEXT): \
 	src/mmux-cc-types.h			\
+	src/mmux-cc-types-generics.h		\
 	src/mmux-cc-types-internals.h		\
 	src/mmux-cc-types-config.h
 
@@ -184,7 +189,8 @@ src/%.$(OBJEXT): \
 #### TESTS
 
 check_PROGRAMS	= \
-	tests/version
+	tests/version				\
+	tests/test-real-predicates
 
 TESTS				= $(check_PROGRAMS)
 
@@ -193,8 +199,11 @@ mmux_cc_types_tests_ldadd	= $(AM_LDFLAGS) libmmux-cc-types.la
 
 ## ------------------------------------------------------------------------
 
-tests_version_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
-tests_version_LDADD		= $(mmux_cc_types_tests_ldadd)
+tests_version_CPPFLAGS			= $(mmux_cc_types_tests_cppflags)
+tests_version_LDADD			= $(mmux_cc_types_tests_ldadd)
+
+tests_test_real_predicates_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
+tests_test_real_predicates_LDADD	= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"

@@ -90,6 +90,7 @@ extern "C" {
 #include <stddef.h>
 #include <inttypes.h>
 #include <complex.h>
+#include <mmux-cc-types-generics.h>
 
 
 /** --------------------------------------------------------------------
@@ -1516,6 +1517,13 @@ DEFINE_BITWISE_PROTOS([[[wint]]])
 DEFINE_BITWISE_PROTOS([[[time]]])
 DEFINE_BITWISE_PROTOS([[[socklen]]])
 DEFINE_BITWISE_PROTOS([[[rlim]]])
+
+
+/** --------------------------------------------------------------------
+ ** Miscellaneous.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl mmux_sint_t mmux_ctype_generic_error (mmux_sint_t X);
 
 
 /** --------------------------------------------------------------------
