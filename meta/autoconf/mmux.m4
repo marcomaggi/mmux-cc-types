@@ -596,7 +596,7 @@ AC_DEFUN([MMUX_CC_CHECK_COMMON_HEADERS],
    AC_HEADER_STDBOOL
    AC_HEADER_SYS_WAIT
    AC_CHECK_HEADERS([complex.h ctype.h errno.h fcntl.h float.h limits.h math.h regex.h stddef.h stdarg.h
-                     time.h wchar.h sys/ioctl.h sys/time.h sys/resource.h])
+                     time.h wchar.h sys/ioctl.h sys/time.h sys/resource.h sys/wait.h])
    AC_CACHE_SAVE])
 
 
@@ -651,6 +651,10 @@ AC_INCLUDES_DEFAULT([
 #  include <errno.h>
 #endif
 
+#ifdef HAVE_ERROR_H
+#  include <error.h>
+#endif
+
 #ifdef HAVE_FCNTL_H
 #  include <fcntl.h>
 #endif
@@ -669,6 +673,20 @@ AC_INCLUDES_DEFAULT([
 
 #ifdef HAVE_LINUX_FS_H
 #  include <linux/fs.h>
+#endif
+
+/* Right now, on my Slackware64 15.0, including this header is in
+   conflict with sys/wait.h so I do not include it.  The reason for
+   including it is to get the definition of P_PIDFD, which is not
+   yet in glibc 2.33 (Marco Maggi; Jun 25, 2025) */
+#if 0
+#  ifdef HAVE_LINUX_WAIT_H
+#    include <linux/wait.h>
+#  endif
+#endif
+
+#ifdef HAVE_LINUX_OPENAT2_H
+#  include <linux/openat2.h>
 #endif
 
 #ifdef HAVE_MATH_H
@@ -745,6 +763,10 @@ AC_INCLUDES_DEFAULT([
 
 #ifdef HAVE_SYS_UN_H
 #  include <sys/un.h>
+#endif
+
+#ifdef HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
 #endif
 
 #ifdef HAVE_TIME_H
