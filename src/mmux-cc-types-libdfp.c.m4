@@ -379,16 +379,41 @@ DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL12
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_COMPLEX_DECIMAL_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_COMPLEX_DECIMAL_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool mmux_$1_equal (mmux_$1_t op1, mmux_$1_t op2)
 {
   return ((op1.re == op2.re) && (op1.im == op2.im))? true : false;
 }
+DECL int
+mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_cmp(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_greater (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_greater(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_less (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_less(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_greater_equal(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_less_equal (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_less_equal(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
 ]]])]]])
 
-DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
 
 /* ------------------------------------------------------------------ */
 

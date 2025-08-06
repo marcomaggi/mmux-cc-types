@@ -1717,25 +1717,22 @@ nan; otherwise return @cfalse{}.
 @section Exact comparison functions
 
 
+In the context of @value{PACKAGE}, when comparing complex numbers: the functions @samp{cmp},
+@samp{equal}, @samp{less}, @samp{greater}, @samp{less_equal}, @samp{greater_equal} compare the
+absolute value of the complex operands.
+
 The @cfunc{mmux_*_cmp} functions perform the usual comparison with ternary result.  The predicate
 functions return @ctrue{} if the operands are in the named relation; otherwise return @cfalse{}.
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineTypeComparisonExactFunction{STEM}
 @deftypefun int mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx bool mmux_\STEM\_lesser (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_less (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx bool mmux_\STEM\_lesser_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-Comparison between @objtype{mmux_\STEM\_t} values.
-@end deftypefun
-
-@end macro
-
-@c ------------------------------------------------------------------------
-
-@macro MmuxDefineTypeComparisonExactComplexFunction{STEM}
-@deftypefun bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_less_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 Comparison between @objtype{mmux_\STEM\_t} values.
 @end deftypefun
 
@@ -1772,21 +1769,21 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @MmuxDefineTypeComparisonExactFunction{decimal64}
 @MmuxDefineTypeComparisonExactFunction{decimal128}
 
-@MmuxDefineTypeComparisonExactComplexFunction{complexf}
-@MmuxDefineTypeComparisonExactComplexFunction{complexd}
-@MmuxDefineTypeComparisonExactComplexFunction{complexld}
+@MmuxDefineTypeComparisonExactFunction{complexf}
+@MmuxDefineTypeComparisonExactFunction{complexd}
+@MmuxDefineTypeComparisonExactFunction{complexld}
 
-@MmuxDefineTypeComparisonExactComplexFunction{complexf32}
-@MmuxDefineTypeComparisonExactComplexFunction{complexf64}
-@MmuxDefineTypeComparisonExactComplexFunction{complexf128}
+@MmuxDefineTypeComparisonExactFunction{complexf32}
+@MmuxDefineTypeComparisonExactFunction{complexf64}
+@MmuxDefineTypeComparisonExactFunction{complexf128}
 
-@MmuxDefineTypeComparisonExactComplexFunction{complexf32x}
-@MmuxDefineTypeComparisonExactComplexFunction{complexf64x}
-@MmuxDefineTypeComparisonExactComplexFunction{complexf128x}
+@MmuxDefineTypeComparisonExactFunction{complexf32x}
+@MmuxDefineTypeComparisonExactFunction{complexf64x}
+@MmuxDefineTypeComparisonExactFunction{complexf128x}
 
-@MmuxDefineTypeComparisonExactComplexFunction{complexd32}
-@MmuxDefineTypeComparisonExactComplexFunction{complexd64}
-@MmuxDefineTypeComparisonExactComplexFunction{complexd128}
+@MmuxDefineTypeComparisonExactFunction{complexd32}
+@MmuxDefineTypeComparisonExactFunction{complexd64}
+@MmuxDefineTypeComparisonExactFunction{complexd128}
 
 @MmuxDefineTypeComparisonExactFunction{sint8}
 @MmuxDefineTypeComparisonExactFunction{uint8}

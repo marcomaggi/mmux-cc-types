@@ -546,7 +546,11 @@ mmux_$1_is_zero (mmux_$1_t X)
 bool
 mmux_$1_is_positive (mmux_$1_t X)
 {
+  /* Turn off because when comparing pointers it raises a warning. */
+  _Pragma("GCC diagnostic push");
+  _Pragma("GCC diagnostic ignored \"-Wextra\"");
   return (MMUX_INTEGER_ZERO($1) < X)? true : false;
+  _Pragma("GCC diagnostic pop");
 }
 bool
 mmux_$1_is_negative (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
@@ -758,6 +762,8 @@ m4_define([[[DEFINE_COMPARISON_EQUAL_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2
 DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == op2)? true : false; }
 ]]])]]])
 
+/* ------------------------------------------------------------------ */
+
 m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
 DECL int
@@ -777,6 +783,8 @@ DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (op1 >= 
 DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (op1 <= op2)? true : false; }
 ]]])]]])
 
+/* ------------------------------------------------------------------ */
+
 m4_define([[[DEFINE_COMPARISON_FLOAT_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
 DECL int
@@ -795,6 +803,39 @@ DECL bool mmux_$1_less          (mmux_$1_t op1, mmux_$1_t op2) { return (       
 DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
 DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
 ]]])]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_COMPARISON_COMPLEX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$3]]])
+DECL int
+mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_cmp(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_greater (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_greater(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_less (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_less(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_greater_equal(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+DECL bool
+mmux_$1_less_equal (mmux_$1_t op1, mmux_$1_t op2)
+{
+  return mmux_$2_less_equal(mmux_$1_abs(op1), mmux_$1_abs(op2));
+}
+]]])]]])
+
+/* ------------------------------------------------------------------ */
 
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[pointer]]])
 
@@ -821,17 +862,17 @@ DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32X
 DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
 DEFINE_COMPARISON_FLOAT_FUNCTIONS([[[float128x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
 
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf]]])
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexd]]])
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexld]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf]]],	[[[float]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexd]]],	[[[double]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexld]]],	[[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
 
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf32]]],	[[[float32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf64]]],	[[[float64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
 
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf32x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf64x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
-DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[complexf128x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
+DEFINE_COMPARISON_COMPLEX_FUNCTIONS([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
 
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sint8]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uint8]]])

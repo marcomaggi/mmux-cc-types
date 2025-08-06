@@ -160,9 +160,14 @@ mmux_$1_ref_output_format (void)
 void
 mmux_$1_save_output_format (char * const dest)
 {
+  /* Turn off the warning  because we do the right thing here.   (Marco Maggi; Aug 6,
+     2025) */
+  _Pragma("GCC diagnostic push");
+  _Pragma("GCC diagnostic ignored \"-Wstringop-truncation\"");
   /* We tell  "strncpy()" to copy  from the internal  state and fill  everything else
      with nul bytes.  See the documentation of "strncpy()". */
   strncpy(dest, mmux_cc_types_output_format_$1, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN);
+  _Pragma("GCC diagnostic pop");
 }
 ]]])]]])
 
