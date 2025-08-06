@@ -131,6 +131,7 @@ EXTRA_DIST	+= \
 
 MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types.h				\
+	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-constants.c			\
