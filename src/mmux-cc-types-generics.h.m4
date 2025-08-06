@@ -248,7 +248,6 @@ DEFINE_COMPARISON_FUNCTIONS([[[lesser_equal]]])
 m4_define([[[DEFINE_ARITHMETICS_UNARY]]],[[[m4_dnl
 #define mmux_ctype_is_$1(VALUE)							\
   _Generic((VALUE),								\
-	   mmux_pointer_t:		mmux_pointer_$1,			\
 	   mmux_char_t:			mmux_char_$1,				\
 m4_ifelse(MMUX_HAVE_CC_TYPE_SLLONG_M4,1,[[[m4_dnl
 	   mmux_sllong_t:		mmux_sllong_$1,				\
@@ -327,7 +326,6 @@ m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_ARITHMETICS_BINARY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)						\
   _Generic((VALUE1),								\
-           mmux_pointer_t:		mmux_pointer_$1,			\
 	   mmux_char_t:			mmux_char_$1,				\
 m4_ifelse(MMUX_HAVE_CC_TYPE_SLLONG_M4,1,[[[m4_dnl
 	   mmux_sllong_t:		mmux_sllong_$1,				\
