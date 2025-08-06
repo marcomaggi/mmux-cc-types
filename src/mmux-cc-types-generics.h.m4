@@ -231,6 +231,70 @@ DEFINE_COMPARISON_FUNCTIONS([[[lesser]]])
 DEFINE_COMPARISON_FUNCTIONS([[[greater_equal]]])
 DEFINE_COMPARISON_FUNCTIONS([[[lesser_equal]]])
 
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_INEXACT_COMPARISON_FUNCTIONS]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE1,VALUE2,MRGEPS)					\
+  _Generic((VALUE1),								\
+	   mmux_float_t:		mmux_float_$1,				\
+	   mmux_double_t:		mmux_double_$1,				\
+m4_ifelse(MMUX_HAVE_CC_TYPE_LDOUBLE_M4,1,[[[m4_dnl
+	   mmux_ldouble_t:		mmux_ldouble_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT32_M4,1,[[[m4_dnl
+	   mmux_float32_t:		mmux_float32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT64_M4,1,[[[m4_dnl
+	   mmux_float64_t:		mmux_float64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT128_M4,1,[[[m4_dnl
+	   mmux_float128_t:		mmux_float128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT32X_M4,1,[[[m4_dnl
+	   mmux_float32x_t:		mmux_float32x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT64X_M4,1,[[[m4_dnl
+	   mmux_float64x_t:		mmux_float64x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT128X_M4,1,[[[m4_dnl
+	   mmux_float128x_t:		mmux_float128x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL32_M4,1,[[[m4_dnl
+	   mmux_decimal32_t:		mmux_decimal32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL64_M4,1,[[[m4_dnl
+	   mmux_decimal64_t:		mmux_decimal64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL128_M4,1,[[[m4_dnl
+	   mmux_decimal128_t:		mmux_decimal128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXLD_M4,1,[[[m4_dnl
+	   mmux_complexld_t:		mmux_complexld_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF32_M4,1,[[[m4_dnl
+	   mmux_complexf32_t:		mmux_complexf32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF64_M4,1,[[[m4_dnl
+	   mmux_complexf64_t:		mmux_complexf64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF128_M4,1,[[[m4_dnl
+	   mmux_complexf128_t:		mmux_complexf128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD32_M4,1,[[[m4_dnl
+	   mmux_complexd32_t:		mmux_complexd32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD64_M4,1,[[[m4_dnl
+	   mmux_complexd64_t:		mmux_complexd64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD128_M4,1,[[[m4_dnl
+	   mmux_complexd128_t:		mmux_complexd128_$1,			\
+]]])m4_dnl
+           default:			mmux_ctype_generic_error)((VALUE1),(VALUE2),(MRGEPS))
+]]]) m4_dnl
+
+DEFINE_INEXACT_COMPARISON_FUNCTIONS([[[equal_absmargin]]])
+DEFINE_INEXACT_COMPARISON_FUNCTIONS([[[equal_relepsilon]]])
+
 
 /** --------------------------------------------------------------------
  ** Arithmetics.
