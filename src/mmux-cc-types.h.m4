@@ -523,6 +523,10 @@ mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attr
 
 m4_define([[[DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));

@@ -7,7 +7,7 @@
 
 	This module implements some support for _DecimalN types through libdfp.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -305,6 +305,26 @@ mmux_$1_is_zero (mmux_$1_t Z)
   mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
 
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
+}
+__attribute__((__const__)) bool
+mmux_$1_is_positive (mmux_$1_t Z __attribute__((__unused__)))
+{
+  return false;
+}
+__attribute__((__const__)) bool
+mmux_$1_is_negative (mmux_$1_t Z __attribute__((__unused__)))
+{
+  return false;
+}
+__attribute__((__const__)) bool
+mmux_$1_is_non_positive (mmux_$1_t Z __attribute__((__unused__)))
+{
+  return false;
+}
+__attribute__((__const__)) bool
+mmux_$1_is_non_negative (mmux_$1_t Z __attribute__((__unused__)))
+{
+  return false;
 }
 __attribute__((__const__)) bool
 mmux_$1_is_nan (mmux_$1_t Z)

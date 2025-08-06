@@ -1606,6 +1606,15 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @chapter Type predicates
 
 
+In the context of @value{PACKAGE}: complex numbers cannot be positive or negative, so the predicates
+@samp{positive}, @samp{negative}, @samp{non_positive}, @samp{non_negative} always return @cfalse{}
+when applied to a complex number.
+
+The C language defines the zero for floating--point numbers as having a sign, so we have @samp{-0.0}
+and @samp{+0.0}; this means zero can be positive or negative and the following predicates examine
+the sign bit to determine the return value.
+
+
 @macro MmuxDefineTypePredicates{STEM}
 @deftypefun bool mmux_\STEM\_is_zero (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_positive (mmux_\STEM\_t @var{OP})

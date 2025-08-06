@@ -699,6 +699,26 @@ mmux_$1_is_zero (mmux_$1_t Z)
   return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
 }
 bool
+mmux_$1_is_positive (mmux_$1_t Z MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+bool
+mmux_$1_is_negative (mmux_$1_t Z MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+bool
+mmux_$1_is_non_positive (mmux_$1_t Z MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+bool
+mmux_$1_is_non_negative (mmux_$1_t Z MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+bool
 mmux_$1_is_nan (mmux_$1_t Z)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
