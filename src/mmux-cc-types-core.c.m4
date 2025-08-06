@@ -1538,7 +1538,7 @@ DEFINE_BITWISE_FUNCS([[[char]]])
  ** ----------------------------------------------------------------- */
 
 mmux_sint_t
-mmux_ctype_generic_error (mmux_sint_t X)
+mmux_ctype_generic_error (mmux_sint_t X, ...)
 /* This function is used in "mmux-cc-types-generics.h". */
 {
   return X;

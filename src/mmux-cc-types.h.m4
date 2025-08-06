@@ -1532,7 +1532,7 @@ DEFINE_BITWISE_PROTOS([[[rlim]]])
  ** Miscellaneous.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_types_decl mmux_sint_t mmux_ctype_generic_error (mmux_sint_t X);
+mmux_cc_types_decl mmux_sint_t mmux_ctype_generic_error (mmux_sint_t X, ...);
 
 
 /** --------------------------------------------------------------------
