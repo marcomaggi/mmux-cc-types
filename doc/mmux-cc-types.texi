@@ -86,7 +86,7 @@
 @c ------------------------------------------------------------
 
 @copying
-This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C11 language
+This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C23 language
 library meant to be used in foreign functions interfaces for higher--level languages.
 
 The package targets @posix{} platforms.
@@ -128,7 +128,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 @ifinfo
 @dircategory Development
 @direntry
-* mmux-cc-types: (mmux-cc-types).       C11 language library handling core types.
+* mmux-cc-types: (mmux-cc-types).       C23language library handling core types.
 @end direntry
 @end ifinfo
 
@@ -185,7 +185,7 @@ Indexes
 @chapter Overview of the package
 
 
-This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C11 language
+This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C23 language
 library meant to be used in foreign functions interfaces for higher--level languages.
 
 @cindex @value{PackageHeaderFile}, header file
@@ -2021,16 +2021,20 @@ Compare the operands using the given epsilon.
 @chapter Arithmetics operations
 
 
+Notes on arithmetics functions:
+
+@itemize
+@item
 Notice how the @code{neg} functions are defined for unsigned exact integers; the result of such an
 operation is whatever the compile produces; for example:
 
 @example
 mmux_ulong_t    op  = 5;
 auto            rop = mmux_ulong_neg(op);
-
 dprintf(2, "rop = %lu\n", rop);
 @print{} 18446744073709551611
 @end example
+@end itemize
 
 
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})

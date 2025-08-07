@@ -19,7 +19,7 @@ Topics
 1. Introduction
 ---------------
 
-This package implements  functions to interface C11  language types with
+This package implements  functions to interface C23  language types with
 higher-level platforms.
 
   The package targets POSIX systems.
@@ -45,7 +45,7 @@ system.
 2. License
 ----------
 
-Copyright (c) 2024 Marco Maggi
+Copyright (c) 2024, 2025 Marco Maggi
 <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it
