@@ -109,6 +109,9 @@ test_real_predicate_is_zero (void)
   { mmux_uintptr_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_uintptr_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 
+  { mmux_ptrdiff_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
+  { mmux_ptrdiff_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
+
   { mmux_float_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 
@@ -397,6 +400,9 @@ test_real_predicate_is_positive (void)
 
   { mmux_uintptr_t	value = 0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_uintptr_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
+
+  { mmux_ptrdiff_t	value = 0;	assert(false == mmux_ctype_is_positive(value));	}
+  { mmux_ptrdiff_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 
   { mmux_float_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}

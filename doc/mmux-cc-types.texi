@@ -291,6 +291,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{uintmax}, type stem
 @cindex @code{sintptr}, type stem
 @cindex @code{uintptr}, type stem
+@cindex @code{ptrdiff}, type stem
 @cindex @code{mode}, type stem
 @cindex @code{off}, type stem
 @cindex @code{pid}, type stem
@@ -395,6 +396,7 @@ non--standard C language type implementing complex floating--point numbers havin
 @MmuxDefineTypeStem{uintmax, uintmax_t}
 @MmuxDefineTypeStem{sintptr, intptr_t}
 @MmuxDefineTypeStem{uintptr, uintptr_t}
+@MmuxDefineTypeStem{ptrdiff, ptrdiff_t}
 @MmuxDefineTypeStem{mode, mode_t}
 @MmuxDefineTypeStem{off, off_t}
 @MmuxDefineTypeStem{pid, pid_t}
@@ -643,6 +645,7 @@ Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using 
 @cindex @code{uintmax}, type stem
 @cindex @code{sintptr}, type stem
 @cindex @code{uintptr}, type stem
+@cindex @code{ptrdiff}, type stem
 @cindex @code{mode}, type stem
 @cindex @code{off}, type stem
 @cindex @code{pid}, type stem
@@ -762,6 +765,7 @@ An alias for @objtype{mmux_uint8_t}.
 @MmuxDefineCAliasTypedef{uintmax, uintmax_t}
 @MmuxDefineCAliasTypedef{sintptr, intptr_t}
 @MmuxDefineCAliasTypedef{uintptr, uintptr_t}
+@MmuxDefineCAliasTypedef{ptrdiff, ptrdiff_t}
 @MmuxDefineCAliasTypedef{mode, mode_t}
 @MmuxDefineCAliasTypedef{off, off_t}
 @MmuxDefineCAliasTypedef{pid, pid_t}
@@ -886,6 +890,7 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{uintmax}
 @MmuxDefineCFunctionSizeof{sintptr}
 @MmuxDefineCFunctionSizeof{uintptr}
+@MmuxDefineCFunctionSizeof{ptrdiff}
 @MmuxDefineCFunctionSizeof{mode}
 @MmuxDefineCFunctionSizeof{off}
 @MmuxDefineCFunctionSizeof{pid}
@@ -962,6 +967,7 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{uintmax}
 @MmuxDefineCFunctionMaximum{sintptr}
 @MmuxDefineCFunctionMaximum{uintptr}
+@MmuxDefineCFunctionMaximum{ptrdiff}
 @MmuxDefineCFunctionMaximum{mode}
 @MmuxDefineCFunctionMaximum{off}
 @MmuxDefineCFunctionMaximum{pid}
@@ -1128,6 +1134,7 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{uintmax}
 @MmuxDefineCFunctionPredicate{sintptr}
 @MmuxDefineCFunctionPredicate{uintptr}
+@MmuxDefineCFunctionPredicate{ptrdiff}
 @MmuxDefineCFunctionPredicate{mode}
 @MmuxDefineCFunctionPredicate{off}
 @MmuxDefineCFunctionPredicate{pid}
@@ -1330,6 +1337,7 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{uintmax}
 @MmuxDefineCFunctionParser{sintptr}
 @MmuxDefineCFunctionParser{uintptr}
+@MmuxDefineCFunctionParser{ptrdiff}
 @MmuxDefineCFunctionParser{mode}
 @MmuxDefineCFunctionParser{off}
 @MmuxDefineCFunctionParser{pid}
@@ -1441,6 +1449,7 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{uintmax}
 @MmuxDefineCFunctionSprinter{sintptr}
 @MmuxDefineCFunctionSprinter{uintptr}
+@MmuxDefineCFunctionSprinter{ptrdiff}
 @MmuxDefineCFunctionSprinter{mode}
 @MmuxDefineCFunctionSprinter{off}
 @MmuxDefineCFunctionSprinter{pid}
@@ -1689,6 +1698,7 @@ nan; otherwise return @cfalse{}.
 @MmuxDefineTypePredicates{uintmax}
 @MmuxDefineTypePredicates{sintptr}
 @MmuxDefineTypePredicates{uintptr}
+@MmuxDefineTypePredicates{ptrdiff}
 @MmuxDefineTypePredicates{mode}
 @MmuxDefineTypePredicates{off}
 @MmuxDefineTypePredicates{pid}
@@ -1800,6 +1810,7 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @MmuxDefineTypeComparisonExactFunction{uintmax}
 @MmuxDefineTypeComparisonExactFunction{sintptr}
 @MmuxDefineTypeComparisonExactFunction{uintptr}
+@MmuxDefineTypeComparisonExactFunction{ptrdiff}
 @MmuxDefineTypeComparisonExactFunction{mode}
 @MmuxDefineTypeComparisonExactFunction{off}
 @MmuxDefineTypeComparisonExactFunction{pid}
@@ -1869,6 +1880,7 @@ Return the maximum or minimum value between the operands.
 @MmuxDefineTypeComparisonMinMaxFunction{uintmax}
 @MmuxDefineTypeComparisonMinMaxFunction{sintptr}
 @MmuxDefineTypeComparisonMinMaxFunction{uintptr}
+@MmuxDefineTypeComparisonMinMaxFunction{ptrdiff}
 @MmuxDefineTypeComparisonMinMaxFunction{mode}
 @MmuxDefineTypeComparisonMinMaxFunction{off}
 @MmuxDefineTypeComparisonMinMaxFunction{pid}
@@ -2154,6 +2166,7 @@ remainder, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{uintmax}
 @MmuxDefineIntegerArithmeticsFunc{sintptr}
 @MmuxDefineIntegerArithmeticsFunc{uintptr}
+@MmuxDefineIntegerArithmeticsFunc{ptrdiff}
 @MmuxDefineIntegerArithmeticsFunc{mode}
 @MmuxDefineIntegerArithmeticsFunc{off}
 @MmuxDefineIntegerArithmeticsFunc{pid}
@@ -2371,6 +2384,7 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{uintmax}
 @MmuxDefineBitwiseFuncs{sintptr}
 @MmuxDefineBitwiseFuncs{uintptr}
+@MmuxDefineBitwiseFuncs{ptrdiff}
 @MmuxDefineBitwiseFuncs{mode}
 @MmuxDefineBitwiseFuncs{off}
 @MmuxDefineBitwiseFuncs{pid}
@@ -2382,7 +2396,6 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{socklen}
 @MmuxDefineBitwiseFuncs{rlim}
 
-@c page
 @c page
 @c ------------------------------------------------------------
 @c Appendices.
