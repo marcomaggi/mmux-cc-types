@@ -577,7 +577,7 @@ DEFINE_ARITHMETICS_REAL_UNARY([[[decr]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_MATHEMATICS_UNARY]]],[[[m4_dnl
-#define mmux_ctype_is_$1(VALUE)							\
+#define mmux_ctype_$1(VALUE)							\
   _Generic((VALUE),								\
 	   mmux_float_t:		mmux_float_$1,				\
 	   mmux_double_t:		mmux_double_$1,				\
@@ -625,22 +625,13 @@ m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF64_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF128_M4,1,[[[m4_dnl
 	   mmux_complexf128_t:		mmux_complexf128_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,			\
-]]])m4_dnl
-m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,			\
-]]])m4_dnl
-m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,			\
-]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE)
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_MATHEMATICS_REAL_UNARY]]],[[[m4_dnl
-#define mmux_ctype_is_$1(VALUE)							\
+#define mmux_ctype_$1(VALUE)							\
   _Generic((VALUE),								\
 	   mmux_float_t:		mmux_float_$1,				\
 	   mmux_double_t:		mmux_double_$1,				\
@@ -727,15 +718,6 @@ m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF64_M4,1,[[[m4_dnl
 ]]])m4_dnl
 m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXF128_M4,1,[[[m4_dnl
 	   mmux_complexf128_t:		mmux_complexf128_$1,			\
-]]])m4_dnl
-m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,			\
-]]])m4_dnl
-m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,			\
-]]])m4_dnl
-m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,			\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2))
 ]]]) m4_dnl

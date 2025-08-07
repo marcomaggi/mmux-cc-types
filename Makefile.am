@@ -192,7 +192,8 @@ src/%.$(OBJEXT): \
 check_PROGRAMS	= \
 	tests/version				\
 	tests/test-real-predicates		\
-	tests/test-arithmetics
+	tests/test-arithmetics			\
+	tests/test-mathematics
 
 TESTS				= $(check_PROGRAMS)
 
@@ -209,6 +210,9 @@ tests_test_real_predicates_LDADD	= $(mmux_cc_types_tests_ldadd)
 
 tests_test_arithmetics_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_arithmetics_LDADD		= $(mmux_cc_types_tests_ldadd)
+
+tests_test_mathematics_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_mathematics_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"
