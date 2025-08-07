@@ -540,27 +540,228 @@ test_mathematics_j1 (void)
 }
 
 static void
-test_mathematics_y0 (void)
-{
-  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
-}
-
-static void
-test_mathematics_y1 (void)
-{
-  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
-}
-
-static void
 test_mathematics_jn (void)
 {
   dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
 }
 
+
+/** --------------------------------------------------------------------
+ ** Bessel function y0.
+ ** ----------------------------------------------------------------- */
+
+static void
+test_mathematics_y0 (void)
+{
+  dprintf(1, "running test: %s\n", __func__);
+
+  {
+    mmux_float_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+
+  {
+    mmux_double_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  {
+    mmux_ldouble_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  {
+    mmux_float32_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  {
+    mmux_float64_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  {
+    mmux_float128_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  {
+    mmux_float32x_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  {
+    mmux_float64x_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  {
+    mmux_float128x_t	op1 = 0.123, rop = -1.400'161'793, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y0(op1), mrg));
+  }
+#endif
+}
+
+
+/** --------------------------------------------------------------------
+ ** Bessel function y1.
+ ** ----------------------------------------------------------------- */
+
+static void
+test_mathematics_y1 (void)
+{
+  dprintf(1, "running test: %s\n", __func__);
+
+  {
+    mmux_float_t	op1 = 0.123, rop = -5.281'675'451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+
+  {
+    mmux_double_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  {
+    mmux_ldouble_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  {
+    mmux_float32_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  {
+    mmux_float64_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  {
+    mmux_float128_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  {
+    mmux_float32x_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  {
+    mmux_float64x_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  {
+    mmux_float128x_t	op1 = 0.123, rop = -5.281675451, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_y1(op1), mrg));
+  }
+#endif
+}
+
+
+/** --------------------------------------------------------------------
+ ** Bessel function yn.
+ ** ----------------------------------------------------------------- */
+
 static void
 test_mathematics_yn (void)
 {
-  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+  dprintf(1, "running test: %s\n", __func__);
+
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_double_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_ldouble_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float32_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float64_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float128_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float32x_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float64x_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  {
+    mmux_sint_t		op1 = 2;
+    mmux_float128x_t	op2 = 0.123, rop = -84.48073985, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_yn(op1,op2), mrg));
+  }
+#endif
 }
 
 
@@ -607,10 +808,9 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_mathematics_tgamma();	}
   if (1) {	test_mathematics_j0();		}
   if (1) {	test_mathematics_j1();		}
+  if (1) {	test_mathematics_jn();		}
   if (1) {	test_mathematics_y0();		}
   if (1) {	test_mathematics_y1();		}
-
-  if (1) {	test_mathematics_jn();		}
   if (1) {	test_mathematics_yn();		}
 
   exit(EXIT_SUCCESS);
