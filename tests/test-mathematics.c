@@ -359,6 +359,211 @@ test_mathematics_cos (void)
 }
 
 
+static void
+test_mathematics_tan (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_asin (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_acos (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_atan (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_atan2 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_sinh (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_cosh (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_tanh (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_asinh (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_acosh (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_atanh (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_exp (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_exp2 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_exp10 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_log (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_log2 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_log10 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_logb (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_pow (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_sqrt (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_cbrt (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_expm1 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_log1p (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_hypot (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_erf (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_erfc (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_lgamma (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_tgamma (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_j0 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_j1 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_y0 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_y1 (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_jn (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+static void
+test_mathematics_yn (void)
+{
+  dprintf(1, "running test TO BE IMPLEMENTED: %s\n", __func__);
+}
+
+
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
@@ -368,6 +573,45 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
 {
   if (1) {	test_mathematics_sin();		}
   if (1) {	test_mathematics_cos();		}
+  if (1) {	test_mathematics_tan();		}
+  if (1) {	test_mathematics_asin();	}
+  if (1) {	test_mathematics_acos();	}
+  if (1) {	test_mathematics_atan();	}
+  if (1) {	test_mathematics_atan2();	}
+
+  if (1) {	test_mathematics_sinh();	}
+  if (1) {	test_mathematics_cosh();	}
+  if (1) {	test_mathematics_tanh();	}
+  if (1) {	test_mathematics_asinh();	}
+  if (1) {	test_mathematics_acosh();	}
+  if (1) {	test_mathematics_atanh();	}
+
+  if (1) {	test_mathematics_exp();		}
+  if (1) {	test_mathematics_exp2();	}
+  if (1) {	test_mathematics_exp10();	}
+  if (1) {	test_mathematics_log();		}
+  if (1) {	test_mathematics_log2();	}
+  if (1) {	test_mathematics_log10();	}
+  if (1) {	test_mathematics_logb();	}
+
+  if (1) {	test_mathematics_pow();		}
+  if (1) {	test_mathematics_sqrt();	}
+  if (1) {	test_mathematics_cbrt();	}
+  if (1) {	test_mathematics_expm1();	}
+  if (1) {	test_mathematics_log1p();	}
+  if (1) {	test_mathematics_hypot();	}
+
+  if (1) {	test_mathematics_erf();		}
+  if (1) {	test_mathematics_erfc();	}
+  if (1) {	test_mathematics_lgamma();	}
+  if (1) {	test_mathematics_tgamma();	}
+  if (1) {	test_mathematics_j0();		}
+  if (1) {	test_mathematics_j1();		}
+  if (1) {	test_mathematics_y0();		}
+  if (1) {	test_mathematics_y1();		}
+
+  if (1) {	test_mathematics_jn();		}
+  if (1) {	test_mathematics_yn();		}
 
   exit(EXIT_SUCCESS);
 }
