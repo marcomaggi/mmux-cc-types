@@ -2021,6 +2021,18 @@ Compare the operands using the given epsilon.
 @chapter Arithmetics operations
 
 
+Notice how the @code{neg} functions are defined for unsigned exact integers; the result of such an
+operation is whatever the compile produces; for example:
+
+@example
+mmux_ulong_t	op  = 5;
+mmux_ulong_t	rop = mmux_ulong_neg(op);
+
+dprintf(2, "rop = %lu\n", mmux_ulong_neg(rop);
+@print{} 18446744073709551611
+@end example
+
+
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
 Perform the addition between @var{PTR} and @var{DELTA}, return the result.
 @end deftypefun

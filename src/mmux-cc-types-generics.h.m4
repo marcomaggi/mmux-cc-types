@@ -8,6 +8,15 @@
 	This a the  public header included by "mmux-cc-types.h".  It  defines uses of
 	the "_Generic" keyword.
 
+	The keywork "_Generic"  does not support compatible types  in its association
+	list; among the exact integers there are compatible types.
+
+	We support "sint8", "uint8", "sint16", "uint16", "sint32", "uint32","sint64",
+	"uint64"  and  assume  that  "schar", "uchar",  "sshort",  "ushort",  "sint",
+	"uint",  "slong",   "ulong",  "sintmax",  "uintmax",   "sintptr",  "uintptr",
+	"ptrdiff", "ssize",  "usize", "mode",  "pid", "uid", "gid",  "wchar", "wint",
+	"off", "rlim", "socklen", "time" are compatible with them.
+
   Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
@@ -38,15 +47,6 @@ extern "C" {
 /** --------------------------------------------------------------------
  ** Predicates.
  ** ----------------------------------------------------------------- */
-
-/* The keywork "_Generic" does not support  compatible types in its association list;
-   among the exact integers there are compatible types.
-
-   We  support "sint8",  "uint8",  "sint16",  "uint16", "sint32",  "uint32","sint64",
-   "uint64" and  assume that  "schar", "uchar",  "sshort", "ushort",  "sint", "uint",
-   "slong", "ulong",  "sintmax", "uintmax",  "sintptr", "uintptr",  "ssize", "usize",
-   "mode", "pid", "uid", "gid", "wchar", "wint", "off", "rlim", "socklen", "time" are
-   compatible with them. */
 
 m4_define([[[DEFINE_REAL_PREDICATE]]],[[[m4_dnl
 #define mmux_ctype_is_$1(VALUE)							\
@@ -137,15 +137,6 @@ DEFINE_REAL_PREDICATE([[[nan]]])
 /** --------------------------------------------------------------------
  ** Comparison.
  ** ----------------------------------------------------------------- */
-
-/* The keywork "_Generic" does not support  compatible types in its association list;
-   among the exact integers there are compatible types.
-
-   We  support "sint8",  "uint8",  "sint16",  "uint16", "sint32",  "uint32","sint64",
-   "uint64" and  assume that  "schar", "uchar",  "sshort", "ushort",  "sint", "uint",
-   "slong", "ulong",  "sintmax", "uintmax",  "sintptr", "uintptr",  "ssize", "usize",
-   "mode", "pid", "uid", "gid", "wchar", "wint", "off", "rlim", "socklen", "time" are
-   compatible with them. */
 
 m4_define([[[DEFINE_COMPARISON_FUNCTIONS]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)						\
@@ -268,6 +259,8 @@ m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL64_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL128_M4,1,[[[m4_dnl
 	   mmux_decimal128_t:		mmux_decimal128_$1,			\
 ]]])m4_dnl
+	   mmux_complexf_t:		mmux_complexf_$1,			\
+	   mmux_complexd_t:		mmux_complexd_$1,			\
 m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXLD_M4,1,[[[m4_dnl
 	   mmux_complexld_t:		mmux_complexld_$1,			\
 ]]])m4_dnl
@@ -300,17 +293,8 @@ DEFINE_INEXACT_COMPARISON_FUNCTIONS([[[equal_relepsilon]]])
  ** Arithmetics.
  ** ----------------------------------------------------------------- */
 
-/* The keywork "_Generic" does not support  compatible types in its association list;
-   among the exact integers there are compatible types.
-
-   We  support "sint8",  "uint8",  "sint16",  "uint16", "sint32",  "uint32","sint64",
-   "uint64" and  assume that  "schar", "uchar",  "sshort", "ushort",  "sint", "uint",
-   "slong", "ulong",  "sintmax", "uintmax",  "sintptr", "uintptr",  "ssize", "usize",
-   "mode", "pid", "uid", "gid", "wchar", "wint", "off", "rlim", "socklen", "time" are
-   compatible with them. */
-
 m4_define([[[DEFINE_ARITHMETICS_UNARY]]],[[[m4_dnl
-#define mmux_ctype_is_$1(VALUE)							\
+#define mmux_ctype_$1(VALUE)							\
   _Generic((VALUE),								\
 	   mmux_char_t:			mmux_char_$1,				\
 m4_ifelse(MMUX_HAVE_CC_TYPE_SLLONG_M4,1,[[[m4_dnl
