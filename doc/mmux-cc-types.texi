@@ -2025,10 +2025,10 @@ Notice how the @code{neg} functions are defined for unsigned exact integers; the
 operation is whatever the compile produces; for example:
 
 @example
-mmux_ulong_t	op  = 5;
-mmux_ulong_t	rop = mmux_ulong_neg(op);
+mmux_ulong_t    op  = 5;
+auto            rop = mmux_ulong_neg(op);
 
-dprintf(2, "rop = %lu\n", mmux_ulong_neg(rop);
+dprintf(2, "rop = %lu\n", rop);
 @print{} 18446744073709551611
 @end example
 

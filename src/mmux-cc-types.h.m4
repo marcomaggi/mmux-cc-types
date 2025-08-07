@@ -87,8 +87,8 @@ extern "C" {
 
 #include <mmux-cc-types-config.h>
 #include <stdbool.h>
-#include <stddef.h>
-#include <inttypes.h>
+#include <stddef.h>	/* for "size_t", etc. */
+#include <inttypes.h>	/* for "int8_t", etc. */
 #include <complex.h>
 #include <mmux-cc-types-generics.h>
 
