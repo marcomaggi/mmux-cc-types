@@ -295,7 +295,7 @@ DEFINE_REAL_DECIMAL_PREDICATES([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128
 
 
 /** --------------------------------------------------------------------
- ** Complex decimal floating-point numbers Predicates.
+ ** Complex decimal floating-point numbers predicates.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_COMPLEX_DECIMAL_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
@@ -504,6 +504,33 @@ mmux_$3 (char const * restrict s_input_value, char ** restrict tailptr)
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal32]]],	[[[strfromd32]]],  [[[strtod32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal64]]],	[[[strfromd64]]],  [[[strtod64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
 DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Some arithmetics functions not implemented by libdfp.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+__attribute__((__const__)) mmux_$1_t
+mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
+{
+  return $2(A, B);
+}
+__attribute__((__const__)) mmux_$1_t
+mmux_$1_incr (mmux_$1_t A)
+{
+  return A + ((mmux_$1_t)1.0);
+}
+__attribute__((__const__)) mmux_$1_t
+mmux_$1_decr (mmux_$1_t A)
+{
+  return A - ((mmux_$1_t)1.0);
+}
+]]])]]])
+
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal32]]],  [[[fmodd32]]],  [[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal64]]],  [[[fmodd64]]],  [[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]], [[[fmodd128]]], [[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------

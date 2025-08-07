@@ -449,6 +449,116 @@ m4_ifelse(MMUX_HAVE_CC_TYPE_COMPLEXD128_M4,1,[[[m4_dnl
 
 /* ------------------------------------------------------------------ */
 
+m4_define([[[DEFINE_ARITHMETICS_REAL_UNARY]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE)							\
+  _Generic((VALUE),								\
+	   mmux_char_t:			mmux_char_$1,				\
+m4_ifelse(MMUX_HAVE_CC_TYPE_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		mmux_sllong_$1,				\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		mmux_sllong_$1,				\
+]]])m4_dnl
+	   mmux_float_t:		mmux_float_$1,				\
+	   mmux_double_t:		mmux_double_$1,				\
+m4_ifelse(MMUX_HAVE_CC_TYPE_LDOUBLE_M4,1,[[[m4_dnl
+	   mmux_ldouble_t:		mmux_ldouble_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT32_M4,1,[[[m4_dnl
+	   mmux_float32_t:		mmux_float32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT64_M4,1,[[[m4_dnl
+	   mmux_float64_t:		mmux_float64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT128_M4,1,[[[m4_dnl
+	   mmux_float128_t:		mmux_float128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT32X_M4,1,[[[m4_dnl
+	   mmux_float32x_t:		mmux_float32x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT64X_M4,1,[[[m4_dnl
+	   mmux_float64x_t:		mmux_float64x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT128X_M4,1,[[[m4_dnl
+	   mmux_float128x_t:		mmux_float128x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL32_M4,1,[[[m4_dnl
+	   mmux_decimal32_t:		mmux_decimal32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL64_M4,1,[[[m4_dnl
+	   mmux_decimal64_t:		mmux_decimal64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL128_M4,1,[[[m4_dnl
+	   mmux_decimal128_t:		mmux_decimal128_$1,			\
+]]])m4_dnl
+	   mmux_sint8_t:		mmux_sint8_$1,				\
+	   mmux_uint8_t:		mmux_uint8_$1,				\
+	   mmux_sint16_t:		mmux_sint16_$1,				\
+	   mmux_uint16_t:		mmux_uint16_$1,				\
+	   mmux_sint32_t:		mmux_sint32_$1,				\
+	   mmux_uint32_t:		mmux_uint32_$1,				\
+	   mmux_sint64_t:		mmux_sint64_$1,				\
+	   mmux_uint64_t:		mmux_uint64_$1,				\
+           default:			mmux_ctype_generic_error)(VALUE)
+]]]) m4_dnl
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_ARITHMETICS_REAL_BINARY]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE1,VALUE2)						\
+  _Generic((VALUE1),								\
+	   mmux_char_t:			mmux_char_$1,				\
+m4_ifelse(MMUX_HAVE_CC_TYPE_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		mmux_sllong_$1,				\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		mmux_sllong_$1,				\
+]]])m4_dnl
+	   mmux_float_t:		mmux_float_$1,				\
+	   mmux_double_t:		mmux_double_$1,				\
+m4_ifelse(MMUX_HAVE_CC_TYPE_LDOUBLE_M4,1,[[[m4_dnl
+	   mmux_ldouble_t:		mmux_ldouble_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT32_M4,1,[[[m4_dnl
+	   mmux_float32_t:		mmux_float32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT64_M4,1,[[[m4_dnl
+	   mmux_float64_t:		mmux_float64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT128_M4,1,[[[m4_dnl
+	   mmux_float128_t:		mmux_float128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT32X_M4,1,[[[m4_dnl
+	   mmux_float32x_t:		mmux_float32x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT64X_M4,1,[[[m4_dnl
+	   mmux_float64x_t:		mmux_float64x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_FLOAT128X_M4,1,[[[m4_dnl
+	   mmux_float128x_t:		mmux_float128x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL32_M4,1,[[[m4_dnl
+	   mmux_decimal32_t:		mmux_decimal32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL64_M4,1,[[[m4_dnl
+	   mmux_decimal64_t:		mmux_decimal64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_HAVE_CC_TYPE_DECIMAL128_M4,1,[[[m4_dnl
+	   mmux_decimal128_t:		mmux_decimal128_$1,			\
+]]])m4_dnl
+	   mmux_sint8_t:		mmux_sint8_$1,				\
+	   mmux_uint8_t:		mmux_uint8_$1,				\
+	   mmux_sint16_t:		mmux_sint16_$1,				\
+	   mmux_uint16_t:		mmux_uint16_$1,				\
+	   mmux_sint32_t:		mmux_sint32_$1,				\
+	   mmux_uint32_t:		mmux_uint32_$1,				\
+	   mmux_sint64_t:		mmux_sint64_$1,				\
+	   mmux_uint64_t:		mmux_uint64_$1,				\
+           default:			mmux_ctype_generic_error)((VALUE1),(VALUE2))
+]]]) m4_dnl
+
+/* ------------------------------------------------------------------ */
+
 DEFINE_ARITHMETICS_BINARY([[[add]]])
 DEFINE_ARITHMETICS_BINARY([[[sub]]])
 DEFINE_ARITHMETICS_BINARY([[[mul]]])
@@ -456,9 +566,10 @@ DEFINE_ARITHMETICS_BINARY([[[div]]])
 DEFINE_ARITHMETICS_UNARY([[[neg]]])
 DEFINE_ARITHMETICS_UNARY([[[inv]]])
 DEFINE_ARITHMETICS_UNARY([[[abs]]])
-DEFINE_ARITHMETICS_BINARY([[[mod]]])
-DEFINE_ARITHMETICS_UNARY([[[incr]]])
-DEFINE_ARITHMETICS_UNARY([[[decr]]])
+
+DEFINE_ARITHMETICS_REAL_BINARY([[[mod]]])
+DEFINE_ARITHMETICS_REAL_UNARY([[[incr]]])
+DEFINE_ARITHMETICS_REAL_UNARY([[[decr]]])
 
 
 /** --------------------------------------------------------------------

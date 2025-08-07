@@ -689,6 +689,38 @@ DEFINE_REAL_FLOAT_NUMBER_PREDICATES([[[float32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32
 DEFINE_REAL_FLOAT_NUMBER_PREDICATES([[[float64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
 DEFINE_REAL_FLOAT_NUMBER_PREDICATES([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
 
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+__attribute__((__const__)) mmux_$1_t
+mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
+{
+  return $2(A, B);
+}
+__attribute__((__const__)) mmux_$1_t
+mmux_$1_incr (mmux_$1_t A)
+{
+  return A + ((mmux_$1_t)1.0);
+}
+__attribute__((__const__)) mmux_$1_t
+mmux_$1_decr (mmux_$1_t A)
+{
+  return A - ((mmux_$1_t)1.0);
+}
+]]])]]])
+
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float]]],	[[[fmodf]]])
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[double]]],	[[[fmod]]])
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[ldouble]]],	[[[fmodl]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float32]]],	[[[fmodf32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float64]]],	[[[fmodf64]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float128]]],	[[[fmodf128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float32x]]],	[[[fmodf32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float64x]]],	[[[fmodf64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float128x]]],	[[[fmodf128x]]],[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
 
 /** --------------------------------------------------------------------
  ** Core C language predicates: complex floating-point numbers.

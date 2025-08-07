@@ -2056,7 +2056,11 @@ as @code{mmux_uint8_t *}, return the result.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_abs (mmux_\STEM\_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value.
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
+remainder, increment, decrement.
 @end deftypefun
 
 @end macro
@@ -2069,7 +2073,7 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_neg (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inv (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_abs (mmux_\CPLXSTEM\_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value.
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values.
 @end deftypefun
 
 @end macro
