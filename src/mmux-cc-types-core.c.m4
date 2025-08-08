@@ -1015,6 +1015,220 @@ DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf64x]]], [[[flo
 DEFINE_TYPE_FUNCTIONS_COMPLEX_FLOAT_APPROX_COMPARISONS([[[complexf128x]]],[[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
 
 
+/** --------------------------------------------------------------------
+ ** Additional mathematical functions no implemented by libc.
+ ** ----------------------------------------------------------------- */
+
+/* 2^Z = exp( log ( 2^Z ) ) = exp( Z * log( 2 ) ) */
+static mmux_complexf_t
+cexp2f (mmux_complexf_t Z)
+{
+  return mmux_complexf_exp(mmux_complexf_mul(Z, mmux_complexf_make_rectangular(mmux_float_constant_LN2(),0.0)));
+}
+static mmux_complexd_t
+cexp2 (mmux_complexd_t Z)
+{
+  return mmux_complexd_exp(mmux_complexd_mul(Z, mmux_complexd_make_rectangular(mmux_double_constant_LN2(),0.0)));
+}
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+static mmux_complexld_t
+cexp2l (mmux_complexld_t Z)
+{
+  return mmux_complexld_exp(mmux_complexld_mul(Z, mmux_complexld_make_rectangular(mmux_ldouble_constant_LN2(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+static mmux_complexf32_t
+cexp2f32 (mmux_complexf32_t Z)
+{
+  return mmux_complexf32_exp(mmux_complexf32_mul(Z, mmux_complexf32_make_rectangular(mmux_float32_constant_LN2(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+static mmux_complexf64_t
+cexp2f64 (mmux_complexf64_t Z)
+{
+  return mmux_complexf64_exp(mmux_complexf64_mul(Z, mmux_complexf64_make_rectangular(mmux_float64_constant_LN2(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+static mmux_complexf128_t
+cexp2f128 (mmux_complexf128_t Z)
+{
+  return mmux_complexf128_exp(mmux_complexf128_mul(Z, mmux_complexf128_make_rectangular(mmux_float128_constant_LN2(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+static mmux_complexf32x_t
+cexp2f32x (mmux_complexf32x_t Z)
+{
+  return mmux_complexf32x_exp(mmux_complexf32x_mul(Z, mmux_complexf32x_make_rectangular(mmux_float32_constant_LN2(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+static mmux_complexf64x_t
+cexp2f64x (mmux_complexf64x_t Z)
+{
+  return mmux_complexf64x_exp(mmux_complexf64x_mul(Z, mmux_complexf64x_make_rectangular(mmux_float64x_constant_LN2(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+static mmux_complexf128x_t
+cexp2f128x (mmux_complexf128x_t Z)
+{
+  return mmux_complexf128x_exp(mmux_complexf128x_mul(Z, mmux_complexf128x_make_rectangular(mmux_float128x_constant_LN2(),0.0)));
+}
+#endif
+
+/* #ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32 */
+/* static mmux_complexd32_t */
+/* cexp2d32 (mmux_complexd32_t Z) */
+/* { */
+/*   return mmux_complexd32_exp(mmux_complexd32_mul(Z, mmux_complexd32_make_rectangular(mmux_decimal32_constant_LN2(),0.0))); */
+/* } */
+/* #endif */
+
+/* ------------------------------------------------------------------ */
+
+/* 10^Z = exp( log ( 10^Z ) ) = exp( Z * log( 10 ) ) */
+static mmux_complexf_t
+cexp10f (mmux_complexf_t Z)
+{
+  return mmux_complexf_exp(mmux_complexf_mul(Z, mmux_complexf_make_rectangular(mmux_float_constant_LN10(),0.0)));
+}
+static mmux_complexd_t
+cexp10 (mmux_complexd_t Z)
+{
+  if (0) {
+    auto W = mmux_complexd_exp(mmux_complexd_mul(Z, mmux_complexd_make_rectangular(mmux_double_constant_LN10(),0.0)));
+    fprintf(stderr, "%s reZ=%f imZ=%f reW=%f imW=%f\n",
+	    __func__, creal(Z), cimag(Z), creal(W), cimag(W));
+  }
+  return mmux_complexd_exp(mmux_complexd_mul(Z, mmux_complexd_make_rectangular(mmux_double_constant_LN10(),0.0)));
+}
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+static mmux_complexld_t
+cexp10l (mmux_complexld_t Z)
+{
+  return mmux_complexld_exp(mmux_complexld_mul(Z, mmux_complexld_make_rectangular(mmux_ldouble_constant_LN10(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+static mmux_complexf32_t
+cexp10f32 (mmux_complexf32_t Z)
+{
+  return mmux_complexf32_exp(mmux_complexf32_mul(Z, mmux_complexf32_make_rectangular(mmux_float32_constant_LN10(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+static mmux_complexf64_t
+cexp10f64 (mmux_complexf64_t Z)
+{
+  return mmux_complexf64_exp(mmux_complexf64_mul(Z, mmux_complexf64_make_rectangular(mmux_float64_constant_LN10(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+static mmux_complexf128_t
+cexp10f128 (mmux_complexf128_t Z)
+{
+  return mmux_complexf128_exp(mmux_complexf128_mul(Z, mmux_complexf128_make_rectangular(mmux_float128_constant_LN10(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+static mmux_complexf32x_t
+cexp10f32x (mmux_complexf32x_t Z)
+{
+  return mmux_complexf32x_exp(mmux_complexf32x_mul(Z, mmux_complexf32x_make_rectangular(mmux_float32_constant_LN10(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+static mmux_complexf64x_t
+cexp10f64x (mmux_complexf64x_t Z)
+{
+  return mmux_complexf64x_exp(mmux_complexf64x_mul(Z, mmux_complexf64x_make_rectangular(mmux_float64x_constant_LN10(),0.0)));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+static mmux_complexf128x_t
+cexp10f128x (mmux_complexf128x_t Z)
+{
+  return mmux_complexf128x_exp(mmux_complexf128x_mul(Z, mmux_complexf128x_make_rectangular(mmux_float128x_constant_LN10(),0.0)));
+}
+#endif
+
+/* ------------------------------------------------------------------ */
+
+/* log_2 Z = log Z / log 2 */
+static mmux_complexf_t
+clog2f (mmux_complexf_t Z)
+{
+  return mmux_complexf_div(mmux_complexf_log(Z),
+			   mmux_complexf_make_rectangular(mmux_float_constant_LN2(),0.0));
+}
+static mmux_complexd_t
+clog2 (mmux_complexd_t Z)
+{
+  return mmux_complexd_div(mmux_complexf_log(Z),
+			   mmux_complexd_make_rectangular(mmux_double_constant_LN2(),0.0));
+}
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+static mmux_complexld_t
+clog2l (mmux_complexld_t Z)
+{
+  return mmux_complexld_div(mmux_complexf_log(Z),
+			    mmux_complexld_make_rectangular(mmux_ldouble_constant_LN2(),0.0));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+static mmux_complexf32_t
+clog2f32 (mmux_complexf32_t Z)
+{
+  return mmux_complexf32_div(mmux_complexf_log(Z),
+			     mmux_complexf32_make_rectangular(mmux_float32_constant_LN2(),0.0));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+static mmux_complexf64_t
+clog2f64 (mmux_complexf64_t Z)
+{
+  return mmux_complexf64_div(mmux_complexf_log(Z),
+			     mmux_complexf64_make_rectangular(mmux_float64_constant_LN2(),0.0));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+static mmux_complexf128_t
+clog2f128 (mmux_complexf128_t Z)
+{
+  return mmux_complexf128_div(mmux_complexf_log(Z),
+			      mmux_complexf128_make_rectangular(mmux_float128_constant_LN2(),0.0));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+static mmux_complexf32x_t
+clog2f32x (mmux_complexf32x_t Z)
+{
+  return mmux_complexf32x_div(mmux_complexf_log(Z),
+			      mmux_complexf32x_make_rectangular(mmux_float32_constant_LN2(),0.0));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+static mmux_complexf64x_t
+clog2f64x (mmux_complexf64x_t Z)
+{
+  return mmux_complexf64x_div(mmux_complexf_log(Z),
+			      mmux_complexf64x_make_rectangular(mmux_float64x_constant_LN2(),0.0));
+}
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+static mmux_complexf128x_t
+clog2f128x (mmux_complexf128x_t Z)
+{
+  return mmux_complexf128x_div(mmux_complexf_log(Z),
+			       mmux_complexf128x_make_rectangular(mmux_float128x_constant_LN2(),0.0));
+}
+#endif
+
+
 m4_divert(-1)m4_dnl
 m4_dnl --------------------------------------------------------------------
 m4_dnl Orgy of math macros.
@@ -1285,8 +1499,8 @@ DEFINE_CFUNCS([[[complexf]]],
 	      [[[casinf]]],		[[[cacosf]]],		[[[catanf]]],		[[[]]],
 	      [[[csinhf]]],		[[[ccoshf]]],		[[[ctanhf]]],
 	      [[[casinhf]]],		[[[cacoshf]]],		[[[catanhf]]],
-	      [[[cexpf]]],		[[[]]],			[[[]]],
-	      [[[clogf]]],		[[[clog10f]]],		[[[]]],			[[[]]],
+	      [[[cexpf]]],		[[[cexp2f]]],		[[[cexp10f]]],
+	      [[[clogf]]],		[[[clog10f]]],		[[[clog2f]]],		[[[]]],
 	      [[[cpowf]]],		[[[csqrtf]]],		[[[]]],			[[[]]],
 	      [[[]]],			[[[]]],
 	      [[[]]],			[[[]]],
@@ -1299,8 +1513,8 @@ DEFINE_CFUNCS([[[complexd]]],
 		  [[[casin]]],		[[[cacos]]],		[[[catan]]],		[[[]]],
 		  [[[csinh]]],		[[[ccosh]]],		[[[ctanh]]],
 		  [[[casinh]]],		[[[cacosh]]],		[[[catanh]]],
-		  [[[cexp]]],		[[[]]],			[[[]]],
-		  [[[clog]]],		[[[clog10]]],		[[[]]],			[[[]]],
+		  [[[cexp]]],		[[[cexp2]]],		[[[cexp10]]],
+		  [[[clog]]],		[[[clog10]]],		[[[clog2]]],		[[[]]],
 		  [[[cpow]]],		[[[csqrt]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1313,8 +1527,8 @@ DEFINE_CFUNCS([[[complexld]]],
 		  [[[casinl]]],		[[[cacosl]]],		[[[catanl]]],		[[[]]],
 		  [[[csinhl]]],		[[[ccoshl]]],		[[[ctanhl]]],
 		  [[[casinhl]]],	[[[cacoshl]]],		[[[catanhl]]],
-		  [[[cexpl]]],		[[[]]],			[[[]]],
-		  [[[clogl]]],		[[[clog10l]]],		[[[]]],			[[[]]],
+		  [[[cexpl]]],		[[[cexp2l]]],		[[[cexp10l]]],
+		  [[[clogl]]],		[[[clog10l]]],		[[[clog2l]]],		[[[]]],
 		  [[[cpowl]]],		[[[csqrtl]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1328,8 +1542,8 @@ DEFINE_CFUNCS([[[complexf32]]],
 		  [[[casinf32]]],	[[[cacosf32]]],		[[[catanf32]]],		[[[]]],
 		  [[[csinhf32]]],	[[[ccoshf32]]],		[[[ctanhf32]]],
 		  [[[casinhf32]]],	[[[cacoshf32]]],	[[[catanhf32]]],
-		  [[[cexpf32]]],	[[[]]],			[[[]]],
-		  [[[clogf32]]],	[[[clog10f32]]],	[[[]]],			[[[]]],
+		  [[[cexpf32]]],	[[[cexp2f32]]],		[[[cexp10f32]]],
+		  [[[clogf32]]],	[[[clog10f32]]],	[[[clog2f32]]],		[[[]]],
 		  [[[cpowf32]]],	[[[csqrtf32]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1342,8 +1556,8 @@ DEFINE_CFUNCS([[[complexf64]]],
 		  [[[casinf64]]],	[[[cacosf64]]],		[[[catanf64]]],		[[[]]],
 		  [[[csinhf64]]],	[[[ccoshf64]]],		[[[ctanhf64]]],
 		  [[[casinhf64]]],	[[[cacoshf64]]],	[[[catanhf64]]],
-		  [[[cexpf64]]],	[[[]]],			[[[]]],
-		  [[[clogf64]]],	[[[clog10f64]]],	[[[]]],			[[[]]],
+		  [[[cexpf64]]],	[[[cexp2f64]]],		[[[cexp10f64]]],
+		  [[[clogf64]]],	[[[clog10f64]]],	[[[clog2f64]]],		[[[]]],
 		  [[[cpowf64]]],	[[[csqrtf64]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1356,8 +1570,8 @@ DEFINE_CFUNCS([[[complexf128]]],
 		  [[[casinf128]]],	[[[cacosf128]]],	[[[catanf128]]],	[[[]]],
 		  [[[csinhf128]]],	[[[ccoshf128]]],	[[[ctanhf128]]],
 		  [[[casinhf128]]],	[[[cacoshf128]]],	[[[catanhf128]]],
-		  [[[cexpf128]]],	[[[]]],			[[[]]],
-		  [[[clogf128]]],	[[[clog10f128]]],	[[[]]],			[[[]]],
+		  [[[cexpf128]]],	[[[cexp2f128]]],	[[[cexp10f128]]],
+		  [[[clogf128]]],	[[[clog10f128]]],	[[[clog2f128]]],	[[[]]],
 		  [[[cpowf128]]],	[[[csqrtf128]]],	[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1371,8 +1585,8 @@ DEFINE_CFUNCS([[[complexf32x]]],
 		  [[[casinf32x]]],	[[[cacosf32x]]],	[[[catanf32x]]],	[[[]]],
 		  [[[csinhf32x]]],	[[[ccoshf32x]]],	[[[ctanhf32x]]],
 		  [[[casinhf32x]]],	[[[cacoshf32x]]],	[[[catanhf32x]]],
-		  [[[cexpf32x]]],	[[[]]],			[[[]]],
-		  [[[clogf32x]]],	[[[clog10f32x]]],	[[[]]],			[[[]]],
+		  [[[cexpf32x]]],	[[[cexp2f32x]]],	[[[cexp10f32x]]],
+		  [[[clogf32x]]],	[[[clog10f32x]]],	[[[clog2f32x]]],	[[[]]],
 		  [[[cpowf32x]]],	[[[csqrtf32x]]],	[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1385,8 +1599,8 @@ DEFINE_CFUNCS([[[complexf64x]]],
 		  [[[casinf64x]]],	[[[cacosf64x]]],	[[[catanf64x]]],	[[[]]],
 		  [[[csinhf64x]]],	[[[ccoshf64x]]],	[[[ctanhf64x]]],
 		  [[[casinhf64x]]],	[[[cacoshf64x]]],	[[[catanhf64x]]],
-		  [[[cexpf64x]]],	[[[]]],			[[[]]],
-		  [[[clogf64x]]],	[[[clog10f64x]]],	[[[]]],			[[[]]],
+		  [[[cexpf64x]]],	[[[cexp2f64x]]],	[[[cexp10f64x]]],
+		  [[[clogf64x]]],	[[[clog10f64x]]],	[[[clog2f64x]]],	[[[]]],
 		  [[[cpowf64x]]],	[[[csqrtf64x]]],	[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],
 	          [[[]]],		[[[]]],
@@ -1399,8 +1613,8 @@ DEFINE_CFUNCS([[[complexf128x]]],
 		  [[[casinf128x]]],	[[[cacosf128x]]],	[[[catanf128x]]],	[[[]]],
 		  [[[csinhf128x]]],	[[[ccoshf128x]]],	[[[ctanhf128x]]],
 		  [[[casinhf128x]]],	[[[cacoshf128x]]],	[[[catanhf128x]]],
-		  [[[cexpf128x]]],	[[[]]],			[[[]]],
-		  [[[clogf128x]]],	[[[clog10f128x]]],	[[[]]],			[[[]]],
+		  [[[cexpf128x]]],	[[[cexp2f128x]]],	[[[cexp10f128x]]],
+		  [[[clogf128x]]],	[[[clog10f128x]]],	[[[clog2f128x]]],	[[[]]],
 		  [[[cpowf128x]]],	[[[csqrtf128x]]],	[[[]]],			[[[]]],
 	          [[[]]],		[[[]]],
 		  [[[]]],		[[[]]],
