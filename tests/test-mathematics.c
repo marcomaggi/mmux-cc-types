@@ -3082,7 +3082,93 @@ test_mathematics_log10 (void)
 static void
 test_mathematics_logb (void)
 {
-  printf("running test TO BE IMPLEMENTED: %s\n", __func__);
+  printf("running test: %s\n", __func__);
+#undef  ROPX
+#define ROPX		-4
+
+  {
+    mmux_float_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+  {
+    mmux_double_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  {
+    mmux_ldouble_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  {
+    mmux_float32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  {
+    mmux_float64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  {
+    mmux_float128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  {
+    mmux_float32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  {
+    mmux_float64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  {
+    mmux_float128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+  if (1) {
+    mmux_decimal32_t	op1 = (mmux_decimal32_t)0.123, rop = ROPX, eps = 1e-4;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+  if (1) {
+    mmux_decimal64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    if (1) {
+      fprintf(stderr, "logb(%f)=%f\n", (mmux_double_t)op1, (mmux_double_t)mmux_ctype_logb(op1));
+    }
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+  if (1) {
+    mmux_decimal128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    if (1) {
+      fprintf(stderr, "logb(%f)=%f\n", (mmux_double_t)op1, (mmux_double_t)mmux_ctype_logb(op1));
+    }
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
+  }
+#endif
 }
 
 

@@ -191,6 +191,7 @@ src/%.$(OBJEXT): \
 
 check_PROGRAMS	= \
 	tests/version				\
+	tests/test-sprint			\
 	tests/test-real-predicates		\
 	tests/test-arithmetics			\
 	tests/test-mathematics
@@ -204,6 +205,9 @@ mmux_cc_types_tests_ldadd	= $(AM_LDFLAGS) libmmux-cc-types.la
 
 tests_version_CPPFLAGS			= $(mmux_cc_types_tests_cppflags)
 tests_version_LDADD			= $(mmux_cc_types_tests_ldadd)
+
+tests_test_sprint_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_sprint_LDADD			= $(mmux_cc_types_tests_ldadd)
 
 tests_test_real_predicates_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
 tests_test_real_predicates_LDADD	= $(mmux_cc_types_tests_ldadd)
