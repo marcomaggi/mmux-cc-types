@@ -403,6 +403,9 @@ mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, char const * s_valu
 mmux_cc_types_decl bool mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_cc_types_decl int mmux_$1_sprint_size (mmux_$1_t value);
+mmux_cc_types_decl bool mmux_$1_dprintf (mmux_sint_t fd, mmux_$1_t value);
+mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
+  __attribute__((__nonnull__(1)));
 ]]])
 
 m4_dnl ----------------------------------------------------------------

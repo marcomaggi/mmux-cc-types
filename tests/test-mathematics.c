@@ -3086,58 +3086,58 @@ test_mathematics_logb (void)
 #undef  ROPX
 #define ROPX		-4
 
-  {
+  if (1) {
     mmux_float_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
-  {
+  if (1) {
     mmux_double_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
-  {
+  if (1) {
     mmux_ldouble_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_FLOAT32
-  {
+  if (1) {
     mmux_float32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_FLOAT64
-  {
+  if (1) {
     mmux_float64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_FLOAT128
-  {
+  if (1) {
     mmux_float128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
-  {
+  if (1) {
     mmux_float32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
-  {
+  if (1) {
     mmux_float64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
-  {
+  if (1) {
     mmux_float128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
@@ -3145,15 +3145,15 @@ test_mathematics_logb (void)
 
 #ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
   if (1) {
-    mmux_decimal32_t	op1 = (mmux_decimal32_t)0.123, rop = ROPX, eps = 1e-4;
+    mmux_decimal32_t	op1 = (mmux_decimal32_t)0.123, rop = -1.0, eps = 1e-4;
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
   }
 #endif
 
 #ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
   if (1) {
-    mmux_decimal64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    if (1) {
+    mmux_decimal64_t	op1 = 0.123, rop = -1.0, eps = 1e-6;
+    if (0) {
       fprintf(stderr, "logb(%f)=%f\n", (mmux_double_t)op1, (mmux_double_t)mmux_ctype_logb(op1));
     }
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
@@ -3162,8 +3162,8 @@ test_mathematics_logb (void)
 
 #ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
   if (1) {
-    mmux_decimal128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    if (1) {
+    mmux_decimal128_t	op1 = 0.123, rop = -1.0, eps = 1e-6;
+    if (0) {
       fprintf(stderr, "logb(%f)=%f\n", (mmux_double_t)op1, (mmux_double_t)mmux_ctype_logb(op1));
     }
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_logb(op1), eps));
@@ -3175,28 +3175,535 @@ test_mathematics_logb (void)
 static void
 test_mathematics_pow (void)
 {
-  printf("running test TO BE IMPLEMENTED: %s\n", __func__);
+  printf("running test: %s\n", __func__);
+#undef  ROPX
+#define ROPX		0.384'588'887
+#undef  ROPZ
+#define ROPZ		324.803'341,-219.903'423
+
+  {
+    mmux_float_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+  {
+    mmux_double_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  {
+    mmux_ldouble_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  {
+    mmux_float32_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  {
+    mmux_float64_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  {
+    mmux_float128_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  {
+    mmux_float32x_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  {
+    mmux_float64x_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  {
+    mmux_float128x_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+  {
+    mmux_decimal32_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-4;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+  {
+    mmux_decimal64_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+  {
+    mmux_decimal128_t	op1 = 0.123, op2 = 0.456, rop = ROPX, mrg = 1e-6;
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+  {
+    auto	op1 = mmux_complexf_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf_make_rectangular(1,1);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+
+  {
+    auto	op1 = mmux_complexd_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexd_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexd_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexd_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+  {
+    auto	op1 = mmux_complexld_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexld_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexld_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexld_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+  {
+    auto	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf32_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf32_make_rectangular(1e-3,1e-3);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+  {
+    auto	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf64_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf64_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+  {
+    auto	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf128_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf128_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+  {
+    auto	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf32x_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf32x_make_rectangular(1e-3,1e-3);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+  {
+    auto	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf64x_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf64x_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+  {
+    auto	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
+    auto	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
+    auto	rop = mmux_complexf128x_make_rectangular(ROPZ);
+    auto	mrg = mmux_complexf128x_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
+  }
+#endif
 }
 
 
 static void
 test_mathematics_sqrt (void)
 {
-  printf("running test TO BE IMPLEMENTED: %s\n", __func__);
+  printf("running test: %s\n", __func__);
+#undef  ROPX
+#define ROPX		0.350'713'558
+#undef  ROPZ
+#define ROPZ		2.327'117'52,0.644'574'237
+
+  {
+    mmux_float_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+  {
+    mmux_double_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  {
+    mmux_ldouble_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  {
+    mmux_float32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  {
+    mmux_float64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  {
+    mmux_float128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  {
+    mmux_float32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  {
+    mmux_float64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  {
+    mmux_float128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+  {
+    mmux_decimal32_t	op1 = 0.123, rop = ROPX, eps = 1e-4;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+  {
+    mmux_decimal64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+  {
+    mmux_decimal128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+  {
+    auto	op1 = mmux_complexf_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf_make_rectangular(1,1);
+    if (0) {
+      fprintf(stderr, "%s: rop=", __func__);
+      mmux_complexf_fprintf(stderr, mmux_ctype_sqrt(op1));
+      fprintf(stderr, "\n");
+    }
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+
+  {
+    auto	op1 = mmux_complexd_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexd_make_rectangular(ROPZ);
+    auto	eps = mmux_complexd_make_rectangular(1e-3,1e-3);
+    if (0) {
+      fprintf(stderr, "%s: rop=", __func__);
+      mmux_complexd_fprintf(stderr, mmux_ctype_sqrt(op1));
+      fprintf(stderr, "\n");
+    }
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+  {
+    auto	op1 = mmux_complexld_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexld_make_rectangular(ROPZ);
+    auto	eps = mmux_complexld_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+  {
+    auto	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf32_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf32_make_rectangular(1e-3,1e-3);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+  {
+    auto	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf64_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf64_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+  {
+    auto	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf128_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf128_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+  {
+    auto	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf32x_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf32x_make_rectangular(1e-3,1e-3);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+  {
+    auto	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf64x_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf64x_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+  {
+    auto	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
+    auto	rop = mmux_complexf128x_make_rectangular(ROPZ);
+    auto	eps = mmux_complexf128x_make_rectangular(1e-6,1e-6);
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
+  }
+#endif
 }
 
 
 static void
 test_mathematics_cbrt (void)
 {
-  printf("running test TO BE IMPLEMENTED: %s\n", __func__);
+  printf("running test: %s\n", __func__);
+#undef  ROPX
+#define ROPX		0.497'318'983
+
+  if (1) {
+    mmux_float_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+  if (1) {
+    mmux_double_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  if (1) {
+    mmux_ldouble_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  if (1) {
+    mmux_float32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  if (1) {
+    mmux_float64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  if (1) {
+    mmux_float128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  if (1) {
+    mmux_float32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  if (1) {
+    mmux_float64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  if (1) {
+    mmux_float128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+  if (1) {
+    mmux_decimal32_t	op1 = (mmux_decimal32_t)0.123, rop = ROPX, eps = 1e-6;
+    if (0) {
+      fprintf(stderr, "%s: decimal32 result ", __func__);
+      mmux_decimal32_fprintf(stderr, mmux_ctype_cbrt(op1));
+      fprintf(stderr, "\n");
+    }
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+  if (1) {
+    mmux_decimal64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+  if (1) {
+    mmux_decimal128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cbrt(op1), eps));
+  }
+#endif
 }
 
 
 static void
 test_mathematics_expm1 (void)
 {
-  printf("running test TO BE IMPLEMENTED: %s\n", __func__);
+  printf("running test: %s\n", __func__);
+#undef  ROPX
+#define ROPX		0.130'884'421
+
+  if (1) {
+    mmux_float_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+  if (1) {
+    mmux_double_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+  if (1) {
+    mmux_ldouble_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+  if (1) {
+    mmux_float32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+  if (1) {
+    mmux_float64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+  if (1) {
+    mmux_float128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+  if (1) {
+    mmux_float32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+  if (1) {
+    mmux_float64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+  if (1) {
+    mmux_float128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+  if (1) {
+    mmux_decimal32_t	op1 = (mmux_decimal32_t)0.123, rop = ROPX, eps = 1e-5;
+    if (0) {
+      fprintf(stderr, "%s: decimal32 result ", __func__);
+      mmux_decimal32_fprintf(stderr, mmux_ctype_expm1(op1));
+      fprintf(stderr, "\n");
+    }
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+  if (1) {
+    mmux_decimal64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+  if (1) {
+    mmux_decimal128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_expm1(op1), eps));
+  }
+#endif
 }
 
 
@@ -3688,6 +4195,56 @@ int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
   mmux_cc_types_init();
+
+  if (1) {
+    fprintf(stderr, "%s: setting output format for float\n", __func__);
+    assert(false == mmux_float_set_output_format("%.6f", __func__));
+    fprintf(stderr, "%s: setting output format for double\n", __func__);
+    assert(false == mmux_double_set_output_format("%.6f", __func__));
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+    fprintf(stderr, "%s: setting output format for ldouble\n", __func__);
+    assert(false == mmux_ldouble_set_output_format("%.6f", __func__));
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+    fprintf(stderr, "%s: setting output format for float32\n", __func__);
+    assert(false == mmux_float32_set_output_format("%.6f", __func__));
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+    fprintf(stderr, "%s: setting output format for float64\n", __func__);
+    assert(false == mmux_float64_set_output_format("%.6f", __func__));
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+    fprintf(stderr, "%s: setting output format for float128\n", __func__);
+    assert(false == mmux_float128_set_output_format("%.6f", __func__));
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+    fprintf(stderr, "%s: setting output format for float32x\n", __func__);
+    assert(false == mmux_float32x_set_output_format("%.6f", __func__));
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+    fprintf(stderr, "%s: setting output format for float64x\n", __func__);
+    assert(false == mmux_float64x_set_output_format("%.6f", __func__));
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+    fprintf(stderr, "%s: setting output format for float128x\n", __func__);
+    assert(false == mmux_float128x_set_output_format("%.6f", __func__));
+#endif
+
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+    fprintf(stderr, "%s: setting output format for decimal32\n", __func__);
+    assert(false == mmux_decimal32_set_output_format("%.6f", __func__));
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+    fprintf(stderr, "%s: setting output format for decimal64\n", __func__);
+    assert(false == mmux_decimal64_set_output_format("%.6f", __func__));
+#endif
+#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+    fprintf(stderr, "%s: setting output format for decimal128\n", __func__);
+    assert(false == mmux_decimal128_set_output_format("%.6f", __func__));
+#endif
+  }
 
   if (1) {	test_mathematics_sin();		}
   if (1) {	test_mathematics_cos();		}

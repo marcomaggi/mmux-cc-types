@@ -520,4 +520,124 @@ DEFINE_TYPEDEF_SPRINTER([[[time]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
 DEFINE_TYPEDEF_SPRINTER([[[socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
 DEFINE_TYPEDEF_SPRINTER([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 
+
+/** --------------------------------------------------------------------
+ ** Printers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_PRINTERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+bool
+mmux_$1_dprintf (mmux_sint_t fd, mmux_$1_t value)
+{
+  int             required_nbytes;
+
+  required_nbytes = mmux_$1_sprint_size(value);
+  if (0 > required_nbytes) {
+    return true;
+  } else {
+    char    str[required_nbytes];
+
+    if (mmux_$1_sprint(str, required_nbytes, value)) {
+      return true;
+    } else if (0 > dprintf(fd, "%s", str)) {
+      return true;
+    }
+  }
+  return false;
+}
+bool
+mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
+{
+  int             required_nbytes;
+
+  required_nbytes = mmux_$1_sprint_size(value);
+  if (0 > required_nbytes) {
+    return true;
+  } else {
+    char    str[required_nbytes];
+
+    if (mmux_$1_sprint(str, required_nbytes, value)) {
+      return true;
+    } else if (0 > fprintf(stream, "%s", str)) {
+      return true;
+    }
+  }
+  return false;
+}
+]]])]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_PRINTERS([[[pointer]]])
+DEFINE_PRINTERS([[[char]]])
+DEFINE_PRINTERS([[[schar]]])
+DEFINE_PRINTERS([[[uchar]]])
+DEFINE_PRINTERS([[[sshort]]])
+DEFINE_PRINTERS([[[ushort]]])
+DEFINE_PRINTERS([[[sint]]])
+DEFINE_PRINTERS([[[uint]]])
+DEFINE_PRINTERS([[[slong]]])
+DEFINE_PRINTERS([[[ulong]]])
+DEFINE_PRINTERS([[[sllong]]],		[[[MMUX_HAVE_CC_TYPE_SLLONG]]])
+DEFINE_PRINTERS([[[ullong]]],		[[[MMUX_HAVE_CC_TYPE_ULLONG]]])
+
+DEFINE_PRINTERS([[[float]]])
+DEFINE_PRINTERS([[[double]]])
+DEFINE_PRINTERS([[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+
+DEFINE_PRINTERS([[[float32]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
+DEFINE_PRINTERS([[[float64]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
+DEFINE_PRINTERS([[[float128]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+
+DEFINE_PRINTERS([[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
+DEFINE_PRINTERS([[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
+DEFINE_PRINTERS([[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+
+DEFINE_PRINTERS([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
+DEFINE_PRINTERS([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
+DEFINE_PRINTERS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+
+DEFINE_PRINTERS([[[complexf]]])
+DEFINE_PRINTERS([[[complexd]]])
+DEFINE_PRINTERS([[[complexld]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
+
+DEFINE_PRINTERS([[[complexf32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
+DEFINE_PRINTERS([[[complexf64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
+DEFINE_PRINTERS([[[complexf128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+
+DEFINE_PRINTERS([[[complexf32x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
+DEFINE_PRINTERS([[[complexf64x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
+DEFINE_PRINTERS([[[complexf128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+
+DEFINE_PRINTERS([[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
+DEFINE_PRINTERS([[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
+DEFINE_PRINTERS([[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+
+DEFINE_PRINTERS([[[sint8]]])
+DEFINE_PRINTERS([[[uint8]]])
+DEFINE_PRINTERS([[[sint16]]])
+DEFINE_PRINTERS([[[uint16]]])
+DEFINE_PRINTERS([[[sint32]]])
+DEFINE_PRINTERS([[[uint32]]])
+DEFINE_PRINTERS([[[sint64]]])
+DEFINE_PRINTERS([[[uint64]]])
+
+DEFINE_PRINTERS([[[ssize]]])
+DEFINE_PRINTERS([[[usize]]])
+DEFINE_PRINTERS([[[sintmax]]])
+DEFINE_PRINTERS([[[uintmax]]])
+DEFINE_PRINTERS([[[sintptr]]])
+DEFINE_PRINTERS([[[uintptr]]])
+DEFINE_PRINTERS([[[mode]]])
+DEFINE_PRINTERS([[[off]]])
+DEFINE_PRINTERS([[[pid]]])
+DEFINE_PRINTERS([[[uid]]])
+DEFINE_PRINTERS([[[gid]]])
+DEFINE_PRINTERS([[[ptrdiff]]])
+DEFINE_PRINTERS([[[wchar]]])
+DEFINE_PRINTERS([[[wint]]])
+DEFINE_PRINTERS([[[time]]])
+DEFINE_PRINTERS([[[socklen]]])
+DEFINE_PRINTERS([[[rlim]]])
+
 /* end of file */

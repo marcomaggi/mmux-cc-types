@@ -363,8 +363,9 @@ m4_dnl $5 - magnitude function
 m4_dnl $6 - argument function
 m4_dnl $7 - conjugate function
 m4_dnl $8 - atan2 function
-m4_dnl $9 - C preprocessor symbol used to exclude the code if the type is not supported.
-m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$9]]],[[[
+m4_dnl $9 - real part sqrt function
+m4_dnl $10 - C preprocessor symbol used to exclude the code if the type is not supported.
+m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$10]]],[[[
 bool
 mmux_string_is_$1 (char const * s_value)
 {
@@ -395,7 +396,7 @@ mmux_$1_imag_part (mmux_$1_t Z)
 inline mmux_$1_part_t
 mmux_$1_abs (mmux_$1_t Z)
 {
-  return sqrt($2(Z) * $2(Z) + $3(Z) * $3(Z));
+  return $9($2(Z) * $2(Z) + $3(Z) * $3(Z));
 }
 inline mmux_$1_part_t
 mmux_$1_arg (mmux_$1_t Z)
@@ -412,41 +413,50 @@ mmux_$1_conj (mmux_$1_t Z)
 /* ------------------------------------------------------------------ */
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf]]],  [[[crealf]]], [[[cimagf]]], [[[CMPLXF]]],
-			 [[[cabsf]]],     [[[cargf]]],  [[[conjf]]],  [[[atan2f]]])
+			 [[[cabsf]]],     [[[cargf]]],  [[[conjf]]],  [[[atan2f]]],
+			 [[[sqrtf]]])
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexd]]],  [[[creal]]],  [[[cimag]]],  [[[CMPLX]]],
-			 [[[cabs]]],      [[[carg]]],   [[[conj]]],   [[[atan2]]])
+			 [[[cabs]]],      [[[carg]]],   [[[conj]]],   [[[atan2]]],
+			 [[[sqrt]]])
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexld]]], [[[creall]]], [[[cimagl]]], [[[CMPLXL]]],
 			 [[[cabsl]]],     [[[cargl]]],  [[[conjl]]],  [[[atan2l]]],
+			 [[[sqrtl]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXLD]]])
 
 /* ------------------------------------------------------------------ */
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf32]]],  [[[crealf32]]], [[[cimagf32]]], [[[CMPLXF32]]],
 			 [[[cabsf32]]],     [[[cargf32]]],  [[[conjf32]]],  [[[atan2f32]]],
+			 [[[sqrtf32]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf64]]],  [[[crealf64]]], [[[cimagf64]]], [[[CMPLXF64]]],
 			 [[[cabsf64]]],     [[[cargf64]]],  [[[conjf64]]],  [[[atan2f64]]],
+			 [[[sqrtf64]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf128]]], [[[crealf128]]],[[[cimagf128]]],[[[CMPLXF128]]],
 			 [[[cabsf128]]],    [[[cargf128]]], [[[conjf128]]], [[[atan2f128]]],
+			 [[[sqrtf128]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
 
 /* ------------------------------------------------------------------ */
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf32x]]],  [[[crealf32x]]], [[[cimagf32x]]], [[[CMPLXF32X]]],
 			 [[[cabsf32x]]],     [[[cargf32x]]],  [[[conjf32x]]],  [[[atan2f32x]]],
+			 [[[sqrtf32x]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf64x]]],  [[[crealf64x]]], [[[cimagf64x]]], [[[CMPLXF64X]]],
 			 [[[cabsf64x]]],     [[[cargf64x]]],  [[[conjf64x]]],  [[[atan2f64x]]],
+			 [[[sqrtf64x]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
 
 DEFINE_COMPLEX_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]],[[[cimagf128x]]],[[[CMPLXF128X]]],
 			 [[[cabsf128x]]],    [[[cargf128x]]], [[[conjf128x]]], [[[atan2f128x]]],
+			 [[[sqrtf128x]]],
 			 [[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
 
 

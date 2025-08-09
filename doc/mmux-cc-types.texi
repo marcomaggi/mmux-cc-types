@@ -2204,7 +2204,7 @@ remainder, increment, decrement.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_logb (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_cbrt (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_hypot (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -2248,7 +2248,7 @@ Compute the named C function.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_logb (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_cbrt (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_hypot (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -2290,7 +2290,7 @@ Compute the named C function.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
 Compute the named C function.
 @end deftypefun
