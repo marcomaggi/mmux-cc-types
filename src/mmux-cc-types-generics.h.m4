@@ -852,72 +852,72 @@ DEFINE_MATHEMATICS_REAL_SINT_BINARY([[[yn]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_BITWISE_UNARY]]],[[[m4_dnl
-#define mmux_ctype_$1(VALUE)						\
+#define mmux_ctype_bitwise_$1(VALUE)						\
   _Generic((VALUE),							\
-	   mmux_pointer_t:		mmux_pointer_$1,		\
-	   mmux_char_t:			mmux_char_$1,			\
+	   mmux_pointer_t:		mmux_pointer_bitwise_$1,		\
+	   mmux_char_t:			mmux_char_bitwise_$1,			\
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
-	   mmux_sllong_t:		mmux_sllong_$1,			\
+	   mmux_sllong_t:		mmux_sllong_bitwise_$1,			\
 ]]])m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
-	   mmux_ullong_t:		mmux_sllong_$1,			\
+	   mmux_ullong_t:		mmux_sllong_bitwise_$1,			\
 ]]])m4_dnl
-	   mmux_sint8_t:		mmux_sint8_$1,			\
-	   mmux_uint8_t:		mmux_uint8_$1,			\
-	   mmux_sint16_t:		mmux_sint16_$1,			\
-	   mmux_uint16_t:		mmux_uint16_$1,			\
-	   mmux_sint32_t:		mmux_sint32_$1,			\
-	   mmux_uint32_t:		mmux_uint32_$1,			\
-	   mmux_sint64_t:		mmux_sint64_$1,			\
-	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_sint8_t:		mmux_sint8_bitwise_$1,			\
+	   mmux_uint8_t:		mmux_uint8_bitwise_$1,			\
+	   mmux_sint16_t:		mmux_sint16_bitwise_$1,			\
+	   mmux_uint16_t:		mmux_uint16_bitwise_$1,			\
+	   mmux_sint32_t:		mmux_sint32_bitwise_$1,			\
+	   mmux_uint32_t:		mmux_uint32_bitwise_$1,			\
+	   mmux_sint64_t:		mmux_sint64_bitwise_$1,			\
+	   mmux_uint64_t:		mmux_uint64_bitwise_$1,			\
            default:			mmux_ctype_generic_error)(VALUE)
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_BITWISE_BINARY]]],[[[m4_dnl
-#define mmux_ctype_$1(VALUE1,VALUE2)					\
+#define mmux_ctype_bitwise_$1(VALUE1,VALUE2)					\
   _Generic((VALUE1),							\
-	   mmux_pointer_t:		mmux_pointer_$1,		\
-	   mmux_char_t:			mmux_char_$1,			\
+	   mmux_pointer_t:		mmux_pointer_bitwise_$1,		\
+	   mmux_char_t:			mmux_char_bitwise_$1,			\
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
-	   mmux_sllong_t:		mmux_sllong_$1,			\
+	   mmux_sllong_t:		mmux_sllong_bitwise_$1,			\
 ]]])m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
-	   mmux_ullong_t:		mmux_sllong_$1,			\
+	   mmux_ullong_t:		mmux_sllong_bitwise_$1,			\
 ]]])m4_dnl
-	   mmux_sint8_t:		mmux_sint8_$1,			\
-	   mmux_uint8_t:		mmux_uint8_$1,			\
-	   mmux_sint16_t:		mmux_sint16_$1,			\
-	   mmux_uint16_t:		mmux_uint16_$1,			\
-	   mmux_sint32_t:		mmux_sint32_$1,			\
-	   mmux_uint32_t:		mmux_uint32_$1,			\
-	   mmux_sint64_t:		mmux_sint64_$1,			\
-	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_sint8_t:		mmux_sint8_bitwise_$1,			\
+	   mmux_uint8_t:		mmux_uint8_bitwise_$1,			\
+	   mmux_sint16_t:		mmux_sint16_bitwise_$1,			\
+	   mmux_uint16_t:		mmux_uint16_bitwise_$1,			\
+	   mmux_sint32_t:		mmux_sint32_bitwise_$1,			\
+	   mmux_uint32_t:		mmux_uint32_bitwise_$1,			\
+	   mmux_sint64_t:		mmux_sint64_bitwise_$1,			\
+	   mmux_uint64_t:		mmux_uint64_bitwise_$1,			\
            default:			mmux_ctype_generic_error)(VALUE1,VALUE2)
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_BITWISE_BINARY_SINT]]],[[[m4_dnl
-#define mmux_ctype_$1(VALUE1,VALUE2)					\
+#define mmux_ctype_bitwise_$1(VALUE1,VALUE2)					\
   _Generic((VALUE1),							\
-	   mmux_pointer_t:		mmux_pointer_$1,		\
-	   mmux_char_t:			mmux_char_$1,			\
+	   mmux_pointer_t:		mmux_pointer_bitwise_$1,		\
+	   mmux_char_t:			mmux_char_bitwise_$1,			\
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
-	   mmux_sllong_t:		mmux_sllong_$1,			\
+	   mmux_sllong_t:		mmux_sllong_bitwise_$1,			\
 ]]])m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
-	   mmux_ullong_t:		mmux_sllong_$1,			\
+	   mmux_ullong_t:		mmux_sllong_bitwise_$1,			\
 ]]])m4_dnl
-	   mmux_sint8_t:		mmux_sint8_$1,			\
-	   mmux_uint8_t:		mmux_uint8_$1,			\
-	   mmux_sint16_t:		mmux_sint16_$1,			\
-	   mmux_uint16_t:		mmux_uint16_$1,			\
-	   mmux_sint32_t:		mmux_sint32_$1,			\
-	   mmux_uint32_t:		mmux_uint32_$1,			\
-	   mmux_sint64_t:		mmux_sint64_$1,			\
-	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_sint8_t:		mmux_sint8_bitwise_$1,			\
+	   mmux_uint8_t:		mmux_uint8_bitwise_$1,			\
+	   mmux_sint16_t:		mmux_sint16_bitwise_$1,			\
+	   mmux_uint16_t:		mmux_uint16_bitwise_$1,			\
+	   mmux_sint32_t:		mmux_sint32_bitwise_$1,			\
+	   mmux_uint32_t:		mmux_uint32_bitwise_$1,			\
+	   mmux_sint64_t:		mmux_sint64_bitwise_$1,			\
+	   mmux_uint64_t:		mmux_uint64_bitwise_$1,			\
            default:			mmux_ctype_generic_error)(VALUE1,VALUE2)
 ]]]) m4_dnl
 
