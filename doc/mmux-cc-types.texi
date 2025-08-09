@@ -466,6 +466,11 @@ Initialise library's internal state.  When successful return @cfalse{}; otherwis
 @chapter How to configure code to link the library
 
 
+@cindex Preprocessor constants, supported data types
+@cindex Supported data types, preprocessor constants
+@cindex Data types, preprocessor constants indicating support enabled
+
+
 It happens that some rare platform may not implement the C language types @objtype{signed long long
 int}, @objtype{unsigned long long int} and @objtype{long double}; more platforms may not implement
 the extension types @objtype{_FloatN} and @objtype{_FloatNx}, which usually are:
@@ -515,7 +520,7 @@ it defines the following symbols in its header files.
 We can use the following C preprocessor symbols with code like:
 
 @example
-#if ((defined MMUX_HAVE_CC_TYPE_LDOUBLE) && (1 == MMUX_HAVE_CC_TYPE_LDOUBLE))
+#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
 ... /* the type is available */
 #endif
 @end example
