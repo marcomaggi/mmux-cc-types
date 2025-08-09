@@ -3687,6 +3687,8 @@ test_mathematics_yn (void)
 int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
+  mmux_cc_types_init();
+
   if (1) {	test_mathematics_sin();		}
   if (1) {	test_mathematics_cos();		}
   if (1) {	test_mathematics_tan();		}

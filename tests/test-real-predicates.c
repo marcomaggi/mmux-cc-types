@@ -625,6 +625,8 @@ test_real_predicate_is_positive (void)
 int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
+  mmux_cc_types_init();
+
   if (1) {	test_real_predicate_is_zero();		}
   if (1) {	test_real_predicate_is_positive();	}
 

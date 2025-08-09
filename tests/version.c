@@ -7,7 +7,7 @@
 
 	Test file for version functions.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -19,6 +19,8 @@
 int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
+  mmux_cc_types_init();
+
   printf("version number string: %s\n", mmux_cc_types_version_string());
   printf("libtool version number: %d:%d:%d\n",
 	 mmux_cc_types_version_interface_current(),

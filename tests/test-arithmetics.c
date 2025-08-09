@@ -2056,6 +2056,8 @@ test_arithmetics_decr (void)
 int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
+  mmux_cc_types_init();
+
   if (1) {	test_arithmetics_add();		}
   if (1) {	test_arithmetics_sub();		}
   if (1) {	test_arithmetics_mul();		}
