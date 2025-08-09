@@ -324,19 +324,19 @@ parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char
 
 DEFINE_COMPLEX_PARSER([[[complexf]]],		[[[float]]])
 DEFINE_COMPLEX_PARSER([[[complexd]]],		[[[double]]])
-DEFINE_COMPLEX_PARSER([[[complexld]]],		[[[ldouble]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+DEFINE_COMPLEX_PARSER([[[complexld]]],		[[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
 
-DEFINE_COMPLEX_PARSER([[[complexf32]]],		[[[float32]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32]]])
-DEFINE_COMPLEX_PARSER([[[complexf64]]],		[[[float64]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64]]])
-DEFINE_COMPLEX_PARSER([[[complexf128]]],	[[[float128]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF128]]])
+DEFINE_COMPLEX_PARSER([[[complexf32]]],		[[[float32]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
+DEFINE_COMPLEX_PARSER([[[complexf64]]],		[[[float64]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
+DEFINE_COMPLEX_PARSER([[[complexf128]]],	[[[float128]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
 
-DEFINE_COMPLEX_PARSER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF32X]]])
-DEFINE_COMPLEX_PARSER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_HAVE_CC_TYPE_COMPLEXF64X]]])
-DEFINE_COMPLEX_PARSER([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXF128X]]])
+DEFINE_COMPLEX_PARSER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
+DEFINE_COMPLEX_PARSER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
+DEFINE_COMPLEX_PARSER([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
 
-DEFINE_COMPLEX_PARSER([[[complexd32]]],		[[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-DEFINE_COMPLEX_PARSER([[[complexd64]]],		[[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_PARSER([[[complexd32]]],		[[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_COMPLEX_PARSER([[[complexd64]]],		[[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
+DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -367,19 +367,19 @@ mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_na
 
 DEFINE_FLOAT_PARSER([[[float]]],	[[[strtof]]])
 DEFINE_FLOAT_PARSER([[[double]]],	[[[strtod]]])
-DEFINE_FLOAT_PARSER([[[ldouble]]],	[[[strtold]]],		[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+DEFINE_FLOAT_PARSER([[[ldouble]]],	[[[strtold]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
 
-DEFINE_FLOAT_PARSER([[[float32]]],	[[[strtof32]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
-DEFINE_FLOAT_PARSER([[[float64]]],	[[[strtof64]]],		[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
-DEFINE_FLOAT_PARSER([[[float128]]],	[[[strtof128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+DEFINE_FLOAT_PARSER([[[float32]]],	[[[strtof32]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
+DEFINE_FLOAT_PARSER([[[float64]]],	[[[strtof64]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
+DEFINE_FLOAT_PARSER([[[float128]]],	[[[strtof128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
 
-DEFINE_FLOAT_PARSER([[[float32x]]],	[[[strtof32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
-DEFINE_FLOAT_PARSER([[[float64x]]],	[[[strtof64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
-DEFINE_FLOAT_PARSER([[[float128x]]],	[[[strtof128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+DEFINE_FLOAT_PARSER([[[float32x]]],	[[[strtof32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
+DEFINE_FLOAT_PARSER([[[float64x]]],	[[[strtof64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
+DEFINE_FLOAT_PARSER([[[float128x]]],	[[[strtof128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
 
-DEFINE_FLOAT_PARSER([[[decimal32]]],	[[[mmux_strtod32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_FLOAT_PARSER([[[decimal64]]],	[[[mmux_strtod64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_FLOAT_PARSER([[[decimal32]]],	[[[mmux_strtod32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_FLOAT_PARSER([[[decimal64]]],	[[[mmux_strtod64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
@@ -413,7 +413,7 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_SLLONG]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
 bool
 mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
 {
@@ -503,7 +503,7 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_ULLONG]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
 bool
 mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
 {

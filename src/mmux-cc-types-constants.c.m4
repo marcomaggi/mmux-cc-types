@@ -7,7 +7,7 @@
 
 	This module implements functions returning constant values.
 
-  Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -51,14 +51,14 @@ __extension__ mmux_$1_t mmux_$1_constant_SQRT1_2	(void) { return M_SQRT1_2$2; }
 
 DEFINE_MATH_CONSTANTS_FUNCS(float)
 DEFINE_MATH_CONSTANTS_FUNCS(double)
-DEFINE_MATH_CONSTANTS_FUNCS(ldouble,	[[[l]]],	[[[MMUX_HAVE_CC_TYPE_LDOUBLE]]])
+DEFINE_MATH_CONSTANTS_FUNCS(ldouble,	[[[l]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
 
-DEFINE_MATH_CONSTANTS_FUNCS(float32,	[[[f32]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float64,	[[[f64]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float128,	[[[f128]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128]]])
+DEFINE_MATH_CONSTANTS_FUNCS(float32,	[[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
+DEFINE_MATH_CONSTANTS_FUNCS(float64,	[[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
+DEFINE_MATH_CONSTANTS_FUNCS(float128,	[[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
 
-DEFINE_MATH_CONSTANTS_FUNCS(float32x,	[[[f32x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT32X]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float64x,	[[[f64x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT64X]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float128x,	[[[f128x]]],	[[[MMUX_HAVE_CC_TYPE_FLOAT128X]]])
+DEFINE_MATH_CONSTANTS_FUNCS(float32x,	[[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
+DEFINE_MATH_CONSTANTS_FUNCS(float64x,	[[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
+DEFINE_MATH_CONSTANTS_FUNCS(float128x,	[[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
 
 /* end of file */

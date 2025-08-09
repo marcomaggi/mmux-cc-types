@@ -207,7 +207,7 @@ test_sprint_ulong (void)
 static void
 test_sprint_sllong (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_sllong_t		X = 123;
   mmux_sint_t		required_nbytes = mmux_sllong_sprint_size(X);
@@ -225,7 +225,7 @@ test_sprint_sllong (void)
 static void
 test_sprint_ullong (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_ullong_t		X = 123;
   mmux_sint_t		required_nbytes = mmux_ullong_sprint_size(X);
@@ -735,7 +735,7 @@ test_sprint_double (void)
 static void
 test_sprint_ldouble (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_ldouble_t		X = (mmux_ldouble_t)0.123;
   mmux_sint_t		required_nbytes = mmux_ldouble_sprint_size(X);
@@ -759,7 +759,7 @@ test_sprint_ldouble (void)
 static void
 test_sprint_float32 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_float32_t	X = (mmux_float32_t)0.123;
   mmux_sint_t		required_nbytes = mmux_float32_sprint_size(X);
@@ -777,7 +777,7 @@ test_sprint_float32 (void)
 static void
 test_sprint_float64 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_float64_t	X = (mmux_float64_t)0.123;
   mmux_sint_t		required_nbytes = mmux_float64_sprint_size(X);
@@ -795,7 +795,7 @@ test_sprint_float64 (void)
 static void
 test_sprint_float128 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_float128_t	X = (mmux_float128_t)0.123;
   mmux_sint_t		required_nbytes = mmux_float128_sprint_size(X);
@@ -813,7 +813,7 @@ test_sprint_float128 (void)
 static void
 test_sprint_float32x (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_float32x_t	X = (mmux_float32x_t)0.123;
   mmux_sint_t		required_nbytes = mmux_float32x_sprint_size(X);
@@ -831,7 +831,7 @@ test_sprint_float32x (void)
 static void
 test_sprint_float64x (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_float64x_t	X = (mmux_float64x_t)0.123;
   mmux_sint_t		required_nbytes = mmux_float64x_sprint_size(X);
@@ -849,7 +849,7 @@ test_sprint_float64x (void)
 static void
 test_sprint_float128x (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_float128x_t	X = (mmux_float128x_t)0.123;
   mmux_sint_t		required_nbytes = mmux_float128x_sprint_size(X);
@@ -873,7 +873,7 @@ test_sprint_float128x (void)
 static void
 test_sprint_decimal32 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_decimal32_t	X = (mmux_decimal32_t)0.123;
   mmux_sint_t		required_nbytes = mmux_decimal32_sprint_size(X);
@@ -891,7 +891,7 @@ test_sprint_decimal32 (void)
 static void
 test_sprint_decimal64 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_decimal64_t	X = (mmux_decimal64_t)0.123;
   mmux_sint_t		required_nbytes = mmux_decimal64_sprint_size(X);
@@ -909,7 +909,7 @@ test_sprint_decimal64 (void)
 static void
 test_sprint_decimal128 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_decimal128_t	X = (mmux_decimal128_t)0.123;
   mmux_sint_t		required_nbytes = mmux_decimal128_sprint_size(X);
@@ -965,7 +965,7 @@ test_sprint_complexd (void)
 static void
 test_sprint_complexld (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZLD
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexld_t	Z = mmux_complexld_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexld_sprint_size(Z);
@@ -989,7 +989,7 @@ test_sprint_complexld (void)
 static void
 test_sprint_complexf32 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZF32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf32_t	Z = mmux_complexf32_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf32_sprint_size(Z);
@@ -1007,7 +1007,7 @@ test_sprint_complexf32 (void)
 static void
 test_sprint_complexf64 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZF64
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf64_t	Z = mmux_complexf64_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf64_sprint_size(Z);
@@ -1025,7 +1025,7 @@ test_sprint_complexf64 (void)
 static void
 test_sprint_complexf128 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZF128
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf128_t	Z = mmux_complexf128_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf128_sprint_size(Z);
@@ -1043,7 +1043,7 @@ test_sprint_complexf128 (void)
 static void
 test_sprint_complexf32x (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZF32Z
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZF32Z
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf32x_t	Z = mmux_complexf32x_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf32x_sprint_size(Z);
@@ -1061,7 +1061,7 @@ test_sprint_complexf32x (void)
 static void
 test_sprint_complexf64x (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZF64Z
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZF64Z
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf64x_t	Z = mmux_complexf64x_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf64x_sprint_size(Z);
@@ -1079,7 +1079,7 @@ test_sprint_complexf64x (void)
 static void
 test_sprint_complexf128x (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZF128Z
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZF128Z
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf128x_t	Z = mmux_complexf128x_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf128x_sprint_size(Z);
@@ -1103,7 +1103,7 @@ test_sprint_complexf128x (void)
 static void
 test_sprint_complexd32 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZD32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexd32_t	Z = mmux_complexd32_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexd32_sprint_size(Z);
@@ -1121,7 +1121,7 @@ test_sprint_complexd32 (void)
 static void
 test_sprint_complexd64 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZD64
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexd64_t	Z = mmux_complexd64_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexd64_sprint_size(Z);
@@ -1139,7 +1139,7 @@ test_sprint_complexd64 (void)
 static void
 test_sprint_complexd128 (void)
 {
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEZD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEZD128
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexd128_t	Z = mmux_complexd128_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexd128_sprint_size(Z);
@@ -1170,46 +1170,46 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
     assert(false == mmux_float_set_output_format("%.3f", __func__));
     fprintf(stderr, "%s: setting output format for double\n", __func__);
     assert(false == mmux_double_set_output_format("%.3f", __func__));
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
     fprintf(stderr, "%s: setting output format for ldouble\n", __func__);
     assert(false == mmux_ldouble_set_output_format("%.3f", __func__));
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
     fprintf(stderr, "%s: setting output format for float32\n", __func__);
     assert(false == mmux_float32_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
     fprintf(stderr, "%s: setting output format for float64\n", __func__);
     assert(false == mmux_float64_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
     fprintf(stderr, "%s: setting output format for float128\n", __func__);
     assert(false == mmux_float128_set_output_format("%.3f", __func__));
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
     fprintf(stderr, "%s: setting output format for float32x\n", __func__);
     assert(false == mmux_float32x_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
     fprintf(stderr, "%s: setting output format for float64x\n", __func__);
     assert(false == mmux_float64x_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
     fprintf(stderr, "%s: setting output format for float128x\n", __func__);
     assert(false == mmux_float128x_set_output_format("%.3f", __func__));
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
     fprintf(stderr, "%s: setting output format for decimal32\n", __func__);
     assert(false == mmux_decimal32_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
     fprintf(stderr, "%s: setting output format for decimal64\n", __func__);
     assert(false == mmux_decimal64_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
     fprintf(stderr, "%s: setting output format for decimal128\n", __func__);
     assert(false == mmux_decimal128_set_output_format("%.3f", __func__));
 #endif

@@ -64,47 +64,47 @@
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[
 #undef  MMUX_FLOAT32_LITERAL
 #define MMUX_FLOAT32_LITERAL(X)		(X ## f32)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[
 #undef  MMUX_FLOAT64_LITERAL
 #define MMUX_FLOAT64_LITERAL(X)		(X ## f64)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[
 #undef  MMUX_FLOAT128_LITERAL
 #define MMUX_FLOAT128_LITERAL(X)	(X ## f128)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT32X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[
 #undef  MMUX_FLOAT32X_LITERAL
 #define MMUX_FLOAT32X_LITERAL(X)	(X ## f32x)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT64X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[
 #undef  MMUX_FLOAT64X_LITERAL
 #define MMUX_FLOAT64X_LITERAL(X)	(X ## f64x)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_FLOAT128X]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[
 #undef  MMUX_FLOAT128X_LITERAL
 #define MMUX_FLOAT128X_LITERAL(X)	(X ## f128x)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
 #undef  MMUX_DECIMAL32_LITERAL
 #define MMUX_DECIMAL32_LITERAL(X)	(X ## DF)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
 #undef  MMUX_DECIMAL64_LITERAL
 #define MMUX_DECIMAL64_LITERAL(X)	(X ## DD)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
 #undef  MMUX_DECIMAL128_LITERAL
 #define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
 ]]])
@@ -131,11 +131,11 @@ MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]],  [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],  [[[
 struct mmux_complexd32_tag_t {
   mmux_decimal32_t		re;
   mmux_decimal32_t		im;
@@ -143,7 +143,7 @@ struct mmux_complexd32_tag_t {
 typedef struct mmux_complexd32_tag_t mmux_complexd32_t;
 typedef mmux_decimal32_t	mmux_complexd32_part_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]],  [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],  [[[
 struct mmux_complexd64_tag_t {
   mmux_decimal64_t		re;
   mmux_decimal64_t		im;
@@ -151,7 +151,7 @@ struct mmux_complexd64_tag_t {
 typedef struct mmux_complexd64_tag_t mmux_complexd64_t;
 typedef mmux_decimal64_t	mmux_complexd64_part_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]], [[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]], [[[
 struct mmux_complexd128_tag_t {
   mmux_decimal128_t	re;
   mmux_decimal128_t	im;
@@ -210,9 +210,9 @@ mmux_$1_conj (mmux_$1_t Z)
 }
 ]]])]]])
 
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd32]]],  [[[atan2d32]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd64]]],  [[[atan2d64]]],  [[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd128]]], [[[atan2d128]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd32]]],  [[[atan2d32]]],  [[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd64]]],  [[[atan2d64]]],  [[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
+DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd128]]], [[[atan2d128]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -289,9 +289,9 @@ mmux_$1_is_non_negative (mmux_$1_t X)
 }
 ]]])]]])
 
-DEFINE_REAL_DECIMAL_PREDICATES([[[decimal32]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_REAL_DECIMAL_PREDICATES([[[decimal64]]],		[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_REAL_DECIMAL_PREDICATES([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_PREDICATES([[[decimal32]]],		[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_PREDICATES([[[decimal64]]],		[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_PREDICATES([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
@@ -342,9 +342,9 @@ mmux_$1_is_infinite (mmux_$1_t Z)
 }
 ]]])]]])
 
-DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
+DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -373,9 +373,9 @@ mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 }
 ]]])]]])
 
-DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -411,9 +411,9 @@ mmux_$1_less_equal (mmux_$1_t op1, mmux_$1_t op2)
 }
 ]]])]]])
 
-DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD32]]])
-DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD64]]])
-DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_HAVE_CC_TYPE_COMPLEXD128]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
+DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -423,9 +423,9 @@ mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
 mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
 ]]])]]])
 
-DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[fabsd32]]],[[[fmaxd32]]],[[[fmind32]]], [[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal64]]],	[[[fabsd64]]],[[[fmaxd64]]],[[[fmind64]]], [[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal128]]],	[[[fabsd128]]],[[[fmaxd128]]],[[[fmind128]]], [[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[fabsd32]]],[[[fmaxd32]]],[[[fmind32]]], [[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal64]]],	[[[fabsd64]]],[[[fmaxd64]]],[[[fmind64]]], [[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal128]]],	[[[fabsd128]]],[[[fmaxd128]]],[[[fmind128]]], [[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
@@ -475,9 +475,9 @@ mmux_$2_equal_relepsilon (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t epsilon)
 }
 ]]])]]])
 
-DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal32]]],	[[[complexd32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal64]]],	[[[complexd64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal128]]],	[[[complexd128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal32]]],	[[[complexd32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal64]]],	[[[complexd64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_DECIMAL_APPROX_COMPARISONS([[[decimal128]]],	[[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
@@ -501,9 +501,9 @@ mmux_$3 (char const * restrict s_input_value, char ** restrict tailptr)
 }
 ]]])]]])
 
-DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal32]]],	[[[strfromd32]]],  [[[strtod32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal64]]],	[[[strfromd64]]],  [[[strtod64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal32]]],	[[[strfromd32]]],  [[[strtod32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal64]]],	[[[strfromd64]]],  [[[strtod64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_STRFROM_STRTO([[[decimal128]]],	[[[strfromd128]]], [[[strtod128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
@@ -528,16 +528,16 @@ mmux_$1_decr (mmux_$1_t A)
 }
 ]]])]]])
 
-DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal32]]],  [[[fmodd32]]],  [[[MMUX_HAVE_CC_TYPE_DECIMAL32]]])
-DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal64]]],  [[[fmodd64]]],  [[[MMUX_HAVE_CC_TYPE_DECIMAL64]]])
-DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]], [[[fmodd128]]], [[[MMUX_HAVE_CC_TYPE_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal32]]],  [[[fmodd32]]],  [[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal64]]],  [[[fmodd64]]],  [[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]], [[[fmodd128]]], [[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 
 /** --------------------------------------------------------------------
  ** Mathematics functions not implemented by libdfp.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
 mmux_decimal32_t
 mmux_exp10d32 (mmux_decimal32_t op)
 {
@@ -545,7 +545,7 @@ mmux_exp10d32 (mmux_decimal32_t op)
 }
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
 mmux_decimal64_t
 mmux_exp10d64 (mmux_decimal64_t op)
 {
@@ -553,7 +553,7 @@ mmux_exp10d64 (mmux_decimal64_t op)
 }
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
 mmux_decimal128_t
 mmux_exp10d128 (mmux_decimal128_t op)
 {
@@ -566,7 +566,7 @@ mmux_exp10d128 (mmux_decimal128_t op)
  ** Mathematicsl constants.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
 __extension__ mmux_decimal128_t mmux_decimal128_constant_E	(void) { return M_Edl; }
 __extension__ mmux_decimal128_t mmux_decimal128_constant_LOG2E	(void) { return M_LOG2Edl; }
 __extension__ mmux_decimal128_t mmux_decimal128_constant_LOG10E	(void) { return M_LOG10Edl; }
@@ -582,7 +582,7 @@ __extension__ mmux_decimal128_t mmux_decimal128_constant_SQRT2	(void) { return M
 __extension__ mmux_decimal128_t mmux_decimal128_constant_SQRT1_2(void) { return M_SQRT1_2dl; }
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
 __extension__ mmux_decimal32_t mmux_decimal32_constant_E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_E(); }
 __extension__ mmux_decimal32_t mmux_decimal32_constant_LOG2E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LOG2E(); }
 __extension__ mmux_decimal32_t mmux_decimal32_constant_LOG10E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LOG10E(); }
@@ -598,7 +598,7 @@ __extension__ mmux_decimal32_t mmux_decimal32_constant_SQRT2	(void) { return (mm
 __extension__ mmux_decimal32_t mmux_decimal32_constant_SQRT1_2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_SQRT1_2(); }
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],[[[
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
 __extension__ mmux_decimal64_t mmux_decimal64_constant_E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_E(); }
 __extension__ mmux_decimal64_t mmux_decimal64_constant_LOG2E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LOG2E(); }
 __extension__ mmux_decimal64_t mmux_decimal64_constant_LOG10E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LOG10E(); }
@@ -749,7 +749,7 @@ DEFINE_BINARYN_CFUNC([[[$1]]],[[[yn]]],		[[[$39]]], [[[$2]]], [[[$3]]])
 /* ------------------------------------------------------------------ */
 
 DEFINE_CFUNCS([[[decimal32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL32]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL32]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]],
 	      [[[sind32]]],		[[[cosd32]]],		[[[tand32]]],
 	      [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
 	      [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
@@ -768,7 +768,7 @@ DEFINE_CFUNCS([[[decimal32]]],
 #endif
 
 DEFINE_CFUNCS([[[decimal64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL64]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL64]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]],
 	      [[[sind64]]],		[[[cosd64]]],		[[[tand64]]],
 	      [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
 	      [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
@@ -787,7 +787,7 @@ DEFINE_CFUNCS([[[decimal64]]],
 #endif
 
 DEFINE_CFUNCS([[[decimal128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL128]]],	[[[MMUX_HAVE_CC_TYPE_DECIMAL128]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]],
 	      [[[sind128]]],		[[[cosd128]]],		[[[tand128]]],
 	      [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
 	      [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
@@ -808,7 +808,7 @@ DEFINE_CFUNCS([[[decimal128]]],
 /* ------------------------------------------------------------------ */
 
 DEFINE_CFUNCS([[[complexd32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD32]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD32_UNIMPLEMENTED]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD32]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD32_UNIMPLEMENTED]]],
 	      [[[csind32]]],	[[[ccosd32]]],		[[[ctand32]]],
 	      [[[casind32]]],	[[[cacosd32]]],		[[[catand32]]],		[[[]]],
 	      [[[csinhd32]]],	[[[ccoshd32]]],		[[[ctanhd32]]],
@@ -823,7 +823,7 @@ DEFINE_CFUNCS([[[complexd32]]],
 	      [[[]]],		[[[]]],			[[[]]])
 
 DEFINE_CFUNCS([[[complexd64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD64]]], [[[MMUX_HAVE_CC_TYPE_COMPLEXD64_UNIMPLEMENTED]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD64]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD64_UNIMPLEMENTED]]],
 	      [[[csind64]]],	[[[ccosd64]]],		[[[ctand64]]],
 	      [[[casind64]]],	[[[cacosd64]]],		[[[catand64]]],		[[[]]],
 	      [[[csinhd64]]],	[[[ccoshd64]]],		[[[ctanhd64]]],
@@ -838,7 +838,7 @@ DEFINE_CFUNCS([[[complexd64]]],
 	      [[[]]],		[[[]]],			[[[]]])
 
 DEFINE_CFUNCS([[[complexd128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD128]]],[[[MMUX_HAVE_CC_TYPE_COMPLEXD128_UNIMPLEMENTED]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD128]]],[[[MMUX_CC_TYPES_HAS_COMPLEXD128_UNIMPLEMENTED]]],
 	      [[[csind128]]],	[[[ccosd128]]],		[[[ctand128]]],
 	      [[[casind128]]],	[[[cacosd128]]],	[[[catand128]]],	[[[]]],
 	      [[[csinhd128]]],	[[[ccoshd128]]],	[[[ctanhd128]]],

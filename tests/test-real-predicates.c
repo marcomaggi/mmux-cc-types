@@ -57,12 +57,12 @@ test_real_predicate_is_zero (void)
   { mmux_ulong_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_ulong_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   { mmux_sllong_t	value = 0;	assert(true  == mmux_sint64_is_zero(value));	}
   { mmux_sllong_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   { mmux_ullong_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_ullong_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
@@ -118,52 +118,52 @@ test_real_predicate_is_zero (void)
   { mmux_double_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_double_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_ldouble_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float32_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float64_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float128_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float32x_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float64x_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_float128x_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_decimal32_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_decimal64_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	value = 0;	assert(true  == mmux_ctype_is_zero(value));	}
   { mmux_decimal128_t	value = 1;	assert(false == mmux_ctype_is_zero(value));	}
 #endif
@@ -220,7 +220,7 @@ test_real_predicate_is_zero (void)
     }
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   if (1) {
     {
       mmux_complexld_t	value = mmux_complexld_make_rectangular(0.0,0.0);
@@ -233,7 +233,7 @@ test_real_predicate_is_zero (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   if (1) {
     {
       mmux_complexf32_t	value = mmux_complexf32_make_rectangular(0.0,0.0);
@@ -246,7 +246,7 @@ test_real_predicate_is_zero (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   if (1) {
     {
       mmux_complexf64_t	value = mmux_complexf64_make_rectangular(0.0,0.0);
@@ -259,7 +259,7 @@ test_real_predicate_is_zero (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   if (1) {
     {
       mmux_complexf128_t	value = mmux_complexf128_make_rectangular(0.0,0.0);
@@ -272,7 +272,7 @@ test_real_predicate_is_zero (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   if (1) {
     {
       mmux_complexd32_t	value = mmux_complexd32_make_rectangular(0.0,0.0);
@@ -285,7 +285,7 @@ test_real_predicate_is_zero (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   if (1) {
     {
       mmux_complexd64_t	value = mmux_complexd64_make_rectangular(0.0,0.0);
@@ -298,7 +298,7 @@ test_real_predicate_is_zero (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   if (1) {
     {
       mmux_complexd128_t	value = mmux_complexd128_make_rectangular(0.0,0.0);
@@ -349,12 +349,12 @@ test_real_predicate_is_positive (void)
   { mmux_ulong_t	value = 0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_ulong_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   { mmux_sllong_t	value = 0;	assert(false == mmux_sint64_is_positive(value));	}
   { mmux_sllong_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   { mmux_ullong_t	value = 0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_ullong_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
@@ -412,61 +412,61 @@ test_real_predicate_is_positive (void)
   { mmux_double_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_double_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_ldouble_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_ldouble_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float32_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_float32_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float64_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_float64_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float128_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_float128_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float32x_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_float32x_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float64x_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_float64x_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_float128x_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_float128x_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_decimal32_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_decimal32_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_decimal64_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_decimal64_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	value = -0.0;	assert(false == mmux_ctype_is_positive(value));	}
   { mmux_decimal128_t	value = +0.0;	assert(true  == mmux_ctype_is_positive(value));	}
   { mmux_decimal128_t	value = 1;	assert(true  == mmux_ctype_is_positive(value));	}
@@ -524,7 +524,7 @@ test_real_predicate_is_positive (void)
     }
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   if (1) {
     {
       mmux_complexld_t	value = mmux_complexld_make_rectangular(0.0,0.0);
@@ -537,7 +537,7 @@ test_real_predicate_is_positive (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   if (1) {
     {
       mmux_complexf32_t	value = mmux_complexf32_make_rectangular(0.0,0.0);
@@ -550,7 +550,7 @@ test_real_predicate_is_positive (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   if (1) {
     {
       mmux_complexf64_t	value = mmux_complexf64_make_rectangular(0.0,0.0);
@@ -563,7 +563,7 @@ test_real_predicate_is_positive (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   if (1) {
     {
       mmux_complexf128_t	value = mmux_complexf128_make_rectangular(0.0,0.0);
@@ -576,7 +576,7 @@ test_real_predicate_is_positive (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   if (1) {
     {
       mmux_complexd32_t	value = mmux_complexd32_make_rectangular(0.0,0.0);
@@ -589,7 +589,7 @@ test_real_predicate_is_positive (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   if (1) {
     {
       mmux_complexd64_t	value = mmux_complexd64_make_rectangular(0.0,0.0);
@@ -602,7 +602,7 @@ test_real_predicate_is_positive (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   if (1) {
     {
       mmux_complexd128_t	value = mmux_complexd128_make_rectangular(0.0,0.0);

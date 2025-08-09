@@ -520,13 +520,13 @@ it defines the following symbols in its header files.
 We can use the following C preprocessor symbols with code like:
 
 @example
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
 ... /* the type is available */
 #endif
 @end example
 
 @macro MmuxDefineCppSymbolHaveType{CPPSTEM}
-@defvr {C Preprocessor Symbol} MMUX_HAVE_CC_TYPE_\CPPSTEM\
+@defvr {C Preprocessor Symbol} MMUX_CC_TYPES_HAS_\CPPSTEM\
 If this preprocessor symbol is defined and its use expands to @samp{1}: the corresponding C language
 type is supported.
 @end defvr

@@ -56,11 +56,11 @@ test_arithmetics_add (void)
   { mmux_slong_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
   { mmux_ulong_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   { mmux_sllong_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   { mmux_ullong_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
@@ -89,43 +89,43 @@ test_arithmetics_add (void)
 
   { mmux_float_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
   { mmux_double_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 #endif
 
@@ -154,7 +154,7 @@ test_arithmetics_add (void)
     assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
     mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
@@ -163,7 +163,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
@@ -172,7 +172,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
@@ -181,7 +181,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
@@ -190,7 +190,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
@@ -199,7 +199,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
@@ -208,7 +208,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
@@ -217,7 +217,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
@@ -226,7 +226,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
@@ -235,7 +235,7 @@ test_arithmetics_add (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
@@ -275,11 +275,11 @@ test_arithmetics_sub (void)
   { mmux_slong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
   { mmux_ulong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   { mmux_sllong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   { mmux_ullong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
@@ -308,43 +308,43 @@ test_arithmetics_sub (void)
 
   { mmux_float_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
   { mmux_double_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
 #endif
 
@@ -373,7 +373,7 @@ test_arithmetics_sub (void)
     assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
     mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
@@ -382,7 +382,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
@@ -391,7 +391,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
@@ -400,7 +400,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
@@ -409,7 +409,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
@@ -418,7 +418,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
@@ -427,7 +427,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
@@ -436,7 +436,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
@@ -445,7 +445,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
@@ -454,7 +454,7 @@ test_arithmetics_sub (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
@@ -487,11 +487,11 @@ test_arithmetics_mul (void)
   { mmux_slong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
   { mmux_ulong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   { mmux_sllong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   { mmux_ullong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
@@ -520,43 +520,43 @@ test_arithmetics_mul (void)
 
   { mmux_float_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
   { mmux_double_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
 #endif
 
@@ -585,7 +585,7 @@ test_arithmetics_mul (void)
     assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
     mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
@@ -594,7 +594,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
@@ -603,7 +603,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
@@ -612,7 +612,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
@@ -621,7 +621,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
@@ -630,7 +630,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
@@ -639,7 +639,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
@@ -648,7 +648,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
@@ -657,7 +657,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
@@ -666,7 +666,7 @@ test_arithmetics_mul (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
@@ -699,11 +699,11 @@ test_arithmetics_div (void)
   { mmux_slong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
   { mmux_ulong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   { mmux_sllong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   { mmux_ullong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
@@ -732,43 +732,43 @@ test_arithmetics_div (void)
 
   { mmux_float_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
   { mmux_double_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
 #endif
 
@@ -799,7 +799,7 @@ test_arithmetics_div (void)
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
     mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
@@ -809,7 +809,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
@@ -819,7 +819,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
@@ -829,7 +829,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
@@ -839,7 +839,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
@@ -849,7 +849,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
@@ -859,7 +859,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
@@ -869,7 +869,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
@@ -879,7 +879,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
@@ -889,7 +889,7 @@ test_arithmetics_div (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
@@ -923,7 +923,7 @@ test_arithmetics_neg (void)
   { mmux_slong_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
   { mmux_ulong_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   {
     mmux_sllong_t	op1 = 5;
     mmux_sllong_t	rop = -5;
@@ -931,7 +931,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   {
     mmux_ullong_t	op1 = 5;
     mmux_ullong_t	rop = -5;
@@ -964,43 +964,43 @@ test_arithmetics_neg (void)
 
   { mmux_float_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
   { mmux_double_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	op1 = 5, rop = -5;	assert(rop == mmux_ctype_neg(op1)); }
 #endif
 
@@ -1027,7 +1027,7 @@ test_arithmetics_neg (void)
     assert(rop == mmux_ctype_neg(op1));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
     mmux_complexld_t	rop = mmux_complexld_make_rectangular(-5.0,-3.0);
@@ -1035,7 +1035,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     mmux_complexf32_t	rop = mmux_complexf32_make_rectangular(-5.0,-3.0);
@@ -1043,7 +1043,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     mmux_complexf64_t	rop = mmux_complexf64_make_rectangular(-5.0,-3.0);
@@ -1051,7 +1051,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     mmux_complexf128_t	rop = mmux_complexf128_make_rectangular(-5.0,-3.0);
@@ -1059,7 +1059,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     mmux_complexf32x_t	rop = mmux_complexf32x_make_rectangular(-5.0,-3.0);
@@ -1067,7 +1067,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     mmux_complexf64x_t	rop = mmux_complexf64x_make_rectangular(-5.0,-3.0);
@@ -1075,7 +1075,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     mmux_complexf128x_t	rop = mmux_complexf128x_make_rectangular(-5.0,-3.0);
@@ -1083,7 +1083,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     mmux_complexd32_t	rop = mmux_complexd32_make_rectangular(-5.0,-3.0);
@@ -1091,7 +1091,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     mmux_complexd64_t	rop = mmux_complexd64_make_rectangular(-5.0,-3.0);
@@ -1099,7 +1099,7 @@ test_arithmetics_neg (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     mmux_complexd128_t	rop = mmux_complexd128_make_rectangular(-5.0,-3.0);
@@ -1131,7 +1131,7 @@ test_arithmetics_inv (void)
   { mmux_slong_t	op1 = 5, rop = 0;	assert(rop == mmux_ctype_inv(op1)); }
   { mmux_ulong_t	op1 = 5, rop = 0;	assert(rop == mmux_ctype_inv(op1)); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   {
     mmux_sllong_t	op1 = 5;
     mmux_sllong_t	rop = 0;
@@ -1139,7 +1139,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   {
     mmux_ullong_t	op1 = 5;
     mmux_ullong_t	rop = 0;
@@ -1178,70 +1178,70 @@ test_arithmetics_inv (void)
     mmux_double_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   {
     mmux_ldouble_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   {
     mmux_float32_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   {
     mmux_float64_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   {
     mmux_float128_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   {
     mmux_float32x_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   {
     mmux_float64x_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   {
     mmux_float128x_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   {
     mmux_decimal32_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   {
     mmux_decimal64_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   {
     mmux_decimal128_t	op1 = 5, rop = 0.2, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
@@ -1277,7 +1277,7 @@ test_arithmetics_inv (void)
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_inv(op1), mrg));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     auto	op1 = mmux_complexld_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexld_make_rectangular(0.147059,-0.088235);
@@ -1286,7 +1286,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     auto	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexf32_make_rectangular(0.147059,-0.088235);
@@ -1295,7 +1295,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     auto	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexf64_make_rectangular(0.147059,-0.088235);
@@ -1304,7 +1304,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     auto	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexf128_make_rectangular(0.147059,-0.088235);
@@ -1313,7 +1313,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     auto	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexf32x_make_rectangular(0.147059,-0.088235);
@@ -1322,7 +1322,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     auto	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexf64x_make_rectangular(0.147059,-0.088235);
@@ -1331,7 +1331,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     auto	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexf128x_make_rectangular(0.147059,-0.088235);
@@ -1340,7 +1340,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     auto	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexd32_make_rectangular(0.147059,-0.088235);
@@ -1349,7 +1349,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     auto	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexd64_make_rectangular(0.147059,-0.088235);
@@ -1358,7 +1358,7 @@ test_arithmetics_inv (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     auto	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     auto	rop = mmux_complexd128_make_rectangular(0.147059,-0.088235);
@@ -1391,7 +1391,7 @@ test_arithmetics_abs (void)
   { mmux_slong_t	op1 = 5, rop = 5;	assert(rop == mmux_ctype_abs(op1)); }
   { mmux_ulong_t	op1 = 5, rop = 5;	assert(rop == mmux_ctype_abs(op1)); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   {
     mmux_sllong_t	op1 = 5;
     mmux_sllong_t	rop = 5;
@@ -1399,7 +1399,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   {
     mmux_ullong_t	op1 = 5;
     mmux_ullong_t	rop = 5;
@@ -1438,70 +1438,70 @@ test_arithmetics_abs (void)
     mmux_double_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   {
     mmux_ldouble_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   {
     mmux_float32_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   {
     mmux_float64_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   {
     mmux_float128_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   {
     mmux_float32x_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   {
     mmux_float64x_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   {
     mmux_float128x_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   {
     mmux_decimal32_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   {
     mmux_decimal64_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   {
     mmux_decimal128_t	op1 = 5, rop = 5, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
@@ -1533,7 +1533,7 @@ test_arithmetics_abs (void)
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_abs(op1), mrg));
   }
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   {
     auto		op1 = mmux_complexld_make_rectangular(5.0,3.0);
     mmux_ldouble_t	rop = 5.830952;
@@ -1542,7 +1542,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   {
     auto		op1 = mmux_complexf32_make_rectangular(5.0,3.0);
     mmux_float32_t	rop = 5.830952;
@@ -1551,7 +1551,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   {
     auto			op1 = mmux_complexf64_make_rectangular(5.0,3.0);
     mmux_complexf64_part_t	rop = 5.830952;
@@ -1560,7 +1560,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   {
     auto			op1 = mmux_complexf128_make_rectangular(5.0,3.0);
     mmux_complexf128_part_t	rop = 5.830952;
@@ -1569,7 +1569,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF32X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   {
     auto			op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
     mmux_complexf32x_part_t	rop = 5.830952;
@@ -1578,7 +1578,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF64X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   {
     auto			op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
     mmux_complexf64x_part_t	rop = 5.830952;
@@ -1587,7 +1587,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXF128X
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   {
     auto			op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
     mmux_complexf128x_part_t	rop = 5.830952;
@@ -1596,7 +1596,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   {
     auto			op1 = mmux_complexd32_make_rectangular(5.0,3.0);
     mmux_complexd32_part_t	rop = 5.830952;
@@ -1605,7 +1605,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   {
     auto			op1 = mmux_complexd64_make_rectangular(5.0,3.0);
     mmux_complexd64_part_t	rop = 5.830952;
@@ -1614,7 +1614,7 @@ test_arithmetics_abs (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_COMPLEXD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   {
     auto			op1 = mmux_complexd128_make_rectangular(5.0,3.0);
     mmux_complexd128_part_t	rop = 5.830952;
@@ -1647,7 +1647,7 @@ test_arithmetics_mod (void)
   { mmux_slong_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
   { mmux_ulong_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   {
     mmux_sllong_t	op1 = 13;
     mmux_sllong_t	op2 = 4;
@@ -1656,7 +1656,7 @@ test_arithmetics_mod (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   {
     mmux_ullong_t	op1 = 13;
     mmux_ullong_t	op2 = 4;
@@ -1690,43 +1690,43 @@ test_arithmetics_mod (void)
 
   { mmux_float_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
   { mmux_double_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   { mmux_ldouble_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   { mmux_float32_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   { mmux_float64_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   { mmux_float128_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   { mmux_float32x_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   { mmux_float64x_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   { mmux_float128x_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   { mmux_decimal32_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   { mmux_decimal64_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   { mmux_decimal128_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
 #endif
 
@@ -1765,7 +1765,7 @@ test_arithmetics_incr (void)
   { mmux_slong_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
   { mmux_ulong_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   {
     mmux_sllong_t	op1 = 5;
     mmux_sllong_t	rop = 6;
@@ -1773,7 +1773,7 @@ test_arithmetics_incr (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   {
     mmux_ullong_t	op1 = 5;
     mmux_ullong_t	rop = 6;
@@ -1812,70 +1812,70 @@ test_arithmetics_incr (void)
     mmux_double_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   {
     mmux_ldouble_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   {
     mmux_float32_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   {
     mmux_float64_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   {
     mmux_float128_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   {
     mmux_float32x_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   {
     mmux_float64x_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   {
     mmux_float128x_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   {
     mmux_decimal32_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   {
     mmux_decimal64_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   {
     mmux_decimal128_t	op1 = 5, rop = 6, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
@@ -1918,7 +1918,7 @@ test_arithmetics_decr (void)
   { mmux_slong_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
   { mmux_ulong_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
 
-#ifdef MMUX_HAVE_CC_TYPE_SLLONG
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
   {
     mmux_sllong_t	op1 = 5;
     mmux_sllong_t	rop = 4;
@@ -1926,7 +1926,7 @@ test_arithmetics_decr (void)
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_ULLONG
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
   {
     mmux_ullong_t	op1 = 5;
     mmux_ullong_t	rop = 4;
@@ -1965,70 +1965,70 @@ test_arithmetics_decr (void)
     mmux_double_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
-#ifdef MMUX_HAVE_CC_TYPE_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
   {
     mmux_ldouble_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
   {
     mmux_float32_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
   {
     mmux_float64_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
   {
     mmux_float128_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT32X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
   {
     mmux_float32x_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT64X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
   {
     mmux_float64x_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_FLOAT128X
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
   {
     mmux_float128x_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL32
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
   {
     mmux_decimal32_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL64
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
   {
     mmux_decimal64_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
   }
 #endif
 
-#ifdef MMUX_HAVE_CC_TYPE_DECIMAL128
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
   {
     mmux_decimal128_t	op1 = 5, rop = 4, mrg = 1e-6;
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
