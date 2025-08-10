@@ -1777,16 +1777,26 @@ DEFINE_BITWISE_FUNCS([[[rlim]]])
  ** ----------------------------------------------------------------- */
 
 #ifdef __CHAR_UNSIGNED__
-DEFINE_SIGNED_INTEGER_PREDICATES([[[char]]])
-DEFINE_STYPE_FUNCTIONS([[[char]]])
-DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
-DEFINE_BITWISE_FUNCS([[[char]]])
-#else
 DEFINE_UNSIGNED_INTEGER_PREDICATES([[[char]]])
 DEFINE_UTYPE_FUNCTIONS([[[char]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
 DEFINE_BITWISE_FUNCS([[[char]]])
+#else
+DEFINE_SIGNED_INTEGER_PREDICATES([[[char]]])
+DEFINE_STYPE_FUNCTIONS([[[char]]])
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
+DEFINE_BITWISE_FUNCS([[[char]]])
 #endif
+
+bool
+mmux_char_is_unsigned (void)
+{
+#ifdef __CHAR_UNSIGNED__
+  return true;
+#else
+  return false;
+#endif
+}
 
 
 /** --------------------------------------------------------------------

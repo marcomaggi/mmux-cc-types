@@ -508,6 +508,9 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[rlim]]])
  ** Type predicate prototypes.
  ** ----------------------------------------------------------------- */
 
+mmux_cc_types_decl bool mmux_char_is_unsigned (void)
+  __attribute__((__const__));
+
 m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
