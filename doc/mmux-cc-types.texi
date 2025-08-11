@@ -1610,7 +1610,7 @@ the terminating zero}; otherwise return @samp{-1}.
 To print a value to @stderr{}, we can do:
 
 @example
-mmux_double_t   X = 1.2;
+auto    X = mmux_double_make(1.2);
 
 if (mmux_double_dprintf(2, X)) @{
   /* error */
