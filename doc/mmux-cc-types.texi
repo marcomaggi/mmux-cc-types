@@ -152,8 +152,9 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * version::                     Version functions.
 * initialisation::              Library initialisation.
 * config::                      How to configure code to link the library.
-* literals::                    Generating literal constants.
 * typedefs::                    Type definitions.
+* literals::                    Generating literal constants.
+* makers::                      Making values.
 * sizeof::                      Type sizes.
 * limits::                      Type maximum and minimum values.
 * constants::                   Functions returning constant values.
@@ -557,59 +558,6 @@ type is supported.
 @MmuxDefineCppSymbolHaveType{COMPLEXD128}
 
 @c page
-@node literals
-@chapter Generating literal constants
-
-
-When a type is supported by @value{PACKAGE}: the corresponding C preprocessor macro generating
-literals is defined.  We have to remember that the argument of these macros must be a compatible
-number specification.
-
-
-@deffn {Preprocessor Macro} MMUX_UNSIGNED_LITERAL (@var{INTEGER_NUMBER_LITERAL})
-Expand into an unsigned integer number literal, using the suffix @samp{U}; the full type of the
-unsigned integer is unspecified.
-
-@example
-mmux_uchar_t    A = MMUX_UNSIGNED_LITERAL(123);
-mmux_ushort_t   B = MMUX_UNSIGNED_LITERAL(123);
-mmux_uint_t     C = MMUX_UNSIGNED_LITERAL(123);
-mmux_ulong_t    D = MMUX_UNSIGNED_LITERAL(123);
-@end example
-@end deffn
-
-@c ------------------------------------------------------------------------
-
-@macro MmuxDefineFlonumLiteralMacro{UPCASESTEM,LOCASESTEM,TYPEDEF,SUFFIX,ARGUMENT,LITERAL_EXAMPLE}
-@deffn {Preprocessor Macro} MMUX_\UPCASESTEM\_LITERAL (@var{\ARGUMENT\})
-Expand into a number literal of type @objtype{\TYPEDEF\}, using the suffix @samp{\SUFFIX\}.
-
-@example
-mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERAL_EXAMPLE);
-@end example
-@end deffn
-
-@end macro
-
-@MmuxDefineFlonumLiteralMacro{SLLONG,sllong,signed long long int,LL,INTEGER_NUMBER_LITERAL,123}
-@MmuxDefineFlonumLiteralMacro{ULLONG,ullong,unsigned long long int,ULL,INTEGER_NUMBER_LITERAL,123}
-
-@MmuxDefineFlonumLiteralMacro{FLOAT,float,float,F,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{LDOUBLE,ldouble,ldouble,L,FLOATING_POINT_NUMBER_LITERAL,0.123}
-
-@MmuxDefineFlonumLiteralMacro{FLOAT32,float32,_Float32,f32,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT64,float64,_Float64,f64,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT128,float128,_Float128,f128,FLOATING_POINT_NUMBER_LITERAL,0.123}
-
-@MmuxDefineFlonumLiteralMacro{FLOAT32X,float32x,_Float32x,f32x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT64X,float64x,_Float64x,f64x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT128X,float128x,_Float128x,f128x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-
-@MmuxDefineFlonumLiteralMacro{DECIMAL32,decimal32,_Decimal32,DF,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{DECIMAL64,decimal64,_Decimal64,DD,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{DECIMAL128,decimal128,_Decimal128,DL,FLOATING_POINT_NUMBER_LITERAL,0.123}
-
-@c page
 @node typedefs
 @chapter Type definitions
 
@@ -845,6 +793,169 @@ const * *}.
 Type definition aliasing the C language types @objtype{mmux_char_t * * *} and @objtype{mmux_char_t
 const * * *}.
 @end deftp
+
+@c page
+@node literals
+@chapter Generating literal constants
+
+
+When a type is supported by @value{PACKAGE}: the corresponding C preprocessor macro generating
+literals is defined.  We have to remember that the argument of these macros must be a compatible
+number specification.
+
+
+@deffn {Preprocessor Macro} MMUX_UNSIGNED_LITERAL (@var{INTEGER_NUMBER_LITERAL})
+Expand into an unsigned integer number literal, using the suffix @samp{U}; the full type of the
+unsigned integer is unspecified.
+
+@example
+mmux_uchar_t    A = MMUX_UNSIGNED_LITERAL(123);
+mmux_ushort_t   B = MMUX_UNSIGNED_LITERAL(123);
+mmux_uint_t     C = MMUX_UNSIGNED_LITERAL(123);
+mmux_ulong_t    D = MMUX_UNSIGNED_LITERAL(123);
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineFlonumLiteralMacro{UPCASESTEM,LOCASESTEM,TYPEDEF,SUFFIX,ARGUMENT,LITERAL_EXAMPLE}
+@deffn {Preprocessor Macro} MMUX_\UPCASESTEM\_LITERAL (@var{\ARGUMENT\})
+Expand into a number literal of type @objtype{\TYPEDEF\}, using the suffix @samp{\SUFFIX\}.
+
+@example
+mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERAL_EXAMPLE);
+@end example
+@end deffn
+
+@end macro
+
+@MmuxDefineFlonumLiteralMacro{SLLONG,sllong,signed long long int,LL,INTEGER_NUMBER_LITERAL,123}
+@MmuxDefineFlonumLiteralMacro{ULLONG,ullong,unsigned long long int,ULL,INTEGER_NUMBER_LITERAL,123}
+
+@MmuxDefineFlonumLiteralMacro{FLOAT,float,float,F,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{LDOUBLE,ldouble,ldouble,L,FLOATING_POINT_NUMBER_LITERAL,0.123}
+
+@MmuxDefineFlonumLiteralMacro{FLOAT32,float32,_Float32,f32,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT64,float64,_Float64,f64,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT128,float128,_Float128,f128,FLOATING_POINT_NUMBER_LITERAL,0.123}
+
+@MmuxDefineFlonumLiteralMacro{FLOAT32X,float32x,_Float32x,f32x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT64X,float64x,_Float64x,f64x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT128X,float128x,_Float128x,f128x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+
+@MmuxDefineFlonumLiteralMacro{DECIMAL32,decimal32,_Decimal32,DF,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{DECIMAL64,decimal64,_Decimal64,DD,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{DECIMAL128,decimal128,_Decimal128,DL,FLOATING_POINT_NUMBER_LITERAL,0.123}
+
+@c page
+@node makers
+@chapter Making values
+
+
+The @dfn{maker} macros are used as follows:
+
+@example
+auto    A = mmuc_sint_make(123);
+auto    B = mmuc_uint_make(123);
+auto    C = mmuc_ldouble_make(0.123);
+auto    D = mmuc_mode_make(MMUX_LIBC_O_RDWR);
+@end example
+
+@noindent
+the macros expand as follows:
+
+@example
+mmux_sint_make(123)       @expansion{} ((mmux_sint_t)(0.123))
+mmux_uint_make(123)       @expansion{} ((mmux_sint_t)(MMUX_UNSIGNED_LITERAL(123)))
+mmux_ldouble_make(0.123)  @expansion{} ((mmux_ldouble_t)(MMUX_LDOUBLE_LITERAL(0.123)))
+@end example
+
+@noindent
+there are no maker macros for complex types, because for those values we have to use the proper
+constructor functions like @cfunc{mmux_complexd_make_rectangular}, @ref{complex make, Constructing
+complex numbers}.
+
+
+@macro MmuxDefineCMacroMaker{STEM}
+@deftypefn {Preprocessor Macro} mmux_\STEM\_t mmux_\STEM\_make (@var{VALUE})
+Return a value of the given type.
+@end deftypefn
+
+@end macro
+
+
+@MmuxDefineCMacroMaker{pointer}
+@MmuxDefineCMacroMaker{pointerc}
+
+@MmuxDefineCMacroMaker{char}
+@MmuxDefineCMacroMaker{schar}
+@MmuxDefineCMacroMaker{uchar}
+@MmuxDefineCMacroMaker{sshort}
+@MmuxDefineCMacroMaker{ushort}
+@MmuxDefineCMacroMaker{sint}
+@MmuxDefineCMacroMaker{uint}
+@MmuxDefineCMacroMaker{slong}
+@MmuxDefineCMacroMaker{ulong}
+@MmuxDefineCMacroMaker{sllong}
+@MmuxDefineCMacroMaker{ullong}
+@MmuxDefineCMacroMaker{float}
+@MmuxDefineCMacroMaker{double}
+@MmuxDefineCMacroMaker{ldouble}
+
+@MmuxDefineCMacroMaker{float32}
+@MmuxDefineCMacroMaker{float64}
+@MmuxDefineCMacroMaker{float128}
+
+@MmuxDefineCMacroMaker{float32x}
+@MmuxDefineCMacroMaker{float64x}
+@MmuxDefineCMacroMaker{float128x}
+
+@MmuxDefineCMacroMaker{decimal32}
+@MmuxDefineCMacroMaker{decimal64}
+@MmuxDefineCMacroMaker{decimal128}
+
+@MmuxDefineCMacroMaker{sint8}
+@MmuxDefineCMacroMaker{uint8}
+@MmuxDefineCMacroMaker{sint16}
+@MmuxDefineCMacroMaker{uint16}
+@MmuxDefineCMacroMaker{sint32}
+@MmuxDefineCMacroMaker{uint32}
+@MmuxDefineCMacroMaker{sint64}
+@MmuxDefineCMacroMaker{uint64}
+
+@MmuxDefineCMacroMaker{ssize}
+@MmuxDefineCMacroMaker{usize}
+@MmuxDefineCMacroMaker{sintmax}
+@MmuxDefineCMacroMaker{uintmax}
+@MmuxDefineCMacroMaker{sintptr}
+@MmuxDefineCMacroMaker{uintptr}
+@MmuxDefineCMacroMaker{ptrdiff}
+@MmuxDefineCMacroMaker{mode}
+@MmuxDefineCMacroMaker{off}
+@MmuxDefineCMacroMaker{pid}
+@MmuxDefineCMacroMaker{uid}
+@MmuxDefineCMacroMaker{gid}
+@MmuxDefineCMacroMaker{wchar}
+@MmuxDefineCMacroMaker{wint}
+@MmuxDefineCMacroMaker{time}
+@MmuxDefineCMacroMaker{socklen}
+@MmuxDefineCMacroMaker{rlim}
+
+@MmuxDefineCMacroMaker{asciip}
+@MmuxDefineCMacroMaker{asciipp}
+@MmuxDefineCMacroMaker{asciippp}
+
+@MmuxDefineCMacroMaker{asciizp}
+@MmuxDefineCMacroMaker{asciizpp}
+@MmuxDefineCMacroMaker{asciizppp}
+
+@MmuxDefineCMacroMaker{asciicp}
+@MmuxDefineCMacroMaker{asciicpp}
+@MmuxDefineCMacroMaker{asciicppp}
+
+@MmuxDefineCMacroMaker{asciizcp}
+@MmuxDefineCMacroMaker{asciizcpp}
+@MmuxDefineCMacroMaker{asciizcppp}
 
 @c page
 @node sizeof

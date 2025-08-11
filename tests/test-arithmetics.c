@@ -37,7 +37,7 @@ test_arithmetics_add (void)
   dprintf(1, "running test: %s\n", __func__);
 
   {
-    mmux_pointer_t	op1 = (mmux_pointer_t)5;
+    auto		op1 = mmux_pointer_make(5);
     mmux_ptrdiff_t	op2 = 4;
     mmux_pointer_t	rop = (mmux_pointer_t)9;
     assert(mmux_ctype_equal(rop, mmux_pointer_add(op1, op2)));
@@ -141,9 +141,9 @@ test_arithmetics_add (void)
   { mmux_time_t		op1 = 5, op2 = 4, rop = 9;	assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2))); }
 
   {
-    mmux_complexf_t	op1 = mmux_complexf_make_rectangular(5.0,3.0);
-    mmux_complexf_t	op2 = mmux_complexf_make_rectangular(4.0,2.0);
-    mmux_complexf_t	rop = mmux_complexf_make_rectangular(9.0,5.0);
+    auto		op1 = mmux_complexf_make_rectangular(5.0,3.0);
+    auto		op2 = mmux_complexf_make_rectangular(4.0,2.0);
+    auto		rop = mmux_complexf_make_rectangular(9.0,5.0);
     assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));
   }
 

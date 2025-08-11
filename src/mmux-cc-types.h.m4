@@ -1578,6 +1578,89 @@ DEFINE_BITWISE_PROTOS([[[rlim]]])
 
 
 /** --------------------------------------------------------------------
+ ** Constructor macros.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)m4_dnl
+m4_define([[[DEFINE_TYPE_MAKER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],m4_dnl
+[[[#define mmux_$1_make(LITERAL)		((mmux_$1_t)$2(LITERAL))]]])]]])
+m4_divert(0)m4_dnl
+
+DEFINE_TYPE_MAKER([[[pointer]]])
+DEFINE_TYPE_MAKER([[[pointerc]]])
+DEFINE_TYPE_MAKER([[[char]]])
+DEFINE_TYPE_MAKER([[[schar]]])
+DEFINE_TYPE_MAKER([[[uchar]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sshort]]])
+DEFINE_TYPE_MAKER([[[ushort]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sint]]])
+DEFINE_TYPE_MAKER([[[uint]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[slong]]])
+DEFINE_TYPE_MAKER([[[ulong]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sllong]]],		[[[MMUX_SLLONG_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_TYPE_MAKER([[[ullong]]],		[[[MMUX_ULLONG_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+DEFINE_TYPE_MAKER([[[float]]],		[[[MMUX_FLOAT_LITERAL]]])
+DEFINE_TYPE_MAKER([[[double]]])
+DEFINE_TYPE_MAKER([[[ldouble]]],	[[[MMUX_FLOAT_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+
+DEFINE_TYPE_MAKER([[[float32]]],	[[[MMUX_FLOAT32_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
+DEFINE_TYPE_MAKER([[[float64]]],	[[[MMUX_FLOAT64_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
+DEFINE_TYPE_MAKER([[[float128]]],	[[[MMUX_FLOAT128_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+
+DEFINE_TYPE_MAKER([[[float32x]]],	[[[MMUX_FLOAT32X_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
+DEFINE_TYPE_MAKER([[[float64x]]],	[[[MMUX_FLOAT64X_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
+DEFINE_TYPE_MAKER([[[float128x]]],	[[[MMUX_FLOAT128X_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+
+DEFINE_TYPE_MAKER([[[decimal32]]],	[[[MMUX_DECIMAL32_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_TYPE_MAKER([[[decimal64]]],	[[[MMUX_DECIMAL64_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_TYPE_MAKER([[[decimal128]]],	[[[MMUX_DECIMAL128_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+
+DEFINE_TYPE_MAKER([[[sint8]]])
+DEFINE_TYPE_MAKER([[[uint8]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sint16]]])
+DEFINE_TYPE_MAKER([[[uint16]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sint32]]])
+DEFINE_TYPE_MAKER([[[uint32]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sint64]]])
+DEFINE_TYPE_MAKER([[[uint64]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+
+DEFINE_TYPE_MAKER([[[ssize]]])
+DEFINE_TYPE_MAKER([[[usize]]],		[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sintmax]]])
+DEFINE_TYPE_MAKER([[[uintmax]]],	[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[sintptr]]])
+DEFINE_TYPE_MAKER([[[uintptr]]],	[[[MMUX_UNSIGNED_LITERAL]]])
+DEFINE_TYPE_MAKER([[[mode]]])
+DEFINE_TYPE_MAKER([[[off]]])
+DEFINE_TYPE_MAKER([[[pid]]])
+DEFINE_TYPE_MAKER([[[uid]]])
+DEFINE_TYPE_MAKER([[[gid]]])
+DEFINE_TYPE_MAKER([[[ptrdiff]]])
+DEFINE_TYPE_MAKER([[[wchar]]])
+DEFINE_TYPE_MAKER([[[wint]]])
+DEFINE_TYPE_MAKER([[[time]]])
+DEFINE_TYPE_MAKER([[[socklen]]])
+DEFINE_TYPE_MAKER([[[rlim]]])
+
+DEFINE_TYPE_MAKER([[[asciip]]])
+DEFINE_TYPE_MAKER([[[asciipp]]])
+DEFINE_TYPE_MAKER([[[asciippp]]])
+
+DEFINE_TYPE_MAKER([[[asciizp]]])
+DEFINE_TYPE_MAKER([[[asciizpp]]])
+DEFINE_TYPE_MAKER([[[asciizppp]]])
+
+DEFINE_TYPE_MAKER([[[asciicp]]])
+DEFINE_TYPE_MAKER([[[asciicpp]]])
+DEFINE_TYPE_MAKER([[[asciicppp]]])
+
+DEFINE_TYPE_MAKER([[[asciizcp]]])
+DEFINE_TYPE_MAKER([[[asciizcpp]]])
+DEFINE_TYPE_MAKER([[[asciizcppp]]])
+
+
+/** --------------------------------------------------------------------
  ** Miscellaneous.
  ** ----------------------------------------------------------------- */
 
