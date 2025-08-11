@@ -166,8 +166,6 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
 
 mmux_cc_types_decl bool mmux_cc_types_init (void)
   __attribute__((__constructor__));
-mmux_cc_types_decl bool mmux_cc_types_init_sprint_module (void);
-mmux_cc_types_decl bool mmux_cc_types_init_parsers_module (void);
 
 
 /** --------------------------------------------------------------------
