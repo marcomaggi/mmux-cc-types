@@ -96,6 +96,24 @@ extern "C" {
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
+#undef  MMUX_SLLONG_LITERAL
+#define MMUX_SLLONG_LITERAL(X)		(X ## LL)
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
+#undef  MMUX_ULLONG_LITERAL
+#define MMUX_ULLONG_LITERAL(X)		(X ## ULL)
+]]])
+
+#undef  MMUX_FLOAT_LITERAL
+#define MMUX_FLOAT_LITERAL(X)		(X ## F)
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[
+#undef  MMUX_LDOUBLE_LITERAL
+#define MMUX_LDOUBLE_LITERAL(X)		(X ## L)
+]]])
+
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[
 #undef  MMUX_FLOAT32_LITERAL
 #define MMUX_FLOAT32_LITERAL(X)		(X ## f32)

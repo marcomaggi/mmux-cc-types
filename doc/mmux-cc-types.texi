@@ -562,28 +562,52 @@ type is supported.
 
 
 When a type is supported by @value{PACKAGE}: the corresponding C preprocessor macro generating
-literals is defined.  We have to remember that the argument of these macros must be a
-floating--point number specification, integer numbers will cause a compilation error.
+literals is defined.  We have to remember that the argument of these macros must be a compatible
+number specification.
 
-@macro MmuxDefineFlonumLiteralMacro{STEM,TYPEDEF,SUFFIX}
-@deffn {Preprocessor Macro} MMUX_\STEM\_LITERAL (@var{FLOATING_POINT_NUMBER})
-Expand into a floating--point number literal of type @objtype{\TYPEDEF\}, using the suffix
-@samp{\SUFFIX\}.
+
+@deffn {Preprocessor Macro} MMUX_UNSIGNED_LITERAL (@var{INTEGER_NUMBER_LITERAL})
+Expand into an unsigned integer number literal, using the suffix @samp{U}; the full type of the
+unsigned integer is unspecified.
+
+@example
+mmux_uchar_t    A = MMUX_UNSIGNED_LITERAL(123);
+mmux_ushort_t   B = MMUX_UNSIGNED_LITERAL(123);
+mmux_uint_t     C = MMUX_UNSIGNED_LITERAL(123);
+mmux_ulong_t    D = MMUX_UNSIGNED_LITERAL(123);
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineFlonumLiteralMacro{UPCASESTEM,LOCASESTEM,TYPEDEF,SUFFIX,ARGUMENT,LITERAL_EXAMPLE}
+@deffn {Preprocessor Macro} MMUX_\UPCASESTEM\_LITERAL (@var{\ARGUMENT\})
+Expand into a number literal of type @objtype{\TYPEDEF\}, using the suffix @samp{\SUFFIX\}.
+
+@example
+mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERAL_EXAMPLE);
+@end example
 @end deffn
 
 @end macro
 
-@MmuxDefineFlonumLiteralMacro{FLOAT32,_Float32,f32}
-@MmuxDefineFlonumLiteralMacro{FLOAT64,_Float64,f64}
-@MmuxDefineFlonumLiteralMacro{FLOAT128,_Float128,f128}
+@MmuxDefineFlonumLiteralMacro{SLLONG,sllong,signed long long int,LL,INTEGER_NUMBER_LITERAL,123}
+@MmuxDefineFlonumLiteralMacro{ULLONG,ullong,unsigned long long int,ULL,INTEGER_NUMBER_LITERAL,123}
 
-@MmuxDefineFlonumLiteralMacro{FLOAT32X,_Float32x,f32x}
-@MmuxDefineFlonumLiteralMacro{FLOAT64X,_Float64x,f64x}
-@MmuxDefineFlonumLiteralMacro{FLOAT128X,_Float128x,f128x}
+@MmuxDefineFlonumLiteralMacro{FLOAT,float,float,F,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{LDOUBLE,ldouble,ldouble,L,FLOATING_POINT_NUMBER_LITERAL,0.123}
 
-@MmuxDefineFlonumLiteralMacro{DECIMAL32,_Decimal32,DF}
-@MmuxDefineFlonumLiteralMacro{DECIMAL64,_Decimal64,DD}
-@MmuxDefineFlonumLiteralMacro{DECIMAL128,_Decimal128,DL}
+@MmuxDefineFlonumLiteralMacro{FLOAT32,float32,_Float32,f32,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT64,float64,_Float64,f64,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT128,float128,_Float128,f128,FLOATING_POINT_NUMBER_LITERAL,0.123}
+
+@MmuxDefineFlonumLiteralMacro{FLOAT32X,float32x,_Float32x,f32x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT64X,float64x,_Float64x,f64x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLOAT128X,float128x,_Float128x,f128x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+
+@MmuxDefineFlonumLiteralMacro{DECIMAL32,decimal32,_Decimal32,DF,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{DECIMAL64,decimal64,_Decimal64,DD,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{DECIMAL128,decimal128,_Decimal128,DL,FLOATING_POINT_NUMBER_LITERAL,0.123}
 
 @c page
 @node typedefs
