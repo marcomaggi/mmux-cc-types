@@ -45,6 +45,45 @@ extern "C" {
 
 
 /** --------------------------------------------------------------------
+ ** Complex numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_COMPLEX_UNARY]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE)							\
+  (_Generic((VALUE),								\
+	   mmux_complexf_t:		mmux_complexf_$1,			\
+	   mmux_complexd_t:		mmux_complexd_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
+	   mmux_complexld_t:		mmux_complexld_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
+	   mmux_complexf32_t:		mmux_complexf32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
+	   mmux_complexf64_t:		mmux_complexf64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
+	   mmux_complexf128_t:		mmux_complexf128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
+	   mmux_complexd32_t:		mmux_complexd32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
+	   mmux_complexd64_t:		mmux_complexd64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
+	   mmux_complexd128_t:		mmux_complexd128_$1,			\
+]]])m4_dnl
+           default:			mmux_ctype_generic_error)(VALUE))
+]]]) m4_dnl
+
+DEFINE_COMPLEX_UNARY([[[real_part]]])
+DEFINE_COMPLEX_UNARY([[[imag_part]]])
+DEFINE_COMPLEX_UNARY([[[arg]]])
+DEFINE_COMPLEX_UNARY([[[conj]]])
+
+
+/** --------------------------------------------------------------------
  ** Predicates.
  ** ----------------------------------------------------------------- */
 
@@ -929,6 +968,91 @@ DEFINE_BITWISE_BINARY([[[xor]]])
 DEFINE_BITWISE_UNARY([[[not]]])
 DEFINE_BITWISE_BINARY_SINT([[[shl]]])
 DEFINE_BITWISE_BINARY_SINT([[[shr]]])
+
+
+/** --------------------------------------------------------------------
+ ** Printing.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_PRINTING_FUNCTION]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE1,VALUE2)						\
+  _Generic((VALUE2),								\
+           mmux_pointer_t:		mmux_pointer_$1,			\
+	   mmux_char_t:			mmux_char_$1,				\
+m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		mmux_sllong_$1,				\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		mmux_sllong_$1,				\
+]]])m4_dnl
+	   mmux_float_t:		mmux_float_$1,				\
+	   mmux_double_t:		mmux_double_$1,				\
+m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
+	   mmux_ldouble_t:		mmux_ldouble_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
+	   mmux_float32_t:		mmux_float32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
+	   mmux_float64_t:		mmux_float64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
+	   mmux_float128_t:		mmux_float128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
+	   mmux_float32x_t:		mmux_float32x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
+	   mmux_float64x_t:		mmux_float64x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
+	   mmux_float128x_t:		mmux_float128x_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
+	   mmux_decimal32_t:		mmux_decimal32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
+	   mmux_decimal64_t:		mmux_decimal64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
+	   mmux_decimal128_t:		mmux_decimal128_$1,			\
+]]])m4_dnl
+	   mmux_sint8_t:		mmux_sint8_$1,				\
+	   mmux_uint8_t:		mmux_uint8_$1,				\
+	   mmux_sint16_t:		mmux_sint16_$1,				\
+	   mmux_uint16_t:		mmux_uint16_$1,				\
+	   mmux_sint32_t:		mmux_sint32_$1,				\
+	   mmux_uint32_t:		mmux_uint32_$1,				\
+	   mmux_sint64_t:		mmux_sint64_$1,				\
+	   mmux_uint64_t:		mmux_uint64_$1,				\
+	   mmux_complexf_t:		mmux_complexf_$1,			\
+	   mmux_complexd_t:		mmux_complexd_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
+	   mmux_complexld_t:		mmux_complexld_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
+	   mmux_complexf32_t:		mmux_complexf32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
+	   mmux_complexf64_t:		mmux_complexf64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
+	   mmux_complexf128_t:		mmux_complexf128_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
+	   mmux_complexd32_t:		mmux_complexd32_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
+	   mmux_complexd64_t:		mmux_complexd64_$1,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
+	   mmux_complexd128_t:		mmux_complexd128_$1,			\
+]]])m4_dnl
+           default:			mmux_ctype_generic_error)((VALUE1),(VALUE2))
+]]]) m4_dnl
+
+DEFINE_PRINTING_FUNCTION([[[fprintf]]])
+DEFINE_PRINTING_FUNCTION([[[dprintf]]])
 
 
 /** --------------------------------------------------------------------
