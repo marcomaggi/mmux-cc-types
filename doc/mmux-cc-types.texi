@@ -158,6 +158,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * limits::                      Type maximum and minimum values.
 * constants::                   Functions returning constant values.
 * stringrep::                   String representations of supported types.
+* printing::                    Printing string representations.
 * complex::                     Basic complex number operations.
 * predicates::                  Type predicates.
 * comparison::                  Comparison functions.
@@ -1465,6 +1466,109 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{time}
 @MmuxDefineCFunctionSprinter{socklen}
 @MmuxDefineCFunctionSprinter{rlim}
+
+@c page
+@node printing
+@chapter Printing string representations
+
+
+To print a value to @stderr{}, we can do:
+
+@example
+mmux_double_t   X = 1.2;
+
+if (mmux_double_dprintf(2, X)) @{
+  /* error */
+@}
+
+if (mmux_double_fprintf(stderr, X)) @{
+  /* error */
+@}
+@end example
+
+
+
+@macro MmuxDefineCFunctionPrinters{STEM}
+@deftypefun bool mmux_\STEM\_dprintf (mmux_sint_t @var{fd}, mmux_\STEM\_t @var{value})
+@deftypefunx bool mmux_\STEM\_fprintf (mmux_pointer_t @var{stream}, mmux_\STEM\_t @var{value})
+Print a string representation of @var{value} to the given file descriptor @var{fd} or stream
+@var{stream}.  When successful return @cfalse{}, otherwise return @ctrue{}.
+@end deftypefun
+
+@end macro
+
+
+@MmuxDefineCFunctionPrinters{pointer}
+
+@MmuxDefineCFunctionPrinters{char}
+@MmuxDefineCFunctionPrinters{schar}
+@MmuxDefineCFunctionPrinters{uchar}
+@MmuxDefineCFunctionPrinters{sshort}
+@MmuxDefineCFunctionPrinters{ushort}
+@MmuxDefineCFunctionPrinters{sint}
+@MmuxDefineCFunctionPrinters{uint}
+@MmuxDefineCFunctionPrinters{slong}
+@MmuxDefineCFunctionPrinters{ulong}
+@MmuxDefineCFunctionPrinters{sllong}
+@MmuxDefineCFunctionPrinters{ullong}
+@MmuxDefineCFunctionPrinters{float}
+@MmuxDefineCFunctionPrinters{double}
+@MmuxDefineCFunctionPrinters{ldouble}
+
+@MmuxDefineCFunctionPrinters{float32}
+@MmuxDefineCFunctionPrinters{float64}
+@MmuxDefineCFunctionPrinters{float128}
+
+@MmuxDefineCFunctionPrinters{float32x}
+@MmuxDefineCFunctionPrinters{float64x}
+@MmuxDefineCFunctionPrinters{float128x}
+
+@MmuxDefineCFunctionPrinters{decimal32}
+@MmuxDefineCFunctionPrinters{decimal64}
+@MmuxDefineCFunctionPrinters{decimal128}
+
+@MmuxDefineCFunctionPrinters{complexf}
+@MmuxDefineCFunctionPrinters{complexd}
+@MmuxDefineCFunctionPrinters{complexld}
+
+@MmuxDefineCFunctionPrinters{complexf32}
+@MmuxDefineCFunctionPrinters{complexf64}
+@MmuxDefineCFunctionPrinters{complexf128}
+
+@MmuxDefineCFunctionPrinters{complexf32x}
+@MmuxDefineCFunctionPrinters{complexf64x}
+@MmuxDefineCFunctionPrinters{complexf128x}
+
+@MmuxDefineCFunctionPrinters{complexd32}
+@MmuxDefineCFunctionPrinters{complexd64}
+@MmuxDefineCFunctionPrinters{complexd128}
+
+@MmuxDefineCFunctionPrinters{sint8}
+@MmuxDefineCFunctionPrinters{uint8}
+@MmuxDefineCFunctionPrinters{sint16}
+@MmuxDefineCFunctionPrinters{uint16}
+@MmuxDefineCFunctionPrinters{sint32}
+@MmuxDefineCFunctionPrinters{uint32}
+@MmuxDefineCFunctionPrinters{sint64}
+@MmuxDefineCFunctionPrinters{uint64}
+
+@MmuxDefineCFunctionPrinters{ssize}
+@MmuxDefineCFunctionPrinters{usize}
+@MmuxDefineCFunctionPrinters{sintmax}
+@MmuxDefineCFunctionPrinters{uintmax}
+@MmuxDefineCFunctionPrinters{sintptr}
+@MmuxDefineCFunctionPrinters{uintptr}
+@MmuxDefineCFunctionPrinters{ptrdiff}
+@MmuxDefineCFunctionPrinters{mode}
+@MmuxDefineCFunctionPrinters{off}
+@MmuxDefineCFunctionPrinters{pid}
+@MmuxDefineCFunctionPrinters{uid}
+@MmuxDefineCFunctionPrinters{gid}
+@MmuxDefineCFunctionPrinters{wchar}
+@MmuxDefineCFunctionPrinters{wint}
+@MmuxDefineCFunctionPrinters{time}
+@MmuxDefineCFunctionPrinters{socklen}
+@MmuxDefineCFunctionPrinters{rlim}
 
 @c page
 @node complex
