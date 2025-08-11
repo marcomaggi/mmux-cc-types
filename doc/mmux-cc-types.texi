@@ -818,12 +818,12 @@ mmux_ulong_t    D = MMUX_UNSIGNED_LITERAL(123);
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineFlonumLiteralMacro{UPCASESTEM,LOCASESTEM,TYPEDEF,SUFFIX,ARGUMENT,LITERAL_EXAMPLE}
+@macro MmuxDefineFlonumLiteralMacro{UPCASESTEM,LOCASESTEM,TYPEDEF,SUFFIX,ARGUMENT,LITERALEXAMPLE}
 @deffn {Preprocessor Macro} MMUX_\UPCASESTEM\_LITERAL (@var{\ARGUMENT\})
 Expand into a number literal of type @objtype{\TYPEDEF\}, using the suffix @samp{\SUFFIX\}.
 
 @example
-mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERAL_EXAMPLE);
+mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERALEXAMPLE);
 @end example
 @end deffn
 
