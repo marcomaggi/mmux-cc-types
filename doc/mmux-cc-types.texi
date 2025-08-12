@@ -1500,17 +1500,17 @@ Type string printers convert binary representations of C language values to stri
 to print a @objtype{mmux_sint_t} string representation we do:
 
 @example
-mmux_sint_t     value = 123;
-int             required_nbytes;
+auto    value           = mmux_sint_make(123);
+auto    required_nbytes = mmux_sint_sprint_size(value);
 
-required_nbytes = mmux_sint_sprint_size(value);
 if (0 > required_nbytes) @{
   /* error */
 @} else @{
   char    str[required_nbytes];
-  bool    rv;
 
-  rv = mmux_sint_sprint(str, required_nbytes, value);
+  if (mmux_sint_sprint(str, required_nbytes, value)) @{
+    /* error */
+  @}
 @}
 @end example
 
