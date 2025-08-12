@@ -965,7 +965,7 @@ test_sprint_complexd (void)
 static void
 test_sprint_complexld (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZLD
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexld_t	Z = mmux_complexld_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexld_sprint_size(Z);
@@ -989,7 +989,7 @@ test_sprint_complexld (void)
 static void
 test_sprint_complexf32 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZF32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf32_t	Z = mmux_complexf32_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf32_sprint_size(Z);
@@ -1007,7 +1007,7 @@ test_sprint_complexf32 (void)
 static void
 test_sprint_complexf64 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZF64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf64_t	Z = mmux_complexf64_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf64_sprint_size(Z);
@@ -1025,7 +1025,7 @@ test_sprint_complexf64 (void)
 static void
 test_sprint_complexf128 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZF128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf128_t	Z = mmux_complexf128_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf128_sprint_size(Z);
@@ -1043,7 +1043,7 @@ test_sprint_complexf128 (void)
 static void
 test_sprint_complexf32x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZF32Z
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32Z
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf32x_t	Z = mmux_complexf32x_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf32x_sprint_size(Z);
@@ -1061,7 +1061,7 @@ test_sprint_complexf32x (void)
 static void
 test_sprint_complexf64x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZF64Z
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64Z
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf64x_t	Z = mmux_complexf64x_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf64x_sprint_size(Z);
@@ -1079,7 +1079,7 @@ test_sprint_complexf64x (void)
 static void
 test_sprint_complexf128x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZF128Z
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128Z
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexf128x_t	Z = mmux_complexf128x_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexf128x_sprint_size(Z);
@@ -1103,7 +1103,7 @@ test_sprint_complexf128x (void)
 static void
 test_sprint_complexd32 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZD32
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexd32_t	Z = mmux_complexd32_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexd32_sprint_size(Z);
@@ -1121,7 +1121,7 @@ test_sprint_complexd32 (void)
 static void
 test_sprint_complexd64 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZD64
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexd64_t	Z = mmux_complexd64_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexd64_sprint_size(Z);
@@ -1139,7 +1139,7 @@ test_sprint_complexd64 (void)
 static void
 test_sprint_complexd128 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEZD128
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   fprintf(stderr, "running test: %s\n", __func__);
   mmux_complexd128_t	Z = mmux_complexd128_make_rectangular(1.234,5.678);
   mmux_sint_t		required_nbytes = mmux_complexd128_sprint_size(Z);
@@ -1253,37 +1253,37 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_socklen();		}
   if (1) {	test_sprint_rlim();		}
 
-  if (0) {	test_sprint_float();		}
+  if (1) {	test_sprint_float();		}
   if (1) {	test_sprint_double();		}
   if (1) {	test_sprint_ldouble();		}
 
-  if (0) {	test_sprint_float32();		}
-  if (0) {	test_sprint_float64();		}
-  if (0) {	test_sprint_float128();		}
+  if (1) {	test_sprint_float32();		}
+  if (1) {	test_sprint_float64();		}
+  if (1) {	test_sprint_float128();		}
 
-  if (0) {	test_sprint_float32x();		}
-  if (0) {	test_sprint_float64x();		}
-  if (0) {	test_sprint_float128x();	}
+  if (1) {	test_sprint_float32x();		}
+  if (1) {	test_sprint_float64x();		}
+  if (1) {	test_sprint_float128x();	}
 
-  if (0) {	test_sprint_decimal32();	}
-  if (0) {	test_sprint_decimal64();	}
-  if (0) {	test_sprint_decimal128();	}
+  if (1) {	test_sprint_decimal32();	}
+  if (1) {	test_sprint_decimal64();	}
+  if (1) {	test_sprint_decimal128();	}
 
   if (1) {	test_sprint_complexf();		}
   if (1) {	test_sprint_complexd();		}
   if (1) {	test_sprint_complexld();	}
 
-  if (0) {	test_sprint_complexf32();	}
-  if (0) {	test_sprint_complexf64();	}
-  if (0) {	test_sprint_complexf128();	}
+  if (1) {	test_sprint_complexf32();	}
+  if (1) {	test_sprint_complexf64();	}
+  if (1) {	test_sprint_complexf128();	}
 
-  if (0) {	test_sprint_complexf32x();	}
-  if (0) {	test_sprint_complexf64x();	}
-  if (0) {	test_sprint_complexf128x();	}
+  if (1) {	test_sprint_complexf32x();	}
+  if (1) {	test_sprint_complexf64x();	}
+  if (1) {	test_sprint_complexf128x();	}
 
-  if (0) {	test_sprint_complexd32();	}
-  if (0) {	test_sprint_complexd64();	}
-  if (0) {	test_sprint_complexd128();	}
+  if (1) {	test_sprint_complexd32();	}
+  if (1) {	test_sprint_complexd64();	}
+  if (1) {	test_sprint_complexd128();	}
 
   exit(EXIT_SUCCESS);
 }

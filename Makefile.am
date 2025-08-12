@@ -189,6 +189,10 @@ src/%.$(OBJEXT): \
 
 #### TESTS
 
+BUILT_SOURCES	+= $(MMUX_CC_TYPES_BUILT_TEST_SOURCES)
+CLEANFILES	+= $(MMUX_CC_TYPES_BUILT_TEST_SOURCES)
+DISTCLEANFILES	+= $(MMUX_CC_TYPES_BUILT_TEST_SOURCES)
+
 check_PROGRAMS	= \
 	tests/version				\
 	tests/test-complex			\
@@ -196,7 +200,8 @@ check_PROGRAMS	= \
 	tests/test-sign-predicates		\
 	tests/test-arithmetics			\
 	tests/test-bitwise			\
-	tests/test-mathematics
+	tests/test-mathematics			\
+	tests/test-parsers
 
 TESTS				= $(check_PROGRAMS)
 
@@ -225,6 +230,9 @@ tests_test_bitwise_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_mathematics_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_mathematics_LDADD		= $(mmux_cc_types_tests_ldadd)
+
+tests_test_parsers_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_parsers_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"
