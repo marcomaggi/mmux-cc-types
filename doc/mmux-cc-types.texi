@@ -855,10 +855,10 @@ mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERALEXAMPLE);
 The @dfn{maker} macros are used as follows:
 
 @example
-auto    A = mmuc_sint_make(123);
-auto    B = mmuc_uint_make(123);
-auto    C = mmuc_ldouble_make(0.123);
-auto    D = mmuc_mode_make(MMUX_LIBC_O_RDWR);
+auto    A = mmux_sint_make(123);
+auto    B = mmux_uint_make(123);
+auto    C = mmux_ldouble_make(0.123);
+auto    D = mmux_mode_make(MMUX_LIBC_O_RDWR);
 @end example
 
 @noindent
@@ -866,7 +866,7 @@ the macros expand as follows:
 
 @example
 mmux_sint_make(123)       @expansion{} ((mmux_sint_t)(0.123))
-mmux_uint_make(123)       @expansion{} ((mmux_sint_t)(MMUX_UNSIGNED_LITERAL(123)))
+mmux_uint_make(123)       @expansion{} ((mmux_uint_t)(MMUX_UNSIGNED_LITERAL(123)))
 mmux_ldouble_make(0.123)  @expansion{} ((mmux_ldouble_t)(MMUX_LDOUBLE_LITERAL(0.123)))
 @end example
 
@@ -1393,7 +1393,7 @@ the expansion of the preprocessor macro @code{__func__} or something similar.
 @section Parsing string representations of C language types
 
 
-Type parsers convert string representations to C language values; to parse a @objtype{mmuc_sint_t}
+Type parsers convert string representations to C language values; to parse a @objtype{mmux_sint_t}
 representation we do:
 
 @example
