@@ -41,6 +41,22 @@
   "Shell mode custom face used for MMUX CC Types functions.")
 
 
+(defconst mmux-cc-types-known-functions-misc
+  (eval-when-compile
+    (regexp-opt
+     '("mmux_cc_types_init"
+       "mmux_cc_types_version_string"
+       "mmux_cc_types_version_interface_current"
+       "mmux_cc_types_version_interface_revision"
+       "mmux_cc_types_version_interface_age"
+       "mmux_strtod32"
+       "mmux_strtod64"
+       "mmux_strtod128"
+       "mmux_ctype_generic_error"
+       )
+     'symbols)))
+
+
 (defconst mmux-cc-types-known-functions-ctypes
   (eval-when-compile
     (regexp-opt
@@ -342,7 +358,9 @@
   ;;expression between  '\_<\(' and  '\)\_>' so  the SUBEXP  number must  be 1  to match  the actual
   ;;symbol.
   ;;
-  `((,mmux-cc-types-known-functions-ctypes 1 mmux-cc-types-function-face keep)
+  `((,mmux-cc-types-known-functions-misc 1 mmux-cc-types-function-face keep)
+
+    (,mmux-cc-types-known-functions-ctypes 1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-known-functions-pointer 1 mmux-cc-types-function-face keep)
 
     (,mmux-cc-types-known-functions-schar 1 mmux-cc-types-function-face keep)
