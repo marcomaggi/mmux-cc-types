@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-14 14:46:37 marco>
+;; Time-stamp: <2025-08-14 21:35:41 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -32,7 +32,7 @@
 
 ;;; Code:
 
-(setq debug-on-error t)
+;;(setq debug-on-error t)
 
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/arithmetics
@@ -179,6 +179,14 @@
     "mmux_pointer_less_equal"
     "mmux_pointer_min"
     "mmux_pointer_max"
+    "mmux_pointer_sizeof"
+    "mmux_pointer_minimum"
+    "mmux_pointer_maximum"
+    "mmux_pointer_dprintf"
+    "mmux_pointer_fprintf"
+    "mmux_pointer_parse"
+    "mmux_pointer_sprint"
+    "mmux_pointer_sprint_size"
     ))
 
 (defconst mmux-cc-types-font-lock-rex/known-functions-pointer
