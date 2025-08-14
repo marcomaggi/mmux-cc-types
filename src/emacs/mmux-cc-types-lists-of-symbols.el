@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-14 21:35:41 marco>
+;; Time-stamp: <2025-08-14 21:47:58 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -281,10 +281,22 @@
       "sprint"
       "sprint_size"))
 
+  (defconst mmux-cc-types-known-function-names/stringrep/flonum
+    '("set_output_format"
+      "ref_output_format"
+      "save_output_format"))
+
   (defconst mmux-cc-types-known-function-names/miscellaneous
     '("sizeof"
       "minimum"
       "maximum"))
+
+  (defconst mmux-cc-types-known-function-names/complex
+    '("make_rectangular"
+      "real_part"
+      "imag_part"
+      "arg"
+      "conj"))
 
   (defconst mmux-cc-types-known-function-names/integer
     (append mmux-cc-types-known-function-names/arithmetics
@@ -302,6 +314,7 @@
 	    mmux-cc-types-known-function-names/mathematics
 	    mmux-cc-types-known-function-names/mathematics/real
 	    mmux-cc-types-known-function-names/stringrep
+	    mmux-cc-types-known-function-names/stringrep/flonum
 	    mmux-cc-types-known-function-names/miscellaneous))
 
   (defconst mmux-cc-types-known-function-names/complex
@@ -311,7 +324,8 @@
 	    mmux-cc-types-known-function-names/comparison
 	    mmux-cc-types-known-function-names/mathematics
 	    mmux-cc-types-known-function-names/stringrep
-	    mmux-cc-types-known-function-names/miscellaneous)))
+	    mmux-cc-types-known-function-names/miscellaneous
+	    mmux-cc-types-known-function-names/complex)))
 
 (defmacro mmux-cc-type-define-integer-list (STEM)
   "Define the list of functions to highlight for the given type stem."
