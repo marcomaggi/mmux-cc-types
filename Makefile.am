@@ -48,7 +48,11 @@ src/m4/$(am__dirstamp):
 
 if WANT_EMACS
 sharelispdir		= $(datadir)/emacs/site-lisp
-dist_sharelisp_LISP	= src/emacs/mmux-cc-types.el
+dist_sharelisp_LISP	= \
+	src/emacs/mmux-cc-types-lists-of-symbols.el	\
+	src/emacs/mmux-cc-types.el
+
+src/emacs/mmux-cc-types.elc: src/emacs/mmux-cc-types-lists-of-symbols.elc
 endif
 
 
