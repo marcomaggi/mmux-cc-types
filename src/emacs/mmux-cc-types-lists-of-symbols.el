@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-14 21:47:58 marco>
+;; Time-stamp: <2025-08-15 08:48:22 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -272,7 +272,20 @@
       "jn"
       "y0"
       "y1"
-      "yn"))
+      "yn"
+      "constant_E"
+      "constant_LOG2E"
+      "constant_LOG10E"
+      "constant_LN2"
+      "constant_LN10"
+      "constant_PI"
+      "constant_PI_2"
+      "constant_PI_4"
+      "constant_1_PI"
+      "constant_2_PI"
+      "constant_2_SQRTPI"
+      "constant_SQRT2"
+      "constant_SQRT1_2"))
 
   (defconst mmux-cc-types-known-function-names/stringrep
     '("dprintf"
