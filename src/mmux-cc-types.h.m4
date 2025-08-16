@@ -34,52 +34,6 @@
 extern "C" {
 #endif
 
-/* The macro  MMUX_CC_TYPES_UNUSED indicates  that a  function, function  argument or
-   variable may potentially be unused. Usage examples:
-
-   static int unused_function (char arg) MMUX_CC_TYPES_UNUSED;
-   int foo (char unused_argument MMUX_CC_TYPES_UNUSED);
-   int unused_variable MMUX_CC_TYPES_UNUSED;
-*/
-#ifdef __GNUC__
-#  define MMUX_CC_TYPES_UNUSED		__attribute__((__unused__))
-#else
-#  define MMUX_CC_TYPES_UNUSED		/* empty */
-#endif
-
-#ifndef __GNUC__
-#  define __attribute__(...)	/* empty */
-#endif
-
-#ifndef __GNUC__
-#  define __builtin_expect(...)	/* empty */
-#endif
-
-#if defined _WIN32 || defined __CYGWIN__
-#  ifdef BUILDING_DLL
-#    ifdef __GNUC__
-#      define mmux_cc_types_decl		__attribute__((__dllexport__)) extern
-#    else
-#      define mmux_cc_types_decl		__declspec(dllexport) extern
-#    endif
-#  else
-#    ifdef __GNUC__
-#      define mmux_cc_types_decl		__attribute__((__dllimport__)) extern
-#    else
-#      define mmux_cc_types_decl		__declspec(dllimport) extern
-#    endif
-#  endif
-#  define mmux_cc_types_private_decl	extern
-#else
-#  if __GNUC__ >= 4
-#    define mmux_cc_types_decl		__attribute__((__visibility__("default"))) extern
-#    define mmux_cc_types_private_decl	__attribute__((__visibility__("hidden")))  extern
-#  else
-#    define mmux_cc_types_decl		extern
-#    define mmux_cc_types_private_decl	extern
-#  endif
-#endif
-
 
 /** --------------------------------------------------------------------
  ** Headers.
@@ -98,65 +52,73 @@ extern "C" {
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
 #undef  MMUX_SLLONG_LITERAL
-#define MMUX_SLLONG_LITERAL(X)		(X ## LL)
+#define MMUX_SLLONG_LITERAL(X)			(X ## LL)
+#undef  mmux_standard_sllong_literal
+#define mmux_standard_sllong_literal(X)		(X ## LL)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
 #undef  MMUX_ULLONG_LITERAL
-#define MMUX_ULLONG_LITERAL(X)		(X ## ULL)
+#define MMUX_ULLONG_LITERAL(X)			(X ## ULL)
+#undef  mmux_standard_ullong_literal
+#define mmux_standard_ullong_literal(X)		(X ## ULL)
 ]]])
 
 #undef  MMUX_FLOAT_LITERAL
-#define MMUX_FLOAT_LITERAL(X)		(X ## F)
+#define MMUX_FLOAT_LITERAL(X)			(X ## F)
+#undef  mmux_standard_float_literal
+#define mmux_standard_float_literal(X)		(X ## F)
+
+#undef  mmux_standard_double_literal
+#define mmux_standard_double_literal(X)		(X)
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[
 #undef  MMUX_LDOUBLE_LITERAL
-#define MMUX_LDOUBLE_LITERAL(X)		(X ## L)
+#define MMUX_LDOUBLE_LITERAL(X)			(X ## L)
+#undef  mmux_standard_ldouble_literal
+#define mmux_standard_ldouble_literal(X)	(X ## L)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[
 #undef  MMUX_FLOAT32_LITERAL
-#define MMUX_FLOAT32_LITERAL(X)		(X ## f32)
+#define MMUX_FLOAT32_LITERAL(X)			(X ## f32)
+#undef  mmux_standard_float32_literal
+#define mmux_standard_float32_literal(X)	(X ## f32)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[
 #undef  MMUX_FLOAT64_LITERAL
-#define MMUX_FLOAT64_LITERAL(X)		(X ## f64)
+#define MMUX_FLOAT64_LITERAL(X)			(X ## f64)
+#undef  mmux_standard_float64_literal
+#define mmux_standard_float64_literal(X)	(X ## f64)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[
 #undef  MMUX_FLOAT128_LITERAL
-#define MMUX_FLOAT128_LITERAL(X)	(X ## f128)
+#define MMUX_FLOAT128_LITERAL(X)		(X ## f128)
+#undef  mmux_standard_float128_literal
+#define mmux_standard_float128_literal(X)	(X ## f128)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[
 #undef  MMUX_FLOAT32X_LITERAL
-#define MMUX_FLOAT32X_LITERAL(X)	(X ## f32x)
+#define MMUX_FLOAT32X_LITERAL(X)		(X ## f32x)
+#undef  mmux_standard_float32x_literal
+#define mmux_standard_float32x_literal(X)	(X ## f32x)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[
 #undef  MMUX_FLOAT64X_LITERAL
-#define MMUX_FLOAT64X_LITERAL(X)	(X ## f64x)
+#define MMUX_FLOAT64X_LITERAL(X)		(X ## f64x)
+#undef  mmux_standard_float64x_literal
+#define mmux_standard_float64x_literal(X)	(X ## f64x)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[
 #undef  MMUX_FLOAT128X_LITERAL
-#define MMUX_FLOAT128X_LITERAL(X)	(X ## f128x)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-#undef  MMUX_DECIMAL32_LITERAL
-#define MMUX_DECIMAL32_LITERAL(X)	(X ## DF)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-#undef  MMUX_DECIMAL64_LITERAL
-#define MMUX_DECIMAL64_LITERAL(X)	(X ## DD)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-#undef  MMUX_DECIMAL128_LITERAL
-#define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
+#define MMUX_FLOAT128X_LITERAL(X)		(X ## f128x)
+#undef  mmux_standard_float128x_literal
+#define mmux_standard_float128x_literal(X)	(X ## f128x)
 ]]])
 
 
@@ -169,188 +131,648 @@ mmux_cc_types_decl bool mmux_cc_types_init (void)
 
 
 /** --------------------------------------------------------------------
- ** Type definitions.
+ ** Standard C types aliases.
  ** ----------------------------------------------------------------- */
 
-typedef void *				mmux_pointer_t;
-typedef void const *			mmux_pointerc_t;
-typedef char				mmux_char_t;
-typedef signed char			mmux_schar_t;
-typedef unsigned char			mmux_uchar_t;
-typedef signed short int		mmux_sshort_t;
-typedef unsigned short int		mmux_ushort_t;
-typedef signed int			mmux_sint_t;
-typedef unsigned int			mmux_uint_t;
-typedef signed long			mmux_slong_t;
-typedef unsigned long			mmux_ulong_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[typedef signed long long	      mmux_sllong_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[typedef unsigned long long int   mmux_ullong_t;]]])
+typedef void *			mmux_standard_pointer_t;
 
-typedef int8_t				mmux_sint8_t;
-typedef uint8_t				mmux_uint8_t;
-typedef int16_t				mmux_sint16_t;
-typedef uint16_t			mmux_uint16_t;
-typedef int32_t				mmux_sint32_t;
-typedef uint32_t			mmux_uint32_t;
-typedef int64_t				mmux_sint64_t;
-typedef uint64_t			mmux_uint64_t;
+typedef char			mmux_standard_char_t;
+typedef signed char		mmux_standard_schar_t;
+typedef unsigned char		mmux_standard_uchar_t;
 
-typedef mmux_sint8_t			mmux_byte_t;
-typedef mmux_uint8_t			mmux_octet_t;
+typedef signed short int	mmux_standard_sshort_t;
+typedef unsigned short int	mmux_standard_ushort_t;
+typedef signed int		mmux_standard_sint_t;
+typedef unsigned int		mmux_standard_uint_t;
+typedef signed long int		mmux_standard_slong_t;
+typedef unsigned long int	mmux_standard_ulong_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[typedef signed long long int	mmux_standard_sllong_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[typedef unsigned long long int	mmux_standard_ullong_t;]]])
 
-typedef float				mmux_float_t;
-typedef double				mmux_double_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],  [[[typedef long double		mmux_ldouble_t;]]])
+typedef int8_t			mmux_standard_sint8_t;
+typedef uint8_t			mmux_standard_uint8_t;
+typedef int16_t			mmux_standard_sint16_t;
+typedef uint16_t		mmux_standard_uint16_t;
+typedef int32_t			mmux_standard_sint32_t;
+typedef uint32_t		mmux_standard_uint32_t;
+typedef int64_t			mmux_standard_sint64_t;
+typedef uint64_t		mmux_standard_uint64_t;
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],  [[[__extension__ typedef _Float32	mmux_float32_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],  [[[__extension__ typedef _Float64	mmux_float64_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]], [[[__extension__ typedef _Float128	mmux_float128_t;]]])
+typedef mmux_standard_sint8_t	mmux_standard_byte_t;
+typedef mmux_standard_uint8_t	mmux_standard_octet_t;
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]], [[[__extension__ typedef _Float32x	mmux_float32x_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]], [[[__extension__ typedef _Float64x	mmux_float64x_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[__extension__ typedef _Float128x mmux_float128x_t;]]])
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t	mmux_standard_ssize_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_USIZE[[[]]]_t	mmux_standard_usize_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTMAX[[[]]]_t	mmux_standard_sintmax_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTMAX[[[]]]_t	mmux_standard_uintmax_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTPTR[[[]]]_t	mmux_standard_sintptr_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTPTR[[[]]]_t	mmux_standard_uintptr_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_MODE[[[]]]_t	mmux_standard_mode_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_OFF[[[]]]_t	mmux_standard_off_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PID[[[]]]_t	mmux_standard_pid_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UID[[[]]]_t	mmux_standard_uid_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_GID[[[]]]_t	mmux_standard_gid_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t	mmux_standard_ptrdiff_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t	mmux_standard_wchar_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t	mmux_standard_wint_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t	mmux_standard_time_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN[[[]]]_t	mmux_standard_socklen_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t	mmux_standard_rlim_t;
 
-typedef float complex		mmux_complexf_t;
-typedef mmux_float_t		mmux_complexf_part_t;
-typedef double complex		mmux_complexd_t;
-typedef mmux_double_t		mmux_complexd_part_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[
-typedef long double complex	mmux_complexld_t;
-typedef mmux_ldouble_t	mmux_complexld_part_t;
+typedef float			mmux_standard_float_t;
+typedef double			mmux_standard_double_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[typedef long double	mmux_standard_ldouble_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],   [[[__extension__ typedef _Float32	mmux_standard_float32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],   [[[__extension__ typedef _Float64	mmux_standard_float64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],  [[[__extension__ typedef _Float128	mmux_standard_float128_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],  [[[__extension__ typedef _Float32x	mmux_standard_float32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],  [[[__extension__ typedef _Float64x	mmux_standard_float64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]], [[[__extension__ typedef _Float128x	mmux_standard_float128x_t;]]])
+
+typedef float complex		mmux_standard_complexf_t;
+typedef double complex		mmux_standard_complexd_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]], [[[typedef long double complex	mmux_standard_complexld_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]], [[[__extension__ typedef _Float32 complex	mmux_standard_complexf32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]], [[[__extension__ typedef _Float64 complex	mmux_standard_complexf64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__extension__ typedef _Float128 complex	mmux_standard_complexf128_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[__extension__ typedef _Float32x complex	mmux_standard_complexf32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[__extension__ typedef _Float64x complex	mmux_standard_complexf64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__extension__ typedef _Float128x complex	mmux_standard_complexf128x_t;]]])
+
+
+/** --------------------------------------------------------------------
+ ** MMUX CC Types embedded type definitions.
+ ** ----------------------------------------------------------------- */
+
+typedef void *			mmux_pointer_t;
+typedef void const *		mmux_pointerc_t;
+
+/* NOTE  We cannot  declare the  "value" field  as "const"  in the  structures below.
+ * Let's say we declare:
+ *
+ *   typedef struct mmux_sint_t { mmux_standard_sint_t const value; } mmux_sint_t;
+ *
+ * then we define a function like:
+ *
+ *   void
+ *   doit (mmux_sint_t * result_p)
+ *   {
+ *     *result_p = mmux_sint_make(123);
+ *   }
+ *
+ * compiling  the function  fails because  assigning the  variable referenced  by the
+ * pointer "result_p"  would mutate the  immutable field "value".  (Marco  Maggi; Aug
+ * 15, 2025)
+ */
+typedef struct mmux_char_t	{ mmux_standard_char_t		value; }	mmux_char_t;
+typedef struct mmux_schar_t	{ mmux_standard_schar_t		value; }	mmux_schar_t;
+typedef struct mmux_uchar_t	{ mmux_standard_uchar_t		value; }	mmux_uchar_t;
+
+typedef struct mmux_sshort_t	{ mmux_standard_sshort_t	value; }	mmux_sshort_t;
+typedef struct mmux_ushort_t	{ mmux_standard_ushort_t	value; }	mmux_ushort_t;
+typedef struct mmux_sint_t	{ mmux_standard_sint_t		value; }	mmux_sint_t;
+typedef struct mmux_uint_t	{ mmux_standard_uint_t		value; }	mmux_uint_t;
+typedef struct mmux_slong_t	{ mmux_standard_slong_t		value; }	mmux_slong_t;
+typedef struct mmux_ulong_t	{ mmux_standard_ulong_t		value; }	mmux_ulong_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
+typedef struct mmux_sllong_t	{ mmux_standard_sllong_t	value; }	mmux_sllong_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
+typedef struct mmux_ullong_t	{ mmux_standard_ullong_t	value; }	mmux_ullong_t;
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[
-__extension__ typedef _Float32x complex		mmux_complexf32_t;
-typedef mmux_float32_t				mmux_complexf32_part_t;
+typedef struct mmux_sint8_t	{ mmux_standard_sint8_t		value; }	mmux_sint8_t;
+typedef struct mmux_uint8_t	{ mmux_standard_uint8_t		value; }	mmux_uint8_t;
+typedef struct mmux_sint16_t	{ mmux_standard_sint16_t	value; }	mmux_sint16_t;
+typedef struct mmux_uint16_t	{ mmux_standard_uint16_t	value; }	mmux_uint16_t;
+typedef struct mmux_sint32_t	{ mmux_standard_sint32_t	value; }	mmux_sint32_t;
+typedef struct mmux_uint32_t	{ mmux_standard_uint32_t	value; }	mmux_uint32_t;
+typedef struct mmux_sint64_t	{ mmux_standard_sint64_t	value; }	mmux_sint64_t;
+typedef struct mmux_uint64_t	{ mmux_standard_uint64_t	value; }	mmux_uint64_t;
+
+typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
+typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
+
+typedef struct mmux_float_t	{ mmux_standard_float_t		value; }	mmux_float_t;
+typedef struct mmux_double_t	{ mmux_standard_double_t	value; }	mmux_double_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],  [[[
+typedef struct mmux_ldouble_t	{ mmux_standard_ldouble_t	value; }	mmux_ldouble_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[
-__extension__ typedef _Float64x complex		mmux_complexf64_t;
-typedef mmux_float64_t				mmux_complexf64_part_t;
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],   [[[
+typedef struct mmux_float32_t	{ mmux_standard_float32_t	value; }	mmux_float32_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],   [[[
+typedef struct mmux_float64_t	{ mmux_standard_float64_t	value; }	mmux_float64_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],  [[[
+typedef struct mmux_float128_t	{ mmux_standard_float128_t	value; }	mmux_float128_t;
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],  [[[
+typedef struct mmux_float32x_t	{ mmux_standard_float32x_t	value; }	mmux_float32x_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],  [[[
+typedef struct mmux_float64x_t	{ mmux_standard_float64x_t	value; }	mmux_float64x_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]], [[[
+typedef struct mmux_float128x_t	{ mmux_standard_float128x_t	value; }	mmux_float128x_t;
+]]])
+
+/* ------------------------------------------------------------------ */
+
+typedef struct mmux_complexf_t	{ mmux_standard_complexf_t	value; }	mmux_complexf_t;
+typedef struct mmux_complexd_t	{ mmux_standard_complexd_t	value; }	mmux_complexd_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],  [[[
+typedef struct mmux_complexld_t	{ mmux_standard_complexld_t	value; }	mmux_complexld_t;
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]], [[[
+typedef struct mmux_complexf32_t { mmux_standard_complexf32_t	value; }      mmux_complexf32_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]], [[[
+typedef struct mmux_complexf64_t { mmux_standard_complexf64_t	value; }      mmux_complexf64_t;
 ]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[
-__extension__ typedef _Float128 complex		mmux_complexf128_t;
-typedef mmux_float128_t				mmux_complexf128_part_t;
+typedef struct mmux_complexf128_t { mmux_standard_complexf128_t	value; }      mmux_complexf128_t;
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[
-__extension__ typedef _Float32x complex	mmux_complexf32x_t;
-typedef mmux_float32x_t	mmux_complexf32x_part_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[
+typedef struct mmux_complexf32x_t { mmux_standard_complexf32x_t	value; }      mmux_complexf32x_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[
-__extension__ typedef _Float64x complex	mmux_complexf64x_t;
-typedef mmux_float64x_t	mmux_complexf64x_part_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[
+typedef struct mmux_complexf64x_t { mmux_standard_complexf64x_t value; }      mmux_complexf64x_t;
 ]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[
-__extension__ typedef _Float128x complex	mmux_complexf128x_t;
-typedef mmux_float128x_t	mmux_complexf128x_part_t;
+typedef struct mmux_complexf128x_t { mmux_standard_complexf128x_t value; }	mmux_complexf128x_t;
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
+typedef mmux_float_t		mmux_complexf_part_t;
+typedef mmux_double_t		mmux_complexd_part_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],     [[[typedef mmux_ldouble_t	mmux_complexld_part_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],  [[[
-struct mmux_complexd32_tag_t {
-  mmux_decimal32_t		re;
-  mmux_decimal32_t		im;
-};
-typedef struct mmux_complexd32_tag_t mmux_complexd32_t;
-typedef mmux_decimal32_t	mmux_complexd32_part_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],  [[[
-struct mmux_complexd64_tag_t {
-  mmux_decimal64_t		re;
-  mmux_decimal64_t		im;
-};
-typedef struct mmux_complexd64_tag_t mmux_complexd64_t;
-typedef mmux_decimal64_t	mmux_complexd64_part_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]], [[[
-struct mmux_complexd128_tag_t {
-  mmux_decimal128_t	re;
-  mmux_decimal128_t	im;
-};
-typedef struct mmux_complexd128_tag_t mmux_complexd128_t;
-typedef mmux_decimal128_t	mmux_complexd128_part_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],  [[[typedef mmux_float32_t	mmux_complexf32_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],  [[[typedef mmux_float64_t	mmux_complexf64_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]], [[[typedef mmux_float128_t	mmux_complexf128_part_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[typedef mmux_float32x_t	mmux_complexf32x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[typedef mmux_float64x_t	mmux_complexf64x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[typedef mmux_float128x_t	mmux_complexf128x_part_t;]]])
 
 /* ------------------------------------------------------------------ */
 
-m4_dnl $1 - CUSTOM_STEM
-m4_dnl $2 - STANDARD_STEM
-m4_define([[[DEFINE_ALIAS_TYPEDEF]]],[[[typedef mmux_[[[]]]$2[[[]]]_t mmux_[[[]]]$1[[[]]]_t]]])
-
-DEFINE_ALIAS_TYPEDEF([[[ssize]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]]);
-DEFINE_ALIAS_TYPEDEF([[[usize]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]]);
-DEFINE_ALIAS_TYPEDEF([[[sintmax]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]]);
-DEFINE_ALIAS_TYPEDEF([[[uintmax]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]]);
-DEFINE_ALIAS_TYPEDEF([[[sintptr]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]]);
-DEFINE_ALIAS_TYPEDEF([[[uintptr]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]]);
-DEFINE_ALIAS_TYPEDEF([[[mode]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]]);
-DEFINE_ALIAS_TYPEDEF([[[off]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]]);
-DEFINE_ALIAS_TYPEDEF([[[pid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_PID]]]);
-DEFINE_ALIAS_TYPEDEF([[[uid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_UID]]]);
-DEFINE_ALIAS_TYPEDEF([[[gid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_GID]]]);
-DEFINE_ALIAS_TYPEDEF([[[ptrdiff]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]]);
-DEFINE_ALIAS_TYPEDEF([[[wchar]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]]);
-DEFINE_ALIAS_TYPEDEF([[[wint]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]]);
-DEFINE_ALIAS_TYPEDEF([[[time]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]]);
-DEFINE_ALIAS_TYPEDEF([[[socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]]);
-DEFINE_ALIAS_TYPEDEF([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]]);
+typedef struct mmux_ssize_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t;	}     mmux_ssize_t;
+typedef struct mmux_usize_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_USIZE[[[]]]_t;	}     mmux_usize_t;
+typedef struct mmux_sintmax_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTMAX[[[]]]_t;	}     mmux_sintmax_t;
+typedef struct mmux_uintmax_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTMAX[[[]]]_t;	}     mmux_uintmax_t;
+typedef struct mmux_sintptr_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTPTR[[[]]]_t;	}     mmux_sintptr_t;
+typedef struct mmux_uintptr_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTPTR[[[]]]_t;	}     mmux_uintptr_t;
+typedef struct mmux_mode_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_MODE[[[]]]_t;	}     mmux_mode_t;
+typedef struct mmux_off_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_OFF[[[]]]_t;	}     mmux_off_t;
+typedef struct mmux_pid_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PID[[[]]]_t;	}     mmux_pid_t;
+typedef struct mmux_uid_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UID[[[]]]_t;	}     mmux_uid_t;
+typedef struct mmux_gid_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_GID[[[]]]_t;	}     mmux_gid_t;
+typedef struct mmux_ptrdiff_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t;	}     mmux_ptrdiff_t;
+typedef struct mmux_wchar_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t;	}     mmux_wchar_t;
+typedef struct mmux_wint_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t;	}     mmux_wint_t;
+typedef struct mmux_time_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t;	}     mmux_time_t;
+typedef struct mmux_socklen_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN[[[]]]_t;	}     mmux_socklen_t;
+typedef struct mmux_rlim_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t;	}     mmux_rlim_t;
 
 /* ------------------------------------------------------------------ */
 
-typedef mmux_char_t *				mmux_asciip_t;
-typedef mmux_char_t **				mmux_asciipp_t;
-typedef mmux_char_t ***				mmux_asciippp_t;
+typedef char *				mmux_asciip_t;
+typedef char **				mmux_asciipp_t;
+typedef char ***			mmux_asciippp_t;
 
-typedef mmux_char_t *				mmux_asciizp_t;
-typedef mmux_char_t **				mmux_asciizpp_t;
-typedef mmux_char_t ***				mmux_asciizppp_t;
+typedef char *				mmux_asciizp_t;
+typedef char **				mmux_asciizpp_t;
+typedef char ***			mmux_asciizppp_t;
 
-typedef mmux_char_t const *			mmux_asciicp_t;
-typedef mmux_char_t const **			mmux_asciicpp_t;
-typedef mmux_char_t const ***			mmux_asciicppp_t;
+typedef char const *			mmux_asciicp_t;
+typedef char const **			mmux_asciicpp_t;
+typedef char const ***			mmux_asciicppp_t;
 
-typedef mmux_char_t const *			mmux_asciizcp_t;
-typedef mmux_char_t const **			mmux_asciizcpp_t;
-typedef mmux_char_t const ***			mmux_asciizcppp_t;
+typedef char const *			mmux_asciizcp_t;
+typedef char const **			mmux_asciizcpp_t;
+typedef char const ***			mmux_asciizcppp_t;
+
+
+/** --------------------------------------------------------------------
+ ** Makers.
+ ** ----------------------------------------------------------------- */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_pointer_make (void * value)
+{
+  return ((mmux_pointer_t)(value));
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_pointerc_t
+mmux_pointerc_make (void * value)
+{
+  return ((mmux_pointerc_t)(value));
+}
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_char_t
+mmux_char_make (mmux_standard_char_t value)
+{
+  return ((mmux_char_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_schar_t
+mmux_schar_make (mmux_standard_schar_t value)
+{
+  return ((mmux_schar_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uchar_t
+mmux_uchar_make (mmux_standard_uchar_t value)
+{
+  return ((mmux_uchar_t){value});
+}
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_sshort_t
+mmux_sshort_make (mmux_standard_sshort_t value)
+{
+  return ((mmux_sshort_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_ushort_t
+mmux_ushort_make (mmux_standard_ushort_t value)
+{
+  return ((mmux_ushort_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
+mmux_sint_make (mmux_standard_sint_t value)
+{
+  return ((mmux_sint_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uint_t
+mmux_uint_make (mmux_standard_uint_t value)
+{
+  return ((mmux_uint_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_slong_t
+mmux_slong_make (mmux_standard_slong_t value)
+{
+  return ((mmux_slong_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_ulong_t
+mmux_ulong_make (mmux_standard_ulong_t value)
+{
+  return ((mmux_ulong_t){value});
+}
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_sllong_t
+mmux_sllong_make (mmux_standard_sllong_t value)
+{
+  return ((mmux_sllong_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_ullong_t
+mmux_ullong_make (mmux_standard_ullong_t value)
+{
+  return ((mmux_ullong_t){value});
+}]]])
+__attribute__((__const__,__always_inline__)) static inline mmux_sint8_t
+mmux_sint8_make (mmux_standard_sint8_t value)
+{
+  return ((mmux_sint8_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uint8_t
+mmux_uint8_make (mmux_standard_uint8_t value)
+{
+  return ((mmux_uint8_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_sint16_t
+mmux_sint16_make (mmux_standard_sint16_t value)
+{
+  return ((mmux_sint16_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uint16_t
+mmux_uint16_make (mmux_standard_uint16_t value)
+{
+  return ((mmux_uint16_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_sint32_t
+mmux_sint32_make (mmux_standard_sint32_t value)
+{
+  return ((mmux_sint32_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uint32_t
+mmux_uint32_make (mmux_standard_uint32_t value)
+{
+  return ((mmux_uint32_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_sint64_t
+mmux_sint64_make (mmux_standard_sint64_t value)
+{
+  return ((mmux_sint64_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uint64_t
+mmux_uint64_make (mmux_standard_uint64_t value)
+{
+  return ((mmux_uint64_t){value});
+}
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_byte_t
+mmux_byte_make (mmux_standard_byte_t value)
+{
+  return ((mmux_byte_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_octet_t
+mmux_octet_make (mmux_standard_octet_t value)
+{
+  return ((mmux_octet_t){{value}});
+}
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_float_t
+mmux_float_make (mmux_standard_float_t value)
+{
+  return ((mmux_float_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_double_t
+mmux_double_make (mmux_standard_double_t value)
+{
+  return ((mmux_double_t){value});
+}
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_ldouble_t
+mmux_ldouble_make (mmux_standard_ldouble_t value)
+{
+  return ((mmux_ldouble_t){value});
+}
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_float32_t
+mmux_float32_make (mmux_standard_float32_t value)
+{
+  return ((mmux_float32_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_float64_t
+mmux_float64_make (mmux_standard_float64_t value)
+{
+  return ((mmux_float64_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_float128_t
+mmux_float128_make (mmux_standard_float128_t value)
+{
+  return ((mmux_float128_t){value});
+}]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_float32x_t
+mmux_float32x_make (mmux_standard_float32x_t value)
+{
+  return ((mmux_float32x_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_float64x_t
+mmux_float64x_make (mmux_standard_float64x_t value)
+{
+  return ((mmux_float64x_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_float128x_t
+mmux_float128x_make (mmux_standard_float128x_t value)
+{
+  return ((mmux_float128x_t){value});
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_complexf_t
+mmux_complexf_make (mmux_standard_complexf_t value)
+{
+  return ((mmux_complexf_t){value});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_complexd_t
+mmux_complexd_make (mmux_standard_complexd_t value)
+{
+  return ((mmux_complexd_t){value});
+}
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexld_t
+mmux_complexld_make (mmux_standard_complexld_t value)
+{
+  return ((mmux_complexld_t){value});
+}]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf32_t
+mmux_complexf32_make (mmux_standard_complexf32_t value)
+{
+  return ((mmux_complexf32_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf64_t
+mmux_complexf64_make (mmux_standard_complexf64_t value)
+{
+  return ((mmux_complexf64_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf128_t
+mmux_complexf128_make (mmux_standard_complexf128_t value)
+{
+  return ((mmux_complexf128_t){value});
+}]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf32x_t
+mmux_complexf32x_make (mmux_standard_complexf32x_t value)
+{
+  return ((mmux_complexf32x_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf64x_t
+mmux_complexf64x_make (mmux_standard_complexf64x_t value)
+{
+  return ((mmux_complexf64x_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf128x_t
+mmux_complexf128x_make (mmux_standard_complexf128x_t value)
+{
+  return ((mmux_complexf128x_t){value});
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+static inline mmux_complexf_part_t
+mmux_complexf_part_make (mmux_standard_float_t value)
+{
+  return ((mmux_complexf_part_t){value});
+}
+static inline mmux_complexd_part_t
+mmux_complexd_part_make (mmux_standard_double_t value)
+{
+  return ((mmux_complexd_part_t){value});
+}
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexld_part_t
+mmux_complexld_part_make (long double value)
+{
+  return ((mmux_complexld_part_t){value});
+}]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf32_part_t
+mmux_complexf32_part_make (mmux_standard_float32_t value)
+{
+  return ((mmux_complexf32_part_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf64_part_t
+mmux_complexf64_part_make (mmux_standard_float64_t value)
+{
+  return ((mmux_complexf64_part_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf128_part_t
+mmux_complexf128_part_make (mmux_standard_float128_t value)
+{
+  return ((mmux_complexf128_part_t){value});
+}]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf32x_part_t
+mmux_complexf32x_part_make (mmux_standard_float32x_t value)
+{
+  return ((mmux_complexf32x_part_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf64x_part_t
+mmux_complexf64x_part_make (mmux_standard_float64x_t value)
+{
+  return ((mmux_complexf64x_part_t){value});
+}]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__attribute__((__const__,__always_inline__))
+static inline mmux_complexf128x_part_t
+mmux_complexf128x_part_make (mmux_standard_float128x_t value)
+{
+  return ((mmux_complexf128x_part_t){value});
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_ssize_t
+mmux_ssize_make (mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t value)
+{
+  return ((mmux_ssize_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_usize_t
+mmux_usize_make (mmux_standard_usize_t value)
+{
+  return ((mmux_usize_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_sintmax_t
+mmux_sintmax_make (mmux_standard_sintmax_t value)
+{
+  return ((mmux_sintmax_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uintmax_t
+mmux_uintmax_make (mmux_standard_uintmax_t value)
+{
+  return ((mmux_uintmax_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_sintptr_t
+mmux_sintptr_make (mmux_standard_sintptr_t value)
+{
+  return ((mmux_sintptr_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uintptr_t
+mmux_uintptr_make (mmux_standard_uintptr_t value)
+{
+  return ((mmux_uintptr_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_mode_t
+mmux_mode_make (mmux_standard_mode_t value)
+{
+  return ((mmux_mode_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_off_t
+mmux_off_make (mmux_standard_off_t value)
+{
+  return ((mmux_off_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_pid_t
+mmux_pid_make (mmux_standard_pid_t value)
+{
+  return ((mmux_pid_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_uid_t
+mmux_uid_make (mmux_standard_uid_t value)
+{
+  return ((mmux_uid_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_gid_t
+mmux_gid_make (mmux_standard_gid_t value)
+{
+  return ((mmux_gid_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_ptrdiff_t
+mmux_ptrdiff_make (mmux_standard_ptrdiff_t value)
+{
+  return ((mmux_ptrdiff_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_wchar_t
+mmux_wchar_make (mmux_standard_wchar_t value)
+{
+  return ((mmux_wchar_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_wint_t
+mmux_wint_make (mmux_standard_wint_t value)
+{
+  return ((mmux_wint_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_time_t
+mmux_time_make (mmux_standard_time_t value)
+{
+  return ((mmux_time_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_socklen_t
+mmux_socklen_make (mmux_standard_socklen_t value)
+{
+  return ((mmux_socklen_t){{value}});
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_rlim_t
+mmux_rlim_make (mmux_standard_rlim_t value)
+{
+  return ((mmux_rlim_t){{value}});
+}
 
 
 /** --------------------------------------------------------------------
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_types_decl mmux_asciizcp_t	mmux_cc_types_version_string		(void);
-mmux_cc_types_decl mmux_sint_t		mmux_cc_types_version_interface_current	(void);
-mmux_cc_types_decl mmux_sint_t		mmux_cc_types_version_interface_revision(void);
-mmux_cc_types_decl mmux_sint_t		mmux_cc_types_version_interface_age	(void);
+mmux_cc_types_decl char const *	mmux_cc_types_version_string		(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
- ** Prototypes of functions not implemented by the C compiler or the C library.
+ ** Support for _DecimalN.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-mmux_cc_types_decl mmux_decimal32_t mmux_strtod32 (char const * restrict input_string, char ** restrict tailptr)
-  __attribute__((__nonnull__(1,2)));
-mmux_cc_types_decl int mmux_strfromd32 (char * s_value, size_t size, char const * restrict format, mmux_decimal32_t value)
-  __attribute__((__nonnull__(3)));
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-mmux_cc_types_decl mmux_decimal64_t mmux_strtod64 (char const * restrict input_string, char ** restrict tailptr)
-  __attribute__((__nonnull__(1,2)));
-mmux_cc_types_decl int mmux_strfromd64 (char * s_value, size_t size, char const * restrict format, mmux_decimal64_t value)
-  __attribute__((__nonnull__(3)));
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-mmux_cc_types_decl mmux_decimal128_t mmux_strtod128 (char const * restrict input_string, char ** restrict tailptr)
-  __attribute__((__nonnull__(1,2)));
-mmux_cc_types_decl int mmux_strfromd128 (char * s_value, size_t size, char const * restrict format, mmux_decimal128_t value)
-  __attribute__((__nonnull__(3)));
-]]])
+#if ((defined MMUX_CC_TYPES_HAS_DECIMAL32) || \
+     (defined MMUX_CC_TYPES_HAS_DECIMAL64) || \
+     (defined MMUX_CC_TYPES_HAS_DECIMAL128))
+#  include <mmux-cc-types-libdfp.h>
+#endif
 
 
 /** --------------------------------------------------------------------
@@ -385,19 +807,6 @@ DEFINE_PROTOS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
- ** Special parser functions.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_types_decl bool mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
-							    mmux_sintmax_t target_min, mmux_sintmax_t target_max,
-							    char const * target_type_name, char const * who);
-
-mmux_cc_types_decl bool mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
-							      mmux_uintmax_t target_max,
-							      char const * target_type_name, char const * who);
-
-
-/** --------------------------------------------------------------------
  ** Type functions prototypes.
  ** ----------------------------------------------------------------- */
 
@@ -419,7 +828,7 @@ mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, char const * s_valu
 mmux_cc_types_decl bool mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_cc_types_decl int mmux_$1_sprint_size (mmux_$1_t value);
-mmux_cc_types_decl bool mmux_$1_dprintf (mmux_sint_t fd, mmux_$1_t value);
+mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value);
 mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 ]]])
@@ -435,6 +844,9 @@ mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_maximum __attrib
 mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_minimum (void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_maximum (void) __attribute__((__const__));
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -709,53 +1121,55 @@ DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_CC_TYPES_HA
  ** Core arithmetics functions.
  ** ----------------------------------------------------------------- */
 
-__attribute__((__const__)) static inline mmux_pointer_t
+__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
 mmux_pointer_add (mmux_pointer_t op, mmux_ptrdiff_t delta)
 {
-  mmux_uint8_t *	op_octets  = (mmux_uint8_t *)op;
-  mmux_uint8_t *	rop_octets = op_octets + delta;
-  mmux_pointer_t	rop        = (mmux_pointer_t)rop_octets;
+  auto	op_octets  = (mmux_standard_uint8_t *)op;
+  auto	rop_octets = op_octets + delta.value;
+  auto	rop        = mmux_pointer_make(rop_octets);
   return rop;
 }
-__attribute__((__const__)) static inline mmux_ptrdiff_t
+__attribute__((__const__,__always_inline__)) static inline mmux_ptrdiff_t
 mmux_pointer_diff (mmux_pointer_t ptr1, mmux_pointer_t ptr2)
 {
-  mmux_uint8_t *	ptr1_octets  = (mmux_uint8_t *)ptr1;
-  mmux_uint8_t *	ptr2_octets  = (mmux_uint8_t *)ptr2;
-  mmux_ptrdiff_t	delta        = ptr1_octets - ptr2_octets;
+  auto	ptr1_octets  = (mmux_standard_uint8_t *)ptr1;
+  auto	ptr2_octets  = (mmux_standard_uint8_t *)ptr2;
+  auto	delta        = mmux_ptrdiff_make(ptr1_octets - ptr2_octets);
   return delta;
 }
 
+/* ------------------------------------------------------------------ */
+
 m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
 {
-  return A + B;
+  return ((mmux_$1_t){A.value + B.value});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
 {
-  return A - B;
+  return ((mmux_$1_t){A.value - B.value});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
 {
-  return A * B;
+  return ((mmux_$1_t){A.value * B.value});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
 {
-  return A / B;
+  return ((mmux_$1_t){A.value / B.value});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_neg (mmux_$1_t A)
 {
-  return (- A);
+  return ((mmux_$1_t){- A.value});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_inv (mmux_$1_t A)
 {
-  return (((mmux_$1_t)1) / A);
+  return mmux_$1_div((mmux_$1_t){1}, A);
 }
 ]]])]]])
 
@@ -783,10 +1197,6 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
-
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexd]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexld]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
@@ -808,119 +1218,76 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint32]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint64]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint64]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[usize]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ssize]]])
-
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sintmax]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uintmax]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sintptr]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uintptr]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ptrdiff]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[mode]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[off]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[pid]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uid]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[gid]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wchar]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[wint]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[time]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[socklen]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[rlim]]])
-
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_$1_t
+m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	Cre = Are + Bre;
-  mmux_$1_part_t	Cim = Aim + Bim;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
+  return ((mmux_$1_t){{A.value + B.value}});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_sub (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	Cre = Are - Bre;
-  mmux_$1_part_t	Cim = Aim - Bim;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
+  return ((mmux_$1_t){{A.value - B.value}});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_mul (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	Cre = (Are * Bre - Aim * Bim);
-  mmux_$1_part_t	Cim = (Are * Bim + Bre * Aim);
-
-  return mmux_$1_make_rectangular (Cre, Cim);
+  return ((mmux_$1_t){{A.value * B.value}});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
 {
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	Bre = mmux_$1_real_part (B);
-  mmux_$1_part_t	Bim = mmux_$1_imag_part (B);
-  mmux_$1_part_t	D   = Bre * Bre + Bim * Bim;
-  mmux_$1_part_t	Cre = (Are * Bre + Aim * Bim) / D;
-  mmux_$1_part_t	Cim = (Aim * Bre - Are * Bim) / D;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
+  return ((mmux_$1_t){{A.value / B.value}});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_neg (mmux_$1_t A)
 {
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-
-  return mmux_$1_make_rectangular (-Are, -Aim);
+  return ((mmux_$1_t){{- A.value}});
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_inv (mmux_$1_t A)
 {
-  mmux_$1_part_t	Are = mmux_$1_real_part (A);
-  mmux_$1_part_t	Aim = mmux_$1_imag_part (A);
-  mmux_$1_part_t	D   = Are * Are + Aim * Aim;
-  mmux_$1_part_t	Cre = + Are / D;
-  mmux_$1_part_t	Cim = - Aim / D;
-
-  return mmux_$1_make_rectangular (Cre, Cim);
+  return mmux_$1_div((mmux_$1_t){{1}}, A);
 }
 ]]])]]])
 
-DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[usize]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[ssize]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[sintmax]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[uintmax]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[sintptr]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[uintptr]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[ptrdiff]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[mode]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[off]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[pid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_PID]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[uid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_UID]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[gid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_GID]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[wchar]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[wint]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[time]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[rlim]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
 {
-  return A % B;
+  return (mmux_$1_t){A.value % B.value};
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_incr (mmux_$1_t A)
 {
-  return ++A;
+  return (mmux_$1_t){A.value + 1};
 }
-__attribute__((__const__)) static inline mmux_$1_t
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_decr (mmux_$1_t A)
 {
-  return --A;
+  return (mmux_$1_t){A.value - 1};
 }
 ]]])]]])
 
@@ -945,24 +1312,45 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint32]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sint64]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint64]]])
 
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[usize]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ssize]]])
+/* ------------------------------------------------------------------ */
 
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sintmax]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uintmax]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[sintptr]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uintptr]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[ptrdiff]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[mode]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[off]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[pid]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uid]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[gid]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wchar]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[wint]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[time]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[socklen]]])
-DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[rlim]]])
+m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
+{
+  return (mmux_$1_t){{A.value % B.value}};
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_incr (mmux_$1_t A)
+{
+  return (mmux_$1_t){{A.value + 1}};
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_decr (mmux_$1_t A)
+{
+  return (mmux_$1_t){{A.value - 1}};
+}
+]]])]]])
+
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[usize]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[ssize]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[sintmax]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[uintmax]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[sintptr]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[uintptr]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[ptrdiff]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[mode]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[off]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[pid]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[uid]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[gid]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[wchar]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[wint]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[time]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[socklen]]])
+DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[rlim]]])
+
+/* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
@@ -997,6 +1385,26 @@ DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]],	[[[MMUX_CC_TYPE
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_zero		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_one		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_two		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG2E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG10E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LN2		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LN10		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI_2		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI_4		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_1_PI		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_2_PI		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_2_SQRTPI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_SQRT2		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_SQRT1_2		(void) __attribute__((__const__));
+
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_zero	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_one	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_two	(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG10E	(void) __attribute__((__const__));
@@ -1575,89 +1983,6 @@ DEFINE_BITWISE_PROTOS([[[wint]]])
 DEFINE_BITWISE_PROTOS([[[time]]])
 DEFINE_BITWISE_PROTOS([[[socklen]]])
 DEFINE_BITWISE_PROTOS([[[rlim]]])
-
-
-/** --------------------------------------------------------------------
- ** Constructor macros.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)m4_dnl
-m4_define([[[DEFINE_TYPE_MAKER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],m4_dnl
-[[[#define mmux_$1_make(LITERAL)		((mmux_$1_t)$2(LITERAL))]]])]]])
-m4_divert(0)m4_dnl
-
-DEFINE_TYPE_MAKER([[[pointer]]])
-DEFINE_TYPE_MAKER([[[pointerc]]])
-DEFINE_TYPE_MAKER([[[char]]])
-DEFINE_TYPE_MAKER([[[schar]]])
-DEFINE_TYPE_MAKER([[[uchar]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sshort]]])
-DEFINE_TYPE_MAKER([[[ushort]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sint]]])
-DEFINE_TYPE_MAKER([[[uint]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[slong]]])
-DEFINE_TYPE_MAKER([[[ulong]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sllong]]],		[[[MMUX_SLLONG_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
-DEFINE_TYPE_MAKER([[[ullong]]],		[[[MMUX_ULLONG_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_ULLONG]]])
-
-DEFINE_TYPE_MAKER([[[float]]],		[[[MMUX_FLOAT_LITERAL]]])
-DEFINE_TYPE_MAKER([[[double]]])
-DEFINE_TYPE_MAKER([[[ldouble]]],	[[[MMUX_FLOAT_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
-
-DEFINE_TYPE_MAKER([[[float32]]],	[[[MMUX_FLOAT32_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_TYPE_MAKER([[[float64]]],	[[[MMUX_FLOAT64_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_TYPE_MAKER([[[float128]]],	[[[MMUX_FLOAT128_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
-
-DEFINE_TYPE_MAKER([[[float32x]]],	[[[MMUX_FLOAT32X_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_TYPE_MAKER([[[float64x]]],	[[[MMUX_FLOAT64X_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_TYPE_MAKER([[[float128x]]],	[[[MMUX_FLOAT128X_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
-
-DEFINE_TYPE_MAKER([[[decimal32]]],	[[[MMUX_DECIMAL32_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_TYPE_MAKER([[[decimal64]]],	[[[MMUX_DECIMAL64_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_TYPE_MAKER([[[decimal128]]],	[[[MMUX_DECIMAL128_LITERAL]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
-
-DEFINE_TYPE_MAKER([[[sint8]]])
-DEFINE_TYPE_MAKER([[[uint8]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sint16]]])
-DEFINE_TYPE_MAKER([[[uint16]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sint32]]])
-DEFINE_TYPE_MAKER([[[uint32]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sint64]]])
-DEFINE_TYPE_MAKER([[[uint64]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-
-DEFINE_TYPE_MAKER([[[ssize]]])
-DEFINE_TYPE_MAKER([[[usize]]],		[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sintmax]]])
-DEFINE_TYPE_MAKER([[[uintmax]]],	[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[sintptr]]])
-DEFINE_TYPE_MAKER([[[uintptr]]],	[[[MMUX_UNSIGNED_LITERAL]]])
-DEFINE_TYPE_MAKER([[[mode]]])
-DEFINE_TYPE_MAKER([[[off]]])
-DEFINE_TYPE_MAKER([[[pid]]])
-DEFINE_TYPE_MAKER([[[uid]]])
-DEFINE_TYPE_MAKER([[[gid]]])
-DEFINE_TYPE_MAKER([[[ptrdiff]]])
-DEFINE_TYPE_MAKER([[[wchar]]])
-DEFINE_TYPE_MAKER([[[wint]]])
-DEFINE_TYPE_MAKER([[[time]]])
-DEFINE_TYPE_MAKER([[[socklen]]])
-DEFINE_TYPE_MAKER([[[rlim]]])
-
-DEFINE_TYPE_MAKER([[[asciip]]])
-DEFINE_TYPE_MAKER([[[asciipp]]])
-DEFINE_TYPE_MAKER([[[asciippp]]])
-
-DEFINE_TYPE_MAKER([[[asciizp]]])
-DEFINE_TYPE_MAKER([[[asciizpp]]])
-DEFINE_TYPE_MAKER([[[asciizppp]]])
-
-DEFINE_TYPE_MAKER([[[asciicp]]])
-DEFINE_TYPE_MAKER([[[asciicpp]]])
-DEFINE_TYPE_MAKER([[[asciicppp]]])
-
-DEFINE_TYPE_MAKER([[[asciizcp]]])
-DEFINE_TYPE_MAKER([[[asciizcpp]]])
-DEFINE_TYPE_MAKER([[[asciizcppp]]])
 
 
 /** --------------------------------------------------------------------

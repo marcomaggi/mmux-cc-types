@@ -26,6 +26,9 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
+/* NOTE We  do not include  "mmux-cc-types-internals.h" because "libdfp"  messes with
+   the  standard headers.   So  we  duplicate, in  this  file,  definitions from  the
+   internals file; it is ugly, but better for me.  (Marco Maggi; Aug 16, 2025) */
 #include <mmux-cc-types-config.h>
 
 #ifdef HAVE_CONFIG_H
@@ -59,55 +62,12 @@
 #  include <float.h>
 #endif
 
+#include <mmux-cc-types-libdfp.h>
+
 
 /** --------------------------------------------------------------------
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[
-#undef  MMUX_FLOAT32_LITERAL
-#define MMUX_FLOAT32_LITERAL(X)		(X ## f32)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[
-#undef  MMUX_FLOAT64_LITERAL
-#define MMUX_FLOAT64_LITERAL(X)		(X ## f64)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[
-#undef  MMUX_FLOAT128_LITERAL
-#define MMUX_FLOAT128_LITERAL(X)	(X ## f128)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[
-#undef  MMUX_FLOAT32X_LITERAL
-#define MMUX_FLOAT32X_LITERAL(X)	(X ## f32x)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[
-#undef  MMUX_FLOAT64X_LITERAL
-#define MMUX_FLOAT64X_LITERAL(X)	(X ## f64x)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[
-#undef  MMUX_FLOAT128X_LITERAL
-#define MMUX_FLOAT128X_LITERAL(X)	(X ## f128x)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-#undef  MMUX_DECIMAL32_LITERAL
-#define MMUX_DECIMAL32_LITERAL(X)	(X ## DF)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-#undef  MMUX_DECIMAL64_LITERAL
-#define MMUX_DECIMAL64_LITERAL(X)	(X ## DD)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-#undef  MMUX_DECIMAL128_LITERAL
-#define MMUX_DECIMAL128_LITERAL(X)	(X ## DL)
-]]])
 
 /* These, and only these, are already defined in "dfp/math.h". */
 #if 0
@@ -128,91 +88,30 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
 
 
 /** --------------------------------------------------------------------
- ** Type definitions.
- ** ----------------------------------------------------------------- */
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],  [[[__extension__ typedef _Decimal32  mmux_decimal32_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],  [[[__extension__ typedef _Decimal64  mmux_decimal64_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]], [[[__extension__ typedef _Decimal128 mmux_decimal128_t;]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],  [[[
-struct mmux_complexd32_tag_t {
-  mmux_decimal32_t		re;
-  mmux_decimal32_t		im;
-};
-typedef struct mmux_complexd32_tag_t mmux_complexd32_t;
-typedef mmux_decimal32_t	mmux_complexd32_part_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],  [[[
-struct mmux_complexd64_tag_t {
-  mmux_decimal64_t		re;
-  mmux_decimal64_t		im;
-};
-typedef struct mmux_complexd64_tag_t mmux_complexd64_t;
-typedef mmux_decimal64_t	mmux_complexd64_part_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]], [[[
-struct mmux_complexd128_tag_t {
-  mmux_decimal128_t	re;
-  mmux_decimal128_t	im;
-};
-typedef struct mmux_complexd128_tag_t mmux_complexd128_t;
-typedef mmux_decimal128_t	mmux_complexd128_part_t;
-]]])
-
-
-/** --------------------------------------------------------------------
- ** Some complex number type functions: string_is, sizeof, make_rectangular, real part, imag part, abs, arg, conj.
+ ** Some complex number type functions: abs, arg.
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - type stem
-m4_dnl $2 - atan2 function
-m4_dnl $3 - conditional code C preprocessor symbol
-m4_define([[[DEFINE_COMPLEX_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-int
-mmux_$1_sizeof (void)
-{
-  return sizeof(mmux_$1_t);
-}
-__attribute__((__const__)) mmux_$1_t
-mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
-{
-  mmux_$1_t	Z = {
-    .re	= re,
-    .im	= im
-  };
-  return Z;
-}
-__attribute__((__const__)) mmux_$1_part_t
-mmux_$1_real_part (mmux_$1_t Z)
-{
-  return Z.re;
-}
-__attribute__((__const__)) mmux_$1_part_t
-mmux_$1_imag_part (mmux_$1_t Z)
-{
-  return Z.im;
-}
-__attribute__((__const__)) mmux_$1_part_t
+m4_dnl $2 - real part type stem
+m4_dnl $3 - sqrt function
+m4_dnl $4 - atan2 function
+m4_define([[[DEFINE_COMPLEXD_BASIC_FUNCTIONS]]],[[[
+mmux_$1_part_t
 mmux_$1_abs (mmux_$1_t Z)
 {
-  return sqrt(Z.re * Z.re + Z.im * Z.im);
+  return mmux_$2_make($3(Z.value.re * Z.value.re + Z.value.im * Z.value.im));
 }
-__attribute__((__const__)) mmux_$1_part_t
+mmux_$1_part_t
 mmux_$1_arg (mmux_$1_t Z)
 {
-  return $2(Z.im, Z.re);
+  return mmux_$2_make($4(Z.value.im, Z.value.re));
 }
-__attribute__((__const__)) mmux_$1_t
-mmux_$1_conj (mmux_$1_t Z)
-{
-  return mmux_$1_make_rectangular(Z.re, - Z.im);
-}
-]]])]]])
+]]])
 
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd32]]],  [[[atan2d32]]],  [[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd64]]],  [[[atan2d64]]],  [[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_COMPLEX_BASIC_FUNCTIONS([[[complexd128]]], [[[atan2d128]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_COMPLEXD_BASIC_FUNCTIONS([[[complexd32]]],   [[[decimal32]]],   [[[sqrtd32]]],   [[[atan2d32]]])
+DEFINE_COMPLEXD_BASIC_FUNCTIONS([[[complexd64]]],   [[[decimal64]]],   [[[sqrtd64]]],   [[[atan2d64]]])
+DEFINE_COMPLEXD_BASIC_FUNCTIONS([[[complexd128]]],  [[[decimal128]]],  [[[sqrtd128]]],  [[[atan2d128]]])
+
 
 
 /** --------------------------------------------------------------------
@@ -223,17 +122,17 @@ m4_define([[[DEFINE_REAL_DECIMAL_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]]
 __attribute__((__const__)) bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
-  return (FP_ZERO == (fpclassify(X)))? true : false;
+  return (FP_ZERO == (fpclassify(X.value)))? true : false;
 }
 __attribute__((__const__)) bool
 mmux_$1_is_nan (mmux_$1_t X)
 {
-  return (FP_NAN == (fpclassify(X)))? true : false;
+  return (FP_NAN == (fpclassify(X.value)))? true : false;
 }
 __attribute__((__const__)) bool
 mmux_$1_is_infinite (mmux_$1_t X)
 {
-  return (FP_INFINITE == (fpclassify(X)))? true : false;
+  return (FP_INFINITE == (fpclassify(X.value)))? true : false;
 }
 __attribute__((__const__)) bool
 mmux_$1_is_positive (mmux_$1_t X)
@@ -241,13 +140,13 @@ mmux_$1_is_positive (mmux_$1_t X)
   if (mmux_$1_is_nan(X)) {
     return false;
   } else if (mmux_$1_is_zero(X)) {
-    if (signbit(X)) {
+    if (signbit(X.value)) {
       return false;
     } else {
       return true;
     }
   } else {
-    return (((mmux_$1_t)0) < X)? true : false;
+    return (mmux_standard_$1_literal(0.0) < X.value)? true : false;
   }
 }
 __attribute__((__const__)) bool
@@ -256,13 +155,13 @@ mmux_$1_is_negative (mmux_$1_t X)
   if (mmux_$1_is_nan(X)) {
     return false;
   } else if (mmux_$1_is_zero(X)) {
-    if (signbit(X)) {
+    if (signbit(X.value)) {
       return true;
     } else {
       return false;
     }
   } else {
-    return (((mmux_$1_t)0) > X)? true : false;
+    return (mmux_standard_$1_literal(0.0) > X.value)? true : false;
   }
 }
 __attribute__((__const__)) bool
@@ -273,7 +172,7 @@ mmux_$1_is_non_positive (mmux_$1_t X)
   } else if (mmux_$1_is_zero(X)) {
     return true;
   } else {
-    return (((mmux_$1_t)0) > X)? true : false;
+    return (mmux_standard_$1_literal(0.0) > X.value)? true : false;
   }
 }
 __attribute__((__const__)) bool
@@ -284,7 +183,7 @@ mmux_$1_is_non_negative (mmux_$1_t X)
   } else if (mmux_$1_is_zero(X)) {
     return true;
   } else {
-    return (((mmux_$1_t)0) < X)? true : false;
+    return (mmux_standard_$1_literal(0.0) < X.value)? true : false;
   }
 }
 ]]])]]])
@@ -302,9 +201,8 @@ m4_define([[[DEFINE_COMPLEX_DECIMAL_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$3
 __attribute__((__const__)) bool
 mmux_$1_is_zero (mmux_$1_t Z)
 {
-  mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
-
-  return (mmux_$2_is_zero(re) && mmux_$2_is_zero(im))? true : false;
+  return (mmux_$2_is_zero(mmux_$1_real_part(Z)) &&
+	  mmux_$2_is_zero(mmux_$1_imag_part(Z)))? true : false;
 }
 __attribute__((__const__)) bool
 mmux_$1_is_positive (mmux_$1_t Z __attribute__((__unused__)))
@@ -329,16 +227,14 @@ mmux_$1_is_non_negative (mmux_$1_t Z __attribute__((__unused__)))
 __attribute__((__const__)) bool
 mmux_$1_is_nan (mmux_$1_t Z)
 {
-  mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
-
-  return (mmux_$2_is_nan(re) || mmux_$2_is_nan(im))? true : false;
+  return (mmux_$2_is_nan(mmux_$1_real_part(Z)) ||
+	  mmux_$2_is_nan(mmux_$1_imag_part(Z)))? true : false;
 }
 __attribute__((__const__)) bool
 mmux_$1_is_infinite (mmux_$1_t Z)
 {
-  mmux_$1_part_t	re = mmux_$1_real_part(Z), im = mmux_$1_imag_part(Z);
-
-  return (mmux_$2_is_infinite(re) || mmux_$2_is_infinite(im))? true : false;
+  return (mmux_$2_is_infinite(mmux_$1_real_part(Z)) ||
+	  mmux_$2_is_infinite(mmux_$1_imag_part(Z)))? true : false;
 }
 ]]])]]])
 
@@ -355,11 +251,11 @@ DEFINE_COMPLEX_DECIMAL_PREDICATES([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_C
 #define DECL		__attribute__((__const__))
 
 m4_define([[[DEFINE_REAL_DECIMAL_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1 == op2)?              true : false; }
-DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1,op2))? true : false; }
-DECL bool mmux_$1_less          (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1,op2))? true : false; }
-DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1,op2))? true : false; }
-DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1,op2))? true : false; }
+DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1.value == op2.value)?              true : false; }
+DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1.value,op2.value))? true : false; }
+DECL bool mmux_$1_less          (mmux_$1_t op1, mmux_$1_t op2) { return (        isless(op1.value,op2.value))? true : false; }
+DECL bool mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2) { return (isgreaterequal(op1.value,op2.value))? true : false; }
+DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (   islessequal(op1.value,op2.value))? true : false; }
 DECL int
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 {
@@ -382,7 +278,7 @@ DEFINE_REAL_DECIMAL_COMPARISONS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL12
 m4_define([[[DEFINE_COMPLEX_DECIMAL_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool mmux_$1_equal (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return ((op1.re == op2.re) && (op1.im == op2.im))? true : false;
+  return ((op1.value.re == op2.value.re) && (op1.value.im == op2.value.im))? true : false;
 }
 DECL int
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
@@ -418,9 +314,9 @@ DEFINE_COMPLEX_DECIMAL_COMPARISONS([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
-mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return $2(X); }
-mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return $3(X, Y); }
-mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return $4(X, Y); }
+mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return mmux_$1_make($2(X.value)); }
+mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1_make($3(X.value, Y.value)); }
+mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1_make($4(X.value, Y.value)); }
 ]]])]]])
 
 DEFINE_TYPE_DECIMAL_FUNCTIONS_COMPARISON_MORE([[[decimal32]]],	[[[fabsd32]]],[[[fmaxd32]]],[[[fmind32]]], [[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
@@ -439,39 +335,30 @@ m4_define([[[DEFINE_DECIMAL_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3
 __attribute__((__const__)) bool
 mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
 {
-  if (0) { fprintf(stderr, "%s: op1=%Lf op2=%Lf margin=%Lf\n", __func__, (long double)op1, (long double)op2, (long double)margin); }
-  return (mmux_$1_abs(op1 - op2) <= mmux_$1_abs(margin))? true : false;
+  return (mmux_$1_less_equal(mmux_$1_abs(mmux_$1_make(op1.value - op2.value)),
+			     mmux_$1_abs(margin)))? true : false;
 }
 __attribute__((__const__)) bool
 mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
 {
-  return (mmux_$1_abs(op1 - op2) <= (mmux_$1_abs(epsilon) * mmux_$1_max(mmux_$1_abs(op1), mmux_$1_abs(op2))))? true : false;
+  return (mmux_$1_less_equal(mmux_$1_abs(mmux_$1_make(op1.value - op2.value)),
+			     mmux_$1_mul(mmux_$1_abs(epsilon),
+					 mmux_$1_max(mmux_$1_abs(op1),
+						     mmux_$1_abs(op2)))))? true : false;
 }
 bool
 mmux_$2_equal_absmargin (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t margin)
 {
-  mmux_$2_part_t	re1 = mmux_$2_real_part(op1);
-  mmux_$2_part_t	im1 = mmux_$2_imag_part(op1);
-  mmux_$2_part_t	re2 = mmux_$2_real_part(op2);
-  mmux_$2_part_t	im2 = mmux_$2_imag_part(op2);
-  mmux_$2_part_t	ret = mmux_$2_real_part(margin);
-  mmux_$2_part_t	imt = mmux_$2_imag_part(margin);
-
-  if (0) { fprintf(stderr, "%s: re1=%Lf re1=%Lf ret=%Lf\n", __func__, (long double)re1, (long double)re2, (long double)ret); }
-  if (0) { fprintf(stderr, "%s: im1=%Lf im2=%Lf imt=%Lf\n", __func__, (long double)im1, (long double)im2, (long double)imt); }
-  return (mmux_$1_equal_absmargin(re1, re2, ret) && mmux_$1_equal_absmargin(im1, im2, imt))? true : false;
+  return (mmux_$1_equal_absmargin(mmux_$2_real_part(op1), mmux_$2_real_part(op2), mmux_$2_real_part(margin)) &&
+	  mmux_$1_equal_absmargin(mmux_$2_imag_part(op1), mmux_$2_imag_part(op2), mmux_$2_imag_part(margin)))?
+    true : false;
 }
 bool
 mmux_$2_equal_relepsilon (mmux_$2_t op1, mmux_$2_t op2, mmux_$2_t epsilon)
 {
-  mmux_$2_part_t	re1 = mmux_$2_real_part(op1);
-  mmux_$2_part_t	im1 = mmux_$2_imag_part(op1);
-  mmux_$2_part_t	re2 = mmux_$2_real_part(op2);
-  mmux_$2_part_t	im2 = mmux_$2_imag_part(op2);
-  mmux_$2_part_t	ret = mmux_$2_real_part(epsilon);
-  mmux_$2_part_t	imt = mmux_$2_imag_part(epsilon);
-
-  return (mmux_$1_equal_relepsilon(re1, re2, ret) && mmux_$1_equal_relepsilon(im1, im2, imt))? true : false;
+  return (mmux_$1_equal_relepsilon(mmux_$2_real_part(op1), mmux_$2_real_part(op2), mmux_$2_real_part(epsilon)) &&
+	  mmux_$1_equal_relepsilon(mmux_$2_imag_part(op1), mmux_$2_imag_part(op2), mmux_$2_imag_part(epsilon)))?
+    true : false;
 }
 ]]])]]])
 
@@ -490,11 +377,11 @@ m4_dnl $3 - strto function
 m4_dnl $4 - conditional code C preprocessor symbol
 m4_define([[[DEFINE_REAL_DECIMAL_STRFROM_STRTO]]],[[[MMUX_CONDITIONAL_CODE([[[$4]]],[[[
 int
-mmux_$2 (char * s_output_value, size_t size, char const * restrict format, mmux_$1_t input_value)
+mmux_$2 (char * s_output_value, size_t size, char const * restrict format, mmux_standard_$1_t input_value)
 {
   return $2(s_output_value, size, format, input_value);
 }
-mmux_$1_t
+mmux_standard_$1_t
 mmux_$3 (char const * restrict s_input_value, char ** restrict tailptr)
 {
   return $3(s_input_value, tailptr);
@@ -514,17 +401,17 @@ m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITI
 __attribute__((__const__)) mmux_$1_t
 mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
 {
-  return $2(A, B);
+  return mmux_$1_make($2(A.value, B.value));
 }
 __attribute__((__const__)) mmux_$1_t
 mmux_$1_incr (mmux_$1_t A)
 {
-  return A + ((mmux_$1_t)1.0);
+  return mmux_$1_make(A.value + mmux_standard_$1_literal(1.0));
 }
 __attribute__((__const__)) mmux_$1_t
 mmux_$1_decr (mmux_$1_t A)
 {
-  return A - ((mmux_$1_t)1.0);
+  return mmux_$1_make(A.value - mmux_standard_$1_literal(1.0));
 }
 ]]])]]])
 
@@ -537,82 +424,435 @@ DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]], [[[fmodd128]]
  ** Mathematics functions not implemented by libdfp.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-mmux_decimal32_t
-mmux_exp10d32 (mmux_decimal32_t op)
+mmux_standard_decimal32_t
+mmux_exp10d32 (mmux_standard_decimal32_t op)
 {
-  return expd32(op * logd32(MMUX_DECIMAL32_LITERAL(10.0)));
+  return expd32(op * logd32(mmux_standard_decimal32_literal(10.0)));
 }
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-mmux_decimal64_t
-mmux_exp10d64 (mmux_decimal64_t op)
+mmux_standard_decimal64_t
+mmux_exp10d64 (mmux_standard_decimal64_t op)
 {
-  return expd64(op * logd64(MMUX_DECIMAL64_LITERAL(10.0)));
+  return expd64(op * logd64(mmux_standard_decimal64_literal(10.0)));
 }
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-mmux_decimal128_t
-mmux_exp10d128 (mmux_decimal128_t op)
+mmux_standard_decimal128_t
+mmux_exp10d128 (mmux_standard_decimal128_t op)
 {
-  return expd128(op * logd128(MMUX_DECIMAL128_LITERAL(10.0)));
+  return expd128(op * logd128(mmux_standard_decimal128_literal(10.0)));
 }
-]]])
 
 
 /** --------------------------------------------------------------------
  ** Mathematicsl constants.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-__extension__ mmux_decimal128_t mmux_decimal128_constant_E	(void) { return M_Edl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_LOG2E	(void) { return M_LOG2Edl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_LOG10E	(void) { return M_LOG10Edl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_LN2	(void) { return M_LN2dl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_LN10	(void) { return M_LN10dl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_PI	(void) { return M_PIdl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_PI_2	(void) { return M_PI_2dl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_PI_4	(void) { return M_PI_4dl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_1_PI	(void) { return M_1_PIdl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_2_PI	(void) { return M_2_PIdl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_2_SQRTPI (void) { return M_2_SQRTPIdl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_SQRT2	(void) { return M_SQRT2dl; }
-__extension__ mmux_decimal128_t mmux_decimal128_constant_SQRT1_2(void) { return M_SQRT1_2dl; }
-]]])
+/* NOTE By inspecting the header files installed by libdfp: I have seen that only the
+   "dl" constants are defined.  (Marco Maggi; Aug 16, 2025) */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-__extension__ mmux_decimal32_t mmux_decimal32_constant_E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_E(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_LOG2E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LOG2E(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_LOG10E	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LOG10E(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_LN2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LN2(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_LN10	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_LN10(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_PI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_PI(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_PI_2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_PI_2(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_PI_4	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_PI_4(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_1_PI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_1_PI(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_2_PI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_2_PI(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_2_SQRTPI	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_2_SQRTPI(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_SQRT2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_SQRT2(); }
-__extension__ mmux_decimal32_t mmux_decimal32_constant_SQRT1_2	(void) { return (mmux_decimal32_t)mmux_decimal128_constant_SQRT1_2(); }
-]]])
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_E (void)
+{
+  return M_Edl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_LOG2E (void)
+{
+  return M_LOG2Edl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_LOG10E (void)
+{
+  return M_LOG10Edl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_LN2 (void)
+{
+  return M_LN2dl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_LN10 (void)
+{
+  return M_LN10dl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_PI (void)
+{
+  return M_PIdl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_PI_2 (void)
+{
+  return M_PI_2dl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_PI_4 (void)
+{
+  return M_PI_4dl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_1_PI (void)
+{
+  return M_1_PIdl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_2_PI (void)
+{
+  return M_2_PIdl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_2_SQRTPI (void)
+{
+  return M_2_SQRTPIdl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_SQRT2 (void)
+{
+  return M_SQRT2dl;
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_SQRT1_2 (void)
+{
+  return M_SQRT1_2dl;
+}
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-__extension__ mmux_decimal64_t mmux_decimal64_constant_E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_E(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_LOG2E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LOG2E(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_LOG10E	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LOG10E(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_LN2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LN2(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_LN10	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_LN10(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_PI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_PI(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_PI_2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_PI_2(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_PI_4	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_PI_4(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_1_PI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_1_PI(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_2_PI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_2_PI(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_2_SQRTPI	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_2_SQRTPI(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_SQRT2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_SQRT2(); }
-__extension__ mmux_decimal64_t mmux_decimal64_constant_SQRT1_2	(void) { return (mmux_decimal64_t)mmux_decimal128_constant_SQRT1_2(); }
-]]])
+/* ------------------------------------------------------------------ */
+
+mmux_decimal32_t
+mmux_decimal32_constant_E (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_E());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_LOG2E (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_LOG2E());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_LOG10E (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_LOG10E());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_LN2 (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_LN2());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_LN10 (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_LN10());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_PI (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_PI());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_PI_2 (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_PI_2());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_PI_4 (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_PI_4());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_1_PI (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_1_PI());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_2_PI (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_2_PI());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_2_SQRTPI (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_2_SQRTPI());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_SQRT2 (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_SQRT2());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_SQRT1_2 (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_SQRT1_2());
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_E (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_E();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_LOG2E (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LOG2E();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_LOG10E (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LOG10E();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_LN2 (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LN2();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_LN10 (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LN10();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_PI (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_PI();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_PI_2 (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_PI_2();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_PI_4 (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_PI_4();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_1_PI (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_1_PI();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_2_PI (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_2_PI();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_2_SQRTPI (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_2_SQRTPI();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_SQRT2 (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_SQRT2();
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_SQRT1_2 (void)
+{
+  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_SQRT1_2();
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_decimal64_t
+mmux_decimal64_constant_E (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_E());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_LOG2E (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_LOG2E());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_LOG10E (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_LOG10E());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_LN2 (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_LN2());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_LN10 (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_LN10());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_PI (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_PI());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_PI_2 (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_PI_2());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_PI_4 (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_PI_4());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_1_PI (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_1_PI());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_2_PI (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_2_PI());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_2_SQRTPI (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_2_SQRTPI());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_SQRT2 (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_SQRT2());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_SQRT1_2 (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_SQRT1_2());
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_E (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_E();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_LOG2E (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LOG2E();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_LOG10E (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LOG10E();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_LN2 (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LN2();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_LN10 (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LN10();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_PI (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_PI();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_PI_2 (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_PI_2();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_PI_4 (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_PI_4();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_1_PI (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_1_PI();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_2_PI (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_2_PI();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_2_SQRTPI (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_2_SQRTPI();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_SQRT2 (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_SQRT2();
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_SQRT1_2 (void)
+{
+  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_SQRT1_2();
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_decimal128_t
+mmux_decimal128_constant_E (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_E());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_LOG2E (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_LOG2E());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_LOG10E (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_LOG10E());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_LN2 (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_LN2());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_LN10 (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_LN10());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_PI (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_PI());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_PI_2 (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_PI_2());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_PI_4 (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_PI_4());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_1_PI (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_1_PI());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_2_PI (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_2_PI());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_2_SQRTPI (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_2_SQRTPI());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_SQRT2 (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_SQRT2());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_SQRT1_2 (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_SQRT1_2());
+}
 
 
 /** --------------------------------------------------------------------
@@ -629,7 +869,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_UNARY_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return $3(op); }
+mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return mmux_$1_make($3(op.value)); }
 ]]])]]])]]])
 
 m4_dnl $1 - type stem
@@ -640,7 +880,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARY_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return $3(op1, op2); }
+mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return mmux_$1_make($3(op1.value, op2.value)); }
 ]]])]]])]]])
 
 m4_dnl $1 - type stem
@@ -651,7 +891,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARYN_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (int N, mmux_$1_t op) { return $3(N, op); }
+mmux_$1_t mmux_$1_$2 (int N, mmux_$1_t op) { return mmux_$1_make($3(N, op.value)); }
 ]]])]]])]]])
 
 m4_divert(0)m4_dnl

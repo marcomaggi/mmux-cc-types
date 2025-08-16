@@ -105,10 +105,14 @@ install-html-local:
 # without the "-pedantic" flag.
 #
 
-EXTRA_DIST	+= src/mmux-cc-types-libdfp.c.m4
+EXTRA_DIST	+= \
+	src/mmux-cc-types-libdfp.h.m4	\
+	src/mmux-cc-types-libdfp.c.m4
 
 if WANT_LIBDFP
-MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= src/mmux-cc-types-libdfp.c
+MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
+	src/mmux-cc-types-libdfp.h		\
+	src/mmux-cc-types-libdfp.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
@@ -157,6 +161,10 @@ include_HEADERS				= \
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-config.h
 
+if WANT_LIBDFP
+include_HEADERS				+= src/mmux-cc-types-libdfp.h
+endif
+
 lib_LTLIBRARIES			= libmmux-cc-types.la
 libmmux_cc_types_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
 libmmux_cc_types_la_CFLAGS	= $(AM_CFLAGS) $(BASH_CFLAGS)
@@ -174,6 +182,10 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprinters.c
 
+if WANT_LIBDFP
+libmmux_cc_types_la_SOURCES	+= src/mmux-cc-types-libdfp.h
+endif
+
 .PHONY: library
 
 library: libmmux-cc-types.la
@@ -189,6 +201,10 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-generics.h		\
 	src/mmux-cc-types-internals.h		\
 	src/mmux-cc-types-config.h
+
+# if WANT_LIBDFP
+# src/%.$(OBJEXT): src/mmux-cc-types-libdfp.h
+# endif
 
 
 #### TESTS

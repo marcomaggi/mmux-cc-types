@@ -69,29 +69,32 @@ mmux_cc_types_init_parsers_module (void)
  ** Type parsers: signed exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
-bool
-mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_source,
-				    mmux_sintmax_t target_min, mmux_sintmax_t target_max,
-				    char const * target_type_name, char const * caller_name)
+static bool
+mmux_cc_types_parse_signed_integer
+  (mmux_standard_sintmax_t * result_p,	/* Pointer to result variable. */
+   char const * s_source,		/* Pointer to source string. */
+   mmux_standard_sintmax_t target_min,	/* The range minimum value of the integer to parse. */
+   mmux_standard_sintmax_t target_max,	/* The range maximum value of the integer to parse. */
+   char const * target_type_name,	/* Type name to be used for error messages. */
+   char const * caller_name)		/* Caller name to be used for error messages. */
+/* NOTE This function is written assuming that "standard_sintmax" is the widest exact
+   signed integer; this is  no longer the case under C23.  For now  it is what it is.
+   (Marco Maggi; Aug 16, 2025) */
 {
-  mmux_sintmax_t	rv;
-  char const *		s_source_beg;
-  char *		s_source_end	= NULL;
-  int			base            = 0;
-  size_t		len		= strlen(s_source);
+  char const *	s_source_beg;
+  char *	s_source_end	= NULL;
+  int		base            = 0;
+  size_t	len		= strlen(s_source);
 
   if (0 == len) {
     /* Parsing error: empty strings are not valid number representations. */
     goto parsing_error;
-  }
-  if ((! isalnum(s_source[0])) && ('+' != s_source[0]) && ('-' != s_source[0])) {
+  } else if ((! isalnum(s_source[0])) && ('+' != s_source[0]) && ('-' != s_source[0])) {
     /* Parsing error: either the  first character is a sign number or  it is a digit,
        for whatever base  it is selected.  The function  "strtoimax()" accepts spaces
        at the beginning of the source string: we do not want them. */
     goto parsing_error;
-  }
-
-  if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
+  } else if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
     /* String specifications like "0b101100110" are parsed with base 2. */
     s_source_beg = 2 + s_source;
     base         = 2;
@@ -100,37 +103,40 @@ mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_sour
   }
 
   errno = 0;
-  rv = strtoimax(s_source_beg, &s_source_end, base);
+  {
+    mmux_standard_sintmax_t	rv = strtoimax(s_source_beg, &s_source_end, base);
 
-  if ((0 == rv) && (s_source_end == s_source_beg)) {
-    /* Parsing error: the source string does not represent a valid number. */
-    goto parsing_error;
-  } else if (ERANGE == errno) {
-    /* Parsing error: the source string may represet a number, but it is out of range
-       according to the parser function. */
-    goto parsing_error;
-  } else if (len != (size_t)(s_source_end - s_source)) {
-    /* Parsing  error:  there   must  be  no  characters  after   the  number  string
-       representation. */
-    goto parsing_error;
-  } else if ((mmux_sintmax_minimum() != target_min) && (rv < target_min)) {
-    /* Parsing error: the  source string is a fine representable  number according to
-       the  parser  function, but  the  resulting  number  is  out of  the  requested
-       range. */
-    goto parsing_error;
-  } else if ((mmux_sintmax_maximum() != target_max) && (target_max < rv)) {
-    /* Parsing error: the  source string is a fine representable  number according to
-       the  parser  function, but  the  resulting  number  is  out of  the  requested
-       range. */
-    goto parsing_error;
-  } else {
-    /* Success! */
-    *p_dest = rv;
-    return false;
+    if ((0 == rv) && (s_source_end == s_source_beg)) {
+      /* Parsing error: the source string does not represent a valid number. */
+      goto parsing_error;
+    } else if (ERANGE == errno) {
+      /* Parsing error: the source string may represet a number, but it is out of range
+	 according to the parser function. */
+      goto parsing_error;
+    } else if (len != (size_t)(s_source_end - s_source)) {
+      /* Parsing  error:  there   must  be  no  characters  after   the  number  string
+	 representation. */
+      goto parsing_error;
+    } else if ((mmux_standard_sintmax_minimum() != target_min) && (rv < target_min)) {
+      /* Parsing error: the  source string is a fine representable  number according to
+	 the  parser  function, but  the  resulting  number  is  out of  the  requested
+	 range. */
+      goto parsing_error;
+    } else if ((mmux_standard_sintmax_maximum() != target_max) && (target_max < rv)) {
+      /* Parsing error: the  source string is a fine representable  number according to
+	 the  parser  function, but  the  resulting  number  is  out of  the  requested
+	 range. */
+      goto parsing_error;
+    } else {
+      /* Success! */
+      *result_p = rv;
+      return false;
+    }
   }
  parsing_error:
   if (caller_name) {
-    fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n", caller_name, target_type_name, s_source);
+    fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n",
+	    caller_name, target_type_name, s_source);
   }
   errno = 0; /* We consider the error consumed here. */
   return true;
@@ -141,31 +147,31 @@ mmux_cc_types_parse_signed_integer (mmux_sintmax_t * p_dest, char const * s_sour
  ** Type parsers: unsigned exact integers of the widest size.
  ** ----------------------------------------------------------------- */
 
-bool
-mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_source,
-				      mmux_uintmax_t target_max,
-				      char const * target_type_name, char const * caller_name)
+static bool
+mmux_cc_types_parse_unsigned_integer
+  (mmux_standard_uintmax_t * result_p,	/* Pointer to result variable. */
+   char const * s_source,		/* Pointer to source string. */
+   mmux_standard_uintmax_t target_max,	/* The range minimum value of the integer to parse. */
+   char const * target_type_name,	/* Type name to be used for error messages. */
+   char const * caller_name)		/* Caller name to be used for error messages. */
+/* NOTE This function is written assuming that "standard_uintmax" is the widest exact
+   unsigned integer; this is no longer the case under C23.  For now it is what it is.
+   (Marco Maggi; Aug 16, 2025) */
 {
-  mmux_uintmax_t	rv;
-  char const *		s_source_beg;
-  char *		s_source_end	= NULL;
-  int			base            = 0;
-  size_t		len		= strlen(s_source);
-
-  if (0) { fprintf(stderr, "%s: uintmax=%lu, target_max=%lu\n", __func__, mmux_uintmax_maximum(), target_max); }
+  char const *	s_source_beg;
+  char *	s_source_end	= NULL;
+  int		base            = 0;
+  size_t	len		= strlen(s_source);
 
   if (0 == len) {
     /* Parsing error: empty strings are not valid number representations. */
     goto parsing_error;
-  }
-  if ((! isalnum(s_source[0])) && ('+' != s_source[0])) {
+  } else if ((! isalnum(s_source[0])) && ('+' != s_source[0])) {
     /* Parsing error:  either the first character  is a plus  sign number or it  is a
        digit, for whatever  base it is selected.  The  function "strtoimax()" accepts
        spaces at the beginning of the source string: we do not want them. */
     goto parsing_error;
-  }
-
-  if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
+  } else if ((3 <= len) && ('0' == s_source[0]) && ('b' == s_source[1])) {
     /* String specifications like "0b101100110" are parsed with base 2. */
     s_source_beg = 2 + s_source;
     base         = 2;
@@ -174,32 +180,35 @@ mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_so
   }
 
   errno = 0;
-  rv = strtoumax(s_source_beg, &s_source_end, base);
+  {
+    mmux_standard_uintmax_t	rv = strtoumax(s_source_beg, &s_source_end, base);
 
-  if ((0 == rv) && (s_source_end == s_source_beg)) {
-    /* Parsing error: the source string does not represent a valid number. */
-    goto parsing_error;
-  } else if (ERANGE == errno) {
-    /* Parsing error: the source string may represet a number, but it is out of range
-       according to the parser function. */
-    if (0) { fprintf(stderr, "%s: parsing error: out of range, %s\n", __func__, s_source); }
-    goto parsing_error;
-  } else if (len != (size_t)(s_source_end - s_source)) {
-    /* Parsing  error:  there   must  be  no  characters  after   the  number  string
-       representation. */
-    if (0) { fprintf(stderr, "%s: parsing error: additional chars after number\n", __func__); }
-    goto parsing_error;
-  } else if ((mmux_uintmax_maximum() != target_max) && (target_max < rv)) {
-    /* Parsing error: the  source string is a fine representable  number according to
-       the  parser  function, but  the  resulting  number  is  out of  the  requested
-       range. */
-    if (0) { fprintf(stderr, "%s: parsing error: greater than requested maximum\n", __func__); }
-    goto parsing_error;
-  } else {
-    /* Success! */
-    *p_dest = rv;
-    return false;
+    if ((0 == rv) && (s_source_end == s_source_beg)) {
+      /* Parsing error: the source string does not represent a valid number. */
+      goto parsing_error;
+    } else if (ERANGE == errno) {
+      /* Parsing error: the source string may represet a number, but it is out of range
+	 according to the parser function. */
+      if (0) { fprintf(stderr, "%s: parsing error: out of range, %s\n", __func__, s_source); }
+      goto parsing_error;
+    } else if (len != (size_t)(s_source_end - s_source)) {
+      /* Parsing  error:  there   must  be  no  characters  after   the  number  string
+	 representation. */
+      if (0) { fprintf(stderr, "%s: parsing error: additional chars after number\n", __func__); }
+      goto parsing_error;
+    } else if ((mmux_standard_uintmax_maximum() != target_max) && (target_max < rv)) {
+      /* Parsing error: the  source string is a fine representable  number according to
+	 the  parser  function, but  the  resulting  number  is  out of  the  requested
+	 range. */
+      if (0) { fprintf(stderr, "%s: parsing error: greater than requested maximum\n", __func__); }
+      goto parsing_error;
+    } else {
+      /* Success! */
+      *result_p = rv;
+      return false;
+    }
   }
+
  parsing_error:
   if (caller_name) {
     fprintf(stderr, "%s: error: invalid argument, expected \"%s\": \"%s\"\n", caller_name, target_type_name, s_source);
@@ -214,10 +223,10 @@ mmux_cc_types_parse_unsigned_integer (mmux_uintmax_t * p_dest, char const * s_so
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-static bool parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name);
+static bool parse_$1_parentheses_format (mmux_$1_t * result_p, const char * s_arg, const char * caller_name);
 
 bool
-mmux_$1_parse (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
+mmux_$1_parse (mmux_$1_t * result_p, const char * s_arg, const char * caller_name)
 {
   int	len = strlen(s_arg);
 
@@ -226,35 +235,36 @@ mmux_$1_parse (mmux_$1_t * p_value, const char * s_arg, const char * caller_name
       fprintf(stderr, "%s: error: invalid argument, string too long (max 2048 chars): \"%s\"\n", caller_name, s_arg);
     }
     return true;
-  } else {
-    int		rv;
+  } else if (parse_$1_parentheses_format(result_p, s_arg, caller_name)) {
+    /* Parsing as complex number failed.  Try to parse as real number. */
+    mmux_$2_t	op_re;
 
-    rv = parse_$1_parentheses_format(p_value, s_arg, caller_name);
-    if (false == rv) {
-      return rv;
-    } else {
-      mmux_$1_part_t	op_re;
-
-      rv = mmux_$2_parse(&op_re, s_arg, caller_name);
-      if (false == rv) {
-	*p_value = mmux_$1_make_rectangular(op_re, 0.0);
-	return false;
-      } else {
-	if (caller_name) {
-	  fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
-	}
-	return true;
+    if (mmux_$2_parse(&op_re, s_arg, caller_name)) {
+      /* Parsing as real number failed.  Return error. */
+      if (caller_name) {
+	fprintf(stderr, "%s: error: invalid argument, expected complex number: \"%s\"\n", caller_name, s_arg);
       }
+      return true;
+    } else {
+      /* Successfully parsed string as real number. */
+      *result_p = mmux_$1_make_rectangular(op_re, mmux_$2_constant_zero());
+      return false;
     }
+  } else {
+    /* Successfully parsed string as complex number. */
+    return false;
   }
 }
 
 bool
-parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char * caller_name)
-/* Try to parse a complex number in the format: (1.2)+i*(3.4)
-
-   First use  a regular  expression to  extract the real  and imaginary  parts.  Then
-   parse the real part and the imaginary part separately. */
+parse_$1_parentheses_format (mmux_$1_t * result_p, const char * s_arg, const char * caller_name)
+/* Try to parse a complex number in the format:
+ *
+ *   (1.2)+i*(3.4)
+ *
+ * first use  a regular  expression to  extract the real  and imaginary  parts.  Then
+ * parse the real part and the imaginary part separately.
+ */
 {
   mmux_$1_part_t	op_re, op_im;
   int			rv;
@@ -316,7 +326,7 @@ parse_$1_parentheses_format (mmux_$1_t * p_value, const char * s_arg, const char
 
   /* Assemble the complex number. */
   {
-    *p_value = mmux_$1_make_rectangular(op_re, op_im);
+    *result_p = mmux_$1_make_rectangular(op_re, op_im);
     return false;
   }
 }
@@ -345,10 +355,10 @@ DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_
 
 m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * result_p, char const * s_value, char const * caller_name)
 {
-  mmux_$1_t	value;
-  char *	tailptr;
+  mmux_standard_$1_t	value;
+  char *		tailptr;
 
   errno = 0;
   value = $2(s_value, &tailptr);
@@ -359,7 +369,7 @@ mmux_$1_parse (mmux_$1_t * p_value, char const * s_value, char const * caller_na
     errno = 0; /* The error is consumed. */
     return true;
   } else {
-    *p_value = value;
+    *result_p = mmux_$1_make(value);
     return false;
   }
 }
@@ -386,25 +396,29 @@ DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_CC_TYPES_HAS
  ** Type parsers: signed integers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[
+m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * p_dest, char const * s_source, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * result_p, char const * s_source, char const * caller_name)
 {
-  mmux_sintmax_t	value;
-  bool			rv;
+  mmux_standard_sintmax_t	value;
 
-  rv = mmux_cc_types_parse_signed_integer(&value, s_source, mmux_$1_minimum(), mmux_$1_maximum(), "$1", caller_name);
-  if (false == rv) {
-    *p_dest = (mmux_$1_t)value;
+  if (mmux_cc_types_parse_signed_integer(&value, s_source,
+					 (mmux_standard_sintmax_t)mmux_standard_$1_minimum(),
+					 (mmux_standard_sintmax_t)mmux_standard_$1_maximum(),
+					 "$1", caller_name)) {
+    return true;
+  } else {
+    *result_p = mmux_$1_make((mmux_standard_$1_t)value);
+    return false;
   }
-  return rv;
 }
-]]])
+]]])]]])
 
 DEFINE_SIGNED_INTEGER_PARSER([[[schar]]])
 DEFINE_SIGNED_INTEGER_PARSER([[[sshort]]])
 DEFINE_SIGNED_INTEGER_PARSER([[[sint]]])
 DEFINE_SIGNED_INTEGER_PARSER([[[slong]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[sllong]]],	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
 
 DEFINE_SIGNED_INTEGER_PARSER([[[sint8]]])
 DEFINE_SIGNED_INTEGER_PARSER([[[sint16]]])
@@ -413,9 +427,10 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 
 /* ------------------------------------------------------------------ */
 
+#if 0
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
 bool
-mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * caller_name)
+mmux_sllong_parse (mmux_sllong_t * result_p, char const * s_source, char const * caller_name)
 {
   mmux_sllong_t	rv;
   char const *		s_source_beg;
@@ -458,7 +473,7 @@ mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * c
     goto parsing_error;
   } else {
     /* Success! */
-    *p_dest = rv;
+    *result_p = rv;
     return false;
   }
  parsing_error:
@@ -468,26 +483,28 @@ mmux_sllong_parse (mmux_sllong_t * p_dest, char const * s_source, char const * c
   errno = 0; /* We consider the error consumed here. */
   return true;
 }]]])
+#endif
 
 
 /** --------------------------------------------------------------------
  ** Type parsers: unsigned integers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[
+m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
 {
-  mmux_uintmax_t	value;
-  bool			rv;
+  mmux_standard_uintmax_t	value;
 
-  rv = mmux_cc_types_parse_unsigned_integer(&value, s_arg, (mmux_uintmax_t) mmux_$1_maximum(), "$1", caller_name);
-  if (false == rv) {
-    *p_value = (mmux_$1_t)value;
+  if (mmux_cc_types_parse_unsigned_integer(&value, s_arg, (mmux_standard_uintmax_t)mmux_standard_$1_maximum(),
+					   "$1", caller_name)) {
+    return true;
+  } else {
+    *p_value = mmux_$1_make((mmux_standard_$1_t)value);
+    return false;
   }
-  return rv;
 }
-]]])
+]]])]]])
 
 DEFINE_UNSIGNED_INTEGER_PARSER([[[pointer]]])
 
@@ -495,6 +512,7 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uchar]]])
 DEFINE_UNSIGNED_INTEGER_PARSER([[[ushort]]])
 DEFINE_UNSIGNED_INTEGER_PARSER([[[uint]]])
 DEFINE_UNSIGNED_INTEGER_PARSER([[[ulong]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[ullong]]],	[[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
 DEFINE_UNSIGNED_INTEGER_PARSER([[[uint8]]])
 DEFINE_UNSIGNED_INTEGER_PARSER([[[uint16]]])
@@ -503,6 +521,7 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 
 /* ------------------------------------------------------------------ */
 
+#if 0
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
 bool
 mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
@@ -558,6 +577,7 @@ mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * c
   errno = 0; /* We consider the error consumed here. */
   return true;
 }]]])
+#endif
 
 
 /** --------------------------------------------------------------------

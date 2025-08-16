@@ -237,7 +237,7 @@ mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
  ** Type string printers: raw C standard types, signed and unsigned integers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_CORE_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_INTEGER_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 int
 mmux_$1_sprint_size (mmux_$1_t value)
 {
@@ -245,7 +245,7 @@ mmux_$1_sprint_size (mmux_$1_t value)
 
   /* According  to the  documentation,  when the  output  is truncated:  "snprintf()"
      returns the number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = snprintf(NULL, 0, $2, value);
+  required_nbytes = snprintf(NULL, 0, $2, value.value);
   if (0 > required_nbytes) {
     return -1;
   } else {
@@ -260,7 +260,7 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 
   /* According to the  documentation: "snprintf()" writes the  terminating null byte,
      when the output buffer has enough room. */
-  to_be_written_chars = snprintf(strptr, len, $2, value);
+  to_be_written_chars = snprintf(strptr, len, $2, value.value);
   if (len > to_be_written_chars) {
     return false;
   } else {
@@ -268,17 +268,17 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
   }
 }]]])]]])
 
-DEFINE_CORE_SPRINTER([[[char]]],	[[["%c"]]])
-DEFINE_CORE_SPRINTER([[[schar]]],	[[["%hhd"]]])
-DEFINE_CORE_SPRINTER([[[uchar]]],	[[["%hhu"]]])
-DEFINE_CORE_SPRINTER([[[sshort]]],	[[["%hd"]]])
-DEFINE_CORE_SPRINTER([[[ushort]]],	[[["%hu"]]])
-DEFINE_CORE_SPRINTER([[[sint]]],	[[["%d"]]])
-DEFINE_CORE_SPRINTER([[[uint]]],	[[["%u"]]])
-DEFINE_CORE_SPRINTER([[[slong]]],	[[["%ld"]]])
-DEFINE_CORE_SPRINTER([[[ulong]]],	[[["%lu"]]])
-DEFINE_CORE_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[MMUX_CC_TYPES_HAS_SLLONG]]])
-DEFINE_CORE_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_CC_TYPES_HAS_ULLONG]]])
+DEFINE_INTEGER_SPRINTER([[[char]]],	[[["%c"]]])
+DEFINE_INTEGER_SPRINTER([[[schar]]],	[[["%hhd"]]])
+DEFINE_INTEGER_SPRINTER([[[uchar]]],	[[["%hhu"]]])
+DEFINE_INTEGER_SPRINTER([[[sshort]]],	[[["%hd"]]])
+DEFINE_INTEGER_SPRINTER([[[ushort]]],	[[["%hu"]]])
+DEFINE_INTEGER_SPRINTER([[[sint]]],	[[["%d"]]])
+DEFINE_INTEGER_SPRINTER([[[uint]]],	[[["%u"]]])
+DEFINE_INTEGER_SPRINTER([[[slong]]],	[[["%ld"]]])
+DEFINE_INTEGER_SPRINTER([[[ulong]]],	[[["%lu"]]])
+DEFINE_INTEGER_SPRINTER([[[sllong]]],	[[["%lld"]]], [[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_INTEGER_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
 
 /** --------------------------------------------------------------------
@@ -291,18 +291,9 @@ mmux_$1_sprint_size (mmux_$1_t value)
 {
   int		required_nbytes;
 
-  if (0) {
-    fprintf(stderr, "%s: enter %s value=%Lf format=\"%s\"\n",
-	    __func__, "$2",
-	    (long double)value, mmux_cc_types_output_format_$1);
-  }
-
   /* According to the documentation, when the output is truncated: "$2()" returns the
      number of required bytes, EXCLUDING the terminating null byte. */
-  required_nbytes = $2(NULL, 0, mmux_cc_types_output_format_$1, value);
-
-  if (0) { fprintf(stderr, "%s: %s required_nbytes=%d\n", __func__, "$2", required_nbytes); }
-
+  required_nbytes = $2(NULL, 0, mmux_cc_types_output_format_$1, value.value);
   if (0 > required_nbytes) {
     return -1;
   } else {
@@ -315,11 +306,9 @@ mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
   int		to_be_written_chars;
 
-  if (0) { fprintf(stderr, "%s: enter len=%d, value=%Lf\n", __func__, len, (long double)value); }
-
   /* According to the  documentation: "$2()" writes the terminating null  byte if the
      output buffer is sufficiently large. */
-  to_be_written_chars = $2(strptr, len, mmux_cc_types_output_format_$1, value);
+  to_be_written_chars = $2(strptr, len, mmux_cc_types_output_format_$1, value.value);
   if (len > to_be_written_chars) {
     return false;
   } else {
@@ -483,12 +472,12 @@ m4_define([[[DEFINE_TYPEDEF_SPRINTER]]],[[[
 int
 mmux_$1_sprint_size (mmux_$1_t value)
 {
-  return mmux_[[[]]]$2[[[]]]_sprint_size(value);
+  return mmux_[[[]]]$2[[[]]]_sprint_size(mmux_[[[]]]$2[[[]]]_make(value.value));
 }
 bool
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
-  return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, value);
+  return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, mmux_[[[]]]$2[[[]]]_make(value.value));
 }
 ]]])
 
@@ -527,7 +516,7 @@ DEFINE_TYPEDEF_SPRINTER([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 
 m4_define([[[DEFINE_PRINTERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_dprintf (mmux_sint_t fd, mmux_$1_t value)
+mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value)
 {
   int             required_nbytes;
 

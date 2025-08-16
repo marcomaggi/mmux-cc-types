@@ -636,6 +636,66 @@ AC_DEFUN([MMUX_LANG_C23],[
 
 # Synopsis:
 #
+#       MMUX_LANG_GCC23
+#
+# Description:
+#
+#       Define the appropriate flags to use the C23 standard language with GCC "-fplan9-extensions".
+#       Such flags are appended to the current definition of the variable "CC".
+#
+#       This macro is meant to be used as:
+#
+#               AC_LANG([C])
+#               MMUX_LANG_GCC23
+#
+#       If the variable "GCC" is set to "yes": select additional warning flags to be handed to the C
+#       compiler.  Such flags are appended to the  variable MMUX_CFLAGS, which is also configured as
+#       substitution  (and so  it becomes  a Makefile  variable).  We  should use  such variable  to
+#       compile commands as follows, in "Makefile.am":
+#
+#               AM_CFLAGS = $(MMUX_CFLAGS)
+#
+AC_DEFUN([MMUX_LANG_GCC23],[
+  AX_REQUIRE_DEFINED([AX_CHECK_COMPILE_FLAG])
+  AX_REQUIRE_DEFINED([AX_APPEND_COMPILE_FLAGS])
+  AX_REQUIRE_DEFINED([AX_GCC_VERSION])
+  AC_REQUIRE([AX_IS_RELEASE])
+
+  AC_PROG_CC
+  AX_CHECK_COMPILE_FLAG([-std=c23],
+    [AX_APPEND_FLAG([-std=c23], [CC])],
+    [AC_MSG_ERROR([*** Compiler does not support -std=c23])],
+    [-pedantic])
+
+  AX_CHECK_COMPILE_FLAG([-fplan9-extensions],
+    [AX_APPEND_FLAG([-fplan9-extensions], [CC])],
+    [AC_MSG_ERROR([*** Compiler does not support -fplan9-extensions])])
+
+  AS_VAR_IF(GCC,'yes',
+    [AX_GCC_VERSION])
+
+  AC_SUBST([MMUX_CFLAGS])
+  AC_DEFINE([_ISOC11_SOURCE],[1],[Enable the ISO C11 features.])
+
+  # These flags are for every compiler.
+  AS_VAR_IF(ax_is_release,'no',
+    [AX_APPEND_COMPILE_FLAGS([-Wall -Wextra -pedantic], [MMUX_CFLAGS], [-Werror])])
+
+  # These flags are for GCC only.
+  AS_VAR_IF(ax_is_release,'no',
+    [AS_VAR_IF(GCC,'yes',
+      [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
+       AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation], [MMUX_CFLAGS], [-Werror])])])
+
+  # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
+  AC_C_CHAR_UNSIGNED
+
+  MMUX_CC_CHECK_COMMON_HEADERS])
+
+
+# Synopsis:
+#
 #     MMUX_CC_CHECK_COMMON_HEADERS
 #
 # Description:

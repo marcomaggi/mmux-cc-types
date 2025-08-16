@@ -37,8 +37,8 @@
   }
 
 #define DOIT_VALUE(STEM,INPUT_VALUE)	{			\
-    mmux_usize_t	buflen = 4096;				\
-    mmux_char_t		bufptr[buflen];				\
+    int		buflen = 4096;					\
+    char	bufptr[buflen];					\
     mmux_ ## STEM ## _sprint(bufptr, buflen, INPUT_VALUE);	\
     DOIT(STEM,bufptr);						\
   }
