@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-15 08:48:22 marco>
+;; Time-stamp: <2025-08-17 10:29:30 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -300,7 +300,8 @@
       "save_output_format"))
 
   (defconst mmux-cc-types-known-function-names/miscellaneous
-    '("sizeof"
+    '("make"
+      "sizeof"
       "minimum"
       "maximum"))
 
@@ -344,9 +345,12 @@
   "Define the list of functions to highlight for the given type stem."
   (let ((ELISP-LIST-NAME	(intern (format "mmux-cc-types-font-lock-list/known-functions-%s" STEM)))
 	(ELISP-REX-NAME		(intern (format "mmux-cc-types-font-lock-rex/known-functions-%s"  STEM)))
-	(LIST-OF-STRINGS	(mapcar #'(lambda (FUNCNAME)
-					    (format "mmux_%s_%s" STEM FUNCNAME))
-					mmux-cc-types-known-function-names/integer)))
+	(LIST-OF-STRINGS	(append (list (format "mmux_%s" STEM)
+					      (format "mmux_%s_literal" STEM)
+					      (format "mmux_standard_%s_literal" STEM))
+					(mapcar #'(lambda (FUNCNAME)
+						    (format "mmux_%s_%s" STEM FUNCNAME))
+						mmux-cc-types-known-function-names/integer))))
     (let ((OUTPUT-FORM		`(progn
 				   (defconst ,ELISP-LIST-NAME (quote ,LIST-OF-STRINGS))
 				   (defconst ,ELISP-REX-NAME  (regexp-opt ,ELISP-LIST-NAME 'symbols)))))
@@ -357,9 +361,12 @@
   "Define the list of functions to highlight for the given type stem."
   (let ((ELISP-LIST-NAME	(intern (format "mmux-cc-types-font-lock-list/known-functions-%s" STEM)))
 	(ELISP-REX-NAME		(intern (format "mmux-cc-types-font-lock-rex/known-functions-%s"  STEM)))
-	(LIST-OF-STRINGS	(mapcar #'(lambda (FUNCNAME)
-					    (format "mmux_%s_%s" STEM FUNCNAME))
-					mmux-cc-types-known-function-names/flonum)))
+	(LIST-OF-STRINGS	(append (list (format "mmux_%s" STEM)
+					      (format "mmux_%s_literal" STEM)
+					      (format "mmux_standard_%s_literal" STEM))
+					(mapcar #'(lambda (FUNCNAME)
+						    (format "mmux_%s_%s" STEM FUNCNAME))
+						mmux-cc-types-known-function-names/flonum))))
     (let ((OUTPUT-FORM		`(progn
 				   (defconst ,ELISP-LIST-NAME (quote ,LIST-OF-STRINGS))
 				   (defconst ,ELISP-REX-NAME  (regexp-opt ,ELISP-LIST-NAME 'symbols)))))
@@ -370,9 +377,12 @@
   "Define the list of functions to highlight for the given type stem."
   (let ((ELISP-LIST-NAME	(intern (format "mmux-cc-types-font-lock-list/known-functions-%s" STEM)))
 	(ELISP-REX-NAME		(intern (format "mmux-cc-types-font-lock-rex/known-functions-%s"  STEM)))
-	(LIST-OF-STRINGS	(mapcar #'(lambda (FUNCNAME)
-					    (format "mmux_%s_%s" STEM FUNCNAME))
-					mmux-cc-types-known-function-names/complex)))
+	(LIST-OF-STRINGS	(append (list (format "mmux_%s" STEM)
+					      (format "mmux_%s_literal" STEM)
+					      (format "mmux_standard_%s_literal" STEM))
+					(mapcar #'(lambda (FUNCNAME)
+						    (format "mmux_%s_%s" STEM FUNCNAME))
+						mmux-cc-types-known-function-names/complex))))
     (let ((OUTPUT-FORM		`(progn
 				   (defconst ,ELISP-LIST-NAME (quote ,LIST-OF-STRINGS))
 				   (defconst ,ELISP-REX-NAME  (regexp-opt ,ELISP-LIST-NAME 'symbols)))))

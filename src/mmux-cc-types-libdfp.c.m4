@@ -449,6 +449,21 @@ mmux_exp10d128 (mmux_standard_decimal128_t op)
    "dl" constants are defined.  (Marco Maggi; Aug 16, 2025) */
 
 mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_zero (void)
+{
+  return mmux_standard_decimal32_literal(0.0);
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_one (void)
+{
+  return mmux_standard_decimal32_literal(1.0);
+}
+mmux_standard_decimal32_t
+mmux_standard_decimal32_constant_two (void)
+{
+  return mmux_standard_decimal32_literal(2.0);
+}
+mmux_standard_decimal32_t
 mmux_standard_decimal32_constant_E (void)
 {
   return M_Edl;
@@ -516,6 +531,21 @@ mmux_standard_decimal32_constant_SQRT1_2 (void)
 
 /* ------------------------------------------------------------------ */
 
+mmux_decimal32_t
+mmux_decimal32_constant_zero (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_zero());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_one (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_one());
+}
+mmux_decimal32_t
+mmux_decimal32_constant_two (void)
+{
+  return mmux_decimal32_make(mmux_standard_decimal32_constant_two());
+}
 mmux_decimal32_t
 mmux_decimal32_constant_E (void)
 {
@@ -585,6 +615,21 @@ mmux_decimal32_constant_SQRT1_2 (void)
 /* ------------------------------------------------------------------ */
 
 mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_zero (void)
+{
+  return mmux_standard_decimal64_literal(0.0);
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_one (void)
+{
+  return mmux_standard_decimal64_literal(1.0);
+}
+mmux_standard_decimal64_t
+mmux_standard_decimal64_constant_two (void)
+{
+  return mmux_standard_decimal64_literal(2.0);
+}
+mmux_standard_decimal64_t
 mmux_standard_decimal64_constant_E (void)
 {
   return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_E();
@@ -652,6 +697,21 @@ mmux_standard_decimal64_constant_SQRT1_2 (void)
 
 /* ------------------------------------------------------------------ */
 
+mmux_decimal64_t
+mmux_decimal64_constant_zero (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_zero());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_one (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_one());
+}
+mmux_decimal64_t
+mmux_decimal64_constant_two (void)
+{
+  return mmux_decimal64_make(mmux_standard_decimal64_constant_two());
+}
 mmux_decimal64_t
 mmux_decimal64_constant_E (void)
 {
@@ -721,6 +781,21 @@ mmux_decimal64_constant_SQRT1_2 (void)
 /* ------------------------------------------------------------------ */
 
 mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_zero (void)
+{
+  return mmux_standard_decimal128_literal(0.0);
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_one (void)
+{
+  return mmux_standard_decimal128_literal(1.0);
+}
+mmux_standard_decimal128_t
+mmux_standard_decimal128_constant_two (void)
+{
+  return mmux_standard_decimal128_literal(2.0);
+}
+mmux_standard_decimal128_t
 mmux_standard_decimal128_constant_E (void)
 {
   return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_E();
@@ -788,6 +863,21 @@ mmux_standard_decimal128_constant_SQRT1_2 (void)
 
 /* ------------------------------------------------------------------ */
 
+mmux_decimal128_t
+mmux_decimal128_constant_zero (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_zero());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_one (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_one());
+}
+mmux_decimal128_t
+mmux_decimal128_constant_two (void)
+{
+  return mmux_decimal128_make(mmux_standard_decimal128_constant_two());
+}
 mmux_decimal128_t
 mmux_decimal128_constant_E (void)
 {

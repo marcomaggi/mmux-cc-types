@@ -570,7 +570,7 @@ AC_DEFUN([MMUX_LANG_C11],[
     [AS_VAR_IF(GCC,'yes',
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
-       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation], [MMUX_CFLAGS], [-Werror])])])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
 
   # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
   AC_C_CHAR_UNSIGNED
@@ -626,7 +626,7 @@ AC_DEFUN([MMUX_LANG_C23],[
     [AS_VAR_IF(GCC,'yes',
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
-       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation], [MMUX_CFLAGS], [-Werror])])])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
 
   # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
   AC_C_CHAR_UNSIGNED
@@ -686,7 +686,7 @@ AC_DEFUN([MMUX_LANG_GCC23],[
     [AS_VAR_IF(GCC,'yes',
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
-       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation], [MMUX_CFLAGS], [-Werror])])])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
 
   # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
   AC_C_CHAR_UNSIGNED

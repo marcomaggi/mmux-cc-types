@@ -30,24 +30,33 @@
  ** ----------------------------------------------------------------- */
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-#undef  MMUX_DECIMAL32_LITERAL
-#define MMUX_DECIMAL32_LITERAL(X)		(X ## DF)
 #undef  mmux_standard_decimal32_literal
-#define mmux_standard_decimal32_literal(X)	(X ## DF)
+#define mmux_standard_decimal32_literal(VALUE)	(VALUE ## DF)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-#undef  MMUX_DECIMAL64_LITERAL
-#define MMUX_DECIMAL64_LITERAL(X)		(X ## DD)
 #undef  mmux_standard_decimal64_literal
-#define mmux_standard_decimal64_literal(X)	(X ## DD)
+#define mmux_standard_decimal64_literal(VALUE)	(VALUE ## DD)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-#undef  MMUX_DECIMAL128_LITERAL
-#define MMUX_DECIMAL128_LITERAL(X)		(X ## DL)
 #undef  mmux_standard_decimal128_literal
-#define mmux_standard_decimal128_literal(X)	(X ## DL)
+#define mmux_standard_decimal128_literal(VALUE)	(VALUE ## DL)
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],[[[
+#undef  mmux_standard_complexd32_part_literal
+#define mmux_standard_complexd32_part_literal(VALUE)	(mmux_standard_decimal32_literal(VALUE))
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],[[[
+#undef  mmux_standard_complexd64_part_literal
+#define mmux_standard_complexd64_part_literal(VALUE)	(mmux_standard_decimal64_literal(VALUE))
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]],[[[
+#undef  mmux_standard_complexd128_part_literal
+#define mmux_standard_complexd128_part_literal(VALUE)	(mmux_standard_decimal128_literal(VALUE))
 ]]])
 
 
@@ -63,17 +72,24 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],
 [[[__extension__ typedef _Decimal128	mmux_standard_decimal128_t;]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],[[[typedef struct mmux_standard_complexd32_t {
-  __extension__ mmux_standard_decimal32_t	re;
-  __extension__ mmux_standard_decimal32_t	im;
+  mmux_standard_decimal32_t	re;
+  mmux_standard_decimal32_t	im;
 } mmux_standard_complexd32_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],[[[typedef struct mmux_standard_complexd64_t {
-  __extension__ mmux_standard_decimal64_t	re;
-  __extension__ mmux_standard_decimal64_t	im;
+  mmux_standard_decimal64_t	re;
+  mmux_standard_decimal64_t	im;
 } mmux_standard_complexd64_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]],[[[typedef struct mmux_standard_complexd128_t {
-  __extension__ mmux_standard_decimal128_t	re;
-  __extension__ mmux_standard_decimal128_t	im;
+  mmux_standard_decimal128_t	re;
+  mmux_standard_decimal128_t	im;
 } mmux_standard_complexd128_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],
+[[[typedef mmux_standard_decimal32_t		mmux_standard_complexd32_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],
+[[[typedef mmux_standard_decimal64_t		mmux_standard_complexd64_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]],
+[[[typedef mmux_standard_decimal128_t		mmux_standard_complexd128_part_t;]]])
 
 
 /** --------------------------------------------------------------------
@@ -110,66 +126,28 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]], [[[typedef mmux_decim
  ** Makers.
  ** ----------------------------------------------------------------- */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_decimal32_t
-mmux_decimal32_make (mmux_standard_decimal32_t value)
+m4_divert(-1)
+m4_dnl $1 - type stem
+m4_dnl $2 - conditional definition symbol
+m4_define([[[DEFINE_TYPE_MAKERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
+#define mmux_$1(VALUE)		((mmux_$1_t){ .value = (VALUE) })
+#define mmux_$1_literal(VALUE)	((mmux_$1_t){ .value = mmux_standard_$1_literal(VALUE) })
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_make (mmux_standard_$1_t value)
 {
-  return ((mmux_decimal32_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_decimal64_t
-mmux_decimal64_make (mmux_standard_decimal64_t value)
-{
-  return ((mmux_decimal64_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_decimal128_t
-mmux_decimal128_make (mmux_standard_decimal128_t value)
-{
-  return ((mmux_decimal128_t){value});
-}]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexd32_t
-mmux_complexd32_make (mmux_standard_complexd32_t value)
-{
-  return ((mmux_complexd32_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexd64_t
-mmux_complexd64_make (mmux_standard_complexd64_t value)
-{
-  return ((mmux_complexd64_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexd128_t
-mmux_complexd128_make (mmux_standard_complexd128_t value)
-{
-  return ((mmux_complexd128_t){value});
-}]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD32]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexd32_part_t
-mmux_complexd32_part_make (mmux_standard_decimal32_t value)
-{
-  return ((mmux_complexd32_part_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD64]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexd64_part_t
-mmux_complexd64_part_make (mmux_standard_decimal64_t value)
-{
-  return ((mmux_complexd64_part_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXD128]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexd128_part_t
-mmux_complexd128_part_make (mmux_standard_decimal128_t value)
-{
-  return ((mmux_complexd128_part_t){value});
-}]]])
+  return mmux_$1(value);
+}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_TYPE_MAKERS(decimal32,		[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_TYPE_MAKERS(decimal64,		[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
+DEFINE_TYPE_MAKERS(decimal128,		[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_TYPE_MAKERS(complexd32,		[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_TYPE_MAKERS(complexd64,		[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
+DEFINE_TYPE_MAKERS(complexd128,		[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_TYPE_MAKERS(complexd32_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_TYPE_MAKERS(complexd64_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
+DEFINE_TYPE_MAKERS(complexd128_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -217,6 +195,11 @@ __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
 {
   return mmux_$1_make( ((mmux_standard_$1_t){re.value, im.value}) );
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_make_rectangular_literal (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
+{
+  return mmux_$1_make( ((mmux_standard_$1_t){re, im}) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_part_t
 mmux_$1_real_part (mmux_$1_t Z)

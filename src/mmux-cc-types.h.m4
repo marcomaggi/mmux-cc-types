@@ -50,22 +50,82 @@ extern "C" {
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
+#undef  mmux_standard_unsigned_literal
+#define mmux_standard_unsigned_literal(X)	(X ## U)
+
+#undef  mmux_standard_pointer_literal
+#define mmux_standard_pointer_literal(X)	(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_pointerc_literal
+#define mmux_standard_pointerc_literal(X)	(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_char_literal
+#define mmux_standard_char_literal(X)		(X)
+
+#undef  mmux_standard_schar_literal
+#define mmux_standard_schar_literal(X)		(X)
+
+#undef  mmux_standard_uchar_literal
+#define mmux_standard_uchar_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_sshort_literal
+#define mmux_standard_sshort_literal(X)		(X)
+
+#undef  mmux_standard_ushort_literal
+#define mmux_standard_ushort_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_sint_literal
+#define mmux_standard_sint_literal(X)		(X)
+
+#undef  mmux_standard_uint_literal
+#define mmux_standard_uint_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_slong_literal
+#define mmux_standard_slong_literal(X)		(X)
+
+#undef  mmux_standard_ulong_literal
+#define mmux_standard_ulong_literal(X)		(mmux_standard_unsigned_literal(X))
+
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
-#undef  MMUX_SLLONG_LITERAL
-#define MMUX_SLLONG_LITERAL(X)			(X ## LL)
 #undef  mmux_standard_sllong_literal
 #define mmux_standard_sllong_literal(X)		(X ## LL)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
-#undef  MMUX_ULLONG_LITERAL
-#define MMUX_ULLONG_LITERAL(X)			(X ## ULL)
 #undef  mmux_standard_ullong_literal
 #define mmux_standard_ullong_literal(X)		(X ## ULL)
 ]]])
 
-#undef  MMUX_FLOAT_LITERAL
-#define MMUX_FLOAT_LITERAL(X)			(X ## F)
+#undef  mmux_standard_sint8_literal
+#define mmux_standard_sint8_literal(X)		(X)
+
+#undef  mmux_standard_uint8_literal
+#define mmux_standard_uint8_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_sint16_literal
+#define mmux_standard_sint16_literal(X)		(X)
+
+#undef  mmux_standard_uint16_literal
+#define mmux_standard_uint16_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_sint32_literal
+#define mmux_standard_sint32_literal(X)		(X)
+
+#undef  mmux_standard_uint32_literal
+#define mmux_standard_uint32_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_sint64_literal
+#define mmux_standard_sint64_literal(X)		(X)
+
+#undef  mmux_standard_uint64_literal
+#define mmux_standard_uint64_literal(X)		(mmux_standard_unsigned_literal(X))
+
+#undef  mmux_standard_byte_literal
+#define mmux_standard_byte_literal(X)		(X)
+
+#undef  mmux_standard_octet_literal
+#define mmux_standard_octet_literal(X)		(mmux_standard_unsigned_literal(X))
+
 #undef  mmux_standard_float_literal
 #define mmux_standard_float_literal(X)		(X ## F)
 
@@ -73,52 +133,107 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
 #define mmux_standard_double_literal(X)		(X)
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[
-#undef  MMUX_LDOUBLE_LITERAL
-#define MMUX_LDOUBLE_LITERAL(X)			(X ## L)
 #undef  mmux_standard_ldouble_literal
 #define mmux_standard_ldouble_literal(X)	(X ## L)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[
-#undef  MMUX_FLOAT32_LITERAL
-#define MMUX_FLOAT32_LITERAL(X)			(X ## f32)
 #undef  mmux_standard_float32_literal
 #define mmux_standard_float32_literal(X)	(X ## f32)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[
-#undef  MMUX_FLOAT64_LITERAL
-#define MMUX_FLOAT64_LITERAL(X)			(X ## f64)
 #undef  mmux_standard_float64_literal
 #define mmux_standard_float64_literal(X)	(X ## f64)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[
-#undef  MMUX_FLOAT128_LITERAL
-#define MMUX_FLOAT128_LITERAL(X)		(X ## f128)
 #undef  mmux_standard_float128_literal
 #define mmux_standard_float128_literal(X)	(X ## f128)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[
-#undef  MMUX_FLOAT32X_LITERAL
-#define MMUX_FLOAT32X_LITERAL(X)		(X ## f32x)
 #undef  mmux_standard_float32x_literal
 #define mmux_standard_float32x_literal(X)	(X ## f32x)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[
-#undef  MMUX_FLOAT64X_LITERAL
-#define MMUX_FLOAT64X_LITERAL(X)		(X ## f64x)
 #undef  mmux_standard_float64x_literal
 #define mmux_standard_float64x_literal(X)	(X ## f64x)
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[
-#undef  MMUX_FLOAT128X_LITERAL
-#define MMUX_FLOAT128X_LITERAL(X)		(X ## f128x)
 #undef  mmux_standard_float128x_literal
 #define mmux_standard_float128x_literal(X)	(X ## f128x)
+]]])
+
+m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[
+#undef  mmux_standard_$1_literal
+#define mmux_standard_$1_literal(X)		(mmux_standard_[[[]]]$2[[[]]]_literal(X))
+]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ssize,	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(usize,	[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(mode,	[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(off,	[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(pid,	[[[MMUX_CC_TYPES_STEM_ALIAS_PID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uid,	[[[MMUX_CC_TYPES_STEM_ALIAS_UID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(gid,	[[[MMUX_CC_TYPES_STEM_ALIAS_GID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ptrdiff,	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wchar,	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
+
+/* ------------------------------------------------------------------ */
+
+#undef  mmux_standard_complexf_part_literal
+#define mmux_standard_complexf_part_literal(VALUE)	(mmux_standard_float_literal(VALUE))
+
+#undef  mmux_standard_complexd_part_literal
+#define mmux_standard_complexd_part_literal(VALUE)	(mmux_standard_double_literal(VALUE))
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[
+#undef  mmux_standard_complexld_part_literal
+#define mmux_standard_complexld_part_literal(VALUE)	(mmux_standard_ldouble_literal(VALUE))
+]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[
+#undef  mmux_standard_complexf32_part_literal
+#define mmux_standard_complexf32_part_literal(VALUE)	(mmux_standard_float32_literal(VALUE))
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[
+#undef  mmux_standard_complexf64_part_literal
+#define mmux_standard_complexf64_part_literal(VALUE)	(mmux_standard_float64_literal(VALUE))
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[
+#undef  mmux_standard_complexf128_part_literal
+#define mmux_standard_complexf128_part_literal(VALUE)	(mmux_standard_float128_literal(VALUE))
+]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[
+#undef  mmux_standard_complexf32x_part_literal
+#define mmux_standard_complexf32x_part_literal(VALUE)	(mmux_standard_float32x_literal(VALUE))
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[
+#undef  mmux_standard_complexf64x_part_literal
+#define mmux_standard_complexf64x_part_literal(VALUE)	(mmux_standard_float64x_literal(VALUE))
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[
+#undef  mmux_standard_complexf128x_part_literal
+#define mmux_standard_complexf128x_part_literal(VALUE)	(mmux_standard_float128x_literal(VALUE))
 ]]])
 
 
@@ -202,6 +317,25 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__extension__ typed
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[__extension__ typedef _Float32x complex	mmux_standard_complexf32x_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[__extension__ typedef _Float64x complex	mmux_standard_complexf64x_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__extension__ typedef _Float128x complex	mmux_standard_complexf128x_t;]]])
+
+typedef mmux_standard_float_t		mmux_standard_complexf_part_t;
+typedef mmux_standard_double_t		mmux_standard_complexd_part_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],
+[[[typedef mmux_standard_ldouble_t	mmux_standard_complexld_part_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],
+[[[typedef mmux_standard_float32_t	mmux_standard_complexf32_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],
+[[[typedef mmux_standard_float64_t	mmux_standard_complexf64_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],
+[[[typedef mmux_standard_float128_t	mmux_standard_complexf128_part_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],
+[[[typedef mmux_standard_float32x_t	mmux_standard_complexf32x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],
+[[[typedef mmux_standard_float64x_t	mmux_standard_complexf64x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],
+[[[typedef mmux_standard_float128x_t	mmux_standard_complexf128x_part_t;]]])
 
 
 /** --------------------------------------------------------------------
@@ -366,11 +500,18 @@ typedef char const ***			mmux_asciizcppp_t;
  ** Makers.
  ** ----------------------------------------------------------------- */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+#define mmux_pointer(VALUE)		((mmux_pointer_t)(VALUE))
+#define mmux_pointerc(VALUE)		((mmux_pointerc_t)(VALUE))
+#define mmux_pointer_literal(VALUE)	((mmux_pointer_t)(mmux_standard_pointer_literal(VALUE)))
+#define mmux_pointerc_literal(VALUE)	((mmux_pointerc_t)(mmux_standard_pointerc_literal(VALUE)))
+
+__attribute__((__const__,__always_inline__))
+static inline mmux_pointer_t
 mmux_pointer_make (void * value)
 {
-  return ((mmux_pointer_t)(value));
+  return mmux_pointer(value);
 }
+
 __attribute__((__const__,__always_inline__)) static inline mmux_pointerc_t
 mmux_pointerc_make (void * value)
 {
@@ -379,379 +520,84 @@ mmux_pointerc_make (void * value)
 
 /* ------------------------------------------------------------------ */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_char_t
-mmux_char_make (mmux_standard_char_t value)
+m4_divert(-1)
+m4_dnl $1 - type stem
+m4_dnl $2 - conditional definition symbol
+m4_define([[[DEFINE_TYPE_MAKERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
+#define mmux_$1(VALUE)		((mmux_$1_t){ .value = VALUE })
+#define mmux_$1_literal(VALUE)	((mmux_$1_t){ .value = mmux_standard_$1_literal(VALUE) })
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_make (mmux_standard_$1_t value)
 {
-  return ((mmux_char_t){value});
+  return mmux_$1(value);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_schar_t
-mmux_schar_make (mmux_standard_schar_t value)
-{
-  return ((mmux_schar_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uchar_t
-mmux_uchar_make (mmux_standard_uchar_t value)
-{
-  return ((mmux_uchar_t){value});
-}
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__,__always_inline__)) static inline mmux_sshort_t
-mmux_sshort_make (mmux_standard_sshort_t value)
-{
-  return ((mmux_sshort_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_ushort_t
-mmux_ushort_make (mmux_standard_ushort_t value)
-{
-  return ((mmux_ushort_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
-mmux_sint_make (mmux_standard_sint_t value)
-{
-  return ((mmux_sint_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uint_t
-mmux_uint_make (mmux_standard_uint_t value)
-{
-  return ((mmux_uint_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_slong_t
-mmux_slong_make (mmux_standard_slong_t value)
-{
-  return ((mmux_slong_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_ulong_t
-mmux_ulong_make (mmux_standard_ulong_t value)
-{
-  return ((mmux_ulong_t){value});
-}
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_sllong_t
-mmux_sllong_make (mmux_standard_sllong_t value)
-{
-  return ((mmux_sllong_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_ullong_t
-mmux_ullong_make (mmux_standard_ullong_t value)
-{
-  return ((mmux_ullong_t){value});
-}]]])
-__attribute__((__const__,__always_inline__)) static inline mmux_sint8_t
-mmux_sint8_make (mmux_standard_sint8_t value)
-{
-  return ((mmux_sint8_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uint8_t
-mmux_uint8_make (mmux_standard_uint8_t value)
-{
-  return ((mmux_uint8_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_sint16_t
-mmux_sint16_make (mmux_standard_sint16_t value)
-{
-  return ((mmux_sint16_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uint16_t
-mmux_uint16_make (mmux_standard_uint16_t value)
-{
-  return ((mmux_uint16_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_sint32_t
-mmux_sint32_make (mmux_standard_sint32_t value)
-{
-  return ((mmux_sint32_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uint32_t
-mmux_uint32_make (mmux_standard_uint32_t value)
-{
-  return ((mmux_uint32_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_sint64_t
-mmux_sint64_make (mmux_standard_sint64_t value)
-{
-  return ((mmux_sint64_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uint64_t
-mmux_uint64_make (mmux_standard_uint64_t value)
-{
-  return ((mmux_uint64_t){value});
-}
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__,__always_inline__)) static inline mmux_byte_t
-mmux_byte_make (mmux_standard_byte_t value)
-{
-  return ((mmux_byte_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_octet_t
-mmux_octet_make (mmux_standard_octet_t value)
-{
-  return ((mmux_octet_t){{value}});
-}
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__,__always_inline__)) static inline mmux_float_t
-mmux_float_make (mmux_standard_float_t value)
-{
-  return ((mmux_float_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_double_t
-mmux_double_make (mmux_standard_double_t value)
-{
-  return ((mmux_double_t){value});
-}
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_ldouble_t
-mmux_ldouble_make (mmux_standard_ldouble_t value)
-{
-  return ((mmux_ldouble_t){value});
-}
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_float32_t
-mmux_float32_make (mmux_standard_float32_t value)
-{
-  return ((mmux_float32_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_float64_t
-mmux_float64_make (mmux_standard_float64_t value)
-{
-  return ((mmux_float64_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_float128_t
-mmux_float128_make (mmux_standard_float128_t value)
-{
-  return ((mmux_float128_t){value});
-}]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_float32x_t
-mmux_float32x_make (mmux_standard_float32x_t value)
-{
-  return ((mmux_float32x_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_float64x_t
-mmux_float64x_make (mmux_standard_float64x_t value)
-{
-  return ((mmux_float64x_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_float128x_t
-mmux_float128x_make (mmux_standard_float128x_t value)
-{
-  return ((mmux_float128x_t){value});
-}]]])
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__,__always_inline__)) static inline mmux_complexf_t
-mmux_complexf_make (mmux_standard_complexf_t value)
-{
-  return ((mmux_complexf_t){value});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_complexd_t
-mmux_complexd_make (mmux_standard_complexd_t value)
-{
-  return ((mmux_complexd_t){value});
-}
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexld_t
-mmux_complexld_make (mmux_standard_complexld_t value)
-{
-  return ((mmux_complexld_t){value});
-}]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf32_t
-mmux_complexf32_make (mmux_standard_complexf32_t value)
-{
-  return ((mmux_complexf32_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf64_t
-mmux_complexf64_make (mmux_standard_complexf64_t value)
-{
-  return ((mmux_complexf64_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf128_t
-mmux_complexf128_make (mmux_standard_complexf128_t value)
-{
-  return ((mmux_complexf128_t){value});
-}]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf32x_t
-mmux_complexf32x_make (mmux_standard_complexf32x_t value)
-{
-  return ((mmux_complexf32x_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf64x_t
-mmux_complexf64x_make (mmux_standard_complexf64x_t value)
-{
-  return ((mmux_complexf64x_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf128x_t
-mmux_complexf128x_make (mmux_standard_complexf128x_t value)
-{
-  return ((mmux_complexf128x_t){value});
-}]]])
-
-/* ------------------------------------------------------------------ */
-
-static inline mmux_complexf_part_t
-mmux_complexf_part_make (mmux_standard_float_t value)
-{
-  return ((mmux_complexf_part_t){value});
-}
-static inline mmux_complexd_part_t
-mmux_complexd_part_make (mmux_standard_double_t value)
-{
-  return ((mmux_complexd_part_t){value});
-}
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexld_part_t
-mmux_complexld_part_make (long double value)
-{
-  return ((mmux_complexld_part_t){value});
-}]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf32_part_t
-mmux_complexf32_part_make (mmux_standard_float32_t value)
-{
-  return ((mmux_complexf32_part_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf64_part_t
-mmux_complexf64_part_make (mmux_standard_float64_t value)
-{
-  return ((mmux_complexf64_part_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf128_part_t
-mmux_complexf128_part_make (mmux_standard_float128_t value)
-{
-  return ((mmux_complexf128_part_t){value});
-}]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf32x_part_t
-mmux_complexf32x_part_make (mmux_standard_float32x_t value)
-{
-  return ((mmux_complexf32x_part_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf64x_part_t
-mmux_complexf64x_part_make (mmux_standard_float64x_t value)
-{
-  return ((mmux_complexf64x_part_t){value});
-}]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__attribute__((__const__,__always_inline__))
-static inline mmux_complexf128x_part_t
-mmux_complexf128x_part_make (mmux_standard_float128x_t value)
-{
-  return ((mmux_complexf128x_part_t){value});
-}]]])
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__,__always_inline__)) static inline mmux_ssize_t
-mmux_ssize_make (mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t value)
-{
-  return ((mmux_ssize_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_usize_t
-mmux_usize_make (mmux_standard_usize_t value)
-{
-  return ((mmux_usize_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_sintmax_t
-mmux_sintmax_make (mmux_standard_sintmax_t value)
-{
-  return ((mmux_sintmax_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uintmax_t
-mmux_uintmax_make (mmux_standard_uintmax_t value)
-{
-  return ((mmux_uintmax_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_sintptr_t
-mmux_sintptr_make (mmux_standard_sintptr_t value)
-{
-  return ((mmux_sintptr_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uintptr_t
-mmux_uintptr_make (mmux_standard_uintptr_t value)
-{
-  return ((mmux_uintptr_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_mode_t
-mmux_mode_make (mmux_standard_mode_t value)
-{
-  return ((mmux_mode_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_off_t
-mmux_off_make (mmux_standard_off_t value)
-{
-  return ((mmux_off_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_pid_t
-mmux_pid_make (mmux_standard_pid_t value)
-{
-  return ((mmux_pid_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_uid_t
-mmux_uid_make (mmux_standard_uid_t value)
-{
-  return ((mmux_uid_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_gid_t
-mmux_gid_make (mmux_standard_gid_t value)
-{
-  return ((mmux_gid_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_ptrdiff_t
-mmux_ptrdiff_make (mmux_standard_ptrdiff_t value)
-{
-  return ((mmux_ptrdiff_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_wchar_t
-mmux_wchar_make (mmux_standard_wchar_t value)
-{
-  return ((mmux_wchar_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_wint_t
-mmux_wint_make (mmux_standard_wint_t value)
-{
-  return ((mmux_wint_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_time_t
-mmux_time_make (mmux_standard_time_t value)
-{
-  return ((mmux_time_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_socklen_t
-mmux_socklen_make (mmux_standard_socklen_t value)
-{
-  return ((mmux_socklen_t){{value}});
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_rlim_t
-mmux_rlim_make (mmux_standard_rlim_t value)
-{
-  return ((mmux_rlim_t){{value}});
-}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_TYPE_MAKERS(char)
+DEFINE_TYPE_MAKERS(schar)
+DEFINE_TYPE_MAKERS(uchar)
+DEFINE_TYPE_MAKERS(sshort)
+DEFINE_TYPE_MAKERS(ushort)
+DEFINE_TYPE_MAKERS(sint)
+DEFINE_TYPE_MAKERS(uint)
+DEFINE_TYPE_MAKERS(slong)
+DEFINE_TYPE_MAKERS(ulong)
+DEFINE_TYPE_MAKERS(sllong,		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_TYPE_MAKERS(ullong,		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+DEFINE_TYPE_MAKERS(sint8)
+DEFINE_TYPE_MAKERS(uint8)
+DEFINE_TYPE_MAKERS(sint16)
+DEFINE_TYPE_MAKERS(uint16)
+DEFINE_TYPE_MAKERS(sint32)
+DEFINE_TYPE_MAKERS(uint32)
+DEFINE_TYPE_MAKERS(sint64)
+DEFINE_TYPE_MAKERS(uint64)
+DEFINE_TYPE_MAKERS(byte)
+DEFINE_TYPE_MAKERS(octet)
+DEFINE_TYPE_MAKERS(float)
+DEFINE_TYPE_MAKERS(double)
+DEFINE_TYPE_MAKERS(ldouble,		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_TYPE_MAKERS(float32,		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
+DEFINE_TYPE_MAKERS(float64,		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
+DEFINE_TYPE_MAKERS(float128,		[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_TYPE_MAKERS(float32x,		[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
+DEFINE_TYPE_MAKERS(float64x,		[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
+DEFINE_TYPE_MAKERS(float128x,		[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_TYPE_MAKERS(complexf)
+DEFINE_TYPE_MAKERS(complexd)
+DEFINE_TYPE_MAKERS(complexld,		[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_TYPE_MAKERS(complexf32,		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
+DEFINE_TYPE_MAKERS(complexf64,		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
+DEFINE_TYPE_MAKERS(complexf128,		[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_TYPE_MAKERS(complexf32x,		[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
+DEFINE_TYPE_MAKERS(complexf64x,		[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
+DEFINE_TYPE_MAKERS(complexf128x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_TYPE_MAKERS(complexf_part)
+DEFINE_TYPE_MAKERS(complexd_part)
+DEFINE_TYPE_MAKERS(complexld_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_TYPE_MAKERS(complexf32_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
+DEFINE_TYPE_MAKERS(complexf64_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
+DEFINE_TYPE_MAKERS(complexf128_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_TYPE_MAKERS(complexf32x_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
+DEFINE_TYPE_MAKERS(complexf64x_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
+DEFINE_TYPE_MAKERS(complexf128x_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_TYPE_MAKERS(ssize)
+DEFINE_TYPE_MAKERS(usize)
+DEFINE_TYPE_MAKERS(sintmax)
+DEFINE_TYPE_MAKERS(uintmax)
+DEFINE_TYPE_MAKERS(sintptr)
+DEFINE_TYPE_MAKERS(uintptr)
+DEFINE_TYPE_MAKERS(mode)
+DEFINE_TYPE_MAKERS(off)
+DEFINE_TYPE_MAKERS(pid)
+DEFINE_TYPE_MAKERS(uid)
+DEFINE_TYPE_MAKERS(gid)
+DEFINE_TYPE_MAKERS(ptrdiff)
+DEFINE_TYPE_MAKERS(wchar)
+DEFINE_TYPE_MAKERS(wint)
+DEFINE_TYPE_MAKERS(time)
+DEFINE_TYPE_MAKERS(socklen)
+DEFINE_TYPE_MAKERS(rlim)
 
 
 /** --------------------------------------------------------------------
@@ -781,6 +627,8 @@ mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
 
 m4_define([[[DEFINE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular_literal (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
   __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_part_t mmux_$1_real_part (mmux_$1_t Z)	__attribute__((__const__));
 mmux_cc_types_decl mmux_$1_part_t mmux_$1_imag_part (mmux_$1_t Z)	__attribute__((__const__));

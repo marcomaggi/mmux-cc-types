@@ -435,6 +435,11 @@ mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
 {
   return ((mmux_$1_t){ $4(re.value, im.value) });
 }
+mmux_$1_t
+mmux_$1_make_rectangular_literal (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
+{
+  return ((mmux_$1_t){ $4(re, im) });
+}
 mmux_$1_part_t
 mmux_$1_real_part (mmux_$1_t Z)
 {
@@ -1224,49 +1229,49 @@ cexp10 (mmux_standard_complexd_t Z)
 static mmux_standard_complexld_t
 cexp10l (mmux_standard_complexld_t Z)
 {
-  return cexpl(Z * CMPLXL(M_LN10l, MMUX_LDOUBLE_LITERAL(0.0)));
+  return cexpl(Z * CMPLXL(M_LN10l, mmux_standard_ldouble_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
 static mmux_standard_complexf32_t
 cexp10f32 (mmux_standard_complexf32_t Z)
 {
-  return cexpf32(Z * CMPLXF32(M_LN10f32, MMUX_FLOAT32_LITERAL(0.0)));
+  return cexpf32(Z * CMPLXF32(M_LN10f32, mmux_standard_float32_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
 static mmux_standard_complexf64_t
 cexp10f64 (mmux_standard_complexf64_t Z)
 {
-  return cexpf64(Z * CMPLXF64(M_LN10f64, MMUX_FLOAT64_LITERAL(0.0)));
+  return cexpf64(Z * CMPLXF64(M_LN10f64, mmux_standard_float64_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
 static mmux_standard_complexf128_t
 cexp10f128 (mmux_standard_complexf128_t Z)
 {
-  return cexpf128(Z * CMPLXF128(M_LN10f128, MMUX_FLOAT128_LITERAL(0.0)));
+  return cexpf128(Z * CMPLXF128(M_LN10f128, mmux_standard_float128_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
 static mmux_standard_complexf32x_t
 cexp10f32x (mmux_standard_complexf32x_t Z)
 {
-  return cexpf32x(Z * CMPLXF32X(M_LN10f32x, MMUX_FLOAT32X_LITERAL(0.0)));
+  return cexpf32x(Z * CMPLXF32X(M_LN10f32x, mmux_standard_float32x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
 static mmux_standard_complexf64x_t
 cexp10f64x (mmux_standard_complexf64x_t Z)
 {
-  return cexpf64x(Z * CMPLXF64X(M_LN10f64x, MMUX_FLOAT64X_LITERAL(0.0)));
+  return cexpf64x(Z * CMPLXF64X(M_LN10f64x, mmux_standard_float64x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
 static mmux_standard_complexf128x_t
 cexp10f128x (mmux_standard_complexf128x_t Z)
 {
-  return cexpf128x(Z * CMPLXF128X(M_LN10f128x, MMUX_FLOAT128X_LITERAL(0.0)));
+  return cexpf128x(Z * CMPLXF128X(M_LN10f128x, mmux_standard_float128x_literal(0.0)));
 }
 #endif
 
@@ -1276,7 +1281,7 @@ cexp10f128x (mmux_standard_complexf128x_t Z)
 static mmux_standard_complexf_t
 clog2f (mmux_standard_complexf_t Z)
 {
-  return (clogf(Z) / CMPLXF(M_LN2, MMUX_FLOAT_LITERAL(0.0)));
+  return (clogf(Z) / CMPLXF(M_LN2, mmux_standard_float_literal(0.0)));
 }
 static mmux_standard_complexd_t
 clog2 (mmux_standard_complexd_t Z)
@@ -1287,49 +1292,49 @@ clog2 (mmux_standard_complexd_t Z)
 static mmux_standard_complexld_t
 clog2l (mmux_standard_complexld_t Z)
 {
-  return (clogl(Z) / CMPLXL(M_LN2l, MMUX_LDOUBLE_LITERAL(0.0)));
+  return (clogl(Z) / CMPLXL(M_LN2l, mmux_standard_ldouble_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
 static mmux_standard_complexf32_t
 clog2f32 (mmux_standard_complexf32_t Z)
 {
-  return (clogf32(Z) / CMPLXF32(M_LN2f32, MMUX_FLOAT32_LITERAL(0.0)));
+  return (clogf32(Z) / CMPLXF32(M_LN2f32, mmux_standard_float32_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
 static mmux_standard_complexf64_t
 clog2f64 (mmux_standard_complexf64_t Z)
 {
-  return (clogf64(Z) / CMPLXF64(M_LN2f64, MMUX_FLOAT64_LITERAL(0.0)));
+  return (clogf64(Z) / CMPLXF64(M_LN2f64, mmux_standard_float64_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
 static mmux_standard_complexf128_t
 clog2f128 (mmux_standard_complexf128_t Z)
 {
-  return (clogf128(Z) / CMPLXF128(M_LN2f128, MMUX_FLOAT128_LITERAL(0.0)));
+  return (clogf128(Z) / CMPLXF128(M_LN2f128, mmux_standard_float128_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
 static mmux_standard_complexf32x_t
 clog2f32x (mmux_standard_complexf32x_t Z)
 {
-  return (clogf32x(Z) / CMPLXF32X(M_LN2f32x, MMUX_FLOAT32X_LITERAL(0.0)));
+  return (clogf32x(Z) / CMPLXF32X(M_LN2f32x, mmux_standard_float32x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
 static mmux_standard_complexf64x_t
 clog2f64x (mmux_standard_complexf64x_t Z)
 {
-  return (clogf64x(Z) / CMPLXF64X(M_LN2f64x, MMUX_FLOAT64X_LITERAL(0.0)));
+  return (clogf64x(Z) / CMPLXF64X(M_LN2f64x, mmux_standard_float64x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
 static mmux_standard_complexf128x_t
 clog2f128x (mmux_standard_complexf128x_t Z)
 {
-  return (clogf128x(Z) / CMPLXF128X(M_LN2f128x, MMUX_FLOAT128X_LITERAL(0.0)));
+  return (clogf128x(Z) / CMPLXF128X(M_LN2f128x, mmux_standard_float128x_literal(0.0)));
 }
 #endif
 
