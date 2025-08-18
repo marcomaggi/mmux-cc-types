@@ -317,7 +317,7 @@ mmux_$1_div (mmux_$1_t A, mmux_$1_t B)
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_neg (mmux_$1_t A)
 {
-  return mmux_$1_make( ((mmux_standard_$1_t){A.value.re, - A.value.im}) );
+  return mmux_$1_make( ((mmux_standard_$1_t){-A.value.re, - A.value.im}) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_inv (mmux_$1_t A)
