@@ -39,6 +39,7 @@
     auto	rop = mmux_## STEM ## _literal(9);			\
     assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_add(op1, op2)));	\
     assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
   }
 
 #undef  DEFINE_REAL_FLONUM_ADD
@@ -49,6 +50,7 @@
     auto	rop = mmux_## STEM ## _literal(9.0);			\
     assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_add(op1, op2)));	\
     assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
   }
 
 #define DEFINE_COMPLEX_ADD(CSTEM,RSTEM)								\
@@ -77,6 +79,7 @@
 							mmux_## CSTEM ##_part_literal(5.0));	\
       assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));					\
     }												\
+    dprintf(2," %s,", #CSTEM);									\
   }
 
 /* ------------------------------------------------------------------ */
@@ -84,7 +87,7 @@
 static void
 test_arithmetics_add (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
   {
     auto	op1 = mmux_pointer_literal(5);
@@ -183,6 +186,8 @@ test_arithmetics_add (void)
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   DEFINE_COMPLEX_ADD(complexd128,	decimal128);
 #endif
+
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -190,220 +195,155 @@ test_arithmetics_add (void)
  ** Subtraction.
  ** ----------------------------------------------------------------- */
 
-#if 0
+#undef  DEFINE_REAL_INTEGER_SUB
+#define DEFINE_REAL_INTEGER_SUB(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(5);			\
+    auto	op2 = mmux_## STEM ## _literal(3);			\
+    auto	rop = mmux_## STEM ## _literal(2);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_sub(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#undef  DEFINE_REAL_FLONUM_SUB
+#define DEFINE_REAL_FLONUM_SUB(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(5.0);			\
+    auto	op2 = mmux_## STEM ## _literal(3.0);			\
+    auto	rop = mmux_## STEM ## _literal(2.0);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_sub(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#define DEFINE_COMPLEX_SUB(CSTEM,RSTEM)								\
+  {												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(3.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(2.0,1.0);			\
+      assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
+    }												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+							mmux_## RSTEM ##_literal(3.0));		\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(3.0),		\
+							mmux_## RSTEM ##_literal(2.0));		\
+      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(2.0),		\
+							mmux_## RSTEM ##_literal(1.0));		\
+      assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
+    }												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+							mmux_## CSTEM ##_part_literal(3.0));	\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
+							mmux_## CSTEM ##_part_literal(2.0));	\
+      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(2.0),	\
+							mmux_## CSTEM ##_part_literal(1.0));	\
+      assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
+    }												\
+    dprintf(2," %s,", #CSTEM);									\
+  }
+
+/* ------------------------------------------------------------------ */
 
 static void
 test_arithmetics_sub (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  {
-    mmux_pointer_t	op1 = (mmux_pointer_t)123;
-    mmux_pointer_t	op2 = (mmux_pointer_t)23;
-    mmux_ptrdiff_t	rop = 100;
-    assert(mmux_ctype_equal(rop, mmux_pointer_diff(op1, op2)));
-  }
-
-  { mmux_char_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_schar_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uchar_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sshort_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_ushort_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sint_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uint_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_slong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_ulong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
+  DEFINE_REAL_INTEGER_SUB(char);
+  DEFINE_REAL_INTEGER_SUB(schar);
+  DEFINE_REAL_INTEGER_SUB(uchar);
+  DEFINE_REAL_INTEGER_SUB(sshort);
+  DEFINE_REAL_INTEGER_SUB(ushort);
+  DEFINE_REAL_INTEGER_SUB(sint);
+  DEFINE_REAL_INTEGER_SUB(uint);
+  DEFINE_REAL_INTEGER_SUB(slong);
+  DEFINE_REAL_INTEGER_SUB(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_INTEGER_SUB(sllong);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_INTEGER_SUB(ullong);
 #endif
-
-  { mmux_sint8_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uint8_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uint16_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uint32_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uint64_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_usize_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uintmax_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uintptr_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  { mmux_float_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_double_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_INTEGER_SUB(sint8);
+  DEFINE_REAL_INTEGER_SUB(uint8);
+  DEFINE_REAL_INTEGER_SUB(sint16);
+  DEFINE_REAL_INTEGER_SUB(uint16);
+  DEFINE_REAL_INTEGER_SUB(sint32);
+  DEFINE_REAL_INTEGER_SUB(uint32);
+  DEFINE_REAL_INTEGER_SUB(sint64);
+  DEFINE_REAL_INTEGER_SUB(uint64);
+  DEFINE_REAL_FLONUM_SUB(float);
+  DEFINE_REAL_FLONUM_SUB(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  { mmux_ldouble_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  { mmux_float32_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  { mmux_float64_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  { mmux_float128_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  { mmux_float32x_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  { mmux_float64x_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  { mmux_float128x_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  { mmux_decimal32_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  { mmux_decimal64_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+  DEFINE_REAL_FLONUM_SUB(decimal64);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  { mmux_decimal128_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+  DEFINE_REAL_FLONUM_SUB(decimal128);
 #endif
+  DEFINE_REAL_INTEGER_SUB(ssize);
+  DEFINE_REAL_INTEGER_SUB(usize);
+  DEFINE_REAL_INTEGER_SUB(sintmax);
+  DEFINE_REAL_INTEGER_SUB(uintmax);
+  DEFINE_REAL_INTEGER_SUB(sintptr);
+  DEFINE_REAL_INTEGER_SUB(uintptr);
+  DEFINE_REAL_INTEGER_SUB(mode);
+  DEFINE_REAL_INTEGER_SUB(off);
+  DEFINE_REAL_INTEGER_SUB(pid);
+  DEFINE_REAL_INTEGER_SUB(uid);
+  DEFINE_REAL_INTEGER_SUB(gid);
+  DEFINE_REAL_INTEGER_SUB(ptrdiff);
+  DEFINE_REAL_INTEGER_SUB(wchar);
+  DEFINE_REAL_INTEGER_SUB(wint);
+  DEFINE_REAL_INTEGER_SUB(time);
+  DEFINE_REAL_INTEGER_SUB(socklen);
+  DEFINE_REAL_INTEGER_SUB(rlim);
 
-  { mmux_mode_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_pid_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_uid_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_gid_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_off_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_wchar_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_wint_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_rlim_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_socklen_t	op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-  { mmux_time_t		op1 = 5, op2 = 4, rop = 1;	assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2))); }
-
-  {
-    mmux_complexf_t	op1 = mmux_complexf_make_rectangular(5.0,3.0);
-    mmux_complexf_t	op2 = mmux_complexf_make_rectangular(4.0,2.0);
-    mmux_complexf_t	rop = mmux_complexf_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-
-  {
-    mmux_complexd_t	op1 = mmux_complexd_make_rectangular(5.0,3.0);
-    mmux_complexd_t	op2 = mmux_complexd_make_rectangular(4.0,2.0);
-    mmux_complexd_t	rop = mmux_complexd_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  {
-    mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
-    mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
-    mmux_complexld_t	rop = mmux_complexld_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  {
-    mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
-    mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
-    mmux_complexf32_t	rop = mmux_complexf32_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  {
-    mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
-    mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
-    mmux_complexf64_t	rop = mmux_complexf64_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  {
-    mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
-    mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
-    mmux_complexf128_t	rop = mmux_complexf128_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  {
-    mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
-    mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
-    mmux_complexf32x_t	rop = mmux_complexf32x_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  {
-    mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
-    mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
-    mmux_complexf64x_t	rop = mmux_complexf64x_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
+  DEFINE_COMPLEX_SUB(complexf,		float);
+  DEFINE_COMPLEX_SUB(complexd,		double);
+  DEFINE_COMPLEX_SUB(complexld,		ldouble);
+  DEFINE_COMPLEX_SUB(complexf32,	float32);
+  DEFINE_COMPLEX_SUB(complexf64,	float64);
+  DEFINE_COMPLEX_SUB(complexf128,	float128);
+  DEFINE_COMPLEX_SUB(complexf32x,	float32x);
+  DEFINE_COMPLEX_SUB(complexf64x,	float64x);
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  {
-    mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
-    mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
-    mmux_complexf128x_t	rop = mmux_complexf128x_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
+  DEFINE_COMPLEX_SUB(complexf128x,	float128x);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  {
-    mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
-    mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
-    mmux_complexd32_t	rop = mmux_complexd32_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  {
-    mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
-    mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
-    mmux_complexd64_t	rop = mmux_complexd64_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
-#endif
-
+  DEFINE_COMPLEX_SUB(complexd32,	decimal32);
+  DEFINE_COMPLEX_SUB(complexd64,	decimal64);
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  {
-    mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
-    mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
-    mmux_complexd128_t	rop = mmux_complexd128_make_rectangular(1.0,1.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
-  }
+  DEFINE_COMPLEX_SUB(complexd128,	decimal128);
 #endif
+
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -411,211 +351,163 @@ test_arithmetics_sub (void)
  ** Multiplication.
  ** ----------------------------------------------------------------- */
 
+#undef  DEFINE_REAL_INTEGER_MUL
+#define DEFINE_REAL_INTEGER_MUL(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(5);			\
+    auto	op2 = mmux_## STEM ## _literal(3);			\
+    auto	rop = mmux_## STEM ## _literal(15);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mul(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#undef  DEFINE_REAL_FLONUM_MUL
+#define DEFINE_REAL_FLONUM_MUL(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(5.0);			\
+    auto	op2 = mmux_## STEM ## _literal(3.0);			\
+    auto	rop = mmux_## STEM ## _literal(15.0);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mul(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#define DEFINE_COMPLEX_MUL(CSTEM,RSTEM)								\
+  {												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(3.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(9.0,19.0);			\
+      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      if (0) {											\
+	dprintf(2, "\nop1 '"); mmux_ctype_dprintf(2, op1);					\
+	dprintf(2, "' op2 '"); mmux_ctype_dprintf(2, op2);					\
+	dprintf(2, "' result '");								\
+	mmux_ctype_dprintf(2, mmux_ctype_mul(op1, op2));					\
+	dprintf(2, "'\n");									\
+      }												\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_mul(op1, op2), eps));			\
+    }												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+							mmux_## RSTEM ##_literal(3.0));		\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(3.0),		\
+							mmux_## RSTEM ##_literal(2.0));		\
+      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(9.0),		\
+							mmux_## RSTEM ##_literal(19.0));	\
+      assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));					\
+    }												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+							mmux_## CSTEM ##_part_literal(3.0));	\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
+							mmux_## CSTEM ##_part_literal(2.0));	\
+      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
+							mmux_## CSTEM ##_part_literal(19.0));	\
+      assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));					\
+    }												\
+    dprintf(2," %s,", #CSTEM);									\
+  }
+
+/* ------------------------------------------------------------------ */
+
 static void
 test_arithmetics_mul (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  { mmux_char_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_schar_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uchar_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sshort_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_ushort_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sint_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uint_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_slong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_ulong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
+  DEFINE_REAL_INTEGER_MUL(char);
+  DEFINE_REAL_INTEGER_MUL(schar);
+  DEFINE_REAL_INTEGER_MUL(uchar);
+  DEFINE_REAL_INTEGER_MUL(sshort);
+  DEFINE_REAL_INTEGER_MUL(ushort);
+  DEFINE_REAL_INTEGER_MUL(sint);
+  DEFINE_REAL_INTEGER_MUL(uint);
+  DEFINE_REAL_INTEGER_MUL(slong);
+  DEFINE_REAL_INTEGER_MUL(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_INTEGER_MUL(sllong);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_INTEGER_MUL(ullong);
 #endif
-
-  { mmux_sint8_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uint8_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uint16_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uint32_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uint64_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_usize_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uintmax_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uintptr_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  { mmux_float_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_double_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_INTEGER_MUL(sint8);
+  DEFINE_REAL_INTEGER_MUL(uint8);
+  DEFINE_REAL_INTEGER_MUL(sint16);
+  DEFINE_REAL_INTEGER_MUL(uint16);
+  DEFINE_REAL_INTEGER_MUL(sint32);
+  DEFINE_REAL_INTEGER_MUL(uint32);
+  DEFINE_REAL_INTEGER_MUL(sint64);
+  DEFINE_REAL_INTEGER_MUL(uint64);
+  DEFINE_REAL_FLONUM_MUL(float);
+  DEFINE_REAL_FLONUM_MUL(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  { mmux_ldouble_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  { mmux_float32_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  { mmux_float64_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  { mmux_float128_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  { mmux_float32x_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  { mmux_float64x_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  { mmux_float128x_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  { mmux_decimal32_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  { mmux_decimal64_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+  DEFINE_REAL_FLONUM_MUL(decimal64);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  { mmux_decimal128_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+  DEFINE_REAL_FLONUM_MUL(decimal128);
 #endif
+  DEFINE_REAL_INTEGER_MUL(ssize);
+  DEFINE_REAL_INTEGER_MUL(usize);
+  DEFINE_REAL_INTEGER_MUL(sintmax);
+  DEFINE_REAL_INTEGER_MUL(uintmax);
+  DEFINE_REAL_INTEGER_MUL(sintptr);
+  DEFINE_REAL_INTEGER_MUL(uintptr);
+  DEFINE_REAL_INTEGER_MUL(mode);
+  DEFINE_REAL_INTEGER_MUL(off);
+  DEFINE_REAL_INTEGER_MUL(pid);
+  DEFINE_REAL_INTEGER_MUL(uid);
+  DEFINE_REAL_INTEGER_MUL(gid);
+  DEFINE_REAL_INTEGER_MUL(ptrdiff);
+  DEFINE_REAL_INTEGER_MUL(wchar);
+  DEFINE_REAL_INTEGER_MUL(wint);
+  DEFINE_REAL_INTEGER_MUL(time);
+  DEFINE_REAL_INTEGER_MUL(socklen);
+  DEFINE_REAL_INTEGER_MUL(rlim);
 
-  { mmux_mode_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_pid_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_uid_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_gid_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_off_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_wchar_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_wint_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_rlim_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_socklen_t	op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-  { mmux_time_t		op1 = 5, op2 = 4, rop = 20;	assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2))); }
-
-  {
-    mmux_complexf_t	op1 = mmux_complexf_make_rectangular(5.0,3.0);
-    mmux_complexf_t	op2 = mmux_complexf_make_rectangular(4.0,2.0);
-    mmux_complexf_t	rop = mmux_complexf_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-
-  {
-    mmux_complexd_t	op1 = mmux_complexd_make_rectangular(5.0,3.0);
-    mmux_complexd_t	op2 = mmux_complexd_make_rectangular(4.0,2.0);
-    mmux_complexd_t	rop = mmux_complexd_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  {
-    mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
-    mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
-    mmux_complexld_t	rop = mmux_complexld_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  {
-    mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
-    mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
-    mmux_complexf32_t	rop = mmux_complexf32_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  {
-    mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
-    mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
-    mmux_complexf64_t	rop = mmux_complexf64_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  {
-    mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
-    mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
-    mmux_complexf128_t	rop = mmux_complexf128_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  {
-    mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
-    mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
-    mmux_complexf32x_t	rop = mmux_complexf32x_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  {
-    mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
-    mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
-    mmux_complexf64x_t	rop = mmux_complexf64x_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
+  DEFINE_COMPLEX_MUL(complexf,		float);
+  DEFINE_COMPLEX_MUL(complexd,		double);
+  DEFINE_COMPLEX_MUL(complexld,		ldouble);
+  DEFINE_COMPLEX_MUL(complexf32,	float32);
+  DEFINE_COMPLEX_MUL(complexf64,	float64);
+  DEFINE_COMPLEX_MUL(complexf128,	float128);
+  DEFINE_COMPLEX_MUL(complexf32x,	float32x);
+  DEFINE_COMPLEX_MUL(complexf64x,	float64x);
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  {
-    mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
-    mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
-    mmux_complexf128x_t	rop = mmux_complexf128x_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
+  DEFINE_COMPLEX_MUL(complexf128x,	float128x);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  {
-    mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
-    mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
-    mmux_complexd32_t	rop = mmux_complexd32_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  {
-    mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
-    mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
-    mmux_complexd64_t	rop = mmux_complexd64_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
-#endif
-
+  DEFINE_COMPLEX_MUL(complexd32,	decimal32);
+  DEFINE_COMPLEX_MUL(complexd64,	decimal64);
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  {
-    mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
-    mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
-    mmux_complexd128_t	rop = mmux_complexd128_make_rectangular(14.0,22.0);
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));
-  }
+  DEFINE_COMPLEX_MUL(complexd128,	decimal128);
 #endif
+
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -623,224 +515,169 @@ test_arithmetics_mul (void)
  ** Division.
  ** ----------------------------------------------------------------- */
 
+#undef  DEFINE_REAL_INTEGER_DIV
+#define DEFINE_REAL_INTEGER_DIV(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(24);			\
+    auto	op2 = mmux_## STEM ## _literal(3);			\
+    auto	rop = mmux_## STEM ## _literal(8);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_div(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#undef  DEFINE_REAL_FLONUM_DIV
+#define DEFINE_REAL_FLONUM_DIV(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(24.0);			\
+    auto	op2 = mmux_## STEM ## _literal(3.0);			\
+    auto	rop = mmux_## STEM ## _literal(8.0);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_div(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#define DEFINE_COMPLEX_DIV(CSTEM,RSTEM)								\
+  {												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(3.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(1.61538462,-0.0769230769);	\
+      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      if (0) {											\
+	dprintf(2, "\nop1 '"); mmux_ctype_dprintf(2, op1);					\
+	dprintf(2, "' op2 '"); mmux_ctype_dprintf(2, op2);					\
+	dprintf(2, "' result '");								\
+	mmux_ctype_dprintf(2, mmux_ctype_div(op1, op2));					\
+	dprintf(2, "'\n");									\
+      }												\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_div(op1, op2), eps));			\
+    }												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+							mmux_## RSTEM ##_literal(3.0));		\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(3.0),		\
+							mmux_## RSTEM ##_literal(2.0));		\
+      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(1.61538462),	\
+							mmux_## RSTEM ##_literal(-0.0769230769));	\
+      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_div(op1, op2), eps));			\
+    }												\
+    {												\
+      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+							mmux_## CSTEM ##_part_literal(3.0));	\
+      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
+							mmux_## CSTEM ##_part_literal(2.0));	\
+      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(1.61538462),	\
+							mmux_## CSTEM ##_part_literal(-0.0769230769));	\
+      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_div(op1, op2), eps));			\
+    }												\
+    dprintf(2," %s,", #CSTEM);									\
+  }
+
+/* ------------------------------------------------------------------ */
+
 static void
 test_arithmetics_div (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  { mmux_char_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_schar_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uchar_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sshort_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_ushort_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sint_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uint_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_slong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_ulong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
+  DEFINE_REAL_INTEGER_DIV(char);
+  DEFINE_REAL_INTEGER_DIV(schar);
+  DEFINE_REAL_INTEGER_DIV(uchar);
+  DEFINE_REAL_INTEGER_DIV(sshort);
+  DEFINE_REAL_INTEGER_DIV(ushort);
+  DEFINE_REAL_INTEGER_DIV(sint);
+  DEFINE_REAL_INTEGER_DIV(uint);
+  DEFINE_REAL_INTEGER_DIV(slong);
+  DEFINE_REAL_INTEGER_DIV(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_INTEGER_DIV(sllong);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_INTEGER_DIV(ullong);
 #endif
-
-  { mmux_sint8_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uint8_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uint16_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uint32_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uint64_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_usize_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uintmax_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uintptr_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  { mmux_float_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_double_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_INTEGER_DIV(sint8);
+  DEFINE_REAL_INTEGER_DIV(uint8);
+  DEFINE_REAL_INTEGER_DIV(sint16);
+  DEFINE_REAL_INTEGER_DIV(uint16);
+  DEFINE_REAL_INTEGER_DIV(sint32);
+  DEFINE_REAL_INTEGER_DIV(uint32);
+  DEFINE_REAL_INTEGER_DIV(sint64);
+  DEFINE_REAL_INTEGER_DIV(uint64);
+  DEFINE_REAL_FLONUM_DIV(float);
+  DEFINE_REAL_FLONUM_DIV(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  { mmux_ldouble_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  { mmux_float32_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  { mmux_float64_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  { mmux_float128_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  { mmux_float32x_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  { mmux_float64x_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  { mmux_float128x_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  { mmux_decimal32_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  { mmux_decimal64_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+  DEFINE_REAL_FLONUM_DIV(decimal64);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  { mmux_decimal128_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+  DEFINE_REAL_FLONUM_DIV(decimal128);
 #endif
+  DEFINE_REAL_INTEGER_DIV(ssize);
+  DEFINE_REAL_INTEGER_DIV(usize);
+  DEFINE_REAL_INTEGER_DIV(sintmax);
+  DEFINE_REAL_INTEGER_DIV(uintmax);
+  DEFINE_REAL_INTEGER_DIV(sintptr);
+  DEFINE_REAL_INTEGER_DIV(uintptr);
+  DEFINE_REAL_INTEGER_DIV(mode);
+  DEFINE_REAL_INTEGER_DIV(off);
+  DEFINE_REAL_INTEGER_DIV(pid);
+  DEFINE_REAL_INTEGER_DIV(uid);
+  DEFINE_REAL_INTEGER_DIV(gid);
+  DEFINE_REAL_INTEGER_DIV(ptrdiff);
+  DEFINE_REAL_INTEGER_DIV(wchar);
+  DEFINE_REAL_INTEGER_DIV(wint);
+  DEFINE_REAL_INTEGER_DIV(time);
+  DEFINE_REAL_INTEGER_DIV(socklen);
+  DEFINE_REAL_INTEGER_DIV(rlim);
 
-  { mmux_mode_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_pid_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_uid_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_gid_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_off_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_wchar_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_wint_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_rlim_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_socklen_t	op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-  { mmux_time_t		op1 = 12, op2 = 4, rop = 3;	assert(mmux_ctype_equal(rop, mmux_ctype_div(op1, op2))); }
-
-  {
-    mmux_complexf_t	op1 = mmux_complexf_make_rectangular(5.0,3.0);
-    mmux_complexf_t	op2 = mmux_complexf_make_rectangular(4.0,2.0);
-    mmux_complexf_t	rop = mmux_complexf_make_rectangular(1.3,0.1);
-    mmux_complexf_t	mrg = mmux_complexf_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-
-  {
-    mmux_complexd_t	op1 = mmux_complexd_make_rectangular(5.0,3.0);
-    mmux_complexd_t	op2 = mmux_complexd_make_rectangular(4.0,2.0);
-    mmux_complexd_t	rop = mmux_complexd_make_rectangular(1.3,0.1);
-    mmux_complexd_t	mrg = mmux_complexd_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  {
-    mmux_complexld_t	op1 = mmux_complexld_make_rectangular(5.0,3.0);
-    mmux_complexld_t	op2 = mmux_complexld_make_rectangular(4.0,2.0);
-    mmux_complexld_t	rop = mmux_complexld_make_rectangular(1.3,0.1);
-    mmux_complexld_t	mrg = mmux_complexld_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  {
-    mmux_complexf32_t	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
-    mmux_complexf32_t	op2 = mmux_complexf32_make_rectangular(4.0,2.0);
-    mmux_complexf32_t	rop = mmux_complexf32_make_rectangular(1.3,0.1);
-    mmux_complexf32_t	mrg = mmux_complexf32_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  {
-    mmux_complexf64_t	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
-    mmux_complexf64_t	op2 = mmux_complexf64_make_rectangular(4.0,2.0);
-    mmux_complexf64_t	rop = mmux_complexf64_make_rectangular(1.3,0.1);
-    mmux_complexf64_t	mrg = mmux_complexf64_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  {
-    mmux_complexf128_t	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
-    mmux_complexf128_t	op2 = mmux_complexf128_make_rectangular(4.0,2.0);
-    mmux_complexf128_t	rop = mmux_complexf128_make_rectangular(1.3,0.1);
-    mmux_complexf128_t	mrg = mmux_complexf128_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  {
-    mmux_complexf32x_t	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
-    mmux_complexf32x_t	op2 = mmux_complexf32x_make_rectangular(4.0,2.0);
-    mmux_complexf32x_t	rop = mmux_complexf32x_make_rectangular(1.3,0.1);
-    mmux_complexf32x_t	mrg = mmux_complexf32x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  {
-    mmux_complexf64x_t	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
-    mmux_complexf64x_t	op2 = mmux_complexf64x_make_rectangular(4.0,2.0);
-    mmux_complexf64x_t	rop = mmux_complexf64x_make_rectangular(1.3,0.1);
-    mmux_complexf64x_t	mrg = mmux_complexf64x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
+  DEFINE_COMPLEX_DIV(complexf,		float);
+  DEFINE_COMPLEX_DIV(complexd,		double);
+  DEFINE_COMPLEX_DIV(complexld,		ldouble);
+  DEFINE_COMPLEX_DIV(complexf32,	float32);
+  DEFINE_COMPLEX_DIV(complexf64,	float64);
+  DEFINE_COMPLEX_DIV(complexf128,	float128);
+  DEFINE_COMPLEX_DIV(complexf32x,	float32x);
+  DEFINE_COMPLEX_DIV(complexf64x,	float64x);
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  {
-    mmux_complexf128x_t	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
-    mmux_complexf128x_t	op2 = mmux_complexf128x_make_rectangular(4.0,2.0);
-    mmux_complexf128x_t	rop = mmux_complexf128x_make_rectangular(1.3,0.1);
-    mmux_complexf128x_t	mrg = mmux_complexf128x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
+  DEFINE_COMPLEX_DIV(complexf128x,	float128x);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  {
-    mmux_complexd32_t	op1 = mmux_complexd32_make_rectangular(5.0,3.0);
-    mmux_complexd32_t	op2 = mmux_complexd32_make_rectangular(4.0,2.0);
-    mmux_complexd32_t	rop = mmux_complexd32_make_rectangular(1.3,0.1);
-    mmux_complexd32_t	mrg = mmux_complexd32_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  {
-    mmux_complexd64_t	op1 = mmux_complexd64_make_rectangular(5.0,3.0);
-    mmux_complexd64_t	op2 = mmux_complexd64_make_rectangular(4.0,2.0);
-    mmux_complexd64_t	rop = mmux_complexd64_make_rectangular(1.3,0.1);
-    mmux_complexd64_t	mrg = mmux_complexd64_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
-#endif
-
+  DEFINE_COMPLEX_DIV(complexd32,	decimal32);
+  DEFINE_COMPLEX_DIV(complexd64,	decimal64);
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  {
-    mmux_complexd128_t	op1 = mmux_complexd128_make_rectangular(5.0,3.0);
-    mmux_complexd128_t	op2 = mmux_complexd128_make_rectangular(4.0,2.0);
-    mmux_complexd128_t	rop = mmux_complexd128_make_rectangular(1.3,0.1);
-    mmux_complexd128_t	mrg = mmux_complexd128_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_div(op1, op2), mrg));
-  }
+  DEFINE_COMPLEX_DIV(complexd128,	decimal128);
 #endif
+
+  dprintf(2, " DONE.\n\n");
 }
+
+#if 0
+
 
 
 /** --------------------------------------------------------------------
@@ -2002,11 +1839,61 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
 {
   mmux_cc_types_init();
 
+  if (1) {
+    fprintf(stderr, "%s: setting output format for float\n", __func__);
+    assert(false == mmux_float_set_output_format("%.3f", __func__));
+    fprintf(stderr, "%s: setting output format for double\n", __func__);
+    assert(false == mmux_double_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
+    fprintf(stderr, "%s: setting output format for ldouble\n", __func__);
+    assert(false == mmux_ldouble_set_output_format("%.3f", __func__));
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32
+    fprintf(stderr, "%s: setting output format for float32\n", __func__);
+    assert(false == mmux_float32_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64
+    fprintf(stderr, "%s: setting output format for float64\n", __func__);
+    assert(false == mmux_float64_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+    fprintf(stderr, "%s: setting output format for float128\n", __func__);
+    assert(false == mmux_float128_set_output_format("%.3f", __func__));
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
+    fprintf(stderr, "%s: setting output format for float32x\n", __func__);
+    assert(false == mmux_float32x_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
+    fprintf(stderr, "%s: setting output format for float64x\n", __func__);
+    assert(false == mmux_float64x_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
+    fprintf(stderr, "%s: setting output format for float128x\n", __func__);
+    assert(false == mmux_float128x_set_output_format("%.3f", __func__));
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
+    fprintf(stderr, "%s: setting output format for decimal32\n", __func__);
+    assert(false == mmux_decimal32_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
+    fprintf(stderr, "%s: setting output format for decimal64\n", __func__);
+    assert(false == mmux_decimal64_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
+    fprintf(stderr, "%s: setting output format for decimal128\n", __func__);
+    assert(false == mmux_decimal128_set_output_format("%.3f", __func__));
+#endif
+  }
+
   if (1) {	test_arithmetics_add();		}
-#if 0
   if (1) {	test_arithmetics_sub();		}
   if (1) {	test_arithmetics_mul();		}
   if (1) {	test_arithmetics_div();		}
+#if 0
   if (1) {	test_arithmetics_neg();		}
   if (1) {	test_arithmetics_inv();		}
   if (1) {	test_arithmetics_abs();		}

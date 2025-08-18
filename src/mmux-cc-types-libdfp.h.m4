@@ -191,6 +191,11 @@ mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
 }
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_standard_$1_make_rectangular (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
+{
+  return ((mmux_standard_$1_t){re, im});
+}
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
 {
@@ -328,6 +333,69 @@ mmux_$1_inv (mmux_$1_t A)
 DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
 DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
 DEFINE_CORE_COMPLEXD_ARITHMETICS_FUNCTIONS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Mathematical constants.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_MATH_INEXACT_REAL_CONSTANTS_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_zero		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_one		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_two		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG2E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG10E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LN2		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LN10		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI_2		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI_4		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_1_PI		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_2_PI		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_2_SQRTPI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_SQRT2		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_SQRT1_2		(void) __attribute__((__const__));
+
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_zero	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_one	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_two	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG10E	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LN2	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LN10	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI_2	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI_4	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_1_PI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_PI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT2	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT1_2	(void) __attribute__((__const__));
+]]])]]])
+
+DEFINE_MATH_INEXACT_REAL_CONSTANTS_PROTOS(decimal32,	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_MATH_INEXACT_REAL_CONSTANTS_PROTOS(decimal64,	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+DEFINE_MATH_INEXACT_REAL_CONSTANTS_PROTOS(decimal128,	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_imag	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_zero	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_one	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_two	(void) __attribute__((__const__));
+
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_imag	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_zero	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_one	(void) __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_two	(void) __attribute__((__const__));
+]]])]]])
+
+DEFINE_MATH_COMPLEX_CONSTANTS_PROTOS(complexd32,	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_PROTOS(complexd64,	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_PROTOS(complexd128,	[[[MMUX_CC_TYPES_HAS_COPMLEXD32]]])
 
 
 /** --------------------------------------------------------------------

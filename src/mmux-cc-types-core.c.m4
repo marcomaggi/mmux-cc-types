@@ -430,6 +430,11 @@ mmux_$1_sizeof (void)
 {
   return sizeof(mmux_$1_t);
 }
+mmux_standard_$1_t
+mmux_standard_$1_make_rectangular (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
+{
+  return $4(re, im);
+}
 mmux_$1_t
 mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
 {

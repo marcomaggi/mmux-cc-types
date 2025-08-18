@@ -30,10 +30,10 @@
 
 
 /** --------------------------------------------------------------------
- ** Constants.
+ ** Real constants.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_MATH_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_MATH_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 mmux_standard_$1_t mmux_standard_$1_constant_zero	(void) { return mmux_standard_$1_literal(0.0); }
 mmux_standard_$1_t mmux_standard_$1_constant_one	(void) { return mmux_standard_$1_literal(1.0); }
 mmux_standard_$1_t mmux_standard_$1_constant_two	(void) { return mmux_standard_$1_literal(2.0); }
@@ -69,16 +69,77 @@ mmux_$1_t mmux_$1_constant_SQRT2	(void) { return mmux_$1_make(M_SQRT2$2); }
 mmux_$1_t mmux_$1_constant_SQRT1_2	(void) { return mmux_$1_make(M_SQRT1_2$2); }
 ]]])]]])
 
-DEFINE_MATH_CONSTANTS_FUNCS(float)
-DEFINE_MATH_CONSTANTS_FUNCS(double)
-DEFINE_MATH_CONSTANTS_FUNCS(ldouble,	[[[l]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(double)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(ldouble,	[[[l]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
 
-DEFINE_MATH_CONSTANTS_FUNCS(float32,	[[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float64,	[[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float128,	[[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float32,	[[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float64,	[[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float128,	[[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
 
-DEFINE_MATH_CONSTANTS_FUNCS(float32x,	[[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float64x,	[[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_MATH_CONSTANTS_FUNCS(float128x,	[[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float32x,	[[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float64x,	[[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(float128x,	[[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+
+
+/** --------------------------------------------------------------------
+ ** Complex constants.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_standard_$1_t
+mmux_standard_$1_constant_imag (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(1.0));
+}
+mmux_standard_$1_t
+mmux_standard_$1_constant_zero (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(0.0));
+}
+mmux_standard_$1_t
+mmux_standard_$1_constant_one (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(1.0), mmux_standard_$1_part_literal(0.0));
+}
+mmux_standard_$1_t
+mmux_standard_$1_constant_two (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(2.0), mmux_standard_$1_part_literal(0.0));
+}
+
+mmux_$1_t
+mmux_$1_constant_imag (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(1.0));
+}
+mmux_$1_t
+mmux_$1_constant_zero (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(0.0));
+}
+mmux_$1_t
+mmux_$1_constant_one (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(1.0), mmux_$1_part_literal(0.0));
+}
+mmux_$1_t
+mmux_$1_constant_two (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(2.0), mmux_$1_part_literal(0.0));
+}
+]]])
+
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexld,		[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf32,		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf64,		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf128,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf32x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf64x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf128x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
 
 /* end of file */

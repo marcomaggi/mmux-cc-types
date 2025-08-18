@@ -442,7 +442,7 @@ mmux_exp10d128 (mmux_standard_decimal128_t op)
 
 
 /** --------------------------------------------------------------------
- ** Mathematicsl constants.
+ ** Mathematical constants: real numbers.
  ** ----------------------------------------------------------------- */
 
 /* NOTE By inspecting the header files installed by libdfp: I have seen that only the
@@ -943,6 +943,59 @@ mmux_decimal128_constant_SQRT1_2 (void)
 {
   return mmux_decimal128_make(mmux_standard_decimal128_constant_SQRT1_2());
 }
+
+
+/** --------------------------------------------------------------------
+ ** Mathematical constants: complex numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_standard_$1_t
+mmux_standard_$1_constant_imag (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(1.0));
+}
+mmux_standard_$1_t
+mmux_standard_$1_constant_zero (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(0.0));
+}
+mmux_standard_$1_t
+mmux_standard_$1_constant_one (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(1.0), mmux_standard_$1_part_literal(0.0));
+}
+mmux_standard_$1_t
+mmux_standard_$1_constant_two (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(2.0), mmux_standard_$1_part_literal(0.0));
+}
+
+mmux_$1_t
+mmux_$1_constant_imag (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(1.0));
+}
+mmux_$1_t
+mmux_$1_constant_zero (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(0.0));
+}
+mmux_$1_t
+mmux_$1_constant_one (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(1.0), mmux_$1_part_literal(0.0));
+}
+mmux_$1_t
+mmux_$1_constant_two (void)
+{
+  return mmux_$1_make_rectangular(mmux_$1_part_literal(2.0), mmux_$1_part_literal(0.0));
+}
+]]])]]])
+
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd32,		[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd64,		[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd128,	[[[MMUX_CC_TYPES_HAS_COPMLEXD32]]])
 
 
 /** --------------------------------------------------------------------
