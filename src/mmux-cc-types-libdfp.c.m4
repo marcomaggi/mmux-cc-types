@@ -66,52 +66,27 @@
 
 
 /** --------------------------------------------------------------------
- ** Preprocessor macros.
- ** ----------------------------------------------------------------- */
-
-/* These, and only these, are already defined in "dfp/math.h". */
-#if 0
-#define M_Edl		2.7182818284590452353602874713526625DL  /* e */
-#define M_LOG2Edl	1.4426950408889634073599246810018921DL  /* log_2 e */
-#define M_LOG10Edl	0.4342944819032518276511289189166051DL  /* log_10 e */
-#define M_LN2dl		0.6931471805599453094172321214581766DL  /* log_e 2 */
-#define M_LN10dl	2.3025850929940456840179914546843642DL  /* log_e 10 */
-#define M_PIdl		3.1415926535897932384626433832795029DL  /* pi */
-#define M_PI_2dl	1.5707963267948966192313216916397514DL  /* pi/2 */
-#define M_PI_4dl	0.7853981633974483096156608458198757DL  /* pi/4 */
-#define M_1_PIdl	0.3183098861837906715377675267450287DL  /* 1/pi */
-#define M_2_PIdl	0.6366197723675813430755350534900574DL  /* 2/pi */
-#define M_2_SQRTPIdl	1.1283791670955125738961589031215452DL  /* 2/sqrt(pi) */
-#define M_SQRT2dl	1.4142135623730950488016887242096981DL  /* sqrt(2) */
-#define M_SQRT1_2dl	0.7071067811865475244008443621048490DL  /* 1/sqrt(2) */
-#endif
-
-
-/** --------------------------------------------------------------------
  ** Some complex number type functions: abs, arg.
  ** ----------------------------------------------------------------- */
 
-m4_dnl $1 - type stem
-m4_dnl $2 - real part type stem
-m4_dnl $3 - sqrt function
-m4_dnl $4 - atan2 function
-m4_define([[[DEFINE_COMPLEXD_BASIC_FUNCTIONS]]],[[[
-mmux_$1_part_t
-mmux_$1_abs (mmux_$1_t Z)
+m4_divert(-1)
+m4_define([[[DEFINE_CPLX_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+mmux_complexd$1_part_t
+mmux_complexd$1_abs (mmux_complexd$1_t Z)
 {
-  return mmux_$2_make($3(Z.value.re * Z.value.re + Z.value.im * Z.value.im));
+  return mmux_decimal$1(sqrtd$1(Z.value.re * Z.value.re + Z.value.im * Z.value.im));
 }
-mmux_$1_part_t
-mmux_$1_arg (mmux_$1_t Z)
+mmux_complexd$1_part_t
+mmux_complexd$1_arg (mmux_complexd$1_t Z)
 {
-  return mmux_$2_make($4(Z.value.im, Z.value.re));
+  return mmux_decimal$1(atan2d$1(Z.value.im, Z.value.re));
 }
-]]])
+]]])]]])
+m4_divert(0)m4_dnl
 
-DEFINE_COMPLEXD_BASIC_FUNCTIONS([[[complexd32]]],   [[[decimal32]]],   [[[sqrtd32]]],   [[[atan2d32]]])
-DEFINE_COMPLEXD_BASIC_FUNCTIONS([[[complexd64]]],   [[[decimal64]]],   [[[sqrtd64]]],   [[[atan2d64]]])
-DEFINE_COMPLEXD_BASIC_FUNCTIONS([[[complexd128]]],  [[[decimal128]]],  [[[sqrtd128]]],  [[[atan2d128]]])
-
+DEFINE_CPLX_BASIC_FUNCTIONS(32)
+DEFINE_CPLX_BASIC_FUNCTIONS(64)
+DEFINE_CPLX_BASIC_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
