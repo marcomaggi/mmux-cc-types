@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-17 10:29:30 marco>
+;; Time-stamp: <2025-08-19 07:01:39 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -158,6 +158,7 @@
 
 (defconst mmux-cc-types-font-lock-list/known-functions-pointer
   '("mmux_pointer_add"
+    "mmux_pointer_sub"
     "mmux_pointer_bitwise_and"
     "mmux_pointer_bitwise_or"
     "mmux_pointer_bitwise_xor"

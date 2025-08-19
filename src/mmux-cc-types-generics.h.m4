@@ -5,17 +5,8 @@
 
   Abstract
 
-	This a the  public header included by "mmux-cc-types.h".  It  defines uses of
-	the "_Generic" keyword.
-
-	The keywork "_Generic"  does not support compatible types  in its association
-	list; among the exact integers there are compatible types.
-
-	We support "sint8", "uint8", "sint16", "uint16", "sint32", "uint32","sint64",
-	"uint64"  and  assume  that  "schar", "uchar",  "sshort",  "ushort",  "sint",
-	"uint",  "slong",   "ulong",  "sintmax",  "uintmax",   "sintptr",  "uintptr",
-	"ptrdiff", "ssize",  "usize", "mode",  "pid", "uid", "gid",  "wchar", "wint",
-	"off", "rlim", "socklen", "time" are compatible with them.
+	This  a the  public  header included  by "mmux-cc-types.h";  it  must not  be
+	included by itself.  It defines uses of the "_Generic" keyword.
 
   Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
 
@@ -33,15 +24,6 @@
 
 #ifndef MMUX_CC_TYPES_GENERICS_H
 #define MMUX_CC_TYPES_GENERICS_H 1
-
-
-/** --------------------------------------------------------------------
- ** Preliminary definitions.
- ** ----------------------------------------------------------------- */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 /** --------------------------------------------------------------------
@@ -1432,7 +1414,7 @@ DEFINE_TERNARY_FUNCTION_INEXACT_NUMBERS_ONLY([[[equal_relepsilon]]])
  ** ----------------------------------------------------------------- */
 
 DEFINE_BINARY_FUNCTION([[[add]]])
-DEFINE_BINARY_FUNCTION_NO_POINTER([[[sub]]])
+DEFINE_BINARY_FUNCTION([[[sub]]])
 DEFINE_BINARY_FUNCTION_NO_POINTER([[[mul]]])
 DEFINE_BINARY_FUNCTION_NO_POINTER([[[div]]])
 DEFINE_UNARY_FUNCTION_NO_POINTER([[[inv]]])
@@ -2051,10 +2033,6 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 /** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #endif /* MMUX_CC_TYPES_GENERICS_H */
 

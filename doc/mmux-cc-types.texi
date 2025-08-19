@@ -2304,7 +2304,7 @@ Perform the addition between @var{PTR} and @var{DELTA}, return the result.
 @end deftypefun
 
 
-@deftypefun mmux_ptrdiff_t mmux_pointer_diff (mmux_pointer_t @vari{OP}, mmux_pointer_t @varii{OP})
+@deftypefun mmux_ptrdiff_t mmux_pointer_sub (mmux_pointer_t @vari{OP}, mmux_pointer_t @varii{OP})
 Compute the difference between the operands @code{@vari{OP} - @varii{OP}}, interpreting the pointers
 as @code{mmux_uint8_t *}, return the result.
 @end deftypefun

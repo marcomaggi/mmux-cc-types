@@ -21,10 +21,7 @@
 #define _GNU_SOURCE	1
 
 #include <mmux-cc-types.h>
-
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <test-common.h>
 
 
 /** --------------------------------------------------------------------
@@ -258,6 +255,15 @@ static void
 test_arithmetics_sub (void)
 {
   dprintf(2, "running test: %s:", __func__);
+
+  {
+    auto	op1 = mmux_pointer_literal(5);
+    auto	op2 = mmux_pointer_literal(3);
+    auto	rop = mmux_ptrdiff_literal(2);
+    assert(mmux_ptrdiff_equal(rop, mmux_pointer_sub(op1, op2)));
+    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
+    dprintf(2," %s,", "pointer");
+  }
 
   DEFINE_REAL_INTEGER_SUB(char);
   DEFINE_REAL_INTEGER_SUB(schar);
@@ -821,7 +827,7 @@ test_arithmetics_neg (void)
 
 
 /** --------------------------------------------------------------------
- ** Inverse.
+ ** Inversion.
  ** ----------------------------------------------------------------- */
 
 static void
@@ -1770,56 +1776,7 @@ int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
   mmux_cc_types_init();
-
-  if (1) {
-    fprintf(stderr, "%s: setting output format for float\n", __func__);
-    assert(false == mmux_float_set_output_format("%.3f", __func__));
-    fprintf(stderr, "%s: setting output format for double\n", __func__);
-    assert(false == mmux_double_set_output_format("%.3f", __func__));
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-    fprintf(stderr, "%s: setting output format for ldouble\n", __func__);
-    assert(false == mmux_ldouble_set_output_format("%.3f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-    fprintf(stderr, "%s: setting output format for float32\n", __func__);
-    assert(false == mmux_float32_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-    fprintf(stderr, "%s: setting output format for float64\n", __func__);
-    assert(false == mmux_float64_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-    fprintf(stderr, "%s: setting output format for float128\n", __func__);
-    assert(false == mmux_float128_set_output_format("%.3f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-    fprintf(stderr, "%s: setting output format for float32x\n", __func__);
-    assert(false == mmux_float32x_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-    fprintf(stderr, "%s: setting output format for float64x\n", __func__);
-    assert(false == mmux_float64x_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-    fprintf(stderr, "%s: setting output format for float128x\n", __func__);
-    assert(false == mmux_float128x_set_output_format("%.3f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-    fprintf(stderr, "%s: setting output format for decimal32\n", __func__);
-    assert(false == mmux_decimal32_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-    fprintf(stderr, "%s: setting output format for decimal64\n", __func__);
-    assert(false == mmux_decimal64_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-    fprintf(stderr, "%s: setting output format for decimal128\n", __func__);
-    assert(false == mmux_decimal128_set_output_format("%.3f", __func__));
-#endif
-  }
+  test_set_output_formats();
 
   if (1) {	test_arithmetics_add();		}
   if (1) {	test_arithmetics_sub();		}

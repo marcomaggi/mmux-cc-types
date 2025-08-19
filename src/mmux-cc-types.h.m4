@@ -1136,7 +1136,7 @@ mmux_pointer_add (mmux_pointer_t op, mmux_ptrdiff_t delta)
   return rop;
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_ptrdiff_t
-mmux_pointer_diff (mmux_pointer_t ptr1, mmux_pointer_t ptr2)
+mmux_pointer_sub (mmux_pointer_t ptr1, mmux_pointer_t ptr2)
 {
   auto	ptr1_octets  = (mmux_standard_uint8_t *)ptr1;
   auto	ptr2_octets  = (mmux_standard_uint8_t *)ptr2;
