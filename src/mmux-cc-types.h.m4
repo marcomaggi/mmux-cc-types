@@ -504,6 +504,7 @@ typedef char const ***			mmux_asciizcppp_t;
  ** Makers.
  ** ----------------------------------------------------------------- */
 
+#if 0
 __attribute__((__const__,__always_inline__))
 static inline mmux_pointer_t
 mmux_pointer (void * value)
@@ -515,6 +516,18 @@ mmux_pointerc (void const * value)
 {
   return ((mmux_pointerc_t)(value));
 }
+#else
+#  undef  mmux_pointer
+#  define mmux_pointer(VALUE)		((mmux_pointer_t)(VALUE))
+#  undef  mmux_pointerc
+#  define mmux_pointerc(VALUE)		((mmux_pointer_t)(VALUE))
+#endif
+
+#undef  mmux_pointer_literal
+#define mmux_pointer_literal(VALUE)	(mmux_pointer(mmux_standard_pointer_literal(VALUE)))
+
+#undef  mmux_pointerc_literal
+#define mmux_pointerc_literal(VALUE)	(mmux_pointerc(mmux_standard_pointerc_literal(VALUE)))
 
 /* ------------------------------------------------------------------ */
 
@@ -522,13 +535,28 @@ m4_divert(-1)
 m4_dnl $1 - type stem
 m4_dnl $2 - conditional definition symbol
 m4_define([[[DEFINE_TYPE_MAKERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-#undef  mmux_$1_literal
-#define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))
+/* NOTE I would really like to define the maker as an inline function.  Because.  But
+ * with the function we cannot declare a  new variable as "constexpr", while with the
+ * macro we can.  For example, the following code:
+ *
+ *  constexpr auto	buflen = mmux_usize(1024);
+ *
+ * works fine  under GCC-C23  with macros,  it does  not work  with functions.   I am
+ * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
+ */
+#if 0
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1 (mmux_standard_$1_t value)
 {
   return ((mmux_$1_t){ .value = value });
 }
+#else
+#  undef  mmux_$1
+#  define mmux_$1(VALUE)		((mmux_$1_t){ .value = (VALUE) })
+#endif
+
+#undef  mmux_$1_literal
+#define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_TYPE_MAKERS(char)
