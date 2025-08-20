@@ -1148,124 +1148,114 @@ test_arithmetics_abs (void)
   dprintf(2, " DONE.\n\n");
 }
 
-#if 0
-
 
 /** --------------------------------------------------------------------
  ** Modulo.
  ** ----------------------------------------------------------------- */
 
+#undef  DEFINE_REAL_INTEGER_MOD
+#define DEFINE_REAL_INTEGER_MOD(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(23);			\
+    auto	op2 = mmux_## STEM ## _literal(3);			\
+    auto	rop = mmux_## STEM ## _literal(2);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mod(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_mod(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#undef  DEFINE_REAL_FLONUM_MOD
+#define DEFINE_REAL_FLONUM_MOD(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(23.0);			\
+    auto	op2 = mmux_## STEM ## _literal(3.0);			\
+    auto	rop = mmux_## STEM ## _literal(2.0);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mod(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_mod(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+/* ------------------------------------------------------------------ */
+
 static void
 test_arithmetics_mod (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  { mmux_char_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_schar_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uchar_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sshort_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_ushort_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sint_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uint_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_slong_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_ulong_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
+  DEFINE_REAL_INTEGER_MOD(char);
+  DEFINE_REAL_INTEGER_MOD(schar);
+  DEFINE_REAL_INTEGER_MOD(uchar);
+  DEFINE_REAL_INTEGER_MOD(sshort);
+  DEFINE_REAL_INTEGER_MOD(ushort);
+  DEFINE_REAL_INTEGER_MOD(sint);
+  DEFINE_REAL_INTEGER_MOD(uint);
+  DEFINE_REAL_INTEGER_MOD(slong);
+  DEFINE_REAL_INTEGER_MOD(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  {
-    mmux_sllong_t	op1 = 13;
-    mmux_sllong_t	op2 = 4;
-    mmux_sllong_t	rop = 1;
-    assert(mmux_ctype_equal(rop, mmux_ctype_mod(op1,op2)));
-  }
+  DEFINE_REAL_INTEGER_MOD(sllong);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  {
-    mmux_ullong_t	op1 = 13;
-    mmux_ullong_t	op2 = 4;
-    mmux_ullong_t	rop = 1;
-    assert(mmux_ctype_equal(rop, mmux_ctype_mod(op1,op2)));
-  }
+  DEFINE_REAL_INTEGER_MOD(ullong);
 #endif
-
-  { mmux_sint8_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uint8_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sint16_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uint16_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sint32_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uint32_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sint64_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uint64_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_ssize_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_usize_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sintmax_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uintmax_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_sintptr_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uintptr_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_ptrdiff_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-
-  { mmux_float_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_double_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_INTEGER_MOD(sint8);
+  DEFINE_REAL_INTEGER_MOD(uint8);
+  DEFINE_REAL_INTEGER_MOD(sint16);
+  DEFINE_REAL_INTEGER_MOD(uint16);
+  DEFINE_REAL_INTEGER_MOD(sint32);
+  DEFINE_REAL_INTEGER_MOD(uint32);
+  DEFINE_REAL_INTEGER_MOD(sint64);
+  DEFINE_REAL_INTEGER_MOD(uint64);
+  DEFINE_REAL_FLONUM_MOD(float);
+  DEFINE_REAL_FLONUM_MOD(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  { mmux_ldouble_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  { mmux_float32_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  { mmux_float64_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  { mmux_float128_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  { mmux_float32x_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  { mmux_float64x_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  { mmux_float128x_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  { mmux_decimal32_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  { mmux_decimal64_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  DEFINE_REAL_FLONUM_MOD(decimal64);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  { mmux_decimal128_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+  DEFINE_REAL_FLONUM_MOD(decimal128);
 #endif
+  DEFINE_REAL_INTEGER_MOD(ssize);
+  DEFINE_REAL_INTEGER_MOD(usize);
+  DEFINE_REAL_INTEGER_MOD(sintmax);
+  DEFINE_REAL_INTEGER_MOD(uintmax);
+  DEFINE_REAL_INTEGER_MOD(sintptr);
+  DEFINE_REAL_INTEGER_MOD(uintptr);
+  DEFINE_REAL_INTEGER_MOD(mode);
+  DEFINE_REAL_INTEGER_MOD(off);
+  DEFINE_REAL_INTEGER_MOD(pid);
+  DEFINE_REAL_INTEGER_MOD(uid);
+  DEFINE_REAL_INTEGER_MOD(gid);
+  DEFINE_REAL_INTEGER_MOD(ptrdiff);
+  DEFINE_REAL_INTEGER_MOD(wchar);
+  DEFINE_REAL_INTEGER_MOD(wint);
+  DEFINE_REAL_INTEGER_MOD(time);
+  DEFINE_REAL_INTEGER_MOD(socklen);
+  DEFINE_REAL_INTEGER_MOD(rlim);
 
-  { mmux_mode_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_pid_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_uid_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_gid_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_off_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_wchar_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_wint_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_rlim_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_socklen_t	op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
-  { mmux_time_t		op1 = 13, op2 = 4, rop = 1;	assert(rop == mmux_ctype_mod(op1,op2)); }
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -1273,152 +1263,108 @@ test_arithmetics_mod (void)
  ** Increment.
  ** ----------------------------------------------------------------- */
 
+#undef  DEFINE_REAL_INTEGER_INCR
+#define DEFINE_REAL_INTEGER_INCR(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(5);			\
+    auto	rop = mmux_## STEM ## _literal(6);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_incr(op1)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_incr(op1)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#undef  DEFINE_REAL_FLONUM_INCR
+#define DEFINE_REAL_FLONUM_INCR(STEM)							\
+  {											\
+    auto	op1 = mmux_## STEM ##_literal(5.0);					\
+    auto	rop = mmux_## STEM ##_literal(6.0);					\
+    auto	eps = mmux_## STEM ##_literal(1e-4);					\
+    assert(mmux_## STEM ##_equal_relepsilon(rop, mmux_## STEM ##_incr(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_incr(op1), eps));		\
+    dprintf(2," %s,", #STEM);								\
+  }
+
+/* ------------------------------------------------------------------ */
+
 static void
 test_arithmetics_incr (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  { mmux_char_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_schar_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uchar_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sshort_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_ushort_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sint_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uint_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_slong_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_ulong_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
+  DEFINE_REAL_INTEGER_INCR(char);
+  DEFINE_REAL_INTEGER_INCR(schar);
+  DEFINE_REAL_INTEGER_INCR(uchar);
+  DEFINE_REAL_INTEGER_INCR(sshort);
+  DEFINE_REAL_INTEGER_INCR(ushort);
+  DEFINE_REAL_INTEGER_INCR(sint);
+  DEFINE_REAL_INTEGER_INCR(uint);
+  DEFINE_REAL_INTEGER_INCR(slong);
+  DEFINE_REAL_INTEGER_INCR(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  {
-    mmux_sllong_t	op1 = 5;
-    mmux_sllong_t	rop = 6;
-    assert(mmux_ctype_equal(rop, mmux_ctype_incr(op1)));
-  }
+  DEFINE_REAL_INTEGER_INCR(sllong);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  {
-    mmux_ullong_t	op1 = 5;
-    mmux_ullong_t	rop = 6;
-    assert(mmux_ctype_equal(rop, mmux_ctype_incr(op1)));
-  }
+  DEFINE_REAL_INTEGER_INCR(ullong);
 #endif
-
-  { mmux_sint8_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uint8_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sint16_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uint16_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sint32_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uint32_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sint64_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uint64_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_ssize_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_usize_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sintmax_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uintmax_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_sintptr_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uintptr_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  { mmux_ptrdiff_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
-  {
-    mmux_float_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
-  {
-    mmux_double_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_INTEGER_INCR(sint8);
+  DEFINE_REAL_INTEGER_INCR(uint8);
+  DEFINE_REAL_INTEGER_INCR(sint16);
+  DEFINE_REAL_INTEGER_INCR(uint16);
+  DEFINE_REAL_INTEGER_INCR(sint32);
+  DEFINE_REAL_INTEGER_INCR(uint32);
+  DEFINE_REAL_INTEGER_INCR(sint64);
+  DEFINE_REAL_INTEGER_INCR(uint64);
+  DEFINE_REAL_FLONUM_INCR(float);
+  DEFINE_REAL_FLONUM_INCR(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  {
-    mmux_ldouble_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  {
-    mmux_float32_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  {
-    mmux_float64_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  {
-    mmux_float128_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  {
-    mmux_float32x_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  {
-    mmux_float64x_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  {
-    mmux_float128x_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  {
-    mmux_decimal32_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  {
-    mmux_decimal64_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_INCR(decimal64);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  {
-    mmux_decimal128_t	op1 = 5, rop = 6, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_incr(op1), mrg));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+  DEFINE_REAL_FLONUM_INCR(decimal128);
 #endif
+  DEFINE_REAL_INTEGER_INCR(ssize);
+  DEFINE_REAL_INTEGER_INCR(usize);
+  DEFINE_REAL_INTEGER_INCR(sintmax);
+  DEFINE_REAL_INTEGER_INCR(uintmax);
+  DEFINE_REAL_INTEGER_INCR(sintptr);
+  DEFINE_REAL_INTEGER_INCR(uintptr);
+  DEFINE_REAL_INTEGER_INCR(mode);
+  DEFINE_REAL_INTEGER_INCR(off);
+  DEFINE_REAL_INTEGER_INCR(pid);
+  DEFINE_REAL_INTEGER_INCR(uid);
+  DEFINE_REAL_INTEGER_INCR(gid);
+  DEFINE_REAL_INTEGER_INCR(ptrdiff);
+  DEFINE_REAL_INTEGER_INCR(wchar);
+  DEFINE_REAL_INTEGER_INCR(wint);
+  DEFINE_REAL_INTEGER_INCR(time);
+  DEFINE_REAL_INTEGER_INCR(socklen);
+  DEFINE_REAL_INTEGER_INCR(rlim);
 
-  { mmux_mode_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_pid_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_uid_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_gid_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_off_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_wchar_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_wint_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_rlim_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_socklen_t	op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-  { mmux_time_t		op1 = 5, rop = 6;	assert(rop == mmux_ctype_incr(op1)); }
-
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -1426,160 +1372,114 @@ test_arithmetics_incr (void)
  ** Decrement.
  ** ----------------------------------------------------------------- */
 
+#undef  DEFINE_REAL_INTEGER_DECR
+#define DEFINE_REAL_INTEGER_DECR(STEM)					\
+  {									\
+    auto	op1 = mmux_## STEM ## _literal(5);			\
+    auto	rop = mmux_## STEM ## _literal(4);			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_decr(op1)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_decr(op1)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
+
+#undef  DEFINE_REAL_FLONUM_DECR
+#define DEFINE_REAL_FLONUM_DECR(STEM)							\
+  {											\
+    auto	op1 = mmux_## STEM ##_literal(5.0);					\
+    auto	rop = mmux_## STEM ##_literal(4.0);					\
+    auto	eps = mmux_## STEM ##_literal(1e-4);					\
+    assert(mmux_## STEM ##_equal_relepsilon(rop, mmux_## STEM ##_decr(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_decr(op1), eps));		\
+    dprintf(2," %s,", #STEM);								\
+  }
+
+/* ------------------------------------------------------------------ */
+
 static void
 test_arithmetics_decr (void)
 {
-  dprintf(1, "running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  { mmux_char_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_schar_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uchar_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sshort_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_ushort_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sint_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uint_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_slong_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_ulong_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
+  DEFINE_REAL_INTEGER_DECR(char);
+  DEFINE_REAL_INTEGER_DECR(schar);
+  DEFINE_REAL_INTEGER_DECR(uchar);
+  DEFINE_REAL_INTEGER_DECR(sshort);
+  DEFINE_REAL_INTEGER_DECR(ushort);
+  DEFINE_REAL_INTEGER_DECR(sint);
+  DEFINE_REAL_INTEGER_DECR(uint);
+  DEFINE_REAL_INTEGER_DECR(slong);
+  DEFINE_REAL_INTEGER_DECR(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  {
-    mmux_sllong_t	op1 = 5;
-    mmux_sllong_t	rop = 4;
-    assert(mmux_ctype_equal(rop, mmux_ctype_decr(op1)));
-  }
+  DEFINE_REAL_INTEGER_DECR(sllong);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  {
-    mmux_ullong_t	op1 = 5;
-    mmux_ullong_t	rop = 4;
-    assert(mmux_ctype_equal(rop, mmux_ctype_decr(op1)));
-  }
+  DEFINE_REAL_INTEGER_DECR(ullong);
 #endif
-
-  { mmux_sint8_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uint8_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sint16_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uint16_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sint32_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uint32_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sint64_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uint64_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_ssize_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_usize_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sintmax_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uintmax_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_sintptr_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uintptr_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  { mmux_ptrdiff_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
-  {
-    mmux_float_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
-  {
-    mmux_double_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_INTEGER_DECR(sint8);
+  DEFINE_REAL_INTEGER_DECR(uint8);
+  DEFINE_REAL_INTEGER_DECR(sint16);
+  DEFINE_REAL_INTEGER_DECR(uint16);
+  DEFINE_REAL_INTEGER_DECR(sint32);
+  DEFINE_REAL_INTEGER_DECR(uint32);
+  DEFINE_REAL_INTEGER_DECR(sint64);
+  DEFINE_REAL_INTEGER_DECR(uint64);
+  DEFINE_REAL_FLONUM_DECR(float);
+  DEFINE_REAL_FLONUM_DECR(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  {
-    mmux_ldouble_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  {
-    mmux_float32_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  {
-    mmux_float64_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  {
-    mmux_float128_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  {
-    mmux_float32x_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  {
-    mmux_float64x_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  {
-    mmux_float128x_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  {
-    mmux_decimal32_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  {
-    mmux_decimal64_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+  DEFINE_REAL_FLONUM_DECR(decimal64);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  {
-    mmux_decimal128_t	op1 = 5, rop = 4, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_decr(op1), mrg));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLOAT128
+  DEFINE_REAL_FLONUM_DECR(decimal128);
 #endif
+  DEFINE_REAL_INTEGER_DECR(ssize);
+  DEFINE_REAL_INTEGER_DECR(usize);
+  DEFINE_REAL_INTEGER_DECR(sintmax);
+  DEFINE_REAL_INTEGER_DECR(uintmax);
+  DEFINE_REAL_INTEGER_DECR(sintptr);
+  DEFINE_REAL_INTEGER_DECR(uintptr);
+  DEFINE_REAL_INTEGER_DECR(mode);
+  DEFINE_REAL_INTEGER_DECR(off);
+  DEFINE_REAL_INTEGER_DECR(pid);
+  DEFINE_REAL_INTEGER_DECR(uid);
+  DEFINE_REAL_INTEGER_DECR(gid);
+  DEFINE_REAL_INTEGER_DECR(ptrdiff);
+  DEFINE_REAL_INTEGER_DECR(wchar);
+  DEFINE_REAL_INTEGER_DECR(wint);
+  DEFINE_REAL_INTEGER_DECR(time);
+  DEFINE_REAL_INTEGER_DECR(socklen);
+  DEFINE_REAL_INTEGER_DECR(rlim);
 
-  { mmux_mode_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_pid_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_uid_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_gid_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_off_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_wchar_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_wint_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_rlim_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_socklen_t	op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-  { mmux_time_t		op1 = 5, rop = 4;	assert(rop == mmux_ctype_decr(op1)); }
-
+  dprintf(2, " DONE.\n\n");
 }
 
 
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
-
-#endif
 
 int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
@@ -1594,11 +1494,9 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_arithmetics_neg();		}
   if (1) {	test_arithmetics_inv();		}
   if (1) {	test_arithmetics_abs();		}
-#if 0
   if (1) {	test_arithmetics_mod();		}
   if (1) {	test_arithmetics_incr();	}
   if (1) {	test_arithmetics_decr();	}
-#endif
 
   exit(EXIT_SUCCESS);
 }
