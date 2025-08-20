@@ -328,6 +328,9 @@ mmux_decimal$1_inv (mmux_decimal$1_t A)
 {
   return mmux_decimal$1_div(mmux_decimal$1_constant_one(), A);
 }
+
+mmux_cc_types_decl mmux_decimal$1_t mmux_decimal$1_abs (mmux_decimal$1_t X)
+  __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
 
