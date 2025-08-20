@@ -369,7 +369,7 @@ mmux_$1_parse (mmux_$1_t * result_p, char const * s_value, char const * caller_n
     errno = 0; /* The error is consumed. */
     return true;
   } else {
-    *result_p = mmux_$1_make(value);
+    *result_p = mmux_$1(value);
     return false;
   }
 }
@@ -408,7 +408,7 @@ mmux_$1_parse (mmux_$1_t * result_p, char const * s_source, char const * caller_
 					 "$1", caller_name)) {
     return true;
   } else {
-    *result_p = mmux_$1_make((mmux_standard_$1_t)value);
+    *result_p = mmux_$1((mmux_standard_$1_t)value);
     return false;
   }
 }
@@ -500,7 +500,7 @@ mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name
 					   "$1", caller_name)) {
     return true;
   } else {
-    *p_value = mmux_$1_make((mmux_standard_$1_t)value);
+    *p_value = mmux_$1((mmux_standard_$1_t)value);
     return false;
   }
 }

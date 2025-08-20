@@ -34,9 +34,6 @@
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_MATH_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-mmux_standard_$1_t mmux_standard_$1_constant_zero	(void) { return mmux_standard_$1_literal(0.0); }
-mmux_standard_$1_t mmux_standard_$1_constant_one	(void) { return mmux_standard_$1_literal(1.0); }
-mmux_standard_$1_t mmux_standard_$1_constant_two	(void) { return mmux_standard_$1_literal(2.0); }
 mmux_standard_$1_t mmux_standard_$1_constant_E		(void) { return M_E$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_LOG2E	(void) { return M_LOG2E$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_LOG10E	(void) { return M_LOG10E$2; }
@@ -51,22 +48,19 @@ mmux_standard_$1_t mmux_standard_$1_constant_2_SQRTPI	(void) { return M_2_SQRTPI
 mmux_standard_$1_t mmux_standard_$1_constant_SQRT2	(void) { return M_SQRT2$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_SQRT1_2	(void) { return M_SQRT1_2$2; }
 
-mmux_$1_t mmux_$1_constant_zero		(void) { return mmux_$1_make(mmux_standard_$1_literal(0.0)); }
-mmux_$1_t mmux_$1_constant_one		(void) { return mmux_$1_make(mmux_standard_$1_literal(1.0)); }
-mmux_$1_t mmux_$1_constant_two		(void) { return mmux_$1_make(mmux_standard_$1_literal(2.0)); }
-mmux_$1_t mmux_$1_constant_E		(void) { return mmux_$1_make(M_E$2); }
-mmux_$1_t mmux_$1_constant_LOG2E	(void) { return mmux_$1_make(M_LOG2E$2); }
-mmux_$1_t mmux_$1_constant_LOG10E	(void) { return mmux_$1_make(M_LOG10E$2); }
-mmux_$1_t mmux_$1_constant_LN2		(void) { return mmux_$1_make(M_LN2$2); }
-mmux_$1_t mmux_$1_constant_LN10		(void) { return mmux_$1_make(M_LN10$2); }
-mmux_$1_t mmux_$1_constant_PI		(void) { return mmux_$1_make(M_PI$2); }
-mmux_$1_t mmux_$1_constant_PI_2		(void) { return mmux_$1_make(M_PI_2$2); }
-mmux_$1_t mmux_$1_constant_PI_4		(void) { return mmux_$1_make(M_PI_4$2); }
-mmux_$1_t mmux_$1_constant_1_PI		(void) { return mmux_$1_make(M_1_PI$2); }
-mmux_$1_t mmux_$1_constant_2_PI		(void) { return mmux_$1_make(M_2_PI$2); }
-mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) { return mmux_$1_make(M_2_SQRTPI$2); }
-mmux_$1_t mmux_$1_constant_SQRT2	(void) { return mmux_$1_make(M_SQRT2$2); }
-mmux_$1_t mmux_$1_constant_SQRT1_2	(void) { return mmux_$1_make(M_SQRT1_2$2); }
+mmux_$1_t mmux_$1_constant_E		(void) { return mmux_$1(M_E$2); }
+mmux_$1_t mmux_$1_constant_LOG2E	(void) { return mmux_$1(M_LOG2E$2); }
+mmux_$1_t mmux_$1_constant_LOG10E	(void) { return mmux_$1(M_LOG10E$2); }
+mmux_$1_t mmux_$1_constant_LN2		(void) { return mmux_$1(M_LN2$2); }
+mmux_$1_t mmux_$1_constant_LN10		(void) { return mmux_$1(M_LN10$2); }
+mmux_$1_t mmux_$1_constant_PI		(void) { return mmux_$1(M_PI$2); }
+mmux_$1_t mmux_$1_constant_PI_2		(void) { return mmux_$1(M_PI_2$2); }
+mmux_$1_t mmux_$1_constant_PI_4		(void) { return mmux_$1(M_PI_4$2); }
+mmux_$1_t mmux_$1_constant_1_PI		(void) { return mmux_$1(M_1_PI$2); }
+mmux_$1_t mmux_$1_constant_2_PI		(void) { return mmux_$1(M_2_PI$2); }
+mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) { return mmux_$1(M_2_SQRTPI$2); }
+mmux_$1_t mmux_$1_constant_SQRT2	(void) { return mmux_$1(M_SQRT2$2); }
+mmux_$1_t mmux_$1_constant_SQRT1_2	(void) { return mmux_$1(M_SQRT1_2$2); }
 ]]])]]])
 
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(float)
@@ -80,66 +74,5 @@ DEFINE_MATH_REAL_CONSTANTS_FUNCS(float128,	[[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLOA
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(float32x,	[[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(float64x,	[[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(float128x,	[[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
-
-
-/** --------------------------------------------------------------------
- ** Complex constants.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_standard_$1_t
-mmux_standard_$1_constant_imag (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(1.0));
-}
-mmux_standard_$1_t
-mmux_standard_$1_constant_zero (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(0.0));
-}
-mmux_standard_$1_t
-mmux_standard_$1_constant_one (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(1.0), mmux_standard_$1_part_literal(0.0));
-}
-mmux_standard_$1_t
-mmux_standard_$1_constant_two (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(2.0), mmux_standard_$1_part_literal(0.0));
-}
-
-mmux_$1_t
-mmux_$1_constant_imag (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(1.0));
-}
-mmux_$1_t
-mmux_$1_constant_zero (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(0.0));
-}
-mmux_$1_t
-mmux_$1_constant_one (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(1.0), mmux_$1_part_literal(0.0));
-}
-mmux_$1_t
-mmux_$1_constant_two (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(2.0), mmux_$1_part_literal(0.0));
-}
-]]])
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexld,		[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf32,		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf64,		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf128,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf32x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf64x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf128x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
 
 /* end of file */

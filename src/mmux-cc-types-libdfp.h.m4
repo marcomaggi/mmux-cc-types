@@ -48,17 +48,18 @@ typedef struct mmux_standard_complexd$1_t {
 
 typedef mmux_standard_decimal$1_t		mmux_standard_complexd$1_part_t;
 
+#undef  mmux_standard_decimal$1
 #define mmux_standard_decimal$1(VALUE)		((mmux_standard_decimal$1_t)(VALUE))
-#define mmux_standard_complexd$1(RE,IM)		((mmux_standard_complexd$1_t){       \
-						  .re = mmux_standard_decimal$1(RE), \
-						  .im = mmux_standard_decimal$1(IM)  })
 
-mmux_cc_types_decl mmux_standard_decimal$1_t mmux_strtod$1 (char const * restrict input_string, char ** restrict tailptr)
-  __attribute__((__nonnull__(1,2)));
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_complexd$1_t
+mmux_standard_complexd$1 (mmux_standard_decimal$1_t re, mmux_standard_decimal$1_t im)
+{
+  return (mmux_standard_complexd$1_t){ .re = re, .im = im };
+}
 
-mmux_cc_types_decl int mmux_strfromd$1 (char * s_value, size_t size, char const * restrict format,
-					mmux_standard_decimal$1_t value)
-  __attribute__((__nonnull__(3)));
+#undef  mmux_standard_complexd$1_literal
+#define mmux_standard_complexd$1_literal(RE,IM)		\
+  (mmux_standard_complexd$1(mmux_standard_decimal$1_literal(RE), mmux_standard_decimal$1_literal(IM)))
 ]]])]]])
 m4_divert(0)m4_dnl
 
@@ -77,22 +78,36 @@ typedef struct mmux_decimal$1_t	 { mmux_standard_decimal$1_t	value; } mmux_decim
 typedef struct mmux_complexd$1_t { mmux_standard_complexd$1_t	value; } mmux_complexd$1_t;
 typedef mmux_decimal$1_t	mmux_complexd$1_part_t;
 
-#define mmux_decimal$1(VALUE)		((mmux_decimal$1_t){ .value = (VALUE) })
-#define mmux_decimal$1_literal(VALUE)	((mmux_decimal$1_t){ .value = mmux_standard_decimal$1_literal(VALUE) })
+#undef  mmux_decimal$1_literal
+#define mmux_decimal$1_literal(VALUE)	(mmux_decimal$1(mmux_standard_decimal$1_literal(VALUE)))
 
 __attribute__((__const__,__always_inline__)) static inline mmux_decimal$1_t
-mmux_decimal$1_make (mmux_standard_decimal$1_t value)
+mmux_decimal$1 (mmux_standard_decimal$1_t value)
 {
-  return mmux_decimal$1(value);
+  return ((mmux_decimal$1_t){ .value = value });
 }
 
-#define mmux_complexd$1(VALUE)			((mmux_complexd$1_t){ .value = (VALUE) })
+__attribute__((__const__,__always_inline__)) static inline mmux_complexd$1_t
+mmux_complexd$1 (mmux_standard_complexd$1_t value)
+{
+  return ((mmux_complexd$1_t){ .value = value });
+}
+
+#undef  mmux_complexd$1_literal
+#define mmux_complexd$1_literal(RE,IM)		(mmux_complexd$1(mmux_standard_complexd$1_literal((RE),(IM))))
+
+#undef  mmux_complexd$1_part_literal
 #define mmux_complexd$1_part_literal(VALUE)	(mmux_decimal$1(VALUE))
 
-__attribute__((__const__,__always_inline__)) static inline mmux_complexd$1_t
-mmux_complexd$1_make (mmux_standard_complexd$1_t value)
+__attribute__((__const__,__always_inline__)) static inline int
+mmux_decimal$1_sizeof (void)
 {
-  return mmux_complexd$1(value);
+  return sizeof(mmux_decimal$1_t);
+}
+__attribute__((__const__,__always_inline__)) static inline int
+mmux_complexd$1_sizeof (void)
+{
+  return sizeof(mmux_complexd$1_t);
 }
 ]]])]]])
 m4_divert(0)m4_dnl
@@ -100,6 +115,29 @@ m4_divert(0)m4_dnl
 DEFINE_LIBDFP_STANDARD_TYPE(32)
 DEFINE_LIBDFP_STANDARD_TYPE(64)
 DEFINE_LIBDFP_STANDARD_TYPE(128)
+
+
+/** --------------------------------------------------------------------
+ ** Preliminary definitions.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_FUNCTION_PROTOTYPES_TYPES]]],[[[m4_dnl
+typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
+typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
+typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+typedef bool      mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
+typedef bool      mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef bool      mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+]]])
+
+DEFINE_FUNCTION_PROTOTYPES_TYPES([[[decimal32]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPES([[[decimal64]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPES([[[decimal128]]])
+
+DEFINE_FUNCTION_PROTOTYPES_TYPES([[[complexd32]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPES([[[complexd64]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPES([[[complexd128]]])
 
 
 /** --------------------------------------------------------------------
@@ -187,6 +225,14 @@ mmux_cc_types_decl mmux_complexd$1_t mmux_complexd$1_constant_imag (void) __attr
 mmux_cc_types_decl mmux_complexd$1_t mmux_complexd$1_constant_zero (void) __attribute__((__const__));
 mmux_cc_types_decl mmux_complexd$1_t mmux_complexd$1_constant_one  (void) __attribute__((__const__));
 mmux_cc_types_decl mmux_complexd$1_t mmux_complexd$1_constant_two  (void) __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_nullary_operation_decimal$1_t mmux_decimal$1_minimum __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_nullary_operation_decimal$1_t mmux_decimal$1_maximum __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_decimal$1_t  mmux_decimal$1_max     __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_decimal$1_t  mmux_decimal$1_min     __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_decimal$1_t mmux_standard_decimal$1_minimum (void) __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_decimal$1_t mmux_standard_decimal$1_maximum (void) __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
 
@@ -200,12 +246,7 @@ DEFINE_MATH_CONSTANTS_PROTOS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_COMPLEXD_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[
-__attribute__((__const__,__always_inline__)) static inline int
-mmux_complexd$1_sizeof (void)
-{
-  return sizeof(mmux_complexd$1_t);
-}
+m4_define([[[DEFINE_CPLX_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_complexd$1_t
 mmux_standard_complexd$1_make_rectangular (mmux_standard_complexd$1_part_t re, mmux_standard_complexd$1_part_t im)
 {
@@ -246,9 +287,9 @@ mmux_complexd$1_conj (mmux_complexd$1_t Z)
 ]]])]]])
 m4_divert(0)m4_dnl
 
-DEFINE_COMPLEXD_BASIC_FUNCTIONS(32)
-DEFINE_COMPLEXD_BASIC_FUNCTIONS(64)
-DEFINE_COMPLEXD_BASIC_FUNCTIONS(128)
+DEFINE_CPLX_BASIC_FUNCTIONS(32)
+DEFINE_CPLX_BASIC_FUNCTIONS(64)
+DEFINE_CPLX_BASIC_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
@@ -256,7 +297,7 @@ DEFINE_COMPLEXD_BASIC_FUNCTIONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_CORE_REAL_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+m4_define([[[DEFINE_REAL_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
 __attribute__((__const__,__always_inline__)) static inline mmux_decimal$1_t
 mmux_decimal$1_add (mmux_decimal$1_t A, mmux_decimal$1_t B)
 {
@@ -290,9 +331,9 @@ mmux_decimal$1_inv (mmux_decimal$1_t A)
 ]]])]]])
 m4_divert(0)m4_dnl
 
-DEFINE_CORE_REAL_ARITHMETICS_FUNCTIONS(32)
-DEFINE_CORE_REAL_ARITHMETICS_FUNCTIONS(64)
-DEFINE_CORE_REAL_ARITHMETICS_FUNCTIONS(128)
+DEFINE_REAL_ARITHMETICS_FUNCTIONS(32)
+DEFINE_REAL_ARITHMETICS_FUNCTIONS(64)
+DEFINE_REAL_ARITHMETICS_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
@@ -300,7 +341,7 @@ DEFINE_CORE_REAL_ARITHMETICS_FUNCTIONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_CORE_CPLX_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+m4_define([[[DEFINE_CPLX_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
 __attribute__((__const__,__always_inline__)) static inline mmux_complexd$1_t
 mmux_complexd$1_add (mmux_complexd$1_t A, mmux_complexd$1_t B)
 {
@@ -350,9 +391,155 @@ mmux_complexd$1_inv (mmux_complexd$1_t A)
 ]]])]]])
 m4_divert(0)m4_dnl
 
-DEFINE_CORE_CPLX_ARITHMETICS_FUNCTIONS(32)
-DEFINE_CORE_CPLX_ARITHMETICS_FUNCTIONS(64)
-DEFINE_CORE_CPLX_ARITHMETICS_FUNCTIONS(128)
+DEFINE_CPLX_ARITHMETICS_FUNCTIONS(32)
+DEFINE_CPLX_ARITHMETICS_FUNCTIONS(64)
+DEFINE_CPLX_ARITHMETICS_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Comparison functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_COMPARISON_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+
+mmux_cc_types_decl bool mmux_decimal$1_equal (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_decimal$1_greater (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_decimal$1_less (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_decimal$1_greater_equal (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_decimal$1_less_equal (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl int mmux_decimal$1_cmp (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+  __attribute__((__const__));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_decl mmux_decimal$1_t mmux_decimal$1_max (mmux_decimal$1_t X, mmux_decimal$1_t Y)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_decimal$1_t mmux_decimal$1_min (mmux_decimal$1_t X, mmux_decimal$1_t Y)
+  __attribute__((__const__));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_decl bool mmux_complexd$1_equal (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl int mmux_complexd$1_cmp (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_complexd$1_greater (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_complexd$1_less (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_complexd$1_greater_equal (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_complexd$1_less_equal (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+  __attribute__((__const__));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_decl bool mmux_standard_decimal$1_equal_absmargin (mmux_standard_decimal$1_t op1,
+								 mmux_standard_decimal$1_t op2,
+								 mmux_standard_decimal$1_t margin)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_standard_decimal$1_equal_relepsilon (mmux_standard_decimal$1_t op1,
+								  mmux_standard_decimal$1_t op2,
+								  mmux_standard_decimal$1_t epsilon)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_decimal$1_equal_absmargin (mmux_decimal$1_t op1,
+							mmux_decimal$1_t op2,
+							mmux_decimal$1_t margin)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_decimal$1_equal_relepsilon (mmux_decimal$1_t op1,
+							 mmux_decimal$1_t op2,
+							 mmux_decimal$1_t epsilon)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_complexd$1_equal_absmargin (mmux_complexd$1_t op1,
+							 mmux_complexd$1_t op2,
+							 mmux_complexd$1_t margin)
+  __attribute__((__const__));
+
+mmux_cc_types_decl bool mmux_complexd$1_equal_relepsilon (mmux_complexd$1_t op1,
+							  mmux_complexd$1_t op2,
+							  mmux_complexd$1_t epsilon)
+  __attribute__((__const__));
+]]])]]])
+m4_divert(0)m4_dnl
+
+DEFINE_COMPARISON_PROTOS(32)
+DEFINE_COMPARISON_PROTOS(64)
+DEFINE_COMPARISON_PROTOS(128)
+
+
+/** --------------------------------------------------------------------
+ ** String representation and printing.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl
+mmux_cc_types_decl mmux_standard_decimal$1_t mmux_strtod$1 (char const * restrict input_string, char ** restrict tailptr)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_types_decl int mmux_strfromd$1 (char * s_value, size_t size, char const * restrict format,
+					mmux_standard_decimal$1_t value)
+  __attribute__((__nonnull__(3)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_decl bool mmux_string_is_decimal$1 (char const * s_value);
+
+mmux_cc_types_decl bool mmux_decimal$1_parse  (mmux_decimal$1_t * p_value, char const * s_value, char const * who)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_types_decl bool mmux_decimal$1_sprint (char * ptr, int len, mmux_decimal$1_t value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_types_decl int mmux_decimal$1_sprint_size (mmux_decimal$1_t value);
+
+mmux_cc_types_decl bool mmux_decimal$1_dprintf (int fd, mmux_decimal$1_t value);
+
+mmux_cc_types_decl bool mmux_decimal$1_fprintf (void * stream, mmux_decimal$1_t value)
+  __attribute__((__nonnull__(1)));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_decl bool mmux_string_is_complexd$1 (char const * s_value);
+
+mmux_cc_types_decl bool mmux_complexd$1_parse  (mmux_complexd$1_t * p_value, char const * s_value, char const * who)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_cc_types_decl bool mmux_complexd$1_sprint (char * ptr, int len, mmux_complexd$1_t value)
+  __attribute__((__nonnull__(1)));
+
+mmux_cc_types_decl int mmux_complexd$1_sprint_size (mmux_complexd$1_t value);
+
+mmux_cc_types_decl bool mmux_complexd$1_dprintf (int fd, mmux_complexd$1_t value);
+
+mmux_cc_types_decl bool mmux_complexd$1_fprintf (void * stream, mmux_complexd$1_t value)
+  __attribute__((__nonnull__(1)));
+]]])]]])
+m4_divert(0)m4_dnl
+
+DEFINE_STRINGREP_PRINTING_PROTOS(32)
+DEFINE_STRINGREP_PRINTING_PROTOS(64)
+DEFINE_STRINGREP_PRINTING_PROTOS(128)
 
 
 /** --------------------------------------------------------------------

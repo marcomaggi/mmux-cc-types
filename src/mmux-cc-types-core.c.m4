@@ -66,24 +66,6 @@ __extension__ static const _Float128x mmux_libc_maximum_float128x=FLT128X_MAX;
 __extension__ static const _Float128x mmux_libc_minimum_float128x=-(mmux_libc_maximum_float128x);
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL32]]],[[[
-/* Should we do something with "DEC32_MIN" defined by GCC? */
-__extension__ static const _Decimal32   mmux_libc_maximum_decimal32=DEC32_MAX;
-__extension__ static const _Decimal32   mmux_libc_minimum_decimal32=-(mmux_libc_maximum_decimal32);
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL64]]],[[[
-/* Should we do something with "DEC64_MIN" defined by GCC? */
-__extension__ static const _Decimal64   mmux_libc_maximum_decimal64=DEC64_MAX;
-__extension__ static const _Decimal64   mmux_libc_minimum_decimal64=-(mmux_libc_maximum_decimal64);
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL128]]],[[[
-/* Should we do something with "DEC128_MIN" defined by GCC? */
-__extension__ static const _Decimal128 mmux_libc_maximum_decimal128=DEC128_MAX;
-__extension__ static const _Decimal128 mmux_libc_minimum_decimal128=-(mmux_libc_maximum_decimal128);
-]]])
-
 
 /** --------------------------------------------------------------------
  ** Version functions.
@@ -143,12 +125,12 @@ mmux_pointer_sizeof (void)
 mmux_pointer_t
 mmux_pointer_maximum (void)
 {
-  return mmux_pointer_make((mmux_pointer_t)mmux_uintptr_maximum().value);
+  return mmux_pointer((mmux_pointer_t)mmux_uintptr_maximum().value);
 }
 mmux_pointer_t
 mmux_pointer_minimum (void)
 {
-  return mmux_pointer_make((mmux_pointer_t)mmux_uintptr_minimum().value);
+  return mmux_pointer((mmux_pointer_t)mmux_uintptr_minimum().value);
 }
 mmux_pointer_t
 mmux_standard_pointer_maximum (void)
@@ -183,12 +165,12 @@ mmux_$1_sizeof (void)
 mmux_$1_t
 mmux_$1_maximum (void)
 {
-  return mmux_$1_make($2);
+  return mmux_$1($2);
 }
 mmux_$1_t
 mmux_$1_minimum (void)
 {
-  return mmux_$1_make($3);
+  return mmux_$1($3);
 }
 mmux_standard_$1_t
 mmux_standard_$1_maximum (void)
@@ -227,10 +209,6 @@ DEFINE_REAL_TYPE_FUNCTIONS(float128,mmux_libc_maximum_float128, mmux_libc_minimu
 DEFINE_REAL_TYPE_FUNCTIONS(float32x, mmux_libc_maximum_float32x, mmux_libc_minimum_float32x, [[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
 DEFINE_REAL_TYPE_FUNCTIONS(float64x, mmux_libc_maximum_float64x, mmux_libc_minimum_float64x, [[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
 DEFINE_REAL_TYPE_FUNCTIONS(float128x,mmux_libc_maximum_float128x, mmux_libc_minimum_float128x, [[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
-
-DEFINE_REAL_TYPE_FUNCTIONS(decimal32, mmux_libc_maximum_decimal32, mmux_libc_minimum_decimal32, [[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_REAL_TYPE_FUNCTIONS(decimal64, mmux_libc_maximum_decimal64, mmux_libc_minimum_decimal64, [[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_REAL_TYPE_FUNCTIONS(decimal128,mmux_libc_maximum_decimal128, mmux_libc_minimum_decimal128, [[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
 
 DEFINE_REAL_TYPE_FUNCTIONS(sint8,	INT8_MAX,	INT8_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uint8,	UINT8_MAX,	0)
@@ -311,9 +289,9 @@ DEFINE_UTYPE_FUNCTIONS([[[uint64]]])
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
-inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return mmux_$1_make($2(X.value));    }
-inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1_make($3(X.value, Y.value)); }
-inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1_make($4(X.value, Y.value)); }
+inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return mmux_$1($2(X.value));    }
+inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1($3(X.value, Y.value)); }
+inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1($4(X.value, Y.value)); }
 ]]])]]])
 
 DEFINE_TYPE_FUNCTIONS([[[float]]],	[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
@@ -349,27 +327,27 @@ mmux_$1_sizeof (void)
 mmux_$1_t
 mmux_$1_maximum (void)
 {
-  return mmux_$1_make(mmux_$2_maximum().value);
+  return mmux_$1(mmux_$2_maximum().value);
 }
 mmux_$1_t
 mmux_$1_minimum (void)
 {
-  return mmux_$1_make(mmux_$2_minimum().value);
+  return mmux_$1(mmux_$2_minimum().value);
 }
 mmux_$1_t
 mmux_$1_abs (mmux_$1_t op)
 {
-  return mmux_$1_make(mmux_$2_abs(mmux_$2_make(op.value)).value);
+  return mmux_$1(mmux_$2_abs(mmux_$2(op.value)).value);
 }
 mmux_$1_t
 mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$1_make(mmux_$2_max(mmux_$2_make(op1.value), mmux_$2_make(op2.value)).value);
+  return mmux_$1(mmux_$2_max(mmux_$2(op1.value), mmux_$2(op2.value)).value);
 }
 mmux_$1_t
 mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$1_make(mmux_$2_min(mmux_$2_make(op1.value), mmux_$2_make(op2.value)).value);
+  return mmux_$1(mmux_$2_min(mmux_$2(op1.value), mmux_$2(op2.value)).value);
 }
 
 mmux_standard_$1_t
@@ -448,22 +426,22 @@ mmux_$1_make_rectangular_literal (mmux_standard_$1_part_t re, mmux_standard_$1_p
 mmux_$1_part_t
 mmux_$1_real_part (mmux_$1_t Z)
 {
-  return mmux_$1_part_make($2(Z.value));
+  return mmux_$1_part($2(Z.value));
 }
 mmux_$1_part_t
 mmux_$1_imag_part (mmux_$1_t Z)
 {
-  return mmux_$1_part_make($3(Z.value));
+  return mmux_$1_part($3(Z.value));
 }
 inline mmux_$1_part_t
 mmux_$1_abs (mmux_$1_t Z)
 {
-  return mmux_$1_part_make($9($2(Z.value) * $2(Z.value) + $3(Z.value) * $3(Z.value)));
+  return mmux_$1_part($9($2(Z.value) * $2(Z.value) + $3(Z.value) * $3(Z.value)));
 }
 inline mmux_$1_part_t
 mmux_$1_arg (mmux_$1_t Z)
 {
-  return mmux_$1_part_make($8($3(Z.value), $2(Z.value)));
+  return mmux_$1_part($8($3(Z.value), $2(Z.value)));
 }
 inline mmux_$1_t
 mmux_$1_conj (mmux_$1_t Z)
@@ -520,25 +498,6 @@ DEFINE_COMPLEX_FUNCTIONS([[[complexf128x]]], [[[crealf128x]]],[[[cimagf128x]]],[
 			 [[[cabsf128x]]],    [[[cargf128x]]], [[[conjf128x]]], [[[atan2f128x]]],
 			 [[[sqrtf128x]]],
 			 [[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
-
-
-/** --------------------------------------------------------------------
- ** Complex decimal basic functions.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_COMPLEX_DECIMAL_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
-bool
-mmux_string_is_$1 (char const * s_value)
-{
-  mmux_$1_t	value;
-
-  return mmux_$1_parse(&value, s_value, NULL);
-}
-]]])]]])
-
-DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_COMPLEX_DECIMAL_FUNCTIONS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -808,17 +767,17 @@ m4_define([[[DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITION
 __attribute__((__const__)) mmux_$1_t
 mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
 {
-  return mmux_$1_make($2(A.value, B.value));
+  return mmux_$1($2(A.value, B.value));
 }
 __attribute__((__const__)) mmux_$1_t
 mmux_$1_incr (mmux_$1_t A)
 {
-  return mmux_$1_make(A.value + ((mmux_standard_$1_t)1.0));
+  return mmux_$1(A.value + mmux_standard_$1_constant_one());
 }
 __attribute__((__const__)) mmux_$1_t
 mmux_$1_decr (mmux_$1_t A)
 {
-  return mmux_$1_make(A.value - ((mmux_standard_$1_t)1.0));
+  return mmux_$1(A.value - mmux_standard_$1_constant_one());
 }
 ]]])]]])
 
@@ -1362,7 +1321,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_UNARY_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return mmux_$1_make($3(op.value)); }
+mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return mmux_$1($3(op.value)); }
 ]]])]]])]]])
 
 m4_dnl $1 - type stem
@@ -1373,7 +1332,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARY_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return mmux_$1_make($3(op1.value, op2.value)); }
+mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return mmux_$1($3(op1.value, op2.value)); }
 ]]])]]])]]])
 
 m4_dnl $1 - type stem
@@ -1384,7 +1343,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARYN_CFUNC]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op) { return mmux_$1_make($3(N.value, op.value)); }
+mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op) { return mmux_$1($3(N.value, op.value)); }
 ]]])]]])]]])
 
 m4_divert(0)m4_dnl
@@ -1791,32 +1750,32 @@ m4_define([[[DEFINE_BITWISE_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_$1_t
 mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$1_make(op1.value & op2.value);
+  return mmux_$1(op1.value & op2.value);
 }
 mmux_$1_t
 mmux_$1_bitwise_or (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$1_make(op1.value | op2.value);
+  return mmux_$1(op1.value | op2.value);
 }
 mmux_$1_t
 mmux_$1_bitwise_xor (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$1_make(op1.value ^ op2.value);
+  return mmux_$1(op1.value ^ op2.value);
 }
 mmux_$1_t
 mmux_$1_bitwise_not (mmux_$1_t op)
 {
-  return mmux_$1_make(~ op.value);
+  return mmux_$1(~ op.value);
 }
 mmux_$1_t
 mmux_$1_bitwise_shl (mmux_$1_t op, mmux_sint_t nbits)
 {
-  return mmux_$1_make(op.value << nbits.value);
+  return mmux_$1(op.value << nbits.value);
 }
 mmux_$1_t
 mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
 {
-  return mmux_$1_make(op.value >> nbits.value);
+  return mmux_$1(op.value >> nbits.value);
 }
 ]]])]]])
 
@@ -1894,7 +1853,7 @@ mmux_sint_t
 mmux_ctype_generic_error (...)
 /* This function is used in "mmux-cc-types-generics.h". */
 {
-  return mmux_sint_make(0);
+  return mmux_sint_constant_zero();
 }
 
 /* end of file */

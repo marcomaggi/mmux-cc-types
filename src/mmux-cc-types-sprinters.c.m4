@@ -7,6 +7,10 @@
 
 	This module implements functions to print values to string.
 
+	NOTE This  module implements some  functions for  the _DecimalX types;  it is
+	more convenient to implement these here rather than in the source file of the
+	libdfp API adapter.
+
   Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
@@ -472,12 +476,12 @@ m4_define([[[DEFINE_TYPEDEF_SPRINTER]]],[[[
 int
 mmux_$1_sprint_size (mmux_$1_t value)
 {
-  return mmux_[[[]]]$2[[[]]]_sprint_size(mmux_[[[]]]$2[[[]]]_make(value.value));
+  return mmux_[[[]]]$2[[[]]]_sprint_size(mmux_[[[]]]$2[[[]]](value.value));
 }
 bool
 mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
 {
-  return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, mmux_[[[]]]$2[[[]]]_make(value.value));
+  return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, mmux_[[[]]]$2[[[]]](value.value));
 }
 ]]])
 

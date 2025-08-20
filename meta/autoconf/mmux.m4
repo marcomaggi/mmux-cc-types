@@ -572,9 +572,6 @@ AC_DEFUN([MMUX_LANG_C11],[
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
 
-  # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
-  AC_C_CHAR_UNSIGNED
-
   MMUX_CC_CHECK_COMMON_HEADERS])
 
 
@@ -627,9 +624,6 @@ AC_DEFUN([MMUX_LANG_C23],[
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
-
-  # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
-  AC_C_CHAR_UNSIGNED
 
   MMUX_CC_CHECK_COMMON_HEADERS])
 
@@ -688,10 +682,32 @@ AC_DEFUN([MMUX_LANG_GCC23],[
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
 
-  # Define __CHAR_UNSIGNED__ if "char" is unsigned on this platform.
-  AC_C_CHAR_UNSIGNED
-
   MMUX_CC_CHECK_COMMON_HEADERS])
+
+
+# Synopsis:
+#
+#       MMUX_CC_CHAR_IS_UNSIGNED
+#
+# Description:
+#
+#       Check if "char" is defined as unsigned on the underlying platform.
+#
+#       If it is unsigned define "__CHAR_UNSIGNED__".
+#
+#       If it is unsigned define to 1 the subst symbol: MMUX_CC_TYPES_CHAR_IS_UNSIGNED.
+#
+AC_DEFUN([MMUX_CC_CHAR_IS_UNSIGNED],[
+  AC_C_CHAR_UNSIGNED
+  AC_MSG_CHECKING([MMUX char is unsigned])
+  AS_VAR_SET([MMUX_CC_TYPES_CHAR_IS_UNSIGNED],[0])
+  AS_IF(mmux_test_variable_is_yes([ac_cv_c_char_unsigned]),
+    [AS_VAR_SET([MMUX_CC_TYPES_CHAR_IS_UNSIGNED],[1])
+     AC_MSG_RESULT([yes])],
+    [AS_VAR_SET([MMUX_CC_TYPES_CHAR_IS_UNSIGNED],[0])
+     AC_MSG_RESULT([no])])
+  AC_SUBST([MMUX_CC_TYPES_CHAR_IS_UNSIGNED],[$MMUX_CC_TYPES_CHAR_IS_UNSIGNED])
+])
 
 
 # Synopsis:
