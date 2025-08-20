@@ -98,18 +98,18 @@ test_complex_make_rectangular (void)
 #define IMP	0.456
 
   if (1) {
-    auto Z = mmux_complexf_make_rectangular(mmux_float_make(REP), mmux_float_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf_make_rectangular(mmux_float(REP), mmux_float(IMP));
+    assert(mmux_ctype_equal(mmux_float(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
   }
 
   if (1) {
-    auto Z = mmux_complexd_make_rectangular(mmux_double_make(REP), mmux_double_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexd_make_rectangular(mmux_double(REP), mmux_double(IMP));
+    assert(mmux_ctype_equal(mmux_double(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_double(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -117,9 +117,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   if (1) {
-    auto Z = mmux_complexld_make_rectangular(mmux_ldouble_make(REP), mmux_ldouble_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexld_make_rectangular(mmux_ldouble(REP), mmux_ldouble(IMP));
+    assert(mmux_ctype_equal(mmux_ldouble(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ldouble(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -128,9 +128,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   if (1) {
-    auto Z = mmux_complexf32_make_rectangular(mmux_float32_make(REP), mmux_float32_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf32_make_rectangular(mmux_float32(REP), mmux_float32(IMP));
+    assert(mmux_ctype_equal(mmux_float32(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float32(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -139,9 +139,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   if (1) {
-    auto Z = mmux_complexf64_make_rectangular(mmux_float64_make(REP), mmux_float64_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf64_make_rectangular(mmux_float64(REP), mmux_float64(IMP));
+    assert(mmux_ctype_equal(mmux_float64(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float64(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -150,9 +150,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   if (1) {
-    auto Z = mmux_complexf128_make_rectangular(mmux_float128_make(REP), mmux_float128_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf128_make_rectangular(mmux_float128(REP), mmux_float128(IMP));
+    assert(mmux_ctype_equal(mmux_float128(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float128(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -161,9 +161,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   if (1) {
-    auto Z = mmux_complexf32x_make_rectangular(mmux_float32x_make(REP), mmux_float32x_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf32x_make_rectangular(mmux_float32x(REP), mmux_float32x(IMP));
+    assert(mmux_ctype_equal(mmux_float32x(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float32x(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -172,9 +172,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   if (1) {
-    auto Z = mmux_complexf64x_make_rectangular(mmux_float64x_make(REP), mmux_float64x_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf64x_make_rectangular(mmux_float64x(REP), mmux_float64x(IMP));
+    assert(mmux_ctype_equal(mmux_float64x(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float64x(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -183,9 +183,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   if (1) {
-    auto Z = mmux_complexf128x_make_rectangular(mmux_float128x_make(REP), mmux_float128x_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexf128x_make_rectangular(mmux_float128x(REP), mmux_float128x(IMP));
+    assert(mmux_ctype_equal(mmux_float128x(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_float128x(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -194,9 +194,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   if (1) {
-    auto Z = mmux_complexd32_make_rectangular(mmux_decimal32_make(REP), mmux_decimal32_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexd32_make_rectangular(mmux_decimal32(REP), mmux_decimal32(IMP));
+    assert(mmux_ctype_equal(mmux_decimal32(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_decimal32(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -205,9 +205,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   if (1) {
-    auto Z = mmux_complexd64_make_rectangular(mmux_decimal64_make(REP), mmux_decimal64_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexd64_make_rectangular(mmux_decimal64(REP), mmux_decimal64(IMP));
+    assert(mmux_ctype_equal(mmux_decimal64(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_decimal64(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -216,9 +216,9 @@ test_complex_make_rectangular (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   if (1) {
-    auto Z = mmux_complexd128_make_rectangular(mmux_decimal128_make(REP), mmux_decimal128_make(IMP));
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_float_make(IMP), mmux_ctype_imag_part(Z)));
+    auto Z = mmux_complexd128_make_rectangular(mmux_decimal128(REP), mmux_decimal128(IMP));
+    assert(mmux_ctype_equal(mmux_decimal128(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_decimal128(IMP), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -243,20 +243,20 @@ test_complex_conjugate (void)
 #define IMP	0.456
 
   if (1) {
-    auto W = mmux_complexf_make_rectangular(mmux_float_make(REP), mmux_float_make(IMP));
+    auto W = mmux_complexf_make_rectangular(mmux_float(REP), mmux_float(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
   }
 
   if (1) {
-    auto W = mmux_complexd_make_rectangular(mmux_double_make(REP), mmux_double_make(IMP));
+    auto W = mmux_complexd_make_rectangular(mmux_double(REP), mmux_double(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_double(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_double(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -264,10 +264,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   if (1) {
-    auto W = mmux_complexld_make_rectangular(mmux_ldouble_make(REP), mmux_ldouble_make(IMP));
+    auto W = mmux_complexld_make_rectangular(mmux_ldouble(REP), mmux_ldouble(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_ldouble(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_ldouble(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -276,10 +276,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   if (1) {
-    auto W = mmux_complexf32_make_rectangular(mmux_float32_make(REP), mmux_float32_make(IMP));
+    auto W = mmux_complexf32_make_rectangular(mmux_float32(REP), mmux_float32(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float32(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float32(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -288,10 +288,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   if (1) {
-    auto W = mmux_complexf64_make_rectangular(mmux_float64_make(REP), mmux_float64_make(IMP));
+    auto W = mmux_complexf64_make_rectangular(mmux_float64(REP), mmux_float64(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float64(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float64(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -300,10 +300,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   if (1) {
-    auto W = mmux_complexf128_make_rectangular(mmux_float128_make(REP), mmux_float128_make(IMP));
+    auto W = mmux_complexf128_make_rectangular(mmux_float128(REP), mmux_float128(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float128(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float128(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -312,10 +312,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   if (1) {
-    auto W = mmux_complexf32x_make_rectangular(mmux_float32x_make(REP), mmux_float32x_make(IMP));
+    auto W = mmux_complexf32x_make_rectangular(mmux_float32x(REP), mmux_float32x(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float32x(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float32x(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -324,10 +324,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   if (1) {
-    auto W = mmux_complexf64x_make_rectangular(mmux_float64x_make(REP), mmux_float64x_make(IMP));
+    auto W = mmux_complexf64x_make_rectangular(mmux_float64x(REP), mmux_float64x(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float64x(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float64x(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -336,10 +336,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   if (1) {
-    auto W = mmux_complexf128x_make_rectangular(mmux_float128x_make(REP), mmux_float128x_make(IMP));
+    auto W = mmux_complexf128x_make_rectangular(mmux_float128x(REP), mmux_float128x(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_float128x(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float128x(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -348,10 +348,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   if (1) {
-    auto W = mmux_complexd32_make_rectangular(mmux_decimal32_make(REP), mmux_decimal32_make(IMP));
+    auto W = mmux_complexd32_make_rectangular(mmux_decimal32(REP), mmux_decimal32(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_decimal32(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_decimal32(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -360,10 +360,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   if (1) {
-    auto W = mmux_complexd64_make_rectangular(mmux_decimal64_make(REP), mmux_decimal64_make(IMP));
+    auto W = mmux_complexd64_make_rectangular(mmux_decimal64(REP), mmux_decimal64(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_decimal64(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_decimal64(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -372,10 +372,10 @@ test_complex_conjugate (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   if (1) {
-    auto W = mmux_complexd128_make_rectangular(mmux_decimal128_make(REP), mmux_decimal128_make(IMP));
+    auto W = mmux_complexd128_make_rectangular(mmux_decimal128(REP), mmux_decimal128(IMP));
     auto Z = mmux_ctype_conj(W);
-    assert(mmux_ctype_equal(mmux_float_make(REP), mmux_ctype_real_part(Z)));
-    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_float_make(IMP)), mmux_ctype_imag_part(Z)));
+    assert(mmux_ctype_equal(mmux_decimal128(REP), mmux_ctype_real_part(Z)));
+    assert(mmux_ctype_equal(mmux_ctype_neg(mmux_decimal128(IMP)), mmux_ctype_imag_part(Z)));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, "\n");
@@ -404,9 +404,12 @@ test_complex_arg (void)
 #define EPS	1e-6
 
   if (1) {
-    auto Z = mmux_complexf_make_rectangular(mmux_float_make(REP), mmux_float_make(IMP));
-    auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto Z   = mmux_complexf_make_rectangular(mmux_float(REP), mmux_float(IMP));
+    auto A   = mmux_ctype_arg(Z);
+    auto rop = mmux_float_literal(ARG);
+    auto eps = mmux_float(EPS);
+    assert(true == mmux_float_equal_relepsilon(rop, A, eps));
+    assert(true ==    mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -415,9 +418,11 @@ test_complex_arg (void)
   }
 
   if (1) {
-    auto Z = mmux_complexd_make_rectangular(mmux_double_make(REP), mmux_double_make(IMP));
+    auto Z = mmux_complexd_make_rectangular(mmux_double(REP), mmux_double(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_double_literal(ARG);
+    auto eps = mmux_double(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -427,9 +432,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
   if (1) {
-    auto Z = mmux_complexld_make_rectangular(mmux_ldouble_make(REP), mmux_ldouble_make(IMP));
+    auto Z = mmux_complexld_make_rectangular(mmux_ldouble(REP), mmux_ldouble(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_ldouble_literal(ARG);
+    auto eps = mmux_ldouble(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -440,9 +447,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
   if (1) {
-    auto Z = mmux_complexf32_make_rectangular(mmux_float32_make(REP), mmux_float32_make(IMP));
+    auto Z = mmux_complexf32_make_rectangular(mmux_float32(REP), mmux_float32(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_float32_literal(ARG);
+    auto eps = mmux_float32(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -453,9 +462,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
   if (1) {
-    auto Z = mmux_complexf64_make_rectangular(mmux_float64_make(REP), mmux_float64_make(IMP));
+    auto Z = mmux_complexf64_make_rectangular(mmux_float64(REP), mmux_float64(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_float64_literal(ARG);
+    auto eps = mmux_float64_literal(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -466,9 +477,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
   if (1) {
-    auto Z = mmux_complexf128_make_rectangular(mmux_float128_make(REP), mmux_float128_make(IMP));
+    auto Z = mmux_complexf128_make_rectangular(mmux_float128(REP), mmux_float128(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_float128_literal(ARG);
+    auto eps = mmux_float128(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -479,9 +492,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
   if (1) {
-    auto Z = mmux_complexf32x_make_rectangular(mmux_float32x_make(REP), mmux_float32x_make(IMP));
+    auto Z = mmux_complexf32x_make_rectangular(mmux_float32x(REP), mmux_float32x(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_float32x_literal(ARG);
+    auto eps = mmux_float32x(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -492,9 +507,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
   if (1) {
-    auto Z = mmux_complexf64x_make_rectangular(mmux_float64x_make(REP), mmux_float64x_make(IMP));
+    auto Z = mmux_complexf64x_make_rectangular(mmux_float64x(REP), mmux_float64x(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_float64x_literal(ARG);
+    auto eps = mmux_float64x(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -505,9 +522,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
   if (1) {
-    auto Z = mmux_complexf128x_make_rectangular(mmux_float128x_make(REP), mmux_float128x_make(IMP));
+    auto Z = mmux_complexf128x_make_rectangular(mmux_float128x(REP), mmux_float128x(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_float128x_literal(ARG);
+    auto eps = mmux_float128x(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -518,9 +537,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
   if (1) {
-    auto Z = mmux_complexd32_make_rectangular(mmux_decimal32_make(REP), mmux_decimal32_make(IMP));
+    auto Z = mmux_complexd32_make_rectangular(mmux_decimal32(REP), mmux_decimal32(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_decimal32_literal(ARG);
+    auto eps = mmux_decimal32(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -531,9 +552,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
   if (1) {
-    auto Z = mmux_complexd64_make_rectangular(mmux_decimal64_make(REP), mmux_decimal64_make(IMP));
+    auto Z = mmux_complexd64_make_rectangular(mmux_decimal64(REP), mmux_decimal64(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_decimal64_literal(ARG);
+    auto eps = mmux_decimal64(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
@@ -544,9 +567,11 @@ test_complex_arg (void)
 
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
   if (1) {
-    auto Z = mmux_complexd128_make_rectangular(mmux_decimal128_make(REP), mmux_decimal128_make(IMP));
+    auto Z = mmux_complexd128_make_rectangular(mmux_decimal128(REP), mmux_decimal128(IMP));
     auto A = mmux_ctype_arg(Z);
-    assert(true == mmux_ctype_equal_relepsilon(ARG, A, EPS));
+    auto rop = mmux_decimal128_literal(ARG);
+    auto eps = mmux_decimal128(EPS);
+    assert(true == mmux_ctype_equal_relepsilon(rop, A, eps));
     fprintf(stderr, "%s: Z(%s)=", __func__, mmux_ctype_dispatch_stem(Z));
     mmux_ctype_fprintf(stderr, Z);
     fprintf(stderr, ", arg(%s)=", mmux_ctype_dispatch_stem(A));
