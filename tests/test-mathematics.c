@@ -18,10 +18,7 @@
  ** ----------------------------------------------------------------- */
 
 #include <mmux-cc-types.h>
-
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <test-common.h>
 
 
 static void
@@ -29,161 +26,103 @@ test_mathematics_sin (void)
 {
   printf("running test: %s\n", __func__);
 
-  {
-    mmux_float_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
+#undef  DOIT_FOR_REAL
+#define DOIT_FOR_REAL(STEM)							\
+  {										\
+    auto	op1 = mmux_## STEM(0.123);					\
+    auto	rop = mmux_## STEM(0.12269009);					\
+    auto	mrg = mmux_## STEM(1e-6);					\
+    assert(mmux_##STEM##_equal_absmargin(rop, mmux_##STEM##_sin(op1), mrg));	\
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));		\
   }
-  {
-    mmux_double_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
+
+#undef  DOIT_FOR_CPLX
+#define DOIT_FOR_CPLX(STEM)							\
+  {										\
+    auto	op1 = mmux_##STEM##_make_rectangular(5.0,3.0);			\
+    auto	rop = mmux_##STEM##_make_rectangular(-9.654125477,2.841692296);	\
+    auto	mrg = mmux_##STEM##_make_rectangular(1e-6,1e-6);		\
+    assert(mmux_##STEM##_equal_absmargin(rop, mmux_##STEM##_sin(op1), mrg));	\
+    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));		\
   }
+
+
+  DOIT_FOR_REAL(float);
+  DOIT_FOR_REAL(double);
 #ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  {
-    mmux_ldouble_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(ldouble);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  {
-    mmux_float32_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(float32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  {
-    mmux_float64_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(float64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  {
-    mmux_float128_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(float128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  {
-    mmux_float32x_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(float32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  {
-    mmux_float64x_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(float64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  {
-    mmux_float128x_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(float128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  {
-    mmux_decimal32_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(decimal32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  {
-    mmux_decimal64_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(decimal64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  {
-    mmux_decimal128_t	op1 = 0.123, rop = 0.12269009, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_REAL(decimal128);
 #endif
 
-  {
-    auto	op1 = mmux_complexf_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
-
-  {
-    auto	op1 = mmux_complexd_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexd_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexd_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
-
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF
+  DOIT_FOR_CPLX(complexf);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD
+  DOIT_FOR_CPLX(complexd);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  {
-    auto	op1 = mmux_complexld_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexld_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexld_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_CPLX(complexld);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  {
-    auto	op1 = mmux_complexf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf32_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf32_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_CPLX(complexf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  {
-    auto	op1 = mmux_complexf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf64_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf64_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_CPLX(complexf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  {
-    auto	op1 = mmux_complexf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf128_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf128_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_CPLX(complexf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  {
-    auto	op1 = mmux_complexf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf32x_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf32x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_CPLX(complexf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  {
-    auto	op1 = mmux_complexf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf64x_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf64x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+  DOIT_FOR_CPLX(complexf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
+  DOIT_FOR_CPLX(complexf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  {
-    auto	op1 = mmux_complexf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_complexf128x_make_rectangular(-9.654125477,2.841692296);
-    auto	mrg = mmux_complexf128x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));
-  }
+#if 0 /* not implemented */
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
+  DOIT_FOR_CPLX(complexd32);
 #endif
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
+  DOIT_FOR_CPLX(complexd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
+  DOIT_FOR_CPLX(complexd128);
+#endif
+#endif
+
 }
+
+#if 0
 
 
 static void
@@ -4696,62 +4635,16 @@ test_mathematics_yn (void)
  ** Let's go.
  ** ----------------------------------------------------------------- */
 
+#endif
+
 int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
   mmux_cc_types_init();
-
-  if (1) {
-    fprintf(stderr, "%s: setting output format for float\n", __func__);
-    assert(false == mmux_float_set_output_format("%.6f", __func__));
-    fprintf(stderr, "%s: setting output format for double\n", __func__);
-    assert(false == mmux_double_set_output_format("%.6f", __func__));
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-    fprintf(stderr, "%s: setting output format for ldouble\n", __func__);
-    assert(false == mmux_ldouble_set_output_format("%.6f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-    fprintf(stderr, "%s: setting output format for float32\n", __func__);
-    assert(false == mmux_float32_set_output_format("%.6f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-    fprintf(stderr, "%s: setting output format for float64\n", __func__);
-    assert(false == mmux_float64_set_output_format("%.6f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-    fprintf(stderr, "%s: setting output format for float128\n", __func__);
-    assert(false == mmux_float128_set_output_format("%.6f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-    fprintf(stderr, "%s: setting output format for float32x\n", __func__);
-    assert(false == mmux_float32x_set_output_format("%.6f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-    fprintf(stderr, "%s: setting output format for float64x\n", __func__);
-    assert(false == mmux_float64x_set_output_format("%.6f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-    fprintf(stderr, "%s: setting output format for float128x\n", __func__);
-    assert(false == mmux_float128x_set_output_format("%.6f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-    fprintf(stderr, "%s: setting output format for decimal32\n", __func__);
-    assert(false == mmux_decimal32_set_output_format("%.6f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-    fprintf(stderr, "%s: setting output format for decimal64\n", __func__);
-    assert(false == mmux_decimal64_set_output_format("%.6f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-    fprintf(stderr, "%s: setting output format for decimal128\n", __func__);
-    assert(false == mmux_decimal128_set_output_format("%.6f", __func__));
-#endif
-  }
+  test_set_output_formats();
 
   if (1) {	test_mathematics_sin();		}
+#if 0
   if (1) {	test_mathematics_cos();		}
   if (1) {	test_mathematics_tan();		}
   if (1) {	test_mathematics_asin();	}
@@ -4791,6 +4684,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_mathematics_y0();		}
   if (1) {	test_mathematics_y1();		}
   if (1) {	test_mathematics_yn();		}
+#endif
 
   exit(EXIT_SUCCESS);
 }

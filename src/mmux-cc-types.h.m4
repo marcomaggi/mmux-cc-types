@@ -679,10 +679,6 @@ DEFINE_PROTOS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
 DEFINE_PROTOS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
 DEFINE_PROTOS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
 
-DEFINE_PROTOS([[[complexd32]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_PROTOS([[[complexd64]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_PROTOS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
-
 
 /** --------------------------------------------------------------------
  ** Type functions prototypes.
@@ -999,6 +995,11 @@ mmux_standard_$1_constant_two (void)
 {
   return (mmux_standard_$1_t)(2);
 }
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_standard_$1_constant_ten (void)
+{
+  return (mmux_standard_$1_t)(10);
+}
 
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_constant_zero (void)
@@ -1014,6 +1015,11 @@ __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_constant_two (void)
 {
   return mmux_$1(mmux_standard_$1_literal(2));
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_constant_ten (void)
+{
+  return mmux_$1(mmux_standard_$1_literal(10));
 }
 ]]])]]])
 
@@ -1077,6 +1083,11 @@ mmux_standard_$1_constant_two (void)
 {
   return mmux_standard_$1_literal(2.0);
 }
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_standard_$1_constant_ten (void)
+{
+  return mmux_standard_$1_literal(10.0);
+}
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG2E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG10E		(void) __attribute__((__const__));
@@ -1105,6 +1116,11 @@ __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_constant_two (void)
 {
   return mmux_$1(mmux_standard_$1_constant_two());
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_constant_ten (void)
+{
+  return mmux_$1(mmux_standard_$1_constant_ten());
 }
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
@@ -1159,6 +1175,11 @@ mmux_standard_$1_constant_two (void)
 {
   return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_two(), mmux_standard_$2_constant_zero());
 }
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_standard_$1_constant_ten (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_ten(), mmux_standard_$2_constant_zero());
+}
 
 /* ------------------------------------------------------------------ */
 
@@ -1181,6 +1202,11 @@ __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_constant_two (void)
 {
   return mmux_$1(mmux_standard_$1_constant_two());
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_constant_ten (void)
+{
+  return mmux_$1(mmux_standard_$1_constant_ten());
 }
 ]]])]]])
 
@@ -1473,7 +1499,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_UNARY_CPROTO]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_$1_t op);
+mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_$1_t op) __attribute__((__const__));
 ]]])]]])]]])
 
 m4_dnl $1 - type stem
@@ -1484,7 +1510,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARY_CPROTO]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2);
+mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) __attribute__((__const__));
 ]]])]]])]]])
 
 m4_dnl $1 - type stem
@@ -1495,7 +1521,7 @@ m4_dnl $5 - C preprocessor for optional definition
 m4_define([[[DEFINE_BINARYN_CPROTO]]],[[[m4_ifelse($#,5,,
 [[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
 )]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op);
+mmux_cc_types_decl mmux_$1_t mmux_$1_$2 (mmux_sint_t N, mmux_$1_t op) __attribute__((__const__));
 ]]])]]])]]])
 
 m4_dnl  $1 - type stem
@@ -1718,49 +1744,6 @@ DEFINE_CPROTOS([[[float128x]]],
 	       [[[j0f128x]]],		[[[j1f128x]]],		[[[jnf128x]]],
 	       [[[y0f128x]]],		[[[y1f128x]]],		[[[ynf128x]]])
 
-DEFINE_CPROTOS([[[decimal32]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_DECIMAL32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]],
-	       [[[sind32]]],		[[[cosd32]]],		[[[tand32]]],
-	       [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
-	       [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
-	       [[[asinhd32]]],		[[[acoshd32]]],		[[[atanhd32]]],
-	       [[[expd32]]],		[[[exp2d32]]],		[[[exp10d32]]],
-	       [[[logd32]]],		[[[log10d32]]],		[[[log2d32]]],		[[[logbd32]]],
-	       [[[powd32]]],		[[[sqrtd32]]],		[[[cbrtd32]]],		[[[hypotd32]]],
-	       [[[expm1d32]]],		[[[log1pd32]]],
-	       [[[erfd32]]],		[[[erfcd32x]]],
-	       [[[lgammad32]]],		[[[tgammad32]]],
-	       [[[j0d32]]],		[[[j1d32]]],		[[[jnd32]]],
-	       [[[y0d32]]],		[[[y1d32]]],		[[[ynd32]]])
-DEFINE_CPROTOS([[[decimal64]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_DECIMAL64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]],
-	       [[[sind64]]],		[[[cosd64]]],		[[[tand64]]],
-	       [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
-	       [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
-	       [[[asinhd64]]],		[[[acoshd64]]],		[[[atanhd64]]],
-	       [[[expd64]]],		[[[exp2d64]]],		[[[exp10d64]]],
-	       [[[logd64]]],		[[[log10d64]]],		[[[log2d64]]],		[[[logbd64]]],
-	       [[[powd64]]],		[[[sqrtd64]]],		[[[cbrtd64]]],		[[[hypotd64]]],
-	       [[[expm1d64]]],		[[[log1pd64]]],
-	       [[[erfd64]]],		[[[erfcd64x]]],
-	       [[[lgammad64]]],		[[[tgammad64]]],
-	       [[[j0d64]]],		[[[j1d64]]],		[[[jnd64]]],
-	       [[[y0d64]]],		[[[y1d64]]],		[[[ynd64]]])
-DEFINE_CPROTOS([[[decimal128]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_DECIMAL128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]],
-	       [[[sind128]]],		[[[cosd128]]],		[[[tand128]]],
-	       [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
-	       [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
-	       [[[asinhd128]]],		[[[acoshd128]]],	[[[atanhd128]]],
-	       [[[expd128]]],		[[[exp2d128]]],		[[[exp10d128]]],
-	       [[[logd128]]],		[[[log10d128]]],	[[[log2d128]]],		[[[logbd128]]],
-	       [[[powd128]]],		[[[sqrtd128]]],		[[[cbrtd128]]],		[[[hypotd128]]],
-	       [[[expm1d128]]],		[[[log1pd128]]],
-	       [[[erfd128]]],		[[[erfcd128x]]],
-	       [[[lgammad128]]],	[[[tgammad128]]],
-	       [[[j0d128]]],		[[[j1d128]]],		[[[jnd128]]],
-	       [[[y0d128]]],		[[[y1d128]]],		[[[ynd128]]])
-
 DEFINE_CPROTOS([[[complexf]]],
 	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF]]],	[[[]]],
 	       [[[csinf]]],		[[[ccosf]]],		[[[ctanf]]],
@@ -1884,49 +1867,6 @@ DEFINE_CPROTOS([[[complexf128x]]],
 	       [[[cexpf128x]]],		[[[cexp2f128x]]],	[[[cexp10f128x]]],
 	       [[[clogf128x]]],		[[[clog10f128x]]],	[[[clog2f128x]]],	[[[]]],
 	       [[[cpowf128x]]],		[[[csqrtf128x]]],	[[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],			[[[]]],
-	       [[[]]],			[[[]]],			[[[]]])
-
-DEFINE_CPROTOS([[[complexd32]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXD32]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD32_UNIMPLEMENTED]]],
-	       [[[csind32]]],		[[[ccosd32]]],		[[[ctand32]]],
-	       [[[casind32]]],		[[[cacosd32]]],		[[[catand32]]],		[[[]]],
-	       [[[csinhd32]]],		[[[ccoshd32]]],		[[[ctanhd32]]],
-	       [[[casinhd32]]],		[[[cacoshd32]]],	[[[catanhd32]]],
-	       [[[cexpd32]]],		[[[]]],			[[[]]],
-	       [[[clogd32]]],		[[[clog10d32]]],	[[[]]],			[[[]]],
-	       [[[cpowd32]]],		[[[csqrtd32]]],		[[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],			[[[]]],
-	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexd64]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXD64]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD64_UNIMPLEMENTED]]],
-	       [[[csind64]]],		[[[ccosd64]]],		[[[ctand64]]],
-	       [[[casind64]]],		[[[cacosd64]]],		[[[catand64]]],		[[[]]],
-	       [[[csinhd64]]],		[[[ccoshd64]]],		[[[ctanhd64]]],
-	       [[[casinhd64]]],		[[[cacoshd64]]],	[[[catanhd64]]],
-	       [[[cexpd64]]],		[[[]]],			[[[]]],
-	       [[[clogd64]]],		[[[clog10d64]]],	[[[]]],			[[[]]],
-	       [[[cpowd64]]],		[[[csqrtd64]]],		[[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],
-	       [[[]]],			[[[]]],			[[[]]],
-	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexd128]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXD128]]],[[[MMUX_CC_TYPES_HAS_COMPLEXD128_UNIMPLEMENTED]]],
-	       [[[csind128]]],		[[[ccosd128]]],		[[[ctand128]]],
-	       [[[casind128]]],		[[[cacosd128]]],	[[[catand128]]],	[[[]]],
-	       [[[csinhd128]]],		[[[ccoshd128]]],	[[[ctanhd128]]],
-	       [[[casinhd128]]],	[[[cacoshd128]]],	[[[catanhd128]]],
-	       [[[cexpd128]]],		[[[]]],			[[[]]],
-	       [[[clogd128]]],		[[[clog10d128]]],	[[[]]],			[[[]]],
-	       [[[cpowd128]]],		[[[csqrtd128]]],	[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],

@@ -86,9 +86,9 @@ mmux_complexd$1_arg (mmux_complexd$1_t Z)
 {
   return mmux_decimal$1(atan2d$1(Z.value.im, Z.value.re));
 }
+/* mmux_complexd$1_conj implemented as inline function */
 ]]])]]])
 m4_divert(0)m4_dnl
-
 DEFINE_REAL_CPLX_BASIC_FUNCTIONS(32)
 DEFINE_REAL_CPLX_BASIC_FUNCTIONS(64)
 DEFINE_REAL_CPLX_BASIC_FUNCTIONS(128)
@@ -439,506 +439,154 @@ mmux_exp10d128 (mmux_standard_decimal128_t op)
 /* NOTE By inspecting the header files installed by libdfp: I have seen that only the
    "dl" constants are defined.  (Marco Maggi; Aug 16, 2025) */
 
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_zero (void)
-{
-  return mmux_standard_decimal32_literal(0.0);
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_one (void)
-{
-  return mmux_standard_decimal32_literal(1.0);
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_two (void)
-{
-  return mmux_standard_decimal32_literal(2.0);
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_E (void)
-{
-  return M_Edl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_LOG2E (void)
-{
-  return M_LOG2Edl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_LOG10E (void)
-{
-  return M_LOG10Edl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_LN2 (void)
-{
-  return M_LN2dl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_LN10 (void)
-{
-  return M_LN10dl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_PI (void)
-{
-  return M_PIdl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_PI_2 (void)
-{
-  return M_PI_2dl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_PI_4 (void)
-{
-  return M_PI_4dl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_1_PI (void)
-{
-  return M_1_PIdl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_2_PI (void)
-{
-  return M_2_PIdl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_2_SQRTPI (void)
-{
-  return M_2_SQRTPIdl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_SQRT2 (void)
-{
-  return M_SQRT2dl;
-}
-mmux_standard_decimal32_t
-mmux_standard_decimal32_constant_SQRT1_2 (void)
-{
-  return M_SQRT1_2dl;
-}
-
-/* ------------------------------------------------------------------ */
-
-mmux_decimal32_t
-mmux_decimal32_constant_zero (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_zero());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_one (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_one());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_two (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_two());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_E (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_E());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_LOG2E (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_LOG2E());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_LOG10E (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_LOG10E());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_LN2 (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_LN2());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_LN10 (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_LN10());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_PI (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_PI());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_PI_2 (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_PI_2());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_PI_4 (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_PI_4());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_1_PI (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_1_PI());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_2_PI (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_2_PI());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_2_SQRTPI (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_2_SQRTPI());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_SQRT2 (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_SQRT2());
-}
-mmux_decimal32_t
-mmux_decimal32_constant_SQRT1_2 (void)
-{
-  return mmux_decimal32(mmux_standard_decimal32_constant_SQRT1_2());
-}
-
-/* ------------------------------------------------------------------ */
-
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_zero (void)
-{
-  return mmux_standard_decimal64_literal(0.0);
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_one (void)
-{
-  return mmux_standard_decimal64_literal(1.0);
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_two (void)
-{
-  return mmux_standard_decimal64_literal(2.0);
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_E (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_E();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_LOG2E (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LOG2E();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_LOG10E (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LOG10E();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_LN2 (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LN2();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_LN10 (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_LN10();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_PI (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_PI();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_PI_2 (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_PI_2();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_PI_4 (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_PI_4();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_1_PI (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_1_PI();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_2_PI (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_2_PI();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_2_SQRTPI (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_2_SQRTPI();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_SQRT2 (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_SQRT2();
-}
-mmux_standard_decimal64_t
-mmux_standard_decimal64_constant_SQRT1_2 (void)
-{
-  return (mmux_standard_decimal64_t)mmux_standard_decimal32_constant_SQRT1_2();
-}
-
-/* ------------------------------------------------------------------ */
-
-mmux_decimal64_t
-mmux_decimal64_constant_zero (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_zero());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_one (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_one());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_two (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_two());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_E (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_E());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_LOG2E (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_LOG2E());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_LOG10E (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_LOG10E());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_LN2 (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_LN2());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_LN10 (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_LN10());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_PI (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_PI());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_PI_2 (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_PI_2());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_PI_4 (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_PI_4());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_1_PI (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_1_PI());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_2_PI (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_2_PI());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_2_SQRTPI (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_2_SQRTPI());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_SQRT2 (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_SQRT2());
-}
-mmux_decimal64_t
-mmux_decimal64_constant_SQRT1_2 (void)
-{
-  return mmux_decimal64(mmux_standard_decimal64_constant_SQRT1_2());
-}
-
-/* ------------------------------------------------------------------ */
-
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_zero (void)
-{
-  return mmux_standard_decimal128_literal(0.0);
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_one (void)
-{
-  return mmux_standard_decimal128_literal(1.0);
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_two (void)
-{
-  return mmux_standard_decimal128_literal(2.0);
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_E (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_E();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_LOG2E (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LOG2E();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_LOG10E (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LOG10E();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_LN2 (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LN2();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_LN10 (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_LN10();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_PI (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_PI();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_PI_2 (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_PI_2();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_PI_4 (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_PI_4();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_1_PI (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_1_PI();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_2_PI (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_2_PI();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_2_SQRTPI (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_2_SQRTPI();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_SQRT2 (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_SQRT2();
-}
-mmux_standard_decimal128_t
-mmux_standard_decimal128_constant_SQRT1_2 (void)
-{
-  return (mmux_standard_decimal128_t)mmux_standard_decimal32_constant_SQRT1_2();
-}
-
-/* ------------------------------------------------------------------ */
-
-mmux_decimal128_t
-mmux_decimal128_constant_zero (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_zero());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_one (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_one());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_two (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_two());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_E (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_E());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_LOG2E (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_LOG2E());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_LOG10E (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_LOG10E());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_LN2 (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_LN2());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_LN10 (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_LN10());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_PI (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_PI());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_PI_2 (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_PI_2());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_PI_4 (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_PI_4());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_1_PI (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_1_PI());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_2_PI (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_2_PI());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_2_SQRTPI (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_2_SQRTPI());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_SQRT2 (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_SQRT2());
-}
-mmux_decimal128_t
-mmux_decimal128_constant_SQRT1_2 (void)
-{
-  return mmux_decimal128(mmux_standard_decimal128_constant_SQRT1_2());
-}
-
-/* ------------------------------------------------------------------ */
-
 m4_divert(-1)
-m4_define([[[DEFINE_MAXIMUM_MINIMUM_CONSTANT_FUNCTIONS]]],[[[
+m4_define([[[DEFINE_DECIMAL_MATH_CONSTANTS]]],[[[
+/* mmux_standard_decimal$1_constant_zero implemented as inline */
+/* mmux_standard_decimal$1_constant_one  implemented as inline */
+/* mmux_standard_decimal$1_constant_two  implemented as inline */
+/* mmux_standard_decimal$1_constant_ten  implemented as inline */
+
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_E (void)
+{
+  return (mmux_standard_decimal$1_t)M_Edl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_LOG2E (void)
+{
+  return (mmux_standard_decimal$1_t)M_LOG2Edl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_LOG10E (void)
+{
+  return (mmux_standard_decimal$1_t)M_LOG10Edl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_LN2 (void)
+{
+  return (mmux_standard_decimal$1_t)M_LN2dl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_LN10 (void)
+{
+  return (mmux_standard_decimal$1_t)M_LN10dl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_PI (void)
+{
+  return (mmux_standard_decimal$1_t)M_PIdl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_PI_2 (void)
+{
+  return (mmux_standard_decimal$1_t)M_PI_2dl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_PI_4 (void)
+{
+  return (mmux_standard_decimal$1_t)M_PI_4dl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_1_PI (void)
+{
+  return (mmux_standard_decimal$1_t)M_1_PIdl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_2_PI (void)
+{
+  return (mmux_standard_decimal$1_t)M_2_PIdl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_2_SQRTPI (void)
+{
+  return (mmux_standard_decimal$1_t)M_2_SQRTPIdl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_SQRT2 (void)
+{
+  return (mmux_standard_decimal$1_t)M_SQRT2dl;
+}
+mmux_standard_decimal$1_t
+mmux_standard_decimal$1_constant_SQRT1_2 (void)
+{
+  return (mmux_standard_decimal$1_t)M_SQRT1_2dl;
+}
+
+/* ------------------------------------------------------------------ */
+
+/* mmux_decimal$1_constant_zero implemented as inline */
+/* mmux_decimal$1_constant_one  implemented as inline */
+/* mmux_decimal$1_constant_two  implemented as inline */
+/* mmux_decimal$1_constant_ten  implemented as inline */
+
+mmux_decimal$1_t
+mmux_decimal$1_constant_E (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_E());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_LOG2E (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_LOG2E());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_LOG10E (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_LOG10E());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_LN2 (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_LN2());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_LN10 (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_LN10());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_PI (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_PI());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_PI_2 (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_PI_2());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_PI_4 (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_PI_4());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_1_PI (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_1_PI());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_2_PI (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_2_PI());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_2_SQRTPI (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_2_SQRTPI());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_SQRT2 (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_SQRT2());
+}
+mmux_decimal$1_t
+mmux_decimal$1_constant_SQRT1_2 (void)
+{
+  return mmux_decimal$1(mmux_standard_decimal$1_constant_SQRT1_2());
+}
+
+/* ------------------------------------------------------------------ */
+
 /* Should we do something with "DEC$1_MIN" defined by GCC? */
 mmux_standard_decimal$1_t
 mmux_standard_decimal$1_maximum (void)
@@ -960,65 +608,28 @@ mmux_decimal$1_minimum (void)
 {
   return mmux_decimal$1(mmux_standard_decimal$1_minimum());
 }
+
+/* ------------------------------------------------------------------ */
+
+/* mmux_standard_complex$1_constant_imag implemented as inline */
+/* mmux_standard_complex$1_constant_zero implemented as inline */
+/* mmux_standard_complex$1_constant_one  implemented as inline */
+/* mmux_standard_complex$1_constant_two  implemented as inline */
+/* mmux_standard_complex$1_constant_ten  implemented as inline */
+
+/* ------------------------------------------------------------------ */
+
+/* mmux_complex$1_constant_imag implemented as inline */
+/* mmux_complex$1_constant_zero implemented as inline */
+/* mmux_complex$1_constant_one  implemented as inline */
+/* mmux_complex$1_constant_two  implemented as inline */
+/* mmux_complex$1_constant_ten  implemented as inline */
+
 ]]])
 m4_divert(0)m4_dnl
-
-DEFINE_MAXIMUM_MINIMUM_CONSTANT_FUNCTIONS(32)
-DEFINE_MAXIMUM_MINIMUM_CONSTANT_FUNCTIONS(64)
-DEFINE_MAXIMUM_MINIMUM_CONSTANT_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Mathematical constants: complex numbers.
- ** ----------------------------------------------------------------- */
-
-m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_standard_$1_t
-mmux_standard_$1_constant_imag (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(1.0));
-}
-mmux_standard_$1_t
-mmux_standard_$1_constant_zero (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(0.0), mmux_standard_$1_part_literal(0.0));
-}
-mmux_standard_$1_t
-mmux_standard_$1_constant_one (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(1.0), mmux_standard_$1_part_literal(0.0));
-}
-mmux_standard_$1_t
-mmux_standard_$1_constant_two (void)
-{
-  return mmux_standard_$1_make_rectangular(mmux_standard_$1_part_literal(2.0), mmux_standard_$1_part_literal(0.0));
-}
-
-mmux_$1_t
-mmux_$1_constant_imag (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(1.0));
-}
-mmux_$1_t
-mmux_$1_constant_zero (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(0.0), mmux_$1_part_literal(0.0));
-}
-mmux_$1_t
-mmux_$1_constant_one (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(1.0), mmux_$1_part_literal(0.0));
-}
-mmux_$1_t
-mmux_$1_constant_two (void)
-{
-  return mmux_$1_make_rectangular(mmux_$1_part_literal(2.0), mmux_$1_part_literal(0.0));
-}
-]]])]]])
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd32,		[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd64,		[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd128,	[[[MMUX_CC_TYPES_HAS_COPMLEXD32]]])
+DEFINE_DECIMAL_MATH_CONSTANTS(32)
+DEFINE_DECIMAL_MATH_CONSTANTS(64)
+DEFINE_DECIMAL_MATH_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------

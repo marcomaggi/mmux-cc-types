@@ -1585,7 +1585,7 @@ DEFINE_BINARY_PRINTING_FUNCTION([[[dprintf]]])
  ** ----------------------------------------------------------------- */
 
 #define mmux_ctype_dispatch_typedef(VALUE)				\
-  _Generic((VALUE),							\
+  (_Generic((VALUE),							\
            mmux_pointer_t:		"mmux_pointer_t",		\
 	   mmux_char_t:			"mmux_char_t",			\
            mmux_schar_t:		"mmux_schar_t",			\
@@ -1691,12 +1691,12 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 	   mmux_complexd128_t:		"mmux_complexd128_t",		\
 ]]])m4_dnl
-           )
+           default:			"<unspecified>"))
 
 /* ------------------------------------------------------------------ */
 
 #define mmux_ctype_dispatch_stem(VALUE)				\
-  _Generic((VALUE),						\
+  (_Generic((VALUE),						\
            mmux_pointer_t:		"pointer",		\
 	   mmux_char_t:			"char",			\
            mmux_schar_t:		"schar",		\
@@ -1802,7 +1802,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 	   mmux_complexd128_t:		"complexd128",		\
 ]]])m4_dnl
-           )
+           default:			"<unspecified>"))
 
 
 /** --------------------------------------------------------------------
