@@ -46,6 +46,7 @@ test_bitwise_and (void)
     auto	rop = mmux_pointer_literal(ROP);
     assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_and(op1, op2)));
     assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2)));
+    dprintf(2," %s,", "pointer");
   }
 
 #undef  DOIT
