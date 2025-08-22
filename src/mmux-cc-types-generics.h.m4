@@ -48,37 +48,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -105,37 +105,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
@@ -163,37 +163,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -220,37 +220,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
@@ -279,37 +279,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -336,37 +336,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
@@ -395,37 +395,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -452,37 +452,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
@@ -511,37 +511,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -568,37 +568,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
@@ -626,37 +626,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -709,37 +709,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_$1,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_$1,			\
 	   mmux_uint8_t:		mmux_uint8_$1,			\
@@ -881,37 +881,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_BINARY_FUNCTION_INEXACT_REAL_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)					\
   (_Generic((VALUE1),							\
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
@@ -924,37 +924,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_UNARY_FUNCTION_INEXACT_REAL_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE)						\
   (_Generic((VALUE),							\
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
@@ -967,37 +967,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_BINARY_FUNCTION_INEXACT_COMPLEX_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)					\
   (_Generic((VALUE1),							\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2))
 ]]]) m4_dnl
@@ -1010,37 +1010,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_UNARY_FUNCTION_INEXACT_COMPLEX_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE)						\
   (_Generic((VALUE),							\
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
@@ -1053,69 +1053,69 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_TERNARY_FUNCTION_INEXACT_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2,VALUE3)				\
   (_Generic((VALUE1),							\
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2),(VALUE3)))
 ]]]) m4_dnl
@@ -1128,69 +1128,69 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_BINARY_FUNCTION_INEXACT_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)					\
   (_Generic((VALUE1),							\
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
@@ -1203,69 +1203,69 @@ m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
 m4_define([[[DEFINE_UNARY_FUNCTION_INEXACT_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE)						\
   (_Generic((VALUE),							\
-	   mmux_float_t:		mmux_float_$1,			\
-	   mmux_double_t:		mmux_double_$1,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
 ]]])m4_dnl
-	   mmux_complexf_t:		mmux_complexf_$1,		\
-	   mmux_complexd_t:		mmux_complexd_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_$1,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
@@ -1281,37 +1281,37 @@ m4_dnl argument and an inexact real number as second argument.
 m4_define([[[DEFINE_BINARY_FUNCTION_SINT_AND_INEXACT_REAL_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)						\
   _Generic((VALUE2),								\
-	   mmux_float_t:		mmux_float_$1,				\
-	   mmux_double_t:		mmux_double_$1,				\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_$1,			\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,				\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,				\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,			\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2))
 ]]]) m4_dnl
@@ -1437,37 +1437,37 @@ DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 	   mmux_sllong_t:		mmux_sllong_neg,		\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_neg,			\
-	   mmux_double_t:		mmux_double_neg,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_neg,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_neg,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_neg,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_neg,			\
 	   mmux_sint16_t:		mmux_sint16_neg,		\
@@ -1479,37 +1479,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_off_t:			mmux_off_neg,			\
            mmux_ptrdiff_t:		mmux_ptrdiff_neg,		\
            mmux_wint_t:			mmux_wint_neg,			\
-	   mmux_complexf_t:		mmux_complexf_neg,		\
-	   mmux_complexd_t:		mmux_complexd_neg,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_neg,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_neg,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_neg,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_neg,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_neg,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)(VALUE))
 
@@ -1604,37 +1604,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		"mmux_ullong_t",		\
 ]]])m4_dnl
-	   mmux_float_t:		"mmux_float_t",			\
-	   mmux_double_t:		"mmux_double_t",		\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		"mmux_ldouble_t",		\
+	   mmux_flonumfl_t:		"mmux_flonumfl_t",			\
+	   mmux_flonumdb_t:		"mmux_flonumdb_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		"mmux_flonumldb_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		"mmux_float32_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		"mmux_flonumf32_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		"mmux_float64_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		"mmux_flonumf64_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		"mmux_float128_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		"mmux_flonumf128_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		"mmux_float32x_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		"mmux_flonumf32x_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		"mmux_float64x_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		"mmux_flonumf64x_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		"mmux_float128x_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		"mmux_flonumf128x_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		"mmux_decimal32_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		"mmux_flonumd32_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		"mmux_decimal64_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		"mmux_flonumd64_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		"mmux_decimal128_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		"mmux_flonumd128_t",		\
 ]]])m4_dnl
 	   mmux_sint8_t:		"mmux_sint8_t",			\
 	   mmux_uint8_t:		"mmux_uint8_t",			\
@@ -1661,37 +1661,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			"mmux_time_t",			\
            mmux_socklen_t:		"mmux_socklen_t",		\
            mmux_rlim_t:			"mmux_rlim_t",			\
-	   mmux_complexf_t:		"mmux_complexf_t",		\
-	   mmux_complexd_t:		"mmux_complexd_t",		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		"mmux_complexld_t",		\
+	   mmux_flonumcfl_t:		"mmux_flonumcfl_t",		\
+	   mmux_flonumcdb_t:		"mmux_flonumcdb_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		"mmux_flonumcldb_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		"mmux_complexf32_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		"mmux_flonumcf32_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		"mmux_complexf64_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		"mmux_flonumcf64_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		"mmux_complexf128_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		"mmux_flonumcf128_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		"mmux_complexf32x_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		"mmux_flonumcf32x_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		"mmux_complexf64x_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		"mmux_flonumcf64x_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		"mmux_complexf128x_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		"mmux_flonumcf128x_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		"mmux_complexd32_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		"mmux_flonumcd32_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		"mmux_complexd64_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		"mmux_flonumcd64_t",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		"mmux_complexd128_t",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		"mmux_flonumcd128_t",		\
 ]]])m4_dnl
            default:			"<unspecified>"))
 
@@ -1715,37 +1715,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		"ullong",		\
 ]]])m4_dnl
-	   mmux_float_t:		"float",		\
-	   mmux_double_t:		"double",		\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		"ldouble",		\
+	   mmux_flonumfl_t:		"flonumfl",		\
+	   mmux_flonumdb_t:		"flonumdb",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		"flonumldb",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		"float32",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		"flonumf32",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		"float64",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		"flonumf64",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		"float128",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		"flonumf128",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		"float32x",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		"flonumf32x",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		"float64x",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		"flonumf64x",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		"float128x",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		"flonumf128x",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		"decimal32",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		"flonumd32",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		"decimal64",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		"flonumd64",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		"decimal128",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		"flonumd128",		\
 ]]])m4_dnl
 	   mmux_sint8_t:		"sint8",		\
 	   mmux_uint8_t:		"uint8",		\
@@ -1772,37 +1772,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			"time",			\
            mmux_socklen_t:		"socklen",		\
            mmux_rlim_t:			"rlim",			\
-	   mmux_complexf_t:		"complexf",		\
-	   mmux_complexd_t:		"complexd",		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		"complexld",		\
+	   mmux_flonumcfl_t:		"flonumcfl",		\
+	   mmux_flonumcdb_t:		"flonumcdb",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		"flonumcldb",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		"complexf32",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		"flonumcf32",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		"complexf64",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		"flonumcf64",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		"complexf128",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		"flonumcf128",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		"complexf32x",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		"flonumcf32x",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		"complexf64x",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		"flonumcf64x",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		"complexf128x",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		"flonumcf128x",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		"complexd32",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		"flonumcd32",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		"complexd64",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		"flonumcd64",		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		"complexd128",		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		"flonumcd128",		\
 ]]])m4_dnl
            default:			"<unspecified>"))
 
@@ -1829,37 +1829,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_sprint,			\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_sprint,			\
-	   mmux_double_t:		mmux_double_sprint,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_sprint,			\
+	   mmux_flonumfl_t:		mmux_flonumfl_sprint,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_sprint,			\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_sprint,			\
 	   mmux_uint8_t:		mmux_uint8_sprint,			\
@@ -1886,37 +1886,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_sprint,			\
            mmux_socklen_t:		mmux_socklen_sprint,			\
            mmux_rlim_t:			mmux_rlim_sprint,			\
-	   mmux_complexf_t:		mmux_complexf_sprint,			\
-	   mmux_complexd_t:		mmux_complexd_sprint,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_sprint,			\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_sprint,			\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_sprint,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_sprint,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_sprint,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_sprint,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_sprint,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_sprint,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_sprint,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_sprint,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_sprint,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_sprint,			\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_sprint,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_sprint,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((BUFPTR),(BUFLEN),(VALUE))
 
@@ -1940,37 +1940,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_ullong_t:		mmux_ullong_sprint_size,		\
 ]]])m4_dnl
-	   mmux_float_t:		mmux_float_sprint_size,			\
-	   mmux_double_t:		mmux_double_sprint_size,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_LDOUBLE_M4,1,[[[m4_dnl
-	   mmux_ldouble_t:		mmux_ldouble_sprint_size,		\
+	   mmux_flonumfl_t:		mmux_flonumfl_sprint_size,			\
+	   mmux_flonumdb_t:		mmux_flonumdb_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32_M4,1,[[[m4_dnl
-	   mmux_float32_t:		mmux_float32_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64_M4,1,[[[m4_dnl
-	   mmux_float64_t:		mmux_float64_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128_M4,1,[[[m4_dnl
-	   mmux_float128_t:		mmux_float128_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT32X_M4,1,[[[m4_dnl
-	   mmux_float32x_t:		mmux_float32x_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT64X_M4,1,[[[m4_dnl
-	   mmux_float64x_t:		mmux_float64x_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLOAT128X_M4,1,[[[m4_dnl
-	   mmux_float128x_t:		mmux_float128x_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL32_M4,1,[[[m4_dnl
-	   mmux_decimal32_t:		mmux_decimal32_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL64_M4,1,[[[m4_dnl
-	   mmux_decimal64_t:		mmux_decimal64_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
-	   mmux_decimal128_t:		mmux_decimal128_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_sprint_size,		\
 ]]])m4_dnl
 	   mmux_sint8_t:		mmux_sint8_sprint_size,			\
 	   mmux_uint8_t:		mmux_uint8_sprint_size,			\
@@ -1997,37 +1997,37 @@ m4_ifelse(MMUX_CC_TYPES_HAS_DECIMAL128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_sprint_size,			\
            mmux_socklen_t:		mmux_socklen_sprint_size,		\
            mmux_rlim_t:			mmux_rlim_sprint_size,			\
-	   mmux_complexf_t:		mmux_complexf_sprint_size,		\
-	   mmux_complexd_t:		mmux_complexd_sprint_size,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXLD_M4,1,[[[m4_dnl
-	   mmux_complexld_t:		mmux_complexld_sprint_size,		\
+	   mmux_flonumcfl_t:		mmux_flonumcfl_sprint_size,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32_M4,1,[[[m4_dnl
-	   mmux_complexf32_t:		mmux_complexf32_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64_M4,1,[[[m4_dnl
-	   mmux_complexf64_t:		mmux_complexf64_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128_M4,1,[[[m4_dnl
-	   mmux_complexf128_t:		mmux_complexf128_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF32X_M4,1,[[[m4_dnl
-	   mmux_complexf32x_t:		mmux_complexf32x_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF64X_M4,1,[[[m4_dnl
-	   mmux_complexf64x_t:		mmux_complexf64x_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXF128X_M4,1,[[[m4_dnl
-	   mmux_complexf128x_t:		mmux_complexf128x_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD32_M4,1,[[[m4_dnl
-	   mmux_complexd32_t:		mmux_complexd32_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD64_M4,1,[[[m4_dnl
-	   mmux_complexd64_t:		mmux_complexd64_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_sprint_size,		\
 ]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_COMPLEXD128_M4,1,[[[m4_dnl
-	   mmux_complexd128_t:		mmux_complexd128_sprint_size,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_sprint_size,		\
 ]]])m4_dnl
            default:			mmux_ctype_generic_error)((VALUE))
 

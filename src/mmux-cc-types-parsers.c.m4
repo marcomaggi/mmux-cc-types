@@ -332,28 +332,28 @@ parse_$1_parentheses_format (mmux_$1_t * result_p, mmux_asciizcp_t s_arg, mmux_a
 }
 ]]])]]])
 
-DEFINE_COMPLEX_PARSER([[[complexf]]],		[[[float]]])
-DEFINE_COMPLEX_PARSER([[[complexd]]],		[[[double]]])
-DEFINE_COMPLEX_PARSER([[[complexld]]],		[[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_COMPLEX_PARSER([[[flonumcfl]]],		[[[flonumfl]]])
+DEFINE_COMPLEX_PARSER([[[flonumcdb]]],		[[[flonumdb]]])
+DEFINE_COMPLEX_PARSER([[[flonumcldb]]],		[[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_COMPLEX_PARSER([[[complexf32]]],		[[[float32]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_COMPLEX_PARSER([[[complexf64]]],		[[[float64]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_COMPLEX_PARSER([[[complexf128]]],	[[[float128]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_COMPLEX_PARSER([[[flonumcf32]]],		[[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_COMPLEX_PARSER([[[flonumcf64]]],		[[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_COMPLEX_PARSER([[[flonumcf128]]],	[[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_COMPLEX_PARSER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_COMPLEX_PARSER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_COMPLEX_PARSER([[[complexf128x]]],	[[[float128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_COMPLEX_PARSER([[[flonumcf32x]]],	[[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_COMPLEX_PARSER([[[flonumcf64x]]],	[[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_COMPLEX_PARSER([[[flonumcf128x]]],	[[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
-DEFINE_COMPLEX_PARSER([[[complexd32]]],		[[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_COMPLEX_PARSER([[[complexd64]]],		[[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_COMPLEX_PARSER([[[flonumcd32]]],		[[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD32]]])
+DEFINE_COMPLEX_PARSER([[[flonumcd64]]],		[[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD64]]])
+DEFINE_COMPLEX_PARSER([[[flonumcd128]]],	[[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD128]]])
 
 
 /** --------------------------------------------------------------------
  ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLONUMFL_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool
 mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
 {
@@ -375,21 +375,21 @@ mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_value, mmux_asciizcp_t ca
 }
 ]]])]]])
 
-DEFINE_FLOAT_PARSER([[[float]]],	[[[strtof]]])
-DEFINE_FLOAT_PARSER([[[double]]],	[[[strtod]]])
-DEFINE_FLOAT_PARSER([[[ldouble]]],	[[[strtold]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_FLONUMFL_PARSER([[[flonumfl]]],	[[[strtof]]])
+DEFINE_FLONUMFL_PARSER([[[flonumdb]]],	[[[strtod]]])
+DEFINE_FLONUMFL_PARSER([[[flonumldb]]],	[[[strtold]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_FLOAT_PARSER([[[float32]]],	[[[strtof32]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_FLOAT_PARSER([[[float64]]],	[[[strtof64]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_FLOAT_PARSER([[[float128]]],	[[[strtof128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_FLONUMFL_PARSER([[[flonumf32]]],	[[[strtof32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUMFL_PARSER([[[flonumf64]]],	[[[strtof64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUMFL_PARSER([[[flonumf128]]],	[[[strtof128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_FLOAT_PARSER([[[float32x]]],	[[[strtof32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_FLOAT_PARSER([[[float64x]]],	[[[strtof64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_FLOAT_PARSER([[[float128x]]],	[[[strtof128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_FLONUMFL_PARSER([[[flonumf32x]]],	[[[strtof32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUMFL_PARSER([[[flonumf64x]]],	[[[strtof64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUMFL_PARSER([[[flonumf128x]]],	[[[strtof128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_FLOAT_PARSER([[[decimal32]]],	[[[mmux_strtod32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_FLOAT_PARSER([[[decimal64]]],	[[[mmux_strtod64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_FLONUMFL_PARSER([[[flonumd32]]],	[[[mmux_strtod32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUMFL_PARSER([[[flonumd64]]],	[[[mmux_strtod64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUMFL_PARSER([[[flonumd128]]],	[[[mmux_strtod128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------

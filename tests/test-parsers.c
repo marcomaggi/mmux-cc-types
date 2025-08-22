@@ -436,170 +436,170 @@ test_sprint_rlim (void)
  ** ----------------------------------------------------------------- */
 
 static void
-test_sprint_float (void)
+test_sprint_flonumfl (void)
 {
-  DOIT(float,"0.0");
-  DOIT(float,"+0.0");
-  DOIT(float,"-0.0");
-  DOIT(float,"123");
-  DOIT(float,"0.123");
-  DOIT(float,"0.123e+13");
-  DOIT_VALUE(float,mmux_float_minimum());
-  DOIT_VALUE(float,mmux_float_maximum());
+  DOIT(flonumfl,"0.0");
+  DOIT(flonumfl,"+0.0");
+  DOIT(flonumfl,"-0.0");
+  DOIT(flonumfl,"123");
+  DOIT(flonumfl,"0.123");
+  DOIT(flonumfl,"0.123e+13");
+  DOIT_VALUE(flonumfl,mmux_flonumfl_minimum());
+  DOIT_VALUE(flonumfl,mmux_flonumfl_maximum());
 }
 static void
-test_sprint_double (void)
+test_sprint_flonumdb (void)
 {
-  DOIT(double,"0.0");
-  DOIT(double,"+0.0");
-  DOIT(double,"-0.0");
-  DOIT(double,"123");
-  DOIT(double,"0.123");
-  DOIT(double,"0.123e+13");
-  DOIT_VALUE(double,mmux_double_minimum());
-  DOIT_VALUE(double,mmux_double_maximum());
+  DOIT(flonumdb,"0.0");
+  DOIT(flonumdb,"+0.0");
+  DOIT(flonumdb,"-0.0");
+  DOIT(flonumdb,"123");
+  DOIT(flonumdb,"0.123");
+  DOIT(flonumdb,"0.123e+13");
+  DOIT_VALUE(flonumdb,mmux_flonumdb_minimum());
+  DOIT_VALUE(flonumdb,mmux_flonumdb_maximum());
 }
 static void
-test_sprint_ldouble (void)
+test_sprint_flonumldb (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  DOIT(ldouble,"0.0");
-  DOIT(ldouble,"+0.0");
-  DOIT(ldouble,"-0.0");
-  DOIT(ldouble,"123");
-  DOIT(ldouble,"0.123");
-  DOIT(ldouble,"0.123e+13");
-  DOIT_VALUE(ldouble,mmux_ldouble_minimum());
-  DOIT_VALUE(ldouble,mmux_ldouble_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT(flonumldb,"0.0");
+  DOIT(flonumldb,"+0.0");
+  DOIT(flonumldb,"-0.0");
+  DOIT(flonumldb,"123");
+  DOIT(flonumldb,"0.123");
+  DOIT(flonumldb,"0.123e+13");
+  DOIT_VALUE(flonumldb,mmux_flonumldb_minimum());
+  DOIT_VALUE(flonumldb,mmux_flonumldb_maximum());
 #endif
 }
 
 static void
-test_sprint_float32 (void)
+test_sprint_flonumf32 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  DOIT(float32,"0.0");
-  DOIT(float32,"+0.0");
-  DOIT(float32,"-0.0");
-  DOIT(float32,"123");
-  DOIT(float32,"0.123");
-  DOIT(float32,"0.123e+13");
-  DOIT_VALUE(float32,mmux_float32_minimum());
-  DOIT_VALUE(float32,mmux_float32_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT(flonumf32,"0.0");
+  DOIT(flonumf32,"+0.0");
+  DOIT(flonumf32,"-0.0");
+  DOIT(flonumf32,"123");
+  DOIT(flonumf32,"0.123");
+  DOIT(flonumf32,"0.123e+13");
+  DOIT_VALUE(flonumf32,mmux_flonumf32_minimum());
+  DOIT_VALUE(flonumf32,mmux_flonumf32_maximum());
 #endif
 }
 static void
-test_sprint_float64 (void)
+test_sprint_flonumf64 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  DOIT(float64,"0.0");
-  DOIT(float64,"+0.0");
-  DOIT(float64,"-0.0");
-  DOIT(float64,"123");
-  DOIT(float64,"0.123");
-  DOIT(float64,"0.123e+13");
-  DOIT_VALUE(float64,mmux_float64_minimum());
-  DOIT_VALUE(float64,mmux_float64_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT(flonumf64,"0.0");
+  DOIT(flonumf64,"+0.0");
+  DOIT(flonumf64,"-0.0");
+  DOIT(flonumf64,"123");
+  DOIT(flonumf64,"0.123");
+  DOIT(flonumf64,"0.123e+13");
+  DOIT_VALUE(flonumf64,mmux_flonumf64_minimum());
+  DOIT_VALUE(flonumf64,mmux_flonumf64_maximum());
 #endif
 }
 static void
-test_sprint_float128 (void)
+test_sprint_flonumf128 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  DOIT(float128,"0.0");
-  DOIT(float128,"+0.0");
-  DOIT(float128,"-0.0");
-  DOIT(float128,"123");
-  DOIT(float128,"0.123");
-  DOIT(float128,"0.123e+13");
-  DOIT_VALUE(float128,mmux_float128_minimum());
-  DOIT_VALUE(float128,mmux_float128_maximum());
-#endif
-}
-
-static void
-test_sprint_float32x (void)
-{
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  DOIT(float32x,"0.0");
-  DOIT(float32x,"+0.0");
-  DOIT(float32x,"-0.0");
-  DOIT(float32x,"123");
-  DOIT(float32x,"0.123");
-  DOIT(float32x,"0.123e+13");
-  DOIT_VALUE(float32x,mmux_float32x_minimum());
-  DOIT_VALUE(float32x,mmux_float32x_maximum());
-#endif
-}
-static void
-test_sprint_float64x (void)
-{
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  DOIT(float64x,"0.0");
-  DOIT(float64x,"+0.0");
-  DOIT(float64x,"-0.0");
-  DOIT(float64x,"123");
-  DOIT(float64x,"0.123");
-  DOIT(float64x,"0.123e+13");
-  DOIT_VALUE(float64x,mmux_float64x_minimum());
-  DOIT_VALUE(float64x,mmux_float64x_maximum());
-#endif
-}
-static void
-test_sprint_float128x (void)
-{
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  DOIT(float128x,"0.0");
-  DOIT(float128x,"+0.0");
-  DOIT(float128x,"-0.0");
-  DOIT(float128x,"123");
-  DOIT(float128x,"0.123");
-  DOIT(float128x,"0.123e+13");
-  DOIT_VALUE(float128x,mmux_float128x_minimum());
-  DOIT_VALUE(float128x,mmux_float128x_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT(flonumf128,"0.0");
+  DOIT(flonumf128,"+0.0");
+  DOIT(flonumf128,"-0.0");
+  DOIT(flonumf128,"123");
+  DOIT(flonumf128,"0.123");
+  DOIT(flonumf128,"0.123e+13");
+  DOIT_VALUE(flonumf128,mmux_flonumf128_minimum());
+  DOIT_VALUE(flonumf128,mmux_flonumf128_maximum());
 #endif
 }
 
 static void
-test_sprint_decimal32 (void)
+test_sprint_flonumf32x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  DOIT(decimal32,"0.0");
-  DOIT(decimal32,"+0.0");
-  DOIT(decimal32,"-0.0");
-  DOIT(decimal32,"123");
-  DOIT(decimal32,"0.123");
-  DOIT(decimal32,"0.123e+13");
-  DOIT_VALUE(decimal32,mmux_decimal32_minimum());
-  DOIT_VALUE(decimal32,mmux_decimal32_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT(flonumf32x,"0.0");
+  DOIT(flonumf32x,"+0.0");
+  DOIT(flonumf32x,"-0.0");
+  DOIT(flonumf32x,"123");
+  DOIT(flonumf32x,"0.123");
+  DOIT(flonumf32x,"0.123e+13");
+  DOIT_VALUE(flonumf32x,mmux_flonumf32x_minimum());
+  DOIT_VALUE(flonumf32x,mmux_flonumf32x_maximum());
 #endif
 }
 static void
-test_sprint_decimal64 (void)
+test_sprint_flonumf64x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  DOIT(decimal64,"0.0");
-  DOIT(decimal64,"+0.0");
-  DOIT(decimal64,"-0.0");
-  DOIT(decimal64,"123");
-  DOIT(decimal64,"0.123");
-  DOIT(decimal64,"0.123e+13");
-  DOIT_VALUE(decimal64,mmux_decimal64_minimum());
-  DOIT_VALUE(decimal64,mmux_decimal64_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT(flonumf64x,"0.0");
+  DOIT(flonumf64x,"+0.0");
+  DOIT(flonumf64x,"-0.0");
+  DOIT(flonumf64x,"123");
+  DOIT(flonumf64x,"0.123");
+  DOIT(flonumf64x,"0.123e+13");
+  DOIT_VALUE(flonumf64x,mmux_flonumf64x_minimum());
+  DOIT_VALUE(flonumf64x,mmux_flonumf64x_maximum());
 #endif
 }
 static void
-test_sprint_decimal128 (void)
+test_sprint_flonumf128x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  DOIT(decimal128,"0.0");
-  DOIT(decimal128,"+0.0");
-  DOIT(decimal128,"-0.0");
-  DOIT(decimal128,"123");
-  DOIT(decimal128,"0.123");
-  DOIT(decimal128,"0.123e+13");
-  DOIT_VALUE(decimal128,mmux_decimal128_minimum());
-  DOIT_VALUE(decimal128,mmux_decimal128_maximum());
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT(flonumf128x,"0.0");
+  DOIT(flonumf128x,"+0.0");
+  DOIT(flonumf128x,"-0.0");
+  DOIT(flonumf128x,"123");
+  DOIT(flonumf128x,"0.123");
+  DOIT(flonumf128x,"0.123e+13");
+  DOIT_VALUE(flonumf128x,mmux_flonumf128x_minimum());
+  DOIT_VALUE(flonumf128x,mmux_flonumf128x_maximum());
+#endif
+}
+
+static void
+test_sprint_flonumd32 (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT(flonumd32,"0.0");
+  DOIT(flonumd32,"+0.0");
+  DOIT(flonumd32,"-0.0");
+  DOIT(flonumd32,"123");
+  DOIT(flonumd32,"0.123");
+  DOIT(flonumd32,"0.123e+13");
+  DOIT_VALUE(flonumd32,mmux_flonumd32_minimum());
+  DOIT_VALUE(flonumd32,mmux_flonumd32_maximum());
+#endif
+}
+static void
+test_sprint_flonumd64 (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT(flonumd64,"0.0");
+  DOIT(flonumd64,"+0.0");
+  DOIT(flonumd64,"-0.0");
+  DOIT(flonumd64,"123");
+  DOIT(flonumd64,"0.123");
+  DOIT(flonumd64,"0.123e+13");
+  DOIT_VALUE(flonumd64,mmux_flonumd64_minimum());
+  DOIT_VALUE(flonumd64,mmux_flonumd64_maximum());
+#endif
+}
+static void
+test_sprint_flonumd128 (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT(flonumd128,"0.0");
+  DOIT(flonumd128,"+0.0");
+  DOIT(flonumd128,"-0.0");
+  DOIT(flonumd128,"123");
+  DOIT(flonumd128,"0.123");
+  DOIT(flonumd128,"0.123e+13");
+  DOIT_VALUE(flonumd128,mmux_flonumd128_minimum());
+  DOIT_VALUE(flonumd128,mmux_flonumd128_maximum());
 #endif
 }
 
@@ -609,110 +609,110 @@ test_sprint_decimal128 (void)
  ** ----------------------------------------------------------------- */
 
 static void
-test_sprint_complexf (void)
+test_sprint_flonumcfl (void)
 {
-  DOIT(complexf,"(0.0)+i*(0.0)");
-  DOIT(complexf,"(+0.0)+i*(-0.0)");
-  DOIT(complexf,"(+0.123)+i*(-0.456)");
+  DOIT(flonumcfl,"(0.0)+i*(0.0)");
+  DOIT(flonumcfl,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcfl,"(+0.123)+i*(-0.456)");
 }
 static void
-test_sprint_complexd (void)
+test_sprint_flonumcdb (void)
 {
-  DOIT(complexd,"(0.0)+i*(0.0)");
-  DOIT(complexd,"(+0.0)+i*(-0.0)");
-  DOIT(complexd,"(+0.123)+i*(-0.456)");
+  DOIT(flonumcdb,"(0.0)+i*(0.0)");
+  DOIT(flonumcdb,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcdb,"(+0.123)+i*(-0.456)");
 }
 static void
-test_sprint_complexld (void)
+test_sprint_flonumcldb (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  DOIT(complexld,"(0.0)+i*(0.0)");
-  DOIT(complexld,"(+0.0)+i*(-0.0)");
-  DOIT(complexld,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT(flonumcldb,"(0.0)+i*(0.0)");
+  DOIT(flonumcldb,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcldb,"(+0.123)+i*(-0.456)");
 #endif
 }
 
 static void
-test_sprint_complexf32 (void)
+test_sprint_flonumcf32 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  DOIT(complexf32,"(0.0)+i*(0.0)");
-  DOIT(complexf32,"(+0.0)+i*(-0.0)");
-  DOIT(complexf32,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT(flonumcf32,"(0.0)+i*(0.0)");
+  DOIT(flonumcf32,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcf32,"(+0.123)+i*(-0.456)");
 #endif
 }
 static void
-test_sprint_complexf64 (void)
+test_sprint_flonumcf64 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  DOIT(complexf64,"(0.0)+i*(0.0)");
-  DOIT(complexf64,"(+0.0)+i*(-0.0)");
-  DOIT(complexf64,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT(flonumcf64,"(0.0)+i*(0.0)");
+  DOIT(flonumcf64,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcf64,"(+0.123)+i*(-0.456)");
 #endif
 }
 static void
-test_sprint_complexf128 (void)
+test_sprint_flonumcf128 (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  DOIT(complexf128,"(0.0)+i*(0.0)");
-  DOIT(complexf128,"(+0.0)+i*(-0.0)");
-  DOIT(complexf128,"(+0.123)+i*(-0.456)");
-#endif
-}
-
-static void
-test_sprint_complexf32x (void)
-{
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  DOIT(complexf32x,"(0.0)+i*(0.0)");
-  DOIT(complexf32x,"(+0.0)+i*(-0.0)");
-  DOIT(complexf32x,"(+0.123)+i*(-0.456)");
-#endif
-}
-static void
-test_sprint_complexf64x (void)
-{
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  DOIT(complexf64x,"(0.0)+i*(0.0)");
-  DOIT(complexf64x,"(+0.0)+i*(-0.0)");
-  DOIT(complexf64x,"(+0.123)+i*(-0.456)");
-#endif
-}
-static void
-test_sprint_complexf128x (void)
-{
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  DOIT(complexf128x,"(0.0)+i*(0.0)");
-  DOIT(complexf128x,"(+0.0)+i*(-0.0)");
-  DOIT(complexf128x,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT(flonumcf128,"(0.0)+i*(0.0)");
+  DOIT(flonumcf128,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcf128,"(+0.123)+i*(-0.456)");
 #endif
 }
 
 static void
-test_sprint_complexd32 (void)
+test_sprint_flonumcf32x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  DOIT(complexd32,"(0.0)+i*(0.0)");
-  DOIT(complexd32,"(+0.0)+i*(-0.0)");
-  DOIT(complexd32,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT(flonumcf32x,"(0.0)+i*(0.0)");
+  DOIT(flonumcf32x,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcf32x,"(+0.123)+i*(-0.456)");
 #endif
 }
 static void
-test_sprint_complexd64 (void)
+test_sprint_flonumcf64x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  DOIT(complexd64,"(0.0)+i*(0.0)");
-  DOIT(complexd64,"(+0.0)+i*(-0.0)");
-  DOIT(complexd64,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT(flonumcf64x,"(0.0)+i*(0.0)");
+  DOIT(flonumcf64x,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcf64x,"(+0.123)+i*(-0.456)");
 #endif
 }
 static void
-test_sprint_complexd128 (void)
+test_sprint_flonumcf128x (void)
 {
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  DOIT(complexd128,"(0.0)+i*(0.0)");
-  DOIT(complexd128,"(+0.0)+i*(-0.0)");
-  DOIT(complexd128,"(+0.123)+i*(-0.456)");
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT(flonumcf128x,"(0.0)+i*(0.0)");
+  DOIT(flonumcf128x,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcf128x,"(+0.123)+i*(-0.456)");
+#endif
+}
+
+static void
+test_sprint_flonumcd32 (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT(flonumcd32,"(0.0)+i*(0.0)");
+  DOIT(flonumcd32,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcd32,"(+0.123)+i*(-0.456)");
+#endif
+}
+static void
+test_sprint_flonumcd64 (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT(flonumcd64,"(0.0)+i*(0.0)");
+  DOIT(flonumcd64,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcd64,"(+0.123)+i*(-0.456)");
+#endif
+}
+static void
+test_sprint_flonumcd128 (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT(flonumcd128,"(0.0)+i*(0.0)");
+  DOIT(flonumcd128,"(+0.0)+i*(-0.0)");
+  DOIT(flonumcd128,"(+0.123)+i*(-0.456)");
 #endif
 }
 
@@ -765,37 +765,37 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_socklen();		}
   if (1) {	test_sprint_rlim();		}
 
-  if (1) {	test_sprint_float();		}
-  if (1) {	test_sprint_double();		}
-  if (1) {	test_sprint_ldouble();		}
+  if (1) {	test_sprint_flonumfl();		}
+  if (1) {	test_sprint_flonumdb();		}
+  if (1) {	test_sprint_flonumldb();		}
 
-  if (1) {	test_sprint_float32();		}
-  if (1) {	test_sprint_float64();		}
-  if (1) {	test_sprint_float128();		}
+  if (1) {	test_sprint_flonumf32();		}
+  if (1) {	test_sprint_flonumf64();		}
+  if (1) {	test_sprint_flonumf128();		}
 
-  if (1) {	test_sprint_float32x();		}
-  if (1) {	test_sprint_float64x();		}
-  if (1) {	test_sprint_float128x();	}
+  if (1) {	test_sprint_flonumf32x();		}
+  if (1) {	test_sprint_flonumf64x();		}
+  if (1) {	test_sprint_flonumf128x();	}
 
-  if (1) {	test_sprint_decimal32();	}
-  if (1) {	test_sprint_decimal64();	}
-  if (1) {	test_sprint_decimal128();	}
+  if (1) {	test_sprint_flonumd32();	}
+  if (1) {	test_sprint_flonumd64();	}
+  if (1) {	test_sprint_flonumd128();	}
 
-  if (1) {	test_sprint_complexf();		}
-  if (1) {	test_sprint_complexd();		}
-  if (1) {	test_sprint_complexld();	}
+  if (1) {	test_sprint_flonumcfl();		}
+  if (1) {	test_sprint_flonumcdb();		}
+  if (1) {	test_sprint_flonumcldb();	}
 
-  if (1) {	test_sprint_complexf32();	}
-  if (1) {	test_sprint_complexf64();	}
-  if (1) {	test_sprint_complexf128();	}
+  if (1) {	test_sprint_flonumcf32();	}
+  if (1) {	test_sprint_flonumcf64();	}
+  if (1) {	test_sprint_flonumcf128();	}
 
-  if (1) {	test_sprint_complexf32x();	}
-  if (1) {	test_sprint_complexf64x();	}
-  if (1) {	test_sprint_complexf128x();	}
+  if (1) {	test_sprint_flonumcf32x();	}
+  if (1) {	test_sprint_flonumcf64x();	}
+  if (1) {	test_sprint_flonumcf128x();	}
 
-  if (1) {	test_sprint_complexd32();	}
-  if (1) {	test_sprint_complexd64();	}
-  if (1) {	test_sprint_complexd128();	}
+  if (1) {	test_sprint_flonumcd32();	}
+  if (1) {	test_sprint_flonumcd64();	}
+  if (1) {	test_sprint_flonumcd128();	}
 
   exit(EXIT_SUCCESS);
 }

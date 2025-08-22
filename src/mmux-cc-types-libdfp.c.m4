@@ -70,23 +70,23 @@
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_REAL_CPLX_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
-__attribute__((__const__)) mmux_decimal$1_t
-mmux_decimal$1_abs (mmux_decimal$1_t X)
+m4_define([[[DEFINE_REAL_CPLX_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+__attribute__((__const__)) mmux_flonumd$1_t
+mmux_flonumd$1_abs (mmux_flonumd$1_t X)
 {
-  return mmux_decimal$1(fabsd$1(X.value));
+  return mmux_flonumd$1(fabsd$1(X.value));
 }
-mmux_complexd$1_part_t
-mmux_complexd$1_abs (mmux_complexd$1_t Z)
+mmux_flonumcd$1_part_t
+mmux_flonumcd$1_abs (mmux_flonumcd$1_t Z)
 {
-  return mmux_decimal$1(sqrtd$1(Z.value.re * Z.value.re + Z.value.im * Z.value.im));
+  return mmux_flonumd$1(sqrtd$1(Z.value.re * Z.value.re + Z.value.im * Z.value.im));
 }
-mmux_complexd$1_part_t
-mmux_complexd$1_arg (mmux_complexd$1_t Z)
+mmux_flonumcd$1_part_t
+mmux_flonumcd$1_arg (mmux_flonumcd$1_t Z)
 {
-  return mmux_decimal$1(atan2d$1(Z.value.im, Z.value.re));
+  return mmux_flonumd$1(atan2d$1(Z.value.im, Z.value.re));
 }
-/* mmux_complexd$1_conj implemented as inline function */
+/* mmux_flonumcd$1_conj implemented as inline function */
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_CPLX_BASIC_FUNCTIONS(32)
@@ -99,76 +99,76 @@ DEFINE_REAL_CPLX_BASIC_FUNCTIONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_REAL_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
-#define MMUX_STANDARD_DECIMAL$1_IS_ZERO(X)	(FP_ZERO	== (fpclassify(X)))
-#define MMUX_STANDARD_DECIMAL$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
-#define MMUX_STANDARD_DECIMAL$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
+m4_define([[[DEFINE_REAL_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+#define MMUX_STANDARD_FLONUMD$1_IS_ZERO(X)	(FP_ZERO	== (fpclassify(X)))
+#define MMUX_STANDARD_FLONUMD$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
+#define MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
 
 __attribute__((__const__)) bool
-mmux_decimal$1_is_zero (mmux_decimal$1_t X)
+mmux_flonumd$1_is_zero (mmux_flonumd$1_t X)
 {
-  return MMUX_STANDARD_DECIMAL$1_IS_ZERO(X.value)? true : false;
+  return MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_is_nan (mmux_decimal$1_t X)
+mmux_flonumd$1_is_nan (mmux_flonumd$1_t X)
 {
-  return MMUX_STANDARD_DECIMAL$1_IS_NAN(X.value)? true : false;
+  return MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_is_infinite (mmux_decimal$1_t X)
+mmux_flonumd$1_is_infinite (mmux_flonumd$1_t X)
 {
-  return MMUX_STANDARD_DECIMAL$1_IS_INFINITE(X.value)? true : false;
+  return MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X.value)? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_is_positive (mmux_decimal$1_t X)
+mmux_flonumd$1_is_positive (mmux_flonumd$1_t X)
 {
-  if (MMUX_STANDARD_DECIMAL$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
     return false;
-  } else if (MMUX_STANDARD_DECIMAL$1_IS_ZERO(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
     if (signbit(X.value)) {
       return false;
     } else {
       return true;
     }
   } else {
-    return (mmux_standard_decimal$1_constant_zero() < X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() < X.value)? true : false;
   }
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_is_negative (mmux_decimal$1_t X)
+mmux_flonumd$1_is_negative (mmux_flonumd$1_t X)
 {
-  if (MMUX_STANDARD_DECIMAL$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
     return false;
-  } else if (MMUX_STANDARD_DECIMAL$1_IS_ZERO(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
     if (signbit(X.value)) {
       return true;
     } else {
       return false;
     }
   } else {
-    return (mmux_standard_decimal$1_constant_zero() > X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() > X.value)? true : false;
   }
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_is_non_positive (mmux_decimal$1_t X)
+mmux_flonumd$1_is_non_positive (mmux_flonumd$1_t X)
 {
-  if (MMUX_STANDARD_DECIMAL$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
     return false;
-  } else if (MMUX_STANDARD_DECIMAL$1_IS_ZERO(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
     return true;
   } else {
-    return (mmux_standard_decimal$1_constant_zero() > X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() > X.value)? true : false;
   }
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_is_non_negative (mmux_decimal$1_t X)
+mmux_flonumd$1_is_non_negative (mmux_flonumd$1_t X)
 {
-  if (MMUX_STANDARD_DECIMAL$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
     return false;
-  } else if (MMUX_STANDARD_DECIMAL$1_IS_ZERO(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
     return true;
   } else {
-    return (mmux_standard_decimal$1_constant_zero() < X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() < X.value)? true : false;
   }
 }
 ]]])]]])
@@ -184,43 +184,43 @@ DEFINE_REAL_PREDICATES(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_CPLX_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+m4_define([[[DEFINE_CPLX_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
 __attribute__((__const__)) bool
-mmux_complexd$1_is_zero (mmux_complexd$1_t Z)
+mmux_flonumcd$1_is_zero (mmux_flonumcd$1_t Z)
 {
-  return (MMUX_STANDARD_DECIMAL$1_IS_ZERO(Z.value.re) && MMUX_STANDARD_DECIMAL$1_IS_ZERO(Z.value.im))? true : false;
+  return (MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.value.re) && MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.value.im))? true : false;
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_is_positive (mmux_complexd$1_t Z __attribute__((__unused__)))
+mmux_flonumcd$1_is_positive (mmux_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_is_negative (mmux_complexd$1_t Z __attribute__((__unused__)))
+mmux_flonumcd$1_is_negative (mmux_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_is_non_positive (mmux_complexd$1_t Z __attribute__((__unused__)))
+mmux_flonumcd$1_is_non_positive (mmux_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_is_non_negative (mmux_complexd$1_t Z __attribute__((__unused__)))
+mmux_flonumcd$1_is_non_negative (mmux_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_is_nan (mmux_complexd$1_t Z)
+mmux_flonumcd$1_is_nan (mmux_flonumcd$1_t Z)
 {
-  return (MMUX_STANDARD_DECIMAL$1_IS_NAN(Z.value.re) ||
-	  MMUX_STANDARD_DECIMAL$1_IS_NAN(Z.value.im))? true : false;
+  return (MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.value.re) ||
+	  MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.value.im))? true : false;
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_is_infinite (mmux_complexd$1_t Z)
+mmux_flonumcd$1_is_infinite (mmux_flonumcd$1_t Z)
 {
-  return (MMUX_STANDARD_DECIMAL$1_IS_INFINITE(Z.value.re) ||
-	  MMUX_STANDARD_DECIMAL$1_IS_INFINITE(Z.value.im))? true : false;
+  return (MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.value.re) ||
+	  MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.value.im))? true : false;
 }
 ]]])]]])
 m4_divert(0)m4_dnl
@@ -235,38 +235,38 @@ DEFINE_CPLX_PREDICATES(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+m4_define([[[DEFINE_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
 __attribute__((__const__)) bool
-mmux_decimal$1_equal (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+mmux_flonumd$1_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return (op1.value == op2.value)? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_greater (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+mmux_flonumd$1_greater (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return (isgreater(op1.value,op2.value))? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_less (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+mmux_flonumd$1_less (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return (isless(op1.value,op2.value))? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_greater_equal (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+mmux_flonumd$1_greater_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return (isgreaterequal(op1.value,op2.value))? true : false;
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_less_equal (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+mmux_flonumd$1_less_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return (islessequal(op1.value,op2.value))? true : false;
 }
 __attribute__((__const__)) int
-mmux_decimal$1_cmp (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
+mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
-  if (mmux_decimal$1_greater(op1, op2)) {
+  if (mmux_flonumd$1_greater(op1, op2)) {
     return +1;
-  } else if (mmux_decimal$1_less(op1, op2)) {
+  } else if (mmux_flonumd$1_less(op1, op2)) {
     return -1;
   } else {
     return 0;
@@ -275,48 +275,48 @@ mmux_decimal$1_cmp (mmux_decimal$1_t op1, mmux_decimal$1_t op2)
 
 /* ------------------------------------------------------------------ */
 
-__attribute__((__const__)) mmux_decimal$1_t
-mmux_decimal$1_max (mmux_decimal$1_t X, mmux_decimal$1_t Y)
+__attribute__((__const__)) mmux_flonumd$1_t
+mmux_flonumd$1_max (mmux_flonumd$1_t X, mmux_flonumd$1_t Y)
 {
-  return mmux_decimal$1(fmaxd$1(X.value, Y.value));
+  return mmux_flonumd$1(fmaxd$1(X.value, Y.value));
 }
-__attribute__((__const__)) mmux_decimal$1_t
-mmux_decimal$1_min (mmux_decimal$1_t X, mmux_decimal$1_t Y)
+__attribute__((__const__)) mmux_flonumd$1_t
+mmux_flonumd$1_min (mmux_flonumd$1_t X, mmux_flonumd$1_t Y)
 {
-  return mmux_decimal$1(fmind$1(X.value, Y.value));
+  return mmux_flonumd$1(fmind$1(X.value, Y.value));
 }
 
 /* ------------------------------------------------------------------ */
 
 __attribute__((__const__)) bool
-mmux_complexd$1_equal (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+mmux_flonumcd$1_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
   return ((op1.value.re == op2.value.re) && (op1.value.im == op2.value.im))? true : false;
 }
 __attribute__((__const__)) int
-mmux_complexd$1_cmp (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+mmux_flonumcd$1_cmp (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_decimal$1_cmp(mmux_complexd$1_abs(op1), mmux_complexd$1_abs(op2));
+  return mmux_flonumd$1_cmp(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_greater (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+mmux_flonumcd$1_greater (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_decimal$1_greater(mmux_complexd$1_abs(op1), mmux_complexd$1_abs(op2));
+  return mmux_flonumd$1_greater(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_less (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+mmux_flonumcd$1_less (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_decimal$1_less(mmux_complexd$1_abs(op1), mmux_complexd$1_abs(op2));
+  return mmux_flonumd$1_less(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_greater_equal (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+mmux_flonumcd$1_greater_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_decimal$1_greater_equal(mmux_complexd$1_abs(op1), mmux_complexd$1_abs(op2));
+  return mmux_flonumd$1_greater_equal(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
 }
 __attribute__((__const__)) bool
-mmux_complexd$1_less_equal (mmux_complexd$1_t op1, mmux_complexd$1_t op2)
+mmux_flonumcd$1_less_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_decimal$1_less_equal(mmux_complexd$1_abs(op1), mmux_complexd$1_abs(op2));
+  return mmux_flonumd$1_less_equal(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
 }
 ]]])]]])
 m4_divert(0)m4_dnl
@@ -331,18 +331,18 @@ DEFINE_COMPARISONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
+m4_define([[[DEFINE_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
 __attribute__((__const__)) bool
-mmux_standard_decimal$1_equal_absmargin (mmux_standard_decimal$1_t op1,
-					 mmux_standard_decimal$1_t op2,
-					 mmux_standard_decimal$1_t margin)
+mmux_standard_flonumd$1_equal_absmargin (mmux_standard_flonumd$1_t op1,
+					 mmux_standard_flonumd$1_t op2,
+					 mmux_standard_flonumd$1_t margin)
 {
   return (fabsd$1(op1 - op2) <= fabsd$1(margin))? true : false;
 }
 __attribute__((__const__)) bool
-mmux_standard_decimal$1_equal_relepsilon (mmux_standard_decimal$1_t op1,
-					  mmux_standard_decimal$1_t op2,
-					  mmux_standard_decimal$1_t epsilon)
+mmux_standard_flonumd$1_equal_relepsilon (mmux_standard_flonumd$1_t op1,
+					  mmux_standard_flonumd$1_t op2,
+					  mmux_standard_flonumd$1_t epsilon)
 {
   return (fabsd$1(op1 - op2) <= (fabsd$1(epsilon) * fmaxd$1(fabsd$1(op1), fabsd$1(op2))))? true : false;
 }
@@ -350,30 +350,30 @@ mmux_standard_decimal$1_equal_relepsilon (mmux_standard_decimal$1_t op1,
 /* ------------------------------------------------------------------ */
 
 __attribute__((__const__)) bool
-mmux_decimal$1_equal_absmargin (mmux_decimal$1_t op1, mmux_decimal$1_t op2, mmux_decimal$1_t margin)
+mmux_flonumd$1_equal_absmargin (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t margin)
 {
-  return mmux_standard_decimal$1_equal_absmargin(op1.value, op2.value, margin.value);
+  return mmux_standard_flonumd$1_equal_absmargin(op1.value, op2.value, margin.value);
 }
 __attribute__((__const__)) bool
-mmux_decimal$1_equal_relepsilon (mmux_decimal$1_t op1, mmux_decimal$1_t op2, mmux_decimal$1_t epsilon)
+mmux_flonumd$1_equal_relepsilon (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t epsilon)
 {
-  return mmux_standard_decimal$1_equal_relepsilon(op1.value, op2.value, epsilon.value);
+  return mmux_standard_flonumd$1_equal_relepsilon(op1.value, op2.value, epsilon.value);
 }
 
 /* ------------------------------------------------------------------ */
 
 bool
-mmux_complexd$1_equal_absmargin (mmux_complexd$1_t op1, mmux_complexd$1_t op2, mmux_complexd$1_t margin)
+mmux_flonumcd$1_equal_absmargin (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t margin)
 {
-  return (mmux_standard_decimal$1_equal_absmargin(op1.value.re, op2.value.re, margin.value.re) &&
-	  mmux_standard_decimal$1_equal_absmargin(op1.value.im, op2.value.im, margin.value.im))?
+  return (mmux_standard_flonumd$1_equal_absmargin(op1.value.re, op2.value.re, margin.value.re) &&
+	  mmux_standard_flonumd$1_equal_absmargin(op1.value.im, op2.value.im, margin.value.im))?
     true : false;
 }
 bool
-mmux_complexd$1_equal_relepsilon (mmux_complexd$1_t op1, mmux_complexd$1_t op2, mmux_complexd$1_t epsilon)
+mmux_flonumcd$1_equal_relepsilon (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t epsilon)
 {
-  return (mmux_standard_decimal$1_equal_relepsilon(op1.value.re, op2.value.re, epsilon.value.re) &&
-	  mmux_standard_decimal$1_equal_relepsilon(op1.value.im, op2.value.im, epsilon.value.im))?
+  return (mmux_standard_flonumd$1_equal_relepsilon(op1.value.re, op2.value.re, epsilon.value.re) &&
+	  mmux_standard_flonumd$1_equal_relepsilon(op1.value.im, op2.value.im, epsilon.value.im))?
     true : false;
 }
 ]]])]]])
@@ -406,29 +406,29 @@ mmux_$1_decr (mmux_$1_t A)
 }
 ]]])]]])
 
-DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal32]]],  [[[fmodd32]]],  [[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal64]]],  [[[fmodd64]]],  [[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]], [[[fmodd128]]], [[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd32]]],  [[[fmodd32]]],  [[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd64]]],  [[[fmodd64]]],  [[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd128]]], [[[fmodd128]]], [[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
  ** Mathematics functions not implemented by libdfp.
  ** ----------------------------------------------------------------- */
 
-mmux_standard_decimal32_t
-mmux_exp10d32 (mmux_standard_decimal32_t op)
+mmux_standard_flonumd32_t
+mmux_exp10d32 (mmux_standard_flonumd32_t op)
 {
-  return expd32(op * logd32(mmux_standard_decimal32_literal(10.0)));
+  return expd32(op * logd32(mmux_standard_flonumd32_literal(10.0)));
 }
-mmux_standard_decimal64_t
-mmux_exp10d64 (mmux_standard_decimal64_t op)
+mmux_standard_flonumd64_t
+mmux_exp10d64 (mmux_standard_flonumd64_t op)
 {
-  return expd64(op * logd64(mmux_standard_decimal64_literal(10.0)));
+  return expd64(op * logd64(mmux_standard_flonumd64_literal(10.0)));
 }
-mmux_standard_decimal128_t
-mmux_exp10d128 (mmux_standard_decimal128_t op)
+mmux_standard_flonumd128_t
+mmux_exp10d128 (mmux_standard_flonumd128_t op)
 {
-  return expd128(op * logd128(mmux_standard_decimal128_literal(10.0)));
+  return expd128(op * logd128(mmux_standard_flonumd128_literal(10.0)));
 }
 
 
@@ -441,172 +441,172 @@ mmux_exp10d128 (mmux_standard_decimal128_t op)
 
 m4_divert(-1)
 m4_define([[[DEFINE_DECIMAL_MATH_CONSTANTS]]],[[[
-/* mmux_standard_decimal$1_constant_zero implemented as inline */
-/* mmux_standard_decimal$1_constant_one  implemented as inline */
-/* mmux_standard_decimal$1_constant_two  implemented as inline */
-/* mmux_standard_decimal$1_constant_ten  implemented as inline */
+/* mmux_standard_flonumd$1_constant_zero implemented as inline */
+/* mmux_standard_flonumd$1_constant_one  implemented as inline */
+/* mmux_standard_flonumd$1_constant_two  implemented as inline */
+/* mmux_standard_flonumd$1_constant_ten  implemented as inline */
 
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_E (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_E (void)
 {
-  return (mmux_standard_decimal$1_t)M_Edl;
+  return (mmux_standard_flonumd$1_t)M_Edl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_LOG2E (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_LOG2E (void)
 {
-  return (mmux_standard_decimal$1_t)M_LOG2Edl;
+  return (mmux_standard_flonumd$1_t)M_LOG2Edl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_LOG10E (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_LOG10E (void)
 {
-  return (mmux_standard_decimal$1_t)M_LOG10Edl;
+  return (mmux_standard_flonumd$1_t)M_LOG10Edl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_LN2 (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_LN2 (void)
 {
-  return (mmux_standard_decimal$1_t)M_LN2dl;
+  return (mmux_standard_flonumd$1_t)M_LN2dl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_LN10 (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_LN10 (void)
 {
-  return (mmux_standard_decimal$1_t)M_LN10dl;
+  return (mmux_standard_flonumd$1_t)M_LN10dl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_PI (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_PI (void)
 {
-  return (mmux_standard_decimal$1_t)M_PIdl;
+  return (mmux_standard_flonumd$1_t)M_PIdl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_PI_2 (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_PI_2 (void)
 {
-  return (mmux_standard_decimal$1_t)M_PI_2dl;
+  return (mmux_standard_flonumd$1_t)M_PI_2dl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_PI_4 (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_PI_4 (void)
 {
-  return (mmux_standard_decimal$1_t)M_PI_4dl;
+  return (mmux_standard_flonumd$1_t)M_PI_4dl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_1_PI (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_1_PI (void)
 {
-  return (mmux_standard_decimal$1_t)M_1_PIdl;
+  return (mmux_standard_flonumd$1_t)M_1_PIdl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_2_PI (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_2_PI (void)
 {
-  return (mmux_standard_decimal$1_t)M_2_PIdl;
+  return (mmux_standard_flonumd$1_t)M_2_PIdl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_2_SQRTPI (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_2_SQRTPI (void)
 {
-  return (mmux_standard_decimal$1_t)M_2_SQRTPIdl;
+  return (mmux_standard_flonumd$1_t)M_2_SQRTPIdl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_SQRT2 (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_SQRT2 (void)
 {
-  return (mmux_standard_decimal$1_t)M_SQRT2dl;
+  return (mmux_standard_flonumd$1_t)M_SQRT2dl;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_constant_SQRT1_2 (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_SQRT1_2 (void)
 {
-  return (mmux_standard_decimal$1_t)M_SQRT1_2dl;
+  return (mmux_standard_flonumd$1_t)M_SQRT1_2dl;
 }
 
 /* ------------------------------------------------------------------ */
 
-/* mmux_decimal$1_constant_zero implemented as inline */
-/* mmux_decimal$1_constant_one  implemented as inline */
-/* mmux_decimal$1_constant_two  implemented as inline */
-/* mmux_decimal$1_constant_ten  implemented as inline */
+/* mmux_flonumd$1_constant_zero implemented as inline */
+/* mmux_flonumd$1_constant_one  implemented as inline */
+/* mmux_flonumd$1_constant_two  implemented as inline */
+/* mmux_flonumd$1_constant_ten  implemented as inline */
 
-mmux_decimal$1_t
-mmux_decimal$1_constant_E (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_E (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_E());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_E());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_LOG2E (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_LOG2E (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_LOG2E());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LOG2E());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_LOG10E (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_LOG10E (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_LOG10E());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LOG10E());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_LN2 (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_LN2 (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_LN2());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LN2());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_LN10 (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_LN10 (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_LN10());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LN10());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_PI (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_PI (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_PI());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_PI());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_PI_2 (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_PI_2 (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_PI_2());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_PI_2());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_PI_4 (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_PI_4 (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_PI_4());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_PI_4());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_1_PI (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_1_PI (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_1_PI());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_1_PI());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_2_PI (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_2_PI (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_2_PI());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_2_PI());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_2_SQRTPI (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_2_SQRTPI (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_2_SQRTPI());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_2_SQRTPI());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_SQRT2 (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_SQRT2 (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_SQRT2());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_SQRT2());
 }
-mmux_decimal$1_t
-mmux_decimal$1_constant_SQRT1_2 (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_SQRT1_2 (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_constant_SQRT1_2());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_SQRT1_2());
 }
 
 /* ------------------------------------------------------------------ */
 
 /* Should we do something with "DEC$1_MIN" defined by GCC? */
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_maximum (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_maximum (void)
 {
   return DEC$1_MAX;
 }
-mmux_standard_decimal$1_t
-mmux_standard_decimal$1_minimum (void)
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_minimum (void)
 {
   return (- DEC$1_MAX);
 }
-mmux_decimal$1_t
-mmux_decimal$1_maximum (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_maximum (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_maximum());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_maximum());
 }
-mmux_decimal$1_t
-mmux_decimal$1_minimum (void)
+mmux_flonumd$1_t
+mmux_flonumd$1_minimum (void)
 {
-  return mmux_decimal$1(mmux_standard_decimal$1_minimum());
+  return mmux_flonumd$1(mmux_standard_flonumd$1_minimum());
 }
 
 /* ------------------------------------------------------------------ */
@@ -765,8 +765,8 @@ DEFINE_BINARYN_CFUNC([[[$1]]],[[[yn]]],		[[[$39]]], [[[$2]]], [[[$3]]])
 
 /* ------------------------------------------------------------------ */
 
-DEFINE_CFUNCS([[[decimal32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]],
+DEFINE_CFUNCS([[[flonumd32]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMD32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]],
 	      [[[sind32]]],		[[[cosd32]]],		[[[tand32]]],
 	      [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
 	      [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
@@ -784,8 +784,8 @@ DEFINE_CFUNCS([[[decimal32]]],
 	      [[[y0d32]]],		[[[y1d32]]],		[[[ynd32]]])
 #endif
 
-DEFINE_CFUNCS([[[decimal64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]],
+DEFINE_CFUNCS([[[flonumd64]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMD64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]],
 	      [[[sind64]]],		[[[cosd64]]],		[[[tand64]]],
 	      [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
 	      [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
@@ -803,8 +803,8 @@ DEFINE_CFUNCS([[[decimal64]]],
 	      [[[y0d64]]],		[[[y1d64]]],		[[[ynd64]]])
 #endif
 
-DEFINE_CFUNCS([[[decimal128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_DECIMAL128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]],
+DEFINE_CFUNCS([[[flonumd128]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMD128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]],
 	      [[[sind128]]],		[[[cosd128]]],		[[[tand128]]],
 	      [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
 	      [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
@@ -824,8 +824,8 @@ DEFINE_CFUNCS([[[decimal128]]],
 
 /* ------------------------------------------------------------------ */
 
-DEFINE_CFUNCS([[[complexd32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD32]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD32_UNIMPLEMENTED]]],
+DEFINE_CFUNCS([[[flonumcd32]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMCD32]]], [[[MMUX_CC_TYPES_HAS_FLONUMCD32_UNIMPLEMENTED]]],
 	      [[[csind32]]],	[[[ccosd32]]],		[[[ctand32]]],
 	      [[[casind32]]],	[[[cacosd32]]],		[[[catand32]]],		[[[]]],
 	      [[[csinhd32]]],	[[[ccoshd32]]],		[[[ctanhd32]]],
@@ -839,8 +839,8 @@ DEFINE_CFUNCS([[[complexd32]]],
 	      [[[]]],		[[[]]],			[[[]]],
 	      [[[]]],		[[[]]],			[[[]]])
 
-DEFINE_CFUNCS([[[complexd64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD64]]], [[[MMUX_CC_TYPES_HAS_COMPLEXD64_UNIMPLEMENTED]]],
+DEFINE_CFUNCS([[[flonumcd64]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMCD64]]], [[[MMUX_CC_TYPES_HAS_FLONUMCD64_UNIMPLEMENTED]]],
 	      [[[csind64]]],	[[[ccosd64]]],		[[[ctand64]]],
 	      [[[casind64]]],	[[[cacosd64]]],		[[[catand64]]],		[[[]]],
 	      [[[csinhd64]]],	[[[ccoshd64]]],		[[[ctanhd64]]],
@@ -854,8 +854,8 @@ DEFINE_CFUNCS([[[complexd64]]],
 	      [[[]]],		[[[]]],			[[[]]],
 	      [[[]]],		[[[]]],			[[[]]])
 
-DEFINE_CFUNCS([[[complexd128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_COMPLEXD128]]],[[[MMUX_CC_TYPES_HAS_COMPLEXD128_UNIMPLEMENTED]]],
+DEFINE_CFUNCS([[[flonumcd128]]],
+	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMCD128]]],[[[MMUX_CC_TYPES_HAS_FLONUMCD128_UNIMPLEMENTED]]],
 	      [[[csind128]]],	[[[ccosd128]]],		[[[ctand128]]],
 	      [[[casind128]]],	[[[cacosd128]]],	[[[catand128]]],	[[[]]],
 	      [[[csinhd128]]],	[[[ccoshd128]]],	[[[ctanhd128]]],
@@ -877,11 +877,11 @@ DEFINE_CFUNCS([[[complexd128]]],
 m4_divert(-1)
 m4_define([[[DEFINE_DECIMAL_STRFROM_STRTO]]],[[[
 int
-mmux_strfromd$1 (char * s_output_value, size_t size, char const * restrict format, mmux_standard_decimal$1_t input_value)
+mmux_strfromd$1 (char * s_output_value, size_t size, char const * restrict format, mmux_standard_flonumd$1_t input_value)
 {
   return strfromd$1(s_output_value, size, format, input_value);
 }
-mmux_standard_decimal$1_t
+mmux_standard_flonumd$1_t
 mmux_strtod$1 (char const * restrict s_input_value, char ** restrict tailptr)
 {
   return strtod$1(s_input_value, tailptr);
@@ -903,11 +903,11 @@ mmux_string_is_$1 (char const * s_value)
 }
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_PARSER_FUNCTIONS([[[decimal32]]])
-DEFINE_PARSER_FUNCTIONS([[[decimal64]]])
-DEFINE_PARSER_FUNCTIONS([[[decimal128]]])
-DEFINE_PARSER_FUNCTIONS([[[complexd32]]])
-DEFINE_PARSER_FUNCTIONS([[[complexd64]]])
-DEFINE_PARSER_FUNCTIONS([[[complexd128]]])
+DEFINE_PARSER_FUNCTIONS([[[flonumd32]]])
+DEFINE_PARSER_FUNCTIONS([[[flonumd64]]])
+DEFINE_PARSER_FUNCTIONS([[[flonumd128]]])
+DEFINE_PARSER_FUNCTIONS([[[flonumcd32]]])
+DEFINE_PARSER_FUNCTIONS([[[flonumcd64]]])
+DEFINE_PARSER_FUNCTIONS([[[flonumcd128]]])
 
 /* end of file */

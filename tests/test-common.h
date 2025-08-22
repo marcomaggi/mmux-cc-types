@@ -37,52 +37,52 @@ __attribute__((__unused__)) static void
 test_set_output_formats (void)
 {
   if (1) {
-    fprintf(stderr, "%s: setting output format for float\n", __func__);
-    assert(false == mmux_float_set_output_format("%.3f", __func__));
-    fprintf(stderr, "%s: setting output format for double\n", __func__);
-    assert(false == mmux_double_set_output_format("%.3f", __func__));
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-    fprintf(stderr, "%s: setting output format for ldouble\n", __func__);
-    assert(false == mmux_ldouble_set_output_format("%.3f", __func__));
+    fprintf(stderr, "%s: setting output format for flonumfl\n", __func__);
+    assert(false == mmux_flonumfl_set_output_format("%.3f", __func__));
+    fprintf(stderr, "%s: setting output format for flonumdb\n", __func__);
+    assert(false == mmux_flonumdb_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+    fprintf(stderr, "%s: setting output format for flonumldb\n", __func__);
+    assert(false == mmux_flonumldb_set_output_format("%.3f", __func__));
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-    fprintf(stderr, "%s: setting output format for float32\n", __func__);
-    assert(false == mmux_float32_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+    fprintf(stderr, "%s: setting output format for flonumf32\n", __func__);
+    assert(false == mmux_flonumf32_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-    fprintf(stderr, "%s: setting output format for float64\n", __func__);
-    assert(false == mmux_float64_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+    fprintf(stderr, "%s: setting output format for flonumf64\n", __func__);
+    assert(false == mmux_flonumf64_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-    fprintf(stderr, "%s: setting output format for float128\n", __func__);
-    assert(false == mmux_float128_set_output_format("%.3f", __func__));
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-    fprintf(stderr, "%s: setting output format for float32x\n", __func__);
-    assert(false == mmux_float32x_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-    fprintf(stderr, "%s: setting output format for float64x\n", __func__);
-    assert(false == mmux_float64x_set_output_format("%.3f", __func__));
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-    fprintf(stderr, "%s: setting output format for float128x\n", __func__);
-    assert(false == mmux_float128x_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+    fprintf(stderr, "%s: setting output format for flonumf128\n", __func__);
+    assert(false == mmux_flonumf128_set_output_format("%.3f", __func__));
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-    fprintf(stderr, "%s: setting output format for decimal32\n", __func__);
-    assert(false == mmux_decimal32_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+    fprintf(stderr, "%s: setting output format for flonumf32x\n", __func__);
+    assert(false == mmux_flonumf32x_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-    fprintf(stderr, "%s: setting output format for decimal64\n", __func__);
-    assert(false == mmux_decimal64_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+    fprintf(stderr, "%s: setting output format for flonumf64x\n", __func__);
+    assert(false == mmux_flonumf64x_set_output_format("%.3f", __func__));
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-    fprintf(stderr, "%s: setting output format for decimal128\n", __func__);
-    assert(false == mmux_decimal128_set_output_format("%.3f", __func__));
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+    fprintf(stderr, "%s: setting output format for flonumf128x\n", __func__);
+    assert(false == mmux_flonumf128x_set_output_format("%.3f", __func__));
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+    fprintf(stderr, "%s: setting output format for flonumd32\n", __func__);
+    assert(false == mmux_flonumd32_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+    fprintf(stderr, "%s: setting output format for flonumd64\n", __func__);
+    assert(false == mmux_flonumd64_set_output_format("%.3f", __func__));
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+    fprintf(stderr, "%s: setting output format for flonumd128\n", __func__);
+    assert(false == mmux_flonumd128_set_output_format("%.3f", __func__));
 #endif
   }
 }

@@ -246,37 +246,37 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{ulong}, type stem
 @cindex @code{sllong}, type stem
 @cindex @code{ullong}, type stem
-@cindex @code{float}, type stem
-@cindex @code{double}, type stem
-@cindex @code{ldouble}, type stem
+@cindex @code{flonumfl}, type stem
+@cindex @code{flonumdb}, type stem
+@cindex @code{flonumldb}, type stem
 
-@cindex @code{float32}, type stem
-@cindex @code{float64}, type stem
-@cindex @code{float128}, type stem
+@cindex @code{flonumf32}, type stem
+@cindex @code{flonumf64}, type stem
+@cindex @code{flonumf128}, type stem
 
-@cindex @code{float32x}, type stem
-@cindex @code{float64x}, type stem
-@cindex @code{float128x}, type stem
+@cindex @code{flonumf32x}, type stem
+@cindex @code{flonumf64x}, type stem
+@cindex @code{flonumf128x}, type stem
 
-@cindex @code{decimal32}, type stem
-@cindex @code{decimal64}, type stem
-@cindex @code{decimal128}, type stem
+@cindex @code{flonumd32}, type stem
+@cindex @code{flonumd64}, type stem
+@cindex @code{flonumd128}, type stem
 
-@cindex @code{complexf}, type stem
-@cindex @code{complexd}, type stem
-@cindex @code{complexld}, type stem
+@cindex @code{flonumcfl}, type stem
+@cindex @code{flonumcdb}, type stem
+@cindex @code{flonumcldb}, type stem
 
-@cindex @code{complexf32}, type stem
-@cindex @code{complexf64}, type stem
-@cindex @code{complexf128}, type stem
+@cindex @code{flonumcf32}, type stem
+@cindex @code{flonumcf64}, type stem
+@cindex @code{flonumcf128}, type stem
 
-@cindex @code{complexf32x}, type stem
-@cindex @code{complexf64x}, type stem
-@cindex @code{complexf128x}, type stem
+@cindex @code{flonumcf32x}, type stem
+@cindex @code{flonumcf64x}, type stem
+@cindex @code{flonumcf128x}, type stem
 
-@cindex @code{complexd32}, type stem
-@cindex @code{complexd64}, type stem
-@cindex @code{complexd128}, type stem
+@cindex @code{flonumcd32}, type stem
+@cindex @code{flonumcd64}, type stem
+@cindex @code{flonumcd128}, type stem
 
 @cindex @code{sint8}, type stem
 @cindex @code{uint8}, type stem
@@ -335,52 +335,52 @@ language type @code{\TYPE\}.
 @MmuxDefineTypeStem{ulong,unsigned long}
 @MmuxDefineTypeStem{sllong,signed long long}
 @MmuxDefineTypeStem{ullong,unsigned long long}
-@MmuxDefineTypeStem{float,float}
-@MmuxDefineTypeStem{double,double}
-@MmuxDefineTypeStem{ldouble,long double}
+@MmuxDefineTypeStem{flonumfl,float}
+@MmuxDefineTypeStem{flonumdb,flonumdb}
+@MmuxDefineTypeStem{flonumldb,long flonumdb}
 
-@MmuxDefineTypeStem{float32, _Float32}
-@MmuxDefineTypeStem{float64, _Float64}
-@MmuxDefineTypeStem{float128, _Float128}
+@MmuxDefineTypeStem{flonumf32, _Float32}
+@MmuxDefineTypeStem{flonumf64, _Float64}
+@MmuxDefineTypeStem{flonumf128, _Float128}
 
-@MmuxDefineTypeStem{float32x, _Float32x}
-@MmuxDefineTypeStem{float64x, _Float64x}
-@MmuxDefineTypeStem{float128x, _Float128x}
+@MmuxDefineTypeStem{flonumf32x, _Float32x}
+@MmuxDefineTypeStem{flonumf64x, _Float64x}
+@MmuxDefineTypeStem{flonumf128x, _Float128x}
 
-@MmuxDefineTypeStem{decimal32, _Decimal32}
-@MmuxDefineTypeStem{decimal64, _Decimal64}
-@MmuxDefineTypeStem{decimal128, _Decimal128}
+@MmuxDefineTypeStem{flonumd32, _Decimal32}
+@MmuxDefineTypeStem{flonumd64, _Decimal64}
+@MmuxDefineTypeStem{flonumd128, _Decimal128}
 
-@MmuxDefineTypeStem{complexf,float complex}
-@MmuxDefineTypeStem{complexd,double complex}
-@MmuxDefineTypeStem{complexld,long double complex}
+@MmuxDefineTypeStem{flonumcfl,float complex}
+@MmuxDefineTypeStem{flonumcdb,flonumdb complex}
+@MmuxDefineTypeStem{flonumcldb,long flonumdb complex}
 
-@MmuxDefineTypeStem{complexf32, _Float32 complex}
-@MmuxDefineTypeStem{complexf64, _Float64 complex}
-@MmuxDefineTypeStem{complexf128, _Float128 complex}
+@MmuxDefineTypeStem{flonumcf32, _Float32 complex}
+@MmuxDefineTypeStem{flonumcf64, _Float64 complex}
+@MmuxDefineTypeStem{flonumcf128, _Float128 complex}
 
-@MmuxDefineTypeStem{complexf32x, _Float32 complex}
-@MmuxDefineTypeStem{complexf64x, _Float64x complex}
-@MmuxDefineTypeStem{complexf128x, _Float128x complex}
+@MmuxDefineTypeStem{flonumcf32x, _Float32 complex}
+@MmuxDefineTypeStem{flonumcf64x, _Float64x complex}
+@MmuxDefineTypeStem{flonumcf128x, _Float128x complex}
 
-@deftp {Type Stem} complexd32
+@deftp {Type Stem} flonumcd32
 Single--word specification of a C language type supported by this package.  It is an alias for a
 non--standard C language type implementing complex floating--point numbers having
-@objtype{_Decimal32} values as real and imaginary parts.
+@objtype{flonumd32} values as real and imaginary parts.
 @end deftp
 
 
-@deftp {Type Stem} complexd64
+@deftp {Type Stem} flonumcd64
 Single--word specification of a C language type supported by this package.  It is an alias for a
 non--standard C language type implementing complex floating--point numbers having
-@objtype{_Decimal64} values as real and imaginary parts.
+@objtype{flonumd64} values as real and imaginary parts.
 @end deftp
 
 
-@deftp {Type Stem} complexd128
+@deftp {Type Stem} flonumcd128
 Single--word specification of a C language type supported by this package.  It is an alias for a
 non--standard C language type implementing complex floating--point numbers having
-@objtype{_Decimal128} values as real and imaginary parts.
+@objtype{flonumd128} values as real and imaginary parts.
 @end deftp
 
 @MmuxDefineTypeStem{sint8,int8_t}
@@ -474,25 +474,25 @@ Initialise library's internal state.  When successful return @cfalse{}; otherwis
 
 
 It happens that some rare platform may not implement the C language types @objtype{signed long long
-int}, @objtype{unsigned long long int} and @objtype{long double}; more platforms may not implement
+int}, @objtype{unsigned long long int} and @objtype{long flonumdb}; more platforms may not implement
 the extension types @objtype{_FloatN} and @objtype{_FloatNx}, which usually are:
 
 @example
-_Float32
-_Float64
-_Float128
-_Float32x
-_Float64x
-_Float128x
+_Flonumf32
+_Flonumf64
+_Flonumf128
+_Flonumf32x
+_Flonumf64x
+_Flonumf128x
 @end example
 
 @noindent
 even more platforms may not implement the extension types @objtype{_DecimalN}, which usually are:
 
 @example
-_Decimal32
-_Decimal64
-_Decimal128
+_Flonumd32
+_Flonumd64
+_Flonumd128
 @end example
 
 @noindent
@@ -502,12 +502,12 @@ This package assumes that: if the real floating--point types are supported, the 
 complex floating--point types are also supported; so the following types are supported:
 
 @example
-_Float32 complex
-_Float64 complex
-_Float128 complex
-_Float32x complex
-_Float64x complex
-_Float128x complex
+_Flonumf32 complex
+_Flonumf64 complex
+_Flonumf128 complex
+_Flonumf32x complex
+_Flonumf64x complex
+_Flonumf128x complex
 @end example
 
 This package implements complex floating--point numbers whose real and imaginary parts are
@@ -522,7 +522,7 @@ it defines the following symbols in its header files.
 We can use the following C preprocessor symbols with code like:
 
 @example
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
 ... /* the type is available */
 #endif
 @end example
@@ -537,25 +537,25 @@ type is supported.
 
 @MmuxDefineCppSymbolHaveType{SLLONG}
 @MmuxDefineCppSymbolHaveType{ULLONG}
-@MmuxDefineCppSymbolHaveType{LDOUBLE}
-@MmuxDefineCppSymbolHaveType{FLOAT32}
-@MmuxDefineCppSymbolHaveType{FLOAT64}
-@MmuxDefineCppSymbolHaveType{FLOAT128}
-@MmuxDefineCppSymbolHaveType{FLOAT32X}
-@MmuxDefineCppSymbolHaveType{FLOAT64X}
-@MmuxDefineCppSymbolHaveType{FLOAT128X}
-@MmuxDefineCppSymbolHaveType{DECIMAL32}
-@MmuxDefineCppSymbolHaveType{DECIMAL64}
-@MmuxDefineCppSymbolHaveType{DECIMAL128}
-@MmuxDefineCppSymbolHaveType{COMPLEXF32}
-@MmuxDefineCppSymbolHaveType{COMPLEXF64}
-@MmuxDefineCppSymbolHaveType{COMPLEXF128}
-@MmuxDefineCppSymbolHaveType{COMPLEXF32X}
-@MmuxDefineCppSymbolHaveType{COMPLEXF64X}
-@MmuxDefineCppSymbolHaveType{COMPLEXF128X}
-@MmuxDefineCppSymbolHaveType{COMPLEXD32}
-@MmuxDefineCppSymbolHaveType{COMPLEXD64}
-@MmuxDefineCppSymbolHaveType{COMPLEXD128}
+@MmuxDefineCppSymbolHaveType{FLONUMLDB}
+@MmuxDefineCppSymbolHaveType{FLONUMF32}
+@MmuxDefineCppSymbolHaveType{FLONUMF64}
+@MmuxDefineCppSymbolHaveType{FLONUMF128}
+@MmuxDefineCppSymbolHaveType{FLONUMF32X}
+@MmuxDefineCppSymbolHaveType{FLONUMF64X}
+@MmuxDefineCppSymbolHaveType{FLONUMF128X}
+@MmuxDefineCppSymbolHaveType{FLONUMD32}
+@MmuxDefineCppSymbolHaveType{FLONUMD64}
+@MmuxDefineCppSymbolHaveType{FLONUMD128}
+@MmuxDefineCppSymbolHaveType{FLONUMCF32}
+@MmuxDefineCppSymbolHaveType{FLONUMCF64}
+@MmuxDefineCppSymbolHaveType{FLONUMCF128}
+@MmuxDefineCppSymbolHaveType{FLONUMCF32X}
+@MmuxDefineCppSymbolHaveType{FLONUMCF64X}
+@MmuxDefineCppSymbolHaveType{FLONUMCF128X}
+@MmuxDefineCppSymbolHaveType{FLONUMCD32}
+@MmuxDefineCppSymbolHaveType{FLONUMCD64}
+@MmuxDefineCppSymbolHaveType{FLONUMCD128}
 
 @c page
 @node typedefs
@@ -576,37 +576,37 @@ type is supported.
 @cindex @code{ulong}, type stem
 @cindex @code{sllong}, type stem
 @cindex @code{ullong}, type stem
-@cindex @code{float}, type stem
-@cindex @code{double}, type stem
-@cindex @code{ldouble}, type stem
+@cindex @code{flonumfl}, type stem
+@cindex @code{flonumdb}, type stem
+@cindex @code{flonumldb}, type stem
 
-@cindex @code{float32}, type stem
-@cindex @code{float64}, type stem
-@cindex @code{float128}, type stem
+@cindex @code{flonumf32}, type stem
+@cindex @code{flonumf64}, type stem
+@cindex @code{flonumf128}, type stem
 
-@cindex @code{float32x}, type stem
-@cindex @code{float64x}, type stem
-@cindex @code{float128x}, type stem
+@cindex @code{flonumf32x}, type stem
+@cindex @code{flonumf64x}, type stem
+@cindex @code{flonumf128x}, type stem
 
-@cindex @code{decimal32}, type stem
-@cindex @code{decimal64}, type stem
-@cindex @code{decimal128}, type stem
+@cindex @code{flonumd32}, type stem
+@cindex @code{flonumd64}, type stem
+@cindex @code{flonumd128}, type stem
 
-@cindex @code{complexf}, type stem
-@cindex @code{complexd}, type stem
-@cindex @code{complexld}, type stem
+@cindex @code{flonumcfl}, type stem
+@cindex @code{flonumcdb}, type stem
+@cindex @code{flonumcldb}, type stem
 
-@cindex @code{complexf32}, type stem
-@cindex @code{complexf64}, type stem
-@cindex @code{complexf128}, type stem
+@cindex @code{flonumcf32}, type stem
+@cindex @code{flonumcf64}, type stem
+@cindex @code{flonumcf128}, type stem
 
-@cindex @code{complexf32x}, type stem
-@cindex @code{complexf64x}, type stem
-@cindex @code{complexf128x}, type stem
+@cindex @code{flonumcf32x}, type stem
+@cindex @code{flonumcf64x}, type stem
+@cindex @code{flonumcf128x}, type stem
 
-@cindex @code{complexd32}, type stem
-@cindex @code{complexd64}, type stem
-@cindex @code{complexd128}, type stem
+@cindex @code{flonumcd32}, type stem
+@cindex @code{flonumcd64}, type stem
+@cindex @code{flonumcd128}, type stem
 
 @cindex @code{sint8}, type stem
 @cindex @code{uint8}, type stem
@@ -677,47 +677,47 @@ imaginary parts type of @objtype{mmux_\COMPLEXSTEM\_t}.
 @MmuxDefineCAliasTypedef{ulong,unsigned long}
 @MmuxDefineCAliasTypedef{sllong,signed long long}
 @MmuxDefineCAliasTypedef{ullong,unsigned long long}
-@MmuxDefineCAliasTypedef{float,float}
-@MmuxDefineCAliasTypedef{double,double}
-@MmuxDefineCAliasTypedef{ldouble,long double}
+@MmuxDefineCAliasTypedef{flonumfl,float}
+@MmuxDefineCAliasTypedef{flonumdb,flonumdb}
+@MmuxDefineCAliasTypedef{flonumldb,long flonumdb}
 
-@MmuxDefineCAliasTypedef{float32, _Float32}
-@MmuxDefineCAliasTypedef{float64, _Float64}
-@MmuxDefineCAliasTypedef{float128, _Float128}
+@MmuxDefineCAliasTypedef{flonumf32, _Flonumf32}
+@MmuxDefineCAliasTypedef{flonumf64, _Flonumf64}
+@MmuxDefineCAliasTypedef{flonumf128, _Flonumf128}
 
-@MmuxDefineCAliasTypedef{float32x, _Float32x}
-@MmuxDefineCAliasTypedef{float64x, _Float64x}
-@MmuxDefineCAliasTypedef{float128x, _Float128x}
+@MmuxDefineCAliasTypedef{flonumf32x, _Flonumf32x}
+@MmuxDefineCAliasTypedef{flonumf64x, _Flonumf64x}
+@MmuxDefineCAliasTypedef{flonumf128x, _Flonumf128x}
 
-@MmuxDefineCAliasTypedef{decimal32, _Decimal32}
-@MmuxDefineCAliasTypedef{decimal64, _Decimal64}
-@MmuxDefineCAliasTypedef{decimal128, _Decimal128}
+@MmuxDefineCAliasTypedef{flonumd32, _Flonumd32}
+@MmuxDefineCAliasTypedef{flonumd64, _Flonumd64}
+@MmuxDefineCAliasTypedef{flonumd128, _Flonumd128}
 
-@MmuxDefineCAliasTypedef{complexf,float complex}
-@MmuxDefineCAliasTypedef{complexd,double complex}
-@MmuxDefineCAliasTypedef{complexld,long double complex}
+@MmuxDefineCAliasTypedef{flonumcfl,float complex}
+@MmuxDefineCAliasTypedef{flonumcdb,flonumdb complex}
+@MmuxDefineCAliasTypedef{flonumcldb,long flonumdb complex}
 
-@MmuxDefineCAliasTypedef{complexf32, _Float32 complex}
-@MmuxDefineCAliasTypedef{complexf64, _Float64 complex}
-@MmuxDefineCAliasTypedef{complexf128, _Float128 complex}
+@MmuxDefineCAliasTypedef{flonumcf32, _Flonumf32 complex}
+@MmuxDefineCAliasTypedef{flonumcf64, _Flonumf64 complex}
+@MmuxDefineCAliasTypedef{flonumcf128, _Flonumf128 complex}
 
-@MmuxDefineCAliasTypedef{complexf32x, _Float32x complex}
-@MmuxDefineCAliasTypedef{complexf64x, _Float64x complex}
-@MmuxDefineCAliasTypedef{complexf128x, _Float128x complex}
+@MmuxDefineCAliasTypedef{flonumcf32x, _Flonumf32x complex}
+@MmuxDefineCAliasTypedef{flonumcf64x, _Flonumf64x complex}
+@MmuxDefineCAliasTypedef{flonumcf128x, _Flonumf128x complex}
 
-@deftp {Typedef} mmux_complexd32_t
+@deftp {Typedef} mmux_flonumcd32_t
 Non--standard type definition representing a complex floating--point number whose real and imaginary
-parts are values of type @objtype{mmux_decimal32_t}.
+parts are values of type @objtype{mmux_flonumd32_t}.
 @end deftp
 
-@deftp {Typedef} mmux_complexd64_t
+@deftp {Typedef} mmux_flonumcd64_t
 Non--standard type definition representing a complex floating--point number whose real and imaginary
-parts are values of type @objtype{mmux_decimal64_t}.
+parts are values of type @objtype{mmux_flonumd64_t}.
 @end deftp
 
-@deftp {Typedef} mmux_complexd128_t
+@deftp {Typedef} mmux_flonumcd128_t
 Non--standard type definition representing a complex floating--point number whose real and imaginary
-parts are values of type @objtype{mmux_decimal128_t}.
+parts are values of type @objtype{mmux_flonumd128_t}.
 @end deftp
 
 @MmuxDefineCAliasTypedef{sint8,int8_t}
@@ -756,21 +756,21 @@ An alias for @objtype{mmux_uint8_t}.
 @MmuxDefineCAliasTypedef{rlim, rlim_t}
 
 
-@MmuxDefineCAliasTypedefPart{complexf,float}
-@MmuxDefineCAliasTypedefPart{complexd,double}
-@MmuxDefineCAliasTypedefPart{complexld,ldouble}
+@MmuxDefineCAliasTypedefPart{flonumcfl,float}
+@MmuxDefineCAliasTypedefPart{flonumcdb,flonumdb}
+@MmuxDefineCAliasTypedefPart{flonumcldb,flonumldb}
 
-@MmuxDefineCAliasTypedefPart{complexf32, float32}
-@MmuxDefineCAliasTypedefPart{complexf64, float64}
-@MmuxDefineCAliasTypedefPart{complexf128, float128}
+@MmuxDefineCAliasTypedefPart{flonumcf32, flonumf32}
+@MmuxDefineCAliasTypedefPart{flonumcf64, flonumf64}
+@MmuxDefineCAliasTypedefPart{flonumcf128, flonumf128}
 
-@MmuxDefineCAliasTypedefPart{complexf32x, float32x}
-@MmuxDefineCAliasTypedefPart{complexf64x, float64x}
-@MmuxDefineCAliasTypedefPart{complexf128x, float128x}
+@MmuxDefineCAliasTypedefPart{flonumcf32x, flonumf32x}
+@MmuxDefineCAliasTypedefPart{flonumcf64x, flonumf64x}
+@MmuxDefineCAliasTypedefPart{flonumcf128x, flonumf128x}
 
-@MmuxDefineCAliasTypedefPart{complexd32, decimal32}
-@MmuxDefineCAliasTypedefPart{complexd64, decimal64}
-@MmuxDefineCAliasTypedefPart{complexd128, decimal128}
+@MmuxDefineCAliasTypedefPart{flonumcd32, flonumd32}
+@MmuxDefineCAliasTypedefPart{flonumcd64, flonumd64}
+@MmuxDefineCAliasTypedefPart{flonumcd128, flonumd128}
 
 @c ------------------------------------------------------------------------
 
@@ -832,20 +832,20 @@ mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERALEXAMPLE);
 @MmuxDefineFlonumLiteralMacro{SLLONG,sllong,signed long long int,LL,INTEGER_NUMBER_LITERAL,123}
 @MmuxDefineFlonumLiteralMacro{ULLONG,ullong,unsigned long long int,ULL,INTEGER_NUMBER_LITERAL,123}
 
-@MmuxDefineFlonumLiteralMacro{FLOAT,float,float,F,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{LDOUBLE,ldouble,ldouble,L,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{flonumfl,flonumfl,flonumfl,F,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMLDB,flonumldb,flonumldb,L,FLOATING_POINT_NUMBER_LITERAL,0.123}
 
-@MmuxDefineFlonumLiteralMacro{FLOAT32,float32,_Float32,f32,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT64,float64,_Float64,f64,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT128,float128,_Float128,f128,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMF32,flonumf32,_Flonumf32,f32,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMF64,flonumf64,_Flonumf64,f64,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMF128,flonumf128,_Flonumf128,f128,FLOATING_POINT_NUMBER_LITERAL,0.123}
 
-@MmuxDefineFlonumLiteralMacro{FLOAT32X,float32x,_Float32x,f32x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT64X,float64x,_Float64x,f64x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLOAT128X,float128x,_Float128x,f128x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMF32X,flonumf32x,_Flonumf32x,f32x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMF64X,flonumf64x,_Flonumf64x,f64x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMF128X,flonumf128x,_Flonumf128x,f128x,FLOATING_POINT_NUMBER_LITERAL,0.123}
 
-@MmuxDefineFlonumLiteralMacro{DECIMAL32,decimal32,_Decimal32,DF,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{DECIMAL64,decimal64,_Decimal64,DD,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{DECIMAL128,decimal128,_Decimal128,DL,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMD32,flonumd32,_Flonumd32,DF,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMD64,flonumd64,_Flonumd64,DD,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@MmuxDefineFlonumLiteralMacro{FLONUMD128,flonumd128,_Flonumd128,DL,FLOATING_POINT_NUMBER_LITERAL,0.123}
 
 @c page
 @node makers
@@ -857,7 +857,7 @@ The @dfn{maker} macros are used as follows:
 @example
 auto    A = mmux_sint_make(123);
 auto    B = mmux_uint_make(123);
-auto    C = mmux_ldouble_make(0.123);
+auto    C = mmux_flonumldb_make(0.123);
 auto    D = mmux_mode_make(MMUX_LIBC_O_RDWR);
 @end example
 
@@ -867,12 +867,12 @@ the macros expand as follows:
 @example
 mmux_sint_make(123)       @expansion{} ((mmux_sint_t)(0.123))
 mmux_uint_make(123)       @expansion{} ((mmux_uint_t)(MMUX_UNSIGNED_LITERAL(123)))
-mmux_ldouble_make(0.123)  @expansion{} ((mmux_ldouble_t)(MMUX_LDOUBLE_LITERAL(0.123)))
+mmux_flonumldb_make(0.123)  @expansion{} ((mmux_flonumldb_t)(MMUX_FLONUMLDB_LITERAL(0.123)))
 @end example
 
 @noindent
 there are no maker macros for complex types, because for those values we have to use the proper
-constructor functions like @cfunc{mmux_complexd_make_rectangular}, @ref{complex make, Constructing
+constructor functions like @cfunc{mmux_flonumcdb_make_rectangular}, @ref{complex make, Constructing
 complex numbers}.
 
 
@@ -898,21 +898,21 @@ Return a value of the given type.
 @MmuxDefineCMacroMaker{ulong}
 @MmuxDefineCMacroMaker{sllong}
 @MmuxDefineCMacroMaker{ullong}
-@MmuxDefineCMacroMaker{float}
-@MmuxDefineCMacroMaker{double}
-@MmuxDefineCMacroMaker{ldouble}
+@MmuxDefineCMacroMaker{flonumfl}
+@MmuxDefineCMacroMaker{flonumdb}
+@MmuxDefineCMacroMaker{flonumldb}
 
-@MmuxDefineCMacroMaker{float32}
-@MmuxDefineCMacroMaker{float64}
-@MmuxDefineCMacroMaker{float128}
+@MmuxDefineCMacroMaker{flonumf32}
+@MmuxDefineCMacroMaker{flonumf64}
+@MmuxDefineCMacroMaker{flonumf128}
 
-@MmuxDefineCMacroMaker{float32x}
-@MmuxDefineCMacroMaker{float64x}
-@MmuxDefineCMacroMaker{float128x}
+@MmuxDefineCMacroMaker{flonumf32x}
+@MmuxDefineCMacroMaker{flonumf64x}
+@MmuxDefineCMacroMaker{flonumf128x}
 
-@MmuxDefineCMacroMaker{decimal32}
-@MmuxDefineCMacroMaker{decimal64}
-@MmuxDefineCMacroMaker{decimal128}
+@MmuxDefineCMacroMaker{flonumd32}
+@MmuxDefineCMacroMaker{flonumd64}
+@MmuxDefineCMacroMaker{flonumd128}
 
 @MmuxDefineCMacroMaker{sint8}
 @MmuxDefineCMacroMaker{uint8}
@@ -984,37 +984,37 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{ulong}
 @MmuxDefineCFunctionSizeof{sllong}
 @MmuxDefineCFunctionSizeof{ullong}
-@MmuxDefineCFunctionSizeof{float}
-@MmuxDefineCFunctionSizeof{double}
-@MmuxDefineCFunctionSizeof{ldouble}
+@MmuxDefineCFunctionSizeof{flonumfl}
+@MmuxDefineCFunctionSizeof{flonumdb}
+@MmuxDefineCFunctionSizeof{flonumldb}
 
-@MmuxDefineCFunctionSizeof{float32}
-@MmuxDefineCFunctionSizeof{float64}
-@MmuxDefineCFunctionSizeof{float128}
+@MmuxDefineCFunctionSizeof{flonumf32}
+@MmuxDefineCFunctionSizeof{flonumf64}
+@MmuxDefineCFunctionSizeof{flonumf128}
 
-@MmuxDefineCFunctionSizeof{float32x}
-@MmuxDefineCFunctionSizeof{float64x}
-@MmuxDefineCFunctionSizeof{float128x}
+@MmuxDefineCFunctionSizeof{flonumf32x}
+@MmuxDefineCFunctionSizeof{flonumf64x}
+@MmuxDefineCFunctionSizeof{flonumf128x}
 
-@MmuxDefineCFunctionSizeof{decimal32}
-@MmuxDefineCFunctionSizeof{decimal64}
-@MmuxDefineCFunctionSizeof{decimal128}
+@MmuxDefineCFunctionSizeof{flonumd32}
+@MmuxDefineCFunctionSizeof{flonumd64}
+@MmuxDefineCFunctionSizeof{flonumd128}
 
-@MmuxDefineCFunctionSizeof{complexf}
-@MmuxDefineCFunctionSizeof{complexd}
-@MmuxDefineCFunctionSizeof{complexld}
+@MmuxDefineCFunctionSizeof{flonumcfl}
+@MmuxDefineCFunctionSizeof{flonumcdb}
+@MmuxDefineCFunctionSizeof{flonumcldb}
 
-@MmuxDefineCFunctionSizeof{complexf32}
-@MmuxDefineCFunctionSizeof{complexf64}
-@MmuxDefineCFunctionSizeof{complexf128}
+@MmuxDefineCFunctionSizeof{flonumcf32}
+@MmuxDefineCFunctionSizeof{flonumcf64}
+@MmuxDefineCFunctionSizeof{flonumcf128}
 
-@MmuxDefineCFunctionSizeof{complexf32x}
-@MmuxDefineCFunctionSizeof{complexf64x}
-@MmuxDefineCFunctionSizeof{complexf128x}
+@MmuxDefineCFunctionSizeof{flonumcf32x}
+@MmuxDefineCFunctionSizeof{flonumcf64x}
+@MmuxDefineCFunctionSizeof{flonumcf128x}
 
-@MmuxDefineCFunctionSizeof{complexd32}
-@MmuxDefineCFunctionSizeof{complexd64}
-@MmuxDefineCFunctionSizeof{complexd128}
+@MmuxDefineCFunctionSizeof{flonumcd32}
+@MmuxDefineCFunctionSizeof{flonumcd64}
+@MmuxDefineCFunctionSizeof{flonumcd128}
 
 @MmuxDefineCFunctionSizeof{sint8}
 @MmuxDefineCFunctionSizeof{uint8}
@@ -1078,21 +1078,21 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{ulong}
 @MmuxDefineCFunctionMaximum{sllong}
 @MmuxDefineCFunctionMaximum{ullong}
-@MmuxDefineCFunctionMaximum{float}
-@MmuxDefineCFunctionMaximum{double}
-@MmuxDefineCFunctionMaximum{ldouble}
+@MmuxDefineCFunctionMaximum{flonumfl}
+@MmuxDefineCFunctionMaximum{flonumdb}
+@MmuxDefineCFunctionMaximum{flonumldb}
 
-@MmuxDefineCFunctionMaximum{float32}
-@MmuxDefineCFunctionMaximum{float64}
-@MmuxDefineCFunctionMaximum{float128}
+@MmuxDefineCFunctionMaximum{flonumf32}
+@MmuxDefineCFunctionMaximum{flonumf64}
+@MmuxDefineCFunctionMaximum{flonumf128}
 
-@MmuxDefineCFunctionMaximum{float32x}
-@MmuxDefineCFunctionMaximum{float64x}
-@MmuxDefineCFunctionMaximum{float128x}
+@MmuxDefineCFunctionMaximum{flonumf32x}
+@MmuxDefineCFunctionMaximum{flonumf64x}
+@MmuxDefineCFunctionMaximum{flonumf128x}
 
-@MmuxDefineCFunctionMaximum{decimal32}
-@MmuxDefineCFunctionMaximum{decimal64}
-@MmuxDefineCFunctionMaximum{decimal128}
+@MmuxDefineCFunctionMaximum{flonumd32}
+@MmuxDefineCFunctionMaximum{flonumd64}
+@MmuxDefineCFunctionMaximum{flonumd128}
 
 @MmuxDefineCFunctionMaximum{sint8}
 @MmuxDefineCFunctionMaximum{uint8}
@@ -1153,21 +1153,21 @@ Return a constant value corresponding to @math{\EXPR\}.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineConstantFunctions{float}
-@MmuxDefineConstantFunctions{double}
-@MmuxDefineConstantFunctions{ldouble}
+@MmuxDefineConstantFunctions{flonumfl}
+@MmuxDefineConstantFunctions{flonumdb}
+@MmuxDefineConstantFunctions{flonumldb}
 
-@MmuxDefineConstantFunctions{float32}
-@MmuxDefineConstantFunctions{float64}
-@MmuxDefineConstantFunctions{float128}
+@MmuxDefineConstantFunctions{flonumf32}
+@MmuxDefineConstantFunctions{flonumf64}
+@MmuxDefineConstantFunctions{flonumf128}
 
-@MmuxDefineConstantFunctions{float32x}
-@MmuxDefineConstantFunctions{float64x}
-@MmuxDefineConstantFunctions{float128x}
+@MmuxDefineConstantFunctions{flonumf32x}
+@MmuxDefineConstantFunctions{flonumf64x}
+@MmuxDefineConstantFunctions{flonumf128x}
 
-@MmuxDefineConstantFunctions{decimal32}
-@MmuxDefineConstantFunctions{decimal64}
-@MmuxDefineConstantFunctions{decimal128}
+@MmuxDefineConstantFunctions{flonumd32}
+@MmuxDefineConstantFunctions{flonumd64}
+@MmuxDefineConstantFunctions{flonumd128}
 
 @c page
 @node stringrep
@@ -1229,37 +1229,37 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{ulong}
 @MmuxDefineCFunctionPredicate{sllong}
 @MmuxDefineCFunctionPredicate{ullong}
-@MmuxDefineCFunctionPredicate{float}
-@MmuxDefineCFunctionPredicate{double}
-@MmuxDefineCFunctionPredicate{ldouble}
+@MmuxDefineCFunctionPredicate{flonumfl}
+@MmuxDefineCFunctionPredicate{flonumdb}
+@MmuxDefineCFunctionPredicate{flonumldb}
 
-@MmuxDefineCFunctionPredicate{float32}
-@MmuxDefineCFunctionPredicate{float64}
-@MmuxDefineCFunctionPredicate{float128}
+@MmuxDefineCFunctionPredicate{flonumf32}
+@MmuxDefineCFunctionPredicate{flonumf64}
+@MmuxDefineCFunctionPredicate{flonumf128}
 
-@MmuxDefineCFunctionPredicate{float32x}
-@MmuxDefineCFunctionPredicate{float64x}
-@MmuxDefineCFunctionPredicate{float128x}
+@MmuxDefineCFunctionPredicate{flonumf32x}
+@MmuxDefineCFunctionPredicate{flonumf64x}
+@MmuxDefineCFunctionPredicate{flonumf128x}
 
-@MmuxDefineCFunctionPredicate{decimal32}
-@MmuxDefineCFunctionPredicate{decimal64}
-@MmuxDefineCFunctionPredicate{decimal128}
+@MmuxDefineCFunctionPredicate{flonumd32}
+@MmuxDefineCFunctionPredicate{flonumd64}
+@MmuxDefineCFunctionPredicate{flonumd128}
 
-@MmuxDefineCFunctionPredicate{complexf}
-@MmuxDefineCFunctionPredicate{complexd}
-@MmuxDefineCFunctionPredicate{complexld}
+@MmuxDefineCFunctionPredicate{flonumcfl}
+@MmuxDefineCFunctionPredicate{flonumcdb}
+@MmuxDefineCFunctionPredicate{flonumcldb}
 
-@MmuxDefineCFunctionPredicate{complexf32}
-@MmuxDefineCFunctionPredicate{complexf64}
-@MmuxDefineCFunctionPredicate{complexf128}
+@MmuxDefineCFunctionPredicate{flonumcf32}
+@MmuxDefineCFunctionPredicate{flonumcf64}
+@MmuxDefineCFunctionPredicate{flonumcf128}
 
-@MmuxDefineCFunctionPredicate{complexf32x}
-@MmuxDefineCFunctionPredicate{complexf64x}
-@MmuxDefineCFunctionPredicate{complexf128x}
+@MmuxDefineCFunctionPredicate{flonumcf32x}
+@MmuxDefineCFunctionPredicate{flonumcf64x}
+@MmuxDefineCFunctionPredicate{flonumcf128x}
 
-@MmuxDefineCFunctionPredicate{complexd32}
-@MmuxDefineCFunctionPredicate{complexd64}
-@MmuxDefineCFunctionPredicate{complexd128}
+@MmuxDefineCFunctionPredicate{flonumcd32}
+@MmuxDefineCFunctionPredicate{flonumcd64}
+@MmuxDefineCFunctionPredicate{flonumcd128}
 
 @MmuxDefineCFunctionPredicate{sint8}
 @MmuxDefineCFunctionPredicate{uint8}
@@ -1301,16 +1301,16 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 representation to the corresponding @asciiz{} string representation.  For floating--point numbers
 the following facilities are implemented to select the string format.
 
-To select an output format for the result of the @cfunc{mmux_double_sprint} function, we do:
+To select an output format for the result of the @cfunc{mmux_flonumdb_sprint} function, we do:
 
 @example
 char const * fmt = "%.4f";
 
-if (mmux_double_set_output_format(fmt, __func__)) @{
+if (mmux_flonumdb_set_output_format(fmt, __func__)) @{
   /* error: invalid format */
 @}
 
-/* call "mmux_double_sprint()" */
+/* call "mmux_flonumdb_sprint()" */
 @end example
 
 To save the current format and restore it later we do:
@@ -1318,16 +1318,16 @@ To save the current format and restore it later we do:
 @example
 char saved_fmt[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
 
-mmux_double_save_output_format(saved_fmt);
+mmux_flonumdb_save_output_format(saved_fmt);
 @{
   char const * fmt = "%.4f";
 
-  if (mmux_double_set_output_format(fmt, __func__)) @{
+  if (mmux_flonumdb_set_output_format(fmt, __func__)) @{
     /* error: invalid format */
   @}
-  /* call "mmux_double_sprint()" */
+  /* call "mmux_flonumdb_sprint()" */
 @}
-mmux_double_set_output_format(saved_fmt, __func__);
+mmux_flonumdb_set_output_format(saved_fmt, __func__);
 @end example
 
 
@@ -1372,21 +1372,21 @@ the expansion of the preprocessor macro @code{__func__} or something similar.
 
 @end macro
 
-@MmuxRealSelectOutputFormatFunction{float, %A}
-@MmuxRealSelectOutputFormatFunction{double, %A}
-@MmuxRealSelectOutputFormatFunction{ldouble, %A}
+@MmuxRealSelectOutputFormatFunction{flonumfl, %A}
+@MmuxRealSelectOutputFormatFunction{flonumdb, %A}
+@MmuxRealSelectOutputFormatFunction{flonumldb, %A}
 
-@MmuxRealSelectOutputFormatFunction{float32, %A}
-@MmuxRealSelectOutputFormatFunction{float64, %A}
-@MmuxRealSelectOutputFormatFunction{float128, %A}
+@MmuxRealSelectOutputFormatFunction{flonumf32, %A}
+@MmuxRealSelectOutputFormatFunction{flonumf64, %A}
+@MmuxRealSelectOutputFormatFunction{flonumf128, %A}
 
-@MmuxRealSelectOutputFormatFunction{float32x, %A}
-@MmuxRealSelectOutputFormatFunction{float64x, %A}
-@MmuxRealSelectOutputFormatFunction{float128x, %A}
+@MmuxRealSelectOutputFormatFunction{flonumf32x, %A}
+@MmuxRealSelectOutputFormatFunction{flonumf64x, %A}
+@MmuxRealSelectOutputFormatFunction{flonumf128x, %A}
 
-@MmuxRealSelectOutputFormatFunction{decimal32, %f}
-@MmuxRealSelectOutputFormatFunction{decimal64, %f}
-@MmuxRealSelectOutputFormatFunction{decimal128, %f}
+@MmuxRealSelectOutputFormatFunction{flonumd32, %f}
+@MmuxRealSelectOutputFormatFunction{flonumd64, %f}
+@MmuxRealSelectOutputFormatFunction{flonumd128, %f}
 
 @c page
 @node stringrep parsers
@@ -1432,37 +1432,37 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{ulong}
 @MmuxDefineCFunctionParser{sllong}
 @MmuxDefineCFunctionParser{ullong}
-@MmuxDefineCFunctionParser{float}
-@MmuxDefineCFunctionParser{double}
-@MmuxDefineCFunctionParser{ldouble}
+@MmuxDefineCFunctionParser{flonumfl}
+@MmuxDefineCFunctionParser{flonumdb}
+@MmuxDefineCFunctionParser{flonumldb}
 
-@MmuxDefineCFunctionParser{float32}
-@MmuxDefineCFunctionParser{float64}
-@MmuxDefineCFunctionParser{float128}
+@MmuxDefineCFunctionParser{flonumf32}
+@MmuxDefineCFunctionParser{flonumf64}
+@MmuxDefineCFunctionParser{flonumf128}
 
-@MmuxDefineCFunctionParser{float32x}
-@MmuxDefineCFunctionParser{float64x}
-@MmuxDefineCFunctionParser{float128x}
+@MmuxDefineCFunctionParser{flonumf32x}
+@MmuxDefineCFunctionParser{flonumf64x}
+@MmuxDefineCFunctionParser{flonumf128x}
 
-@MmuxDefineCFunctionParser{decimal32}
-@MmuxDefineCFunctionParser{decimal64}
-@MmuxDefineCFunctionParser{decimal128}
+@MmuxDefineCFunctionParser{flonumd32}
+@MmuxDefineCFunctionParser{flonumd64}
+@MmuxDefineCFunctionParser{flonumd128}
 
-@MmuxDefineCFunctionParser{complexf}
-@MmuxDefineCFunctionParser{complexd}
-@MmuxDefineCFunctionParser{complexld}
+@MmuxDefineCFunctionParser{flonumcfl}
+@MmuxDefineCFunctionParser{flonumcdb}
+@MmuxDefineCFunctionParser{flonumcldb}
 
-@MmuxDefineCFunctionParser{complexf32}
-@MmuxDefineCFunctionParser{complexf64}
-@MmuxDefineCFunctionParser{complexf128}
+@MmuxDefineCFunctionParser{flonumcf32}
+@MmuxDefineCFunctionParser{flonumcf64}
+@MmuxDefineCFunctionParser{flonumcf128}
 
-@MmuxDefineCFunctionParser{complexf32x}
-@MmuxDefineCFunctionParser{complexf64x}
-@MmuxDefineCFunctionParser{complexf128x}
+@MmuxDefineCFunctionParser{flonumcf32x}
+@MmuxDefineCFunctionParser{flonumcf64x}
+@MmuxDefineCFunctionParser{flonumcf128x}
 
-@MmuxDefineCFunctionParser{complexd32}
-@MmuxDefineCFunctionParser{complexd64}
-@MmuxDefineCFunctionParser{complexd128}
+@MmuxDefineCFunctionParser{flonumcd32}
+@MmuxDefineCFunctionParser{flonumcd64}
+@MmuxDefineCFunctionParser{flonumcd128}
 
 @MmuxDefineCFunctionParser{sint8}
 @MmuxDefineCFunctionParser{uint8}
@@ -1544,37 +1544,37 @@ the terminating zero}; otherwise return @samp{-1}.
 @MmuxDefineCFunctionSprinter{ulong}
 @MmuxDefineCFunctionSprinter{sllong}
 @MmuxDefineCFunctionSprinter{ullong}
-@MmuxDefineCFunctionSprinter{float}
-@MmuxDefineCFunctionSprinter{double}
-@MmuxDefineCFunctionSprinter{ldouble}
+@MmuxDefineCFunctionSprinter{flonumfl}
+@MmuxDefineCFunctionSprinter{flonumdb}
+@MmuxDefineCFunctionSprinter{flonumldb}
 
-@MmuxDefineCFunctionSprinter{float32}
-@MmuxDefineCFunctionSprinter{float64}
-@MmuxDefineCFunctionSprinter{float128}
+@MmuxDefineCFunctionSprinter{flonumf32}
+@MmuxDefineCFunctionSprinter{flonumf64}
+@MmuxDefineCFunctionSprinter{flonumf128}
 
-@MmuxDefineCFunctionSprinter{float32x}
-@MmuxDefineCFunctionSprinter{float64x}
-@MmuxDefineCFunctionSprinter{float128x}
+@MmuxDefineCFunctionSprinter{flonumf32x}
+@MmuxDefineCFunctionSprinter{flonumf64x}
+@MmuxDefineCFunctionSprinter{flonumf128x}
 
-@MmuxDefineCFunctionSprinter{decimal32}
-@MmuxDefineCFunctionSprinter{decimal64}
-@MmuxDefineCFunctionSprinter{decimal128}
+@MmuxDefineCFunctionSprinter{flonumd32}
+@MmuxDefineCFunctionSprinter{flonumd64}
+@MmuxDefineCFunctionSprinter{flonumd128}
 
-@MmuxDefineCFunctionSprinter{complexf}
-@MmuxDefineCFunctionSprinter{complexd}
-@MmuxDefineCFunctionSprinter{complexld}
+@MmuxDefineCFunctionSprinter{flonumcfl}
+@MmuxDefineCFunctionSprinter{flonumcdb}
+@MmuxDefineCFunctionSprinter{flonumcldb}
 
-@MmuxDefineCFunctionSprinter{complexf32}
-@MmuxDefineCFunctionSprinter{complexf64}
-@MmuxDefineCFunctionSprinter{complexf128}
+@MmuxDefineCFunctionSprinter{flonumcf32}
+@MmuxDefineCFunctionSprinter{flonumcf64}
+@MmuxDefineCFunctionSprinter{flonumcf128}
 
-@MmuxDefineCFunctionSprinter{complexf32x}
-@MmuxDefineCFunctionSprinter{complexf64x}
-@MmuxDefineCFunctionSprinter{complexf128x}
+@MmuxDefineCFunctionSprinter{flonumcf32x}
+@MmuxDefineCFunctionSprinter{flonumcf64x}
+@MmuxDefineCFunctionSprinter{flonumcf128x}
 
-@MmuxDefineCFunctionSprinter{complexd32}
-@MmuxDefineCFunctionSprinter{complexd64}
-@MmuxDefineCFunctionSprinter{complexd128}
+@MmuxDefineCFunctionSprinter{flonumcd32}
+@MmuxDefineCFunctionSprinter{flonumcd64}
+@MmuxDefineCFunctionSprinter{flonumcd128}
 
 @MmuxDefineCFunctionSprinter{sint8}
 @MmuxDefineCFunctionSprinter{uint8}
@@ -1611,13 +1611,13 @@ the terminating zero}; otherwise return @samp{-1}.
 To print a value to @stderr{}, we can do:
 
 @example
-auto    X = mmux_double_make(1.2);
+auto    X = mmux_flonumdb_make(1.2);
 
-if (mmux_double_dprintf(2, X)) @{
+if (mmux_flonumdb_dprintf(2, X)) @{
   /* error */
 @}
 
-if (mmux_double_fprintf(stderr, X)) @{
+if (mmux_flonumdb_fprintf(stderr, X)) @{
   /* error */
 @}
 @end example
@@ -1647,37 +1647,37 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 @MmuxDefineCFunctionPrinters{ulong}
 @MmuxDefineCFunctionPrinters{sllong}
 @MmuxDefineCFunctionPrinters{ullong}
-@MmuxDefineCFunctionPrinters{float}
-@MmuxDefineCFunctionPrinters{double}
-@MmuxDefineCFunctionPrinters{ldouble}
+@MmuxDefineCFunctionPrinters{flonumfl}
+@MmuxDefineCFunctionPrinters{flonumdb}
+@MmuxDefineCFunctionPrinters{flonumldb}
 
-@MmuxDefineCFunctionPrinters{float32}
-@MmuxDefineCFunctionPrinters{float64}
-@MmuxDefineCFunctionPrinters{float128}
+@MmuxDefineCFunctionPrinters{flonumf32}
+@MmuxDefineCFunctionPrinters{flonumf64}
+@MmuxDefineCFunctionPrinters{flonumf128}
 
-@MmuxDefineCFunctionPrinters{float32x}
-@MmuxDefineCFunctionPrinters{float64x}
-@MmuxDefineCFunctionPrinters{float128x}
+@MmuxDefineCFunctionPrinters{flonumf32x}
+@MmuxDefineCFunctionPrinters{flonumf64x}
+@MmuxDefineCFunctionPrinters{flonumf128x}
 
-@MmuxDefineCFunctionPrinters{decimal32}
-@MmuxDefineCFunctionPrinters{decimal64}
-@MmuxDefineCFunctionPrinters{decimal128}
+@MmuxDefineCFunctionPrinters{flonumd32}
+@MmuxDefineCFunctionPrinters{flonumd64}
+@MmuxDefineCFunctionPrinters{flonumd128}
 
-@MmuxDefineCFunctionPrinters{complexf}
-@MmuxDefineCFunctionPrinters{complexd}
-@MmuxDefineCFunctionPrinters{complexld}
+@MmuxDefineCFunctionPrinters{flonumcfl}
+@MmuxDefineCFunctionPrinters{flonumcdb}
+@MmuxDefineCFunctionPrinters{flonumcldb}
 
-@MmuxDefineCFunctionPrinters{complexf32}
-@MmuxDefineCFunctionPrinters{complexf64}
-@MmuxDefineCFunctionPrinters{complexf128}
+@MmuxDefineCFunctionPrinters{flonumcf32}
+@MmuxDefineCFunctionPrinters{flonumcf64}
+@MmuxDefineCFunctionPrinters{flonumcf128}
 
-@MmuxDefineCFunctionPrinters{complexf32x}
-@MmuxDefineCFunctionPrinters{complexf64x}
-@MmuxDefineCFunctionPrinters{complexf128x}
+@MmuxDefineCFunctionPrinters{flonumcf32x}
+@MmuxDefineCFunctionPrinters{flonumcf64x}
+@MmuxDefineCFunctionPrinters{flonumcf128x}
 
-@MmuxDefineCFunctionPrinters{complexd32}
-@MmuxDefineCFunctionPrinters{complexd64}
-@MmuxDefineCFunctionPrinters{complexd128}
+@MmuxDefineCFunctionPrinters{flonumcd32}
+@MmuxDefineCFunctionPrinters{flonumcd64}
+@MmuxDefineCFunctionPrinters{flonumcd128}
 
 @MmuxDefineCFunctionPrinters{sint8}
 @MmuxDefineCFunctionPrinters{uint8}
@@ -1726,11 +1726,11 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 To construct a complex number from its real and imaginary parts, we do:
 
 @example
-mmux_double_t   rep = 1.2;
-mmux_double_t   imp = 3.4;
-mmux_complexd_t Z;
+mmux_flonumdb_t   rep = 1.2;
+mmux_flonumdb_t   imp = 3.4;
+mmux_flonumcdb_t Z;
 
-Z = mmux_complexd_make_rectangular(rep, imp);
+Z = mmux_flonumcdb_make_rectangular(rep, imp);
 @end example
 
 
@@ -1742,21 +1742,21 @@ Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imag
 
 @end macro
 
-@MmuxDefineComplexMakeRectangularFunction{complexf, float}
-@MmuxDefineComplexMakeRectangularFunction{complexd, double}
-@MmuxDefineComplexMakeRectangularFunction{complexld, ldouble}
+@MmuxDefineComplexMakeRectangularFunction{flonumcfl, float}
+@MmuxDefineComplexMakeRectangularFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexMakeRectangularFunction{flonumcldb, flonumldb}
 
-@MmuxDefineComplexMakeRectangularFunction{complexf32, float32}
-@MmuxDefineComplexMakeRectangularFunction{complexf64, float64}
-@MmuxDefineComplexMakeRectangularFunction{complexf128, float128}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf128, flonumf128}
 
-@MmuxDefineComplexMakeRectangularFunction{complexf32x, float32x}
-@MmuxDefineComplexMakeRectangularFunction{complexf64x, float64x}
-@MmuxDefineComplexMakeRectangularFunction{complexf128x, float128x}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf128x, flonumf128x}
 
-@MmuxDefineComplexMakeRectangularFunction{complexd32, decimal32}
-@MmuxDefineComplexMakeRectangularFunction{complexd64, decimal64}
-@MmuxDefineComplexMakeRectangularFunction{complexd128, decimal128}
+@MmuxDefineComplexMakeRectangularFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexMakeRectangularFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexMakeRectangularFunction{flonumcd128, flonumd128}
 
 @c page
 @node complex parts
@@ -1766,12 +1766,12 @@ Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imag
 To extract the real and imaginary parts from a complex number we do:
 
 @example
-mmux_complexd_t Z = ...;
-mmux_double_t   rep;
-mmux_double_t   imp;
+mmux_flonumcdb_t Z = ...;
+mmux_flonumdb_t   rep;
+mmux_flonumdb_t   imp;
 
-rep = mmux_complexd_real_part(Z);
-imp = mmux_complexd_real_part(Z);
+rep = mmux_flonumcdb_real_part(Z);
+imp = mmux_flonumcdb_real_part(Z);
 @end example
 
 
@@ -1783,21 +1783,21 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 
 @end macro
 
-@MmuxDefineComplexRealImagPartFunction{complexf, float}
-@MmuxDefineComplexRealImagPartFunction{complexd, double}
-@MmuxDefineComplexRealImagPartFunction{complexld, ldouble}
+@MmuxDefineComplexRealImagPartFunction{flonumcfl, float}
+@MmuxDefineComplexRealImagPartFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexRealImagPartFunction{flonumcldb, flonumldb}
 
-@MmuxDefineComplexRealImagPartFunction{complexf32, float32}
-@MmuxDefineComplexRealImagPartFunction{complexf64, float64}
-@MmuxDefineComplexRealImagPartFunction{complexf128, float128}
+@MmuxDefineComplexRealImagPartFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexRealImagPartFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexRealImagPartFunction{flonumcf128, flonumf128}
 
-@MmuxDefineComplexRealImagPartFunction{complexf32x, float32x}
-@MmuxDefineComplexRealImagPartFunction{complexf64x, float64x}
-@MmuxDefineComplexRealImagPartFunction{complexf128x, float128x}
+@MmuxDefineComplexRealImagPartFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexRealImagPartFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexRealImagPartFunction{flonumcf128x, flonumf128x}
 
-@MmuxDefineComplexRealImagPartFunction{complexd32, decimal32}
-@MmuxDefineComplexRealImagPartFunction{complexd64, decimal64}
-@MmuxDefineComplexRealImagPartFunction{complexd128, decimal128}
+@MmuxDefineComplexRealImagPartFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexRealImagPartFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexRealImagPartFunction{flonumcd128, flonumd128}
 
 @c page
 @node complex arg
@@ -1811,21 +1811,21 @@ Compute and return the argument value of the complex number @var{OP}.
 
 @end macro
 
-@MmuxDefineComplexArgFunction{complexf, float}
-@MmuxDefineComplexArgFunction{complexd, double}
-@MmuxDefineComplexArgFunction{complexld, ldouble}
+@MmuxDefineComplexArgFunction{flonumcfl, float}
+@MmuxDefineComplexArgFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexArgFunction{flonumcldb, flonumldb}
 
-@MmuxDefineComplexArgFunction{complexf32, float32}
-@MmuxDefineComplexArgFunction{complexf64, float64}
-@MmuxDefineComplexArgFunction{complexf128, float128}
+@MmuxDefineComplexArgFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexArgFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexArgFunction{flonumcf128, flonumf128}
 
-@MmuxDefineComplexArgFunction{complexf32x, float32x}
-@MmuxDefineComplexArgFunction{complexf64x, float64x}
-@MmuxDefineComplexArgFunction{complexf128x, float128x}
+@MmuxDefineComplexArgFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexArgFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexArgFunction{flonumcf128x, flonumf128x}
 
-@MmuxDefineComplexArgFunction{complexd32, decimal32}
-@MmuxDefineComplexArgFunction{complexd64, decimal64}
-@MmuxDefineComplexArgFunction{complexd128, decimal128}
+@MmuxDefineComplexArgFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexArgFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexArgFunction{flonumcd128, flonumd128}
 
 @c page
 @node complex conj
@@ -1839,21 +1839,21 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 
 @end macro
 
-@MmuxDefineComplexConjFunction{complexf, float}
-@MmuxDefineComplexConjFunction{complexd, double}
-@MmuxDefineComplexConjFunction{complexld, ldouble}
+@MmuxDefineComplexConjFunction{flonumcfl, float}
+@MmuxDefineComplexConjFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexConjFunction{flonumcldb, flonumldb}
 
-@MmuxDefineComplexConjFunction{complexf32, float32}
-@MmuxDefineComplexConjFunction{complexf64, float64}
-@MmuxDefineComplexConjFunction{complexf128, float128}
+@MmuxDefineComplexConjFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexConjFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexConjFunction{flonumcf128, flonumf128}
 
-@MmuxDefineComplexConjFunction{complexf32x, float32x}
-@MmuxDefineComplexConjFunction{complexf64x, float64x}
-@MmuxDefineComplexConjFunction{complexf128x, float128x}
+@MmuxDefineComplexConjFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexConjFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexConjFunction{flonumcf128x, flonumf128x}
 
-@MmuxDefineComplexConjFunction{complexd32, decimal32}
-@MmuxDefineComplexConjFunction{complexd64, decimal64}
-@MmuxDefineComplexConjFunction{complexd128, decimal128}
+@MmuxDefineComplexConjFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexConjFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexConjFunction{flonumcd128, flonumd128}
 
 @c page
 @node predicates
@@ -1901,37 +1901,37 @@ nan; otherwise return @cfalse{}.
 @MmuxDefineTypePredicates{ulong}
 @MmuxDefineTypePredicates{sllong}
 @MmuxDefineTypePredicates{ullong}
-@MmuxDefineTypePredicates{float}
-@MmuxDefineTypePredicates{double}
-@MmuxDefineTypePredicates{ldouble}
+@MmuxDefineTypePredicates{flonumfl}
+@MmuxDefineTypePredicates{flonumdb}
+@MmuxDefineTypePredicates{flonumldb}
 
-@MmuxDefineTypePredicates{float32}
-@MmuxDefineTypePredicates{float64}
-@MmuxDefineTypePredicates{float128}
+@MmuxDefineTypePredicates{flonumf32}
+@MmuxDefineTypePredicates{flonumf64}
+@MmuxDefineTypePredicates{flonumf128}
 
-@MmuxDefineTypePredicates{float32x}
-@MmuxDefineTypePredicates{float64x}
-@MmuxDefineTypePredicates{float128x}
+@MmuxDefineTypePredicates{flonumf32x}
+@MmuxDefineTypePredicates{flonumf64x}
+@MmuxDefineTypePredicates{flonumf128x}
 
-@MmuxDefineTypePredicates{decimal32}
-@MmuxDefineTypePredicates{decimal64}
-@MmuxDefineTypePredicates{decimal128}
+@MmuxDefineTypePredicates{flonumd32}
+@MmuxDefineTypePredicates{flonumd64}
+@MmuxDefineTypePredicates{flonumd128}
 
-@MmuxDefineTypePredicates{complexf}
-@MmuxDefineTypePredicates{complexd}
-@MmuxDefineTypePredicates{complexld}
+@MmuxDefineTypePredicates{flonumcfl}
+@MmuxDefineTypePredicates{flonumcdb}
+@MmuxDefineTypePredicates{flonumcldb}
 
-@MmuxDefineTypePredicates{complexf32}
-@MmuxDefineTypePredicates{complexf64}
-@MmuxDefineTypePredicates{complexf128}
+@MmuxDefineTypePredicates{flonumcf32}
+@MmuxDefineTypePredicates{flonumcf64}
+@MmuxDefineTypePredicates{flonumcf128}
 
-@MmuxDefineTypePredicates{complexf32x}
-@MmuxDefineTypePredicates{complexf64x}
-@MmuxDefineTypePredicates{complexf128x}
+@MmuxDefineTypePredicates{flonumcf32x}
+@MmuxDefineTypePredicates{flonumcf64x}
+@MmuxDefineTypePredicates{flonumcf128x}
 
-@MmuxDefineTypePredicates{complexd32}
-@MmuxDefineTypePredicates{complexd64}
-@MmuxDefineTypePredicates{complexd128}
+@MmuxDefineTypePredicates{flonumcd32}
+@MmuxDefineTypePredicates{flonumcd64}
+@MmuxDefineTypePredicates{flonumcd128}
 
 @MmuxDefineTypePredicates{sint8}
 @MmuxDefineTypePredicates{uint8}
@@ -2013,37 +2013,37 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @MmuxDefineTypeComparisonExactFunction{ulong}
 @MmuxDefineTypeComparisonExactFunction{sllong}
 @MmuxDefineTypeComparisonExactFunction{ullong}
-@MmuxDefineTypeComparisonExactFunction{float}
-@MmuxDefineTypeComparisonExactFunction{double}
-@MmuxDefineTypeComparisonExactFunction{ldouble}
+@MmuxDefineTypeComparisonExactFunction{flonumfl}
+@MmuxDefineTypeComparisonExactFunction{flonumdb}
+@MmuxDefineTypeComparisonExactFunction{flonumldb}
 
-@MmuxDefineTypeComparisonExactFunction{float32}
-@MmuxDefineTypeComparisonExactFunction{float64}
-@MmuxDefineTypeComparisonExactFunction{float128}
+@MmuxDefineTypeComparisonExactFunction{flonumf32}
+@MmuxDefineTypeComparisonExactFunction{flonumf64}
+@MmuxDefineTypeComparisonExactFunction{flonumf128}
 
-@MmuxDefineTypeComparisonExactFunction{float32x}
-@MmuxDefineTypeComparisonExactFunction{float64x}
-@MmuxDefineTypeComparisonExactFunction{float128x}
+@MmuxDefineTypeComparisonExactFunction{flonumf32x}
+@MmuxDefineTypeComparisonExactFunction{flonumf64x}
+@MmuxDefineTypeComparisonExactFunction{flonumf128x}
 
-@MmuxDefineTypeComparisonExactFunction{decimal32}
-@MmuxDefineTypeComparisonExactFunction{decimal64}
-@MmuxDefineTypeComparisonExactFunction{decimal128}
+@MmuxDefineTypeComparisonExactFunction{flonumd32}
+@MmuxDefineTypeComparisonExactFunction{flonumd64}
+@MmuxDefineTypeComparisonExactFunction{flonumd128}
 
-@MmuxDefineTypeComparisonExactFunction{complexf}
-@MmuxDefineTypeComparisonExactFunction{complexd}
-@MmuxDefineTypeComparisonExactFunction{complexld}
+@MmuxDefineTypeComparisonExactFunction{flonumcfl}
+@MmuxDefineTypeComparisonExactFunction{flonumcdb}
+@MmuxDefineTypeComparisonExactFunction{flonumcldb}
 
-@MmuxDefineTypeComparisonExactFunction{complexf32}
-@MmuxDefineTypeComparisonExactFunction{complexf64}
-@MmuxDefineTypeComparisonExactFunction{complexf128}
+@MmuxDefineTypeComparisonExactFunction{flonumcf32}
+@MmuxDefineTypeComparisonExactFunction{flonumcf64}
+@MmuxDefineTypeComparisonExactFunction{flonumcf128}
 
-@MmuxDefineTypeComparisonExactFunction{complexf32x}
-@MmuxDefineTypeComparisonExactFunction{complexf64x}
-@MmuxDefineTypeComparisonExactFunction{complexf128x}
+@MmuxDefineTypeComparisonExactFunction{flonumcf32x}
+@MmuxDefineTypeComparisonExactFunction{flonumcf64x}
+@MmuxDefineTypeComparisonExactFunction{flonumcf128x}
 
-@MmuxDefineTypeComparisonExactFunction{complexd32}
-@MmuxDefineTypeComparisonExactFunction{complexd64}
-@MmuxDefineTypeComparisonExactFunction{complexd128}
+@MmuxDefineTypeComparisonExactFunction{flonumcd32}
+@MmuxDefineTypeComparisonExactFunction{flonumcd64}
+@MmuxDefineTypeComparisonExactFunction{flonumcd128}
 
 @MmuxDefineTypeComparisonExactFunction{sint8}
 @MmuxDefineTypeComparisonExactFunction{uint8}
@@ -2099,21 +2099,21 @@ Return the maximum or minimum value between the operands.
 @MmuxDefineTypeComparisonMinMaxFunction{ulong}
 @MmuxDefineTypeComparisonMinMaxFunction{sllong}
 @MmuxDefineTypeComparisonMinMaxFunction{ullong}
-@MmuxDefineTypeComparisonMinMaxFunction{float}
-@MmuxDefineTypeComparisonMinMaxFunction{double}
-@MmuxDefineTypeComparisonMinMaxFunction{ldouble}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumfl}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumdb}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumldb}
 
-@MmuxDefineTypeComparisonMinMaxFunction{float32}
-@MmuxDefineTypeComparisonMinMaxFunction{float64}
-@MmuxDefineTypeComparisonMinMaxFunction{float128}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf32}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf64}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf128}
 
-@MmuxDefineTypeComparisonMinMaxFunction{float32x}
-@MmuxDefineTypeComparisonMinMaxFunction{float64x}
-@MmuxDefineTypeComparisonMinMaxFunction{float128x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf32x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf64x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf128x}
 
-@MmuxDefineTypeComparisonMinMaxFunction{decimal32}
-@MmuxDefineTypeComparisonMinMaxFunction{decimal64}
-@MmuxDefineTypeComparisonMinMaxFunction{decimal128}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumd32}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumd64}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumd128}
 
 @MmuxDefineTypeComparisonMinMaxFunction{sint8}
 @MmuxDefineTypeComparisonMinMaxFunction{uint8}
@@ -2166,11 +2166,11 @@ abs(imag(@vari{OP}) - imag(@varii{OP})) <= abs(imag(@var{MARGIN}))
 To compare two floating--point numbers with the criterion of the absolute margin, we do:
 
 @example
-mmux_double_t   op1    = 1.2;
-mmux_double_t   op2    = 1.23;
-mmux_double_t   margin = 1e-6;
+mmux_flonumdb_t   op1    = 1.2;
+mmux_flonumdb_t   op2    = 1.23;
+mmux_flonumdb_t   margin = 1e-6;
 
-if (mmux_double_equal_absmargin(op1, op2, margin)) @{
+if (mmux_flonumdb_equal_absmargin(op1, op2, margin)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -2186,29 +2186,29 @@ Compare the operands using the given margin.
 @end macro
 
 
-@MmuxDefineAbsmarginFunc{double}
-@MmuxDefineAbsmarginFunc{ldouble}
-@MmuxDefineAbsmarginFunc{complexf}
-@MmuxDefineAbsmarginFunc{complexd}
-@MmuxDefineAbsmarginFunc{complexld}
-@MmuxDefineAbsmarginFunc{float32}
-@MmuxDefineAbsmarginFunc{float64}
-@MmuxDefineAbsmarginFunc{float128}
-@MmuxDefineAbsmarginFunc{float32x}
-@MmuxDefineAbsmarginFunc{float64x}
-@MmuxDefineAbsmarginFunc{float128x}
-@MmuxDefineAbsmarginFunc{decimal32}
-@MmuxDefineAbsmarginFunc{decimal64}
-@MmuxDefineAbsmarginFunc{decimal128}
-@MmuxDefineAbsmarginFunc{complexf32}
-@MmuxDefineAbsmarginFunc{complexf64}
-@MmuxDefineAbsmarginFunc{complexf128}
-@MmuxDefineAbsmarginFunc{complexf32x}
-@MmuxDefineAbsmarginFunc{complexf64x}
-@MmuxDefineAbsmarginFunc{complexf128x}
-@MmuxDefineAbsmarginFunc{complexd32}
-@MmuxDefineAbsmarginFunc{complexd64}
-@MmuxDefineAbsmarginFunc{complexd128}
+@MmuxDefineAbsmarginFunc{flonumdb}
+@MmuxDefineAbsmarginFunc{flonumldb}
+@MmuxDefineAbsmarginFunc{flonumcfl}
+@MmuxDefineAbsmarginFunc{flonumcdb}
+@MmuxDefineAbsmarginFunc{flonumcldb}
+@MmuxDefineAbsmarginFunc{flonumf32}
+@MmuxDefineAbsmarginFunc{flonumf64}
+@MmuxDefineAbsmarginFunc{flonumf128}
+@MmuxDefineAbsmarginFunc{flonumf32x}
+@MmuxDefineAbsmarginFunc{flonumf64x}
+@MmuxDefineAbsmarginFunc{flonumf128x}
+@MmuxDefineAbsmarginFunc{flonumd32}
+@MmuxDefineAbsmarginFunc{flonumd64}
+@MmuxDefineAbsmarginFunc{flonumd128}
+@MmuxDefineAbsmarginFunc{flonumcf32}
+@MmuxDefineAbsmarginFunc{flonumcf64}
+@MmuxDefineAbsmarginFunc{flonumcf128}
+@MmuxDefineAbsmarginFunc{flonumcf32x}
+@MmuxDefineAbsmarginFunc{flonumcf64x}
+@MmuxDefineAbsmarginFunc{flonumcf128x}
+@MmuxDefineAbsmarginFunc{flonumcd32}
+@MmuxDefineAbsmarginFunc{flonumcd64}
+@MmuxDefineAbsmarginFunc{flonumcd128}
 
 @c page
 @node comparison relepsilon
@@ -2234,11 +2234,11 @@ abs(imag(@varo{OP}) - imag(@var{OP})) <= (abs(imag(@var{EPSILON})) * max(abs(ima
 To compare two floating--point numbers with the criterion of the relative epsilon, we do:
 
 @example
-mmux_double_t   op1     = 1.2;
-mmux_double_t   op2     = 1.23;
-mmux_double_t   epsilon = 1e-6;
+mmux_flonumdb_t   op1     = 1.2;
+mmux_flonumdb_t   op2     = 1.23;
+mmux_flonumdb_t   epsilon = 1e-6;
 
-if (mmux_double_equal_relepsilon(op1, op2, epsilon)) @{
+if (mmux_flonumdb_equal_relepsilon(op1, op2, epsilon)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -2254,29 +2254,29 @@ Compare the operands using the given epsilon.
 @end macro
 
 
-@MmuxDefineRelepsilonFunc{double}
-@MmuxDefineRelepsilonFunc{ldouble}
-@MmuxDefineRelepsilonFunc{complexf}
-@MmuxDefineRelepsilonFunc{complexd}
-@MmuxDefineRelepsilonFunc{complexld}
-@MmuxDefineRelepsilonFunc{float32}
-@MmuxDefineRelepsilonFunc{float64}
-@MmuxDefineRelepsilonFunc{float128}
-@MmuxDefineRelepsilonFunc{float32x}
-@MmuxDefineRelepsilonFunc{float64x}
-@MmuxDefineRelepsilonFunc{float128x}
-@MmuxDefineRelepsilonFunc{decimal32}
-@MmuxDefineRelepsilonFunc{decimal64}
-@MmuxDefineRelepsilonFunc{decimal128}
-@MmuxDefineRelepsilonFunc{complexf32}
-@MmuxDefineRelepsilonFunc{complexf64}
-@MmuxDefineRelepsilonFunc{complexf128}
-@MmuxDefineRelepsilonFunc{complexf32x}
-@MmuxDefineRelepsilonFunc{complexf64x}
-@MmuxDefineRelepsilonFunc{complexf128x}
-@MmuxDefineRelepsilonFunc{complexd32}
-@MmuxDefineRelepsilonFunc{complexd64}
-@MmuxDefineRelepsilonFunc{complexd128}
+@MmuxDefineRelepsilonFunc{flonumdb}
+@MmuxDefineRelepsilonFunc{flonumldb}
+@MmuxDefineRelepsilonFunc{flonumcfl}
+@MmuxDefineRelepsilonFunc{flonumcdb}
+@MmuxDefineRelepsilonFunc{flonumcldb}
+@MmuxDefineRelepsilonFunc{flonumf32}
+@MmuxDefineRelepsilonFunc{flonumf64}
+@MmuxDefineRelepsilonFunc{flonumf128}
+@MmuxDefineRelepsilonFunc{flonumf32x}
+@MmuxDefineRelepsilonFunc{flonumf64x}
+@MmuxDefineRelepsilonFunc{flonumf128x}
+@MmuxDefineRelepsilonFunc{flonumd32}
+@MmuxDefineRelepsilonFunc{flonumd64}
+@MmuxDefineRelepsilonFunc{flonumd128}
+@MmuxDefineRelepsilonFunc{flonumcf32}
+@MmuxDefineRelepsilonFunc{flonumcf64}
+@MmuxDefineRelepsilonFunc{flonumcf128}
+@MmuxDefineRelepsilonFunc{flonumcf32x}
+@MmuxDefineRelepsilonFunc{flonumcf64x}
+@MmuxDefineRelepsilonFunc{flonumcf128x}
+@MmuxDefineRelepsilonFunc{flonumcd32}
+@MmuxDefineRelepsilonFunc{flonumcd64}
+@MmuxDefineRelepsilonFunc{flonumcd128}
 
 @c page
 @node arithmetics
@@ -2369,37 +2369,37 @@ remainder, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{ulong}
 @MmuxDefineIntegerArithmeticsFunc{sllong}
 @MmuxDefineIntegerArithmeticsFunc{ullong}
-@MmuxDefineNotIntegerRealArithmeticsFunc{float}
-@MmuxDefineNotIntegerRealArithmeticsFunc{double}
-@MmuxDefineNotIntegerRealArithmeticsFunc{ldouble}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumfl}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumdb}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumldb}
 
-@MmuxDefineNotIntegerRealArithmeticsFunc{float32}
-@MmuxDefineNotIntegerRealArithmeticsFunc{float64}
-@MmuxDefineNotIntegerRealArithmeticsFunc{float128}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumf32}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumf64}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumf128}
 
-@MmuxDefineNotIntegerRealArithmeticsFunc{float32x}
-@MmuxDefineNotIntegerRealArithmeticsFunc{float64x}
-@MmuxDefineNotIntegerRealArithmeticsFunc{float128x}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumf32x}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumf64x}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumf128x}
 
-@MmuxDefineNotIntegerRealArithmeticsFunc{decimal32}
-@MmuxDefineNotIntegerRealArithmeticsFunc{decimal64}
-@MmuxDefineNotIntegerRealArithmeticsFunc{decimal128}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumd32}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumd64}
+@MmuxDefineNotIntegerRealArithmeticsFunc{flonumd128}
 
-@MmuxDefineComplexArithmeticsFunc{complexf,float}
-@MmuxDefineComplexArithmeticsFunc{complexd,double}
-@MmuxDefineComplexArithmeticsFunc{complexld,ldouble}
+@MmuxDefineComplexArithmeticsFunc{flonumcfl,float}
+@MmuxDefineComplexArithmeticsFunc{flonumcdb,flonumdb}
+@MmuxDefineComplexArithmeticsFunc{flonumcldb,flonumldb}
 
-@MmuxDefineComplexArithmeticsFunc{complexf32,float32}
-@MmuxDefineComplexArithmeticsFunc{complexf64,float64}
-@MmuxDefineComplexArithmeticsFunc{complexf128,float128}
+@MmuxDefineComplexArithmeticsFunc{flonumcf32,flonumf32}
+@MmuxDefineComplexArithmeticsFunc{flonumcf64,flonumf64}
+@MmuxDefineComplexArithmeticsFunc{flonumcf128,flonumf128}
 
-@MmuxDefineComplexArithmeticsFunc{complexf32x,float32x}
-@MmuxDefineComplexArithmeticsFunc{complexf64x,float64x}
-@MmuxDefineComplexArithmeticsFunc{complexf128x,float128x}
+@MmuxDefineComplexArithmeticsFunc{flonumcf32x,flonumf32x}
+@MmuxDefineComplexArithmeticsFunc{flonumcf64x,flonumf64x}
+@MmuxDefineComplexArithmeticsFunc{flonumcf128x,flonumf128x}
 
-@MmuxDefineComplexArithmeticsFunc{complexd32,decimal32}
-@MmuxDefineComplexArithmeticsFunc{complexd64,decimal64}
-@MmuxDefineComplexArithmeticsFunc{complexd128,decimal128}
+@MmuxDefineComplexArithmeticsFunc{flonumcd32,flonumd32}
+@MmuxDefineComplexArithmeticsFunc{flonumcd64,flonumd64}
+@MmuxDefineComplexArithmeticsFunc{flonumcd128,flonumd128}
 
 @MmuxDefineIntegerArithmeticsFunc{sint8}
 @MmuxDefineIntegerArithmeticsFunc{uint8}
@@ -2521,7 +2521,7 @@ Compute the named C function.
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineMathComplexFuncs{STEM}
+@macro MmuxDefineMathFlonumcfluncs{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
@@ -2549,38 +2549,38 @@ Compute the named C function.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineMathRealFuncs{float}
-@MmuxDefineMathRealFuncs{double}
-@MmuxDefineMathRealFuncs{ldouble}
+@MmuxDefineMathRealFuncs{flonumfl}
+@MmuxDefineMathRealFuncs{flonumdb}
+@MmuxDefineMathRealFuncs{flonumldb}
 
-@MmuxDefineMathRealFuncs{float32}
-@MmuxDefineMathRealFuncs{float64}
-@MmuxDefineMathRealFuncs{float128}
+@MmuxDefineMathRealFuncs{flonumf32}
+@MmuxDefineMathRealFuncs{flonumf64}
+@MmuxDefineMathRealFuncs{flonumf128}
 
-@MmuxDefineMathRealFuncs{float32x}
-@MmuxDefineMathRealFuncs{float64x}
-@MmuxDefineMathRealFuncs{float128x}
+@MmuxDefineMathRealFuncs{flonumf32x}
+@MmuxDefineMathRealFuncs{flonumf64x}
+@MmuxDefineMathRealFuncs{flonumf128x}
 
-@MmuxDefineMathRealDecimalFuncs{decimal32}
-@MmuxDefineMathRealDecimalFuncs{decimal64}
-@MmuxDefineMathRealDecimalFuncs{decimal128}
+@MmuxDefineMathRealDecimalFuncs{flonumd32}
+@MmuxDefineMathRealDecimalFuncs{flonumd64}
+@MmuxDefineMathRealDecimalFuncs{flonumd128}
 
-@MmuxDefineMathComplexFuncs{complexf}
-@MmuxDefineMathComplexFuncs{complexd}
-@MmuxDefineMathComplexFuncs{complexld}
+@MmuxDefineMathFlonumcfluncs{flonumcfl}
+@MmuxDefineMathFlonumcfluncs{flonumcdb}
+@MmuxDefineMathFlonumcfluncs{flonumcldb}
 
-@MmuxDefineMathComplexFuncs{complexf32}
-@MmuxDefineMathComplexFuncs{complexf64}
-@MmuxDefineMathComplexFuncs{complexf128}
+@MmuxDefineMathFlonumcfluncs{flonumcf32}
+@MmuxDefineMathFlonumcfluncs{flonumcf64}
+@MmuxDefineMathFlonumcfluncs{flonumcf128}
 
-@MmuxDefineMathComplexFuncs{complexf32x}
-@MmuxDefineMathComplexFuncs{complexf64x}
-@MmuxDefineMathComplexFuncs{complexf128x}
+@MmuxDefineMathFlonumcfluncs{flonumcf32x}
+@MmuxDefineMathFlonumcfluncs{flonumcf64x}
+@MmuxDefineMathFlonumcfluncs{flonumcf128x}
 
 @ignore
-@MmuxDefineMathComplexFuncs{complexd32}
-@MmuxDefineMathComplexFuncs{complexd64}
-@MmuxDefineMathComplexFuncs{complexd128}
+@MmuxDefineMathFlonumcfluncs{flonumcd32}
+@MmuxDefineMathFlonumcfluncs{flonumcd64}
+@MmuxDefineMathFlonumcfluncs{flonumcd128}
 @end ignore
 
 @c page

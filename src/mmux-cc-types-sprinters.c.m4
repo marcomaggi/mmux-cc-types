@@ -32,42 +32,42 @@
 
 #include <mmux-cc-types-internals.h>
 
-/* Given that  the length MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN  is meant to  include the
+/* Given that  the length MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN  is meant to  include the
    terminating  nul character:  the _MINUS  length is  used to  validate the  maximum
    length (nul excluded) for at format string. */
-#undef  MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS
-#define MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS		(MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN-1)
+#undef  MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN_MINUS
+#define MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN_MINUS		(MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN-1)
 
 /* This  regular   expression  is  used   to  validate  the  format   specifiers  for
    floating-point numbers.  */
-static regex_t mmux_cc_types_float_format_rex;
+static regex_t mmux_cc_types_flonumfl_format_rex;
 
-m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 #undef  MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])
 #define MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]])	[[[$2]]]
 
 /* Just    to     be    paranoid     we    add     a    character     beyond    index
-   MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN and  we will  set that character  to nul  in the
+   MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN and  we will  set that character  to nul  in the
    initialisation  function.   That character  should  never  be touched  by  correct
    code. */
-char	mmux_cc_types_output_format_$1[1+MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
+char	mmux_cc_types_output_format_$1[1+MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN];
 ]]])]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]],	[[["%A"]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[double]]],	[[["%A"]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[ldouble]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumfl]]],	[[["%A"]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumdb]]],	[[["%A"]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumldb]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf32]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf64]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf128]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32x]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64x]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128x]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf32x]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf64x]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf128x]]],	[[["%A"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal32]]],	[[["%f"]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal64]]],	[[["%f"]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal128]]],	[[["%f"]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumd32]]],	[[["%f"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumd64]]],	[[["%f"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumd128]]],	[[["%f"]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -79,32 +79,32 @@ mmux_cc_types_init_sprint_module (void)
 {
   /* Compile the POSIX  regular expression required to parse  the string representing
      the output format of floating-point numbers. */
-  int rv = regcomp(&mmux_cc_types_float_format_rex, "^%[+-\\#\\'\\ ]*[0-9]*\\.\\?[0-9]*l\\?[feEgGaA]$", REG_NOSUB);
+  int rv = regcomp(&mmux_cc_types_flonumfl_format_rex, "^%[+-\\#\\'\\ ]*[0-9]*\\.\\?[0-9]*l\\?[feEgGaA]$", REG_NOSUB);
   if (rv) {
     fprintf(stderr, "MMUX CC Types: internal error: compiling regular expression\n");
     return true;
   }
 
-  m4_define([[[INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+  m4_define([[[INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
   mmux_$1_set_output_format(MMUX_CC_TYPES_DEFAULT_OUTPUT_FORMAT_[[[]]]MMUX_M4_TOUPPER([[[$1]]]), "MMUX CC Types");
-  mmux_cc_types_output_format_$1[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN] = '\0';
+  mmux_cc_types_output_format_$1[MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN] = '\0';
   ]]])]]])
 
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[double]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[ldouble]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumfl]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumdb]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-  INITIALISE_FLOAT_OUTPUT_FORMAT_VARIABLE([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+  INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
   return false;
 }
@@ -114,35 +114,35 @@ mmux_cc_types_init_sprint_module (void)
  ** Selecting printf output format for floating-pont numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_set_output_format (char const * const new_result_format, char const * const caller_name)
 {
   int	new_result_format_len = strlen(new_result_format);
 
-  if (new_result_format_len > MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS) {
+  if (new_result_format_len > MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN_MINUS) {
     if (caller_name) {
-      fprintf(stderr, "%s: error setting new float format, string too long (maxlen=%d): %s\n",
-	      caller_name, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN_MINUS, new_result_format);
+      fprintf(stderr, "%s: error setting new flonumfl format, string too long (maxlen=%d): %s\n",
+	      caller_name, MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN_MINUS, new_result_format);
     }
     return true;
   }
 
   if (0) {
-    fprintf(stderr, "%s: setting new float format: %s\n", __func__, new_result_format);
+    fprintf(stderr, "%s: setting new flonumfl format: %s\n", __func__, new_result_format);
   }
 
   /* Validate the format string. */
   {
     int		rv;
 
-    rv = regexec(&mmux_cc_types_float_format_rex, new_result_format, 0, NULL, 0);
+    rv = regexec(&mmux_cc_types_flonumfl_format_rex, new_result_format, 0, NULL, 0);
     if (rv) {
       char	error_message[1024];
 
-      regerror(rv, &mmux_cc_types_float_format_rex, error_message, 1024);
+      regerror(rv, &mmux_cc_types_flonumfl_format_rex, error_message, 1024);
       if (caller_name) {
-	fprintf(stderr, "%s: error: invalid argument, expected float format (%s): \"%s\"\n",
+	fprintf(stderr, "%s: error: invalid argument, expected flonumfl format (%s): \"%s\"\n",
 		caller_name, error_message, new_result_format);
       }
       return true;
@@ -151,7 +151,7 @@ mmux_$1_set_output_format (char const * const new_result_format, char const * co
 
   /* We tell "strncpy()"  to copy the from  buffer and fill everything  else with nul
      bytes.  See the documentation of "strncpy()". */
-  strncpy(mmux_cc_types_output_format_$1, new_result_format, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN);
+  strncpy(mmux_cc_types_output_format_$1, new_result_format, MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN);
   return false;
 }
 
@@ -170,26 +170,26 @@ mmux_$1_save_output_format (char * const dest)
   _Pragma("GCC diagnostic ignored \"-Wstringop-truncation\"");
   /* We tell  "strncpy()" to copy  from the internal  state and fill  everything else
      with nul bytes.  See the documentation of "strncpy()". */
-  strncpy(dest, mmux_cc_types_output_format_$1, MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN);
+  strncpy(dest, mmux_cc_types_output_format_$1, MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN);
   _Pragma("GCC diagnostic pop");
 }
 ]]])]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[double]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[ldouble]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumfl]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumdb]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -289,7 +289,7 @@ DEFINE_INTEGER_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_CC_TYPES_HAS_ULLONG]
  ** Type string printers: raw C standard types, real floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_FLONUMFL_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 mmux_sint_t
 mmux_$1_sprint_size (mmux_$1_t value)
 {
@@ -320,21 +320,21 @@ mmux_$1_sprint (mmux_asciizp_t strptr, mmux_sint_t len, mmux_$1_t value)
   }
 }]]])]]])
 
-DEFINE_FLOAT_SPRINTER([[[float]]],	[[[strfromf]]])
-DEFINE_FLOAT_SPRINTER([[[double]]],	[[[strfromd]]])
-DEFINE_FLOAT_SPRINTER([[[ldouble]]],	[[[strfroml]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumfl]]],	[[[strfromf]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumdb]]],	[[[strfromd]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumldb]]],	[[[strfroml]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_FLOAT_SPRINTER([[[float32]]],	[[[strfromf32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_FLOAT_SPRINTER([[[float64]]],	[[[strfromf64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_FLOAT_SPRINTER([[[float128]]],	[[[strfromf128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumf32]]],	[[[strfromf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumf64]]],	[[[strfromf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumf128]]],	[[[strfromf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_FLOAT_SPRINTER([[[float32x]]],	[[[strfromf32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_FLOAT_SPRINTER([[[float64x]]],	[[[strfromf64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_FLOAT_SPRINTER([[[float128x]]],	[[[strfromf128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumf32x]]],	[[[strfromf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumf64x]]],	[[[strfromf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumf128x]]],	[[[strfromf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_FLOAT_SPRINTER([[[decimal32]]],	[[[mmux_strfromd32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_FLOAT_SPRINTER([[[decimal64]]],	[[[mmux_strfromd64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_FLOAT_SPRINTER([[[decimal128]]],	[[[mmux_strfromd128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumd32]]],	[[[mmux_strfromd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumd64]]],	[[[mmux_strfromd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUMFL_SPRINTER([[[flonumd128]]],	[[[mmux_strfromd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -451,21 +451,21 @@ mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_$1_t value)
 }
 ]]])]]])
 
-DEFINE_COMPLEX_SPRINTER([[[complexf]]],		[[[float]]])
-DEFINE_COMPLEX_SPRINTER([[[complexd]]],		[[[double]]])
-DEFINE_COMPLEX_SPRINTER([[[complexld]]],	[[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcfl]]],		[[[flonumfl]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcdb]]],		[[[flonumdb]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcldb]]],	[[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_COMPLEX_SPRINTER([[[complexf32]]],	[[[float32]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf64]]],	[[[float64]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf128]]],	[[[float128]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcf32]]],	[[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcf64]]],	[[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcf128]]],	[[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_COMPLEX_SPRINTER([[[complexf32x]]],	[[[float32x]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf64x]]],	[[[float64x]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_COMPLEX_SPRINTER([[[complexf128x]]],	[[[floatf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcf32x]]],	[[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcf64x]]],	[[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcf128x]]],	[[[flonumflf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
-DEFINE_COMPLEX_SPRINTER([[[complexd32]]],	[[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_COMPLEX_SPRINTER([[[complexd64]]],	[[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_COMPLEX_SPRINTER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcd32]]],	[[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD32]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcd64]]],	[[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD64]]])
+DEFINE_COMPLEX_SPRINTER([[[flonumcd128]]],	[[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -572,37 +572,37 @@ DEFINE_PRINTERS([[[ulong]]])
 DEFINE_PRINTERS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
 DEFINE_PRINTERS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
-DEFINE_PRINTERS([[[float]]])
-DEFINE_PRINTERS([[[double]]])
-DEFINE_PRINTERS([[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_PRINTERS([[[flonumfl]]])
+DEFINE_PRINTERS([[[flonumdb]]])
+DEFINE_PRINTERS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_PRINTERS([[[float32]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_PRINTERS([[[float64]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_PRINTERS([[[float128]]],		[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_PRINTERS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_PRINTERS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_PRINTERS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_PRINTERS([[[float32x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_PRINTERS([[[float64x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_PRINTERS([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_PRINTERS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_PRINTERS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_PRINTERS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_PRINTERS([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_PRINTERS([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_PRINTERS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_PRINTERS([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_PRINTERS([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_PRINTERS([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
-DEFINE_PRINTERS([[[complexf]]])
-DEFINE_PRINTERS([[[complexd]]])
-DEFINE_PRINTERS([[[complexld]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_PRINTERS([[[flonumcfl]]])
+DEFINE_PRINTERS([[[flonumcdb]]])
+DEFINE_PRINTERS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_PRINTERS([[[complexf32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_PRINTERS([[[complexf64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_PRINTERS([[[complexf128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_PRINTERS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_PRINTERS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_PRINTERS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_PRINTERS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_PRINTERS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_PRINTERS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_PRINTERS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_PRINTERS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_PRINTERS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
-DEFINE_PRINTERS([[[complexd32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_PRINTERS([[[complexd64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_PRINTERS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_PRINTERS([[[flonumcd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD32]]])
+DEFINE_PRINTERS([[[flonumcd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD64]]])
+DEFINE_PRINTERS([[[flonumcd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD128]]])
 
 DEFINE_PRINTERS([[[sint8]]])
 DEFINE_PRINTERS([[[uint8]]])

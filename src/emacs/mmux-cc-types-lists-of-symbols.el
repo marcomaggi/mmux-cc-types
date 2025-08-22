@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-19 07:01:39 marco>
+;; Time-stamp: <2025-08-22 10:48:19 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -439,37 +439,37 @@
 (mmux-cc-type-define-integer-list socklen)
 (mmux-cc-type-define-integer-list rlim)
 
-(mmux-cc-type-define-flonum-list float)
-(mmux-cc-type-define-flonum-list double)
-(mmux-cc-type-define-flonum-list ldouble)
+(mmux-cc-type-define-flonum-list flonumfl)
+(mmux-cc-type-define-flonum-list flonumdb)
+(mmux-cc-type-define-flonum-list flonumldb)
 
-(mmux-cc-type-define-flonum-list float32)
-(mmux-cc-type-define-flonum-list float64)
-(mmux-cc-type-define-flonum-list float128)
+(mmux-cc-type-define-flonum-list flonumf32)
+(mmux-cc-type-define-flonum-list flonumf64)
+(mmux-cc-type-define-flonum-list flonumf128)
 
-(mmux-cc-type-define-flonum-list float32x)
-(mmux-cc-type-define-flonum-list float64x)
-(mmux-cc-type-define-flonum-list float128x)
+(mmux-cc-type-define-flonum-list flonumf32x)
+(mmux-cc-type-define-flonum-list flonumf64x)
+(mmux-cc-type-define-flonum-list flonumf128x)
 
-(mmux-cc-type-define-flonum-list decimal32)
-(mmux-cc-type-define-flonum-list decimal64)
-(mmux-cc-type-define-flonum-list decimal128)
+(mmux-cc-type-define-flonum-list flonumd32)
+(mmux-cc-type-define-flonum-list flonumd64)
+(mmux-cc-type-define-flonum-list flonumd128)
 
-(mmux-cc-type-define-complex-list complexf)
-(mmux-cc-type-define-complex-list complexd)
-(mmux-cc-type-define-complex-list complexld)
+(mmux-cc-type-define-complex-list flonumcfl)
+(mmux-cc-type-define-complex-list flonumcdb)
+(mmux-cc-type-define-complex-list flonumcldb)
 
-(mmux-cc-type-define-complex-list complexf32)
-(mmux-cc-type-define-complex-list complexf64)
-(mmux-cc-type-define-complex-list complexf128)
+(mmux-cc-type-define-complex-list flonumcf32)
+(mmux-cc-type-define-complex-list flonumcf64)
+(mmux-cc-type-define-complex-list flonumcf128)
 
-(mmux-cc-type-define-complex-list complexf32x)
-(mmux-cc-type-define-complex-list complexf64x)
-(mmux-cc-type-define-complex-list complexf128x)
+(mmux-cc-type-define-complex-list flonumcf32x)
+(mmux-cc-type-define-complex-list flonumcf64x)
+(mmux-cc-type-define-complex-list flonumcf128x)
 
-(mmux-cc-type-define-complex-list complexd32)
-(mmux-cc-type-define-complex-list complexd64)
-(mmux-cc-type-define-complex-list complexd128)
+(mmux-cc-type-define-complex-list flonumcd32)
+(mmux-cc-type-define-complex-list flonumcd64)
+(mmux-cc-type-define-complex-list flonumcd128)
 
 
 ;;;; done

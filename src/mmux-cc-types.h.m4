@@ -130,45 +130,45 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
 #undef  mmux_standard_octet_literal
 #define mmux_standard_octet_literal(X)		(mmux_standard_unsigned_literal(X))
 
-#undef  mmux_standard_float_literal
-#define mmux_standard_float_literal(X)		(X ## F)
+#undef  mmux_standard_flonumfl_literal
+#define mmux_standard_flonumfl_literal(X)		(X ## F)
 
-#undef  mmux_standard_double_literal
-#define mmux_standard_double_literal(X)		(X)
+#undef  mmux_standard_flonumdb_literal
+#define mmux_standard_flonumdb_literal(X)		(X)
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[
-#undef  mmux_standard_ldouble_literal
-#define mmux_standard_ldouble_literal(X)	(X ## L)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],[[[
+#undef  mmux_standard_flonumldb_literal
+#define mmux_standard_flonumldb_literal(X)	(X ## L)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],[[[
-#undef  mmux_standard_float32_literal
-#define mmux_standard_float32_literal(X)	(X ## f32)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],[[[
+#undef  mmux_standard_flonumf32_literal
+#define mmux_standard_flonumf32_literal(X)	(X ## f32)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],[[[
-#undef  mmux_standard_float64_literal
-#define mmux_standard_float64_literal(X)	(X ## f64)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],[[[
+#undef  mmux_standard_flonumf64_literal
+#define mmux_standard_flonumf64_literal(X)	(X ## f64)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],[[[
-#undef  mmux_standard_float128_literal
-#define mmux_standard_float128_literal(X)	(X ## f128)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],[[[
+#undef  mmux_standard_flonumf128_literal
+#define mmux_standard_flonumf128_literal(X)	(X ## f128)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],[[[
-#undef  mmux_standard_float32x_literal
-#define mmux_standard_float32x_literal(X)	(X ## f32x)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],[[[
+#undef  mmux_standard_flonumf32x_literal
+#define mmux_standard_flonumf32x_literal(X)	(X ## f32x)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],[[[
-#undef  mmux_standard_float64x_literal
-#define mmux_standard_float64x_literal(X)	(X ## f64x)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],[[[
+#undef  mmux_standard_flonumf64x_literal
+#define mmux_standard_flonumf64x_literal(X)	(X ## f64x)
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]],[[[
-#undef  mmux_standard_float128x_literal
-#define mmux_standard_float128x_literal(X)	(X ## f128x)
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]],[[[
+#undef  mmux_standard_flonumf128x_literal
+#define mmux_standard_flonumf128x_literal(X)	(X ## f128x)
 ]]])
 
 m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[
@@ -195,49 +195,49 @@ DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 
 /* ------------------------------------------------------------------ */
 
-#undef  mmux_standard_complexf_part_literal
-#define mmux_standard_complexf_part_literal(VALUE)	(mmux_standard_float_literal(VALUE))
+#undef  mmux_standard_flonumcfl_part_literal
+#define mmux_standard_flonumcfl_part_literal(VALUE)	(mmux_standard_flonumfl_literal(VALUE))
 
-#undef  mmux_standard_complexd_part_literal
-#define mmux_standard_complexd_part_literal(VALUE)	(mmux_standard_double_literal(VALUE))
+#undef  mmux_standard_flonumcdb_part_literal
+#define mmux_standard_flonumcdb_part_literal(VALUE)	(mmux_standard_flonumdb_literal(VALUE))
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],[[[
-#undef  mmux_standard_complexld_part_literal
-#define mmux_standard_complexld_part_literal(VALUE)	(mmux_standard_ldouble_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],[[[
+#undef  mmux_standard_flonumcldb_part_literal
+#define mmux_standard_flonumcldb_part_literal(VALUE)	(mmux_standard_flonumldb_literal(VALUE))
 ]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],[[[
-#undef  mmux_standard_complexf32_part_literal
-#define mmux_standard_complexf32_part_literal(VALUE)	(mmux_standard_float32_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],[[[
+#undef  mmux_standard_flonumcf32_part_literal
+#define mmux_standard_flonumcf32_part_literal(VALUE)	(mmux_standard_flonumf32_literal(VALUE))
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],[[[
-#undef  mmux_standard_complexf64_part_literal
-#define mmux_standard_complexf64_part_literal(VALUE)	(mmux_standard_float64_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],[[[
+#undef  mmux_standard_flonumcf64_part_literal
+#define mmux_standard_flonumcf64_part_literal(VALUE)	(mmux_standard_flonumf64_literal(VALUE))
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[
-#undef  mmux_standard_complexf128_part_literal
-#define mmux_standard_complexf128_part_literal(VALUE)	(mmux_standard_float128_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[
+#undef  mmux_standard_flonumcf128_part_literal
+#define mmux_standard_flonumcf128_part_literal(VALUE)	(mmux_standard_flonumf128_literal(VALUE))
 ]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],[[[
-#undef  mmux_standard_complexf32x_part_literal
-#define mmux_standard_complexf32x_part_literal(VALUE)	(mmux_standard_float32x_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]],[[[
+#undef  mmux_standard_flonumcf32x_part_literal
+#define mmux_standard_flonumcf32x_part_literal(VALUE)	(mmux_standard_flonumf32x_literal(VALUE))
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],[[[
-#undef  mmux_standard_complexf64x_part_literal
-#define mmux_standard_complexf64x_part_literal(VALUE)	(mmux_standard_float64x_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],[[[
+#undef  mmux_standard_flonumcf64x_part_literal
+#define mmux_standard_flonumcf64x_part_literal(VALUE)	(mmux_standard_flonumf64x_literal(VALUE))
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[
-#undef  mmux_standard_complexf128x_part_literal
-#define mmux_standard_complexf128x_part_literal(VALUE)	(mmux_standard_float128x_literal(VALUE))
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[
+#undef  mmux_standard_flonumcf128x_part_literal
+#define mmux_standard_flonumcf128x_part_literal(VALUE)	(mmux_standard_flonumf128x_literal(VALUE))
 ]]])
 
 
@@ -298,48 +298,48 @@ typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t	mmux_standard_
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN[[[]]]_t	mmux_standard_socklen_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t	mmux_standard_rlim_t;
 
-typedef float			mmux_standard_float_t;
-typedef double			mmux_standard_double_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],[[[typedef long double	mmux_standard_ldouble_t;]]])
+typedef float				mmux_standard_flonumfl_t;
+typedef double				mmux_standard_flonumdb_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],[[[typedef long double		mmux_standard_flonumldb_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],   [[[__extension__ typedef _Float32	mmux_standard_float32_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],   [[[__extension__ typedef _Float64	mmux_standard_float64_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],  [[[__extension__ typedef _Float128	mmux_standard_float128_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],   [[[__extension__ typedef _Float32	mmux_standard_flonumf32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],   [[[__extension__ typedef _Float64	mmux_standard_flonumf64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],  [[[__extension__ typedef _Float128	mmux_standard_flonumf128_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],  [[[__extension__ typedef _Float32x	mmux_standard_float32x_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],  [[[__extension__ typedef _Float64x	mmux_standard_float64x_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]], [[[__extension__ typedef _Float128x	mmux_standard_float128x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],  [[[__extension__ typedef _Float32x	mmux_standard_flonumf32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],  [[[__extension__ typedef _Float64x	mmux_standard_flonumf64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]], [[[__extension__ typedef _Float128x	mmux_standard_flonumf128x_t;]]])
 
-typedef float complex		mmux_standard_complexf_t;
-typedef double complex		mmux_standard_complexd_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]], [[[typedef long double complex	mmux_standard_complexld_t;]]])
+typedef float complex		mmux_standard_flonumcfl_t;
+typedef double complex		mmux_standard_flonumcdb_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]], [[[typedef long double complex	mmux_standard_flonumcldb_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]], [[[__extension__ typedef _Float32 complex	mmux_standard_complexf32_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]], [[[__extension__ typedef _Float64 complex	mmux_standard_complexf64_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[__extension__ typedef _Float128 complex	mmux_standard_complexf128_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]], [[[__extension__ typedef _Float32 complex	mmux_standard_flonumcf32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]], [[[__extension__ typedef _Float64 complex	mmux_standard_flonumcf64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[__extension__ typedef _Float128 complex	mmux_standard_flonumcf128_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[__extension__ typedef _Float32x complex	mmux_standard_complexf32x_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[__extension__ typedef _Float64x complex	mmux_standard_complexf64x_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[__extension__ typedef _Float128x complex	mmux_standard_complexf128x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[__extension__ typedef _Float32x complex	mmux_standard_flonumcf32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[__extension__ typedef _Float64x complex	mmux_standard_flonumcf64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[__extension__ typedef _Float128x complex	mmux_standard_flonumcf128x_t;]]])
 
-typedef mmux_standard_float_t		mmux_standard_complexf_part_t;
-typedef mmux_standard_double_t		mmux_standard_complexd_part_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],
-[[[typedef mmux_standard_ldouble_t	mmux_standard_complexld_part_t;]]])
+typedef mmux_standard_flonumfl_t		mmux_standard_flonumcfl_part_t;
+typedef mmux_standard_flonumdb_t		mmux_standard_flonumcdb_part_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],
+[[[typedef mmux_standard_flonumldb_t	mmux_standard_flonumcldb_part_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],
-[[[typedef mmux_standard_float32_t	mmux_standard_complexf32_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],
-[[[typedef mmux_standard_float64_t	mmux_standard_complexf64_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],
-[[[typedef mmux_standard_float128_t	mmux_standard_complexf128_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],
+[[[typedef mmux_standard_flonumf32_t	mmux_standard_flonumcf32_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],
+[[[typedef mmux_standard_flonumf64_t	mmux_standard_flonumcf64_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],
+[[[typedef mmux_standard_flonumf128_t	mmux_standard_flonumcf128_part_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],
-[[[typedef mmux_standard_float32x_t	mmux_standard_complexf32x_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],
-[[[typedef mmux_standard_float64x_t	mmux_standard_complexf64x_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],
-[[[typedef mmux_standard_float128x_t	mmux_standard_complexf128x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]],
+[[[typedef mmux_standard_flonumf32x_t	mmux_standard_flonumcf32x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],
+[[[typedef mmux_standard_flonumf64x_t	mmux_standard_flonumcf64x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
+[[[typedef mmux_standard_flonumf128x_t	mmux_standard_flonumcf128x_part_t;]]])
 
 
 /** --------------------------------------------------------------------
@@ -395,71 +395,71 @@ typedef struct mmux_uint64_t	{ mmux_standard_uint64_t	value; }	mmux_uint64_t;
 typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
 typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
 
-typedef struct mmux_float_t	{ mmux_standard_float_t		value; }	mmux_float_t;
-typedef struct mmux_double_t	{ mmux_standard_double_t	value; }	mmux_double_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],  [[[
-typedef struct mmux_ldouble_t	{ mmux_standard_ldouble_t	value; }	mmux_ldouble_t;
+typedef struct mmux_flonumfl_t	{ mmux_standard_flonumfl_t		value; }	mmux_flonumfl_t;
+typedef struct mmux_flonumdb_t	{ mmux_standard_flonumdb_t	value; }	mmux_flonumdb_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],  [[[
+typedef struct mmux_flonumldb_t	{ mmux_standard_flonumldb_t	value; }	mmux_flonumldb_t;
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32]]],   [[[
-typedef struct mmux_float32_t	{ mmux_standard_float32_t	value; }	mmux_float32_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],   [[[
+typedef struct mmux_flonumf32_t	{ mmux_standard_flonumf32_t	value; }	mmux_flonumf32_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64]]],   [[[
-typedef struct mmux_float64_t	{ mmux_standard_float64_t	value; }	mmux_float64_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],   [[[
+typedef struct mmux_flonumf64_t	{ mmux_standard_flonumf64_t	value; }	mmux_flonumf64_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128]]],  [[[
-typedef struct mmux_float128_t	{ mmux_standard_float128_t	value; }	mmux_float128_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],  [[[
+typedef struct mmux_flonumf128_t	{ mmux_standard_flonumf128_t	value; }	mmux_flonumf128_t;
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT32X]]],  [[[
-typedef struct mmux_float32x_t	{ mmux_standard_float32x_t	value; }	mmux_float32x_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],  [[[
+typedef struct mmux_flonumf32x_t	{ mmux_standard_flonumf32x_t	value; }	mmux_flonumf32x_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT64X]]],  [[[
-typedef struct mmux_float64x_t	{ mmux_standard_float64x_t	value; }	mmux_float64x_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],  [[[
+typedef struct mmux_flonumf64x_t	{ mmux_standard_flonumf64x_t	value; }	mmux_flonumf64x_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLOAT128X]]], [[[
-typedef struct mmux_float128x_t	{ mmux_standard_float128x_t	value; }	mmux_float128x_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]], [[[
+typedef struct mmux_flonumf128x_t	{ mmux_standard_flonumf128x_t	value; }	mmux_flonumf128x_t;
 ]]])
 
 /* ------------------------------------------------------------------ */
 
-typedef struct mmux_complexf_t	{ mmux_standard_complexf_t	value; }	mmux_complexf_t;
-typedef struct mmux_complexd_t	{ mmux_standard_complexd_t	value; }	mmux_complexd_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],  [[[
-typedef struct mmux_complexld_t	{ mmux_standard_complexld_t	value; }	mmux_complexld_t;
+typedef struct mmux_flonumcfl_t	{ mmux_standard_flonumcfl_t	value; }	mmux_flonumcfl_t;
+typedef struct mmux_flonumcdb_t	{ mmux_standard_flonumcdb_t	value; }	mmux_flonumcdb_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],  [[[
+typedef struct mmux_flonumcldb_t	{ mmux_standard_flonumcldb_t	value; }	mmux_flonumcldb_t;
 ]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]], [[[
-typedef struct mmux_complexf32_t { mmux_standard_complexf32_t	value; }      mmux_complexf32_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]], [[[
+typedef struct mmux_flonumcf32_t { mmux_standard_flonumcf32_t	value; }      mmux_flonumcf32_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]], [[[
-typedef struct mmux_complexf64_t { mmux_standard_complexf64_t	value; }      mmux_complexf64_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]], [[[
+typedef struct mmux_flonumcf64_t { mmux_standard_flonumcf64_t	value; }      mmux_flonumcf64_t;
 ]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],[[[
-typedef struct mmux_complexf128_t { mmux_standard_complexf128_t	value; }      mmux_complexf128_t;
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[
-typedef struct mmux_complexf32x_t { mmux_standard_complexf32x_t	value; }      mmux_complexf32x_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[
-typedef struct mmux_complexf64x_t { mmux_standard_complexf64x_t value; }      mmux_complexf64x_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[
-typedef struct mmux_complexf128x_t { mmux_standard_complexf128x_t value; }	mmux_complexf128x_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[
+typedef struct mmux_flonumcf128_t { mmux_standard_flonumcf128_t	value; }      mmux_flonumcf128_t;
 ]]])
 
-typedef mmux_float_t		mmux_complexf_part_t;
-typedef mmux_double_t		mmux_complexd_part_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_LDOUBLE]]],     [[[typedef mmux_ldouble_t	mmux_complexld_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[
+typedef struct mmux_flonumcf32x_t { mmux_standard_flonumcf32x_t	value; }      mmux_flonumcf32x_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[
+typedef struct mmux_flonumcf64x_t { mmux_standard_flonumcf64x_t value; }      mmux_flonumcf64x_t;
+]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[
+typedef struct mmux_flonumcf128x_t { mmux_standard_flonumcf128x_t value; }	mmux_flonumcf128x_t;
+]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],  [[[typedef mmux_float32_t	mmux_complexf32_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],  [[[typedef mmux_float64_t	mmux_complexf64_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128]]], [[[typedef mmux_float128_t	mmux_complexf128_part_t;]]])
+typedef mmux_flonumfl_t		mmux_flonumcfl_part_t;
+typedef mmux_flonumdb_t		mmux_flonumcdb_part_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],     [[[typedef mmux_flonumldb_t	mmux_flonumcldb_part_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]], [[[typedef mmux_float32x_t	mmux_complexf32x_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]], [[[typedef mmux_float64x_t	mmux_complexf64x_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],[[[typedef mmux_float128x_t	mmux_complexf128x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],  [[[typedef mmux_flonumf32_t	mmux_flonumcf32_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],  [[[typedef mmux_flonumf64_t	mmux_flonumcf64_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]], [[[typedef mmux_flonumf128_t	mmux_flonumcf128_part_t;]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[typedef mmux_flonumf32x_t	mmux_flonumcf32x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[typedef mmux_flonumf64x_t	mmux_flonumcf64x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonumf128x_t	mmux_flonumcf128x_part_t;]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -576,33 +576,33 @@ DEFINE_TYPE_MAKERS(sint64)
 DEFINE_TYPE_MAKERS(uint64)
 DEFINE_TYPE_MAKERS(byte)
 DEFINE_TYPE_MAKERS(octet)
-DEFINE_TYPE_MAKERS(float)
-DEFINE_TYPE_MAKERS(double)
-DEFINE_TYPE_MAKERS(ldouble,		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
-DEFINE_TYPE_MAKERS(float32,		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_TYPE_MAKERS(float64,		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_TYPE_MAKERS(float128,		[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
-DEFINE_TYPE_MAKERS(float32x,		[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_TYPE_MAKERS(float64x,		[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_TYPE_MAKERS(float128x,		[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
-DEFINE_TYPE_MAKERS(complexf)
-DEFINE_TYPE_MAKERS(complexd)
-DEFINE_TYPE_MAKERS(complexld,		[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
-DEFINE_TYPE_MAKERS(complexf32,		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_TYPE_MAKERS(complexf64,		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_TYPE_MAKERS(complexf128,		[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
-DEFINE_TYPE_MAKERS(complexf32x,		[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_TYPE_MAKERS(complexf64x,		[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_TYPE_MAKERS(complexf128x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
-DEFINE_TYPE_MAKERS(complexf_part)
-DEFINE_TYPE_MAKERS(complexd_part)
-DEFINE_TYPE_MAKERS(complexld_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
-DEFINE_TYPE_MAKERS(complexf32_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_TYPE_MAKERS(complexf64_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_TYPE_MAKERS(complexf128_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
-DEFINE_TYPE_MAKERS(complexf32x_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_TYPE_MAKERS(complexf64x_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_TYPE_MAKERS(complexf128x_part,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_TYPE_MAKERS(flonumfl)
+DEFINE_TYPE_MAKERS(flonumdb)
+DEFINE_TYPE_MAKERS(flonumldb,		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_TYPE_MAKERS(flonumf32,		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_TYPE_MAKERS(flonumf64,		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_TYPE_MAKERS(flonumf128,		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_TYPE_MAKERS(flonumf32x,		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_TYPE_MAKERS(flonumf64x,		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_TYPE_MAKERS(flonumf128x,		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_TYPE_MAKERS(flonumcfl)
+DEFINE_TYPE_MAKERS(flonumcdb)
+DEFINE_TYPE_MAKERS(flonumcldb,		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_TYPE_MAKERS(flonumcf32,		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_TYPE_MAKERS(flonumcf64,		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_TYPE_MAKERS(flonumcf128,		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+DEFINE_TYPE_MAKERS(flonumcf32x,		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_TYPE_MAKERS(flonumcf64x,		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_TYPE_MAKERS(flonumcf128x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_TYPE_MAKERS(flonumcfl_part)
+DEFINE_TYPE_MAKERS(flonumcdb_part)
+DEFINE_TYPE_MAKERS(flonumcldb_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_TYPE_MAKERS(flonumcf32_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_TYPE_MAKERS(flonumcf64_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_TYPE_MAKERS(flonumcf128_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+DEFINE_TYPE_MAKERS(flonumcf32x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_TYPE_MAKERS(flonumcf64x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_TYPE_MAKERS(flonumcf128x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 DEFINE_TYPE_MAKERS(ssize)
 DEFINE_TYPE_MAKERS(usize)
 DEFINE_TYPE_MAKERS(sintmax)
@@ -636,9 +636,9 @@ mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
  ** Support for _DecimalN.
  ** ----------------------------------------------------------------- */
 
-#if ((defined MMUX_CC_TYPES_HAS_DECIMAL32) || \
-     (defined MMUX_CC_TYPES_HAS_DECIMAL64) || \
-     (defined MMUX_CC_TYPES_HAS_DECIMAL128))
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
 #  include <mmux-cc-types-libdfp.h>
 #endif
 
@@ -663,17 +663,17 @@ mmux_cc_types_decl mmux_$1_part_t mmux_$1_arg  (mmux_$1_t Z)		__attribute__((__c
 mmux_cc_types_decl mmux_$1_t      mmux_$1_conj (mmux_$1_t Z)		__attribute__((__const__));
 ]]])]]])
 
-DEFINE_PROTOS([[[complexf]]])
-DEFINE_PROTOS([[[complexd]]])
-DEFINE_PROTOS([[[complexld]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_PROTOS([[[flonumcfl]]])
+DEFINE_PROTOS([[[flonumcdb]]])
+DEFINE_PROTOS([[[flonumcldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_PROTOS([[[complexf32]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_PROTOS([[[complexf64]]],		[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_PROTOS([[[complexf128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_PROTOS([[[flonumcf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_PROTOS([[[flonumcf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_PROTOS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_PROTOS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_PROTOS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_PROTOS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_PROTOS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_PROTOS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_PROTOS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
 
 /** --------------------------------------------------------------------
@@ -745,29 +745,29 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ulong]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float]]])
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[double]]])
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumfl]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumdb]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float32]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float64]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float128]]],		[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float32x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float64x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexd]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexld]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcfl]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcdb]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_TYPE_PROTOS_COMPLEX_NUMBERS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[sint8]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[uint8]]])
@@ -836,7 +836,7 @@ mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__a
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
 ]]])]]])
 
-m4_define([[[DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon __attribute__((__const__));
 ]]])]]])
@@ -856,29 +856,29 @@ DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ulong]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[double]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumfl]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumdb]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float32]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float64]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float128]]],		[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float32x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float64x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[float128x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexd]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexld]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcfl]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcdb]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sint8]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uint8]]])
@@ -909,47 +909,47 @@ DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[rlim]]])
 
 /* ------------------------------------------------------------------ */
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[double]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[ldouble]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumfl]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumdb]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexld]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcfl]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcdb]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD32]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD64]]])
-DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXD128]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD32]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD64]]])
+DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD128]]])
 
 
 /** --------------------------------------------------------------------
  ** Selecting printf output format for floating point numbers.
  ** ----------------------------------------------------------------- */
 
-#undef  MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN
-#define MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN		(1+8)
+#undef  MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN
+#define MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN		(1+8)
 
-m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl bool mmux_$1_set_output_format (mmux_asciizcp_t new_result_format, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1)));
 
@@ -957,21 +957,21 @@ mmux_cc_types_decl mmux_asciizcp_t mmux_$1_ref_output_format  (void);
 mmux_cc_types_decl void            mmux_$1_save_output_format (char * dest);
 ]]])]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[double]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[ldouble]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumfl]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumdb]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal32]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal64]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -1136,17 +1136,17 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT2	(void) __attribute__((__cons
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT1_2	(void) __attribute__((__const__));
 ]]])]]])
 
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(double)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(ldouble,		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumfl)
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumdb)
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumldb,		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float32,		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float64,		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float128,	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32,		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64,		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128,	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float32x,	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float64x,	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(float128x,	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32x,	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64x,	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128x,	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
 
 /** --------------------------------------------------------------------
@@ -1209,17 +1209,17 @@ mmux_$1_constant_ten (void)
 }
 ]]])]]])
 
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf,		float)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexd,		double)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexld,		ldouble,	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcfl,		flonumfl)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcdb,		flonumdb)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcldb,		flonumldb,	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf32,		float32,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf64,		float64,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf128,	float128,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf32,		flonumf32,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf64,		flonumf64,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf128,	flonumf128,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf32x,	float32x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf64x,	float64x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(complexf128x,	float128x,	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf32x,	flonumf32x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf64x,	flonumf64x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf128x,	flonumf128x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
 
 /** --------------------------------------------------------------------
@@ -1290,29 +1290,29 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ulong]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[double]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[ldouble]]],	[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumfl]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumdb]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float32x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float64x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[float128x]]],	[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexd]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexld]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXLD]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcfl]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcdb]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf32]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf64]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf128]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf32x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf64x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]])
-DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[complexf128x]]],	[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[sint8]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint8]]])
@@ -1457,7 +1457,7 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[rlim]]])
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
   __attribute__((__const__));
 
@@ -1468,21 +1468,21 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_decr (mmux_$1_t A)
   __attribute__((__const__));
 ]]])]]])
 
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[double]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[ldouble]]],		[[[MMUX_CC_TYPES_HAS_LDOUBLE]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumfl]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumdb]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float32]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float64]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float128]]],		[[[MMUX_CC_TYPES_HAS_FLOAT128]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float32x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT32X]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float64x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT64X]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[float128x]]],		[[[MMUX_CC_TYPES_HAS_FLOAT128X]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal32]]],		[[[MMUX_CC_TYPES_HAS_DECIMAL32]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal64]]],		[[[MMUX_CC_TYPES_HAS_DECIMAL64]]])
-DEFINE_REAL_FLOAT_NUMBER_ARITHMETICS_FUNCTIONS([[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_DECIMAL128]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -1614,8 +1614,8 @@ DEFINE_BINARYN_CPROTO([[[$1]]],[[[yn]]],	[[[$39]]], [[[$2]]], [[[$3]]])
 /* ------------------------------------------------------------------ */
 m4_divert(0)m4_dnl
 
-DEFINE_CPROTOS([[[float]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT]]],		[[[]]],
+DEFINE_CPROTOS([[[flonumfl]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMFL]]],		[[[]]],
 	       [[[sinf]]],		[[[cosf]]],		[[[tanf]]],
 	       [[[asinf]]],		[[[acosf]]],		[[[atanf]]],		[[[atan2f]]],
 	       [[[sinhf]]],		[[[coshf]]],		[[[tanhf]]],
@@ -1628,8 +1628,8 @@ DEFINE_CPROTOS([[[float]]],
 	       [[[lgammaf]]],		[[[tgammaf]]],
 	       [[[j0f]]],		[[[j1f]]],		[[[jnf]]],
 	       [[[y0f]]],		[[[y1f]]],		[[[ynf]]])
-DEFINE_CPROTOS([[[double]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_DOUBLE]]],		[[[]]],
+DEFINE_CPROTOS([[[flonumdb]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMDB]]],		[[[]]],
 	       [[[sin]]],		[[[cos]]],		[[[tan]]],
 	       [[[asin]]],		[[[acos]]],		[[[atan]]],		[[[atan2f]]],
 	       [[[sinh]]],		[[[cosh]]],		[[[tanh]]],
@@ -1642,8 +1642,8 @@ DEFINE_CPROTOS([[[double]]],
 	       [[[lgamma]]],		[[[tgamma]]],
 	       [[[j0]]],		[[[j1]]],		[[[jn]]],
 	       [[[y0]]],		[[[y1]]],		[[[yn]]])
-DEFINE_CPROTOS([[[ldouble]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_LDOUBLE]]], [[[MMUX_CC_TYPES_HAS_LDOUBLE]]],
+DEFINE_CPROTOS([[[flonumldb]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMLDB]]], [[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],
 	       [[[sinl]]],		[[[cosl]]],		[[[tanl]]],
 	       [[[asinl]]],		[[[acosl]]],		[[[atanl]]],		[[[atan2l]]],
 	       [[[sinhl]]],		[[[coshl]]],		[[[tanhl]]],
@@ -1657,8 +1657,8 @@ DEFINE_CPROTOS([[[ldouble]]],
 	       [[[j0l]]],		[[[j1l]]],		[[[jnl]]],
 	       [[[y0l]]],		[[[y1l]]],		[[[ynl]]])
 
-DEFINE_CPROTOS([[[float32]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT32]]],  [[[MMUX_CC_TYPES_HAS_FLOAT32]]],
+DEFINE_CPROTOS([[[flonumf32]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMF32]]],  [[[MMUX_CC_TYPES_HAS_FLONUMF32]]],
 	       [[[sinf32]]],		[[[cosf32]]],		[[[tanf32]]],
 	       [[[asinf32]]],		[[[acosf32]]],		[[[atanf32]]],		[[[atan2f32]]],
 	       [[[sinhf32]]],		[[[coshf32]]],		[[[tanhf32]]],
@@ -1671,8 +1671,8 @@ DEFINE_CPROTOS([[[float32]]],
 	       [[[lgammaf32]]],		[[[tgammaf32]]],
 	       [[[j0f32]]],		[[[j1f32]]],		[[[jnf32]]],
 	       [[[y0f32]]],		[[[y1f32]]],		[[[ynf32]]])
-DEFINE_CPROTOS([[[float64]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT64]]],  [[[MMUX_CC_TYPES_HAS_FLOAT64]]],
+DEFINE_CPROTOS([[[flonumf64]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMF64]]],  [[[MMUX_CC_TYPES_HAS_FLONUMF64]]],
 	       [[[sinf64]]],		[[[cosf64]]],		[[[tanf64]]],
 	       [[[asinf64]]],		[[[acosf64]]],		[[[atanf64]]],		[[[atan2f64]]],
 	       [[[sinhf64]]],		[[[coshf64]]],		[[[tanhf64]]],
@@ -1685,8 +1685,8 @@ DEFINE_CPROTOS([[[float64]]],
 	       [[[lgammaf64]]],		[[[tgammaf64]]],
 	       [[[j0f64]]],		[[[j1f64]]],		[[[jnf64]]],
 	       [[[y0f64]]],		[[[y1f64]]],		[[[ynf64]]])
-DEFINE_CPROTOS([[[float128]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT128]]], [[[MMUX_CC_TYPES_HAS_FLOAT128]]],
+DEFINE_CPROTOS([[[flonumf128]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMF128]]], [[[MMUX_CC_TYPES_HAS_FLONUMF128]]],
 	       [[[sinf128]]],		[[[cosf128]]],		[[[tanf128]]],
 	       [[[asinf128]]],		[[[acosf128]]],		[[[atanf128]]],		[[[atan2f128]]],
 	       [[[sinhf128]]],		[[[coshf128]]],		[[[tanhf128]]],
@@ -1700,8 +1700,8 @@ DEFINE_CPROTOS([[[float128]]],
 	       [[[j0f128]]],		[[[j1f128]]],		[[[jnf128]]],
 	       [[[y0f128]]],		[[[y1f128]]],		[[[ynf128]]])
 
-DEFINE_CPROTOS([[[float32x]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT32X]]],  [[[MMUX_CC_TYPES_HAS_FLOAT32X]]],
+DEFINE_CPROTOS([[[flonumf32x]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMF32X]]],  [[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],
 	       [[[sinf32x]]],		[[[cosf32x]]],		[[[tanf32x]]],
 	       [[[asinf32x]]],		[[[acosf32x]]],		[[[atanf32x]]],		[[[atan2f32x]]],
 	       [[[sinhf32x]]],		[[[coshf32x]]],		[[[tanhf32x]]],
@@ -1714,8 +1714,8 @@ DEFINE_CPROTOS([[[float32x]]],
 	       [[[lgammaf32x]]],	[[[tgammaf32x]]],
 	       [[[j0f32x]]],		[[[j1f32x]]],		[[[jnf32x]]],
 	       [[[y0f32x]]],		[[[y1f32x]]],		[[[ynf32x]]])
-DEFINE_CPROTOS([[[float64x]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT64X]]],  [[[MMUX_CC_TYPES_HAS_FLOAT64X]]],
+DEFINE_CPROTOS([[[flonumf64x]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMF64X]]],  [[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],
 	       [[[sinf64x]]],		[[[cosf64x]]],		[[[tanf64x]]],
 	       [[[asinf64x]]],		[[[acosf64x]]],		[[[atanf64x]]],		[[[atan2f64x]]],
 	       [[[sinhf64x]]],		[[[coshf64x]]],		[[[tanhf64x]]],
@@ -1728,8 +1728,8 @@ DEFINE_CPROTOS([[[float64x]]],
 	       [[[lgammaf64x]]],	[[[tgammaf64x]]],
 	       [[[j0f64x]]],		[[[j1f64x]]],		[[[jnf64x]]],
 	       [[[y0f64x]]],		[[[y1f64x]]],		[[[ynf64x]]])
-DEFINE_CPROTOS([[[float128x]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLOAT128X]]], [[[MMUX_CC_TYPES_HAS_FLOAT128X]]],
+DEFINE_CPROTOS([[[flonumf128x]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMF128X]]], [[[MMUX_CC_TYPES_HAS_FLONUMF128X]]],
 	       [[[sinf128x]]],		[[[cosf128x]]],		[[[tanf128x]]],
 	       [[[asinf128x]]],		[[[acosf128x]]],	[[[atanf128x]]],	[[[atan2f128x]]],
 	       [[[sinhf128x]]],		[[[coshf128x]]],	[[[tanhf128x]]],
@@ -1743,8 +1743,8 @@ DEFINE_CPROTOS([[[float128x]]],
 	       [[[j0f128x]]],		[[[j1f128x]]],		[[[jnf128x]]],
 	       [[[y0f128x]]],		[[[y1f128x]]],		[[[ynf128x]]])
 
-DEFINE_CPROTOS([[[complexf]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF]]],	[[[]]],
+DEFINE_CPROTOS([[[flonumcfl]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCFL]]],	[[[]]],
 	       [[[csinf]]],		[[[ccosf]]],		[[[ctanf]]],
 	       [[[casinf]]],		[[[cacosf]]],		[[[catanf]]],		[[[]]],
 	       [[[csinhf]]],		[[[ccoshf]]],		[[[ctanhf]]],
@@ -1757,8 +1757,8 @@ DEFINE_CPROTOS([[[complexf]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexd]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXD]]],	[[[]]],
+DEFINE_CPROTOS([[[flonumcdb]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCDB]]],	[[[]]],
 	       [[[csin]]],		[[[ccos]]],		[[[ctan]]],
 	       [[[casin]]],		[[[cacos]]],		[[[catan]]],		[[[]]],
 	       [[[csinh]]],		[[[ccosh]]],		[[[ctanh]]],
@@ -1771,8 +1771,8 @@ DEFINE_CPROTOS([[[complexd]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexld]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXLD]]], [[[MMUX_CC_TYPES_HAS_COMPLEXLD]]],
+DEFINE_CPROTOS([[[flonumcldb]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCLDB]]], [[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],
 	       [[[csinl]]],		[[[ccosl]]],		[[[ctanl]]],
 	       [[[casinl]]],		[[[cacosl]]],		[[[catanl]]],		[[[]]],
 	       [[[csinhl]]],		[[[ccoshl]]],		[[[ctanhl]]],
@@ -1786,8 +1786,8 @@ DEFINE_CPROTOS([[[complexld]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
 
-DEFINE_CPROTOS([[[complexf32]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF32]]],  [[[MMUX_CC_TYPES_HAS_COMPLEXF32]]],
+DEFINE_CPROTOS([[[flonumcf32]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF32]]],  [[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],
 	       [[[csinf32]]],		[[[ccosf32]]],		[[[ctanf32]]],
 	       [[[casinf32]]],		[[[cacosf32]]],		[[[catanf32]]],		[[[]]],
 	       [[[csinhf32]]],		[[[ccoshf32]]],		[[[ctanhf32]]],
@@ -1800,8 +1800,8 @@ DEFINE_CPROTOS([[[complexf32]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexf64]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF64]]],  [[[MMUX_CC_TYPES_HAS_COMPLEXF64]]],
+DEFINE_CPROTOS([[[flonumcf64]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF64]]],  [[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],
 	       [[[csinf64]]],		[[[ccosf64]]],		[[[ctanf64]]],
 	       [[[casinf64]]],		[[[cacosf64]]],		[[[catanf64]]],		[[[]]],
 	       [[[csinhf64]]],		[[[ccoshf64]]],		[[[ctanhf64]]],
@@ -1814,8 +1814,8 @@ DEFINE_CPROTOS([[[complexf64]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexf128]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF128]]],[[[MMUX_CC_TYPES_HAS_COMPLEXF128]]],
+DEFINE_CPROTOS([[[flonumcf128]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF128]]],[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],
 	       [[[csinf128]]],		[[[ccosf128]]],		[[[ctanf128]]],
 	       [[[casinf128]]],		[[[cacosf128]]],	[[[catanf128]]],	[[[]]],
 	       [[[csinhf128]]],		[[[ccoshf128]]],	[[[ctanhf128]]],
@@ -1829,8 +1829,8 @@ DEFINE_CPROTOS([[[complexf128]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
 
-DEFINE_CPROTOS([[[complexf32x]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF32X]]],[[[MMUX_CC_TYPES_HAS_COMPLEXF32X]]],
+DEFINE_CPROTOS([[[flonumcf32x]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF32X]]],[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]],
 	       [[[csinf32x]]],		[[[ccosf32x]]],		[[[ctanf32x]]],
 	       [[[casinf32x]]],		[[[cacosf32x]]],	[[[catanf32x]]],	[[[]]],
 	       [[[csinhf32x]]],		[[[ccoshf32x]]],	[[[ctanhf32x]]],
@@ -1843,8 +1843,8 @@ DEFINE_CPROTOS([[[complexf32x]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexf64x]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF64X]]],[[[MMUX_CC_TYPES_HAS_COMPLEXF64X]]],
+DEFINE_CPROTOS([[[flonumcf64x]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF64X]]],[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],
 	       [[[csinf64x]]],		[[[ccosf64x]]],		[[[ctanf64x]]],
 	       [[[casinf64x]]],		[[[cacosf64x]]],	[[[catanf64x]]],	[[[]]],
 	       [[[csinhf64x]]],		[[[ccoshf64x]]],	[[[ctanhf64x]]],
@@ -1857,8 +1857,8 @@ DEFINE_CPROTOS([[[complexf64x]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-DEFINE_CPROTOS([[[complexf128x]]],
-	       [[[MMUX_BASH_PARSE_CPROTO_ARG_COMPLEXF128X]]],[[[MMUX_CC_TYPES_HAS_COMPLEXF128X]]],
+DEFINE_CPROTOS([[[flonumcf128x]]],
+	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF128X]]],[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
 	       [[[csinf128x]]],		[[[ccosf128x]]],	[[[ctanf128x]]],
 	       [[[casinf128x]]],	[[[cacosf128x]]],	[[[catanf128x]]],	[[[]]],
 	       [[[csinhf128x]]],	[[[ccoshf128x]]],	[[[ctanhf128x]]],

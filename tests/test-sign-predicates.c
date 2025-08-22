@@ -111,76 +111,76 @@ test_sign_predicate_is_zero (void)
   DOIT_INTEGER(socklen);
   DOIT_INTEGER(time);
 
-  DOIT_FLONUMR(float);
-  DOIT_FLONUMR(double);
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  DOIT_FLONUMR(ldouble);
+  DOIT_FLONUMR(flonumfl);
+  DOIT_FLONUMR(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FLONUMR(flonumldb);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  DOIT_FLONUMR(float32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FLONUMR(flonumf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  DOIT_FLONUMR(float64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FLONUMR(flonumf64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  DOIT_FLONUMR(float128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  DOIT_FLONUMR(float32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  DOIT_FLONUMR(float64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  DOIT_FLONUMR(float128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FLONUMR(flonumf128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  DOIT_FLONUMR(decimal32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FLONUMR(flonumf32x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  DOIT_FLONUMR(decimal64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FLONUMR(flonumf64x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  DOIT_FLONUMR(decimal128);
-#endif
-
-  DOIT_FLONUMC(complexf);
-  DOIT_FLONUMC(complexd);
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  DOIT_FLONUMC(complexld);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FLONUMR(flonumf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  DOIT_FLONUMC(complexf32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FLONUMR(flonumd32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  DOIT_FLONUMC(complexf64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FLONUMR(flonumd64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  DOIT_FLONUMC(complexf128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  DOIT_FLONUMC(complexf32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  DOIT_FLONUMC(complexf64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  DOIT_FLONUMC(complexf128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FLONUMR(flonumd128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  DOIT_FLONUMC(complexd32);
+  DOIT_FLONUMC(flonumcfl);
+  DOIT_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FLONUMC(flonumcldb);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  DOIT_FLONUMC(complexd64);
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FLONUMC(flonumcf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  DOIT_FLONUMC(complexd128);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FLONUMC(flonumcf128);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FLONUMC(flonumcf128x);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -301,76 +301,76 @@ test_sign_predicate_is_positive (void)
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(float);
-  DOIT_FLONUMR(double);
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  DOIT_FLONUMR(ldouble);
+  DOIT_FLONUMR(flonumfl);
+  DOIT_FLONUMR(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FLONUMR(flonumldb);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  DOIT_FLONUMR(float32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FLONUMR(flonumf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  DOIT_FLONUMR(float64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FLONUMR(flonumf64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  DOIT_FLONUMR(float128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  DOIT_FLONUMR(float32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  DOIT_FLONUMR(float64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  DOIT_FLONUMR(float128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FLONUMR(flonumf128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  DOIT_FLONUMR(decimal32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FLONUMR(flonumf32x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  DOIT_FLONUMR(decimal64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FLONUMR(flonumf64x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  DOIT_FLONUMR(decimal128);
-#endif
-
-  DOIT_FLONUMC(complexf);
-  DOIT_FLONUMC(complexd);
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  DOIT_FLONUMC(complexld);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FLONUMR(flonumf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  DOIT_FLONUMC(complexf32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FLONUMR(flonumd32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  DOIT_FLONUMC(complexf64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FLONUMR(flonumd64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  DOIT_FLONUMC(complexf128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  DOIT_FLONUMC(complexf32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  DOIT_FLONUMC(complexf64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  DOIT_FLONUMC(complexf128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FLONUMR(flonumd128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  DOIT_FLONUMC(complexd32);
+  DOIT_FLONUMC(flonumcfl);
+  DOIT_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FLONUMC(flonumcldb);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  DOIT_FLONUMC(complexd64);
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FLONUMC(flonumcf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  DOIT_FLONUMC(complexd128);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FLONUMC(flonumcf128);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FLONUMC(flonumcf128x);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -491,76 +491,76 @@ test_sign_predicate_is_negative (void)
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(float);
-  DOIT_FLONUMR(double);
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  DOIT_FLONUMR(ldouble);
+  DOIT_FLONUMR(flonumfl);
+  DOIT_FLONUMR(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FLONUMR(flonumldb);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  DOIT_FLONUMR(float32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FLONUMR(flonumf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  DOIT_FLONUMR(float64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FLONUMR(flonumf64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  DOIT_FLONUMR(float128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  DOIT_FLONUMR(float32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  DOIT_FLONUMR(float64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  DOIT_FLONUMR(float128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FLONUMR(flonumf128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  DOIT_FLONUMR(decimal32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FLONUMR(flonumf32x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  DOIT_FLONUMR(decimal64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FLONUMR(flonumf64x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  DOIT_FLONUMR(decimal128);
-#endif
-
-  DOIT_FLONUMC(complexf);
-  DOIT_FLONUMC(complexd);
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  DOIT_FLONUMC(complexld);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FLONUMR(flonumf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  DOIT_FLONUMC(complexf32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FLONUMR(flonumd32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  DOIT_FLONUMC(complexf64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FLONUMR(flonumd64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  DOIT_FLONUMC(complexf128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  DOIT_FLONUMC(complexf32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  DOIT_FLONUMC(complexf64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  DOIT_FLONUMC(complexf128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FLONUMR(flonumd128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  DOIT_FLONUMC(complexd32);
+  DOIT_FLONUMC(flonumcfl);
+  DOIT_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FLONUMC(flonumcldb);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  DOIT_FLONUMC(complexd64);
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FLONUMC(flonumcf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  DOIT_FLONUMC(complexd128);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FLONUMC(flonumcf128);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FLONUMC(flonumcf128x);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -681,76 +681,76 @@ test_sign_predicate_is_non_positive (void)
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(float);
-  DOIT_FLONUMR(double);
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  DOIT_FLONUMR(ldouble);
+  DOIT_FLONUMR(flonumfl);
+  DOIT_FLONUMR(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FLONUMR(flonumldb);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  DOIT_FLONUMR(float32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FLONUMR(flonumf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  DOIT_FLONUMR(float64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FLONUMR(flonumf64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  DOIT_FLONUMR(float128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  DOIT_FLONUMR(float32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  DOIT_FLONUMR(float64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  DOIT_FLONUMR(float128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FLONUMR(flonumf128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  DOIT_FLONUMR(decimal32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FLONUMR(flonumf32x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  DOIT_FLONUMR(decimal64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FLONUMR(flonumf64x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  DOIT_FLONUMR(decimal128);
-#endif
-
-  DOIT_FLONUMC(complexf);
-  DOIT_FLONUMC(complexd);
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  DOIT_FLONUMC(complexld);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FLONUMR(flonumf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  DOIT_FLONUMC(complexf32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FLONUMR(flonumd32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  DOIT_FLONUMC(complexf64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FLONUMR(flonumd64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  DOIT_FLONUMC(complexf128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  DOIT_FLONUMC(complexf32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  DOIT_FLONUMC(complexf64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  DOIT_FLONUMC(complexf128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FLONUMR(flonumd128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  DOIT_FLONUMC(complexd32);
+  DOIT_FLONUMC(flonumcfl);
+  DOIT_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FLONUMC(flonumcldb);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  DOIT_FLONUMC(complexd64);
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FLONUMC(flonumcf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  DOIT_FLONUMC(complexd128);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FLONUMC(flonumcf128);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FLONUMC(flonumcf128x);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -871,76 +871,76 @@ test_sign_predicate_is_non_negative (void)
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(float);
-  DOIT_FLONUMR(double);
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  DOIT_FLONUMR(ldouble);
+  DOIT_FLONUMR(flonumfl);
+  DOIT_FLONUMR(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FLONUMR(flonumldb);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  DOIT_FLONUMR(float32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FLONUMR(flonumf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  DOIT_FLONUMR(float64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FLONUMR(flonumf64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  DOIT_FLONUMR(float128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  DOIT_FLONUMR(float32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  DOIT_FLONUMR(float64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  DOIT_FLONUMR(float128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FLONUMR(flonumf128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  DOIT_FLONUMR(decimal32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FLONUMR(flonumf32x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  DOIT_FLONUMR(decimal64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FLONUMR(flonumf64x);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  DOIT_FLONUMR(decimal128);
-#endif
-
-  DOIT_FLONUMC(complexf);
-  DOIT_FLONUMC(complexd);
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  DOIT_FLONUMC(complexld);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FLONUMR(flonumf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  DOIT_FLONUMC(complexf32);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FLONUMR(flonumd32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  DOIT_FLONUMC(complexf64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FLONUMR(flonumd64);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  DOIT_FLONUMC(complexf128);
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  DOIT_FLONUMC(complexf32x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  DOIT_FLONUMC(complexf64x);
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  DOIT_FLONUMC(complexf128x);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FLONUMR(flonumd128);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  DOIT_FLONUMC(complexd32);
+  DOIT_FLONUMC(flonumcfl);
+  DOIT_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FLONUMC(flonumcldb);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  DOIT_FLONUMC(complexd64);
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FLONUMC(flonumcf32);
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  DOIT_FLONUMC(complexd128);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FLONUMC(flonumcf128);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FLONUMC(flonumcf128x);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");

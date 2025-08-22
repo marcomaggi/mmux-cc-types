@@ -115,40 +115,40 @@ DEFINE_TEST_SPRINTER_FUNCTION(rlim,		123,	"123")
     dprintf(2, " DONE\n");								\
   }
 
-DEFINE_TEST_SPRINTER_FUNCTION(float,		0.123,	"0.123")
-DEFINE_TEST_SPRINTER_FUNCTION(double,		0.123,	"0.123")
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-DEFINE_TEST_SPRINTER_FUNCTION(ldouble,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumfl,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumdb,		0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+DEFINE_TEST_SPRINTER_FUNCTION(flonumldb,		0.123,	"0.123")
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-DEFINE_TEST_SPRINTER_FUNCTION(float32,		0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf32,		0.123,	"0.123")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-DEFINE_TEST_SPRINTER_FUNCTION(float64,		0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf64,		0.123,	"0.123")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-DEFINE_TEST_SPRINTER_FUNCTION(float128,		0.123,	"0.123")
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-DEFINE_TEST_SPRINTER_FUNCTION(float32x,		0.123,	"0.123")
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-DEFINE_TEST_SPRINTER_FUNCTION(float64x,		0.123,	"0.123")
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-DEFINE_TEST_SPRINTER_FUNCTION(float128x,	0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf128,		0.123,	"0.123")
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-DEFINE_TEST_SPRINTER_FUNCTION(decimal32,	0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf32x,		0.123,	"0.123")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-DEFINE_TEST_SPRINTER_FUNCTION(decimal64,	0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf64x,		0.123,	"0.123")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-DEFINE_TEST_SPRINTER_FUNCTION(decimal128,	0.123,	"0.123")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf128x,	0.123,	"0.123")
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+DEFINE_TEST_SPRINTER_FUNCTION(flonumd32,	0.123,	"0.123")
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+DEFINE_TEST_SPRINTER_FUNCTION(flonumd64,	0.123,	"0.123")
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123")
 #endif
 
 
@@ -176,40 +176,40 @@ DEFINE_TEST_SPRINTER_FUNCTION(decimal128,	0.123,	"0.123")
     dprintf(2, " DONE\n");									\
   }
 
-DEFINE_TEST_SPRINTER_FUNCTION(complexf,		0.123, 0.456,	"(0.123)+i*(0.456)")
-DEFINE_TEST_SPRINTER_FUNCTION(complexd,		0.123, 0.456,	"(0.123)+i*(0.456)")
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-DEFINE_TEST_SPRINTER_FUNCTION(complexld,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcfl,		0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcdb,		0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcldb,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-DEFINE_TEST_SPRINTER_FUNCTION(complexf32,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf32,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-DEFINE_TEST_SPRINTER_FUNCTION(complexf64,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf64,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-DEFINE_TEST_SPRINTER_FUNCTION(complexf128,	0.123, 0.456,	"(0.123)+i*(0.456)")
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-DEFINE_TEST_SPRINTER_FUNCTION(complexf32x,	0.123, 0.456,	"(0.123)+i*(0.456)")
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-DEFINE_TEST_SPRINTER_FUNCTION(complexf64x,	0.123, 0.456,	"(0.123)+i*(0.456)")
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-DEFINE_TEST_SPRINTER_FUNCTION(complexf128x,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf128,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-DEFINE_TEST_SPRINTER_FUNCTION(complexd32,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf32x,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-DEFINE_TEST_SPRINTER_FUNCTION(complexd64,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf64x,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-DEFINE_TEST_SPRINTER_FUNCTION(complexd128,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf128x,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcd32,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcd64,	0.123, 0.456,	"(0.123)+i*(0.456)")
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcd128,	0.123, 0.456,	"(0.123)+i*(0.456)")
 #endif
 
 
@@ -265,76 +265,76 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_socklen();		}
   if (1) {	test_sprint_rlim();		}
 
-  if (1) {	test_sprint_float();		}
-  if (1) {	test_sprint_double();		}
-#ifdef MMUX_CC_TYPES_HAS_LDOUBLE
-  if (1) {	test_sprint_ldouble();		}
+  if (1) {	test_sprint_flonumfl();		}
+  if (1) {	test_sprint_flonumdb();		}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  if (1) {	test_sprint_flonumldb();		}
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32
-  if (1) {	test_sprint_float32();		}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  if (1) {	test_sprint_flonumf32();		}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64
-  if (1) {	test_sprint_float64();		}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  if (1) {	test_sprint_flonumf64();		}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128
-  if (1) {	test_sprint_float128();		}
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLOAT32X
-  if (1) {	test_sprint_float32x();		}
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT64X
-  if (1) {	test_sprint_float64x();		}
-#endif
-#ifdef MMUX_CC_TYPES_HAS_FLOAT128X
-  if (1) {	test_sprint_float128x();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  if (1) {	test_sprint_flonumf128();		}
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL32
-  if (1) {	test_sprint_decimal32();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  if (1) {	test_sprint_flonumf32x();		}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL64
-  if (1) {	test_sprint_decimal64();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  if (1) {	test_sprint_flonumf64x();		}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_DECIMAL128
-  if (1) {	test_sprint_decimal128();	}
-#endif
-
-  if (1) {	test_sprint_complexf();		}
-  if (1) {	test_sprint_complexd();		}
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXLD
-  if (1) {	test_sprint_complexld();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  if (1) {	test_sprint_flonumf128x();	}
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32
-  if (1) {	test_sprint_complexf32();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  if (1) {	test_sprint_flonumd32();	}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64
-  if (1) {	test_sprint_complexf64();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  if (1) {	test_sprint_flonumd64();	}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128
-  if (1) {	test_sprint_complexf128();	}
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF32X
-  if (1) {	test_sprint_complexf32x();	}
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF64X
-  if (1) {	test_sprint_complexf64x();	}
-#endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXF128X
-  if (1) {	test_sprint_complexf128x();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  if (1) {	test_sprint_flonumd128();	}
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD32
-  if (1) {	test_sprint_complexd32();	}
+  if (1) {	test_sprint_flonumcfl();		}
+  if (1) {	test_sprint_flonumcdb();		}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  if (1) {	test_sprint_flonumcldb();	}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD64
-  if (1) {	test_sprint_complexd64();	}
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  if (1) {	test_sprint_flonumcf32();	}
 #endif
-#ifdef MMUX_CC_TYPES_HAS_COMPLEXD128
-  if (1) {	test_sprint_complexd128();	}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  if (1) {	test_sprint_flonumcf64();	}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  if (1) {	test_sprint_flonumcf128();	}
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  if (1) {	test_sprint_flonumcf32x();	}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  if (1) {	test_sprint_flonumcf64x();	}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  if (1) {	test_sprint_flonumcf128x();	}
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  if (1) {	test_sprint_flonumcd32();	}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  if (1) {	test_sprint_flonumcd64();	}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  if (1) {	test_sprint_flonumcd128();	}
 #endif
 
   exit(EXIT_SUCCESS);

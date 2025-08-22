@@ -29,7 +29,7 @@ float64
 float128
 float32x
 float64x
-float128x
+flonumf128x
 decimal32
 decimal64
 decimal128
@@ -44,7 +44,7 @@ complexf64x
 complexf128x
 complexd32
 complexd64
-complexd128
+flonumcd128
 complexf_part
 complexd_part
 complexld_part
@@ -56,7 +56,7 @@ complexf64x_part
 complexf128x_part
 complexd32_part
 complexd64_part
-complexd128_part
+flonumcd128_part
 ssize
 usize
 sintmax
