@@ -117,11 +117,6 @@ mmux_string_is_pointer (char const * s_value)
 
   return mmux_pointer_parse(&value, s_value, NULL);
 }
-int
-mmux_pointer_sizeof (void)
-{
-  return sizeof(mmux_pointer_t);
-}
 mmux_pointer_t
 mmux_pointer_maximum (void)
 {
@@ -156,11 +151,6 @@ mmux_string_is_$1 (char const * s_value)
   mmux_$1_t	value;
 
   return mmux_$1_parse(&value, s_value, NULL);
-}
-int
-mmux_$1_sizeof (void)
-{
-  return sizeof(mmux_$1_t);
 }
 mmux_$1_t
 mmux_$1_maximum (void)
@@ -319,11 +309,6 @@ mmux_string_is_$1 (char const * s_value)
 {
   return mmux_string_is_$2(s_value);
 }
-int
-mmux_$1_sizeof (void)
-{
-  return sizeof(mmux_$1_t);
-}
 mmux_$1_t
 mmux_$1_maximum (void)
 {
@@ -402,11 +387,6 @@ mmux_string_is_$1 (char const * s_value)
   mmux_$1_t	value;
 
   return mmux_$1_parse(&value, s_value, NULL);
-}
-int
-mmux_$1_sizeof (void)
-{
-  return sizeof(mmux_$1_t);
 }
 mmux_standard_$1_t
 mmux_standard_$1_make_rectangular (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
@@ -964,6 +944,7 @@ mmux_$1_less_equal (mmux_$1_t op1, mmux_$1_t op2)
 
 /* ------------------------------------------------------------------ */
 
+DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[schar]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[uchar]]])
 DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[sshort]]])
@@ -1779,6 +1760,7 @@ mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
 }
 ]]])]]])
 
+DEFINE_BITWISE_FUNCS([[[char]]])
 DEFINE_BITWISE_FUNCS([[[schar]]])
 DEFINE_BITWISE_FUNCS([[[uchar]]])
 DEFINE_BITWISE_FUNCS([[[sshort]]])
@@ -1825,13 +1807,9 @@ DEFINE_BITWISE_FUNCS([[[rlim]]])
 #ifdef __CHAR_UNSIGNED__
 DEFINE_UNSIGNED_INTEGER_PREDICATES([[[char]]])
 DEFINE_UTYPE_FUNCTIONS([[[char]]])
-DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
-DEFINE_BITWISE_FUNCS([[[char]]])
 #else
 DEFINE_SIGNED_INTEGER_PREDICATES([[[char]]])
 DEFINE_STYPE_FUNCTIONS([[[char]]])
-DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[char]]])
-DEFINE_BITWISE_FUNCS([[[char]]])
 #endif
 
 bool

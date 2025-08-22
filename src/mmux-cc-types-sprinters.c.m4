@@ -196,7 +196,7 @@ DEFINE_FLOAT_OUTPUT_FORMAT_SETTER_FUNCTION([[[decimal128]]],	[[[MMUX_CC_TYPES_HA
  ** Type string printers: pointers.
  ** ----------------------------------------------------------------- */
 
-int
+mmux_sint_t
 mmux_pointer_sprint_size (mmux_pointer_t value)
 {
   if (value) {
@@ -206,17 +206,17 @@ mmux_pointer_sprint_size (mmux_pointer_t value)
        returns the number of required bytes, EXCLUDING the terminating null byte. */
     required_nbytes = snprintf(NULL, 0, "%p", value);
     if (0 > required_nbytes) {
-      return -1;
+      return mmux_sint_literal(-1);
     } else {
       /* This return value DOES account for the terminating zero character. */
-      return ++required_nbytes;
+      return mmux_sint(++required_nbytes);
     }
   } else {
-    return (1 + strlen("0x0"));
+    return mmux_sint(1 + strlen("0x0"));
   }
 }
 bool
-mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
+mmux_pointer_sprint (mmux_asciizp_t strptr, mmux_sint_t len, mmux_pointer_t value)
 /* This exists because the GNU C Library  prints "(nil)" when the pointer is NULL and
    the template is "%p"; we want a proper number representation. */
 {
@@ -225,11 +225,11 @@ mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
   /* According to the  documentation: "snprintf()" writes the  terminating null byte,
      when the output buffer has enough room. */
   if (value) {
-    to_be_written_chars = snprintf(strptr, len, "%p", value);
+    to_be_written_chars = snprintf(strptr, len.value, "%p", value);
   } else {
-    to_be_written_chars = snprintf(strptr, len, "0x0");
+    to_be_written_chars = snprintf(strptr, len.value, "0x0");
   }
-  if (len > to_be_written_chars) {
+  if (len.value > to_be_written_chars) {
     return false;
   } else {
     return true;
@@ -242,7 +242,7 @@ mmux_pointer_sprint (char * strptr, int len, mmux_pointer_t value)
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_INTEGER_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-int
+mmux_sint_t
 mmux_$1_sprint_size (mmux_$1_t value)
 {
   int		required_nbytes;
@@ -251,21 +251,21 @@ mmux_$1_sprint_size (mmux_$1_t value)
      returns the number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = snprintf(NULL, 0, $2, value.value);
   if (0 > required_nbytes) {
-    return -1;
+    return mmux_sint_literal(-1);
   } else {
     /* This return value DOES account for the terminating zero character. */
-    return ++required_nbytes;
+    return mmux_sint(++required_nbytes);
   }
 }
 bool
-mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
+mmux_$1_sprint (mmux_asciizp_t strptr, mmux_sint_t len, mmux_$1_t value)
 {
   int		to_be_written_chars;
 
   /* According to the  documentation: "snprintf()" writes the  terminating null byte,
      when the output buffer has enough room. */
-  to_be_written_chars = snprintf(strptr, len, $2, value.value);
-  if (len > to_be_written_chars) {
+  to_be_written_chars = snprintf(strptr, len.value, $2, value.value);
+  if (len.value > to_be_written_chars) {
     return false;
   } else {
     return true;
@@ -290,7 +290,7 @@ DEFINE_INTEGER_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_CC_TYPES_HAS_ULLONG]
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FLOAT_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-int
+mmux_sint_t
 mmux_$1_sprint_size (mmux_$1_t value)
 {
   int		required_nbytes;
@@ -299,21 +299,21 @@ mmux_$1_sprint_size (mmux_$1_t value)
      number of required bytes, EXCLUDING the terminating null byte. */
   required_nbytes = $2(NULL, 0, mmux_cc_types_output_format_$1, value.value);
   if (0 > required_nbytes) {
-    return -1;
+    return mmux_sint_literal(-1);
   } else {
     /* This return value DOES account for the terminating zero character. */
-    return ++required_nbytes;
+    return mmux_sint(++required_nbytes);
   }
 }
 bool
-mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
+mmux_$1_sprint (mmux_asciizp_t strptr, mmux_sint_t len, mmux_$1_t value)
 {
   int		to_be_written_chars;
 
   /* According to the  documentation: "$2()" writes the terminating null  byte if the
      output buffer is sufficiently large. */
-  to_be_written_chars = $2(strptr, len, mmux_cc_types_output_format_$1, value.value);
-  if (len > to_be_written_chars) {
+  to_be_written_chars = $2(strptr, len.value, mmux_cc_types_output_format_$1, value.value);
+  if (len.value > to_be_written_chars) {
     return false;
   } else {
     return true;
@@ -351,33 +351,33 @@ m4_dnl $1 - The stem of the complex number.
 m4_dnl $2 - The stem of the real and imaginary parts.
 m4_dnl $3 - An optional C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_COMPLEX_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-int
+mmux_sint_t
 mmux_$1_sprint_size (mmux_$1_t value)
 {
-  mmux_$1_part_t	re = mmux_$1_real_part(value);
-  mmux_$1_part_t	im = mmux_$1_imag_part(value);
-  int			required_nbytes, total_required_nbytes = strlen("()+i*()");
+  auto		re = mmux_$1_real_part(value);
+  auto		im = mmux_$1_imag_part(value);
+  auto		required_nbytes       = mmux_$2_sprint_size(re);
+  auto		total_required_nbytes = mmux_sint(strlen("()+i*()"));
 
-  required_nbytes = mmux_$2_sprint_size(re);
-  if (0 > required_nbytes) {
-    return -1;
+  if (0 > required_nbytes.value) {
+    return mmux_sint_literal(-1);
   } else {
-    total_required_nbytes += --required_nbytes;
+    total_required_nbytes.value += --required_nbytes.value;
   }
 
   required_nbytes = mmux_$2_sprint_size(im);
-  if (0 > required_nbytes) {
-    return -1;
+  if (0 > required_nbytes.value) {
+    return mmux_sint_literal(-1);
   } else {
-    total_required_nbytes += --required_nbytes;
+    total_required_nbytes.value += --required_nbytes.value;
   }
 
   /* This return value DOES account for the terminating zero character. */
-  if (0) { fprintf(stderr, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes); }
-  return ++total_required_nbytes;
+  if (0) { fprintf(stderr, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes.value); }
+  return mmux_sint(1 + total_required_nbytes.value);
 }
 bool
-mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
+mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_$1_t value)
 {
   mmux_$1_part_t	re = mmux_$1_real_part(value);
   mmux_$1_part_t	im = mmux_$1_imag_part(value);
@@ -385,9 +385,9 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
 
   /* Output the opening parenthesis of the real part. */
   {
-    if (0 < len) {
+    if (0 < len.value) {
       *ptr++ = '(';
-      --len;
+      --len.value;
     } else {
       return true;
     }
@@ -397,27 +397,27 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
   {
     ptrdiff_t	delta;
 
-    if (0) { fprintf(stderr, "%s: before printing rep, len=%d\n", __func__, len); }
+    if (0) { fprintf(stderr, "%s: before printing rep, len=%d\n", __func__, len.value); }
 
     rv = mmux_$2_sprint(ptr, len, re);
     if (true == rv) { return rv; }
 
     delta  = strlen(ptr);
-    ptr   += delta;
-    len   -= delta;
+    ptr       += delta;
+    len.value -= delta;
   }
 
-  if (0) { fprintf(stderr, "%s: after printing rep, len=%d\n", __func__, len); }
+  if (0) { fprintf(stderr, "%s: after printing rep, len=%d\n", __func__, len.value); }
 
   /* Output the middle of the template. */
   {
-    if (5 < len) {
+    if (5 < len.value) {
       *ptr++  = ')';
       *ptr++  = '+';
       *ptr++  = 'i';
       *ptr++  = '*';
       *ptr++  = '(';
-      len    += 5;
+      len.value += 5;
     } else {
       return true;
     }
@@ -431,14 +431,14 @@ mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
     if (true == rv) { return rv; }
 
     delta  = strlen(ptr);
-    ptr   += delta;
-    len   -= delta;
+    ptr       += delta;
+    len.value -= delta;
   }
 
   /* Output the  closing parenthesis of the  imaginary part and the  terminating null
      character. */
   {
-    if (1 < len) {
+    if (1 < len.value) {
       *ptr++  = ')';
       *ptr++  = '\0';
       /* len += 2; */
@@ -473,13 +473,13 @@ DEFINE_COMPLEX_SPRINTER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HA
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_TYPEDEF_SPRINTER]]],[[[
-int
+mmux_sint_t
 mmux_$1_sprint_size (mmux_$1_t value)
 {
   return mmux_[[[]]]$2[[[]]]_sprint_size(mmux_[[[]]]$2[[[]]](value.value));
 }
 bool
-mmux_$1_sprint (char * strptr, int len, mmux_$1_t value)
+mmux_$1_sprint (mmux_asciizp_t strptr, mmux_sint_t len, mmux_$1_t value)
 {
   return mmux_[[[]]]$2[[[]]]_sprint(strptr, len, mmux_[[[]]]$2[[[]]](value.value));
 }
@@ -522,13 +522,12 @@ m4_define([[[DEFINE_PRINTERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
 mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value)
 {
-  int             required_nbytes;
+  auto	required_nbytes = mmux_$1_sprint_size(value);
 
-  required_nbytes = mmux_$1_sprint_size(value);
-  if (0 > required_nbytes) {
+  if (0 > required_nbytes.value) {
     return true;
   } else {
-    char    str[required_nbytes];
+    char	str[required_nbytes.value];
 
     if (mmux_$1_sprint(str, required_nbytes, value)) {
       return true;
@@ -541,13 +540,12 @@ mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value)
 bool
 mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
 {
-  int             required_nbytes;
+  auto	required_nbytes = mmux_$1_sprint_size(value);
 
-  required_nbytes = mmux_$1_sprint_size(value);
-  if (0 > required_nbytes) {
+  if (0 > required_nbytes.value) {
     return true;
   } else {
-    char    str[required_nbytes];
+    char	str[required_nbytes.value];
 
     if (mmux_$1_sprint(str, required_nbytes, value)) {
       return true;

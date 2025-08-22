@@ -483,21 +483,17 @@ typedef struct mmux_rlim_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t;	}
 
 /* ------------------------------------------------------------------ */
 
-typedef char *				mmux_asciip_t;
-typedef char **				mmux_asciipp_t;
-typedef char ***			mmux_asciippp_t;
+typedef char *			mmux_asciizp_t;
+typedef char **			mmux_asciizpp_t;
+typedef char ***		mmux_asciizppp_t;
 
-typedef char *				mmux_asciizp_t;
-typedef char **				mmux_asciizpp_t;
-typedef char ***			mmux_asciizppp_t;
+typedef char const *		mmux_asciicp_t;
+typedef char const **		mmux_asciicpp_t;
+typedef char const ***		mmux_asciicppp_t;
 
-typedef char const *			mmux_asciicp_t;
-typedef char const **			mmux_asciicpp_t;
-typedef char const ***			mmux_asciicppp_t;
-
-typedef char const *			mmux_asciizcp_t;
-typedef char const **			mmux_asciizcpp_t;
-typedef char const ***			mmux_asciizcppp_t;
+typedef char const *		mmux_asciizcp_t;
+typedef char const **		mmux_asciizcpp_t;
+typedef char const ***		mmux_asciizcppp_t;
 
 
 /** --------------------------------------------------------------------
@@ -630,7 +626,7 @@ DEFINE_TYPE_MAKERS(rlim)
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-mmux_cc_types_decl char const *	mmux_cc_types_version_string		(void);
+mmux_cc_types_decl mmux_asciizcp_t	mmux_cc_types_version_string		(void);
 mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
 mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
 mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
@@ -694,14 +690,17 @@ typedef bool      mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
 typedef bool      mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef bool      mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
-mmux_cc_types_decl bool mmux_string_is_$1 (char const * s_value);
-mmux_cc_types_decl int mmux_$1_sizeof (void)
-  __attribute__((__const__));
-mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, char const * s_value, char const * who)
+mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
+__attribute__((__const,__always_inline__)) static inline
+mmux_sint_t mmux_$1_sizeof (void)
+{
+  return mmux_sint(sizeof(mmux_$1_t));
+}
+mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
-mmux_cc_types_decl bool mmux_$1_sprint (char * ptr, int len, mmux_$1_t value)
+mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
-mmux_cc_types_decl int mmux_$1_sprint_size (mmux_$1_t value);
+mmux_cc_types_decl mmux_sint_t mmux_$1_sprint_size (mmux_$1_t value);
 mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value);
 mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
@@ -951,11 +950,11 @@ DEFINE_TYPE_PROTOS_FLOAT_APPROX_COMPARISONS([[[complexd128]]],	[[[MMUX_CC_TYPES_
 #define MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN		(1+8)
 
 m4_define([[[DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl bool mmux_$1_set_output_format (char const * new_result_format, char const * who)
+mmux_cc_types_decl bool mmux_$1_set_output_format (mmux_asciizcp_t new_result_format, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_types_decl char const * mmux_$1_ref_output_format  (void);
-mmux_cc_types_decl void         mmux_$1_save_output_format (char * dest);
+mmux_cc_types_decl mmux_asciizcp_t mmux_$1_ref_output_format  (void);
+mmux_cc_types_decl void            mmux_$1_save_output_format (char * dest);
 ]]])]]])
 
 DEFINE_FLOAT_OUTPUT_FORMAT_VARS_AND_PROTOS([[[float]]])

@@ -17,11 +17,11 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#include <mmux-cc-types.h>
+#undef  _GNU_SOURCE
+#define _GNU_SOURCE	1
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <mmux-cc-types.h>
+#include <test-common.h>
 
 
 /** --------------------------------------------------------------------
@@ -31,69 +31,76 @@
 static void
 test_bitwise_and (void)
 {
-  printf("running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  OP1
+#define OP1		0b1111
+#undef  OP2
+#define OP2		0b1001
+#undef	ROP
+#define ROP		0b1001
 
   {
-    auto	op1 = (mmux_pointer_t)0b1111;
-    auto	op2 = (mmux_uintptr_t)0b1001;
-    auto	rop = (mmux_pointer_t)0b1001;
+    auto	op1 = mmux_pointer_literal(OP1);
+    auto	op2 = mmux_uintptr_literal(OP2);
+    auto	rop = mmux_pointer_literal(ROP);
+    assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_and(op1, op2)));
     assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2)));
   }
 
-  { mmux_char_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_schar_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uchar_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
+#undef  DOIT
+#define DOIT(STEM)								\
+  {										\
+    auto	op1 = mmux_##STEM##_literal(OP1);				\
+    auto	op2 = mmux_##STEM##_literal(OP2);				\
+    auto	rop = mmux_##STEM##_literal(ROP);				\
+    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_and(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2)));		\
+    dprintf(2," %s,", #STEM);						\
+  }
 
-  { mmux_sshort_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_ushort_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_sint_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uint_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_slong_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_ulong_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
+  DOIT(sllong);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
 #endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(ptrdiff);
+  DOIT(mode);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(off);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(rlim);
+  DOIT(socklen);
+  DOIT(time);
 
-  { mmux_sint8_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uint8_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uint16_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uint32_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uint64_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_usize_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uintmax_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uintptr_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-
-  { mmux_mode_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_pid_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_uid_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_gid_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_off_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_wchar_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_wint_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_rlim_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_socklen_t	op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
-  { mmux_time_t		op1 = 0b1111, op2 = 0b1001, rop = 0b1001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2))); }
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -104,71 +111,76 @@ test_bitwise_and (void)
 static void
 test_bitwise_or (void)
 {
-  printf("running test: %s\n", __func__);
-#undef  ROP
-#define ROP	0b1111
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  OP1
+#define OP1		0b1111
+#undef  OP2
+#define OP2		0b1001
+#undef	ROP
+#define ROP		0b1111
 
   {
-    auto	op1 = (mmux_pointer_t)0b1111;
-    auto	op2 = (mmux_uintptr_t)0b1001;
-    auto	rop = (mmux_pointer_t)ROP;
+    auto	op1 = mmux_pointer_literal(OP1);
+    auto	op2 = mmux_uintptr_literal(OP2);
+    auto	rop = mmux_pointer_literal(ROP);
+    assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_or(op1, op2)));
     assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2)));
   }
 
-  { mmux_char_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_schar_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uchar_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
+#undef  DOIT
+#define DOIT(STEM)								\
+  {										\
+    auto	op1 = mmux_##STEM##_literal(OP1);				\
+    auto	op2 = mmux_##STEM##_literal(OP2);				\
+    auto	rop = mmux_##STEM##_literal(ROP);				\
+    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_or(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2)));		\
+    dprintf(2," %s,", #STEM);							\
+  }
 
-  { mmux_sshort_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_ushort_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_sint_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uint_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_slong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_ulong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
+  DOIT(sllong);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
 #endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(ptrdiff);
+  DOIT(mode);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(off);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(rlim);
+  DOIT(socklen);
+  DOIT(time);
 
-  { mmux_sint8_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uint8_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uint16_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uint32_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uint64_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_usize_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uintmax_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uintptr_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-
-  { mmux_mode_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_pid_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_uid_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_gid_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_off_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_wchar_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_wint_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_rlim_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_socklen_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
-  { mmux_time_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2))); }
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -179,71 +191,76 @@ test_bitwise_or (void)
 static void
 test_bitwise_xor (void)
 {
-  printf("running test: %s\n", __func__);
-#undef  ROP
-#define ROP	0b0110
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  OP1
+#define OP1		0b1111
+#undef  OP2
+#define OP2		0b1001
+#undef	ROP
+#define ROP		0b0110
 
   {
-    auto	op1 = (mmux_pointer_t)0b1111;
-    auto	op2 = (mmux_uintptr_t)0b1001;
-    auto	rop = (mmux_pointer_t)ROP;
+    auto	op1 = mmux_pointer_literal(OP1);
+    auto	op2 = mmux_uintptr_literal(OP2);
+    auto	rop = mmux_pointer_literal(ROP);
+    assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_xor(op1, op2)));
     assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2)));
   }
 
-  { mmux_char_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_schar_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uchar_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
+#undef  DOIT
+#define DOIT(STEM)								\
+  {										\
+    auto	op1 = mmux_##STEM##_literal(OP1);				\
+    auto	op2 = mmux_##STEM##_literal(OP2);				\
+    auto	rop = mmux_##STEM##_literal(ROP);				\
+    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_xor(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2)));		\
+    dprintf(2," %s,", #STEM);							\
+  }
 
-  { mmux_sshort_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_ushort_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_sint_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uint_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_slong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_ulong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
+  DOIT(sllong);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
 #endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(ptrdiff);
+  DOIT(mode);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(off);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(rlim);
+  DOIT(socklen);
+  DOIT(time);
 
-  { mmux_sint8_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uint8_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uint16_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uint32_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uint64_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_usize_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uintmax_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uintptr_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-
-  { mmux_mode_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_pid_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_uid_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_gid_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_off_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_wchar_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_wint_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_rlim_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_socklen_t	op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
-  { mmux_time_t		op1 = 0b1111, op2 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2))); }
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -251,76 +268,91 @@ test_bitwise_xor (void)
  ** Bitwise NOT.
  ** ----------------------------------------------------------------- */
 
-#undef  BITWISE_NOT
-#define BITWISE_NOT(OP)		(mmux_ctype_bitwise_and(mmux_ctype_bitwise_not(OP), 0b1111))
-
 static void
 test_bitwise_not (void)
 {
-  printf("running test: %s\n", __func__);
-#undef  ROP
-#define ROP	0b0110
+  dprintf(2, "running test: %s:", __func__);
 
-  if (1) {
-    auto	op1 = (mmux_pointer_t)0b1001;
-    auto	rop = (mmux_pointer_t)ROP;
-    assert(mmux_ctype_equal(rop, BITWISE_NOT(op1)));
+#undef  DOIT
+#define DOIT(STEM)							\
+  {									\
+    {									\
+      auto	op1 = mmux_##STEM##_maximum();				\
+      auto	rop = mmux_##STEM##_minimum();				\
+      if (0) {								\
+	dprintf(2, "op1 = '");						\
+	mmux_##STEM##_dprintf(2, op1);					\
+	dprintf(2, "', rop = '");					\
+	mmux_##STEM##_dprintf(2, rop);					\
+	dprintf(2, "', result = '");					\
+	mmux_##STEM##_dprintf(2, mmux_##STEM##_bitwise_not(op1));	\
+	dprintf(2, "'\n");						\
+      }									\
+      assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_not(op1)));	\
+      assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_not(op1)));	\
+      dprintf(2," %s,", #STEM);						\
+    }									\
+    {									\
+      auto	op1 = mmux_##STEM##_minimum();				\
+      auto	rop = mmux_##STEM##_maximum();				\
+      if (0) {								\
+	dprintf(2, "op1 = '");						\
+	mmux_##STEM##_dprintf(2, op1);					\
+	dprintf(2, "', rop = '");					\
+	mmux_##STEM##_dprintf(2, rop);					\
+	dprintf(2, "', result = '");					\
+	mmux_##STEM##_dprintf(2, mmux_##STEM##_bitwise_not(op1));	\
+	dprintf(2, "'\n");						\
+      }									\
+      assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_not(op1)));	\
+      assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_not(op1)));	\
+      dprintf(2," %s,", #STEM);						\
+    }									\
   }
 
-  { mmux_char_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_schar_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uchar_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sshort_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_ushort_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sint_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uint_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_slong_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_ulong_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
+  DOIT(pointer);
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
+  DOIT(sllong);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
 #endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(ptrdiff);
+  DOIT(mode);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(off);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(rlim);
+  DOIT(socklen);
+  DOIT(time);
 
-  { mmux_sint8_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uint8_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sint16_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uint16_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sint32_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uint32_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sint64_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uint64_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_ssize_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_usize_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sintmax_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uintmax_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_sintptr_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uintptr_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_ptrdiff_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-
-  { mmux_mode_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_pid_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_uid_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_gid_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_off_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_wchar_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_wint_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_rlim_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_socklen_t	op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
-  { mmux_time_t		op1 = 0b1001, rop = ROP;	assert(mmux_ctype_equal(rop, BITWISE_NOT(op1))); }
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -331,70 +363,62 @@ test_bitwise_not (void)
 static void
 test_bitwise_shl (void)
 {
-  printf("running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  if (1) {
-    auto	op1 = (mmux_pointer_t)0b0001;
-    mmux_sint_t	op2 = 3;
-    auto	rop = (mmux_pointer_t)0b1000;
-    //mmux_pointer_fprintf(stderr, mmux_ctype_bitwise_shl(op1, op2));
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2)));
+#undef  DOIT
+#define DOIT(STEM)								\
+  {										\
+    auto	op1 = mmux_##STEM##_literal(0b0001);				\
+    auto	op2 = mmux_sint(3);						\
+    auto	rop = mmux_##STEM##_literal(0b1000);				\
+    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_shl(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2)));		\
+    dprintf(2," %s,", #STEM);							\
   }
 
-  { mmux_char_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_schar_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uchar_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sshort_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_ushort_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sint_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uint_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_slong_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_ulong_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
+  DOIT(pointer);
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
+  DOIT(sllong);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
 #endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(ptrdiff);
+  DOIT(mode);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(off);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(rlim);
+  DOIT(socklen);
+  DOIT(time);
 
-  { mmux_sint8_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uint8_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uint16_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uint32_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uint64_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_usize_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uintmax_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uintptr_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-
-  { mmux_mode_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_pid_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_uid_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_gid_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_off_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_wchar_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_wint_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_rlim_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_socklen_t	op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
-  { mmux_time_t		op1 = 0b0001, op2 = 3, rop = 0b1000;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2))); }
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -405,70 +429,62 @@ test_bitwise_shl (void)
 static void
 test_bitwise_shr (void)
 {
-  printf("running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  if (1) {
-    auto	op1 = (mmux_pointer_t)0b1000;
-    mmux_sint_t	op2 = 3;
-    auto	rop = (mmux_pointer_t)0b0001;
-    //mmux_pointer_fprintf(stderr, mmux_ctype_bitwise_shr(op1, op2));
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2)));
+#undef  DOIT
+#define DOIT(STEM)								\
+  {										\
+    auto	op1 = mmux_##STEM##_literal(0b1000);				\
+    auto	op2 = mmux_sint(3);						\
+    auto	rop = mmux_##STEM##_literal(0b0001);				\
+    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_shr(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2)));		\
+    dprintf(2," %s,", #STEM);							\
   }
 
-  { mmux_char_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_schar_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uchar_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sshort_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_ushort_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sint_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uint_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_slong_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_ulong_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
+  DOIT(pointer);
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  { mmux_sllong_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
+  DOIT(sllong);
 #endif
-
-#ifdef MMUX_CC_TYPES_HAS_ULLONG
-  { mmux_ullong_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
 #endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(ptrdiff);
+  DOIT(mode);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(off);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(rlim);
+  DOIT(socklen);
+  DOIT(time);
 
-  { mmux_sint8_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uint8_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sint16_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uint16_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sint32_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uint32_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sint64_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uint64_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_ssize_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_usize_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sintmax_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uintmax_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_sintptr_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uintptr_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_ptrdiff_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-
-  { mmux_mode_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_pid_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_uid_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_gid_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_off_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_wchar_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_wint_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_rlim_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_socklen_t	op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
-  { mmux_time_t		op1 = 0b1000, op2 = 3, rop = 0b0001;	assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2))); }
+  dprintf(2, " DONE.\n\n");
 }
 
 

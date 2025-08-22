@@ -72,19 +72,19 @@ mmux_cc_types_init_parsers_module (void)
 static bool
 mmux_cc_types_parse_signed_integer
   (mmux_standard_sintmax_t * result_p,	/* Pointer to result variable. */
-   char const * s_source,		/* Pointer to source string. */
+   mmux_asciizcp_t s_source,		/* Pointer to source string. */
    mmux_standard_sintmax_t target_min,	/* The range minimum value of the integer to parse. */
    mmux_standard_sintmax_t target_max,	/* The range maximum value of the integer to parse. */
-   char const * target_type_name,	/* Type name to be used for error messages. */
-   char const * caller_name)		/* Caller name to be used for error messages. */
+   mmux_asciizcp_t target_type_name,	/* Type name to be used for error messages. */
+   mmux_asciizcp_t caller_name)		/* Caller name to be used for error messages. */
 /* NOTE This function is written assuming that "standard_sintmax" is the widest exact
    signed integer; this is  no longer the case under C23.  For now  it is what it is.
    (Marco Maggi; Aug 16, 2025) */
 {
-  char const *	s_source_beg;
-  char *	s_source_end	= NULL;
-  int		base            = 0;
-  size_t	len		= strlen(s_source);
+  mmux_asciizcp_t	s_source_beg;
+  mmux_asciizp_t	s_source_end	= NULL;
+  int			base            = 0;
+  size_t		len		= strlen(s_source);
 
   if (0 == len) {
     /* Parsing error: empty strings are not valid number representations. */
@@ -150,18 +150,18 @@ mmux_cc_types_parse_signed_integer
 static bool
 mmux_cc_types_parse_unsigned_integer
   (mmux_standard_uintmax_t * result_p,	/* Pointer to result variable. */
-   char const * s_source,		/* Pointer to source string. */
+   mmux_asciizcp_t s_source,		/* Pointer to source string. */
    mmux_standard_uintmax_t target_max,	/* The range minimum value of the integer to parse. */
-   char const * target_type_name,	/* Type name to be used for error messages. */
-   char const * caller_name)		/* Caller name to be used for error messages. */
+   mmux_asciizcp_t target_type_name,	/* Type name to be used for error messages. */
+   mmux_asciizcp_t caller_name)		/* Caller name to be used for error messages. */
 /* NOTE This function is written assuming that "standard_uintmax" is the widest exact
    unsigned integer; this is no longer the case under C23.  For now it is what it is.
    (Marco Maggi; Aug 16, 2025) */
 {
-  char const *	s_source_beg;
-  char *	s_source_end	= NULL;
-  int		base            = 0;
-  size_t	len		= strlen(s_source);
+  mmux_asciizcp_t	s_source_beg;
+  mmux_asciizp_t	s_source_end	= NULL;
+  int			base            = 0;
+  size_t		len		= strlen(s_source);
 
   if (0 == len) {
     /* Parsing error: empty strings are not valid number representations. */
@@ -223,10 +223,10 @@ mmux_cc_types_parse_unsigned_integer
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_COMPLEX_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-static bool parse_$1_parentheses_format (mmux_$1_t * result_p, const char * s_arg, const char * caller_name);
+static bool parse_$1_parentheses_format (mmux_$1_t * result_p, mmux_asciizcp_t s_arg, mmux_asciizcp_t caller_name);
 
 bool
-mmux_$1_parse (mmux_$1_t * result_p, const char * s_arg, const char * caller_name)
+mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_arg, mmux_asciizcp_t caller_name)
 {
   int	len = strlen(s_arg);
 
@@ -257,7 +257,7 @@ mmux_$1_parse (mmux_$1_t * result_p, const char * s_arg, const char * caller_nam
 }
 
 bool
-parse_$1_parentheses_format (mmux_$1_t * result_p, const char * s_arg, const char * caller_name)
+parse_$1_parentheses_format (mmux_$1_t * result_p, mmux_asciizcp_t s_arg, mmux_asciizcp_t caller_name)
 /* Try to parse a complex number in the format:
  *
  *   (1.2)+i*(3.4)
@@ -355,7 +355,7 @@ DEFINE_COMPLEX_PARSER([[[complexd128]]],	[[[decimal128]]],	[[[MMUX_CC_TYPES_HAS_
 
 m4_define([[[DEFINE_FLOAT_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * result_p, char const * s_value, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
 {
   mmux_standard_$1_t	value;
   char *		tailptr;
@@ -398,7 +398,7 @@ DEFINE_FLOAT_PARSER([[[decimal128]]],	[[[mmux_strtod128]]],	[[[MMUX_CC_TYPES_HAS
 
 m4_define([[[DEFINE_SIGNED_INTEGER_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * result_p, char const * s_source, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_source, mmux_asciizcp_t caller_name)
 {
   mmux_standard_sintmax_t	value;
 
@@ -430,10 +430,10 @@ DEFINE_SIGNED_INTEGER_PARSER([[[sint64]]])
 #if 0
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
 bool
-mmux_sllong_parse (mmux_sllong_t * result_p, char const * s_source, char const * caller_name)
+mmux_sllong_parse (mmux_sllong_t * result_p, mmux_asciizcp_t s_source, mmux_asciizcp_t caller_name)
 {
   mmux_sllong_t	rv;
-  char const *		s_source_beg;
+  mmux_asciizcp_t		s_source_beg;
   char *		s_source_end	= NULL;
   int			base            = 0;
   size_t		len		= strlen(s_source);
@@ -492,7 +492,7 @@ mmux_sllong_parse (mmux_sllong_t * result_p, char const * s_source, char const *
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * p_value, mmux_asciizcp_t s_arg, mmux_asciizcp_t caller_name)
 {
   mmux_standard_uintmax_t	value;
 
@@ -524,10 +524,10 @@ DEFINE_UNSIGNED_INTEGER_PARSER([[[uint64]]])
 #if 0
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
 bool
-mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * caller_name)
+mmux_ullong_parse (mmux_ullong_t * p_dest, mmux_asciizcp_t s_source, mmux_asciizcp_t caller_name)
 {
   mmux_ullong_t		rv;
-  char const *		s_source_beg;
+  mmux_asciizcp_t		s_source_beg;
   char *		s_source_end	= NULL;
   int			base            = 0;
   size_t		len		= strlen(s_source);
@@ -586,7 +586,7 @@ mmux_ullong_parse (mmux_ullong_t * p_dest, char const * s_source, char const * c
 
 m4_define([[[DEFINE_TYPEDEF_PARSER]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * p_value, char const * s_arg, char const * caller_name)
+mmux_$1_parse (mmux_$1_t * p_value, mmux_asciizcp_t s_arg, mmux_asciizcp_t caller_name)
 {
   return mmux_[[[]]]$2[[[]]]_parse(p_value, s_arg, caller_name);
 }

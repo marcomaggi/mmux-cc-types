@@ -17,13 +17,14 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
+#undef  _GNU_SOURCE
+#define _GNU_SOURCE	1
+
 #include <mmux-cc-types.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
+#include <test-common.h>
 
 #define DOIT(STEM,INPUTSTR)	 {								\
-    mmux_asciizcp_t	str = INPUTSTR;								\
+    char *	str = INPUTSTR;									\
     mmux_ ## STEM ## _t	value;									\
 												\
     if (true == mmux_ ## STEM ## _parse(&value, str, __func__)) {				\
@@ -36,9 +37,10 @@
     }												\
   }
 
-#define DOIT_VALUE(STEM,INPUT_VALUE)	{			\
-    int		buflen = 4096;					\
-    char	bufptr[buflen];					\
+#define DOIT_VALUE(STEM,INPUT_VALUE)				\
+  {								\
+    auto	buflen = mmux_sint(4096);			\
+    char	bufptr[buflen.value];				\
     mmux_ ## STEM ## _sprint(bufptr, buflen, INPUT_VALUE);	\
     DOIT(STEM,bufptr);						\
   }

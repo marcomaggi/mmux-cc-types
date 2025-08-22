@@ -24,6 +24,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define BOOL_STRING(BOOL)	((true == BOOL)? "true" : "false")
 
@@ -32,7 +33,7 @@
  ** Helpers.
  ** ----------------------------------------------------------------- */
 
-static void
+__attribute__((__unused__)) static void
 test_set_output_formats (void)
 {
   if (1) {

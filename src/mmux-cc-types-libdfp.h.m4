@@ -31,6 +31,24 @@
  ** Standard types definitions: literals, makers.
  ** ----------------------------------------------------------------- */
 
+/* NOTE These are duplicates of the definitions in "mmux-cc-types.h"; they are needed
+   for  the functinos  below.  I  do know  that it  is ugly.   (Marco Maggi;  Aug 21,
+   2025) */
+typedef signed int		mmux_standard_sint_t;
+typedef struct mmux_char_t { char value; } mmux_char_t;
+typedef struct mmux_sint_t { int  value; } mmux_sint_t;
+#  undef  mmux_sint
+#  define mmux_sint(VALUE)		((mmux_sint_t){ .value = (VALUE) })
+typedef char *			mmux_asciizp_t;
+typedef char **			mmux_asciizpp_t;
+typedef char ***		mmux_asciizppp_t;
+typedef char const *		mmux_asciicp_t;
+typedef char const **		mmux_asciicpp_t;
+typedef char const ***		mmux_asciicppp_t;
+typedef char const *		mmux_asciizcp_t;
+typedef char const **		mmux_asciizcpp_t;
+typedef char const ***		mmux_asciizcppp_t;
+
 m4_divert(-1)
 m4_define([[[DEFINE_LIBDFP_TYPE_MACROS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_DECIMAL$1]]],[[[m4_dnl
 #undef  mmux_standard_decimal$1_literal
@@ -112,15 +130,15 @@ typedef mmux_decimal$1_t	mmux_complexd$1_part_t;
 #undef  mmux_complexd$1_part_literal
 #define mmux_complexd$1_part_literal(VALUE)	(mmux_decimal$1(VALUE))
 
-__attribute__((__const__,__always_inline__)) static inline int
+__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
 mmux_decimal$1_sizeof (void)
 {
-  return sizeof(mmux_decimal$1_t);
+  return mmux_sint(sizeof(mmux_decimal$1_t));
 }
-__attribute__((__const__,__always_inline__)) static inline int
+__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
 mmux_complexd$1_sizeof (void)
 {
-  return sizeof(mmux_complexd$1_t);
+  return mmux_sint(sizeof(mmux_complexd$1_t));
 }
 ]]])]]])
 m4_divert(0)m4_dnl
@@ -329,7 +347,7 @@ DEFINE_MATH_CONSTANTS_PROTOS(128)
 
 
 /** --------------------------------------------------------------------
- ** Some complex number functions: sizeof, make_rectangular, real part, imag part, abs, arg, conj.
+ ** Some complex number functions: sizeof, real part, imag part, abs, arg, conj.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -710,6 +728,35 @@ DEFINE_CFUNCS([[[complexd128]]],
 
 
 
+
+/** --------------------------------------------------------------------
+ ** Predicates.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_PREDICATE_PROTOS]]],[[[
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
+mmux_cc_types_decl int mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
+]]])
+
+DEFINE_PREDICATE_PROTOS(decimal32)
+DEFINE_PREDICATE_PROTOS(decimal64)
+DEFINE_PREDICATE_PROTOS(decimal128)
+DEFINE_PREDICATE_PROTOS(complexd32)
+DEFINE_PREDICATE_PROTOS(complexd64)
+DEFINE_PREDICATE_PROTOS(complexd128)
+
+
 /** --------------------------------------------------------------------
  ** Comparison functions.
  ** ----------------------------------------------------------------- */
@@ -808,43 +855,43 @@ DEFINE_COMPARISON_PROTOS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl
-mmux_cc_types_decl mmux_standard_decimal$1_t mmux_strtod$1 (char const * restrict input_string, char ** restrict tailptr)
+mmux_cc_types_decl mmux_standard_decimal$1_t mmux_strtod$1 (mmux_asciizcp_t restrict input_string, char ** restrict tailptr)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_types_decl int mmux_strfromd$1 (char * s_value, size_t size, char const * restrict format,
+mmux_cc_types_decl int mmux_strfromd$1 (char * s_value, size_t size, mmux_asciizcp_t restrict format,
 					mmux_standard_decimal$1_t value)
   __attribute__((__nonnull__(3)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_cc_types_decl bool mmux_string_is_decimal$1 (char const * s_value);
+mmux_cc_types_decl bool mmux_string_is_decimal$1 (mmux_asciizcp_t s_value);
 
-mmux_cc_types_decl bool mmux_decimal$1_parse  (mmux_decimal$1_t * p_value, char const * s_value, char const * who)
+mmux_cc_types_decl bool mmux_decimal$1_parse  (mmux_decimal$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_types_decl bool mmux_decimal$1_sprint (char * ptr, int len, mmux_decimal$1_t value)
+mmux_cc_types_decl bool mmux_decimal$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_decimal$1_t value)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_types_decl int mmux_decimal$1_sprint_size (mmux_decimal$1_t value);
+mmux_cc_types_decl mmux_sint_t mmux_decimal$1_sprint_size (mmux_decimal$1_t value);
 
-mmux_cc_types_decl bool mmux_decimal$1_dprintf (int fd, mmux_decimal$1_t value);
+mmux_cc_types_decl bool mmux_decimal$1_dprintf (mmux_standard_sint_t fd, mmux_decimal$1_t value);
 
 mmux_cc_types_decl bool mmux_decimal$1_fprintf (void * stream, mmux_decimal$1_t value)
   __attribute__((__nonnull__(1)));
 
 /* ------------------------------------------------------------------ */
 
-mmux_cc_types_decl bool mmux_string_is_complexd$1 (char const * s_value);
+mmux_cc_types_decl bool mmux_string_is_complexd$1 (mmux_asciizcp_t s_value);
 
-mmux_cc_types_decl bool mmux_complexd$1_parse  (mmux_complexd$1_t * p_value, char const * s_value, char const * who)
+mmux_cc_types_decl bool mmux_complexd$1_parse  (mmux_complexd$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_types_decl bool mmux_complexd$1_sprint (char * ptr, int len, mmux_complexd$1_t value)
+mmux_cc_types_decl bool mmux_complexd$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_complexd$1_t value)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_types_decl int mmux_complexd$1_sprint_size (mmux_complexd$1_t value);
+mmux_cc_types_decl mmux_sint_t mmux_complexd$1_sprint_size (mmux_complexd$1_t value);
 
-mmux_cc_types_decl bool mmux_complexd$1_dprintf (int fd, mmux_complexd$1_t value);
+mmux_cc_types_decl bool mmux_complexd$1_dprintf (mmux_standard_sint_t fd, mmux_complexd$1_t value);
 
 mmux_cc_types_decl bool mmux_complexd$1_fprintf (void * stream, mmux_complexd$1_t value)
   __attribute__((__nonnull__(1)));
