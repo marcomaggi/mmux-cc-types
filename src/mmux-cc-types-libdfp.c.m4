@@ -262,6 +262,17 @@ DEFINE_CPLX_PREDICATES(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_COMPARISONS]]],[[[
+__attribute__((__const__)) int
+mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
+{
+  if (mmux_flonumd$1_greater(op1, op2)) {
+    return +1;
+  } else if (mmux_flonumd$1_less(op1, op2)) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 __attribute__((__const__)) bool
 mmux_flonumd$1_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
@@ -286,17 +297,6 @@ __attribute__((__const__)) bool
 mmux_flonumd$1_less_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return (islessequal(op1.value,op2.value))? true : false;
-}
-__attribute__((__const__)) int
-mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-{
-  if (mmux_flonumd$1_greater(op1, op2)) {
-    return +1;
-  } else if (mmux_flonumd$1_less(op1, op2)) {
-    return -1;
-  } else {
-    return 0;
-  }
 }
 
 /* ------------------------------------------------------------------ */
