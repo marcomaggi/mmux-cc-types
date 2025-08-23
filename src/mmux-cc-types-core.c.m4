@@ -107,16 +107,9 @@ mmux_cc_types_init (void)
 
 
 /** --------------------------------------------------------------------
- ** Real number type functions: string_is, sizeof, minimum, maximum.
+ ** Real number type functions: minimum, maximum.
  ** ----------------------------------------------------------------- */
 
-bool
-mmux_string_is_pointer (char const * s_value)
-{
-  mmux_pointer_t	value;
-
-  return mmux_pointer_parse(&value, s_value, NULL);
-}
 mmux_pointer_t
 mmux_pointer_maximum (void)
 {
@@ -145,13 +138,6 @@ m4_dnl $2 - C language expression evaluating to the maximum value.
 m4_dnl $3 - C language expression evaluating to the minimum value.
 m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$4]]],[[[
-bool
-mmux_string_is_$1 (char const * s_value)
-{
-  mmux_$1_t	value;
-
-  return mmux_$1_parse(&value, s_value, NULL);
-}
 mmux_$1_t
 mmux_$1_maximum (void)
 {
@@ -298,17 +284,12 @@ DEFINE_TYPE_FUNCTIONS([[[flonumf128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fmi
 
 
 /** --------------------------------------------------------------------
- ** Aliased integer number type functions: string_is, sizeof, minimum, maximum, abs, min, max.
+ ** Aliased integer number type functions: minimum, maximum, abs, min, max.
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
 m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[
-bool
-mmux_string_is_$1 (char const * s_value)
-{
-  return mmux_string_is_$2(s_value);
-}
 mmux_$1_t
 mmux_$1_maximum (void)
 {
@@ -367,7 +348,7 @@ DEFINE_TYPE_FUNCTIONS(rlim,	MMUX_CC_TYPES_STEM_ALIAS_RLIM)
 
 
 /** --------------------------------------------------------------------
- ** Some complex number type functions: string_is, sizeof, make_rectangular, real part, imag part, abs, arg, conj.
+ ** Some complex number type functions: real part, imag part, abs, arg, conj.
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - type stem
@@ -381,13 +362,6 @@ m4_dnl $8 - atan2 function
 m4_dnl $9 - real part sqrt function
 m4_dnl $10 - C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$10]]],[[[
-bool
-mmux_string_is_$1 (char const * s_value)
-{
-  mmux_$1_t	value;
-
-  return mmux_$1_parse(&value, s_value, NULL);
-}
 mmux_standard_$1_t
 mmux_standard_$1_make_rectangular (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
 {

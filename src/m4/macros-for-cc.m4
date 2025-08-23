@@ -9,7 +9,7 @@ m4_dnl
 m4_dnl		This library  defines macros to  automatically generate C language
 m4_dnl		functions for GNU Bash builtings implementation.
 m4_dnl
-m4_dnl Copyright (C) 2024 Marco Maggi <mrc.mgg@gmail.com>
+m4_dnl Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 m4_dnl
 m4_dnl This program is free  software: you can redistribute it and/or  modify it under the
 m4_dnl terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -40,7 +40,7 @@ m4_dnl helpers
 
 m4_dnl $1 - Preprocessor symbol: if defined to 1, include the body of code; otherwise include the alternative body.
 m4_dnl $2 - The body of code.
-m4_dnl $3 - The alternative of code.
+m4_dnl $3 - The alternative body of code.
 m4_define([[[MMUX_CONDITIONAL_CODE]]],[[[m4_ifelse([[[$1]]],,[[[$2]]],[[[m4_dnl
 #if ((defined $1) && (1 == $1))
 $2
@@ -50,6 +50,12 @@ $3
 ]]])
 #endif
 ]]])]]])
+
+m4_dnl $1 - The lower case type stem.
+m4_dnl $2 - The body of code.
+m4_define([[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM]]],[[[#ifdef MMUX_CC_TYPES_HAS_[[[]]]MMUX_M4_TOUPPER($1)
+$2
+#endif]]])
 
 
 m4_dnl let's go

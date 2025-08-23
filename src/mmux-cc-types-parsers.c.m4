@@ -353,43 +353,44 @@ DEFINE_COMPLEX_PARSER([[[flonumcd128]]],	[[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_
  ** Type parsers: floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_FLONUMFL_PARSER]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_divert(-1)
+m4_define([[[DEFINE_REAL_FLONUM_PARSER]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
 bool
-mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
+mmux_flonum$1_parse (mmux_flonum$1_t * result_p, mmux_asciizcp_t s_value, mmux_asciizcp_t caller_name)
 {
-  mmux_standard_$1_t	value;
-  char *		tailptr;
+  mmux_standard_flonum$1_t	value;
+  mmux_asciizp_t		tailptr;
 
   errno = 0;
-  value = $2(s_value, &tailptr);
+  value = mmux_standard_strto$1(s_value, &tailptr);
   if (errno || (s_value == tailptr)) {
     if (caller_name) {
-      fprintf(stderr, "%s: error: invalid argument, expected \"$1\": \"%s\"\n", caller_name, s_value);
+      fprintf(stderr, "%s: error: invalid argument, expected \"flonum$1\": \"%s\"\n", caller_name, s_value);
     }
     errno = 0; /* The error is consumed. */
     return true;
   } else {
-    *result_p = mmux_$1(value);
+    *result_p = mmux_flonum$1(value);
     return false;
   }
 }
 ]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_REAL_FLONUM_PARSER([[[fl]]])
+DEFINE_REAL_FLONUM_PARSER([[[db]]])
+DEFINE_REAL_FLONUM_PARSER([[[ldb]]])
 
-DEFINE_FLONUMFL_PARSER([[[flonumfl]]],	[[[strtof]]])
-DEFINE_FLONUMFL_PARSER([[[flonumdb]]],	[[[strtod]]])
-DEFINE_FLONUMFL_PARSER([[[flonumldb]]],	[[[strtold]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_REAL_FLONUM_PARSER([[[f32]]])
+DEFINE_REAL_FLONUM_PARSER([[[f64]]])
+DEFINE_REAL_FLONUM_PARSER([[[f128]]])
 
-DEFINE_FLONUMFL_PARSER([[[flonumf32]]],	[[[strtof32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_FLONUMFL_PARSER([[[flonumf64]]],	[[[strtof64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_FLONUMFL_PARSER([[[flonumf128]]],	[[[strtof128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_REAL_FLONUM_PARSER([[[f32x]]])
+DEFINE_REAL_FLONUM_PARSER([[[f64x]]])
+DEFINE_REAL_FLONUM_PARSER([[[f128x]]])
 
-DEFINE_FLONUMFL_PARSER([[[flonumf32x]]],	[[[strtof32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_FLONUMFL_PARSER([[[flonumf64x]]],	[[[strtof64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_FLONUMFL_PARSER([[[flonumf128x]]],	[[[strtof128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
-
-DEFINE_FLONUMFL_PARSER([[[flonumd32]]],	[[[mmux_strtod32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
-DEFINE_FLONUMFL_PARSER([[[flonumd64]]],	[[[mmux_strtod64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
-DEFINE_FLONUMFL_PARSER([[[flonumd128]]],	[[[mmux_strtod128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
+DEFINE_REAL_FLONUM_PARSER([[[d32]]])
+DEFINE_REAL_FLONUM_PARSER([[[d64]]])
+DEFINE_REAL_FLONUM_PARSER([[[d128]]])
 
 
 /** --------------------------------------------------------------------
@@ -621,5 +622,86 @@ DEFINE_SIGNED_INTEGER_PARSER([[[char]]])
 #else
 DEFINE_UNSIGNED_INTEGER_PARSER([[[char]]])
 #endif
+
+
+/** --------------------------------------------------------------------
+ ** String predicates.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STRING_IS_FUNCTION]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
+bool
+mmux_string_is_$1 (char const * s_value)
+{
+  mmux_$1_t	value;
+
+  return mmux_$1_parse(&value, s_value, NULL);
+}
+]]])]]])
+m4_divert(0)m4_dnl
+
+DEFINE_STRING_IS_FUNCTION([[[pointer]]])
+DEFINE_STRING_IS_FUNCTION([[[char]]])
+DEFINE_STRING_IS_FUNCTION([[[schar]]])
+DEFINE_STRING_IS_FUNCTION([[[uchar]]])
+DEFINE_STRING_IS_FUNCTION([[[sshort]]])
+DEFINE_STRING_IS_FUNCTION([[[ushort]]])
+DEFINE_STRING_IS_FUNCTION([[[sint]]])
+DEFINE_STRING_IS_FUNCTION([[[uint]]])
+DEFINE_STRING_IS_FUNCTION([[[slong]]])
+DEFINE_STRING_IS_FUNCTION([[[ulong]]])
+DEFINE_STRING_IS_FUNCTION([[[sllong]]])
+DEFINE_STRING_IS_FUNCTION([[[ullong]]])
+DEFINE_STRING_IS_FUNCTION([[[sint8]]])
+DEFINE_STRING_IS_FUNCTION([[[uint8]]])
+DEFINE_STRING_IS_FUNCTION([[[sint16]]])
+DEFINE_STRING_IS_FUNCTION([[[uint16]]])
+DEFINE_STRING_IS_FUNCTION([[[sint32]]])
+DEFINE_STRING_IS_FUNCTION([[[uint32]]])
+DEFINE_STRING_IS_FUNCTION([[[sint64]]])
+DEFINE_STRING_IS_FUNCTION([[[uint64]]])
+m4_dnl DEFINE_STRING_IS_FUNCTION([[[byte]]])
+m4_dnl DEFINE_STRING_IS_FUNCTION([[[octet]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumfl]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumdb]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumldb]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumf32]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumf64]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumf128]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumf32x]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumf64x]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumf128x]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumd32]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumd64]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumd128]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcfl]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcdb]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcldb]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcf32]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcf64]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcf128]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcf32x]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcf64x]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcf128x]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcd32]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcd64]]])
+DEFINE_STRING_IS_FUNCTION([[[flonumcd128]]])
+DEFINE_STRING_IS_FUNCTION([[[ssize]]])
+DEFINE_STRING_IS_FUNCTION([[[usize]]])
+DEFINE_STRING_IS_FUNCTION([[[sintmax]]])
+DEFINE_STRING_IS_FUNCTION([[[uintmax]]])
+DEFINE_STRING_IS_FUNCTION([[[sintptr]]])
+DEFINE_STRING_IS_FUNCTION([[[uintptr]]])
+DEFINE_STRING_IS_FUNCTION([[[mode]]])
+DEFINE_STRING_IS_FUNCTION([[[off]]])
+DEFINE_STRING_IS_FUNCTION([[[pid]]])
+DEFINE_STRING_IS_FUNCTION([[[uid]]])
+DEFINE_STRING_IS_FUNCTION([[[gid]]])
+DEFINE_STRING_IS_FUNCTION([[[ptrdiff]]])
+DEFINE_STRING_IS_FUNCTION([[[wchar]]])
+DEFINE_STRING_IS_FUNCTION([[[wint]]])
+DEFINE_STRING_IS_FUNCTION([[[time]]])
+DEFINE_STRING_IS_FUNCTION([[[socklen]]])
+DEFINE_STRING_IS_FUNCTION([[[rlim]]])
 
 /* end of file */

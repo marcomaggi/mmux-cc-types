@@ -50,7 +50,7 @@ typedef char const **		mmux_asciizcpp_t;
 typedef char const ***		mmux_asciizcppp_t;
 
 m4_divert(-1)
-m4_define([[[DEFINE_LIBDFP_TYPE_MACROS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+m4_define([[[DEFINE_LIBDFP_TYPE_MACROS]]],[[[
 #undef  mmux_standard_flonumd$1_literal
 #define mmux_standard_flonumd$1_literal(VALUE)	(VALUE ## $2)
 
@@ -90,7 +90,7 @@ typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
 #define mmux_standard_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
 					     mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
 
 DEFINE_LIBDFP_TYPE_MACROS(32,	[[[DF]]])
@@ -99,11 +99,31 @@ DEFINE_LIBDFP_TYPE_MACROS(128,	[[[DL]]])
 
 
 /** --------------------------------------------------------------------
+ ** Sprinter and parser adapters.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_STRING_TO_FROM_PROTOS]]],[[[
+mmux_cc_types_decl mmux_standard_sint_t mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p,
+								 size_t size, mmux_asciizcp_t restrict format,
+								 mmux_standard_flonum$1_t value)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value,
+								   mmux_asciizpp_t restrict tailptr)
+  __attribute__((__const__));
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d32)
+DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d64)
+DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d128)
+
+
+/** --------------------------------------------------------------------
  ** MMUX CC Types embedded type definitions.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_LIBDFP_STANDARD_TYPE]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+m4_define([[[DEFINE_LIBDFP_STANDARD_TYPE]]],[[[
 typedef struct mmux_flonumd$1_t	 { mmux_standard_flonumd$1_t	value; } mmux_flonumd$1_t;
 typedef struct mmux_flonumcd$1_t { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
 typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
@@ -140,9 +160,8 @@ mmux_flonumcd$1_sizeof (void)
 {
   return mmux_sint(sizeof(mmux_flonumcd$1_t));
 }
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
-
 DEFINE_LIBDFP_STANDARD_TYPE(32)
 DEFINE_LIBDFP_STANDARD_TYPE(64)
 DEFINE_LIBDFP_STANDARD_TYPE(128)
@@ -176,7 +195,7 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[
+m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd32_t
 mmux_standard_flonumd$1_constant_zero (void)
 {
@@ -338,7 +357,7 @@ mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_mi
 
 mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_minimum (void) __attribute__((__const__));
 mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_maximum (void) __attribute__((__const__));
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
 
 DEFINE_MATH_CONSTANTS_PROTOS(32)
@@ -351,7 +370,7 @@ DEFINE_MATH_CONSTANTS_PROTOS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_CPLX_BASIC_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[
+m4_define([[[DEFINE_CPLX_BASIC_FUNCTIONS]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_part_t
 mmux_flonumcd$1_real_part (mmux_flonumcd$1_t Z)
 {
@@ -374,9 +393,8 @@ mmux_flonumcd$1_conj (mmux_flonumcd$1_t Z)
 {
   return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Z.value.re, - Z.value.im) );
 }
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
-
 DEFINE_CPLX_BASIC_FUNCTIONS(32)
 DEFINE_CPLX_BASIC_FUNCTIONS(64)
 DEFINE_CPLX_BASIC_FUNCTIONS(128)
@@ -387,7 +405,7 @@ DEFINE_CPLX_BASIC_FUNCTIONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_REAL_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+m4_define([[[DEFINE_REAL_ARITHMETICS_FUNCTIONS]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
 mmux_flonumd$1_add (mmux_flonumd$1_t A, mmux_flonumd$1_t B)
 {
@@ -421,9 +439,8 @@ mmux_flonumd$1_inv (mmux_flonumd$1_t A)
 
 mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_abs (mmux_flonumd$1_t X)
   __attribute__((__const__));
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
-
 DEFINE_REAL_ARITHMETICS_FUNCTIONS(32)
 DEFINE_REAL_ARITHMETICS_FUNCTIONS(64)
 DEFINE_REAL_ARITHMETICS_FUNCTIONS(128)
@@ -434,7 +451,7 @@ DEFINE_REAL_ARITHMETICS_FUNCTIONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_CPLX_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+m4_define([[[DEFINE_CPLX_ARITHMETICS_FUNCTIONS]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
 mmux_flonumcd$1_add (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
 {
@@ -481,9 +498,8 @@ mmux_flonumcd$1_inv (mmux_flonumcd$1_t A)
 
   return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Cre, Cim) );
 }
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
-
 DEFINE_CPLX_ARITHMETICS_FUNCTIONS(32)
 DEFINE_CPLX_ARITHMETICS_FUNCTIONS(64)
 DEFINE_CPLX_ARITHMETICS_FUNCTIONS(128)
@@ -728,7 +744,6 @@ DEFINE_CFUNCS([[[flonumcd128]]],
 
 
 
-
 /** --------------------------------------------------------------------
  ** Predicates.
  ** ----------------------------------------------------------------- */
@@ -762,7 +777,7 @@ DEFINE_PREDICATE_PROTOS(flonumcd128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_COMPARISON_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMD$1]]],[[[m4_dnl
+m4_define([[[DEFINE_COMPARISON_PROTOS]]],[[[
 
 mmux_cc_types_decl bool mmux_flonumd$1_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
   __attribute__((__const__));
@@ -841,9 +856,8 @@ mmux_cc_types_decl bool mmux_flonumcd$1_equal_relepsilon (mmux_flonumcd$1_t op1,
 							  mmux_flonumcd$1_t op2,
 							  mmux_flonumcd$1_t epsilon)
   __attribute__((__const__));
-]]])]]])
+]]])
 m4_divert(0)m4_dnl
-
 DEFINE_COMPARISON_PROTOS(32)
 DEFINE_COMPARISON_PROTOS(64)
 DEFINE_COMPARISON_PROTOS(128)
@@ -855,15 +869,6 @@ DEFINE_COMPARISON_PROTOS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_strtod$1 (mmux_asciizcp_t restrict input_string, char ** restrict tailptr)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_cc_types_decl int mmux_strfromd$1 (char * s_value, size_t size, mmux_asciizcp_t restrict format,
-					mmux_standard_flonumd$1_t value)
-  __attribute__((__nonnull__(3)));
-
-/* ------------------------------------------------------------------ */
-
 mmux_cc_types_decl bool mmux_string_is_flonumd$1 (mmux_asciizcp_t s_value);
 
 mmux_cc_types_decl bool mmux_flonumd$1_parse  (mmux_flonumd$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)

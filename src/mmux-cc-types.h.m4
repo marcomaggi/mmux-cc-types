@@ -946,8 +946,8 @@ DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcd128]]],	[[[MMUX_CC_TYP
  ** Selecting printf output format for floating point numbers.
  ** ----------------------------------------------------------------- */
 
-#undef  MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN
-#define MMUX_CC_TYPES_FLONUMFL_FORMAT_MAXLEN		(1+8)
+#undef  MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN
+#define MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN		(1+8)
 
 m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl bool mmux_$1_set_output_format (mmux_asciizcp_t new_result_format, mmux_asciizcp_t who)

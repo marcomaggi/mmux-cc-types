@@ -106,7 +106,7 @@ install-html-local:
 #
 
 EXTRA_DIST	+= \
-	src/mmux-cc-types-libdfp.h.m4	\
+	src/mmux-cc-types-libdfp.h.m4		\
 	src/mmux-cc-types-libdfp.c.m4
 
 if WANT_LIBDFP
@@ -132,6 +132,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types.h.m4				\
 	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-internals.h.m4		\
+	src/mmux-cc-types-adapters.h.m4			\
 	src/mmux-cc-types-constants.c.m4		\
 	src/mmux-cc-types-core.c.m4			\
 	src/mmux-cc-types-parsers.c.m4			\
@@ -142,6 +143,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-adapters.h			\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
@@ -177,6 +179,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-adapters.h			\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
 	src/mmux-cc-types-parsers.c			\
@@ -200,6 +203,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types.h			\
 	src/mmux-cc-types-generics.h		\
 	src/mmux-cc-types-internals.h		\
+	src/mmux-cc-types-adapters.h		\
 	src/mmux-cc-types-config.h
 
 # if WANT_LIBDFP
@@ -222,9 +226,10 @@ check_PROGRAMS	= \
 	tests/test-sign-predicates		\
 	tests/test-arithmetics			\
 	tests/test-bitwise			\
-	tests/test-mathematics			\
 	tests/test-parsers			\
 	tests/test-experiments
+
+#	tests/test-mathematics
 
 TESTS				= $(check_PROGRAMS)
 

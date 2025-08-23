@@ -142,6 +142,16 @@
 #  include <regex.h>
 #endif
 
+/* ------------------------------------------------------------------ */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp.h>
+#endif
+
+#include <mmux-cc-types-adapters.h>
+
 
 /** --------------------------------------------------------------------
  ** Preprocessor macros.
