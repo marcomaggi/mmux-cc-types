@@ -172,6 +172,14 @@ DEFINE_LIBDFP_STANDARD_TYPE(128)
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_FUNCTION_PROTOTYPES_TYPES]]],[[[m4_dnl
+typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
+typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t   (mmux_standard_$1_t X);
+typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
+typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
+typedef bool      mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t X);
+typedef bool      mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
+typedef bool      mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
+
 typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
 typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
 typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
@@ -778,89 +786,42 @@ DEFINE_PREDICATE_PROTOS(flonumcd128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_COMPARISON_PROTOS]]],[[[
-
-mmux_cc_types_decl bool mmux_flonumd$1_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
+mmux_cc_types_decl int mmux_flonum$1_cmp (mmux_flonum$1_t op1, mmux_flonum$1_t op2)
   __attribute__((__const__));
 
-mmux_cc_types_decl bool mmux_flonumd$1_greater (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumd$1_less (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumd$1_greater_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumd$1_less_equal (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-  __attribute__((__const__));
-
-mmux_cc_types_decl int mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_flonum$1_t mmux_flonum$1_equal	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_flonum$1_t mmux_flonum$1_greater	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_flonum$1_t mmux_flonum$1_less		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_flonum$1_t mmux_flonum$1_greater_equal __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_flonum$1_t mmux_flonum$1_less_equal	__attribute__((__const__));
 
 /* ------------------------------------------------------------------ */
 
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_max (mmux_flonumd$1_t X, mmux_flonumd$1_t Y)
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_flonum$1_t mmux_standard_flonum$1_equal_absmargin
   __attribute__((__const__));
 
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_min (mmux_flonumd$1_t X, mmux_flonumd$1_t Y)
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_flonum$1_t mmux_standard_flonum$1_equal_relepsilon
   __attribute__((__const__));
 
-/* ------------------------------------------------------------------ */
-
-mmux_cc_types_decl bool mmux_flonumcd$1_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_flonum$1_t mmux_flonum$1_equal_absmargin
   __attribute__((__const__));
 
-mmux_cc_types_decl int mmux_flonumcd$1_cmp (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_flonum$1_t mmux_flonum$1_equal_relepsilon
   __attribute__((__const__));
 
-mmux_cc_types_decl bool mmux_flonumcd$1_greater (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_flonum$1_t mmux_flonum$1_equal_absmargin
   __attribute__((__const__));
 
-mmux_cc_types_decl bool mmux_flonumcd$1_less (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumcd$1_greater_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumcd$1_less_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
-  __attribute__((__const__));
-
-/* ------------------------------------------------------------------ */
-
-mmux_cc_types_decl bool mmux_standard_flonumd$1_equal_absmargin (mmux_standard_flonumd$1_t op1,
-								 mmux_standard_flonumd$1_t op2,
-								 mmux_standard_flonumd$1_t margin)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_standard_flonumd$1_equal_relepsilon (mmux_standard_flonumd$1_t op1,
-								  mmux_standard_flonumd$1_t op2,
-								  mmux_standard_flonumd$1_t epsilon)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumd$1_equal_absmargin (mmux_flonumd$1_t op1,
-							mmux_flonumd$1_t op2,
-							mmux_flonumd$1_t margin)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumd$1_equal_relepsilon (mmux_flonumd$1_t op1,
-							 mmux_flonumd$1_t op2,
-							 mmux_flonumd$1_t epsilon)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumcd$1_equal_absmargin (mmux_flonumcd$1_t op1,
-							 mmux_flonumcd$1_t op2,
-							 mmux_flonumcd$1_t margin)
-  __attribute__((__const__));
-
-mmux_cc_types_decl bool mmux_flonumcd$1_equal_relepsilon (mmux_flonumcd$1_t op1,
-							  mmux_flonumcd$1_t op2,
-							  mmux_flonumcd$1_t epsilon)
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_flonum$1_t mmux_flonum$1_equal_relepsilon
   __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_COMPARISON_PROTOS(32)
-DEFINE_COMPARISON_PROTOS(64)
-DEFINE_COMPARISON_PROTOS(128)
+DEFINE_COMPARISON_PROTOS(d32)
+DEFINE_COMPARISON_PROTOS(d64)
+DEFINE_COMPARISON_PROTOS(d128)
+DEFINE_COMPARISON_PROTOS(cd32)
+DEFINE_COMPARISON_PROTOS(cd64)
+DEFINE_COMPARISON_PROTOS(cd128)
 
 
 /** --------------------------------------------------------------------
@@ -869,43 +830,29 @@ DEFINE_COMPARISON_PROTOS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl
-mmux_cc_types_decl bool mmux_string_is_flonumd$1 (mmux_asciizcp_t s_value);
+mmux_cc_types_decl bool mmux_string_is_flonum$1 (mmux_asciizcp_t s_value);
 
-mmux_cc_types_decl bool mmux_flonumd$1_parse  (mmux_flonumd$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
+mmux_cc_types_decl bool mmux_flonum$1_parse  (mmux_flonum$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_types_decl bool mmux_flonumd$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_flonumd$1_t value)
+mmux_cc_types_decl bool mmux_flonum$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_flonum$1_t value)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_types_decl mmux_sint_t mmux_flonumd$1_sprint_size (mmux_flonumd$1_t value);
+mmux_cc_types_decl mmux_sint_t mmux_flonum$1_sprint_size (mmux_flonum$1_t value);
 
-mmux_cc_types_decl bool mmux_flonumd$1_dprintf (mmux_standard_sint_t fd, mmux_flonumd$1_t value);
+mmux_cc_types_decl bool mmux_flonum$1_dprintf (mmux_standard_sint_t fd, mmux_flonum$1_t value);
 
-mmux_cc_types_decl bool mmux_flonumd$1_fprintf (void * stream, mmux_flonumd$1_t value)
-  __attribute__((__nonnull__(1)));
-
-/* ------------------------------------------------------------------ */
-
-mmux_cc_types_decl bool mmux_string_is_flonumcd$1 (mmux_asciizcp_t s_value);
-
-mmux_cc_types_decl bool mmux_flonumcd$1_parse  (mmux_flonumcd$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_cc_types_decl bool mmux_flonumcd$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_flonumcd$1_t value)
-  __attribute__((__nonnull__(1)));
-
-mmux_cc_types_decl mmux_sint_t mmux_flonumcd$1_sprint_size (mmux_flonumcd$1_t value);
-
-mmux_cc_types_decl bool mmux_flonumcd$1_dprintf (mmux_standard_sint_t fd, mmux_flonumcd$1_t value);
-
-mmux_cc_types_decl bool mmux_flonumcd$1_fprintf (void * stream, mmux_flonumcd$1_t value)
+mmux_cc_types_decl bool mmux_flonum$1_fprintf (void * stream, mmux_flonum$1_t value)
   __attribute__((__nonnull__(1)));
 ]]])]]])
 m4_divert(0)m4_dnl
 
-DEFINE_STRINGREP_PRINTING_PROTOS(32)
-DEFINE_STRINGREP_PRINTING_PROTOS(64)
-DEFINE_STRINGREP_PRINTING_PROTOS(128)
+DEFINE_STRINGREP_PRINTING_PROTOS(d32)
+DEFINE_STRINGREP_PRINTING_PROTOS(d64)
+DEFINE_STRINGREP_PRINTING_PROTOS(d128)
+DEFINE_STRINGREP_PRINTING_PROTOS(cd32)
+DEFINE_STRINGREP_PRINTING_PROTOS(cd64)
+DEFINE_STRINGREP_PRINTING_PROTOS(cd128)
 
 
 /** --------------------------------------------------------------------
