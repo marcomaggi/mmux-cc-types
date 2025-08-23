@@ -609,7 +609,7 @@ mmux_flonumd$1_constant_SQRT1_2 (void)
 
 /* ------------------------------------------------------------------ */
 
-/* Should we do something with "DEC$1_MIN" defined by GCC? */
+/* Should we do something with "DECd$1_MIN" defined by GCC? */
 mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_maximum (void)
 {
@@ -633,19 +633,19 @@ mmux_flonumd$1_minimum (void)
 
 /* ------------------------------------------------------------------ */
 
-/* mmux_standard_complex$1_constant_imag implemented as inline */
-/* mmux_standard_complex$1_constant_zero implemented as inline */
-/* mmux_standard_complex$1_constant_one  implemented as inline */
-/* mmux_standard_complex$1_constant_two  implemented as inline */
-/* mmux_standard_complex$1_constant_ten  implemented as inline */
+/* mmux_standard_complexd$1_constant_imag implemented as inline */
+/* mmux_standard_complexd$1_constant_zero implemented as inline */
+/* mmux_standard_complexd$1_constant_one  implemented as inline */
+/* mmux_standard_complexd$1_constant_two  implemented as inline */
+/* mmux_standard_complexd$1_constant_ten  implemented as inline */
 
 /* ------------------------------------------------------------------ */
 
-/* mmux_complex$1_constant_imag implemented as inline */
-/* mmux_complex$1_constant_zero implemented as inline */
-/* mmux_complex$1_constant_one  implemented as inline */
-/* mmux_complex$1_constant_two  implemented as inline */
-/* mmux_complex$1_constant_ten  implemented as inline */
+/* mmux_complexd$1_constant_imag implemented as inline */
+/* mmux_complexd$1_constant_zero implemented as inline */
+/* mmux_complexd$1_constant_one  implemented as inline */
+/* mmux_complexd$1_constant_two  implemented as inline */
+/* mmux_complexd$1_constant_ten  implemented as inline */
 
 ]]])
 m4_divert(0)m4_dnl
