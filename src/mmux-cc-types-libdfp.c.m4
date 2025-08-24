@@ -457,29 +457,11 @@ DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		2_SQRTPI)
 DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		SQRT2)
 DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		SQRT1_2)
 
-/* ------------------------------------------------------------------ */
-
 /* Should we do something with "DECd$1_MIN" defined by GCC? */
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_maximum (void)
-{
-  return DEC$1_MAX;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_minimum (void)
-{
-  return (- DEC$1_MAX);
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_maximum (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_maximum());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_minimum (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_minimum());
-}
+mmux_standard_flonumd$1_t mmux_standard_flonumd$1_maximum (void) { return    DEC$1_MAX; }
+mmux_standard_flonumd$1_t mmux_standard_flonumd$1_minimum (void) { return (- DEC$1_MAX); }
+mmux_flonumd$1_t mmux_flonumd$1_maximum (void) { return mmux_flonumd$1(mmux_standard_flonumd$1_maximum()); }
+mmux_flonumd$1_t mmux_flonumd$1_minimum (void) { return mmux_flonumd$1(mmux_standard_flonumd$1_minimum()); }
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_MATH_CONSTANTS(32)
