@@ -1080,6 +1080,7 @@ mmux_standard_$1_constant_ten (void)
 {
   return mmux_standard_$1_literal(10.0);
 }
+mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_nan		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG2E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG10E		(void) __attribute__((__const__));
@@ -1114,6 +1115,7 @@ mmux_$1_constant_ten (void)
 {
   return mmux_$1(mmux_standard_$1_constant_ten());
 }
+mmux_cc_types_decl mmux_$1_t mmux_$1_constant_nan	(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG10E	(void) __attribute__((__const__));
@@ -1148,6 +1150,11 @@ DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128x,	[[[MMUX_CC_TYPES_HAS
 
 m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_standard_$1_constant_nan (void)
+{
+  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_nan(), mmux_standard_$2_constant_nan());
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
 mmux_standard_$1_constant_imag (void)
 {
   return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_zero(), mmux_standard_$2_constant_one());
@@ -1175,6 +1182,11 @@ mmux_standard_$1_constant_ten (void)
 
 /* ------------------------------------------------------------------ */
 
+__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_$1_constant_nan (void)
+{
+  return mmux_$1(mmux_standard_$1_constant_nan());
+}
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_constant_imag (void)
 {

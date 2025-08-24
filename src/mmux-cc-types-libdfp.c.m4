@@ -76,10 +76,42 @@
 m4_divert(-1)
 m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS]]],[[[
 mmux_standard_flonum$1_t
-mmux_standard_flonum$1_exp10 (mmux_standard_flonum$1_t op)
+exp10$1 (mmux_standard_flonum$1_t op)
 {
   return exp$1(op * log$1(mmux_standard_flonum$1_constant_ten()));
 }
+#if 0 /* Are these actually implemented by libdfp? */
+mmux_standard_flonum$1_t
+j0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonum$1_constant_nan();
+}
+mmux_standard_flonum$1_t
+j1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonum$1_constant_nan();
+}
+mmux_standard_flonum$1_t
+jn$1 (mmux_sint_t N, mmux_standard_flonum$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonum$1_constant_nan();
+}
+mmux_standard_flonum$1_t
+y0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonum$1_constant_nan();
+}
+mmux_standard_flonum$1_t
+y1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonum$1_constant_nan();
+}
+mmux_standard_flonum$1_t
+yn$1 (mmux_sint_t N, mmux_standard_flonum$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonum$1_constant_nan();
+}
+#endif
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d32)
@@ -462,6 +494,28 @@ mmux_standard_flonumd$1_t mmux_standard_flonumd$1_maximum (void) { return    DEC
 mmux_standard_flonumd$1_t mmux_standard_flonumd$1_minimum (void) { return (- DEC$1_MAX); }
 mmux_flonumd$1_t mmux_flonumd$1_maximum (void) { return mmux_flonumd$1(mmux_standard_flonumd$1_maximum()); }
 mmux_flonumd$1_t mmux_flonumd$1_minimum (void) { return mmux_flonumd$1(mmux_standard_flonumd$1_minimum()); }
+
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_nan (void)
+{
+  return nand$1("nan(0)");
+}
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_nan (void)
+{
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_nan());
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_constant_nan (void)
+{
+  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_nan(),
+						   mmux_standard_flonumd$1_constant_nan());
+}
+mmux_flonumcd$1_t
+mmux_flonumcd$1_constant_nan (void)
+{
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_nan());
+}
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_MATH_CONSTANTS(32)
@@ -608,7 +662,7 @@ DEFINE_CFUNCS([[[flonumd32]]],
 	      [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
 	      [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
 	      [[[asinhd32]]],		[[[acoshd32]]],		[[[atanhd32]]],
-	      [[[expd32]]],		[[[exp2d32]]],		[[[mmux_standard_flonumd32_exp10]]],
+	      [[[expd32]]],		[[[exp2d32]]],		[[[exp10d32]]],
 	      [[[logd32]]],		[[[log10d32]]],		[[[log2d32]]],		[[[logbd32]]],
 	      [[[powd32]]],		[[[sqrtd32]]],		[[[cbrtd32]]],		[[[hypotd32]]],
 	      [[[expm1d32]]],		[[[log1pd32]]],
@@ -627,7 +681,7 @@ DEFINE_CFUNCS([[[flonumd64]]],
 	      [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
 	      [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
 	      [[[asinhd64]]],		[[[acoshd64]]],		[[[atanhd64]]],
-	      [[[expd64]]],		[[[exp2d64]]],		[[[mmux_standard_flonumd64_exp10]]],
+	      [[[expd64]]],		[[[exp2d64]]],		[[[exp10d64]]],
 	      [[[logd64]]],		[[[log10d64]]],		[[[log2d64]]],		[[[logbd64]]],
 	      [[[powd64]]],		[[[sqrtd64]]],		[[[cbrtd64]]],		[[[hypotd64]]],
 	      [[[expm1d64]]],		[[[log1pd64]]],
@@ -646,7 +700,7 @@ DEFINE_CFUNCS([[[flonumd128]]],
 	      [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
 	      [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
 	      [[[asinhd128]]],		[[[acoshd128]]],	[[[atanhd128]]],
-	      [[[expd128]]],		[[[exp2d128]]],		[[[mmux_standard_flonumd128_exp10]]],
+	      [[[expd128]]],		[[[exp2d128]]],		[[[exp10d128]]],
 	      [[[logd128]]],		[[[log10d128]]],	[[[log2d128]]],		[[[logbd128]]],
 	      [[[powd128]]],		[[[sqrtd128]]],		[[[cbrtd128]]],		[[[hypotd128]]],
 	      [[[expm1d128]]],		[[[log1pd128]]],
