@@ -5,9 +5,9 @@
 
   Abstract
 
-	This is the public  header file defining the API of  _DecimalN support; it is
-	included by  "mmux-cc-types.h" and  "mmux-cc-types-libdfp.c"; it must  not be
-	included by itself.
+	This is the public header file  defining the API of "_DecimalN" types support
+	in  the library  MMUX  CC  Types; it  is  included  by "mmux-cc-types.h"  and
+	"mmux-cc-types-libdfp.c"; it must not be included by itself.
 
   Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
@@ -28,7 +28,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Standard types definitions: literals, makers.
+ ** Preliminary definitions.
  ** ----------------------------------------------------------------- */
 
 /* NOTE These are duplicates of the definitions in "mmux-cc-types.h"; they are needed
@@ -49,14 +49,13 @@ typedef char const *		mmux_asciizcp_t;
 typedef char const **		mmux_asciizcpp_t;
 typedef char const ***		mmux_asciizcppp_t;
 
+
+/** --------------------------------------------------------------------
+ ** Standard types definitions: typedefs, literals, makers.
+ ** ----------------------------------------------------------------- */
+
 m4_divert(-1)
 m4_define([[[DEFINE_LIBDFP_TYPE_MACROS]]],[[[
-#undef  mmux_standard_flonumd$1_literal
-#define mmux_standard_flonumd$1_literal(VALUE)	(VALUE ## $2)
-
-#undef  mmux_standard_flonumcd$1_part_literal
-#define mmux_standard_flonumcd$1_part_literal(VALUE)	(mmux_standard_flonumd$1_literal(VALUE))
-
 __extension__ typedef _Decimal$1	mmux_standard_flonumd$1_t;
 
 typedef struct mmux_standard_flonumcd$1_t {
@@ -65,6 +64,9 @@ typedef struct mmux_standard_flonumcd$1_t {
 } mmux_standard_flonumcd$1_t;
 
 typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
+
+#define mmux_standard_flonumd$1_literal(VALUE)		(VALUE ## $2)
+#define mmux_standard_flonumcd$1_part_literal(VALUE)	(mmux_standard_flonumd$1_literal(VALUE))
 
 /* NOTE I would really like to define the maker as an inline function.  Because.  But
  * with the function we cannot declare a  new variable as "constexpr", while with the
@@ -76,30 +78,24 @@ typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
  * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
  */
 
-#undef  mmux_standard_flonumd$1
 #define mmux_standard_flonumd$1(STANDARD_DECIMAL)	((mmux_standard_flonumd$1_t)(STANDARD_DECIMAL))
-
-#undef  mmux_standard_flonumcd$1
 #define mmux_standard_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_standard_flonumcd$1_t)(STANDARD_FLONUMCDB))
 
-#undef  mmux_standard_flonumcd$1_make_rectangular
 #define mmux_standard_flonumcd$1_make_rectangular(STANDARD_DECIMAL_RE,STANDARD_DECIMAL_IM) \
   ((mmux_standard_flonumcd$1_t){ .re = (STANDARD_DECIMAL_RE), .im = (STANDARD_DECIMAL_IM) })
 
-#undef  mmux_standard_flonumcd$1_make_rectangular_literal
 #define mmux_standard_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
 					     mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
 ]]])
 m4_divert(0)m4_dnl
-
 DEFINE_LIBDFP_TYPE_MACROS(32,	[[[DF]]])
 DEFINE_LIBDFP_TYPE_MACROS(64,	[[[DD]]])
 DEFINE_LIBDFP_TYPE_MACROS(128,	[[[DL]]])
 
 
 /** --------------------------------------------------------------------
- ** Sprinter and parser adapters.
+ ** Standard types adapters: sprinter and parser.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -128,26 +124,20 @@ typedef struct mmux_flonumd$1_t	 { mmux_standard_flonumd$1_t	value; } mmux_flonu
 typedef struct mmux_flonumcd$1_t { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
 typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
 
-#undef  mmux_flonumd$1
 #define mmux_flonumd$1(STANDARD_DECIMAL)	((mmux_flonumd$1_t){ .value = (STANDARD_DECIMAL) })
 
-#undef  mmux_flonumd$1_literal
 #define mmux_flonumd$1_literal(STANDARD_DECIMAL_LITERAL) \
   (mmux_flonumd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL)))
 
-#undef  mmux_flonumcd$1
 #define mmux_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_flonumcd$1_t){ .value = (STANDARD_FLONUMCDB) })
 
-#undef  mmux_flonumcd$1_make_rectangular
 #define mmux_flonumcd$1_make_rectangular(DECIMAL_RE,DECIMAL_IM) \
   (mmux_flonumcd$1(mmux_standard_flonumcd$1_make_rectangular((DECIMAL_RE).value,(DECIMAL_IM).value)))
 
-#undef  mmux_flonumcd$1_make_rectangular_literal
 #define mmux_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (mmux_flonumcd$1(mmux_standard_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,       \
 								     STANDARD_DECIMAL_LITERAL_IM)))
 
-#undef  mmux_flonumcd$1_part_literal
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
 
 __attribute__((__const__,__always_inline__)) static inline mmux_sint_t
@@ -171,26 +161,27 @@ DEFINE_LIBDFP_STANDARD_TYPE(128)
  ** Preliminary definitions.
  ** ----------------------------------------------------------------- */
 
+m4_divert(-1)
 m4_define([[[DEFINE_FUNCTION_PROTOTYPES_TYPES]]],[[[m4_dnl
 typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
-typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t   (mmux_standard_$1_t X);
+typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t (mmux_standard_$1_t X);
 typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
 typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
-typedef bool      mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t X);
-typedef bool      mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
-typedef bool      mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
+typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t X);
+typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
+typedef bool mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
 
 typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
 typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
 typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-typedef bool      mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
-typedef bool      mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
-typedef bool      mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+typedef bool mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
+typedef bool mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef bool mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 
-typedef int mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2);
+typedef mmux_sint_t mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2);
 ]]])
-
+m4_divert(0)m4_dnl
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd32]]])
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd64]]])
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd128]]])
@@ -201,178 +192,145 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
 
 
 /** --------------------------------------------------------------------
- ** Mathematical constants.
+ ** Mathematical constants: standard real types.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_MATH_CONSTANTS_PROTOS]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd32_t
-mmux_standard_flonumd$1_constant_zero (void)
+m4_define([[[DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION]]],
+[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_$2 (void)
 {
-  return mmux_standard_flonumd$1_literal(0.0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_one (void)
-{
-  return mmux_standard_flonumd$1_literal(1.0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_two (void)
-{
-  return mmux_standard_flonumd$1_literal(2.0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_ten (void)
-{
-  return mmux_standard_flonumd$1_literal(10.0);
-}
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_E		(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_LOG2E	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_LOG10E	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_LN2	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_LN10	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_PI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_PI_2	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_PI_4	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_1_PI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_2_PI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_2_SQRTPI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_SQRT2	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_constant_SQRT1_2	(void)
-  __attribute__((__const__));
+  return mmux_standard_flonumd$1_literal($3);
+}]]])
 
-/* ------------------------------------------------------------------ */
+m4_define([[[DEFINE_STANDARD_REAL_CONSTANT_PROTO]]],
+[[[mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_constant_$2
+  __attribute__((__const__))]]])
 
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_constant_zero (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_constant_one (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_one());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_constant_two (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_two());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_constant_ten (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_ten());
-}
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_E		(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_LOG2E	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_LOG10E	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_LN2		(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_LN10	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_PI		(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_PI_2	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_PI_4	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_1_PI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_2_PI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_2_SQRTPI	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_SQRT2	(void)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_constant_SQRT1_2	(void)
-  __attribute__((__const__));
+m4_define([[[DEFINE_STANDARD_REAL_CONSTANTS]]],[[[
+DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	zero,	0.0)
+DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	one,	1.0)
+DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	two,	2.0)
+DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	ten,	10.0)
 
-/* ------------------------------------------------------------------ */
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		E);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LOG2E);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LOG10E);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LN2);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LN10);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		PI);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		PI_2);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		PI_4);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		1_PI);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		2_PI);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		2_SQRTPI);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		SQRT2);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		SQRT1_2);
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_constant_imag (void)
-{
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_zero(), mmux_standard_flonumd$1_constant_one());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_constant_zero (void)
-{
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_zero(), mmux_standard_flonumd$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_constant_one (void)
-{
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_one(), mmux_standard_flonumd$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_constant_two (void)
-{
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_two(), mmux_standard_flonumd$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_constant_ten (void)
-{
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_ten(), mmux_standard_flonumd$1_constant_zero());
-}
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		minimum);
+DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		maximum);
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_REAL_CONSTANTS(32)
+DEFINE_STANDARD_REAL_CONSTANTS(64)
+DEFINE_STANDARD_REAL_CONSTANTS(128)
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Mathematical constants: standard cplx types.
+ ** ----------------------------------------------------------------- */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_constant_imag (void)
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION]]],
+[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_constant_$2 (void)
 {
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_imag());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_constant_zero (void)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_constant_one (void)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_one());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_constant_two (void)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_two());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_constant_ten (void)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_ten());
-}
+  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_$3(),
+						   mmux_standard_flonumd$1_constant_$4());
+}]]])
 
-/* ------------------------------------------------------------------ */
+m4_define([[[DEFINE_STANDARD_CPLX_CONSTANTS]]],[[[
+DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	imag,	zero,	one)
+DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	zero,	zero,	zero)
+DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	one,	one,	zero)
+DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	two,	two,	zero)
+DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	ten,	ten,	zero)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_CPLX_CONSTANTS(32)
+DEFINE_STANDARD_CPLX_CONSTANTS(64)
+DEFINE_STANDARD_CPLX_CONSTANTS(128)
+
+
+
+/** --------------------------------------------------------------------
+ ** Mathematical constants: embedded real types.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION]]],
+[[[__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_flonumd$1_constant_$2 (void)
+{
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_$2());
+}]]])
+
+m4_define([[[DEFINE_EMBEDDED_REAL_CONSTANT_PROTO]]],
+[[[mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumd$1_t mmux_flonumd$1_constant_$2
+  __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_EMBEDDED_REAL_CONSTANTS]]],[[[
+DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	zero)
+DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	one)
+DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	two)
+DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	ten)
+
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		E);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LOG2E);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LOG10E);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LN2);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LN10);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		PI);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		PI_2);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		PI_4);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		1_PI);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		2_PI);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		2_SQRTPI);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		SQRT2);
+DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		SQRT1_2);
 
 mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumd$1_t mmux_flonumd$1_minimum __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumd$1_t mmux_flonumd$1_maximum __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_max     __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_min     __attribute__((__const__));
-
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_minimum (void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_maximum (void) __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
+DEFINE_EMBEDDED_REAL_CONSTANTS(32)
+DEFINE_EMBEDDED_REAL_CONSTANTS(64)
+DEFINE_EMBEDDED_REAL_CONSTANTS(128)
 
-DEFINE_MATH_CONSTANTS_PROTOS(32)
-DEFINE_MATH_CONSTANTS_PROTOS(64)
-DEFINE_MATH_CONSTANTS_PROTOS(128)
+
+/** --------------------------------------------------------------------
+ ** Mathematical constants: embedded cplx types.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION]]],
+[[[__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_flonumcd$1_constant_$2 (void)
+{
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_$2());
+}]]])
+
+m4_define([[[DEFINE_EMBEDDED_CPLX_CONSTANTS]]],[[[
+DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	imag)
+DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	zero)
+DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	one)
+DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	two)
+DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	ten)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_EMBEDDED_CPLX_CONSTANTS(32)
+DEFINE_EMBEDDED_CPLX_CONSTANTS(64)
+DEFINE_EMBEDDED_CPLX_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------
@@ -789,25 +747,12 @@ mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
 
-/* ------------------------------------------------------------------ */
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_absmargin
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_relepsilon
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon
-  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_absmargin  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_relepsilon __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin   __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon  __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_COMPARISON_PROTOS(flonumd32)
@@ -816,6 +761,19 @@ DEFINE_COMPARISON_PROTOS(flonumd128)
 DEFINE_COMPARISON_PROTOS(flonumcd32)
 DEFINE_COMPARISON_PROTOS(flonumcd64)
 DEFINE_COMPARISON_PROTOS(flonumcd128)
+
+/* ------------------------------------------------------------------ */
+
+m4_divert(-1)
+m4_define([[[DEFINE_MIN_MAX_PROTOS]]],[[[
+mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_max     __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_min     __attribute__((__const__));
+]]])
+m4_divert(0)m4_dnl
+DEFINE_MIN_MAX_PROTOS(32)
+DEFINE_MIN_MAX_PROTOS(64)
+DEFINE_MIN_MAX_PROTOS(128)
+
 
 
 /** --------------------------------------------------------------------

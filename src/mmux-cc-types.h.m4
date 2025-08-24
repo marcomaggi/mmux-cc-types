@@ -689,6 +689,7 @@ typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y
 typedef bool      mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
 typedef bool      mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef bool      mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
+typedef mmux_sint_t mmux_cc_types_comparison_$1_t      (mmux_$1_t X, mmux_$1_t Y);
 
 mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
 __attribute__((__const,__always_inline__)) static inline
@@ -812,7 +813,7 @@ mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__att
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
-mmux_cc_types_decl int mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_comparison_$1_t mmux_$1_cmp			__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));
@@ -828,7 +829,7 @@ mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	_
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
-mmux_cc_types_decl int mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)		__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_comparison_$1_t mmux_$1_cmp			__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));

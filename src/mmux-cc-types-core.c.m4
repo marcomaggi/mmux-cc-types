@@ -818,15 +818,15 @@ mmux_pointer_equal (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   return (op1 == op2)? true : false;
 }
-mmux_standard_sint_t
+mmux_sint_t
 mmux_pointer_cmp (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   if (op1 > op2) {
-    return +1;
+    return mmux_sint(+1);
   } else if (op1 < op2) {
-    return -1;
+    return mmux_sint(-1);
   } else {
-    return 0;
+    return mmux_sint(0);
   }
 }
 bool mmux_pointer_greater       (mmux_pointer_t op1, mmux_pointer_t op2) { return (op1 >  op2)? true : false; }
@@ -847,15 +847,15 @@ DECL bool mmux_$1_equal         (mmux_$1_t op1, mmux_$1_t op2) { return (op1.val
 
 m4_define([[[DEFINE_COMPARISON_INTEGER_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
-DECL mmux_standard_sint_t
+DECL mmux_sint_t
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 {
   if (op1.value > op2.value) {
-    return +1;
+    return mmux_sint(+1);
   } else if (op1.value < op2.value) {
-    return -1;
+    return mmux_sint(-1);
   } else {
-    return 0;
+    return mmux_sint(0);
   }
 }
 DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (op1.value >  op2.value)? true : false; }
@@ -868,15 +868,15 @@ DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (op1.val
 
 m4_define([[[DEFINE_COMPARISON_FLONUMFL_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$2]]])
-DECL mmux_standard_sint_t
+DECL mmux_sint_t
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 {
   if (mmux_$1_greater(op1, op2)) {
-    return +1;
+    return mmux_sint(+1);
   } else if (mmux_$1_less(op1, op2)) {
-    return -1;
+    return mmux_sint(-1);
   } else {
-    return 0;
+    return mmux_sint(0);
   }
 }
 DECL bool mmux_$1_greater       (mmux_$1_t op1, mmux_$1_t op2) { return (     isgreater(op1.value,op2.value))? true : false; }
@@ -889,7 +889,7 @@ DECL bool mmux_$1_less_equal    (mmux_$1_t op1, mmux_$1_t op2) { return (   isle
 
 m4_define([[[DEFINE_COMPARISON_COMPLEX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$3]]])
-DECL mmux_standard_sint_t
+DECL mmux_sint_t
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 {
   return mmux_$2_cmp(mmux_$1_abs(op1), mmux_$1_abs(op2));
