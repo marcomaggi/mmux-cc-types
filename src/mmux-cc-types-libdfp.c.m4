@@ -70,7 +70,25 @@
 
 
 /** --------------------------------------------------------------------
- ** Standard sprinter and parser adapters.
+ ** Standard types adapters: mathematical functions not implemented by libdfp.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS]]],[[[
+mmux_standard_flonum$1_t
+mmux_standard_flonum$1_exp10 (mmux_standard_flonum$1_t op)
+{
+  return exp$1(op * log$1(mmux_standard_flonum$1_constant_ten()));
+}
+]]])
+m4_divert(0)m4_dnl
+DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d32)
+DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d64)
+DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d128)
+
+
+/** --------------------------------------------------------------------
+ ** Standard types adapters: sprinter and parser.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -404,24 +422,6 @@ m4_divert(0)m4_dnl
 DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[d32]]])
 DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[d64]]])
 DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[d128]]])
-
-
-/** --------------------------------------------------------------------
- ** Mathematics functions not implemented by libdfp.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS]]],[[[
-mmux_standard_flonum$1_t
-mmux_exp10$1 (mmux_standard_flonum$1_t op)
-{
-  return exp$1(op * log$1(mmux_standard_flonum$1_constant_ten()));
-}
-]]])
-m4_divert(0)m4_dnl
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d32)
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d64)
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d128)
 
 
 /** --------------------------------------------------------------------
@@ -763,7 +763,7 @@ DEFINE_CFUNCS([[[flonumd32]]],
 	      [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
 	      [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
 	      [[[asinhd32]]],		[[[acoshd32]]],		[[[atanhd32]]],
-	      [[[expd32]]],		[[[exp2d32]]],		[[[mmux_exp10d32]]],
+	      [[[expd32]]],		[[[exp2d32]]],		[[[mmux_standard_flonumd32_exp10]]],
 	      [[[logd32]]],		[[[log10d32]]],		[[[log2d32]]],		[[[logbd32]]],
 	      [[[powd32]]],		[[[sqrtd32]]],		[[[cbrtd32]]],		[[[hypotd32]]],
 	      [[[expm1d32]]],		[[[log1pd32]]],
@@ -782,7 +782,7 @@ DEFINE_CFUNCS([[[flonumd64]]],
 	      [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
 	      [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
 	      [[[asinhd64]]],		[[[acoshd64]]],		[[[atanhd64]]],
-	      [[[expd64]]],		[[[exp2d64]]],		[[[mmux_exp10d64]]],
+	      [[[expd64]]],		[[[exp2d64]]],		[[[mmux_standard_flonumd64_exp10]]],
 	      [[[logd64]]],		[[[log10d64]]],		[[[log2d64]]],		[[[logbd64]]],
 	      [[[powd64]]],		[[[sqrtd64]]],		[[[cbrtd64]]],		[[[hypotd64]]],
 	      [[[expm1d64]]],		[[[log1pd64]]],
@@ -801,7 +801,7 @@ DEFINE_CFUNCS([[[flonumd128]]],
 	      [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
 	      [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
 	      [[[asinhd128]]],		[[[acoshd128]]],	[[[atanhd128]]],
-	      [[[expd128]]],		[[[exp2d128]]],		[[[mmux_exp10d128]]],
+	      [[[expd128]]],		[[[exp2d128]]],		[[[mmux_standard_flonumd128_exp10]]],
 	      [[[logd128]]],		[[[log10d128]]],	[[[log2d128]]],		[[[logbd128]]],
 	      [[[powd128]]],		[[[sqrtd128]]],		[[[cbrtd128]]],		[[[hypotd128]]],
 	      [[[expm1d128]]],		[[[log1pd128]]],
