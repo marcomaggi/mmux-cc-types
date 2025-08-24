@@ -334,7 +334,7 @@ DEFINE_EMBEDDED_CPLX_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------
- ** Some complex number functions: sizeof, real part, imag part, abs, arg, conj.
+ ** Some complex number functions: real part, imag part, abs, arg, conj.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -716,6 +716,7 @@ DEFINE_CFUNCS([[[flonumcd128]]],
  ** Predicates.
  ** ----------------------------------------------------------------- */
 
+m4_divert(-1)
 m4_define([[[DEFINE_PREDICATE_PROTOS]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
@@ -725,7 +726,7 @@ mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__att
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
 ]]])
-
+m4_divert(0)m4_dnl
 DEFINE_PREDICATE_PROTOS(flonumd32)
 DEFINE_PREDICATE_PROTOS(flonumd64)
 DEFINE_PREDICATE_PROTOS(flonumd128)
@@ -751,8 +752,6 @@ mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_relepsilon __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	  __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon  __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_COMPARISON_PROTOS(flonumd32)
@@ -773,7 +772,6 @@ m4_divert(0)m4_dnl
 DEFINE_MIN_MAX_PROTOS(32)
 DEFINE_MIN_MAX_PROTOS(64)
 DEFINE_MIN_MAX_PROTOS(128)
-
 
 
 /** --------------------------------------------------------------------
@@ -798,7 +796,6 @@ mmux_cc_types_decl bool mmux_flonum$1_fprintf (void * stream, mmux_flonum$1_t va
   __attribute__((__nonnull__(1)));
 ]]])]]])
 m4_divert(0)m4_dnl
-
 DEFINE_STRINGREP_PRINTING_PROTOS(d32)
 DEFINE_STRINGREP_PRINTING_PROTOS(d64)
 DEFINE_STRINGREP_PRINTING_PROTOS(d128)
