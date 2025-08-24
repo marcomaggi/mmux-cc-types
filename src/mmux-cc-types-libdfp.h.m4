@@ -481,7 +481,76 @@ DEFINE_CPLX_ARITHMETICS_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematics builtins.
+ ** Mathematics.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_operation_flonumd$1_t mmux_flonumd$1_$2 __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t mmux_flonumd$1_$2 __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_BINARY_SINT_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_$2 (mmux_sint_t N, mmux_flonumd$1_t X) __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_FLONUMD_MATH_PROTOS]]],[[[m4_dnl
+DEFINE_UNARY_MATH_PROTO($1,		sin);
+DEFINE_UNARY_MATH_PROTO($1,		cos);
+DEFINE_UNARY_MATH_PROTO($1,		tan);
+
+DEFINE_UNARY_MATH_PROTO($1,		asin);
+DEFINE_UNARY_MATH_PROTO($1,		acos);
+DEFINE_UNARY_MATH_PROTO($1,		atan);
+DEFINE_BINARY_MATH_PROTO($1,		atan2);
+
+DEFINE_UNARY_MATH_PROTO($1,		sinh);
+DEFINE_UNARY_MATH_PROTO($1,		cosh);
+DEFINE_UNARY_MATH_PROTO($1,		tanh);
+
+DEFINE_UNARY_MATH_PROTO($1,		asinh);
+DEFINE_UNARY_MATH_PROTO($1,		acosh);
+DEFINE_UNARY_MATH_PROTO($1,		atanh);
+
+DEFINE_UNARY_MATH_PROTO($1,		exp);
+DEFINE_UNARY_MATH_PROTO($1,		exp2);
+DEFINE_UNARY_MATH_PROTO($1,		exp10);
+
+DEFINE_UNARY_MATH_PROTO($1,		log);
+DEFINE_UNARY_MATH_PROTO($1,		log10);
+DEFINE_UNARY_MATH_PROTO($1,		log2);
+DEFINE_UNARY_MATH_PROTO($1,		logb);
+
+DEFINE_BINARY_MATH_PROTO($1,		pow);
+DEFINE_UNARY_MATH_PROTO($1,		sqrt);
+DEFINE_UNARY_MATH_PROTO($1,		cbrt);
+DEFINE_BINARY_MATH_PROTO($1,		hypot);
+
+DEFINE_UNARY_MATH_PROTO($1,		expm1);
+DEFINE_UNARY_MATH_PROTO($1,		log1p);
+
+DEFINE_UNARY_MATH_PROTO($1,		erf);
+DEFINE_UNARY_MATH_PROTO($1,		erfc);
+
+DEFINE_UNARY_MATH_PROTO($1,		lgamma);
+DEFINE_UNARY_MATH_PROTO($1,		tgamma);
+
+DEFINE_UNARY_MATH_PROTO($1,		j0);
+DEFINE_UNARY_MATH_PROTO($1,		j1);
+DEFINE_BINARY_SINT_MATH_PROTO($1,	jn);
+
+DEFINE_UNARY_MATH_PROTO($1,		y0);
+DEFINE_UNARY_MATH_PROTO($1,		y1);
+DEFINE_BINARY_SINT_MATH_PROTO($1,	yn);
+]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMD_MATH_PROTOS(32)
+DEFINE_FLONUMD_MATH_PROTOS(64)
+DEFINE_FLONUMD_MATH_PROTOS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics builtins. OLD
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)m4_dnl

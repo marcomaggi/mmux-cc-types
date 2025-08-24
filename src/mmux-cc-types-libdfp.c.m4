@@ -80,38 +80,40 @@ exp10$1 (mmux_standard_flonum$1_t op)
 {
   return exp$1(op * log$1(mmux_standard_flonum$1_constant_ten()));
 }
-#if 0 /* Are these actually implemented by libdfp? */
+
+/* The Bessel stuff below is not really implemented by "libdfp", or is it? */
 mmux_standard_flonum$1_t
-j0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_j0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonum$1_constant_nan();
 }
 mmux_standard_flonum$1_t
-j1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_j1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonum$1_constant_nan();
 }
 mmux_standard_flonum$1_t
-jn$1 (mmux_sint_t N, mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_jn$1 (mmux_standard_sint_t     N  __attribute__((__unused__)),
+		    mmux_standard_flonum$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonum$1_constant_nan();
 }
 mmux_standard_flonum$1_t
-y0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_y0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonum$1_constant_nan();
 }
 mmux_standard_flonum$1_t
-y1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_y1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonum$1_constant_nan();
 }
 mmux_standard_flonum$1_t
-yn$1 (mmux_sint_t N, mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_yn$1 (mmux_standard_sint_t     N  __attribute__((__unused__)),
+		    mmux_standard_flonum$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonum$1_constant_nan();
 }
-#endif
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d32)
@@ -524,9 +526,101 @@ DEFINE_REAL_MATH_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------
+ ** Mathematical operations.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_MATH_FUNCTION]]],[[[mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_flonumd$1_t X)
+{
+  return mmux_flonumd$1($2d$1(X.value));
+}]]])
+
+m4_define([[[DEFINE_BINARY_MATH_FUNCTION]]],[[[mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_flonumd$1_t X, mmux_flonumd$1_t Y)
+{
+  return mmux_flonumd$1($2d$1(X.value, Y.value));
+}]]])
+
+m4_define([[[DEFINE_UNARY_MATH_BESSEL_FUNCTION]]],[[[mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_flonumd$1_t X)
+{
+  return mmux_flonumd$1(mmux_standard_$2d$1(X.value));
+}]]])
+
+m4_define([[[DEFINE_BINARY_MATH_SINT_BESSEL_FUNCTION]]],[[[mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_sint_t N, mmux_flonumd$1_t X)
+{
+  return mmux_flonumd$1(mmux_standard_$2d$1(N.value, X.value));
+}]]])
+
+m4_define([[[DEFINE_FLONUMD_MATH_FUNCTIONS]]],[[[m4_dnl
+DEFINE_UNARY_MATH_FUNCTION($1,		sin);
+DEFINE_UNARY_MATH_FUNCTION($1,		cos);
+DEFINE_UNARY_MATH_FUNCTION($1,		tan);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		asin);
+DEFINE_UNARY_MATH_FUNCTION($1,		acos);
+DEFINE_UNARY_MATH_FUNCTION($1,		atan);
+DEFINE_BINARY_MATH_FUNCTION($1,		atan2);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		sinh);
+DEFINE_UNARY_MATH_FUNCTION($1,		cosh);
+DEFINE_UNARY_MATH_FUNCTION($1,		tanh);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		asinh);
+DEFINE_UNARY_MATH_FUNCTION($1,		acosh);
+DEFINE_UNARY_MATH_FUNCTION($1,		atanh);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		exp);
+DEFINE_UNARY_MATH_FUNCTION($1,		exp2);
+DEFINE_UNARY_MATH_FUNCTION($1,		exp10);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		log);
+DEFINE_UNARY_MATH_FUNCTION($1,		log10);
+DEFINE_UNARY_MATH_FUNCTION($1,		log2);
+DEFINE_UNARY_MATH_FUNCTION($1,		logb);
+
+DEFINE_BINARY_MATH_FUNCTION($1,		pow);
+DEFINE_UNARY_MATH_FUNCTION($1,		sqrt);
+DEFINE_UNARY_MATH_FUNCTION($1,		cbrt);
+DEFINE_BINARY_MATH_FUNCTION($1,		hypot);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		expm1);
+DEFINE_UNARY_MATH_FUNCTION($1,		log1p);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		erf);
+DEFINE_UNARY_MATH_FUNCTION($1,		erfc);
+
+DEFINE_UNARY_MATH_FUNCTION($1,		lgamma);
+DEFINE_UNARY_MATH_FUNCTION($1,		tgamma);
+]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMD_MATH_FUNCTIONS(32)
+DEFINE_FLONUMD_MATH_FUNCTIONS(64)
+DEFINE_FLONUMD_MATH_FUNCTIONS(128)
+
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS]]],[[[m4_dnl
+DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		j0);
+DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		j1);
+DEFINE_BINARY_MATH_SINT_BESSEL_FUNCTION($1,	jn);
+
+DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		y0);
+DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		y1);
+DEFINE_BINARY_MATH_SINT_BESSEL_FUNCTION($1,	yn);
+]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(32)
+DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(64)
+DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
  ** Mathematics builtins.
  ** ----------------------------------------------------------------- */
 
+#if 0
 m4_divert(-1)m4_dnl
 
 m4_dnl $1 - type stem
@@ -759,5 +853,7 @@ DEFINE_CFUNCS([[[flonumcd128]]],
 	      [[[]]],		[[[]]],
 	      [[[]]],		[[[]]],			[[[]]],
 	      [[[]]],		[[[]]],			[[[]]])
+
+#endif
 
 /* end of file */
