@@ -1,0 +1,16 @@
+-*- coding: utf-8-unix -*-
+
+* Implement the complex functions also for the real types, examples:
+
+  mmux_flonumdb_conj()
+  mmux_flonumdb_arg()
+  mmux_flonumdb_real_part()
+  mmux_flonumdb_imag_part()
+
+### end of file
+# Local Variables:
+# mode: text
+# fill-column: 72
+# paragraph-start: "*"
+# ispell-local-dictionary: "en_GB-ise-w_accents"
+# End:
