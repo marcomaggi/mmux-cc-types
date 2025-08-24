@@ -430,152 +430,32 @@ DEFINE_REAL_DECIMAL_NUMBER_ARITHMETICS_FUNCTIONS([[[d128]]])
 
 /* NOTE By inspecting the header files installed by libdfp: I have seen that only the
    "dl" constants are defined.  (Marco Maggi; Aug 16, 2025) */
-
 m4_divert(-1)
-m4_define([[[DEFINE_DECIMAL_MATH_CONSTANTS]]],[[[
-/* mmux_standard_flonumd$1_constant_zero implemented as inline */
-/* mmux_standard_flonumd$1_constant_one  implemented as inline */
-/* mmux_standard_flonumd$1_constant_two  implemented as inline */
-/* mmux_standard_flonumd$1_constant_ten  implemented as inline */
+m4_define([[[DEFINE_REAL_MATH_CONSTANT_FUNCTIONS]]],[[[mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_$2 (void)
+{
+  return (mmux_standard_flonumd$1_t)M_$2dl;
+}
+mmux_flonumd$1_t
+mmux_flonumd$1_constant_$2 (void)
+{
+  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_$2());
+}]]])
 
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_E (void)
-{
-  return (mmux_standard_flonumd$1_t)M_Edl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_LOG2E (void)
-{
-  return (mmux_standard_flonumd$1_t)M_LOG2Edl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_LOG10E (void)
-{
-  return (mmux_standard_flonumd$1_t)M_LOG10Edl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_LN2 (void)
-{
-  return (mmux_standard_flonumd$1_t)M_LN2dl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_LN10 (void)
-{
-  return (mmux_standard_flonumd$1_t)M_LN10dl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_PI (void)
-{
-  return (mmux_standard_flonumd$1_t)M_PIdl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_PI_2 (void)
-{
-  return (mmux_standard_flonumd$1_t)M_PI_2dl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_PI_4 (void)
-{
-  return (mmux_standard_flonumd$1_t)M_PI_4dl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_1_PI (void)
-{
-  return (mmux_standard_flonumd$1_t)M_1_PIdl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_2_PI (void)
-{
-  return (mmux_standard_flonumd$1_t)M_2_PIdl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_2_SQRTPI (void)
-{
-  return (mmux_standard_flonumd$1_t)M_2_SQRTPIdl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_SQRT2 (void)
-{
-  return (mmux_standard_flonumd$1_t)M_SQRT2dl;
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_SQRT1_2 (void)
-{
-  return (mmux_standard_flonumd$1_t)M_SQRT1_2dl;
-}
-
-/* ------------------------------------------------------------------ */
-
-/* mmux_flonumd$1_constant_zero implemented as inline */
-/* mmux_flonumd$1_constant_one  implemented as inline */
-/* mmux_flonumd$1_constant_two  implemented as inline */
-/* mmux_flonumd$1_constant_ten  implemented as inline */
-
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_E (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_E());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_LOG2E (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LOG2E());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_LOG10E (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LOG10E());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_LN2 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LN2());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_LN10 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_LN10());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_PI (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_PI());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_PI_2 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_PI_2());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_PI_4 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_PI_4());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_1_PI (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_1_PI());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_2_PI (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_2_PI());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_2_SQRTPI (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_2_SQRTPI());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_SQRT2 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_SQRT2());
-}
-mmux_flonumd$1_t
-mmux_flonumd$1_constant_SQRT1_2 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_SQRT1_2());
-}
+m4_define([[[DEFINE_REAL_MATH_CONSTANTS]]],[[[
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		E)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		LOG2E)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		LOG10E)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		LN2)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		LN10)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		PI)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		PI_2)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		PI_4)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		1_PI)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		2_PI)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		2_SQRTPI)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		SQRT2)
+DEFINE_REAL_MATH_CONSTANT_FUNCTIONS($1,		SQRT1_2)
 
 /* ------------------------------------------------------------------ */
 
@@ -600,28 +480,11 @@ mmux_flonumd$1_minimum (void)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_minimum());
 }
-
-/* ------------------------------------------------------------------ */
-
-/* mmux_standard_complexd$1_constant_imag implemented as inline */
-/* mmux_standard_complexd$1_constant_zero implemented as inline */
-/* mmux_standard_complexd$1_constant_one  implemented as inline */
-/* mmux_standard_complexd$1_constant_two  implemented as inline */
-/* mmux_standard_complexd$1_constant_ten  implemented as inline */
-
-/* ------------------------------------------------------------------ */
-
-/* mmux_complexd$1_constant_imag implemented as inline */
-/* mmux_complexd$1_constant_zero implemented as inline */
-/* mmux_complexd$1_constant_one  implemented as inline */
-/* mmux_complexd$1_constant_two  implemented as inline */
-/* mmux_complexd$1_constant_ten  implemented as inline */
-
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_DECIMAL_MATH_CONSTANTS(32)
-DEFINE_DECIMAL_MATH_CONSTANTS(64)
-DEFINE_DECIMAL_MATH_CONSTANTS(128)
+DEFINE_REAL_MATH_CONSTANTS(32)
+DEFINE_REAL_MATH_CONSTANTS(64)
+DEFINE_REAL_MATH_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------
