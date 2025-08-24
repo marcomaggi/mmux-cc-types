@@ -356,7 +356,7 @@ DEFINE_COMPARISONS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_APPROX_COMPARISONS]]],[[[
+m4_define([[[DEFINE_STANDARD_APPROX_COMPARISONS]]],[[[
 __attribute__((__const__)) bool
 mmux_standard_flonumd$1_equal_absmargin (mmux_standard_flonumd$1_t op1,
 					 mmux_standard_flonumd$1_t op2,
@@ -371,41 +371,11 @@ mmux_standard_flonumd$1_equal_relepsilon (mmux_standard_flonumd$1_t op1,
 {
   return (fabsd$1(op1 - op2) <= (fabsd$1(epsilon) * fmaxd$1(fabsd$1(op1), fabsd$1(op2))))? true : false;
 }
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__)) bool
-mmux_flonumd$1_equal_absmargin (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t margin)
-{
-  return mmux_standard_flonumd$1_equal_absmargin(op1.value, op2.value, margin.value);
-}
-__attribute__((__const__)) bool
-mmux_flonumd$1_equal_relepsilon (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t epsilon)
-{
-  return mmux_standard_flonumd$1_equal_relepsilon(op1.value, op2.value, epsilon.value);
-}
-
-/* ------------------------------------------------------------------ */
-
-bool
-mmux_flonumcd$1_equal_absmargin (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t margin)
-{
-  return (mmux_standard_flonumd$1_equal_absmargin(op1.value.re, op2.value.re, margin.value.re) &&
-	  mmux_standard_flonumd$1_equal_absmargin(op1.value.im, op2.value.im, margin.value.im))?
-    true : false;
-}
-bool
-mmux_flonumcd$1_equal_relepsilon (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t epsilon)
-{
-  return (mmux_standard_flonumd$1_equal_relepsilon(op1.value.re, op2.value.re, epsilon.value.re) &&
-	  mmux_standard_flonumd$1_equal_relepsilon(op1.value.im, op2.value.im, epsilon.value.im))?
-    true : false;
-}
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_APPROX_COMPARISONS(32)
-DEFINE_APPROX_COMPARISONS(64)
-DEFINE_APPROX_COMPARISONS(128)
+DEFINE_STANDARD_APPROX_COMPARISONS(32)
+DEFINE_STANDARD_APPROX_COMPARISONS(64)
+DEFINE_STANDARD_APPROX_COMPARISONS(128)
 
 
 /** --------------------------------------------------------------------
