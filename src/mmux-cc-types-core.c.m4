@@ -28,42 +28,39 @@
 
 #include <mmux-cc-types-internals.h>
 
-m4_define([[[MMUX_FLONUMFL_ZERO]]],  [[[((mmux_standard_$1_t)0.0)]]])
-m4_define([[[MMUX_INTEGER_ZERO]]],[[[((mmux_standard_$1_t)0)]]])
-
 
 /** --------------------------------------------------------------------
  ** Some maximum/minimum values.
  ** ----------------------------------------------------------------- */
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],[[[
-static const mmux_standard_flonumf32_t   mmux_libc_maximum_flonumf32=FLT32_MAX;
-static const mmux_standard_flonumf32_t   mmux_libc_minimum_flonumf32=-(mmux_libc_maximum_flonumf32);
+constexpr static const mmux_standard_flonumf32_t   mmux_libc_maximum_flonumf32=FLT32_MAX;
+constexpr static const mmux_standard_flonumf32_t   mmux_libc_minimum_flonumf32=-(mmux_libc_maximum_flonumf32);
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],[[[
-static const mmux_standard_flonumf64_t   mmux_libc_maximum_flonumf64=FLT64_MAX;
-static const mmux_standard_flonumf64_t   mmux_libc_minimum_flonumf64=-(mmux_libc_maximum_flonumf64);
+constexpr static const mmux_standard_flonumf64_t   mmux_libc_maximum_flonumf64=FLT64_MAX;
+constexpr static const mmux_standard_flonumf64_t   mmux_libc_minimum_flonumf64=-(mmux_libc_maximum_flonumf64);
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],[[[
-static const mmux_standard_flonumf128_t mmux_libc_maximum_flonumf128=FLT128_MAX;
-static const mmux_standard_flonumf128_t mmux_libc_minimum_flonumf128=-(mmux_libc_maximum_flonumf128);
+constexpr static const mmux_standard_flonumf128_t mmux_libc_maximum_flonumf128=FLT128_MAX;
+constexpr static const mmux_standard_flonumf128_t mmux_libc_minimum_flonumf128=-(mmux_libc_maximum_flonumf128);
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]], [[[
-static const mmux_standard_flonumf32x_t  mmux_libc_maximum_flonumf32x=FLT32X_MAX;
-static const mmux_standard_flonumf32x_t  mmux_libc_minimum_flonumf32x=-(mmux_libc_maximum_flonumf32x);
+constexpr static const mmux_standard_flonumf32x_t  mmux_libc_maximum_flonumf32x=FLT32X_MAX;
+constexpr static const mmux_standard_flonumf32x_t  mmux_libc_minimum_flonumf32x=-(mmux_libc_maximum_flonumf32x);
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]], [[[
-static const mmux_standard_flonumf64x_t  mmux_libc_maximum_flonumf64x=FLT64X_MAX;
-static const mmux_standard_flonumf64x_t  mmux_libc_minimum_flonumf64x=-(mmux_libc_maximum_flonumf64);
+constexpr static const mmux_standard_flonumf64x_t  mmux_libc_maximum_flonumf64x=FLT64X_MAX;
+constexpr static const mmux_standard_flonumf64x_t  mmux_libc_minimum_flonumf64x=-(mmux_libc_maximum_flonumf64);
 ]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]],[[[
-static const mmux_standard_flonumf128x_t mmux_libc_maximum_flonumf128x=FLT128X_MAX;
-static const mmux_standard_flonumf128x_t mmux_libc_minimum_flonumf128x=-(mmux_libc_maximum_flonumf128x);
+constexpr static const mmux_standard_flonumf128x_t mmux_libc_maximum_flonumf128x=FLT128X_MAX;
+constexpr static const mmux_standard_flonumf128x_t mmux_libc_minimum_flonumf128x=-(mmux_libc_maximum_flonumf128x);
 ]]])
 
 
@@ -457,27 +454,27 @@ m4_define([[[DEFINE_SIGNED_INTEGER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]
 bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
-  return (MMUX_INTEGER_ZERO($1) == X.value)? true : false;
+  return (mmux_standard_$1_literal(0) == X.value)? true : false;
 }
 bool
 mmux_$1_is_positive (mmux_$1_t X)
 {
-  return (MMUX_INTEGER_ZERO($1) < X.value)? true : false;
+  return (mmux_standard_$1_literal(0) < X.value)? true : false;
 }
 bool
 mmux_$1_is_negative (mmux_$1_t X)
 {
-  return (MMUX_INTEGER_ZERO($1) > X.value)? true : false;
+  return (mmux_standard_$1_literal(0) > X.value)? true : false;
 }
 bool
 mmux_$1_is_non_positive (mmux_$1_t X)
 {
-  return (MMUX_INTEGER_ZERO($1) >= X.value)? true : false;
+  return (mmux_standard_$1_literal(0) >= X.value)? true : false;
 }
 bool
 mmux_$1_is_non_negative (mmux_$1_t X)
 {
-  return (MMUX_INTEGER_ZERO($1) <= X.value)? true : false;
+  return (mmux_standard_$1_literal(0) <= X.value)? true : false;
 }
 bool
 mmux_$1_is_nan (mmux_$1_t X MMUX_CC_TYPES_UNUSED)
@@ -563,7 +560,7 @@ m4_define([[[DEFINE_UNSIGNED_INTEGER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$
 bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
-  return (MMUX_INTEGER_ZERO($1) == X.value)? true : false;
+  return (mmux_standard_$1_literal(0) == X.value)? true : false;
 }
 bool
 mmux_$1_is_positive (mmux_$1_t X)
@@ -571,7 +568,7 @@ mmux_$1_is_positive (mmux_$1_t X)
   /* Turn off because when comparing pointers it raises a warning. */
   _Pragma("GCC diagnostic push");
   _Pragma("GCC diagnostic ignored \"-Wextra\"");
-  return (MMUX_INTEGER_ZERO($1) < X.value)? true : false;
+  return (mmux_standard_$1_literal(0) < X.value)? true : false;
   _Pragma("GCC diagnostic pop");
 }
 bool
@@ -656,7 +653,7 @@ mmux_$1_is_positive (mmux_$1_t X)
       return true;
     }
   } else {
-    return (MMUX_FLONUMFL_ZERO($1) < X.value)? true : false;
+    return (mmux_standard_$1_constant_zero() < X.value)? true : false;
   }
 }
 bool
@@ -671,7 +668,7 @@ mmux_$1_is_negative (mmux_$1_t X)
       return false;
     }
   } else {
-    return (MMUX_FLONUMFL_ZERO($1) > X.value)? true : false;
+    return (mmux_standard_$1_constant_zero() > X.value)? true : false;
   }
 }
 bool
@@ -682,7 +679,7 @@ mmux_$1_is_non_positive (mmux_$1_t X)
   } else if (mmux_$1_is_zero(X)) {
     return true;
   } else {
-    return (MMUX_FLONUMFL_ZERO($1) > X.value)? true : false;
+    return (mmux_standard_$1_constant_zero() > X.value)? true : false;
   }
 }
 bool
@@ -693,7 +690,7 @@ mmux_$1_is_non_negative (mmux_$1_t X)
   } else if (mmux_$1_is_zero(X)) {
     return true;
   } else {
-    return (MMUX_FLONUMFL_ZERO($1) < X.value)? true : false;
+    return (mmux_standard_$1_constant_zero() < X.value)? true : false;
   }
 }
 ]]])]]])
