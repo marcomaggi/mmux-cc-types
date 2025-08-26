@@ -70,55 +70,458 @@
 
 
 /** --------------------------------------------------------------------
- ** Standard types adapters: mathematical functions not implemented by libdfp.
+ ** Macros.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_SOME_MACROS]]],[[[
+#define MMUX_STANDARD_FLONUMD$1_IS_ZERO(X)	(FP_ZERO	== (fpclassify(X)))
+#define MMUX_STANDARD_FLONUMD$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
+#define MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
+#define CMPLXCD$1(RE,IM)	(mmux_standard_flonumcd$1_make_rectangular((RE),(IM)))
+]]])
+m4_divert(0)m4_dnl
+DEFINE_SOME_MACROS(32)
+DEFINE_SOME_MACROS(64)
+DEFINE_SOME_MACROS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Standard types adapters: real numbers mathematical functions not implemented by libdfp.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS]]],[[[
-mmux_standard_flonum$1_t
-exp10$1 (mmux_standard_flonum$1_t op)
+mmux_standard_flonumd$1_t
+exp10d$1 (mmux_standard_flonumd$1_t op)
 {
-  return exp$1(op * log$1(mmux_standard_flonum$1_constant_ten()));
+  return expd$1(op * logd$1(mmux_standard_flonumd$1_constant_ten()));
 }
 
 /* The Bessel stuff below is not really implemented by "libdfp", or is it? */
-mmux_standard_flonum$1_t
-mmux_standard_j0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_flonumd$1_t
+mmux_standard_j0d$1 (mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
-  return mmux_standard_flonum$1_constant_nan();
+  return mmux_standard_flonumd$1_constant_nan();
 }
-mmux_standard_flonum$1_t
-mmux_standard_j1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_flonumd$1_t
+mmux_standard_j1d$1 (mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
-  return mmux_standard_flonum$1_constant_nan();
+  return mmux_standard_flonumd$1_constant_nan();
 }
-mmux_standard_flonum$1_t
-mmux_standard_jn$1 (mmux_standard_sint_t     N  __attribute__((__unused__)),
-		    mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_flonumd$1_t
+mmux_standard_jnd$1 (mmux_standard_sint_t     N  __attribute__((__unused__)),
+		    mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
-  return mmux_standard_flonum$1_constant_nan();
+  return mmux_standard_flonumd$1_constant_nan();
 }
-mmux_standard_flonum$1_t
-mmux_standard_y0$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_flonumd$1_t
+mmux_standard_y0d$1 (mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
-  return mmux_standard_flonum$1_constant_nan();
+  return mmux_standard_flonumd$1_constant_nan();
 }
-mmux_standard_flonum$1_t
-mmux_standard_y1$1 (mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_flonumd$1_t
+mmux_standard_y1d$1 (mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
-  return mmux_standard_flonum$1_constant_nan();
+  return mmux_standard_flonumd$1_constant_nan();
 }
-mmux_standard_flonum$1_t
-mmux_standard_yn$1 (mmux_standard_sint_t     N  __attribute__((__unused__)),
-		    mmux_standard_flonum$1_t op __attribute__((__unused__)))
+mmux_standard_flonumd$1_t
+mmux_standard_ynd$1 (mmux_standard_sint_t     N  __attribute__((__unused__)),
+		    mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
-  return mmux_standard_flonum$1_constant_nan();
+  return mmux_standard_flonumd$1_constant_nan();
 }
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d32)
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d64)
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(d128)
+DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(32)
+DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(64)
+DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Standard types adapters: complex numbers mathematical functions not implemented by libdfp.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_UNARY_MATH_CPLX_FUNCTION]]],[[[m4_dnl
+mmux_standard_flonumcd$1_t
+$2cd$1 (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
+{
+  return mmux_standard_flonumcd$1_constant_nan();
+}]]])
+
+m4_define([[[DEFINE_BINARY_MATH_CPLX_FUNCTION]]],[[[m4_dnl
+mmux_standard_flonumcd$1_t
+$2cd$1 (mmux_standard_flonumcd$1_t Z1 __attribute__((__unused__)),
+	mmux_standard_flonumcd$1_t Z2 __attribute__((__unused__)))
+{
+  return mmux_standard_flonumcd$1_constant_nan();
+}]]])
+
+m4_define([[[DEFINE_MATH_CPLX_FUNCTIOS]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mulcd$1 (mmux_standard_flonumcd$1_t A, mmux_standard_flonumcd$1_t B)
+{
+  auto	Cre = A.re * B.re - A.im * B.im;
+  auto	Cim = A.re * B.im + B.re * A.im;
+  return CMPLXCD$1(Cre, Cim);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_div (mmux_standard_flonumcd$1_t A, mmux_standard_flonumcd$1_t B)
+{
+  auto	D   = B.re * B.re + B.im * B.im;
+  auto	Cre = (A.re * B.re + A.im * B.im) / D;
+  auto	Cim = (A.im * B.re - A.re * B.im) / D;
+  return CMPLXCD$1(Cre, Cim);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+abscd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  return sqrtd$1(Z.re * Z.re + Z.im * Z.im);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+argcd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  return atan2d$1(Z.im, Z.re);
+}
+
+/* TRIGONOMETRIC SINE FOR COMPLEX NUMBERS
+ *
+ * For the real part of a complex number Z we notice that:
+ *
+ *    Z + conj(Z) = (A+iB) + (A-iB) = (A+A) + i (B-B) = 2A
+ *
+ * and:
+ *
+ *    conj(sin(X+iY)) = sin(conj(X+iY)) = sin(X-iY)
+ *
+ * so:
+ *
+ *    2 Rep{sin(X+iY)} = sin(X+iY) + sin(X-iY)
+ *
+ * by definition:
+ *
+ *                exp[i(X+iY)] - exp[-i(X+iY)]   exp(iX)exp(-Y) - exp(-iX)exp(+Y)
+ *    sin(X+iY) = ---------------------------- = --------------------------------
+ *                            2i                               2i
+ *
+ *                exp[i(X-iY)] - exp[-i(X-iY)]   exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *    sin(X-iY) = ---------------------------- = --------------------------------
+ *                            2i                               2i
+ *
+ * so:
+ *
+ *    4i Rep{sin(X+iY)} =
+ *      = exp(iX)exp(-Y) - exp(-iX)exp(+Y) + exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *
+ * We notice also that:
+ *
+ *              exp(iX) - exp(-iX)                exp(Y) + exp(-Y)
+ *    sin(X)  = ------------------      cosh(Y) = ----------------
+ *                     2i                                2
+ *
+ * so:
+ *
+ *    4i sin(X) cosh(Y) = [exp(iX) - exp(-iX)] [exp(+Y) + exp(-Y)]
+ *      = exp(iX)exp(+Y) - exp(-iX)exp(+Y) + exp(iX)exp(-Y) - exp(-iX)exp(-Y)
+ *      = exp(iX)exp(-Y) - exp(-iX)exp(+Y) + exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *
+ * and finally:
+ *
+ *    4i Rep{sin(X+iY)} = 4i sin(X) cosh(Y)  =>  Rep{sin(X+iY)} = sin(X) cosh(Y)
+ *
+ * For the imaginary part of a complex number Z we notice that:
+ *
+ *    Z - conj(Z) = (A+iB) - (A-iB) = (A-A) + iB - (-iB) = iB + iB = 2iB
+ *
+ * and:
+ *
+ *    conj(sin(X+iY)) = sin(conj(X+iY)) = sin(X-iY)
+ *
+ * so:
+ *
+ *    2i Imp{sin(X+iY)} = sin(X+iY) - sin(X-iY)
+ *
+ * by definition:
+ *
+ *                exp[i(X+iY)] - exp[-i(X+iY)]   exp(iX)exp(-Y) - exp(-iX)exp(+Y)
+ *    sin(X+iY) = ---------------------------- = --------------------------------
+ *                            2i                               2i
+ *
+ *                exp[i(X-iY)] - exp[-i(X-iY)]   exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *    sin(X-iY) = ---------------------------- = --------------------------------
+ *                            2i                               2i
+ *
+ * so, given that 2i * 2i = -4:
+ *
+ *    -4 Imp{sin(X+iY)} =
+ *      = exp(iX)exp(-Y) - exp(-iX)exp(+Y) - exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *
+ * We notice also that:
+ *
+ *             exp(iX) + exp(-iX)                exp(Y) - exp(-Y)
+ *    cos(X) = ------------------      sinh(Y) = ----------------
+ *                     2                                2
+ *
+ * so:
+ *
+ *    4 cos(X) sinh(Y) = [exp(iX) + exp(-iX)] [exp(Y) - exp(-Y)]
+ *      =   exp(iX)exp(+Y) + exp(-iX)exp(+Y) - exp(iX)exp(-Y) - exp(-iX)exp(-Y)
+ *      = - exp(iX)exp(-Y) + exp(-iX)exp(+Y) + exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *
+ *    -4 cos(X) sinh(Y) =
+ *      =   exp(iX)exp(-Y) - exp(-iX)exp(+Y) - exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *
+ * and finally:
+ *
+ *    -4 Imp{sin(X+iY)} = -4 cos(X) sinh(Y)  =>  Imp{sin(X+iY)} = cos(X) sinh(Y)
+ *
+ */
+mmux_standard_flonumcd$1_t
+sincd$1 (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
+{
+  return CMPLXCD$1(sind$1(Z.re) * coshd$1(Z.im),
+		   cosd$1(Z.re) * sinhd$1(Z.im));
+}
+
+/* TRIGONOMETRIC COSINE FOR COMPLEX NUMBERS
+ *
+ * For the real part of a complex number Z we notice that:
+ *
+ *    Z + conj(Z) = (A+iB) + (A-iB) = (A+A) + i (B-B) = 2A
+ *
+ * and:
+ *
+ *    conj(cos(X+iY)) = cos(conj(X+iY)) = cos(X-iY)
+ *
+ * so:
+ *
+ *    2 Rep{cos(X+iY)} = cos(X+iY) + cos(X-iY)
+ *
+ * by definition:
+ *
+ *                exp[i(X+iY)] + exp[-i(X+iY)]   exp(iX)exp(-Y) + exp(-iX)exp(+Y)
+ *    cos(X+iY) = ---------------------------- = --------------------------------
+ *                             2                                2
+ *
+ *                exp[i(X-iY)] + exp[-i(X-iY)]   exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *    cos(X-iY) = ---------------------------- = --------------------------------
+ *                             2                                2
+ *
+ * so:
+ *
+ *    2 Rep{cos(X+iY)} =
+ *      = exp(iX)exp(-Y) + exp(-iX)exp(+Y) + exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *
+ * We notice also that:
+ *
+ *              exp(iX) + exp(-iX)                exp(Y) + exp(-Y)
+ *    cos(X)  = ------------------      cosh(Y) = ----------------
+ *                      2                                2
+ *
+ * so:
+ *
+ *    4 cos(X) cosh(Y) = [exp(iX) + exp(-iX)] [exp(Y) + exp(-Y)]
+ *      = exp(iX)exp(+Y) + exp(-iX)exp(+Y) + exp(iX)exp(-Y) + exp(-iX)exp(-Y)
+ *      = exp(iX)exp(-Y) + exp(-iX)exp(+Y) + exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *
+ * and finally:
+ *
+ *    4 Rep{cos(X+iY)} = 4 cos(X) cosh(Y)  =>  Rep{cos(X+iY)} = cos(X) cosh(Y)
+ *
+ *
+ * For the imaginary part of a complex number Z we notice that:
+ *
+ *    Z - conj(Z) = (A+iB) - (A-iB) = (A-A) + iB - (-iB) = iB + iB = 2iB
+ *
+ * and:
+ *
+ *    conj(cos(X+iY)) = cos(conj(X+iY)) = cos(X-iY)
+ *
+ * so:
+ *
+ *    2i Imp{cos(X+iY)} = cos(X+iY) - cos(X-iY)
+ *
+ * by definition:
+ *
+ *                exp[i(X+iY)] + exp[-i(X+iY)]   exp(iX)exp(-Y) + exp(-iX)exp(+Y)
+ *    cos(X+iY) = ---------------------------- = --------------------------------
+ *                             2                                2
+ *
+ *                exp[i(X-iY)] + exp[-i(X-iY)]   exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *    cos(X-iY) = ---------------------------- = --------------------------------
+ *                             2                                2
+ *
+ * so:
+ *
+ *    4i Imp{cos(X+iY)} =
+ *      = exp(iX)exp(-Y) + exp(-iX)exp(+Y) - exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *
+ * We notice also that:
+ *
+ *             exp(iX) - exp(-iX)                exp(Y) - exp(-Y)
+ *    sin(X) = ------------------      sinh(Y) = ----------------
+ *                    2i                                2
+ *
+ * so:
+ *
+ *    4i sin(X) sinh(Y) = [exp(iX) - exp(-iX)] [exp(+Y) - exp(-Y)]
+ *      =   exp(iX)exp(+Y) - exp(-iX)exp(+Y) - exp(iX)exp(-Y) + exp(-iX)exp(-Y)
+ *      = - exp(iX)exp(-Y) - exp(-iX)exp(+Y) + exp(iX)exp(+Y) + exp(-iX)exp(-Y)
+ *
+ *    -4i sin(X) sinh(Y) =
+ *      =   exp(iX)exp(-Y) + exp(-iX)exp(+Y) - exp(iX)exp(+Y) - exp(-iX)exp(-Y)
+ *
+ * and finally:
+ *
+ *    4i Imp{cos(X+iY)} = -4i sin(X) sinh(Y)  =>  Imp{cos(X+iY)} = - sin(X) sinh(Y)
+ *
+ */
+mmux_standard_flonumcd$1_t
+coscd$1 (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
+{
+  return CMPLXCD$1(   cosd$1(Z.re) * coshd$1(Z.im),
+		      - (sind$1(Z.re) * sinhd$1(Z.im)));
+}
+
+/* TRIGONOMETRIC TANGENT FOR COMPLEX NUMBERS
+ *
+ * Verified with WolframAlpha:
+ *
+ *    tan (x.rep + i * x.imp) = z.rep + i * z.imp
+ *
+ *                     sin (2 * x.rep)
+ *    z.rep = ----------------------------------
+ *            cos (2 * x.rep) + cosh (2 * x.imp)
+ *
+ *                    sinh (2 * x.imp)
+ *    z.imp = ----------------------------------
+ *            cos (2 * x.rep) + cosh (2 * x.imp)
+ *
+ * alternatively the following formula avoids  generating a NaN in some
+ * cases:
+ *
+ *              tanh (2 * x.imp)
+ *    z.imp = --------------------
+ *                 cos (2 * x.rep)
+ *            1 + ----------------
+ *                cosh (2 * x.imp)
+ *
+ * Using the alternative formula for  Z.IMP is slower because we cannot
+ * share the denominator with Z.REP.
+ *
+ */
+mmux_standard_flonumcd$1_t
+tancd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  auto	R2	= mmux_standard_flonumd$1_constant_two() * Z.re;
+  auto	I2	= mmux_standard_flonumd$1_constant_two() * Z.im;
+
+  if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.re) && MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.im)) {
+    /* Avoid generating a NaN in this case  by using the alternative formula for the
+       imaginary part. */
+    auto	A	= cosd$1(R2);
+    auto	B	= coshd$1(I2);
+    auto	rop_re	= sind$1(R2) / (A + B);
+    auto	rop_im	= tanhd$1(I2) / (mmux_standard_flonumd$1_constant_one() + A / B);
+    return CMPLXCD$1(rop_re, rop_im);
+  } else {
+    /* This is faster. */
+    auto	den	= cosd$1(R2) + coshd$1(I2);
+    auto	rop_re	=  sind$1(R2) / den;
+    auto	rop_im	= sinhd$1(I2) / den;
+    return CMPLXCD$1(rop_re, rop_im);
+  }
+}
+
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		asin)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		acos)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		atan)
+
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		sinh)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		cosh)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		tanh)
+
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		asinh)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		acosh)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		atanh)
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+expcd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  /* exp(Z) = exp(Rep{Z}) * (cos(Imp{Z}) + i * sin(Imp{Z})
+   *        = exp(Rep{Z}) * cos(Imp{Z}) + i * exp(Rep{Z}) * sin(Imp{Z})
+   */
+  auto	exp_rep_Z	= expd$1(Z.re);
+  auto	cos_imp_Z	= cosd$1(Z.im);
+  auto	sin_imp_Z	= sind$1(Z.im);
+  auto	rep_rop		= exp_rep_Z * cos_imp_Z;
+  auto	imp_rop		= exp_rep_Z * sin_imp_Z;
+  return CMPLXCD$1(rep_rop, imp_rop);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+exp2cd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  /* 2^Z = exp( log ( 2^Z ) ) = exp( Z * log( 2 ) ) */
+  auto	natural_logarithm_of_two = CMPLXCD$1(mmux_standard_flonumd$1_constant_LN2(),
+					     mmux_standard_flonumd$1_constant_zero());
+  return expcd$1( mulcd$1(Z, natural_logarithm_of_two) );
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+exp10cd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  /* 10^Z = exp( log ( 2^Z ) ) = exp( Z * log( 19 ) ) */
+  auto	natural_logarithm_of_ten = CMPLXCD$1(mmux_standard_flonumd$1_constant_LN10(),
+					     mmux_standard_flonumd$1_constant_zero());
+  return expcd$1( mulcd$1(Z, natural_logarithm_of_ten) );
+}
+
+/* ------------------------------------------------------------------ */
+
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+logcd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  auto	radius		= abscd$1(Z);
+  auto	ln_of_radius	= logd$1(radius);
+  auto	argument	= argcd$1(Z);
+  return CMPLXCD$1(ln_of_radius, argument);
+}
+/* log_2 Z = log Z / log 2 */
+mmux_standard_flonumcd$1_t
+log2cd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  return mmux_standard_flonumcd$1_div(logcd$1(Z), mmux_standard_flonumcd$1_constant_two());
+}
+/* log_10 Z = log Z / log 10 */
+mmux_standard_flonumcd$1_t
+log10cd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  return mmux_standard_flonumcd$1_div(logcd$1(Z), mmux_standard_flonumcd$1_constant_ten());
+}
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_BINARY_MATH_CPLX_FUNCTION($1,		pow)
+DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		sqrt)
+/* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z )) */
+static mmux_standard_flonumcd$1_t
+cbrtcd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  auto one_third =									\
+    CMPLXCD$1(mmux_standard_flonumd$1_constant_one() /
+	      mmux_standard_flonumd$1_literal(3.0),
+	      mmux_standard_flonumd$1_constant_zero());
+  return expcd$1(mulcd$1(one_third, logcd$1(Z)));
+}
+
+]]])
+m4_divert(0)m4_dnl
+DEFINE_MATH_CPLX_FUNCTIOS(32)
+DEFINE_MATH_CPLX_FUNCTIOS(64)
+DEFINE_MATH_CPLX_FUNCTIOS(128)
 
 
 /** --------------------------------------------------------------------
@@ -159,12 +562,12 @@ mmux_flonumd$1_abs (mmux_flonumd$1_t X)
 mmux_flonumcd$1_part_t
 mmux_flonumcd$1_abs (mmux_flonumcd$1_t Z)
 {
-  return mmux_flonumd$1(sqrtd$1(Z.value.re * Z.value.re + Z.value.im * Z.value.im));
+  return mmux_flonumd$1(abscd$1(Z.value));
 }
 mmux_flonumcd$1_part_t
 mmux_flonumcd$1_arg (mmux_flonumcd$1_t Z)
 {
-  return mmux_flonumd$1(atan2d$1(Z.value.im, Z.value.re));
+  return mmux_flonumd$1(argcd$1(Z.value));
 }
 /* mmux_flonumcd$1_conj implemented as inline function */
 ]]])
@@ -180,10 +583,6 @@ DEFINE_REAL_CPLX_BASIC_FUNCTIONS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_REAL_PREDICATES]]],[[[
-#define MMUX_STANDARD_FLONUMD$1_IS_ZERO(X)	(FP_ZERO	== (fpclassify(X)))
-#define MMUX_STANDARD_FLONUMD$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
-#define MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
-
 __attribute__((__const__)) bool
 mmux_flonumd$1_is_zero (mmux_flonumd$1_t X)
 {
@@ -510,8 +909,8 @@ mmux_flonumd$1_constant_nan (void)
 mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_nan (void)
 {
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_nan(),
-						   mmux_standard_flonumd$1_constant_nan());
+  return CMPLXCD$1(mmux_standard_flonumd$1_constant_nan(),
+		   mmux_standard_flonumd$1_constant_nan());
 }
 mmux_flonumcd$1_t
 mmux_flonumcd$1_constant_nan (void)
@@ -526,7 +925,7 @@ DEFINE_REAL_MATH_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematical operations.
+ ** Mathematics: real decimal floating-point functions.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -617,243 +1016,52 @@ DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematics builtins.
+ ** Mathematics: complex decimal floating-point functions.
  ** ----------------------------------------------------------------- */
 
-#if 0
-m4_divert(-1)m4_dnl
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_MATH_FUNCTION]]],[[[mmux_flonumcd$1_t
+mmux_flonumcd$1_$2 (mmux_flonumcd$1_t X)
+{
+  return mmux_flonumcd$1($2cd$1(X.value));
+}]]])
 
-m4_dnl $1 - type stem
-m4_dnl $2 - builtin tail identifier
-m4_dnl $3 - mathematical function identifier, empty if not to be implemented
-m4_dnl $4 - type parser macro
-m4_dnl $5 - C preprocessor for optional definition
-m4_define([[[DEFINE_UNARY_CFUNC]]],[[[m4_ifelse($#,5,,
-[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_$1_t op) { return mmux_$1($3(op.value)); }
-]]])]]])]]])
+m4_define([[[DEFINE_BINARY_MATH_FUNCTION]]],[[[mmux_flonumcd$1_t
+mmux_flonumcd$1_$2 (mmux_flonumcd$1_t X, mmux_flonumcd$1_t Y)
+{
+  return mmux_flonumcd$1($2cd$1(X.value, Y.value));
+}]]])
 
-m4_dnl $1 - type stem
-m4_dnl $2 - builtin tail identifier
-m4_dnl $3 - mathematical function identifier, empty if not to be implemented
-m4_dnl $4 - type parser macro
-m4_dnl $5 - C preprocessor for optional definition
-m4_define([[[DEFINE_BINARY_CFUNC]]],[[[m4_ifelse($#,5,,
-[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (mmux_$1_t op1, mmux_$1_t op2) { return mmux_$1($3(op1.value, op2.value)); }
-]]])]]])]]])
+m4_define([[[DEFINE_FLONUMCD_MATH_FUNCTIONS]]],[[[m4_dnl
+DEFINE_UNARY_MATH_FUNCTION($1,		sin);
+DEFINE_UNARY_MATH_FUNCTION($1,		cos);
+DEFINE_UNARY_MATH_FUNCTION($1,		tan);
 
-m4_dnl $1 - type stem
-m4_dnl $2 - builtin tail identifier
-m4_dnl $3 - mathematical function identifier, empty if not to be implemented
-m4_dnl $4 - type parser macro
-m4_dnl $5 - C preprocessor for optional definition
-m4_define([[[DEFINE_BINARYN_CFUNC]]],[[[m4_ifelse($#,5,,
-[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 5 got: $#
-)]]])MMUX_CONDITIONAL_CODE([[[$5]]],[[[m4_ifelse([[[$3]]],,,[[[
-mmux_$1_t mmux_$1_$2 (int N, mmux_$1_t op) { return mmux_$1($3(N, op.value)); }
-]]])]]])]]])
+DEFINE_UNARY_MATH_FUNCTION($1,		asin);
+DEFINE_UNARY_MATH_FUNCTION($1,		acos);
+DEFINE_UNARY_MATH_FUNCTION($1,		atan);
 
-m4_divert(0)m4_dnl
+DEFINE_UNARY_MATH_FUNCTION($1,		sinh);
+DEFINE_UNARY_MATH_FUNCTION($1,		cosh);
+DEFINE_UNARY_MATH_FUNCTION($1,		tanh);
 
-m4_dnl ----------------------------------------------------------------------
+DEFINE_UNARY_MATH_FUNCTION($1,		asinh);
+DEFINE_UNARY_MATH_FUNCTION($1,		acosh);
+DEFINE_UNARY_MATH_FUNCTION($1,		atanh);
 
-m4_dnl  $1 - type stem
-m4_dnl  $2 - type parser macro
-m4_dnl  $3 - C preprocessor for optional definition
-
-m4_dnl  $4 - identifier of C function implementing sin
-m4_dnl  $5 - identifier of C function implementing cos
-m4_dnl  $6 - identifier of C function implementing tan
-m4_dnl  $7 - identifier of C function implementing asin
-m4_dnl  $8 - identifier of C function implementing acos
-m4_dnl  $9 - identifier of C function implementing atan
-m4_dnl $10 - identifier of C function implementing atan2
-
-m4_dnl $11 - identifier of C function implementing sinh
-m4_dnl $12 - identifier of C function implementing cosh
-m4_dnl $13 - identifier of C function implementing tanh
-m4_dnl $14 - identifier of C function implementing asinh
-m4_dnl $15 - identifier of C function implementing acosh
-m4_dnl $16 - identifier of C function implementing atanh
-
-m4_dnl $17 - identifier of C function implementing exp
-m4_dnl $18 - identifier of C function implementing exp2
-m4_dnl $19 - identifier of C function implementing exp10
-m4_dnl $20 - identifier of C function implementing log
-m4_dnl $21 - identifier of C function implementing log10
-m4_dnl $22 - identifier of C function implementing log2
-m4_dnl $23 - identifier of C function implementing logb
-m4_dnl $24 - identifier of C function implementing pow
-m4_dnl $25 - identifier of C function implementing sqrt
-m4_dnl $26 - identifier of C function implementing cbrt
-m4_dnl $27 - identifier of C function implementing hypot
-m4_dnl $28 - identifier of C function implementing expm1
-m4_dnl $29 - identifier of C function implementing log1p
-
-m4_dnl $30 - identifier of C function implementing erf
-m4_dnl $31 - identifier of C function implementing erfc
-m4_dnl $32 - identifier of C function implementing lgamma
-m4_dnl $33 - identifier of C function implementing tgamma
-m4_dnl $34 - identifier of C function implementing j0
-m4_dnl $35 - identifier of C function implementing j1
-m4_dnl $36 - identifier of C function implementing jn
-m4_dnl $37 - identifier of C function implementing y0
-m4_dnl $38 - identifier of C function implementing y1
-m4_dnl $39 - identifier of C function implementing yn
-
-m4_define([[[DEFINE_CFUNCS]]],[[[m4_ifelse($#,39,,
-[[[m4_fatal_error(m4___program__:m4___file__:m4___line__: wrong number of arguments expected 39 got: $#
-)]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[sin]]],	[[[$4]]],  [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[cos]]],	[[[$5]]],  [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[tan]]],	[[[$6]]],  [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[asin]]],	[[[$7]]],  [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[acos]]],	[[[$8]]],  [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[atan]]],	[[[$9]]],  [[[$2]]], [[[$3]]])
-DEFINE_BINARY_CFUNC([[[$1]]], [[[atan2]]],	[[[$10]]], [[[$2]]], [[[$3]]])
-
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[sinh]]],	[[[$11]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[cosh]]],	[[[$12]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[tanh]]],	[[[$13]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[asinh]]],	[[[$14]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[acosh]]],	[[[$15]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[atanh]]],	[[[$16]]], [[[$2]]], [[[$3]]])
-
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[exp]]],	[[[$17]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[exp2]]],	[[[$18]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[exp10]]],	[[[$19]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[log]]],	[[[$20]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[log10]]],	[[[$21]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[log2]]],	[[[$22]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[logb]]],	[[[$23]]], [[[$2]]], [[[$3]]])
-DEFINE_BINARY_CFUNC([[[$1]]], [[[pow]]],	[[[$24]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[sqrt]]],	[[[$25]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[cbrt]]],	[[[$26]]], [[[$2]]], [[[$3]]])
-DEFINE_BINARY_CFUNC([[[$1]]], [[[hypot]]],	[[[$27]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[expm1]]],	[[[$28]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[log1p]]],	[[[$29]]], [[[$2]]], [[[$3]]])
-
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[erf]]],	[[[$30]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[erfc]]],	[[[$31]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[lgamma]]],	[[[$32]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[tgamma]]],	[[[$33]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[j0]]],		[[[$34]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[j1]]],		[[[$35]]], [[[$2]]], [[[$3]]])
-DEFINE_BINARYN_CFUNC([[[$1]]],[[[jn]]],		[[[$36]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[y0]]],		[[[$37]]], [[[$2]]], [[[$3]]])
-DEFINE_UNARY_CFUNC([[[$1]]],  [[[y1]]],		[[[$38]]], [[[$2]]], [[[$3]]])
-DEFINE_BINARYN_CFUNC([[[$1]]],[[[yn]]],		[[[$39]]], [[[$2]]], [[[$3]]])
+DEFINE_UNARY_MATH_FUNCTION($1,		exp);
+DEFINE_UNARY_MATH_FUNCTION($1,		exp2);
+DEFINE_UNARY_MATH_FUNCTION($1,		exp10);
+DEFINE_UNARY_MATH_FUNCTION($1,		log);
+DEFINE_UNARY_MATH_FUNCTION($1,		log2);
+DEFINE_UNARY_MATH_FUNCTION($1,		log10);
+DEFINE_BINARY_MATH_FUNCTION($1,		pow);
+DEFINE_UNARY_MATH_FUNCTION($1,		sqrt);
+DEFINE_UNARY_MATH_FUNCTION($1,		cbrt);
 ]]])
-
-/* ------------------------------------------------------------------ */
-
-DEFINE_CFUNCS([[[flonumd32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMD32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]],
-	      [[[sind32]]],		[[[cosd32]]],		[[[tand32]]],
-	      [[[asind32]]],		[[[acosd32]]],		[[[atand32]]],		[[[atan2d32]]],
-	      [[[sinhd32]]],		[[[coshd32]]],		[[[tanhd32]]],
-	      [[[asinhd32]]],		[[[acoshd32]]],		[[[atanhd32]]],
-	      [[[expd32]]],		[[[exp2d32]]],		[[[exp10d32]]],
-	      [[[logd32]]],		[[[log10d32]]],		[[[log2d32]]],		[[[logbd32]]],
-	      [[[powd32]]],		[[[sqrtd32]]],		[[[cbrtd32]]],		[[[hypotd32]]],
-	      [[[expm1d32]]],		[[[log1pd32]]],
-	      [[[erfd32]]],		[[[erfcd32]]],
-	      [[[lgammad32]]],		[[[tgammad32]]],
-	      [[[]]],			[[[]]],			[[[]]],
-	      [[[]]],			[[[]]],			[[[]]])
-#if 0 /* not implemented by libdfp */
-	      [[[j0d32]]],		[[[j1d32]]],		[[[jnd32]]],
-	      [[[y0d32]]],		[[[y1d32]]],		[[[ynd32]]])
-#endif
-
-DEFINE_CFUNCS([[[flonumd64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMD64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]],
-	      [[[sind64]]],		[[[cosd64]]],		[[[tand64]]],
-	      [[[asind64]]],		[[[acosd64]]],		[[[atand64]]],		[[[atan2d64]]],
-	      [[[sinhd64]]],		[[[coshd64]]],		[[[tanhd64]]],
-	      [[[asinhd64]]],		[[[acoshd64]]],		[[[atanhd64]]],
-	      [[[expd64]]],		[[[exp2d64]]],		[[[exp10d64]]],
-	      [[[logd64]]],		[[[log10d64]]],		[[[log2d64]]],		[[[logbd64]]],
-	      [[[powd64]]],		[[[sqrtd64]]],		[[[cbrtd64]]],		[[[hypotd64]]],
-	      [[[expm1d64]]],		[[[log1pd64]]],
-	      [[[erfd64]]],		[[[erfcd64]]],
-	      [[[lgammad64]]],		[[[tgammad64]]],
-	      [[[]]],			[[[]]],			[[[]]],
-	      [[[]]],			[[[]]],			[[[]]])
-#if 0 /* not implemented by libdfp */
-	      [[[j0d64]]],		[[[j1d64]]],		[[[jnd64]]],
-	      [[[y0d64]]],		[[[y1d64]]],		[[[ynd64]]])
-#endif
-
-DEFINE_CFUNCS([[[flonumd128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMD128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]],
-	      [[[sind128]]],		[[[cosd128]]],		[[[tand128]]],
-	      [[[asind128]]],		[[[acosd128]]],		[[[atand128]]],		[[[atan2d128]]],
-	      [[[sinhd128]]],		[[[coshd128]]],		[[[tanhd128]]],
-	      [[[asinhd128]]],		[[[acoshd128]]],	[[[atanhd128]]],
-	      [[[expd128]]],		[[[exp2d128]]],		[[[exp10d128]]],
-	      [[[logd128]]],		[[[log10d128]]],	[[[log2d128]]],		[[[logbd128]]],
-	      [[[powd128]]],		[[[sqrtd128]]],		[[[cbrtd128]]],		[[[hypotd128]]],
-	      [[[expm1d128]]],		[[[log1pd128]]],
-	      [[[erfd128]]],		[[[erfcd128]]],
-	      [[[lgammad128]]],		[[[tgammad128]]],
-	      [[[]]],			[[[]]],			[[[]]],
-	      [[[]]],			[[[]]],			[[[]]])
-#if 0 /* not implemented by libdfp */
-	      [[[j0d128]]],		[[[j1d128]]],		[[[jnd128]]],
-	      [[[y0d128]]],		[[[y1d128]]],		[[[ynd128]]])
-#endif
-
-/* ------------------------------------------------------------------ */
-
-DEFINE_CFUNCS([[[flonumcd32]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMCD32]]], [[[MMUX_CC_TYPES_HAS_FLONUMCD32_UNIMPLEMENTED]]],
-	      [[[csind32]]],	[[[ccosd32]]],		[[[ctand32]]],
-	      [[[casind32]]],	[[[cacosd32]]],		[[[catand32]]],		[[[]]],
-	      [[[csinhd32]]],	[[[ccoshd32]]],		[[[ctanhd32]]],
-	      [[[casinhd32]]],	[[[cacoshd32]]],	[[[catanhd32]]],
-	      [[[cexpd32]]],	[[[]]],			[[[]]],
-	      [[[clogd32]]],	[[[clog10d32]]],	[[[]]],			[[[]]],
-	      [[[cpowd32]]],	[[[csqrtd32]]],		[[[]]],			[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],			[[[]]],
-	      [[[]]],		[[[]]],			[[[]]])
-
-DEFINE_CFUNCS([[[flonumcd64]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMCD64]]], [[[MMUX_CC_TYPES_HAS_FLONUMCD64_UNIMPLEMENTED]]],
-	      [[[csind64]]],	[[[ccosd64]]],		[[[ctand64]]],
-	      [[[casind64]]],	[[[cacosd64]]],		[[[catand64]]],		[[[]]],
-	      [[[csinhd64]]],	[[[ccoshd64]]],		[[[ctanhd64]]],
-	      [[[casinhd64]]],	[[[cacoshd64]]],	[[[catanhd64]]],
-	      [[[cexpd64]]],	[[[]]],			[[[]]],
-	      [[[clogd64]]],	[[[clog10d64]]],	[[[]]],			[[[]]],
-	      [[[cpowd64]]],	[[[csqrtd64]]],		[[[]]],			[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],			[[[]]],
-	      [[[]]],		[[[]]],			[[[]]])
-
-DEFINE_CFUNCS([[[flonumcd128]]],
-	      [[[MMUX_BASH_PARSE_CFUNC_ARG_FLONUMCD128]]],[[[MMUX_CC_TYPES_HAS_FLONUMCD128_UNIMPLEMENTED]]],
-	      [[[csind128]]],	[[[ccosd128]]],		[[[ctand128]]],
-	      [[[casind128]]],	[[[cacosd128]]],	[[[catand128]]],	[[[]]],
-	      [[[csinhd128]]],	[[[ccoshd128]]],	[[[ctanhd128]]],
-	      [[[casinhd128]]],	[[[cacoshd128]]],	[[[catanhd128]]],
-	      [[[cexpd128]]],	[[[]]],			[[[]]],
-	      [[[clogd128]]],	[[[clog10d128]]],	[[[]]],			[[[]]],
-	      [[[cpowd128]]],	[[[csqrtd128]]],	[[[]]],			[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],
-	      [[[]]],		[[[]]],			[[[]]],
-	      [[[]]],		[[[]]],			[[[]]])
-
-#endif
+m4_divert(0)m4_dnl
+DEFINE_FLONUMCD_MATH_FUNCTIONS(32)
+DEFINE_FLONUMCD_MATH_FUNCTIONS(64)
+DEFINE_FLONUMCD_MATH_FUNCTIONS(128)
 
 /* end of file */

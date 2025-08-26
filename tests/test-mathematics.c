@@ -17,6 +17,9 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
+#undef  _GNU_SOURCE
+#define _GNU_SOURCE	1
+
 #include <mmux-cc-types.h>
 #include <test-common.h>
 
@@ -24,28 +27,36 @@
 static void
 test_mathematics_sin (void)
 {
-  printf("running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_REAL
 #define DOIT_FOR_REAL(STEM)							\
   {										\
     auto	op1 = mmux_## STEM(0.123);					\
     auto	rop = mmux_## STEM(0.12269009);					\
-    auto	mrg = mmux_## STEM(1e-6);					\
-    assert(mmux_##STEM##_equal_absmargin(rop, mmux_##STEM##_sin(op1), mrg));	\
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));		\
+    auto	eps = mmux_## STEM(1e-6);					\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_sin(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sin(op1), eps));		\
+    dprintf(2," %s,", #STEM);							\
   }
 
 #undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)							\
-  {										\
-    auto	op1 = mmux_##STEM##_make_rectangular(5.0,3.0);			\
-    auto	rop = mmux_##STEM##_make_rectangular(-9.654125477,2.841692296);	\
-    auto	mrg = mmux_##STEM##_make_rectangular(1e-6,1e-6);		\
-    assert(mmux_##STEM##_equal_absmargin(rop, mmux_##STEM##_sin(op1), mrg));	\
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sin(op1), mrg));		\
+#define DOIT_FOR_CPLX(STEM)								\
+  {											\
+    auto	op1 = mmux_##STEM##_make_rectangular_literal(5.0,3.0);			\
+    auto	rop = mmux_##STEM##_make_rectangular_literal(-9.654125477,2.841692296);	\
+    auto	eps = mmux_##STEM##_make_rectangular_literal(1e-3,1e-3);		\
+    if (0) {										\
+      dprintf(2, "\napplication for " #STEM " expected '");				\
+      mmux_##STEM##_dprintf(2, rop);							\
+      dprintf(2, "' got '");								\
+      mmux_##STEM##_dprintf(2, mmux_##STEM##_sin(op1));					\
+      dprintf(2, "' ");									\
+    }											\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_sin(op1), eps));		\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sin(op1), eps));			\
+    dprintf(2," %s,", #STEM);								\
   }
-
 
   DOIT_FOR_REAL(flonumfl);
   DOIT_FOR_REAL(flonumdb);
@@ -108,7 +119,6 @@ test_mathematics_sin (void)
   DOIT_FOR_CPLX(flonumcf128x);
 #endif
 
-#if 0 /* not implemented */
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
   DOIT_FOR_CPLX(flonumcd32);
 #endif
@@ -118,172 +128,117 @@ test_mathematics_sin (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
   DOIT_FOR_CPLX(flonumcd128);
 #endif
-#endif
 
+  dprintf(2, " DONE.\n\n");
 }
-
-#if 0
 
 
 static void
 test_mathematics_cos (void)
 {
-  printf("running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
-  {
-    mmux_flonumfl_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
+#undef  DOIT_FOR_REAL
+#define DOIT_FOR_REAL(STEM)							\
+  {										\
+    auto	op1 = mmux_## STEM(0.123);					\
+    auto	rop = mmux_## STEM(0.9924450321);				\
+    auto	eps = mmux_## STEM(1e-6);					\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_cos(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cos(op1), eps));		\
+    dprintf(2," %s,", #STEM);							\
   }
-  {
-    mmux_flonumdb_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
+
+#undef  DOIT_FOR_CPLX
+#define DOIT_FOR_CPLX(STEM)								\
+  {											\
+    auto	op1 = mmux_##STEM##_make_rectangular_literal(5.0,3.0);			\
+    auto	rop = mmux_##STEM##_make_rectangular_literal(2.855815004,9.606383448);	\
+    auto	eps = mmux_##STEM##_make_rectangular_literal(1e-3,1e-3);		\
+    if (0) {										\
+      dprintf(2, "\napplication for " #STEM " expected '");				\
+      mmux_##STEM##_dprintf(2, rop);							\
+      dprintf(2, "' got '");								\
+      mmux_##STEM##_dprintf(2, mmux_##STEM##_cos(op1));					\
+      dprintf(2, "' ");									\
+    }											\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_cos(op1), eps));		\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cos(op1), eps));			\
+    dprintf(2," %s,", #STEM);								\
   }
+
+  DOIT_FOR_REAL(flonumfl);
+  DOIT_FOR_REAL(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  {
-    mmux_flonumldb_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  {
-    mmux_flonumf32_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  {
-    mmux_flonumf64_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  {
-    mmux_flonumf128_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  {
-    mmux_flonumf32x_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  {
-    mmux_flonumf64x_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  {
-    mmux_flonumf128x_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  {
-    mmux_flonumd32_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumd32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  {
-    mmux_flonumd64_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumd64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  {
-    mmux_flonumd128_t	op1 = 0.123, rop = 0.9924450321, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumd128);
 #endif
 
-  {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
-
-  {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
-
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+  DOIT_FOR_CPLX(flonumcfl);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+  DOIT_FOR_CPLX(flonumcdb);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_CPLX(flonumcf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(2.855815004,9.606383448);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cos(op1), mrg));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_CPLX(flonumcd32);
 #endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_CPLX(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_CPLX(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
 }
 
 
@@ -292,161 +247,124 @@ test_mathematics_tan (void)
 {
   printf("running test: %s\n", __func__);
 
-  {
-    mmux_flonumfl_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
+#undef	OP1
+#define	OP1		0.123
+#undef	ROP
+#define	ROP		0.123'624'066
+
+#undef  COP1RE
+#define COP1RE		5.0
+#undef  COP1IM
+#define COP1IM		3.0
+#undef	CROPRE
+#define	CROPRE		-0.002'708'235'84
+#undef	CROPIM
+#define	CROPIM		1.004'164'71
+
+#undef  DOIT_FOR_REAL
+#define DOIT_FOR_REAL(STEM)							\
+  {										\
+    auto	op1 = mmux_## STEM(OP1);					\
+    auto	rop = mmux_## STEM(ROP);					\
+    auto	eps = mmux_## STEM(1e-6);					\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_tan(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_tan(op1), eps));		\
+    dprintf(2," %s,", #STEM);							\
   }
-  {
-    mmux_flonumdb_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
+
+#undef  DOIT_FOR_CPLX
+#define DOIT_FOR_CPLX(STEM)								\
+  {											\
+    auto	op1 = mmux_##STEM##_make_rectangular_literal(COP1RE,COP1RE);		\
+    auto	rop = mmux_##STEM##_make_rectangular_literal(CROPRE,CROPIM);		\
+    auto	eps = mmux_##STEM##_make_rectangular_literal(1e-6,1e-6);		\
+    if (1) {										\
+      dprintf(2, "\napplication for " #STEM " expected '");				\
+      mmux_##STEM##_dprintf(2, rop);							\
+      dprintf(2, "' got '");								\
+      mmux_##STEM##_dprintf(2, mmux_##STEM##_tan(op1));					\
+      dprintf(2, "' ");									\
+    }											\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_tan(op1), eps));		\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_tan(op1), eps));			\
+    dprintf(2," %s,", #STEM);								\
   }
+
+  DOIT_FOR_REAL(flonumfl);
+  DOIT_FOR_REAL(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  {
-    mmux_flonumldb_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  {
-    mmux_flonumf32_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  {
-    mmux_flonumf64_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  {
-    mmux_flonumf128_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  {
-    mmux_flonumf32x_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  {
-    mmux_flonumf64x_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  {
-    mmux_flonumf128x_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumf128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  {
-    mmux_flonumd32_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumd32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  {
-    mmux_flonumd64_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumd64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  {
-    mmux_flonumd128_t	op1 = 0.123, rop = 0.123'624'066, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_REAL(flonumd128);
 #endif
 
-  {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
-
-  {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
-
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+  DOIT_FOR_CPLX(flonumcfl);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+  DOIT_FOR_CPLX(flonumcdb);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+  DOIT_FOR_CPLX(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_CPLX(flonumcf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(-0.002'708'235'84,1.004'164'71);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tan(op1), mrg));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_CPLX(flonumcd32);
 #endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_CPLX(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_CPLX(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
 }
+
+#if 0
 
 
 static void
@@ -4644,9 +4562,9 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   test_set_output_formats();
 
   if (1) {	test_mathematics_sin();		}
-#if 0
   if (1) {	test_mathematics_cos();		}
   if (1) {	test_mathematics_tan();		}
+#if 0
   if (1) {	test_mathematics_asin();	}
   if (1) {	test_mathematics_acos();	}
   if (1) {	test_mathematics_atan();	}

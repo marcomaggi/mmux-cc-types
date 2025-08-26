@@ -7,6 +7,8 @@
   mmux_flonumdb_real_part()
   mmux_flonumdb_imag_part()
 
+* Implement mathematical functions for all types: sqr, cbrt.
+
 ### end of file
 # Local Variables:
 # mode: text

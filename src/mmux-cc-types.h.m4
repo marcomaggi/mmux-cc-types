@@ -50,131 +50,52 @@ extern "C" {
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
-#undef  mmux_standard_unsigned_literal
 #define mmux_standard_unsigned_literal(X)	(X ## U)
-
-#undef  mmux_standard_pointer_literal
 #define mmux_standard_pointer_literal(X)	((void *)(mmux_standard_unsigned_literal(X)))
-
-#undef  mmux_standard_pointerc_literal
 #define mmux_standard_pointerc_literal(X)	((void const *)(mmux_standard_unsigned_literal(X)))
-
-#undef  mmux_standard_char_literal
 m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
-#define mmux_standard_char_literal(X)		(mmux_standard_unsigned_literal(X))
-]]],[[[m4_dnl
-#define mmux_standard_char_literal(X)		(X)
-]]])m4_dnl
-
-#undef  mmux_standard_schar_literal
+#define mmux_standard_char_literal(X)		(mmux_standard_unsigned_literal(X))]]],[[[m4_dnl
+#define mmux_standard_char_literal(X)		(X)]]])
 #define mmux_standard_schar_literal(X)		(X)
-
-#undef  mmux_standard_uchar_literal
 #define mmux_standard_uchar_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_sshort_literal
 #define mmux_standard_sshort_literal(X)		(X)
-
-#undef  mmux_standard_ushort_literal
 #define mmux_standard_ushort_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_sint_literal
 #define mmux_standard_sint_literal(X)		(X)
-
-#undef  mmux_standard_uint_literal
 #define mmux_standard_uint_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_slong_literal
 #define mmux_standard_slong_literal(X)		(X)
-
-#undef  mmux_standard_ulong_literal
 #define mmux_standard_ulong_literal(X)		(mmux_standard_unsigned_literal(X))
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
-#undef  mmux_standard_sllong_literal
-#define mmux_standard_sllong_literal(X)		(X ## LL)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
-#undef  mmux_standard_ullong_literal
-#define mmux_standard_ullong_literal(X)		(X ## ULL)
-]]])
-
-#undef  mmux_standard_sint8_literal
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[SLLONG]]],[[[m4_dnl
+#define mmux_standard_sllong_literal(X)		(X ## LL)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[ULLONG]]],[[[m4_dnl
+#define mmux_standard_ullong_literal(X)		(X ## ULL)]]])
 #define mmux_standard_sint8_literal(X)		(X)
-
-#undef  mmux_standard_uint8_literal
 #define mmux_standard_uint8_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_sint16_literal
 #define mmux_standard_sint16_literal(X)		(X)
-
-#undef  mmux_standard_uint16_literal
 #define mmux_standard_uint16_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_sint32_literal
 #define mmux_standard_sint32_literal(X)		(X)
-
-#undef  mmux_standard_uint32_literal
 #define mmux_standard_uint32_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_sint64_literal
 #define mmux_standard_sint64_literal(X)		(X)
-
-#undef  mmux_standard_uint64_literal
 #define mmux_standard_uint64_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_byte_literal
 #define mmux_standard_byte_literal(X)		(X)
-
-#undef  mmux_standard_octet_literal
 #define mmux_standard_octet_literal(X)		(mmux_standard_unsigned_literal(X))
-
-#undef  mmux_standard_flonumfl_literal
-#define mmux_standard_flonumfl_literal(X)		(X ## F)
-
-#undef  mmux_standard_flonumdb_literal
-#define mmux_standard_flonumdb_literal(X)		(X)
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],[[[
-#undef  mmux_standard_flonumldb_literal
-#define mmux_standard_flonumldb_literal(X)	(X ## L)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],[[[
-#undef  mmux_standard_flonumf32_literal
-#define mmux_standard_flonumf32_literal(X)	(X ## f32)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],[[[
-#undef  mmux_standard_flonumf64_literal
-#define mmux_standard_flonumf64_literal(X)	(X ## f64)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],[[[
-#undef  mmux_standard_flonumf128_literal
-#define mmux_standard_flonumf128_literal(X)	(X ## f128)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],[[[
-#undef  mmux_standard_flonumf32x_literal
-#define mmux_standard_flonumf32x_literal(X)	(X ## f32x)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],[[[
-#undef  mmux_standard_flonumf64x_literal
-#define mmux_standard_flonumf64x_literal(X)	(X ## f64x)
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]],[[[
-#undef  mmux_standard_flonumf128x_literal
-#define mmux_standard_flonumf128x_literal(X)	(X ## f128x)
-]]])
-
-m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[
-#undef  mmux_standard_$1_literal
-#define mmux_standard_$1_literal(X)		(mmux_standard_[[[]]]$2[[[]]]_literal(X))
-]]])
+#define mmux_standard_flonumfl_literal(X)	(X ## F)
+#define mmux_standard_flonumdb_literal(X)	(X)
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMLDB]]],[[[m4_dnl
+#define mmux_standard_flonumldb_literal(X)	(X ## L)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF32]]],[[[m4_dnl
+#define mmux_standard_flonumf32_literal(X)	(X ## f32)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF64]]],[[[m4_dnl
+#define mmux_standard_flonumf64_literal(X)	(X ## f64)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128]]],[[[m4_dnl
+#define mmux_standard_flonumf128_literal(X)	(X ## f128)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF32X]]],[[[m4_dnl
+#define mmux_standard_flonumf32x_literal(X)	(X ## f32x)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF64X]]],[[[m4_dnl
+#define mmux_standard_flonumf64x_literal(X)	(X ## f64x)]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128X]]],[[[m4_dnl
+#define mmux_standard_flonumf128x_literal(X)	(X ## f128x)]]])
+m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[m4_dnl
+#define mmux_standard_$1_literal(X)		(mmux_standard_[[[]]]$2[[[]]]_literal(X))]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ssize,	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(usize,	[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
@@ -195,50 +116,28 @@ DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 
 /* ------------------------------------------------------------------ */
 
-#undef  mmux_standard_flonumcfl_part_literal
 #define mmux_standard_flonumcfl_part_literal(VALUE)	(mmux_standard_flonumfl_literal(VALUE))
-
-#undef  mmux_standard_flonumcdb_part_literal
 #define mmux_standard_flonumcdb_part_literal(VALUE)	(mmux_standard_flonumdb_literal(VALUE))
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],[[[
-#undef  mmux_standard_flonumcldb_part_literal
-#define mmux_standard_flonumcldb_part_literal(VALUE)	(mmux_standard_flonumldb_literal(VALUE))
-]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCLDB]]],[[[m4_dnl
+#define mmux_standard_flonumcldb_part_literal(VALUE)	(mmux_standard_flonumldb_literal(VALUE))]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],[[[
-#undef  mmux_standard_flonumcf32_part_literal
-#define mmux_standard_flonumcf32_part_literal(VALUE)	(mmux_standard_flonumf32_literal(VALUE))
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],[[[
-#undef  mmux_standard_flonumcf64_part_literal
-#define mmux_standard_flonumcf64_part_literal(VALUE)	(mmux_standard_flonumf64_literal(VALUE))
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[
-#undef  mmux_standard_flonumcf128_part_literal
-#define mmux_standard_flonumcf128_part_literal(VALUE)	(mmux_standard_flonumf128_literal(VALUE))
-]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF32]]],[[[m4_dnl
+#define mmux_standard_flonumcf32_part_literal(VALUE)	(mmux_standard_flonumf32_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF64]]],[[[m4_dnl
+#define mmux_standard_flonumcf64_part_literal(VALUE)	(mmux_standard_flonumf64_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128]]],[[[m4_dnl
+#define mmux_standard_flonumcf128_part_literal(VALUE)	(mmux_standard_flonumf128_literal(VALUE))]]])
 
 /* ------------------------------------------------------------------ */
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]],[[[
-#undef  mmux_standard_flonumcf32x_part_literal
-#define mmux_standard_flonumcf32x_part_literal(VALUE)	(mmux_standard_flonumf32x_literal(VALUE))
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],[[[
-#undef  mmux_standard_flonumcf64x_part_literal
-#define mmux_standard_flonumcf64x_part_literal(VALUE)	(mmux_standard_flonumf64x_literal(VALUE))
-]]])
-
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[
-#undef  mmux_standard_flonumcf128x_part_literal
-#define mmux_standard_flonumcf128x_part_literal(VALUE)	(mmux_standard_flonumf128x_literal(VALUE))
-]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF32X]]],[[[m4_dnl
+#define mmux_standard_flonumcf32x_part_literal(VALUE)	(mmux_standard_flonumf32x_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF64X]]],[[[m4_dnl
+#define mmux_standard_flonumcf64x_part_literal(VALUE)	(mmux_standard_flonumf64x_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
+#define mmux_standard_flonumcf128x_part_literal(VALUE)	(mmux_standard_flonumf128x_literal(VALUE))]]])
 
 
 /** --------------------------------------------------------------------
@@ -376,12 +275,10 @@ typedef struct mmux_sint_t	{ mmux_standard_sint_t		value; }	mmux_sint_t;
 typedef struct mmux_uint_t	{ mmux_standard_uint_t		value; }	mmux_uint_t;
 typedef struct mmux_slong_t	{ mmux_standard_slong_t		value; }	mmux_slong_t;
 typedef struct mmux_ulong_t	{ mmux_standard_ulong_t		value; }	mmux_ulong_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[
-typedef struct mmux_sllong_t	{ mmux_standard_sllong_t	value; }	mmux_sllong_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[m4_dnl
+typedef struct mmux_sllong_t	{ mmux_standard_sllong_t	value; }	mmux_sllong_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
-typedef struct mmux_ullong_t	{ mmux_standard_ullong_t	value; }	mmux_ullong_t;
-]]])
+typedef struct mmux_ullong_t	{ mmux_standard_ullong_t	value; }	mmux_ullong_t;]]])
 
 typedef struct mmux_sint8_t	{ mmux_standard_sint8_t		value; }	mmux_sint8_t;
 typedef struct mmux_uint8_t	{ mmux_standard_uint8_t		value; }	mmux_uint8_t;
@@ -396,90 +293,76 @@ typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
 typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
 
 typedef struct mmux_flonumfl_t	{ mmux_standard_flonumfl_t		value; }	mmux_flonumfl_t;
-typedef struct mmux_flonumdb_t	{ mmux_standard_flonumdb_t	value; }	mmux_flonumdb_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],  [[[
-typedef struct mmux_flonumldb_t	{ mmux_standard_flonumldb_t	value; }	mmux_flonumldb_t;
-]]])
+typedef struct mmux_flonumdb_t	{ mmux_standard_flonumdb_t		value; }	mmux_flonumdb_t;
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],  [[[m4_dnl
+typedef struct mmux_flonumldb_t	{ mmux_standard_flonumldb_t		value; }	mmux_flonumldb_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],   [[[
-typedef struct mmux_flonumf32_t	{ mmux_standard_flonumf32_t	value; }	mmux_flonumf32_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],   [[[
-typedef struct mmux_flonumf64_t	{ mmux_standard_flonumf64_t	value; }	mmux_flonumf64_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],  [[[
-typedef struct mmux_flonumf128_t	{ mmux_standard_flonumf128_t	value; }	mmux_flonumf128_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],   [[[m4_dnl
+typedef struct mmux_flonumf32_t	{ mmux_standard_flonumf32_t		value; }	mmux_flonumf32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],   [[[m4_dnl
+typedef struct mmux_flonumf64_t	{ mmux_standard_flonumf64_t		value; }	mmux_flonumf64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],  [[[m4_dnl
+typedef struct mmux_flonumf128_t	{ mmux_standard_flonumf128_t	value; }	mmux_flonumf128_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],  [[[
-typedef struct mmux_flonumf32x_t	{ mmux_standard_flonumf32x_t	value; }	mmux_flonumf32x_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],  [[[
-typedef struct mmux_flonumf64x_t	{ mmux_standard_flonumf64x_t	value; }	mmux_flonumf64x_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]], [[[
-typedef struct mmux_flonumf128x_t	{ mmux_standard_flonumf128x_t	value; }	mmux_flonumf128x_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],  [[[m4_dnl
+typedef struct mmux_flonumf32x_t	{ mmux_standard_flonumf32x_t	value; }	mmux_flonumf32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],  [[[m4_dnl
+typedef struct mmux_flonumf64x_t	{ mmux_standard_flonumf64x_t	value; }	mmux_flonumf64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]], [[[m4_dnl
+typedef struct mmux_flonumf128x_t	{ mmux_standard_flonumf128x_t	value; }	mmux_flonumf128x_t;]]])
 
 /* ------------------------------------------------------------------ */
 
 typedef struct mmux_flonumcfl_t	{ mmux_standard_flonumcfl_t	value; }	mmux_flonumcfl_t;
 typedef struct mmux_flonumcdb_t	{ mmux_standard_flonumcdb_t	value; }	mmux_flonumcdb_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],  [[[
-typedef struct mmux_flonumcldb_t	{ mmux_standard_flonumcldb_t	value; }	mmux_flonumcldb_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],  [[[m4_dnl
+typedef struct mmux_flonumcldb_t	{ mmux_standard_flonumcldb_t	value; }	mmux_flonumcldb_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]], [[[
-typedef struct mmux_flonumcf32_t { mmux_standard_flonumcf32_t	value; }      mmux_flonumcf32_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]], [[[
-typedef struct mmux_flonumcf64_t { mmux_standard_flonumcf64_t	value; }      mmux_flonumcf64_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[
-typedef struct mmux_flonumcf128_t { mmux_standard_flonumcf128_t	value; }      mmux_flonumcf128_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]], [[[m4_dnl
+typedef struct mmux_flonumcf32_t { mmux_standard_flonumcf32_t	value; }      mmux_flonumcf32_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]], [[[m4_dnl
+typedef struct mmux_flonumcf64_t { mmux_standard_flonumcf64_t	value; }      mmux_flonumcf64_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[m4_dnl
+typedef struct mmux_flonumcf128_t { mmux_standard_flonumcf128_t	value; }      mmux_flonumcf128_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[
-typedef struct mmux_flonumcf32x_t { mmux_standard_flonumcf32x_t	value; }      mmux_flonumcf32x_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[
-typedef struct mmux_flonumcf64x_t { mmux_standard_flonumcf64x_t value; }      mmux_flonumcf64x_t;
-]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[
-typedef struct mmux_flonumcf128x_t { mmux_standard_flonumcf128x_t value; }	mmux_flonumcf128x_t;
-]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[m4_dnl
+typedef struct mmux_flonumcf32x_t { mmux_standard_flonumcf32x_t	value; }      mmux_flonumcf32x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[m4_dnl
+typedef struct mmux_flonumcf64x_t { mmux_standard_flonumcf64x_t value; }      mmux_flonumcf64x_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[m4_dnl
+typedef struct mmux_flonumcf128x_t { mmux_standard_flonumcf128x_t value; }	mmux_flonumcf128x_t;]]])
 
 typedef mmux_flonumfl_t		mmux_flonumcfl_part_t;
 typedef mmux_flonumdb_t		mmux_flonumcdb_part_t;
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],     [[[typedef mmux_flonumldb_t	mmux_flonumcldb_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],   [[[typedef mmux_flonumldb_t	 mmux_flonumcldb_part_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],  [[[typedef mmux_flonumf32_t	mmux_flonumcf32_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],  [[[typedef mmux_flonumf64_t	mmux_flonumcf64_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]], [[[typedef mmux_flonumf128_t	mmux_flonumcf128_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],  [[[typedef mmux_flonumf32_t	 mmux_flonumcf32_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]],  [[[typedef mmux_flonumf64_t	 mmux_flonumcf64_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]], [[[typedef mmux_flonumf128_t	 mmux_flonumcf128_part_t;]]])
 
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[typedef mmux_flonumf32x_t	mmux_flonumcf32x_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[typedef mmux_flonumf64x_t	mmux_flonumcf64x_part_t;]]])
-MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonumf128x_t	mmux_flonumcf128x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[typedef mmux_flonumf32x_t	 mmux_flonumcf32x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[typedef mmux_flonumf64x_t	 mmux_flonumcf64x_part_t;]]])
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonumf128x_t mmux_flonumcf128x_part_t;]]])
 
 /* ------------------------------------------------------------------ */
 
-typedef struct mmux_ssize_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t;	}     mmux_ssize_t;
-typedef struct mmux_usize_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_USIZE[[[]]]_t;	}     mmux_usize_t;
-typedef struct mmux_sintmax_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTMAX[[[]]]_t;	}     mmux_sintmax_t;
-typedef struct mmux_uintmax_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTMAX[[[]]]_t;	}     mmux_uintmax_t;
-typedef struct mmux_sintptr_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTPTR[[[]]]_t;	}     mmux_sintptr_t;
-typedef struct mmux_uintptr_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTPTR[[[]]]_t;	}     mmux_uintptr_t;
-typedef struct mmux_mode_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_MODE[[[]]]_t;	}     mmux_mode_t;
-typedef struct mmux_off_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_OFF[[[]]]_t;	}     mmux_off_t;
-typedef struct mmux_pid_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PID[[[]]]_t;	}     mmux_pid_t;
-typedef struct mmux_uid_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UID[[[]]]_t;	}     mmux_uid_t;
-typedef struct mmux_gid_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_GID[[[]]]_t;	}     mmux_gid_t;
-typedef struct mmux_ptrdiff_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t;	}     mmux_ptrdiff_t;
-typedef struct mmux_wchar_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t;	}     mmux_wchar_t;
-typedef struct mmux_wint_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t;	}     mmux_wint_t;
-typedef struct mmux_time_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t;	}     mmux_time_t;
-typedef struct mmux_socklen_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN[[[]]]_t;	}     mmux_socklen_t;
-typedef struct mmux_rlim_t	{ mmux_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t;	}     mmux_rlim_t;
+typedef struct mmux_ssize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
+typedef struct mmux_usize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
+typedef struct mmux_sintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sintmax_t;
+typedef struct mmux_uintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UINTMAX;	}     mmux_uintmax_t;
+typedef struct mmux_sintptr_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTPTR;	}     mmux_sintptr_t;
+typedef struct mmux_uintptr_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UINTPTR;	}     mmux_uintptr_t;
+typedef struct mmux_mode_t	{ MMUX_CC_TYPES_TYPE_ALIAS_MODE;	}     mmux_mode_t;
+typedef struct mmux_off_t	{ MMUX_CC_TYPES_TYPE_ALIAS_OFF;		}     mmux_off_t;
+typedef struct mmux_pid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_PID;		}     mmux_pid_t;
+typedef struct mmux_uid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UID;		}     mmux_uid_t;
+typedef struct mmux_gid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_GID;		}     mmux_gid_t;
+typedef struct mmux_ptrdiff_t	{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
+typedef struct mmux_wchar_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
+typedef struct mmux_wint_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
+typedef struct mmux_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
+typedef struct mmux_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SOCKLEN;	}     mmux_socklen_t;
+typedef struct mmux_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_RLIM;	}     mmux_rlim_t;
 
 /* ------------------------------------------------------------------ */
 
@@ -500,24 +383,25 @@ typedef char const ***		mmux_asciizcppp_t;
  ** Makers.
  ** ----------------------------------------------------------------- */
 
-#if 0
-__attribute__((__const__,__always_inline__))
-static inline mmux_pointer_t
-mmux_pointer (void * value)
-{
-  return (mmux_pointer_t) value;
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_pointerc_t
-mmux_pointerc (void const * value)
-{
-  return ((mmux_pointerc_t)(value));
-}
-#else
-#  undef  mmux_pointer
-#  define mmux_pointer(VALUE)		((mmux_pointer_t)(VALUE))
-#  undef  mmux_pointerc
-#  define mmux_pointerc(VALUE)		((mmux_pointer_t)(VALUE))
-#endif
+/* NOTE I would really like to define the maker as an inline function, as in:
+ *
+ *   __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+ *   mmux_$1 (mmux_standard_$1_t value)
+ *   {
+ *     return ((mmux_$1_t){ .value = value });
+ *   }
+ *
+ * Because.  But with  the function we cannot declare a  new variable as "constexpr",
+ * while with the macro we can.  For example, the following code:
+ *
+ *  constexpr auto	buflen = mmux_usize(1024);
+ *
+ * works fine  under GCC-C23  with macros,  it does  not work  with functions.   I am
+ * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
+ */
+
+#define mmux_pointer(VALUE)		((mmux_pointer_t)(VALUE))
+#define mmux_pointerc(VALUE)		((mmux_pointer_t)(VALUE))
 
 #undef  mmux_pointer_literal
 #define mmux_pointer_literal(VALUE)	(mmux_pointer(mmux_standard_pointer_literal(VALUE)))
@@ -531,29 +415,8 @@ m4_divert(-1)
 m4_dnl $1 - type stem
 m4_dnl $2 - conditional definition symbol
 m4_define([[[DEFINE_TYPE_MAKERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-/* NOTE I would really like to define the maker as an inline function.  Because.  But
- * with the function we cannot declare a  new variable as "constexpr", while with the
- * macro we can.  For example, the following code:
- *
- *  constexpr auto	buflen = mmux_usize(1024);
- *
- * works fine  under GCC-C23  with macros,  it does  not work  with functions.   I am
- * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
- */
-#if 0
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1 (mmux_standard_$1_t value)
-{
-  return ((mmux_$1_t){ .value = value });
-}
-#else
-#  undef  mmux_$1
-#  define mmux_$1(VALUE)		((mmux_$1_t){ .value = (VALUE) })
-#endif
-
-#undef  mmux_$1_literal
-#define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))
-]]])]]])
+#define mmux_$1(VALUE)			((mmux_$1_t){ .value = (VALUE) })
+#define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_TYPE_MAKERS(char)
 DEFINE_TYPE_MAKERS(schar)
@@ -644,53 +507,146 @@ mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
+ ** Prototypes typedefs.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_PROTOTYPES_TYPEDEFS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
+typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
+typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t   (mmux_standard_$1_t op1);
+typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+typedef mmux_standard_$1_t mmux_cc_types_binary_sint_operation_standard_$1_t (mmux_sint_t op1, mmux_standard_$1_t op2);
+typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2, mmux_standard_$1_t op3);
+typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t op1);
+typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+typedef bool mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2, mmux_standard_$1_t op3);
+typedef mmux_sint_t mmux_cc_types_comparison_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+
+typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
+typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t op1);
+typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t op1, mmux_$1_t op2);
+typedef mmux_$1_t mmux_cc_types_binary_sint_operation_$1_t (mmux_sint_t op1, mmux_$1_t op2);
+typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t op3);
+typedef bool mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t op1);
+typedef bool mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t op1, mmux_$1_t op2);
+typedef bool mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t op3);
+typedef mmux_sint_t mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2);
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_PROTOTYPES_TYPEDEFS([[[pointer]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[char]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[schar]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uchar]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sshort]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ushort]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[slong]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ulong]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumfl]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumdb]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcfl]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcdb]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint8]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint8]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint16]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint16]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint64]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint64]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[ssize]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[usize]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sintmax]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uintmax]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sintptr]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uintptr]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[mode]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[off]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[pid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[gid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ptrdiff]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[wchar]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[wint]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[time]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[socklen]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
+
+
+/** --------------------------------------------------------------------
  ** Basic functions for complex floating-point types.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_make_rectangular (mmux_standard_$1_part_t re,
-									 mmux_standard_$1_part_t im)
+m4_divert(-1)
+m4_define([[[DEFINE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
+mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_make_rectangular (mmux_standard_flonum$1_t re,
+										       mmux_standard_flonum$1_t im)
   __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
+
+#define mmux_standard_flonumc$1_make_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,STANDARD_FLONUM_LITERAL_IM) \
+  (mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_RE),		\
+					    mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_IM)))
+
+mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_make_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
   __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t      mmux_$1_make_rectangular_literal (mmux_standard_$1_part_t re,
-								    mmux_standard_$1_part_t im)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_real_part (mmux_$1_t Z)	__attribute__((__const__));
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_imag_part (mmux_$1_t Z)	__attribute__((__const__));
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_abs  (mmux_$1_t Z)		__attribute__((__const__));
-mmux_cc_types_decl mmux_$1_part_t mmux_$1_arg  (mmux_$1_t Z)		__attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t      mmux_$1_conj (mmux_$1_t Z)		__attribute__((__const__));
+
+#define mmux_flonumc$1_make_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,STANDARD_FLONUM_LITERAL_IM)	\
+  (mmux_flonumc$1(mmux_standard_flonumc$1_make_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,		\
+								   STANDARD_FLONUM_LITERAL_IM)))
+
+mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_real_part (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_imag_part (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_abs       (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_arg       (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_conj      (mmux_flonumc$1_t Z)	__attribute__((__const__));
 ]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_PROTOS([[[fl]]])
+DEFINE_PROTOS([[[db]]])
+DEFINE_PROTOS([[[ldb]]])
 
-DEFINE_PROTOS([[[flonumcfl]]])
-DEFINE_PROTOS([[[flonumcdb]]])
-DEFINE_PROTOS([[[flonumcldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_PROTOS([[[f32]]])
+DEFINE_PROTOS([[[f64]]])
+DEFINE_PROTOS([[[f128]]])
 
-DEFINE_PROTOS([[[flonumcf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_PROTOS([[[flonumcf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_PROTOS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-
-DEFINE_PROTOS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_PROTOS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_PROTOS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_PROTOS([[[f32x]]])
+DEFINE_PROTOS([[[f64x]]])
+DEFINE_PROTOS([[[f128x]]])
 
 
 /** --------------------------------------------------------------------
  ** Type functions prototypes.
  ** ----------------------------------------------------------------- */
 
+m4_divert(-1)
+
 m4_dnl $1 - type stem
 m4_define([[[DEFINE_TYPE_PROTOS_ALL_NUMBERS]]],[[[m4_dnl
-typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
-typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
-typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
-typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-typedef bool      mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
-typedef bool      mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
-typedef bool      mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-typedef mmux_sint_t mmux_cc_types_comparison_$1_t      (mmux_$1_t X, mmux_$1_t Y);
-
 mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
 __attribute__((__const,__always_inline__)) static inline
 mmux_sint_t mmux_$1_sizeof (void)
@@ -719,8 +675,8 @@ mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs	__attribute__(
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
 
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_minimum (void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_maximum (void) __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_$1_t mmux_standard_$1_minimum __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_$1_t mmux_standard_$1_maximum __attribute__((__const__));
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -732,7 +688,7 @@ DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------
-
+m4_divert(0)m4_dnl
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[pointer]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[char]]])
 DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[schar]]])
@@ -805,6 +761,7 @@ DEFINE_TYPE_PROTOS_REAL_NUMBERS([[[rlim]]])
 mmux_cc_types_decl bool mmux_char_is_unsigned (void)
   __attribute__((__const__));
 
+m4_divert(-1)
 m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
@@ -841,9 +798,7 @@ m4_define([[[DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS]]],[[[MMUX_CONDITION
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon __attribute__((__const__));
 ]]])]]])
-
-/* ------------------------------------------------------------------ */
-
+m4_divert(0)m4_dnl
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[pointer]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[char]]])
 DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[schar]]])
@@ -942,35 +897,37 @@ DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128x]]],	[[[MMUX_CC_TY
 #undef  MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN
 #define MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN		(1+8)
 
-m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
 mmux_cc_types_decl bool mmux_$1_set_output_format (mmux_asciizcp_t new_result_format, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1)));
 
 mmux_cc_types_decl mmux_asciizcp_t mmux_$1_ref_output_format  (void);
 mmux_cc_types_decl void            mmux_$1_save_output_format (char * dest);
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumfl]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumdb]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumldb]]])
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128]]])
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf32x]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf64x]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128x]]])
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]])
 
 
 /** --------------------------------------------------------------------
  ** Mathematical constants: exact real numbers.
  ** ----------------------------------------------------------------- */
 
+m4_divert(-1)
 m4_define([[[DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
 mmux_standard_$1_constant_zero (void)
@@ -1014,7 +971,7 @@ mmux_$1_constant_ten (void)
   return mmux_$1(mmux_standard_$1_literal(10));
 }
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(char)
 DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(schar)
 DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uchar)
@@ -1059,7 +1016,8 @@ DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(rlim)
  ** Mathematical constants: inexact real numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_divert(-1)
+m4_define([[[DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
 mmux_standard_$1_constant_zero (void)
 {
@@ -1130,105 +1088,112 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) __attribute__((__c
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT2	(void) __attribute__((__const__));
 mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT1_2	(void) __attribute__((__const__));
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumfl)
 DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumdb)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumldb,		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumldb)
 
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32,		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64,		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128,	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32)
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64)
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128)
 
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32x,	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64x,	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128x,	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32x)
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64x)
+DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128x)
 
 
 /** --------------------------------------------------------------------
  ** Mathematical constants: inexact complex numbers.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_nan (void)
+m4_divert(-1)
+m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_nan (void)
 {
-  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_nan(), mmux_standard_$2_constant_nan());
+  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_nan(),
+						  mmux_standard_flonum$1_constant_nan());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_imag (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_imag (void)
 {
-  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_zero(), mmux_standard_$2_constant_one());
+  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_zero(),
+						  mmux_standard_flonum$1_constant_one());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_zero (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_zero (void)
 {
-  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_zero(), mmux_standard_$2_constant_zero());
+  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_zero(),
+						  mmux_standard_flonum$1_constant_zero());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_one (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_one (void)
 {
-  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_one(), mmux_standard_$2_constant_zero());
+  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_one(),
+						  mmux_standard_flonum$1_constant_zero());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_two (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_two (void)
 {
-  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_two(), mmux_standard_$2_constant_zero());
+  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_two(),
+						  mmux_standard_flonum$1_constant_zero());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_ten (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_ten (void)
 {
-  return mmux_standard_$1_make_rectangular(mmux_standard_$2_constant_ten(), mmux_standard_$2_constant_zero());
+  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_ten(),
+						  mmux_standard_flonum$1_constant_zero());
 }
 
 /* ------------------------------------------------------------------ */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_nan (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_flonumc$1_constant_nan (void)
 {
-  return mmux_$1(mmux_standard_$1_constant_nan());
+  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_nan());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_imag (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_flonumc$1_constant_imag (void)
 {
-  return mmux_$1(mmux_standard_$1_constant_imag());
+  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_imag());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_zero (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_flonumc$1_constant_zero (void)
 {
-  return mmux_$1(mmux_standard_$1_constant_zero());
+  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_zero());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_one (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_flonumc$1_constant_one (void)
 {
-  return mmux_$1(mmux_standard_$1_constant_one());
+  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_one());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_two (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_flonumc$1_constant_two (void)
 {
-  return mmux_$1(mmux_standard_$1_constant_two());
+  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_two());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_ten (void)
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_flonumc$1_constant_ten (void)
 {
-  return mmux_$1(mmux_standard_$1_constant_ten());
+  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_ten());
 }
 ]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(fl)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(db)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(ldb)
 
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcfl,		flonumfl)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcdb,		flonumdb)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcldb,		flonumldb,	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f32)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f64)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f128)
 
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf32,		flonumf32,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf64,		flonumf64,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf128,	flonumf128,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf32x,	flonumf32x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf64x,	flonumf64x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(flonumcf128x,	flonumf128x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f32x)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f64x)
+DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f128x)
 
 
 /** --------------------------------------------------------------------
- ** Core arithmetics functions.
+ ** Arithmetics: core functions.
  ** ----------------------------------------------------------------- */
 
 __attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
@@ -1250,6 +1215,7 @@ mmux_pointer_sub (mmux_pointer_t ptr1, mmux_pointer_t ptr2)
 
 /* ------------------------------------------------------------------ */
 
+m4_divert(-1)
 m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
@@ -1282,7 +1248,7 @@ mmux_$1_inv (mmux_$1_t A)
   return mmux_$1_div(mmux_$1_constant_one(), A);
 }
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[char]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[schar]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uchar]]])
@@ -1330,6 +1296,7 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS([[[uint64]]])
 
 /* ------------------------------------------------------------------ */
 
+m4_divert(-1)
 m4_define([[[DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_add (mmux_$1_t A, mmux_$1_t B)
@@ -1362,7 +1329,7 @@ mmux_$1_inv (mmux_$1_t A)
   return mmux_$1_div((mmux_$1_t){{1}}, A);
 }
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[usize]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[ssize]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
 DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[sintmax]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
@@ -1383,6 +1350,7 @@ DEFINE_CORE_ARITHMETICS_FUNCTIONS_FOR_ALIASED_TYPES([[[rlim]]],		[[[MMUX_CC_TYPE
 
 /* ------------------------------------------------------------------ */
 
+m4_divert(-1)
 m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
@@ -1400,7 +1368,7 @@ mmux_$1_decr (mmux_$1_t A)
   return (mmux_$1_t){A.value - 1};
 }
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[char]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[schar]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uchar]]])
@@ -1424,6 +1392,7 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS([[[uint64]]])
 
 /* ------------------------------------------------------------------ */
 
+m4_divert(-1)
 m4_define([[[DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 __attribute__((__const__,__always_inline__)) static inline mmux_$1_t
 mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
@@ -1441,7 +1410,7 @@ mmux_$1_decr (mmux_$1_t A)
   return (mmux_$1_t){{A.value - 1}};
 }
 ]]])]]])
-
+m4_divert(0)m4_dnl
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[usize]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[ssize]]])
 DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[sintmax]]])
@@ -1462,7 +1431,8 @@ DEFINE_CORE_ARITHMETICS_INTEGER_FUNCTIONS_FOR_ALIASED_TYPES([[[rlim]]])
 
 /* ------------------------------------------------------------------ */
 
-m4_define([[[DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_divert(-1)
+m4_define([[[DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
 mmux_cc_types_decl mmux_$1_t mmux_$1_mod (mmux_$1_t A, mmux_$1_t B)
   __attribute__((__const__));
 
@@ -1472,28 +1442,194 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_incr (mmux_$1_t A)
 mmux_cc_types_decl mmux_$1_t mmux_$1_decr (mmux_$1_t A)
   __attribute__((__const__));
 ]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumfl]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumdb]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumldb]]])
 
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumfl]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumdb]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128]]])
 
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32x]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64x]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128x]]])
 
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd32]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd64]]])
+DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd128]]])
 
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
-DEFINE_REAL_FLONUMFL_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
+
+/** --------------------------------------------------------------------
+ ** Bitwise operations.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_and (mmux_pointer_t op, mmux_uintptr_t mask)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_or  (mmux_pointer_t op, mmux_uintptr_t mask)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_xor (mmux_pointer_t op, mmux_uintptr_t mask)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_not (mmux_pointer_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shl (mmux_pointer_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_BITWISE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_or  (mmux_$1_t op1, mmux_$1_t op2)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_xor (mmux_$1_t op1, mmux_$1_t op2)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_not (mmux_$1_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shl (mmux_$1_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
+  __attribute__((__const__));
+]]])]]])
+
+DEFINE_BITWISE_PROTOS([[[char]]])
+DEFINE_BITWISE_PROTOS([[[schar]]])
+DEFINE_BITWISE_PROTOS([[[uchar]]])
+DEFINE_BITWISE_PROTOS([[[sshort]]])
+DEFINE_BITWISE_PROTOS([[[ushort]]])
+DEFINE_BITWISE_PROTOS([[[sint]]])
+DEFINE_BITWISE_PROTOS([[[uint]]])
+DEFINE_BITWISE_PROTOS([[[slong]]])
+DEFINE_BITWISE_PROTOS([[[ulong]]])
+DEFINE_BITWISE_PROTOS([[[sllong]]],	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_BITWISE_PROTOS([[[ullong]]],	[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+DEFINE_BITWISE_PROTOS([[[sint8]]])
+DEFINE_BITWISE_PROTOS([[[uint8]]])
+DEFINE_BITWISE_PROTOS([[[sint16]]])
+DEFINE_BITWISE_PROTOS([[[uint16]]])
+DEFINE_BITWISE_PROTOS([[[sint32]]])
+DEFINE_BITWISE_PROTOS([[[uint32]]])
+DEFINE_BITWISE_PROTOS([[[sint64]]])
+DEFINE_BITWISE_PROTOS([[[uint64]]])
+
+DEFINE_BITWISE_PROTOS([[[ssize]]])
+DEFINE_BITWISE_PROTOS([[[usize]]])
+DEFINE_BITWISE_PROTOS([[[sintmax]]])
+DEFINE_BITWISE_PROTOS([[[uintmax]]])
+DEFINE_BITWISE_PROTOS([[[sintptr]]])
+DEFINE_BITWISE_PROTOS([[[uintptr]]])
+DEFINE_BITWISE_PROTOS([[[ptrdiff]]])
+DEFINE_BITWISE_PROTOS([[[mode]]])
+DEFINE_BITWISE_PROTOS([[[off]]])
+DEFINE_BITWISE_PROTOS([[[pid]]])
+DEFINE_BITWISE_PROTOS([[[uid]]])
+DEFINE_BITWISE_PROTOS([[[gid]]])
+DEFINE_BITWISE_PROTOS([[[wchar]]])
+DEFINE_BITWISE_PROTOS([[[wint]]])
+DEFINE_BITWISE_PROTOS([[[time]]])
+DEFINE_BITWISE_PROTOS([[[socklen]]])
+DEFINE_BITWISE_PROTOS([[[rlim]]])
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: floating-point number functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_operation_flonum$1_t mmux_flonum$1_$2 __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_operation_flonum$1_t mmux_flonum$1_$2 __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_BINARY_SINT_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_sint_operation_flonum$1_t mmux_flonum$1_$2 __attribute__((__const__))]]])
+
+m4_define([[[DEFINE_COMMON_FLONUM_MATH_PROTOS]]],[[[m4_dnl
+#ifdef MMUX_CC_TYPES_HAS_FLONUM[[[]]]MMUX_M4_TOUPPER($1)
+DEFINE_UNARY_MATH_PROTO($1,		sin);
+DEFINE_UNARY_MATH_PROTO($1,		cos);
+DEFINE_UNARY_MATH_PROTO($1,		tan);
+
+DEFINE_UNARY_MATH_PROTO($1,		asin);
+DEFINE_UNARY_MATH_PROTO($1,		acos);
+DEFINE_UNARY_MATH_PROTO($1,		atan);
+
+DEFINE_UNARY_MATH_PROTO($1,		sinh);
+DEFINE_UNARY_MATH_PROTO($1,		cosh);
+DEFINE_UNARY_MATH_PROTO($1,		tanh);
+
+DEFINE_UNARY_MATH_PROTO($1,		asinh);
+DEFINE_UNARY_MATH_PROTO($1,		acosh);
+DEFINE_UNARY_MATH_PROTO($1,		atanh);
+
+DEFINE_UNARY_MATH_PROTO($1,		exp);
+DEFINE_UNARY_MATH_PROTO($1,		exp2);
+DEFINE_UNARY_MATH_PROTO($1,		exp10);
+
+DEFINE_UNARY_MATH_PROTO($1,		log);
+DEFINE_UNARY_MATH_PROTO($1,		log2);
+DEFINE_UNARY_MATH_PROTO($1,		log10);
+
+DEFINE_BINARY_MATH_PROTO($1,		pow);
+DEFINE_UNARY_MATH_PROTO($1,		sqrt);
+DEFINE_UNARY_MATH_PROTO($1,		cbrt);
+#endif
+]]])
+
+m4_define([[[DEFINE_REAL_FLONUM_MATH_PROTOS]]],[[[m4_dnl
+DEFINE_COMMON_FLONUM_MATH_PROTOS($1)
+#ifdef MMUX_CC_TYPES_HAS_FLONUM[[[]]]MMUX_M4_TOUPPER($1)
+DEFINE_UNARY_MATH_PROTO($1,		logb);
+DEFINE_BINARY_MATH_PROTO($1,		hypot);
+
+DEFINE_UNARY_MATH_PROTO($1,		expm1);
+DEFINE_UNARY_MATH_PROTO($1,		log1p);
+
+DEFINE_UNARY_MATH_PROTO($1,		erf);
+DEFINE_UNARY_MATH_PROTO($1,		erfc);
+
+DEFINE_UNARY_MATH_PROTO($1,		lgamma);
+DEFINE_UNARY_MATH_PROTO($1,		tgamma);
+
+DEFINE_UNARY_MATH_PROTO($1,		j0);
+DEFINE_UNARY_MATH_PROTO($1,		j1);
+DEFINE_BINARY_SINT_MATH_PROTO($1,	jn);
+
+DEFINE_UNARY_MATH_PROTO($1,		y0);
+DEFINE_UNARY_MATH_PROTO($1,		y1);
+DEFINE_BINARY_SINT_MATH_PROTO($1,	yn);
+#endif
+]]])
+m4_divert(0)m4_dnl
+DEFINE_REAL_FLONUM_MATH_PROTOS(fl)
+DEFINE_REAL_FLONUM_MATH_PROTOS(db)
+DEFINE_REAL_FLONUM_MATH_PROTOS(ldb)
+DEFINE_REAL_FLONUM_MATH_PROTOS(f32)
+DEFINE_REAL_FLONUM_MATH_PROTOS(f64)
+DEFINE_REAL_FLONUM_MATH_PROTOS(f128)
+DEFINE_REAL_FLONUM_MATH_PROTOS(f32x)
+DEFINE_REAL_FLONUM_MATH_PROTOS(f64x)
+DEFINE_REAL_FLONUM_MATH_PROTOS(f128x)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cfl)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cdb)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cldb)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cf32)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cf64)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cf128)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cf32x)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cf64x)
+DEFINE_COMMON_FLONUM_MATH_PROTOS(cf128x)
 
 
 /** --------------------------------------------------------------------
  ** Mathematics C type functions.
  ** ----------------------------------------------------------------- */
 
+#if 0
 m4_divert(-1)m4_dnl
 m4_dnl $1 - type stem
 m4_dnl $2 - builtin tail identifier
@@ -1747,6 +1883,7 @@ DEFINE_CPROTOS([[[flonumf128x]]],
 	       [[[lgammaf128x]]],	[[[tgammaf128x]]],
 	       [[[j0f128x]]],		[[[j1f128x]]],		[[[jnf128x]]],
 	       [[[y0f128x]]],		[[[y1f128x]]],		[[[ynf128x]]])
+#endif
 
 DEFINE_CPROTOS([[[flonumcfl]]],
 	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCFL]]],	[[[]]],
@@ -1791,6 +1928,7 @@ DEFINE_CPROTOS([[[flonumcldb]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
 
+#if 0
 DEFINE_CPROTOS([[[flonumcf32]]],
 	       [[[MMUX_BASH_PARSE_CPROTO_ARG_FLONUMCF32]]],  [[[MMUX_CC_TYPES_HAS_FLONUMCF32]]],
 	       [[[csinf32]]],		[[[ccosf32]]],		[[[ctanf32]]],
@@ -1876,80 +2014,7 @@ DEFINE_CPROTOS([[[flonumcf128x]]],
 	       [[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]],
 	       [[[]]],			[[[]]],			[[[]]])
-
-
-/** --------------------------------------------------------------------
- ** Bitwise operations.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_and (mmux_pointer_t op, mmux_uintptr_t mask)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_or  (mmux_pointer_t op, mmux_uintptr_t mask)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_xor (mmux_pointer_t op, mmux_uintptr_t mask)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_not (mmux_pointer_t op)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shl (mmux_pointer_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-
-/* ------------------------------------------------------------------ */
-
-m4_define([[[DEFINE_BITWISE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_or  (mmux_$1_t op1, mmux_$1_t op2)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_xor (mmux_$1_t op1, mmux_$1_t op2)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_not (mmux_$1_t op)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shl (mmux_$1_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-]]])]]])
-
-DEFINE_BITWISE_PROTOS([[[char]]])
-DEFINE_BITWISE_PROTOS([[[schar]]])
-DEFINE_BITWISE_PROTOS([[[uchar]]])
-DEFINE_BITWISE_PROTOS([[[sshort]]])
-DEFINE_BITWISE_PROTOS([[[ushort]]])
-DEFINE_BITWISE_PROTOS([[[sint]]])
-DEFINE_BITWISE_PROTOS([[[uint]]])
-DEFINE_BITWISE_PROTOS([[[slong]]])
-DEFINE_BITWISE_PROTOS([[[ulong]]])
-DEFINE_BITWISE_PROTOS([[[sllong]]],	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
-DEFINE_BITWISE_PROTOS([[[ullong]]],	[[[MMUX_CC_TYPES_HAS_ULLONG]]])
-
-DEFINE_BITWISE_PROTOS([[[sint8]]])
-DEFINE_BITWISE_PROTOS([[[uint8]]])
-DEFINE_BITWISE_PROTOS([[[sint16]]])
-DEFINE_BITWISE_PROTOS([[[uint16]]])
-DEFINE_BITWISE_PROTOS([[[sint32]]])
-DEFINE_BITWISE_PROTOS([[[uint32]]])
-DEFINE_BITWISE_PROTOS([[[sint64]]])
-DEFINE_BITWISE_PROTOS([[[uint64]]])
-
-DEFINE_BITWISE_PROTOS([[[ssize]]])
-DEFINE_BITWISE_PROTOS([[[usize]]])
-DEFINE_BITWISE_PROTOS([[[sintmax]]])
-DEFINE_BITWISE_PROTOS([[[uintmax]]])
-DEFINE_BITWISE_PROTOS([[[sintptr]]])
-DEFINE_BITWISE_PROTOS([[[uintptr]]])
-DEFINE_BITWISE_PROTOS([[[ptrdiff]]])
-DEFINE_BITWISE_PROTOS([[[mode]]])
-DEFINE_BITWISE_PROTOS([[[off]]])
-DEFINE_BITWISE_PROTOS([[[pid]]])
-DEFINE_BITWISE_PROTOS([[[uid]]])
-DEFINE_BITWISE_PROTOS([[[gid]]])
-DEFINE_BITWISE_PROTOS([[[wchar]]])
-DEFINE_BITWISE_PROTOS([[[wint]]])
-DEFINE_BITWISE_PROTOS([[[time]]])
-DEFINE_BITWISE_PROTOS([[[socklen]]])
-DEFINE_BITWISE_PROTOS([[[rlim]]])
+#endif
 
 
 /** --------------------------------------------------------------------

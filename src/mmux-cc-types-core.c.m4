@@ -372,11 +372,6 @@ mmux_$1_make_rectangular (mmux_$1_part_t re, mmux_$1_part_t im)
 {
   return ((mmux_$1_t){ $4(re.value, im.value) });
 }
-mmux_$1_t
-mmux_$1_make_rectangular_literal (mmux_standard_$1_part_t re, mmux_standard_$1_part_t im)
-{
-  return ((mmux_$1_t){ $4(re, im) });
-}
 mmux_$1_part_t
 mmux_$1_real_part (mmux_$1_t Z)
 {
@@ -1257,7 +1252,556 @@ clog2f128x (mmux_standard_flonumcf128x_t Z)
 }
 #endif
 
+/* ------------------------------------------------------------------ */
+
+/* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z ))
+ */
+static mmux_standard_flonumcfl_t
+ccbrtf (mmux_standard_flonumcfl_t Z)
+{
+  constexpr auto one_third = CMPLXF(mmux_standard_flonumfl_literal(1.0) / mmux_standard_flonumfl_literal(3.0),
+				    mmux_standard_flonumfl_literal(0.0));
+  return cexpf(one_third * clogf(Z));
+}
+static mmux_standard_flonumcdb_t
+ccbrt (mmux_standard_flonumcdb_t Z)
+{
+  constexpr auto one_third = CMPLX(mmux_standard_flonumdb_literal(1.0) / mmux_standard_flonumdb_literal(3.0),
+				   mmux_standard_flonumdb_literal(0.0));
+  return cexp(one_third * clog(Z));
+}
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+static mmux_standard_flonumcldb_t
+ccbrtl (mmux_standard_flonumcldb_t Z)
+{
+  constexpr auto one_third = CMPLXL(mmux_standard_flonumldb_literal(1.0) / mmux_standard_flonumldb_literal(3.0),
+				    mmux_standard_flonumldb_literal(0.0));
+  return cexpl(one_third * clogl(Z));
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+static mmux_standard_flonumcf32_t
+ccbrtf32 (mmux_standard_flonumcf32_t Z)
+{
+  constexpr auto one_third = CMPLXF32(mmux_standard_flonumf32_literal(1.0) / mmux_standard_flonumf32_literal(3.0),
+				      mmux_standard_flonumf32_literal(0.0));
+  return cexpf32(one_third * clogf32(Z));
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+static mmux_standard_flonumcf64_t
+ccbrtf64 (mmux_standard_flonumcf64_t Z)
+{
+  constexpr auto one_third = CMPLXF64(mmux_standard_flonumf64_literal(1.0) / mmux_standard_flonumf64_literal(3.0),
+				      mmux_standard_flonumf64_literal(0.0));
+  return cexpf64(one_third * clogf64(Z));
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+static mmux_standard_flonumcf128_t
+ccbrtf128 (mmux_standard_flonumcf128_t Z)
+{
+  constexpr auto one_third = CMPLXF128(mmux_standard_flonumf128_literal(1.0) / mmux_standard_flonumf128_literal(3.0),
+				       mmux_standard_flonumf128_literal(0.0));
+  return cexpf128(one_third * clogf128(Z));
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+static mmux_standard_flonumcf32x_t
+ccbrtf32x (mmux_standard_flonumcf32x_t Z)
+{
+  constexpr auto one_third = CMPLXF32X(mmux_standard_flonumf32x_literal(1.0) / mmux_standard_flonumf32x_literal(3.0),
+				       mmux_standard_flonumf32x_literal(0.0));
+  return cexpf32x(one_third * clogf32x(Z));
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+static mmux_standard_flonumcf64x_t
+ccbrtf64x (mmux_standard_flonumcf64x_t Z)
+{
+  constexpr auto one_third = CMPLXF64X(mmux_standard_flonumf64x_literal(1.0) / mmux_standard_flonumf64x_literal(3.0),
+				       mmux_standard_flonumf64x_literal(0.0));
+  return cexpf64x(one_third * clogf64x(Z));
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+static mmux_standard_flonumcf128x_t
+ccbrtf128x (mmux_standard_flonumcf128x_t Z)
+{
+  constexpr auto one_third = CMPLXF128X(mmux_standard_flonumf128x_literal(1.0) / mmux_standard_flonumf128x_literal(3.0),
+					mmux_standard_flonumf128x_literal(0.0));
+  return cexpf128x(one_third * clogf128x(Z));
+}
+#endif
+
 
+/** --------------------------------------------------------------------
+ ** Mathematics: real float, double, long double floating-point functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_MATH_FUNCTION]]],[[[
+mmux_flonum$1_t
+mmux_flonum$1_$2 (mmux_flonum$1_t op)
+{
+  return mmux_flonum$1($3(op.value));
+}]]])
+
+m4_define([[[DEFINE_BINARY_MATH_FUNCTION]]],[[[mmux_flonum$1_t
+mmux_flonum$1_$2 (mmux_flonum$1_t op1, mmux_flonum$1_t op2)
+{
+  return mmux_flonum$1($3(op1.value, op2.value));
+}]]])
+
+m4_define([[[DEFINE_BINARY_SINT_MATH_FUNCTION]]],[[[mmux_flonum$1_t
+mmux_flonum$1_$2 (mmux_sint_t op1, mmux_flonum$1_t op2)
+{
+  return mmux_flonum$1($3(op1.value, op2.value));
+}]]])
+m4_divert(0)m4_dnl
+#ifdef MMUX_CC_TYPES_HAS_FLONUMFL
+DEFINE_UNARY_MATH_FUNCTION(fl,		sin,		sinf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		cos,		cosf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		tan,		tanf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		asin,		asinf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		acos,		acosf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		atan,		atanf)
+DEFINE_BINARY_MATH_FUNCTION(fl,		atan2,		atan2f)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		sinh,		sinhf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		cosh,		coshf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		tanh,		tanhf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		asinh,		asinhf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		acosh,		acoshf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		atanh,		atanhf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		exp,		expf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		exp2,		exp2f)
+DEFINE_UNARY_MATH_FUNCTION(fl,		exp10,		exp10f)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		log,		logf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		log10,		log10f)
+DEFINE_UNARY_MATH_FUNCTION(fl,		log2,		log2f)
+DEFINE_UNARY_MATH_FUNCTION(fl,		logb,		logbf)
+
+DEFINE_BINARY_MATH_FUNCTION(fl,		pow,		powf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		sqrt,		sqrtf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		cbrt,		cbrtf)
+DEFINE_BINARY_MATH_FUNCTION(fl,		hypot,		hypotf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		expm1,		expm1f)
+DEFINE_UNARY_MATH_FUNCTION(fl,		log1p,		log1pf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		erf,		erff)
+DEFINE_UNARY_MATH_FUNCTION(fl,		erfc,		erfcf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		lgamma,		lgammaf)
+DEFINE_UNARY_MATH_FUNCTION(fl,		tgamma,		tgammaf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		j0,		j0f)
+DEFINE_UNARY_MATH_FUNCTION(fl,		j1,		j1f)
+DEFINE_BINARY_SINT_MATH_FUNCTION(fl,	jn,		jnf)
+
+DEFINE_UNARY_MATH_FUNCTION(fl,		y0,		y0f)
+DEFINE_UNARY_MATH_FUNCTION(fl,		y1,		y1f)
+DEFINE_BINARY_SINT_MATH_FUNCTION(fl,	yn,		ynf)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMDB
+DEFINE_UNARY_MATH_FUNCTION(db,		sin,		sin)
+DEFINE_UNARY_MATH_FUNCTION(db,		cos,		cos)
+DEFINE_UNARY_MATH_FUNCTION(db,		tan,		tan)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		asin,		asin)
+DEFINE_UNARY_MATH_FUNCTION(db,		acos,		acos)
+DEFINE_UNARY_MATH_FUNCTION(db,		atan,		atan)
+DEFINE_BINARY_MATH_FUNCTION(db,		atan2,		atan2)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		sinh,		sinh)
+DEFINE_UNARY_MATH_FUNCTION(db,		cosh,		cosh)
+DEFINE_UNARY_MATH_FUNCTION(db,		tanh,		tanh)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		asinh,		asinh)
+DEFINE_UNARY_MATH_FUNCTION(db,		acosh,		acosh)
+DEFINE_UNARY_MATH_FUNCTION(db,		atanh,		atanh)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		exp,		exp)
+DEFINE_UNARY_MATH_FUNCTION(db,		exp2,		exp2)
+DEFINE_UNARY_MATH_FUNCTION(db,		exp10,		exp10)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		log,		log)
+DEFINE_UNARY_MATH_FUNCTION(db,		log10,		log10)
+DEFINE_UNARY_MATH_FUNCTION(db,		log2,		log2)
+DEFINE_UNARY_MATH_FUNCTION(db,		logb,		logb)
+
+DEFINE_BINARY_MATH_FUNCTION(db,		pow,		pow)
+DEFINE_UNARY_MATH_FUNCTION(db,		sqrt,		sqrt)
+DEFINE_UNARY_MATH_FUNCTION(db,		cbrt,		cbrt)
+DEFINE_BINARY_MATH_FUNCTION(db,		hypot,		hypot)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		expm1,		expm1)
+DEFINE_UNARY_MATH_FUNCTION(db,		log1p,		log1p)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		erf,		erf)
+DEFINE_UNARY_MATH_FUNCTION(db,		erfc,		erfc)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		lgamma,		lgamma)
+DEFINE_UNARY_MATH_FUNCTION(db,		tgamma,		tgamma)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		j0,		j0)
+DEFINE_UNARY_MATH_FUNCTION(db,		j1,		j1)
+DEFINE_BINARY_SINT_MATH_FUNCTION(db,	jn,		jn)
+
+DEFINE_UNARY_MATH_FUNCTION(db,		y0,		y0)
+DEFINE_UNARY_MATH_FUNCTION(db,		y1,		y1)
+DEFINE_BINARY_SINT_MATH_FUNCTION(db,	yn,		yn)
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+DEFINE_UNARY_MATH_FUNCTION(ldb,		sin,		sinl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		cos,		cosl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		tan,		tanl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		asin,		asinl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		acos,		acosl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		atan,		atanl)
+DEFINE_BINARY_MATH_FUNCTION(ldb,	atan2,		atan2l)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		sinh,		sinhl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		cosh,		coshl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		tanh,		tanhl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		asinh,		asinhl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		acosh,		acoshl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		atanh,		atanhl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		exp,		expl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		exp2,		exp2l)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		exp10,		exp10l)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		log,		logl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		log10,		log10l)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		log2,		log2l)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		logb,		logbl)
+
+DEFINE_BINARY_MATH_FUNCTION(ldb,	pow,		powl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		sqrt,		sqrtl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		cbrt,		cbrtl)
+DEFINE_BINARY_MATH_FUNCTION(ldb,	hypot,		hypotl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		expm1,		expm1l)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		log1p,		log1pl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		erf,		erfl)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		erfc,		erfcl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		lgamma,		lgammal)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		tgamma,		tgammal)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		j0,		j0l)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		j1,		j1l)
+DEFINE_BINARY_SINT_MATH_FUNCTION(ldb,	jn,		jnl)
+
+DEFINE_UNARY_MATH_FUNCTION(ldb,		y0,		y0l)
+DEFINE_UNARY_MATH_FUNCTION(ldb,		y1,		y1l)
+DEFINE_BINARY_SINT_MATH_FUNCTION(ldb,	yn,		ynl)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+DEFINE_UNARY_MATH_FUNCTION(cfl,		sin,		csinf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		cos,		ccosf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		tan,		ctanf)
+
+DEFINE_UNARY_MATH_FUNCTION(cfl,		asin,		casinf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		acos,		cacosf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		atan,		catanf)
+
+DEFINE_UNARY_MATH_FUNCTION(cfl,		sinh,		csinhf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		cosh,		ccoshf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		tanh,		ctanhf)
+
+DEFINE_UNARY_MATH_FUNCTION(cfl,		asinh,		casinhf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		acosh,		cacoshf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		atanh,		catanhf)
+
+DEFINE_UNARY_MATH_FUNCTION(cfl,		exp,		cexpf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		exp2,		cexp2f)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		exp10,		cexp10f)
+
+DEFINE_UNARY_MATH_FUNCTION(cfl,		log,		clogf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		log10,		clog10f)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		log2,		clog2f)
+
+DEFINE_BINARY_MATH_FUNCTION(cfl,	pow,		cpowf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		sqrt,		csqrtf)
+DEFINE_UNARY_MATH_FUNCTION(cfl,		cbrt,		ccbrtf)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+DEFINE_UNARY_MATH_FUNCTION(cdb,		sin,		csin)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		cos,		ccos)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		tan,		ctan)
+
+DEFINE_UNARY_MATH_FUNCTION(cdb,		asin,		casin)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		acos,		cacos)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		atan,		catan)
+
+DEFINE_UNARY_MATH_FUNCTION(cdb,		sinh,		csinh)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		cosh,		ccosh)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		tanh,		ctanh)
+
+DEFINE_UNARY_MATH_FUNCTION(cdb,		asinh,		casinh)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		acosh,		cacosh)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		atanh,		catanh)
+
+DEFINE_UNARY_MATH_FUNCTION(cdb,		exp,		cexp)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		exp2,		cexp2)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		exp10,		cexp10)
+
+DEFINE_UNARY_MATH_FUNCTION(cdb,		log,		clog)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		log10,		clog10)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		log2,		clog2)
+
+DEFINE_BINARY_MATH_FUNCTION(cdb,	pow,		cpow)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		sqrt,		csqrt)
+DEFINE_UNARY_MATH_FUNCTION(cdb,		cbrt,		ccbrt)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+DEFINE_UNARY_MATH_FUNCTION(cldb,	sin,		csinl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	cos,		ccosl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	tan,		ctanl)
+
+DEFINE_UNARY_MATH_FUNCTION(cldb,	asin,		casinl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	acos,		cacosl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	atan,		catanl)
+
+DEFINE_UNARY_MATH_FUNCTION(cldb,	sinh,		csinhl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	cosh,		ccoshl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	tanh,		ctanhl)
+
+DEFINE_UNARY_MATH_FUNCTION(cldb,	asinh,		casinhl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	acosh,		cacoshl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	atanh,		catanhl)
+
+DEFINE_UNARY_MATH_FUNCTION(cldb,	exp,		cexpl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	exp2,		cexp2l)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	exp10,		cexp10l)
+
+DEFINE_UNARY_MATH_FUNCTION(cldb,	log,		clogl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	log10,		clog10l)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	log2,		clog2l)
+
+DEFINE_BINARY_MATH_FUNCTION(cldb,	pow,		cpowl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	sqrt,		csqrtl)
+DEFINE_UNARY_MATH_FUNCTION(cldb,	cbrt,		ccbrtl)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+DEFINE_UNARY_MATH_FUNCTION(cf32,	sin,		csinf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	cos,		ccosf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	tan,		ctanf32)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32,	asin,		casinf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	acos,		cacosf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	atan,		catanf32)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32,	sinh,		csinhf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	cosh,		ccoshf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	tanh,		ctanhf32)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32,	asinh,		casinhf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	acosh,		cacoshf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	atanh,		catanhf32)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32,	exp,		cexpf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	exp2,		cexp2f32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	exp10,		cexp10f32)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32,	log,		clogf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	log10,		clog10f32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	log2,		clog2f32)
+
+DEFINE_BINARY_MATH_FUNCTION(cf32,	pow,		cpowf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	sqrt,		csqrtf32)
+DEFINE_UNARY_MATH_FUNCTION(cf32,	cbrt,		ccbrtf32)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+DEFINE_UNARY_MATH_FUNCTION(cf64,	sin,		csinf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	cos,		ccosf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	tan,		ctanf64)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64,	asin,		casinf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	acos,		cacosf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	atan,		catanf64)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64,	sinh,		csinhf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	cosh,		ccoshf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	tanh,		ctanhf64)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64,	asinh,		casinhf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	acosh,		cacoshf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	atanh,		catanhf64)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64,	exp,		cexpf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	exp2,		cexp2f64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	exp10,		cexp10f64)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64,	log,		clogf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	log10,		clog10f64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	log2,		clog2f64)
+
+DEFINE_BINARY_MATH_FUNCTION(cf64,	pow,		cpowf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	sqrt,		csqrtf64)
+DEFINE_UNARY_MATH_FUNCTION(cf64,	cbrt,		ccbrtf64)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+DEFINE_UNARY_MATH_FUNCTION(cf128,	sin,		csinf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	cos,		ccosf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	tan,		ctanf128)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128,	asin,		casinf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	acos,		cacosf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	atan,		catanf128)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128,	sinh,		csinhf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	cosh,		ccoshf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	tanh,		ctanhf128)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128,	asinh,		casinhf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	acosh,		cacoshf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	atanh,		catanhf128)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128,	exp,		cexpf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	exp2,		cexp2f128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	exp10,		cexp10f128)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128,	log,		clogf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	log10,		clog10f128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	log2,		clog2f128)
+
+DEFINE_BINARY_MATH_FUNCTION(cf128,	pow,		cpowf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	sqrt,		csqrtf128)
+DEFINE_UNARY_MATH_FUNCTION(cf128,	cbrt,		ccbrtf128)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	sin,		csinf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	cos,		ccosf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	tan,		ctanf32x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	asin,		casinf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	acos,		cacosf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	atan,		catanf32x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	sinh,		csinhf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	cosh,		ccoshf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	tanh,		ctanhf32x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	asinh,		casinhf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	acosh,		cacoshf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	atanh,		catanhf32x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	exp,		cexpf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	exp2,		cexp2f32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	exp10,		cexp10f32x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	log,		clogf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	log10,		clog10f32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	log2,		clog2f32x)
+
+DEFINE_BINARY_MATH_FUNCTION(cf32x,	pow,		cpowf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	sqrt,		csqrtf32x)
+DEFINE_UNARY_MATH_FUNCTION(cf32x,	cbrt,		ccbrtf32x)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	sin,		csinf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	cos,		ccosf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	tan,		ctanf64x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	asin,		casinf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	acos,		cacosf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	atan,		catanf64x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	sinh,		csinhf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	cosh,		ccoshf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	tanh,		ctanhf64x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	asinh,		casinhf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	acosh,		cacoshf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	atanh,		catanhf64x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	exp,		cexpf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	exp2,		cexp2f64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	exp10,		cexp10f64x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	log,		clogf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	log10,		clog10f64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	log2,		clog2f64x)
+
+DEFINE_BINARY_MATH_FUNCTION(cf64x,	pow,		cpowf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	sqrt,		csqrtf64x)
+DEFINE_UNARY_MATH_FUNCTION(cf64x,	cbrt,		ccbrtf64x)
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	sin,		csinf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	cos,		ccosf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	tan,		ctanf128x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	asin,		casinf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	acos,		cacosf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	atan,		catanf128x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	sinh,		csinhf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	cosh,		ccoshf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	tanh,		ctanhf128x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	asinh,		casinhf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	acosh,		cacoshf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	atanh,		catanhf128x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	exp,		cexpf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	exp2,		cexp2f128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	exp10,		cexp10f128x)
+
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	log,		clogf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	log10,		clog10f128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	log2,		clog2f128x)
+
+DEFINE_BINARY_MATH_FUNCTION(cf128x,	pow,		cpowf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	sqrt,		csqrtf128x)
+DEFINE_UNARY_MATH_FUNCTION(cf128x,	cbrt,		ccbrtf128x)
+#endif
+
+
+#if 0
+
 m4_divert(-1)m4_dnl
 m4_dnl --------------------------------------------------------------------
 m4_dnl Orgy of math macros.
@@ -1650,6 +2194,7 @@ DEFINE_CFUNCS([[[flonumcf128x]]],
 		  [[[]]],		[[[]]],
 		  [[[]]],		[[[]]],			[[[]]],
 		  [[[]]],		[[[]]],			[[[]]])
+#endif
 
 
 /** --------------------------------------------------------------------

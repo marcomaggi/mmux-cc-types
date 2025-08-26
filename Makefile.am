@@ -221,15 +221,14 @@ DISTCLEANFILES	+= $(MMUX_CC_TYPES_BUILT_TEST_SOURCES)
 
 check_PROGRAMS	= \
 	tests/version				\
-	tests/test-complex			\
-	tests/test-sprint			\
-	tests/test-sign-predicates		\
 	tests/test-arithmetics			\
 	tests/test-bitwise			\
+	tests/test-complex			\
+	tests/test-experiments			\
+	tests/test-mathematics			\
 	tests/test-parsers			\
-	tests/test-experiments
-
-#	tests/test-mathematics
+	tests/test-sign-predicates		\
+	tests/test-sprint
 
 TESTS				= $(check_PROGRAMS)
 
