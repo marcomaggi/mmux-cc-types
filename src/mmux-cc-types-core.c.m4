@@ -69,24 +69,24 @@ constexpr static const mmux_standard_flonumf128x_t mmux_libc_minimum_flonumf128x
  ** ----------------------------------------------------------------- */
 
 mmux_pointer_t
-mmux_pointer_maximum (void)
-{
-  return mmux_pointer((mmux_pointer_t)mmux_uintptr_maximum().value);
-}
-mmux_pointer_t
-mmux_pointer_minimum (void)
-{
-  return mmux_pointer((mmux_pointer_t)mmux_uintptr_minimum().value);
-}
-mmux_pointer_t
 mmux_standard_pointer_maximum (void)
 {
-  return mmux_pointer_maximum();
+  return (mmux_pointer_t)mmux_uintptr_maximum().value;
 }
 mmux_pointer_t
 mmux_standard_pointer_minimum (void)
 {
-  return mmux_pointer_minimum();
+  return (mmux_pointer_t)mmux_uintptr_minimum().value;
+}
+mmux_pointer_t
+mmux_pointer_maximum (void)
+{
+  return mmux_pointer(mmux_standard_pointer_maximum());
+}
+mmux_pointer_t
+mmux_pointer_minimum (void)
+{
+  return mmux_pointer(mmux_standard_pointer_minimum());
 }
 
 /* ------------------------------------------------------------------ */
@@ -96,16 +96,6 @@ m4_dnl $2 - C language expression evaluating to the maximum value.
 m4_dnl $3 - C language expression evaluating to the minimum value.
 m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$4]]],[[[
-mmux_$1_t
-mmux_$1_maximum (void)
-{
-  return mmux_$1($2);
-}
-mmux_$1_t
-mmux_$1_minimum (void)
-{
-  return mmux_$1($3);
-}
 mmux_standard_$1_t
 mmux_standard_$1_maximum (void)
 {
@@ -115,6 +105,16 @@ mmux_standard_$1_t
 mmux_standard_$1_minimum (void)
 {
   return $3;
+}
+mmux_$1_t
+mmux_$1_maximum (void)
+{
+  return mmux_$1($2);
+}
+mmux_$1_t
+mmux_$1_minimum (void)
+{
+  return mmux_$1($3);
 }
 ]]])]]])
 
@@ -222,23 +222,23 @@ DEFINE_UTYPE_FUNCTIONS([[[uint64]]])
  ** Real non-alias floating-point number functions: abs, min, max.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
+m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
 inline mmux_$1_t mmux_$1_abs (mmux_$1_t X)              { return mmux_$1($2(X.value));    }
 inline mmux_$1_t mmux_$1_max (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1($3(X.value, Y.value)); }
 inline mmux_$1_t mmux_$1_min (mmux_$1_t X, mmux_$1_t Y) { return mmux_$1($4(X.value, Y.value)); }
 ]]])]]])
 
-DEFINE_TYPE_FUNCTIONS([[[flonumfl]]],	[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
-DEFINE_TYPE_FUNCTIONS([[[flonumdb]]],	[[[fabs]]],     [[[fmax]]],      [[[fmin]]])
-DEFINE_TYPE_FUNCTIONS([[[flonumldb]]],	[[[fabsl]]],    [[[fmaxl]]],     [[[fminl]]],    [[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumfl]]],		[[[fabsf]]],    [[[fmaxf]]],     [[[fminf]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumdb]]],		[[[fabs]]],     [[[fmax]]],      [[[fmin]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumldb]]],		[[[fabsl]]],    [[[fmaxl]]],     [[[fminl]]])
 
-DEFINE_TYPE_FUNCTIONS([[[flonumf32]]],	[[[fabsf32]]],  [[[fmaxf32]]],   [[[fminf32]]],  [[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_TYPE_FUNCTIONS([[[flonumf64]]],	[[[fabsf64]]],  [[[fmaxf64]]],   [[[fminf64]]],  [[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_TYPE_FUNCTIONS([[[flonumf128]]],	[[[fabsf128]]], [[[fmaxf128]]],  [[[fminf128]]], [[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumf32]]],		[[[fabsf32]]],  [[[fmaxf32]]],   [[[fminf32]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumf64]]],		[[[fabsf64]]],  [[[fmaxf64]]],   [[[fminf64]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumf128]]],		[[[fabsf128]]], [[[fmaxf128]]],  [[[fminf128]]])
 
-DEFINE_TYPE_FUNCTIONS([[[flonumf32x]]],	[[[fabsf32x]]], [[[fmaxf32x]]],  [[[fminf32x]]], [[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_TYPE_FUNCTIONS([[[flonumf64x]]],	[[[fabsf64x]]], [[[fmaxf64x]]],  [[[fminf64x]]], [[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_TYPE_FUNCTIONS([[[flonumf128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fminf128x]]],[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumf32x]]],		[[[fabsf32x]]], [[[fmaxf32x]]],  [[[fminf32x]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumf64x]]],		[[[fabsf64x]]], [[[fmaxf64x]]],  [[[fminf64x]]])
+DEFINE_TYPE_FUNCTIONS([[[flonumf128x]]],	[[[fabsf128x]]],[[[fmaxf128x]]], [[[fminf128x]]])
 
 
 /** --------------------------------------------------------------------
@@ -1024,60 +1024,60 @@ DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128x]]],[[[
  ** ----------------------------------------------------------------- */
 
 /* 2^Z = exp( log ( 2^Z ) ) = exp( Z * log( 2 ) ) */
-static mmux_standard_flonumcfl_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcfl_t
 cexp2f (mmux_standard_flonumcfl_t Z)
 {
   return cexpf(Z * CMPLXF(M_LN2, 0.0));
 }
-static mmux_standard_flonumcdb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcdb_t
 cexp2 (mmux_standard_flonumcdb_t Z)
 {
   return cexp(Z * CMPLX(M_LN2, 0.0));
 }
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-static mmux_standard_flonumcldb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcldb_t
 cexp2l (mmux_standard_flonumcldb_t Z)
 {
   return cexpl(Z * CMPLXL(M_LN2l, 0.0));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-static mmux_standard_flonumcf32_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32_t
 cexp2f32 (mmux_standard_flonumcf32_t Z)
 {
   return cexpf32(Z * CMPLXF32(M_LN2f32, 0.0));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-static mmux_standard_flonumcf64_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64_t
 cexp2f64 (mmux_standard_flonumcf64_t Z)
 {
   return cexpf64(Z * CMPLXF64(M_LN2f64, 0.0));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-static mmux_standard_flonumcf128_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128_t
 cexp2f128 (mmux_standard_flonumcf128_t Z)
 {
   return cexpf128(Z * CMPLXF128(M_LN2f128, 0.0));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-static mmux_standard_flonumcf32x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32x_t
 cexp2f32x (mmux_standard_flonumcf32x_t Z)
 {
   return cexpf32x(Z * CMPLXF32X(M_LN2f32x, 0.0));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-static mmux_standard_flonumcf64x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64x_t
 cexp2f64x (mmux_standard_flonumcf64x_t Z)
 {
   return cexpf64x(Z * CMPLXF64X(M_LN2f64x, 0.0));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-static mmux_standard_flonumcf128x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128x_t
 cexp2f128x (mmux_standard_flonumcf128x_t Z)
 {
   return cexpf128x(Z * CMPLXF128X(M_LN2f128x, 0.0));
@@ -1087,60 +1087,60 @@ cexp2f128x (mmux_standard_flonumcf128x_t Z)
 /* ------------------------------------------------------------------ */
 
 /* 10^Z = exp( log ( 10^Z ) ) = exp( Z * log( 10 ) ) */
-static mmux_standard_flonumcfl_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcfl_t
 cexp10f (mmux_standard_flonumcfl_t Z)
 {
   return cexpf(Z * CMPLXF(M_LN10, 0.0));
 }
-static mmux_standard_flonumcdb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcdb_t
 cexp10 (mmux_standard_flonumcdb_t Z)
 {
   return cexp(Z * CMPLX(M_LN10, 0.0));
 }
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-static mmux_standard_flonumcldb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcldb_t
 cexp10l (mmux_standard_flonumcldb_t Z)
 {
   return cexpl(Z * CMPLXL(M_LN10l, mmux_standard_flonumldb_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-static mmux_standard_flonumcf32_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32_t
 cexp10f32 (mmux_standard_flonumcf32_t Z)
 {
   return cexpf32(Z * CMPLXF32(M_LN10f32, mmux_standard_flonumf32_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-static mmux_standard_flonumcf64_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64_t
 cexp10f64 (mmux_standard_flonumcf64_t Z)
 {
   return cexpf64(Z * CMPLXF64(M_LN10f64, mmux_standard_flonumf64_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-static mmux_standard_flonumcf128_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128_t
 cexp10f128 (mmux_standard_flonumcf128_t Z)
 {
   return cexpf128(Z * CMPLXF128(M_LN10f128, mmux_standard_flonumf128_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-static mmux_standard_flonumcf32x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32x_t
 cexp10f32x (mmux_standard_flonumcf32x_t Z)
 {
   return cexpf32x(Z * CMPLXF32X(M_LN10f32x, mmux_standard_flonumf32x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-static mmux_standard_flonumcf64x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64x_t
 cexp10f64x (mmux_standard_flonumcf64x_t Z)
 {
   return cexpf64x(Z * CMPLXF64X(M_LN10f64x, mmux_standard_flonumf64x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-static mmux_standard_flonumcf128x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128x_t
 cexp10f128x (mmux_standard_flonumcf128x_t Z)
 {
   return cexpf128x(Z * CMPLXF128X(M_LN10f128x, mmux_standard_flonumf128x_literal(0.0)));
@@ -1150,60 +1150,60 @@ cexp10f128x (mmux_standard_flonumcf128x_t Z)
 /* ------------------------------------------------------------------ */
 
 /* log_2 Z = log Z / log 2 */
-static mmux_standard_flonumcfl_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcfl_t
 clog2f (mmux_standard_flonumcfl_t Z)
 {
   return (clogf(Z) / CMPLXF(M_LN2, mmux_standard_flonumfl_literal(0.0)));
 }
-static mmux_standard_flonumcdb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcdb_t
 clog2 (mmux_standard_flonumcdb_t Z)
 {
   return (clog(Z) / CMPLX(M_LN2, 0.0));
 }
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-static mmux_standard_flonumcldb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcldb_t
 clog2l (mmux_standard_flonumcldb_t Z)
 {
   return (clogl(Z) / CMPLXL(M_LN2l, mmux_standard_flonumldb_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-static mmux_standard_flonumcf32_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32_t
 clog2f32 (mmux_standard_flonumcf32_t Z)
 {
   return (clogf32(Z) / CMPLXF32(M_LN2f32, mmux_standard_flonumf32_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-static mmux_standard_flonumcf64_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64_t
 clog2f64 (mmux_standard_flonumcf64_t Z)
 {
   return (clogf64(Z) / CMPLXF64(M_LN2f64, mmux_standard_flonumf64_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-static mmux_standard_flonumcf128_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128_t
 clog2f128 (mmux_standard_flonumcf128_t Z)
 {
   return (clogf128(Z) / CMPLXF128(M_LN2f128, mmux_standard_flonumf128_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-static mmux_standard_flonumcf32x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32x_t
 clog2f32x (mmux_standard_flonumcf32x_t Z)
 {
   return (clogf32x(Z) / CMPLXF32X(M_LN2f32x, mmux_standard_flonumf32x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-static mmux_standard_flonumcf64x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64x_t
 clog2f64x (mmux_standard_flonumcf64x_t Z)
 {
   return (clogf64x(Z) / CMPLXF64X(M_LN2f64x, mmux_standard_flonumf64x_literal(0.0)));
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-static mmux_standard_flonumcf128x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128x_t
 clog2f128x (mmux_standard_flonumcf128x_t Z)
 {
   return (clogf128x(Z) / CMPLXF128X(M_LN2f128x, mmux_standard_flonumf128x_literal(0.0)));
@@ -1214,14 +1214,14 @@ clog2f128x (mmux_standard_flonumcf128x_t Z)
 
 /* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z ))
  */
-static mmux_standard_flonumcfl_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcfl_t
 ccbrtf (mmux_standard_flonumcfl_t Z)
 {
   constexpr auto one_third = CMPLXF(mmux_standard_flonumfl_literal(1.0) / mmux_standard_flonumfl_literal(3.0),
 				    mmux_standard_flonumfl_literal(0.0));
   return cexpf(one_third * clogf(Z));
 }
-static mmux_standard_flonumcdb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcdb_t
 ccbrt (mmux_standard_flonumcdb_t Z)
 {
   constexpr auto one_third = CMPLX(mmux_standard_flonumdb_literal(1.0) / mmux_standard_flonumdb_literal(3.0),
@@ -1229,7 +1229,7 @@ ccbrt (mmux_standard_flonumcdb_t Z)
   return cexp(one_third * clog(Z));
 }
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-static mmux_standard_flonumcldb_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcldb_t
 ccbrtl (mmux_standard_flonumcldb_t Z)
 {
   constexpr auto one_third = CMPLXL(mmux_standard_flonumldb_literal(1.0) / mmux_standard_flonumldb_literal(3.0),
@@ -1238,7 +1238,7 @@ ccbrtl (mmux_standard_flonumcldb_t Z)
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-static mmux_standard_flonumcf32_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32_t
 ccbrtf32 (mmux_standard_flonumcf32_t Z)
 {
   constexpr auto one_third = CMPLXF32(mmux_standard_flonumf32_literal(1.0) / mmux_standard_flonumf32_literal(3.0),
@@ -1247,7 +1247,7 @@ ccbrtf32 (mmux_standard_flonumcf32_t Z)
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-static mmux_standard_flonumcf64_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64_t
 ccbrtf64 (mmux_standard_flonumcf64_t Z)
 {
   constexpr auto one_third = CMPLXF64(mmux_standard_flonumf64_literal(1.0) / mmux_standard_flonumf64_literal(3.0),
@@ -1256,7 +1256,7 @@ ccbrtf64 (mmux_standard_flonumcf64_t Z)
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-static mmux_standard_flonumcf128_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128_t
 ccbrtf128 (mmux_standard_flonumcf128_t Z)
 {
   constexpr auto one_third = CMPLXF128(mmux_standard_flonumf128_literal(1.0) / mmux_standard_flonumf128_literal(3.0),
@@ -1265,7 +1265,7 @@ ccbrtf128 (mmux_standard_flonumcf128_t Z)
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-static mmux_standard_flonumcf32x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf32x_t
 ccbrtf32x (mmux_standard_flonumcf32x_t Z)
 {
   constexpr auto one_third = CMPLXF32X(mmux_standard_flonumf32x_literal(1.0) / mmux_standard_flonumf32x_literal(3.0),
@@ -1274,7 +1274,7 @@ ccbrtf32x (mmux_standard_flonumcf32x_t Z)
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-static mmux_standard_flonumcf64x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf64x_t
 ccbrtf64x (mmux_standard_flonumcf64x_t Z)
 {
   constexpr auto one_third = CMPLXF64X(mmux_standard_flonumf64x_literal(1.0) / mmux_standard_flonumf64x_literal(3.0),
@@ -1283,7 +1283,7 @@ ccbrtf64x (mmux_standard_flonumcf64x_t Z)
 }
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-static mmux_standard_flonumcf128x_t
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcf128x_t
 ccbrtf128x (mmux_standard_flonumcf128x_t Z)
 {
   constexpr auto one_third = CMPLXF128X(mmux_standard_flonumf128x_literal(1.0) / mmux_standard_flonumf128x_literal(3.0),
