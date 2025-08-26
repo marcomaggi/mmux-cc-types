@@ -30,6 +30,131 @@
 
 
 /** --------------------------------------------------------------------
+ ** Some maximum/minimum values.
+ ** ----------------------------------------------------------------- */
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],[[[
+constexpr static const mmux_standard_flonumf32_t   mmux_libc_maximum_flonumf32=FLT32_MAX;
+constexpr static const mmux_standard_flonumf32_t   mmux_libc_minimum_flonumf32=-(mmux_libc_maximum_flonumf32);
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],[[[
+constexpr static const mmux_standard_flonumf64_t   mmux_libc_maximum_flonumf64=FLT64_MAX;
+constexpr static const mmux_standard_flonumf64_t   mmux_libc_minimum_flonumf64=-(mmux_libc_maximum_flonumf64);
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],[[[
+constexpr static const mmux_standard_flonumf128_t mmux_libc_maximum_flonumf128=FLT128_MAX;
+constexpr static const mmux_standard_flonumf128_t mmux_libc_minimum_flonumf128=-(mmux_libc_maximum_flonumf128);
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]], [[[
+constexpr static const mmux_standard_flonumf32x_t  mmux_libc_maximum_flonumf32x=FLT32X_MAX;
+constexpr static const mmux_standard_flonumf32x_t  mmux_libc_minimum_flonumf32x=-(mmux_libc_maximum_flonumf32x);
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]], [[[
+constexpr static const mmux_standard_flonumf64x_t  mmux_libc_maximum_flonumf64x=FLT64X_MAX;
+constexpr static const mmux_standard_flonumf64x_t  mmux_libc_minimum_flonumf64x=-(mmux_libc_maximum_flonumf64);
+]]])
+
+MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]],[[[
+constexpr static const mmux_standard_flonumf128x_t mmux_libc_maximum_flonumf128x=FLT128X_MAX;
+constexpr static const mmux_standard_flonumf128x_t mmux_libc_minimum_flonumf128x=-(mmux_libc_maximum_flonumf128x);
+]]])
+
+
+/** --------------------------------------------------------------------
+ ** Real number type functions: minimum, maximum.
+ ** ----------------------------------------------------------------- */
+
+mmux_pointer_t
+mmux_standard_pointer_maximum (void)
+{
+  return (mmux_pointer_t)mmux_uintptr_maximum().value;
+}
+mmux_pointer_t
+mmux_standard_pointer_minimum (void)
+{
+  return (mmux_pointer_t)mmux_uintptr_minimum().value;
+}
+mmux_pointer_t
+mmux_pointer_maximum (void)
+{
+  return mmux_pointer(mmux_standard_pointer_maximum());
+}
+mmux_pointer_t
+mmux_pointer_minimum (void)
+{
+  return mmux_pointer(mmux_standard_pointer_minimum());
+}
+
+/* ------------------------------------------------------------------ */
+
+m4_dnl $1 - Stem of the type.
+m4_dnl $2 - C language expression evaluating to the maximum value.
+m4_dnl $3 - C language expression evaluating to the minimum value.
+m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
+m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$4]]],[[[
+mmux_standard_$1_t
+mmux_standard_$1_maximum (void)
+{
+  return $2;
+}
+mmux_standard_$1_t
+mmux_standard_$1_minimum (void)
+{
+  return $3;
+}
+mmux_$1_t
+mmux_$1_maximum (void)
+{
+  return mmux_$1($2);
+}
+mmux_$1_t
+mmux_$1_minimum (void)
+{
+  return mmux_$1($3);
+}
+]]])]]])
+
+DEFINE_REAL_TYPE_FUNCTIONS(char,	CHAR_MAX,	CHAR_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sshort,	SHRT_MAX,	SHRT_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(ushort,	USHRT_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint,	INT_MAX,	INT_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint,	UINT_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(slong,	LONG_MAX,	LONG_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(ulong,	ULONG_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sllong,	LLONG_MAX,	LLONG_MIN,	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_REAL_TYPE_FUNCTIONS(ullong,	ULLONG_MAX,	0,		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+/* FIXME Should we do something to make available the "_MIN" constants defined by the
+   C language standard?  (Marco Maggi; Sep 18, 2024) */
+DEFINE_REAL_TYPE_FUNCTIONS(flonumfl,	FLT_MAX,	-FLT_MAX)
+DEFINE_REAL_TYPE_FUNCTIONS(flonumdb,	DBL_MAX,	-DBL_MAX)
+DEFINE_REAL_TYPE_FUNCTIONS(flonumldb,	LDBL_MAX,	-LDBL_MAX,	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+
+DEFINE_REAL_TYPE_FUNCTIONS(flonumf32, mmux_libc_maximum_flonumf32, mmux_libc_minimum_flonumf32, [[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_REAL_TYPE_FUNCTIONS(flonumf64, mmux_libc_maximum_flonumf64, mmux_libc_minimum_flonumf64, [[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_REAL_TYPE_FUNCTIONS(flonumf128,mmux_libc_maximum_flonumf128, mmux_libc_minimum_flonumf128, [[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+
+DEFINE_REAL_TYPE_FUNCTIONS(flonumf32x, mmux_libc_maximum_flonumf32x, mmux_libc_minimum_flonumf32x, [[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_REAL_TYPE_FUNCTIONS(flonumf64x, mmux_libc_maximum_flonumf64x, mmux_libc_minimum_flonumf64x, [[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_REAL_TYPE_FUNCTIONS(flonumf128x,mmux_libc_maximum_flonumf128x, mmux_libc_minimum_flonumf128x, [[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+
+DEFINE_REAL_TYPE_FUNCTIONS(sint8,	INT8_MAX,	INT8_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint8,	UINT8_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint16,	INT16_MAX,	INT16_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint16,	UINT16_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint32,	INT32_MAX,	INT32_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint32,	UINT32_MAX,	0)
+DEFINE_REAL_TYPE_FUNCTIONS(sint64,	INT64_MAX,	INT64_MIN)
+DEFINE_REAL_TYPE_FUNCTIONS(uint64,	UINT64_MAX,	0)
+
+
+/** --------------------------------------------------------------------
  ** Real constants.
  ** ----------------------------------------------------------------- */
 
