@@ -65,45 +65,6 @@ constexpr static const mmux_standard_flonumf128x_t mmux_libc_minimum_flonumf128x
 
 
 /** --------------------------------------------------------------------
- ** Version functions.
- ** ----------------------------------------------------------------- */
-
-char const *
-mmux_cc_types_version_string (void)
-{
-  return (char const *)mmux_cc_types_VERSION_INTERFACE_STRING;
-}
-int
-mmux_cc_types_version_interface_current (void)
-{
-  return mmux_cc_types_VERSION_INTERFACE_CURRENT;
-}
-int
-mmux_cc_types_version_interface_revision (void)
-{
-  return mmux_cc_types_VERSION_INTERFACE_REVISION;
-}
-int
-mmux_cc_types_version_interface_age (void)
-{
-  return mmux_cc_types_VERSION_INTERFACE_AGE;
-}
-
-
-/** --------------------------------------------------------------------
- ** Library initialisation.
- ** ----------------------------------------------------------------- */
-
-bool
-mmux_cc_types_init (void)
-{
-  if (mmux_cc_types_init_sprint_module())  { return true; }
-  if (mmux_cc_types_init_parsers_module()) { return true; }
-  return false;
-}
-
-
-/** --------------------------------------------------------------------
  ** Real number type functions: minimum, maximum.
  ** ----------------------------------------------------------------- */
 

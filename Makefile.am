@@ -135,6 +135,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-adapters.h.m4			\
 	src/mmux-cc-types-constants.c.m4		\
 	src/mmux-cc-types-core.c.m4			\
+	src/mmux-cc-types-library.c.m4			\
 	src/mmux-cc-types-parsers.c.m4			\
 	src/mmux-cc-types-sprinters.c.m4
 
@@ -146,6 +147,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-adapters.h			\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
+	src/mmux-cc-types-library.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprinters.c
 
@@ -182,6 +184,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-adapters.h			\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-core.c			\
+	src/mmux-cc-types-library.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-sprinters.c
 
