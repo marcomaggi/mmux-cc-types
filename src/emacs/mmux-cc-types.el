@@ -62,6 +62,7 @@
   ;;
   `((,mmux-cc-types-font-lock-rex/known-functions-misc			1 mmux-cc-types-function-face keep)
 
+    (,mmux-cc-types-font-lock-rex/known-generic-macros/complex		1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-generic-macros/arithmetics	1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-generic-macros/bitwise		1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-generic-macros/predicates	1 mmux-cc-types-function-face keep)

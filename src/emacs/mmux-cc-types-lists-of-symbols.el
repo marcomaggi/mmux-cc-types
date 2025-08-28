@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-08-22 10:48:19 marco>
+;; Time-stamp: <2025-08-28 07:44:44 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -35,6 +35,12 @@
 ;;(setq debug-on-error t)
 
 
+(defconst mmux-cc-types-font-lock-list/known-generic-macros/complex
+  '("mmux_ctype_rectangular"
+    "mmux_ctype_real_part"
+    "mmux_ctype_imag_part"
+    "mmux_ctype_argument"))
+
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/arithmetics
   '("mmux_ctype_add"
     "mmux_ctype_sub"
@@ -45,7 +51,7 @@
     "mmux_ctype_inv"
     "mmux_ctype_incr"
     "mmux_ctype_decr"
-    "mmux_ctype_abs"))
+    "mmux_ctype_absolute"))
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/bitwise
   '("mmux_ctype_bitwise_and"
@@ -72,7 +78,9 @@
     "mmux_ctype_greater_equal"
     "mmux_ctype_less_equal"
     "mmux_ctype_min"
-    "mmux_ctype_max"))
+    "mmux_ctype_max"
+    "mmux_ctype_equal_absmargin"
+    "mmux_ctype_equal_relepsilon"))
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/mathematics
   '("mmux_ctype_sin"
@@ -124,6 +132,8 @@
     "mmux_ctype_minimum"
     "mmux_ctype_maximum"))
 
+(defconst mmux-cc-types-font-lock-rex/known-generic-macros/complex
+  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/complex 'symbols))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/arithmetics
   (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/arithmetics 'symbols))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/bitwise
@@ -205,7 +215,7 @@
       "inv"
       "incr"
       "decr"
-      "abs"))
+      "absolute"))
 
   (defconst mmux-cc-types-known-function-names/bitwise
     '("bitwise_and"
@@ -307,11 +317,11 @@
       "maximum"))
 
   (defconst mmux-cc-types-known-function-names/complex
-    '("make_rectangular"
+    '("rectangular"
       "real_part"
       "imag_part"
-      "arg"
-      "conj"))
+      "argument"
+      "conjugate"))
 
   (defconst mmux-cc-types-known-function-names/integer
     (append mmux-cc-types-known-function-names/arithmetics

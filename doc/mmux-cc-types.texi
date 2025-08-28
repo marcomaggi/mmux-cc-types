@@ -872,7 +872,7 @@ mmux_flonumldb_make(0.123)  @expansion{} ((mmux_flonumldb_t)(MMUX_FLONUMLDB_LITE
 
 @noindent
 there are no maker macros for complex types, because for those values we have to use the proper
-constructor functions like @cfunc{mmux_flonumcdb_make_rectangular}, @ref{complex make, Constructing
+constructor functions like @cfunc{mmux_flonumcdb_rectangular}, @ref{complex make, Constructing
 complex numbers}.
 
 
@@ -1715,7 +1715,7 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 * complex make::        Constructing complex numbers.
 * complex parts::       Extracting the real and imaginary parts.
 * complex arg::         Computing the argument value.
-* complex conj::        Computing the complex conjugate value.
+* complex conjugate::        Computing the complex conjugate value.
 @end menu
 
 @c page
@@ -1730,12 +1730,12 @@ mmux_flonumdb_t   rep = 1.2;
 mmux_flonumdb_t   imp = 3.4;
 mmux_flonumcdb_t Z;
 
-Z = mmux_flonumcdb_make_rectangular(rep, imp);
+Z = mmux_flonumcdb_rectangular(rep, imp);
 @end example
 
 
 @macro MmuxDefineComplexMakeRectangularFunction{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_make_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
+@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
 Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
 @var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Return the result.
 @end deftypefun
@@ -1805,7 +1805,7 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 
 
 @macro MmuxDefineComplexArgFunction{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_arg (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_argument (mmux_\CPLXSTEM\_t @var{OP})
 Compute and return the argument value of the complex number @var{OP}.
 @end deftypefun
 
@@ -1828,32 +1828,32 @@ Compute and return the argument value of the complex number @var{OP}.
 @MmuxDefineComplexArgFunction{flonumcd128, flonumd128}
 
 @c page
-@node complex conj
+@node complex conjugate
 @section Computing the complex conjugate value
 
 
-@macro MmuxDefineComplexConjFunction{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_conj (mmux_\CPLXSTEM\_t @var{OP})
+@macro MmuxDefineComplexConjugateFunction{CPLXSTEM,REALSTEM}
+@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_conjugate (mmux_\CPLXSTEM\_t @var{OP})
 Compute and return complex conjugate value of the complex number @var{OP}.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineComplexConjFunction{flonumcfl, float}
-@MmuxDefineComplexConjFunction{flonumcdb, flonumdb}
-@MmuxDefineComplexConjFunction{flonumcldb, flonumldb}
+@MmuxDefineComplexConjugateFunction{flonumcfl, float}
+@MmuxDefineComplexConjugateFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexConjugateFunction{flonumcldb, flonumldb}
 
-@MmuxDefineComplexConjFunction{flonumcf32, flonumf32}
-@MmuxDefineComplexConjFunction{flonumcf64, flonumf64}
-@MmuxDefineComplexConjFunction{flonumcf128, flonumf128}
+@MmuxDefineComplexConjugateFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexConjugateFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexConjugateFunction{flonumcf128, flonumf128}
 
-@MmuxDefineComplexConjFunction{flonumcf32x, flonumf32x}
-@MmuxDefineComplexConjFunction{flonumcf64x, flonumf64x}
-@MmuxDefineComplexConjFunction{flonumcf128x, flonumf128x}
+@MmuxDefineComplexConjugateFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexConjugateFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexConjugateFunction{flonumcf128x, flonumf128x}
 
-@MmuxDefineComplexConjFunction{flonumcd32, flonumd32}
-@MmuxDefineComplexConjFunction{flonumcd64, flonumd64}
-@MmuxDefineComplexConjFunction{flonumcd128, flonumd128}
+@MmuxDefineComplexConjugateFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexConjugateFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexConjugateFunction{flonumcd128, flonumd128}
 
 @c page
 @node predicates
@@ -2317,7 +2317,7 @@ as @code{mmux_uint8_t *}, return the result.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_abs (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_absolute (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
@@ -2334,7 +2334,7 @@ remainder, increment, decrement.
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_div (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_neg (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inv (mmux_\CPLXSTEM\_t @var{OP})
-@deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_abs (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_absolute (mmux_\CPLXSTEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values.
 @end deftypefun
 
@@ -2347,7 +2347,7 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_abs (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_absolute (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})

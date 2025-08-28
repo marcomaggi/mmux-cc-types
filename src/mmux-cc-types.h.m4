@@ -147,6 +147,9 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
 mmux_cc_types_decl bool mmux_cc_types_init (void)
   __attribute__((__constructor__));
 
+mmux_cc_types_decl void mmux_cc_types_final (void)
+  __attribute__((__destructor__));
+
 
 /** --------------------------------------------------------------------
  ** Standard C types aliases.
@@ -604,26 +607,24 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
 
 m4_divert(-1)
 m4_define([[[DEFINE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_make_rectangular (mmux_standard_flonum$1_t re,
-										       mmux_standard_flonum$1_t im)
+/* We need this  constructor for standard complex  numbers so that we can  use it for
+   inline functions in the main header file. */
+mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular (mmux_standard_flonum$1_t re,
+										  mmux_standard_flonum$1_t im)
   __attribute__((__const__));
 
-#define mmux_standard_flonumc$1_make_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,STANDARD_FLONUM_LITERAL_IM) \
-  (mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_RE),		\
-					    mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_IM)))
-
-mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_make_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
+mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
   __attribute__((__const__));
 
-#define mmux_flonumc$1_make_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,STANDARD_FLONUM_LITERAL_IM)	\
-  (mmux_flonumc$1(mmux_standard_flonumc$1_make_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,		\
-								   STANDARD_FLONUM_LITERAL_IM)))
+#define mmux_flonumc$1_rectangular_literal(STANDARD_FLONUM_LITERAL_RE,STANDARD_FLONUM_LITERAL_IM)     \
+  (mmux_flonumc$1(mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_RE), \
+						      mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_IM))))
 
 mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_real_part (mmux_flonumc$1_t Z)	__attribute__((__const__));
 mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_imag_part (mmux_flonumc$1_t Z)	__attribute__((__const__));
-mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_abs       (mmux_flonumc$1_t Z)	__attribute__((__const__));
-mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_arg       (mmux_flonumc$1_t Z)	__attribute__((__const__));
-mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_conj      (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_absolute  (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonum$1_t  mmux_flonumc$1_argument  (mmux_flonumc$1_t Z)	__attribute__((__const__));
+mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_conjugate (mmux_flonumc$1_t Z)	__attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_PROTOS([[[fl]]])
@@ -671,7 +672,7 @@ m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
 mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_minimum __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_maximum __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_abs	__attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_absolute	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
 
@@ -1111,38 +1112,38 @@ m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_nan (void)
 {
-  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_nan(),
-						  mmux_standard_flonum$1_constant_nan());
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_nan(),
+					     mmux_standard_flonum$1_constant_nan());
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_imag (void)
 {
-  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_zero(),
-						  mmux_standard_flonum$1_constant_one());
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_zero(),
+					     mmux_standard_flonum$1_constant_one());
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_zero (void)
 {
-  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_zero(),
-						  mmux_standard_flonum$1_constant_zero());
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_zero(),
+					     mmux_standard_flonum$1_constant_zero());
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_one (void)
 {
-  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_one(),
-						  mmux_standard_flonum$1_constant_zero());
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_one(),
+					     mmux_standard_flonum$1_constant_zero());
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_two (void)
 {
-  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_two(),
-						  mmux_standard_flonum$1_constant_zero());
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_two(),
+					     mmux_standard_flonum$1_constant_zero());
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_ten (void)
 {
-  return mmux_standard_flonumc$1_make_rectangular(mmux_standard_flonum$1_constant_ten(),
-						  mmux_standard_flonum$1_constant_zero());
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_ten(),
+					     mmux_standard_flonum$1_constant_zero());
 }
 
 /* ------------------------------------------------------------------ */

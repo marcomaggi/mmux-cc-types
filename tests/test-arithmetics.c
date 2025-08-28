@@ -42,44 +42,44 @@
 #undef  DEFINE_REAL_FLONUM_ADD
 #define DEFINE_REAL_FLONUM_ADD(STEM)					\
   {									\
-    auto	op1 = mmux_## STEM ## _literal(5.0);			\
-    auto	op2 = mmux_## STEM ## _literal(4.0);			\
-    auto	rop = mmux_## STEM ## _literal(9.0);			\
+    auto	op1 = mmux_## STEM ##_literal(5.0);			\
+    auto	op2 = mmux_## STEM ##_literal(4.0);			\
+    auto	rop = mmux_## STEM ##_literal(9.0);			\
     assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_add(op1, op2)));	\
     assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));		\
     dprintf(2," %s,", #STEM);						\
   }
 
-#define DEFINE_COMPLEX_ADD(CSTEM,RSTEM)								\
-  {												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(4.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(9.0,5.0);			\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));					\
-    }												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
-							mmux_## RSTEM ##_literal(3.0));		\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(4.0),		\
-							mmux_## RSTEM ##_literal(2.0));		\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(9.0),		\
-							mmux_## RSTEM ##_literal(5.0));		\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));					\
-    }												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
-							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(4.0),	\
-							mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
-							mmux_## CSTEM ##_part_literal(5.0));	\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));					\
-    }												\
-    dprintf(2," %s,", #CSTEM);									\
+#define DEFINE_CPLX_FLONUM_ADD(CSTEM,RSTEM)						\
+  {											\
+    {											\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_rectangular_literal(4.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(9.0,5.0);			\
+      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));		\
+      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));				\
+    }											\
+    {											\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),	\
+						   mmux_## RSTEM ##_literal(3.0));	\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(4.0),	\
+						   mmux_## RSTEM ##_literal(2.0));	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(9.0),	\
+						   mmux_## RSTEM ##_literal(5.0));	\
+      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));		\
+      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));				\
+    }											\
+    {											\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+						   mmux_## CSTEM ##_part_literal(3.0));	\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(4.0),	\
+						   mmux_## CSTEM ##_part_literal(2.0));	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
+						   mmux_## CSTEM ##_part_literal(5.0));	\
+      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));		\
+      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));				\
+    }											\
+    dprintf(2," %s,", #CSTEM);								\
   }
 
 /* ------------------------------------------------------------------ */
@@ -170,21 +170,21 @@ test_arithmetics_add (void)
   DEFINE_REAL_INTEGER_ADD(socklen);
   DEFINE_REAL_INTEGER_ADD(rlim);
 
-  DEFINE_COMPLEX_ADD(flonumcfl,		flonumfl);
-  DEFINE_COMPLEX_ADD(flonumcdb,		flonumdb);
-  DEFINE_COMPLEX_ADD(flonumcldb,		flonumldb);
-  DEFINE_COMPLEX_ADD(flonumcf32,	flonumf32);
-  DEFINE_COMPLEX_ADD(flonumcf64,	flonumf64);
-  DEFINE_COMPLEX_ADD(flonumcf128,	flonumf128);
-  DEFINE_COMPLEX_ADD(flonumcf32x,	flonumf32x);
-  DEFINE_COMPLEX_ADD(flonumcf64x,	flonumf64x);
+  DEFINE_CPLX_FLONUM_ADD(flonumcfl,	flonumfl);
+  DEFINE_CPLX_FLONUM_ADD(flonumcdb,	flonumdb);
+  DEFINE_CPLX_FLONUM_ADD(flonumcldb,	flonumldb);
+  DEFINE_CPLX_FLONUM_ADD(flonumcf32,	flonumf32);
+  DEFINE_CPLX_FLONUM_ADD(flonumcf64,	flonumf64);
+  DEFINE_CPLX_FLONUM_ADD(flonumcf128,	flonumf128);
+  DEFINE_CPLX_FLONUM_ADD(flonumcf32x,	flonumf32x);
+  DEFINE_CPLX_FLONUM_ADD(flonumcf64x,	flonumf64x);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DEFINE_COMPLEX_ADD(flonumcf128x,	flonumf128x);
+  DEFINE_CPLX_FLONUM_ADD(flonumcf128x,	flonumf128x);
 #endif
-  DEFINE_COMPLEX_ADD(flonumcd32,	flonumd32);
-  DEFINE_COMPLEX_ADD(flonumcd64,	flonumd64);
+  DEFINE_CPLX_FLONUM_ADD(flonumcd32,	flonumd32);
+  DEFINE_CPLX_FLONUM_ADD(flonumcd64,	flonumd64);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DEFINE_COMPLEX_ADD(flonumcd128,	flonumd128);
+  DEFINE_CPLX_FLONUM_ADD(flonumcd128,	flonumd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -220,28 +220,28 @@ test_arithmetics_add (void)
 #define DEFINE_COMPLEX_SUB(CSTEM,RSTEM)								\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(3.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(2.0,1.0);			\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_rectangular_literal(3.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(2.0,1.0);			\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_sub(op1, op2)));			\
       assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
 							mmux_## RSTEM ##_literal(3.0));		\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(3.0),		\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(3.0),		\
 							mmux_## RSTEM ##_literal(2.0));		\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(2.0),		\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(2.0),		\
 							mmux_## RSTEM ##_literal(1.0));		\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_sub(op1, op2)));			\
       assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
 							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
 							mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(2.0),	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(2.0),	\
 							mmux_## CSTEM ##_part_literal(1.0));	\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_sub(op1, op2)));			\
       assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
@@ -388,10 +388,10 @@ test_arithmetics_sub (void)
 #define DEFINE_COMPLEX_MUL(CSTEM,RSTEM)								\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(3.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(9.0,19.0);			\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_rectangular_literal(3.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(9.0,19.0);			\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);			\
       if (0) {											\
 	dprintf(2, "\nop1 '"); mmux_ctype_dprintf(2, op1);					\
 	dprintf(2, "' op2 '"); mmux_ctype_dprintf(2, op2);					\
@@ -403,21 +403,21 @@ test_arithmetics_sub (void)
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_mul(op1, op2), eps));			\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
 							mmux_## RSTEM ##_literal(3.0));		\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(3.0),		\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(3.0),		\
 							mmux_## RSTEM ##_literal(2.0));		\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(9.0),		\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(9.0),		\
 							mmux_## RSTEM ##_literal(19.0));	\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_mul(op1, op2)));			\
       assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));					\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
 							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
 							mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
 							mmux_## CSTEM ##_part_literal(19.0));	\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_mul(op1, op2)));			\
       assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));					\
@@ -555,10 +555,10 @@ test_arithmetics_mul (void)
 #define DEFINE_COMPLEX_DIV(CSTEM,RSTEM)								\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular_literal(3.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(1.61538462,-0.0769230769);	\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
+      auto	op2 = mmux_## CSTEM ##_rectangular_literal(3.0,2.0);			\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(1.61538462,-0.0769230769);	\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);			\
       if (0) {											\
 	dprintf(2, "\nop1 '"); mmux_ctype_dprintf(2, op1);					\
 	dprintf(2, "' op2 '"); mmux_ctype_dprintf(2, op2);					\
@@ -570,24 +570,24 @@ test_arithmetics_mul (void)
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_div(op1, op2), eps));			\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
 							mmux_## RSTEM ##_literal(3.0));		\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(3.0),		\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(3.0),		\
 							mmux_## RSTEM ##_literal(2.0));		\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(1.61538462),	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(1.61538462),	\
 							mmux_## RSTEM ##_literal(-0.0769230769));	\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);			\
       assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_div(op1, op2), eps));	\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_div(op1, op2), eps));			\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
 							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
+      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
 							mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(1.61538462),	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(1.61538462),	\
 							mmux_## CSTEM ##_part_literal(-0.0769230769));	\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);			\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);			\
       assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_div(op1, op2), eps));	\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_div(op1, op2), eps));			\
     }												\
@@ -722,23 +722,23 @@ test_arithmetics_div (void)
 #define DEFINE_COMPLEX_NEG(CSTEM,RSTEM)								\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);			\
-      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(-5.0,-3.0);			\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(-5.0,-3.0);			\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_neg(op1)));				\
       assert(mmux_ctype_equal(rop, mmux_ctype_neg(op1)));					\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),		\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
 							mmux_## RSTEM ##_literal(3.0));		\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(-5.0),		\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(-5.0),		\
 							mmux_## RSTEM ##_literal(-3.0));	\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_neg(op1)));				\
       assert(mmux_ctype_equal(rop, mmux_ctype_neg(op1)));					\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
 							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(-5.0),	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(-5.0),	\
 							mmux_## CSTEM ##_part_literal(-3.0));	\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_neg(op1)));				\
       assert(mmux_ctype_equal(rop, mmux_ctype_neg(op1)));					\
@@ -851,9 +851,9 @@ test_arithmetics_neg (void)
 #define DEFINE_COMPLEX_INV(CSTEM,RSTEM)									\
   {													\
     {													\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(5.0,3.0);				\
-      auto	rop = mmux_## CSTEM ##_make_rectangular_literal(0.147058824,-0.0882352941);		\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);				\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);				\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(0.147058824,-0.0882352941);		\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);				\
       if (0) {												\
 	dprintf(2, "\nop1 '");    mmux_ctype_dprintf(2, op1);						\
 	dprintf(2, "' result '"); mmux_ctype_dprintf(2, mmux_ctype_inv(op1));				\
@@ -864,20 +864,20 @@ test_arithmetics_neg (void)
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inv(op1), eps));				\
     }													\
     {													\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(5.0),			\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),			\
 							mmux_## RSTEM ##_literal(3.0));			\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(0.147058824),		\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(0.147058824),		\
 							mmux_## RSTEM ##_literal(-0.0882352941));	\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);				\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);				\
       assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inv(op1), eps));			\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inv(op1), eps));				\
     }													\
     {													\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(5.0),		\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),		\
 							mmux_## CSTEM ##_part_literal(3.0));		\
-      auto	rop = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(0.147058824),	\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(0.147058824),	\
 							mmux_## CSTEM ##_part_literal(-0.0882352941));	\
-      auto	eps = mmux_## CSTEM ##_make_rectangular_literal(1e-4,1e-4);				\
+      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);				\
       assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inv(op1), eps));			\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inv(op1), eps));				\
     }													\
@@ -989,61 +989,61 @@ test_arithmetics_inv (void)
  ** Absolute value.
  ** ----------------------------------------------------------------- */
 
-#undef  DEFINE_REAL_INTEGER_ABS
-#define DEFINE_REAL_INTEGER_ABS(STEM)					\
+#undef  DEFINE_REAL_INTEGER_ABSOLUTE
+#define DEFINE_REAL_INTEGER_ABSOLUTE(STEM)					\
   {									\
     auto	op1 = mmux_## STEM ## _literal(-5);			\
     auto	rop = mmux_## STEM ## _literal(5);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_abs(op1)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_abs(op1)));			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_absolute(op1)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_absolute(op1)));			\
     dprintf(2," %s,", #STEM);						\
   }
 
-#undef  DEFINE_REAL_UNSIGNED_INTEGER_ABS
-#define DEFINE_REAL_UNSIGNED_INTEGER_ABS(STEM)				\
+#undef  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE
+#define DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(STEM)				\
   {									\
     auto	op1 = mmux_## STEM ## _literal(5);			\
     auto	rop = mmux_## STEM ## _literal(5);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_abs(op1)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_abs(op1)));			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_absolute(op1)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_absolute(op1)));			\
     dprintf(2," %s,", #STEM);						\
   }
 
-#undef  DEFINE_REAL_FLONUM_ABS
-#define DEFINE_REAL_FLONUM_ABS(STEM)							\
+#undef  DEFINE_REAL_FLONUM_ABSOLUTE
+#define DEFINE_REAL_FLONUM_ABSOLUTE(STEM)							\
   {											\
     auto	op1 = mmux_## STEM ##_literal(-5.0);					\
     auto	rop = mmux_## STEM ##_literal(5.0);					\
     auto	eps = mmux_## STEM ##_literal(1e-4);					\
-    assert(mmux_## STEM ##_equal_relepsilon(rop, mmux_## STEM ##_abs(op1), eps));	\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_abs(op1), eps));			\
+    assert(mmux_## STEM ##_equal_relepsilon(rop, mmux_## STEM ##_absolute(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     dprintf(2," %s,", #STEM);								\
   }
 
-#define DEFINE_COMPLEX_ABS(CSTEM,RSTEM)								\
+#define DEFINE_COMPLEX_ABSOLUTE(CSTEM,RSTEM)								\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular_literal(-5.0,-3.0);			\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(-5.0,-3.0);			\
       auto	rop = mmux_## RSTEM(mmux_standard_## RSTEM ##_literal(5.83095189));		\
       auto	eps = mmux_## RSTEM ##_literal(1e-4);						\
-      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_abs(op1), eps));		\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_abs(op1), eps));			\
+      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));		\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## RSTEM ##_literal(-5.0),		\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(-5.0),		\
 							mmux_## RSTEM ##_literal(-3.0));	\
       auto	rop = mmux_## RSTEM(mmux_standard_## RSTEM ##_literal(5.83095189));		\
       auto	eps = mmux_## RSTEM ##_literal(1e-4);						\
-      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_abs(op1), eps));		\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_abs(op1), eps));			\
+      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));		\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_make_rectangular(mmux_## CSTEM ##_part_literal(-5.0),	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(-5.0),	\
 							mmux_## CSTEM ##_part_literal(-3.0));	\
       auto	rop = mmux_## RSTEM ##_literal(5.83095189);					\
       auto	eps = mmux_## RSTEM ##_literal(1e-4);						\
-      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_abs(op1), eps));		\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_abs(op1), eps));			\
+      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));		\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     }												\
     dprintf(2," %s,", #CSTEM);									\
   }
@@ -1051,102 +1051,102 @@ test_arithmetics_inv (void)
 /* ------------------------------------------------------------------ */
 
 static void
-test_arithmetics_abs (void)
+test_arithmetics_absolute (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-  DEFINE_REAL_INTEGER_ABS(char);
-  DEFINE_REAL_INTEGER_ABS(schar);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uchar);
-  DEFINE_REAL_INTEGER_ABS(sshort);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(ushort);
-  DEFINE_REAL_INTEGER_ABS(sint);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uint);
-  DEFINE_REAL_INTEGER_ABS(slong);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(ulong);
+  DEFINE_REAL_INTEGER_ABSOLUTE(char);
+  DEFINE_REAL_INTEGER_ABSOLUTE(schar);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uchar);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sshort);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(ushort);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sint);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uint);
+  DEFINE_REAL_INTEGER_ABSOLUTE(slong);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DEFINE_REAL_INTEGER_ABS(sllong);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(ullong);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(ullong);
 #endif
-  DEFINE_REAL_INTEGER_ABS(sint8);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uint8);
-  DEFINE_REAL_INTEGER_ABS(sint16);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uint16);
-  DEFINE_REAL_INTEGER_ABS(sint32);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uint32);
-  DEFINE_REAL_INTEGER_ABS(sint64);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uint64);
-  DEFINE_REAL_FLONUM_ABS(flonumfl);
-  DEFINE_REAL_FLONUM_ABS(flonumdb);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sint8);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uint8);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sint16);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uint16);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sint32);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uint32);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sint64);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uint64);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumfl);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DEFINE_REAL_FLONUM_ABS(flonumldb);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DEFINE_REAL_FLONUM_ABS(flonumf32);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DEFINE_REAL_FLONUM_ABS(flonumf64);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_ABS(flonumf128);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DEFINE_REAL_FLONUM_ABS(flonumf32x);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DEFINE_REAL_FLONUM_ABS(flonumf64x);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DEFINE_REAL_FLONUM_ABS(flonumf128x);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DEFINE_REAL_FLONUM_ABS(flonumd32);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DEFINE_REAL_FLONUM_ABS(flonumd64);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_ABS(flonumd128);
+  DEFINE_REAL_FLONUM_ABSOLUTE(flonumd128);
 #endif
-  DEFINE_REAL_INTEGER_ABS(ssize);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(usize);
-  DEFINE_REAL_INTEGER_ABS(sintmax);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uintmax);
-  DEFINE_REAL_INTEGER_ABS(sintptr);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uintptr);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(mode);
-  DEFINE_REAL_INTEGER_ABS(off);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(pid);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(uid);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(gid);
-  DEFINE_REAL_INTEGER_ABS(ptrdiff);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(wchar);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(wint);
-  DEFINE_REAL_INTEGER_ABS(time);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(socklen);
-  DEFINE_REAL_UNSIGNED_INTEGER_ABS(rlim);
+  DEFINE_REAL_INTEGER_ABSOLUTE(ssize);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(usize);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sintmax);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uintmax);
+  DEFINE_REAL_INTEGER_ABSOLUTE(sintptr);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uintptr);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(mode);
+  DEFINE_REAL_INTEGER_ABSOLUTE(off);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(pid);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(uid);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(gid);
+  DEFINE_REAL_INTEGER_ABSOLUTE(ptrdiff);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(wchar);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(wint);
+  DEFINE_REAL_INTEGER_ABSOLUTE(time);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(socklen);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(rlim);
 
-  DEFINE_COMPLEX_ABS(flonumcfl,		flonumfl);
-  DEFINE_COMPLEX_ABS(flonumcdb,		flonumdb);
-  DEFINE_COMPLEX_ABS(flonumcldb,	flonumldb);
-  DEFINE_COMPLEX_ABS(flonumcf32,	flonumf32);
-  DEFINE_COMPLEX_ABS(flonumcf64,	flonumf64);
-  DEFINE_COMPLEX_ABS(flonumcf128,	flonumf128);
-  DEFINE_COMPLEX_ABS(flonumcf32x,	flonumf32x);
-  DEFINE_COMPLEX_ABS(flonumcf64x,	flonumf64x);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcfl,		flonumfl);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcdb,		flonumdb);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcldb,	flonumldb);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcf32,	flonumf32);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcf64,	flonumf64);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcf128,	flonumf128);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcf32x,	flonumf32x);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcf64x,	flonumf64x);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DEFINE_COMPLEX_ABS(flonumcf128x,	flonumf128x);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcf128x,	flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DEFINE_COMPLEX_ABS(flonumcd32,	flonumd32);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcd32,	flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DEFINE_COMPLEX_ABS(flonumcd64,	flonumd64);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcd64,	flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DEFINE_COMPLEX_ABS(flonumcd128,	flonumd128);
+  DEFINE_COMPLEX_ABSOLUTE(flonumcd128,	flonumd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1497,7 +1497,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_arithmetics_div();		}
   if (1) {	test_arithmetics_neg();		}
   if (1) {	test_arithmetics_inv();		}
-  if (1) {	test_arithmetics_abs();		}
+  if (1) {	test_arithmetics_absolute();	}
   if (1) {	test_arithmetics_mod();		}
   if (1) {	test_arithmetics_incr();	}
   if (1) {	test_arithmetics_decr();	}

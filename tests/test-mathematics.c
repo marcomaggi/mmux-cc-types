@@ -43,9 +43,9 @@ test_mathematics_sin (void)
 #undef  DOIT_FOR_CPLX
 #define DOIT_FOR_CPLX(STEM)								\
   {											\
-    auto	op1 = mmux_##STEM##_make_rectangular_literal(5.0,3.0);			\
-    auto	rop = mmux_##STEM##_make_rectangular_literal(-9.654125477,2.841692296);	\
-    auto	eps = mmux_##STEM##_make_rectangular_literal(1e-3,1e-3);		\
+    auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
+    auto	rop = mmux_##STEM##_rectangular_literal(-9.654125477,2.841692296);	\
+    auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);		\
     if (0) {										\
       dprintf(2, "\napplication for " #STEM " expected '");				\
       mmux_##STEM##_dprintf(2, rop);							\
@@ -152,9 +152,9 @@ test_mathematics_cos (void)
 #undef  DOIT_FOR_CPLX
 #define DOIT_FOR_CPLX(STEM)								\
   {											\
-    auto	op1 = mmux_##STEM##_make_rectangular_literal(5.0,3.0);			\
-    auto	rop = mmux_##STEM##_make_rectangular_literal(2.855815004,9.606383448);	\
-    auto	eps = mmux_##STEM##_make_rectangular_literal(1e-3,1e-3);		\
+    auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
+    auto	rop = mmux_##STEM##_rectangular_literal(2.855815004,9.606383448);	\
+    auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);		\
     if (0) {										\
       dprintf(2, "\napplication for " #STEM " expected '");				\
       mmux_##STEM##_dprintf(2, rop);							\
@@ -275,9 +275,9 @@ test_mathematics_tan (void)
 #undef  DOIT_FOR_CPLX
 #define DOIT_FOR_CPLX(STEM)								\
   {											\
-    auto	op1 = mmux_##STEM##_make_rectangular_literal(COP1RE,COP1RE);		\
-    auto	rop = mmux_##STEM##_make_rectangular_literal(CROPRE,CROPIM);		\
-    auto	eps = mmux_##STEM##_make_rectangular_literal(1e-6,1e-6);		\
+    auto	op1 = mmux_##STEM##_rectangular_literal(COP1RE,COP1RE);		\
+    auto	rop = mmux_##STEM##_rectangular_literal(CROPRE,CROPIM);		\
+    auto	eps = mmux_##STEM##_rectangular_literal(1e-6,1e-6);		\
     if (1) {										\
       dprintf(2, "\napplication for " #STEM " expected '");				\
       mmux_##STEM##_dprintf(2, rop);							\
@@ -451,78 +451,78 @@ test_mathematics_asin (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(1.023'821'75,2.452'913'74);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
   }
 #endif
@@ -613,78 +613,78 @@ test_mathematics_acos (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(0.546'974'58,-2.452'913'74);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(0.546'974'58,-2.452'913'74);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acos(op1), mrg));
   }
 #endif
@@ -779,78 +779,78 @@ test_mathematics_atan (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atan(op1), mrg));
   }
 #endif
@@ -1032,78 +1032,78 @@ test_mathematics_sinh (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_sinh(op1), mrg));
   }
 #endif
@@ -1198,78 +1198,78 @@ test_mathematics_cosh (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_cosh(op1), mrg));
   }
 #endif
@@ -1364,78 +1364,78 @@ test_mathematics_tanh (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_tanh(op1), mrg));
   }
 #endif
@@ -1530,78 +1530,78 @@ test_mathematics_asinh (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asinh(op1), mrg));
   }
 #endif
@@ -1696,78 +1696,78 @@ test_mathematics_acosh (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_acosh(op1), mrg));
   }
 #endif
@@ -1862,78 +1862,78 @@ test_mathematics_atanh (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_atanh(op1), mrg));
   }
 #endif
@@ -2028,78 +2028,78 @@ test_mathematics_exp (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp(op1), mrg));
   }
 #endif
@@ -2194,78 +2194,78 @@ test_mathematics_exp2 (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_exp2(op1), mrg));
   }
 #endif
@@ -2360,78 +2360,78 @@ test_mathematics_exp10 (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	eps = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_exp10(op1), eps));
   }
 #endif
@@ -2526,78 +2526,78 @@ test_mathematics_log (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	eps = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
   }
 #endif
@@ -2692,78 +2692,78 @@ test_mathematics_log2 (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	eps = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
   }
 #endif
@@ -2858,78 +2858,78 @@ test_mathematics_log10 (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	eps = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
   }
 #endif
@@ -3117,87 +3117,87 @@ test_mathematics_pow (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcfl_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcfl_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcfl_rectangular(1,1);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcdb_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcdb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcdb_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcldb_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcldb_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcf32_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcf32_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcf64_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcf64_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcf128_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcf128_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcf32x_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcf32x_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcf64x_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcf64x_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	op2 = mmux_flonumcf128x_make_rectangular(4.0,2.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	mrg = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	op2 = mmux_flonumcf128x_rectangular(4.0,2.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_pow(op1,op2), mrg));
   }
 #endif
@@ -3292,9 +3292,9 @@ test_mathematics_sqrt (void)
 #endif
 
   {
-    auto	op1 = mmux_flonumcfl_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_make_rectangular(1,1);
+    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
+    auto	eps = mmux_flonumcfl_rectangular(1,1);
     if (0) {
       fprintf(stderr, "%s: rop=", __func__);
       mmux_flonumcfl_fprintf(stderr, mmux_ctype_sqrt(op1));
@@ -3304,9 +3304,9 @@ test_mathematics_sqrt (void)
   }
 
   {
-    auto	op1 = mmux_flonumcdb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
     if (0) {
       fprintf(stderr, "%s: rop=", __func__);
       mmux_flonumcdb_fprintf(stderr, mmux_ctype_sqrt(op1));
@@ -3317,63 +3317,63 @@ test_mathematics_sqrt (void)
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
   {
-    auto	op1 = mmux_flonumcldb_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
+    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
   {
-    auto	op1 = mmux_flonumcf32_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
   {
-    auto	op1 = mmux_flonumcf64_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
   {
-    auto	op1 = mmux_flonumcf128_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
   {
-    auto	op1 = mmux_flonumcf32x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_make_rectangular(1e-3,1e-3);
+    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
   {
-    auto	op1 = mmux_flonumcf64x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
   {
-    auto	op1 = mmux_flonumcf128x_make_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_make_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_make_rectangular(1e-6,1e-6);
+    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
+    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
+    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sqrt(op1), eps));
   }
 #endif

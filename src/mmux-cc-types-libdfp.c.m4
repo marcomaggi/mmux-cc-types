@@ -78,7 +78,15 @@ m4_define([[[DEFINE_SOME_MACROS]]],[[[
 #define MMUX_STANDARD_FLONUMD$1_IS_ZERO(X)	(FP_ZERO	== (fpclassify(X)))
 #define MMUX_STANDARD_FLONUMD$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
 #define MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
-#define CMPLXCD$1(RE,IM)	(mmux_standard_flonumcd$1_make_rectangular((RE),(IM)))
+
+#define rectangularcd$1(STANDARD_DECIMAL_RE,STANDARD_DECIMAL_IM) \
+  ((mmux_standard_flonumcd$1_t){ .re = (STANDARD_DECIMAL_RE), .im = (STANDARD_DECIMAL_IM) })
+
+#define rectangularcd$1_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
+  (rectangularcd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
+					     mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
+
+#define CMPLXCD$1(RE,IM)			(rectangularcd$1((RE),(IM)))
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_SOME_MACROS(32)
@@ -555,21 +563,21 @@ DEFINE_STANDARD_STRING_TO_FROM_FUNCTIONS(d128)
 m4_divert(-1)
 m4_define([[[DEFINE_REAL_CPLX_BASIC_FUNCTIONS]]],[[[
 __attribute__((__const__)) mmux_flonumd$1_t
-mmux_flonumd$1_abs (mmux_flonumd$1_t X)
+mmux_flonumd$1_absolute (mmux_flonumd$1_t X)
 {
   return mmux_flonumd$1(fabsd$1(X.value));
 }
 mmux_flonumcd$1_part_t
-mmux_flonumcd$1_abs (mmux_flonumcd$1_t Z)
+mmux_flonumcd$1_absolute (mmux_flonumcd$1_t Z)
 {
   return mmux_flonumd$1(abscd$1(Z.value));
 }
 mmux_flonumcd$1_part_t
-mmux_flonumcd$1_arg (mmux_flonumcd$1_t Z)
+mmux_flonumcd$1_argument (mmux_flonumcd$1_t Z)
 {
   return mmux_flonumd$1(argcd$1(Z.value));
 }
-/* mmux_flonumcd$1_conj implemented as inline function */
+/* mmux_flonumcd$1_conjugate implemented as inline function */
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_CPLX_BASIC_FUNCTIONS(32)
@@ -773,27 +781,27 @@ mmux_flonumcd$1_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 __attribute__((__const__)) mmux_sint_t
 mmux_flonumcd$1_cmp (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_flonumd$1_cmp(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
+  return mmux_flonumd$1_cmp(mmux_flonumcd$1_absolute(op1), mmux_flonumcd$1_absolute(op2));
 }
 __attribute__((__const__)) bool
 mmux_flonumcd$1_greater (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_flonumd$1_greater(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
+  return mmux_flonumd$1_greater(mmux_flonumcd$1_absolute(op1), mmux_flonumcd$1_absolute(op2));
 }
 __attribute__((__const__)) bool
 mmux_flonumcd$1_less (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_flonumd$1_less(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
+  return mmux_flonumd$1_less(mmux_flonumcd$1_absolute(op1), mmux_flonumcd$1_absolute(op2));
 }
 __attribute__((__const__)) bool
 mmux_flonumcd$1_greater_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_flonumd$1_greater_equal(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
+  return mmux_flonumd$1_greater_equal(mmux_flonumcd$1_absolute(op1), mmux_flonumcd$1_absolute(op2));
 }
 __attribute__((__const__)) bool
 mmux_flonumcd$1_less_equal (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_flonumd$1_less_equal(mmux_flonumcd$1_abs(op1), mmux_flonumcd$1_abs(op2));
+  return mmux_flonumd$1_less_equal(mmux_flonumcd$1_absolute(op1), mmux_flonumcd$1_absolute(op2));
 }
 ]]])
 m4_divert(0)m4_dnl

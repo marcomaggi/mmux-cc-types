@@ -40,34 +40,35 @@
 
 /* This  regular   expression  is  used   to  validate  the  format   specifiers  for
    floating-point numbers.  */
-static regex_t mmux_cc_types_flonumfl_format_rex;
+static regex_t	mmux_cc_types_flonumfl_format_rex;
+static bool	mmux_cc_types_rex_initialised = false;
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
 mmux_asciizcp_t mmux_cc_types_default_output_format_flonum$1=[[[$2]]];
 
 /* Just    to     be    paranoid     we    add     a    character     beyond    index
-   MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN and we will set  that character to nul in the
+   MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN and  we will set  that character to nul  in the
    initialisation  function.   That character  should  never  be touched  by  correct
    code. */
 static char	mmux_cc_types_output_format_flonum$1[1+MMUX_CC_TYPES_FLONUM_FORMAT_MAXLEN];
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[fl]]],	[[["%A"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[db]]],	[[["%A"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[ldb]]],	[[["%A"]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(fl,	"%A")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(db,	"%A")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(ldb,	"%A")
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[f32]]],	[[["%A"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[f64]]],	[[["%A"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[f128]]],	[[["%A"]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(f32,	"%A")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(f64,	"%A")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(f128,	"%A")
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[f32x]]],	[[["%A"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[f64x]]],	[[["%A"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[f128x]]],	[[["%A"]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(f32x,	"%A")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(f64x,	"%A")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(f128x,	"%A")
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[d32]]],	[[["%f"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[d64]]],	[[["%f"]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[d128]]],	[[["%f"]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(d32,	"%f")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(d64,	"%f")
+DEFINE_FLONUMFL_OUTPUT_FORMAT_VARIABLE(d128,	"%f")
 
 
 /** --------------------------------------------------------------------
@@ -83,6 +84,8 @@ mmux_cc_types_init_sprint_module (void)
   if (rv) {
     fprintf(stderr, "MMUX CC Types: internal error: compiling regular expression\n");
     return true;
+  } else {
+    mmux_cc_types_rex_initialised = true;
   }
 
   m4_divert(-1)
@@ -109,6 +112,13 @@ mmux_cc_types_init_sprint_module (void)
   INITIALISE_FLONUMFL_OUTPUT_FORMAT_VARIABLE([[[d128]]])
 
   return false;
+}
+void
+mmux_cc_types_final_sprint_module (void)
+{
+  if (mmux_cc_types_rex_initialised) {
+    regfree(&mmux_cc_types_flonumfl_format_rex);
+  }
 }
 
 

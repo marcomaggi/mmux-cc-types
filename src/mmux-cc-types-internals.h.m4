@@ -172,6 +172,9 @@
 mmux_cc_types_private_decl bool mmux_cc_types_init_sprint_module (void);
 mmux_cc_types_private_decl bool mmux_cc_types_init_parsers_module (void);
 
+mmux_cc_types_private_decl void mmux_cc_types_final_sprint_module (void);
+mmux_cc_types_private_decl void mmux_cc_types_final_parsers_module (void);
+
 
 /** --------------------------------------------------------------------
  ** Done.

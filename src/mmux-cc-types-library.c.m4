@@ -66,5 +66,11 @@ mmux_cc_types_init (void)
   if (mmux_cc_types_init_parsers_module()) { return true; }
   return false;
 }
+void
+mmux_cc_types_final (void)
+{
+  mmux_cc_types_final_sprint_module();
+  mmux_cc_types_final_parsers_module();
+}
 
 /* end of file */

@@ -162,7 +162,7 @@ DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123")
   test_sprint_##STEM (void)									\
   {												\
     dprintf(2, "running test: %s", __func__);							\
-    auto	Z = mmux_##STEM##_make_rectangular_literal(LITERAL_VALUE_RE,LITERAL_VALUE_IM);	\
+    auto	Z = mmux_##STEM##_rectangular_literal(LITERAL_VALUE_RE,LITERAL_VALUE_IM);	\
     auto	required_nbytes = mmux_##STEM##_sprint_size(Z);					\
 												\
     assert(mmux_ctype_is_positive(required_nbytes));						\

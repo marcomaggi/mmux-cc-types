@@ -81,12 +81,12 @@ typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
 #define mmux_standard_flonumd$1(STANDARD_DECIMAL)	((mmux_standard_flonumd$1_t)(STANDARD_DECIMAL))
 #define mmux_standard_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_standard_flonumcd$1_t)(STANDARD_FLONUMCDB))
 
-#define mmux_standard_flonumcd$1_make_rectangular(STANDARD_DECIMAL_RE,STANDARD_DECIMAL_IM) \
+#define mmux_standard_flonumcd$1_rectangular(STANDARD_DECIMAL_RE,STANDARD_DECIMAL_IM) \
   ((mmux_standard_flonumcd$1_t){ .re = (STANDARD_DECIMAL_RE), .im = (STANDARD_DECIMAL_IM) })
 
-#define mmux_standard_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
-  (mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
-					     mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
+#define mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
+  (mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
+					mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_LIBDFP_TYPE_MACROS(32,	[[[DF]]])
@@ -131,11 +131,15 @@ typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
 
 #define mmux_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_flonumcd$1_t){ .value = (STANDARD_FLONUMCDB) })
 
-#define mmux_flonumcd$1_make_rectangular(DECIMAL_RE,DECIMAL_IM) \
-  (mmux_flonumcd$1(mmux_standard_flonumcd$1_make_rectangular((DECIMAL_RE).value,(DECIMAL_IM).value)))
-
-#define mmux_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
-  (mmux_flonumcd$1(mmux_standard_flonumcd$1_make_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,       \
+/* This is an inline  function, rather than a preprocessor macro, so  that we can use
+   it in the macro "mmux_ctype_rectangular()". */
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
+{
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular(re.value,im.value));
+}
+#define mmux_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
+  (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,       \
 								     STANDARD_DECIMAL_LITERAL_IM)))
 
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
@@ -246,7 +250,7 @@ m4_define([[[DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION]]],
 [[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_$2 (void)
 {
-  return mmux_standard_flonumcd$1_make_rectangular(mmux_standard_flonumd$1_constant_$3(),
+  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_$3(),
 						   mmux_standard_flonumd$1_constant_$4());
 }]]])
 
@@ -341,7 +345,7 @@ DEFINE_EMBEDDED_CPLX_CONSTANTS(128)
 
 
 /** --------------------------------------------------------------------
- ** Some complex number functions: real part, imag part, abs, arg, conj.
+ ** Some complex number functions: real part, imag part, abs, arg, conjugate.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -357,16 +361,16 @@ mmux_flonumcd$1_imag_part (mmux_flonumcd$1_t Z)
   return mmux_flonumd$1(Z.value.im);
 }
 
-mmux_cc_types_decl mmux_flonumcd$1_part_t mmux_flonumcd$1_abs (mmux_flonumcd$1_t Z)
+mmux_cc_types_decl mmux_flonumcd$1_part_t mmux_flonumcd$1_absolute (mmux_flonumcd$1_t Z)
   __attribute__((__const__));
 
-mmux_cc_types_decl mmux_flonumcd$1_part_t mmux_flonumcd$1_arg (mmux_flonumcd$1_t Z)
+mmux_cc_types_decl mmux_flonumcd$1_part_t mmux_flonumcd$1_argument (mmux_flonumcd$1_t Z)
   __attribute__((__const__));
 
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_conj (mmux_flonumcd$1_t Z)
+mmux_flonumcd$1_conjugate (mmux_flonumcd$1_t Z)
 {
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Z.value.re, - Z.value.im) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Z.value.re, - Z.value.im) );
 }
 ]]])
 m4_divert(0)m4_dnl
@@ -412,7 +416,7 @@ mmux_flonumd$1_inv (mmux_flonumd$1_t A)
   return mmux_flonumd$1_div(mmux_flonumd$1_constant_one(), A);
 }
 
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_abs (mmux_flonumd$1_t X)
+mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_absolute (mmux_flonumd$1_t X)
   __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
@@ -432,7 +436,7 @@ mmux_flonumcd$1_add (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
 {
   auto	Cre = A.value.re + B.value.re;
   auto	Cim = A.value.im + B.value.im;
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Cre, Cim) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
 mmux_flonumcd$1_sub (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
@@ -440,7 +444,7 @@ mmux_flonumcd$1_sub (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
   auto	Cre = A.value.re - B.value.re;
   auto	Cim = A.value.im - B.value.im;
 
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Cre, Cim) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
 mmux_flonumcd$1_mul (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
@@ -448,7 +452,7 @@ mmux_flonumcd$1_mul (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
   auto	Cre = A.value.re * B.value.re - A.value.im * B.value.im;
   auto	Cim = A.value.re * B.value.im + B.value.re * A.value.im;
 
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Cre, Cim) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
 mmux_flonumcd$1_div (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
@@ -457,12 +461,12 @@ mmux_flonumcd$1_div (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
   auto	Cre = (A.value.re * B.value.re + A.value.im * B.value.im) / D;
   auto	Cim = (A.value.im * B.value.re - A.value.re * B.value.im) / D;
 
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Cre, Cim) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
 mmux_flonumcd$1_neg (mmux_flonumcd$1_t A)
 {
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(-A.value.re, - A.value.im) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(-A.value.re, - A.value.im) );
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
 mmux_flonumcd$1_inv (mmux_flonumcd$1_t A)
@@ -471,7 +475,7 @@ mmux_flonumcd$1_inv (mmux_flonumcd$1_t A)
   auto	Cre = A.value.re / D;
   auto	Cim = - (A.value.im / D);
 
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_make_rectangular(Cre, Cim) );
+  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
 }
 ]]])
 m4_divert(0)m4_dnl

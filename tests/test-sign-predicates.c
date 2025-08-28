@@ -60,8 +60,8 @@ test_sign_predicate_is_zero (void)
 #undef  DOIT_FLONUMC
 #define DOIT_FLONUMC(STEM)							\
   {										\
-    auto	valueT = mmux_##STEM##_make_rectangular_literal(0.0,0.0);	\
-    auto	valueF = mmux_##STEM##_make_rectangular_literal(1.0,0.0);	\
+    auto	valueT = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
+    auto	valueF = mmux_##STEM##_rectangular_literal(1.0,0.0);	\
     assert(true  == mmux_##STEM##_is_zero(valueT));				\
     assert(false == mmux_##STEM##_is_zero(valueF));				\
     assert(true  == mmux_ctype_is_zero(valueT));				\
@@ -244,9 +244,9 @@ test_sign_predicate_is_positive (void)
 #undef  DOIT_FLONUMC
 #define DOIT_FLONUMC(STEM)							\
   {										\
-    auto	valueA = mmux_##STEM##_make_rectangular_literal(0.0,0.0);	\
-    auto	valueB = mmux_##STEM##_make_rectangular_literal(+1.0,0.0);	\
-    auto	valueC = mmux_##STEM##_make_rectangular_literal(-1.0,0.0);	\
+    auto	valueA = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
+    auto	valueB = mmux_##STEM##_rectangular_literal(+1.0,0.0);	\
+    auto	valueC = mmux_##STEM##_rectangular_literal(-1.0,0.0);	\
     assert(false == mmux_##STEM##_is_positive(valueA));				\
     assert(false == mmux_##STEM##_is_positive(valueB));				\
     assert(false == mmux_##STEM##_is_positive(valueC));				\
@@ -434,9 +434,9 @@ test_sign_predicate_is_negative (void)
 #undef  DOIT_FLONUMC
 #define DOIT_FLONUMC(STEM)							\
   {										\
-    auto	valueA = mmux_##STEM##_make_rectangular_literal(0.0,0.0);	\
-    auto	valueB = mmux_##STEM##_make_rectangular_literal(+1.0,0.0);	\
-    auto	valueC = mmux_##STEM##_make_rectangular_literal(-1.0,0.0);	\
+    auto	valueA = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
+    auto	valueB = mmux_##STEM##_rectangular_literal(+1.0,0.0);	\
+    auto	valueC = mmux_##STEM##_rectangular_literal(-1.0,0.0);	\
     assert(false == mmux_##STEM##_is_negative(valueA));				\
     assert(false == mmux_##STEM##_is_negative(valueB));				\
     assert(false == mmux_##STEM##_is_negative(valueC));				\
@@ -624,9 +624,9 @@ test_sign_predicate_is_non_positive (void)
 #undef  DOIT_FLONUMC
 #define DOIT_FLONUMC(STEM)							\
   {										\
-    auto	valueA = mmux_##STEM##_make_rectangular_literal(0.0,0.0);	\
-    auto	valueB = mmux_##STEM##_make_rectangular_literal(+1.0,0.0);	\
-    auto	valueC = mmux_##STEM##_make_rectangular_literal(-1.0,0.0);	\
+    auto	valueA = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
+    auto	valueB = mmux_##STEM##_rectangular_literal(+1.0,0.0);	\
+    auto	valueC = mmux_##STEM##_rectangular_literal(-1.0,0.0);	\
     assert(false == mmux_##STEM##_is_non_positive(valueA));			\
     assert(false == mmux_##STEM##_is_non_positive(valueB));			\
     assert(false == mmux_##STEM##_is_non_positive(valueC));			\
@@ -814,9 +814,9 @@ test_sign_predicate_is_non_negative (void)
 #undef  DOIT_FLONUMC
 #define DOIT_FLONUMC(STEM)							\
   {										\
-    auto	valueA = mmux_##STEM##_make_rectangular_literal(0.0,0.0);	\
-    auto	valueB = mmux_##STEM##_make_rectangular_literal(+1.0,0.0);	\
-    auto	valueC = mmux_##STEM##_make_rectangular_literal(-1.0,0.0);	\
+    auto	valueA = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
+    auto	valueB = mmux_##STEM##_rectangular_literal(+1.0,0.0);	\
+    auto	valueC = mmux_##STEM##_rectangular_literal(-1.0,0.0);	\
     assert(false == mmux_##STEM##_is_non_negative(valueA));			\
     assert(false == mmux_##STEM##_is_non_negative(valueB));			\
     assert(false == mmux_##STEM##_is_non_negative(valueC));			\

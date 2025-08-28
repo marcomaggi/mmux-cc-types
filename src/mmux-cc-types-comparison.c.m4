@@ -28,6 +28,7 @@
 
 #include <mmux-cc-types-internals.h>
 
+
 /** --------------------------------------------------------------------
  ** Comparison core functions.
  ** ----------------------------------------------------------------- */
@@ -111,27 +112,27 @@ DEFINE_COMPARISON_EQUAL_FUNCTIONS([[[$1]]],[[[$3]]])
 DECL mmux_sint_t
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$2_cmp(mmux_$1_abs(op1), mmux_$1_abs(op2));
+  return mmux_$2_cmp(mmux_$1_absolute(op1), mmux_$1_absolute(op2));
 }
 DECL bool
 mmux_$1_greater (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$2_greater(mmux_$1_abs(op1), mmux_$1_abs(op2));
+  return mmux_$2_greater(mmux_$1_absolute(op1), mmux_$1_absolute(op2));
 }
 DECL bool
 mmux_$1_less (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$2_less(mmux_$1_abs(op1), mmux_$1_abs(op2));
+  return mmux_$2_less(mmux_$1_absolute(op1), mmux_$1_absolute(op2));
 }
 DECL bool
 mmux_$1_greater_equal (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$2_greater_equal(mmux_$1_abs(op1), mmux_$1_abs(op2));
+  return mmux_$2_greater_equal(mmux_$1_absolute(op1), mmux_$1_absolute(op2));
 }
 DECL bool
 mmux_$1_less_equal (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_$2_less_equal(mmux_$1_abs(op1), mmux_$1_abs(op2));
+  return mmux_$2_less_equal(mmux_$1_absolute(op1), mmux_$1_absolute(op2));
 }
 ]]])]]])
 
@@ -206,82 +207,72 @@ DEFINE_COMPARISON_INTEGER_FUNCTIONS([[[rlim]]])
  ** Approximate comparison functions for floating-point numbers.
  ** ----------------------------------------------------------------- */
 
-m4_dnl $1 - complex type stem
-m4_dnl $2 - preprocessor symbol for conditional definition
-m4_define([[[DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_divert(-1)
+m4_define([[[DEFINE_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
 bool
-mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
+mmux_standard_flonum$1_equal_absmargin (mmux_standard_flonum$1_t op1,
+					mmux_standard_flonum$1_t op2,
+					mmux_standard_flonum$1_t margin)
 {
-  return (mmux_$1_less_equal(mmux_$1_abs(mmux_$1_sub(op1,op2)), mmux_$1_abs(margin)))? true : false;
+  return (absolute$1(margin) <= absolute$1(op1 - op2))? true : false;
 }
 bool
-mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
+mmux_standard_flonum$1_equal_relepsilon (mmux_standard_flonum$1_t op1,
+					 mmux_standard_flonum$1_t op2,
+					 mmux_standard_flonum$1_t epsilon)
 {
-  return (mmux_$1_less_equal(mmux_$1_abs(mmux_$1_sub(op1,op2)),
-			     mmux_$1_mul(mmux_$1_abs(epsilon),
-					 mmux_$1_max(mmux_$1_abs(op1),
-						     mmux_$1_abs(op2)))))? true : false;
+  return (absolute$1(op1 - op2) <= absolute$1(epsilon) * max$1(absolute$1(op1), absolute$1(op2)))? true : false;
+}
+bool
+mmux_flonum$1_equal_absmargin (mmux_flonum$1_t op1, mmux_flonum$1_t op2, mmux_flonum$1_t margin)
+{
+  return mmux_standard_flonum$1_equal_absmargin(op1.value, op2.value, margin.value);
+}
+bool
+mmux_flonum$1_equal_relepsilon (mmux_flonum$1_t op1, mmux_flonum$1_t op2, mmux_flonum$1_t epsilon)
+{
+  return mmux_standard_flonum$1_equal_relepsilon(op1.value, op2.value, epsilon.value);
+}
+]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
+bool
+mmux_flonumc$1_equal_absmargin (mmux_flonumc$1_t op1, mmux_flonumc$1_t op2, mmux_flonumc$1_t margin)
+{
+  auto	re1 = mmux_flonumc$1_real_part(op1);
+  auto	im1 = mmux_flonumc$1_imag_part(op1);
+  auto	re2 = mmux_flonumc$1_real_part(op2);
+  auto	im2 = mmux_flonumc$1_imag_part(op2);
+  auto	ret = mmux_flonumc$1_real_part(margin);
+  auto	imt = mmux_flonumc$1_imag_part(margin);
+
+  return (mmux_flonum$1_equal_absmargin(re1, re2, ret) &&
+	  mmux_flonum$1_equal_absmargin(im1, im2, imt))? true : false;
+}
+bool
+mmux_flonumc$1_equal_relepsilon (mmux_flonumc$1_t op1, mmux_flonumc$1_t op2, mmux_flonumc$1_t epsilon)
+{
+  auto	re1 = mmux_flonumc$1_real_part(op1);
+  auto	im1 = mmux_flonumc$1_imag_part(op1);
+  auto	re2 = mmux_flonumc$1_real_part(op2);
+  auto	im2 = mmux_flonumc$1_imag_part(op2);
+  auto	ret = mmux_flonumc$1_real_part(epsilon);
+  auto	imt = mmux_flonumc$1_imag_part(epsilon);
+
+  return (mmux_flonum$1_equal_relepsilon(re1, re2, ret) &&
+	  mmux_flonum$1_equal_relepsilon(im1, im2, imt))? true : false;
 }
 ]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_APPROX_COMPARISONS([[[fl]]])
+DEFINE_APPROX_COMPARISONS([[[db]]])
+DEFINE_APPROX_COMPARISONS([[[ldb]]])
 
-/* ------------------------------------------------------------------ */
+DEFINE_APPROX_COMPARISONS([[[f32]]])
+DEFINE_APPROX_COMPARISONS([[[f64]]])
+DEFINE_APPROX_COMPARISONS([[[f128]]])
 
-m4_dnl $1 - complex type stem
-m4_dnl $2 - real part type stem
-m4_dnl $3 - preprocessor symbol for conditional definition
-m4_define([[[DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
-bool
-mmux_$1_equal_absmargin (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t margin)
-{
-  mmux_$1_part_t	re1 = mmux_$1_real_part(op1);
-  mmux_$1_part_t	im1 = mmux_$1_imag_part(op1);
-  mmux_$1_part_t	re2 = mmux_$1_real_part(op2);
-  mmux_$1_part_t	im2 = mmux_$1_imag_part(op2);
-  mmux_$1_part_t	ret = mmux_$1_real_part(margin);
-  mmux_$1_part_t	imt = mmux_$1_imag_part(margin);
-
-  return (mmux_$2_equal_absmargin(re1, re2, ret) && mmux_$2_equal_absmargin(im1, im2, imt))? true : false;
-}
-bool
-mmux_$1_equal_relepsilon (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t epsilon)
-{
-  mmux_$1_part_t	re1 = mmux_$1_real_part(op1);
-  mmux_$1_part_t	im1 = mmux_$1_imag_part(op1);
-  mmux_$1_part_t	re2 = mmux_$1_real_part(op2);
-  mmux_$1_part_t	im2 = mmux_$1_imag_part(op2);
-  mmux_$1_part_t	ret = mmux_$1_real_part(epsilon);
-  mmux_$1_part_t	imt = mmux_$1_imag_part(epsilon);
-
-  return (mmux_$2_equal_relepsilon(re1, re2, ret) && mmux_$2_equal_relepsilon(im1, im2, imt))? true : false;
-}
-]]])]]])
-
-/* ------------------------------------------------------------------ */
-
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumfl]]])
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumdb]]])
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
-
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
-
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_TYPE_FUNCTIONS_REAL_FLOAT_APPROX_COMPARISONS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
-
-/* ------------------------------------------------------------------ */
-
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcfl]]],    [[[flonumfl]]])
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcdb]]],    [[[flonumdb]]])
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcldb]]],   [[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf32]]],  [[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf64]]],  [[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128]]], [[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf32x]]], [[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf64x]]], [[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_TYPE_FUNCTIONS_COMPLEX_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128x]]],[[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_APPROX_COMPARISONS([[[f32x]]])
+DEFINE_APPROX_COMPARISONS([[[f64x]]])
+DEFINE_APPROX_COMPARISONS([[[f128x]]])
 
 /* end of file */

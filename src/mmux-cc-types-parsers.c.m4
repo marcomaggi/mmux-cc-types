@@ -30,7 +30,8 @@
 
 /* This regular expression is used to parse this package's standard format of complex
    double numbers.  */
-static regex_t mmux_cc_types_complex_rex;
+static regex_t	mmux_cc_types_complex_rex;
+static bool	mmux_cc_types_rex_initialised = false;
 
 
 /** --------------------------------------------------------------------
@@ -59,9 +60,18 @@ mmux_cc_types_init_parsers_module (void)
     if (rv) {
       fprintf(stderr, "MMUX CC Types: internal error: compiling regular expression\n");
       return true;
+    } else {
+      mmux_cc_types_rex_initialised = true;
     }
   }
   return false;
+}
+void
+mmux_cc_types_final_parsers_module (void)
+{
+  if (mmux_cc_types_rex_initialised) {
+    regfree(&mmux_cc_types_complex_rex);
+  }
 }
 
 
@@ -247,7 +257,7 @@ mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_arg, mmux_asciizcp_t call
       return true;
     } else {
       /* Successfully parsed string as real number. */
-      *result_p = mmux_$1_make_rectangular(op_re, mmux_$2_constant_zero());
+      *result_p = mmux_$1_rectangular(op_re, mmux_$2_constant_zero());
       return false;
     }
   } else {
@@ -326,7 +336,7 @@ parse_$1_parentheses_format (mmux_$1_t * result_p, mmux_asciizcp_t s_arg, mmux_a
 
   /* Assemble the complex number. */
   {
-    *result_p = mmux_$1_make_rectangular(op_re, op_im);
+    *result_p = mmux_$1_rectangular(op_re, op_im);
     return false;
   }
 }
