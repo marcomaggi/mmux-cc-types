@@ -383,11 +383,6 @@ pow$1 (mmux_standard_flonum$1_t X, mmux_standard_flonum$1_t Y)
   return pow$2(X, Y);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
-sqr$1 (mmux_standard_flonum$1_t X)
-{
-  return (X * X);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
 sqrt$1 (mmux_standard_flonum$1_t X)
 {
   return sqrt$2(X);
@@ -404,6 +399,13 @@ hypot$1 (mmux_standard_flonum$1_t X, mmux_standard_flonum$1_t Y)
 {
   return hypot$2(X,Y);
 }]]])]]])
+
+m4_define([[[DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+square$1 (mmux_standard_flonum$1_t X)
+{
+  return (X * X);
+}]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_MATH_REAL_FUNCTIONS_EXP_LOG(fl,	f)
 DEFINE_MATH_REAL_FUNCTIONS_EXP_LOG(db,	)
@@ -417,6 +419,16 @@ DEFINE_MATH_REAL_FUNCTIONS_EXP_LOG(ldb,	l)
  * DEFINE_MATH_REAL_FUNCTIONS_EXP_LOG(f64x,	f64x)
  * DEFINE_MATH_REAL_FUNCTIONS_EXP_LOG(f128x,	f128x)
  */
+
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(fl,	f)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(db,	)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(ldb,	l)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f32,	f32)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f64,	f64)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f128,	f128)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f32x,	f32x)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f64x,	f64x)
+DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f128x,	f128x)
 
 /* ------------------------------------------------------------------ */
 
@@ -461,7 +473,7 @@ powc$1 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
   return pow$2(op1, op2);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-sqrc$1 (mmux_standard_flonumc$1_t Z)
+squarec$1 (mmux_standard_flonumc$1_t Z)
 {
   return (Z * Z);
 }

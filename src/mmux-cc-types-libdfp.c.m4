@@ -79,9 +79,6 @@ m4_define([[[DEFINE_SOME_MACROS]]],[[[
 #define MMUX_STANDARD_FLONUMD$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
 #define MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
 
-#define rectangularcd$1(STANDARD_DECIMAL_RE,STANDARD_DECIMAL_IM) \
-  ((mmux_standard_flonumcd$1_t){ .re = (STANDARD_DECIMAL_RE), .im = (STANDARD_DECIMAL_IM) })
-
 #define rectangularcd$1_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (rectangularcd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
 					     mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
@@ -95,11 +92,156 @@ DEFINE_SOME_MACROS(128)
 
 
 /** --------------------------------------------------------------------
+ ** Complex functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
+mmux_standard_flonumd$1_t
+real_partd$1 (mmux_standard_flonumd$1_t op)
+{
+  return op;
+}
+mmux_standard_flonumd$1_t
+imag_partd$1 (mmux_standard_flonumd$1_t op)
+{
+  return op;
+}
+mmux_standard_flonumd$1_t
+argumentd$1 (mmux_standard_flonumd$1_t op __attribute__((__unused__)))
+{
+  return mmux_standard_flonumd$1_constant_zero();
+}
+mmux_standard_flonumd$1_t
+absoluted$1 (mmux_standard_flonumd$1_t op)
+{
+  return fabsd$1(op);
+}]]])
+
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
+mmux_standard_flonumcd$1_t
+rectangularcd$1 (mmux_standard_flonumd$1_t re, mmux_standard_flonumd$1_t im)
+{
+  return (mmux_standard_flonumcd$1_t){ .re = re, .im = im };
+}
+mmux_standard_flonumd$1_t
+real_partcd$1 (mmux_standard_flonumcd$1_t op)
+{
+  return op.re;
+}
+mmux_standard_flonumd$1_t
+imag_partcd$1 (mmux_standard_flonumcd$1_t op)
+{
+  return op.im;
+}
+mmux_standard_flonumd$1_t
+absolutecd$1 (mmux_standard_flonumcd$1_t op)
+{
+  return sqrtd$1( op.re * op.re + op.im * op.im );
+}
+mmux_standard_flonumd$1_t
+argumentcd$1 (mmux_standard_flonumcd$1_t op)
+{
+  return atan2d$1(op.im, op.re);
+}]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_COMPLEX_FUNCTIONS(32)
+DEFINE_COMPLEX_FUNCTIONS(64)
+DEFINE_COMPLEX_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Arithmetics: standard functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_ARITHMETICS_REAL_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+addd$1 (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return op1 + op2;
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+subd$1 (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return op1 - op2;
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+muld$1 (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return (op1 * op2);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+divd$1 (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return (op1 / op2);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+negd$1 (mmux_standard_flonumd$1_t op)
+{
+  return (- op);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+invd$1 (mmux_standard_flonumd$1_t op)
+{
+  return (mmux_standard_flonumd$1_literal(1.0) / op);
+}]]])
+
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+addcd$1 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
+{
+  auto	Cre = op1.re + op2.re;
+  auto	Cim = op1.im + op2.im;
+  return rectangularcd$1(Cre, Cim);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+subcd$1 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
+{
+  auto	Cre = op1.re - op2.re;
+  auto	Cim = op1.im - op2.im;
+  return rectangularcd$1(Cre, Cim);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mulcd$1 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
+{
+  auto	Cre = op1.re * op2.re - op1.im * op2.im;
+  auto	Cim = op1.re * op2.im + op2.re * op1.im;
+  return rectangularcd$1(Cre, Cim);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+divcd$1 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
+{
+  auto	D   =  op2.re * op2.re + op2.im * op2.im;
+  auto	Cre = (op1.re * op2.re + op1.im * op2.im) / D;
+  auto	Cim = (op1.im * op2.re - op1.re * op2.im) / D;
+  return rectangularcd$1(Cre, Cim);
+}
+__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+negcd$1 (mmux_standard_flonumcd$1_t op)
+{
+  return rectangularcd$1(- op.re, - op.im);
+}]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_ARITHMETICS_REAL_FUNCTIONS(32)
+DEFINE_ARITHMETICS_REAL_FUNCTIONS(64)
+DEFINE_ARITHMETICS_REAL_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
  ** Standard types adapters: real numbers mathematical functions not implemented by libdfp.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS]]],[[[
+static mmux_standard_flonumd$1_t
+squared$1 (mmux_standard_flonumd$1_t op)
+{
+  return muld$1(op,op);
+}
+
 mmux_standard_flonumd$1_t
 exp10d$1 (mmux_standard_flonumd$1_t op)
 {
@@ -167,32 +309,7 @@ $2cd$1 (mmux_standard_flonumcd$1_t Z1 __attribute__((__unused__)),
   return mmux_standard_flonumcd$1_constant_nan();
 }]]])
 
-m4_define([[[DEFINE_MATH_CPLX_FUNCTIOS]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mulcd$1 (mmux_standard_flonumcd$1_t A, mmux_standard_flonumcd$1_t B)
-{
-  auto	Cre = A.re * B.re - A.im * B.im;
-  auto	Cim = A.re * B.im + B.re * A.im;
-  return CMPLXCD$1(Cre, Cim);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_div (mmux_standard_flonumcd$1_t A, mmux_standard_flonumcd$1_t B)
-{
-  auto	D   = B.re * B.re + B.im * B.im;
-  auto	Cre = (A.re * B.re + A.im * B.im) / D;
-  auto	Cim = (A.im * B.re - A.re * B.im) / D;
-  return CMPLXCD$1(Cre, Cim);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
-abscd$1 (mmux_standard_flonumcd$1_t Z)
-{
-  return sqrtd$1(Z.re * Z.re + Z.im * Z.im);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
-argcd$1 (mmux_standard_flonumcd$1_t Z)
-{
-  return atan2d$1(Z.im, Z.re);
-}
+m4_define([[[DEFINE_MATH_CPLX_FUNCTIONS]]],[[[
 
 /* TRIGONOMETRIC SINE FOR COMPLEX NUMBERS
  *
@@ -492,44 +609,49 @@ exp10cd$1 (mmux_standard_flonumcd$1_t Z)
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
 logcd$1 (mmux_standard_flonumcd$1_t Z)
 {
-  auto	radius		= abscd$1(Z);
+  auto	radius		= absolutecd$1(Z);
   auto	ln_of_radius	= logd$1(radius);
-  auto	argument	= argcd$1(Z);
+  auto	argument	= argumentcd$1(Z);
   return CMPLXCD$1(ln_of_radius, argument);
 }
 /* log_2 Z = log Z / log 2 */
 mmux_standard_flonumcd$1_t
 log2cd$1 (mmux_standard_flonumcd$1_t Z)
 {
-  return mmux_standard_flonumcd$1_div(logcd$1(Z), mmux_standard_flonumcd$1_constant_two());
+  return divcd$1(logcd$1(Z), mmux_standard_flonumcd$1_constant_two());
 }
 /* log_10 Z = log Z / log 10 */
 mmux_standard_flonumcd$1_t
 log10cd$1 (mmux_standard_flonumcd$1_t Z)
 {
-  return mmux_standard_flonumcd$1_div(logcd$1(Z), mmux_standard_flonumcd$1_constant_ten());
+  return divcd$1(logcd$1(Z), mmux_standard_flonumcd$1_constant_ten());
 }
 
 /* ------------------------------------------------------------------ */
 
 DEFINE_BINARY_MATH_CPLX_FUNCTION($1,		pow)
+
+static mmux_standard_flonumcd$1_t
+squarecd$1 (mmux_standard_flonumcd$1_t Z)
+{
+  return mulcd$1(Z,Z);
+}
+
 DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		sqrt)
+
 /* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z )) */
 static mmux_standard_flonumcd$1_t
 cbrtcd$1 (mmux_standard_flonumcd$1_t Z)
 {
-  auto one_third =									\
-    CMPLXCD$1(mmux_standard_flonumd$1_constant_one() /
-	      mmux_standard_flonumd$1_literal(3.0),
-	      mmux_standard_flonumd$1_constant_zero());
+  auto one_third = rectangularcd$1(mmux_standard_flonumd$1_constant_one() / mmux_standard_flonumd$1_literal(3.0),
+				   mmux_standard_flonumd$1_constant_zero());
   return expcd$1(mulcd$1(one_third, logcd$1(Z)));
 }
-
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_MATH_CPLX_FUNCTIOS(32)
-DEFINE_MATH_CPLX_FUNCTIOS(64)
-DEFINE_MATH_CPLX_FUNCTIOS(128)
+DEFINE_MATH_CPLX_FUNCTIONS(32)
+DEFINE_MATH_CPLX_FUNCTIONS(64)
+DEFINE_MATH_CPLX_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
@@ -565,17 +687,17 @@ m4_define([[[DEFINE_REAL_CPLX_BASIC_FUNCTIONS]]],[[[
 __attribute__((__const__)) mmux_flonumd$1_t
 mmux_flonumd$1_absolute (mmux_flonumd$1_t X)
 {
-  return mmux_flonumd$1(fabsd$1(X.value));
+  return mmux_flonumd$1(absoluted$1(X.value));
 }
 mmux_flonumcd$1_part_t
 mmux_flonumcd$1_absolute (mmux_flonumcd$1_t Z)
 {
-  return mmux_flonumd$1(abscd$1(Z.value));
+  return mmux_flonumd$1(absolutecd$1(Z.value));
 }
 mmux_flonumcd$1_part_t
 mmux_flonumcd$1_argument (mmux_flonumcd$1_t Z)
 {
-  return mmux_flonumd$1(argcd$1(Z.value));
+  return mmux_flonumd$1(argumentcd$1(Z.value));
 }
 /* mmux_flonumcd$1_conjugate implemented as inline function */
 ]]])
@@ -989,6 +1111,7 @@ DEFINE_UNARY_MATH_FUNCTION($1,		log2);
 DEFINE_UNARY_MATH_FUNCTION($1,		logb);
 
 DEFINE_BINARY_MATH_FUNCTION($1,		pow);
+DEFINE_UNARY_MATH_FUNCTION($1,		square);
 DEFINE_UNARY_MATH_FUNCTION($1,		sqrt);
 DEFINE_UNARY_MATH_FUNCTION($1,		cbrt);
 DEFINE_BINARY_MATH_FUNCTION($1,		hypot);
@@ -1064,6 +1187,7 @@ DEFINE_UNARY_MATH_FUNCTION($1,		log);
 DEFINE_UNARY_MATH_FUNCTION($1,		log2);
 DEFINE_UNARY_MATH_FUNCTION($1,		log10);
 DEFINE_BINARY_MATH_FUNCTION($1,		pow);
+DEFINE_UNARY_MATH_FUNCTION($1,		square);
 DEFINE_UNARY_MATH_FUNCTION($1,		sqrt);
 DEFINE_UNARY_MATH_FUNCTION($1,		cbrt);
 ]]])

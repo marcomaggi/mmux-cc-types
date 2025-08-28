@@ -33,7 +33,7 @@ test_mathematics_sin (void)
 #define DOIT_FOR_REAL(STEM)							\
   {										\
     auto	op1 = mmux_## STEM(0.123);					\
-    auto	rop = mmux_## STEM(0.12269009);					\
+    auto	rop = mmux_## STEM(0.122'690'09);				\
     auto	eps = mmux_## STEM(1e-6);					\
     assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_sin(op1), eps));	\
     assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sin(op1), eps));		\
@@ -44,8 +44,8 @@ test_mathematics_sin (void)
 #define DOIT_FOR_CPLX(STEM)								\
   {											\
     auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-    auto	rop = mmux_##STEM##_rectangular_literal(-9.654125477,2.841692296);	\
-    auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);		\
+    auto	rop = mmux_##STEM##_rectangular_literal(-9.654'125'477,2.841'692'296);	\
+    auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
     if (0) {										\
       dprintf(2, "\napplication for " #STEM " expected '");				\
       mmux_##STEM##_dprintf(2, rop);							\
