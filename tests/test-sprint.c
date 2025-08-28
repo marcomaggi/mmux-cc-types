@@ -101,54 +101,54 @@ DEFINE_TEST_SPRINTER_FUNCTION(rlim,		123,	"123")
   test_sprint_##STEM (void)								\
   {											\
     dprintf(2, "running test: %s", __func__);						\
-    auto		X = mmux_##STEM##_literal(LITERAL_VALUE);			\
-    auto		required_nbytes = mmux_##STEM##_sprint_size(X);			\
+    auto	X = mmux_##STEM##_literal(LITERAL_VALUE);				\
+    auto	required_nbytes = mmux_##STEM##_sprint_size(X);				\
 											\
     assert(mmux_ctype_is_positive(required_nbytes));					\
     {											\
       char	str[required_nbytes.value];						\
 											\
       assert(false == mmux_##STEM##_sprint(str, required_nbytes, X));			\
-      fprintf(stderr, " required_bytes = %d, str = '%s'", required_nbytes.value, str);	\
+      dprintf(2, " required_bytes = %d, str = '%s'", required_nbytes.value, str);	\
       assert(0 == strcmp(EXPECTED_STRING, (char *)str));				\
     }											\
     dprintf(2, " DONE\n");								\
   }
 
-DEFINE_TEST_SPRINTER_FUNCTION(flonumfl,		0.123,	"0.123")
-DEFINE_TEST_SPRINTER_FUNCTION(flonumdb,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumfl,		0.123,	"0.123000")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumdb,		0.123,	"0.123000")
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-DEFINE_TEST_SPRINTER_FUNCTION(flonumldb,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumldb,	0.123,	"0.123000")
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-DEFINE_TEST_SPRINTER_FUNCTION(flonumf32,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf32,	0.123,	"0.123000")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-DEFINE_TEST_SPRINTER_FUNCTION(flonumf64,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf64,	0.123,	"0.123000")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-DEFINE_TEST_SPRINTER_FUNCTION(flonumf128,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf128,	0.123,	"0.123000")
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-DEFINE_TEST_SPRINTER_FUNCTION(flonumf32x,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf32x,	0.123,	"0.123000")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-DEFINE_TEST_SPRINTER_FUNCTION(flonumf64x,		0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf64x,	0.123,	"0.123000")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-DEFINE_TEST_SPRINTER_FUNCTION(flonumf128x,	0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumf128x,	0.123,	"0.123000")
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-DEFINE_TEST_SPRINTER_FUNCTION(flonumd32,	0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumd32,	0.123,	"0.123000")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-DEFINE_TEST_SPRINTER_FUNCTION(flonumd64,	0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumd64,	0.123,	"0.123000")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123000")
 #endif
 
 
@@ -176,40 +176,40 @@ DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123")
     dprintf(2, " DONE\n");									\
   }
 
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcfl,		0.123, 0.456,	"(0.123)+i*(0.456)")
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcdb,		0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcfl,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcdb,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcldb,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcldb,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcf32,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf32,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcf64,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf64,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcf128,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf128,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcf32x,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf32x,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcf64x,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf64x,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcf128x,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcf128x,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcd32,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcd32,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcd64,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcd64,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-DEFINE_TEST_SPRINTER_FUNCTION(flonumcd128,	0.123, 0.456,	"(0.123)+i*(0.456)")
+DEFINE_TEST_SPRINTER_FUNCTION(flonumcd128,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
 
 
