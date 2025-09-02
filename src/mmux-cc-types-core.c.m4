@@ -601,7 +601,7 @@ DEFINE_COMPLEX_NUMBER_PREDICATES([[[flonumcf128x]]],	[[[flonumf128x]]],	[[[MMUX_
 
 
 /** --------------------------------------------------------------------
- ** Mathematics: real float, double, long double floating-point functions.
+ ** Mathematics: high-level functions.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)

@@ -68,55 +68,21 @@ constexpr static const mmux_standard_flonumf128x_t mmux_libc_minimum_flonumf128x
  ** Real number type functions: minimum, maximum.
  ** ----------------------------------------------------------------- */
 
-mmux_pointer_t
-mmux_standard_pointer_maximum (void)
-{
-  return (mmux_pointer_t)mmux_uintptr_maximum().value;
-}
-mmux_pointer_t
-mmux_standard_pointer_minimum (void)
-{
-  return (mmux_pointer_t)mmux_uintptr_minimum().value;
-}
-mmux_pointer_t
-mmux_pointer_maximum (void)
-{
-  return mmux_pointer(mmux_standard_pointer_maximum());
-}
-mmux_pointer_t
-mmux_pointer_minimum (void)
-{
-  return mmux_pointer(mmux_standard_pointer_minimum());
-}
-
-/* ------------------------------------------------------------------ */
-
 m4_dnl $1 - Stem of the type.
 m4_dnl $2 - C language expression evaluating to the maximum value.
 m4_dnl $3 - C language expression evaluating to the minimum value.
 m4_dnl $4 - C preprocessor symbol used to exclude the code if the type is not supported.
 m4_define([[[DEFINE_REAL_TYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$4]]],[[[
 mmux_standard_$1_t
-mmux_standard_$1_maximum (void)
+mmux_standard_$1_constant_maximum (void)
 {
   return $2;
 }
 mmux_standard_$1_t
-mmux_standard_$1_minimum (void)
+mmux_standard_$1_constant_minimum (void)
 {
   return $3;
-}
-mmux_$1_t
-mmux_$1_maximum (void)
-{
-  return mmux_$1($2);
-}
-mmux_$1_t
-mmux_$1_minimum (void)
-{
-  return mmux_$1($3);
-}
-]]])]]])
+}]]])]]])
 
 DEFINE_REAL_TYPE_FUNCTIONS(char,	CHAR_MAX,	CHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
@@ -182,7 +148,7 @@ mmux_standard_flonumf64x_t	mmux_standard_flonumf64x_constant_nan	(void) { return
 mmux_standard_flonumf128x_t	mmux_standard_flonumf128x_constant_nan	(void) { return nanf128x("nan(0)"); }
 #endif
 
-m4_define([[[DEFINE_MATH_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$3]]],[[[
+m4_define([[[DEFINE_MATH_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
 mmux_standard_$1_t mmux_standard_$1_constant_E		(void) { return M_E$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_LOG2E	(void) { return M_LOG2E$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_LOG10E	(void) { return M_LOG10E$2; }
@@ -196,33 +162,16 @@ mmux_standard_$1_t mmux_standard_$1_constant_2_PI	(void) { return M_2_PI$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_2_SQRTPI	(void) { return M_2_SQRTPI$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_SQRT2	(void) { return M_SQRT2$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_SQRT1_2	(void) { return M_SQRT1_2$2; }
-
-mmux_$1_t mmux_$1_constant_nan		(void) { return mmux_$1(mmux_standard_$1_constant_nan()); }
-mmux_$1_t mmux_$1_constant_E		(void) { return mmux_$1(M_E$2); }
-mmux_$1_t mmux_$1_constant_LOG2E	(void) { return mmux_$1(M_LOG2E$2); }
-mmux_$1_t mmux_$1_constant_LOG10E	(void) { return mmux_$1(M_LOG10E$2); }
-mmux_$1_t mmux_$1_constant_LN2		(void) { return mmux_$1(M_LN2$2); }
-mmux_$1_t mmux_$1_constant_LN10		(void) { return mmux_$1(M_LN10$2); }
-mmux_$1_t mmux_$1_constant_PI		(void) { return mmux_$1(M_PI$2); }
-mmux_$1_t mmux_$1_constant_PI_2		(void) { return mmux_$1(M_PI_2$2); }
-mmux_$1_t mmux_$1_constant_PI_4		(void) { return mmux_$1(M_PI_4$2); }
-mmux_$1_t mmux_$1_constant_1_PI		(void) { return mmux_$1(M_1_PI$2); }
-mmux_$1_t mmux_$1_constant_2_PI		(void) { return mmux_$1(M_2_PI$2); }
-mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) { return mmux_$1(M_2_SQRTPI$2); }
-mmux_$1_t mmux_$1_constant_SQRT2	(void) { return mmux_$1(M_SQRT2$2); }
-mmux_$1_t mmux_$1_constant_SQRT1_2	(void) { return mmux_$1(M_SQRT1_2$2); }
 ]]])]]])
-
+m4_divert(-1)m4_dnl
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumfl)
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumdb)
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumldb,	[[[l]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
-
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf32,	[[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf64,	[[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf128,	[[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
-
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf32x,	[[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf64x,	[[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf128x,	[[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumldb,	l)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf32,	f32)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf64,	f64)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf128,	f128)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf32x,	f32x)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf64x,	f64x)
+DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumf128x,	f128x)
 
 /* end of file */

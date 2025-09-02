@@ -127,12 +127,12 @@ mmux_cc_types_parse_signed_integer
       /* Parsing  error:  there   must  be  no  characters  after   the  number  string
 	 representation. */
       goto parsing_error;
-    } else if ((mmux_standard_sintmax_minimum() != target_min) && (rv < target_min)) {
+    } else if ((mmux_standard_sintmax_constant_minimum() != target_min) && (rv < target_min)) {
       /* Parsing error: the  source string is a fine representable  number according to
 	 the  parser  function, but  the  resulting  number  is  out of  the  requested
 	 range. */
       goto parsing_error;
-    } else if ((mmux_standard_sintmax_maximum() != target_max) && (target_max < rv)) {
+    } else if ((mmux_standard_sintmax_constant_maximum() != target_max) && (target_max < rv)) {
       /* Parsing error: the  source string is a fine representable  number according to
 	 the  parser  function, but  the  resulting  number  is  out of  the  requested
 	 range. */
@@ -206,7 +206,7 @@ mmux_cc_types_parse_unsigned_integer
 	 representation. */
       if (0) { fprintf(stderr, "%s: parsing error: additional chars after number\n", __func__); }
       goto parsing_error;
-    } else if ((mmux_standard_uintmax_maximum() != target_max) && (target_max < rv)) {
+    } else if ((mmux_standard_uintmax_constant_maximum() != target_max) && (target_max < rv)) {
       /* Parsing error: the  source string is a fine representable  number according to
 	 the  parser  function, but  the  resulting  number  is  out of  the  requested
 	 range. */
@@ -414,8 +414,8 @@ mmux_$1_parse (mmux_$1_t * result_p, mmux_asciizcp_t s_source, mmux_asciizcp_t c
   mmux_standard_sintmax_t	value;
 
   if (mmux_cc_types_parse_signed_integer(&value, s_source,
-					 (mmux_standard_sintmax_t)mmux_standard_$1_minimum(),
-					 (mmux_standard_sintmax_t)mmux_standard_$1_maximum(),
+					 (mmux_standard_sintmax_t)mmux_standard_$1_constant_minimum(),
+					 (mmux_standard_sintmax_t)mmux_standard_$1_constant_maximum(),
 					 "$1", caller_name)) {
     return true;
   } else {
@@ -507,7 +507,7 @@ mmux_$1_parse (mmux_$1_t * p_value, mmux_asciizcp_t s_arg, mmux_asciizcp_t calle
 {
   mmux_standard_uintmax_t	value;
 
-  if (mmux_cc_types_parse_unsigned_integer(&value, s_arg, (mmux_standard_uintmax_t)mmux_standard_$1_maximum(),
+  if (mmux_cc_types_parse_unsigned_integer(&value, s_arg, (mmux_standard_uintmax_t)mmux_standard_$1_constant_maximum(),
 					   "$1", caller_name)) {
     return true;
   } else {

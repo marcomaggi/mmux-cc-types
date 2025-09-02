@@ -1,11 +1,11 @@
 /*
   Part of: MMUX CC Tests
-  Contents: test for version functions
+  Contents: test for functions
   Date: Aug 11, 2025
 
   Abstract
 
-	Test file for version functions.
+	Test file for functions.
 
   Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 

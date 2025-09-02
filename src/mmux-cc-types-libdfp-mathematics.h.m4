@@ -1,0 +1,292 @@
+/*
+  Part of: MMUX CC Types
+  Contents: public header file for _DecimalN support
+  Date: Aug 30, 2025
+
+  Abstract
+
+	This is a public header file defining the API of "_DecimalN" types support in
+	the library  MMUX CC  Types; it is  included by  "mmux-cc-types-libdfp.h"; it
+	must not be included by itself.
+
+  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+
+  This program is free  software: you can redistribute it and/or  modify it under the
+  terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
+  Foundation, either version 3 of the License, or (at your option) any later version.
+
+  This program  is distributed in the  hope that it  will be useful, but  WITHOUT ANY
+  WARRANTY; without  even the implied  warranty of  MERCHANTABILITY or FITNESS  FOR A
+  PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+  You should have received  a copy of the GNU General Public  License along with this
+  program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#ifndef MMUX_CC_TYPES_LIBDFP_MATHEMATICS_H
+#define MMUX_CC_TYPES_LIBDFP_MATHEMATICS_H 1
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard real decimal floating-point prototypes.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMD_UNARY_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_BINARY_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_BINARY_SINT_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_$2 (mmux_standard_sint_t N, mmux_standard_flonumd$1_t X)
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_MATH_PROTOS]]],[[[m4_dnl
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		sin)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		cos)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		tan)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		asin)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		acos)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		atan)
+DEFINE_STANDARD_FLONUMD_BINARY_PROTO($1,	atan2)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		sinh)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		cosh)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		tanh)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		asinh)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		acosh)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		atanh)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		exp)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		exp2)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		exp10)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		log)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		log10)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		log2)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		logb)
+
+DEFINE_STANDARD_FLONUMD_BINARY_PROTO($1,	pow)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		square)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		sqrt)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		cbrt)
+DEFINE_STANDARD_FLONUMD_BINARY_PROTO($1,	hypot)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		expm1)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		log1p)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		erf)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		erfc)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		lgamma)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		tgamma)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		j0)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		j1)
+DEFINE_STANDARD_FLONUMD_BINARY_SINT_PROTO($1,	jn)
+
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		y0)
+DEFINE_STANDARD_FLONUMD_UNARY_PROTO($1,		y1)
+DEFINE_STANDARD_FLONUMD_BINARY_SINT_PROTO($1,	yn)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMD_MATH_PROTOS(32)
+DEFINE_STANDARD_FLONUMD_MATH_PROTOS(64)
+DEFINE_STANDARD_FLONUMD_MATH_PROTOS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard complex decimal floating-point prototypes.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_UNARY_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumcd$1_t mmux_standard_flonumcd$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_BINARY_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumcd$1_t mmux_standard_flonumcd$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_MATH_PROTOS]]],[[[m4_dnl
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	sin)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	cos)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	tan)
+
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	asin)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	acos)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	atan)
+
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	sinh)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	cosh)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	tanh)
+
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	asinh)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	acosh)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	atanh)
+
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	exp)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	exp2)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	exp10)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	log)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	log2)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	log10)
+DEFINE_STANDARD_FLONUMCD_BINARY_PROTO($1,	pow)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	square)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	sqrt)
+DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	cbrt)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_MATH_PROTOS(32)
+DEFINE_STANDARD_FLONUMCD_MATH_PROTOS(64)
+DEFINE_STANDARD_FLONUMCD_MATH_PROTOS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: real decimal floating-point functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUMD_UNARY_FUNCTION]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_flonumd$1_t op)
+{
+  return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op.value));
+}]]])
+
+m4_define([[[DEFINE_FLONUMD_BINARY_FUNCTION]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
+{
+  return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op1.value, op2.value));
+}]]])
+
+m4_define([[[DEFINE_FLONUMD_BINARY_SINT_FUNCTION]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_flonumd$1_$2 (mmux_sint_t op1, mmux_flonumd$1_t op2)
+{
+  return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op1.value, op2.value));
+}]]])
+
+m4_define([[[DEFINE_FLONUMD_MATH_FUNCTIONS]]],[[[m4_dnl
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	sin)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	cos)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	tan)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	asin)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	acos)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	atan)
+DEFINE_FLONUMD_BINARY_FUNCTION($1,	atan2)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	sinh)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	cosh)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	tanh)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	asinh)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	acosh)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	atanh)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	exp)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	exp2)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	exp10)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	log)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	log10)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	log2)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	logb)
+
+DEFINE_FLONUMD_BINARY_FUNCTION($1,	pow)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	square)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	sqrt)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	cbrt)
+DEFINE_FLONUMD_BINARY_FUNCTION($1,	hypot)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	expm1)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	log1p)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	erf)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	erfc)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	lgamma)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	tgamma)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	j0)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	j1)
+DEFINE_FLONUMD_BINARY_SINT_FUNCTION($1,	jn)
+
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	y0)
+DEFINE_FLONUMD_UNARY_FUNCTION($1,	y1)
+DEFINE_FLONUMD_BINARY_SINT_FUNCTION($1,	yn)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMD_MATH_FUNCTIONS(32)
+DEFINE_FLONUMD_MATH_FUNCTIONS(64)
+DEFINE_FLONUMD_MATH_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: complex decimal floating-point functions.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUMCD_UNARY_FUNCTION]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op)
+{
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op.value));
+}]]])
+
+m4_define([[[DEFINE_FLONUMCD_BINARY_FUNCTION]]],[[[m4_dnl
+__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
+{
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op1.value, op2.value));
+}]]])
+
+m4_define([[[DEFINE_FLONUMCD_MATH_FUNCTIONS]]],[[[m4_dnl
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	sin)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	cos)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	tan)
+
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	asin)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	acos)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	atan)
+
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	sinh)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	cosh)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	tanh)
+
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	asinh)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	acosh)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	atanh)
+
+DEFINE_FLONUMCD_BINARY_FUNCTION($1,	pow)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	square)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	sqrt)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	cbrt)
+
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	exp)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	exp2)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	exp10)
+
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log2)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log10)]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMCD_MATH_FUNCTIONS(32)
+DEFINE_FLONUMCD_MATH_FUNCTIONS(64)
+DEFINE_FLONUMCD_MATH_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Done.
+ ** ----------------------------------------------------------------- */
+
+#endif /* MMUX_CC_TYPES_LIBDFP_MATHEMATICS_H */
+
+/* end of file */

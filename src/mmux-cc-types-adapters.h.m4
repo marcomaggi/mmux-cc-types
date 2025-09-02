@@ -253,42 +253,42 @@ sinc$1 (mmux_standard_flonumc$1_t Z)
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 cosc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return ccos(Z);
+  return ccos$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 tanc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return ctan(Z);
+  return ctan$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 asinc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return casin(Z);
+  return casin$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 acosc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return cacos(Z);
+  return cacos$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 atanc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return catan(Z);
+  return catan$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 sinhc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return csinh(Z);
+  return csinh$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 coshc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return ccosh(Z);
+  return ccosh$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 tanhc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return ctanh(Z);
+  return ctanh$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 asinhc$1 (mmux_standard_flonumc$1_t Z)
@@ -298,12 +298,12 @@ asinhc$1 (mmux_standard_flonumc$1_t Z)
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 acoshc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return cacosh(Z);
+  return cacosh$2(Z);
 }
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
 atanhc$1 (mmux_standard_flonumc$1_t Z)
 {
-  return catanh(Z);
+  return catanh$2(Z);
 }]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_MATH_CPLX_FUNCTIONS_TRIG_HYPER(fl,	f)

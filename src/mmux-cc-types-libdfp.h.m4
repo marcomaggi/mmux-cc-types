@@ -55,7 +55,7 @@ typedef char const ***		mmux_asciizcppp_t;
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_LIBDFP_TYPE_MACROS]]],[[[
+m4_define([[[DEFINE_LIBDFP_TYPE]]],[[[
 __extension__ typedef _Decimal$1	mmux_standard_flonumd$1_t;
 
 typedef struct mmux_standard_flonumcd$1_t {
@@ -64,6 +64,10 @@ typedef struct mmux_standard_flonumcd$1_t {
 } mmux_standard_flonumcd$1_t;
 
 typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
+
+typedef struct mmux_flonumd$1_t	 { mmux_standard_flonumd$1_t	value; } mmux_flonumd$1_t;
+typedef struct mmux_flonumcd$1_t { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
+typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
 
 #define mmux_standard_flonumd$1_literal(VALUE)		(VALUE ## $2)
 #define mmux_standard_flonumcd$1_part_literal(VALUE)	(mmux_standard_flonumd$1_literal(VALUE))
@@ -87,49 +91,13 @@ typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
 #define mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
 					mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
-]]])
-m4_divert(0)m4_dnl
-DEFINE_LIBDFP_TYPE_MACROS(32,	[[[DF]]])
-DEFINE_LIBDFP_TYPE_MACROS(64,	[[[DD]]])
-DEFINE_LIBDFP_TYPE_MACROS(128,	[[[DL]]])
-
-
-/** --------------------------------------------------------------------
- ** Standard types adapters: sprinter and parser.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_STRING_TO_FROM_PROTOS]]],[[[
-mmux_cc_types_decl mmux_standard_sint_t mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p,
-								 size_t size, mmux_asciizcp_t restrict format,
-								 mmux_standard_flonum$1_t value)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value,
-								   mmux_asciizpp_t restrict tailptr)
-  __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d32)
-DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d64)
-DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d128)
-
-
-/** --------------------------------------------------------------------
- ** MMUX CC Types embedded type definitions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_LIBDFP_STANDARD_TYPE]]],[[[
-typedef struct mmux_flonumd$1_t	 { mmux_standard_flonumd$1_t	value; } mmux_flonumd$1_t;
-typedef struct mmux_flonumcd$1_t { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
-typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
 
 #define mmux_flonumd$1(STANDARD_DECIMAL)	((mmux_flonumd$1_t){ .value = (STANDARD_DECIMAL) })
 
 #define mmux_flonumd$1_literal(STANDARD_DECIMAL_LITERAL) \
   (mmux_flonumd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL)))
 
-#define mmux_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_flonumcd$1_t){ .value = (STANDARD_FLONUMCDB) })
+#define mmux_flonumcd$1(STANDARD_FLONUMCD)	((mmux_flonumcd$1_t){ .value = (STANDARD_FLONUMCD) })
 
 /* This is an inline  function, rather than a preprocessor macro, so  that we can use
    it in the macro "mmux_ctype_rectangular()". */
@@ -140,7 +108,7 @@ mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
 }
 #define mmux_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,       \
-								     STANDARD_DECIMAL_LITERAL_IM)))
+								STANDARD_DECIMAL_LITERAL_IM)))
 
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
 
@@ -153,12 +121,11 @@ __attribute__((__const__,__always_inline__)) static inline mmux_sint_t
 mmux_flonumcd$1_sizeof (void)
 {
   return mmux_sint(sizeof(mmux_flonumcd$1_t));
-}
-]]])
+}]]])
 m4_divert(0)m4_dnl
-DEFINE_LIBDFP_STANDARD_TYPE(32)
-DEFINE_LIBDFP_STANDARD_TYPE(64)
-DEFINE_LIBDFP_STANDARD_TYPE(128)
+DEFINE_LIBDFP_TYPE(32,	[[[DF]]])
+DEFINE_LIBDFP_TYPE(64,	[[[DD]]])
+DEFINE_LIBDFP_TYPE(128,	[[[DL]]])
 
 
 /** --------------------------------------------------------------------
@@ -196,407 +163,33 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
 
 
 /** --------------------------------------------------------------------
- ** Mathematical constants: standard real types.
+ ** Includes.
  ** ----------------------------------------------------------------- */
 
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_constant_$2 (void)
-{
-  return mmux_standard_flonumd$1_literal($3);
-}]]])
-
-m4_define([[[DEFINE_STANDARD_REAL_CONSTANT_PROTO]]],
-[[[mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_constant_$2
-  __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_STANDARD_REAL_CONSTANTS]]],[[[
-DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	zero,	0.0)
-DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	one,	1.0)
-DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	two,	2.0)
-DEFINE_STANDARD_REAL_CONSTANT_INLINE_FUNCTION($1,	ten,	10.0)
-
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		nan);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		E);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LOG2E);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LOG10E);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LN2);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		LN10);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		PI);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		PI_2);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		PI_4);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		1_PI);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		2_PI);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		2_SQRTPI);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		SQRT2);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		SQRT1_2);
-
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		minimum);
-DEFINE_STANDARD_REAL_CONSTANT_PROTO($1,		maximum);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_REAL_CONSTANTS(32)
-DEFINE_STANDARD_REAL_CONSTANTS(64)
-DEFINE_STANDARD_REAL_CONSTANTS(128)
+#include <mmux-cc-types-libdfp-constants.h>
+#include <mmux-cc-types-libdfp-arithmetics.h>
+#include <mmux-cc-types-libdfp-complex.h>
+#include <mmux-cc-types-libdfp-mathematics.h>
 
 
 /** --------------------------------------------------------------------
- ** Mathematical constants: standard cplx types.
+ ** Standard types adapters: sprinter and parser.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_constant_$2 (void)
-{
-  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_$3(),
-						   mmux_standard_flonumd$1_constant_$4());
-}]]])
-
-m4_define([[[DEFINE_STANDARD_CPLX_CONSTANTS]]],[[[
-DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	imag,	zero,	one)
-DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	zero,	zero,	zero)
-DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	one,	one,	zero)
-DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	two,	two,	zero)
-DEFINE_STANDARD_CPLX_CONSTANT_INLINE_FUNCTION($1,	ten,	ten,	zero)
-
-mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_flonumcd$1_t mmux_standard_flonumcd$1_constant_nan
+m4_define([[[DEFINE_STANDARD_STRING_TO_FROM_PROTOS]]],[[[
+mmux_cc_types_decl mmux_standard_sint_t mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p,
+								 size_t size, mmux_asciizcp_t restrict format,
+								 mmux_standard_flonum$1_t value)
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value,
+								   mmux_asciizpp_t restrict tailptr)
   __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_CPLX_CONSTANTS(32)
-DEFINE_STANDARD_CPLX_CONSTANTS(64)
-DEFINE_STANDARD_CPLX_CONSTANTS(128)
-
-
-
-/** --------------------------------------------------------------------
- ** Mathematical constants: embedded real types.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_constant_$2 (void)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_constant_$2());
-}]]])
-
-m4_define([[[DEFINE_EMBEDDED_REAL_CONSTANT_PROTO]]],
-[[[mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumd$1_t mmux_flonumd$1_constant_$2
-  __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_EMBEDDED_REAL_CONSTANTS]]],[[[
-DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	zero)
-DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	one)
-DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	two)
-DEFINE_EMBEDDED_REAL_CONSTANT_INLINE_FUNCTION($1,	ten)
-
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		nan);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		E);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LOG2E);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LOG10E);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LN2);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		LN10);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		PI);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		PI_2);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		PI_4);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		1_PI);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		2_PI);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		2_SQRTPI);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		SQRT2);
-DEFINE_EMBEDDED_REAL_CONSTANT_PROTO($1,		SQRT1_2);
-
-mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumd$1_t mmux_flonumd$1_minimum __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumd$1_t mmux_flonumd$1_maximum __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_EMBEDDED_REAL_CONSTANTS(32)
-DEFINE_EMBEDDED_REAL_CONSTANTS(64)
-DEFINE_EMBEDDED_REAL_CONSTANTS(128)
-
-
-/** --------------------------------------------------------------------
- ** Mathematical constants: embedded cplx types.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_constant_$2 (void)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_$2());
-}]]])
-
-m4_define([[[DEFINE_EMBEDDED_CPLX_CONSTANTS]]],[[[
-DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	imag)
-DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	zero)
-DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	one)
-DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	two)
-DEFINE_EMBEDDED_CPLX_CONSTANT_INLINE_FUNCTION($1,	ten)
-mmux_cc_types_decl mmux_cc_types_nullary_operation_flonumcd$1_t mmux_flonumcd$1_constant_nan
-  __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_EMBEDDED_CPLX_CONSTANTS(32)
-DEFINE_EMBEDDED_CPLX_CONSTANTS(64)
-DEFINE_EMBEDDED_CPLX_CONSTANTS(128)
-
-
-/** --------------------------------------------------------------------
- ** Some complex number functions: real part, imag part, abs, arg, conjugate.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_CPLX_BASIC_FUNCTIONS]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_part_t
-mmux_flonumcd$1_real_part (mmux_flonumcd$1_t Z)
-{
-  return mmux_flonumd$1(Z.value.re);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_part_t
-mmux_flonumcd$1_imag_part (mmux_flonumcd$1_t Z)
-{
-  return mmux_flonumd$1(Z.value.im);
-}
-
-mmux_cc_types_decl mmux_flonumcd$1_part_t mmux_flonumcd$1_absolute (mmux_flonumcd$1_t Z)
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_flonumcd$1_part_t mmux_flonumcd$1_argument (mmux_flonumcd$1_t Z)
-  __attribute__((__const__));
-
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_conjugate (mmux_flonumcd$1_t Z)
-{
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Z.value.re, - Z.value.im) );
-}
-]]])
-m4_divert(0)m4_dnl
-DEFINE_CPLX_BASIC_FUNCTIONS(32)
-DEFINE_CPLX_BASIC_FUNCTIONS(64)
-DEFINE_CPLX_BASIC_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Arithmetics: real numbers.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_REAL_ARITHMETICS_FUNCTIONS]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_add (mmux_flonumd$1_t A, mmux_flonumd$1_t B)
-{
-  return mmux_flonumd$1(A.value + B.value);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_sub (mmux_flonumd$1_t A, mmux_flonumd$1_t B)
-{
-  return mmux_flonumd$1(A.value - B.value);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_mul (mmux_flonumd$1_t A, mmux_flonumd$1_t B)
-{
-  return mmux_flonumd$1(A.value * B.value);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_div (mmux_flonumd$1_t A, mmux_flonumd$1_t B)
-{
-  return mmux_flonumd$1(A.value / B.value);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_neg (mmux_flonumd$1_t A)
-{
-  return mmux_flonumd$1(- A.value);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
-mmux_flonumd$1_inv (mmux_flonumd$1_t A)
-{
-  return mmux_flonumd$1_div(mmux_flonumd$1_constant_one(), A);
-}
-
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_absolute (mmux_flonumd$1_t X)
-  __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_REAL_ARITHMETICS_FUNCTIONS(32)
-DEFINE_REAL_ARITHMETICS_FUNCTIONS(64)
-DEFINE_REAL_ARITHMETICS_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Arithmetics: complex numbers.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_CPLX_ARITHMETICS_FUNCTIONS]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_add (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
-{
-  auto	Cre = A.value.re + B.value.re;
-  auto	Cim = A.value.im + B.value.im;
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_sub (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
-{
-  auto	Cre = A.value.re - B.value.re;
-  auto	Cim = A.value.im - B.value.im;
-
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_mul (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
-{
-  auto	Cre = A.value.re * B.value.re - A.value.im * B.value.im;
-  auto	Cim = A.value.re * B.value.im + B.value.re * A.value.im;
-
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_div (mmux_flonumcd$1_t A, mmux_flonumcd$1_t B)
-{
-  auto	D   = B.value.re * B.value.re + B.value.im * B.value.im;
-  auto	Cre = (A.value.re * B.value.re + A.value.im * B.value.im) / D;
-  auto	Cim = (A.value.im * B.value.re - A.value.re * B.value.im) / D;
-
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_neg (mmux_flonumcd$1_t A)
-{
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(-A.value.re, - A.value.im) );
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
-mmux_flonumcd$1_inv (mmux_flonumcd$1_t A)
-{
-  auto	D   = A.value.re * A.value.re + A.value.im * A.value.im;
-  auto	Cre = A.value.re / D;
-  auto	Cim = - (A.value.im / D);
-
-  return mmux_flonumcd$1( mmux_standard_flonumcd$1_rectangular(Cre, Cim) );
-}
-]]])
-m4_divert(0)m4_dnl
-DEFINE_CPLX_ARITHMETICS_FUNCTIONS(32)
-DEFINE_CPLX_ARITHMETICS_FUNCTIONS(64)
-DEFINE_CPLX_ARITHMETICS_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Mathematics: decimal floating-point functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_unary_operation_flonumd$1_t mmux_flonumd$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t mmux_flonumd$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_BINARY_SINT_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_flonumd$1_t mmux_flonumd$1_$2 (mmux_sint_t N, mmux_flonumd$1_t X) __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_FLONUMD_MATH_PROTOS]]],[[[m4_dnl
-DEFINE_UNARY_MATH_PROTO($1,		sin);
-DEFINE_UNARY_MATH_PROTO($1,		cos);
-DEFINE_UNARY_MATH_PROTO($1,		tan);
-
-DEFINE_UNARY_MATH_PROTO($1,		asin);
-DEFINE_UNARY_MATH_PROTO($1,		acos);
-DEFINE_UNARY_MATH_PROTO($1,		atan);
-DEFINE_BINARY_MATH_PROTO($1,		atan2);
-
-DEFINE_UNARY_MATH_PROTO($1,		sinh);
-DEFINE_UNARY_MATH_PROTO($1,		cosh);
-DEFINE_UNARY_MATH_PROTO($1,		tanh);
-
-DEFINE_UNARY_MATH_PROTO($1,		asinh);
-DEFINE_UNARY_MATH_PROTO($1,		acosh);
-DEFINE_UNARY_MATH_PROTO($1,		atanh);
-
-DEFINE_UNARY_MATH_PROTO($1,		exp);
-DEFINE_UNARY_MATH_PROTO($1,		exp2);
-DEFINE_UNARY_MATH_PROTO($1,		exp10);
-
-DEFINE_UNARY_MATH_PROTO($1,		log);
-DEFINE_UNARY_MATH_PROTO($1,		log10);
-DEFINE_UNARY_MATH_PROTO($1,		log2);
-DEFINE_UNARY_MATH_PROTO($1,		logb);
-
-DEFINE_BINARY_MATH_PROTO($1,		pow);
-DEFINE_UNARY_MATH_PROTO($1,		square);
-DEFINE_UNARY_MATH_PROTO($1,		sqrt);
-DEFINE_UNARY_MATH_PROTO($1,		cbrt);
-DEFINE_BINARY_MATH_PROTO($1,		hypot);
-
-DEFINE_UNARY_MATH_PROTO($1,		expm1);
-DEFINE_UNARY_MATH_PROTO($1,		log1p);
-
-DEFINE_UNARY_MATH_PROTO($1,		erf);
-DEFINE_UNARY_MATH_PROTO($1,		erfc);
-
-DEFINE_UNARY_MATH_PROTO($1,		lgamma);
-DEFINE_UNARY_MATH_PROTO($1,		tgamma);
-
-DEFINE_UNARY_MATH_PROTO($1,		j0);
-DEFINE_UNARY_MATH_PROTO($1,		j1);
-DEFINE_BINARY_SINT_MATH_PROTO($1,	jn);
-
-DEFINE_UNARY_MATH_PROTO($1,		y0);
-DEFINE_UNARY_MATH_PROTO($1,		y1);
-DEFINE_BINARY_SINT_MATH_PROTO($1,	yn);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMD_MATH_PROTOS(32)
-DEFINE_FLONUMD_MATH_PROTOS(64)
-DEFINE_FLONUMD_MATH_PROTOS(128)
-
-
-/** --------------------------------------------------------------------
- ** Mathematics: complex decimal floating-point functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_unary_operation_flonumcd$1_t mmux_flonumcd$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonumcd$1_t mmux_flonumcd$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_FLONUMCD_MATH_PROTOS]]],[[[m4_dnl
-DEFINE_UNARY_MATH_PROTO($1,		sin);
-DEFINE_UNARY_MATH_PROTO($1,		cos);
-DEFINE_UNARY_MATH_PROTO($1,		tan);
-
-DEFINE_UNARY_MATH_PROTO($1,		asin);
-DEFINE_UNARY_MATH_PROTO($1,		acos);
-DEFINE_UNARY_MATH_PROTO($1,		atan);
-
-DEFINE_UNARY_MATH_PROTO($1,		sinh);
-DEFINE_UNARY_MATH_PROTO($1,		cosh);
-DEFINE_UNARY_MATH_PROTO($1,		tanh);
-
-DEFINE_UNARY_MATH_PROTO($1,		asinh);
-DEFINE_UNARY_MATH_PROTO($1,		acosh);
-DEFINE_UNARY_MATH_PROTO($1,		atanh);
-
-DEFINE_UNARY_MATH_PROTO($1,		exp);
-DEFINE_UNARY_MATH_PROTO($1,		exp2);
-DEFINE_UNARY_MATH_PROTO($1,		exp10);
-DEFINE_UNARY_MATH_PROTO($1,		log);
-DEFINE_UNARY_MATH_PROTO($1,		log2);
-DEFINE_UNARY_MATH_PROTO($1,		log10);
-DEFINE_BINARY_MATH_PROTO($1,		pow);
-DEFINE_UNARY_MATH_PROTO($1,		square);
-DEFINE_UNARY_MATH_PROTO($1,		sqrt);
-DEFINE_UNARY_MATH_PROTO($1,		cbrt);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMCD_MATH_PROTOS(32)
-DEFINE_FLONUMCD_MATH_PROTOS(64)
-DEFINE_FLONUMCD_MATH_PROTOS(128)
+DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d32)
+DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d64)
+DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d128)
 
 
 /** --------------------------------------------------------------------

@@ -245,7 +245,7 @@ test_mathematics_cos (void)
 static void
 test_mathematics_tan (void)
 {
-  printf("running test: %s\n", __func__);
+  dprintf(2, "running test: %s:", __func__);
 
 #undef	OP1
 #define	OP1		0.123
@@ -273,21 +273,144 @@ test_mathematics_tan (void)
   }
 
 #undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
-  {											\
-    auto	op1 = mmux_##STEM##_rectangular_literal(COP1RE,COP1RE);		\
+#define DOIT_FOR_CPLX(STEM)							\
+  {										\
+    auto	op1 = mmux_##STEM##_rectangular_literal(COP1RE,COP1IM);		\
     auto	rop = mmux_##STEM##_rectangular_literal(CROPRE,CROPIM);		\
     auto	eps = mmux_##STEM##_rectangular_literal(1e-6,1e-6);		\
-    if (1) {										\
-      dprintf(2, "\napplication for " #STEM " expected '");				\
-      mmux_##STEM##_dprintf(2, rop);							\
-      dprintf(2, "' got '");								\
-      mmux_##STEM##_dprintf(2, mmux_##STEM##_tan(op1));					\
-      dprintf(2, "' ");									\
-    }											\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_tan(op1), eps));		\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_tan(op1), eps));			\
-    dprintf(2," %s,", #STEM);								\
+    if (0) {									\
+      dprintf(2, "\napplication for " #STEM " expected '");			\
+      mmux_##STEM##_dprintf(2, rop);						\
+      dprintf(2, "' got '");							\
+      mmux_##STEM##_dprintf(2, mmux_##STEM##_tan(op1));				\
+      dprintf(2, "' ");								\
+    }										\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_tan(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_tan(op1), eps));		\
+    dprintf(2," %s,", #STEM);							\
+  }
+
+  DOIT_FOR_REAL(flonumfl);
+  DOIT_FOR_REAL(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_REAL(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_REAL(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_REAL(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_REAL(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_REAL(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_REAL(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_REAL(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_REAL(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_REAL(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_REAL(flonumd128);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+  DOIT_FOR_CPLX(flonumcfl);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+  DOIT_FOR_CPLX(flonumcdb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FOR_CPLX(flonumcldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FOR_CPLX(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FOR_CPLX(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FOR_CPLX(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FOR_CPLX(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FOR_CPLX(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_CPLX(flonumcf128x);
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_CPLX(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_CPLX(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_CPLX(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+static void
+test_mathematics_asin (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef	OP1
+#define	OP1		0.123
+#undef	ROP
+#define	ROP		0.123'312'275
+
+#undef  COP1RE
+#define COP1RE		5.0
+#undef  COP1IM
+#define COP1IM		3.0
+#undef	CROPRE
+#define	CROPRE		1.023'821'75
+#undef	CROPIM
+#define	CROPIM		2.452'913'74
+
+#undef  DOIT_FOR_REAL
+#define DOIT_FOR_REAL(STEM)							\
+  {										\
+    auto	op1 = mmux_## STEM(OP1);					\
+    auto	rop = mmux_## STEM(ROP);					\
+    auto	eps = mmux_## STEM(1e-6);					\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_asin(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_asin(op1), eps));	\
+    dprintf(2," %s,", #STEM);							\
+  }
+
+#undef  DOIT_FOR_CPLX
+#define DOIT_FOR_CPLX(STEM)							\
+  {										\
+    auto	op1 = mmux_##STEM##_rectangular_literal(COP1RE,COP1IM);		\
+    auto	rop = mmux_##STEM##_rectangular_literal(CROPRE,CROPIM);		\
+    auto	eps = mmux_##STEM##_rectangular_literal(1e-6,1e-6);		\
+    if (0) {									\
+      dprintf(2, "\napplication for " #STEM " expected '");			\
+      mmux_##STEM##_dprintf(2, rop);						\
+      dprintf(2, "' got '");							\
+      mmux_##STEM##_dprintf(2, mmux_##STEM##_asin(op1));			\
+      dprintf(2, "' ");								\
+    }										\
+    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_asin(op1), eps));	\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_asin(op1), eps));	\
+    dprintf(2," %s,", #STEM);							\
   }
 
   DOIT_FOR_REAL(flonumfl);
@@ -365,168 +488,6 @@ test_mathematics_tan (void)
 }
 
 #if 0
-
-
-static void
-test_mathematics_asin (void)
-{
-  printf("running test: %s\n", __func__);
-
-  {
-    mmux_flonumfl_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-  {
-    mmux_flonumdb_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  {
-    mmux_flonumldb_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  {
-    mmux_flonumf32_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  {
-    mmux_flonumf64_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  {
-    mmux_flonumf128_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  {
-    mmux_flonumf32x_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  {
-    mmux_flonumf64x_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  {
-    mmux_flonumf128x_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  {
-    mmux_flonumd32_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  {
-    mmux_flonumd64_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  {
-    mmux_flonumd128_t	op1 = 0.123, rop = 0.123'312'275, mrg = 1e-6;
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-  {
-    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcfl_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-
-  {
-    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcdb_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  {
-    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcldb_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  {
-    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf32_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  {
-    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf64_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  {
-    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf128_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  {
-    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf32x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  {
-    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf64x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  {
-    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_rectangular(1.023'821'75,2.452'913'74);
-    auto	mrg = mmux_flonumcf128x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_absmargin(rop, mmux_ctype_asin(op1), mrg));
-  }
-#endif
-}
 
 
 static void
@@ -4564,8 +4525,8 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_mathematics_sin();		}
   if (1) {	test_mathematics_cos();		}
   if (1) {	test_mathematics_tan();		}
-#if 0
   if (1) {	test_mathematics_asin();	}
+#if 0
   if (1) {	test_mathematics_acos();	}
   if (1) {	test_mathematics_atan();	}
   if (1) {	test_mathematics_atan2();	}

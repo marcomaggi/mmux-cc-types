@@ -9,6 +9,7 @@ AM_CPPFLAGS		= -I$(srcdir)/src/ -I$(builddir)/src/
 CLEANFILES		=
 DISTCLEANFILES		=
 BUILT_SOURCES		=
+include_HEADERS		=
 
 ## --------------------------------------------------------------------
 
@@ -106,13 +107,35 @@ install-html-local:
 #
 
 EXTRA_DIST	+= \
-	src/mmux-cc-types-libdfp.h.m4		\
-	src/mmux-cc-types-libdfp.c.m4
+	src/mmux-cc-types-libdfp.h.m4			\
+	src/mmux-cc-types-libdfp-arithmetics.h.m4	\
+	src/mmux-cc-types-libdfp-complex.h.m4		\
+	src/mmux-cc-types-libdfp-constants.h.m4		\
+	src/mmux-cc-types-libdfp-internal.h.m4		\
+	src/mmux-cc-types-libdfp-mathematics.h.m4	\
+	\
+	src/mmux-cc-types-libdfp.c.m4			\
+	src/mmux-cc-types-libdfp-arithmetics.c.m4	\
+	src/mmux-cc-types-libdfp-complex.c.m4		\
+	src/mmux-cc-types-libdfp-constants.c.m4		\
+	src/mmux-cc-types-libdfp-mathematics.c.m4	\
+	src/mmux-cc-types-libdfp-sign-predicates.c.m4
 
 if WANT_LIBDFP
 MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
-	src/mmux-cc-types-libdfp.h		\
-	src/mmux-cc-types-libdfp.c
+	src/mmux-cc-types-libdfp.h			\
+	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-constants.h		\
+	src/mmux-cc-types-libdfp-internal.h		\
+	src/mmux-cc-types-libdfp-mathematics.h		\
+	\
+	src/mmux-cc-types-libdfp.c			\
+	src/mmux-cc-types-libdfp-arithmetics.c		\
+	src/mmux-cc-types-libdfp-complex.c		\
+	src/mmux-cc-types-libdfp-constants.c		\
+	src/mmux-cc-types-libdfp-mathematics.c		\
+	src/mmux-cc-types-libdfp-sign-predicates.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
@@ -122,7 +145,27 @@ noinst_LTLIBRARIES			= libmmux-cc-types-libdfp.la
 libmmux_cc_types_libdfp_la_CPPFLAGS	= $(AM_CPPFLAGS)
 libmmux_cc_types_libdfp_la_CFLAGS	= $(AM_CFLAGS)  $(LIBDFP_CFLAGS) -Wno-pedantic
 libmmux_cc_types_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
-libmmux_cc_types_libdfp_la_SOURCES	= src/mmux-cc-types-libdfp.c
+libmmux_cc_types_libdfp_la_SOURCES	= \
+	src/mmux-cc-types-libdfp.h			\
+	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-constants.h		\
+	src/mmux-cc-types-libdfp-internal.h		\
+	src/mmux-cc-types-libdfp-mathematics.h		\
+	\
+	src/mmux-cc-types-libdfp.c			\
+	src/mmux-cc-types-libdfp-arithmetics.c		\
+	src/mmux-cc-types-libdfp-complex.c		\
+	src/mmux-cc-types-libdfp-constants.c		\
+	src/mmux-cc-types-libdfp-mathematics.c		\
+	src/mmux-cc-types-libdfp-sign-predicates.c
+
+include_HEADERS			+= \
+	src/mmux-cc-types-libdfp.h			\
+	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-constants.h		\
+	src/mmux-cc-types-libdfp-mathematics.h
 endif
 
 
@@ -130,9 +173,11 @@ endif
 
 EXTRA_DIST	+= \
 	src/mmux-cc-types.h.m4				\
-	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-internals.h.m4		\
 	src/mmux-cc-types-adapters.h.m4			\
+	src/mmux-cc-types-constants.h.m4		\
+	src/mmux-cc-types-generics.h.m4			\
+	\
 	src/mmux-cc-types-bitwise.c.m4			\
 	src/mmux-cc-types-comparison.c.m4		\
 	src/mmux-cc-types-constants.c.m4		\
@@ -144,9 +189,11 @@ EXTRA_DIST	+= \
 MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
-	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-adapters.h			\
+	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-generics.h			\
+	\
 	src/mmux-cc-types-bitwise.c			\
 	src/mmux-cc-types-comparison.c			\
 	src/mmux-cc-types-constants.c			\
@@ -164,14 +211,11 @@ mmux_cc_types_REVISION		= @mmux_cc_types_VERSION_INTERFACE_REVISION@
 mmux_cc_types_AGE		= @mmux_cc_types_VERSION_INTERFACE_AGE@
 mmux_cc_types_LINKER_VERSION	= -version-info $(mmux_cc_types_CURRENT):$(mmux_cc_types_REVISION):$(mmux_cc_types_AGE)
 
-include_HEADERS				= \
+include_HEADERS			+= \
 	src/mmux-cc-types.h				\
-	src/mmux-cc-types-generics.h			\
-	src/mmux-cc-types-config.h
-
-if WANT_LIBDFP
-include_HEADERS				+= src/mmux-cc-types-libdfp.h
-endif
+	src/mmux-cc-types-config.h			\
+	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-generics.h
 
 lib_LTLIBRARIES			= libmmux-cc-types.la
 libmmux_cc_types_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
@@ -182,10 +226,12 @@ libmmux_cc_types_la_LIBADD	= libmmux-cc-types-libdfp.la
 endif
 libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types.h				\
-	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-adapters.h			\
+	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-generics.h			\
+	\
 	src/mmux-cc-types-bitwise.c			\
 	src/mmux-cc-types-comparison.c			\
 	src/mmux-cc-types-constants.c			\
@@ -195,7 +241,9 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-sprinters.c
 
 if WANT_LIBDFP
-libmmux_cc_types_la_SOURCES	+= src/mmux-cc-types-libdfp.h
+libmmux_cc_types_la_SOURCES	+= \
+	src/mmux-cc-types-libdfp.h			\
+	src/mmux-cc-types-libdfp-mathematics.h
 endif
 
 .PHONY: library
@@ -210,10 +258,11 @@ src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 
 src/%.$(OBJEXT): \
 	src/mmux-cc-types.h			\
-	src/mmux-cc-types-generics.h		\
+	src/mmux-cc-types-config.h		\
 	src/mmux-cc-types-internals.h		\
 	src/mmux-cc-types-adapters.h		\
-	src/mmux-cc-types-config.h
+	src/mmux-cc-types-constants.h		\
+	src/mmux-cc-types-generics.h
 
 # if WANT_LIBDFP
 # src/%.$(OBJEXT): src/mmux-cc-types-libdfp.h
@@ -233,6 +282,7 @@ check_PROGRAMS	= \
 	tests/test-arithmetics			\
 	tests/test-bitwise			\
 	tests/test-complex			\
+	tests/test-constants			\
 	tests/test-experiments			\
 	tests/test-mathematics			\
 	tests/test-parsers			\
@@ -251,6 +301,9 @@ tests_version_LDADD			= $(mmux_cc_types_tests_ldadd)
 
 tests_test_complex_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_complex_LDADD		= $(mmux_cc_types_tests_ldadd)
+
+tests_test_constants_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_constants_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_sprint_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_sprint_LDADD			= $(mmux_cc_types_tests_ldadd)

@@ -243,6 +243,25 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
 [[[typedef mmux_standard_flonumf128x_t	mmux_standard_flonumcf128x_part_t;]]])
 
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUMC_CONSTRUCTOR]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
+/* We need this  constructor for standard complex  numbers so that we can  use it for
+   inline functions in the main header file. */
+mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular (mmux_standard_flonum$1_t re,
+										  mmux_standard_flonum$1_t im)
+  __attribute__((__const__));
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMC_CONSTRUCTOR(fl)
+DEFINE_FLONUMC_CONSTRUCTOR(db)
+DEFINE_FLONUMC_CONSTRUCTOR(ldb)
+DEFINE_FLONUMC_CONSTRUCTOR(f32)
+DEFINE_FLONUMC_CONSTRUCTOR(f64)
+DEFINE_FLONUMC_CONSTRUCTOR(f128)
+DEFINE_FLONUMC_CONSTRUCTOR(f32x)
+DEFINE_FLONUMC_CONSTRUCTOR(f64x)
+DEFINE_FLONUMC_CONSTRUCTOR(f128x)
+
 
 /** --------------------------------------------------------------------
  ** MMUX CC Types embedded type definitions.
@@ -493,9 +512,9 @@ DEFINE_TYPE_MAKERS(rlim)
  ** ----------------------------------------------------------------- */
 
 mmux_cc_types_decl mmux_asciizcp_t	mmux_cc_types_version_string		(void);
-mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
-mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
-mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
+mmux_cc_types_decl int			mmux_cc_types_version_interface_current	(void);
+mmux_cc_types_decl int			mmux_cc_types_version_interface_revision(void);
+mmux_cc_types_decl int			mmux_cc_types_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
@@ -602,17 +621,18 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
 
 
 /** --------------------------------------------------------------------
+ ** Include files.
+ ** ----------------------------------------------------------------- */
+
+#include <mmux-cc-types-constants.h>
+
+
+/** --------------------------------------------------------------------
  ** Basic functions for complex floating-point types.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 m4_define([[[DEFINE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-/* We need this  constructor for standard complex  numbers so that we can  use it for
-   inline functions in the main header file. */
-mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular (mmux_standard_flonum$1_t re,
-										  mmux_standard_flonum$1_t im)
-  __attribute__((__const__));
-
 mmux_cc_types_decl mmux_flonumc$1_t mmux_flonumc$1_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
   __attribute__((__const__));
 
@@ -922,275 +942,6 @@ DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128x]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd32]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd64]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]])
-
-
-/** --------------------------------------------------------------------
- ** Mathematical constants: exact real numbers.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_zero (void)
-{
-  return (mmux_standard_$1_t)(0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_one (void)
-{
-  return (mmux_standard_$1_t)(1);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_two (void)
-{
-  return (mmux_standard_$1_t)(2);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_ten (void)
-{
-  return (mmux_standard_$1_t)(10);
-}
-
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_zero (void)
-{
-  return mmux_$1(mmux_standard_$1_literal(0));
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_one (void)
-{
-  return mmux_$1(mmux_standard_$1_literal(1));
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_two (void)
-{
-  return mmux_$1(mmux_standard_$1_literal(2));
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_ten (void)
-{
-  return mmux_$1(mmux_standard_$1_literal(10));
-}
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(char)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(schar)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uchar)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sshort)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(ushort)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sint)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uint)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(slong)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(ulong)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sllong)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(ullong)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sint8)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uint8)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sint16)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uint16)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sint32)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uint32)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sint64)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uint64)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(byte)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(octet)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(ssize)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(usize)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sintmax)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uintmax)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(sintptr)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uintptr)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(mode)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(off)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(pid)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(uid)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(gid)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(ptrdiff)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(wchar)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(wint)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(time)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(socklen)
-DEFINE_MATH_EXACT_REAL_CONSTANTS_FUNCS(rlim)
-
-
-/** --------------------------------------------------------------------
- ** Mathematical constants: inexact real numbers.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_zero (void)
-{
-  return mmux_standard_$1_literal(0.0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_one (void)
-{
-  return mmux_standard_$1_literal(1.0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_two (void)
-{
-  return mmux_standard_$1_literal(2.0);
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
-mmux_standard_$1_constant_ten (void)
-{
-  return mmux_standard_$1_literal(10.0);
-}
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_nan		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_E		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG2E		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LOG10E		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LN2		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_LN10		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI_2		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_PI_4		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_1_PI		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_2_PI		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_2_SQRTPI	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_SQRT2		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_SQRT1_2		(void) __attribute__((__const__));
-
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_zero (void)
-{
-  return mmux_$1(mmux_standard_$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_one (void)
-{
-  return mmux_$1(mmux_standard_$1_constant_one());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_two (void)
-{
-  return mmux_$1(mmux_standard_$1_constant_two());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
-mmux_$1_constant_ten (void)
-{
-  return mmux_$1(mmux_standard_$1_constant_ten());
-}
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_nan	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_E		(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG2E	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LOG10E	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LN2	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_LN10	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI_2	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_PI_4	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_1_PI	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_PI	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_2_SQRTPI	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT2	(void) __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_constant_SQRT1_2	(void) __attribute__((__const__));
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumfl)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumdb)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumldb)
-
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128)
-
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf32x)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf64x)
-DEFINE_INEXACT_REAL_CONSTANTS_PROTOS_AND_FUNCS(flonumf128x)
-
-
-/** --------------------------------------------------------------------
- ** Mathematical constants: inexact complex numbers.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_constant_nan (void)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_nan(),
-					     mmux_standard_flonum$1_constant_nan());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_constant_imag (void)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_zero(),
-					     mmux_standard_flonum$1_constant_one());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_constant_zero (void)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_zero(),
-					     mmux_standard_flonum$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_constant_one (void)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_one(),
-					     mmux_standard_flonum$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_constant_two (void)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_two(),
-					     mmux_standard_flonum$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_constant_ten (void)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_ten(),
-					     mmux_standard_flonum$1_constant_zero());
-}
-
-/* ------------------------------------------------------------------ */
-
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
-mmux_flonumc$1_constant_nan (void)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_nan());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
-mmux_flonumc$1_constant_imag (void)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_imag());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
-mmux_flonumc$1_constant_zero (void)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_zero());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
-mmux_flonumc$1_constant_one (void)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_one());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
-mmux_flonumc$1_constant_two (void)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_two());
-}
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
-mmux_flonumc$1_constant_ten (void)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_constant_ten());
-}
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(fl)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(db)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(ldb)
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f32)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f64)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f128)
-
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f32x)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f64x)
-DEFINE_MATH_COMPLEX_CONSTANTS_FUNCS(f128x)
 
 
 /** --------------------------------------------------------------------
