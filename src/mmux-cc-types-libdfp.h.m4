@@ -141,6 +141,7 @@ typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_s
 typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t X);
 typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
 typedef bool mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
+typedef mmux_sint_t mmux_cc_types_comparison_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
 
 typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
 typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
@@ -149,14 +150,12 @@ typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y
 typedef bool mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
 typedef bool mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef bool mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
-
 typedef mmux_sint_t mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2);
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd32]]])
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd64]]])
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd128]]])
-
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd32]]])
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd64]]])
 DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
@@ -169,6 +168,7 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
 #include <mmux-cc-types-libdfp-constants.h>
 #include <mmux-cc-types-libdfp-arithmetics.h>
 #include <mmux-cc-types-libdfp-complex.h>
+#include <mmux-cc-types-libdfp-comparison.h>
 #include <mmux-cc-types-libdfp-mathematics.h>
 
 
@@ -213,77 +213,6 @@ DEFINE_PREDICATE_PROTOS(flonumd128)
 DEFINE_PREDICATE_PROTOS(flonumcd32)
 DEFINE_PREDICATE_PROTOS(flonumcd64)
 DEFINE_PREDICATE_PROTOS(flonumcd128)
-
-
-/** --------------------------------------------------------------------
- ** Comparison functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_COMPARISON_PROTOS]]],[[[
-mmux_cc_types_decl mmux_cc_types_comparison_$1_t mmux_$1_cmp			__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_absmargin  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_relepsilon __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_COMPARISON_PROTOS(flonumd32)
-DEFINE_COMPARISON_PROTOS(flonumd64)
-DEFINE_COMPARISON_PROTOS(flonumd128)
-DEFINE_COMPARISON_PROTOS(flonumcd32)
-DEFINE_COMPARISON_PROTOS(flonumcd64)
-DEFINE_COMPARISON_PROTOS(flonumcd128)
-
-/* ------------------------------------------------------------------ */
-
-m4_divert(-1)
-m4_define([[[DEFINE_APPROX_COMPARISON_INLINE_FUNCTIONS]]],[[[
-__attribute__((__const__,__always_inline__)) static inline bool
-mmux_flonumd$1_equal_absmargin (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t margin)
-{
-  return mmux_standard_flonumd$1_equal_absmargin(op1.value, op2.value, margin.value);
-}
-__attribute__((__const__,__always_inline__)) static inline bool
-mmux_flonumd$1_equal_relepsilon (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t epsilon)
-{
-  return mmux_standard_flonumd$1_equal_relepsilon(op1.value, op2.value, epsilon.value);
-}
-__attribute__((__const__,__always_inline__)) static inline bool
-mmux_flonumcd$1_equal_absmargin (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t margin)
-{
-  return (mmux_standard_flonumd$1_equal_absmargin(op1.value.re, op2.value.re, margin.value.re) &&
-	  mmux_standard_flonumd$1_equal_absmargin(op1.value.im, op2.value.im, margin.value.im))?
-    true : false;
-}
-__attribute__((__const__,__always_inline__)) static inline bool
-mmux_flonumcd$1_equal_relepsilon (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t epsilon)
-{
-  return (mmux_standard_flonumd$1_equal_relepsilon(op1.value.re, op2.value.re, epsilon.value.re) &&
-	  mmux_standard_flonumd$1_equal_relepsilon(op1.value.im, op2.value.im, epsilon.value.im))?
-    true : false;
-}
-]]])
-m4_divert(0)m4_dnl
-DEFINE_APPROX_COMPARISON_INLINE_FUNCTIONS(32)
-DEFINE_APPROX_COMPARISON_INLINE_FUNCTIONS(64)
-DEFINE_APPROX_COMPARISON_INLINE_FUNCTIONS(128)
-
-/* ------------------------------------------------------------------ */
-
-m4_divert(-1)
-m4_define([[[DEFINE_MIN_MAX_PROTOS]]],[[[
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_max     __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonumd$1_t  mmux_flonumd$1_min     __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_MIN_MAX_PROTOS(32)
-DEFINE_MIN_MAX_PROTOS(64)
-DEFINE_MIN_MAX_PROTOS(128)
 
 
 /** --------------------------------------------------------------------

@@ -109,33 +109,37 @@ install-html-local:
 EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp.h.m4			\
 	src/mmux-cc-types-libdfp-arithmetics.h.m4	\
+	src/mmux-cc-types-libdfp-comparison.h.m4	\
 	src/mmux-cc-types-libdfp-complex.h.m4		\
 	src/mmux-cc-types-libdfp-constants.h.m4		\
 	src/mmux-cc-types-libdfp-internal.h.m4		\
 	src/mmux-cc-types-libdfp-mathematics.h.m4	\
 	\
-	src/mmux-cc-types-libdfp.c.m4			\
 	src/mmux-cc-types-libdfp-arithmetics.c.m4	\
+	src/mmux-cc-types-libdfp-comparison.c.m4	\
 	src/mmux-cc-types-libdfp-complex.c.m4		\
 	src/mmux-cc-types-libdfp-constants.c.m4		\
 	src/mmux-cc-types-libdfp-mathematics.c.m4	\
-	src/mmux-cc-types-libdfp-sign-predicates.c.m4
+	src/mmux-cc-types-libdfp-sign-predicates.c.m4	\
+	src/mmux-cc-types-libdfp-string.c.m4
 
 if WANT_LIBDFP
 MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-comparison.h		\
 	src/mmux-cc-types-libdfp-complex.h		\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-internal.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	\
-	src/mmux-cc-types-libdfp.c			\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
+	src/mmux-cc-types-libdfp-comparison.c		\
 	src/mmux-cc-types-libdfp-complex.c		\
 	src/mmux-cc-types-libdfp-constants.c		\
 	src/mmux-cc-types-libdfp-mathematics.c		\
-	src/mmux-cc-types-libdfp-sign-predicates.c
+	src/mmux-cc-types-libdfp-sign-predicates.c	\
+	src/mmux-cc-types-libdfp-string.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
@@ -148,17 +152,19 @@ libmmux_cc_types_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
 libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-comparison.h		\
 	src/mmux-cc-types-libdfp-complex.h		\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-internal.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	\
-	src/mmux-cc-types-libdfp.c			\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
+	src/mmux-cc-types-libdfp-comparison.c		\
 	src/mmux-cc-types-libdfp-complex.c		\
 	src/mmux-cc-types-libdfp-constants.c		\
 	src/mmux-cc-types-libdfp-mathematics.c		\
-	src/mmux-cc-types-libdfp-sign-predicates.c
+	src/mmux-cc-types-libdfp-sign-predicates.c	\
+	src/mmux-cc-types-libdfp-string.c
 
 include_HEADERS			+= \
 	src/mmux-cc-types-libdfp.h			\

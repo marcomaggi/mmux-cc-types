@@ -5,7 +5,7 @@
 
   Abstract
 
-	This  module implements  complex  numbers functions  for  the standard  types
+	This   module   implements   string   functions  for   the   standard   types
 	"mmux_standard_flonumcd$1_t".
 
   Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
@@ -31,20 +31,26 @@
 
 
 /** --------------------------------------------------------------------
- ** Complex numbers functions: standard flonumcd.
+ ** Standard types adapters: sprinter and parser.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMCD_COMPLEX_FUNCTIONS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-mmux_standard_flonumd$1_t
-mmux_standard_flonumcd$1_argument (mmux_standard_flonumcd$1_t op)
+m4_define([[[DEFINE_STANDARD_STRING_TO_FROM_FUNCTIONS]]],[[[
+mmux_standard_sint_t
+mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p, size_t size, mmux_asciizcp_t restrict format,
+			 mmux_standard_flonum$1_t value)
 {
-  return atan2d$1(op.im, op.re);
-}]]])]]])
+  return strfrom$1(result_p, size, format, value);
+}
+mmux_standard_flonum$1_t
+mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value, mmux_asciizpp_t restrict tailptr)
+{
+  return strto$1(s_input_value, tailptr);
+}
+]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMCD_COMPLEX_FUNCTIONS(32)
-DEFINE_STANDARD_FLONUMCD_COMPLEX_FUNCTIONS(64)
-DEFINE_STANDARD_FLONUMCD_COMPLEX_FUNCTIONS(128)
+DEFINE_STANDARD_STRING_TO_FROM_FUNCTIONS(d32)
+DEFINE_STANDARD_STRING_TO_FROM_FUNCTIONS(d64)
+DEFINE_STANDARD_STRING_TO_FROM_FUNCTIONS(d128)
 
 /* end of file */
