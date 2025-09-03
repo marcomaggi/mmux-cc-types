@@ -170,6 +170,7 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
 #include <mmux-cc-types-libdfp-complex.h>
 #include <mmux-cc-types-libdfp-comparison.h>
 #include <mmux-cc-types-libdfp-mathematics.h>
+#include <mmux-cc-types-libdfp-sign-predicates.h>
 
 
 /** --------------------------------------------------------------------
@@ -190,34 +191,6 @@ m4_divert(0)m4_dnl
 DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d32)
 DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d64)
 DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d128)
-
-
-/** --------------------------------------------------------------------
- ** Predicates.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_PREDICATE_PROTOS]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_PREDICATE_PROTOS(flonumd32)
-DEFINE_PREDICATE_PROTOS(flonumd64)
-DEFINE_PREDICATE_PROTOS(flonumd128)
-DEFINE_PREDICATE_PROTOS(flonumcd32)
-DEFINE_PREDICATE_PROTOS(flonumcd64)
-DEFINE_PREDICATE_PROTOS(flonumcd128)
-
-
-/** --------------------------------------------------------------------
- ** String representation and printing.
- ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl

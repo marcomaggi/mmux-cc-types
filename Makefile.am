@@ -114,6 +114,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp-constants.h.m4		\
 	src/mmux-cc-types-libdfp-internal.h.m4		\
 	src/mmux-cc-types-libdfp-mathematics.h.m4	\
+	src/mmux-cc-types-libdfp-sign-predicates.h.m4	\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c.m4	\
 	src/mmux-cc-types-libdfp-comparison.c.m4	\
@@ -132,6 +133,7 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-internal.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
+	src/mmux-cc-types-libdfp-sign-predicates.h	\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
 	src/mmux-cc-types-libdfp-comparison.c		\
@@ -157,6 +159,7 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-internal.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
+	src/mmux-cc-types-libdfp-sign-predicates.h	\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
 	src/mmux-cc-types-libdfp-comparison.c		\
@@ -171,7 +174,8 @@ include_HEADERS			+= \
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-complex.h		\
 	src/mmux-cc-types-libdfp-constants.h		\
-	src/mmux-cc-types-libdfp-mathematics.h
+	src/mmux-cc-types-libdfp-mathematics.h		\
+	src/mmux-cc-types-libdfp-sign-predicates.h
 endif
 
 

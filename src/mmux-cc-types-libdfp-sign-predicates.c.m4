@@ -30,132 +30,132 @@
 
 
 /** --------------------------------------------------------------------
- ** Real decimal floating-point number predicates.
+ ** Sign predicates: flonumd.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_REAL_PREDICATES]]],[[[
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_zero (mmux_flonumd$1_t X)
+m4_define([[[DEFINE_STANDARD_FLONUMD_PREDICATES]]],[[[m4_dnl
+bool
+mmux_standard_flonumd$1_is_zero (mmux_standard_flonumd$1_t op)
 {
-  return MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)? true : false;
+  return MMUX_STANDARD_FLONUMD$1_IS_ZERO(op)? true : false;
 }
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_nan (mmux_flonumd$1_t X)
+bool
+mmux_standard_flonumd$1_is_nan (mmux_standard_flonumd$1_t op)
 {
-  return MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)? true : false;
+  return MMUX_STANDARD_FLONUMD$1_IS_NAN(op)? true : false;
 }
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_infinite (mmux_flonumd$1_t X)
+bool
+mmux_standard_flonumd$1_is_infinite (mmux_standard_flonumd$1_t op)
 {
-  return MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X.value)? true : false;
+  return MMUX_STANDARD_FLONUMD$1_IS_INFINITE(op)? true : false;
 }
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_positive (mmux_flonumd$1_t X)
+bool
+mmux_standard_flonumd$1_is_positive (mmux_standard_flonumd$1_t op)
 {
-  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(op)) {
     return false;
-  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
-    if (signbit(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(op)) {
+    if (signbit(op)) {
       return false;
     } else {
       return true;
     }
   } else {
-    return (mmux_standard_flonumd$1_constant_zero() < X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() < op)? true : false;
   }
 }
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_negative (mmux_flonumd$1_t X)
+bool
+mmux_standard_flonumd$1_is_negative (mmux_standard_flonumd$1_t op)
 {
-  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(op)) {
     return false;
-  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
-    if (signbit(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(op)) {
+    if (signbit(op)) {
       return true;
     } else {
       return false;
     }
   } else {
-    return (mmux_standard_flonumd$1_constant_zero() > X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() > op)? true : false;
   }
 }
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_non_positive (mmux_flonumd$1_t X)
+bool
+mmux_standard_flonumd$1_is_non_positive (mmux_standard_flonumd$1_t op)
 {
-  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(op)) {
     return false;
-  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(op)) {
     return true;
   } else {
-    return (mmux_standard_flonumd$1_constant_zero() > X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() > op)? true : false;
   }
 }
-__attribute__((__const__)) bool
-mmux_flonumd$1_is_non_negative (mmux_flonumd$1_t X)
+bool
+mmux_standard_flonumd$1_is_non_negative (mmux_standard_flonumd$1_t op)
 {
-  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(X.value)) {
+  if (MMUX_STANDARD_FLONUMD$1_IS_NAN(op)) {
     return false;
-  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(X.value)) {
+  } else if (MMUX_STANDARD_FLONUMD$1_IS_ZERO(op)) {
     return true;
   } else {
-    return (mmux_standard_flonumd$1_constant_zero() < X.value)? true : false;
+    return (mmux_standard_flonumd$1_constant_zero() < op)? true : false;
   }
 }
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_REAL_PREDICATES(32)
-DEFINE_REAL_PREDICATES(64)
-DEFINE_REAL_PREDICATES(128)
+DEFINE_STANDARD_FLONUMD_PREDICATES(32)
+DEFINE_STANDARD_FLONUMD_PREDICATES(64)
+DEFINE_STANDARD_FLONUMD_PREDICATES(128)
 
 
 /** --------------------------------------------------------------------
- ** Complex decimal floating-point numbers predicates.
+ ** Sign predicates: flonumcd.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_CPLX_PREDICATES]]],[[[
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_zero (mmux_flonumcd$1_t Z)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_PREDICATES]]],[[[
+bool
+mmux_standard_flonumcd$1_is_zero (mmux_standard_flonumcd$1_t Z)
 {
-  return (MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.value.re) && MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.value.im))? true : false;
+  return (MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.re) && MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.im))? true : false;
 }
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_positive (mmux_flonumcd$1_t Z __attribute__((__unused__)))
+bool
+mmux_standard_flonumcd$1_is_positive (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_negative (mmux_flonumcd$1_t Z __attribute__((__unused__)))
+bool
+mmux_standard_flonumcd$1_is_negative (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_non_positive (mmux_flonumcd$1_t Z __attribute__((__unused__)))
+bool
+mmux_standard_flonumcd$1_is_non_positive (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_non_negative (mmux_flonumcd$1_t Z __attribute__((__unused__)))
+bool
+mmux_standard_flonumcd$1_is_non_negative (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
 {
   return false;
 }
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_nan (mmux_flonumcd$1_t Z)
+bool
+mmux_standard_flonumcd$1_is_nan (mmux_standard_flonumcd$1_t Z)
 {
-  return (MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.value.re) ||
-	  MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.value.im))? true : false;
+  return (MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.re) ||
+	  MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.im))? true : false;
 }
-__attribute__((__const__)) bool
-mmux_flonumcd$1_is_infinite (mmux_flonumcd$1_t Z)
+bool
+mmux_standard_flonumcd$1_is_infinite (mmux_standard_flonumcd$1_t Z)
 {
-  return (MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.value.re) ||
-	  MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.value.im))? true : false;
+  return (MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.re) ||
+	  MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.im))? true : false;
 }
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_CPLX_PREDICATES(32)
-DEFINE_CPLX_PREDICATES(64)
-DEFINE_CPLX_PREDICATES(128)
+DEFINE_STANDARD_FLONUMCD_PREDICATES(32)
+DEFINE_STANDARD_FLONUMCD_PREDICATES(64)
+DEFINE_STANDARD_FLONUMCD_PREDICATES(128)
 
 /* end of file */
