@@ -77,17 +77,17 @@ DEFINE_STANDARD_FLONUMD_CONSTANT_FUNCTION($1,		2_SQRTPI);
 DEFINE_STANDARD_FLONUMD_CONSTANT_FUNCTION($1,		SQRT2);
 DEFINE_STANDARD_FLONUMD_CONSTANT_FUNCTION($1,		SQRT1_2);
 mmux_standard_flonumd$1_t
-mmux_standard_$1_constant_nan (void)
+mmux_standard_flonumd$1_constant_nan (void)
 {
   return nand$1("nan(0)");
 }
 mmux_standard_flonumd$1_t
-mmux_standard_$1_constant_maximum (void)
+mmux_standard_flonumd$1_constant_maximum (void)
 {
   return mmux_libc_maximum_flonumd$1;
 }
 mmux_standard_flonumd$1_t
-mmux_standard_$1_constant_minimum (void)
+mmux_standard_flonumd$1_constant_minimum (void)
 {
   return mmux_libc_minimum_flonumd$1;
 }]]])

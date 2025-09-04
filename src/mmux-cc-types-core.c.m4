@@ -127,22 +127,12 @@ DEFINE_TYPE_FUNCTIONS(f128x)
 
 
 /** --------------------------------------------------------------------
- ** Aliased integer number type functions: minimum, maximum, abs, min, max.
+ ** Aliased integer number type functions: abs, min, max.
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - CUSTOM_STEM
 m4_dnl $2 - STANDARD_STEM
 m4_define([[[DEFINE_TYPE_FUNCTIONS]]],[[[
-mmux_$1_t
-mmux_$1_maximum (void)
-{
-  return mmux_$1(mmux_$2_maximum().value);
-}
-mmux_$1_t
-mmux_$1_minimum (void)
-{
-  return mmux_$1(mmux_$2_minimum().value);
-}
 mmux_$1_t
 mmux_$1_absolute (mmux_$1_t op)
 {
@@ -157,19 +147,7 @@ mmux_$1_t
 mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
 {
   return mmux_$1(mmux_$2_min(mmux_$2(op1.value), mmux_$2(op2.value)).value);
-}
-
-mmux_standard_$1_t
-mmux_standard_$1_maximum (void)
-{
-  return mmux_standard_$2_maximum();
-}
-mmux_standard_$1_t
-mmux_standard_$1_minimum (void)
-{
-  return mmux_standard_$2_minimum();
-}
-]]])
+}]]])
 
 DEFINE_TYPE_FUNCTIONS(ssize,	MMUX_CC_TYPES_STEM_ALIAS_SSIZE)
 DEFINE_TYPE_FUNCTIONS(usize,	MMUX_CC_TYPES_STEM_ALIAS_USIZE)

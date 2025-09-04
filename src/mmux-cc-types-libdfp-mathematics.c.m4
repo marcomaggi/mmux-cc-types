@@ -31,52 +31,94 @@
 
 
 /** --------------------------------------------------------------------
- ** Standard types adapters: real numbers mathematical functions not implemented by libdfp.
+ ** Mathematics: standard flonumd, functions implemented by libdfp.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS]]],[[[
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY]]],[[[mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_$2 (mmux_standard_flonumd$1_t op)
+{
+  return $2d$1(op);
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_BINARY]]],[[[mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_$2 (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return $2d$1(op1, op2);
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_BINARY_SINT]]],[[[mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_$2 (mmux_standard_sint_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return $2d$1(op1, op2);
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_FUNCTIONS]]],[[[m4_dnl
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	sin)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	cos)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	tan)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	asin)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	acos)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	atan)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_BINARY($1,	atan2)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	sinh)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	cosh)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	tanh)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	asinh)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	acosh)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	atanh)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	exp)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	exp2)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	log)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	log10)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	log2)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	logb)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_BINARY($1,	pow)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	sqrt)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	cbrt)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_BINARY($1,	hypot)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	expm1)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	log1p)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	erf)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	erfc)
+
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	lgamma)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_UNARY($1,	tgamma)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMD_LIBDFP_WRAPPER_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumd, functions NOT implemented by libdfp.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS]]],[[[
 mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_square (mmux_standard_flonumd$1_t op)
 {
   return mmux_standard_flonumd$1_mul(op,op);
-}
-
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_exp (mmux_standard_flonumd$1_t op)
-{
-  return expd$1(op);
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_exp2 (mmux_standard_flonumd$1_t op)
-{
-  return expd$1(op * logd$1(mmux_standard_flonumd$1_constant_two()));
 }
 mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_exp10 (mmux_standard_flonumd$1_t op)
 {
   return expd$1(op * logd$1(mmux_standard_flonumd$1_constant_ten()));
 }
-
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_log (mmux_standard_flonumd$1_t op)
-{
-  return logd$1(op);
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_log2d (mmux_standard_flonumd$1_t op)
-/* log_2 X = log X / log 2 */
-{
-  return logd$1(op) / mmux_standard_flonumd$1_constant_LN2();
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_log10 (mmux_standard_flonumd$1_t op)
-/* log_10 X = log X / log 10 */
-{
-  return logd$1(op) / mmux_standard_flonumd$1_constant_LN10();
-}
-
-/* The Bessel stuff below is not really implemented by "libdfp", or is it? */
+/* The Bessel stuff below is not really  implemented by "libdfp", or is it?  It looks
+   like the  functions are declred but  no implementation is present.   (Marco Maggi;
+   Sep 3, 2025) */
 mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_j0 (mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
@@ -109,16 +151,59 @@ mmux_standard_flonumd$1_yn (mmux_standard_sint_t      N  __attribute__((__unused
 {
   return mmux_standard_flonumd$1_constant_nan();
 }
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_exp (mmux_standard_flonumd$1_t op)
+{
+  return expd$1(op);
+}
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_exp2 (mmux_standard_flonumd$1_t op)
+{
+  return expd$1(op * logd$1(mmux_standard_flonumd$1_constant_two()));
+}
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_log (mmux_standard_flonumd$1_t op)
+{
+  return logd$1(op);
+}
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_log2d (mmux_standard_flonumd$1_t op)
+/* log_2 X = log X / log 2 */
+{
+  return logd$1(op) / mmux_standard_flonumd$1_constant_LN2();
+}
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_log10 (mmux_standard_flonumd$1_t op)
+/* log_10 X = log X / log 10 */
+{
+  return logd$1(op) / mmux_standard_flonumd$1_constant_LN10();
+}
+
+#endif
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(32)
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(64)
-DEFINE_REAL_DECIMAL_NUMBER_MATHEMATICS_FUNCTIONS(128)
+DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
- ** Standard types adapters: complex numbers mathematical functions not implemented by libdfp.
+ ** Mathematics: standard flonumcd.
  ** ----------------------------------------------------------------- */
+
+#if 0
 
 m4_divert(-1)
 
@@ -455,6 +540,7 @@ DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		atanh)
 
 /* ------------------------------------------------------------------ */
 
+#if 0
 mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_exp (mmux_standard_flonumcd$1_t Z)
 {
@@ -509,6 +595,7 @@ mmux_standard_flonumcd$1_log10 (mmux_standard_flonumcd$1_t Z)
   return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(Z),
 				      mmux_standard_flonumcd$1_constant_ten());
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 
@@ -534,147 +621,6 @@ DEFINE_MATH_CPLX_FUNCTIONS(32)
 DEFINE_MATH_CPLX_FUNCTIONS(64)
 DEFINE_MATH_CPLX_FUNCTIONS(128)
 
-
-/** --------------------------------------------------------------------
- ** Mathematics: real decimal floating-point functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_UNARY_MATH_FUNCTION]]],[[[mmux_flonumd$1_t
-mmux_flonumd$1_$2 (mmux_flonumd$1_t X)
-{
-  return mmux_flonumd$1($2d$1(X.value));
-}]]])
-
-m4_define([[[DEFINE_BINARY_MATH_FUNCTION]]],[[[mmux_flonumd$1_t
-mmux_flonumd$1_$2 (mmux_flonumd$1_t X, mmux_flonumd$1_t Y)
-{
-  return mmux_flonumd$1($2d$1(X.value, Y.value));
-}]]])
-
-m4_define([[[DEFINE_UNARY_MATH_BESSEL_FUNCTION]]],[[[mmux_flonumd$1_t
-mmux_flonumd$1_$2 (mmux_flonumd$1_t X)
-{
-  return mmux_flonumd$1(mmux_standard_$2d$1(X.value));
-}]]])
-
-m4_define([[[DEFINE_BINARY_MATH_SINT_BESSEL_FUNCTION]]],[[[mmux_flonumd$1_t
-mmux_flonumd$1_$2 (mmux_sint_t N, mmux_flonumd$1_t X)
-{
-  return mmux_flonumd$1(mmux_standard_$2d$1(N.value, X.value));
-}]]])
-
-m4_define([[[DEFINE_FLONUMD_MATH_FUNCTIONS]]],[[[m4_dnl
-DEFINE_UNARY_MATH_FUNCTION($1,		sin);
-DEFINE_UNARY_MATH_FUNCTION($1,		cos);
-DEFINE_UNARY_MATH_FUNCTION($1,		tan);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		asin);
-DEFINE_UNARY_MATH_FUNCTION($1,		acos);
-DEFINE_UNARY_MATH_FUNCTION($1,		atan);
-DEFINE_BINARY_MATH_FUNCTION($1,		atan2);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		sinh);
-DEFINE_UNARY_MATH_FUNCTION($1,		cosh);
-DEFINE_UNARY_MATH_FUNCTION($1,		tanh);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		asinh);
-DEFINE_UNARY_MATH_FUNCTION($1,		acosh);
-DEFINE_UNARY_MATH_FUNCTION($1,		atanh);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		exp);
-DEFINE_UNARY_MATH_FUNCTION($1,		exp2);
-DEFINE_UNARY_MATH_FUNCTION($1,		exp10);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		log);
-DEFINE_UNARY_MATH_FUNCTION($1,		log10);
-DEFINE_UNARY_MATH_FUNCTION($1,		log2);
-DEFINE_UNARY_MATH_FUNCTION($1,		logb);
-
-DEFINE_BINARY_MATH_FUNCTION($1,		pow);
-DEFINE_UNARY_MATH_FUNCTION($1,		square);
-DEFINE_UNARY_MATH_FUNCTION($1,		sqrt);
-DEFINE_UNARY_MATH_FUNCTION($1,		cbrt);
-DEFINE_BINARY_MATH_FUNCTION($1,		hypot);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		expm1);
-DEFINE_UNARY_MATH_FUNCTION($1,		log1p);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		erf);
-DEFINE_UNARY_MATH_FUNCTION($1,		erfc);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		lgamma);
-DEFINE_UNARY_MATH_FUNCTION($1,		tgamma);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMD_MATH_FUNCTIONS(32)
-DEFINE_FLONUMD_MATH_FUNCTIONS(64)
-DEFINE_FLONUMD_MATH_FUNCTIONS(128)
-
-m4_divert(-1)
-m4_define([[[DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS]]],[[[m4_dnl
-DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		j0);
-DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		j1);
-DEFINE_BINARY_MATH_SINT_BESSEL_FUNCTION($1,	jn);
-
-DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		y0);
-DEFINE_UNARY_MATH_BESSEL_FUNCTION($1,		y1);
-DEFINE_BINARY_MATH_SINT_BESSEL_FUNCTION($1,	yn);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(32)
-DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(64)
-DEFINE_FLONUMD_MATH_BESSEL_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Mathematics: complex decimal floating-point functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_UNARY_MATH_FUNCTION]]],[[[mmux_flonumcd$1_t
-mmux_flonumcd$1_$2 (mmux_flonumcd$1_t X)
-{
-  return mmux_flonumcd$1($2cd$1(X.value));
-}]]])
-
-m4_define([[[DEFINE_BINARY_MATH_FUNCTION]]],[[[mmux_flonumcd$1_t
-mmux_flonumcd$1_$2 (mmux_flonumcd$1_t X, mmux_flonumcd$1_t Y)
-{
-  return mmux_flonumcd$1($2cd$1(X.value, Y.value));
-}]]])
-
-m4_define([[[DEFINE_FLONUMCD_MATH_FUNCTIONS]]],[[[m4_dnl
-DEFINE_UNARY_MATH_FUNCTION($1,		sin);
-DEFINE_UNARY_MATH_FUNCTION($1,		cos);
-DEFINE_UNARY_MATH_FUNCTION($1,		tan);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		asin);
-DEFINE_UNARY_MATH_FUNCTION($1,		acos);
-DEFINE_UNARY_MATH_FUNCTION($1,		atan);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		sinh);
-DEFINE_UNARY_MATH_FUNCTION($1,		cosh);
-DEFINE_UNARY_MATH_FUNCTION($1,		tanh);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		asinh);
-DEFINE_UNARY_MATH_FUNCTION($1,		acosh);
-DEFINE_UNARY_MATH_FUNCTION($1,		atanh);
-
-DEFINE_UNARY_MATH_FUNCTION($1,		exp);
-DEFINE_UNARY_MATH_FUNCTION($1,		exp2);
-DEFINE_UNARY_MATH_FUNCTION($1,		exp10);
-DEFINE_UNARY_MATH_FUNCTION($1,		log);
-DEFINE_UNARY_MATH_FUNCTION($1,		log2);
-DEFINE_UNARY_MATH_FUNCTION($1,		log10);
-DEFINE_BINARY_MATH_FUNCTION($1,		pow);
-DEFINE_UNARY_MATH_FUNCTION($1,		square);
-DEFINE_UNARY_MATH_FUNCTION($1,		sqrt);
-DEFINE_UNARY_MATH_FUNCTION($1,		cbrt);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMCD_MATH_FUNCTIONS(32)
-DEFINE_FLONUMCD_MATH_FUNCTIONS(64)
-DEFINE_FLONUMCD_MATH_FUNCTIONS(128)
+#endif
 
 /* end of file */

@@ -148,6 +148,7 @@ mmux_standard_flonumf64x_t	mmux_standard_flonumf64x_constant_nan	(void) { return
 mmux_standard_flonumf128x_t	mmux_standard_flonumf128x_constant_nan	(void) { return nanf128x("nan(0)"); }
 #endif
 
+m4_divert(-1)
 m4_define([[[DEFINE_MATH_REAL_CONSTANTS_FUNCS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
 mmux_standard_$1_t mmux_standard_$1_constant_E		(void) { return M_E$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_LOG2E	(void) { return M_LOG2E$2; }
@@ -163,7 +164,7 @@ mmux_standard_$1_t mmux_standard_$1_constant_2_SQRTPI	(void) { return M_2_SQRTPI
 mmux_standard_$1_t mmux_standard_$1_constant_SQRT2	(void) { return M_SQRT2$2; }
 mmux_standard_$1_t mmux_standard_$1_constant_SQRT1_2	(void) { return M_SQRT1_2$2; }
 ]]])]]])
-m4_divert(-1)m4_dnl
+m4_divert(0)m4_dnl
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumfl)
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumdb)
 DEFINE_MATH_REAL_CONSTANTS_FUNCS(flonumldb,	l)

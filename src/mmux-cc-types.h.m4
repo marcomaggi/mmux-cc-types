@@ -690,14 +690,9 @@ m4_dnl $1 - type stem
 m4_dnl $2 - C preprocessor symbol for conditional code
 m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
-mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_minimum __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_nullary_operation_$1_t mmux_$1_maximum __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_absolute	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_$1_t mmux_standard_$1_minimum __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_$1_t mmux_standard_$1_maximum __attribute__((__const__));
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------

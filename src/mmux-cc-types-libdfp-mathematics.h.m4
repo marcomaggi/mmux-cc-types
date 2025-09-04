@@ -28,7 +28,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Mathematics: standard real decimal floating-point prototypes.
+ ** Mathematics: standard flonumd prototypes.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -41,7 +41,7 @@ mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumd$1_t mmux_stan
   __attribute__((__const__));]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMD_BINARY_SINT_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_$2 (mmux_standard_sint_t N, mmux_standard_flonumd$1_t X)
+mmux_cc_types_decl mmux_cc_types_binary_operation_sint_standard_flonumd$1_t mmux_standard_flonumd$1_$2
   __attribute__((__const__));]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMD_MATH_PROTOS]]],[[[m4_dnl
@@ -101,7 +101,7 @@ DEFINE_STANDARD_FLONUMD_MATH_PROTOS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematics: standard complex decimal floating-point prototypes.
+ ** Mathematics: standard flonumcd prototypes.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -133,9 +133,11 @@ DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	atanh)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	exp)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	exp2)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	exp10)
+
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	log)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	log2)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	log10)
+
 DEFINE_STANDARD_FLONUMCD_BINARY_PROTO($1,	pow)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	square)
 DEFINE_STANDARD_FLONUMCD_UNARY_PROTO($1,	sqrt)
@@ -148,7 +150,7 @@ DEFINE_STANDARD_FLONUMCD_MATH_PROTOS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematics: real decimal floating-point functions.
+ ** Mathematics: flonumd functions.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -230,7 +232,7 @@ DEFINE_FLONUMD_MATH_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematics: complex decimal floating-point functions.
+ ** Mathematics: flonumcd functions.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -265,18 +267,19 @@ DEFINE_FLONUMCD_UNARY_FUNCTION($1,	asinh)
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	acosh)
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	atanh)
 
-DEFINE_FLONUMCD_BINARY_FUNCTION($1,	pow)
-DEFINE_FLONUMCD_UNARY_FUNCTION($1,	square)
-DEFINE_FLONUMCD_UNARY_FUNCTION($1,	sqrt)
-DEFINE_FLONUMCD_UNARY_FUNCTION($1,	cbrt)
-
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	exp)
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	exp2)
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	exp10)
 
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log)
 DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log2)
-DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log10)]]])
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	log10)
+
+DEFINE_FLONUMCD_BINARY_FUNCTION($1,	pow)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	square)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	sqrt)
+DEFINE_FLONUMCD_UNARY_FUNCTION($1,	cbrt)
+]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMCD_MATH_FUNCTIONS(32)
 DEFINE_FLONUMCD_MATH_FUNCTIONS(64)

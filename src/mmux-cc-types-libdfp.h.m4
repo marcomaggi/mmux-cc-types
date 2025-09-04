@@ -110,6 +110,7 @@ mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
   (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,       \
 								STANDARD_DECIMAL_LITERAL_IM)))
 
+#define mmux_flonumcd$1_part(VALUE)		(mmux_flonumd$1(VALUE))
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
 
 __attribute__((__const__,__always_inline__)) static inline mmux_sint_t
@@ -137,6 +138,7 @@ m4_define([[[DEFINE_FUNCTION_PROTOTYPES_TYPES]]],[[[m4_dnl
 typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
 typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t (mmux_standard_$1_t X);
 typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
+typedef mmux_standard_$1_t mmux_cc_types_binary_operation_sint_standard_$1_t  (mmux_standard_sint_t N, mmux_standard_$1_t X);
 typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
 typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t X);
 typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
@@ -146,6 +148,7 @@ typedef mmux_sint_t mmux_cc_types_comparison_standard_$1_t (mmux_standard_$1_t o
 typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
 typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
 typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t X, mmux_$1_t Y);
+typedef mmux_$1_t mmux_cc_types_binary_operation_sint_$1_t (mmux_sint_t N, mmux_$1_t X);
 typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 typedef bool mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
 typedef bool mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
