@@ -278,8 +278,8 @@ test_bitwise_not (void)
 #define DOIT(STEM)							\
   {									\
     {									\
-      auto	op1 = mmux_##STEM##_maximum();				\
-      auto	rop = mmux_##STEM##_minimum();				\
+      auto	op1 = mmux_##STEM##_constant_maximum();			\
+      auto	rop = mmux_##STEM##_constant_minimum();			\
       if (0) {								\
 	dprintf(2, "op1 = '");						\
 	mmux_##STEM##_dprintf(2, op1);					\
@@ -294,8 +294,8 @@ test_bitwise_not (void)
       dprintf(2," %s,", #STEM);						\
     }									\
     {									\
-      auto	op1 = mmux_##STEM##_minimum();				\
-      auto	rop = mmux_##STEM##_maximum();				\
+      auto	op1 = mmux_##STEM##_constant_minimum();			\
+      auto	rop = mmux_##STEM##_constant_maximum();			\
       if (0) {								\
 	dprintf(2, "op1 = '");						\
 	mmux_##STEM##_dprintf(2, op1);					\
