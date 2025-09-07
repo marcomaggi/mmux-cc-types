@@ -40,6 +40,7 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
 mmux_standard_flonumd$1_t
 mmux_standard_flonumcd$1_argument (mmux_standard_flonumcd$1_t op)
 {
+  if (0) { dprintf(2, "%s: %f\n", __func__, (double)atan2d$1(op.im, op.re)); }
   return atan2d$1(op.im, op.re);
 }]]])]]])
 m4_divert(0)m4_dnl

@@ -185,6 +185,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types.h.m4				\
 	src/mmux-cc-types-internals.h.m4		\
 	src/mmux-cc-types-adapters.h.m4			\
+	src/mmux-cc-types-comparison.h.m4		\
 	src/mmux-cc-types-constants.h.m4		\
 	src/mmux-cc-types-generics.h.m4			\
 	\
@@ -201,6 +202,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-adapters.h			\
+	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	\
@@ -224,6 +226,7 @@ mmux_cc_types_LINKER_VERSION	= -version-info $(mmux_cc_types_CURRENT):$(mmux_cc_
 include_HEADERS			+= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
+	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h
 
@@ -239,6 +242,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-adapters.h			\
+	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	\
@@ -253,7 +257,11 @@ libmmux_cc_types_la_SOURCES	= \
 if WANT_LIBDFP
 libmmux_cc_types_la_SOURCES	+= \
 	src/mmux-cc-types-libdfp.h			\
-	src/mmux-cc-types-libdfp-mathematics.h
+	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-constants.h		\
+	src/mmux-cc-types-libdfp-mathematics.h		\
+	src/mmux-cc-types-libdfp-sign-predicates.h
 endif
 
 .PHONY: library
@@ -271,6 +279,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-config.h		\
 	src/mmux-cc-types-internals.h		\
 	src/mmux-cc-types-adapters.h		\
+	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-constants.h		\
 	src/mmux-cc-types-generics.h
 
@@ -289,6 +298,7 @@ DISTCLEANFILES	+= $(MMUX_CC_TYPES_BUILT_TEST_SOURCES)
 
 check_PROGRAMS	= \
 	tests/version				\
+	tests/test-demo				\
 	tests/test-arithmetics			\
 	tests/test-bitwise			\
 	tests/test-complex			\
@@ -308,6 +318,9 @@ mmux_cc_types_tests_ldadd	= $(AM_LDFLAGS) libmmux-cc-types.la
 
 tests_version_CPPFLAGS			= $(mmux_cc_types_tests_cppflags)
 tests_version_LDADD			= $(mmux_cc_types_tests_ldadd)
+
+tests_test_demo_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_demo_LDADD			= $(mmux_cc_types_tests_ldadd)
 
 tests_test_complex_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_complex_LDADD		= $(mmux_cc_types_tests_ldadd)

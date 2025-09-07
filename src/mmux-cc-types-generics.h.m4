@@ -1445,6 +1445,9 @@ DEFINE_BINARY_FUNCTION([[[lesser_equal]]])
 DEFINE_TERNARY_FUNCTION_INEXACT_NUMBERS_ONLY([[[equal_absmargin]]])
 DEFINE_TERNARY_FUNCTION_INEXACT_NUMBERS_ONLY([[[equal_relepsilon]]])
 
+DEFINE_BINARY_FUNCTION([[[max]]])
+DEFINE_BINARY_FUNCTION([[[min]]])
+
 
 /** --------------------------------------------------------------------
  ** Arithmetics.

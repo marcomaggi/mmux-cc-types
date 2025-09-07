@@ -625,6 +625,7 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
  ** ----------------------------------------------------------------- */
 
 #include <mmux-cc-types-constants.h>
+#include <mmux-cc-types-comparison.h>
 
 
 /** --------------------------------------------------------------------
@@ -691,8 +692,6 @@ m4_dnl $2 - C preprocessor symbol for conditional code
 m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
 mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_absolute	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_max	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_$1_t	mmux_$1_min	__attribute__((__const__));
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------
@@ -778,23 +777,7 @@ mmux_cc_types_decl bool mmux_char_is_unsigned (void)
   __attribute__((__const__));
 
 m4_divert(-1)
-m4_define([[[DEFINE_PREDICATE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_comparison_$1_t mmux_$1_cmp			__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
-]]])]]])
-
-m4_define([[[DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_zero		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_positive	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_negative	__attribute__((__const__));
@@ -802,108 +785,71 @@ mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_positive	_
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_non_negative	__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_nan		__attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_unary_predicate_$1_t  mmux_$1_is_infinite	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_comparison_$1_t mmux_$1_cmp			__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_equal		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less		__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_greater_equal	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_$1_t mmux_$1_less_equal	__attribute__((__const__));
-]]])]]])
-
-m4_define([[[DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_absmargin	__attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_$1_t mmux_$1_equal_relepsilon __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[pointer]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[char]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[schar]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uchar]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sshort]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ushort]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sint]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uint]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[slong]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ulong]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[pointer]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[char]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[schar]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uchar]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sshort]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[ushort]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sint]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uint]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[slong]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[ulong]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumfl]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumdb]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumfl]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumdb]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcfl]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcdb]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcfl]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcdb]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
 
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_PREDICATE_PROTOS_COMPLEX_NUMBERS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sint8]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uint8]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sint16]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uint16]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sint32]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uint32]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sint64]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uint64]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sint8]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uint8]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sint16]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uint16]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sint32]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uint32]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sint64]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uint64]]])
 
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ssize]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[usize]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sintmax]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uintmax]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[sintptr]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uintptr]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[mode]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[off]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[pid]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[uid]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[gid]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[ptrdiff]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[wchar]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[wint]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[time]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[socklen]]])
-DEFINE_PREDICATE_PROTOS_REAL_NUMBERS([[[rlim]]])
-
-/* ------------------------------------------------------------------ */
-
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumfl]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumdb]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
-
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
-
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
-
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcfl]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcdb]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
-
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_TYPE_PROTOS_FLONUMFL_APPROX_COMPARISONS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[ssize]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[usize]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sintmax]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uintmax]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[sintptr]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uintptr]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[mode]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[off]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[pid]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[uid]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[gid]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[ptrdiff]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[wchar]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[wint]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[time]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[socklen]]])
+DEFINE_ALL_NUMBERS_SIGN_PREDICATES_PROTOS([[[rlim]]])
 
 
 /** --------------------------------------------------------------------
@@ -1188,6 +1134,9 @@ mmux_cc_types_decl mmux_$1_t mmux_$1_incr (mmux_$1_t A)
 
 mmux_cc_types_decl mmux_$1_t mmux_$1_decr (mmux_$1_t A)
   __attribute__((__const__));
+
+mmux_cc_types_decl mmux_$1_t mmux_$1_sign (mmux_$1_t op)
+  __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumfl]]])
@@ -1201,10 +1150,6 @@ DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128]]])
 DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf32x]]])
 DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf64x]]])
 DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumf128x]]])
-
-DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd32]]])
-DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd64]]])
-DEFINE_REAL_FLONUM_NUMBER_ARITHMETICS_FUNCTIONS([[[flonumd128]]])
 
 
 /** --------------------------------------------------------------------
@@ -1331,6 +1276,7 @@ DEFINE_UNARY_MATH_PROTO($1,		cbrt);
 m4_define([[[DEFINE_REAL_FLONUM_MATH_PROTOS]]],[[[m4_dnl
 DEFINE_COMMON_FLONUM_MATH_PROTOS($1)
 #ifdef MMUX_CC_TYPES_HAS_FLONUM[[[]]]MMUX_M4_TOUPPER($1)
+DEFINE_BINARY_MATH_PROTO($1,		atan2);
 DEFINE_UNARY_MATH_PROTO($1,		logb);
 DEFINE_BINARY_MATH_PROTO($1,		hypot);
 

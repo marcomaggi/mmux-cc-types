@@ -186,18 +186,14 @@ mmux_cc_types_decl mmux_cc_types_nullary_operation_standard_flonum$1_t mmux_stan
   __attribute__((__const__));]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUM_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
-DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	zero,	0.0)
-DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one,	1.0)
-DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	two,	2.0)
-DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	ten,	10.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	zero,			+0.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one,			1.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	two,			2.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	ten,			10.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	positive_zero,		+0.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	negative_zero,		-0.0)
+DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_half,		0.5)
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
-mmux_standard_flonum$1_constant_one_half (void)
-{
-  /* FIXME There probably  is a better way  to compute this constant.  Or  the use of
-     this constant.  (Marco Maggi; Sep 1, 2025) */
-  return (mmux_standard_flonum$1_t)(mmux_standard_flonum$1_literal(1.0) / mmux_standard_flonum$1_literal(2.0));
-}
 __attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
 mmux_standard_flonum$1_constant_one_third (void)
 {
@@ -206,6 +202,8 @@ mmux_standard_flonum$1_constant_one_third (void)
   return (mmux_standard_flonum$1_t)(mmux_standard_flonum$1_literal(1.0) / mmux_standard_flonum$1_literal(3.0));
 }
 
+DEFINE_STANDARD_FLONUM_CONSTANT_PROTO($1,		positive_infinity)
+DEFINE_STANDARD_FLONUM_CONSTANT_PROTO($1,		negative_infinity)
 DEFINE_STANDARD_FLONUM_CONSTANT_PROTO($1,		nan)
 DEFINE_STANDARD_FLONUM_CONSTANT_PROTO($1,		E)
 DEFINE_STANDARD_FLONUM_CONSTANT_PROTO($1,		LOG2E)
@@ -300,6 +298,10 @@ DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	two)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	ten)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	one_half)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	one_third)
+DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	positive_zero)
+DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	negative_zero)
+DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	positive_infinity)
+DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	negative_infinity)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	maximum)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	minimum)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	nan)

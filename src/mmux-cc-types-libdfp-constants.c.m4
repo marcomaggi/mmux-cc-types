@@ -90,6 +90,16 @@ mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_constant_minimum (void)
 {
   return mmux_libc_minimum_flonumd$1;
+}
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_positive_infinity (void)
+{
+  return (mmux_standard_flonumd$1_t)(+ INFINITY);
+}
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_constant_negative_infinity (void)
+{
+  return (mmux_standard_flonumd$1_t)(- INFINITY);
 }]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_CONSTANT_FUNCTIONS(32)

@@ -30,7 +30,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Integer non-alias number functions: abs, min, max.
+ ** Integer non-alias number functions: absolute.
  ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_STYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
@@ -38,36 +38,14 @@ mmux_$1_t
 mmux_$1_absolute (mmux_$1_t op)
 {
   return ((mmux_$1_is_negative(op))? mmux_$1_neg(op) : op);
-}
-mmux_$1_t
-mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
-{
-  return ((mmux_$1_greater_equal(op1, op2))? op1 : op2);
-}
-mmux_$1_t
-mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
-{
-  return ((mmux_$1_less_equal(op1, op2))? op1 : op2);
-}
-]]])]]])
+}]]])]]])
 
 m4_define([[[DEFINE_UTYPE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$5]]],[[[
 mmux_$1_t
 mmux_$1_absolute (mmux_$1_t op)
 {
   return op;
-}
-mmux_$1_t
-mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
-{
-  return ((mmux_$1_greater_equal(op1, op2))? op1 : op2);
-}
-mmux_$1_t
-mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
-{
-  return ((mmux_$1_less_equal(op1, op2))? op1 : op2);
-}
-]]])]]])
+}]]])]]])
 
 
 DEFINE_UTYPE_FUNCTIONS([[[pointer]]])
@@ -104,16 +82,7 @@ mmux_flonum$1_absolute (mmux_flonum$1_t X)
 {
   return mmux_flonum$1(absolute$1(X.value));
 }
-mmux_flonum$1_t
-mmux_flonum$1_max (mmux_flonum$1_t X, mmux_flonum$1_t Y)
-{
-  return mmux_flonum$1(max$1(X.value, Y.value));
-}
-mmux_flonum$1_t
-mmux_flonum$1_min (mmux_flonum$1_t X, mmux_flonum$1_t Y)
-{
-  return mmux_flonum$1(min$1(X.value, Y.value));
-}]]])]]])
+]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_TYPE_FUNCTIONS(fl)
 DEFINE_TYPE_FUNCTIONS(db)
@@ -127,7 +96,7 @@ DEFINE_TYPE_FUNCTIONS(f128x)
 
 
 /** --------------------------------------------------------------------
- ** Aliased integer number type functions: abs, min, max.
+ ** Aliased integer number type functions: abs
  ** ----------------------------------------------------------------- */
 
 m4_dnl $1 - CUSTOM_STEM
@@ -137,16 +106,6 @@ mmux_$1_t
 mmux_$1_absolute (mmux_$1_t op)
 {
   return mmux_$1(mmux_$2_absolute(mmux_$2(op.value)).value);
-}
-mmux_$1_t
-mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
-{
-  return mmux_$1(mmux_$2_max(mmux_$2(op1.value), mmux_$2(op2.value)).value);
-}
-mmux_$1_t
-mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
-{
-  return mmux_$1(mmux_$2_min(mmux_$2(op1.value), mmux_$2(op2.value)).value);
 }]]])
 
 DEFINE_TYPE_FUNCTIONS(ssize,	MMUX_CC_TYPES_STEM_ALIAS_SSIZE)
@@ -404,6 +363,49 @@ DEFINE_UNSIGNED_INTEGER_PREDICATES([[[rlim]]])
 
 m4_define([[[DEFINE_REAL_FLONUMFL_NUMBER_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 bool
+mmux_standard_$1_is_zero (mmux_standard_$1_t op)
+{
+  return (FP_ZERO == (fpclassify(op)))? true : false;
+}
+mmux_standard_$1_t
+mmux_standard_$1_is_nan (mmux_standard_$1_t op)
+{
+  return (FP_ZERO == (fpclassify(op)))? true : false;
+}
+bool
+mmux_standard_$1_is_positive (mmux_standard_$1_t op)
+{
+  if (mmux_standard_$1_is_nan(op)) {
+    return false;
+  } else if (mmux_standard_$1_is_zero(op)) {
+    if (signbit(op)) {
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return (mmux_standard_$1_constant_zero() < op)? true : false;
+  }
+}
+bool
+mmux_standard_$1_is_negative (mmux_standard_$1_t op)
+{
+  if (mmux_standard_$1_is_nan(op)) {
+    return false;
+  } else if (mmux_standard_$1_is_zero(op)) {
+    if (signbit(op)) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return (mmux_standard_$1_constant_zero() > op)? true : false;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+bool
 mmux_$1_is_zero (mmux_$1_t X)
 {
   return (FP_ZERO == (fpclassify(X.value)))? true : false;
@@ -501,6 +503,31 @@ __attribute__((__const__)) mmux_$1_t
 mmux_$1_decr (mmux_$1_t A)
 {
   return mmux_$1(A.value - mmux_standard_$1_constant_one());
+}
+static mmux_standard_$1_t
+mmux_standard_$1_sign (mmux_standard_$1_t op)
+{
+  if (mmux_standard_$1_is_nan(op)) {
+    return mmux_standard_$1_constant_nan();
+  } else if (mmux_standard_$1_is_zero(op)) {
+    if (signbit(op)) {
+      return mmux_standard_$1_literal(-1.0);
+    } else {
+      return mmux_standard_$1_constant_one();
+    }
+  } else if (mmux_standard_$1_is_positive(op)) {
+    return mmux_standard_$1_constant_one();
+  } else if (mmux_standard_$1_is_negative(op)) {
+    return mmux_standard_$1_literal(-1.0);
+  } else {
+    /* We should never come here. */
+    return mmux_standard_$1_constant_zero();
+  }
+}
+mmux_$1_t
+mmux_$1_sign (mmux_$1_t op)
+{
+  return mmux_$1(mmux_standard_$1_sign(op.value));
 }
 ]]])]]])
 

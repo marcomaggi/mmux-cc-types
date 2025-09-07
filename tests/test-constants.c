@@ -401,6 +401,222 @@ test_constant_zero (void)
 
 
 /** --------------------------------------------------------------------
+ ** Positive zero.
+ ** ----------------------------------------------------------------- */
+
+static void
+test_constant_positive_zero (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
+  {										\
+    auto	op  = mmux_## STEM ## _constant_positive_zero();		\
+    assert(mmux_## STEM ## _is_positive(op) && mmux_## STEM ## _is_zero(op));	\
+    dprintf(2," %s,", #STEM);							\
+  }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+/** --------------------------------------------------------------------
+ ** Negative zero.
+ ** ----------------------------------------------------------------- */
+
+static void
+test_constant_negative_zero (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
+  {										\
+    auto	op  = mmux_## STEM ## _constant_negative_zero();		\
+    assert(mmux_## STEM ## _is_negative(op) && mmux_## STEM ## _is_zero(op));	\
+    dprintf(2," %s,", #STEM);							\
+  }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+/** --------------------------------------------------------------------
+ ** Positive infinity.
+ ** ----------------------------------------------------------------- */
+
+static void
+test_constant_positive_infinity (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)								\
+  {											\
+    auto	op  = mmux_## STEM ## _constant_positive_infinity();			\
+    assert(mmux_## STEM ## _is_positive(op) && mmux_## STEM ## _is_infinite(op));	\
+    dprintf(2," %s,", #STEM);								\
+  }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+/** --------------------------------------------------------------------
+ ** Negative infinity.
+ ** ----------------------------------------------------------------- */
+
+static void
+test_constant_negative_infinity (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)								\
+  {											\
+    auto	op  = mmux_## STEM ## _constant_negative_infinity();			\
+    assert(mmux_## STEM ## _is_negative(op) && mmux_## STEM ## _is_infinite(op));	\
+    dprintf(2," %s,", #STEM);								\
+  }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+/** --------------------------------------------------------------------
  ** One.
  ** ----------------------------------------------------------------- */
 
@@ -1930,28 +2146,32 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   mmux_cc_types_init();
   test_set_output_formats();
 
-  if (1) {	test_constant_maximum();	}
-  if (1) {	test_constant_minimum();	}
-  if (1) {	test_constant_zero();		}
-  if (1) {	test_constant_one();		}
-  if (1) {	test_constant_two();		}
-  if (1) {	test_constant_ten();		}
-  if (1) {	test_constant_one_half();	}
-  if (1) {	test_constant_one_third();	}
-  if (1) {	test_constant_nan();		}
-  if (1) {	test_constant_E();		}
-  if (1) {	test_constant_LOG2E();		}
-  if (1) {	test_constant_LOG10E();		}
-  if (1) {	test_constant_LN2();		}
-  if (1) {	test_constant_LN10();		}
-  if (1) {	test_constant_PI();		}
-  if (1) {	test_constant_PI_2();		}
-  if (1) {	test_constant_PI_4();		}
-  if (1) {	test_constant_1_PI();		}
-  if (1) {	test_constant_2_PI();		}
-  if (1) {	test_constant_2_SQRTPI();	}
-  if (1) {	test_constant_SQRT2();		}
-  if (1) {	test_constant_SQRT1_2();	}
+  if (1) {	test_constant_maximum();		}
+  if (1) {	test_constant_minimum();		}
+  if (1) {	test_constant_zero();			}
+  if (1) {	test_constant_positive_zero();		}
+  if (1) {	test_constant_negative_zero();		}
+  if (1) {	test_constant_positive_infinity();	}
+  if (1) {	test_constant_negative_infinity();	}
+  if (1) {	test_constant_one();			}
+  if (1) {	test_constant_two();			}
+  if (1) {	test_constant_ten();			}
+  if (1) {	test_constant_one_half();		}
+  if (1) {	test_constant_one_third();		}
+  if (1) {	test_constant_nan();			}
+  if (1) {	test_constant_E();			}
+  if (1) {	test_constant_LOG2E();			}
+  if (1) {	test_constant_LOG10E();			}
+  if (1) {	test_constant_LN2();			}
+  if (1) {	test_constant_LN10();			}
+  if (1) {	test_constant_PI();			}
+  if (1) {	test_constant_PI_2();			}
+  if (1) {	test_constant_PI_4();			}
+  if (1) {	test_constant_1_PI();			}
+  if (1) {	test_constant_2_PI();			}
+  if (1) {	test_constant_2_SQRTPI();		}
+  if (1) {	test_constant_SQRT2();			}
+  if (1) {	test_constant_SQRT1_2();		}
 
   exit(EXIT_SUCCESS);
 }

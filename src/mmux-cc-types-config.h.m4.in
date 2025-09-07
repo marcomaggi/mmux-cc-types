@@ -183,6 +183,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[#define MMUX_CC_TYPES_HAS_FLONUM
 #  endif
 #endif
 
+#define mmux_cc_types_inline_decl	__attribute__((__const__,__always_inline__)) static inline
+
 #endif /* MMUX_CC_TYPES_CONFIG_H */
 
 /* end of file */

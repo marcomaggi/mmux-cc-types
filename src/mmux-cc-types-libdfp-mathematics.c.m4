@@ -150,49 +150,7 @@ mmux_standard_flonumd$1_yn (mmux_standard_sint_t      N  __attribute__((__unused
 			    mmux_standard_flonumd$1_t op __attribute__((__unused__)))
 {
   return mmux_standard_flonumd$1_constant_nan();
-}
-
-
-
-
-
-
-
-
-
-
-
-#if 0
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_exp (mmux_standard_flonumd$1_t op)
-{
-  return expd$1(op);
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_exp2 (mmux_standard_flonumd$1_t op)
-{
-  return expd$1(op * logd$1(mmux_standard_flonumd$1_constant_two()));
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_log (mmux_standard_flonumd$1_t op)
-{
-  return logd$1(op);
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_log2d (mmux_standard_flonumd$1_t op)
-/* log_2 X = log X / log 2 */
-{
-  return logd$1(op) / mmux_standard_flonumd$1_constant_LN2();
-}
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_log10 (mmux_standard_flonumd$1_t op)
-/* log_10 X = log X / log 10 */
-{
-  return logd$1(op) / mmux_standard_flonumd$1_constant_LN10();
-}
-
-#endif
-]]])
+}]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS(32)
 DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS(64)
@@ -200,83 +158,11 @@ DEFINE_STANDARD_FLONUMD_EXTENSION_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
- ** Mathematics: standard flonumcd.
+ ** Mathematics: standard flonumcd, trigonometric functions: sin, cos, tan.
  ** ----------------------------------------------------------------- */
 
-#if 0
-
 m4_divert(-1)
-
-m4_define([[[DEFINE_UNARY_MATH_CPLX_FUNCTION]]],[[[m4_dnl
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
-{
-  return mmux_standard_flonumcd$1_constant_nan();
-}]]])
-
-m4_define([[[DEFINE_BINARY_MATH_CPLX_FUNCTION]]],[[[m4_dnl
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t Z1 __attribute__((__unused__)),
-			     mmux_standard_flonumcd$1_t Z2 __attribute__((__unused__)))
-{
-  return mmux_standard_flonumcd$1_constant_nan();
-}]]])
-
-m4_define([[[DEFINE_MATH_CPLX_FUNCTIONS]]],[[[
-
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_exp (mmux_standard_flonumcd$1_t op)
-{
-  auto	R = mmux_standard_flonumd$1_exp(op.re);
-  auto	S = mmux_standard_flonumd$1_sin(op.im);
-  auto	C = mmux_standard_flonumd$1_cos(op.im);
-
-  return mmux_standard_flonumcd$1_rectangular(R * S, R * C);
-}
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_exp2 (mmux_standard_flonumcd$1_t op)
-{
-  /* exp2(op) = exp(op * log(2)) */
-  auto	LN2 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN2(),
-						   mmux_standard_flonumd$1_constant_zero());
-  return mmux_standard_flonumcd$1_exp(mmux_standard_flonumcd$1_mul(op, LN2));
-}
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_exp10 (mmux_standard_flonumcd$1_t op)
-{
-  /* exp2(op) = exp(op * log(10)) */
-  auto	LN10 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN10(),
-						    mmux_standard_flonumd$1_constant_zero());
-  return mmux_standard_flonumcd$1_exp(mmux_standard_flonumcd$1_mul(op, LN10));
-}
-
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_log (mmux_standard_flonumcd$1_t op)
-{
-  auto	R    = mmux_standard_flonumcd$1_absolute(op);
-  auto	T    = mmux_standard_flonumcd$1_argument(op);
-  auto	ln_R = mmux_standard_flonumd$1_log(R);
-
-  return mmux_standard_flonumcd$1_rectangular(ln_R, T);
-}
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_log2 (mmux_standard_flonumcd$1_t op)
-/* log_2 X = log X / log 2 */
-{
-  auto	LN2 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN2(),
-						   mmux_standard_flonumd$1_constant_zero());
-  return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(op), LN2);
-}
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_log10 (mmux_standard_flonumcd$1_t op)
-/* log_10 X = log X / log 10 */
-{
-  auto	LN10 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN10(),
-						    mmux_standard_flonumd$1_constant_zero());
-  return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(op), LN10);
-}
-
-
+m4_define([[[DEFINE_STANDARD_FLONUMCD_DIRECT_TRIGONOMETRIC_FUNCTIONS]]],[[[
 /* TRIGONOMETRIC SINE FOR COMPLEX NUMBERS
  *
  * For the real part of a complex number Z we notice that:
@@ -370,9 +256,9 @@ mmux_standard_flonumcd$1_log10 (mmux_standard_flonumcd$1_t op)
  *
  */
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_sinc (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
+mmux_standard_flonumcd$1_sin (mmux_standard_flonumcd$1_t Z)
 {
-  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_sin(Z.re) * mmux_standard_flonumd$1_cos(Z.im),
+  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_sin(Z.re) * mmux_standard_flonumd$1_cosh(Z.im),
 					      mmux_standard_flonumd$1_cos(Z.re) * mmux_standard_flonumd$1_sinh(Z.im));
 }
 
@@ -470,7 +356,7 @@ mmux_standard_flonumcd$1_sinc (mmux_standard_flonumcd$1_t Z __attribute__((__unu
  *
  */
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_cosc (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
+mmux_standard_flonumcd$1_cos (mmux_standard_flonumcd$1_t Z)
 {
   return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_cos(Z.re) * mmux_standard_flonumd$1_cosh(Z.im),
 					      - (mmux_standard_flonumd$1_sin(Z.re) * mmux_standard_flonumd$1_sinh(Z.im)));
@@ -480,26 +366,26 @@ mmux_standard_flonumcd$1_cosc (mmux_standard_flonumcd$1_t Z __attribute__((__unu
  *
  * Verified with WolframAlpha:
  *
- *    tan (x.rep + i * x.imp) = z.rep + i * z.imp
+ *    tan (x.rep + i * x.im) = z.rep + i * z.im
  *
  *                     sin (2 * x.rep)
  *    z.rep = ----------------------------------
- *            cos (2 * x.rep) + cosh (2 * x.imp)
+ *            cos (2 * x.rep) + cosh (2 * x.im)
  *
- *                    sinh (2 * x.imp)
- *    z.imp = ----------------------------------
- *            cos (2 * x.rep) + cosh (2 * x.imp)
+ *                    sinh (2 * x.im)
+ *    z.im = ----------------------------------
+ *            cos (2 * x.rep) + cosh (2 * x.im)
  *
  * alternatively the following formula avoids  generating a NaN in some
  * cases:
  *
- *              tanh (2 * x.imp)
- *    z.imp = --------------------
+ *              tanh (2 * x.im)
+ *    z.im = --------------------
  *                 cos (2 * x.rep)
  *            1 + ----------------
- *                cosh (2 * x.imp)
+ *                cosh (2 * x.im)
  *
- * Using the alternative formula for  Z.IMP is slower because we cannot
+ * Using the alternative formula for  Z.IM is slower because we cannot
  * share the denominator with Z.REP.
  *
  */
@@ -525,102 +411,402 @@ mmux_standard_flonumcd$1_tan (mmux_standard_flonumcd$1_t Z)
     return mmux_standard_flonumcd$1_rectangular(rop_re, rop_im);
   }
 }
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_DIRECT_TRIGONOMETRIC_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_DIRECT_TRIGONOMETRIC_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_DIRECT_TRIGONOMETRIC_FUNCTIONS(128)
 
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		asin)
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		acos)
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		atan)
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumcd, trigonometric inverse functions: asin, acos, atan.
+ ** ----------------------------------------------------------------- */
 
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		sinh)
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		cosh)
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		tanh)
-
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		asinh)
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		acosh)
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		atanh)
-
-/* ------------------------------------------------------------------ */
-
-#if 0
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_INVERSE_TRIGONOMETRIC_FUNCTIONS]]],[[[
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_exp (mmux_standard_flonumcd$1_t Z)
+mmux_standard_flonumcd$1_asin (mmux_standard_flonumcd$1_t Z)
 {
-  /* exp(Z) = exp(Rep{Z}) * (cos(Imp{Z}) + i * sin(Imp{Z})
-   *        = exp(Rep{Z}) * cos(Imp{Z}) + i * exp(Rep{Z}) * sin(Imp{Z})
+  if (mmux_standard_flonumd$1_is_zero(Z.re)) {
+    return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_zero(),
+						mmux_standard_flonumd$1_asinh(Z.im));
+  } else {
+    /*
+     * W = asin(Z) = Z.re + i * Z.im
+     *
+     * A = Z.re^2 + Z.im^2
+     * B = A - 1
+     * C = B^2
+     * D = sqrt(Z.im)
+     * Q = sqrt(C + 4 * D)
+     * W.re = 1/2 * sgn(Z.re) * acos (Q - A)
+     * W.im = 1/2 * sgn(Z.im) * acosh(Q + A)
+     *
+     */
+    auto	A   = sqrtd$1(Z.re) + sqrtd$1(Z.im);
+    auto	B   = A - mmux_standard_flonumd$1_constant_one();
+    auto	C   = mmux_standard_flonumd$1_square(B);
+    auto	D   = sqrtd$1(Z.im);
+    auto	Q   = sqrtd$1(C + D * mmux_standard_flonumd$1_literal(4.0));
+    auto	Wre = mmux_standard_flonumd$1_constant_one_half()
+      * mmux_standard_flonumd$1_sign(Z.re)
+      * mmux_standard_flonumd$1_acos(Q - A);
+    auto	Wim = mmux_standard_flonumd$1_constant_one_half()
+      * mmux_standard_flonumd$1_sign(Z.im)
+      * mmux_standard_flonumd$1_acosh(Q + A);
+
+    return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
+  }
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_acos (mmux_standard_flonumcd$1_t Z)
+{
+  /*
+   * W = acos(Z.re + i Z.im)
+   *
+   * Y    = asin(Z)
+   * W.re = pi/2 - Y.re
+   * W.im = - Y.im
+   *
    */
-  auto	exp_rep_Z	= mmux_standard_flonumd$1_exp(Z.re);
-  auto	cos_imp_Z	= mmux_standard_flonumd$1_cos(Z.im);
-  auto	sin_imp_Z	= mmux_standard_flonumd$1_sin(Z.im);
-  auto	rep_rop		= exp_rep_Z * cos_imp_Z;
-  auto	imp_rop		= exp_rep_Z * sin_imp_Z;
-  return mmux_standard_flonumcd$1_rectangular(rep_rop, imp_rop);
+  if (mmux_standard_flonumd$1_is_zero(Z.re) && mmux_standard_flonumd$1_is_zero(Z.im)) {
+    /* Let's avoid generating a NaN for this case. */
+    if (mmux_standard_flonumd$1_is_positive(Z.re)) {
+      if (mmux_standard_flonumd$1_is_positive(Z.im)) {
+	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_zero(),
+						    mmux_standard_flonumd$1_constant_negative_infinity());
+      } else {
+	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_zero(),
+						    mmux_standard_flonumd$1_constant_positive_infinity());
+      }
+    } else {
+      if (mmux_standard_flonumd$1_is_positive(Z.im)) {
+	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_PI(),
+						    mmux_standard_flonumd$1_constant_negative_infinity());
+      } else {
+	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_PI(),
+						    mmux_standard_flonumd$1_constant_positive_infinity());
+      }
+    }
+  } else {
+    auto	Y   = mmux_standard_flonumcd$1_asin(Z);
+    auto	Wre = mmux_standard_flonumd$1_constant_PI_2() - Y.re;
+    auto	Wim = - Y.im;
+
+    return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
+  }
 }
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_exp2 (mmux_standard_flonumcd$1_t Z)
+mmux_standard_flonumcd$1_atan (mmux_standard_flonumcd$1_t Z)
+/*
+ * Formula from Wikipedia section "Logarithmic forms":
+ *
+ * 	<http://en.wikipedia.org/wiki/Arc_tangent>
+ *
+ * and also from the R6RS document:
+ *
+ *   D = atan Z = 1/2 * i * (log (1 - i * Z) - log (1 + i * Z))
+ *
+ *   i * Z = i * (Z.re + i * Z.im) = i * Z.re - Z.im
+ *
+ *   A = 1 - i * Z = 1 - (- Z.im + i * Z.re) = (1 + Z.im) - i * Z.re
+ *   B = 1 + i * Z = 1 + (- Z.im + i * Z.re) = (1 - Z.im) + i * Z.re
+ *   C = log A - log B
+ *   D = 1/2 * i C = 0.5i * (C.re + i * C.im)
+ *                 = 0.5 * C.re * i - 0.5 * C.im
+ *                 = (-0.5 * C.im) + i * (0.5 * C.re)
+ *
+ */
 {
-  /* 2^Z = exp( log ( 2^Z ) ) = exp( Z * log( 2 ) ) */
-  auto	natural_logarithm_of_two = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN2(),
-									mmux_standard_flonumd$1_constant_zero());
-  return mmux_standard_flonumcd$1_exp( mmux_standard_flonumcd$1_mul(Z, natural_logarithm_of_two) );
+  auto	Are = + mmux_standard_flonumd$1_constant_one() + Z.im;
+  auto	Aim = - Z.re;
+  auto	A   = mmux_standard_flonumcd$1_rectangular(Are, Aim);
+
+  auto	Bre = + mmux_standard_flonumd$1_constant_one() - Z.im;
+  auto	Bim = + Z.re;
+  auto	B   = mmux_standard_flonumcd$1_rectangular(Bre, Bim);
+
+  auto	C   = mmux_standard_flonumcd$1_sub(mmux_standard_flonumcd$1_log(A), mmux_standard_flonumcd$1_log(B));
+  auto	Wre = - mmux_standard_flonumd$1_constant_one_half() * C.im;
+  auto	Wim = + mmux_standard_flonumd$1_constant_one_half() * C.re;
+
+  return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
+}
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_INVERSE_TRIGONOMETRIC_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_INVERSE_TRIGONOMETRIC_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_INVERSE_TRIGONOMETRIC_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumcd, exponentiation functions: exp, exp2, exp10.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_EXPONENTIATION_FUNCTIONS]]],[[[
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_exp (mmux_standard_flonumcd$1_t op)
+{
+  /*
+   * exp(Z.re + i * Z.im) = exp(Z.re) cos(Z.im) + i * exp(Z.re) sin(Z.im)
+   */
+  auto	R = mmux_standard_flonumd$1_exp(op.re);
+  auto	C = mmux_standard_flonumd$1_cos(op.im);
+  auto	S = mmux_standard_flonumd$1_sin(op.im);
+
+  return mmux_standard_flonumcd$1_rectangular(R * C, R * S);
 }
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_exp10 (mmux_standard_flonumcd$1_t Z)
+mmux_standard_flonumcd$1_exp2 (mmux_standard_flonumcd$1_t op)
 {
-  /* 10^Z = exp( log ( 2^Z ) ) = exp( Z * log( 19 ) ) */
-  auto	natural_logarithm_of_ten = CMPLXCD$1(mmux_standard_flonumd$1_constant_LN10(),
-					     mmux_standard_flonumd$1_constant_zero());
-  return mmux_standard_flonumcd$1_exp( mmux_standard_flonumcd$1_mul(Z, natural_logarithm_of_ten) );
-}
-
-/* ------------------------------------------------------------------ */
-
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_log (mmux_standard_flonumcd$1_t Z)
-{
-  auto	radius		= mmux_standard_flonumcd$1_absolute(Z);
-  auto	ln_of_radius	= mmux_standard_flonumd$1_log(radius);
-  auto	argument	= mmux_standard_flonumcd$1_argument(Z);
-  return mmux_standard_flonumcd$1_rectangular(ln_of_radius, argument);
+  /* exp2(op) = exp(op * log(2)) */
+  auto	LN2 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN2(),
+						   mmux_standard_flonumd$1_constant_zero());
+  return mmux_standard_flonumcd$1_exp(mmux_standard_flonumcd$1_mul(op, LN2));
 }
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumdc$1_log2 (mmux_standard_flonumcd$1_t Z)
+mmux_standard_flonumcd$1_exp10 (mmux_standard_flonumcd$1_t op)
 {
-  /* log_2 Z = log Z / log 2 */
-  return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(Z),
-				      mmux_standard_flonumcd$1_constant_two());
+  /* exp2(op) = exp(op * log(10)) */
+  auto	LN10 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN10(),
+						    mmux_standard_flonumd$1_constant_zero());
+  return mmux_standard_flonumcd$1_exp(mmux_standard_flonumcd$1_mul(op, LN10));
+}
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_EXPONENTIATION_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_EXPONENTIATION_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_EXPONENTIATION_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumcd, logarithmic functions: log, log2, log10.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_LOGARITHMIC_FUNCTIONS]]],[[[
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_log (mmux_standard_flonumcd$1_t op)
+{
+  /* We want the principal value of log_e(Z):
+   *
+   *   W = log_e(Z) = log_e(abs(Z)) + i * arg(Z)
+   *
+   *   arg(Z) = atan2(Z.im, Z.re)
+   */
+  auto	R    = mmux_standard_flonumcd$1_absolute(op);
+  auto	T    = mmux_standard_flonumcd$1_argument(op);
+  auto	ln_R = mmux_standard_flonumd$1_log(R);
+
+  return mmux_standard_flonumcd$1_rectangular(ln_R, T);
 }
 mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_log10 (mmux_standard_flonumcd$1_t Z)
+mmux_standard_flonumcd$1_log2 (mmux_standard_flonumcd$1_t op)
+/* log_2 X = log X / log 2 */
 {
-  /* log_10 Z = log Z / log 10 */
-  return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(Z),
-				      mmux_standard_flonumcd$1_constant_ten());
+  auto	LN2 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN2(),
+						   mmux_standard_flonumd$1_constant_zero());
+  return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(op), LN2);
 }
-#endif
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_log10 (mmux_standard_flonumcd$1_t op)
+/* log_10 X = log X / log 10 */
+{
+  auto	LN10 = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_LN10(),
+						    mmux_standard_flonumd$1_constant_zero());
+  return mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_log(op), LN10);
+}
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_LOGARITHMIC_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_LOGARITHMIC_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_LOGARITHMIC_FUNCTIONS(128)
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumcd, hyperbolic functions: sinh, cosh, tanh.
+ ** ----------------------------------------------------------------- */
 
-DEFINE_BINARY_MATH_CPLX_FUNCTION($1,		pow)
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_HYPERBOLIC_FUNCTIONS]]],[[[
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_sinh (mmux_standard_flonumcd$1_t Z)
+{
+  if (mmux_standard_flonumd$1_is_zero(Z.im)) {
+    return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_sinh(Z.re) , Z.im);
+  } else {
+    auto	sinhZre = mmux_standard_flonumd$1_sinh(Z.re);
+    auto	coshZre = mmux_standard_flonumd$1_cosh(Z.re);
+    auto	sinZim  = mmux_standard_flonumd$1_sin(Z.im);
+    auto	cosZim  = mmux_standard_flonumd$1_cos(Z.im);
 
-static mmux_standard_flonumcd$1_t
+    return mmux_standard_flonumcd$1_rectangular(sinhZre * cosZim, coshZre * sinZim);
+  }
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_cosh (mmux_standard_flonumcd$1_t Z)
+{
+  if (mmux_standard_flonumd$1_is_zero(Z.im)) {
+    return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_cosh(Z.re) , Z.im);
+  } else {
+    auto	sinhZre = mmux_standard_flonumd$1_sinh(Z.re);
+    auto	coshZre = mmux_standard_flonumd$1_cosh(Z.re);
+    auto	sinZim  = mmux_standard_flonumd$1_sin(Z.im);
+    auto	cosZim  = mmux_standard_flonumd$1_cos(Z.im);
+
+    return mmux_standard_flonumcd$1_rectangular(coshZre * cosZim, sinhZre * sinZim);
+  }
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_tanh (mmux_standard_flonumcd$1_t Z)
+{
+  /*
+   *
+   * tanh (Z) = W.re + i * W.im
+   *
+   *           tanh (2 * Z.im)
+   * W.re = --------------------
+   *              cos (2 * Z.im)
+   *         1 + ---------------
+   *             cosh (2 * Z.re)
+   *
+   *                  sin (2 * Z.im)
+   * W.im = ----------------------------------
+   *         cosh (2 * Z.re) + cos (2 * Z.im)
+   *
+   */
+  auto	Zre2 = mmux_standard_flonumd$1_constant_two() * Z.re;
+  auto	Zim2 = mmux_standard_flonumd$1_constant_two() * Z.im;
+
+  auto	sinZim2  = mmux_standard_flonumd$1_sin(Zim2);
+  auto	cosZim2  = mmux_standard_flonumd$1_cos(Zim2);
+
+  auto	coshZre2 = mmux_standard_flonumd$1_cosh(Zre2);
+  auto	tanhZim2 = mmux_standard_flonumd$1_tanh(Zim2);
+
+  auto	Wre = tanhZim2 / mmux_standard_flonumd$1_constant_one() + cosZim2 / coshZre2;
+  auto	Wim = sinZim2 / (coshZre2 + cosZim2);
+
+  return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
+}]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_HYPERBOLIC_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_HYPERBOLIC_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_HYPERBOLIC_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumcd, inverse hyperbolic functions: asinh, acosh, atanh.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_INVERSE_HYPERBOLIC_FUNCTIONS]]],[[[
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_asinh (mmux_standard_flonumcd$1_t Z)
+{
+  /*
+   * Everybody (including the GNU C Library) makes use of this formula:
+   *
+   *    (log (+ z (sqrt (+ 1 (square z)))))
+   *
+   * notice:
+   *
+   *    S    = 1 + Z^2 = 1 + (X+iY)^2 = 1 + (X+iY) (X+iY) = 1 + X^2 - Y^2 + 2iXY
+   *    S.re = 1 + X^2 - Y^2
+   *    S.im = 2XY
+   */
+  auto	T = mmux_standard_flonumcd$1_square(Z);
+  T = mmux_standard_flonumcd$1_add(mmux_standard_flonumcd$1_constant_one(), T);
+  T = mmux_standard_flonumcd$1_sqrt(T);
+  T = mmux_standard_flonumcd$1_add(Z, T);
+  return mmux_standard_flonumcd$1_log(T);
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_acosh (mmux_standard_flonumcd$1_t Z)
+{
+  /*
+   * From Wikipedia (https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions):
+   *
+   *  W = acosh(Z) = log{Z + [sqrt(Z + 1) * sqrt(Z - 1)]}
+   *
+   *  (let* ((A	(sqrt (+ Z 1)))
+   *         (B	(sqrt (- Z 1)))
+   *         (C	(* A B))
+   *         (D	(+ Z C)))
+   *    (log D))
+   *
+   * where log() computes the principal value.
+   */
+  auto  A = mmux_standard_flonumcd$1_sqrt(mmux_standard_flonumcd$1_add(Z, mmux_standard_flonumcd$1_constant_one()));
+  auto  B = mmux_standard_flonumcd$1_sqrt(mmux_standard_flonumcd$1_sub(Z, mmux_standard_flonumcd$1_constant_one()));
+  auto  C = mmux_standard_flonumcd$1_mul(A, B);
+  auto  D = mmux_standard_flonumcd$1_add(Z, C);
+
+  return mmux_standard_flonumcd$1_log(D);
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_atanh (mmux_standard_flonumcd$1_t Z)
+{
+  /*
+   * From Wikipedia:
+   *
+   *                    1 + Z
+   *  atanh Z = 1/2 log -----
+   *                    1 - Z
+   *
+   */
+  auto	A = mmux_standard_flonumcd$1_add(mmux_standard_flonumcd$1_constant_one(), Z);
+  auto	B = mmux_standard_flonumcd$1_sub(mmux_standard_flonumcd$1_constant_one(), Z);
+  auto	C = mmux_standard_flonumcd$1_div(A,B);
+  auto	D = mmux_standard_flonumcd$1_log(C);
+
+  return mmux_standard_flonumcd$1_mul(mmux_standard_flonumcd$1_constant_one_half(), D);
+}]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_INVERSE_HYPERBOLIC_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_INVERSE_HYPERBOLIC_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_INVERSE_HYPERBOLIC_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Mathematics: standard flonumcd, powers and roots functions: pow, square, sqrt, cbrt.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMCD_POWERS_FUNCTIONS]]],[[[
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_pow (mmux_standard_flonumcd$1_t Z, mmux_standard_flonumcd$1_t W)
+/* pow(Z,W) = Z^W = exp( log( Z^W )) = exp( W * log( Z )) */
+{
+  return mmux_standard_flonumcd$1_exp(mmux_standard_flonumcd$1_mul(W, mmux_standard_flonumcd$1_log(Z)));
+}
+mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_square (mmux_standard_flonumcd$1_t Z)
 {
   return mmux_standard_flonumcd$1_mul(Z,Z);
 }
-
-DEFINE_UNARY_MATH_CPLX_FUNCTION($1,		sqrt)
-
-/* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z )) */
-static mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_sqrt (mmux_standard_flonumcd$1_t Z)
+/* square root: sqrt(Z) = Z^(1/2) = exp( log( Z^(1/2) )) = exp( 1/2 * log( Z )) */
+{
+  auto	T = Z;
+  T = mmux_standard_flonumcd$1_log(T);
+  T = mmux_standard_flonumcd$1_mul(mmux_standard_flonumcd$1_constant_one_half(), T);
+  T = mmux_standard_flonumcd$1_exp(T);
+  return T;
+}
+mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_cbrt (mmux_standard_flonumcd$1_t Z)
+/* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z )) */
 {
   return mmux_standard_flonumcd$1_exp(mmux_standard_flonumcd$1_mul(mmux_standard_flonumcd$1_constant_one_third(),
 								   mmux_standard_flonumcd$1_log(Z)));
-}]]])
+}
+]]])
 m4_divert(0)m4_dnl
-DEFINE_MATH_CPLX_FUNCTIONS(32)
-DEFINE_MATH_CPLX_FUNCTIONS(64)
-DEFINE_MATH_CPLX_FUNCTIONS(128)
-
-#endif
+DEFINE_STANDARD_FLONUMCD_POWERS_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_POWERS_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_POWERS_FUNCTIONS(128)
 
 /* end of file */
