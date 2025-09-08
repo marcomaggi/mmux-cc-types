@@ -1457,10 +1457,10 @@ DEFINE_BINARY_FUNCTION([[[add]]])
 DEFINE_BINARY_FUNCTION([[[sub]]])
 DEFINE_BINARY_FUNCTION_NO_POINTER([[[mul]]])
 DEFINE_BINARY_FUNCTION_NO_POINTER([[[div]]])
-DEFINE_UNARY_FUNCTION_NO_POINTER([[[inv]]])
+DEFINE_UNARY_FUNCTION_NO_POINTER([[[inverse]]])
 DEFINE_UNARY_FUNCTION_NO_POINTER([[[absolute]]])
 
-DEFINE_BINARY_FUNCTION_REAL_NUMBERS_ONLY([[[mod]]])
+DEFINE_BINARY_FUNCTION_REAL_NUMBERS_ONLY([[[modulo]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[incr]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 
@@ -1475,7 +1475,7 @@ DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
 	   mmux_sllong_t:		mmux_sllong_neg,		\
 ]]])m4_dnl
-	   mmux_flonumfl_t:		mmux_flonumfl_neg,			\
+           mmux_flonumfl_t:		mmux_flonumfl_neg,		\
 	   mmux_flonumdb_t:		mmux_flonumdb_neg,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
 	   mmux_flonumldb_t:		mmux_flonumldb_neg,		\

@@ -73,4 +73,16 @@ mmux_cc_types_final (void)
   mmux_cc_types_final_parsers_module();
 }
 
+
+/** --------------------------------------------------------------------
+ ** Miscellaneous.
+ ** ----------------------------------------------------------------- */
+
+mmux_sint_t
+mmux_ctype_generic_error (...)
+/* This function is used in "mmux-cc-types-generics.h". */
+{
+  return mmux_sint_constant_zero();
+}
+
 /* end of file */

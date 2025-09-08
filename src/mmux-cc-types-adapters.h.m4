@@ -32,34 +32,29 @@
 m4_divert(-1)
 m4_define([[[DEFINE_COMPLEX_FUNCTIONS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 real_part$1 (mmux_standard_flonum$1_t X)
 {
   return X;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
-imag_part$1 (mmux_standard_flonum$1_t X __attribute__((__unused__)))
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+imag_part$1 (mmux_standard_flonum$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return mmux_standard_flonum$1_constant_zero();
 }
-__attribute__((__const__,__always_inline__)) static inline inline mmux_standard_flonum$1_t
-absolute$1 (mmux_standard_flonum$1_t X __attribute__((__unused__)))
-{
-  return fabs$2(X);
-}
-__attribute__((__const__,__always_inline__)) static inline inline mmux_standard_flonum$1_t
-argument$1 (mmux_standard_flonum$1_t X __attribute__((__unused__)))
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+argument$1 (mmux_standard_flonum$1_t X MMUX_CC_TYPES_UNUSED)
 {
   return mmux_standard_flonum$1_constant_zero();
 }
-__attribute__((__const__,__always_inline__)) static inline inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 conjugate$1 (mmux_standard_flonum$1_t X)
 {
   return X;
 }]]])
 
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 rectangularc$1 (mmux_standard_flonum$1_t re, mmux_standard_flonum$1_t im)
 {
   return CMPLX[[[]]]MMUX_M4_TOUPPER($2)(re, im);
@@ -67,27 +62,22 @@ rectangularc$1 (mmux_standard_flonum$1_t re, mmux_standard_flonum$1_t im)
 #define rectangularc$1_literal(STANDARD_FLONUM_LITERAL_RE,STANDARD_FLONUM_LITERAL_IM)	\
   (rectangularc$1(mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_RE),		\
 		  mmux_standard_flonum$1_literal(STANDARD_FLONUM_LITERAL_IM)))
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_part_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_part_t
 real_partc$1 (mmux_standard_flonumc$1_t Z)
 {
   return creal$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_part_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_part_t
 imag_partc$1 (mmux_standard_flonumc$1_t Z)
 {
   return cimag$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline inline mmux_standard_flonumc$1_part_t
-absolutec$1 (mmux_standard_flonumc$1_t Z)
-{
-  return cabs$2(Z);
-}
-__attribute__((__const__,__always_inline__)) static inline inline mmux_standard_flonumc$1_part_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_part_t
 argumentc$1 (mmux_standard_flonumc$1_t Z)
 {
   return atan2$2(cimag$2(Z), creal$2(Z));
 }
-__attribute__((__const__,__always_inline__)) static inline inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 conjugatec$1 (mmux_standard_flonumc$1_t Z)
 {
   return rectangularc$1(creal$2(Z), - cimag$2(Z));
@@ -105,55 +95,116 @@ DEFINE_COMPLEX_FUNCTIONS(f128x,		f128x)
 
 
 /** --------------------------------------------------------------------
- ** Arithmetics.
+ ** Arithmetics: flonum.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+m4_define([[[DEFINE_FLONUM_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 add$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return op1 + op2;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 sub$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return op1 - op2;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mul$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return (op1 * op2);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 div$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return (op1 / op2);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
-neg$1 (mmux_standard_flonum$1_t op)
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+modulo$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
+{
+  return fmod$2(op1, op2);
+}
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+inverse$1 (mmux_standard_flonum$1_t op)
+{
+  return (mmux_standard_flonum$1_constant_one() / op);
+}
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+negation$1 (mmux_standard_flonum$1_t op)
 {
   return (- op);
-}]]])]]])
+}
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+absolute$1 (mmux_standard_flonum$1_t X MMUX_CC_TYPES_UNUSED)
+{
+  return fabs$2(X);
+}
+]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_ARITHMETICS_FUNCTIONS(fl)
-DEFINE_ARITHMETICS_FUNCTIONS(db)
-DEFINE_ARITHMETICS_FUNCTIONS(ldb)
-DEFINE_ARITHMETICS_FUNCTIONS(f32)
-DEFINE_ARITHMETICS_FUNCTIONS(f64)
-DEFINE_ARITHMETICS_FUNCTIONS(f128)
-DEFINE_ARITHMETICS_FUNCTIONS(f32x)
-DEFINE_ARITHMETICS_FUNCTIONS(f64x)
-DEFINE_ARITHMETICS_FUNCTIONS(f128x)
-DEFINE_ARITHMETICS_FUNCTIONS(cfl)
-DEFINE_ARITHMETICS_FUNCTIONS(cdb)
-DEFINE_ARITHMETICS_FUNCTIONS(cldb)
-DEFINE_ARITHMETICS_FUNCTIONS(cf32)
-DEFINE_ARITHMETICS_FUNCTIONS(cf64)
-DEFINE_ARITHMETICS_FUNCTIONS(cf128)
-DEFINE_ARITHMETICS_FUNCTIONS(cf32x)
-DEFINE_ARITHMETICS_FUNCTIONS(cf64x)
-DEFINE_ARITHMETICS_FUNCTIONS(cf128x)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(fl,		f)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(db)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(ldb,	l)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(f32,	f32)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(f64,	f64)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(f128,	f128)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(f32x,	f32x)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(f64x,	f64x)
+DEFINE_FLONUM_ARITHMETICS_FUNCTIONS(f128x,	f128x)
+
+
+/** --------------------------------------------------------------------
+ ** Arithmetics: flonumc.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+add$1 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
+{
+  return op1 + op2;
+}
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+sub$1 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
+{
+  return op1 - op2;
+}
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+mul$1 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
+{
+  return (op1 * op2);
+}
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+div$1 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
+{
+  return (op1 / op2);
+}
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+inverse$1 (mmux_standard_flonumc$1_t op)
+{
+  return (mmux_standard_flonumc$1_constant_one() / op);
+}
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+negation$1 (mmux_standard_flonumc$1_t op)
+{
+  return (- op);
+}
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+absolutec$1 (mmux_standard_flonumc$1_t Z)
+{
+  return cabs$2(Z);
+}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(fl)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(db)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(ldb)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(f32)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(f64)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(f128)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(f32x)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(f64x)
+DEFINE_FLONUMC_ARITHMETICS_FUNCTIONS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -162,67 +213,67 @@ DEFINE_ARITHMETICS_FUNCTIONS(cf128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_MATH_REAL_FUNCTIONS_TRIG_HYPER]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 sin$1 (mmux_standard_flonum$1_t Z)
 {
   return sin$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 cos$1 (mmux_standard_flonum$1_t Z)
 {
   return cos$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 tan$1 (mmux_standard_flonum$1_t Z)
 {
   return tan$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 asin$1 (mmux_standard_flonum$1_t Z)
 {
   return asin$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 acos$1 (mmux_standard_flonum$1_t Z)
 {
   return acos$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 atan$1 (mmux_standard_flonum$1_t Z)
 {
   return atan$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 atan2$1 (mmux_standard_flonum$1_t imp, mmux_standard_flonum$1_t rep)
 {
   return atan2$2(imp, rep);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 sinh$1 (mmux_standard_flonum$1_t Z)
 {
   return sinh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 cosh$1 (mmux_standard_flonum$1_t Z)
 {
   return cosh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 tanh$1 (mmux_standard_flonum$1_t Z)
 {
   return tanh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 asinh$1 (mmux_standard_flonum$1_t Z)
 {
   return asinh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 acosh$1 (mmux_standard_flonum$1_t Z)
 {
   return acosh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 atanh$1 (mmux_standard_flonum$1_t Z)
 {
   return atanh$2(Z);
@@ -245,62 +296,62 @@ DEFINE_MATH_REAL_FUNCTIONS_TRIG_HYPER(ldb,	l)
 
 m4_divert(-1)
 m4_define([[[DEFINE_MATH_CPLX_FUNCTIONS_TRIG_HYPER]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 sinc$1 (mmux_standard_flonumc$1_t Z)
 {
   return csin$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 cosc$1 (mmux_standard_flonumc$1_t Z)
 {
   return ccos$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 tanc$1 (mmux_standard_flonumc$1_t Z)
 {
   return ctan$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 asinc$1 (mmux_standard_flonumc$1_t Z)
 {
   return casin$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 acosc$1 (mmux_standard_flonumc$1_t Z)
 {
   return cacos$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 atanc$1 (mmux_standard_flonumc$1_t Z)
 {
   return catan$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 sinhc$1 (mmux_standard_flonumc$1_t Z)
 {
   return csinh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 coshc$1 (mmux_standard_flonumc$1_t Z)
 {
   return ccosh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 tanhc$1 (mmux_standard_flonumc$1_t Z)
 {
   return ctanh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 asinhc$1 (mmux_standard_flonumc$1_t Z)
 {
   return casinh(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 acoshc$1 (mmux_standard_flonumc$1_t Z)
 {
   return cacosh$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 atanhc$1 (mmux_standard_flonumc$1_t Z)
 {
   return catanh$2(Z);
@@ -323,24 +374,24 @@ DEFINE_MATH_CPLX_FUNCTIONS_TRIG_HYPER(f128x,	f128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_MATH_REAL_FUNCTIONS_EXP_LOG]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 exp$1 (mmux_standard_flonum$1_t X)
 {
   return exp$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 exp2$1 (mmux_standard_flonum$1_t X)
 {
   /* 2^X = exp( log ( 2^X ) ) = exp( X * log( 2 ) ) */
   return exp$2(X * mmux_standard_flonum$1_constant_LN2());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 exp10$1 (mmux_standard_flonum$1_t X)
 {
   /* 10^X = exp( log ( 10^X ) ) = exp( X * log( 10 ) ) */
   return exp$2(X * mmux_standard_flonum$1_constant_LN10());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 expm1$1 (mmux_standard_flonum$1_t X)
 {
   return expm1$2(X);
@@ -348,28 +399,28 @@ expm1$1 (mmux_standard_flonum$1_t X)
 
 /* ------------------------------------------------------------------ */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 log$1 (mmux_standard_flonum$1_t X)
 {
   return log$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 log2$1 (mmux_standard_flonumc$1_t X)
 /* log_2 X = log X / log 2 */
 {
   return (log$1(X) / mmux_standard_flonum$1_constant_LN2());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 log10$1 (mmux_standard_flonumc$1_t X)
 {
   return log10$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 logb$1 (mmux_standard_flonumc$1_t X)
 {
   return logb$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 log1p$1 (mmux_standard_flonum$1_t Z)
 {
   return log1p$2(Z);
@@ -377,31 +428,31 @@ log1p$1 (mmux_standard_flonum$1_t Z)
 
 /* ------------------------------------------------------------------ */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 pow$1 (mmux_standard_flonum$1_t X, mmux_standard_flonum$1_t Y)
 {
   return pow$2(X, Y);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 sqrt$1 (mmux_standard_flonum$1_t X)
 {
   return sqrt$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 cbrt$1 (mmux_standard_flonum$1_t X)
 /* cubic root: cbrt(X) = X^(1/3) = exp( log( X^(1/3) )) = exp( 1/3 * log( X )) */
 {
   auto one_third = mmux_standard_flonum$1_constant_one() / mmux_standard_flonum$1_literal(3.0);
   return exp$1(one_third * log$1(X));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 hypot$1 (mmux_standard_flonum$1_t X, mmux_standard_flonum$1_t Y)
 {
   return hypot$2(X,Y);
 }]]])]]])
 
 m4_define([[[DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 square$1 (mmux_standard_flonum$1_t X)
 {
   return (X * X);
@@ -434,55 +485,55 @@ DEFINE_MATH_REAL_EXTRA_FUNCTIONS_EXP_LOG(f128x,	f128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_MATH_CPLX_FUNCTIONS_EXP_LOG]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 expc$1 (mmux_standard_flonumc$1_t Z)
 {
   return cexp$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 exp2c$1 (mmux_standard_flonumc$1_t Z)
 {
   /* 2^Z = exp( log ( 2^Z ) ) = exp( Z * log( 2 ) ) */
   return cexp$2(Z * rectangularc$1(mmux_standard_flonum$1_constant_LN2(), mmux_standard_flonum$1_constant_zero()));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 exp10c$1 (mmux_standard_flonumc$1_t Z)
 {
   /* 10^Z = exp( log ( 10^Z ) ) = exp( Z * log( 10 ) ) */
   return cexp$2(Z * rectangularc$1(mmux_standard_flonum$1_constant_LN10(), mmux_standard_flonum$1_constant_zero()));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 logc$1 (mmux_standard_flonumc$1_t Z)
 {
   return clog$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 log2c$1 (mmux_standard_flonumc$1_t Z)
 /* log_2 Z = log Z / log 2 */
 {
   return (logc$1(Z) / rectangularc$1(mmux_standard_flonum$1_constant_LN2(), mmux_standard_flonum$1_constant_zero()));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 log10c$1 (mmux_standard_flonumc$1_t Z)
 {
   return clog10$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 powc$1 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
 {
   return pow$2(op1, op2);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 squarec$1 (mmux_standard_flonumc$1_t Z)
 {
   return (Z * Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 sqrtc$1 (mmux_standard_flonumc$1_t X)
 {
   return csqrt$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 cbrtc$1 (mmux_standard_flonumc$1_t Z)
 /* cubic root: cbrt(Z) = Z^(1/3) = exp( log( Z^(1/3) )) = exp( 1/3 * log( Z )) */
 {
@@ -508,57 +559,57 @@ DEFINE_MATH_CPLX_FUNCTIONS_EXP_LOG(f128x,	f128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_MATH_FUNCTIONS_SPECIAL]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 erf$1 (mmux_standard_flonum$1_t X)
 {
   return erf$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 erfc$1 (mmux_standard_flonum$1_t X)
 {
   return erfc$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 lgamma$1 (mmux_standard_flonum$1_t X)
 {
   return lgamma$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 gamma$1 (mmux_standard_flonum$1_t X)
 {
   return gamma$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 tgamma$1 (mmux_standard_flonum$1_t X)
 {
   return tgamma$2(X);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 j0$1 (mmux_standard_flonum$1_t Z)
 {
   return j0$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 j1$1 (mmux_standard_flonum$1_t Z)
 {
   return j1$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 jn$1 (int N, mmux_standard_flonum$1_t Z)
 {
   return jn$2(N, Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 y0$1 (mmux_standard_flonum$1_t Z)
 {
   return y0$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 y1$1 (mmux_standard_flonum$1_t Z)
 {
   return y1$2(Z);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 yn$1 (int N, mmux_standard_flonum$1_t Z)
 {
   return yn$2(N, Z);
@@ -586,12 +637,12 @@ DEFINE_MATH_FUNCTIONS_SPECIAL(ldb,	l)
 
 m4_divert(-1)
 m4_define([[[DEFINE_MIN_MAX_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 min$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return $2(op1, op2);
 }
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 max$1 (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return $3(op1, op2);
@@ -615,15 +666,13 @@ DEFINE_MIN_MAX_FUNCTIONS(f128x,		fminf128x,	fmaxf128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_STRING_TO_FROM_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
-__attribute__((__const__,__always_inline__))
-static inline mmux_standard_sint_t
+mmux_cc_types_inline_decl mmux_standard_sint_t
 mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p, size_t size, mmux_asciizcp_t restrict format,
 			 mmux_standard_flonum$1_t value)
 {
   return $2(result_p, size, format, value);
 }
-__attribute__((__const__,__always_inline__))
-static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value, mmux_asciizpp_t restrict tailptr)
 {
   return $3(s_input_value, tailptr);

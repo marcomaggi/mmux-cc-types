@@ -150,7 +150,7 @@
 #  include <mmux-cc-types-libdfp.h>
 #endif
 
-#include <mmux-cc-types-adapters.h>
+//#include <mmux-cc-types-adapters.h>
 
 
 /** --------------------------------------------------------------------

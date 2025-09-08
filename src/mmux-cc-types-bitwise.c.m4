@@ -30,7 +30,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Bitwise operations.
+ ** Bitwise operations: pointers.
  ** ----------------------------------------------------------------- */
 
 mmux_pointer_t
@@ -76,7 +76,10 @@ mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
   return (mmux_pointer_t)op_uintptr;
 }
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Bitwise operations: exact integers.
+ ** ----------------------------------------------------------------- */
 
 m4_define([[[DEFINE_BITWISE_FUNCS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_$1_t
