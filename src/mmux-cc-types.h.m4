@@ -43,7 +43,6 @@ extern "C" {
 #include <stddef.h>	/* for "size_t", etc. */
 #include <inttypes.h>	/* for "int8_t", etc. */
 #include <complex.h>
-#include <mmux-cc-types-generics.h>
 
 
 /** --------------------------------------------------------------------
@@ -141,7 +140,7 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
 
 
 /** --------------------------------------------------------------------
- ** Initialisation functions.
+ ** Library management: initialisation functions.
  ** ----------------------------------------------------------------- */
 
 mmux_cc_types_decl bool mmux_cc_types_init (void)
@@ -149,6 +148,23 @@ mmux_cc_types_decl bool mmux_cc_types_init (void)
 
 mmux_cc_types_decl void mmux_cc_types_final (void)
   __attribute__((__destructor__));
+
+
+/** --------------------------------------------------------------------
+ ** Library management: version functions.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl char const *	mmux_cc_types_version_string		(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
+mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
+
+
+/** --------------------------------------------------------------------
+ ** Library management: miscellaneous stuff.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_decl int mmux_ctype_generic_error (...);
 
 
 /** --------------------------------------------------------------------
@@ -508,27 +524,6 @@ DEFINE_TYPE_MAKERS(rlim)
 
 
 /** --------------------------------------------------------------------
- ** Version functions.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_types_decl mmux_asciizcp_t	mmux_cc_types_version_string		(void);
-mmux_cc_types_decl int			mmux_cc_types_version_interface_current	(void);
-mmux_cc_types_decl int			mmux_cc_types_version_interface_revision(void);
-mmux_cc_types_decl int			mmux_cc_types_version_interface_age	(void);
-
-
-/** --------------------------------------------------------------------
- ** Support for _DecimalN.
- ** ----------------------------------------------------------------- */
-
-#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
-     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
-     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
-#  include <mmux-cc-types-libdfp.h>
-#endif
-
-
-/** --------------------------------------------------------------------
  ** Prototypes typedefs.
  ** ----------------------------------------------------------------- */
 
@@ -537,7 +532,7 @@ m4_define([[[DEFINE_PROTOTYPES_TYPEDEFS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
 typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t   (mmux_standard_$1_t op1);
 typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
-typedef mmux_standard_$1_t mmux_cc_types_binary_sint_operation_standard_$1_t (mmux_sint_t op1, mmux_standard_$1_t op2);
+typedef mmux_standard_$1_t mmux_cc_types_binary_sint_operation_standard_$1_t (mmux_standard_sint_t op1, mmux_standard_$1_t op2);
 typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2, mmux_standard_$1_t op3);
 typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t op1);
 typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
@@ -630,8 +625,15 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
 #include <mmux-cc-types-sign-predicates.h>
 #include <mmux-cc-types-arithmetics.h>
 #include <mmux-cc-types-comparison.h>
+#include <mmux-cc-types-mathematics.h>
 #include <mmux-cc-types-bitwise.h>
 #include <mmux-cc-types-generics.h>
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp.h>
+#endif
 
 
 /** --------------------------------------------------------------------
@@ -773,13 +775,6 @@ DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128x]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd32]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd64]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]])
-
-
-/** --------------------------------------------------------------------
- ** Miscellaneous.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_types_decl mmux_sint_t mmux_ctype_generic_error (...);
 
 
 /** --------------------------------------------------------------------

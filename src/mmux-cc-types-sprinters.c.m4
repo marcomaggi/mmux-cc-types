@@ -123,6 +123,31 @@ mmux_cc_types_final_sprint_module (void)
 
 
 /** --------------------------------------------------------------------
+ ** Adapters.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_STRING_FROM_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
+mmux_cc_types_inline_decl mmux_standard_sint_t
+mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p, size_t size, mmux_asciizcp_t restrict format,
+			 mmux_standard_flonum$1_t value)
+{
+  return $2(result_p, size, format, value);
+}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(fl,	strfromf)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(db,	strfromd)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(ldb,	strfroml)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(f32,	strfromf32)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(f64,	strfromf64)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(f128,	strfromf128)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(f32x,	strfromf32x)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(f64x,	strfromf64x)
+DEFINE_STANDARD_STRING_FROM_FUNCTIONS(f128x,	strfromf128x)
+
+
+/** --------------------------------------------------------------------
  ** Selecting printf output format for floating-pont numbers.
  ** ----------------------------------------------------------------- */
 

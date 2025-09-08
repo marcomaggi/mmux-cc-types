@@ -41,7 +41,7 @@ mmux_pointer_not_equal (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   return (op1 != op2)? true : false;
 }
-mmux_sint_t
+mmux_cc_types_inline_decl mmux_sint_t
 mmux_pointer_cmp (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   if (op1 > op2) {
@@ -110,17 +110,17 @@ mmux_standard_$1_less_equal (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
 {
   return (op1 <= op2)? true : false;
 }
-mmux_standard_$1_t
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_max (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
 {
   return ((mmux_standard_$1_greater_equal(op1, op2))? op1 : op2);
 }
-mmux_standard_$1_t
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_min (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
 {
   return ((mmux_standard_$1_less_equal(op1, op2))? op1 : op2);
 }
-mmux_standard_sint_t
+mmux_cc_types_inline_decl mmux_standard_sint_t
 mmux_standard_$1_cmp (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
 {
   if (mmux_standard_$1_greater(op1, op2)) {

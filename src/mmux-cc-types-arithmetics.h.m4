@@ -100,12 +100,12 @@ mmux_standard_$1_neg (mmux_standard_$1_t op)
 {
   return (- op);
 }
-mmux_standard_$1_t
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_absolute (mmux_standard_$1_t op)
 {
   return ((mmux_standard_$1_is_negative(op))? mmux_standard_$1_neg(op) : op);
 }
-mmux_standard_$1_t
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_sign (mmux_standard_$1_t op)
 {
   if (mmux_standard_$1_is_positive(op)) {

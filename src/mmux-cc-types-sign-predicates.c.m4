@@ -52,17 +52,18 @@ mmux_char_is_unsigned (void)
    operands, which is not handled correctly with the operators <, >, <=, >=. */
 
 m4_define([[[DEFINE_FLONUM_SIGN_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-#define STANDARD_FLONUM$1_IS_ZERO(OP)		(FP_ZERO	== (fpclassify(OP))
-#define STANDARD_FLONUM$1_IS_INFINITE(OP)	(FP_INFINITE	== (fpclassify(OP))
-#define STANDARD_FLONUM$1_IS_NORMAL(OP)		(FP_NORMAL	== (fpclassify(OP))
-#define STANDARD_FLONUM$1_IS_SUBNORMAL(OP)	(FP_SUBNORMAL	== (fpclassify(OP))
+#define STANDARD_FLONUM$1_IS_ZERO(OP)		(FP_ZERO	== (fpclassify(OP)))
+#define STANDARD_FLONUM$1_IS_NAN(OP)		(FP_NAN		== (fpclassify(OP)))
+#define STANDARD_FLONUM$1_IS_INFINITE(OP)	(FP_INFINITE	== (fpclassify(OP)))
+#define STANDARD_FLONUM$1_IS_NORMAL(OP)		(FP_NORMAL	== (fpclassify(OP)))
+#define STANDARD_FLONUM$1_IS_SUBNORMAL(OP)	(FP_SUBNORMAL	== (fpclassify(OP)))
 
 bool
 mmux_standard_flonum$1_is_zero (mmux_standard_flonum$1_t op)
 {
   return (STANDARD_FLONUM$1_IS_ZERO(op))? true : false;
 }
-mmux_standard_flonum$1_t
+bool
 mmux_standard_flonum$1_is_nan (mmux_standard_flonum$1_t op)
 {
   return (STANDARD_FLONUM$1_IS_NAN(op))? true : false;
@@ -128,7 +129,7 @@ mmux_standard_flonum$1_is_non_positive (mmux_standard_flonum$1_t op)
   } else if (STANDARD_FLONUM$1_IS_ZERO(op)) {
     return true;
   } else {
-    return (mmux_standard_standard_flonum$1_constant_zero() > op)? true : false;
+    return (mmux_standard_flonum$1_constant_zero() > op)? true : false;
   }
 }
 bool
@@ -139,7 +140,7 @@ mmux_standard_flonum$1_is_non_negative (mmux_standard_flonum$1_t op)
   } else if (STANDARD_FLONUM$1_IS_ZERO(op)) {
     return true;
   } else {
-    return (mmux_standard_standard_flonum$1_constant_zero() < op)? true : false;
+    return (mmux_standard_flonum$1_constant_zero() < op)? true : false;
   }
 }]]])]]])
 m4_divert(0)m4_dnl

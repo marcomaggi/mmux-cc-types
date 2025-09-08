@@ -35,6 +35,30 @@ static bool	mmux_cc_types_rex_initialised = false;
 
 
 /** --------------------------------------------------------------------
+ ** Adapters.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_STRING_TO_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value, mmux_asciizpp_t restrict tailptr)
+{
+  return $2(s_input_value, tailptr);
+}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(fl,		strtof)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(db,		strtod)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(ldb,	strtold)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(f32,	strtof32)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(f64,	strtof64)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(f128,	strtof128)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(f32x,	strtof32x)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(f64x,	strtof64x)
+DEFINE_STANDARD_STRING_TO_FUNCTIONS(f128x,	strtof128x)
+
+
+/** --------------------------------------------------------------------
  ** Initialisation.
  ** ----------------------------------------------------------------- */
 
