@@ -624,11 +624,14 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
  ** Include files.
  ** ----------------------------------------------------------------- */
 
+/* Order is important here!  There are a lot of inline functions. */
 #include <mmux-cc-types-constants.h>
 #include <mmux-cc-types-complex.h>
 #include <mmux-cc-types-sign-predicates.h>
 #include <mmux-cc-types-arithmetics.h>
 #include <mmux-cc-types-comparison.h>
+#include <mmux-cc-types-bitwise.h>
+#include <mmux-cc-types-generics.h>
 
 
 /** --------------------------------------------------------------------
@@ -770,173 +773,6 @@ DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumf128x]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd32]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd64]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]])
-
-
-/** --------------------------------------------------------------------
- ** Bitwise operations.
- ** ----------------------------------------------------------------- */
-
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_and (mmux_pointer_t op, mmux_uintptr_t mask)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_or  (mmux_pointer_t op, mmux_uintptr_t mask)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_xor (mmux_pointer_t op, mmux_uintptr_t mask)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_not (mmux_pointer_t op)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shl (mmux_pointer_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_pointer_t mmux_pointer_bitwise_shr (mmux_pointer_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-
-/* ------------------------------------------------------------------ */
-
-m4_divert(-1)
-m4_define([[[DEFINE_BITWISE_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_and (mmux_$1_t op1, mmux_$1_t op2)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_or  (mmux_$1_t op1, mmux_$1_t op2)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_xor (mmux_$1_t op1, mmux_$1_t op2)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_not (mmux_$1_t op)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shl (mmux_$1_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_$1_t mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
-  __attribute__((__const__));
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_BITWISE_PROTOS([[[char]]])
-DEFINE_BITWISE_PROTOS([[[schar]]])
-DEFINE_BITWISE_PROTOS([[[uchar]]])
-DEFINE_BITWISE_PROTOS([[[sshort]]])
-DEFINE_BITWISE_PROTOS([[[ushort]]])
-DEFINE_BITWISE_PROTOS([[[sint]]])
-DEFINE_BITWISE_PROTOS([[[uint]]])
-DEFINE_BITWISE_PROTOS([[[slong]]])
-DEFINE_BITWISE_PROTOS([[[ulong]]])
-DEFINE_BITWISE_PROTOS([[[sllong]]],	[[[MMUX_CC_TYPES_HAS_SLLONG]]])
-DEFINE_BITWISE_PROTOS([[[ullong]]],	[[[MMUX_CC_TYPES_HAS_ULLONG]]])
-
-DEFINE_BITWISE_PROTOS([[[sint8]]])
-DEFINE_BITWISE_PROTOS([[[uint8]]])
-DEFINE_BITWISE_PROTOS([[[sint16]]])
-DEFINE_BITWISE_PROTOS([[[uint16]]])
-DEFINE_BITWISE_PROTOS([[[sint32]]])
-DEFINE_BITWISE_PROTOS([[[uint32]]])
-DEFINE_BITWISE_PROTOS([[[sint64]]])
-DEFINE_BITWISE_PROTOS([[[uint64]]])
-
-DEFINE_BITWISE_PROTOS([[[ssize]]])
-DEFINE_BITWISE_PROTOS([[[usize]]])
-DEFINE_BITWISE_PROTOS([[[sintmax]]])
-DEFINE_BITWISE_PROTOS([[[uintmax]]])
-DEFINE_BITWISE_PROTOS([[[sintptr]]])
-DEFINE_BITWISE_PROTOS([[[uintptr]]])
-DEFINE_BITWISE_PROTOS([[[ptrdiff]]])
-DEFINE_BITWISE_PROTOS([[[mode]]])
-DEFINE_BITWISE_PROTOS([[[off]]])
-DEFINE_BITWISE_PROTOS([[[pid]]])
-DEFINE_BITWISE_PROTOS([[[uid]]])
-DEFINE_BITWISE_PROTOS([[[gid]]])
-DEFINE_BITWISE_PROTOS([[[wchar]]])
-DEFINE_BITWISE_PROTOS([[[wint]]])
-DEFINE_BITWISE_PROTOS([[[time]]])
-DEFINE_BITWISE_PROTOS([[[socklen]]])
-DEFINE_BITWISE_PROTOS([[[rlim]]])
-
-
-/** --------------------------------------------------------------------
- ** Mathematics: floating-point number functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_unary_operation_flonum$1_t mmux_flonum$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_binary_operation_flonum$1_t mmux_flonum$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_BINARY_SINT_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_binary_sint_operation_flonum$1_t mmux_flonum$1_$2 __attribute__((__const__))]]])
-
-m4_define([[[DEFINE_COMMON_FLONUM_MATH_PROTOS]]],[[[m4_dnl
-#ifdef MMUX_CC_TYPES_HAS_FLONUM[[[]]]MMUX_M4_TOUPPER($1)
-DEFINE_UNARY_MATH_PROTO($1,		sin);
-DEFINE_UNARY_MATH_PROTO($1,		cos);
-DEFINE_UNARY_MATH_PROTO($1,		tan);
-
-DEFINE_UNARY_MATH_PROTO($1,		asin);
-DEFINE_UNARY_MATH_PROTO($1,		acos);
-DEFINE_UNARY_MATH_PROTO($1,		atan);
-
-DEFINE_UNARY_MATH_PROTO($1,		sinh);
-DEFINE_UNARY_MATH_PROTO($1,		cosh);
-DEFINE_UNARY_MATH_PROTO($1,		tanh);
-
-DEFINE_UNARY_MATH_PROTO($1,		asinh);
-DEFINE_UNARY_MATH_PROTO($1,		acosh);
-DEFINE_UNARY_MATH_PROTO($1,		atanh);
-
-DEFINE_UNARY_MATH_PROTO($1,		exp);
-DEFINE_UNARY_MATH_PROTO($1,		exp2);
-DEFINE_UNARY_MATH_PROTO($1,		exp10);
-
-DEFINE_UNARY_MATH_PROTO($1,		log);
-DEFINE_UNARY_MATH_PROTO($1,		log2);
-DEFINE_UNARY_MATH_PROTO($1,		log10);
-
-DEFINE_BINARY_MATH_PROTO($1,		pow);
-DEFINE_UNARY_MATH_PROTO($1,		sqrt);
-DEFINE_UNARY_MATH_PROTO($1,		cbrt);
-#endif
-]]])
-
-m4_define([[[DEFINE_REAL_FLONUM_MATH_PROTOS]]],[[[m4_dnl
-DEFINE_COMMON_FLONUM_MATH_PROTOS($1)
-#ifdef MMUX_CC_TYPES_HAS_FLONUM[[[]]]MMUX_M4_TOUPPER($1)
-DEFINE_BINARY_MATH_PROTO($1,		atan2);
-DEFINE_UNARY_MATH_PROTO($1,		logb);
-DEFINE_BINARY_MATH_PROTO($1,		hypot);
-
-DEFINE_UNARY_MATH_PROTO($1,		expm1);
-DEFINE_UNARY_MATH_PROTO($1,		log1p);
-
-DEFINE_UNARY_MATH_PROTO($1,		erf);
-DEFINE_UNARY_MATH_PROTO($1,		erfc);
-
-DEFINE_UNARY_MATH_PROTO($1,		lgamma);
-DEFINE_UNARY_MATH_PROTO($1,		tgamma);
-
-DEFINE_UNARY_MATH_PROTO($1,		j0);
-DEFINE_UNARY_MATH_PROTO($1,		j1);
-DEFINE_BINARY_SINT_MATH_PROTO($1,	jn);
-
-DEFINE_UNARY_MATH_PROTO($1,		y0);
-DEFINE_UNARY_MATH_PROTO($1,		y1);
-DEFINE_BINARY_SINT_MATH_PROTO($1,	yn);
-#endif
-]]])
-m4_divert(0)m4_dnl
-DEFINE_REAL_FLONUM_MATH_PROTOS(fl)
-DEFINE_REAL_FLONUM_MATH_PROTOS(db)
-DEFINE_REAL_FLONUM_MATH_PROTOS(ldb)
-DEFINE_REAL_FLONUM_MATH_PROTOS(f32)
-DEFINE_REAL_FLONUM_MATH_PROTOS(f64)
-DEFINE_REAL_FLONUM_MATH_PROTOS(f128)
-DEFINE_REAL_FLONUM_MATH_PROTOS(f32x)
-DEFINE_REAL_FLONUM_MATH_PROTOS(f64x)
-DEFINE_REAL_FLONUM_MATH_PROTOS(f128x)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cfl)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cdb)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cldb)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cf32)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cf64)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cf128)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cf32x)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cf64x)
-DEFINE_COMMON_FLONUM_MATH_PROTOS(cf128x)
 
 
 /** --------------------------------------------------------------------

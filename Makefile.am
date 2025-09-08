@@ -186,10 +186,12 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-internals.h.m4		\
 	src/mmux-cc-types-adapters.h.m4			\
 	src/mmux-cc-types-arithmetics.h.m4		\
+	src/mmux-cc-types-bitwise.h.m4			\
 	src/mmux-cc-types-comparison.h.m4		\
 	src/mmux-cc-types-complex.h.m4			\
 	src/mmux-cc-types-constants.h.m4		\
 	src/mmux-cc-types-generics.h.m4			\
+	src/mmux-cc-types-mathematics.h.m4		\
 	src/mmux-cc-types-sign-predicates.h.m4		\
 	\
 	src/mmux-cc-types-arithmetics.c.m4		\
@@ -209,10 +211,12 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-adapters.h			\
 	src/mmux-cc-types-arithmetics.h			\
+	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex.h			\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
+	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-sign-predicates.h		\
 	\
 	src/mmux-cc-types-arithmetics.c			\
@@ -239,10 +243,12 @@ include_HEADERS			+= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-arithmetics.h			\
+	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex.h			\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
+	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-sign-predicates.h
 
 lib_LTLIBRARIES			= libmmux-cc-types.la
@@ -258,10 +264,12 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-internals.h			\
 	src/mmux-cc-types-adapters.h			\
 	src/mmux-cc-types-arithmetics.h			\
+	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex.h			\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
+	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-sign-predicates.h		\
 	\
 	src/mmux-cc-types-arithmetics.c			\
@@ -296,15 +304,17 @@ src/%.c: src/%.c.m4 $(MMUX_M4_CC_MACROS)
 	$(M4_PROGRAM) $(MMUX_M4_FLAGS) $(MMUX_M4_CC_MACROS) $< >$@
 
 src/%.$(OBJEXT): \
-	src/mmux-cc-types.h			\
-	src/mmux-cc-types-config.h		\
-	src/mmux-cc-types-internals.h		\
-	src/mmux-cc-types-adapters.h		\
-	src/mmux-cc-types-arithmetics.h		\
-	src/mmux-cc-types-comparison.h		\
-	src/mmux-cc-types-complex.h		\
-	src/mmux-cc-types-constants.h		\
-	src/mmux-cc-types-generics.h		\
+	src/mmux-cc-types.h				\
+	src/mmux-cc-types-config.h			\
+	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-adapters.h			\
+	src/mmux-cc-types-arithmetics.h			\
+	src/mmux-cc-types-bitwise.h			\
+	src/mmux-cc-types-comparison.h			\
+	src/mmux-cc-types-complex.h			\
+	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-generics.h			\
+	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-sign-predicates.h
 
 
