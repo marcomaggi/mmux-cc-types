@@ -140,7 +140,7 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
 
 
 /** --------------------------------------------------------------------
- ** Library management: initialisation functions.
+ ** Library management.
  ** ----------------------------------------------------------------- */
 
 mmux_cc_types_decl bool mmux_cc_types_init (void)
@@ -149,22 +149,16 @@ mmux_cc_types_decl bool mmux_cc_types_init (void)
 mmux_cc_types_decl void mmux_cc_types_final (void)
   __attribute__((__destructor__));
 
-
-/** --------------------------------------------------------------------
- ** Library management: version functions.
- ** ----------------------------------------------------------------- */
-
 mmux_cc_types_decl char const *	mmux_cc_types_version_string		(void);
 mmux_cc_types_decl int		mmux_cc_types_version_interface_current	(void);
 mmux_cc_types_decl int		mmux_cc_types_version_interface_revision(void);
 mmux_cc_types_decl int		mmux_cc_types_version_interface_age	(void);
 
-
-/** --------------------------------------------------------------------
- ** Library management: miscellaneous stuff.
- ** ----------------------------------------------------------------- */
-
 mmux_cc_types_decl int mmux_ctype_generic_error (...);
+
+/* This is a helper to make it easier to debug inline functions defined by the header
+   files when we do not include the standard headers. */
+mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt, ...);
 
 
 /** --------------------------------------------------------------------
@@ -258,25 +252,6 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],
 [[[typedef mmux_standard_flonumf64x_t	mmux_standard_flonumcf64x_part_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
 [[[typedef mmux_standard_flonumf128x_t	mmux_standard_flonumcf128x_part_t;]]])
-
-m4_divert(-1)
-m4_define([[[DEFINE_FLONUMC_CONSTRUCTOR]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
-/* We need this  constructor for standard complex  numbers so that we can  use it for
-   inline functions in the main header file. */
-mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular (mmux_standard_flonum$1_t re,
-										  mmux_standard_flonum$1_t im)
-  __attribute__((__const__));
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMC_CONSTRUCTOR(fl)
-DEFINE_FLONUMC_CONSTRUCTOR(db)
-DEFINE_FLONUMC_CONSTRUCTOR(ldb)
-DEFINE_FLONUMC_CONSTRUCTOR(f32)
-DEFINE_FLONUMC_CONSTRUCTOR(f64)
-DEFINE_FLONUMC_CONSTRUCTOR(f128)
-DEFINE_FLONUMC_CONSTRUCTOR(f32x)
-DEFINE_FLONUMC_CONSTRUCTOR(f64x)
-DEFINE_FLONUMC_CONSTRUCTOR(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -620,8 +595,9 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
  ** ----------------------------------------------------------------- */
 
 /* Order is important here!  There are a lot of inline functions. */
-#include <mmux-cc-types-constants.h>
+
 #include <mmux-cc-types-complex.h>
+#include <mmux-cc-types-constants.h>
 #include <mmux-cc-types-sign-predicates.h>
 #include <mmux-cc-types-arithmetics.h>
 #include <mmux-cc-types-comparison.h>

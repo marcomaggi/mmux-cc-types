@@ -29,7 +29,7 @@
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMD_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+[[[mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_constant_$2 (void)
 {
   return mmux_standard_flonumd$1_literal($3);
@@ -48,7 +48,7 @@ DEFINE_STANDARD_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	positive_zero,		+0.0)
 DEFINE_STANDARD_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	negative_zero,		-0.0)
 DEFINE_STANDARD_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	one_half,		0.5)
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_constant_one_third (void)
 {
   /* FIXME There probably  is a better way  to compute this constant.  Or  the use of
@@ -88,13 +88,21 @@ DEFINE_STANDARD_FLONUMD_CONSTANTS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+[[[mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_$2 (void)
 {
   return (mmux_standard_flonumcd$1_t) {
     .re = mmux_standard_flonumd$1_constant_$2(),
     .im = mmux_standard_flonumd$1_constant_zero(),
   };
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_constant_$2_$3_infinity (void)
+{
+  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_$2_infinity(),
+					      mmux_standard_flonumd$1_constant_$3_infinity());
 }]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMCD_CONSTANTS]]],[[[m4_dnl
@@ -105,7 +113,7 @@ DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	ten)
 DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one_half)
 DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one_third)
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_imag (void)
 {
   return (mmux_standard_flonumcd$1_t) {
@@ -113,14 +121,20 @@ mmux_standard_flonumcd$1_constant_imag (void)
     .im = mmux_standard_flonumd$1_constant_one(),
   };
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_nan (void)
 {
   return (mmux_standard_flonumcd$1_t) {
     .re = mmux_standard_flonumd$1_constant_nan(),
     .im = mmux_standard_flonumd$1_constant_nan(),
   };
-}]]])
+}
+
+DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
+]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMCD_CONSTANTS(32)
 DEFINE_STANDARD_FLONUMCD_CONSTANTS(64)
@@ -133,7 +147,7 @@ DEFINE_STANDARD_FLONUMCD_CONSTANTS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_constant_$2 (void)
 {
   return (mmux_flonumd$1_t) { .value = mmux_standard_flonumd$1_constant_$2() };
@@ -179,13 +193,21 @@ DEFINE_FLONUMD_CONSTANTS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_constant_$2 (void)
 {
   /* FIXME   Why    GCC   tells   me   to    put   braces   around   the    call   to
      "mmux_standard_flonumd$1_constant_$2()" ?  (Marco Maggi; Sep 1, 2025) */
   return (mmux_flonumcd$1_t) { .value = { mmux_standard_flonumd$1_constant_$2() } };
 }]]])
+
+m4_define([[[DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
+mmux_flonumcd$1_constant_$2_$3_infinity (void)
+{
+  return (mmux_flonumcd$1_t) { .value = mmux_standard_flonumcd$1_constant_$2_$3_infinity() };
+}]]])
+
 
 m4_define([[[DEFINE_FLONUMCD_CONSTANTS]]],[[[m4_dnl
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	nan)
@@ -195,6 +217,11 @@ DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	two)
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	ten)
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one_half)
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one_third)
+
+DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMCD_CONSTANTS(32)

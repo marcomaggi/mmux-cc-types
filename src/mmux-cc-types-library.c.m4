@@ -84,5 +84,18 @@ mmux_ctype_generic_error (...)
 {
   return 0;
 }
+int
+mmux_cc_types_dprintf (int fd, char const * restrict template, ...)
+{
+  va_list	ap;
+  int		rv;
+
+  va_start(ap, template);
+  {
+    rv = vdprintf(fd, template, ap);
+  }
+  va_end(ap);
+  return rv;
+}
 
 /* end of file */

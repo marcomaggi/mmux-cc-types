@@ -29,22 +29,22 @@
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMD_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_real_part (mmux_standard_flonumd$1_t op)
 {
   return op;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_imag_part (mmux_standard_flonumd$1_t op MMUX_CC_TYPES_UNUSED)
 {
   return mmux_standard_flonumd$1_constant_zero();
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_argument (mmux_standard_flonumd$1_t op  MMUX_CC_TYPES_UNUSED)
 {
   return mmux_standard_flonumd$1_constant_zero();
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_conjugate (mmux_standard_flonumd$1_t op)
 {
   return op;
@@ -61,22 +61,22 @@ DEFINE_STANDARD_FLONUMD_COMPLEX_INLINE_FUNCTIONS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMD_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_real_part (mmux_flonumd$1_t op)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_real_part(op.value));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_imag_part (mmux_flonumd$1_t op)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_imag_part(op.value));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_argument (mmux_flonumd$1_t op __attribute__((__unused__)))
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_argument(op.value));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_conjugate (mmux_flonumd$1_t op __attribute__((__unused__)))
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_conjugate(op.value));
@@ -94,19 +94,19 @@ DEFINE_FLONUMD_COMPLEX_INLINE_FUNCTIONS(128)
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumcd$1_real_part (mmux_standard_flonumcd$1_t op)
 {
   return op.re;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumcd$1_imag_part (mmux_standard_flonumcd$1_t op)
 {
   return op.im;
 }
 mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumcd$1_argument (mmux_standard_flonumcd$1_t op)
   __attribute__((__const__));
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_conjugate (mmux_standard_flonumcd$1_t op)
 {
   return (mmux_standard_flonumcd$1_t) { .re = op.re , .im = - op.im };
@@ -124,22 +124,22 @@ DEFINE_STANDARD_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(128)
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumcd$1_real_part (mmux_flonumcd$1_t op)
 {
   return mmux_flonumd$1(mmux_standard_flonumcd$1_real_part(op.value));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumcd$1_imag_part (mmux_flonumcd$1_t op)
 {
   return mmux_flonumd$1(mmux_standard_flonumcd$1_imag_part(op.value));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumcd$1_argument (mmux_flonumcd$1_t op)
 {
   return mmux_flonumd$1(mmux_standard_flonumcd$1_argument(op.value));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_conjugate (mmux_flonumcd$1_t op)
 {
   return mmux_flonumcd$1(mmux_standard_flonumcd$1_conjugate(op.value));

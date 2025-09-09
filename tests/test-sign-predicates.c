@@ -23,6 +23,175 @@
 #include <mmux-cc-types.h>
 #include <test-common.h>
 
+static mmux_flonumcfl_t		infinity_flonumcfl_plus_plus;
+static mmux_flonumcfl_t		infinity_flonumcfl_plus_minus;
+static mmux_flonumcfl_t		infinity_flonumcfl_minus_plus;
+static mmux_flonumcfl_t		infinity_flonumcfl_minus_minus;
+
+static mmux_flonumcdb_t		infinity_flonumcdb_plus_plus;
+static mmux_flonumcdb_t		infinity_flonumcdb_plus_minus;
+static mmux_flonumcdb_t		infinity_flonumcdb_minus_plus;
+static mmux_flonumcdb_t		infinity_flonumcdb_minus_minus;
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+static mmux_flonumcldb_t	infinity_flonumcldb_plus_plus;
+static mmux_flonumcldb_t	infinity_flonumcldb_plus_minus;
+static mmux_flonumcldb_t	infinity_flonumcldb_minus_plus;
+static mmux_flonumcldb_t	infinity_flonumcldb_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+static mmux_flonumcf32_t	infinity_flonumcf32_plus_plus;
+static mmux_flonumcf32_t	infinity_flonumcf32_plus_minus;
+static mmux_flonumcf32_t	infinity_flonumcf32_minus_plus;
+static mmux_flonumcf32_t	infinity_flonumcf32_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+static mmux_flonumcf64_t	infinity_flonumcf64_plus_plus;
+static mmux_flonumcf64_t	infinity_flonumcf64_plus_minus;
+static mmux_flonumcf64_t	infinity_flonumcf64_minus_plus;
+static mmux_flonumcf64_t	infinity_flonumcf64_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+static mmux_flonumcf128_t	infinity_flonumcf128_plus_plus;
+static mmux_flonumcf128_t	infinity_flonumcf128_plus_minus;
+static mmux_flonumcf128_t	infinity_flonumcf128_minus_plus;
+static mmux_flonumcf128_t	infinity_flonumcf128_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+static mmux_flonumcf32x_t	infinity_flonumcf32x_plus_plus;
+static mmux_flonumcf32x_t	infinity_flonumcf32x_plus_minus;
+static mmux_flonumcf32x_t	infinity_flonumcf32x_minus_plus;
+static mmux_flonumcf32x_t	infinity_flonumcf32x_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+static mmux_flonumcf64x_t	infinity_flonumcf64x_plus_plus;
+static mmux_flonumcf64x_t	infinity_flonumcf64x_plus_minus;
+static mmux_flonumcf64x_t	infinity_flonumcf64x_minus_plus;
+static mmux_flonumcf64x_t	infinity_flonumcf64x_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+static mmux_flonumcf128x_t	infinity_flonumcf128x_plus_plus;
+static mmux_flonumcf128x_t	infinity_flonumcf128x_plus_minus;
+static mmux_flonumcf128x_t	infinity_flonumcf128x_minus_plus;
+static mmux_flonumcf128x_t	infinity_flonumcf128x_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+static mmux_flonumcd32_t	infinity_flonumcd32_plus_plus;
+static mmux_flonumcd32_t	infinity_flonumcd32_plus_minus;
+static mmux_flonumcd32_t	infinity_flonumcd32_minus_plus;
+static mmux_flonumcd32_t	infinity_flonumcd32_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+static mmux_flonumcd64_t	infinity_flonumcd64_plus_plus;
+static mmux_flonumcd64_t	infinity_flonumcd64_plus_minus;
+static mmux_flonumcd64_t	infinity_flonumcd64_minus_plus;
+static mmux_flonumcd64_t	infinity_flonumcd64_minus_minus;
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+static mmux_flonumcd128_t	infinity_flonumcd128_plus_plus;
+static mmux_flonumcd128_t	infinity_flonumcd128_plus_minus;
+static mmux_flonumcd128_t	infinity_flonumcd128_minus_plus;
+static mmux_flonumcd128_t	infinity_flonumcd128_minus_minus;
+#endif
+
+
+/** --------------------------------------------------------------------
+ ** Helpers.
+ ** ----------------------------------------------------------------- */
+
+static void
+initialise_constants (void)
+{
+  infinity_flonumcfl_plus_plus		= mmux_flonumcfl_constant_positive_positive_infinity();
+  infinity_flonumcfl_plus_minus		= mmux_flonumcfl_constant_positive_negative_infinity();
+  infinity_flonumcfl_minus_plus		= mmux_flonumcfl_constant_negative_positive_infinity();
+  infinity_flonumcfl_minus_minus	= mmux_flonumcfl_constant_negative_negative_infinity();
+
+  infinity_flonumcdb_plus_plus		= mmux_flonumcdb_constant_positive_positive_infinity();
+  infinity_flonumcdb_plus_minus		= mmux_flonumcdb_constant_positive_negative_infinity();
+  infinity_flonumcdb_minus_plus		= mmux_flonumcdb_constant_negative_positive_infinity();
+  infinity_flonumcdb_minus_minus	= mmux_flonumcdb_constant_negative_negative_infinity();
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  infinity_flonumcldb_plus_plus		= mmux_flonumcldb_constant_positive_positive_infinity();
+  infinity_flonumcldb_plus_minus	= mmux_flonumcldb_constant_positive_negative_infinity();
+  infinity_flonumcldb_minus_plus	= mmux_flonumcldb_constant_negative_positive_infinity();
+  infinity_flonumcldb_minus_minus	= mmux_flonumcldb_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  infinity_flonumcf32_plus_plus		= mmux_flonumcf32_constant_positive_positive_infinity();
+  infinity_flonumcf32_plus_minus	= mmux_flonumcf32_constant_positive_negative_infinity();
+  infinity_flonumcf32_minus_plus	= mmux_flonumcf32_constant_negative_positive_infinity();
+  infinity_flonumcf32_minus_minus	= mmux_flonumcf32_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  infinity_flonumcf64_plus_plus		= mmux_flonumcf64_constant_positive_positive_infinity();
+  infinity_flonumcf64_plus_minus	= mmux_flonumcf64_constant_positive_negative_infinity();
+  infinity_flonumcf64_minus_plus	= mmux_flonumcf64_constant_negative_positive_infinity();
+  infinity_flonumcf64_minus_minus	= mmux_flonumcf64_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  infinity_flonumcf128_plus_plus	= mmux_flonumcf128_constant_positive_positive_infinity();
+  infinity_flonumcf128_plus_minus	= mmux_flonumcf128_constant_positive_negative_infinity();
+  infinity_flonumcf128_minus_plus	= mmux_flonumcf128_constant_negative_positive_infinity();
+  infinity_flonumcf128_minus_minus	= mmux_flonumcf128_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  infinity_flonumcf32x_plus_plus	= mmux_flonumcf32x_constant_positive_positive_infinity();
+  infinity_flonumcf32x_plus_minus	= mmux_flonumcf32x_constant_positive_negative_infinity();
+  infinity_flonumcf32x_minus_plus	= mmux_flonumcf32x_constant_negative_positive_infinity();
+  infinity_flonumcf32x_minus_minus	= mmux_flonumcf32x_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  infinity_flonumcf64x_plus_plus	= mmux_flonumcf64x_constant_positive_positive_infinity();
+  infinity_flonumcf64x_plus_minus	= mmux_flonumcf64x_constant_positive_negative_infinity();
+  infinity_flonumcf64x_minus_plus	= mmux_flonumcf64x_constant_negative_positive_infinity();
+  infinity_flonumcf64x_minus_minus	= mmux_flonumcf64x_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  infinity_flonumcf128x_plus_plus	= mmux_flonumcf128x_constant_positive_positive_infinity();
+  infinity_flonumcf128x_plus_minus	= mmux_flonumcf128x_constant_positive_negative_infinity();
+  infinity_flonumcf128x_minus_plus	= mmux_flonumcf128x_constant_negative_positive_infinity();
+  infinity_flonumcf128x_minus_minus	= mmux_flonumcf128x_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  infinity_flonumcd32_plus_plus		= mmux_flonumcd32_constant_positive_positive_infinity();
+  infinity_flonumcd32_plus_minus	= mmux_flonumcd32_constant_positive_negative_infinity();
+  infinity_flonumcd32_minus_plus	= mmux_flonumcd32_constant_negative_positive_infinity();
+  infinity_flonumcd32_minus_minus	= mmux_flonumcd32_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  infinity_flonumcd64_plus_plus		= mmux_flonumcd64_constant_positive_positive_infinity();
+  infinity_flonumcd64_plus_minus	= mmux_flonumcd64_constant_positive_negative_infinity();
+  infinity_flonumcd64_minus_plus	= mmux_flonumcd64_constant_negative_positive_infinity();
+  infinity_flonumcd64_minus_minus	= mmux_flonumcd64_constant_negative_negative_infinity();
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  infinity_flonumcd128_plus_plus	= mmux_flonumcd128_constant_positive_positive_infinity();
+  infinity_flonumcd128_plus_minus	= mmux_flonumcd128_constant_positive_negative_infinity();
+  infinity_flonumcd128_minus_plus	= mmux_flonumcd128_constant_negative_positive_infinity();
+  infinity_flonumcd128_minus_minus	= mmux_flonumcd128_constant_negative_negative_infinity();
+#endif
+}
+
 
 /** --------------------------------------------------------------------
  ** Is zero.
@@ -33,118 +202,152 @@ test_sign_predicate_is_zero (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_INTEGER
-#define DOIT_INTEGER(STEM)				    \
+#undef  DOIT_FOR_THIS_NUMBER
+#define DOIT_FOR_THIS_NUMBER(STEM,RESULT,CTOR)		    \
   {							    \
-    auto	valueT = mmux_##STEM##_literal(0);	    \
-    auto	valueF = mmux_##STEM##_literal(1);	    \
-    assert(true  == mmux_##STEM##_is_zero(valueT));	    \
-    assert(false == mmux_##STEM##_is_zero(valueF));	    \
-    assert(true  == mmux_ctype_is_zero(valueT));	    \
-    assert(false == mmux_ctype_is_zero(valueF));	    \
+    auto	A = mmux_##STEM##_##CTOR;		    \
+    auto	R = RESULT;				    \
+    assert(R == mmux_##STEM##_is_zero(A));		    \
+    assert(R == mmux_ctype_is_zero(A));			    \
+  }
+
+#undef  DOIT_SIGNED_INTEGER
+#define DOIT_SIGNED_INTEGER(STEM)			    \
+  {							    \
+    DOIT_FOR_THIS_NUMBER(STEM,true ,literal( 0));	    \
+    DOIT_FOR_THIS_NUMBER(STEM,false,literal(+1));	    \
+    DOIT_FOR_THIS_NUMBER(STEM,false,literal(-1));	    \
+    DOIT_FOR_THIS_NUMBER(STEM,true ,constant_zero());	    \
     dprintf(2," %s,", #STEM);				    \
   }
 
-#undef  DOIT_FLONUMR
-#define DOIT_FLONUMR(STEM)				    \
+#undef  DOIT_UNSIGNED_INTEGER
+#define DOIT_UNSIGNED_INTEGER(STEM)			    \
   {							    \
-    auto	valueT = mmux_##STEM##_literal(0.0);	    \
-    auto	valueF = mmux_##STEM##_literal(1.0);	    \
-    assert(true  == mmux_##STEM##_is_zero(valueT));	    \
-    assert(false == mmux_##STEM##_is_zero(valueF));	    \
-    assert(true  == mmux_ctype_is_zero(valueT));	    \
-    assert(false == mmux_ctype_is_zero(valueF));	    \
+    DOIT_FOR_THIS_NUMBER(STEM,true ,literal( 0));	    \
+    DOIT_FOR_THIS_NUMBER(STEM,false,literal(+1));	    \
+    DOIT_FOR_THIS_NUMBER(STEM,true ,constant_zero());	    \
     dprintf(2," %s,", #STEM);				    \
   }
+
+#undef  DOIT_FLONUM
+#define DOIT_FLONUM(STEM)						\
+  {									\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,literal( 0.0));			\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,literal(+0.0));			\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,literal(-0.0));			\
+    DOIT_FOR_THIS_NUMBER(STEM,false,literal(+1.0));			\
+    DOIT_FOR_THIS_NUMBER(STEM,false,literal(-1.0));			\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,constant_zero());			\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_nan());			\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_positive_infinity());	\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_negative_infinity());	\
+    dprintf(2," %s,", #STEM);						\
+ }
 
 #undef  DOIT_FLONUMC
 #define DOIT_FLONUMC(STEM)							\
   {										\
-    auto	valueT = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
-    auto	valueF = mmux_##STEM##_rectangular_literal(1.0,0.0);	\
-    assert(true  == mmux_##STEM##_is_zero(valueT));				\
-    assert(false == mmux_##STEM##_is_zero(valueF));				\
-    assert(true  == mmux_ctype_is_zero(valueT));				\
-    assert(false == mmux_ctype_is_zero(valueF));				\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,rectangular_literal( 0.0, 0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,rectangular_literal(+0.0,+0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,rectangular_literal(-0.0,-0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,rectangular_literal(+0.0,-0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,true ,rectangular_literal(-0.0,+0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal(+1.0, 0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal(-1.0, 0.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal( 0.0,+1.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal( 0.0,-1.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal(-1.0,-1.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal(+1.0,-1.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal(-1.0,+1.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,rectangular_literal(+1.0,+1.0));		\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_nan());				\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_positive_positive_infinity());	\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_positive_negative_infinity());	\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_negative_positive_infinity());	\
+    DOIT_FOR_THIS_NUMBER(STEM,false,constant_negative_negative_infinity());	\
     dprintf(2," %s,", #STEM);							\
   }
 
-  DOIT_INTEGER(char);
-  DOIT_INTEGER(char);
-  DOIT_INTEGER(schar);
-  DOIT_INTEGER(uchar);
-  DOIT_INTEGER(sshort);
-  DOIT_INTEGER(ushort);
-  DOIT_INTEGER(sint);
-  DOIT_INTEGER(uint);
-  DOIT_INTEGER(slong);
-  DOIT_INTEGER(ulong);
+#ifdef MMUX_CC_TYPES_CHAR_IS_UNSIGNED
+  DOIT_UNSIGNED_INTEGER(char);
+#else
+  DOIT_SIGNED_INTEGER(char);
+#endif
+  DOIT_SIGNED_INTEGER(schar);
+  DOIT_UNSIGNED_INTEGER(uchar);
+  DOIT_SIGNED_INTEGER(sshort);
+  DOIT_UNSIGNED_INTEGER(ushort);
+  DOIT_SIGNED_INTEGER(sint);
+  DOIT_UNSIGNED_INTEGER(uint);
+  DOIT_SIGNED_INTEGER(slong);
+  DOIT_UNSIGNED_INTEGER(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT_INTEGER(sllong);
+  DOIT_SIGNED_INTEGER(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT_INTEGER(ullong);
+  DOIT_UNSIGNED_INTEGER(ullong);
 #endif
-  DOIT_INTEGER(sint8);
-  DOIT_INTEGER(uint8);
-  DOIT_INTEGER(sint16);
-  DOIT_INTEGER(uint16);
-  DOIT_INTEGER(sint32);
-  DOIT_INTEGER(uint32);
-  DOIT_INTEGER(sint64);
-  DOIT_INTEGER(uint64);
-  DOIT_INTEGER(ssize);
-  DOIT_INTEGER(usize);
-  DOIT_INTEGER(sintmax);
-  DOIT_INTEGER(uintmax);
-  DOIT_INTEGER(sintptr);
-  DOIT_INTEGER(uintptr);
-  DOIT_INTEGER(ptrdiff);
-  DOIT_INTEGER(mode);
-  DOIT_INTEGER(pid);
-  DOIT_INTEGER(uid);
-  DOIT_INTEGER(gid);
-  DOIT_INTEGER(off);
-  DOIT_INTEGER(wchar);
-  DOIT_INTEGER(wint);
-  DOIT_INTEGER(rlim);
-  DOIT_INTEGER(socklen);
-  DOIT_INTEGER(time);
+  DOIT_SIGNED_INTEGER(sint8);
+  DOIT_UNSIGNED_INTEGER(uint8);
+  DOIT_SIGNED_INTEGER(sint16);
+  DOIT_UNSIGNED_INTEGER(uint16);
+  DOIT_SIGNED_INTEGER(sint32);
+  DOIT_UNSIGNED_INTEGER(uint32);
+  DOIT_SIGNED_INTEGER(sint64);
+  DOIT_UNSIGNED_INTEGER(uint64);
+  DOIT_SIGNED_INTEGER(ssize);
+  DOIT_UNSIGNED_INTEGER(usize);
+  DOIT_SIGNED_INTEGER(sintmax);
+  DOIT_UNSIGNED_INTEGER(uintmax);
+  DOIT_SIGNED_INTEGER(sintptr);
+  DOIT_UNSIGNED_INTEGER(uintptr);
+  DOIT_SIGNED_INTEGER(ptrdiff);
+  DOIT_UNSIGNED_INTEGER(mode);
+  DOIT_SIGNED_INTEGER(pid);
+  DOIT_UNSIGNED_INTEGER(uid);
+  DOIT_UNSIGNED_INTEGER(gid);
+  DOIT_SIGNED_INTEGER(off);
+  DOIT_SIGNED_INTEGER(wchar);
+  DOIT_UNSIGNED_INTEGER(wint);
+  DOIT_UNSIGNED_INTEGER(rlim);
+  DOIT_UNSIGNED_INTEGER(socklen);
+  DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(flonumfl);
-  DOIT_FLONUMR(flonumdb);
+  DOIT_FLONUM(flonumfl);
+  DOIT_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FLONUMR(flonumldb);
+  DOIT_FLONUM(flonumldb);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FLONUMR(flonumf32);
+  DOIT_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FLONUMR(flonumf64);
+  DOIT_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FLONUMR(flonumf128);
+  DOIT_FLONUM(flonumf128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FLONUMR(flonumf32x);
+  DOIT_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FLONUMR(flonumf64x);
+  DOIT_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FLONUMR(flonumf128x);
+  DOIT_FLONUM(flonumf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FLONUMR(flonumd32);
+  DOIT_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FLONUMR(flonumd64);
+  DOIT_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FLONUMR(flonumd128);
+  DOIT_FLONUM(flonumd128);
 #endif
 
   DOIT_FLONUMC(flonumcfl);
@@ -199,61 +402,94 @@ test_sign_predicate_is_positive (void)
 #undef  DOIT_SIGNED_INTEGER
 #define DOIT_SIGNED_INTEGER(STEM)			    \
   {							    \
-    auto	valueA = mmux_##STEM##_literal(+1);	    \
-    auto	valueB = mmux_##STEM##_literal(0);	    \
-    auto	valueC = mmux_##STEM##_literal(-1);	    \
-    assert(true  == mmux_##STEM##_is_positive(valueA));	    \
-    assert(false == mmux_##STEM##_is_positive(valueB));	    \
-    assert(false == mmux_##STEM##_is_positive(valueC));	    \
-    assert(true  == mmux_ctype_is_positive(valueA));	    \
-    assert(false == mmux_ctype_is_positive(valueB));	    \
-    assert(false == mmux_ctype_is_positive(valueC));	    \
+    auto	A = mmux_##STEM##_literal(+1);		    \
+    auto	B = mmux_##STEM##_literal(0);		    \
+    auto	C = mmux_##STEM##_literal(-1);		    \
+    assert(true  == mmux_##STEM##_is_positive(A));	    \
+    assert(false == mmux_##STEM##_is_positive(B));	    \
+    assert(false == mmux_##STEM##_is_positive(C));	    \
+    assert(true  == mmux_ctype_is_positive(A));		    \
+    assert(false == mmux_ctype_is_positive(B));		    \
+    assert(false == mmux_ctype_is_positive(C));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_UNSIGNED_INTEGER
 #define DOIT_UNSIGNED_INTEGER(STEM)			    \
   {							    \
-    auto	valueA = mmux_##STEM##_literal(+1);	    \
-    auto	valueB = mmux_##STEM##_literal(0);	    \
-    assert(true  == mmux_##STEM##_is_positive(valueA));	    \
-    assert(false == mmux_##STEM##_is_positive(valueB));	    \
-    assert(true  == mmux_ctype_is_positive(valueA));	    \
-    assert(false == mmux_ctype_is_positive(valueB));	    \
+    auto	A = mmux_##STEM##_literal(+1);		    \
+    auto	B = mmux_##STEM##_literal(0);		    \
+    assert(true  == mmux_##STEM##_is_positive(A));	    \
+    assert(false == mmux_##STEM##_is_positive(B));	    \
+    assert(true  == mmux_ctype_is_positive(A));		    \
+    assert(false == mmux_ctype_is_positive(B));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
-#undef  DOIT_FLONUMR
-#define DOIT_FLONUMR(STEM)				    \
+#undef  DOIT_FLONUM
+#define DOIT_FLONUM(STEM)				    \
   {							    \
-    auto	valueA = mmux_##STEM##_literal(+1.0);	    \
-    auto	valueB = mmux_##STEM##_literal(+0.0);	    \
-    auto	valueC = mmux_##STEM##_literal(-0.0);	    \
-    auto	valueD = mmux_##STEM##_literal(-1.0);	    \
-    assert(true  == mmux_##STEM##_is_positive(valueA));	    \
-    assert(true  == mmux_##STEM##_is_positive(valueB));	    \
-    assert(false == mmux_##STEM##_is_positive(valueC));	    \
-    assert(false == mmux_##STEM##_is_positive(valueD));	    \
-    assert(true  == mmux_ctype_is_positive(valueA));	    \
-    assert(true  == mmux_ctype_is_positive(valueB));	    \
-    assert(false == mmux_ctype_is_positive(valueC));	    \
-    assert(false == mmux_ctype_is_positive(valueD));	    \
+    auto	A = mmux_##STEM##_literal(+1.0);	    \
+    auto	B = mmux_##STEM##_literal(+0.0);	    \
+    auto	C = mmux_##STEM##_literal(-0.0);	    \
+    auto	D = mmux_##STEM##_literal(-1.0);	    \
+    assert(true  == mmux_##STEM##_is_positive(A));	    \
+    assert(true  == mmux_##STEM##_is_positive(B));	    \
+    assert(false == mmux_##STEM##_is_positive(C));	    \
+    assert(false == mmux_##STEM##_is_positive(D));	    \
+    assert(true  == mmux_ctype_is_positive(A));		    \
+    assert(true  == mmux_ctype_is_positive(B));		    \
+    assert(false == mmux_ctype_is_positive(C));		    \
+    assert(false == mmux_ctype_is_positive(D));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FLONUMC
-#define DOIT_FLONUMC(STEM)							\
-  {										\
-    auto	valueA = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
-    auto	valueB = mmux_##STEM##_rectangular_literal(+1.0,0.0);	\
-    auto	valueC = mmux_##STEM##_rectangular_literal(-1.0,0.0);	\
-    assert(false == mmux_##STEM##_is_positive(valueA));				\
-    assert(false == mmux_##STEM##_is_positive(valueB));				\
-    assert(false == mmux_##STEM##_is_positive(valueC));				\
-    assert(false == mmux_ctype_is_positive(valueA));				\
-    assert(false == mmux_ctype_is_positive(valueB));				\
-    assert(false == mmux_ctype_is_positive(valueC));				\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FLONUMC(STEM)						\
+  {									\
+    auto	A = mmux_##STEM##_rectangular_literal( 0.0, 0.0);	\
+    auto	B = mmux_##STEM##_rectangular_literal(+0.0,+0.0);	\
+    auto	C = mmux_##STEM##_rectangular_literal(-0.0,-0.0);	\
+    auto	D = mmux_##STEM##_rectangular_literal(+0.0,-0.0);	\
+    auto	E = mmux_##STEM##_rectangular_literal(-0.0,+0.0);	\
+    auto	F = mmux_##STEM##_rectangular_literal(+1.0, 0.0);	\
+    auto	G = mmux_##STEM##_rectangular_literal(-1.0, 0.0);	\
+    auto	H = mmux_##STEM##_rectangular_literal( 0.0,+1.0);	\
+    auto	J = mmux_##STEM##_rectangular_literal( 0.0,-1.0);	\
+    auto	K = mmux_##STEM##_rectangular_literal(-1.0,-1.0);	\
+    auto	L = mmux_##STEM##_rectangular_literal(+1.0,-1.0);	\
+    auto	M = mmux_##STEM##_rectangular_literal(-1.0,+1.0);	\
+    auto	N = mmux_##STEM##_rectangular_literal(+1.0,+1.0);	\
+    auto	O = mmux_##STEM##_constant_nan();			\
+    assert(true  == mmux_##STEM##_is_positive(A));			\
+    assert(true  == mmux_##STEM##_is_positive(B));			\
+    assert(false == mmux_##STEM##_is_positive(C));			\
+    assert(false == mmux_##STEM##_is_positive(D));			\
+    assert(false == mmux_##STEM##_is_positive(E));			\
+    assert(true  == mmux_##STEM##_is_positive(F));			\
+    assert(false == mmux_##STEM##_is_positive(G));			\
+    assert(true  == mmux_##STEM##_is_positive(H));			\
+    assert(false == mmux_##STEM##_is_positive(J));			\
+    assert(false == mmux_##STEM##_is_positive(K));			\
+    assert(false == mmux_##STEM##_is_positive(L));			\
+    assert(false == mmux_##STEM##_is_positive(M));			\
+    assert(true  == mmux_##STEM##_is_positive(N));			\
+    assert(false == mmux_##STEM##_is_positive(O));			\
+    assert(true  == mmux_ctype_is_positive(A));				\
+    assert(true  == mmux_ctype_is_positive(B));				\
+    assert(false == mmux_ctype_is_positive(C));				\
+    assert(false == mmux_ctype_is_positive(D));				\
+    assert(false == mmux_ctype_is_positive(E));				\
+    assert(true  == mmux_ctype_is_positive(F));				\
+    assert(false == mmux_ctype_is_positive(G));				\
+    assert(true  == mmux_ctype_is_positive(H));				\
+    assert(false == mmux_ctype_is_positive(J));				\
+    assert(false == mmux_ctype_is_positive(K));				\
+    assert(false == mmux_ctype_is_positive(L));				\
+    assert(false == mmux_ctype_is_positive(M));				\
+    assert(true  == mmux_ctype_is_positive(N));				\
+    assert(false == mmux_ctype_is_positive(O));				\
+    dprintf(2," %s,", #STEM);						\
   }
 
 #ifdef MMUX_CC_TYPES_CHAR_IS_UNSIGNED
@@ -292,49 +528,49 @@ test_sign_predicate_is_positive (void)
   DOIT_SIGNED_INTEGER(ptrdiff);
   DOIT_UNSIGNED_INTEGER(mode);
   DOIT_UNSIGNED_INTEGER(pid);
-  DOIT_INTEGER(uid);
+  DOIT_UNSIGNED_INTEGER(uid);
   DOIT_UNSIGNED_INTEGER(gid);
   DOIT_SIGNED_INTEGER(off);
-  DOIT_UNSIGNED_INTEGER(wchar);
+  DOIT_SIGNED_INTEGER(wchar);
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(flonumfl);
-  DOIT_FLONUMR(flonumdb);
+  DOIT_FLONUM(flonumfl);
+  DOIT_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FLONUMR(flonumldb);
+  DOIT_FLONUM(flonumldb);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FLONUMR(flonumf32);
+  DOIT_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FLONUMR(flonumf64);
+  DOIT_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FLONUMR(flonumf128);
+  DOIT_FLONUM(flonumf128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FLONUMR(flonumf32x);
+  DOIT_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FLONUMR(flonumf64x);
+  DOIT_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FLONUMR(flonumf128x);
+  DOIT_FLONUM(flonumf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FLONUMR(flonumd32);
+  DOIT_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FLONUMR(flonumd64);
+  DOIT_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FLONUMR(flonumd128);
+  DOIT_FLONUM(flonumd128);
 #endif
 
   DOIT_FLONUMC(flonumcfl);
@@ -389,61 +625,94 @@ test_sign_predicate_is_negative (void)
 #undef  DOIT_SIGNED_INTEGER
 #define DOIT_SIGNED_INTEGER(STEM)			    \
   {							    \
-    auto	valueA = mmux_##STEM##_literal(+1);	    \
-    auto	valueB = mmux_##STEM##_literal(0);	    \
-    auto	valueC = mmux_##STEM##_literal(-1);	    \
-    assert(false == mmux_##STEM##_is_negative(valueA));	    \
-    assert(false == mmux_##STEM##_is_negative(valueB));	    \
-    assert(true  == mmux_##STEM##_is_negative(valueC));	    \
-    assert(false == mmux_ctype_is_negative(valueA));	    \
-    assert(false == mmux_ctype_is_negative(valueB));	    \
-    assert(true  == mmux_ctype_is_negative(valueC));	    \
+    auto	A = mmux_##STEM##_literal(+1);		    \
+    auto	B = mmux_##STEM##_literal(0);		    \
+    auto	C = mmux_##STEM##_literal(-1);		    \
+    assert(false == mmux_##STEM##_is_negative(A));	    \
+    assert(false == mmux_##STEM##_is_negative(B));	    \
+    assert(true  == mmux_##STEM##_is_negative(C));	    \
+    assert(false == mmux_ctype_is_negative(A));		    \
+    assert(false == mmux_ctype_is_negative(B));		    \
+    assert(true  == mmux_ctype_is_negative(C));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_UNSIGNED_INTEGER
 #define DOIT_UNSIGNED_INTEGER(STEM)			    \
   {							    \
-    auto	valueA = mmux_##STEM##_literal(+1);	    \
-    auto	valueB = mmux_##STEM##_literal(0);	    \
-    assert(false == mmux_##STEM##_is_negative(valueA));	    \
-    assert(false == mmux_##STEM##_is_negative(valueB));	    \
-    assert(false == mmux_ctype_is_negative(valueA));	    \
-    assert(false == mmux_ctype_is_negative(valueB));	    \
+    auto	A = mmux_##STEM##_literal(+1);		    \
+    auto	B = mmux_##STEM##_literal(0);		    \
+    assert(false == mmux_##STEM##_is_negative(A));	    \
+    assert(false == mmux_##STEM##_is_negative(B));	    \
+    assert(false == mmux_ctype_is_negative(A));		    \
+    assert(false == mmux_ctype_is_negative(B));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
-#undef  DOIT_FLONUMR
-#define DOIT_FLONUMR(STEM)				    \
+#undef  DOIT_FLONUM
+#define DOIT_FLONUM(STEM)				    \
   {							    \
-    auto	valueA = mmux_##STEM##_literal(+1.0);	    \
-    auto	valueB = mmux_##STEM##_literal(+0.0);	    \
-    auto	valueC = mmux_##STEM##_literal(-0.0);	    \
-    auto	valueD = mmux_##STEM##_literal(-1.0);	    \
-    assert(false == mmux_##STEM##_is_negative(valueA));	    \
-    assert(false == mmux_##STEM##_is_negative(valueB));	    \
-    assert(true  == mmux_##STEM##_is_negative(valueC));	    \
-    assert(true  == mmux_##STEM##_is_negative(valueD));	    \
-    assert(false == mmux_ctype_is_negative(valueA));	    \
-    assert(false == mmux_ctype_is_negative(valueB));	    \
-    assert(true  == mmux_ctype_is_negative(valueC));	    \
-    assert(true  == mmux_ctype_is_negative(valueD));	    \
+    auto	A = mmux_##STEM##_literal(+1.0);	    \
+    auto	B = mmux_##STEM##_literal(+0.0);	    \
+    auto	C = mmux_##STEM##_literal(-0.0);	    \
+    auto	D = mmux_##STEM##_literal(-1.0);	    \
+    assert(false == mmux_##STEM##_is_negative(A));	    \
+    assert(false == mmux_##STEM##_is_negative(B));	    \
+    assert(true  == mmux_##STEM##_is_negative(C));	    \
+    assert(true  == mmux_##STEM##_is_negative(D));	    \
+    assert(false == mmux_ctype_is_negative(A));		    \
+    assert(false == mmux_ctype_is_negative(B));		    \
+    assert(true  == mmux_ctype_is_negative(C));		    \
+    assert(true  == mmux_ctype_is_negative(D));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FLONUMC
-#define DOIT_FLONUMC(STEM)							\
-  {										\
-    auto	valueA = mmux_##STEM##_rectangular_literal(0.0,0.0);	\
-    auto	valueB = mmux_##STEM##_rectangular_literal(+1.0,0.0);	\
-    auto	valueC = mmux_##STEM##_rectangular_literal(-1.0,0.0);	\
-    assert(false == mmux_##STEM##_is_negative(valueA));				\
-    assert(false == mmux_##STEM##_is_negative(valueB));				\
-    assert(false == mmux_##STEM##_is_negative(valueC));				\
-    assert(false == mmux_ctype_is_negative(valueA));				\
-    assert(false == mmux_ctype_is_negative(valueB));				\
-    assert(false == mmux_ctype_is_negative(valueC));				\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FLONUMC(STEM)						\
+  {									\
+    auto	A = mmux_##STEM##_rectangular_literal( 0.0, 0.0);	\
+    auto	B = mmux_##STEM##_rectangular_literal(+0.0,+0.0);	\
+    auto	C = mmux_##STEM##_rectangular_literal(-0.0,-0.0);	\
+    auto	D = mmux_##STEM##_rectangular_literal(+0.0,-0.0);	\
+    auto	E = mmux_##STEM##_rectangular_literal(-0.0,+0.0);	\
+    auto	F = mmux_##STEM##_rectangular_literal(+1.0, 0.0);	\
+    auto	G = mmux_##STEM##_rectangular_literal(-1.0, 0.0);	\
+    auto	H = mmux_##STEM##_rectangular_literal( 0.0,+1.0);	\
+    auto	J = mmux_##STEM##_rectangular_literal( 0.0,-1.0);	\
+    auto	K = mmux_##STEM##_rectangular_literal(-1.0,-1.0);	\
+    auto	L = mmux_##STEM##_rectangular_literal(+1.0,-1.0);	\
+    auto	M = mmux_##STEM##_rectangular_literal(-1.0,+1.0);	\
+    auto	N = mmux_##STEM##_rectangular_literal(+1.0,+1.0);	\
+    auto	O = mmux_##STEM##_constant_nan();			\
+    assert(true  == mmux_##STEM##_is_negative(A));			\
+    assert(true  == mmux_##STEM##_is_negative(B));			\
+    assert(false == mmux_##STEM##_is_negative(C));			\
+    assert(false == mmux_##STEM##_is_negative(D));			\
+    assert(false == mmux_##STEM##_is_negative(E));			\
+    assert(true  == mmux_##STEM##_is_negative(F));			\
+    assert(false == mmux_##STEM##_is_negative(G));			\
+    assert(true  == mmux_##STEM##_is_negative(H));			\
+    assert(false == mmux_##STEM##_is_negative(J));			\
+    assert(false == mmux_##STEM##_is_negative(K));			\
+    assert(false == mmux_##STEM##_is_negative(L));			\
+    assert(false == mmux_##STEM##_is_negative(M));			\
+    assert(true  == mmux_##STEM##_is_negative(N));			\
+    assert(false == mmux_##STEM##_is_negative(O));			\
+    assert(true  == mmux_ctype_is_negative(A));				\
+    assert(true  == mmux_ctype_is_negative(B));				\
+    assert(false == mmux_ctype_is_negative(C));				\
+    assert(false == mmux_ctype_is_negative(D));				\
+    assert(false == mmux_ctype_is_negative(E));				\
+    assert(true  == mmux_ctype_is_negative(F));				\
+    assert(false == mmux_ctype_is_negative(G));				\
+    assert(true  == mmux_ctype_is_negative(H));				\
+    assert(false == mmux_ctype_is_negative(J));				\
+    assert(false == mmux_ctype_is_negative(K));				\
+    assert(false == mmux_ctype_is_negative(L));				\
+    assert(false == mmux_ctype_is_negative(M));				\
+    assert(true  == mmux_ctype_is_negative(N));				\
+    assert(false == mmux_ctype_is_negative(O));				\
+    dprintf(2," %s,", #STEM);						\
   }
 
 #ifdef MMUX_CC_TYPES_CHAR_IS_UNSIGNED
@@ -482,49 +751,49 @@ test_sign_predicate_is_negative (void)
   DOIT_SIGNED_INTEGER(ptrdiff);
   DOIT_UNSIGNED_INTEGER(mode);
   DOIT_UNSIGNED_INTEGER(pid);
-  DOIT_INTEGER(uid);
+  DOIT_UNSIGNED_INTEGER(uid);
   DOIT_UNSIGNED_INTEGER(gid);
   DOIT_SIGNED_INTEGER(off);
-  DOIT_UNSIGNED_INTEGER(wchar);
+  DOIT_SIGNED_INTEGER(wchar);
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(flonumfl);
-  DOIT_FLONUMR(flonumdb);
+  DOIT_FLONUM(flonumfl);
+  DOIT_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FLONUMR(flonumldb);
+  DOIT_FLONUM(flonumldb);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FLONUMR(flonumf32);
+  DOIT_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FLONUMR(flonumf64);
+  DOIT_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FLONUMR(flonumf128);
+  DOIT_FLONUM(flonumf128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FLONUMR(flonumf32x);
+  DOIT_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FLONUMR(flonumf64x);
+  DOIT_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FLONUMR(flonumf128x);
+  DOIT_FLONUM(flonumf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FLONUMR(flonumd32);
+  DOIT_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FLONUMR(flonumd64);
+  DOIT_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FLONUMR(flonumd128);
+  DOIT_FLONUM(flonumd128);
 #endif
 
   DOIT_FLONUMC(flonumcfl);
@@ -603,8 +872,8 @@ test_sign_predicate_is_non_positive (void)
     dprintf(2," %s,", #STEM);					\
   }
 
-#undef  DOIT_FLONUMR
-#define DOIT_FLONUMR(STEM)					\
+#undef  DOIT_FLONUM
+#define DOIT_FLONUM(STEM)					\
   {								\
     auto	valueA = mmux_##STEM##_literal(+1.0);		\
     auto	valueB = mmux_##STEM##_literal(+0.0);		\
@@ -672,49 +941,49 @@ test_sign_predicate_is_non_positive (void)
   DOIT_SIGNED_INTEGER(ptrdiff);
   DOIT_UNSIGNED_INTEGER(mode);
   DOIT_UNSIGNED_INTEGER(pid);
-  DOIT_INTEGER(uid);
+  DOIT_UNSIGNED_INTEGER(uid);
   DOIT_UNSIGNED_INTEGER(gid);
   DOIT_SIGNED_INTEGER(off);
-  DOIT_UNSIGNED_INTEGER(wchar);
+  DOIT_SIGNED_INTEGER(wchar);
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(flonumfl);
-  DOIT_FLONUMR(flonumdb);
+  DOIT_FLONUM(flonumfl);
+  DOIT_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FLONUMR(flonumldb);
+  DOIT_FLONUM(flonumldb);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FLONUMR(flonumf32);
+  DOIT_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FLONUMR(flonumf64);
+  DOIT_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FLONUMR(flonumf128);
+  DOIT_FLONUM(flonumf128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FLONUMR(flonumf32x);
+  DOIT_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FLONUMR(flonumf64x);
+  DOIT_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FLONUMR(flonumf128x);
+  DOIT_FLONUM(flonumf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FLONUMR(flonumd32);
+  DOIT_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FLONUMR(flonumd64);
+  DOIT_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FLONUMR(flonumd128);
+  DOIT_FLONUM(flonumd128);
 #endif
 
   DOIT_FLONUMC(flonumcfl);
@@ -793,8 +1062,8 @@ test_sign_predicate_is_non_negative (void)
     dprintf(2," %s,", #STEM);					\
   }
 
-#undef  DOIT_FLONUMR
-#define DOIT_FLONUMR(STEM)					\
+#undef  DOIT_FLONUM
+#define DOIT_FLONUM(STEM)					\
   {								\
     auto	valueA = mmux_##STEM##_literal(+1.0);		\
     auto	valueB = mmux_##STEM##_literal(+0.0);		\
@@ -862,49 +1131,49 @@ test_sign_predicate_is_non_negative (void)
   DOIT_SIGNED_INTEGER(ptrdiff);
   DOIT_UNSIGNED_INTEGER(mode);
   DOIT_UNSIGNED_INTEGER(pid);
-  DOIT_INTEGER(uid);
+  DOIT_UNSIGNED_INTEGER(uid);
   DOIT_UNSIGNED_INTEGER(gid);
   DOIT_SIGNED_INTEGER(off);
-  DOIT_UNSIGNED_INTEGER(wchar);
+  DOIT_SIGNED_INTEGER(wchar);
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
 
-  DOIT_FLONUMR(flonumfl);
-  DOIT_FLONUMR(flonumdb);
+  DOIT_FLONUM(flonumfl);
+  DOIT_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FLONUMR(flonumldb);
+  DOIT_FLONUM(flonumldb);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FLONUMR(flonumf32);
+  DOIT_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FLONUMR(flonumf64);
+  DOIT_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FLONUMR(flonumf128);
+  DOIT_FLONUM(flonumf128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FLONUMR(flonumf32x);
+  DOIT_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FLONUMR(flonumf64x);
+  DOIT_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FLONUMR(flonumf128x);
+  DOIT_FLONUM(flonumf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FLONUMR(flonumd32);
+  DOIT_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FLONUMR(flonumd64);
+  DOIT_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FLONUMR(flonumd128);
+  DOIT_FLONUM(flonumd128);
 #endif
 
   DOIT_FLONUMC(flonumcfl);
@@ -955,6 +1224,7 @@ int
 main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUSED)
 {
   mmux_cc_types_init();
+  initialise_constants();
 
   if (1) {	test_sign_predicate_is_zero();		}
   if (1) {	test_sign_predicate_is_positive();	}

@@ -389,26 +389,47 @@ DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FL
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_$1_t  mmux_standard_$1_is_zero     __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_$1_t  mmux_standard_$1_is_nan      __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_$1_t  mmux_standard_$1_is_infinite __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_$1_t  mmux_standard_$1_is_finite   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_$1_t  mmux_standard_$1_is_normal   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_$1_t  mmux_standard_$1_is_subnormal __attribute__((__const__));
+
+m4_define([[[DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_standard_flonumc$1_$2 (mmux_standard_flonumc$1_t op)
+{
+  if (false) {
+    mmux_cc_types_dprintf(2, "\n%s: here %f %f\n", __func__,
+			  (double)mmux_standard_flonum$1_real_part(op),
+			  (double)mmux_standard_flonum$1_imag_part(op));
+  }
+  return (mmux_standard_flonum$1_$2(mmux_standard_flonumc$1_real_part(op)) &&
+	  mmux_standard_flonum$1_$2(mmux_standard_flonumc$1_imag_part(op))) ?
+    true : false;
+}
+]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_zero)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_positive)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_negative)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_non_positive)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_non_negative)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_nan)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_infinite)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_finite)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_normal)
+DEFINE_STANDARD_FLONUMC_BINARY_PREDICATE($1,	is_subnormal)
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcfl]]])
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcdb]]])
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(fl)
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(db)
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(ldb)
 
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f32)
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f64)
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f128)
 
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f32x)
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f64x)
+DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -425,6 +446,10 @@ mmux_$1_$2 (mmux_$1_t op)
 
 m4_define([[[DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_zero)
+DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_positive)
+DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_negative)
+DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_non_positive)
+DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_non_negative)
 DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_nan)
 DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_infinite)
 DEFINE_FLONUMC_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_finite)

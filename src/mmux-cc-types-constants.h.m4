@@ -29,12 +29,12 @@
 
 m4_divert(-1)
 m4_define([[[DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_constant_$2 (void)
 {
   return (mmux_standard_$1_t)($3);
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_constant_$2 (void)
 {
   return mmux_$1(mmux_standard_$1_constant_$2());
@@ -47,12 +47,12 @@ mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_maximum (void)
 mmux_cc_types_decl mmux_standard_$1_t mmux_standard_$1_constant_minimum (void)
   __attribute__((__const__));
 
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_constant_maximum (void)
 {
   return mmux_$1(mmux_standard_$1_constant_maximum());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_constant_minimum (void)
 {
   return mmux_$1(mmux_standard_$1_constant_minimum());
@@ -91,12 +91,12 @@ DEFINE_EXACT_INTEGER_CONSTANT_INLINE_FUNCTIONS(uint64)
 
 m4_divert(-1)
 m4_define([[[DEFINE_EXACT_INTEGER_SINGLE_ALIASED_TYPE_INLINE_FUNCTIONS]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_$1_t
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_constant_$3 (void)
 {
   return mmux_standard_$2_constant_$3();
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_$1_t
+mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_constant_$3 (void)
 {
   return mmux_$1(mmux_standard_$1_constant_$3());
@@ -134,17 +134,17 @@ DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(rlim,	MMUX_CC_TYPES_STEM_ALIAS_RLIM)
  ** Constants: pointers.
  ** ----------------------------------------------------------------- */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_cc_types_inline_decl mmux_pointer_t
 mmux_standard_pointer_constant_zero (void)
 {
   return NULL;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_cc_types_inline_decl mmux_pointer_t
 mmux_standard_pointer_constant_maximum (void)
 {
   return (mmux_pointer_t)mmux_standard_uintptr_constant_maximum();
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_cc_types_inline_decl mmux_pointer_t
 mmux_standard_pointer_constant_minimum (void)
 {
   return (mmux_pointer_t)mmux_standard_uintptr_constant_minimum();
@@ -152,17 +152,17 @@ mmux_standard_pointer_constant_minimum (void)
 
 /* ------------------------------------------------------------------ */
 
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_cc_types_inline_decl mmux_pointer_t
 mmux_pointer_constant_zero (void)
 {
   return mmux_pointer(mmux_standard_pointer_constant_zero());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_cc_types_inline_decl mmux_pointer_t
 mmux_pointer_constant_maximum (void)
 {
   return mmux_pointer(mmux_standard_pointer_constant_maximum());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_pointer_t
+mmux_cc_types_inline_decl mmux_pointer_t
 mmux_pointer_constant_minimum (void)
 {
   return mmux_pointer(mmux_standard_pointer_constant_minimum());
@@ -175,7 +175,7 @@ mmux_pointer_constant_minimum (void)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_flonum$1_constant_$2 (void)
 {
   return mmux_standard_flonum$1_literal($3);
@@ -194,7 +194,7 @@ DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	positive_zero,		+0.0
 DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	negative_zero,		-0.0)
 DEFINE_STANDARD_FLONUM_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_half,		0.5)
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonum$1_t
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_flonum$1_constant_one_third (void)
 {
   /* FIXME There probably  is a better way  to compute this constant.  Or  the use of
@@ -239,12 +239,21 @@ DEFINE_STANDARD_FLONUM_CONSTANTS(f128x)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION]]],
-[[[__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+
+m4_define([[[DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_$2 (void)
 {
   return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_$2(),
 					     mmux_standard_flonum$1_constant_zero());
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_$2_$3_infinity (void)
+{
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_$2_infinity(),
+					     mmux_standard_flonum$1_constant_$3_infinity());
 }]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMC_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
@@ -255,18 +264,24 @@ DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	ten)
 DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_half)
 DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_third)
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_imag (void)
 {
   return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_zero(),
 					     mmux_standard_flonum$1_constant_one());
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumc$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_nan (void)
 {
   return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_nan(),
 					     mmux_standard_flonum$1_constant_nan());
-}]]])]]])
+}
+
+DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
+]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMC_CONSTANTS(fl)
 DEFINE_STANDARD_FLONUMC_CONSTANTS(db)
@@ -285,7 +300,7 @@ DEFINE_STANDARD_FLONUMC_CONSTANTS(f128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonum$1_t
+mmux_cc_types_inline_decl mmux_flonum$1_t
 mmux_flonum$1_constant_$2 (void)
 {
   return (mmux_flonum$1_t) { .value = mmux_standard_flonum$1_constant_$2() };
@@ -336,11 +351,19 @@ DEFINE_FLONUM_CONSTANTS(f128x)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
+
 m4_define([[[DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumc$1_t
+mmux_cc_types_inline_decl mmux_flonumc$1_t
 mmux_flonumc$1_constant_$2 (void)
 {
   return (mmux_flonumc$1_t) { .value = mmux_standard_flonum$1_constant_$2() };
+}]]])
+
+m4_define([[[DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_flonumc$1_t
+mmux_flonumc$1_constant_$2_$3_infinity (void)
+{
+  return (mmux_flonumc$1_t) { .value = mmux_standard_flonumc$1_constant_$2_$3_infinity() };
 }]]])
 
 m4_define([[[DEFINE_FLONUMC_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
@@ -351,6 +374,11 @@ DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	two)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	ten)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	one_half)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	one_third)
+
+DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMC_CONSTANTS(fl)

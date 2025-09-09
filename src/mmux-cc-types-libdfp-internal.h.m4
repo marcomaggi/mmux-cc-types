@@ -78,10 +78,8 @@ m4_define([[[DEFINE_SOME_MACROS]]],[[[
 #define MMUX_STANDARD_FLONUMD$1_IS_ZERO(X)	(FP_ZERO	== (fpclassify(X)))
 #define MMUX_STANDARD_FLONUMD$1_IS_NAN(X)	(FP_NAN		== (fpclassify(X)))
 #define MMUX_STANDARD_FLONUMD$1_IS_INFINITE(X)	(FP_INFINITE	== (fpclassify(X)))
-
-#define mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
-  (mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE),   \
-					mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
+#define MMUX_STANDARD_FLONUMD$1_IS_NORMAL(X)	(FP_NORMAL	== (fpclassify(X)))
+#define MMUX_STANDARD_FLONUMD$1_IS_SUBNORMAL(X)	(FP_SUBNORMAL	== (fpclassify(X)))
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_SOME_MACROS(32)

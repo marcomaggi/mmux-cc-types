@@ -41,12 +41,12 @@ mmux_standard_$1_real_part (mmux_standard_$1_t op)
 mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_imag_part (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return mmux_standard_$1_constant_zero();
+  return mmux_standard_$1_literal(0);
 }
 mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_argument (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return mmux_standard_$1_constant_zero();
+  return mmux_standard_$1_literal(0);
 }
 mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_conjugate (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)
@@ -167,12 +167,12 @@ mmux_standard_flonum$1_real_part (mmux_standard_flonum$1_t op)
 mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_flonum$1_imag_part (mmux_standard_flonum$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return mmux_standard_flonum$1_constant_zero();
+  return mmux_standard_flonum$1_literal(0.0);
 }
 mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_flonum$1_argument (mmux_standard_flonum$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return mmux_standard_flonum$1_constant_zero();
+  return mmux_standard_flonum$1_literal(0.0);
 }
 mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_flonum$1_conjugate (mmux_standard_flonum$1_t op)
@@ -246,6 +246,10 @@ mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular
 										  mmux_standard_flonum$1_t im)
   __attribute__((__const__));
 
+#define mmux_standard_flonumc$1_rectangular_literal(RE,IM)			\
+  mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_literal(RE),	\
+				      mmux_standard_flonum$1_literal(IM))
+
 mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_real_part (mmux_standard_flonumc$1_t op)
   __attribute__((__const__));
 
@@ -283,6 +287,10 @@ mmux_flonumc$1_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
 {
   return mmux_flonumc$1(mmux_standard_flonumc$1_rectangular(re.value, im.value));
 }
+#define mmux_flonumc$1_rectangular_literal(RE,IM)				\
+  mmux_flonumc$1_rectangular(mmux_flonum$1(mmux_standard_flonum$1_literal(RE)), \
+			     mmux_flonum$1(mmux_standard_flonum$1_literal(IM)))
+
 mmux_cc_types_inline_decl mmux_flonum$1_t
 mmux_flonumc$1_real_part (mmux_flonumc$1_t op)
 {

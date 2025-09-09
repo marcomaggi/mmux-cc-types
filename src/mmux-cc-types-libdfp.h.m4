@@ -72,53 +72,52 @@ typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
 #define mmux_standard_flonumd$1_literal(VALUE)		(VALUE ## $2)
 #define mmux_standard_flonumcd$1_part_literal(VALUE)	(mmux_standard_flonumd$1_literal(VALUE))
 
-/* NOTE I would really like to define the maker as an inline function.  Because.  But
- * with the function we cannot declare a  new variable as "constexpr", while with the
- * macro we can.  For example, the following code:
- *
- *  constexpr auto	X = mmux_flonumd32(1024);
- *
- * works fine  under GCC-C23  with macros,  it does  not work  with functions.   I am
- * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
- */
-
 #define mmux_standard_flonumd$1(STANDARD_DECIMAL)	((mmux_standard_flonumd$1_t)(STANDARD_DECIMAL))
 #define mmux_standard_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_standard_flonumcd$1_t)(STANDARD_FLONUMCDB))
 
-#define mmux_standard_flonumcd$1_rectangular(STANDARD_DECIMAL_RE,STANDARD_DECIMAL_IM) \
-  ((mmux_standard_flonumcd$1_t){ .re = (STANDARD_DECIMAL_RE), .im = (STANDARD_DECIMAL_IM) })
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_rectangular (mmux_standard_flonumd$1_t re, mmux_standard_flonumd$1_t im)
+{
+  return (mmux_standard_flonumcd$1_t){ .re = re, .im = im };
+}
 
 #define mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
   (mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
 					mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
 
-#define mmux_flonumd$1(STANDARD_DECIMAL)	((mmux_flonumd$1_t){ .value = (STANDARD_DECIMAL) })
+mmux_cc_types_inline_decl mmux_flonumd$1_t
+mmux_flonumd$1 (mmux_standard_flonumd$1_t value)
+{
+  return (mmux_flonumd$1_t){ .value = value };
+}
 
 #define mmux_flonumd$1_literal(STANDARD_DECIMAL_LITERAL) \
   (mmux_flonumd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL)))
 
-#define mmux_flonumcd$1(STANDARD_FLONUMCD)	((mmux_flonumcd$1_t){ .value = (STANDARD_FLONUMCD) })
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
+mmux_flonumcd$1 (mmux_standard_flonumcd$1_t value)
+{
+  return (mmux_flonumcd$1_t){ .value = value };
+}
 
-/* This is an inline  function, rather than a preprocessor macro, so  that we can use
-   it in the macro "mmux_ctype_rectangular()". */
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
 {
   return mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular(re.value,im.value));
 }
-#define mmux_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
-  (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,       \
+#define mmux_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM)	\
+  (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,		\
 								STANDARD_DECIMAL_LITERAL_IM)))
 
 #define mmux_flonumcd$1_part(VALUE)		(mmux_flonumd$1(VALUE))
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
 
-__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
+mmux_cc_types_inline_decl mmux_sint_t
 mmux_flonumd$1_sizeof (void)
 {
   return mmux_sint(sizeof(mmux_flonumd$1_t));
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
+mmux_cc_types_inline_decl mmux_sint_t
 mmux_flonumcd$1_sizeof (void)
 {
   return mmux_sint(sizeof(mmux_flonumcd$1_t));
@@ -168,10 +167,12 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
  ** Includes.
  ** ----------------------------------------------------------------- */
 
+/* Order is important here!  There are a lot of inline functions. */
+
 #include <mmux-cc-types-libdfp-constants.h>
+#include <mmux-cc-types-libdfp-complex.h>
 #include <mmux-cc-types-libdfp-sign-predicates.h>
 #include <mmux-cc-types-libdfp-arithmetics.h>
-#include <mmux-cc-types-libdfp-complex.h>
 #include <mmux-cc-types-libdfp-comparison.h>
 #include <mmux-cc-types-libdfp-mathematics.h>
 

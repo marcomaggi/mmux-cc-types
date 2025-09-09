@@ -23,48 +23,132 @@
 
 
 /** --------------------------------------------------------------------
- ** Predicates.
+ ** Sign predicates: standard flonumd
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_FLONUMD_PREDICATE_PROTOS]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_zero
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_positive
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_negative
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_non_positive
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_non_negative
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_nan
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_infinite
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_finite
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_normal
+  __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonumd$1_t  mmux_standard_flonumd$1_is_subnormal
+  __attribute__((__const__));
+]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMD_PREDICATE_PROTOS(32)
+DEFINE_FLONUMD_PREDICATE_PROTOS(64)
+DEFINE_FLONUMD_PREDICATE_PROTOS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Sign predicates: flonumd
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 
 m4_define([[[DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
-mmux_flonum$1_is_$2 (mmux_flonum$1_t op)
+mmux_cc_types_inline_decl bool
+mmux_flonumd$1_$2 (mmux_flonumd$1_t op)
 {
-  return mmux_standard_flonum$1_is_$2(op.value);
+  return mmux_standard_flonumd$1_$2(op.value);
 }]]])
 
-m4_define([[[DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS]]],[[[
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_zero
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_nan
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_infinite
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_positive
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_negative
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_non_positive
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_unary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_is_non_negative
-  __attribute__((__const__));
-
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	zero)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	nan)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	infinite)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	positive)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	negative)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	non_positive)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	non_negative)
+m4_define([[[DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS]]],[[[m4_dnl
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_zero)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_positive)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_negative)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_non_positive)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_non_negative)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_nan)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_infinite)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_finite)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_normal)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_subnormal)
 ]]])
 m4_divert(0)m4_dnl
-DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(d32)
-DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(d64)
-DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(d128)
-DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(cd32)
-DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(cd64)
-DEFINE_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(cd128)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS(32)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS(64)
+DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Sign predicates: standard flonumcd
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t op)
+{
+  return (mmux_standard_flonumd$1_$2(mmux_standard_flonumcd$1_real_part(op)) &&
+	  mmux_standard_flonumd$1_$2(mmux_standard_flonumcd$1_imag_part(op)))?
+    true : false;
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS]]],[[[m4_dnl
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_zero)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_positive)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_negative)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_non_positive)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_non_negative)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_nan)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_infinite)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_finite)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_normal)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_INLINE_FUNCTION($1,	is_subnormal)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(32)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(64)
+DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Sign predicates: flonumcd
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op)
+{
+  return mmux_standard_flonumcd$1_$2(op.value);
+}]]])
+
+m4_define([[[DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS]]],[[[m4_dnl
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_zero)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_positive)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_negative)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_non_positive)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_non_negative)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_nan)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_infinite)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_finite)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_normal)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_subnormal)
+]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(32)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(64)
+DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(128)
 
 /* end of file */

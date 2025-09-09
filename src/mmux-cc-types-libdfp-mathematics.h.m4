@@ -155,21 +155,21 @@ DEFINE_STANDARD_FLONUMCD_MATH_PROTOS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMD_UNARY_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_$2 (mmux_flonumd$1_t op)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op.value));
 }]]])
 
 m4_define([[[DEFINE_FLONUMD_BINARY_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_$2 (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op1.value, op2.value));
 }]]])
 
 m4_define([[[DEFINE_FLONUMD_BINARY_SINT_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_$2 (mmux_sint_t op1, mmux_flonumd$1_t op2)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op1.value, op2.value));
@@ -237,14 +237,14 @@ DEFINE_FLONUMD_MATH_FUNCTIONS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMCD_UNARY_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op)
 {
   return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op.value));
 }]]])
 
 m4_define([[[DEFINE_FLONUMCD_BINARY_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
   return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op1.value, op2.value));

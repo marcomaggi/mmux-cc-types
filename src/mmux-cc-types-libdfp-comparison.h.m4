@@ -64,7 +64,7 @@ DEFINE_STANDARD_FLONUMD_COMPARISON_PROTOS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
 {
   return mmux_standard_flonumd$1_$2(mmux_standard_flonumcd$1_absolute(op1),
@@ -72,13 +72,13 @@ mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonu
 }]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMCD_COMPARISON_PROTOS]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
+mmux_cc_types_inline_decl mmux_sint_t
 mmux_standard_flonumcd$1_cmp (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
 {
   return mmux_standard_flonumd$1_cmp(mmux_standard_flonumcd$1_absolute(op1),
 				     mmux_standard_flonumcd$1_absolute(op2));
 }
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_standard_flonumcd$1_equal (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
 {
   return (mmux_standard_flonumd$1_equal(op1.re, op2.re) &&
@@ -90,7 +90,7 @@ DEFINE_STANDARD_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1,	less)
 DEFINE_STANDARD_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1,	greater_equal)
 DEFINE_STANDARD_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1,	less_equal)
 
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_standard_flonumcd$1_equal_absmargin (mmux_standard_flonumcd$1_t op1,
 					  mmux_standard_flonumcd$1_t op2,
 					  mmux_standard_flonumcd$1_t mrg)
@@ -99,7 +99,7 @@ mmux_standard_flonumcd$1_equal_absmargin (mmux_standard_flonumcd$1_t op1,
 	  mmux_standard_flonumd$1_equal_absmargin(op1.im, op2.im, mrg.im)) ?
     true : false;
 }
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_standard_flonumcd$1_equal_relepsilon (mmux_standard_flonumcd$1_t op1,
 					   mmux_standard_flonumcd$1_t op2,
 					   mmux_standard_flonumcd$1_t eps)
@@ -109,14 +109,14 @@ mmux_standard_flonumcd$1_equal_relepsilon (mmux_standard_flonumcd$1_t op1,
     true : false;
 }
 
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_max (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
 {
   return (mmux_standard_flonumd$1_greater_equal(mmux_standard_flonumcd$1_absolute(op1),
 						mmux_standard_flonumcd$1_absolute(op2)))?
     op1 : op2;
 }
-__attribute__((__const__,__always_inline__)) static inline mmux_standard_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_min (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
 {
   return (mmux_standard_flonumd$1_greater_equal(mmux_standard_flonumcd$1_absolute(op1),
@@ -135,28 +135,28 @@ DEFINE_STANDARD_FLONUMCD_COMPARISON_PROTOS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_flonumd$1_$2 (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return mmux_standard_flonumd$1_$2(op1.value, op2.value);
 }]]])
 
 m4_define([[[DEFINE_FLONUMD_TERNARY_COMPARISON_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_flonumd$1_$2 (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2, mmux_flonumd$1_t op3)
 {
   return mmux_standard_flonumd$1_$2(op1.value, op2.value, op3.value);
 }]]])
 
 m4_define([[[DEFINE_FLONUMD_BINARY_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumd$1_t
+mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1_$2 (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op1.value, op2.value));
 }]]])
 
 m4_define([[[DEFINE_FLONUMD_COMPARISON_INLINE_FUNCTIONS]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
+mmux_cc_types_inline_decl mmux_sint_t
 mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
   return mmux_standard_flonumd$1_cmp(op1.value, op2.value);
@@ -183,28 +183,28 @@ DEFINE_FLONUMD_COMPARISON_INLINE_FUNCTIONS(128)
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
   return mmux_standard_flonumcd$1_$2(op1.value, op2.value);
 }]]])
 
 m4_define([[[DEFINE_FLONUMCD_TERNARY_COMPARISON_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline bool
+mmux_cc_types_inline_decl bool
 mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2, mmux_flonumcd$1_t op3)
 {
   return mmux_standard_flonumcd$1_$2(op1.value, op2.value, op3.value);
 }]]])
 
 m4_define([[[DEFINE_FLONUMCD_BINARY_INLINE_FUNCTION]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_flonumcd$1_t
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
   return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op1.value, op2.value));
 }]]])
 
 m4_define([[[DEFINE_FLONUMCD_COMPARISON_INLINE_FUNCTIONS]]],[[[m4_dnl
-__attribute__((__const__,__always_inline__)) static inline mmux_sint_t
+mmux_cc_types_inline_decl mmux_sint_t
 mmux_flonumcd$1_cmp (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
   return mmux_standard_flonumcd$1_cmp(op1.value, op2.value);

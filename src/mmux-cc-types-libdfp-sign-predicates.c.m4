@@ -30,7 +30,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Sign predicates: flonumd.
+ ** Sign predicates: standard flonumd.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -39,16 +39,6 @@ bool
 mmux_standard_flonumd$1_is_zero (mmux_standard_flonumd$1_t op)
 {
   return MMUX_STANDARD_FLONUMD$1_IS_ZERO(op)? true : false;
-}
-bool
-mmux_standard_flonumd$1_is_nan (mmux_standard_flonumd$1_t op)
-{
-  return MMUX_STANDARD_FLONUMD$1_IS_NAN(op)? true : false;
-}
-bool
-mmux_standard_flonumd$1_is_infinite (mmux_standard_flonumd$1_t op)
-{
-  return MMUX_STANDARD_FLONUMD$1_IS_INFINITE(op)? true : false;
 }
 bool
 mmux_standard_flonumd$1_is_positive (mmux_standard_flonumd$1_t op)
@@ -102,60 +92,37 @@ mmux_standard_flonumd$1_is_non_negative (mmux_standard_flonumd$1_t op)
     return (mmux_standard_flonumd$1_constant_zero() < op)? true : false;
   }
 }
+
+bool
+mmux_standard_flonumd$1_is_nan (mmux_standard_flonumd$1_t op)
+{
+  return MMUX_STANDARD_FLONUMD$1_IS_NAN(op)? true : false;
+}
+bool
+mmux_standard_flonumd$1_is_infinite (mmux_standard_flonumd$1_t op)
+{
+  return MMUX_STANDARD_FLONUMD$1_IS_INFINITE(op)? true : false;
+}
+bool
+mmux_standard_flonumd$1_is_finite (mmux_standard_flonumd$1_t op)
+{
+  auto	val = fpclassify(op);
+  return ((FP_INFINITE != val) && (FP_NAN != val))? true : false;
+}
+bool
+mmux_standard_flonumd$1_is_normal (mmux_standard_flonumd$1_t op)
+{
+  return MMUX_STANDARD_FLONUMD$1_IS_NORMAL(op)? true : false;
+}
+bool
+mmux_standard_flonumd$1_is_subnormal (mmux_standard_flonumd$1_t op)
+{
+  return MMUX_STANDARD_FLONUMD$1_IS_SUBNORMAL(op)? true : false;
+}
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_PREDICATES(32)
 DEFINE_STANDARD_FLONUMD_PREDICATES(64)
 DEFINE_STANDARD_FLONUMD_PREDICATES(128)
-
-
-/** --------------------------------------------------------------------
- ** Sign predicates: flonumcd.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMCD_PREDICATES]]],[[[
-bool
-mmux_standard_flonumcd$1_is_zero (mmux_standard_flonumcd$1_t Z)
-{
-  return (MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.re) && MMUX_STANDARD_FLONUMD$1_IS_ZERO(Z.im))? true : false;
-}
-bool
-mmux_standard_flonumcd$1_is_positive (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
-{
-  return false;
-}
-bool
-mmux_standard_flonumcd$1_is_negative (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
-{
-  return false;
-}
-bool
-mmux_standard_flonumcd$1_is_non_positive (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
-{
-  return false;
-}
-bool
-mmux_standard_flonumcd$1_is_non_negative (mmux_standard_flonumcd$1_t Z __attribute__((__unused__)))
-{
-  return false;
-}
-bool
-mmux_standard_flonumcd$1_is_nan (mmux_standard_flonumcd$1_t Z)
-{
-  return (MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.re) ||
-	  MMUX_STANDARD_FLONUMD$1_IS_NAN(Z.im))? true : false;
-}
-bool
-mmux_standard_flonumcd$1_is_infinite (mmux_standard_flonumcd$1_t Z)
-{
-  return (MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.re) ||
-	  MMUX_STANDARD_FLONUMD$1_IS_INFINITE(Z.im))? true : false;
-}
-]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMCD_PREDICATES(32)
-DEFINE_STANDARD_FLONUMCD_PREDICATES(64)
-DEFINE_STANDARD_FLONUMCD_PREDICATES(128)
 
 /* end of file */

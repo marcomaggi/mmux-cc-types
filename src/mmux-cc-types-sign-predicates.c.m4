@@ -30,7 +30,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Miscellaneous.
+ ** Sign predicates: char
  ** ----------------------------------------------------------------- */
 
 bool
@@ -43,9 +43,51 @@ mmux_char_is_unsigned (void)
 #endif
 }
 
+bool
+mmux_standard_char_is_zero (mmux_standard_char_t op)
+{
+  return (0 == op)? true : false;
+}
+bool
+mmux_standard_char_is_positive (mmux_standard_char_t op)
+{
+#ifdef __CHAR_UNSIGNED__
+  return (0 != op)? true : false;
+#else
+  return (0 < op)? true : false;
+#endif
+}
+bool
+mmux_standard_char_is_negative (mmux_standard_char_t op)
+{
+#ifdef __CHAR_UNSIGNED__
+  return (0 != op)? true : false;
+#else
+  return (0 > op)? true : false;
+#endif
+}
+bool
+mmux_standard_char_is_non_positive (mmux_standard_char_t op)
+{
+#ifdef __CHAR_UNSIGNED__
+  return (0 == op)? true : false;
+#else
+  return (0 >= op)? true : false;
+#endif
+}
+bool
+mmux_standard_char_is_non_negative (mmux_standard_char_t op)
+{
+#ifdef __CHAR_UNSIGNED__
+  return true;
+#else
+  return (0 <= op)? true : false;
+#endif
+}
+
 
 /** --------------------------------------------------------------------
- ** Comparison: standard flonum functions.
+ ** Sign predicates: standard flonum
  ** ----------------------------------------------------------------- */
 
 /* Remember  that the  flonum functions  exist to  handle correctly  the case  of NaN
