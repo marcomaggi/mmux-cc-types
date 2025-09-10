@@ -640,7 +640,7 @@ test_constant_one (void)
     auto	op  = mmux_## STEM ## _constant_one();	    \
     auto	rop = mmux_## STEM ## _literal(1.0);	    \
     assert(mmux_## STEM ## _equal(op, rop));		    \
-    dprintf(2," flonum%s,", #STEM);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
@@ -652,7 +652,7 @@ test_constant_one (void)
       mmux_## STEM ## _dprintf(2, op);					\
     }									\
     assert(mmux_## STEM ## _equal(op, rop));				\
-    dprintf(2," flonumc%s,", #STEM);					\
+    dprintf(2," %s,", #STEM);						\
   }
 
   DOIT_FOR_EXACT_INTEGER(char);
