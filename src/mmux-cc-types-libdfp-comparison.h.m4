@@ -72,7 +72,7 @@ mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t op1, mmux_standard_flonu
 }]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMCD_COMPARISON_PROTOS]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_sint_t
+mmux_cc_types_inline_decl mmux_standard_sint_t
 mmux_standard_flonumcd$1_cmp (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
 {
   return mmux_standard_flonumd$1_cmp(mmux_standard_flonumcd$1_absolute(op1),
@@ -159,7 +159,7 @@ m4_define([[[DEFINE_FLONUMD_COMPARISON_INLINE_FUNCTIONS]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_sint_t
 mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
 {
-  return mmux_standard_flonumd$1_cmp(op1.value, op2.value);
+  return mmux_sint(mmux_standard_flonumd$1_cmp(op1.value, op2.value));
 }
 DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, equal)
 DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, greater)
@@ -207,7 +207,7 @@ m4_define([[[DEFINE_FLONUMCD_COMPARISON_INLINE_FUNCTIONS]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_sint_t
 mmux_flonumcd$1_cmp (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
 {
-  return mmux_standard_flonumcd$1_cmp(op1.value, op2.value);
+  return mmux_sint(mmux_standard_flonumcd$1_cmp(op1.value, op2.value));
 }
 DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, equal)
 DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, greater)

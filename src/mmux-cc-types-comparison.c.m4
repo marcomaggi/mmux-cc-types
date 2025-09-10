@@ -38,7 +38,7 @@
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$2]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
 /* The "equal", "not_equal", "cmp" functions are  implemented as inline in the header
    file. */
 bool
@@ -64,26 +64,26 @@ mmux_standard_flonum$1_less_equal (mmux_standard_flonum$1_t op1, mmux_standard_f
 mmux_standard_flonum$1_t
 mmux_standard_flonum$1_max (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
-  return fmax$1(op1, op2);
+  return fmax$2(op1, op2);
 }
 mmux_standard_flonum$1_t
 mmux_standard_flonum$1_min (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
-  return fmin$1(op1, op2);
+  return fmin$2(op1, op2);
 }
 bool
 mmux_standard_flonum$1_equal_absmargin (mmux_standard_flonum$1_t op1,
 					mmux_standard_flonum$1_t op2,
 					mmux_standard_flonum$1_t margin)
 {
-  return (fabs$1(margin) <= fabs$1(op1 - op2))? true : false;
+  return (fabs$2(margin) <= fabs$2(op1 - op2))? true : false;
 }
 bool
 mmux_standard_flonum$1_equal_relepsilon (mmux_standard_flonum$1_t op1,
 					 mmux_standard_flonum$1_t op2,
 					 mmux_standard_flonum$1_t epsilon)
 {
-  return (fabs$1(op1 - op2) <= fabs$1(epsilon) * fmax$1(fabs$1(op1), fabs$1(op2)))? true : false;
+  return (fabs$2(op1 - op2) <= fabs$2(epsilon) * fmax$2(fabs$2(op1), fabs$2(op2)))? true : false;
 }]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS(fl,		f)

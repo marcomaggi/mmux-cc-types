@@ -252,57 +252,58 @@ DEFINE_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[rlim]]])
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
 mmux_cc_types_inline_decl bool
-mmux_standard_$1_equal (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
+mmux_standard_flonum$1_equal (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return (op1 == op2)? true : false;
 }
 mmux_cc_types_inline_decl bool
-mmux_standard_$1_not_equal (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
+mmux_standard_flonum$1_not_equal (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   return (op1 != op2)? true : false;
 }
 /* Remember that special  flonum functions exist to handle correctly  the case of NaN
    operands, which is not handled correctly with the operators <, >, <=, >=. */
-mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_$1_t  mmux_standard_$1_greater
+mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_greater
   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_$1_t  mmux_standard_$1_less
+mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_less
   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_$1_t  mmux_standard_$1_greater_equal
+mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_greater_equal
   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_$1_t  mmux_standard_$1_less_equal
+mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonum$1_t  mmux_standard_flonum$1_less_equal
   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_absmargin
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_flonum$1_t mmux_standard_flonum$1_equal_absmargin
   __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_$1_t mmux_standard_$1_equal_relepsilon
+mmux_cc_types_decl mmux_cc_types_ternary_predicate_standard_flonum$1_t mmux_standard_flonum$1_equal_relepsilon
 __attribute__((__const__));
 mmux_cc_types_inline_decl mmux_standard_sint_t
-mmux_standard_$1_cmp (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
+mmux_standard_flonum$1_cmp (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
-  if (mmux_standard_$1_greater(op1, op2)) {
+  if (mmux_standard_flonum$1_greater(op1, op2)) {
     return +1;
-  } else if (mmux_standard_$1_less(op1, op2)) {
+  } else if (mmux_standard_flonum$1_less(op1, op2)) {
     return -1;
   } else {
     return 0;
   }
 }
-mmux_cc_types_decl mmux_cc_types_binary_operation_standard_$1_t  mmux_standard_$1_max __attribute__((__const__));
-mmux_cc_types_decl mmux_cc_types_binary_operation_standard_$1_t  mmux_standard_$1_min __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonum$1_t  mmux_standard_flonum$1_max __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonum$1_t  mmux_standard_flonum$1_min __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumfl]]])
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumdb]]])
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(fl)
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(db)
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(ldb)
 
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f32)
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f64)
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f128)
 
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f32x)
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f64x)
+DEFINE_STANDARD_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -352,17 +353,17 @@ mmux_flonum$1_cmp (mmux_flonum$1_t op1, mmux_flonum$1_t op2)
 }
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumfl]]])
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumdb]]])
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(fl)
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(db)
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(ldb)
 
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f32)
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f64)
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f128)
 
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f32x)
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f64x)
+DEFINE_FLONUM_COMPARISON_FUNCTIONS_AND_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -378,7 +379,8 @@ mmux_standard_flonumc$1_$2 (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc
 				   mmux_standard_flonumc$1_absolute(op2));
 }]]])
 
-m4_define([[[DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
 DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	equal)
 DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	not_equal)
 DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	greater)
@@ -435,17 +437,17 @@ mmux_standard_flonumc$1_min (mmux_standard_flonumc$1_t op1, mmux_standard_flonum
     op2 : op1;
 }]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[fl]]])
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[db]]])
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[ldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(fl)
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(db)
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(ldb)
 
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f32)
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f64)
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f128)
 
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f32x)
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f64x)
+DEFINE_STANDARD_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -460,7 +462,8 @@ mmux_flonumc$1_$2 (mmux_flonumc$1_t op1, mmux_flonumc$1_t op2)
   return mmux_standard_flonumc$1_$2(op1.value, op2.value);
 }]]])
 
-m4_define([[[DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+m4_define([[[DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
 DEFINE_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,		equal)
 DEFINE_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,		not_equal)
 DEFINE_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,		greater)
@@ -494,17 +497,17 @@ mmux_flonumc$1_min (mmux_flonumc$1_t op1, mmux_flonumc$1_t op2)
   return mmux_flonumc$1(mmux_standard_flonumc$1_min(op1.value, op2.value));
 }]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[fl]]])
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[db]]])
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[ldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(fl)
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(db)
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(ldb)
 
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f32)
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f64)
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f128)
 
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f32x)
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f64x)
+DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(f128x)
 
 
 /** --------------------------------------------------------------------

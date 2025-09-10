@@ -142,7 +142,7 @@ typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_s
 typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t X);
 typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
 typedef bool mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t X, mmux_standard_$1_t Y, mmux_standard_$1_t Z);
-typedef mmux_sint_t mmux_cc_types_comparison_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+typedef mmux_standard_sint_t mmux_cc_types_comparison_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
 
 typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
 typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t X);
