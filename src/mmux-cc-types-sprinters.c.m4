@@ -214,19 +214,19 @@ mmux_$1_save_output_format (mmux_asciizp_t const dest)
 
 DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumfl]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumdb]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
 DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
-DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUMFL_OUTPUT_FORMAT_SETTER_FUNCTION([[[flonumd128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -323,7 +323,7 @@ DEFINE_INTEGER_SPRINTER([[[ullong]]],	[[["%llu"]]], [[[MMUX_CC_TYPES_HAS_ULLONG]
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: raw C standard types, real floating-point numbers.
+ ** Type string printers: flonum
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -331,31 +331,53 @@ m4_define([[[DEFINE_REAL_FLONUM_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_ST
 mmux_sint_t
 mmux_flonum$1_sprint_size (mmux_flonum$1_t value)
 {
-  int		required_nbytes;
-
-  /* According   to    the   documentation,    when   the   output    is   truncated:
-     "mmux_standard_strfrom$1()" returns the number  of required bytes, EXCLUDING the
-     terminating null byte. */
-  required_nbytes = mmux_standard_strfrom$1(NULL, 0, mmux_cc_types_output_format_flonum$1, value.value);
-  if (0 > required_nbytes) {
-    return mmux_sint_literal(-1);
+  if (mmux_flonum$1_is_nan(value)) {
+    return mmux_sint(strlen(MMUX_CC_TYPES_FLONUM_STRINGREP_NAN));
+  } else if (mmux_flonum$1_is_infinite(value)) {
+    if (mmux_flonum$1_is_positive(value)) {
+      return mmux_sint(strlen(MMUX_CC_TYPES_FLONUM_STRINGREP_POSITIVE_INFINITY));
+    } else {
+      return mmux_sint(strlen(MMUX_CC_TYPES_FLONUM_STRINGREP_NEGATIVE_INFINITY));
+    }
   } else {
-    /* This return value DOES account for the terminating zero character. */
-    return mmux_sint(++required_nbytes);
+    int		required_nbytes;
+
+    /* According   to    the   documentation,    when   the   output    is   truncated:
+       "mmux_standard_strfrom$1()" returns the number  of required bytes, EXCLUDING the
+       terminating null byte. */
+    required_nbytes = mmux_standard_strfrom$1(NULL, 0, mmux_cc_types_output_format_flonum$1, value.value);
+    if (0 > required_nbytes) {
+      return mmux_sint_literal(-1);
+    } else {
+      /* This return value DOES account for the terminating zero character. */
+      return mmux_sint(++required_nbytes);
+    }
   }
 }
 bool
 mmux_flonum$1_sprint (mmux_asciizp_t strptr, mmux_sint_t len, mmux_flonum$1_t value)
 {
-  int		to_be_written_chars;
-
-  /* According   to  the   documentation:   "mmux_standard_strfrom$1()"  writes   the
-     terminating null byte if the output buffer is sufficiently large. */
-  to_be_written_chars = mmux_standard_strfrom$1(strptr, len.value, mmux_cc_types_output_format_flonum$1, value.value);
-  if (len.value > to_be_written_chars) {
+  if (mmux_flonum$1_is_nan(value)) {
+    strncpy(strptr, MMUX_CC_TYPES_FLONUM_STRINGREP_NAN, len.value);
+    return false;
+  } else if (mmux_flonum$1_is_infinite(value)) {
+    if (mmux_flonum$1_is_positive(value)) {
+      strncpy(strptr, MMUX_CC_TYPES_FLONUM_STRINGREP_POSITIVE_INFINITY, len.value);
+    } else {
+      strncpy(strptr, MMUX_CC_TYPES_FLONUM_STRINGREP_NEGATIVE_INFINITY, len.value);
+    }
     return false;
   } else {
-    return true;
+    int		to_be_written_chars;
+
+    /* According   to  the   documentation:   "mmux_standard_strfrom$1()"  writes   the
+       terminating null byte if the output buffer is sufficiently large. */
+    to_be_written_chars = mmux_standard_strfrom$1(strptr, len.value, mmux_cc_types_output_format_flonum$1, value.value);
+    if (len.value > to_be_written_chars) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }]]])]]])
 m4_divert(0)m4_dnl
@@ -377,7 +399,7 @@ DEFINE_REAL_FLONUM_SPRINTER(d128)
 
 
 /** --------------------------------------------------------------------
- ** Type string printers: raw C standard types, real floating-point numbers.
+ ** Type string printers: flonumc
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -411,7 +433,7 @@ mmux_flonumc$1_sprint_size (mmux_flonumc$1_t value)
   }
 
   /* This return value DOES account for the terminating zero character. */
-  if (0) { fprintf(stderr, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes); }
+  if (0) { dprintf(2, "%s: total_required_nbytes=%d\n", __func__, ++total_required_nbytes); }
   return mmux_sint(1 + total_required_nbytes);
 }
 bool
@@ -479,7 +501,11 @@ mmux_flonumc$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_flonumc$1_t val
     if (1 < len.value) {
       *ptr++  = ')';
       *ptr++  = '\0';
-      /* len += 2; */
+      /* We  do not  increment  it because  this  value  is no  more  needed: we  are
+       * returning.
+       *
+       * len += 2;
+       */
     } else {
       return true;
     }

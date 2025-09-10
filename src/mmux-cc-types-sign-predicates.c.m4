@@ -103,12 +103,12 @@ m4_define([[[DEFINE_FLONUM_SIGN_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],
 bool
 mmux_standard_flonum$1_is_zero (mmux_standard_flonum$1_t op)
 {
-  return (STANDARD_FLONUM$1_IS_ZERO(op))? true : false;
+  return (iszero(op))? true : false;
 }
 bool
 mmux_standard_flonum$1_is_nan (mmux_standard_flonum$1_t op)
 {
-  return (STANDARD_FLONUM$1_IS_NAN(op))? true : false;
+  return (isnan(op))? true : false;
 }
 bool
 mmux_standard_flonum$1_is_infinite (mmux_standard_flonum$1_t op)
@@ -118,31 +118,26 @@ mmux_standard_flonum$1_is_infinite (mmux_standard_flonum$1_t op)
 bool
 mmux_standard_flonum$1_is_finite (mmux_standard_flonum$1_t op)
 {
-  auto	val = fpclassify(op);
-  return ((FP_INFINITE != val) && (FP_NAN != val))? true : false;
+  return (isfinite(op))? true : false;
 }
 bool
 mmux_standard_flonum$1_is_normal (mmux_standard_flonum$1_t op)
 {
-  return (STANDARD_FLONUM$1_IS_NORMAL(op))? true : false;
+  return (isnormal(op))? true : false;
 }
 bool
 mmux_standard_flonum$1_is_subnormal (mmux_standard_flonum$1_t op)
 {
-  return (STANDARD_FLONUM$1_IS_SUBNORMAL(op))? true : false;
+  return (issubnormal(op))? true : false;
 }
 
 bool
 mmux_standard_flonum$1_is_positive (mmux_standard_flonum$1_t op)
 {
-  if (STANDARD_FLONUM$1_IS_NAN(op)) {
+  if (isnan(op)) {
     return false;
-  } else if (STANDARD_FLONUM$1_IS_ZERO(op)) {
-    if (signbit(op)) {
-      return false;
-    } else {
-      return true;
-    }
+  } else if (iszero(op)) {
+    return (0 != signbit(op))? false : true;
   } else {
     return (mmux_standard_flonum$1_constant_zero() < op)? true : false;
   }
@@ -150,14 +145,10 @@ mmux_standard_flonum$1_is_positive (mmux_standard_flonum$1_t op)
 bool
 mmux_standard_flonum$1_is_negative (mmux_standard_flonum$1_t op)
 {
-  if (STANDARD_FLONUM$1_IS_NAN(op)) {
+  if (isnan(op)) {
     return false;
-  } else if (STANDARD_FLONUM$1_IS_ZERO(op)) {
-    if (signbit(op)) {
-      return true;
-    } else {
-      return false;
-    }
+  } else if (iszero(op)) {
+    return (0 != signbit(op))? true : false;
   } else {
     return (mmux_standard_flonum$1_constant_zero() > op)? true : false;
   }
@@ -166,9 +157,9 @@ mmux_standard_flonum$1_is_negative (mmux_standard_flonum$1_t op)
 bool
 mmux_standard_flonum$1_is_non_positive (mmux_standard_flonum$1_t op)
 {
-  if (STANDARD_FLONUM$1_IS_NAN(op)) {
+  if (isnan(op)) {
     return false;
-  } else if (STANDARD_FLONUM$1_IS_ZERO(op)) {
+  } else if (iszero(op)) {
     return true;
   } else {
     return (mmux_standard_flonum$1_constant_zero() > op)? true : false;
@@ -177,9 +168,9 @@ mmux_standard_flonum$1_is_non_positive (mmux_standard_flonum$1_t op)
 bool
 mmux_standard_flonum$1_is_non_negative (mmux_standard_flonum$1_t op)
 {
-  if (STANDARD_FLONUM$1_IS_NAN(op)) {
+  if (isnan(op)) {
     return false;
-  } else if (STANDARD_FLONUM$1_IS_ZERO(op)) {
+  } else if (iszero(op)) {
     return true;
   } else {
     return (mmux_standard_flonum$1_constant_zero() < op)? true : false;

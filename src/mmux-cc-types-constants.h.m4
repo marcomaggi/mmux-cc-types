@@ -356,7 +356,7 @@ m4_define([[[DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_flonumc$1_t
 mmux_flonumc$1_constant_$2 (void)
 {
-  return (mmux_flonumc$1_t) { .value = mmux_standard_flonum$1_constant_$2() };
+  return (mmux_flonumc$1_t) { .value = mmux_standard_flonumc$1_constant_$2() };
 }]]])
 
 m4_define([[[DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
@@ -368,6 +368,7 @@ mmux_flonumc$1_constant_$2_$3_infinity (void)
 
 m4_define([[[DEFINE_FLONUMC_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	nan)
+DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	imag)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	zero)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	one)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	two)

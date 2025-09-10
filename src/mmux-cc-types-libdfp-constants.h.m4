@@ -6,7 +6,7 @@
   Abstract
 
 	This  module  implements  mathematical   constants  for  the  standard  types
-	"mmux_standard_flonumcd$1_t".
+	"mmux_standard_flonumd$1_t" and "mmux_standard_flonumcd$1_t".
 
   Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
@@ -196,21 +196,19 @@ m4_define([[[DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_constant_$2 (void)
 {
-  /* FIXME   Why    GCC   tells   me   to    put   braces   around   the    call   to
-     "mmux_standard_flonumd$1_constant_$2()" ?  (Marco Maggi; Sep 1, 2025) */
-  return (mmux_flonumcd$1_t) { .value = { mmux_standard_flonumd$1_constant_$2() } };
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_$2());
 }]]])
 
 m4_define([[[DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1_constant_$2_$3_infinity (void)
 {
-  return (mmux_flonumcd$1_t) { .value = mmux_standard_flonumcd$1_constant_$2_$3_infinity() };
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_constant_$2_$3_infinity());
 }]]])
-
 
 m4_define([[[DEFINE_FLONUMCD_CONSTANTS]]],[[[m4_dnl
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	nan)
+DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	imag)
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	zero)
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one)
 DEFINE_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	two)
