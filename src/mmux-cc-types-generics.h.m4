@@ -1427,8 +1427,11 @@ DEFINE_UNARY_FUNCTION([[[is_positive]]])
 DEFINE_UNARY_FUNCTION([[[is_negative]]])
 DEFINE_UNARY_FUNCTION([[[is_non_positive]]])
 DEFINE_UNARY_FUNCTION([[[is_non_negative]]])
+DEFINE_UNARY_FUNCTION([[[is_finite]]])
 DEFINE_UNARY_FUNCTION([[[is_infinite]]])
 DEFINE_UNARY_FUNCTION([[[is_nan]]])
+DEFINE_UNARY_FUNCTION_INEXACT_NUMBERS_ONLY([[[is_normal]]])
+DEFINE_UNARY_FUNCTION_INEXACT_NUMBERS_ONLY([[[is_subnormal]]])
 
 
 /** --------------------------------------------------------------------

@@ -207,12 +207,12 @@ mmux_standard_$1_is_negative (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)
 mmux_cc_types_inline_decl bool
 mmux_standard_$1_is_non_positive (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return true;
+  return (mmux_standard_$1_literal(0) != op)? false : true;
 }
 mmux_cc_types_inline_decl bool
-mmux_standard_$1_is_non_negative (mmux_standard_$1_t op)
+mmux_standard_$1_is_non_negative (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return (mmux_standard_$1_literal(0) == op)? true : false;
+  return true;
 }
 mmux_cc_types_inline_decl bool
 mmux_standard_$1_is_nan (mmux_standard_$1_t op MMUX_CC_TYPES_UNUSED)

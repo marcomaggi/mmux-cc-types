@@ -122,6 +122,7 @@ mmux_standard_flonum$1_is_finite (mmux_standard_flonum$1_t op)
 }
 bool
 mmux_standard_flonum$1_is_normal (mmux_standard_flonum$1_t op)
+/* Notice that zero, infinity and NaN are not "normal". */
 {
   return (isnormal(op))? true : false;
 }
