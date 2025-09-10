@@ -50,7 +50,7 @@ mmux_standard_flonumd$1_div (mmux_standard_flonumd$1_t op1, mmux_standard_flonum
   return (op1 / op2);
 }
 
-mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_mod
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_modulo
   __attribute__((__const__));
 
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
@@ -59,7 +59,7 @@ mmux_standard_flonumd$1_neg (mmux_standard_flonumd$1_t op)
   return (- op);
 }
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_inv (mmux_standard_flonumd$1_t op)
+mmux_standard_flonumd$1_inverse (mmux_standard_flonumd$1_t op)
 {
   return (mmux_standard_flonumd$1_constant_one() / op);
 }
@@ -127,7 +127,7 @@ mmux_standard_flonumcd$1_neg (mmux_standard_flonumcd$1_t op)
   return mmux_standard_flonumcd$1_rectangular(- op.re, - op.im);
 }
 mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_inv (mmux_standard_flonumcd$1_t op)
+mmux_standard_flonumcd$1_inverse (mmux_standard_flonumcd$1_t op)
 {
   auto	D   = op.re * op.re + op.im * op.im;
   auto	Cre = op.re / D;
@@ -169,9 +169,9 @@ DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		add)
 DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		sub)
 DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		mul)
 DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		div)
-DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		mod)
+DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		modulo)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		neg)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		inv)
+DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		inverse)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		incr)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		decr)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		absolute)
@@ -209,7 +209,7 @@ DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		sub)
 DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		mul)
 DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		div)
 DEFINE_FLONUMCD_ARITHMETICS_UNARY_FUNCTION($1,		neg)
-DEFINE_FLONUMCD_ARITHMETICS_UNARY_FUNCTION($1,		inv)
+DEFINE_FLONUMCD_ARITHMETICS_UNARY_FUNCTION($1,		inverse)
 mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumcd$1_absolute (mmux_flonumcd$1_t op)
 {

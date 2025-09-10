@@ -42,7 +42,7 @@ mmux_standard_flonumd$1_absolute (mmux_standard_flonumd$1_t op)
   return fabsd$1(op);
 }
 mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_mod (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+mmux_standard_flonumd$1_modulo (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
 {
   return fmodd$1(op1, op2);
 }

@@ -35,7 +35,7 @@
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUM_ARITHMETICS_FUNCTIONS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$2]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
 mmux_standard_flonum$1_t
 mmux_standard_flonum$1_modulo (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
@@ -87,8 +87,8 @@ DEFINE_STANDARD_FLONUM_ARITHMETICS_FUNCTIONS(f128x,	f128x)
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMC_ARITHMETICS_FUNCTIONS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$2]]],[[[m4_dnl
-mmux_standard_flonumc$1_t
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
+mmux_standard_flonum$1_t
 mmux_standard_flonumc$1_absolute (mmux_standard_flonumc$1_t op)
 {
   return cabs$2(op);

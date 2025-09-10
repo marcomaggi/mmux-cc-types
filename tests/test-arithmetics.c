@@ -828,27 +828,27 @@ test_arithmetics_neg (void)
  ** Inversion.
  ** ----------------------------------------------------------------- */
 
-#undef  DEFINE_REAL_INTEGER_INV
-#define DEFINE_REAL_INTEGER_INV(STEM)					\
+#undef  DEFINE_REAL_INTEGER_INVERSE
+#define DEFINE_REAL_INTEGER_INVERSE(STEM)					\
   {									\
     auto	op1 = mmux_## STEM ## _literal(5);			\
     auto	rop = mmux_## STEM ## _literal(0);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_inv(op1)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_inv(op1)));			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_inverse(op1)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_inverse(op1)));			\
     dprintf(2," %s,", #STEM);						\
   }
 
-#undef  DEFINE_REAL_FLONUM_INV
-#define DEFINE_REAL_FLONUM_INV(STEM)					\
+#undef  DEFINE_REAL_FLONUM_INVERSE
+#define DEFINE_REAL_FLONUM_INVERSE(STEM)					\
   {									\
     auto	op1 = mmux_## STEM ## _literal(5.0);			\
     auto	rop = mmux_## STEM ## _literal(0.2);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_inv(op1)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_inv(op1)));			\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_inverse(op1)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_inverse(op1)));			\
     dprintf(2," %s,", #STEM);						\
   }
 
-#define DEFINE_COMPLEX_INV(CSTEM,RSTEM)									\
+#define DEFINE_COMPLEX_INVERSE(CSTEM,RSTEM)									\
   {													\
     {													\
       auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);				\
@@ -856,12 +856,12 @@ test_arithmetics_neg (void)
       auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);				\
       if (0) {												\
 	dprintf(2, "\nop1 '");    mmux_ctype_dprintf(2, op1);						\
-	dprintf(2, "' result '"); mmux_ctype_dprintf(2, mmux_ctype_inv(op1));				\
+	dprintf(2, "' result '"); mmux_ctype_dprintf(2, mmux_ctype_inverse(op1));				\
 	dprintf(2, "' expected result '"); mmux_ctype_dprintf(2, rop);					\
 	dprintf(2, "'\n");										\
       }													\
-      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inv(op1), eps));			\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inv(op1), eps));				\
+      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inverse(op1), eps));			\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inverse(op1), eps));				\
     }													\
     {													\
       auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),			\
@@ -869,8 +869,8 @@ test_arithmetics_neg (void)
       auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(0.147058824),		\
 							mmux_## RSTEM ##_literal(-0.0882352941));	\
       auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);				\
-      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inv(op1), eps));			\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inv(op1), eps));				\
+      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inverse(op1), eps));			\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inverse(op1), eps));				\
     }													\
     {													\
       auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),		\
@@ -878,8 +878,8 @@ test_arithmetics_neg (void)
       auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(0.147058824),	\
 							mmux_## CSTEM ##_part_literal(-0.0882352941));	\
       auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);				\
-      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inv(op1), eps));			\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inv(op1), eps));				\
+      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_inverse(op1), eps));			\
+      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_inverse(op1), eps));				\
     }													\
     dprintf(2," %s,", #CSTEM);										\
   }
@@ -887,98 +887,98 @@ test_arithmetics_neg (void)
 /* ------------------------------------------------------------------ */
 
 static void
-test_arithmetics_inv (void)
+test_arithmetics_inverse (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-  DEFINE_REAL_INTEGER_INV(char);
-  DEFINE_REAL_INTEGER_INV(schar);
-  DEFINE_REAL_INTEGER_INV(uchar);
-  DEFINE_REAL_INTEGER_INV(sshort);
-  DEFINE_REAL_INTEGER_INV(ushort);
-  DEFINE_REAL_INTEGER_INV(sint);
-  DEFINE_REAL_INTEGER_INV(uint);
-  DEFINE_REAL_INTEGER_INV(slong);
-  DEFINE_REAL_INTEGER_INV(ulong);
+  DEFINE_REAL_INTEGER_INVERSE(char);
+  DEFINE_REAL_INTEGER_INVERSE(schar);
+  DEFINE_REAL_INTEGER_INVERSE(uchar);
+  DEFINE_REAL_INTEGER_INVERSE(sshort);
+  DEFINE_REAL_INTEGER_INVERSE(ushort);
+  DEFINE_REAL_INTEGER_INVERSE(sint);
+  DEFINE_REAL_INTEGER_INVERSE(uint);
+  DEFINE_REAL_INTEGER_INVERSE(slong);
+  DEFINE_REAL_INTEGER_INVERSE(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DEFINE_REAL_INTEGER_INV(sllong);
+  DEFINE_REAL_INTEGER_INVERSE(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  DEFINE_REAL_INTEGER_INV(ullong);
+  DEFINE_REAL_INTEGER_INVERSE(ullong);
 #endif
-  DEFINE_REAL_INTEGER_INV(sint8);
-  DEFINE_REAL_INTEGER_INV(uint8);
-  DEFINE_REAL_INTEGER_INV(sint16);
-  DEFINE_REAL_INTEGER_INV(uint16);
-  DEFINE_REAL_INTEGER_INV(sint32);
-  DEFINE_REAL_INTEGER_INV(uint32);
-  DEFINE_REAL_INTEGER_INV(sint64);
-  DEFINE_REAL_INTEGER_INV(uint64);
-  DEFINE_REAL_FLONUM_INV(flonumfl);
-  DEFINE_REAL_FLONUM_INV(flonumdb);
+  DEFINE_REAL_INTEGER_INVERSE(sint8);
+  DEFINE_REAL_INTEGER_INVERSE(uint8);
+  DEFINE_REAL_INTEGER_INVERSE(sint16);
+  DEFINE_REAL_INTEGER_INVERSE(uint16);
+  DEFINE_REAL_INTEGER_INVERSE(sint32);
+  DEFINE_REAL_INTEGER_INVERSE(uint32);
+  DEFINE_REAL_INTEGER_INVERSE(sint64);
+  DEFINE_REAL_INTEGER_INVERSE(uint64);
+  DEFINE_REAL_FLONUM_INVERSE(flonumfl);
+  DEFINE_REAL_FLONUM_INVERSE(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DEFINE_REAL_FLONUM_INV(flonumldb);
+  DEFINE_REAL_FLONUM_INVERSE(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DEFINE_REAL_FLONUM_INV(flonumf32);
+  DEFINE_REAL_FLONUM_INVERSE(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DEFINE_REAL_FLONUM_INV(flonumf64);
+  DEFINE_REAL_FLONUM_INVERSE(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_INV(flonumf128);
+  DEFINE_REAL_FLONUM_INVERSE(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DEFINE_REAL_FLONUM_INV(flonumf32x);
+  DEFINE_REAL_FLONUM_INVERSE(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DEFINE_REAL_FLONUM_INV(flonumf64x);
+  DEFINE_REAL_FLONUM_INVERSE(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DEFINE_REAL_FLONUM_INV(flonumf128x);
+  DEFINE_REAL_FLONUM_INVERSE(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DEFINE_REAL_FLONUM_INV(flonumd32);
+  DEFINE_REAL_FLONUM_INVERSE(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DEFINE_REAL_FLONUM_INV(flonumd64);
+  DEFINE_REAL_FLONUM_INVERSE(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_INV(flonumd128);
+  DEFINE_REAL_FLONUM_INVERSE(flonumd128);
 #endif
-  DEFINE_REAL_INTEGER_INV(ssize);
-  DEFINE_REAL_INTEGER_INV(usize);
-  DEFINE_REAL_INTEGER_INV(sintmax);
-  DEFINE_REAL_INTEGER_INV(uintmax);
-  DEFINE_REAL_INTEGER_INV(sintptr);
-  DEFINE_REAL_INTEGER_INV(uintptr);
-  DEFINE_REAL_INTEGER_INV(mode);
-  DEFINE_REAL_INTEGER_INV(off);
-  DEFINE_REAL_INTEGER_INV(pid);
-  DEFINE_REAL_INTEGER_INV(uid);
-  DEFINE_REAL_INTEGER_INV(gid);
-  DEFINE_REAL_INTEGER_INV(ptrdiff);
-  DEFINE_REAL_INTEGER_INV(wchar);
-  DEFINE_REAL_INTEGER_INV(wint);
-  DEFINE_REAL_INTEGER_INV(time);
-  DEFINE_REAL_INTEGER_INV(socklen);
-  DEFINE_REAL_INTEGER_INV(rlim);
+  DEFINE_REAL_INTEGER_INVERSE(ssize);
+  DEFINE_REAL_INTEGER_INVERSE(usize);
+  DEFINE_REAL_INTEGER_INVERSE(sintmax);
+  DEFINE_REAL_INTEGER_INVERSE(uintmax);
+  DEFINE_REAL_INTEGER_INVERSE(sintptr);
+  DEFINE_REAL_INTEGER_INVERSE(uintptr);
+  DEFINE_REAL_INTEGER_INVERSE(mode);
+  DEFINE_REAL_INTEGER_INVERSE(off);
+  DEFINE_REAL_INTEGER_INVERSE(pid);
+  DEFINE_REAL_INTEGER_INVERSE(uid);
+  DEFINE_REAL_INTEGER_INVERSE(gid);
+  DEFINE_REAL_INTEGER_INVERSE(ptrdiff);
+  DEFINE_REAL_INTEGER_INVERSE(wchar);
+  DEFINE_REAL_INTEGER_INVERSE(wint);
+  DEFINE_REAL_INTEGER_INVERSE(time);
+  DEFINE_REAL_INTEGER_INVERSE(socklen);
+  DEFINE_REAL_INTEGER_INVERSE(rlim);
 
-  DEFINE_COMPLEX_INV(flonumcfl,		flonumfl);
-  DEFINE_COMPLEX_INV(flonumcdb,		flonumdb);
-  DEFINE_COMPLEX_INV(flonumcldb,		flonumldb);
-  DEFINE_COMPLEX_INV(flonumcf32,	flonumf32);
-  DEFINE_COMPLEX_INV(flonumcf64,	flonumf64);
-  DEFINE_COMPLEX_INV(flonumcf128,	flonumf128);
-  DEFINE_COMPLEX_INV(flonumcf32x,	flonumf32x);
-  DEFINE_COMPLEX_INV(flonumcf64x,	flonumf64x);
+  DEFINE_COMPLEX_INVERSE(flonumcfl,		flonumfl);
+  DEFINE_COMPLEX_INVERSE(flonumcdb,		flonumdb);
+  DEFINE_COMPLEX_INVERSE(flonumcldb,		flonumldb);
+  DEFINE_COMPLEX_INVERSE(flonumcf32,	flonumf32);
+  DEFINE_COMPLEX_INVERSE(flonumcf64,	flonumf64);
+  DEFINE_COMPLEX_INVERSE(flonumcf128,	flonumf128);
+  DEFINE_COMPLEX_INVERSE(flonumcf32x,	flonumf32x);
+  DEFINE_COMPLEX_INVERSE(flonumcf64x,	flonumf64x);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DEFINE_COMPLEX_INV(flonumcf128x,	flonumf128x);
+  DEFINE_COMPLEX_INVERSE(flonumcf128x,	flonumf128x);
 #endif
-  DEFINE_COMPLEX_INV(flonumcd32,	flonumd32);
-  DEFINE_COMPLEX_INV(flonumcd64,	flonumd64);
+  DEFINE_COMPLEX_INVERSE(flonumcd32,	flonumd32);
+  DEFINE_COMPLEX_INVERSE(flonumcd64,	flonumd64);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DEFINE_COMPLEX_INV(flonumcd128,	flonumd128);
+  DEFINE_COMPLEX_INVERSE(flonumcd128,	flonumd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -989,71 +989,69 @@ test_arithmetics_inv (void)
  ** Absolute value.
  ** ----------------------------------------------------------------- */
 
+static void
+test_arithmetics_absolute (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
 #undef  DEFINE_REAL_INTEGER_ABSOLUTE
-#define DEFINE_REAL_INTEGER_ABSOLUTE(STEM)					\
+#define DEFINE_REAL_INTEGER_ABSOLUTE(STEM)				\
   {									\
     auto	op1 = mmux_## STEM ## _literal(-5);			\
     auto	rop = mmux_## STEM ## _literal(5);			\
     assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_absolute(op1)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_absolute(op1)));			\
+    assert(mmux_ctype_equal(rop, mmux_ctype_absolute(op1)));		\
     dprintf(2," %s,", #STEM);						\
   }
 
 #undef  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE
-#define DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(STEM)				\
+#define DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(STEM)			\
   {									\
     auto	op1 = mmux_## STEM ## _literal(5);			\
     auto	rop = mmux_## STEM ## _literal(5);			\
     assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_absolute(op1)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_absolute(op1)));			\
+    assert(mmux_ctype_equal(rop, mmux_ctype_absolute(op1)));		\
     dprintf(2," %s,", #STEM);						\
   }
 
 #undef  DEFINE_REAL_FLONUM_ABSOLUTE
-#define DEFINE_REAL_FLONUM_ABSOLUTE(STEM)							\
+#define DEFINE_REAL_FLONUM_ABSOLUTE(STEM)						\
   {											\
     auto	op1 = mmux_## STEM ##_literal(-5.0);					\
     auto	rop = mmux_## STEM ##_literal(5.0);					\
     auto	eps = mmux_## STEM ##_literal(1e-4);					\
     assert(mmux_## STEM ##_equal_relepsilon(rop, mmux_## STEM ##_absolute(op1), eps));	\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
+    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));		\
     dprintf(2," %s,", #STEM);								\
   }
 
-#define DEFINE_COMPLEX_ABSOLUTE(CSTEM,RSTEM)								\
+#define DEFINE_COMPLEX_ABSOLUTE(CSTEM,RSTEM)							\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular_literal(-5.0,-3.0);			\
-      auto	rop = mmux_## RSTEM(mmux_standard_## RSTEM ##_literal(5.83095189));		\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(-5.0,-3.0);				\
+      auto	rop = mmux_## RSTEM ##_literal(5.83095189);					\
       auto	eps = mmux_## RSTEM ##_literal(1e-4);						\
-      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));		\
+      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));	\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     }												\
     {												\
       auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(-5.0),		\
-							mmux_## RSTEM ##_literal(-3.0));	\
+						   mmux_## RSTEM ##_literal(-3.0));		\
       auto	rop = mmux_## RSTEM(mmux_standard_## RSTEM ##_literal(5.83095189));		\
       auto	eps = mmux_## RSTEM ##_literal(1e-4);						\
-      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));		\
+      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));	\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(-5.0),	\
-							mmux_## CSTEM ##_part_literal(-3.0));	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(-5.0),		\
+						   mmux_## CSTEM ##_part_literal(-3.0));	\
       auto	rop = mmux_## RSTEM ##_literal(5.83095189);					\
       auto	eps = mmux_## RSTEM ##_literal(1e-4);						\
-      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));		\
+      assert(mmux_## RSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_absolute(op1), eps));	\
       assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_absolute(op1), eps));			\
     }												\
     dprintf(2," %s,", #CSTEM);									\
   }
-
-/* ------------------------------------------------------------------ */
-
-static void
-test_arithmetics_absolute (void)
-{
-  dprintf(2, "running test: %s:", __func__);
 
   DEFINE_REAL_INTEGER_ABSOLUTE(char);
   DEFINE_REAL_INTEGER_ABSOLUTE(schar);
@@ -1157,107 +1155,107 @@ test_arithmetics_absolute (void)
  ** Modulo.
  ** ----------------------------------------------------------------- */
 
-#undef  DEFINE_REAL_INTEGER_MOD
-#define DEFINE_REAL_INTEGER_MOD(STEM)					\
+#undef  DEFINE_REAL_INTEGER_MODULO
+#define DEFINE_REAL_INTEGER_MODULO(STEM)					\
   {									\
     auto	op1 = mmux_## STEM ## _literal(23);			\
     auto	op2 = mmux_## STEM ## _literal(3);			\
     auto	rop = mmux_## STEM ## _literal(2);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mod(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_mod(op1, op2)));		\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_modulo(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_modulo(op1, op2)));		\
     dprintf(2," %s,", #STEM);						\
   }
 
-#undef  DEFINE_REAL_FLONUM_MOD
-#define DEFINE_REAL_FLONUM_MOD(STEM)					\
+#undef  DEFINE_REAL_FLONUM_MODULO
+#define DEFINE_REAL_FLONUM_MODULO(STEM)					\
   {									\
     auto	op1 = mmux_## STEM ## _literal(23.0);			\
     auto	op2 = mmux_## STEM ## _literal(3.0);			\
     auto	rop = mmux_## STEM ## _literal(2.0);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mod(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_mod(op1, op2)));		\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_modulo(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_modulo(op1, op2)));		\
     dprintf(2," %s,", #STEM);						\
   }
 
 /* ------------------------------------------------------------------ */
 
 static void
-test_arithmetics_mod (void)
+test_arithmetics_modulo (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-  DEFINE_REAL_INTEGER_MOD(char);
-  DEFINE_REAL_INTEGER_MOD(schar);
-  DEFINE_REAL_INTEGER_MOD(uchar);
-  DEFINE_REAL_INTEGER_MOD(sshort);
-  DEFINE_REAL_INTEGER_MOD(ushort);
-  DEFINE_REAL_INTEGER_MOD(sint);
-  DEFINE_REAL_INTEGER_MOD(uint);
-  DEFINE_REAL_INTEGER_MOD(slong);
-  DEFINE_REAL_INTEGER_MOD(ulong);
+  DEFINE_REAL_INTEGER_MODULO(char);
+  DEFINE_REAL_INTEGER_MODULO(schar);
+  DEFINE_REAL_INTEGER_MODULO(uchar);
+  DEFINE_REAL_INTEGER_MODULO(sshort);
+  DEFINE_REAL_INTEGER_MODULO(ushort);
+  DEFINE_REAL_INTEGER_MODULO(sint);
+  DEFINE_REAL_INTEGER_MODULO(uint);
+  DEFINE_REAL_INTEGER_MODULO(slong);
+  DEFINE_REAL_INTEGER_MODULO(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DEFINE_REAL_INTEGER_MOD(sllong);
+  DEFINE_REAL_INTEGER_MODULO(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  DEFINE_REAL_INTEGER_MOD(ullong);
+  DEFINE_REAL_INTEGER_MODULO(ullong);
 #endif
-  DEFINE_REAL_INTEGER_MOD(sint8);
-  DEFINE_REAL_INTEGER_MOD(uint8);
-  DEFINE_REAL_INTEGER_MOD(sint16);
-  DEFINE_REAL_INTEGER_MOD(uint16);
-  DEFINE_REAL_INTEGER_MOD(sint32);
-  DEFINE_REAL_INTEGER_MOD(uint32);
-  DEFINE_REAL_INTEGER_MOD(sint64);
-  DEFINE_REAL_INTEGER_MOD(uint64);
-  DEFINE_REAL_FLONUM_MOD(flonumfl);
-  DEFINE_REAL_FLONUM_MOD(flonumdb);
+  DEFINE_REAL_INTEGER_MODULO(sint8);
+  DEFINE_REAL_INTEGER_MODULO(uint8);
+  DEFINE_REAL_INTEGER_MODULO(sint16);
+  DEFINE_REAL_INTEGER_MODULO(uint16);
+  DEFINE_REAL_INTEGER_MODULO(sint32);
+  DEFINE_REAL_INTEGER_MODULO(uint32);
+  DEFINE_REAL_INTEGER_MODULO(sint64);
+  DEFINE_REAL_INTEGER_MODULO(uint64);
+  DEFINE_REAL_FLONUM_MODULO(flonumfl);
+  DEFINE_REAL_FLONUM_MODULO(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DEFINE_REAL_FLONUM_MOD(flonumldb);
+  DEFINE_REAL_FLONUM_MODULO(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DEFINE_REAL_FLONUM_MOD(flonumf32);
+  DEFINE_REAL_FLONUM_MODULO(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DEFINE_REAL_FLONUM_MOD(flonumf64);
+  DEFINE_REAL_FLONUM_MODULO(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_MOD(flonumf128);
+  DEFINE_REAL_FLONUM_MODULO(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DEFINE_REAL_FLONUM_MOD(flonumf32x);
+  DEFINE_REAL_FLONUM_MODULO(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DEFINE_REAL_FLONUM_MOD(flonumf64x);
+  DEFINE_REAL_FLONUM_MODULO(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DEFINE_REAL_FLONUM_MOD(flonumf128x);
+  DEFINE_REAL_FLONUM_MODULO(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DEFINE_REAL_FLONUM_MOD(flonumd32);
+  DEFINE_REAL_FLONUM_MODULO(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DEFINE_REAL_FLONUM_MOD(flonumd64);
+  DEFINE_REAL_FLONUM_MODULO(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_MOD(flonumd128);
+  DEFINE_REAL_FLONUM_MODULO(flonumd128);
 #endif
-  DEFINE_REAL_INTEGER_MOD(ssize);
-  DEFINE_REAL_INTEGER_MOD(usize);
-  DEFINE_REAL_INTEGER_MOD(sintmax);
-  DEFINE_REAL_INTEGER_MOD(uintmax);
-  DEFINE_REAL_INTEGER_MOD(sintptr);
-  DEFINE_REAL_INTEGER_MOD(uintptr);
-  DEFINE_REAL_INTEGER_MOD(mode);
-  DEFINE_REAL_INTEGER_MOD(off);
-  DEFINE_REAL_INTEGER_MOD(pid);
-  DEFINE_REAL_INTEGER_MOD(uid);
-  DEFINE_REAL_INTEGER_MOD(gid);
-  DEFINE_REAL_INTEGER_MOD(ptrdiff);
-  DEFINE_REAL_INTEGER_MOD(wchar);
-  DEFINE_REAL_INTEGER_MOD(wint);
-  DEFINE_REAL_INTEGER_MOD(time);
-  DEFINE_REAL_INTEGER_MOD(socklen);
-  DEFINE_REAL_INTEGER_MOD(rlim);
+  DEFINE_REAL_INTEGER_MODULO(ssize);
+  DEFINE_REAL_INTEGER_MODULO(usize);
+  DEFINE_REAL_INTEGER_MODULO(sintmax);
+  DEFINE_REAL_INTEGER_MODULO(uintmax);
+  DEFINE_REAL_INTEGER_MODULO(sintptr);
+  DEFINE_REAL_INTEGER_MODULO(uintptr);
+  DEFINE_REAL_INTEGER_MODULO(mode);
+  DEFINE_REAL_INTEGER_MODULO(off);
+  DEFINE_REAL_INTEGER_MODULO(pid);
+  DEFINE_REAL_INTEGER_MODULO(uid);
+  DEFINE_REAL_INTEGER_MODULO(gid);
+  DEFINE_REAL_INTEGER_MODULO(ptrdiff);
+  DEFINE_REAL_INTEGER_MODULO(wchar);
+  DEFINE_REAL_INTEGER_MODULO(wint);
+  DEFINE_REAL_INTEGER_MODULO(time);
+  DEFINE_REAL_INTEGER_MODULO(socklen);
+  DEFINE_REAL_INTEGER_MODULO(rlim);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -1496,9 +1494,9 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_arithmetics_mul();		}
   if (1) {	test_arithmetics_div();		}
   if (1) {	test_arithmetics_neg();		}
-  if (1) {	test_arithmetics_inv();		}
+  if (1) {	test_arithmetics_inverse();	}
   if (1) {	test_arithmetics_absolute();	}
-  if (1) {	test_arithmetics_mod();		}
+  if (1) {	test_arithmetics_modulo();	}
   if (1) {	test_arithmetics_incr();	}
   if (1) {	test_arithmetics_decr();	}
 
