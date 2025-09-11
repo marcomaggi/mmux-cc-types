@@ -30,16 +30,35 @@
 #undef	NORMAL_EPS
 #define	NORMAL_EPS		1e-6
 
-#undef  EQUAL_RELEPSILON
-#define EQUAL_RELEPSILON(STEM, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)		\
-  if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {	\
-    dprintf(2, "\n%s: %s: expected '", __func__, #STEM);				\
-    mmux_##STEM##_dprintf(2, erop);							\
-    dprintf(2, "' got '");								\
-    mmux_##STEM##_dprintf(2, rop1);							\
-    dprintf(2, "'\n");									\
-    exit(EXIT_FAILURE);									\
+#undef  EQUAL_RELEPSILON_UNARY
+#define EQUAL_RELEPSILON_UNARY(STEM, FUNC, OP, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)	\
+  if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {		\
+    dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);				\
+    mmux_##STEM##_dprintf(2, op);								\
+    dprintf(2, ")=");										\
+    mmux_##STEM##_dprintf(2, erop);								\
+    dprintf(2, "' got '");									\
+    mmux_##STEM##_dprintf(2, rop1);								\
+    dprintf(2, "'\n");										\
+    exit(EXIT_FAILURE);										\
   }
+
+#undef  EQUAL_RELEPSILON_BINARY
+#define EQUAL_RELEPSILON_BINARY(STEM, FUNC, OP1, OP2, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)	\
+  if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {			\
+    dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);					\
+    mmux_##STEM##_dprintf(2, op1);									\
+    dprintf(2, ",");											\
+    mmux_##STEM##_dprintf(2, op2);									\
+    dprintf(2, ")=");											\
+    mmux_##STEM##_dprintf(2, erop);									\
+    dprintf(2, "' got '");										\
+    mmux_##STEM##_dprintf(2, rop1);									\
+    dprintf(2, "'\n");											\
+    exit(EXIT_FAILURE);											\
+  }
+
+/* ------------------------------------------------------------------ */
 
 #undef  DOIT_FOR_THIS_FLONUM
 #define DOIT_FOR_THIS_FLONUM(STEM,FUNC, OP, EXPECTED_ROP, EPSILON)	\
@@ -49,20 +68,54 @@
     auto	eps  = mmux_##STEM##_literal(EPSILON);			\
     auto	rop1 = mmux_##STEM##_##FUNC(op);			\
     auto	rop2 = mmux_ctype_##FUNC(op);				\
-    EQUAL_RELEPSILON(STEM,erop,rop1,eps);				\
-    EQUAL_RELEPSILON(STEM,erop,rop2,eps);				\
+    EQUAL_RELEPSILON_UNARY(STEM,FUNC,op,erop,rop1,eps);			\
+    EQUAL_RELEPSILON_UNARY(STEM,FUNC,op,erop,rop2,eps);			\
+  }
+
+#undef  DOIT_FOR_THIS_FLONUM_BINARY
+#define DOIT_FOR_THIS_FLONUM_BINARY(STEM, FUNC,					\
+				    OP1, OP2,					\
+				    EXPECTED_ROP, EPSILON)			\
+  {										\
+    auto	op1  = mmux_##STEM##_literal(OP1);				\
+    auto	op2  = mmux_##STEM##_literal(OP2);				\
+    auto	erop = mmux_##STEM##_literal(EXPECTED_ROP);			\
+    auto	eps  = mmux_##STEM##_literal(EPSILON);				\
+    auto	rop1 = mmux_##STEM##_##FUNC(op1,op2);				\
+    auto	rop2 = mmux_ctype_##FUNC(op1,op2);				\
+    EQUAL_RELEPSILON_BINARY(STEM,FUNC,op1,op2,erop,rop1,eps);			\
+    EQUAL_RELEPSILON_BINARY(STEM,FUNC,op1,op2,erop,rop2,eps);			\
   }
 
 #undef  DOIT_FOR_THIS_FLONUMC
-#define DOIT_FOR_THIS_FLONUMC(STEM,FUNC, OP_REP, OP_IMP, EXPECTED_REP, EXPECTED_IMP, EPSILON)	\
+#define DOIT_FOR_THIS_FLONUMC(STEM, FUNC,							\
+			      OP_REP, OP_IMP,							\
+			      EXPECTED_REP, EXPECTED_IMP,					\
+			      EPSILON)								\
   {												\
     auto	op   = mmux_##STEM##_rectangular_literal(OP_REP,OP_IMP);			\
     auto	erop = mmux_##STEM##_rectangular_literal(EXPECTED_REP, EXPECTED_IMP);		\
     auto	eps  = mmux_##STEM##_rectangular_literal(EPSILON,EPSILON);			\
     auto	rop1 = mmux_##STEM##_##FUNC(op);						\
     auto	rop2 = mmux_ctype_##FUNC(op);							\
-    EQUAL_RELEPSILON(STEM,erop,rop1,eps);							\
-    EQUAL_RELEPSILON(STEM,erop,rop2,eps);							\
+    EQUAL_RELEPSILON_UNARY(STEM,FUNC,op,erop,rop1,eps);						\
+    EQUAL_RELEPSILON_UNARY(STEM,FUNC,op,erop,rop2,eps);						\
+  }
+
+#undef  DOIT_FOR_THIS_FLONUMC_BINARY
+#define DOIT_FOR_THIS_FLONUMC_BINARY(STEM,FUNC,						\
+				     OP1_REP, OP1_IMP,					\
+				     OP2_REP, OP2_IMP,					\
+				     EXPECTED_REP, EXPECTED_IMP, EPSILON)		\
+  {											\
+    auto	op1  = mmux_##STEM##_rectangular_literal(OP1_REP,OP1_IMP);		\
+    auto	op2  = mmux_##STEM##_rectangular_literal(OP2_REP,OP2_IMP);		\
+    auto	erop = mmux_##STEM##_rectangular_literal(EXPECTED_REP, EXPECTED_IMP);	\
+    auto	eps  = mmux_##STEM##_rectangular_literal(EPSILON,EPSILON);		\
+    auto	rop1 = mmux_##STEM##_##FUNC(op);					\
+    auto	rop2 = mmux_ctype_##FUNC(op);						\
+    EQUAL_RELEPSILON_BINARY(STEM,FUNC,op1,op2,erop,rop1,eps);				\
+    EQUAL_RELEPSILON_BINARY(STEM,FUNC,op1,op2,erop,rop2,eps);				\
   }
 
 
@@ -272,32 +325,23 @@ test_mathematics_tan (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1 = mmux_## STEM ##_literal(0.123);				\
-    auto	rop = mmux_## STEM ##_literal(0.123'624'066);			\
-    auto	eps = mmux_## STEM(1e-6);					\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_tan(op1), eps));	\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_tan(op1), eps));		\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, tan,			    \
+			 0.123,				    \
+			 0.123'624'066,			    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)									\
-  {												\
-    auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);				\
-    auto	rop = mmux_##STEM##_rectangular_literal(-0.002'708'235'84,1.004'164'71);	\
-    auto	eps = mmux_##STEM##_rectangular_literal(1e-6,1e-6);				\
-    if (0) {											\
-      dprintf(2, "\napplication for " #STEM " expected '");					\
-      mmux_##STEM##_dprintf(2, rop);								\
-      dprintf(2, "' got '");									\
-      mmux_##STEM##_dprintf(2, mmux_##STEM##_tan(op1));						\
-      dprintf(2, "' ");										\
-    }												\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_tan(op1), eps));			\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_tan(op1), eps));				\
-    dprintf(2," %s,", #STEM);									\
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, tan,			    \
+			  5.0,3.0,			    \
+			  -0.002'708'235'84,1.004'164'71,   \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
@@ -381,55 +425,27 @@ test_mathematics_asin (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1  = mmux_## STEM ##_literal(0.123);				\
-    auto	erop = mmux_## STEM ##_literal(0.123'312'275);			\
-    auto	eps  = mmux_## STEM ##_literal(1e-6);				\
-    auto	rop1 = mmux_## STEM ##_asin(op1);				\
-    auto	rop2 = mmux_ctype_asin(op1);					\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, asin,			    \
+			 0.123,				    \
+			 0.123'312'275,			    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)								\
-  {											\
-    { /* Special case for the operand. */						\
-      auto	op1  = mmux_##STEM##_rectangular_literal(0.0,3.0);			\
-      auto	erop = mmux_##STEM##_rectangular_literal(0.0,1.818'446'46);		\
-      auto	eps  = mmux_##STEM##_rectangular_literal(1e-6,1e-6);			\
-      auto	rop1 = mmux_##STEM##_asin(op1);						\
-      auto	rop2 = mmux_ctype_asin(op1);						\
-      if (1) {										\
-	dprintf(2, "\napplication for " #STEM " expected '");				\
-	mmux_##STEM##_dprintf(2, erop);							\
-	dprintf(2, "' got '");								\
-	mmux_##STEM##_dprintf(2, rop1);							\
-	dprintf(2, "' ");								\
-      }											\
-      assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
-      assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
-      dprintf(2," %s,", #STEM);								\
-    }											\
-    {											\
-      auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-      auto	erop = mmux_##STEM##_rectangular_literal(1.023'821'75,2.452'913'74);	\
-      auto	eps  = mmux_##STEM##_rectangular_literal(1e-6,1e-6);			\
-      auto	rop1 = mmux_##STEM##_asin(op1);						\
-      auto	rop2 = mmux_ctype_asin(op1);						\
-      if (1) {										\
-	dprintf(2, "\napplication for " #STEM " expected '");				\
-	mmux_##STEM##_dprintf(2, erop);							\
-	dprintf(2, "' got '");								\
-	mmux_##STEM##_dprintf(2, rop1);							\
-	dprintf(2, "' ");								\
-      }											\
-      assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
-      assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
-      dprintf(2," %s,", #STEM);								\
-    }											\
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, asin,			    \
+			  0.0,3.0,			    \
+			  0.0,1.818'446'46,		    \
+			  SMALL_EPS);			    \
+    DOIT_FOR_THIS_FLONUMC(STEM, asin,			    \
+			  5.0,3.0,			    \
+			  1.023'821'75,2.452'913'74,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
@@ -513,38 +529,23 @@ test_mathematics_acos (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1  = mmux_## STEM ##_literal(0.123);				\
-    auto	erop = mmux_## STEM ##_literal(1.447'484'05);			\
-    auto	eps  = mmux_## STEM ##_literal(1e-6);				\
-    auto	rop1 = mmux_## STEM ##_acos(op1);				\
-    auto	rop2 = mmux_ctype_acos(op1);					\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, acos,			    \
+			 0.123,				    \
+			 1.447'484'05,			    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)								\
-  {											\
-    {											\
-      auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-      auto	erop = mmux_##STEM##_rectangular_literal(0.546'974'58,-2.452'913'74);	\
-      auto	eps  = mmux_##STEM##_rectangular_literal(1e-6,1e-6);			\
-      auto	rop1 = mmux_##STEM##_acos(op1);						\
-      auto	rop2 = mmux_ctype_acos(op1);						\
-      if (1) {										\
-	dprintf(2, "\napplication for " #STEM " expected '");				\
-	mmux_##STEM##_dprintf(2, erop);							\
-	dprintf(2, "' got '");								\
-	mmux_##STEM##_dprintf(2, rop1);							\
-	dprintf(2, "' ");								\
-      }											\
-      assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
-      assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
-      dprintf(2," %s,", #STEM);								\
-    }											\
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, acos,			    \
+			  5.0,3.0,			    \
+			  0.546'974'58,-2.452'913'74,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
@@ -628,38 +629,23 @@ test_mathematics_atan (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1  = mmux_## STEM ##_literal(0.123);				\
-    auto	erop = mmux_## STEM ##_literal(0.122'385'281);			\
-    auto	eps  = mmux_## STEM ##_literal(1e-6);				\
-    auto	rop1 = mmux_## STEM ##_atan(op1);				\
-    auto	rop2 = mmux_ctype_atan(op1);					\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, atan,			    \
+			 0.123,				    \
+			 0.122'385'281,			    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)								\
-  {											\
-    {											\
-      auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-      auto	erop = mmux_##STEM##_rectangular_literal(1.423'679'04,0.086'569'059'2);	\
-      auto	eps  = mmux_##STEM##_rectangular_literal(1e-6,1e-6);			\
-      auto	rop1 = mmux_##STEM##_atan(op1);						\
-      auto	rop2 = mmux_ctype_atan(op1);						\
-      if (1) {										\
-	dprintf(2, "\napplication for " #STEM " expected '");				\
-	mmux_##STEM##_dprintf(2, erop);							\
-	dprintf(2, "' got '");								\
-	mmux_##STEM##_dprintf(2, rop1);							\
-	dprintf(2, "' ");								\
-      }											\
-      assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
-      assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
-      dprintf(2," %s,", #STEM);								\
-    }											\
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, atan,			    \
+			  5.0,3.0,			    \
+			  1.423'679'04,0.086'569'059'2,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
@@ -743,24 +729,13 @@ test_mathematics_atan2 (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)					\
-  {								\
-    auto	op1  = mmux_## STEM ##_literal(0.123);		\
-    auto	op2  = mmux_## STEM ##_literal(0.456);		\
-    auto	erop = mmux_## STEM ##_literal(0.263'466'541);	\
-    auto	eps  = mmux_## STEM ##_literal(1e-5);		\
-    auto	rop1 = mmux_## STEM ##_atan2(op1,op2);		\
-    auto	rop2 = mmux_ctype_atan2(op1,op2);		\
-    if (0) {							\
-      dprintf(2, "atan2 %s: expected ", #STEM);			\
-      mmux_##STEM##_dprintf(2, erop);				\
-      dprintf(2, " got ");					\
-      mmux_##STEM##_dprintf(2, rop1);				\
-      dprintf(2, "\n");						\
-    }								\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));	\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));	\
-    dprintf(2," %s,", #STEM);					\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM_BINARY(STEM, atan2,		    \
+				0.123,	0.456,		    \
+				0.263'466'541,		    \
+				SMALL_EPS);		    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
@@ -806,36 +781,23 @@ test_mathematics_sinh (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1  = mmux_## STEM(0.123);					\
-    auto	erop = mmux_## STEM(0.123'310'379);				\
-    auto	eps  = mmux_## STEM(1e-5);					\
-    auto	rop1 = mmux_##STEM##_sinh(op1);					\
-    auto	rop2 = mmux_ctype_sinh(op1);					\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, sinh,			    \
+			 0.123,				    \
+			 0.123'310'379,			    \
+			 SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)								\
-  {											\
-    auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-    auto	erop = mmux_##STEM##_rectangular_literal(-73.460'621'7,10.472'508'5);	\
-    auto	eps  = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
-    auto	rop1 = mmux_##STEM##_sinh(op1);						\
-    auto	rop2 = mmux_ctype_sinh(op1);						\
-    if (0) {										\
-      dprintf(2, "\napplication for " #STEM " expected '");				\
-      mmux_##STEM##_dprintf(2, erop);							\
-      dprintf(2, "' got '");								\
-      mmux_##STEM##_dprintf(2, rop1);							\
-      dprintf(2, "' ");									\
-    }											\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
-    dprintf(2," %s,", #STEM);								\
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, sinh,			    \
+			  5.0,3.0,			    \
+			  -73.460'621'7,10.472'508'5,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
@@ -919,37 +881,24 @@ test_mathematics_cosh (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1  = mmux_## STEM(0.123);					\
-    auto	erop = mmux_## STEM(1.007'574'04);				\
-    auto	eps  = mmux_## STEM(1e-5);					\
-    auto	rop1 = mmux_##STEM##_cosh(op1);					\
-    auto	rop2 = mmux_ctype_cosh(op1);					\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, cosh,			    \
+			 0.123,				    \
+			 1.007'574'04,			    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)								\
-  {											\
-    auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-    auto	erop = mmux_##STEM##_rectangular_literal(-73.467'292'2,10.471'557'7);	\
-    auto	eps  = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
-    auto	rop1 = mmux_##STEM##_cosh(op1);						\
-    auto	rop2 = mmux_ctype_cosh(op1);						\
-    if (0) {										\
-      dprintf(2, "\napplication for " #STEM " expected '");				\
-      mmux_##STEM##_dprintf(2, erop);							\
-      dprintf(2, "' got '");								\
-      mmux_##STEM##_dprintf(2, rop1);							\
-      dprintf(2, "' ");									\
-    }											\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
-    dprintf(2," %s,", #STEM);								\
-    }
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, cosh,			    \
+			  5.0,3.0,			    \
+			  -73.467'292'2,10.471'557'7,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
+  }
 
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
@@ -1032,36 +981,23 @@ test_mathematics_tanh (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT_FOR_FLONUM
-#define DOIT_FOR_FLONUM(STEM)							\
-  {										\
-    auto	op1  = mmux_## STEM(0.123);					\
-    auto	erop = mmux_## STEM(0.122'383'442);				\
-    auto	eps  = mmux_## STEM(1e-5);					\
-    auto	rop1 = mmux_##STEM##_tanh(op1);					\
-    auto	rop2 = mmux_ctype_tanh(op1);					\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
-    dprintf(2," %s,", #STEM);							\
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, tanh,			    \
+			 0.123,				    \
+			 0.122'383'442,			    \
+			 SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
-#define DOIT_FOR_FLONUMC(STEM)									\
-  {												\
-    auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);				\
-    auto	erop = mmux_##STEM##_rectangular_literal(0.999'912'82,-2.536'867'62e-05);	\
-    auto	eps  = mmux_##STEM##_rectangular_literal(1e-3,1e-3);				\
-    auto	rop1 = mmux_##STEM##_tanh(op1);							\
-    auto	rop2 = mmux_ctype_tanh(op1);							\
-    if (0) {											\
-      dprintf(2, "\napplication for " #STEM " expected '");					\
-      mmux_##STEM##_dprintf(2, erop);								\
-      dprintf(2, "' got '");									\
-      mmux_##STEM##_dprintf(2, rop1);								\
-      dprintf(2, "' ");										\
-    }												\
-    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));					\
-    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));					\
-    dprintf(2," %s,", #STEM);									\
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, tanh,			    \
+			  5.0,3.0,			    \
+			  0.999'912'82,-2.536'867'62e-05,   \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
   DOIT_FOR_FLONUM(flonumfl);
