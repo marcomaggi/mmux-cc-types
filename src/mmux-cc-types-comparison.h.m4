@@ -72,6 +72,16 @@ mmux_pointer_less_equal (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   return (op1 <= op2)? true : false;
 }
+mmux_cc_types_inline_decl mmux_pointer_t
+mmux_pointer_max (mmux_pointer_t op1, mmux_pointer_t op2)
+{
+  return ((mmux_pointer_greater_equal(op1, op2))? op1 : op2);
+}
+mmux_cc_types_inline_decl mmux_pointer_t
+mmux_pointer_min (mmux_pointer_t op1, mmux_pointer_t op2)
+{
+  return ((mmux_pointer_greater_equal(op1, op2))? op2 : op1);
+}
 
 
 /** --------------------------------------------------------------------

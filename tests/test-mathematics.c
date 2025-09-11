@@ -17,11 +17,53 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#undef  _GNU_SOURCE
-#define _GNU_SOURCE	1
-
-#include <mmux-cc-types.h>
 #include <test-common.h>
+
+
+/** --------------------------------------------------------------------
+ ** Common macros.
+ ** ----------------------------------------------------------------- */
+
+#undef	SMALL_EPS
+#define	SMALL_EPS		1e-3
+
+#undef	NORMAL_EPS
+#define	NORMAL_EPS		1e-6
+
+#undef  EQUAL_RELEPSILON
+#define EQUAL_RELEPSILON(STEM, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)		\
+  if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {	\
+    dprintf(2, "\n%s: %s: expected '", __func__, #STEM);				\
+    mmux_##STEM##_dprintf(2, erop);							\
+    dprintf(2, "' got '");								\
+    mmux_##STEM##_dprintf(2, rop1);							\
+    dprintf(2, "'\n");									\
+    exit(EXIT_FAILURE);									\
+  }
+
+#undef  DOIT_FOR_THIS_FLONUM
+#define DOIT_FOR_THIS_FLONUM(STEM,FUNC, OP, EXPECTED_ROP, EPSILON)	\
+  {									\
+    auto	op   = mmux_##STEM##_literal(OP);			\
+    auto	erop = mmux_##STEM##_literal(EXPECTED_ROP);		\
+    auto	eps  = mmux_##STEM##_literal(EPSILON);			\
+    auto	rop1 = mmux_##STEM##_##FUNC(op);			\
+    auto	rop2 = mmux_ctype_##FUNC(op);				\
+    EQUAL_RELEPSILON(STEM,erop,rop1,eps);				\
+    EQUAL_RELEPSILON(STEM,erop,rop2,eps);				\
+  }
+
+#undef  DOIT_FOR_THIS_FLONUMC
+#define DOIT_FOR_THIS_FLONUMC(STEM,FUNC, OP_REP, OP_IMP, EXPECTED_REP, EXPECTED_IMP, EPSILON)	\
+  {												\
+    auto	op   = mmux_##STEM##_rectangular_literal(OP_REP,OP_IMP);			\
+    auto	erop = mmux_##STEM##_rectangular_literal(EXPECTED_REP, EXPECTED_IMP);		\
+    auto	eps  = mmux_##STEM##_rectangular_literal(EPSILON,EPSILON);			\
+    auto	rop1 = mmux_##STEM##_##FUNC(op);						\
+    auto	rop2 = mmux_ctype_##FUNC(op);							\
+    EQUAL_RELEPSILON(STEM,erop,rop1,eps);							\
+    EQUAL_RELEPSILON(STEM,erop,rop2,eps);							\
+  }
 
 
 static void
@@ -29,104 +71,95 @@ test_mathematics_sin (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
-  {										\
-    auto	op1 = mmux_## STEM(0.123);					\
-    auto	rop = mmux_## STEM(0.122'690'09);				\
-    auto	eps = mmux_## STEM(1e-6);					\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_sin(op1), eps));	\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sin(op1), eps));		\
-    dprintf(2," %s,", #STEM);							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, sin,			    \
+			 0.123,				    \
+			 0.122'690'09,			    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
-  {											\
-    auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-    auto	rop = mmux_##STEM##_rectangular_literal(-9.654'125'477,2.841'692'296);	\
-    auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
-    if (0) {										\
-      dprintf(2, "\napplication for " #STEM " expected '");				\
-      mmux_##STEM##_dprintf(2, rop);							\
-      dprintf(2, "' got '");								\
-      mmux_##STEM##_dprintf(2, mmux_##STEM##_sin(op1));					\
-      dprintf(2, "' ");									\
-    }											\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_sin(op1), eps));		\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_sin(op1), eps));			\
-    dprintf(2," %s,", #STEM);								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, sin,			    \
+			  5.0,3.0,			    \
+			  -9.654'125'477,2.841'692'296,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -138,104 +171,95 @@ test_mathematics_cos (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
-  {										\
-    auto	op1 = mmux_## STEM(0.123);					\
-    auto	rop = mmux_## STEM(0.9924450321);				\
-    auto	eps = mmux_## STEM(1e-6);					\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_cos(op1), eps));	\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cos(op1), eps));		\
-    dprintf(2," %s,", #STEM);							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, cos,			    \
+			 0.123,				    \
+			 0.992'445'032'1,		    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
-  {											\
-    auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
-    auto	rop = mmux_##STEM##_rectangular_literal(2.855815004,9.606383448);	\
-    auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
-    if (0) {										\
-      dprintf(2, "\napplication for " #STEM " expected '");				\
-      mmux_##STEM##_dprintf(2, rop);							\
-      dprintf(2, "' got '");								\
-      mmux_##STEM##_dprintf(2, mmux_##STEM##_cos(op1));					\
-      dprintf(2, "' ");									\
-    }											\
-    assert(mmux_##STEM##_equal_relepsilon(rop, mmux_##STEM##_cos(op1), eps));		\
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_cos(op1), eps));			\
-    dprintf(2," %s,", #STEM);								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, cos,			    \
+			  5.0,3.0,			    \
+			  2.855815004,9.606383448,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -247,8 +271,8 @@ test_mathematics_tan (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1 = mmux_## STEM ##_literal(0.123);				\
     auto	rop = mmux_## STEM ##_literal(0.123'624'066);			\
@@ -258,8 +282,8 @@ test_mathematics_tan (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)									\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)									\
   {												\
     auto	op1 = mmux_##STEM##_rectangular_literal(5.0,3.0);				\
     auto	rop = mmux_##STEM##_rectangular_literal(-0.002'708'235'84,1.004'164'71);	\
@@ -276,75 +300,75 @@ test_mathematics_tan (void)
     dprintf(2," %s,", #STEM);									\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -356,8 +380,8 @@ test_mathematics_asin (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM ##_literal(0.123);				\
     auto	erop = mmux_## STEM ##_literal(0.123'312'275);			\
@@ -369,8 +393,8 @@ test_mathematics_asin (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     { /* Special case for the operand. */						\
       auto	op1  = mmux_##STEM##_rectangular_literal(0.0,3.0);			\
@@ -408,75 +432,75 @@ test_mathematics_asin (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -488,8 +512,8 @@ test_mathematics_acos (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM ##_literal(0.123);				\
     auto	erop = mmux_## STEM ##_literal(1.447'484'05);			\
@@ -501,8 +525,8 @@ test_mathematics_acos (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     {											\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
@@ -523,75 +547,75 @@ test_mathematics_acos (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -603,8 +627,8 @@ test_mathematics_atan (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM ##_literal(0.123);				\
     auto	erop = mmux_## STEM ##_literal(0.122'385'281);			\
@@ -616,8 +640,8 @@ test_mathematics_atan (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     {											\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
@@ -638,75 +662,75 @@ test_mathematics_atan (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -718,8 +742,8 @@ test_mathematics_atan2 (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)					\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)					\
   {								\
     auto	op1  = mmux_## STEM ##_literal(0.123);		\
     auto	op2  = mmux_## STEM ##_literal(0.456);		\
@@ -739,37 +763,37 @@ test_mathematics_atan2 (void)
     dprintf(2," %s,", #STEM);					\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -781,8 +805,8 @@ test_mathematics_sinh (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(0.123'310'379);				\
@@ -794,8 +818,8 @@ test_mathematics_sinh (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
     auto	erop = mmux_##STEM##_rectangular_literal(-73.460'621'7,10.472'508'5);	\
@@ -814,75 +838,75 @@ test_mathematics_sinh (void)
     dprintf(2," %s,", #STEM);								\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -894,8 +918,8 @@ test_mathematics_cosh (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(1.007'574'04);				\
@@ -907,8 +931,8 @@ test_mathematics_cosh (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
     auto	erop = mmux_##STEM##_rectangular_literal(-73.467'292'2,10.471'557'7);	\
@@ -927,75 +951,75 @@ test_mathematics_cosh (void)
     dprintf(2," %s,", #STEM);								\
     }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1007,8 +1031,8 @@ test_mathematics_tanh (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(0.122'383'442);				\
@@ -1020,8 +1044,8 @@ test_mathematics_tanh (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)									\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)									\
   {												\
     auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);				\
     auto	erop = mmux_##STEM##_rectangular_literal(0.999'912'82,-2.536'867'62e-05);	\
@@ -1040,75 +1064,75 @@ test_mathematics_tanh (void)
     dprintf(2," %s,", #STEM);									\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1120,8 +1144,8 @@ test_mathematics_asinh (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(0.122'691'948);				\
@@ -1133,8 +1157,8 @@ test_mathematics_asinh (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     { /* special case */								\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,0.0);			\
@@ -1172,75 +1196,75 @@ test_mathematics_asinh (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1252,8 +1276,8 @@ test_mathematics_acosh (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(1.23);					\
     auto	erop = mmux_## STEM(0.665'863'529);				\
@@ -1272,8 +1296,8 @@ test_mathematics_acosh (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     { /* special case */								\
       auto	op1  = mmux_##STEM##_rectangular_literal(1.23,0.0);			\
@@ -1311,75 +1335,75 @@ test_mathematics_acosh (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1391,8 +1415,8 @@ test_mathematics_atanh (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(1.23);					\
     auto	erop = mmux_## STEM(0.123'625'981);				\
@@ -1411,8 +1435,8 @@ test_mathematics_atanh (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     {											\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
@@ -1433,75 +1457,75 @@ test_mathematics_atanh (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1513,8 +1537,8 @@ test_mathematics_exp (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(1.130'884'42);				\
@@ -1533,8 +1557,8 @@ test_mathematics_exp (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     {											\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
@@ -1555,75 +1579,75 @@ test_mathematics_exp (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1635,8 +1659,8 @@ test_mathematics_exp2 (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(1.088'997'02);				\
@@ -1655,8 +1679,8 @@ test_mathematics_exp2 (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     {											\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
@@ -1677,75 +1701,75 @@ test_mathematics_exp2 (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -1757,8 +1781,8 @@ test_mathematics_exp10 (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT_FOR_REAL
-#define DOIT_FOR_REAL(STEM)							\
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
   {										\
     auto	op1  = mmux_## STEM(0.123);					\
     auto	erop = mmux_## STEM(1.327'394'46);				\
@@ -1777,8 +1801,8 @@ test_mathematics_exp10 (void)
     dprintf(2," %s,", #STEM);							\
   }
 
-#undef  DOIT_FOR_CPLX
-#define DOIT_FOR_CPLX(STEM)								\
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
   {											\
     {											\
       auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
@@ -1786,7 +1810,7 @@ test_mathematics_exp10 (void)
       auto	eps  = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
       auto	rop1 = mmux_##STEM##_exp10(op1);					\
       auto	rop2 = mmux_ctype_exp10(op1);						\
-      if (1) {										\
+      if (0) {										\
 	dprintf(2, "\napplication for " #STEM " expected '");				\
 	mmux_##STEM##_dprintf(2, erop);							\
 	dprintf(2, "' got '");								\
@@ -1807,579 +1831,411 @@ test_mathematics_exp10 (void)
     }											\
   }
 
-  DOIT_FOR_REAL(flonumfl);
-  DOIT_FOR_REAL(flonumdb);
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DOIT_FOR_REAL(flonumldb);
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DOIT_FOR_REAL(flonumf32);
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DOIT_FOR_REAL(flonumf64);
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DOIT_FOR_REAL(flonumf128);
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DOIT_FOR_REAL(flonumf32x);
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DOIT_FOR_REAL(flonumf64x);
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DOIT_FOR_REAL(flonumf128x);
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DOIT_FOR_REAL(flonumd32);
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DOIT_FOR_REAL(flonumd64);
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  DOIT_FOR_REAL(flonumd128);
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
-  DOIT_FOR_CPLX(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcfl);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
-  DOIT_FOR_CPLX(flonumcdb);
+  DOIT_FOR_FLONUMC(flonumcdb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  DOIT_FOR_CPLX(flonumcldb);
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  DOIT_FOR_CPLX(flonumcf32);
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  DOIT_FOR_CPLX(flonumcf64);
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  DOIT_FOR_CPLX(flonumcf128);
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  DOIT_FOR_CPLX(flonumcf32x);
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  DOIT_FOR_CPLX(flonumcf64x);
+  DOIT_FOR_FLONUMC(flonumcf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DOIT_FOR_CPLX(flonumcf128x);
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
-  DOIT_FOR_CPLX(flonumcd32);
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
-  DOIT_FOR_CPLX(flonumcd64);
+  DOIT_FOR_FLONUMC(flonumcd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DOIT_FOR_CPLX(flonumcd128);
+  DOIT_FOR_FLONUMC(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
 }
 
-#if 0
-
 
 static void
 test_mathematics_log (void)
 {
-  printf("running test: %s\n", __func__);
-#undef  ROPX
-#define ROPX		-2.095'570'92
-#undef  ROPZ
-#define ROPZ		1.763'180'26,0.540'419'5
+  dprintf(2, "running test: %s:", __func__);
 
-  {
-    mmux_flonumfl_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)							\
+  {										\
+    auto	op1  = mmux_## STEM(0.123);					\
+    auto	erop = mmux_## STEM(-2.095'570'92);				\
+    auto	eps  = mmux_## STEM(1e-5);					\
+    auto	rop1 = mmux_##STEM##_log(op1);					\
+    auto	rop2 = mmux_ctype_log(op1);					\
+    if (0) {									\
+      dprintf(2, "\napplication for " #STEM " expected '");			\
+      mmux_##STEM##_dprintf(2, erop);						\
+      dprintf(2, "' got '");							\
+      mmux_##STEM##_dprintf(2, rop1);						\
+      dprintf(2, "' ");								\
+    }										\
+    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));			\
+    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));			\
+    dprintf(2," %s,", #STEM);							\
   }
-  {
-    mmux_flonumdb_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
+
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
+  {											\
+    {											\
+      auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
+      auto	erop = mmux_##STEM##_rectangular_literal(1.763'180'26,0.540'419'5);	\
+      auto	eps  = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
+      auto	rop1 = mmux_##STEM##_log(op1);						\
+      auto	rop2 = mmux_ctype_log(op1);						\
+      assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
+      assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
+      dprintf(2," %s,", #STEM);								\
+    }											\
   }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  {
-    mmux_flonumldb_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  {
-    mmux_flonumf32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  {
-    mmux_flonumf64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  {
-    mmux_flonumf128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  {
-    mmux_flonumf32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  {
-    mmux_flonumf64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  {
-    mmux_flonumf128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  {
-    mmux_flonumd32_t	op1 = 0.123, rop = ROPX, eps = 1e-4;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  {
-    mmux_flonumd64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  {
-    mmux_flonumd128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
-  {
-    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_rectangular(1,1);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
-
-  {
-    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
-
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+  DOIT_FOR_FLONUMC(flonumcfl);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+  DOIT_FOR_FLONUMC(flonumcdb);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  {
-    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  {
-    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  {
-    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  {
-    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  {
-    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  {
-    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  {
-    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log(op1), eps));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_FLONUMC(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
 }
 
 
 static void
 test_mathematics_log2 (void)
 {
-  printf("running test: %s\n", __func__);
-#undef  ROPX
-#define ROPX		-3.023'269'78
-#undef  ROPZ
-#define ROPZ		2.543'731'42,0.779'660'533
+  dprintf(2, "running test: %s:", __func__);
 
-  {
-    mmux_flonumfl_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)					\
+  {								\
+    auto	op1  = mmux_## STEM(0.123);			\
+    auto	erop = mmux_## STEM(-3.023'269'78);		\
+    auto	eps  = mmux_## STEM(1e-5);			\
+    auto	rop1 = mmux_##STEM##_log2(op1);			\
+    auto	rop2 = mmux_ctype_log2(op1);			\
+    if (0) {							\
+      dprintf(2, "\napplication for " #STEM " expected '");	\
+      mmux_##STEM##_dprintf(2, erop);				\
+      dprintf(2, "' got '");					\
+      mmux_##STEM##_dprintf(2, rop1);				\
+      dprintf(2, "' ");						\
+    }								\
+    assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));	\
+    assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));	\
+    dprintf(2," %s,", #STEM);					\
   }
-  {
-    mmux_flonumdb_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
+
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)								\
+  {											\
+    {											\
+      auto	op1  = mmux_##STEM##_rectangular_literal(5.0,3.0);			\
+      auto	erop = mmux_##STEM##_rectangular_literal(2.543'731'42,0.779'660'533);	\
+      auto	eps  = mmux_##STEM##_rectangular_literal(1e-3,1e-3);			\
+      auto	rop1 = mmux_##STEM##_log2(op1);						\
+      auto	rop2 = mmux_ctype_log2(op1);						\
+      assert(mmux_##STEM##_equal_relepsilon(erop, rop1, eps));				\
+      assert(mmux_ctype_equal_relepsilon(erop, rop2, eps));				\
+      dprintf(2," %s,", #STEM);								\
+    }											\
   }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  {
-    mmux_flonumldb_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  {
-    mmux_flonumf32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  {
-    mmux_flonumf64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  {
-    mmux_flonumf128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  {
-    mmux_flonumf32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  {
-    mmux_flonumf64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  {
-    mmux_flonumf128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  {
-    mmux_flonumd32_t	op1 = 0.123, rop = ROPX, eps = 1e-4;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  {
-    mmux_flonumd64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  {
-    mmux_flonumd128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
-  {
-    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_rectangular(1,1);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
-
-  {
-    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
-
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+  DOIT_FOR_FLONUMC(flonumcfl);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+  DOIT_FOR_FLONUMC(flonumcdb);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  {
-    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  {
-    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  {
-    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  {
-    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  {
-    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  {
-    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  {
-    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log2(op1), eps));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_FLONUMC(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
 }
 
 
 static void
 test_mathematics_log10 (void)
 {
-  printf("running test: %s\n", __func__);
-#undef  ROPX
-#define ROPX		-0.910'094'889
-#undef  ROPZ
-#define ROPZ		0.765'739'459,0.234'701'207
+  dprintf(2, "running test: %s:", __func__);
 
-  {
-    mmux_flonumfl_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUM(STEM, log10,			    \
+			 0.123,				    \
+			 -0.910'094'889,		    \
+			 NORMAL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
-  {
-    mmux_flonumdb_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
+
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_FLONUMC(STEM, log10,			    \
+			  5.0,3.0,			    \
+			  0.765'739'459,0.234'701'207,	    \
+			  SMALL_EPS);			    \
+    dprintf(2," %s,", #STEM);				    \
   }
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  {
-    mmux_flonumldb_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  {
-    mmux_flonumf32_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  {
-    mmux_flonumf64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  {
-    mmux_flonumf128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  {
-    mmux_flonumf32x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  {
-    mmux_flonumf64x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf64x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  {
-    mmux_flonumf128x_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumf128x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  {
-    mmux_flonumd32_t	op1 = 0.123, rop = ROPX, eps = 1e-4;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  {
-    mmux_flonumd64_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
-  {
-    mmux_flonumd128_t	op1 = 0.123, rop = ROPX, eps = 1e-6;
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUM(flonumd128);
 #endif
 
-  {
-    auto	op1 = mmux_flonumcfl_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcfl_rectangular(ROPZ);
-    auto	eps = mmux_flonumcfl_rectangular(1,1);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
-
-  {
-    auto	op1 = mmux_flonumcdb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcdb_rectangular(ROPZ);
-    auto	eps = mmux_flonumcdb_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
-
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCFL
+  DOIT_FOR_FLONUMC(flonumcfl);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCDB
+  DOIT_FOR_FLONUMC(flonumcdb);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
-  {
-    auto	op1 = mmux_flonumcldb_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcldb_rectangular(ROPZ);
-    auto	eps = mmux_flonumcldb_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcldb);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
-  {
-    auto	op1 = mmux_flonumcf32_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf32);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
-  {
-    auto	op1 = mmux_flonumcf64_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf64);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
-  {
-    auto	op1 = mmux_flonumcf128_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf128);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
-  {
-    auto	op1 = mmux_flonumcf32x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf32x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf32x_rectangular(1e-3,1e-3);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf32x);
 #endif
-
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
-  {
-    auto	op1 = mmux_flonumcf64x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf64x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf64x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+  DOIT_FOR_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_FLONUMC(flonumcf128x);
 #endif
 
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  {
-    auto	op1 = mmux_flonumcf128x_rectangular(5.0,3.0);
-    auto	rop = mmux_flonumcf128x_rectangular(ROPZ);
-    auto	eps = mmux_flonumcf128x_rectangular(1e-6,1e-6);
-    assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_log10(op1), eps));
-  }
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_FLONUMC(flonumcd32);
 #endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_FLONUMC(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
 }
+
+#if 0
 
 
 static void
@@ -4028,10 +3884,11 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_mathematics_exp2();	}
   if (1) {	test_mathematics_exp10();	}
 
-#if 0
   if (1) {	test_mathematics_log();		}
   if (1) {	test_mathematics_log2();	}
   if (1) {	test_mathematics_log10();	}
+
+#if 0
   if (1) {	test_mathematics_logb();	}
 
   if (1) {	test_mathematics_pow();		}

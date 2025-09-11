@@ -17,10 +17,6 @@
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-#undef  _GNU_SOURCE
-#define _GNU_SOURCE	1
-
-#include <mmux-cc-types.h>
 #include <test-common.h>
 
 #define DOIT(STEM,INPUTSTR)	 {								\
