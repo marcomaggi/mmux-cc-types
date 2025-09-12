@@ -826,13 +826,8 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedef{sint64,int64_t}
 @MmuxDefineCAliasTypedef{uint64,uint64_t}
 
-@deftp {Typedef Alias} mmux_byte_t
-An alias for @objtype{mmux_sint8_t}.
-@end deftp
-
-@deftp {Typedef Alias} mmux_octet_t
-An alias for @objtype{mmux_uint8_t}.
-@end deftp
+@MmuxDefineCAliasTypedefForAliasedType{byte,            sint8_t,        sint8}
+@MmuxDefineCAliasTypedefForAliasedType{octet,           uint8_t,        uint8}
 
 @MmuxDefineCAliasTypedefForAliasedType{ssize,           ssize_t,        @value{ALIASSSIZE}}
 @MmuxDefineCAliasTypedefForAliasedType{usize,           size_t,         @value{ALIASUSIZE}}
@@ -901,48 +896,171 @@ literals is defined.  We have to remember that the argument of these macros must
 number specification.
 
 
-@deffn {Preprocessor Macro} MMUX_UNSIGNED_LITERAL (@var{INTEGER_NUMBER_LITERAL})
+@deffn {Preprocessor Macro} mmux_standard_unsigned_literal (@var{INTEGER_NUMBER_LITERAL})
 Expand into an unsigned integer number literal, using the suffix @samp{U}; the full type of the
 unsigned integer is unspecified.
 
 @example
-mmux_uchar_t    A = MMUX_UNSIGNED_LITERAL(123);
-mmux_ushort_t   B = MMUX_UNSIGNED_LITERAL(123);
-mmux_uint_t     C = MMUX_UNSIGNED_LITERAL(123);
-mmux_ulong_t    D = MMUX_UNSIGNED_LITERAL(123);
+mmux_uchar_t    A = mmux_standard_unsigned_literal(123);
+mmux_ushort_t   B = mmux_standard_unsigned_literal(123);
+mmux_uint_t     C = mmux_standard_unsigned_literal(123);
+mmux_ulong_t    D = mmux_standard_unsigned_literal(123);
 @end example
 @end deffn
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineFlonumLiteralMacro{UPCASESTEM,LOCASESTEM,TYPEDEF,SUFFIX,ARGUMENT,LITERALEXAMPLE}
-@deffn {Preprocessor Macro} MMUX_\UPCASESTEM\_LITERAL (@var{\ARGUMENT\})
-Expand into a number literal of type @objtype{\TYPEDEF\}, using the suffix @samp{\SUFFIX\}.
+@macro MmuxDefineLiteralMacro{STEM}
+@deffn {Preprocessor Macro} mmux_standard_\STEM\_literal (@var{ARG})
+This macro implements the following expansion:
 
 @example
-mmux_\LOCASESTEM\_t  value = MMUX_\UPCASESTEM\_LITERAL(LITERALEXAMPLE);
+mmux_standard_\STEM\_literal(@var{ARG})
+@expansion{} ((mmux_standard_\STEM\_t) (@var{ARG}))
+@end example
+
+@noindent
+and we can use it as follows:
+
+@example
+auto    val = mmux_standard_\STEM\_literal(13)
 @end example
 @end deffn
 
 @end macro
 
-@MmuxDefineFlonumLiteralMacro{SLLONG,sllong,signed long long int,LL,INTEGER_NUMBER_LITERAL,123}
-@MmuxDefineFlonumLiteralMacro{ULLONG,ullong,unsigned long long int,ULL,INTEGER_NUMBER_LITERAL,123}
+@c ------------------------------------------------------------------------
 
-@MmuxDefineFlonumLiteralMacro{flonumfl,flonumfl,flonumfl,F,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMLDB,flonumldb,flonumldb,L,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@macro MmuxDefineLiteralMacroUnsignedInteger{STEM}
+@deffn {Preprocessor Macro} mmux_standard_\STEM\_literal (@var{ARG})
+This macro implements the following expansion:
 
-@MmuxDefineFlonumLiteralMacro{FLONUMF32,flonumf32,_Flonumf32,f32,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMF64,flonumf64,_Flonumf64,f64,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMF128,flonumf128,_Flonumf128,f128,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@example
+mmux_standard_\STEM\_literal(@var{ARG})
+@expansion{} ((mmux_standard_\STEM\_t) (mmux_standard_unsigned_literal(@var{ARG})))
+@end example
 
-@MmuxDefineFlonumLiteralMacro{FLONUMF32X,flonumf32x,_Flonumf32x,f32x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMF64X,flonumf64x,_Flonumf64x,f64x,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMF128X,flonumf128x,_Flonumf128x,f128x,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@noindent
+and we can use it as follows:
 
-@MmuxDefineFlonumLiteralMacro{FLONUMD32,flonumd32,_Flonumd32,DF,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMD64,flonumd64,_Flonumd64,DD,FLOATING_POINT_NUMBER_LITERAL,0.123}
-@MmuxDefineFlonumLiteralMacro{FLONUMD128,flonumd128,_Flonumd128,DL,FLOATING_POINT_NUMBER_LITERAL,0.123}
+@example
+auto    val = mmux_standard_\STEM\_literal(13)
+@end example
+@end deffn
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineLiteralMacroWithSuffix{STEM,SUFFIX,LITERALEXAMPLE}
+@deffn {Preprocessor Macro} mmux_standard_\STEM\_literal (@var{ARG})
+This macro implements the following expansion:
+
+@example
+mmux_standard_\STEM\_literal(@var{ARG})
+@expansion{} ((mmux_standard_\STEM\_t) (@var{ARG} ## \SUFFIX\))
+@end example
+
+@noindent
+and we can use it as follows:
+
+@example
+auto    val = mmux_standard_\STEM\_literal(\LITERALEXAMPLE\)
+@end example
+@end deffn
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Preprocessor Macro} mmux_standard_pointer_t mmux_standard_pointer_literal (@var{ARG})
+This macro implements the following expansion:
+
+@example
+mmux_standard_pointer_literal(@var{ARG})
+@expansion{} ((mmux_standard_pointer_t) (mmux_standard_unsigned_literal(@var{ARG})))
+@end example
+@end deftypefn
+
+
+@deftypefn {Preprocessor Macro} mmux_standard_pointerc_t mmux_standard_pointerc_literal (@var{ARG})
+This macro implements the following expansion:
+
+@example
+mmux_standard_pointerc_literal(@var{ARG})
+@expansion{} ((mmux_standard_pointerc_t) (mmux_standard_unsigned_literal(@var{ARG})))
+@end example
+@end deftypefn
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineLiteralMacro{char}
+
+@MmuxDefineLiteralMacro{schar}
+@MmuxDefineLiteralMacroUnsignedInteger{uchar}
+
+@MmuxDefineLiteralMacro{sshort}
+@MmuxDefineLiteralMacroUnsignedInteger{ushort}
+
+@MmuxDefineLiteralMacro{sint}
+@MmuxDefineLiteralMacroUnsignedInteger{uint}
+
+@MmuxDefineLiteralMacro{slong}
+@MmuxDefineLiteralMacroUnsignedInteger{ulong}
+
+@MmuxDefineLiteralMacroWithSuffix{sllong,LL,123}
+@MmuxDefineLiteralMacroWithSuffix{ullong,ULL,123}
+
+@MmuxDefineLiteralMacro{sint8}
+@MmuxDefineLiteralMacroUnsignedInteger{uint8}
+
+@MmuxDefineLiteralMacro{sint16}
+@MmuxDefineLiteralMacroUnsignedInteger{uint16}
+
+@MmuxDefineLiteralMacro{sint32}
+@MmuxDefineLiteralMacroUnsignedInteger{uint32}
+
+@MmuxDefineLiteralMacro{sint64}
+@MmuxDefineLiteralMacroUnsignedInteger{uint64}
+
+@MmuxDefineLiteralMacro{byte}
+@MmuxDefineLiteralMacroUnsignedInteger{octet}
+
+@MmuxDefineLiteralMacro{ssize}
+@MmuxDefineLiteralMacroUnsignedInteger{usize}
+@MmuxDefineLiteralMacro{sintmax}
+@MmuxDefineLiteralMacroUnsignedInteger{uintmax}
+@MmuxDefineLiteralMacro{sintptr}
+@MmuxDefineLiteralMacroUnsignedInteger{uintptr}
+@MmuxDefineLiteralMacroUnsignedInteger{mode}
+@MmuxDefineLiteralMacro{off}
+@MmuxDefineLiteralMacro{pid}
+@MmuxDefineLiteralMacroUnsignedInteger{uid}
+@MmuxDefineLiteralMacroUnsignedInteger{gid}
+@MmuxDefineLiteralMacro{ptrdiff}
+@MmuxDefineLiteralMacro{wchar}
+@MmuxDefineLiteralMacroUnsignedInteger{wint}
+@MmuxDefineLiteralMacro{time}
+@MmuxDefineLiteralMacroUnsignedInteger{socklen}
+@MmuxDefineLiteralMacroUnsignedInteger{rlim}
+
+@MmuxDefineLiteralMacroWithSuffix{flonumfl,F,0.123}
+@MmuxDefineLiteralMacro{flonumdb}
+@MmuxDefineLiteralMacroWithSuffix{flonumldb,L,0.123}
+
+@MmuxDefineLiteralMacroWithSuffix{flonumf32,f32,0.123}
+@MmuxDefineLiteralMacroWithSuffix{flonumf64,f64,0.123}
+@MmuxDefineLiteralMacroWithSuffix{flonumf128,f128,0.123}
+
+@MmuxDefineLiteralMacroWithSuffix{flonumf32x,f32x,0.123}
+@MmuxDefineLiteralMacroWithSuffix{flonumf64x,f64x,0.123}
+@MmuxDefineLiteralMacroWithSuffix{flonumf128x,f128x,0.123}
+
+@MmuxDefineLiteralMacroWithSuffix{flonumd32,DF,0.123}
+@MmuxDefineLiteralMacroWithSuffix{flonumd64,DD,0.123}
+@MmuxDefineLiteralMacroWithSuffix{flonumd128,DL,0.123}
+
+
 
 @c page
 @node makers
@@ -963,7 +1081,7 @@ the macros expand as follows:
 
 @example
 mmux_sint_make(123)       @expansion{} ((mmux_sint_t)(0.123))
-mmux_uint_make(123)       @expansion{} ((mmux_uint_t)(MMUX_UNSIGNED_LITERAL(123)))
+mmux_uint_make(123)       @expansion{} ((mmux_uint_t)(mmux_standard_unsigned_literal(123)))
 mmux_flonumldb_make(0.123)  @expansion{} ((mmux_flonumldb_t)(MMUX_FLONUMLDB_LITERAL(0.123)))
 @end example
 
