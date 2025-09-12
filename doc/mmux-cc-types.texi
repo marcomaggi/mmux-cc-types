@@ -7,6 +7,7 @@
 @c @include version.texi
 @include mmux-version.texi
 @include macros.texi
+@include aliased-types.texi
 
 @c page
 @c ------------------------------------------------------------
@@ -89,6 +90,11 @@
 This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C23 language
 library meant to be used in foreign functions interfaces for higher--level languages.
 
+This package installs a C23 library which implements an @api{} to interface C23 language types with
+higher--level platforms.  The source code must be compiled with the @gnu{} C Compiler
+(@command{gcc}) and depending on the @gnu{} C Library (@command{glibc}) and the @emph{Decimal
+Floating Point C Library} (@command{libdfp}).
+
 The package targets @posix{} platforms.
 
 This package is distributed under the terms of the @gnu{} General Public License (@gpl{}).
@@ -128,7 +134,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 @ifinfo
 @dircategory Development
 @direntry
-* mmux-cc-types: (mmux-cc-types).       C23language library handling core types.
+* mmux-cc-types: (mmux-cc-types).       C23 language library handling core types.
 @end direntry
 @end ifinfo
 
@@ -225,7 +231,7 @@ C language header files are installed under @code{$includedir}, for example:
 
 Support for the @objtype{_DecimalN} types is enabled if availability of such types is detected at
 package--configuration time.  This package relies on the availability of the external package
-@code{libdfp}.
+@code{libdfp}, the @emph{Decimal Floating Point C Library}.
 
 @c page
 @node overview stems
@@ -312,6 +318,8 @@ useful when using preprocessor macros to generate code.
 If @value{PACKAGE} supports a type: it blindly implements all the possible operations for it, even
 when it looks like an operation does not make much sense.  A type is a type.
 
+@c ------------------------------------------------------------------------
+
 @macro MmuxDefineTypeStem{STEM,TYPE}
 @deftp {Type Stem} \STEM\
 Single--word specification of a C language type supported by this package.  It is an alias for the C
@@ -320,6 +328,16 @@ language type @code{\TYPE\}.
 
 @end macro
 
+@macro MmuxDefineAliasedTypeStem{STEM,TYPE,ALIAS}
+@deftp {Type Stem} \STEM\
+Single--word specification of a C language type supported by this package.  It is an alias for the C
+language type @code{\TYPE\}, which, as this instance of the package installation as been configured,
+it is an alias for @code{@value{\ALIAS\}}.
+@end deftp
+
+@end macro
+
+@c ------------------------------------------------------------------------
 
 @MmuxDefineTypeStem{pointer,void *}
 @MmuxDefineTypeStem{pointerc,void const *}
@@ -392,23 +410,23 @@ non--standard C language type implementing complex floating--point numbers havin
 @MmuxDefineTypeStem{sint64,int64_t}
 @MmuxDefineTypeStem{uint64,uint64_t}
 
-@MmuxDefineTypeStem{ssize,ssize_t}
-@MmuxDefineTypeStem{usize,size_t}
-@MmuxDefineTypeStem{sintmax, intmax_t}
-@MmuxDefineTypeStem{uintmax, uintmax_t}
-@MmuxDefineTypeStem{sintptr, intptr_t}
-@MmuxDefineTypeStem{uintptr, uintptr_t}
-@MmuxDefineTypeStem{ptrdiff, ptrdiff_t}
-@MmuxDefineTypeStem{mode, mode_t}
-@MmuxDefineTypeStem{off, off_t}
-@MmuxDefineTypeStem{pid, pid_t}
-@MmuxDefineTypeStem{uid, uid_t}
-@MmuxDefineTypeStem{gid, gid_t}
-@MmuxDefineTypeStem{wchar, wchar_t}
-@MmuxDefineTypeStem{wint, wint_t}
-@MmuxDefineTypeStem{time, time_t}
-@MmuxDefineTypeStem{socklen, socklen_t}
-@MmuxDefineTypeStem{rlim, rlim_t}
+@MmuxDefineAliasedTypeStem{ssize,ssize_t,ALIASSSIZE}
+@MmuxDefineAliasedTypeStem{usize,size_t,ALIASUSIZE}
+@MmuxDefineAliasedTypeStem{sintmax, intmax_t,ALIASSINTMAX}
+@MmuxDefineAliasedTypeStem{uintmax, uintmax_t,ALIASUINTMAX}
+@MmuxDefineAliasedTypeStem{sintptr, intptr_t,ALIASSINTPTR}
+@MmuxDefineAliasedTypeStem{uintptr, uintptr_t,ALIASUINTPTR}
+@MmuxDefineAliasedTypeStem{ptrdiff, ptrdiff_t,ALIASPTRDIFF}
+@MmuxDefineAliasedTypeStem{mode, mode_t,ALIASMODE}
+@MmuxDefineAliasedTypeStem{off, off_t,ALIASOFF}
+@MmuxDefineAliasedTypeStem{pid, pid_t,ALIASPID}
+@MmuxDefineAliasedTypeStem{uid, uid_t,ALIASUID}
+@MmuxDefineAliasedTypeStem{gid, gid_t,ALIASGID}
+@MmuxDefineAliasedTypeStem{wchar, wchar_t,ALIASWCHAR}
+@MmuxDefineAliasedTypeStem{wint, wint_t,ALIASWINT}
+@MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
+@MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
+@MmuxDefineAliasedTypeStem{rlim, rlim_t,ALIASRLIM}
 
 @c page
 @node overview errors
@@ -463,6 +481,11 @@ Return an integer representing the library interface current age.
 Initialise library's internal state.  When successful return @cfalse{}; otherwise return @ctrue{}.
 @end deftypefun
 
+
+@deftypefun bool mmux_cc_types_final (void)
+Finalise library's internal state.  It is the reverse of @cfunc{mmux_cc_types_init}.
+@end deftypefun
+
 @c page
 @node config
 @chapter How to configure code to link the library
@@ -474,8 +497,8 @@ Initialise library's internal state.  When successful return @cfalse{}; otherwis
 
 
 It happens that some rare platform may not implement the C language types @objtype{signed long long
-int}, @objtype{unsigned long long int} and @objtype{long flonumdb}; more platforms may not implement
-the extension types @objtype{_FloatN} and @objtype{_FloatNx}, which usually are:
+int}, @objtype{unsigned long long int} and @objtype{long double float}; more platforms may not
+implement the extension types @objtype{_FloatN} and @objtype{_FloatNx}, which usually are:
 
 @example
 _Flonumf32

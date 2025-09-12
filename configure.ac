@@ -104,6 +104,7 @@ AC_CONFIG_FILES([Makefile]
   [src/mmux-cc-types-config.h.m4]
   [src/m4/mmux-cc-types-config.m4]
   [doc/mmux-version.texi]
+  [doc/aliased-types.texi]
   [meta/scripts/mmux-cc-types.pc]
   [meta/slackware/slack-desc])
 MMUX_OUTPUT

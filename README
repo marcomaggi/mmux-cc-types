@@ -19,14 +19,22 @@ Topics
 1. Introduction
 ---------------
 
-This package implements  functions to interface C23  language types with
-higher-level platforms.
+This package installs a C23 library which implements an API to interface
+C23 language types with higher-level platforms.  The source code must be
+compiled  with the  GNU C  Compiler  (gcc) and  depending on  the GNU  C
+Library (glibc) and the Decimal Floating Point C Library (libdfp).
+
+  A possible use  of the library is in foreign  functions interfaces for
+higher--level languages.
 
   The package targets POSIX systems.
 
-  To  support  the  decimal  floating-point  numeric  types  _Decimal32,
-_Decimal64,  _Decimal128, this  package relies  on the  external package
-"libdfp" (see Resources).
+  The package will probably compile  fine with packages of the following
+versions and maybe later versions:
+
+* GNU Compiler Collection version 15.2.0;
+* GNU C Library version 2.33;
+* Decimal Floating Point C Library version 1.0.16.
 
   The  package uses  the GNU  Autotools and  it is  tested on  GNU+Linux
 systems;  only to  build from  a  repository checkout:  it requires  the
@@ -65,7 +73,8 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 3. Install
 ----------
 
-To install from a proper release tarball, do this:
+Make sure that the required dependencies are satisfied.  To install from
+a proper release tarball, do this:
 
     $ cd mmux-cc-types-0.1.0
     $ mkdir build
@@ -78,10 +87,6 @@ To install from a proper release tarball, do this:
 to inspect the available configuration options:
 
     $ ../configure --help
-
-  By default the  configuration searches for the package  MBFL to enable
-testing;  to  disable this  search:  when  configuring, use  the  option
-"--disable-mbfl".
 
   The Makefile is designed to allow parallel builds, so we can do:
 

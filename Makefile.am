@@ -71,6 +71,7 @@ doc_mmux_cc_types_TEXINFOS	= \
 	doc/macros.texi			\
 	doc/overview-linking.texi	\
 	doc/mmux-version.texi		\
+	doc/aliased-types.texi		\
 	doc/gpl-3.0.texi		\
 	doc/fdl-1.3.texi
 
