@@ -495,6 +495,276 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   }
 #endif
 
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumf32_literal(65);
+      auto	str = mmux_flonumf32(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumf32_literal(0.123);
+      auto	str = mmux_flonumf32(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumf32_literal(12e34);
+      auto	str = mmux_flonumf32(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumf64_literal(65);
+      auto	str = mmux_flonumf64(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumf64_literal(0.123);
+      auto	str = mmux_flonumf64(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumf64_literal(12e34);
+      auto	str = mmux_flonumf64(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumf128_literal(65);
+      auto	str = mmux_flonumf128(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumf128_literal(0.123);
+      auto	str = mmux_flonumf128(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumf128_literal(12e34);
+      auto	str = mmux_flonumf128(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumf32x_literal(65);
+      auto	str = mmux_flonumf32x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumf32x_literal(0.123);
+      auto	str = mmux_flonumf32x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumf32x_literal(12e34);
+      auto	str = mmux_flonumf32x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumf64x_literal(65);
+      auto	str = mmux_flonumf64x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumf64x_literal(0.123);
+      auto	str = mmux_flonumf64x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumf64x_literal(12e34);
+      auto	str = mmux_flonumf64x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumf128x_literal(65);
+      auto	str = mmux_flonumf128x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumf128x_literal(0.123);
+      auto	str = mmux_flonumf128x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumf128x_literal(12e34);
+      auto	str = mmux_flonumf128x(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumd32_literal(65);
+      auto	str = mmux_flonumd32(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumd32_literal(0.123);
+      auto	str = mmux_flonumd32(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumd32_literal(12e34);
+      auto	str = mmux_flonumd32(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumd64_literal(65);
+      auto	str = mmux_flonumd64(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumd64_literal(0.123);
+      auto	str = mmux_flonumd64(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumd64_literal(12e34);
+      auto	str = mmux_flonumd64(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  {
+#if 0
+    if (1) { /* invalid suffix on integer constant */
+      auto	val = mmux_standard_flonumd128_literal(65);
+      auto	str = mmux_flonumd128(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+#endif
+    if (1) {
+      auto	val = mmux_standard_flonumd128_literal(0.123);
+      auto	str = mmux_flonumd128(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+    if (1) {
+      auto	val = mmux_standard_flonumd128_literal(12e34);
+      auto	str = mmux_flonumd128(val);
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
+      mmux_ctype_dprintf(2, str);
+      dprintf(2, "\n");
+    }
+  }
+#endif
+
   exit(EXIT_SUCCESS);
 }
 
