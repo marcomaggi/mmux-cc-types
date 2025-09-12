@@ -133,6 +133,7 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
  ** ----------------------------------------------------------------- */
 
 typedef void *			mmux_standard_pointer_t;
+typedef void const *		mmux_standard_pointerc_t;
 
 typedef char			mmux_standard_char_t;
 typedef signed char		mmux_standard_schar_t;

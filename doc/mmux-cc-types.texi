@@ -665,16 +665,82 @@ type is supported.
 @cindex @code{asciizcpp}, type stem
 @cindex @code{asciizcppp}, type stem
 
-The following type definitions just alias the corresponding C language type; the type name is
-composed from a ``stem'': a single word representing the name of the type.  Such uniform names are
-useful when using preprocessor macros to generate code.
+We use the following type definitions as aliases and placeholders for the corresponding C language
+type; the type name is composed from a ``stem'': a single word representing the name of the type.
+Such uniform names are useful when using preprocessor macros to generate code.
+
+The definitions of some data structures leverage the @gnu{} C Compiler extension
+@option{-fplan9-extensions} as follows:
+
+@example
+typedef struct mmux_ssize_t @{ mmux_@value{ALIASSSIZE}_t; @} mmux_ssize_t;
+@end example
+
+@noindent
+notice the anonymous field; it means that a pointer to @objtype{mmux_ssize_t} is seen by the
+compiler as a pointer to @objtype{mmux_@value{ALIASSSIZE}_t} and also we can write:
+
+@example
+mmux_ssize_t    val = @{ .value = mmux_standard_ssize_literal(123) @};
+
+do_something_with(val.value);
+@end example
+
+@noindent
+because the field @code{value} of @objtype{mmux_@value{ALIASSSIZE}_t} is also seen as a field of
+@objtype{mmux_ssize_t}.  Regarding this coding example, notice that, to define a local variable, we
+can just write:
+
+@example
+auto    val = mmux_ssize_literal(123);
+
+do_something_with(val.value);
+@end example
+
+@noindent
+which is equivalent to the code above.
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCAliasTypedef{STEM,TYPE}
 @deftp {Typedef} mmux_\STEM\_t
-Type definition aliasing the C language type @objtype{\TYPE\}.
+@deftpx {Typedef} mmux_standard_\STEM\_t
+The type @objtype{mmux_standard_\STEM\_t} is a simple alias for @objtype{\TYPE\}:
+
+@example
+typedef \TYPE\  mmux_standard_\STEM\_t;
+@end example
+
+The type @objtype{mmux_\STEM\_t} is a data structure with definition:
+
+@example
+typedef struct mmux_\STEM\_t @{ mmux_standard_\STEM\_t value; @} mmux_\STEM\_t;
+@end example
 @end deftp
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineCAliasTypedefForAliasedType{STEM,TYPE,ALIASTYPE}
+@deftp {Typedef} mmux_\STEM\_t
+@deftpx {Typedef} mmux_standard_\STEM\_t
+The type @objtype{mmux_standard_\STEM\_t} is a simple alias for @objtype{\TYPE\}:
+
+@example
+typedef \TYPE\  mmux_standard_\STEM\_t;
+@end example
+
+The type @objtype{mmux_\STEM\_t} is a data structure with definition:
+
+@example
+typedef struct mmux_\STEM\_t @{ mmux_\ALIASTYPE\_t; @} mmux_\STEM\_t;
+@end example
+@end deftp
+
+@end macro
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCAliasTypedefPart{COMPLEXSTEM,PARTSTEM}
 @deftp {Typedef} mmux_\COMPLEXSTEM\_part_t
@@ -686,8 +752,16 @@ imaginary parts type of @objtype{mmux_\COMPLEXSTEM\_t}.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineCAliasTypedef{pointer,void *}
-@MmuxDefineCAliasTypedef{pointerc,void const *}
+@deftp {Typedef} mmux_pointer_t
+@deftpx {Typedef} mmux_standard_pointer_t
+Aliases for @code{void *}.
+@end deftp
+
+
+@deftp {Typedef} mmux_pointerc_t
+@deftpx {Typedef} mmux_standard_pointerc_t
+Aliases for @code{void const *}.
+@end deftp
 
 @MmuxDefineCAliasTypedef{char,char}
 @MmuxDefineCAliasTypedef{schar,signed char}
@@ -760,23 +834,23 @@ An alias for @objtype{mmux_sint8_t}.
 An alias for @objtype{mmux_uint8_t}.
 @end deftp
 
-@MmuxDefineCAliasTypedef{ssize,ssize_t}
-@MmuxDefineCAliasTypedef{usize,size_t}
-@MmuxDefineCAliasTypedef{sintmax, intmax_t}
-@MmuxDefineCAliasTypedef{uintmax, uintmax_t}
-@MmuxDefineCAliasTypedef{sintptr, intptr_t}
-@MmuxDefineCAliasTypedef{uintptr, uintptr_t}
-@MmuxDefineCAliasTypedef{ptrdiff, ptrdiff_t}
-@MmuxDefineCAliasTypedef{mode, mode_t}
-@MmuxDefineCAliasTypedef{off, off_t}
-@MmuxDefineCAliasTypedef{pid, pid_t}
-@MmuxDefineCAliasTypedef{uid, uid_t}
-@MmuxDefineCAliasTypedef{gid, gid_t}
-@MmuxDefineCAliasTypedef{wchar, wchar_t}
-@MmuxDefineCAliasTypedef{wint, wint_t}
-@MmuxDefineCAliasTypedef{time, time_t}
-@MmuxDefineCAliasTypedef{socklen, socklen_t}
-@MmuxDefineCAliasTypedef{rlim, rlim_t}
+@MmuxDefineCAliasTypedefForAliasedType{ssize,           ssize_t,        @value{ALIASSSIZE}}
+@MmuxDefineCAliasTypedefForAliasedType{usize,           size_t,         @value{ALIASUSIZE}}
+@MmuxDefineCAliasTypedefForAliasedType{sintmax,         intmax_t,       @value{ALIASSINTMAX}}
+@MmuxDefineCAliasTypedefForAliasedType{uintmax,         uintmax_t,      @value{ALIASUINTMAX}}
+@MmuxDefineCAliasTypedefForAliasedType{sintptr,         intptr_t,       @value{ALIASSINTPTR}}
+@MmuxDefineCAliasTypedefForAliasedType{uintptr,         uintptr_t,      @value{ALIASUINTPTR}}
+@MmuxDefineCAliasTypedefForAliasedType{ptrdiff,         ptrdiff_t,      @value{ALIASPTRDIFF}}
+@MmuxDefineCAliasTypedefForAliasedType{mode,            mode_t,         @value{ALIASMODE}}
+@MmuxDefineCAliasTypedefForAliasedType{off,             off_t,          @value{ALIASOFF}}
+@MmuxDefineCAliasTypedefForAliasedType{pid,             pid_t,          @value{ALIASPID}}
+@MmuxDefineCAliasTypedefForAliasedType{uid,             uid_t,          @value{ALIASUID}}
+@MmuxDefineCAliasTypedefForAliasedType{gid,             gid_t,          @value{ALIASGID}}
+@MmuxDefineCAliasTypedefForAliasedType{wchar,           wchar_t,        @value{ALIASWCHAR}}
+@MmuxDefineCAliasTypedefForAliasedType{wint,            wint_t,         @value{ALIASWINT}}
+@MmuxDefineCAliasTypedefForAliasedType{time,            time_t,         @value{ALIASTIME}}
+@MmuxDefineCAliasTypedefForAliasedType{socklen,         socklen_t,      @value{ALIASSOCKLEN}}
+@MmuxDefineCAliasTypedefForAliasedType{rlim,            rlim_t,         @value{ALIASRLIM}}
 
 
 @MmuxDefineCAliasTypedefPart{flonumcfl,float}
