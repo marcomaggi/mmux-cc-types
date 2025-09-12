@@ -31,23 +31,7 @@
  ** Preliminary definitions.
  ** ----------------------------------------------------------------- */
 
-/* NOTE These are duplicates of the definitions in "mmux-cc-types.h"; they are needed
-   for  the functinos  below.  I  do know  that it  is ugly.   (Marco Maggi;  Aug 21,
-   2025) */
-typedef signed int		mmux_standard_sint_t;
-typedef struct mmux_char_t { char value; } mmux_char_t;
-typedef struct mmux_sint_t { int  value; } mmux_sint_t;
-#  undef  mmux_sint
-#  define mmux_sint(VALUE)		((mmux_sint_t){ .value = (VALUE) })
-typedef char *			mmux_asciizp_t;
-typedef char **			mmux_asciizpp_t;
-typedef char ***		mmux_asciizppp_t;
-typedef char const *		mmux_asciicp_t;
-typedef char const **		mmux_asciicpp_t;
-typedef char const ***		mmux_asciicppp_t;
-typedef char const *		mmux_asciizcp_t;
-typedef char const **		mmux_asciizcpp_t;
-typedef char const ***		mmux_asciizcppp_t;
+#include <mmux-cc-types-typedefs.h>
 
 
 /** --------------------------------------------------------------------

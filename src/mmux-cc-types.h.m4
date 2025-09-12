@@ -40,9 +40,6 @@ extern "C" {
  ** ----------------------------------------------------------------- */
 
 #include <mmux-cc-types-config.h>
-#include <stddef.h>	/* for "size_t", etc. */
-#include <inttypes.h>	/* for "int8_t", etc. */
-#include <complex.h>
 
 
 /** --------------------------------------------------------------------
@@ -72,112 +69,6 @@ mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt,
  ** ----------------------------------------------------------------- */
 
 #include <mmux-cc-types-typedefs.h>
-
-
-/** --------------------------------------------------------------------
- ** Makers.
- ** ----------------------------------------------------------------- */
-
-/* NOTE I would really like to define the maker as an inline function, as in:
- *
- *   mmux_cc_types_inline_decl mmux_$1_t
- *   mmux_$1 (mmux_standard_$1_t value)
- *   {
- *     return ((mmux_$1_t){ .value = value });
- *   }
- *
- * Because.  But with  the function we cannot declare a  new variable as "constexpr",
- * while with the macro we can.  For example, the following code:
- *
- *  constexpr auto	buflen = mmux_usize(1024);
- *
- * works fine  under GCC-C23  with macros,  it does  not work  with functions.   I am
- * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
- */
-
-#define mmux_pointer(VALUE)		((mmux_pointer_t)(VALUE))
-#define mmux_pointerc(VALUE)		((mmux_pointer_t)(VALUE))
-
-#undef  mmux_pointer_literal
-#define mmux_pointer_literal(VALUE)	(mmux_pointer(mmux_standard_pointer_literal(VALUE)))
-
-#undef  mmux_pointerc_literal
-#define mmux_pointerc_literal(VALUE)	(mmux_pointerc(mmux_standard_pointerc_literal(VALUE)))
-
-/* ------------------------------------------------------------------ */
-
-m4_divert(-1)
-m4_dnl $1 - type stem
-m4_dnl $2 - conditional definition symbol
-m4_define([[[DEFINE_TYPE_MAKERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-#define mmux_$1(VALUE)			((mmux_$1_t){ .value = (VALUE) })
-#define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_TYPE_MAKERS(char)
-DEFINE_TYPE_MAKERS(schar)
-DEFINE_TYPE_MAKERS(uchar)
-DEFINE_TYPE_MAKERS(sshort)
-DEFINE_TYPE_MAKERS(ushort)
-DEFINE_TYPE_MAKERS(sint)
-DEFINE_TYPE_MAKERS(uint)
-DEFINE_TYPE_MAKERS(slong)
-DEFINE_TYPE_MAKERS(ulong)
-DEFINE_TYPE_MAKERS(sllong,		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
-DEFINE_TYPE_MAKERS(ullong,		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
-DEFINE_TYPE_MAKERS(sint8)
-DEFINE_TYPE_MAKERS(uint8)
-DEFINE_TYPE_MAKERS(sint16)
-DEFINE_TYPE_MAKERS(uint16)
-DEFINE_TYPE_MAKERS(sint32)
-DEFINE_TYPE_MAKERS(uint32)
-DEFINE_TYPE_MAKERS(sint64)
-DEFINE_TYPE_MAKERS(uint64)
-DEFINE_TYPE_MAKERS(byte)
-DEFINE_TYPE_MAKERS(octet)
-DEFINE_TYPE_MAKERS(flonumfl)
-DEFINE_TYPE_MAKERS(flonumdb)
-DEFINE_TYPE_MAKERS(flonumldb,		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
-DEFINE_TYPE_MAKERS(flonumf32,		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_TYPE_MAKERS(flonumf64,		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_TYPE_MAKERS(flonumf128,		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
-DEFINE_TYPE_MAKERS(flonumf32x,		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_TYPE_MAKERS(flonumf64x,		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_TYPE_MAKERS(flonumf128x,		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
-DEFINE_TYPE_MAKERS(flonumcfl)
-DEFINE_TYPE_MAKERS(flonumcdb)
-DEFINE_TYPE_MAKERS(flonumcldb,		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
-DEFINE_TYPE_MAKERS(flonumcf32,		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_TYPE_MAKERS(flonumcf64,		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_TYPE_MAKERS(flonumcf128,		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-DEFINE_TYPE_MAKERS(flonumcf32x,		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_TYPE_MAKERS(flonumcf64x,		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_TYPE_MAKERS(flonumcf128x,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
-DEFINE_TYPE_MAKERS(flonumcfl_part)
-DEFINE_TYPE_MAKERS(flonumcdb_part)
-DEFINE_TYPE_MAKERS(flonumcldb_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
-DEFINE_TYPE_MAKERS(flonumcf32_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_TYPE_MAKERS(flonumcf64_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_TYPE_MAKERS(flonumcf128_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-DEFINE_TYPE_MAKERS(flonumcf32x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_TYPE_MAKERS(flonumcf64x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_TYPE_MAKERS(flonumcf128x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
-DEFINE_TYPE_MAKERS(ssize)
-DEFINE_TYPE_MAKERS(usize)
-DEFINE_TYPE_MAKERS(sintmax)
-DEFINE_TYPE_MAKERS(uintmax)
-DEFINE_TYPE_MAKERS(sintptr)
-DEFINE_TYPE_MAKERS(uintptr)
-DEFINE_TYPE_MAKERS(mode)
-DEFINE_TYPE_MAKERS(off)
-DEFINE_TYPE_MAKERS(pid)
-DEFINE_TYPE_MAKERS(uid)
-DEFINE_TYPE_MAKERS(gid)
-DEFINE_TYPE_MAKERS(ptrdiff)
-DEFINE_TYPE_MAKERS(wchar)
-DEFINE_TYPE_MAKERS(wint)
-DEFINE_TYPE_MAKERS(time)
-DEFINE_TYPE_MAKERS(socklen)
-DEFINE_TYPE_MAKERS(rlim)
 
 
 /** --------------------------------------------------------------------
