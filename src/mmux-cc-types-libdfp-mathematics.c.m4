@@ -427,110 +427,64 @@ m4_define([[[DEFINE_STANDARD_FLONUMCD_INVERSE_TRIGONOMETRIC_FUNCTIONS]]],[[[
 mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_asin (mmux_standard_flonumcd$1_t Z)
 {
-  if (mmux_standard_flonumd$1_is_zero(Z.re)) {
-    return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_zero(),
-						mmux_standard_flonumd$1_asinh(Z.im));
-  } else {
-    /*
-     * W = asin(Z) = Z.re + i * Z.im
-     *
-     * A = Z.re^2 + Z.im^2
-     * B = A - 1
-     * C = B^2
-     * D = sqrt(Z.im)
-     * Q = sqrt(C + 4 * D)
-     * W.re = 1/2 * sgn(Z.re) * acos (Q - A)
-     * W.im = 1/2 * sgn(Z.im) * acosh(Q + A)
-     *
-     */
-    auto	A   = sqrtd$1(Z.re) + sqrtd$1(Z.im);
-    auto	B   = A - mmux_standard_flonumd$1_constant_one();
-    auto	C   = mmux_standard_flonumd$1_square(B);
-    auto	D   = sqrtd$1(Z.im);
-    auto	Q   = sqrtd$1(C + D * mmux_standard_flonumd$1_literal(4.0));
-    auto	Wre = mmux_standard_flonumd$1_constant_one_half()
-      * mmux_standard_flonumd$1_sign(Z.re)
-      * mmux_standard_flonumd$1_acos(Q - A);
-    auto	Wim = mmux_standard_flonumd$1_constant_one_half()
-      * mmux_standard_flonumd$1_sign(Z.im)
-      * mmux_standard_flonumd$1_acosh(Q + A);
+  /* See Wikipedia:
+   *
+   *	<https://en.wikipedia.org/wiki/Inverse_trigonometric_functions
+   *
+   * section "Logarithmic forms".
+   *
+   * asin(Z) = - imag log(imag * Z + sqrt(1 - square(Z)))
+   *
+   */
+  auto	A = mmux_standard_flonumcd$1_square(Z);
+  auto	B = mmux_standard_flonumcd$1_sub(mmux_standard_flonumcd$1_constant_one(), A);
+  auto	C = mmux_standard_flonumcd$1_sqrt(B);
+  auto	D = mmux_standard_flonumcd$1_mul(mmux_standard_flonumcd$1_constant_imag(), Z);
+  auto	E = mmux_standard_flonumcd$1_log(mmux_standard_flonumcd$1_add(D, C));
+  auto	F = mmux_standard_flonumcd$1_mul(mmux_standard_flonumcd$1_constant_imag(), E);
+  auto	G = mmux_standard_flonumcd$1_neg(F);
 
-    return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
-  }
+  return G;
 }
 mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_acos (mmux_standard_flonumcd$1_t Z)
 {
-  /*
-   * W = acos(Z.re + i Z.im)
+  /* See Wikipedia:
    *
-   * Y    = asin(Z)
-   * W.re = pi/2 - Y.re
-   * W.im = - Y.im
+   *	<https://en.wikipedia.org/wiki/Inverse_trigonometric_functions
+   *
+   * section "Logarithmic forms".
+   *
+   * acos(Z) = pi/2 - asin(Z)
    *
    */
-  if (mmux_standard_flonumd$1_is_zero(Z.re) && mmux_standard_flonumd$1_is_zero(Z.im)) {
-    /* Let's avoid generating a NaN for this case. */
-    if (mmux_standard_flonumd$1_is_positive(Z.re)) {
-      if (mmux_standard_flonumd$1_is_positive(Z.im)) {
-	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_zero(),
-						    mmux_standard_flonumd$1_constant_negative_infinity());
-      } else {
-	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_zero(),
-						    mmux_standard_flonumd$1_constant_positive_infinity());
-      }
-    } else {
-      if (mmux_standard_flonumd$1_is_positive(Z.im)) {
-	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_PI(),
-						    mmux_standard_flonumd$1_constant_negative_infinity());
-      } else {
-	return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_PI(),
-						    mmux_standard_flonumd$1_constant_positive_infinity());
-      }
-    }
-  } else {
-    auto	Y   = mmux_standard_flonumcd$1_asin(Z);
-    auto	Wre = mmux_standard_flonumd$1_constant_PI_2() - Y.re;
-    auto	Wim = - Y.im;
-
-    return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
-  }
+  auto	A = mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_PI_2(),
+						 mmux_standard_flonumd$1_constant_zero());
+  auto	B = mmux_standard_flonumcd$1_asin(Z);
+  auto	C = mmux_standard_flonumcd$1_sub(A, B);
+  return C;
 }
 mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_atan (mmux_standard_flonumcd$1_t Z)
-/*
- * Formula from Wikipedia section "Logarithmic forms":
- *
- * 	<http://en.wikipedia.org/wiki/Arc_tangent>
- *
- * and also from the R6RS document:
- *
- *   D = atan Z = 1/2 * i * (log (1 - i * Z) - log (1 + i * Z))
- *
- *   i * Z = i * (Z.re + i * Z.im) = i * Z.re - Z.im
- *
- *   A = 1 - i * Z = 1 - (- Z.im + i * Z.re) = (1 + Z.im) - i * Z.re
- *   B = 1 + i * Z = 1 + (- Z.im + i * Z.re) = (1 - Z.im) + i * Z.re
- *   C = log A - log B
- *   D = 1/2 * i C = 0.5i * (C.re + i * C.im)
- *                 = 0.5 * C.re * i - 0.5 * C.im
- *                 = (-0.5 * C.im) + i * (0.5 * C.re)
- *
- */
 {
-  auto	Are = + mmux_standard_flonumd$1_constant_one() + Z.im;
-  auto	Aim = - Z.re;
-  auto	A   = mmux_standard_flonumcd$1_rectangular(Are, Aim);
-
-  auto	Bre = + mmux_standard_flonumd$1_constant_one() - Z.im;
-  auto	Bim = + Z.re;
-  auto	B   = mmux_standard_flonumcd$1_rectangular(Bre, Bim);
-
-  auto	C   = mmux_standard_flonumcd$1_sub(mmux_standard_flonumcd$1_log(A), mmux_standard_flonumcd$1_log(B));
-  auto	Wre = - mmux_standard_flonumd$1_constant_one_half() * C.im;
-  auto	Wim = + mmux_standard_flonumd$1_constant_one_half() * C.re;
-
-  return mmux_standard_flonumcd$1_rectangular(Wre, Wim);
+  /* See Wikipedia:
+   *
+   *	<https://en.wikipedia.org/wiki/Inverse_trigonometric_functions
+   *
+   * section "Logarithmic forms".
+   *
+   * atan(Z) = - imag/2 * log( (imag - Z) / (imag + Z) )
+   *
+   */
+  auto	A = mmux_standard_flonumcd$1_sub(mmux_standard_flonumcd$1_constant_imag(), Z);
+  auto	B = mmux_standard_flonumcd$1_add(mmux_standard_flonumcd$1_constant_imag(), Z);
+  auto	C = mmux_standard_flonumcd$1_div(A, B);
+  auto	D = mmux_standard_flonumcd$1_log(C);
+  auto	E = mmux_standard_flonumcd$1_div(mmux_standard_flonumcd$1_constant_imag(),
+					 mmux_standard_flonumcd$1_constant_two());
+  auto	F = mmux_standard_flonumcd$1_neg(E);
+  auto	G = mmux_standard_flonumcd$1_mul(F, D);
+  return G;
 }
 ]]])
 m4_divert(0)m4_dnl

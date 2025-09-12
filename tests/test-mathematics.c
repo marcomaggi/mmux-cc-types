@@ -47,9 +47,9 @@
 #define EQUAL_RELEPSILON_BINARY(STEM, FUNC, OP1, OP2, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)	\
   if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {			\
     dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);					\
-    mmux_ctype_dprintf(2, op1);									\
+    mmux_ctype_dprintf(2, op1);										\
     dprintf(2, ",");											\
-    mmux_ctype_dprintf(2, op2);									\
+    mmux_ctype_dprintf(2, op2);										\
     dprintf(2, ")=");											\
     mmux_ctype_dprintf(2, erop);									\
     dprintf(2, "' got '");										\
@@ -649,7 +649,7 @@ test_mathematics_atan (void)
     DOIT_FOR_THIS_FLONUM(STEM, atan,			    \
 			 0.123,				    \
 			 0.122'385'281,			    \
-			 NORMAL_EPS);			    \
+			 SMALL_EPS);			    \
     dprintf(2," %s,", #STEM);				    \
   }
 
@@ -3051,9 +3051,9 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_mathematics_cos();		}
   if (1) {	test_mathematics_tan();		}
 
-  if (0) {	test_mathematics_asin();	}
-  if (0) {	test_mathematics_acos();	}
-  if (0) {	test_mathematics_atan();	}
+  if (1) {	test_mathematics_asin();	}
+  if (1) {	test_mathematics_acos();	}
+  if (1) {	test_mathematics_atan();	}
   if (1) {	test_mathematics_atan2();	}
 
   if (1) {	test_mathematics_sinh();	}
