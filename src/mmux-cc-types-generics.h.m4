@@ -88,6 +88,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -203,6 +205,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -319,6 +323,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -435,6 +441,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -551,6 +559,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -666,6 +676,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -749,6 +761,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -801,6 +815,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -853,6 +869,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -1351,6 +1369,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_$1,			\
 	   mmux_sint64_t:		mmux_sint64_$1,			\
 	   mmux_uint64_t:		mmux_uint64_$1,			\
+	   mmux_byte_t:			mmux_byte_$1,			\
+	   mmux_octet_t:		mmux_octet_$1,			\
            mmux_ssize_t:		mmux_ssize_$1,			\
            mmux_usize_t:		mmux_usize_$1,			\
            mmux_sintmax_t:		mmux_sintmax_$1,		\
@@ -1515,6 +1535,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_sint16_t:		mmux_sint16_neg,		\
 	   mmux_sint32_t:		mmux_sint32_neg,		\
 	   mmux_sint64_t:		mmux_sint64_neg,		\
+	   mmux_byte_t:			mmux_byte_neg,			\
            mmux_ssize_t:		mmux_ssize_neg,			\
            mmux_sintmax_t:		mmux_sintmax_neg,		\
            mmux_sintptr_t:		mmux_sintptr_neg,		\
@@ -1686,6 +1707,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		"mmux_uint32_t",		\
 	   mmux_sint64_t:		"mmux_sint64_t",		\
 	   mmux_uint64_t:		"mmux_uint64_t",		\
+	   mmux_byte_t:			"mmux_byte_t",			\
+	   mmux_octet_t:		"mmux_octet_t",			\
            mmux_ssize_t:		"mmux_ssize_t",			\
            mmux_usize_t:		"mmux_usize_t",			\
            mmux_sintmax_t:		"mmux_sintmax_t",		\
@@ -1797,6 +1820,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		"uint32",		\
 	   mmux_sint64_t:		"sint64",		\
 	   mmux_uint64_t:		"uint64",		\
+           mmux_byte_t:			"byte",			\
+	   mmux_octet_t:		"octet",		\
            mmux_ssize_t:		"ssize_t",		\
            mmux_usize_t:		"usize_t",		\
            mmux_sintmax_t:		"sintmax",		\
@@ -1911,6 +1936,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_sprint,			\
 	   mmux_sint64_t:		mmux_sint64_sprint,			\
 	   mmux_uint64_t:		mmux_uint64_sprint,			\
+	   mmux_byte_t:			mmux_byte_sprint,			\
+	   mmux_octet_t:		mmux_octet_sprint,			\
            mmux_ssize_t:		mmux_ssize_sprint,			\
            mmux_usize_t:		mmux_usize_sprint,			\
            mmux_sintmax_t:		mmux_sintmax_sprint,			\
@@ -2022,6 +2049,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_uint32_t:		mmux_uint32_sprint_size,		\
 	   mmux_sint64_t:		mmux_sint64_sprint_size,		\
 	   mmux_uint64_t:		mmux_uint64_sprint_size,		\
+	   mmux_byte_t:			mmux_byte_sprint_size,			\
+	   mmux_octet_t:		mmux_octet_sprint_size,			\
            mmux_ssize_t:		mmux_ssize_sprint_size,			\
            mmux_usize_t:		mmux_usize_sprint_size,			\
            mmux_sintmax_t:		mmux_sintmax_sprint_size,		\
