@@ -184,6 +184,7 @@ endif
 EXTRA_DIST	+= \
 	src/mmux-cc-types.h.m4				\
 	src/mmux-cc-types-internals.h.m4		\
+	src/mmux-cc-types-typedefs.h.m4			\
 	src/mmux-cc-types-arithmetics.h.m4		\
 	src/mmux-cc-types-bitwise.h.m4			\
 	src/mmux-cc-types-comparison.h.m4		\
@@ -208,6 +209,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-typedefs.h			\
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
@@ -240,6 +242,7 @@ mmux_cc_types_LINKER_VERSION	= -version-info $(mmux_cc_types_CURRENT):$(mmux_cc_
 include_HEADERS			+= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
+	src/mmux-cc-types-typedefs.h			\
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
@@ -260,6 +263,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-typedefs.h			\
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
@@ -283,6 +287,7 @@ libmmux_cc_types_la_SOURCES	= \
 if WANT_LIBDFP
 libmmux_cc_types_la_SOURCES	+= \
 	src/mmux-cc-types-libdfp.h			\
+	src/mmux-cc-types-typedefs.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-complex.h		\
 	src/mmux-cc-types-libdfp-constants.h		\
@@ -304,6 +309,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types.h				\
 	src/mmux-cc-types-config.h			\
 	src/mmux-cc-types-internals.h			\
+	src/mmux-cc-types-typedefs.h			\
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
