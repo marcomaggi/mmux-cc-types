@@ -1658,6 +1658,9 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{sint64}
 @MmuxDefineCFunctionPredicate{uint64}
 
+@MmuxDefineCFunctionPredicate{byte}
+@MmuxDefineCFunctionPredicate{octet}
+
 @MmuxDefineCFunctionPredicate{ssize}
 @MmuxDefineCFunctionPredicate{usize}
 @MmuxDefineCFunctionPredicate{sintmax}

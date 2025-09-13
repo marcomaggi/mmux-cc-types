@@ -68,6 +68,8 @@ DEFINE_TEST_SPRINTER_FUNCTION(sint32,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(uint32,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(sint64,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(uint64,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(byte,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(octet,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(ssize,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(usize,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(sintmax,		123,	"123")
@@ -243,6 +245,8 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_uint32();		}
   if (1) {	test_sprint_sint64();		}
   if (1) {	test_sprint_uint64();		}
+  if (1) {	test_sprint_byte();		}
+  if (1) {	test_sprint_octet();		}
   if (1) {	test_sprint_ssize();		}
   if (1) {	test_sprint_usize();		}
   if (1) {	test_sprint_sintmax();		}
