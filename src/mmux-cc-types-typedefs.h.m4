@@ -35,100 +35,6 @@
 
 
 /** --------------------------------------------------------------------
- ** Preprocessor macros: generating literal values.
- ** ----------------------------------------------------------------- */
-
-#define mmux_standard_unsigned_literal(X)	(X ## U)
-#define mmux_standard_pointer_literal(X)	((mmux_standard_pointer_t) (mmux_standard_unsigned_literal(X)))
-#define mmux_standard_pointerc_literal(X)	((mmux_standard_pointerc_t)(mmux_standard_unsigned_literal(X)))
-m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
-#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(mmux_standard_unsigned_literal(X)))]]],[[[m4_dnl
-#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(X))]]])
-#define mmux_standard_schar_literal(X)		((mmux_standard_schar_t)(X))
-#define mmux_standard_uchar_literal(X)		((mmux_standard_uchar_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_sshort_literal(X)		((mmux_standard_sshort_t)(X))
-#define mmux_standard_ushort_literal(X)		((mmux_standard_ushort_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_sint_literal(X)		((mmux_standard_sint_t)(X))
-#define mmux_standard_uint_literal(X)		((mmux_standard_uint_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_slong_literal(X)		((mmux_standard_slong_t)(X))
-#define mmux_standard_ulong_literal(X)		((mmux_standard_ulong_t)(mmux_standard_unsigned_literal(X)))
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[SLLONG]]],[[[m4_dnl
-#define mmux_standard_sllong_literal(X)		((mmux_standard_sllong_t)(X ## LL))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[ULLONG]]],[[[m4_dnl
-#define mmux_standard_ullong_literal(X)		((mmux_standard_ullong_t)(X ## ULL))]]])
-#define mmux_standard_sint8_literal(X)		((mmux_standard_sint8_t)(X))
-#define mmux_standard_uint8_literal(X)		((mmux_standard_uint8_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_sint16_literal(X)		((mmux_standard_sint16_t)(X))
-#define mmux_standard_uint16_literal(X)		((mmux_standard_uint16_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_sint32_literal(X)		((mmux_standard_sint32_t)(X))
-#define mmux_standard_uint32_literal(X)		((mmux_standard_uint32_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_sint64_literal(X)		((mmux_standard_sint64_t)(X))
-#define mmux_standard_uint64_literal(X)		((mmux_standard_uint64_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_flonumfl_literal(X)	((mmux_standard_flonumfl_t)(X ## F))
-#define mmux_standard_flonumdb_literal(X)	((mmux_standard_flonumdb_t)(X))
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMLDB]]],[[[m4_dnl
-#define mmux_standard_flonumldb_literal(X)	((mmux_standard_flonumldb_t)(X ## L))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF32]]],[[[m4_dnl
-#define mmux_standard_flonumf32_literal(X)	((mmux_standard_flonumf32_t)(X ## f32))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF64]]],[[[m4_dnl
-#define mmux_standard_flonumf64_literal(X)	((mmux_standard_flonumf64_t)(X ## f64))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128]]],[[[m4_dnl
-#define mmux_standard_flonumf128_literal(X)	((mmux_standard_flonumf128_t)(X ## f128))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF32X]]],[[[m4_dnl
-#define mmux_standard_flonumf32x_literal(X)	((mmux_standard_flonumf32x_t)(X ## f32x))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF64X]]],[[[m4_dnl
-#define mmux_standard_flonumf64x_literal(X)	((mmux_standard_flonumf64x_t)(X ## f64x))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128X]]],[[[m4_dnl
-#define mmux_standard_flonumf128x_literal(X)	((mmux_standard_flonumf128x_t)(X ## f128x))]]])
-m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[m4_dnl
-#define mmux_standard_$1_literal(X)		((mmux_standard_$1_t)(mmux_standard_[[[]]]$2[[[]]]_literal(X)))]]])
-#define mmux_standard_byte_literal(X)		((mmux_standard_byte_t)(X))
-#define mmux_standard_octet_literal(X)		((mmux_standard_octet_t)(mmux_standard_unsigned_literal(X)))
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ssize,	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(usize,	[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(mode,	[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(off,	[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(pid,	[[[MMUX_CC_TYPES_STEM_ALIAS_PID]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uid,	[[[MMUX_CC_TYPES_STEM_ALIAS_UID]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(gid,	[[[MMUX_CC_TYPES_STEM_ALIAS_GID]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ptrdiff,	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wchar,	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
-
-/* ------------------------------------------------------------------ */
-
-#define mmux_standard_flonumcfl_part_literal(VALUE)	(mmux_standard_flonumfl_literal(VALUE))
-#define mmux_standard_flonumcdb_part_literal(VALUE)	(mmux_standard_flonumdb_literal(VALUE))
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCLDB]]],[[[m4_dnl
-#define mmux_standard_flonumcldb_part_literal(VALUE)	(mmux_standard_flonumldb_literal(VALUE))]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF32]]],[[[m4_dnl
-#define mmux_standard_flonumcf32_part_literal(VALUE)	(mmux_standard_flonumf32_literal(VALUE))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF64]]],[[[m4_dnl
-#define mmux_standard_flonumcf64_part_literal(VALUE)	(mmux_standard_flonumf64_literal(VALUE))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128]]],[[[m4_dnl
-#define mmux_standard_flonumcf128_part_literal(VALUE)	(mmux_standard_flonumf128_literal(VALUE))]]])
-
-/* ------------------------------------------------------------------ */
-
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF32X]]],[[[m4_dnl
-#define mmux_standard_flonumcf32x_part_literal(VALUE)	(mmux_standard_flonumf32x_literal(VALUE))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF64X]]],[[[m4_dnl
-#define mmux_standard_flonumcf64x_part_literal(VALUE)	(mmux_standard_flonumf64x_literal(VALUE))]]])
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
-#define mmux_standard_flonumcf128x_part_literal(VALUE)	(mmux_standard_flonumf128x_literal(VALUE))]]])
-
-
-/** --------------------------------------------------------------------
  ** Standard C types aliases.
  ** ----------------------------------------------------------------- */
 
@@ -220,6 +126,100 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]],
 [[[typedef mmux_standard_flonumf64x_t	mmux_standard_flonumcf64x_part_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
 [[[typedef mmux_standard_flonumf128x_t	mmux_standard_flonumcf128x_part_t;]]])
+
+
+/** --------------------------------------------------------------------
+ ** Preprocessor macros: generating literal values.
+ ** ----------------------------------------------------------------- */
+
+#define mmux_standard_unsigned_literal(X)	(X ## U)
+#define mmux_standard_pointer_literal(X)	((mmux_standard_pointer_t) (mmux_standard_unsigned_literal(X)))
+#define mmux_standard_pointerc_literal(X)	((mmux_standard_pointerc_t)(mmux_standard_unsigned_literal(X)))
+m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
+#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(mmux_standard_unsigned_literal(X)))]]],[[[m4_dnl
+#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(X))]]])
+#define mmux_standard_schar_literal(X)		((mmux_standard_schar_t)(X))
+#define mmux_standard_uchar_literal(X)		((mmux_standard_uchar_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_sshort_literal(X)		((mmux_standard_sshort_t)(X))
+#define mmux_standard_ushort_literal(X)		((mmux_standard_ushort_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_sint_literal(X)		((mmux_standard_sint_t)(X))
+#define mmux_standard_uint_literal(X)		((mmux_standard_uint_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_slong_literal(X)		((mmux_standard_slong_t)(X))
+#define mmux_standard_ulong_literal(X)		((mmux_standard_ulong_t)(mmux_standard_unsigned_literal(X)))
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[SLLONG]]],[[[m4_dnl
+#define mmux_standard_sllong_literal(X)		((mmux_standard_sllong_t)(X ## LL))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[ULLONG]]],[[[m4_dnl
+#define mmux_standard_ullong_literal(X)		((mmux_standard_ullong_t)(X ## ULL))]]])
+#define mmux_standard_sint8_literal(X)		((mmux_standard_sint8_t)(X))
+#define mmux_standard_uint8_literal(X)		((mmux_standard_uint8_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_sint16_literal(X)		((mmux_standard_sint16_t)(X))
+#define mmux_standard_uint16_literal(X)		((mmux_standard_uint16_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_sint32_literal(X)		((mmux_standard_sint32_t)(X))
+#define mmux_standard_uint32_literal(X)		((mmux_standard_uint32_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_sint64_literal(X)		((mmux_standard_sint64_t)(X))
+#define mmux_standard_uint64_literal(X)		((mmux_standard_uint64_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_flonumfl_literal(X)	((mmux_standard_flonumfl_t)(X ## F))
+#define mmux_standard_flonumdb_literal(X)	((mmux_standard_flonumdb_t)(X))
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMLDB]]],[[[m4_dnl
+#define mmux_standard_flonumldb_literal(X)	((mmux_standard_flonumldb_t)(X ## L))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF32]]],[[[m4_dnl
+#define mmux_standard_flonumf32_literal(X)	((mmux_standard_flonumf32_t)(X ## f32))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF64]]],[[[m4_dnl
+#define mmux_standard_flonumf64_literal(X)	((mmux_standard_flonumf64_t)(X ## f64))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128]]],[[[m4_dnl
+#define mmux_standard_flonumf128_literal(X)	((mmux_standard_flonumf128_t)(X ## f128))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF32X]]],[[[m4_dnl
+#define mmux_standard_flonumf32x_literal(X)	((mmux_standard_flonumf32x_t)(X ## f32x))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF64X]]],[[[m4_dnl
+#define mmux_standard_flonumf64x_literal(X)	((mmux_standard_flonumf64x_t)(X ## f64x))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128X]]],[[[m4_dnl
+#define mmux_standard_flonumf128x_literal(X)	((mmux_standard_flonumf128x_t)(X ## f128x))]]])
+m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[m4_dnl
+#define mmux_standard_$1_literal(X)		((mmux_standard_$1_t)(mmux_standard_[[[]]]$2[[[]]]_literal(X)))]]])
+#define mmux_standard_byte_literal(X)		((mmux_standard_byte_t)(X))
+#define mmux_standard_octet_literal(X)		((mmux_standard_octet_t)(mmux_standard_unsigned_literal(X)))
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ssize,	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(usize,	[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(mode,	[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(off,	[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(pid,	[[[MMUX_CC_TYPES_STEM_ALIAS_PID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uid,	[[[MMUX_CC_TYPES_STEM_ALIAS_UID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(gid,	[[[MMUX_CC_TYPES_STEM_ALIAS_GID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ptrdiff,	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wchar,	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
+
+/* ------------------------------------------------------------------ */
+
+#define mmux_standard_flonumcfl_part_literal(VALUE)	(mmux_standard_flonumfl_literal(VALUE))
+#define mmux_standard_flonumcdb_part_literal(VALUE)	(mmux_standard_flonumdb_literal(VALUE))
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCLDB]]],[[[m4_dnl
+#define mmux_standard_flonumcldb_part_literal(VALUE)	(mmux_standard_flonumldb_literal(VALUE))]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF32]]],[[[m4_dnl
+#define mmux_standard_flonumcf32_part_literal(VALUE)	(mmux_standard_flonumf32_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF64]]],[[[m4_dnl
+#define mmux_standard_flonumcf64_part_literal(VALUE)	(mmux_standard_flonumf64_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128]]],[[[m4_dnl
+#define mmux_standard_flonumcf128_part_literal(VALUE)	(mmux_standard_flonumf128_literal(VALUE))]]])
+
+/* ------------------------------------------------------------------ */
+
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF32X]]],[[[m4_dnl
+#define mmux_standard_flonumcf32x_part_literal(VALUE)	(mmux_standard_flonumf32x_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF64X]]],[[[m4_dnl
+#define mmux_standard_flonumcf64x_part_literal(VALUE)	(mmux_standard_flonumf64x_literal(VALUE))]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
+#define mmux_standard_flonumcf128x_part_literal(VALUE)	(mmux_standard_flonumf128x_literal(VALUE))]]])
 
 
 /** --------------------------------------------------------------------

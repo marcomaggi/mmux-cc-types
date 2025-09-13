@@ -30,748 +30,375 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   mmux_cc_types_init();
   test_set_output_formats();
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_char_literal(65);
-      auto	str = mmux_char(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      auto	str = mmux_char_literal(65);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+#define DOIT_FOR_NUMBER(STEM,LITERAL)					\
+  {									\
+    if (1) {								\
+      constexpr auto	val  = mmux_standard_##STEM##_literal(LITERAL);	\
+      auto		stru = mmux_##STEM(val);			\
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(stru));		\
+      mmux_ctype_dprintf(2, stru);					\
+      dprintf(2, "\n");							\
+    }									\
+    if (1) {								\
+      auto	stru = mmux_##STEM##_literal(LITERAL);			\
+      dprintf(2, "%s: ", mmux_ctype_dispatch_typedef(stru));		\
+      mmux_ctype_dprintf(2, stru);					\
+      dprintf(2, "\n");							\
+    }									\
   }
 
-  /* ------------------------------------------------------------------ */
+#define DOIT_FOR_EXACT_INTEGER(STEM,LITERAL)		    \
+  DOIT_FOR_NUMBER(STEM,LITERAL)
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_schar_literal(65);
-      auto	str = mmux_schar(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+#define DOIT_FOR_FLONUM(STEM,LITERAL)			    \
+  DOIT_FOR_NUMBER(STEM,LITERAL)
 
-    if (1) {
-      constexpr auto	val = mmux_standard_uchar_literal(65);
-      auto	str = mmux_uchar(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+#define DOIT_FOR_FLONUMC(STEM,LITERAL_RE,LITERAL_IM)							\
+  {													\
+    if (1) {												\
+      auto	val  = mmux_standard_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);		\
+      auto	stru = mmux_##STEM(val);								\
+      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(stru));						\
+      mmux_ctype_dprintf(2, stru);									\
+      dprintf(2, "\n");											\
+    }													\
+    if (1) {												\
+      auto	stru = mmux_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);			\
+      dprintf(2, "%s: ", mmux_ctype_dispatch_typedef(stru));						\
+      mmux_ctype_dprintf(2, stru);									\
+      dprintf(2, "\n");											\
+    }													\
   }
 
-  /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sshort_literal(65);
-      auto	str = mmux_sshort(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(char,		65);
+#ifdef MMUX_CC_TYPES_CHAR_IS_SIGNED
+  DOIT_FOR_EXACT_INTEGER(char,		-65);
+#endif
+  DOIT_FOR_EXACT_INTEGER(schar,		65);
+  DOIT_FOR_EXACT_INTEGER(schar,		-65);
+  DOIT_FOR_EXACT_INTEGER(uchar,		65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_ushort_literal(65);
-      auto	str = mmux_ushort(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
+  DOIT_FOR_EXACT_INTEGER(sshort,	65);
+  DOIT_FOR_EXACT_INTEGER(sshort,	-65);
+  DOIT_FOR_EXACT_INTEGER(ushort,	65);
 
-  /* ------------------------------------------------------------------ */
+  DOIT_FOR_EXACT_INTEGER(sint,		65);
+  DOIT_FOR_EXACT_INTEGER(sint,		-65);
+  DOIT_FOR_EXACT_INTEGER(uint,		65);
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sint_literal(65);
-      auto	str = mmux_sint(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(slong,		65);
+  DOIT_FOR_EXACT_INTEGER(slong,		-65);
+  DOIT_FOR_EXACT_INTEGER(ulong,		65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_uint_literal(65);
-      auto	str = mmux_uint(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_slong_literal(65);
-      auto	str = mmux_slong(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-
-    if (1) {
-      constexpr auto	val = mmux_standard_ulong_literal(65);
-      auto	str = mmux_ulong(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-    if (1) {
-      constexpr auto	val = mmux_standard_sllong_literal(65);
-      auto	str = mmux_sllong(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(sllong,	65);
+  DOIT_FOR_EXACT_INTEGER(sllong,	-65);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-    if (1) {
-      constexpr auto	val = mmux_standard_ullong_literal(65);
-      auto	str = mmux_ullong(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(ullong,	65);
 #endif
-  }
 
-  /* ------------------------------------------------------------------ */
+  DOIT_FOR_EXACT_INTEGER(sint8,		65);
+  DOIT_FOR_EXACT_INTEGER(sint8,		-65);
+  DOIT_FOR_EXACT_INTEGER(uint8,		65);
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sint8_literal(65);
-      auto	str = mmux_sint8(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(sint16,	65);
+  DOIT_FOR_EXACT_INTEGER(sint16,	-65);
+  DOIT_FOR_EXACT_INTEGER(uint16,	65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_uint8_literal(65);
-      auto	str = mmux_uint8(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
+  DOIT_FOR_EXACT_INTEGER(sint32,	65);
+  DOIT_FOR_EXACT_INTEGER(sint32,	-65);
+  DOIT_FOR_EXACT_INTEGER(uint32,	65);
 
-  /* ------------------------------------------------------------------ */
+  DOIT_FOR_EXACT_INTEGER(sint64,	65);
+  DOIT_FOR_EXACT_INTEGER(sint64,	-65);
+  DOIT_FOR_EXACT_INTEGER(uint64,	65);
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sint16_literal(65);
-      auto	str = mmux_sint16(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(byte,		65);
+  DOIT_FOR_EXACT_INTEGER(byte,		-65);
+  DOIT_FOR_EXACT_INTEGER(octet,		65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_uint16_literal(65);
-      auto	str = mmux_uint16(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
+  DOIT_FOR_EXACT_INTEGER(sintmax,	65);
+  DOIT_FOR_EXACT_INTEGER(sintmax,	-65);
+  DOIT_FOR_EXACT_INTEGER(uintmax,	65);
 
-  /* ------------------------------------------------------------------ */
+  DOIT_FOR_EXACT_INTEGER(sintptr,	65);
+  DOIT_FOR_EXACT_INTEGER(sintptr,	-65);
+  DOIT_FOR_EXACT_INTEGER(uintptr,	65);
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sint32_literal(65);
-      auto	str = mmux_sint32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(ssize,		65);
+  DOIT_FOR_EXACT_INTEGER(ssize,		-65);
+  DOIT_FOR_EXACT_INTEGER(usize,		65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_uint32_literal(65);
-      auto	str = mmux_uint32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
+  DOIT_FOR_EXACT_INTEGER(mode,		65);
 
-  /* ------------------------------------------------------------------ */
+  DOIT_FOR_EXACT_INTEGER(off,		65);
+  DOIT_FOR_EXACT_INTEGER(off,		-65);
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sint64_literal(65);
-      auto	str = mmux_sint64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(pid,		65);
+  DOIT_FOR_EXACT_INTEGER(pid,		-65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_uint64_literal(65);
-      auto	str = mmux_uint64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
+  DOIT_FOR_EXACT_INTEGER(gid,		65);
+  DOIT_FOR_EXACT_INTEGER(uid,		65);
 
-  /* ------------------------------------------------------------------ */
+  DOIT_FOR_EXACT_INTEGER(ptrdiff,	65);
+  DOIT_FOR_EXACT_INTEGER(ptrdiff,	-65);
 
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_byte_literal(65);
-      auto	str = mmux_byte(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+  DOIT_FOR_EXACT_INTEGER(wchar,		65);
+  DOIT_FOR_EXACT_INTEGER(wchar,		-65);
 
-    if (1) {
-      constexpr auto	val = mmux_standard_octet_literal(65);
-      auto	str = mmux_octet(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sintmax_literal(65);
-      auto	str = mmux_sintmax(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-
-    if (1) {
-      constexpr auto	val = mmux_standard_uintmax_literal(65);
-      auto	str = mmux_uintmax(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_sintptr_literal(65);
-      auto	str = mmux_sintptr(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-
-    if (1) {
-      constexpr auto	val = mmux_standard_uintptr_literal(65);
-      auto	str = mmux_uintptr(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_mode_literal(65);
-      auto	str = mmux_mode(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_off_literal(65);
-      auto	str = mmux_off(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_ptrdiff_literal(65);
-      auto	str = mmux_ptrdiff(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_pid_literal(65);
-      auto	str = mmux_pid(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_uid_literal(65);
-      auto	str = mmux_uid(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_gid_literal(65);
-      auto	str = mmux_gid(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_wchar_literal(65);
-      auto	str = mmux_wchar(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_wint_literal(65);
-      auto	str = mmux_wint(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_time_literal(65);
-      auto	str = mmux_time(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_socklen_literal(65);
-      auto	str = mmux_socklen(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  {
-    if (1) {
-      constexpr auto	val = mmux_standard_rlim_literal(65);
-      auto	str = mmux_rlim(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-  }
+  DOIT_FOR_EXACT_INTEGER(wint,		65);
+  DOIT_FOR_EXACT_INTEGER(time,		65);
+  DOIT_FOR_EXACT_INTEGER(socklen,	65);
+  DOIT_FOR_EXACT_INTEGER(rlim,		65);
 
   /* ------------------------------------------------------------------ */
 
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumfl_literal(65);
-      auto	str = mmux_flonumfl(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumfl,		65);		/* invalid suffix on integer constant */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumfl_literal(0.123);
-      auto	str = mmux_flonumfl(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumfl_literal(12e34);
-      auto	str = mmux_flonumfl(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumfl,		0.123);
+    DOIT_FOR_FLONUM(flonumfl,		12e34);
   }
-
-  /* ------------------------------------------------------------------ */
 
   {
-    if (1) { /* VALID no suffix on integer constant !!! */
-      constexpr auto	val = mmux_standard_flonumdb_literal(65);
-      auto	str = mmux_flonumdb(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumdb_literal(0.123);
-      auto	str = mmux_flonumdb(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumdb_literal(12e34);
-      auto	str = mmux_flonumdb(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumdb,		65);		/* VALID no suffix on integer constant !!! */
+    DOIT_FOR_FLONUM(flonumdb,		0.123);
+    DOIT_FOR_FLONUM(flonumdb,		12e34);
   }
-
-  /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
   {
-    if (1) { /* VALID suffix on integer constant !!! */
-      constexpr auto	val = mmux_standard_flonumldb_literal(65);
-      auto	str = mmux_flonumldb(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumldb_literal(0.123);
-      auto	str = mmux_flonumldb(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumldb_literal(12e34);
-      auto	str = mmux_flonumldb(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumldb,		65);		/* VALID no suffix on integer constant !!! */
+    DOIT_FOR_FLONUM(flonumldb,		0.123);
+    DOIT_FOR_FLONUM(flonumldb,		12e34);
   }
 #endif
 
-  /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumf32_literal(65);
-      auto	str = mmux_flonumf32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf32,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf32_literal(0.123);
-      auto	str = mmux_flonumf32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf32_literal(12e34);
-      auto	str = mmux_flonumf32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf32,		0.123);
+    DOIT_FOR_FLONUM(flonumf32,		12e34);
   }
 #endif
-
-  /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumf64_literal(65);
-      auto	str = mmux_flonumf64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf64,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf64_literal(0.123);
-      auto	str = mmux_flonumf64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf64_literal(12e34);
-      auto	str = mmux_flonumf64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf64,		0.123);
+    DOIT_FOR_FLONUM(flonumf64,		12e34);
   }
 #endif
-
-  /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumf128_literal(65);
-      auto	str = mmux_flonumf128(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf128,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf128_literal(0.123);
-      auto	str = mmux_flonumf128(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf128_literal(12e34);
-      auto	str = mmux_flonumf128(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf128,		0.123);
+    DOIT_FOR_FLONUM(flonumf128,		12e34);
   }
 #endif
 
-  /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumf32x_literal(65);
-      auto	str = mmux_flonumf32x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf32x,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf32x_literal(0.123);
-      auto	str = mmux_flonumf32x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf32x_literal(12e34);
-      auto	str = mmux_flonumf32x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf32x,		0.123);
+    DOIT_FOR_FLONUM(flonumf32x,		12e34);
   }
 #endif
-
-  /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumf64x_literal(65);
-      auto	str = mmux_flonumf64x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf64x,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf64x_literal(0.123);
-      auto	str = mmux_flonumf64x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf64x_literal(12e34);
-      auto	str = mmux_flonumf64x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf64x,		0.123);
+    DOIT_FOR_FLONUM(flonumf64x,		12e34);
   }
 #endif
-
-  /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumf128x_literal(65);
-      auto	str = mmux_flonumf128x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf128x,	65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf128x_literal(0.123);
-      auto	str = mmux_flonumf128x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumf128x_literal(12e34);
-      auto	str = mmux_flonumf128x(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumf128x,	0.123);
+    DOIT_FOR_FLONUM(flonumf128x,	12e34);
   }
 #endif
 
-  /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumd32_literal(65);
-      auto	str = mmux_flonumd32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumd32,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumd32_literal(0.123);
-      auto	str = mmux_flonumd32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumd32_literal(12e34);
-      auto	str = mmux_flonumd32(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumd32,		0.123);
+    DOIT_FOR_FLONUM(flonumd32,		12e34);
   }
 #endif
-
-  /* ------------------------------------------------------------------ */
 
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumd64_literal(65);
-      auto	str = mmux_flonumd64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumd64,		65);		/* invalid no suffix on integer constant !!! */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumd64_literal(0.123);
-      auto	str = mmux_flonumd64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumd64_literal(12e34);
-      auto	str = mmux_flonumd64(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUM(flonumd64,		0.123);
+    DOIT_FOR_FLONUM(flonumd64,		12e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  {
+#if 0
+    DOIT_FOR_FLONUM(flonumd128,		65);		/* invalid no suffix on integer constant !!! */
+#endif
+    DOIT_FOR_FLONUM(flonumd128,		0.123);
+    DOIT_FOR_FLONUM(flonumd128,		12e34);
   }
 #endif
 
   /* ------------------------------------------------------------------ */
 
-#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
   {
 #if 0
-    if (1) { /* invalid suffix on integer constant */
-      constexpr auto	val = mmux_standard_flonumd128_literal(65);
-      auto	str = mmux_flonumd128(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUMC(flonumcfl,		65,78);		/* invalid suffix on integer constant */
 #endif
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumd128_literal(0.123);
-      auto	str = mmux_flonumd128(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
-    if (1) {
-      constexpr auto	val = mmux_standard_flonumd128_literal(12e34);
-      auto	str = mmux_flonumd128(val);
-      dprintf(2, "%s: ", mmux_ctype_dispatch_stem(str));
-      mmux_ctype_dprintf(2, str);
-      dprintf(2, "\n");
-    }
+    DOIT_FOR_FLONUMC(flonumcfl,		0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcfl,		1e23,2e34);
+  }
+
+  {
+#if 1
+    DOIT_FOR_FLONUMC(flonumcdb,		65,78);		/* VALID suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcdb,		0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcdb,		1e23,2e34);
+  }
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  {
+#if 1
+    DOIT_FOR_FLONUMC(flonumcldb,	65,78);		/* VALID suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcldb,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcldb,	1e23,2e34);
   }
 #endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcf32,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcf32,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcf32,	1e23,2e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcf64,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcf64,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcf64,	1e23,2e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcf128,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcf128,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcf128,	1e23,2e34);
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcf32x,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcf32x,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcf32x,	1e23,2e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcf64x,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcf64x,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcf64x,	1e23,2e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcf128x,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcf128x,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcf128x,	1e23,2e34);
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcd32,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcd32,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcd32,	1e23,2e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcd64,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcd64,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcd64,	1e23,2e34);
+  }
+#endif
+
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  {
+#if 0
+    DOIT_FOR_FLONUMC(flonumcd128,	65,78);		/* invalid suffix on integer constant */
+#endif
+    DOIT_FOR_FLONUMC(flonumcd128,	0.123,0.456);
+    DOIT_FOR_FLONUMC(flonumcd128,	1e23,2e34);
+  }
+#endif
+
+  /* ------------------------------------------------------------------ */
 
   exit(EXIT_SUCCESS);
 }

@@ -2075,6 +2075,12 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @chapter Type predicates
 
 
+@cindex @objtype{char} is signed
+@cindex @objtype{char} is unsigned
+@cindex Signed @objtype{char}
+@cindex Unsigned @objtype{char}
+
+
 In the context of @value{PACKAGE}: complex numbers cannot be positive or negative, so the predicates
 @samp{positive}, @samp{negative}, @samp{non_positive}, @samp{non_negative} always return @cfalse{}
 when applied to a complex number.
@@ -2087,6 +2093,20 @@ the sign bit to determine the return value.
 @deftypefun bool mmux_char_is_unsigned (void)
 Return @ctrue{} if @objtype{mmux_char_t} is unsigned; otherwise return @cfalse{}.
 @end deftypefun
+
+
+@defmac MMUX_CC_TYPES_CHAR_IS_SIGNED
+@defmacx MMUX_CC_TYPES_CHAR_IS_UNSIGNED
+Preprocessor symbols defined to @samp{1} only if the corresponding condition is true; otherwise they
+are undefined.  Whether the standard type @objtype{char} is signed or unsigned, it is implementation
+dependent.  We can use them as follows:
+
+@example
+#ifdef MMUX_CC_TYPES_CHAR_IS_SIGNED
+...
+#endif
+@end example
+@end defmac
 
 
 @macro MmuxDefineTypePredicates{STEM}
