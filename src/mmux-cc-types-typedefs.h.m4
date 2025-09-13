@@ -129,7 +129,7 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
 
 
 /** --------------------------------------------------------------------
- ** Preprocessor macros: generating literal values.
+ ** Preprocessor macros: generating standard literal values.
  ** ----------------------------------------------------------------- */
 
 #define mmux_standard_unsigned_literal(X)	(X ## U)
@@ -228,6 +228,20 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
 
 typedef void *			mmux_pointer_t;
 typedef void const *		mmux_pointerc_t;
+
+typedef char *			mmux_asciizp_t;
+typedef char **			mmux_asciizpp_t;
+typedef char ***		mmux_asciizppp_t;
+
+typedef char const *		mmux_asciicp_t;
+typedef char const **		mmux_asciicpp_t;
+typedef char const ***		mmux_asciicppp_t;
+
+typedef char const *		mmux_asciizcp_t;
+typedef char const **		mmux_asciizcpp_t;
+typedef char const ***		mmux_asciizcppp_t;
+
+/* ------------------------------------------------------------------ */
 
 /* NOTE  We cannot  declare the  "value" field  as "const"  in the  structures below.
  * Let's say we declare:
@@ -345,49 +359,23 @@ typedef struct mmux_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
 typedef struct mmux_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SOCKLEN;	}     mmux_socklen_t;
 typedef struct mmux_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_RLIM;	}     mmux_rlim_t;
 
-/* ------------------------------------------------------------------ */
-
-typedef char *			mmux_asciizp_t;
-typedef char **			mmux_asciizpp_t;
-typedef char ***		mmux_asciizppp_t;
-
-typedef char const *		mmux_asciicp_t;
-typedef char const **		mmux_asciicpp_t;
-typedef char const ***		mmux_asciicppp_t;
-
-typedef char const *		mmux_asciizcp_t;
-typedef char const **		mmux_asciizcpp_t;
-typedef char const ***		mmux_asciizcppp_t;
-
 
 /** --------------------------------------------------------------------
  ** Makers.
  ** ----------------------------------------------------------------- */
 
-/* NOTE I would really like to define the maker as an inline function, as in:
- *
- *   mmux_cc_types_inline_decl mmux_$1_t
- *   mmux_$1 (mmux_standard_$1_t value)
- *   {
- *     return ((mmux_$1_t){ .value = value });
- *   }
- *
- * Because.  But with  the function we cannot declare a  new variable as "constexpr",
- * while with the macro we can.  For example, the following code:
- *
- *  constexpr auto	buflen = mmux_usize(1024);
- *
- * works fine  under GCC-C23  with macros,  it does  not work  with functions.   I am
- * disappointed, but for now "constexpr" wins.  (Marco Maggi; Aug 20, 2025)
- */
-
-#define mmux_pointer(VALUE)		((mmux_pointer_t)(VALUE))
-#define mmux_pointerc(VALUE)		((mmux_pointer_t)(VALUE))
-
-#undef  mmux_pointer_literal
+mmux_cc_types_inline_decl mmux_pointer_t
+mmux_pointer (mmux_standard_pointer_t value)
+{
+  return (mmux_pointer_t)value;
+}
 #define mmux_pointer_literal(VALUE)	(mmux_pointer(mmux_standard_pointer_literal(VALUE)))
 
-#undef  mmux_pointerc_literal
+mmux_cc_types_inline_decl mmux_pointerc_t
+mmux_pointerc (mmux_standard_pointerc_t value)
+{
+  return (mmux_pointerc_t)value;
+}
 #define mmux_pointerc_literal(VALUE)	(mmux_pointerc(mmux_standard_pointerc_literal(VALUE)))
 
 /* ------------------------------------------------------------------ */
@@ -396,7 +384,11 @@ m4_divert(-1)
 m4_dnl $1 - type stem
 m4_dnl $2 - conditional definition symbol
 m4_define([[[DEFINE_TYPE_MAKERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
-#define mmux_$1(VALUE)			((mmux_$1_t){ .value = (VALUE) })
+mmux_cc_types_inline_decl mmux_$1_t
+mmux_$1 (mmux_standard_$1_t the_value)
+{
+  return (mmux_$1_t){ .value = the_value };
+}
 #define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_TYPE_MAKERS(char)

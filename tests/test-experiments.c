@@ -46,7 +46,7 @@ test_test_byte_data_structure (void)
   if (1) {
     _Pragma("GCC diagnostic push");
     _Pragma("GCC diagnostic ignored \"-Wpedantic\"");
-    constexpr auto	buflen = mmux_usize(1024);
+    auto	buflen = mmux_usize(1024);
     _Pragma("GCC diagnostic pop");
     test_byte_t *	bufptr = malloc(sizeof(test_byte_t) * buflen.value);
 
@@ -94,7 +94,7 @@ test_3bytes_data_structure (void)
   if (1) {
     _Pragma("GCC diagnostic push");
     _Pragma("GCC diagnostic ignored \"-Wpedantic\"");
-    constexpr auto	buflen = mmux_usize_literal(1024);
+    auto	buflen = mmux_usize_literal(1024);
     _Pragma("GCC diagnostic pop");
     test_3bytes_t *	bufptr = malloc(sizeof(test_3bytes_t) * buflen.value);
 
@@ -143,7 +143,7 @@ test_char_data_structure (void)
   if (1) {
     _Pragma("GCC diagnostic push");
     _Pragma("GCC diagnostic ignored \"-Wpedantic\"");
-    constexpr auto	buflen = mmux_usize(1024);
+     auto	buflen = mmux_usize(1024);
     _Pragma("GCC diagnostic pop");
     mmux_char_t *	bufptr = malloc(sizeof(mmux_char_t) * buflen.value);
 
@@ -225,7 +225,7 @@ test_byte_data_structure (void)
   if (1) {
     _Pragma("GCC diagnostic push");
     _Pragma("GCC diagnostic ignored \"-Wpedantic\"");
-    constexpr auto	buflen = mmux_usize(1024);
+    auto	buflen = mmux_usize(1024);
     _Pragma("GCC diagnostic pop");
     mmux_byte_t *	bufptr = malloc(sizeof(mmux_byte_t) * buflen.value);
 
@@ -270,7 +270,7 @@ test_octet_data_structure (void)
   if (1) {
     _Pragma("GCC diagnostic push");
     _Pragma("GCC diagnostic ignored \"-Wpedantic\"");
-    constexpr auto	buflen = mmux_usize(1024);
+    auto	buflen = mmux_usize(1024);
     _Pragma("GCC diagnostic pop");
     mmux_octet_t *	bufptr = malloc(sizeof(mmux_octet_t) * buflen.value);
 

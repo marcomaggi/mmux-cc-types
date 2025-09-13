@@ -1103,37 +1103,45 @@ mmux_standard_pointerc_literal(@var{ARG})
 @chapter Making values
 
 
-The @dfn{maker} macros are used as follows:
+The @dfn{maker} functions are used as follows:
 
 @example
-auto    A = mmux_sint_make(123);
-auto    B = mmux_uint_make(123);
-auto    C = mmux_flonumldb_make(0.123);
-auto    D = mmux_mode_make(MMUX_LIBC_O_RDWR);
+auto    A = mmux_sint(123);
+auto    B = mmux_uint(123);
+auto    C = mmux_flonumldb(0.123);
+auto    D = mmux_mode(MMUX_LIBC_O_RDWR);
 @end example
 
 @noindent
-the macros expand as follows:
+the return values are data structures of the named type; all the maker functions are @code{inline}.
+As an exception: when the type is a pointer, the returned value is the pointer itself.
+
+To construct a complex number from its real and imaginary parts, we do:
 
 @example
-mmux_sint_make(123)       @expansion{} ((mmux_sint_t)(0.123))
-mmux_uint_make(123)       @expansion{} ((mmux_uint_t)(mmux_standard_unsigned_literal(123)))
-mmux_flonumldb_make(0.123)  @expansion{} ((mmux_flonumldb_t)(MMUX_FLONUMLDB_LITERAL(0.123)))
+auto    rep = mmux_flonumdb_literal(1.2);
+auto    imp = mmux_flonumdb_literal(3.4);
+auto    Z   = mmux_flonumcdb_rectangular(rep, imp);
 @end example
 
-@noindent
-there are no maker macros for complex types, because for those values we have to use the proper
-constructor functions like @cfunc{mmux_flonumcdb_rectangular}, @ref{complex make, Constructing
-complex numbers}.
-
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCMacroMaker{STEM}
-@deftypefn {Preprocessor Macro} mmux_\STEM\_t mmux_\STEM\_make (@var{VALUE})
+@deftypefun mmux_\STEM\_t mmux_\STEM\ (mmux_standard_\STEM\_t @var{VALUE})
 Return a value of the given type.
-@end deftypefn
+@end deftypefun
 
 @end macro
 
+@macro MmuxDefineComplexMakeRectangularFunction{CPLXSTEM,REALSTEM}
+@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
+Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
+@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Return the result.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
 
 @MmuxDefineCMacroMaker{pointer}
 @MmuxDefineCMacroMaker{pointerc}
@@ -1149,22 +1157,6 @@ Return a value of the given type.
 @MmuxDefineCMacroMaker{ulong}
 @MmuxDefineCMacroMaker{sllong}
 @MmuxDefineCMacroMaker{ullong}
-@MmuxDefineCMacroMaker{flonumfl}
-@MmuxDefineCMacroMaker{flonumdb}
-@MmuxDefineCMacroMaker{flonumldb}
-
-@MmuxDefineCMacroMaker{flonumf32}
-@MmuxDefineCMacroMaker{flonumf64}
-@MmuxDefineCMacroMaker{flonumf128}
-
-@MmuxDefineCMacroMaker{flonumf32x}
-@MmuxDefineCMacroMaker{flonumf64x}
-@MmuxDefineCMacroMaker{flonumf128x}
-
-@MmuxDefineCMacroMaker{flonumd32}
-@MmuxDefineCMacroMaker{flonumd64}
-@MmuxDefineCMacroMaker{flonumd128}
-
 @MmuxDefineCMacroMaker{sint8}
 @MmuxDefineCMacroMaker{uint8}
 @MmuxDefineCMacroMaker{sint16}
@@ -1173,6 +1165,9 @@ Return a value of the given type.
 @MmuxDefineCMacroMaker{uint32}
 @MmuxDefineCMacroMaker{sint64}
 @MmuxDefineCMacroMaker{uint64}
+
+@MmuxDefineCMacroMaker{byte}
+@MmuxDefineCMacroMaker{octet}
 
 @MmuxDefineCMacroMaker{ssize}
 @MmuxDefineCMacroMaker{usize}
@@ -1207,6 +1202,40 @@ Return a value of the given type.
 @MmuxDefineCMacroMaker{asciizcp}
 @MmuxDefineCMacroMaker{asciizcpp}
 @MmuxDefineCMacroMaker{asciizcppp}
+
+@MmuxDefineCMacroMaker{flonumfl}
+@MmuxDefineCMacroMaker{flonumdb}
+@MmuxDefineCMacroMaker{flonumldb}
+
+@MmuxDefineCMacroMaker{flonumf32}
+@MmuxDefineCMacroMaker{flonumf64}
+@MmuxDefineCMacroMaker{flonumf128}
+
+@MmuxDefineCMacroMaker{flonumf32x}
+@MmuxDefineCMacroMaker{flonumf64x}
+@MmuxDefineCMacroMaker{flonumf128x}
+
+@MmuxDefineCMacroMaker{flonumd32}
+@MmuxDefineCMacroMaker{flonumd64}
+@MmuxDefineCMacroMaker{flonumd128}
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineComplexMakeRectangularFunction{flonumcfl, flonumfl}
+@MmuxDefineComplexMakeRectangularFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexMakeRectangularFunction{flonumcldb, flonumldb}
+
+@MmuxDefineComplexMakeRectangularFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf128, flonumf128}
+
+@MmuxDefineComplexMakeRectangularFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexMakeRectangularFunction{flonumcf128x, flonumf128x}
+
+@MmuxDefineComplexMakeRectangularFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexMakeRectangularFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexMakeRectangularFunction{flonumcd128, flonumd128}
 
 @c page
 @node sizeof
@@ -1751,7 +1780,7 @@ Type string printers convert binary representations of C language values to stri
 to print a @objtype{mmux_sint_t} string representation we do:
 
 @example
-auto    value           = mmux_sint_make(123);
+auto    value           = mmux_sint(123);
 auto    required_nbytes = mmux_sint_sprint_size(value);
 
 if (0 > required_nbytes) @{
@@ -1862,7 +1891,7 @@ the terminating zero}; otherwise return @samp{-1}.
 To print a value to @stderr{}, we can do:
 
 @example
-auto    X = mmux_flonumdb_make(1.2);
+auto    X = mmux_flonumdb(1.2);
 
 if (mmux_flonumdb_dprintf(2, X)) @{
   /* error */
@@ -1963,51 +1992,10 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 
 
 @menu
-* complex make::        Constructing complex numbers.
-* complex parts::       Extracting the real and imaginary parts.
-* complex arg::         Computing the argument value.
-* complex conjugate::        Computing the complex conjugate value.
+* complex parts::               Extracting the real and imaginary parts.
+* complex arg::                 Computing the argument value.
+* complex conjugate::           Computing the complex conjugate value.
 @end menu
-
-@c page
-@node complex make
-@section Constructing complex numbers
-
-
-To construct a complex number from its real and imaginary parts, we do:
-
-@example
-mmux_flonumdb_t   rep = 1.2;
-mmux_flonumdb_t   imp = 3.4;
-mmux_flonumcdb_t Z;
-
-Z = mmux_flonumcdb_rectangular(rep, imp);
-@end example
-
-
-@macro MmuxDefineComplexMakeRectangularFunction{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
-Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
-@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Return the result.
-@end deftypefun
-
-@end macro
-
-@MmuxDefineComplexMakeRectangularFunction{flonumcfl, float}
-@MmuxDefineComplexMakeRectangularFunction{flonumcdb, flonumdb}
-@MmuxDefineComplexMakeRectangularFunction{flonumcldb, flonumldb}
-
-@MmuxDefineComplexMakeRectangularFunction{flonumcf32, flonumf32}
-@MmuxDefineComplexMakeRectangularFunction{flonumcf64, flonumf64}
-@MmuxDefineComplexMakeRectangularFunction{flonumcf128, flonumf128}
-
-@MmuxDefineComplexMakeRectangularFunction{flonumcf32x, flonumf32x}
-@MmuxDefineComplexMakeRectangularFunction{flonumcf64x, flonumf64x}
-@MmuxDefineComplexMakeRectangularFunction{flonumcf128x, flonumf128x}
-
-@MmuxDefineComplexMakeRectangularFunction{flonumcd32, flonumd32}
-@MmuxDefineComplexMakeRectangularFunction{flonumcd64, flonumd64}
-@MmuxDefineComplexMakeRectangularFunction{flonumcd128, flonumd128}
 
 @c page
 @node complex parts

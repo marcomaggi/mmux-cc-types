@@ -334,11 +334,16 @@ mmux_flonum$1_sprint_size (mmux_flonum$1_t value)
   if (mmux_flonum$1_is_nan(value)) {
     return mmux_sint(strlen(MMUX_CC_TYPES_FLONUM_STRINGREP_NAN));
   } else if (mmux_flonum$1_is_infinite(value)) {
+    /* It  is possible  for the  representations  of positive  infinity and  negative
+       infinity to have the same length.  But not assume it blindly. */
+    _Pragma("GCC diagnostic push");
+    _Pragma("GCC diagnostic ignored \"-Wduplicated-branches\"");
     if (mmux_flonum$1_is_positive(value)) {
       return mmux_sint(strlen(MMUX_CC_TYPES_FLONUM_STRINGREP_POSITIVE_INFINITY));
     } else {
       return mmux_sint(strlen(MMUX_CC_TYPES_FLONUM_STRINGREP_NEGATIVE_INFINITY));
     }
+    _Pragma("GCC diagnostic pop");
   } else {
     int		required_nbytes;
 
