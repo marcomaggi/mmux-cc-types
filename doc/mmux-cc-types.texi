@@ -931,6 +931,28 @@ auto    val = mmux_standard_\STEM\_literal(13)
 
 @c ------------------------------------------------------------------------
 
+@macro MmuxDefineLiteralMacroCplx{STEM,RSTEM}
+@deffn {Preprocessor Macro} mmux_standard_\STEM\_literal (@var{ARGRE}, @var{ARGIM})
+This macro implements the following expansion:
+
+@example
+mmux_standard_\STEM\_literal(@var{ARGRE}, @var{ARGIM})
+@expansion{} mmux_standard_\STEM\_rectangular(mmux_standard_\RSTEM\_literal(@var{ARGRE}),
+                                        mmux_standard_\RSTEM\_literal(@var{ARGIM}))
+@end example
+
+@noindent
+and we can use it as follows:
+
+@example
+auto    val = mmux_standard_\STEM\_literal(1.2,3.4)
+@end example
+@end deffn
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
 @macro MmuxDefineLiteralMacroUnsignedInteger{STEM}
 @deffn {Preprocessor Macro} mmux_standard_\STEM\_literal (@var{ARG})
 This macro implements the following expansion:
@@ -1060,7 +1082,21 @@ mmux_standard_pointerc_literal(@var{ARG})
 @MmuxDefineLiteralMacroWithSuffix{flonumd64,DD,0.123}
 @MmuxDefineLiteralMacroWithSuffix{flonumd128,DL,0.123}
 
+@MmuxDefineLiteralMacroCplx{flonumcfl,flonumfl}
+@MmuxDefineLiteralMacroCplx{flonumcdb,flonumdb}
+@MmuxDefineLiteralMacroCplx{flonumcldb,flonumldb}
 
+@MmuxDefineLiteralMacroCplx{flonumcf32,flonumf32}
+@MmuxDefineLiteralMacroCplx{flonumcf64,flonumf64}
+@MmuxDefineLiteralMacroCplx{flonumcf128,flonumf128}
+
+@MmuxDefineLiteralMacroCplx{flonumcf32x,flonumf32x}
+@MmuxDefineLiteralMacroCplx{flonumcf64x,flonumf64x}
+@MmuxDefineLiteralMacroCplx{flonumcf128x,flonumf128x}
+
+@MmuxDefineLiteralMacroCplx{flonumcd32,flonumd32}
+@MmuxDefineLiteralMacroCplx{flonumcd64,flonumd64}
+@MmuxDefineLiteralMacroCplx{flonumcd128,flonumd128}
 
 @c page
 @node makers
