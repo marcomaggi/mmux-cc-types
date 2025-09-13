@@ -161,8 +161,6 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * typedefs::                    Type definitions.
 * literals::                    Generating literal constants.
 * makers::                      Making values.
-* sizeof::                      Type sizes.
-* limits::                      Type maximum and minimum values.
 * constants::                   Functions returning constant values.
 * stringrep::                   String representations of supported types.
 * printing::                    Printing string representations.
@@ -1260,12 +1258,24 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 @MmuxDefineComplexMakeRectangularFunction{flonumcd128, flonumd128}
 
 @c page
-@node sizeof
-@chapter Type size measured in bytes
+@node constants
+@chapter Functions returning constant values
+
+
+@menu
+* constants sizeof::            Size of data types.
+* constants limits::            Type maximum and minimum values.
+* constants flonum::            Floating--point numbers mathematical constants.
+* constants exact::             Exact integer--point numbers constants.
+@end menu
+
+@c page
+@node constants sizeof
+@section Type size measured in bytes
 
 
 @macro MmuxDefineCFunctionSizeof{STEM}
-@deftypefun int mmux_\STEM\_sizeof (void)
+@deftypefun mmux_sint_t mmux_\STEM\_constant_sizeof (void)
 Return a positive integer representing the size in bytes of the C language type
 @objtype{mmux_\STEM\_t}.
 @end deftypefun
@@ -1346,8 +1356,8 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{rlim}
 
 @c page
-@node limits
-@chapter Type maximum and minimum values
+@node constants limits
+@section Type maximum and minimum values
 
 
 The following functions return the maximum and minimum values representable by a C language real
@@ -1358,8 +1368,8 @@ positive value.
 
 
 @macro MmuxDefineCFunctionMaximum{STEM}
-@deftypefun mmux_\STEM\_t mmux_\STEM\_maximum (void)
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_minimum (void)
+@deftypefun mmux_\STEM\_t mmux_\STEM\_constant_maximum (void)
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_constant_minimum (void)
 Return the maximum and minimum values representable by the range of values of the type
 @objtype{mmux_\STEM\_t}.
 @end deftypefun
@@ -1424,52 +1434,128 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{rlim}
 
 @c page
-@node constants
-@chapter Functions returning constant values
+@node constants flonum
+@section Floating--point numbers mathematical constants
 
 
-@macro MmuxDefineConstantFunction{STEM,FUNCSTEM,EXPR}
+@macro MmuxDefineFlonumConstantFunction{STEM,FUNCSTEM,EXPR}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_constant_\FUNCSTEM\ (void)
-Return a constant value corresponding to @math{\EXPR\}.
+Return a constant value corresponding to @samp{\EXPR\}.
 @end deftypefun
 
 @end macro
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineConstantFunctions{STEM}
-@MmuxDefineConstantFunction{\STEM\,E,e}
-@MmuxDefineConstantFunction{\STEM\,LOG2E,log_2(e)}
-@MmuxDefineConstantFunction{\STEM\,LOG10E,log_10(e)}
-@MmuxDefineConstantFunction{\STEM\,LN2,ln(2)}
-@MmuxDefineConstantFunction{\STEM\,LN10,ln(10)}
-@MmuxDefineConstantFunction{\STEM\,PI,pi}
-@MmuxDefineConstantFunction{\STEM\,PI_2,pi/2}
-@MmuxDefineConstantFunction{\STEM\,PI_4,pi/4}
-@MmuxDefineConstantFunction{\STEM\,1_PI,1/pi}
-@MmuxDefineConstantFunction{\STEM\,2_PI,2/pi}
-@MmuxDefineConstantFunction{\STEM\,2_SQRTPI,2/sqrt(pi)}
-@MmuxDefineConstantFunction{\STEM\,SQRT2,sqrt(2)}
-@MmuxDefineConstantFunction{\STEM\,SQRT1_2,sqrt(1/2)}
+@macro MmuxDefineFlonumConstantFunctions{STEM}
+@MmuxDefineFlonumConstantFunction{\STEM\,zero,0.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,one,1.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,two,2.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,ten,10.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,one_half,1.0/2.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,one_third,1.0/3.0}
+
+@MmuxDefineFlonumConstantFunction{\STEM\,positive_zero,+0.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,negative_zero,-0.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,positive_infinity,+inf.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,negative_infinity,-inf.0}
+
+@MmuxDefineFlonumConstantFunction{\STEM\,nan,+nan.0}
+@MmuxDefineFlonumConstantFunction{\STEM\,E,e}
+@MmuxDefineFlonumConstantFunction{\STEM\,LOG2E,log_2(e)}
+@MmuxDefineFlonumConstantFunction{\STEM\,LOG10E,log_10(e)}
+@MmuxDefineFlonumConstantFunction{\STEM\,LN2,ln(2)}
+@MmuxDefineFlonumConstantFunction{\STEM\,LN10,ln(10)}
+@MmuxDefineFlonumConstantFunction{\STEM\,PI,pi}
+@MmuxDefineFlonumConstantFunction{\STEM\,PI_2,pi/2}
+@MmuxDefineFlonumConstantFunction{\STEM\,PI_4,pi/4}
+@MmuxDefineFlonumConstantFunction{\STEM\,1_PI,1/pi}
+@MmuxDefineFlonumConstantFunction{\STEM\,2_PI,2/pi}
+@MmuxDefineFlonumConstantFunction{\STEM\,2_SQRTPI,2/sqrt(pi)}
+@MmuxDefineFlonumConstantFunction{\STEM\,SQRT2,sqrt(2)}
+@MmuxDefineFlonumConstantFunction{\STEM\,SQRT1_2,sqrt(1/2)}
 @end macro
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineConstantFunctions{flonumfl}
-@MmuxDefineConstantFunctions{flonumdb}
-@MmuxDefineConstantFunctions{flonumldb}
+@MmuxDefineFlonumConstantFunctions{flonumfl}
+@MmuxDefineFlonumConstantFunctions{flonumdb}
+@MmuxDefineFlonumConstantFunctions{flonumldb}
 
-@MmuxDefineConstantFunctions{flonumf32}
-@MmuxDefineConstantFunctions{flonumf64}
-@MmuxDefineConstantFunctions{flonumf128}
+@MmuxDefineFlonumConstantFunctions{flonumf32}
+@MmuxDefineFlonumConstantFunctions{flonumf64}
+@MmuxDefineFlonumConstantFunctions{flonumf128}
 
-@MmuxDefineConstantFunctions{flonumf32x}
-@MmuxDefineConstantFunctions{flonumf64x}
-@MmuxDefineConstantFunctions{flonumf128x}
+@MmuxDefineFlonumConstantFunctions{flonumf32x}
+@MmuxDefineFlonumConstantFunctions{flonumf64x}
+@MmuxDefineFlonumConstantFunctions{flonumf128x}
 
-@MmuxDefineConstantFunctions{flonumd32}
-@MmuxDefineConstantFunctions{flonumd64}
-@MmuxDefineConstantFunctions{flonumd128}
+@MmuxDefineFlonumConstantFunctions{flonumd32}
+@MmuxDefineFlonumConstantFunctions{flonumd64}
+@MmuxDefineFlonumConstantFunctions{flonumd128}
+
+@c page
+@node constants exact
+@section Exact integer--point numbers constants
+
+
+@macro MmuxDefineExactConstantFunction{STEM,FUNCSTEM,EXPR}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_constant_\FUNCSTEM\ (void)
+Return a constant value corresponding to @samp{\EXPR\}.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineExactConstantFunctions{STEM}
+@MmuxDefineExactConstantFunction{\STEM\,zero,0}
+@MmuxDefineExactConstantFunction{\STEM\,one,1}
+@MmuxDefineExactConstantFunction{\STEM\,two,2}
+@MmuxDefineExactConstantFunction{\STEM\,ten,10}
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineExactConstantFunctions{char}
+@MmuxDefineExactConstantFunctions{schar}
+@MmuxDefineExactConstantFunctions{uchar}
+@MmuxDefineExactConstantFunctions{sshort}
+@MmuxDefineExactConstantFunctions{ushort}
+@MmuxDefineExactConstantFunctions{sint}
+@MmuxDefineExactConstantFunctions{uint}
+@MmuxDefineExactConstantFunctions{slong}
+@MmuxDefineExactConstantFunctions{ulong}
+@MmuxDefineExactConstantFunctions{sllong}
+@MmuxDefineExactConstantFunctions{ullong}
+@MmuxDefineExactConstantFunctions{sint8}
+@MmuxDefineExactConstantFunctions{uint8}
+@MmuxDefineExactConstantFunctions{sint16}
+@MmuxDefineExactConstantFunctions{uint16}
+@MmuxDefineExactConstantFunctions{sint32}
+@MmuxDefineExactConstantFunctions{uint32}
+@MmuxDefineExactConstantFunctions{sint64}
+@MmuxDefineExactConstantFunctions{uint64}
+
+@MmuxDefineExactConstantFunctions{byte}
+@MmuxDefineExactConstantFunctions{octet}
+@MmuxDefineExactConstantFunctions{ssize}
+@MmuxDefineExactConstantFunctions{usize}
+@MmuxDefineExactConstantFunctions{sintmax}
+@MmuxDefineExactConstantFunctions{uintmax}
+@MmuxDefineExactConstantFunctions{sintptr}
+@MmuxDefineExactConstantFunctions{uintptr}
+@MmuxDefineExactConstantFunctions{mode}
+@MmuxDefineExactConstantFunctions{off}
+@MmuxDefineExactConstantFunctions{pid}
+@MmuxDefineExactConstantFunctions{uid}
+@MmuxDefineExactConstantFunctions{gid}
+@MmuxDefineExactConstantFunctions{ptrdiff}
+@MmuxDefineExactConstantFunctions{wchar}
+@MmuxDefineExactConstantFunctions{wint}
+@MmuxDefineExactConstantFunctions{time}
+@MmuxDefineExactConstantFunctions{socklen}
+@MmuxDefineExactConstantFunctions{rlim}
 
 @c page
 @node stringrep

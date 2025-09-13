@@ -198,7 +198,7 @@ m4_dnl $1 - type stem
 m4_define([[[DEFINE_TYPE_PROTOS_ALL_NUMBERS]]],[[[m4_dnl
 mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
 __attribute__((__const,__always_inline__)) static inline
-mmux_sint_t mmux_$1_sizeof (void)
+mmux_sint_t mmux_$1_constant_sizeof (void)
 {
   return mmux_sint(sizeof(mmux_$1_t));
 }

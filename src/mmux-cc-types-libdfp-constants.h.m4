@@ -180,7 +180,12 @@ DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	2_PI)
 DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	2_SQRTPI)
 DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	SQRT2)
 DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	SQRT1_2)
-]]])
+
+mmux_cc_types_inline_decl mmux_sint_t
+mmux_flonumd$1_constant_sizeof (void)
+{
+  return mmux_sint(sizeof(mmux_flonumd$1_t));
+}]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMD_CONSTANTS(32)
 DEFINE_FLONUMD_CONSTANTS(64)
@@ -220,7 +225,12 @@ DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
 DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
 DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
 DEFINE_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
-]]])
+
+mmux_cc_types_inline_decl mmux_sint_t
+mmux_flonumcd$1_constant_sizeof (void)
+{
+  return mmux_sint(sizeof(mmux_flonumcd$1_t));
+}]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMCD_CONSTANTS(32)
 DEFINE_FLONUMCD_CONSTANTS(64)

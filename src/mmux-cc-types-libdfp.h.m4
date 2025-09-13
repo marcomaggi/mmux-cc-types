@@ -95,17 +95,7 @@ mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
 
 #define mmux_flonumcd$1_part(VALUE)		(mmux_flonumd$1(VALUE))
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
-
-mmux_cc_types_inline_decl mmux_sint_t
-mmux_flonumd$1_sizeof (void)
-{
-  return mmux_sint(sizeof(mmux_flonumd$1_t));
-}
-mmux_cc_types_inline_decl mmux_sint_t
-mmux_flonumcd$1_sizeof (void)
-{
-  return mmux_sint(sizeof(mmux_flonumcd$1_t));
-}]]])
+]]])
 m4_divert(0)m4_dnl
 DEFINE_LIBDFP_TYPE(32,	[[[DF]]])
 DEFINE_LIBDFP_TYPE(64,	[[[DD]]])
