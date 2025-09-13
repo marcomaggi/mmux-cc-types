@@ -763,6 +763,28 @@ Aliases for @code{void *}.
 Aliases for @code{void const *}.
 @end deftp
 
+@c ------------------------------------------------------------------------
+
+@deftp {Typedef} mmux_asciizp_t
+@deftpx {Typedef} mmux_asciizcp_t
+Type definitions aliasing, respectively, the C language types @code{char *} and @code{char const *};
+they are meant to reference an @asciiz{} string.
+@end deftp
+
+
+@deftp {Typedef} mmux_asciizpp_t
+@deftpx {Typedef} mmux_asciizcpp_t
+Type definition aliasing the C language types @code{char * *} and @code{char const * *}.
+@end deftp
+
+
+@deftp {Typedef} mmux_asciizppp_t
+@deftpx {Typedef} mmux_asciizcppp_t
+Type definition aliasing the C language types @code{char * * *} and @code{char const * * *}.
+@end deftp
+
+@c ------------------------------------------------------------------------
+
 @MmuxDefineCAliasTypedef{char,char}
 @MmuxDefineCAliasTypedef{schar,signed char}
 @MmuxDefineCAliasTypedef{uchar,unsigned char}
@@ -775,8 +797,8 @@ Aliases for @code{void const *}.
 @MmuxDefineCAliasTypedef{sllong,signed long long}
 @MmuxDefineCAliasTypedef{ullong,unsigned long long}
 @MmuxDefineCAliasTypedef{flonumfl,float}
-@MmuxDefineCAliasTypedef{flonumdb,flonumdb}
-@MmuxDefineCAliasTypedef{flonumldb,long flonumdb}
+@MmuxDefineCAliasTypedef{flonumdb,double float}
+@MmuxDefineCAliasTypedef{flonumldb,long double float}
 
 @MmuxDefineCAliasTypedef{flonumf32, _Flonumf32}
 @MmuxDefineCAliasTypedef{flonumf64, _Flonumf64}
@@ -863,28 +885,6 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedefPart{flonumcd32, flonumd32}
 @MmuxDefineCAliasTypedefPart{flonumcd64, flonumd64}
 @MmuxDefineCAliasTypedefPart{flonumcd128, flonumd128}
-
-@c ------------------------------------------------------------------------
-
-@deftp {Typedef} mmux_asciizp_t
-@deftpx {Typedef} mmux_asciizcp_t
-Type definitions aliasing, respectively, the C language types @objtype{mmux_schar_t *} and
-@objtype{mmux_schar_t const *}; they are meant to reference an @asciiz{} string.
-@end deftp
-
-
-@deftp {Typedef} mmux_asciizpp_t
-@deftpx {Typedef} mmux_asciizcpp_t
-Type definition aliasing the C language types @objtype{mmux_char_t * *} and @objtype{mmux_char_t
-const * *}.
-@end deftp
-
-
-@deftp {Typedef} mmux_asciizppp_t
-@deftpx {Typedef} mmux_asciizcppp_t
-Type definition aliasing the C language types @objtype{mmux_char_t * * *} and @objtype{mmux_char_t
-const * * *}.
-@end deftp
 
 @c page
 @node literals
@@ -1124,20 +1124,42 @@ auto    imp = mmux_flonumdb_literal(3.4);
 auto    Z   = mmux_flonumcdb_rectangular(rep, imp);
 @end example
 
+@noindent
+or:
+
+@example
+auto    Z   = mmux_flonumcdb_rectangular_literal(1.2, 3.4);
+@end example
+
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineCMacroMaker{STEM}
-@deftypefun mmux_\STEM\_t mmux_\STEM\ (mmux_standard_\STEM\_t @var{VALUE})
-Return a value of the given type.
-@end deftypefun
+@deftypefn {Function} mmux_\STEM\_t mmux_\STEM\ (mmux_standard_\STEM\_t @var{VALUE})
+@deftypefnx {Preprocessor Macro} mmux_\STEM\_t mmux_\STEM\_literal (@var{LITERAL_ARG})
+Return a data structure of the named type.  The macro implements the following expansion:
+
+@example
+mmux_\STEM\_literal(@var{LITERAL_ARG})
+@expansion{} mmux_\STEM\(mmux_standard_\STEM\_literal(@var{LITERAL_ARG}))
+@end example
+@end deftypefn
 
 @end macro
 
 @macro MmuxDefineComplexMakeRectangularFunction{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
-Construct a complex number, of type @objtype{\CPLXSTEM\}, from the real and imaginary parts
-@var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}.  Return the result.
-@end deftypefun
+@deftypefn {Function} mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
+@deftypefnx {Preprocessor Macro} mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
+Make a data structure holding a complex number, of type @objtype{\CPLXSTEM\}, from the real and
+imaginary parts @var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}; return the result.
+
+The macro implements the following expansion:
+
+@example
+mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
+@expansion{} mmux_\CPLXSTEM\_rectangular(mmux_standard_\REALSTEM\_literal(@var{LITERAL_REP}),
+                                    mmux_standard_\REALSTEM\_literal(@var{LITERAL_IMP}))
+@end example
+@end deftypefn
 
 @end macro
 
