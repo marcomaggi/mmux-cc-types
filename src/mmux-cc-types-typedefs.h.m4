@@ -64,8 +64,6 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[ULLONG]]],[[[m4_dnl
 #define mmux_standard_uint32_literal(X)		((mmux_standard_uint32_t)(mmux_standard_unsigned_literal(X)))
 #define mmux_standard_sint64_literal(X)		((mmux_standard_sint64_t)(X))
 #define mmux_standard_uint64_literal(X)		((mmux_standard_uint64_t)(mmux_standard_unsigned_literal(X)))
-#define mmux_standard_byte_literal(X)		((mmux_standard_byte_t)(X))
-#define mmux_standard_octet_literal(X)		((mmux_standard_octet_t)(mmux_standard_unsigned_literal(X)))
 #define mmux_standard_flonumfl_literal(X)	((mmux_standard_flonumfl_t)(X ## F))
 #define mmux_standard_flonumdb_literal(X)	((mmux_standard_flonumdb_t)(X))
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMLDB]]],[[[m4_dnl
@@ -84,6 +82,8 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMF128X]]],[[[m4_dnl
 #define mmux_standard_flonumf128x_literal(X)	((mmux_standard_flonumf128x_t)(X ## f128x))]]])
 m4_define([[[DEFINE_ALIASED_INTEGER_LITERAL_MACRO]]],[[[m4_dnl
 #define mmux_standard_$1_literal(X)		((mmux_standard_$1_t)(mmux_standard_[[[]]]$2[[[]]]_literal(X)))]]])
+#define mmux_standard_byte_literal(X)		((mmux_standard_byte_t)(X))
+#define mmux_standard_octet_literal(X)		((mmux_standard_octet_t)(mmux_standard_unsigned_literal(X)))
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ssize,	[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(usize,	[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
@@ -270,9 +270,6 @@ typedef struct mmux_uint32_t	{ mmux_standard_uint32_t	value; }	mmux_uint32_t;
 typedef struct mmux_sint64_t	{ mmux_standard_sint64_t	value; }	mmux_sint64_t;
 typedef struct mmux_uint64_t	{ mmux_standard_uint64_t	value; }	mmux_uint64_t;
 
-typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
-typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
-
 typedef struct mmux_flonumfl_t	{ mmux_standard_flonumfl_t		value; }	mmux_flonumfl_t;
 typedef struct mmux_flonumdb_t	{ mmux_standard_flonumdb_t		value; }	mmux_flonumdb_t;
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],  [[[m4_dnl
@@ -326,6 +323,9 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[typedef mmux_flonu
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonumf128x_t mmux_flonumcf128x_part_t;]]])
 
 /* ------------------------------------------------------------------ */
+
+typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
+typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
 
 typedef struct mmux_ssize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
 typedef struct mmux_usize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
@@ -418,8 +418,6 @@ DEFINE_TYPE_MAKERS(sint32)
 DEFINE_TYPE_MAKERS(uint32)
 DEFINE_TYPE_MAKERS(sint64)
 DEFINE_TYPE_MAKERS(uint64)
-DEFINE_TYPE_MAKERS(byte)
-DEFINE_TYPE_MAKERS(octet)
 DEFINE_TYPE_MAKERS(flonumfl)
 DEFINE_TYPE_MAKERS(flonumdb)
 DEFINE_TYPE_MAKERS(flonumldb,		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
@@ -447,6 +445,8 @@ DEFINE_TYPE_MAKERS(flonumcf128_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
 DEFINE_TYPE_MAKERS(flonumcf32x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
 DEFINE_TYPE_MAKERS(flonumcf64x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
 DEFINE_TYPE_MAKERS(flonumcf128x_part,	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_TYPE_MAKERS(byte)
+DEFINE_TYPE_MAKERS(octet)
 DEFINE_TYPE_MAKERS(ssize)
 DEFINE_TYPE_MAKERS(usize)
 DEFINE_TYPE_MAKERS(sintmax)

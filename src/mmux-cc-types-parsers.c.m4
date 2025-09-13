@@ -627,15 +627,15 @@ mmux_$1_parse (mmux_$1_t * p_value, mmux_asciizcp_t s_arg, mmux_asciizcp_t calle
 }
 ]]])
 
+DEFINE_TYPEDEF_PARSER([[[byte]]],		[[[sint8]]])
+DEFINE_TYPEDEF_PARSER([[[octet]]],		[[[uint8]]])
+
 DEFINE_TYPEDEF_PARSER([[[ssize]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_SSIZE]]])
 DEFINE_TYPEDEF_PARSER([[[usize]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_USIZE]]])
 DEFINE_TYPEDEF_PARSER([[[sintmax]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMAX]]])
 DEFINE_TYPEDEF_PARSER([[[uintmax]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]])
 DEFINE_TYPEDEF_PARSER([[[sintptr]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]])
 DEFINE_TYPEDEF_PARSER([[[uintptr]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
-
-DEFINE_TYPEDEF_PARSER([[[byte]]],		[[[sint8]]])
-DEFINE_TYPEDEF_PARSER([[[octet]]],		[[[uint8]]])
 
 DEFINE_TYPEDEF_PARSER([[[ptrdiff]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
 DEFINE_TYPEDEF_PARSER([[[mode]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]])
