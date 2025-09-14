@@ -2447,6 +2447,7 @@ dependent.  We can use them as follows:
 @end example
 @end defmac
 
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineTypePredicates{STEM}
 @deftypefun bool mmux_\STEM\_is_zero (mmux_\STEM\_t @var{OP})
@@ -2458,10 +2459,31 @@ dependent.  We can use them as follows:
 @deftypefunx bool mmux_\STEM\_is_finite (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
 Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
-nan; otherwise return @cfalse{}.
+not--a--number; otherwise return @cfalse{}.
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineFlonumTypePredicates{STEM}
+@deftypefun bool mmux_\STEM\_is_zero (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_positive (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_negative (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_non_positive (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_non_negative (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_infinite (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_finite (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_normal (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_subnormal (mmux_\STEM\_t @var{OP})
+Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
+not--a--number, normal, subnormal; otherwise return @cfalse{}.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
 
 @MmuxDefineTypePredicates{pointer}
 
@@ -2506,37 +2528,37 @@ nan; otherwise return @cfalse{}.
 @MmuxDefineTypePredicates{socklen}
 @MmuxDefineTypePredicates{rlim}
 
-@MmuxDefineTypePredicates{flonumfl}
-@MmuxDefineTypePredicates{flonumdb}
-@MmuxDefineTypePredicates{flonumldb}
+@MmuxDefineFlonumTypePredicates{flonumfl}
+@MmuxDefineFlonumTypePredicates{flonumdb}
+@MmuxDefineFlonumTypePredicates{flonumldb}
 
-@MmuxDefineTypePredicates{flonumf32}
-@MmuxDefineTypePredicates{flonumf64}
-@MmuxDefineTypePredicates{flonumf128}
+@MmuxDefineFlonumTypePredicates{flonumf32}
+@MmuxDefineFlonumTypePredicates{flonumf64}
+@MmuxDefineFlonumTypePredicates{flonumf128}
 
-@MmuxDefineTypePredicates{flonumf32x}
-@MmuxDefineTypePredicates{flonumf64x}
-@MmuxDefineTypePredicates{flonumf128x}
+@MmuxDefineFlonumTypePredicates{flonumf32x}
+@MmuxDefineFlonumTypePredicates{flonumf64x}
+@MmuxDefineFlonumTypePredicates{flonumf128x}
 
-@MmuxDefineTypePredicates{flonumd32}
-@MmuxDefineTypePredicates{flonumd64}
-@MmuxDefineTypePredicates{flonumd128}
+@MmuxDefineFlonumTypePredicates{flonumd32}
+@MmuxDefineFlonumTypePredicates{flonumd64}
+@MmuxDefineFlonumTypePredicates{flonumd128}
 
-@MmuxDefineTypePredicates{flonumcfl}
-@MmuxDefineTypePredicates{flonumcdb}
-@MmuxDefineTypePredicates{flonumcldb}
+@MmuxDefineFlonumTypePredicates{flonumcfl}
+@MmuxDefineFlonumTypePredicates{flonumcdb}
+@MmuxDefineFlonumTypePredicates{flonumcldb}
 
-@MmuxDefineTypePredicates{flonumcf32}
-@MmuxDefineTypePredicates{flonumcf64}
-@MmuxDefineTypePredicates{flonumcf128}
+@MmuxDefineFlonumTypePredicates{flonumcf32}
+@MmuxDefineFlonumTypePredicates{flonumcf64}
+@MmuxDefineFlonumTypePredicates{flonumcf128}
 
-@MmuxDefineTypePredicates{flonumcf32x}
-@MmuxDefineTypePredicates{flonumcf64x}
-@MmuxDefineTypePredicates{flonumcf128x}
+@MmuxDefineFlonumTypePredicates{flonumcf32x}
+@MmuxDefineFlonumTypePredicates{flonumcf64x}
+@MmuxDefineFlonumTypePredicates{flonumcf128x}
 
-@MmuxDefineTypePredicates{flonumcd32}
-@MmuxDefineTypePredicates{flonumcd64}
-@MmuxDefineTypePredicates{flonumcd128}
+@MmuxDefineFlonumTypePredicates{flonumcd32}
+@MmuxDefineFlonumTypePredicates{flonumcd64}
+@MmuxDefineFlonumTypePredicates{flonumcd128}
 
 @c page
 @node comparison
