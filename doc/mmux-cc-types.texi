@@ -2249,7 +2249,7 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 @section Computing the argument value
 
 
-@macro MmuxDefineRealArgFunction{STEM}
+@macro MmuxDefineRealArgumentFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_argument (mmux_\STEM\_t @var{OP})
 Compute and return the argument value of @var{OP} interpreted as complex number.  The result is
 always positive zero.
@@ -2259,7 +2259,7 @@ always positive zero.
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineComplexArgFunction{CPLXSTEM,REALSTEM}
+@macro MmuxDefineComplexArgumentFunction{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_argument (mmux_\CPLXSTEM\_t @var{OP})
 Compute and return the argument value of the complex number @var{OP}.
 @end deftypefun
@@ -2268,92 +2268,147 @@ Compute and return the argument value of the complex number @var{OP}.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineRealArgFunction{sshort}
-@MmuxDefineRealArgFunction{ushort}
-@MmuxDefineRealArgFunction{sint}
-@MmuxDefineRealArgFunction{uint}
-@MmuxDefineRealArgFunction{slong}
-@MmuxDefineRealArgFunction{ulong}
-@MmuxDefineRealArgFunction{sllong}
-@MmuxDefineRealArgFunction{ullong}
+@MmuxDefineRealArgumentFunction{sshort}
+@MmuxDefineRealArgumentFunction{ushort}
+@MmuxDefineRealArgumentFunction{sint}
+@MmuxDefineRealArgumentFunction{uint}
+@MmuxDefineRealArgumentFunction{slong}
+@MmuxDefineRealArgumentFunction{ulong}
+@MmuxDefineRealArgumentFunction{sllong}
+@MmuxDefineRealArgumentFunction{ullong}
 
-@MmuxDefineRealArgFunction{sint8}
-@MmuxDefineRealArgFunction{uint8}
-@MmuxDefineRealArgFunction{sint16}
-@MmuxDefineRealArgFunction{uint16}
-@MmuxDefineRealArgFunction{sint32}
-@MmuxDefineRealArgFunction{uint32}
-@MmuxDefineRealArgFunction{sint64}
-@MmuxDefineRealArgFunction{uint64}
+@MmuxDefineRealArgumentFunction{sint8}
+@MmuxDefineRealArgumentFunction{uint8}
+@MmuxDefineRealArgumentFunction{sint16}
+@MmuxDefineRealArgumentFunction{uint16}
+@MmuxDefineRealArgumentFunction{sint32}
+@MmuxDefineRealArgumentFunction{uint32}
+@MmuxDefineRealArgumentFunction{sint64}
+@MmuxDefineRealArgumentFunction{uint64}
 
-@MmuxDefineRealArgFunction{byte}
-@MmuxDefineRealArgFunction{octet}
-@MmuxDefineRealArgFunction{sintmax}
-@MmuxDefineRealArgFunction{uintmax}
-@MmuxDefineRealArgFunction{sintptr}
-@MmuxDefineRealArgFunction{uintptr}
+@MmuxDefineRealArgumentFunction{byte}
+@MmuxDefineRealArgumentFunction{octet}
+@MmuxDefineRealArgumentFunction{sintmax}
+@MmuxDefineRealArgumentFunction{uintmax}
+@MmuxDefineRealArgumentFunction{sintptr}
+@MmuxDefineRealArgumentFunction{uintptr}
 
-@MmuxDefineRealArgFunction{flonumfl}
-@MmuxDefineRealArgFunction{flonumdb}
-@MmuxDefineRealArgFunction{flonumldb}
+@MmuxDefineRealArgumentFunction{flonumfl}
+@MmuxDefineRealArgumentFunction{flonumdb}
+@MmuxDefineRealArgumentFunction{flonumldb}
 
-@MmuxDefineRealArgFunction{flonumf32}
-@MmuxDefineRealArgFunction{flonumf64}
-@MmuxDefineRealArgFunction{flonumf128}
+@MmuxDefineRealArgumentFunction{flonumf32}
+@MmuxDefineRealArgumentFunction{flonumf64}
+@MmuxDefineRealArgumentFunction{flonumf128}
 
-@MmuxDefineRealArgFunction{flonumf32x}
-@MmuxDefineRealArgFunction{flonumf64x}
-@MmuxDefineRealArgFunction{flonumf128x}
+@MmuxDefineRealArgumentFunction{flonumf32x}
+@MmuxDefineRealArgumentFunction{flonumf64x}
+@MmuxDefineRealArgumentFunction{flonumf128x}
 
-@MmuxDefineRealArgFunction{flonumd32}
-@MmuxDefineRealArgFunction{flonumd64}
-@MmuxDefineRealArgFunction{flonumd128}
+@MmuxDefineRealArgumentFunction{flonumd32}
+@MmuxDefineRealArgumentFunction{flonumd64}
+@MmuxDefineRealArgumentFunction{flonumd128}
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineComplexArgFunction{flonumcfl, flonumfl}
-@MmuxDefineComplexArgFunction{flonumcdb, flonumdb}
-@MmuxDefineComplexArgFunction{flonumcldb, flonumldb}
+@MmuxDefineComplexArgumentFunction{flonumcfl, flonumfl}
+@MmuxDefineComplexArgumentFunction{flonumcdb, flonumdb}
+@MmuxDefineComplexArgumentFunction{flonumcldb, flonumldb}
 
-@MmuxDefineComplexArgFunction{flonumcf32, flonumf32}
-@MmuxDefineComplexArgFunction{flonumcf64, flonumf64}
-@MmuxDefineComplexArgFunction{flonumcf128, flonumf128}
+@MmuxDefineComplexArgumentFunction{flonumcf32, flonumf32}
+@MmuxDefineComplexArgumentFunction{flonumcf64, flonumf64}
+@MmuxDefineComplexArgumentFunction{flonumcf128, flonumf128}
 
-@MmuxDefineComplexArgFunction{flonumcf32x, flonumf32x}
-@MmuxDefineComplexArgFunction{flonumcf64x, flonumf64x}
-@MmuxDefineComplexArgFunction{flonumcf128x, flonumf128x}
+@MmuxDefineComplexArgumentFunction{flonumcf32x, flonumf32x}
+@MmuxDefineComplexArgumentFunction{flonumcf64x, flonumf64x}
+@MmuxDefineComplexArgumentFunction{flonumcf128x, flonumf128x}
 
-@MmuxDefineComplexArgFunction{flonumcd32, flonumd32}
-@MmuxDefineComplexArgFunction{flonumcd64, flonumd64}
-@MmuxDefineComplexArgFunction{flonumcd128, flonumd128}
+@MmuxDefineComplexArgumentFunction{flonumcd32, flonumd32}
+@MmuxDefineComplexArgumentFunction{flonumcd64, flonumd64}
+@MmuxDefineComplexArgumentFunction{flonumcd128, flonumd128}
 
 @c page
 @node complex conjugate
 @section Computing the complex conjugate value
 
 
-@macro MmuxDefineComplexConjugateFunction{CPLXSTEM,REALSTEM}
-@deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_conjugate (mmux_\CPLXSTEM\_t @var{OP})
+@macro MmuxDefineRealConjugateFunction{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_conjugate (mmux_\STEM\_t @var{OP})
+Compute and return complex conjugate value of @var{OP} interpreted as a complex number; the result
+is always @var{op} itself.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineComplexConjugateFunction{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_conjugate (mmux_\STEM\_t @var{OP})
 Compute and return complex conjugate value of the complex number @var{OP}.
 @end deftypefun
 
 @end macro
 
-@MmuxDefineComplexConjugateFunction{flonumcfl, float}
-@MmuxDefineComplexConjugateFunction{flonumcdb, flonumdb}
-@MmuxDefineComplexConjugateFunction{flonumcldb, flonumldb}
+@c ------------------------------------------------------------------------
 
-@MmuxDefineComplexConjugateFunction{flonumcf32, flonumf32}
-@MmuxDefineComplexConjugateFunction{flonumcf64, flonumf64}
-@MmuxDefineComplexConjugateFunction{flonumcf128, flonumf128}
+@MmuxDefineRealConjugateFunction{sshort}
+@MmuxDefineRealConjugateFunction{ushort}
+@MmuxDefineRealConjugateFunction{sint}
+@MmuxDefineRealConjugateFunction{uint}
+@MmuxDefineRealConjugateFunction{slong}
+@MmuxDefineRealConjugateFunction{ulong}
+@MmuxDefineRealConjugateFunction{sllong}
+@MmuxDefineRealConjugateFunction{ullong}
 
-@MmuxDefineComplexConjugateFunction{flonumcf32x, flonumf32x}
-@MmuxDefineComplexConjugateFunction{flonumcf64x, flonumf64x}
-@MmuxDefineComplexConjugateFunction{flonumcf128x, flonumf128x}
+@MmuxDefineRealConjugateFunction{sint8}
+@MmuxDefineRealConjugateFunction{uint8}
+@MmuxDefineRealConjugateFunction{sint16}
+@MmuxDefineRealConjugateFunction{uint16}
+@MmuxDefineRealConjugateFunction{sint32}
+@MmuxDefineRealConjugateFunction{uint32}
+@MmuxDefineRealConjugateFunction{sint64}
+@MmuxDefineRealConjugateFunction{uint64}
 
-@MmuxDefineComplexConjugateFunction{flonumcd32, flonumd32}
-@MmuxDefineComplexConjugateFunction{flonumcd64, flonumd64}
-@MmuxDefineComplexConjugateFunction{flonumcd128, flonumd128}
+@MmuxDefineRealConjugateFunction{byte}
+@MmuxDefineRealConjugateFunction{octet}
+@MmuxDefineRealConjugateFunction{sintmax}
+@MmuxDefineRealConjugateFunction{uintmax}
+@MmuxDefineRealConjugateFunction{sintptr}
+@MmuxDefineRealConjugateFunction{uintptr}
+
+@MmuxDefineRealConjugateFunction{flonumfl}
+@MmuxDefineRealConjugateFunction{flonumdb}
+@MmuxDefineRealConjugateFunction{flonumldb}
+
+@MmuxDefineRealConjugateFunction{flonumf32}
+@MmuxDefineRealConjugateFunction{flonumf64}
+@MmuxDefineRealConjugateFunction{flonumf128}
+
+@MmuxDefineRealConjugateFunction{flonumf32x}
+@MmuxDefineRealConjugateFunction{flonumf64x}
+@MmuxDefineRealConjugateFunction{flonumf128x}
+
+@MmuxDefineRealConjugateFunction{flonumd32}
+@MmuxDefineRealConjugateFunction{flonumd64}
+@MmuxDefineRealConjugateFunction{flonumd128}
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineComplexConjugateFunction{flonumcfl}
+@MmuxDefineComplexConjugateFunction{flonumcdb}
+@MmuxDefineComplexConjugateFunction{flonumcldb}
+
+@MmuxDefineComplexConjugateFunction{flonumcf32}
+@MmuxDefineComplexConjugateFunction{flonumcf64}
+@MmuxDefineComplexConjugateFunction{flonumcf128}
+
+@MmuxDefineComplexConjugateFunction{flonumcf32x}
+@MmuxDefineComplexConjugateFunction{flonumcf64x}
+@MmuxDefineComplexConjugateFunction{flonumcf128x}
+
+@MmuxDefineComplexConjugateFunction{flonumcd32}
+@MmuxDefineComplexConjugateFunction{flonumcd64}
+@MmuxDefineComplexConjugateFunction{flonumcd128}
 
 @c page
 @node predicates
