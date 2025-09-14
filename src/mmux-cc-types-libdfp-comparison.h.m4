@@ -33,6 +33,8 @@ mmux_cc_types_decl mmux_cc_types_comparison_standard_flonumd$1_t  mmux_standard_
   __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonumd$1_t     mmux_standard_flonumd$1_equal
   __attribute__((__const__));
+mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonumd$1_t     mmux_standard_flonumd$1_not_equal
+  __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonumd$1_t     mmux_standard_flonumd$1_greater
   __attribute__((__const__));
 mmux_cc_types_decl mmux_cc_types_binary_predicate_standard_flonumd$1_t     mmux_standard_flonumd$1_less
@@ -83,6 +85,13 @@ mmux_standard_flonumcd$1_equal (mmux_standard_flonumcd$1_t op1, mmux_standard_fl
 {
   return (mmux_standard_flonumd$1_equal(op1.re, op2.re) &&
 	  mmux_standard_flonumd$1_equal(op1.im, op2.im))?
+    true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_standard_flonumcd$1_not_equal (mmux_standard_flonumcd$1_t op1, mmux_standard_flonumcd$1_t op2)
+{
+  return (mmux_standard_flonumd$1_not_equal(op1.re, op2.re) &&
+	  mmux_standard_flonumd$1_not_equal(op1.im, op2.im))?
     true : false;
 }
 DEFINE_STANDARD_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1,	greater)
@@ -162,6 +171,7 @@ mmux_flonumd$1_cmp (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
   return mmux_sint(mmux_standard_flonumd$1_cmp(op1.value, op2.value));
 }
 DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, equal)
+DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, not_equal)
 DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, greater)
 DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, less)
 DEFINE_FLONUMD_BINARY_COMPARISON_INLINE_FUNCTION($1, greater_equal)
@@ -210,6 +220,7 @@ mmux_flonumcd$1_cmp (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
   return mmux_sint(mmux_standard_flonumcd$1_cmp(op1.value, op2.value));
 }
 DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, equal)
+DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, not_equal)
 DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, greater)
 DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, less)
 DEFINE_FLONUMCD_BINARY_COMPARISON_INLINE_FUNCTION($1, greater_equal)

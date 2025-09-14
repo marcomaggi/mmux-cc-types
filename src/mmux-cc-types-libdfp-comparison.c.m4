@@ -52,6 +52,11 @@ mmux_standard_flonumd$1_equal (mmux_standard_flonumd$1_t op1, mmux_standard_flon
   return (op1 == op2)? true : false;
 }
 bool
+mmux_standard_flonumd$1_not_equal (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return (op1 == op2)? false : true;
+}
+bool
 mmux_standard_flonumd$1_greater (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
 {
   return (isgreater(op1,op2))? true : false;

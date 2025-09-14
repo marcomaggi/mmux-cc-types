@@ -2587,8 +2587,9 @@ functions return @ctrue{} if the operands are in the named relation; otherwise r
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineTypeComparisonExactFunction{STEM}
-@deftypefun int mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefun mmux_sint_t mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_not_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_less (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -2613,6 +2614,36 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @MmuxDefineTypeComparisonExactFunction{ulong}
 @MmuxDefineTypeComparisonExactFunction{sllong}
 @MmuxDefineTypeComparisonExactFunction{ullong}
+@MmuxDefineTypeComparisonExactFunction{sint8}
+@MmuxDefineTypeComparisonExactFunction{uint8}
+@MmuxDefineTypeComparisonExactFunction{sint16}
+@MmuxDefineTypeComparisonExactFunction{uint16}
+@MmuxDefineTypeComparisonExactFunction{sint32}
+@MmuxDefineTypeComparisonExactFunction{uint32}
+@MmuxDefineTypeComparisonExactFunction{sint64}
+@MmuxDefineTypeComparisonExactFunction{uint64}
+
+@MmuxDefineTypeComparisonExactFunction{byte}
+@MmuxDefineTypeComparisonExactFunction{octet}
+
+@MmuxDefineTypeComparisonExactFunction{ssize}
+@MmuxDefineTypeComparisonExactFunction{usize}
+@MmuxDefineTypeComparisonExactFunction{sintmax}
+@MmuxDefineTypeComparisonExactFunction{uintmax}
+@MmuxDefineTypeComparisonExactFunction{sintptr}
+@MmuxDefineTypeComparisonExactFunction{uintptr}
+@MmuxDefineTypeComparisonExactFunction{ptrdiff}
+@MmuxDefineTypeComparisonExactFunction{mode}
+@MmuxDefineTypeComparisonExactFunction{off}
+@MmuxDefineTypeComparisonExactFunction{pid}
+@MmuxDefineTypeComparisonExactFunction{uid}
+@MmuxDefineTypeComparisonExactFunction{gid}
+@MmuxDefineTypeComparisonExactFunction{wchar}
+@MmuxDefineTypeComparisonExactFunction{wint}
+@MmuxDefineTypeComparisonExactFunction{time}
+@MmuxDefineTypeComparisonExactFunction{socklen}
+@MmuxDefineTypeComparisonExactFunction{rlim}
+
 @MmuxDefineTypeComparisonExactFunction{flonumfl}
 @MmuxDefineTypeComparisonExactFunction{flonumdb}
 @MmuxDefineTypeComparisonExactFunction{flonumldb}
@@ -2644,33 +2675,6 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @MmuxDefineTypeComparisonExactFunction{flonumcd32}
 @MmuxDefineTypeComparisonExactFunction{flonumcd64}
 @MmuxDefineTypeComparisonExactFunction{flonumcd128}
-
-@MmuxDefineTypeComparisonExactFunction{sint8}
-@MmuxDefineTypeComparisonExactFunction{uint8}
-@MmuxDefineTypeComparisonExactFunction{sint16}
-@MmuxDefineTypeComparisonExactFunction{uint16}
-@MmuxDefineTypeComparisonExactFunction{sint32}
-@MmuxDefineTypeComparisonExactFunction{uint32}
-@MmuxDefineTypeComparisonExactFunction{sint64}
-@MmuxDefineTypeComparisonExactFunction{uint64}
-
-@MmuxDefineTypeComparisonExactFunction{ssize}
-@MmuxDefineTypeComparisonExactFunction{usize}
-@MmuxDefineTypeComparisonExactFunction{sintmax}
-@MmuxDefineTypeComparisonExactFunction{uintmax}
-@MmuxDefineTypeComparisonExactFunction{sintptr}
-@MmuxDefineTypeComparisonExactFunction{uintptr}
-@MmuxDefineTypeComparisonExactFunction{ptrdiff}
-@MmuxDefineTypeComparisonExactFunction{mode}
-@MmuxDefineTypeComparisonExactFunction{off}
-@MmuxDefineTypeComparisonExactFunction{pid}
-@MmuxDefineTypeComparisonExactFunction{uid}
-@MmuxDefineTypeComparisonExactFunction{gid}
-@MmuxDefineTypeComparisonExactFunction{wchar}
-@MmuxDefineTypeComparisonExactFunction{wint}
-@MmuxDefineTypeComparisonExactFunction{time}
-@MmuxDefineTypeComparisonExactFunction{socklen}
-@MmuxDefineTypeComparisonExactFunction{rlim}
 
 @c page
 @node comparison mimmax
