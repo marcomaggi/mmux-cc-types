@@ -459,6 +459,101 @@ DEFINE_TYPE_MAKERS(rlim)
 
 
 /** --------------------------------------------------------------------
+ ** Prototypes typedefs.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_PROTOTYPES_TYPEDEFS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
+typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
+typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t   (mmux_standard_$1_t op1);
+typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+typedef mmux_standard_$1_t mmux_cc_types_binary_sint_operation_standard_$1_t (mmux_standard_sint_t op1, mmux_standard_$1_t op2);
+typedef mmux_standard_$1_t mmux_cc_types_ternary_operation_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2, mmux_standard_$1_t op3);
+typedef bool mmux_cc_types_unary_predicate_standard_$1_t   (mmux_standard_$1_t op1);
+typedef bool mmux_cc_types_binary_predicate_standard_$1_t  (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+typedef bool mmux_cc_types_ternary_predicate_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2, mmux_standard_$1_t op3);
+typedef mmux_sint_t mmux_cc_types_comparison_standard_$1_t (mmux_standard_$1_t op1, mmux_standard_$1_t op2);
+
+typedef mmux_$1_t mmux_cc_types_nullary_operation_$1_t (void);
+typedef mmux_$1_t mmux_cc_types_unary_operation_$1_t   (mmux_$1_t op1);
+typedef mmux_$1_t mmux_cc_types_binary_operation_$1_t  (mmux_$1_t op1, mmux_$1_t op2);
+typedef mmux_$1_t mmux_cc_types_binary_sint_operation_$1_t (mmux_sint_t op1, mmux_$1_t op2);
+typedef mmux_$1_t mmux_cc_types_ternary_operation_$1_t (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t op3);
+typedef bool mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t op1);
+typedef bool mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t op1, mmux_$1_t op2);
+typedef bool mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t op1, mmux_$1_t op2, mmux_$1_t op3);
+typedef mmux_sint_t mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2);
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_PROTOTYPES_TYPEDEFS([[[pointer]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[char]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[schar]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uchar]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sshort]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ushort]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[slong]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ulong]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sllong]]],		[[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ullong]]],		[[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint8]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint8]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint16]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint16]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sint64]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uint64]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[byte]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[octet]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[ssize]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[usize]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sintmax]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uintmax]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[sintptr]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uintptr]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[mode]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[off]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[pid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[uid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[gid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ptrdiff]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[wchar]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[wint]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[time]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[socklen]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumfl]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumdb]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcfl]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcdb]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

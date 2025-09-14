@@ -194,6 +194,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-mathematics.h.m4		\
 	src/mmux-cc-types-sign-predicates.h.m4		\
+	src/mmux-cc-types-stringrep.h.m4		\
 	\
 	src/mmux-cc-types-arithmetics.c.m4		\
 	src/mmux-cc-types-bitwise.c.m4			\
@@ -219,6 +220,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-stringrep.h			\
 	\
 	src/mmux-cc-types-arithmetics.c			\
 	src/mmux-cc-types-bitwise.c			\
@@ -251,7 +253,8 @@ include_HEADERS			+= \
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
-	src/mmux-cc-types-sign-predicates.h
+	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-stringrep.h
 
 lib_LTLIBRARIES			= libmmux-cc-types.la
 libmmux_cc_types_la_CPPFLAGS	= $(AM_CPPFLAGS) -I$(builddir)/src
@@ -273,6 +276,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-stringrep.h			\
 	\
 	src/mmux-cc-types-arithmetics.c			\
 	src/mmux-cc-types-bitwise.c			\
@@ -318,7 +322,8 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
-	src/mmux-cc-types-sign-predicates.h
+	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-stringrep.h
 
 
 #### TESTS
