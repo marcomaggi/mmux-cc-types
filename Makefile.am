@@ -336,6 +336,7 @@ check_PROGRAMS	= \
 	tests/test-bitwise			\
 	tests/test-complex			\
 	tests/test-constants			\
+	tests/test-documentation		\
 	tests/test-experiments			\
 	tests/test-literals			\
 	tests/test-mathematics			\
@@ -385,6 +386,9 @@ tests_test_experiments_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_literals_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_literals_LDADD		= $(mmux_cc_types_tests_ldadd)
+
+tests_test_documentation_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
+tests_test_documentation_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"

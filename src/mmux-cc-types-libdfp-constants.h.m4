@@ -181,10 +181,10 @@ DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	2_SQRTPI)
 DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	SQRT2)
 DEFINE_FLONUMD_CONSTANT_INLINE_FUNCTION($1,	SQRT1_2)
 
-mmux_cc_types_inline_decl mmux_sint_t
+mmux_cc_types_inline_decl mmux_usize_t
 mmux_flonumd$1_constant_sizeof (void)
 {
-  return mmux_sint(sizeof(mmux_flonumd$1_t));
+  return mmux_usize(sizeof(mmux_flonumd$1_t));
 }]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMD_CONSTANTS(32)

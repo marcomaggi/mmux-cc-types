@@ -2144,6 +2144,140 @@ test_constant_SQRT1_2 (void)
 }
 
 
+static void
+test_constant_sizeof (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  DOIT
+#define DOIT(STEM)						\
+  {								\
+    auto	op  = mmux_ ## STEM ## _constant_sizeof();	\
+    assert(mmux_ctype_is_positive(op));				\
+    if (0) {							\
+      dprintf(2,"\nsizeof(%s) = ", #STEM);			\
+      mmux_ctype_dprintf(2, op);				\
+      dprintf(2,"\n");						\
+    }								\
+    dprintf(2," %s,", #STEM);					\
+  }
+
+  DOIT(pointer);
+  DOIT(char);
+  DOIT(schar);
+  DOIT(uchar);
+  DOIT(sshort);
+  DOIT(ushort);
+  DOIT(sint);
+  DOIT(uint);
+  DOIT(slong);
+  DOIT(ulong);
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(sllong);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  DOIT(ullong);
+#endif
+  DOIT(sint8);
+  DOIT(uint8);
+  DOIT(sint16);
+  DOIT(uint16);
+  DOIT(sint32);
+  DOIT(uint32);
+  DOIT(sint64);
+  DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
+  DOIT(ssize);
+  DOIT(usize);
+  DOIT(sintmax);
+  DOIT(uintmax);
+  DOIT(sintptr);
+  DOIT(uintptr);
+  DOIT(mode);
+  DOIT(off);
+  DOIT(pid);
+  DOIT(uid);
+  DOIT(gid);
+  DOIT(ptrdiff);
+  DOIT(wchar);
+  DOIT(wint);
+  DOIT(time);
+  DOIT(socklen);
+  DOIT(rlim);
+
+  DOIT(flonumfl);
+  DOIT(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT(flonumd128);
+#endif
+
+/* ------------------------------------------------------------------ */
+
+  DOIT(flonumcfl);
+  DOIT(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT(flonumcldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT(flonumcf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT(flonumcd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
@@ -2180,6 +2314,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_constant_2_SQRTPI();		}
   if (1) {	test_constant_SQRT2();			}
   if (1) {	test_constant_SQRT1_2();		}
+  if (1) {	test_constant_sizeof();			}
 
   exit(EXIT_SUCCESS);
 }

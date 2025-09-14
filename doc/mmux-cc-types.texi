@@ -1101,6 +1101,15 @@ mmux_standard_pointerc_literal(@var{ARG})
 @chapter Making values
 
 
+@cindex Maker functions
+@cindex Literal maker macros
+@cindex How to specify a literal value
+@cindex How to make a value
+@cindex Constructing a value
+@cindex Constructing a literal value
+@cindex Constructors for values
+
+
 The @dfn{maker} functions are used as follows:
 
 @example
@@ -1108,11 +1117,25 @@ auto    A = mmux_sint(123);
 auto    B = mmux_uint(123);
 auto    C = mmux_flonumldb(0.123);
 auto    D = mmux_mode(MMUX_LIBC_O_RDWR);
+
+auto    Z = mmux_sint_add(mmux_sint(123), mmux_sint(456));
 @end example
 
 @noindent
 the return values are data structures of the named type; all the maker functions are @code{inline}.
 As an exception: when the type is a pointer, the returned value is the pointer itself.
+
+If a literal value requires a suffix to be correctly specified: we can use the @dfn{literal makers};
+these are preprocessor macros we can use as follows:
+
+@example
+auto    F = mmux_flonumf64_literal(123.456e5);
+auto    G = mmux_flonumd64_literal(-7.4e-4);
+@end example
+
+@noindent
+it is a generally good practice to use the literal maker every time a value does not result from an
+expression.
 
 To construct a complex number from its real and imaginary parts, we do:
 
@@ -1126,7 +1149,7 @@ auto    Z   = mmux_flonumcdb_rectangular(rep, imp);
 or:
 
 @example
-auto    Z   = mmux_flonumcdb_rectangular_literal(1.2, 3.4);
+auto    Z   = mmux_flonumcldb_rectangular_literal(1.2, 3.4);
 @end example
 
 @c ------------------------------------------------------------------------
@@ -1864,6 +1887,9 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{sint64}
 @MmuxDefineCFunctionParser{uint64}
 
+@MmuxDefineCFunctionParser{byte}
+@MmuxDefineCFunctionParser{octet}
+
 @MmuxDefineCFunctionParser{ssize}
 @MmuxDefineCFunctionParser{usize}
 @MmuxDefineCFunctionParser{sintmax}
@@ -2016,7 +2042,7 @@ if (mmux_flonumdb_fprintf(stderr, X)) @{
 
 
 @macro MmuxDefineCFunctionPrinters{STEM}
-@deftypefun bool mmux_\STEM\_dprintf (mmux_sint_t @var{fd}, mmux_\STEM\_t @var{value})
+@deftypefun bool mmux_\STEM\_dprintf (int @var{fd}, mmux_\STEM\_t @var{value})
 @deftypefunx bool mmux_\STEM\_fprintf (mmux_pointer_t @var{stream}, mmux_\STEM\_t @var{value})
 Print a string representation of @var{value} to the given file descriptor @var{fd} or stream
 @var{stream}.  When successful return @cfalse{}, otherwise return @ctrue{}.

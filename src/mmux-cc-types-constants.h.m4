@@ -57,6 +57,11 @@ mmux_$1_constant_minimum (void)
 {
   return mmux_$1(mmux_standard_$1_constant_minimum());
 }
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_$1_constant_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_$1_t));
+}
 
 DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS($1,	zero,	0)
 DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS($1,	one,	1)
@@ -100,7 +105,8 @@ mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_constant_$3 (void)
 {
   return mmux_$1(mmux_standard_$1_constant_$3());
-}]]])
+}
+]]])
 
 m4_define([[[DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS]]],[[[m4_dnl
 DEFINE_EXACT_INTEGER_SINGLE_ALIASED_TYPE_INLINE_FUNCTIONS($1,	$2,	zero)
@@ -109,7 +115,11 @@ DEFINE_EXACT_INTEGER_SINGLE_ALIASED_TYPE_INLINE_FUNCTIONS($1,	$2,	two)
 DEFINE_EXACT_INTEGER_SINGLE_ALIASED_TYPE_INLINE_FUNCTIONS($1,	$2,	ten)
 DEFINE_EXACT_INTEGER_SINGLE_ALIASED_TYPE_INLINE_FUNCTIONS($1,	$2,	maximum)
 DEFINE_EXACT_INTEGER_SINGLE_ALIASED_TYPE_INLINE_FUNCTIONS($1,	$2,	minimum)
-]]])
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_$1_constant_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_$1_t));
+}]]])
 m4_divert(0)m4_dnl
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(byte,	MMUX_CC_TYPES_STEM_ALIAS_BYTE)
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(octet,	MMUX_CC_TYPES_STEM_ALIAS_OCTET)
@@ -168,6 +178,11 @@ mmux_cc_types_inline_decl mmux_pointer_t
 mmux_pointer_constant_minimum (void)
 {
   return mmux_pointer(mmux_standard_pointer_constant_minimum());
+}
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_pointer_constant_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_pointer_t));
 }
 
 
@@ -305,7 +320,7 @@ m4_define([[[DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_flonum$1_t
 mmux_flonum$1_constant_$2 (void)
 {
-  return (mmux_flonum$1_t) { .value = mmux_standard_flonum$1_constant_$2() };
+  return mmux_flonum$1(mmux_standard_flonum$1_constant_$2());
 }]]])
 
 m4_define([[[DEFINE_FLONUM_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[
@@ -335,7 +350,12 @@ DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	2_PI)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	2_SQRTPI)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	SQRT2)
 DEFINE_FLONUM_CONSTANT_INLINE_FUNCTION($1,	SQRT1_2)
-]]])]]])
+
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_flonum$1_constant_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_flonum$1_t));
+}]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUM_CONSTANTS(fl)
 DEFINE_FLONUM_CONSTANTS(db)
@@ -382,7 +402,12 @@ DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
-]]])]]])
+
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_flonumc$1_constant_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_flonumc$1_t));
+}]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMC_CONSTANTS(fl)
 DEFINE_FLONUMC_CONSTANTS(db)

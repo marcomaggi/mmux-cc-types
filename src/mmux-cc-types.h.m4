@@ -196,17 +196,12 @@ m4_divert(-1)
 
 m4_dnl $1 - type stem
 m4_define([[[DEFINE_TYPE_PROTOS_ALL_NUMBERS]]],[[[m4_dnl
-mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
-__attribute__((__const,__always_inline__)) static inline
-mmux_sint_t mmux_$1_constant_sizeof (void)
-{
-  return mmux_sint(sizeof(mmux_$1_t));
-}
 mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_cc_types_decl mmux_sint_t mmux_$1_sprint_size (mmux_$1_t value);
+mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
 mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value);
 mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
@@ -218,7 +213,6 @@ m4_dnl $1 - type stem
 m4_dnl $2 - C preprocessor symbol for conditional code
 m4_define([[[DEFINE_TYPE_PROTOS_REAL_NUMBERS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[m4_dnl
 DEFINE_TYPE_PROTOS_ALL_NUMBERS([[[$1]]],[[[$2]]])
-mmux_cc_types_decl mmux_cc_types_unary_operation_$1_t	mmux_$1_absolute	__attribute__((__const__));
 ]]])]]])
 
 m4_dnl ----------------------------------------------------------------
