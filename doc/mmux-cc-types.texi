@@ -2421,9 +2421,8 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @cindex Unsigned @objtype{char}
 
 
-In the context of @value{PACKAGE}: complex numbers cannot be positive or negative, so the predicates
-@samp{positive}, @samp{negative}, @samp{non_positive}, @samp{non_negative} always return @cfalse{}
-when applied to a complex number.
+When the following predicates are applied to a complex number: the predicate returns @ctrue{} if
+both the real and imaginary parts satisfy it.
 
 The C language defines the zero for floating--point numbers as having a sign, so we have @samp{-0.0}
 and @samp{+0.0}; this means zero can be positive or negative and the following predicates examine
@@ -2456,6 +2455,7 @@ dependent.  We can use them as follows:
 @deftypefunx bool mmux_\STEM\_is_non_positive (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_non_negative (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_infinite (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_is_finite (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
 Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
 nan; otherwise return @cfalse{}.
@@ -2476,6 +2476,36 @@ nan; otherwise return @cfalse{}.
 @MmuxDefineTypePredicates{ulong}
 @MmuxDefineTypePredicates{sllong}
 @MmuxDefineTypePredicates{ullong}
+@MmuxDefineTypePredicates{sint8}
+@MmuxDefineTypePredicates{uint8}
+@MmuxDefineTypePredicates{sint16}
+@MmuxDefineTypePredicates{uint16}
+@MmuxDefineTypePredicates{sint32}
+@MmuxDefineTypePredicates{uint32}
+@MmuxDefineTypePredicates{sint64}
+@MmuxDefineTypePredicates{uint64}
+
+@MmuxDefineTypePredicates{byte}
+@MmuxDefineTypePredicates{octet}
+
+@MmuxDefineTypePredicates{ssize}
+@MmuxDefineTypePredicates{usize}
+@MmuxDefineTypePredicates{sintmax}
+@MmuxDefineTypePredicates{uintmax}
+@MmuxDefineTypePredicates{sintptr}
+@MmuxDefineTypePredicates{uintptr}
+@MmuxDefineTypePredicates{ptrdiff}
+@MmuxDefineTypePredicates{mode}
+@MmuxDefineTypePredicates{off}
+@MmuxDefineTypePredicates{pid}
+@MmuxDefineTypePredicates{uid}
+@MmuxDefineTypePredicates{gid}
+@MmuxDefineTypePredicates{wchar}
+@MmuxDefineTypePredicates{wint}
+@MmuxDefineTypePredicates{time}
+@MmuxDefineTypePredicates{socklen}
+@MmuxDefineTypePredicates{rlim}
+
 @MmuxDefineTypePredicates{flonumfl}
 @MmuxDefineTypePredicates{flonumdb}
 @MmuxDefineTypePredicates{flonumldb}
@@ -2507,33 +2537,6 @@ nan; otherwise return @cfalse{}.
 @MmuxDefineTypePredicates{flonumcd32}
 @MmuxDefineTypePredicates{flonumcd64}
 @MmuxDefineTypePredicates{flonumcd128}
-
-@MmuxDefineTypePredicates{sint8}
-@MmuxDefineTypePredicates{uint8}
-@MmuxDefineTypePredicates{sint16}
-@MmuxDefineTypePredicates{uint16}
-@MmuxDefineTypePredicates{sint32}
-@MmuxDefineTypePredicates{uint32}
-@MmuxDefineTypePredicates{sint64}
-@MmuxDefineTypePredicates{uint64}
-
-@MmuxDefineTypePredicates{ssize}
-@MmuxDefineTypePredicates{usize}
-@MmuxDefineTypePredicates{sintmax}
-@MmuxDefineTypePredicates{uintmax}
-@MmuxDefineTypePredicates{sintptr}
-@MmuxDefineTypePredicates{uintptr}
-@MmuxDefineTypePredicates{ptrdiff}
-@MmuxDefineTypePredicates{mode}
-@MmuxDefineTypePredicates{off}
-@MmuxDefineTypePredicates{pid}
-@MmuxDefineTypePredicates{uid}
-@MmuxDefineTypePredicates{gid}
-@MmuxDefineTypePredicates{wchar}
-@MmuxDefineTypePredicates{wint}
-@MmuxDefineTypePredicates{time}
-@MmuxDefineTypePredicates{socklen}
-@MmuxDefineTypePredicates{rlim}
 
 @c page
 @node comparison

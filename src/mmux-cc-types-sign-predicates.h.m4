@@ -300,6 +300,7 @@ DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[uint64]]])
 
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[byte]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[octet]]])
+
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[ssize]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[usize]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[sintmax]]])
@@ -320,7 +321,7 @@ DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[rlim]]])
 
 
 /** --------------------------------------------------------------------
- ** Comparison: standard flonum.
+ ** Predicates: standard flonum.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -351,7 +352,7 @@ DEFINE_STANDARD_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],	[[[MMUX_CC_TYPE
 
 
 /** --------------------------------------------------------------------
- ** Comparison: flonum.
+ ** Predicates: flonum.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -389,7 +390,7 @@ DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FL
 
 
 /** --------------------------------------------------------------------
- ** Comparison: standard flonumc.
+ ** Predicates: standard flonumc.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -437,7 +438,7 @@ DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
- ** Comparison: flonumc.
+ ** Predicates: flonumc.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
