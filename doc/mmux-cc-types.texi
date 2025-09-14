@@ -2249,6 +2249,16 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 @section Computing the argument value
 
 
+@macro MmuxDefineRealArgFunction{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_argument (mmux_\STEM\_t @var{OP})
+Compute and return the argument value of @var{OP} interpreted as complex number.  The result is
+always positive zero.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
 @macro MmuxDefineComplexArgFunction{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_argument (mmux_\CPLXSTEM\_t @var{OP})
 Compute and return the argument value of the complex number @var{OP}.
@@ -2256,7 +2266,52 @@ Compute and return the argument value of the complex number @var{OP}.
 
 @end macro
 
-@MmuxDefineComplexArgFunction{flonumcfl, float}
+@c ------------------------------------------------------------------------
+
+@MmuxDefineRealArgFunction{sshort}
+@MmuxDefineRealArgFunction{ushort}
+@MmuxDefineRealArgFunction{sint}
+@MmuxDefineRealArgFunction{uint}
+@MmuxDefineRealArgFunction{slong}
+@MmuxDefineRealArgFunction{ulong}
+@MmuxDefineRealArgFunction{sllong}
+@MmuxDefineRealArgFunction{ullong}
+
+@MmuxDefineRealArgFunction{sint8}
+@MmuxDefineRealArgFunction{uint8}
+@MmuxDefineRealArgFunction{sint16}
+@MmuxDefineRealArgFunction{uint16}
+@MmuxDefineRealArgFunction{sint32}
+@MmuxDefineRealArgFunction{uint32}
+@MmuxDefineRealArgFunction{sint64}
+@MmuxDefineRealArgFunction{uint64}
+
+@MmuxDefineRealArgFunction{byte}
+@MmuxDefineRealArgFunction{octet}
+@MmuxDefineRealArgFunction{sintmax}
+@MmuxDefineRealArgFunction{uintmax}
+@MmuxDefineRealArgFunction{sintptr}
+@MmuxDefineRealArgFunction{uintptr}
+
+@MmuxDefineRealArgFunction{flonumfl}
+@MmuxDefineRealArgFunction{flonumdb}
+@MmuxDefineRealArgFunction{flonumldb}
+
+@MmuxDefineRealArgFunction{flonumf32}
+@MmuxDefineRealArgFunction{flonumf64}
+@MmuxDefineRealArgFunction{flonumf128}
+
+@MmuxDefineRealArgFunction{flonumf32x}
+@MmuxDefineRealArgFunction{flonumf64x}
+@MmuxDefineRealArgFunction{flonumf128x}
+
+@MmuxDefineRealArgFunction{flonumd32}
+@MmuxDefineRealArgFunction{flonumd64}
+@MmuxDefineRealArgFunction{flonumd128}
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineComplexArgFunction{flonumcfl, flonumfl}
 @MmuxDefineComplexArgFunction{flonumcdb, flonumdb}
 @MmuxDefineComplexArgFunction{flonumcldb, flonumldb}
 
