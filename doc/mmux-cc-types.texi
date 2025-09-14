@@ -1811,7 +1811,7 @@ Type parsers convert string representations to C language values; to parse a @ob
 representation we do:
 
 @example
-char const *    arg = "123";
+mmux_asciizc_t  arg = "123";
 mmux_sint_t     value;
 bool            rv;
 
@@ -1917,7 +1917,7 @@ Type string printers convert binary representations of C language values to stri
 to print a @objtype{mmux_sint_t} string representation we do:
 
 @example
-auto    value           = mmux_sint(123);
+auto    value           = mmux_sint_literal(123);
 auto    required_nbytes = mmux_sint_sprint_size(value);
 
 if (0 > required_nbytes) @{
@@ -2028,7 +2028,7 @@ the terminating zero}; otherwise return @samp{-1}.
 To print a value to @stderr{}, we can do:
 
 @example
-auto    X = mmux_flonumdb(1.2);
+auto    X = mmux_flonumdb_literal(1.2);
 
 if (mmux_flonumdb_dprintf(2, X)) @{
   /* error */
@@ -2064,6 +2064,36 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 @MmuxDefineCFunctionPrinters{ulong}
 @MmuxDefineCFunctionPrinters{sllong}
 @MmuxDefineCFunctionPrinters{ullong}
+@MmuxDefineCFunctionPrinters{sint8}
+@MmuxDefineCFunctionPrinters{uint8}
+@MmuxDefineCFunctionPrinters{sint16}
+@MmuxDefineCFunctionPrinters{uint16}
+@MmuxDefineCFunctionPrinters{sint32}
+@MmuxDefineCFunctionPrinters{uint32}
+@MmuxDefineCFunctionPrinters{sint64}
+@MmuxDefineCFunctionPrinters{uint64}
+
+@MmuxDefineCFunctionPrinters{byte}
+@MmuxDefineCFunctionPrinters{octet}
+
+@MmuxDefineCFunctionPrinters{ssize}
+@MmuxDefineCFunctionPrinters{usize}
+@MmuxDefineCFunctionPrinters{sintmax}
+@MmuxDefineCFunctionPrinters{uintmax}
+@MmuxDefineCFunctionPrinters{sintptr}
+@MmuxDefineCFunctionPrinters{uintptr}
+@MmuxDefineCFunctionPrinters{ptrdiff}
+@MmuxDefineCFunctionPrinters{mode}
+@MmuxDefineCFunctionPrinters{off}
+@MmuxDefineCFunctionPrinters{pid}
+@MmuxDefineCFunctionPrinters{uid}
+@MmuxDefineCFunctionPrinters{gid}
+@MmuxDefineCFunctionPrinters{wchar}
+@MmuxDefineCFunctionPrinters{wint}
+@MmuxDefineCFunctionPrinters{time}
+@MmuxDefineCFunctionPrinters{socklen}
+@MmuxDefineCFunctionPrinters{rlim}
+
 @MmuxDefineCFunctionPrinters{flonumfl}
 @MmuxDefineCFunctionPrinters{flonumdb}
 @MmuxDefineCFunctionPrinters{flonumldb}
@@ -2096,33 +2126,6 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 @MmuxDefineCFunctionPrinters{flonumcd64}
 @MmuxDefineCFunctionPrinters{flonumcd128}
 
-@MmuxDefineCFunctionPrinters{sint8}
-@MmuxDefineCFunctionPrinters{uint8}
-@MmuxDefineCFunctionPrinters{sint16}
-@MmuxDefineCFunctionPrinters{uint16}
-@MmuxDefineCFunctionPrinters{sint32}
-@MmuxDefineCFunctionPrinters{uint32}
-@MmuxDefineCFunctionPrinters{sint64}
-@MmuxDefineCFunctionPrinters{uint64}
-
-@MmuxDefineCFunctionPrinters{ssize}
-@MmuxDefineCFunctionPrinters{usize}
-@MmuxDefineCFunctionPrinters{sintmax}
-@MmuxDefineCFunctionPrinters{uintmax}
-@MmuxDefineCFunctionPrinters{sintptr}
-@MmuxDefineCFunctionPrinters{uintptr}
-@MmuxDefineCFunctionPrinters{ptrdiff}
-@MmuxDefineCFunctionPrinters{mode}
-@MmuxDefineCFunctionPrinters{off}
-@MmuxDefineCFunctionPrinters{pid}
-@MmuxDefineCFunctionPrinters{uid}
-@MmuxDefineCFunctionPrinters{gid}
-@MmuxDefineCFunctionPrinters{wchar}
-@MmuxDefineCFunctionPrinters{wint}
-@MmuxDefineCFunctionPrinters{time}
-@MmuxDefineCFunctionPrinters{socklen}
-@MmuxDefineCFunctionPrinters{rlim}
-
 @c page
 @node complex
 @chapter Basic complex number operations
@@ -2130,7 +2133,7 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 
 @menu
 * complex parts::               Extracting the real and imaginary parts.
-* complex arg::                 Computing the argument value.
+* complex argument::            Computing the argument value.
 * complex conjugate::           Computing the complex conjugate value.
 @end menu
 
@@ -2142,14 +2145,35 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 To extract the real and imaginary parts from a complex number we do:
 
 @example
-mmux_flonumcdb_t Z = ...;
-mmux_flonumdb_t   rep;
-mmux_flonumdb_t   imp;
-
-rep = mmux_flonumcdb_real_part(Z);
-imp = mmux_flonumcdb_real_part(Z);
+mmux_flonumcf64_t  Z    = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumf64_t   Zrep = mmux_flonumcf64_real_part(Z);
+mmux_flonumf64_t   Zimp = mmux_flonumcf64_imag_part(Z);
 @end example
 
+@noindent
+once we have understood the types, we can just write:
+
+@example
+mmux_flonumcf64_t  Z    = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+auto               Zrep = mmux_flonumcf64_real_part(Z);
+auto               Zimp = mmux_flonumcf64_imag_part(Z);
+@end example
+
+For completeness @code{real_part} and @code{imag_part} functions are implemented also for all the
+real exact integer numeric types and all the real floating--point numeric types.
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineRealRealImagPartFunction{REALSTEM}
+@deftypefun  mmux_\REALSTEM\_t mmux_\REALSTEM\_real_part (mmux_\REALSTEM\_t @var{OP})
+@deftypefunx mmux_\REALSTEM\_t mmux_\REALSTEM\_imag_part (mmux_\REALSTEM\_t @var{OP})
+Extract and return the real or imaginary parts from the real number @var{OP}.  The real part is
+@var{OP} itself; the imaginary part is always zero.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineComplexRealImagPartFunction{CPLXSTEM,REALSTEM}
 @deftypefun  mmux_\REALSTEM\_t mmux_\CPLXSTEM\_real_part (mmux_\CPLXSTEM\_t @var{OP})
@@ -2158,6 +2182,51 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineRealRealImagPartFunction{sshort}
+@MmuxDefineRealRealImagPartFunction{ushort}
+@MmuxDefineRealRealImagPartFunction{sint}
+@MmuxDefineRealRealImagPartFunction{uint}
+@MmuxDefineRealRealImagPartFunction{slong}
+@MmuxDefineRealRealImagPartFunction{ulong}
+@MmuxDefineRealRealImagPartFunction{sllong}
+@MmuxDefineRealRealImagPartFunction{ullong}
+
+@MmuxDefineRealRealImagPartFunction{sint8}
+@MmuxDefineRealRealImagPartFunction{uint8}
+@MmuxDefineRealRealImagPartFunction{sint16}
+@MmuxDefineRealRealImagPartFunction{uint16}
+@MmuxDefineRealRealImagPartFunction{sint32}
+@MmuxDefineRealRealImagPartFunction{uint32}
+@MmuxDefineRealRealImagPartFunction{sint64}
+@MmuxDefineRealRealImagPartFunction{uint64}
+
+@MmuxDefineRealRealImagPartFunction{byte}
+@MmuxDefineRealRealImagPartFunction{octet}
+@MmuxDefineRealRealImagPartFunction{sintmax}
+@MmuxDefineRealRealImagPartFunction{uintmax}
+@MmuxDefineRealRealImagPartFunction{sintptr}
+@MmuxDefineRealRealImagPartFunction{uintptr}
+
+@MmuxDefineRealRealImagPartFunction{flonumfl}
+@MmuxDefineRealRealImagPartFunction{flonumdb}
+@MmuxDefineRealRealImagPartFunction{flonumldb}
+
+@MmuxDefineRealRealImagPartFunction{flonumf32}
+@MmuxDefineRealRealImagPartFunction{flonumf64}
+@MmuxDefineRealRealImagPartFunction{flonumf128}
+
+@MmuxDefineRealRealImagPartFunction{flonumf32x}
+@MmuxDefineRealRealImagPartFunction{flonumf64x}
+@MmuxDefineRealRealImagPartFunction{flonumf128x}
+
+@MmuxDefineRealRealImagPartFunction{flonumd32}
+@MmuxDefineRealRealImagPartFunction{flonumd64}
+@MmuxDefineRealRealImagPartFunction{flonumd128}
+
+@c ------------------------------------------------------------------------
 
 @MmuxDefineComplexRealImagPartFunction{flonumcfl, float}
 @MmuxDefineComplexRealImagPartFunction{flonumcdb, flonumdb}
@@ -2176,7 +2245,7 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 @MmuxDefineComplexRealImagPartFunction{flonumcd128, flonumd128}
 
 @c page
-@node complex arg
+@node complex argument
 @section Computing the argument value
 
 
