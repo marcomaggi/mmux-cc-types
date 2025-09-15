@@ -401,7 +401,7 @@ DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	greater)
 DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	less)
 DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	greater_equal)
 DEFINE_STANDARD_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,	less_equal)
-mmux_cc_types_inline_decl bool
+mmux_cc_types_inline_decl mmux_standard_sint_t
 mmux_standard_flonumc$1_cmp (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
 {
   auto	aop1 = mmux_standard_flonumc$1_absolute(op1);
@@ -436,14 +436,15 @@ mmux_standard_flonumc$1_equal_relepsilon (mmux_standard_flonumc$1_t op1, mmux_st
 	  mmux_standard_flonum$1_equal_relepsilon(mmux_standard_flonumc$1_imag_part(op1),
 						  mmux_standard_flonumc$1_imag_part(op2),
 						  mmux_standard_flonumc$1_imag_part(eps)));
-}mmux_cc_types_inline_decl bool
+}
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_max (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
 {
   return (mmux_standard_flonum$1_greater_equal(mmux_standard_flonumc$1_absolute(op1),
 					       mmux_standard_flonumc$1_absolute(op2)))?
     op1 : op2;
 }
-mmux_cc_types_inline_decl bool
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_min (mmux_standard_flonumc$1_t op1, mmux_standard_flonumc$1_t op2)
 {
   return (mmux_standard_flonum$1_greater_equal(mmux_standard_flonumc$1_absolute(op1),

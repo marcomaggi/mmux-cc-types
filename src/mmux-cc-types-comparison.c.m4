@@ -76,13 +76,24 @@ mmux_standard_flonum$1_equal_absmargin (mmux_standard_flonum$1_t op1,
 					mmux_standard_flonum$1_t op2,
 					mmux_standard_flonum$1_t margin)
 {
-  return (fabs$2(margin) <= fabs$2(op1 - op2))? true : false;
+  if (0) {
+    dprintf(2, "diff %f mrg %f\n", (double)fabs$2(op1 - op2), (double)fabs$2(margin));
+  }
+  return (fabs$2(margin) >= fabs$2(op1 - op2))? true : false;
 }
 bool
 mmux_standard_flonum$1_equal_relepsilon (mmux_standard_flonum$1_t op1,
 					 mmux_standard_flonum$1_t op2,
 					 mmux_standard_flonum$1_t epsilon)
 {
+  if (0) {
+    dprintf(2, "\n%s: op1 %f op2 %f diff %f eps %f\n",
+	    __func__,
+	    (double)op1,
+	    (double)op2,
+	    (double)fabs$2(op1 - op2),
+	    (double)fabs$2(epsilon) * fmax$2(fabs$2(op1), fabs$2(op2)));
+  }
   return (fabs$2(op1 - op2) <= fabs$2(epsilon) * fmax$2(fabs$2(op1), fabs$2(op2)))? true : false;
 }]]])]]])
 m4_divert(0)m4_dnl

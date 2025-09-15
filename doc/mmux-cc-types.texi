@@ -2702,6 +2702,8 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @section Maximum and minimum values
 
 
+In what follows: complex floating--point numbers are compared by comparing their absolute values.
+
 @macro MmuxDefineTypeComparisonMinMaxFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_max (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_min (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -2724,21 +2726,6 @@ Return the maximum or minimum value between the operands.
 @MmuxDefineTypeComparisonMinMaxFunction{ulong}
 @MmuxDefineTypeComparisonMinMaxFunction{sllong}
 @MmuxDefineTypeComparisonMinMaxFunction{ullong}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumfl}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumdb}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumldb}
-
-@MmuxDefineTypeComparisonMinMaxFunction{flonumf32}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumf64}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumf128}
-
-@MmuxDefineTypeComparisonMinMaxFunction{flonumf32x}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumf64x}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumf128x}
-
-@MmuxDefineTypeComparisonMinMaxFunction{flonumd32}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumd64}
-@MmuxDefineTypeComparisonMinMaxFunction{flonumd128}
 
 @MmuxDefineTypeComparisonMinMaxFunction{sint8}
 @MmuxDefineTypeComparisonMinMaxFunction{uint8}
@@ -2748,6 +2735,9 @@ Return the maximum or minimum value between the operands.
 @MmuxDefineTypeComparisonMinMaxFunction{uint32}
 @MmuxDefineTypeComparisonMinMaxFunction{sint64}
 @MmuxDefineTypeComparisonMinMaxFunction{uint64}
+
+@MmuxDefineTypeComparisonMinMaxFunction{byte}
+@MmuxDefineTypeComparisonMinMaxFunction{octet}
 
 @MmuxDefineTypeComparisonMinMaxFunction{ssize}
 @MmuxDefineTypeComparisonMinMaxFunction{usize}
@@ -2767,13 +2757,50 @@ Return the maximum or minimum value between the operands.
 @MmuxDefineTypeComparisonMinMaxFunction{socklen}
 @MmuxDefineTypeComparisonMinMaxFunction{rlim}
 
+@MmuxDefineTypeComparisonMinMaxFunction{flonumfl}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumdb}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumldb}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf32}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf64}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf128}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf32x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf64x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumf128x}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumd32}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumd64}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumd128}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcfl}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcdb}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcldb}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcf32}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcf64}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcf128}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcf32x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcf64x}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcf128x}
+
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcd32}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcd64}
+@MmuxDefineTypeComparisonMinMaxFunction{flonumcd128}
+
 @c page
 @node comparison absmargin
 @section Absolute margin comparison criterion
 
 
-To compare real numbers with the criterion of the absolute margin means to verify the predicate
-between the real numbers @vari{OP}, @varii{OP}, @var{MARGIN}:
+@cindex Absolute margin comparison criterion
+@cindex Comparison criterion, absolute margin
+@cindex Margin, absolute margin comparison criterion
+
+
+To compare real numbers with the @dfn{criterion of the absolute margin} means to verify the
+predicate between the real numbers @vari{OP}, @varii{OP}, @var{MARGIN}:
 
 @example
 abs(@vari{OP} - @varii{OP}) <= abs(@var{MARGIN})
@@ -2791,11 +2818,11 @@ abs(imag(@vari{OP}) - imag(@varii{OP})) <= abs(imag(@var{MARGIN}))
 To compare two floating--point numbers with the criterion of the absolute margin, we do:
 
 @example
-mmux_flonumdb_t   op1    = 1.2;
-mmux_flonumdb_t   op2    = 1.23;
-mmux_flonumdb_t   margin = 1e-6;
+auto    op1 = mmux_flonumdb_literal(1.2);
+auto    op2 = mmux_flonumdb_literal(1.23);
+auto    mrg = mmux_flonumdb_literal(1e-6);
 
-if (mmux_flonumdb_equal_absmargin(op1, op2, margin)) @{
+if (mmux_flonumdb_equal_absmargin(op1, op2, mrg)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -2811,26 +2838,36 @@ Compare the operands using the given margin.
 @end macro
 
 
+@MmuxDefineAbsmarginFunc{flonumfl}
 @MmuxDefineAbsmarginFunc{flonumdb}
 @MmuxDefineAbsmarginFunc{flonumldb}
-@MmuxDefineAbsmarginFunc{flonumcfl}
-@MmuxDefineAbsmarginFunc{flonumcdb}
-@MmuxDefineAbsmarginFunc{flonumcldb}
+
 @MmuxDefineAbsmarginFunc{flonumf32}
 @MmuxDefineAbsmarginFunc{flonumf64}
 @MmuxDefineAbsmarginFunc{flonumf128}
+
 @MmuxDefineAbsmarginFunc{flonumf32x}
 @MmuxDefineAbsmarginFunc{flonumf64x}
 @MmuxDefineAbsmarginFunc{flonumf128x}
+
 @MmuxDefineAbsmarginFunc{flonumd32}
 @MmuxDefineAbsmarginFunc{flonumd64}
 @MmuxDefineAbsmarginFunc{flonumd128}
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineAbsmarginFunc{flonumcfl}
+@MmuxDefineAbsmarginFunc{flonumcdb}
+@MmuxDefineAbsmarginFunc{flonumcldb}
+
 @MmuxDefineAbsmarginFunc{flonumcf32}
 @MmuxDefineAbsmarginFunc{flonumcf64}
 @MmuxDefineAbsmarginFunc{flonumcf128}
+
 @MmuxDefineAbsmarginFunc{flonumcf32x}
 @MmuxDefineAbsmarginFunc{flonumcf64x}
 @MmuxDefineAbsmarginFunc{flonumcf128x}
+
 @MmuxDefineAbsmarginFunc{flonumcd32}
 @MmuxDefineAbsmarginFunc{flonumcd64}
 @MmuxDefineAbsmarginFunc{flonumcd128}
@@ -2840,8 +2877,13 @@ Compare the operands using the given margin.
 @section Relative epsilon comparison criterion
 
 
-To compare real numbers with the criterion of the relative epsilon means to verify the predicate
-between the real numbers @vari{OP}, @varii{OP}, @var{EPSILON}:
+@cindex Relative epsilon comparison criterion
+@cindex Comparison criterion, relative epsilon
+@cindex Epsilon, relative epsilon comparison criterion
+
+
+To compare real numbers with the @dfn{criterion of the relative epsilon} means to verify the
+predicate between the real numbers @vari{OP}, @varii{OP}, @var{EPSILON}:
 
 @example
 abs(@vari{OP} - @varii{OP}) <= (abs(@var{EPSILON}) * max(abs(@vari{OP}), abs(@varii{OP})))
@@ -2852,18 +2894,18 @@ while to compare complex numbers means to verify the predicate between the compl
 @vari{OP}, @varii{OP}, @var{EPSILON}:
 
 @example
-abs(real(@varo{OP}) - real(@var{OP})) <= (abs(real(@var{EPSILON})) * max(abs(real(@vari{OP})), real(abs(@varii{OP})))) &&
-abs(imag(@varo{OP}) - imag(@var{OP})) <= (abs(imag(@var{EPSILON})) * max(abs(imag(@vari{OP})), imag(abs(@varii{OP}))))
+abs(real(@varo{OP}) - real(@var{OP})) <= (abs(real(@var{EPSILON})) * max(abs(real(@vari{OP})), abs(real(@varii{OP})))) &&
+abs(imag(@varo{OP}) - imag(@var{OP})) <= (abs(imag(@var{EPSILON})) * max(abs(imag(@vari{OP})), abs(imag(@varii{OP}))))
 @end example
 
 To compare two floating--point numbers with the criterion of the relative epsilon, we do:
 
 @example
-mmux_flonumdb_t   op1     = 1.2;
-mmux_flonumdb_t   op2     = 1.23;
-mmux_flonumdb_t   epsilon = 1e-6;
+auto    op1 = mmux_flonumdb_literal(1.2);
+auto    op2 = mmux_flonumdb_literal(1.23);
+auto    eps = mmux_flonumdb_literal(1e-6);
 
-if (mmux_flonumdb_equal_relepsilon(op1, op2, epsilon)) @{
+if (mmux_flonumdb_equal_relepsilon(op1, op2, eps)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -2878,27 +2920,36 @@ Compare the operands using the given epsilon.
 
 @end macro
 
-
+@MmuxDefineRelepsilonFunc{flonumfl}
 @MmuxDefineRelepsilonFunc{flonumdb}
 @MmuxDefineRelepsilonFunc{flonumldb}
-@MmuxDefineRelepsilonFunc{flonumcfl}
-@MmuxDefineRelepsilonFunc{flonumcdb}
-@MmuxDefineRelepsilonFunc{flonumcldb}
+
 @MmuxDefineRelepsilonFunc{flonumf32}
 @MmuxDefineRelepsilonFunc{flonumf64}
 @MmuxDefineRelepsilonFunc{flonumf128}
+
 @MmuxDefineRelepsilonFunc{flonumf32x}
 @MmuxDefineRelepsilonFunc{flonumf64x}
 @MmuxDefineRelepsilonFunc{flonumf128x}
+
 @MmuxDefineRelepsilonFunc{flonumd32}
 @MmuxDefineRelepsilonFunc{flonumd64}
 @MmuxDefineRelepsilonFunc{flonumd128}
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineRelepsilonFunc{flonumcfl}
+@MmuxDefineRelepsilonFunc{flonumcdb}
+@MmuxDefineRelepsilonFunc{flonumcldb}
+
 @MmuxDefineRelepsilonFunc{flonumcf32}
 @MmuxDefineRelepsilonFunc{flonumcf64}
 @MmuxDefineRelepsilonFunc{flonumcf128}
+
 @MmuxDefineRelepsilonFunc{flonumcf32x}
 @MmuxDefineRelepsilonFunc{flonumcf64x}
 @MmuxDefineRelepsilonFunc{flonumcf128x}
+
 @MmuxDefineRelepsilonFunc{flonumcd32}
 @MmuxDefineRelepsilonFunc{flonumcd64}
 @MmuxDefineRelepsilonFunc{flonumcd128}
