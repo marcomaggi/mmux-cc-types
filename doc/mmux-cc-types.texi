@@ -2972,6 +2972,12 @@ auto            rop = mmux_ulong_neg(op);
 dprintf(2, "rop = %lu\n", rop);
 @print{} 18446744073709551611
 @end example
+
+@item
+The @code{sign} function returns @samp{+1}, @samp{-1}, @samp{0} depending on the sign of its
+operand; for flonum operands the result is always @samp{+1.0} or @samp{-1.0} because flonum zero has
+a sign; for flonumc operands the result is a complex number whose real and imaginary parts represent
+the signs of the real and imaginary parts of the operand.
 @end itemize
 
 
@@ -2992,13 +2998,14 @@ as @code{mmux_uint8_t *}, return the result.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_mul (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_inverse (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_absolute (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_modulo (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement.
+remainder, increment, decrement, sign.
 @end deftypefun
 
 @end macro
@@ -3009,9 +3016,11 @@ remainder, increment, decrement.
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_mul (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_div (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_neg (mmux_\CPLXSTEM\_t @var{OP})
-@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inv (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inverse (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_absolute (mmux_\CPLXSTEM\_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values.
+@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_sign (mmux_\CPLXSTEM\_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values,
+sign.
 @end deftypefun
 
 @end macro
@@ -3022,13 +3031,14 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_mul (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_div (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_neg (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_inv (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_inverse (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_absolute (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_mod (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_modulo (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement.
+remainder, increment, decrement, sign.
 @end deftypefun
 
 @end macro
@@ -3045,6 +3055,36 @@ remainder, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{ulong}
 @MmuxDefineIntegerArithmeticsFunc{sllong}
 @MmuxDefineIntegerArithmeticsFunc{ullong}
+@MmuxDefineIntegerArithmeticsFunc{sint8}
+@MmuxDefineIntegerArithmeticsFunc{uint8}
+@MmuxDefineIntegerArithmeticsFunc{sint16}
+@MmuxDefineIntegerArithmeticsFunc{uint16}
+@MmuxDefineIntegerArithmeticsFunc{sint32}
+@MmuxDefineIntegerArithmeticsFunc{uint32}
+@MmuxDefineIntegerArithmeticsFunc{sint64}
+@MmuxDefineIntegerArithmeticsFunc{uint64}
+
+@MmuxDefineIntegerArithmeticsFunc{byte}
+@MmuxDefineIntegerArithmeticsFunc{octet}
+
+@MmuxDefineIntegerArithmeticsFunc{ssize}
+@MmuxDefineIntegerArithmeticsFunc{usize}
+@MmuxDefineIntegerArithmeticsFunc{sintmax}
+@MmuxDefineIntegerArithmeticsFunc{uintmax}
+@MmuxDefineIntegerArithmeticsFunc{sintptr}
+@MmuxDefineIntegerArithmeticsFunc{uintptr}
+@MmuxDefineIntegerArithmeticsFunc{ptrdiff}
+@MmuxDefineIntegerArithmeticsFunc{mode}
+@MmuxDefineIntegerArithmeticsFunc{off}
+@MmuxDefineIntegerArithmeticsFunc{pid}
+@MmuxDefineIntegerArithmeticsFunc{uid}
+@MmuxDefineIntegerArithmeticsFunc{gid}
+@MmuxDefineIntegerArithmeticsFunc{wchar}
+@MmuxDefineIntegerArithmeticsFunc{wint}
+@MmuxDefineIntegerArithmeticsFunc{time}
+@MmuxDefineIntegerArithmeticsFunc{socklen}
+@MmuxDefineIntegerArithmeticsFunc{rlim}
+
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumfl}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumdb}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumldb}
@@ -3076,33 +3116,6 @@ remainder, increment, decrement.
 @MmuxDefineComplexArithmeticsFunc{flonumcd32,flonumd32}
 @MmuxDefineComplexArithmeticsFunc{flonumcd64,flonumd64}
 @MmuxDefineComplexArithmeticsFunc{flonumcd128,flonumd128}
-
-@MmuxDefineIntegerArithmeticsFunc{sint8}
-@MmuxDefineIntegerArithmeticsFunc{uint8}
-@MmuxDefineIntegerArithmeticsFunc{sint16}
-@MmuxDefineIntegerArithmeticsFunc{uint16}
-@MmuxDefineIntegerArithmeticsFunc{sint32}
-@MmuxDefineIntegerArithmeticsFunc{uint32}
-@MmuxDefineIntegerArithmeticsFunc{sint64}
-@MmuxDefineIntegerArithmeticsFunc{uint64}
-
-@MmuxDefineIntegerArithmeticsFunc{ssize}
-@MmuxDefineIntegerArithmeticsFunc{usize}
-@MmuxDefineIntegerArithmeticsFunc{sintmax}
-@MmuxDefineIntegerArithmeticsFunc{uintmax}
-@MmuxDefineIntegerArithmeticsFunc{sintptr}
-@MmuxDefineIntegerArithmeticsFunc{uintptr}
-@MmuxDefineIntegerArithmeticsFunc{ptrdiff}
-@MmuxDefineIntegerArithmeticsFunc{mode}
-@MmuxDefineIntegerArithmeticsFunc{off}
-@MmuxDefineIntegerArithmeticsFunc{pid}
-@MmuxDefineIntegerArithmeticsFunc{uid}
-@MmuxDefineIntegerArithmeticsFunc{gid}
-@MmuxDefineIntegerArithmeticsFunc{wchar}
-@MmuxDefineIntegerArithmeticsFunc{wint}
-@MmuxDefineIntegerArithmeticsFunc{time}
-@MmuxDefineIntegerArithmeticsFunc{socklen}
-@MmuxDefineIntegerArithmeticsFunc{rlim}
 
 @c page
 @node mathematics

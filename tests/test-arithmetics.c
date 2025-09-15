@@ -148,6 +148,10 @@ test_arithmetics_add (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_ADD(flonumd128);
 #endif
+
+  DEFINE_REAL_INTEGER_ADD(byte);
+  DEFINE_REAL_INTEGER_ADD(octet);
+
   DEFINE_REAL_INTEGER_ADD(ssize);
   DEFINE_REAL_INTEGER_ADD(usize);
   DEFINE_REAL_INTEGER_ADD(sintmax);
@@ -316,6 +320,8 @@ test_arithmetics_sub (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_SUB(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_SUB(byte);
+  DEFINE_REAL_INTEGER_SUB(octet);
   DEFINE_REAL_INTEGER_SUB(ssize);
   DEFINE_REAL_INTEGER_SUB(usize);
   DEFINE_REAL_INTEGER_SUB(sintmax);
@@ -483,6 +489,8 @@ test_arithmetics_mul (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_MUL(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_MUL(byte);
+  DEFINE_REAL_INTEGER_MUL(octet);
   DEFINE_REAL_INTEGER_MUL(ssize);
   DEFINE_REAL_INTEGER_MUL(usize);
   DEFINE_REAL_INTEGER_MUL(sintmax);
@@ -652,6 +660,8 @@ test_arithmetics_div (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_DIV(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_DIV(byte);
+  DEFINE_REAL_INTEGER_DIV(octet);
   DEFINE_REAL_INTEGER_DIV(ssize);
   DEFINE_REAL_INTEGER_DIV(usize);
   DEFINE_REAL_INTEGER_DIV(sintmax);
@@ -695,6 +705,11 @@ test_arithmetics_div (void)
  ** Negation.
  ** ----------------------------------------------------------------- */
 
+static void
+test_arithmetics_neg (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
 #undef  DEFINE_REAL_INTEGER_NEG
 #define DEFINE_REAL_INTEGER_NEG(STEM)					\
   {									\
@@ -718,36 +733,29 @@ test_arithmetics_div (void)
 #define DEFINE_COMPLEX_NEG(CSTEM,RSTEM)								\
   {												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
-      auto	rop = mmux_## CSTEM ##_rectangular_literal(-5.0,-3.0);			\
+      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);				\
+      auto	rop = mmux_## CSTEM ##_rectangular_literal(-5.0,-3.0);				\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_neg(op1)));				\
       assert(mmux_ctype_equal(rop, mmux_ctype_neg(op1)));					\
     }												\
     {												\
       auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
-							mmux_## RSTEM ##_literal(3.0));		\
+						   mmux_## RSTEM ##_literal(3.0));		\
       auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(-5.0),		\
-							mmux_## RSTEM ##_literal(-3.0));	\
+						   mmux_## RSTEM ##_literal(-3.0));		\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_neg(op1)));				\
       assert(mmux_ctype_equal(rop, mmux_ctype_neg(op1)));					\
     }												\
     {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
-							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(-5.0),	\
-							mmux_## CSTEM ##_part_literal(-3.0));	\
+      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),		\
+						   mmux_## CSTEM ##_part_literal(3.0));		\
+      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(-5.0),		\
+						   mmux_## CSTEM ##_part_literal(-3.0));	\
       assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_neg(op1)));				\
       assert(mmux_ctype_equal(rop, mmux_ctype_neg(op1)));					\
     }												\
     dprintf(2," %s,", #CSTEM);									\
   }
-
-/* ------------------------------------------------------------------ */
-
-static void
-test_arithmetics_neg (void)
-{
-  dprintf(2, "running test: %s:", __func__);
 
   DEFINE_REAL_INTEGER_NEG(schar);
   DEFINE_REAL_INTEGER_NEG(sshort);
@@ -762,6 +770,7 @@ test_arithmetics_neg (void)
   DEFINE_REAL_INTEGER_NEG(sint64);
   DEFINE_REAL_FLONUM_NEG(flonumfl);
   DEFINE_REAL_FLONUM_NEG(flonumdb);
+
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
   DEFINE_REAL_FLONUM_NEG(flonumldb);
 #endif
@@ -792,6 +801,7 @@ test_arithmetics_neg (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_NEG(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_NEG(byte);
   DEFINE_REAL_INTEGER_NEG(ssize);
   DEFINE_REAL_INTEGER_NEG(sintmax);
   DEFINE_REAL_INTEGER_NEG(sintptr);
@@ -942,6 +952,8 @@ test_arithmetics_inverse (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_INVERSE(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_INVERSE(byte);
+  DEFINE_REAL_INTEGER_INVERSE(octet);
   DEFINE_REAL_INTEGER_INVERSE(ssize);
   DEFINE_REAL_INTEGER_INVERSE(usize);
   DEFINE_REAL_INTEGER_INVERSE(sintmax);
@@ -1104,6 +1116,8 @@ test_arithmetics_absolute (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_ABSOLUTE(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_ABSOLUTE(byte);
+  DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(octet);
   DEFINE_REAL_INTEGER_ABSOLUTE(ssize);
   DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(usize);
   DEFINE_REAL_INTEGER_ABSOLUTE(sintmax);
@@ -1235,6 +1249,8 @@ test_arithmetics_modulo (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_MODULO(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_MODULO(byte);
+  DEFINE_REAL_INTEGER_MODULO(octet);
   DEFINE_REAL_INTEGER_MODULO(ssize);
   DEFINE_REAL_INTEGER_MODULO(usize);
   DEFINE_REAL_INTEGER_MODULO(sintmax);
@@ -1344,6 +1360,8 @@ test_arithmetics_incr (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
   DEFINE_REAL_FLONUM_INCR(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_INCR(byte);
+  DEFINE_REAL_INTEGER_INCR(octet);
   DEFINE_REAL_INTEGER_INCR(ssize);
   DEFINE_REAL_INTEGER_INCR(usize);
   DEFINE_REAL_INTEGER_INCR(sintmax);
@@ -1453,6 +1471,8 @@ test_arithmetics_decr (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
   DEFINE_REAL_FLONUM_DECR(flonumd128);
 #endif
+  DEFINE_REAL_INTEGER_DECR(byte);
+  DEFINE_REAL_INTEGER_DECR(octet);
   DEFINE_REAL_INTEGER_DECR(ssize);
   DEFINE_REAL_INTEGER_DECR(usize);
   DEFINE_REAL_INTEGER_DECR(sintmax);
@@ -1558,6 +1578,8 @@ test_arithmetics_sign (void)
   DOIT_FOR_SIGNED_EXACT_INTEGER(sint64);
   DOIT_FOR_UNSIGNED_EXACT_INTEGER(uint64);
 
+  DOIT_FOR_SIGNED_EXACT_INTEGER(byte);
+  DOIT_FOR_UNSIGNED_EXACT_INTEGER(octet);
   DOIT_FOR_SIGNED_EXACT_INTEGER(ssize);
   DOIT_FOR_UNSIGNED_EXACT_INTEGER(usize);
   DOIT_FOR_SIGNED_EXACT_INTEGER(sintmax);
