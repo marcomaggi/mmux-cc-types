@@ -1709,6 +1709,13 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 
 @cindex Printing format for floating--point numbers
 @cindex Formatting floating--point numbers
+@cindex String format for infinities
+@cindex Output format for infinities
+@cindex Infinities, string format
+@cindex Infinities, Output format
+@cindex @samp{+inf.0} positive infinity string representation
+@cindex @samp{-inf.0} negative infinity string representation
+@cindex @samp{+nan.0} not--a--number string representation
 
 
 @value{PACKAGE} implements @cfunc{mmux_*_sprint} functions to convert numbers from a binary
@@ -1744,7 +1751,6 @@ mmux_flonumdb_save_output_format(saved_fmt);
 mmux_flonumdb_set_output_format(saved_fmt, __func__);
 @end example
 
-
 String representations of complex floating--point numbers are composed using the format selected for
 the corresponding real floating--point type.
 
@@ -1763,6 +1769,21 @@ The string referenced by the pointer returned by the getter functions must not b
 The format--saving functions expect the destination buffer to be capable of holding a
 @code{MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN} characters, nul--termination character included.
 @end itemize
+
+Notice that the following special string representations are adopted:
+
+@table @code
+@item +inf.0
+@itemx -inf.0
+positive and negative infinities;
+
+@item +nan.0
+not--a--number;
+@end table
+
+@noindent
+with these representations: if the first character of a token is a digit or a plus or a minus: the
+token is a number.
 
 
 @defvr {C Preprocessor Symbol} MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN
