@@ -143,6 +143,53 @@ test_complex_numbers (void)
       dprintf_newline(2);
     }
   }
+
+  dprintf(2, "%s: leave\n", __func__);
+}
+
+
+static void
+test_stringrep_sprinters (void)
+{
+  dprintf(2, "%s: enter\n", __func__);
+
+  {
+    dprintf(2, "%s: sprinting a flonumdb\n", __func__);
+    {
+      mmux_flonumdb_t  value           = mmux_flonumdb_literal(0.123);
+      mmux_sint_t      required_nbytes = mmux_flonumdb_sprint_size(value);
+
+      if (mmux_sint_is_negative(required_nbytes)) {
+	exit(EXIT_FAILURE);
+      } else {
+	char    str[required_nbytes.value];
+
+	if (mmux_flonumdb_sprint(str, required_nbytes, value)) {
+	  exit(EXIT_FAILURE);
+	}
+	dprintf(2, "%s", str); dprintf_newline(2);
+      }
+    }
+
+    dprintf(2, "%s: generically sprinting a flonumdb\n", __func__);
+    {
+      auto    value           = mmux_flonumdb_literal(0.123);
+      auto    required_nbytes = mmux_ctype_sprint_size(value);
+
+      if (mmux_ctype_is_negative(required_nbytes)) {
+	exit(EXIT_FAILURE);
+      } else {
+	char    str[required_nbytes.value];
+
+	if (mmux_ctype_sprint(str, required_nbytes, value)) {
+	  exit(EXIT_FAILURE);
+	}
+	dprintf(2, "%s", str); dprintf_newline(2);
+      }
+    }
+  }
+
+  dprintf(2, "%s: leave\n", __func__);
 }
 
 
@@ -157,6 +204,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   test_set_output_formats();
 
   if (1) {	test_complex_numbers();		}
+  if (1) {	test_stringrep_sprinters();	}
 
   exit(EXIT_SUCCESS);
 }

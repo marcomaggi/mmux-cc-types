@@ -1941,27 +1941,46 @@ the parsing operation, for example: the name of a C function.
 
 
 Type string printers convert binary representations of C language values to string representations;
-to print a @objtype{mmux_sint_t} string representation we do:
+to construct a @objtype{mmux_flonumdb_t} string representation we do:
 
 @example
-auto    value           = mmux_sint_literal(123);
-auto    required_nbytes = mmux_sint_sprint_size(value);
+mmux_flonumdb_t  value           = mmux_flonumdb_literal(0.123);
+mmux_sint_t      required_nbytes = mmux_flonumdb_sprint_size(value);
 
-if (0 > required_nbytes) @{
+if (mmux_sint_is_negative(required_nbytes)) @{
   /* error */
 @} else @{
-  char    str[required_nbytes];
+  char    str[required_nbytes.value];
 
-  if (mmux_sint_sprint(str, required_nbytes, value)) @{
+  if (mmux_flonumdb_sprint(str, required_nbytes, value)) @{
     /* error */
   @}
 @}
 @end example
 
+@noindent
+or more generically:
+
+@example
+auto    value           = mmux_flonumdb_literal(0.123);
+auto    required_nbytes = mmux_ctype_sprint_size(value);
+
+if (mmux_ctype_is_negative(required_nbytes)) @{
+  /* error */
+@} else @{
+  char    str[required_nbytes.value];
+
+  if (mmux_ctype_sprint(str, required_nbytes, value)) @{
+    /* error */
+  @}
+@}
+@end example
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionSprinter{STEM}
-@deftypefun bool mmux_\STEM\_sprint (char * @var{STRPTR}, int @var{LEN}, mmux_\STEM\_t @var{VALUE})
-@deftypefunx int mmux_\STEM\_sprint_size (mmux_\STEM\_t @var{VALUE})
+@deftypefun bool mmux_\STEM\_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, mmux_\STEM\_t @var{VALUE})
+@deftypefunx mmux_sint_t mmux_\STEM\_sprint_size (mmux_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
 characters (terminating zero included).  When successful return @cfalse{}; otherwise leave
@@ -1973,6 +1992,13 @@ the terminating zero}; otherwise return @samp{-1}.
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, @var{VALUE})
+@deftypefnx {Generic Macro} mmux_sint_t mmux_ctype_sprint_size (@var{VALUE})
+Generic macros.
+@end deftypefn
 
 
 @MmuxDefineCFunctionSprinter{pointer}
