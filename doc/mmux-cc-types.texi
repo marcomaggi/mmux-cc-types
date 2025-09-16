@@ -3545,7 +3545,7 @@ development takes place at:
 
 @center @value{GithubUrl}
 
-the package @code{libdfp} is available online:
+The package @emph{Decimal Floating Point C Library}, @code{libdfp}, is available online:
 
 @center @url{https://github.com/libdfp/libdfp}
 
