@@ -1847,7 +1847,7 @@ rv = mmux_sint_parse(&value, arg, __func__);
 
 
 @macro MmuxDefineCFunctionParser{STEM}
-@deftypefun bool mmux_\STEM\_parse (mmux_\STEM\_t * @var{PTR}, char const * @var{STR}, char const * @var{WHO})
+@deftypefun bool mmux_\STEM\_parse (mmux_\STEM\_t * @var{PTR}, mmux_asciizcp_t @var{STR}, mmux_asciizcp_t @var{WHO})
 Parse a string which is meant to be the representation of a C language type @objtype{\STEM\}; when
 successful store the result in the variable referenced by @var{PTR}, then return @cfalse{};
 otherwise leave @var{PTR} untouched and return @ctrue{}.
@@ -2081,7 +2081,7 @@ Generic macros.
 To print a value to @stderr{}, we can do:
 
 @example
-auto    X = mmux_flonumdb_literal(1.2);
+mmux_flonumdb_t  X = mmux_flonumdb_literal(1.2);
 
 if (mmux_flonumdb_dprintf(2, X)) @{
   /* error */
@@ -2092,7 +2092,22 @@ if (mmux_flonumdb_fprintf(stderr, X)) @{
 @}
 @end example
 
+@noindent
+or more generically:
 
+@example
+auto  X = mmux_flonumdb_literal(1.2);
+
+if (mmux_ctype_dprintf(2, X)) @{
+  /* error */
+@}
+
+if (mmux_ctype_fprintf(stderr, X)) @{
+  /* error */
+@}
+@end example
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionPrinters{STEM}
 @deftypefun bool mmux_\STEM\_dprintf (int @var{fd}, mmux_\STEM\_t @var{value})
@@ -2102,6 +2117,14 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+
+@deftypefn {Generic macro} bool mmux_ctype_dprintf (int @var{fd}, @var{value})
+@deftypefnx {Generic macro} bool mmux_ctype_fprintf (mmux_pointer_t @var{stream}, @var{value})
+Generic macros.
+@end deftypefn
 
 
 @MmuxDefineCFunctionPrinters{pointer}
@@ -2584,12 +2607,39 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @cindex Unsigned @objtype{char}
 
 
+To test if a real number is zero we do:
+
+@example
+mmux_flonumf32x_t val = mmux_flonumf32x_literal(123.45);
+
+if (mmux_flonumf32x_is_zero(val)) @{
+  ...
+@}
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto  val = mmux_flonumf32x_literal(123.45);
+
+if (mmux_ctype_is_zero(val)) @{
+  ...
+@}
+@end example
+
+Notes:
+
+@itemize
+@item
 When the following predicates are applied to a complex number: the predicate returns @ctrue{} if
 both the real and imaginary parts satisfy it.
 
+@item
 The C language defines the zero for floating--point numbers as having a sign, so we have @samp{-0.0}
 and @samp{+0.0}; this means zero can be positive or negative and the following predicates examine
 the sign bit to determine the return value.
+@end itemize
 
 
 @deftypefun bool mmux_char_is_unsigned (void)
@@ -2647,6 +2697,20 @@ not--a--number, normal, subnormal; otherwise return @cfalse{}.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_zero (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_positive (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_negative (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_non_positive (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_non_negative (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_infinite (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_finite (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_nan (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_normal (@var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_subnormal (@var{OP})
+Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
+not--a--number, normal, subnormal; otherwise return @cfalse{}.
+@end deftypefn
 
 @MmuxDefineTypePredicates{pointer}
 
@@ -2740,12 +2804,45 @@ not--a--number, normal, subnormal; otherwise return @cfalse{}.
 @section Exact comparison functions
 
 
+To compare two numbers we do:
+
+@example
+mmux_slong_t      A = mmux_slong_literal(123);
+mmux_slong_t      B = mmux_slong_literal(456);
+mmux_sint_t       V = mmux_slong_cmp(A, B);
+
+mmux_sint_dprintf(2, V);        @print{} -1
+if (0 == V.value) @{
+  ...
+@}
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto              A = mmux_slong_literal(123);
+auto              B = mmux_slong_literal(456);
+mmux_sint_t       V = mmux_ctype_cmp(A, B);
+
+mmux_sint_dprintf(2, V);        @print{} -1
+if (0 == V.value) @{
+  ...
+@}
+@end example
+
+Notes:
+
+@itemize
+@item
 In the context of @value{PACKAGE}, when comparing complex numbers: the functions @samp{cmp},
 @samp{equal}, @samp{less}, @samp{greater}, @samp{less_equal}, @samp{greater_equal} compare the
 absolute value of the complex operands.
 
+@item
 The @cfunc{mmux_*_cmp} functions perform the usual comparison with ternary result.  The predicate
 functions return @ctrue{} if the operands are in the named relation; otherwise return @cfalse{}.
+@end itemize
 
 @c ------------------------------------------------------------------------
 
@@ -2763,6 +2860,16 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro}  mmux_sint_t mmux_ctype_cmp (@vari{OP}, @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_equal (@vari{OP}, @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_not_equal (@vari{OP}, @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_greater (@vari{OP}, @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_less (@vari{OP}, @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_greater_equal (@vari{OP}, @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_less_equal (@vari{OP}, @varii{OP})
+Comparison between values.
+@end deftypefn
 
 @MmuxDefineTypeComparisonExactFunction{pointer}
 
@@ -2843,6 +2950,27 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @node comparison mimmax
 @section Maximum and minimum values
 
+
+To determine the maximum between two numbers we do:
+
+@example
+mmux_uint64_t     A = mmux_uint64_literal(123);
+mmux_uint64_t     B = mmux_uint64_literal(456);
+mmux_uint64_t     V = mmux_uint64_max(A, B);
+
+mmux_uint64_dprintf(2, V);       @print{} 456
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      A = mmux_uint64_literal(123);
+auto      B = mmux_uint64_literal(456);
+auto      V = mmux_ctype_max(A, B);
+
+mmux_ctype_dprintf(2, V);       @print{} 456
+@end example
 
 In what follows: complex floating--point numbers are compared by comparing their absolute values.
 
@@ -2960,11 +3088,26 @@ abs(imag(@vari{OP}) - imag(@varii{OP})) <= abs(imag(@var{MARGIN}))
 To compare two floating--point numbers with the criterion of the absolute margin, we do:
 
 @example
-auto    op1 = mmux_flonumdb_literal(1.2);
-auto    op2 = mmux_flonumdb_literal(1.23);
-auto    mrg = mmux_flonumdb_literal(1e-6);
+mmux_flonumldb_t  op1 = mmux_flonumdb_literal(1.2);
+mmux_flonumldb_t  op2 = mmux_flonumdb_literal(1.23);
+mmux_flonumldb_t  mrg = mmux_flonumdb_literal(1e-6);
 
-if (mmux_flonumdb_equal_absmargin(op1, op2, mrg)) @{
+if (mmux_flonumldb_equal_absmargin(op1, op2, mrg)) @{
+  ... /* equal */
+@} else @{
+  ... /* not equal */
+@}
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      op1 = mmux_flonumldb_literal(1.2);
+auto      op2 = mmux_flonumldb_literal(1.23);
+auto      mrg = mmux_flonumldb_literal(1e-6);
+
+if (mmux_ctype_equal_absmargin(op1, op2, mrg)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -3043,17 +3186,33 @@ abs(imag(@varo{OP}) - imag(@var{OP})) <= (abs(imag(@var{EPSILON})) * max(abs(ima
 To compare two floating--point numbers with the criterion of the relative epsilon, we do:
 
 @example
-auto    op1 = mmux_flonumdb_literal(1.2);
-auto    op2 = mmux_flonumdb_literal(1.23);
-auto    eps = mmux_flonumdb_literal(1e-6);
+mmux_flonumldb_t  op1 = mmux_flonumdb_literal(1.2);
+mmux_flonumldb_t  op2 = mmux_flonumdb_literal(1.23);
+mmux_flonumldb_t  eps = mmux_flonumdb_literal(1e-6);
 
-if (mmux_flonumdb_equal_relepsilon(op1, op2, eps)) @{
+if (mmux_flonumldb_equal_relepsilon(op1, op2, eps)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
 @}
 @end example
 
+@noindent
+or more generically:
+
+@example
+auto      op1 = mmux_flonumldb_literal(1.2);
+auto      op2 = mmux_flonumldb_literal(1.23);
+auto      eps = mmux_flonumldb_literal(1e-6);
+
+if (mmux_ctype_equal_relepsilon(op1, op2, eps)) @{
+  ... /* equal */
+@} else @{
+  ... /* not equal */
+@}
+@end example
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineRelepsilonFunc{STEM}
 @deftypefun bool mmux_\STEM\_equal_relepsilon (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @vari{EPSILON})

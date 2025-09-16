@@ -193,6 +193,145 @@ test_stringrep_sprinters (void)
 }
 
 
+static void
+test_predicates (void)
+{
+  dprintf(2, "%s: enter\n", __func__);
+
+  {
+    dprintf(2, "%s: test if a number is zero\n", __func__);
+    {
+      mmux_flonumf32x_t	val = mmux_flonumf32x_literal(123.45);
+
+      if (mmux_flonumf32x_is_zero(val)) {
+	dprintf(2, "%s: it is zero\n", __func__);
+      } else {
+	dprintf(2, "%s: it is not zero\n", __func__);
+      }
+    }
+    dprintf(2, "%s: generically test if a number is zero\n", __func__);
+    {
+      auto	val = mmux_flonumf32x_literal(123.45);
+
+      if (mmux_ctype_is_zero(val)) {
+	dprintf(2, "%s: it is zero\n", __func__);
+      } else {
+	dprintf(2, "%s: it is not zero\n", __func__);
+      }
+    }
+  }
+
+  dprintf(2, "%s: leave\n", __func__);
+}
+
+
+static void
+test_comparison (void)
+{
+  dprintf(2, "%s: enter\n", __func__);
+
+  {
+    dprintf(2, "%s: compare two numbers\n", __func__);
+    {
+      mmux_slong_t	A = mmux_slong_literal(123);
+      mmux_slong_t	B = mmux_slong_literal(456);
+      mmux_sint_t	V = mmux_slong_cmp(A, B);
+
+      dprintf(2, "%s: V=%d\n", __func__, V.value);
+    }
+    dprintf(2, "%s: generically compare two numbers\n", __func__);
+    {
+      auto		A = mmux_slong_literal(123);
+      auto		B = mmux_slong_literal(456);
+      mmux_sint_t	V = mmux_ctype_cmp(A, B);
+
+      dprintf(2, "%s: V=%d\n", __func__, V.value);
+    }
+  }
+
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: determine the maximum between two numbers\n", __func__);
+    {
+      mmux_uint64_t	A = mmux_uint64_literal(123);
+      mmux_uint64_t	B = mmux_uint64_literal(456);
+      mmux_uint64_t	V = mmux_uint64_max(A, B);
+
+      mmux_uint64_dprintf(2, V); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically determine the maximum between two numbers\n", __func__);
+    {
+      auto	A = mmux_uint64_literal(123);
+      auto	B = mmux_uint64_literal(456);
+      auto	V = mmux_ctype_max(A, B);
+
+      mmux_ctype_dprintf(2, V); dprintf_newline(2);
+    }
+  }
+
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: compare flonums with absmargin criterion\n", __func__);
+    {
+      mmux_flonumldb_t	op1 = mmux_flonumldb_literal(1.2);
+      mmux_flonumldb_t	op2 = mmux_flonumldb_literal(1.23);
+      mmux_flonumldb_t	mrg = mmux_flonumldb_literal(1e-6);
+
+      if (mmux_flonumldb_equal_absmargin(op1, op2, mrg)) {
+	dprintf(2, "%s: absmargin equal\n", __func__);
+      } else {
+	dprintf(2, "%s: absmargin not equal\n", __func__);
+      }
+    }
+    dprintf(2, "%s: generically compare flonums with absmargin criterion\n", __func__);
+    {
+      auto	op1 = mmux_flonumldb_literal(1.2);
+      auto	op2 = mmux_flonumldb_literal(1.23);
+      auto	mrg = mmux_flonumldb_literal(1e-6);
+
+      if (mmux_ctype_equal_absmargin(op1, op2, mrg)) {
+	dprintf(2, "%s: absmargin equal\n", __func__);
+      } else {
+	dprintf(2, "%s: absmargin not equal\n", __func__);
+      }
+    }
+  }
+
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: compare flonums with relepsilon criterion\n", __func__);
+    {
+      mmux_flonumldb_t	op1 = mmux_flonumldb_literal(1.2);
+      mmux_flonumldb_t	op2 = mmux_flonumldb_literal(1.23);
+      mmux_flonumldb_t	eps = mmux_flonumldb_literal(1e-6);
+
+      if (mmux_flonumldb_equal_relepsilon(op1, op2, eps)) {
+	dprintf(2, "%s: relepsilon equal\n", __func__);
+      } else {
+	dprintf(2, "%s: relepsilon not equal\n", __func__);
+      }
+    }
+    dprintf(2, "%s: generically compare flonums with relepsilon criterion\n", __func__);
+    {
+      auto	op1 = mmux_flonumldb_literal(1.2);
+      auto	op2 = mmux_flonumldb_literal(1.23);
+      auto	eps = mmux_flonumldb_literal(1e-6);
+
+      if (mmux_ctype_equal_relepsilon(op1, op2, eps)) {
+	dprintf(2, "%s: relepsilon equal\n", __func__);
+      } else {
+	dprintf(2, "%s: relepsilon not equal\n", __func__);
+      }
+    }
+  }
+
+  dprintf(2, "%s: leave\n", __func__);
+}
+
+
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
@@ -205,6 +344,8 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
 
   if (1) {	test_complex_numbers();		}
   if (1) {	test_stringrep_sprinters();	}
+  if (1) {	test_predicates();		}
+  if (1) {	test_comparison();		}
 
   exit(EXIT_SUCCESS);
 }

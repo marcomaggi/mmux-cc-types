@@ -104,7 +104,7 @@ test_set_output_formats_verbose (bool verbose)
  ** Printing helpers.
  ** ----------------------------------------------------------------- */
 
-void
+MMUX_CC_TYPES_UNUSED void
 dprintf_newline (int fd)
 {
   dprintf(fd, "\n");
