@@ -1,5 +1,14 @@
 -*- coding: utf-8-unix -*-
 
+* Implement generic macros:
+
+  mmux_ctype_is_signed_integer
+  mmux_ctype_is_unsigned_integer
+  mmux_ctype_is_exact_integer
+  mmux_ctype_is_real
+  mmux_ctype_is_complex
+  mmux_ctype_is_flonum
+
 * Implement rounding mathematical functions.
 
 * Implement flonum sign bit mathematical functions.

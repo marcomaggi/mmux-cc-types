@@ -2172,22 +2172,48 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 To extract the real and imaginary parts from a complex number we do:
 
 @example
-mmux_flonumcf64_t  Z    = mmux_flonumcf64_rectangular_literal(1.2,3.4);
-mmux_flonumf64_t   Zrep = mmux_flonumcf64_real_part(Z);
-mmux_flonumf64_t   Zimp = mmux_flonumcf64_imag_part(Z);
+mmux_flonumcf64_t  Z   = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumf64_t   Zre = mmux_flonumcf64_real_part(Z);
+mmux_flonumf64_t   Zim = mmux_flonumcf64_imag_part(Z);
+
+mmux_flonumf64_dprintf(2, Zre);         @print{} 1.2
+mmux_flonumf64_dprintf(2, Zim);         @print{} 3.4
 @end example
 
 @noindent
-once we have understood the types, we can just write:
+or more generically:
 
 @example
-mmux_flonumcf64_t  Z    = mmux_flonumcf64_rectangular_literal(1.2,3.4);
-auto               Zrep = mmux_flonumcf64_real_part(Z);
-auto               Zimp = mmux_flonumcf64_imag_part(Z);
+auto    Z   = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+auto    Zre = mmux_ctype_real_part(Z);
+auto    Zim = mmux_ctype_imag_part(Z);
+
+mmux_ctype_dprintf(2, Zre);     @print{} 1.2
+mmux_ctype_dprintf(2, Zim);     @print{} 3.4
 @end example
 
-For completeness @code{real_part} and @code{imag_part} functions are implemented also for all the
-real exact integer numeric types and all the real floating--point numeric types.
+To extract the real and imaginary parts from a real number we do:
+
+@example
+mmux_flonumf64_t   Z   = mmux_flonumf64_literal(0.123);
+mmux_flonumf64_t   Zre = mmux_flonumf64_real_part(Z);
+mmux_flonumf64_t   Zim = mmux_flonumf64_imag_part(Z);
+
+mmux_flonumf64_dprintf(2, Zre); @print{} 0.123
+mmux_flonumf64_dprintf(2, Zim); @print{} 0.0
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      Z   = mmux_flonumf64_literal(0.123);
+auto      Zre = mmux_ctype_real_part(Z);
+auto      Zim = mmux_ctype_imag_part(Z);
+
+mmux_ctype_dprintf(2, Zre); @print{} 0.123
+mmux_ctype_dprintf(2, Zim); @print{} 0.0
+@end example
 
 @c ------------------------------------------------------------------------
 
@@ -2402,6 +2428,46 @@ Compute and return the argument value of the complex number @var{OP}.
 @node complex conjugate
 @section Computing the complex conjugate value
 
+
+To compute the complex conjugate of a complex number we do:
+
+@example
+mmux_flonumcf64_t  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumcf64_t  A = mmux_flonumcf64_conjugate(Z);
+
+mmux_flonumcf64_dprintf(2, A);  @print{} (1.2)+i*(-3.4)
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+auto      A = mmux_ctype_conjugate(Z);
+
+mmux_ctype_dprintf(2, A);       @print{} (1.2)+i*(-3.4)
+@end example
+
+To compute the complex conjugate of a real number we do:
+
+@example
+mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
+mmux_flonumf64_t   A = mmux_flonumf64_conjugate(Z);
+
+mmux_flonumf64_dprintf(2, A);   @print{} 0.123
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      Z = mmux_flonumf64_literal(0.123);
+auto      A = mmux_ctype_conjugate(Z);
+
+mmux_ctype_dprintf(2, A);       @print{} 0.123
+@end example
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineRealConjugateFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_conjugate (mmux_\STEM\_t @var{OP})
