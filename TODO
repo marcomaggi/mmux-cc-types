@@ -1,13 +1,14 @@
 -*- coding: utf-8-unix -*-
 
-* Implement the complex functions also for the real types, examples:
+* Implement rounding mathematical functions.
 
-  mmux_flonumdb_conj()
-  mmux_flonumdb_arg()
-  mmux_flonumdb_real_part()
-  mmux_flonumdb_imag_part()
+* Implement flonum sign bit mathematical functions.
 
-* Implement mathematical functions for all types: sqr, cbrt.
+* See if it  is possible to implement mathematical  root functions, both
+  real valued and complex valued.
+
+* See if it is possible to implement mathematical rationalise functions,
+  from rational number to numerator and denominator.
 
 ### end of file
 # Local Variables:
