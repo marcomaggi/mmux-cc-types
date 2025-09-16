@@ -2255,7 +2255,7 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineComplexRealImagPartFunction{flonumcfl, float}
+@MmuxDefineComplexRealImagPartFunction{flonumcfl, flonumfl}
 @MmuxDefineComplexRealImagPartFunction{flonumcdb, flonumdb}
 @MmuxDefineComplexRealImagPartFunction{flonumcldb, flonumldb}
 
@@ -2275,6 +2275,50 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 @node complex argument
 @section Computing the argument value
 
+
+To compute the complex argument of a complex number we do:
+
+@example
+mmux_flonumcf64_t  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumf64_t   A = mmux_flonumcf64_argument(Z);
+
+mmux_flonumf64_dprintf(2, A);
+@print{} 1.231504
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto    Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+auto    A = mmux_ctype_argument(Z);
+
+mmux_ctype_dprintf(2, A);
+@print{} 1.231504
+@end example
+
+To compute the complex argument of a real number we do:
+
+@example
+mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
+mmux_flonumf64_t   A = mmux_flonumf64_argument(Z);
+
+mmux_flonumf64_dprintf(2, A);
+@print{} 0.0
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto    Z = mmux_flonumf64_literal(0.123);
+auto    A = mmux_ctype_argument(Z);
+
+mmux_ctype_dprintf(2, A);
+@print{} 0.0
+@end example
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineRealArgumentFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_argument (mmux_\STEM\_t @var{OP})

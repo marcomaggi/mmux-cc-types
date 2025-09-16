@@ -35,9 +35,11 @@ static void test_set_output_formats (void)
 static void test_set_output_formats_verbose (bool verbose)
   __attribute__((__unused__));
 
+static void dprintf_newline(int fd);
+
 
 /** --------------------------------------------------------------------
- ** Helpers.
+ ** Numeric format helpers.
  ** ----------------------------------------------------------------- */
 
 void
@@ -95,6 +97,17 @@ test_set_output_formats_verbose (bool verbose)
   if (verbose) { dprintf(2, "%s: setting output format for flonumd128\n", __func__); }
   assert(false == mmux_flonumd128_set_output_format("%.6f", __func__));
 #endif
+}
+
+
+/** --------------------------------------------------------------------
+ ** Printing helpers.
+ ** ----------------------------------------------------------------- */
+
+void
+dprintf_newline (int fd)
+{
+  dprintf(fd, "\n");
 }
 
 /* end of file */
