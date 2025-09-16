@@ -3122,7 +3122,21 @@ remainder, increment, decrement, sign.
 @chapter Mathematics operations
 
 
-@macro MmuxDefineMathRealFuncs{STEM}
+@menu
+* mathematics trigonometry::    Trigonometric functions.
+* mathematics hyperbolic::      Hyperbolic functions.
+* mathematics exponentiation::  Exponentiation functions.
+* mathematics logarithmic::     Logarithmic functions.
+* mathematics powers::          Raising to the power functions.
+* mathematics special::         Special functions.
+@end menu
+
+@c page
+@node mathematics trigonometry
+@section Trigonometric functions
+
+
+@macro MmuxDefineMathRealTrigonometricFuncs{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
@@ -3130,24 +3144,282 @@ remainder, increment, decrement, sign.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_acos (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_atan (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_atan2 (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sinh (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@macro MmuxDefineMathCplxTrigonometricFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_asin (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_acos (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineMathRealTrigonometricFuncs{flonumfl}
+@MmuxDefineMathRealTrigonometricFuncs{flonumdb}
+@MmuxDefineMathRealTrigonometricFuncs{flonumldb}
+
+@MmuxDefineMathRealTrigonometricFuncs{flonumf32}
+@MmuxDefineMathRealTrigonometricFuncs{flonumf64}
+@MmuxDefineMathRealTrigonometricFuncs{flonumf128}
+
+@MmuxDefineMathRealTrigonometricFuncs{flonumf32x}
+@MmuxDefineMathRealTrigonometricFuncs{flonumf64x}
+@MmuxDefineMathRealTrigonometricFuncs{flonumf128x}
+
+@MmuxDefineMathRealTrigonometricFuncs{flonumd32}
+@MmuxDefineMathRealTrigonometricFuncs{flonumd64}
+@MmuxDefineMathRealTrigonometricFuncs{flonumd128}
+
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcfl}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcdb}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcldb}
+
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcf32}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcf64}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcf128}
+
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcf32x}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcf64x}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcf128x}
+
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcd32}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcd64}
+@MmuxDefineMathCplxTrigonometricFuncs{flonumcd128}
+
+@c page
+@node mathematics hyperbolic
+@section Hyperbolic functions
+
+
+@macro MmuxDefineMathHyperbolicFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sinh (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_cosh (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_tanh (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_asinh (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_acosh (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_atanh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineMathHyperbolicFuncs{flonumfl}
+@MmuxDefineMathHyperbolicFuncs{flonumdb}
+@MmuxDefineMathHyperbolicFuncs{flonumldb}
+
+@MmuxDefineMathHyperbolicFuncs{flonumf32}
+@MmuxDefineMathHyperbolicFuncs{flonumf64}
+@MmuxDefineMathHyperbolicFuncs{flonumf128}
+
+@MmuxDefineMathHyperbolicFuncs{flonumf32x}
+@MmuxDefineMathHyperbolicFuncs{flonumf64x}
+@MmuxDefineMathHyperbolicFuncs{flonumf128x}
+
+@MmuxDefineMathHyperbolicFuncs{flonumd32}
+@MmuxDefineMathHyperbolicFuncs{flonumd64}
+@MmuxDefineMathHyperbolicFuncs{flonumd128}
+
+@MmuxDefineMathHyperbolicFuncs{flonumcfl}
+@MmuxDefineMathHyperbolicFuncs{flonumcdb}
+@MmuxDefineMathHyperbolicFuncs{flonumcldb}
+
+@MmuxDefineMathHyperbolicFuncs{flonumcf32}
+@MmuxDefineMathHyperbolicFuncs{flonumcf64}
+@MmuxDefineMathHyperbolicFuncs{flonumcf128}
+
+@MmuxDefineMathHyperbolicFuncs{flonumcf32x}
+@MmuxDefineMathHyperbolicFuncs{flonumcf64x}
+@MmuxDefineMathHyperbolicFuncs{flonumcf128x}
+
+@MmuxDefineMathHyperbolicFuncs{flonumcd32}
+@MmuxDefineMathHyperbolicFuncs{flonumcd64}
+@MmuxDefineMathHyperbolicFuncs{flonumcd128}
+
+@c page
+@node mathematics exponentiation
+@section Exponentiation functions
+
+
+@macro MmuxDefineMathRealExponentiationFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_exp2 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_exp10 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_expm1 (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@macro MmuxDefineMathCplxExponentiationFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp2 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp10 (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineMathRealExponentiationFuncs{flonumfl}
+@MmuxDefineMathRealExponentiationFuncs{flonumdb}
+@MmuxDefineMathRealExponentiationFuncs{flonumldb}
+
+@MmuxDefineMathRealExponentiationFuncs{flonumf32}
+@MmuxDefineMathRealExponentiationFuncs{flonumf64}
+@MmuxDefineMathRealExponentiationFuncs{flonumf128}
+
+@MmuxDefineMathRealExponentiationFuncs{flonumf32x}
+@MmuxDefineMathRealExponentiationFuncs{flonumf64x}
+@MmuxDefineMathRealExponentiationFuncs{flonumf128x}
+
+@MmuxDefineMathRealExponentiationFuncs{flonumd32}
+@MmuxDefineMathRealExponentiationFuncs{flonumd64}
+@MmuxDefineMathRealExponentiationFuncs{flonumd128}
+
+@MmuxDefineMathCplxExponentiationFuncs{flonumcfl}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcdb}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcldb}
+
+@MmuxDefineMathCplxExponentiationFuncs{flonumcf32}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcf64}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcf128}
+
+@MmuxDefineMathCplxExponentiationFuncs{flonumcf32x}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcf64x}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcf128x}
+
+@MmuxDefineMathCplxExponentiationFuncs{flonumcd32}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcd64}
+@MmuxDefineMathCplxExponentiationFuncs{flonumcd128}
+
+@c page
+@node mathematics logarithmic
+@section Logarithmic functions
+
+
+@macro MmuxDefineMathRealLogarithmicFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_logb (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log1p (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@macro MmuxDefineMathCplxLogarithmicFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineMathRealLogarithmicFuncs{flonumfl}
+@MmuxDefineMathRealLogarithmicFuncs{flonumdb}
+@MmuxDefineMathRealLogarithmicFuncs{flonumldb}
+
+@MmuxDefineMathRealLogarithmicFuncs{flonumf32}
+@MmuxDefineMathRealLogarithmicFuncs{flonumf64}
+@MmuxDefineMathRealLogarithmicFuncs{flonumf128}
+
+@MmuxDefineMathRealLogarithmicFuncs{flonumf32x}
+@MmuxDefineMathRealLogarithmicFuncs{flonumf64x}
+@MmuxDefineMathRealLogarithmicFuncs{flonumf128x}
+
+@MmuxDefineMathRealLogarithmicFuncs{flonumd32}
+@MmuxDefineMathRealLogarithmicFuncs{flonumd64}
+@MmuxDefineMathRealLogarithmicFuncs{flonumd128}
+
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcfl}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcdb}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcldb}
+
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcf32}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcf64}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcf128}
+
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcf32x}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcf64x}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcf128x}
+
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcd32}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcd64}
+@MmuxDefineMathCplxLogarithmicFuncs{flonumcd128}
+
+@c page
+@node mathematics powers
+@section Raising to the power functions
+
+
+@macro MmuxDefineMathPowersFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_square (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_cube (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_cbrt (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_hypot (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_expm1 (mmux_\STEM\_t @var{OP})
+Compute the named C function.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineMathPowersFuncs{flonumfl}
+@MmuxDefineMathPowersFuncs{flonumdb}
+@MmuxDefineMathPowersFuncs{flonumldb}
+
+@MmuxDefineMathPowersFuncs{flonumf32}
+@MmuxDefineMathPowersFuncs{flonumf64}
+@MmuxDefineMathPowersFuncs{flonumf128}
+
+@MmuxDefineMathPowersFuncs{flonumf32x}
+@MmuxDefineMathPowersFuncs{flonumf64x}
+@MmuxDefineMathPowersFuncs{flonumf128x}
+
+@MmuxDefineMathPowersFuncs{flonumd32}
+@MmuxDefineMathPowersFuncs{flonumd64}
+@MmuxDefineMathPowersFuncs{flonumd128}
+
+@MmuxDefineMathPowersFuncs{flonumcfl}
+@MmuxDefineMathPowersFuncs{flonumcdb}
+@MmuxDefineMathPowersFuncs{flonumcldb}
+
+@MmuxDefineMathPowersFuncs{flonumcf32}
+@MmuxDefineMathPowersFuncs{flonumcf64}
+@MmuxDefineMathPowersFuncs{flonumcf128}
+
+@MmuxDefineMathPowersFuncs{flonumcf32x}
+@MmuxDefineMathPowersFuncs{flonumcf64x}
+@MmuxDefineMathPowersFuncs{flonumcf128x}
+
+@MmuxDefineMathPowersFuncs{flonumcd32}
+@MmuxDefineMathPowersFuncs{flonumcd64}
+@MmuxDefineMathPowersFuncs{flonumcd128}
+
+@c page
+@node mathematics special
+@section Special functions
+
+
+@macro MmuxDefineMathSpecialFuncs{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_hypot (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_log1p (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_erf (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_erfc (mmux_\STEM\_t @var{OP})
@@ -3166,111 +3438,21 @@ Compute the named C function.
 
 @c ------------------------------------------------------------------------
 
-@macro MmuxDefineMathRealDecimalFuncs{STEM}
-@deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_asin (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_acos (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan2 (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sinh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_cosh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_tanh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_asinh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_acosh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_atanh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp2 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp10 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_logb (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_cbrt (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_hypot (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_expm1 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log1p (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_erf (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_erfc (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_lgamma (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_tgamma (mmux_\STEM\_t @var{OP})
-@c @deftypefunx mmux_\STEM\_t mmux_\STEM\_j0 (mmux_\STEM\_t @var{OP})
-@c @deftypefunx mmux_\STEM\_t mmux_\STEM\_j1 (mmux_\STEM\_t @var{OP})
-@c @deftypefunx mmux_\STEM\_t mmux_\STEM\_jn (mmux_sint_t @var{N}, mmux_\STEM\_t @var{OP})
-@c @deftypefunx mmux_\STEM\_t mmux_\STEM\_y0 (mmux_\STEM\_t @var{OP})
-@c @deftypefunx mmux_\STEM\_t mmux_\STEM\_y1 (mmux_\STEM\_t @var{OP})
-@c @deftypefunx mmux_\STEM\_t mmux_\STEM\_yn (mmux_sint_t @var{N}, mmux_\STEM\_t @var{OP})
-Compute the named C function.
-@end deftypefun
+@MmuxDefineMathSpecialFuncs{flonumfl}
+@MmuxDefineMathSpecialFuncs{flonumdb}
+@MmuxDefineMathSpecialFuncs{flonumldb}
 
-@end macro
+@MmuxDefineMathSpecialFuncs{flonumf32}
+@MmuxDefineMathSpecialFuncs{flonumf64}
+@MmuxDefineMathSpecialFuncs{flonumf128}
 
-@c ------------------------------------------------------------------------
+@MmuxDefineMathSpecialFuncs{flonumf32x}
+@MmuxDefineMathSpecialFuncs{flonumf64x}
+@MmuxDefineMathSpecialFuncs{flonumf128x}
 
-@macro MmuxDefineMathFlonumcfluncs{STEM}
-@deftypefun mmux_\STEM\_t mmux_\STEM\_sin (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_cos (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_tan (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_asin (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_acos (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_atan (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sinh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_cosh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_tanh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_asinh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_acosh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_atanh (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp2 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_exp10 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log2 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_log10 (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_pow (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sqrt (mmux_\STEM\_t @var{OP})
-Compute the named C function.
-@end deftypefun
-
-@end macro
-
-@c ------------------------------------------------------------------------
-
-@MmuxDefineMathRealFuncs{flonumfl}
-@MmuxDefineMathRealFuncs{flonumdb}
-@MmuxDefineMathRealFuncs{flonumldb}
-
-@MmuxDefineMathRealFuncs{flonumf32}
-@MmuxDefineMathRealFuncs{flonumf64}
-@MmuxDefineMathRealFuncs{flonumf128}
-
-@MmuxDefineMathRealFuncs{flonumf32x}
-@MmuxDefineMathRealFuncs{flonumf64x}
-@MmuxDefineMathRealFuncs{flonumf128x}
-
-@MmuxDefineMathRealDecimalFuncs{flonumd32}
-@MmuxDefineMathRealDecimalFuncs{flonumd64}
-@MmuxDefineMathRealDecimalFuncs{flonumd128}
-
-@MmuxDefineMathFlonumcfluncs{flonumcfl}
-@MmuxDefineMathFlonumcfluncs{flonumcdb}
-@MmuxDefineMathFlonumcfluncs{flonumcldb}
-
-@MmuxDefineMathFlonumcfluncs{flonumcf32}
-@MmuxDefineMathFlonumcfluncs{flonumcf64}
-@MmuxDefineMathFlonumcfluncs{flonumcf128}
-
-@MmuxDefineMathFlonumcfluncs{flonumcf32x}
-@MmuxDefineMathFlonumcfluncs{flonumcf64x}
-@MmuxDefineMathFlonumcfluncs{flonumcf128x}
-
-@ignore
-@MmuxDefineMathFlonumcfluncs{flonumcd32}
-@MmuxDefineMathFlonumcfluncs{flonumcd64}
-@MmuxDefineMathFlonumcfluncs{flonumcd128}
-@end ignore
+@MmuxDefineMathSpecialFuncs{flonumd32}
+@MmuxDefineMathSpecialFuncs{flonumd64}
+@MmuxDefineMathSpecialFuncs{flonumd128}
 
 @c page
 @node bitwise
@@ -3319,6 +3501,9 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{uint32}
 @MmuxDefineBitwiseFuncs{sint64}
 @MmuxDefineBitwiseFuncs{uint64}
+
+@MmuxDefineBitwiseFuncs{byte}
+@MmuxDefineBitwiseFuncs{octet}
 
 @MmuxDefineBitwiseFuncs{ssize}
 @MmuxDefineBitwiseFuncs{usize}

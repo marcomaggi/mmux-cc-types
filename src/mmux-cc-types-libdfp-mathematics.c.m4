@@ -112,6 +112,11 @@ mmux_standard_flonumd$1_square (mmux_standard_flonumd$1_t op)
   return mmux_standard_flonumd$1_mul(op,op);
 }
 mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_cube (mmux_standard_flonumd$1_t op)
+{
+  return mmux_standard_flonumd$1_mul(op,mmux_standard_flonumd$1_mul(op,op));
+}
+mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_exp10 (mmux_standard_flonumd$1_t op)
 {
   return expd$1(op * logd$1(mmux_standard_flonumd$1_constant_ten()));
@@ -739,6 +744,11 @@ mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_square (mmux_standard_flonumcd$1_t Z)
 {
   return mmux_standard_flonumcd$1_mul(Z,Z);
+}
+mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_cube (mmux_standard_flonumcd$1_t Z)
+{
+  return mmux_standard_flonumcd$1_mul(Z,mmux_standard_flonumcd$1_mul(Z,Z));
 }
 mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_sqrt (mmux_standard_flonumcd$1_t Z)

@@ -79,6 +79,8 @@ test_bitwise_and (void)
   DOIT(uint32);
   DOIT(sint64);
   DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
   DOIT(ssize);
   DOIT(usize);
   DOIT(sintmax);
@@ -159,6 +161,8 @@ test_bitwise_or (void)
   DOIT(uint32);
   DOIT(sint64);
   DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
   DOIT(ssize);
   DOIT(usize);
   DOIT(sintmax);
@@ -239,6 +243,8 @@ test_bitwise_xor (void)
   DOIT(uint32);
   DOIT(sint64);
   DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
   DOIT(ssize);
   DOIT(usize);
   DOIT(sintmax);
@@ -331,6 +337,8 @@ test_bitwise_not (void)
   DOIT(uint32);
   DOIT(sint64);
   DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
   DOIT(ssize);
   DOIT(usize);
   DOIT(sintmax);
@@ -397,6 +405,8 @@ test_bitwise_shl (void)
   DOIT(uint32);
   DOIT(sint64);
   DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
   DOIT(ssize);
   DOIT(usize);
   DOIT(sintmax);
@@ -463,6 +473,8 @@ test_bitwise_shr (void)
   DOIT(uint32);
   DOIT(sint64);
   DOIT(uint64);
+  DOIT(byte);
+  DOIT(octet);
   DOIT(ssize);
   DOIT(usize);
   DOIT(sintmax);
