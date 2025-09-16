@@ -250,6 +250,36 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{ulong}, type stem
 @cindex @code{sllong}, type stem
 @cindex @code{ullong}, type stem
+@cindex @code{sint8}, type stem
+@cindex @code{uint8}, type stem
+@cindex @code{sint16}, type stem
+@cindex @code{uint16}, type stem
+@cindex @code{sint32}, type stem
+@cindex @code{uint32}, type stem
+@cindex @code{sint64}, type stem
+@cindex @code{uint64}, type stem
+
+@cindex @code{byte}, type stem
+@cindex @code{octet}, type stem
+
+@cindex @code{ssize}, type stem
+@cindex @code{usize}, type stem
+@cindex @code{sintmax}, type stem
+@cindex @code{uintmax}, type stem
+@cindex @code{sintptr}, type stem
+@cindex @code{uintptr}, type stem
+@cindex @code{ptrdiff}, type stem
+@cindex @code{mode}, type stem
+@cindex @code{off}, type stem
+@cindex @code{pid}, type stem
+@cindex @code{uid}, type stem
+@cindex @code{gid}, type stem
+@cindex @code{wchar}, type stem
+@cindex @code{wint}, type stem
+@cindex @code{time}, type stem
+@cindex @code{socklen}, type stem
+@cindex @code{rlim}, type stem
+
 @cindex @code{flonumfl}, type stem
 @cindex @code{flonumdb}, type stem
 @cindex @code{flonumldb}, type stem
@@ -281,33 +311,6 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{flonumcd32}, type stem
 @cindex @code{flonumcd64}, type stem
 @cindex @code{flonumcd128}, type stem
-
-@cindex @code{sint8}, type stem
-@cindex @code{uint8}, type stem
-@cindex @code{sint16}, type stem
-@cindex @code{uint16}, type stem
-@cindex @code{sint32}, type stem
-@cindex @code{uint32}, type stem
-@cindex @code{sint64}, type stem
-@cindex @code{uint64}, type stem
-
-@cindex @code{ssize}, type stem
-@cindex @code{usize}, type stem
-@cindex @code{sintmax}, type stem
-@cindex @code{uintmax}, type stem
-@cindex @code{sintptr}, type stem
-@cindex @code{uintptr}, type stem
-@cindex @code{ptrdiff}, type stem
-@cindex @code{mode}, type stem
-@cindex @code{off}, type stem
-@cindex @code{pid}, type stem
-@cindex @code{uid}, type stem
-@cindex @code{gid}, type stem
-@cindex @code{wchar}, type stem
-@cindex @code{wint}, type stem
-@cindex @code{time}, type stem
-@cindex @code{socklen}, type stem
-@cindex @code{rlim}, type stem
 
 
 The following word definitions just alias the corresponding C language type; such uniform names are
@@ -351,6 +354,36 @@ it is an alias for @code{@value{\ALIAS\}}.
 @MmuxDefineTypeStem{ulong,unsigned long}
 @MmuxDefineTypeStem{sllong,signed long long}
 @MmuxDefineTypeStem{ullong,unsigned long long}
+@MmuxDefineTypeStem{sint8,int8_t}
+@MmuxDefineTypeStem{uint8,uint8_t}
+@MmuxDefineTypeStem{sint16,int16_t}
+@MmuxDefineTypeStem{uint16,uint16_t}
+@MmuxDefineTypeStem{sint32,int32_t}
+@MmuxDefineTypeStem{uint32,uint32_t}
+@MmuxDefineTypeStem{sint64,int64_t}
+@MmuxDefineTypeStem{uint64,uint64_t}
+
+@MmuxDefineTypeStem{byte,int8_t}
+@MmuxDefineTypeStem{octet,uint8_t}
+
+@MmuxDefineAliasedTypeStem{ssize,ssize_t,ALIASSSIZE}
+@MmuxDefineAliasedTypeStem{usize,size_t,ALIASUSIZE}
+@MmuxDefineAliasedTypeStem{sintmax, intmax_t,ALIASSINTMAX}
+@MmuxDefineAliasedTypeStem{uintmax, uintmax_t,ALIASUINTMAX}
+@MmuxDefineAliasedTypeStem{sintptr, intptr_t,ALIASSINTPTR}
+@MmuxDefineAliasedTypeStem{uintptr, uintptr_t,ALIASUINTPTR}
+@MmuxDefineAliasedTypeStem{ptrdiff, ptrdiff_t,ALIASPTRDIFF}
+@MmuxDefineAliasedTypeStem{mode, mode_t,ALIASMODE}
+@MmuxDefineAliasedTypeStem{off, off_t,ALIASOFF}
+@MmuxDefineAliasedTypeStem{pid, pid_t,ALIASPID}
+@MmuxDefineAliasedTypeStem{uid, uid_t,ALIASUID}
+@MmuxDefineAliasedTypeStem{gid, gid_t,ALIASGID}
+@MmuxDefineAliasedTypeStem{wchar, wchar_t,ALIASWCHAR}
+@MmuxDefineAliasedTypeStem{wint, wint_t,ALIASWINT}
+@MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
+@MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
+@MmuxDefineAliasedTypeStem{rlim, rlim_t,ALIASRLIM}
+
 @MmuxDefineTypeStem{flonumfl,float}
 @MmuxDefineTypeStem{flonumdb,flonumdb}
 @MmuxDefineTypeStem{flonumldb,long flonumdb}
@@ -398,33 +431,6 @@ Single--word specification of a C language type supported by this package.  It i
 non--standard C language type implementing complex floating--point numbers having
 @objtype{flonumd128} values as real and imaginary parts.
 @end deftp
-
-@MmuxDefineTypeStem{sint8,int8_t}
-@MmuxDefineTypeStem{uint8,uint8_t}
-@MmuxDefineTypeStem{sint16,int16_t}
-@MmuxDefineTypeStem{uint16,uint16_t}
-@MmuxDefineTypeStem{sint32,int32_t}
-@MmuxDefineTypeStem{uint32,uint32_t}
-@MmuxDefineTypeStem{sint64,int64_t}
-@MmuxDefineTypeStem{uint64,uint64_t}
-
-@MmuxDefineAliasedTypeStem{ssize,ssize_t,ALIASSSIZE}
-@MmuxDefineAliasedTypeStem{usize,size_t,ALIASUSIZE}
-@MmuxDefineAliasedTypeStem{sintmax, intmax_t,ALIASSINTMAX}
-@MmuxDefineAliasedTypeStem{uintmax, uintmax_t,ALIASUINTMAX}
-@MmuxDefineAliasedTypeStem{sintptr, intptr_t,ALIASSINTPTR}
-@MmuxDefineAliasedTypeStem{uintptr, uintptr_t,ALIASUINTPTR}
-@MmuxDefineAliasedTypeStem{ptrdiff, ptrdiff_t,ALIASPTRDIFF}
-@MmuxDefineAliasedTypeStem{mode, mode_t,ALIASMODE}
-@MmuxDefineAliasedTypeStem{off, off_t,ALIASOFF}
-@MmuxDefineAliasedTypeStem{pid, pid_t,ALIASPID}
-@MmuxDefineAliasedTypeStem{uid, uid_t,ALIASUID}
-@MmuxDefineAliasedTypeStem{gid, gid_t,ALIASGID}
-@MmuxDefineAliasedTypeStem{wchar, wchar_t,ALIASWCHAR}
-@MmuxDefineAliasedTypeStem{wint, wint_t,ALIASWINT}
-@MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
-@MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
-@MmuxDefineAliasedTypeStem{rlim, rlim_t,ALIASRLIM}
 
 @c page
 @node overview errors
