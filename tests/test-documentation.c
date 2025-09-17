@@ -373,6 +373,32 @@ test_arithmetics (void)
 
 
 static void
+test_mathematics (void)
+{
+  dprintf(2, "%s: enter\n", __func__);
+
+  {
+    dprintf(2, "%s: compute the trigonometric cosine of a number\n", __func__);
+    {
+      mmux_flonumdb_t	X = mmux_flonumdb_literal(0.123);
+      mmux_flonumdb_t	Y = mmux_flonumdb_cos(X);
+
+      mmux_flonumdb_dprintf(2, Y); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically compute the trigonometric cosine of a number\n", __func__);
+    {
+      auto	X = mmux_flonumdb_literal(0.123);
+      auto	Y = mmux_ctype_cos(X);
+
+      mmux_ctype_dprintf(2, Y); dprintf_newline(2);
+    }
+  }
+
+  dprintf(2, "%s: leave\n", __func__);
+}
+
+
+static void
 test_bitwise (void)
 {
   dprintf(2, "%s: enter\n", __func__);
@@ -415,7 +441,8 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_predicates();		}
   if (1) {	test_comparison();		}
   if (1) {	test_arithmetics();		}
-  if (1) {	test_bitwise();		}
+  if (1) {	test_mathematics();		}
+  if (1) {	test_bitwise();			}
 
   exit(EXIT_SUCCESS);
 }

@@ -3509,6 +3509,25 @@ remainder, increment, decrement, sign.
 @chapter Mathematical operations
 
 
+If we want to compute the trigonometric cosine of a floating--point number we do:
+
+@example
+mmux_flonumdb_t   X = mmux_flonumdb_literal(0.123);
+mmux_flonumdb_t   Y = mmux_flonumdb_cos(X);
+
+mmux_flonumdb_dprintf(2, Y);    @print{} 0.992445
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      X = mmux_flonumdb_literal(0.123);
+auto      Y = mmux_ctype_cos(X);
+
+mmux_ctype_dprintf(2, Y);       @print{} 0.992445
+@end example
+
 @menu
 * mathematics trigonometry::    Trigonometric functions.
 * mathematics hyperbolic::      Hyperbolic functions.
@@ -3549,6 +3568,18 @@ Compute the named C function.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sin (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_cos (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_tan (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_asin (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_acos (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_atan (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_atan2 (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+Compute the named C function.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operands and result.
+@end deftypefn
+
 
 @MmuxDefineMathRealTrigonometricFuncs{flonumfl}
 @MmuxDefineMathRealTrigonometricFuncs{flonumdb}
@@ -3600,6 +3631,17 @@ Compute the named C function.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sinh (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_cosh (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_tanh (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_asinh (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_acosh (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_atanh (mmux_ctype_t @var{OP})
+Compute the named C function.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operand and result.
+@end deftypefn
+
 
 @MmuxDefineMathHyperbolicFuncs{flonumfl}
 @MmuxDefineMathHyperbolicFuncs{flonumdb}
@@ -3658,6 +3700,15 @@ Compute the named C function.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_exp (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_exp2 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_exp10 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_expm1 (mmux_ctype_t @var{OP})
+Compute the named C function.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operand and result.
+@end deftypefn
+
 
 @MmuxDefineMathRealExponentiationFuncs{flonumfl}
 @MmuxDefineMathRealExponentiationFuncs{flonumdb}
@@ -3718,6 +3769,16 @@ Compute the named C function.
 
 @c ------------------------------------------------------------------------
 
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_log (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_log2 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_log10 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_logb (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_log1p (mmux_ctype_t @var{OP})
+Compute the named C function.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operand and result.
+@end deftypefn
+
+
 @MmuxDefineMathRealLogarithmicFuncs{flonumfl}
 @MmuxDefineMathRealLogarithmicFuncs{flonumdb}
 @MmuxDefineMathRealLogarithmicFuncs{flonumldb}
@@ -3767,6 +3828,16 @@ Compute the named C function.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_pow (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_square (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_cube (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_sqrt (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_cbrt (mmux_ctype_t @var{OP})
+Compute the named C function.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operands and result.
+@end deftypefn
+
 
 @MmuxDefineMathPowersFuncs{flonumfl}
 @MmuxDefineMathPowersFuncs{flonumdb}
@@ -3824,6 +3895,23 @@ Compute the named C function.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_hypot (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_log1p (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_erf (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_erfc (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_lgamma (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_tgamma (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_j0 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_j1 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_jn (mmux_sint_t @var{N}, mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_y0 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_y1 (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_yn (mmux_sint_t @var{N}, mmux_ctype_t @var{OP})
+Compute the named C function.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operands and result.
+@end deftypefn
+
 
 @MmuxDefineMathSpecialFuncs{flonumfl}
 @MmuxDefineMathSpecialFuncs{flonumdb}
