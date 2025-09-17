@@ -167,8 +167,8 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * complex::                     Basic complex number operations.
 * predicates::                  Type predicates.
 * comparison::                  Comparison functions.
-* arithmetics::                 Arithmetics operations.
-* mathematics::                 Mathematics operations.
+* arithmetics::                 Arithmetical operations.
+* mathematics::                 Mathematical operations.
 * bitwise::                     Bitwise operations.
 
 Appendices
@@ -1995,9 +1995,9 @@ the terminating zero}; otherwise return @samp{-1}.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, @var{VALUE})
-@deftypefnx {Generic Macro} mmux_sint_t mmux_ctype_sprint_size (@var{VALUE})
-Generic macros.
+@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, mmmux_ctype_t @var{VALUE})
+@deftypefnx {Generic Macro} mmux_sint_t mmux_ctype_sprint_size (mmux_ctype_t @var{VALUE})
+Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @end deftypefn
 
 
@@ -2121,9 +2121,9 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 @c ------------------------------------------------------------------------
 
 
-@deftypefn {Generic macro} bool mmux_ctype_dprintf (int @var{fd}, @var{value})
-@deftypefnx {Generic macro} bool mmux_ctype_fprintf (mmux_pointer_t @var{stream}, @var{value})
-Generic macros.
+@deftypefn {Generic macro} bool mmux_ctype_dprintf (int @var{fd}, mmux_ctype_t @var{value})
+@deftypefnx {Generic macro} bool mmux_ctype_fprintf (mmux_pointer_t @var{stream}, mmux_ctype_t @var{value})
+Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @end deftypefn
 
 
@@ -2287,6 +2287,14 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 
 @c ------------------------------------------------------------------------
 
+@deftypefn {Generic Macro}  mmux_ctype_t mmux_ctype_real_part (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_imag_part (mmux_ctype_t @var{OP})
+Extract and return the real or imaginary parts from the real number @var{OP}.  The real part is
+@var{OP} itself; the imaginary part is always zero.  The type @objtype{mmux_ctype_t} is a
+placeholder for the type of the operand and result.
+@end deftypefn
+
+
 @MmuxDefineRealRealImagPartFunction{sshort}
 @MmuxDefineRealRealImagPartFunction{ushort}
 @MmuxDefineRealRealImagPartFunction{sint}
@@ -2414,6 +2422,12 @@ Compute and return the argument value of the complex number @var{OP}.
 
 @c ------------------------------------------------------------------------
 
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_argument (mmux_ctype_t @var{OP})
+Compute and return the complex argument value of @var{OP} interpreted as complex number.  The type
+@objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+@end deftypefn
+
+
 @MmuxDefineRealArgumentFunction{sshort}
 @MmuxDefineRealArgumentFunction{ushort}
 @MmuxDefineRealArgumentFunction{sint}
@@ -2536,6 +2550,12 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @end macro
 
 @c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_conjugate (mmux_ctype_t @var{OP})
+Compute and return complex conjugate value of @var{OP}.  The type @objtype{mmux_ctype_t} is a
+placeholder for the type of the operand and result.
+@end deftypefn
+
 
 @MmuxDefineRealConjugateFunction{sshort}
 @MmuxDefineRealConjugateFunction{ushort}
@@ -2698,18 +2718,19 @@ not--a--number, normal, subnormal; otherwise return @cfalse{}.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_zero (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_positive (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_negative (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_non_positive (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_non_negative (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_infinite (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_finite (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_nan (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_normal (@var{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_is_subnormal (@var{OP})
+@deftypefn {Generic Macro} bool mmux_ctype_is_zero (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_positive (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_negative (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_non_positive (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_non_negative (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_infinite (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_finite (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_nan (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_normal (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_subnormal (mmux_ctype_t @var{OP})
 Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
-not--a--number, normal, subnormal; otherwise return @cfalse{}.
+not--a--number, normal, subnormal; otherwise return @cfalse{}.  The type @objtype{mmux_ctype_t} is a
+placeholder for the type of the operand.
 @end deftypefn
 
 @MmuxDefineTypePredicates{pointer}
@@ -2861,14 +2882,15 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro}  mmux_sint_t mmux_ctype_cmp (@vari{OP}, @varii{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_equal (@vari{OP}, @varii{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_not_equal (@vari{OP}, @varii{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_greater (@vari{OP}, @varii{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_less (@vari{OP}, @varii{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_greater_equal (@vari{OP}, @varii{OP})
-@deftypefnx {Generic Macro} bool mmux_ctype_less_equal (@vari{OP}, @varii{OP})
-Comparison between values.
+@deftypefn {Generic Macro} mmux_sint_t mmux_ctype_cmp (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_not_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_greater (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_less (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_greater_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_less_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+Comparison between values.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
+operands.
 @end deftypefn
 
 @MmuxDefineTypeComparisonExactFunction{pointer}
@@ -2974,6 +2996,8 @@ mmux_ctype_dprintf(2, V);       @print{} 456
 
 In what follows: complex floating--point numbers are compared by comparing their absolute values.
 
+@c ------------------------------------------------------------------------
+
 @macro MmuxDefineTypeComparisonMinMaxFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_max (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_min (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -2981,6 +3005,14 @@ Return the maximum or minimum value between the operands.
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_max (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_min (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+Return the maximum or minimum value between the operands.  The type @objtype{mmux_ctype_t} is a
+placeholder for the type of the operands and result.
+@end deftypefn
 
 
 @MmuxDefineTypeComparisonMinMaxFunction{pointer}
@@ -3114,6 +3146,7 @@ if (mmux_ctype_equal_absmargin(op1, op2, mrg)) @{
 @}
 @end example
 
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineAbsmarginFunc{STEM}
 @deftypefun bool mmux_\STEM\_equal_absmargin (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @vari{MARGIN})
@@ -3121,6 +3154,13 @@ Compare the operands using the given margin.
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} bool mmux_ctype_equal_absmargin (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP}, mmux_ctype_t @vari{MARGIN})
+Compare the operands using the given margin.  The type @objtype{mmux_ctype_t} is a placeholder for
+the type of the operands.
+@end deftypefn
 
 
 @MmuxDefineAbsmarginFunc{flonumfl}
@@ -3221,6 +3261,14 @@ Compare the operands using the given epsilon.
 
 @end macro
 
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} bool mmux_ctype_equal_relepsilon (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP}, mmux_ctype_t @vari{EPSILON})
+Compare the operands using the given epsilon.  The type @objtype{mmux_ctype_t} is a placeholder for
+the type of the operands.
+@end deftypefn
+
+
 @MmuxDefineRelepsilonFunc{flonumfl}
 @MmuxDefineRelepsilonFunc{flonumdb}
 @MmuxDefineRelepsilonFunc{flonumldb}
@@ -3257,7 +3305,7 @@ Compare the operands using the given epsilon.
 
 @c page
 @node arithmetics
-@chapter Arithmetics operations
+@chapter Arithmetical operations
 
 
 To add two numbers we do:
@@ -3303,20 +3351,21 @@ and imaginary parts represent the signs of the real and imaginary parts of the o
 @end itemize
 
 
-@deffn {Generic Macro} mmux_ctype_add (@vari{OP}, @varii{OP})
-@deffnx {Generic Macro} mmux_ctype_sub (@vari{OP}, @varii{OP})
-@deffnx {Generic Macro} mmux_ctype_mul (@vari{OP}, @varii{OP})
-@deffnx {Generic Macro} mmux_ctype_div (@vari{OP}, @varii{OP})
-@deffnx {Generic Macro} mmux_ctype_neg (@var{OP})
-@deffnx {Generic Macro} mmux_ctype_inverse (@var{OP})
-@deffnx {Generic Macro} mmux_ctype_absolute (@var{OP})
-@deffnx {Generic Macro} mmux_ctype_modulo (@vari{OP}, @varii{OP})
-@deffnx {Generic Macro} mmux_ctype_incr (@var{OP})
-@deffnx {Generic Macro} mmux_ctype_decr (@var{OP})
-@deffnx {Generic Macro} mmux_ctype_sign (@var{OP})
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_add (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_sub (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_mul (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_div (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_neg (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_inverse (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_absolute (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_modulo (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_incr (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_decr (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement, sign.
-@end deffn
+remainder, increment, decrement, sign.  The type @objtype{mmux_ctype_t} is a placeholder for the
+type of the operands and result.
+@end deftypefn
 
 
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
@@ -3457,7 +3506,7 @@ remainder, increment, decrement, sign.
 
 @c page
 @node mathematics
-@chapter Mathematics operations
+@chapter Mathematical operations
 
 
 @menu
@@ -3795,6 +3844,40 @@ Compute the named C function.
 @c page
 @node bitwise
 @chapter Bitwise operations
+
+
+Bitwise operations are implemented for exact integer types.  If we want to perform the bitwise
+exclusive--OR operation on two integers we do:
+
+@example
+mmux_uint_t	A = mmux_uint_literal(0b111000);
+mmux_uint_t	B = mmux_uint_literal(0b101010);
+mmux_uint_t	C = mmux_uint_bitwise_xor(A, B);
+
+mmux_uint_dprintf(2, C);        @print{} 18
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto	A = mmux_uint_literal(0b111000);
+auto	B = mmux_uint_literal(0b101010);
+auto	C = mmux_ctype_bitwise_xor(A, B);
+
+mmux_ctype_dprintf(2, C);        @print{} 18
+@end example
+
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_and (mmux_ctype_t @var{OP}, mmux_ctype_t @var{MASK})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_or (mmux_ctype_t @var{OP}, mmux_ctype_t @var{MASK})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_xor (mmux_ctype_t @var{OP}, mmux_ctype_t @var{MASK})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_not (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_shl (mmux_ctype_t @var{OP}, mmux_sint_t @var{NBITS})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_shr (mmux_ctype_t @var{OP}, mmux_sint_t @var{NBITS})
+Perform the bitwise operations on exact integer values.  The type @objtype{mmux_ctype_t} is a
+placeholder for the type of the operands and result.
+@end deftypefn
 
 
 @deftypefun mmux_pointer_t mmux_pointer_bitwise_and (mmux_pointer_t @var{OP}, mmux_uintptr_t @var{MASK})
