@@ -332,6 +332,46 @@ test_comparison (void)
 }
 
 
+static void
+test_arithmetics (void)
+{
+  dprintf(2, "%s: enter\n", __func__);
+
+  {
+    dprintf(2, "%s: add two numbers\n", __func__);
+    {
+      mmux_flonumf128_t	A = mmux_flonumf128_literal(1.23);
+      mmux_flonumf128_t	B = mmux_flonumf128_literal(4.56);
+      mmux_flonumf128_t	C = mmux_flonumf128_add(A, B);
+
+      mmux_flonumf128_dprintf(2, C); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically add two numbers\n", __func__);
+    {
+      auto	A = mmux_flonumf128_literal(1.23);
+      auto	B = mmux_flonumf128_literal(4.56);
+      auto	C = mmux_ctype_add(A, B);
+
+      mmux_ctype_dprintf(2, C); dprintf_newline(2);
+    }
+  }
+
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: negate an unsigned integer\n", __func__);
+    {
+      auto    op  = mmux_ulong_literal(5);
+      auto    rop = mmux_ctype_neg(op);
+
+      mmux_ctype_dprintf(2, rop); dprintf_newline(2);
+    }
+  }
+
+  dprintf(2, "%s: leave\n", __func__);
+}
+
+
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
@@ -346,6 +386,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_stringrep_sprinters();	}
   if (1) {	test_predicates();		}
   if (1) {	test_comparison();		}
+  if (1) {	test_arithmetics();		}
 
   exit(EXIT_SUCCESS);
 }

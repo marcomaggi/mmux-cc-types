@@ -1858,6 +1858,7 @@ DEFINE_BINARY_FUNCTION([[[add]]])
 DEFINE_BINARY_FUNCTION([[[sub]]])
 DEFINE_BINARY_FUNCTION_NO_POINTER([[[mul]]])
 DEFINE_BINARY_FUNCTION_NO_POINTER([[[div]]])
+DEFINE_UNARY_FUNCTION_NO_POINTER([[[neg]]])
 DEFINE_UNARY_FUNCTION_NO_POINTER([[[inverse]]])
 DEFINE_UNARY_FUNCTION_NO_POINTER([[[absolute]]])
 
@@ -1865,94 +1866,6 @@ DEFINE_BINARY_FUNCTION_REAL_NUMBERS_ONLY([[[modulo]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[incr]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[sign]]])
-
-/* No unsigned types for this! */
-#define mmux_ctype_neg(VALUE)						\
-  (_Generic((VALUE),							\
-           mmux_char_t:			mmux_char_neg,			\
-           mmux_schar_t:		mmux_schar_neg,			\
-           mmux_sshort_t:		mmux_sshort_neg,		\
-           mmux_sint_t:			mmux_sint_neg,			\
-           mmux_slong_t:		mmux_slong_neg,			\
-m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
-	   mmux_sllong_t:		mmux_sllong_neg,		\
-]]])m4_dnl
-           mmux_flonumfl_t:		mmux_flonumfl_neg,		\
-	   mmux_flonumdb_t:		mmux_flonumdb_neg,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
-	   mmux_flonumldb_t:		mmux_flonumldb_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
-	   mmux_flonumf32_t:		mmux_flonumf32_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
-	   mmux_flonumf64_t:		mmux_flonumf64_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
-	   mmux_flonumf128_t:		mmux_flonumf128_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
-	   mmux_flonumf32x_t:		mmux_flonumf32x_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
-	   mmux_flonumf64x_t:		mmux_flonumf64x_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
-	   mmux_flonumf128x_t:		mmux_flonumf128x_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
-	   mmux_flonumd32_t:		mmux_flonumd32_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
-	   mmux_flonumd64_t:		mmux_flonumd64_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
-	   mmux_flonumd128_t:		mmux_flonumd128_neg,		\
-]]])m4_dnl
-	   mmux_sint8_t:		mmux_sint8_neg,			\
-	   mmux_sint16_t:		mmux_sint16_neg,		\
-	   mmux_sint32_t:		mmux_sint32_neg,		\
-	   mmux_sint64_t:		mmux_sint64_neg,		\
-	   mmux_byte_t:			mmux_byte_neg,			\
-           mmux_ssize_t:		mmux_ssize_neg,			\
-           mmux_sintmax_t:		mmux_sintmax_neg,		\
-           mmux_sintptr_t:		mmux_sintptr_neg,		\
-           mmux_off_t:			mmux_off_neg,			\
-           mmux_ptrdiff_t:		mmux_ptrdiff_neg,		\
-           mmux_wint_t:			mmux_wint_neg,			\
-	   mmux_flonumcfl_t:		mmux_flonumcfl_neg,		\
-	   mmux_flonumcdb_t:		mmux_flonumcdb_neg,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
-	   mmux_flonumcldb_t:		mmux_flonumcldb_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
-	   mmux_flonumcf32_t:		mmux_flonumcf32_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
-	   mmux_flonumcf64_t:		mmux_flonumcf64_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
-	   mmux_flonumcf128_t:		mmux_flonumcf128_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
-	   mmux_flonumcf32x_t:		mmux_flonumcf32x_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
-	   mmux_flonumcf64x_t:		mmux_flonumcf64x_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
-	   mmux_flonumcf128x_t:		mmux_flonumcf128x_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
-	   mmux_flonumcd32_t:		mmux_flonumcd32_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
-	   mmux_flonumcd64_t:		mmux_flonumcd64_neg,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
-	   mmux_flonumcd128_t:		mmux_flonumcd128_neg,		\
-]]])m4_dnl
-           default:			mmux_ctype_generic_error)(VALUE))
 
 
 /** --------------------------------------------------------------------

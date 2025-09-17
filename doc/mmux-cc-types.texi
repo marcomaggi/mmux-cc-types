@@ -3260,26 +3260,63 @@ Compare the operands using the given epsilon.
 @chapter Arithmetics operations
 
 
+To add two numbers we do:
+
+@example
+mmux_flonumf128_t A = mmux_flonumf128_literal(1.23);
+mmux_flonumf128_t B = mmux_flonumf128_literal(4.56);
+mmux_flonumf128_t C = mmux_flonumf128_add(A, B);
+
+mmux_flonumf128_dprintf(2, C);  @print{} 5.79
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      A = mmux_flonumf128_literal(1.23);
+auto      B = mmux_flonumf128_literal(4.56);
+auto      C = mmux_ctype_add(A, B);
+
+mmux_ctype_dprintf(2, C);  @print{} 5.79
+@end example
+
 Notes on arithmetics functions:
 
 @itemize
 @item
-Notice how the @code{neg} functions are defined for unsigned exact integers; the result of such an
-operation is whatever the compile produces; for example:
+Notice how the @code{neg} functions are defined for unsigned exact integers: the result of such an
+operation is whatever the compiled code produces; for example:
 
 @example
-mmux_ulong_t    op  = 5;
-auto            rop = mmux_ulong_neg(op);
-dprintf(2, "rop = %lu\n", rop);
-@print{} 18446744073709551611
+auto    op  = mmux_ulong_literal(5);
+auto    rop = mmux_ctype_neg(op);
+
+mmux_ctype_dprintf(2, rop);     @print{} 18446744073709551611
 @end example
 
 @item
 The @code{sign} function returns @samp{+1}, @samp{-1}, @samp{0} depending on the sign of its
-operand; for flonum operands the result is always @samp{+1.0} or @samp{-1.0} because flonum zero has
-a sign; for flonumc operands the result is a complex number whose real and imaginary parts represent
-the signs of the real and imaginary parts of the operand.
+operand; for @code{flonum} operands the result is always @samp{+1.0} or @samp{-1.0} because
+@code{flonum} zero has a sign; for @code{flonumc} operands the result is a complex number whose real
+and imaginary parts represent the signs of the real and imaginary parts of the operand.
 @end itemize
+
+
+@deffn {Generic Macro} mmux_ctype_add (@vari{OP}, @varii{OP})
+@deffnx {Generic Macro} mmux_ctype_sub (@vari{OP}, @varii{OP})
+@deffnx {Generic Macro} mmux_ctype_mul (@vari{OP}, @varii{OP})
+@deffnx {Generic Macro} mmux_ctype_div (@vari{OP}, @varii{OP})
+@deffnx {Generic Macro} mmux_ctype_neg (@var{OP})
+@deffnx {Generic Macro} mmux_ctype_inverse (@var{OP})
+@deffnx {Generic Macro} mmux_ctype_absolute (@var{OP})
+@deffnx {Generic Macro} mmux_ctype_modulo (@vari{OP}, @varii{OP})
+@deffnx {Generic Macro} mmux_ctype_incr (@var{OP})
+@deffnx {Generic Macro} mmux_ctype_decr (@var{OP})
+@deffnx {Generic Macro} mmux_ctype_sign (@var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
+remainder, increment, decrement, sign.
+@end deffn
 
 
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
