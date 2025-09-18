@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-09-04 07:02:13 marco>
+;; Time-stamp: <2025-09-17 21:38:50 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -125,7 +125,8 @@
     "mmux_ctype_fprintf"
     "mmux_ctype_parse"
     "mmux_ctype_sprint"
-    "mmux_ctype_sprint_size"))
+    "mmux_ctype_sprint_size"
+    "mmux_ctype_sprint_with_base"))
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/miscellaneous
   '("mmux_ctype_sizeof"
@@ -198,6 +199,7 @@
     "mmux_pointer_parse"
     "mmux_pointer_sprint"
     "mmux_pointer_sprint_size"
+    "mmux_pointer_sprint_with_base"
     ))
 
 (defconst mmux-cc-types-font-lock-rex/known-functions-pointer

@@ -36,11 +36,16 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
 mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value);
+mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value)
+  __attribute__((__const__));
 
 mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
 mmux_cc_types_decl mmux_sint_t mmux_$1_sprint_size (mmux_$1_t value);
+
+mmux_cc_types_decl bool mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen,
+						  mmux_$1_t op, mmux_uint_t const base)
+  __attribute__((__nonnull__(1)));
 
 mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value);
 mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)

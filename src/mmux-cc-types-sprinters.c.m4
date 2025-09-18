@@ -587,6 +587,145 @@ DEFINE_ALIASED_TYPES_SPRINTER([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 
 
 /** --------------------------------------------------------------------
+ ** Formatting exact integers with custom base.
+ ** ----------------------------------------------------------------- */
+
+/* We use the same map-to-output of the GNU Multiple Precision library.
+ *                                             0         1         2         3         4         5         6
+ *                                             01234567890123456789012345678901234567890123456789012345678901
+ */
+static char const	map_to_output[1+62] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+bool
+mmux_sint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen,
+			      mmux_sint64_t op, mmux_uint_t const base)
+{
+  constexpr mmux_standard_usize_t	maximum_buflen = 1 + 64;
+  char					reverse_result[maximum_buflen];
+  mmux_standard_usize_t			i = 0;
+  mmux_standard_sint64_t		rest;
+
+  for (;; ++i) {
+    if (i == buflen.value) {
+      /* Not enough room in output buffer. */
+      return true;
+    }
+    rest     = op.value % base.value;
+    op.value = op.value / base.value;
+    reverse_result[i] = map_to_output[rest];
+    if (0 == op.value) { break; }
+  }
+  ++i;
+
+  /* Now "i" equals the number of characters including the terminating zero. */
+  if (i > buflen.value) {
+    /* Not enough room in output buffer. */
+    return true;
+  } else {
+    bufptr[i] = '\0';
+    /* Copy in reverse from "reverse_result" to "bufptr". */
+    for (mmux_standard_usize_t j = i-1, k = 0; k < i; --j, ++k) {
+      bufptr[k] = reverse_result[j];
+    }
+    return false;
+  }
+}
+bool
+mmux_uint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen,
+			      mmux_uint64_t op, mmux_uint_t const base)
+{
+  constexpr mmux_standard_usize_t	maximum_buflen = 1 + 64;
+  char					reverse_result[maximum_buflen];
+  mmux_standard_usize_t			i = 0;
+  mmux_standard_uint64_t		rest;
+
+  for (;; ++i) {
+    if (i == buflen.value) {
+      /* Not enough room in output buffer. */
+      return true;
+    }
+    rest     = op.value % base.value;
+    op.value = op.value / base.value;
+    reverse_result[i] = map_to_output[rest];
+    if (0 == op.value) { break; }
+  }
+  ++i;
+
+  /* Now "i" equals the number of characters including the terminating zero. */
+  if (i > buflen.value) {
+    /* Not enough room in output buffer. */
+    return true;
+  } else {
+    bufptr[i] = '\0';
+    /* Copy in reverse from "reverse_result" to "bufptr". */
+    for (mmux_standard_usize_t j = i-1, k = 0; k < i; --j, ++k) {
+      bufptr[k] = reverse_result[j];
+    }
+    return false;
+  }
+}
+
+m4_divert(-1)
+m4_define([[[DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen, mmux_$1_t op, mmux_uint_t const base)
+{
+  return mmux_sint64_sprint_with_base(bufptr, buflen, mmux_sint64(op.value), base);
+}]]])]]])
+
+m4_define([[[DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen, mmux_$1_t op, mmux_uint_t const base)
+{
+  return mmux_uint64_sprint_with_base(bufptr, buflen, mmux_uint64(op.value), base);
+}]]])]]])
+m4_divert(0)m4_dnl
+m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])]]],[[[m4_dnl
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])]]])
+
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[schar]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uchar]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sshort]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[ushort]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sint]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uint]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[slong]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[ulong]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sllong]]], [[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[ullong]]], [[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sint8]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uint8]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sint16]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uint16]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sint32]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uint32]]])
+
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[byte]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[octet]]])
+
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[ssize]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[usize]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sintmax]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uintmax]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sintptr]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uintptr]]])
+
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[ptrdiff]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[mode]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[off]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[pid]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uid]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[gid]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[wchar]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[wint]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[time]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[socklen]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[rlim]]])
+
+
+/** --------------------------------------------------------------------
  ** Printers.
  ** ----------------------------------------------------------------- */
 
