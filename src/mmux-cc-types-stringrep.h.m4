@@ -43,9 +43,12 @@ mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmu
   __attribute__((__nonnull__(1)));
 mmux_cc_types_decl mmux_sint_t mmux_$1_sprint_size (mmux_$1_t value);
 
-mmux_cc_types_decl bool mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen,
+mmux_cc_types_decl bool mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p,
+						  bool * is_negative,
 						  mmux_$1_t op, mmux_uint_t const base)
   __attribute__((__nonnull__(1)));
+
+mmux_cc_types_decl bool mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t const base);
 
 mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value);
 mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)

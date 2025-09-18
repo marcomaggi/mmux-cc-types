@@ -229,6 +229,10 @@ MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[FLONUMCF128X]]],[[[m4_dnl
 typedef void *			mmux_pointer_t;
 typedef void const *		mmux_pointerc_t;
 
+typedef char *			mmux_asciip_t;
+typedef char **			mmux_asciipp_t;
+typedef char ***		mmux_asciippp_t;
+
 typedef char *			mmux_asciizp_t;
 typedef char **			mmux_asciizpp_t;
 typedef char ***		mmux_asciizppp_t;

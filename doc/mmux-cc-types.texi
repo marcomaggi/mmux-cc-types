@@ -1940,6 +1940,16 @@ the parsing operation, for example: the name of a C function.
 @section Printing string representations of C language types
 
 
+@menu
+* stringrep sprinters general::         General string representations.
+* stringrep sprinters integers::        Exact integer string representations.
+@end menu
+
+@c page
+@node stringrep sprinters general
+@subsection General string representations
+
+
 Type string printers convert binary representations of C language values to string representations;
 to construct a @objtype{mmux_flonumdb_t} string representation we do:
 
@@ -1995,7 +2005,7 @@ the terminating zero}; otherwise return @samp{-1}.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, mmmux_ctype_t @var{VALUE})
+@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, mmux_ctype_t @var{VALUE})
 @deftypefnx {Generic Macro} mmux_sint_t mmux_ctype_sprint_size (mmux_ctype_t @var{VALUE})
 Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @end deftypefn
@@ -2014,6 +2024,33 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{ulong}
 @MmuxDefineCFunctionSprinter{sllong}
 @MmuxDefineCFunctionSprinter{ullong}
+@MmuxDefineCFunctionSprinter{sint8}
+@MmuxDefineCFunctionSprinter{uint8}
+@MmuxDefineCFunctionSprinter{sint16}
+@MmuxDefineCFunctionSprinter{uint16}
+@MmuxDefineCFunctionSprinter{sint32}
+@MmuxDefineCFunctionSprinter{uint32}
+@MmuxDefineCFunctionSprinter{sint64}
+@MmuxDefineCFunctionSprinter{uint64}
+
+@MmuxDefineCFunctionSprinter{ssize}
+@MmuxDefineCFunctionSprinter{usize}
+@MmuxDefineCFunctionSprinter{sintmax}
+@MmuxDefineCFunctionSprinter{uintmax}
+@MmuxDefineCFunctionSprinter{sintptr}
+@MmuxDefineCFunctionSprinter{uintptr}
+@MmuxDefineCFunctionSprinter{ptrdiff}
+@MmuxDefineCFunctionSprinter{mode}
+@MmuxDefineCFunctionSprinter{off}
+@MmuxDefineCFunctionSprinter{pid}
+@MmuxDefineCFunctionSprinter{uid}
+@MmuxDefineCFunctionSprinter{gid}
+@MmuxDefineCFunctionSprinter{wchar}
+@MmuxDefineCFunctionSprinter{wint}
+@MmuxDefineCFunctionSprinter{time}
+@MmuxDefineCFunctionSprinter{socklen}
+@MmuxDefineCFunctionSprinter{rlim}
+
 @MmuxDefineCFunctionSprinter{flonumfl}
 @MmuxDefineCFunctionSprinter{flonumdb}
 @MmuxDefineCFunctionSprinter{flonumldb}
@@ -2046,32 +2083,159 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{flonumcd64}
 @MmuxDefineCFunctionSprinter{flonumcd128}
 
-@MmuxDefineCFunctionSprinter{sint8}
-@MmuxDefineCFunctionSprinter{uint8}
-@MmuxDefineCFunctionSprinter{sint16}
-@MmuxDefineCFunctionSprinter{uint16}
-@MmuxDefineCFunctionSprinter{sint32}
-@MmuxDefineCFunctionSprinter{uint32}
-@MmuxDefineCFunctionSprinter{sint64}
-@MmuxDefineCFunctionSprinter{uint64}
+@c page
+@node stringrep sprinters integers
+@subsection Exact integer string representations
 
-@MmuxDefineCFunctionSprinter{ssize}
-@MmuxDefineCFunctionSprinter{usize}
-@MmuxDefineCFunctionSprinter{sintmax}
-@MmuxDefineCFunctionSprinter{uintmax}
-@MmuxDefineCFunctionSprinter{sintptr}
-@MmuxDefineCFunctionSprinter{uintptr}
-@MmuxDefineCFunctionSprinter{ptrdiff}
-@MmuxDefineCFunctionSprinter{mode}
-@MmuxDefineCFunctionSprinter{off}
-@MmuxDefineCFunctionSprinter{pid}
-@MmuxDefineCFunctionSprinter{uid}
-@MmuxDefineCFunctionSprinter{gid}
-@MmuxDefineCFunctionSprinter{wchar}
-@MmuxDefineCFunctionSprinter{wint}
-@MmuxDefineCFunctionSprinter{time}
-@MmuxDefineCFunctionSprinter{socklen}
-@MmuxDefineCFunctionSprinter{rlim}
+
+The following functions @cfunc{mmux_*_sprint_with_base} generate a string representation of the
+exact integer @var{VALUE} and store it, in @mmuxascii{} format, in the string referenced by
+@var{BUFPTR}.  When successful return @cfalse{}; otherwise leave @var{BUFPTR} untouched and return
+@ctrue{}.
+
+The following functions @cfunc{mmux_*_dprintf_with_base} generate a string representation of the
+exact integer @var{VALUE} and write it to the file descriptor @var{FD}.  When successful return
+@cfalse{}; otherwise return @ctrue{}.
+
+Behavioural notes for the functions @cfunc{mmux_*_sprint_with_base}:
+
+@itemize
+@item
+The generated string @strong{does not} include a terminating zero character.
+
+@item
+If there is not enough room in the buffer referenced by @var{BUFPTR} to contain the generated
+string: the buffer is left untouched and the return value is @ctrue{}.
+
+@item
+Regarding the argument @var{BUFLEN_P}:
+
+@itemize -
+@item
+upon entering a function call: it must reference a variable representing the maximum number of
+characters that can be stored in the buffer referenced by @var{BUFPTR};
+
+@item
+upon successfully returning from a function call: it is set to the number of characters stored in
+the buffer referenced by by @var{BUFPTR};
+
+@item
+upon returning with failure from a function call: it is left untouched.
+@end itemize
+
+@item
+If the exact integer is negative: the variable referenced by @var{IS_NEGATIVE_P} is set to @ctrue{};
+otherwise it is set to @cfalse{}.  The generated string @strong{does not} include a sign character.
+
+@item
+The @var{base} argument represents the base of the string representation; it can be between @samp{2}
+included and @samp{62} included.
+
+@item
+The longest generated string happens when the base is @samp{2} and it is @samp{64} characters long.
+
+@item
+Internally all the exact integers are converted to @objtype{mmux_sint64_t} or
+@objtype{mmux_uint64_t}, then the conversion is performed.
+
+@item
+No padding is performed for the generated string.
+@end itemize
+
+The cipher to output character map is:
+
+@example
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+@end example
+
+@noindent
+and it has 62 characters.  It is similar to the mapping used by the @gnu{} Multiple Precision
+library, @xref{I/O of Integers, Input and Output Functions, Input and Output Functions, gmp}.
+
+Some usage examples:
+
+@example
+#define DOIT(LITERAL, BASE) \
+  mmux_ctype_dprintf_with_base(2, \
+    mmux_sint64_literal(LITERAL), \
+    mmux_uint_literal(BASE))
+
+DOIT(+123,       2);    @print{} +1111011
+DOIT(+123,      10);    @print{} +123
+DOIT(+1234,     10);    @print{} +1234
+DOIT(-1234,     10);    @print{} -1234
+DOIT(+123,      16);    @print{} +7B
+DOIT(-123,      16);    @print{} -7B
+
+DOIT(10,        11);    @print{} +A
+DOIT(20,        21);    @print{} +K
+DOIT(30,        31);    @print{} +U
+DOIT(40,        41);    @print{} +e
+DOIT(50,        51);    @print{} +o
+DOIT(60,        61);    @print{} +y
+DOIT(61,        62);    @print{} +z
+@end example
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineCFunctionExactIntegerSprinter{STEM}
+@deftypefun bool mmux_\STEM\_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_\STEM\_t @var{VALUE})
+@deftypefunx bool mmux_\STEM\_dprintf_with_base (int @var{FD}, mmux_\STEM\_t @var{VALUE}, mmux_uint_t @var{BASE})
+Generate or print a string representation of the exact integer @var{VALUE}.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} bool mmux_ctype_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_ctype_t @var{VALUE})
+@deftypefnx {Generic Macro} bool mmux_ctype_dprintf_with_base (int @var{FD}, mmux_ctype_t @var{VALUE}, mmux_uint_t @var{BASE})
+Generic macros.  Generate or print a string representation of the exact integer @var{VALUE}.  The
+type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+@end deftypefn
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineCFunctionExactIntegerSprinter{pointer}
+
+@MmuxDefineCFunctionExactIntegerSprinter{char}
+@MmuxDefineCFunctionExactIntegerSprinter{schar}
+@MmuxDefineCFunctionExactIntegerSprinter{uchar}
+@MmuxDefineCFunctionExactIntegerSprinter{sshort}
+@MmuxDefineCFunctionExactIntegerSprinter{ushort}
+@MmuxDefineCFunctionExactIntegerSprinter{sint}
+@MmuxDefineCFunctionExactIntegerSprinter{uint}
+@MmuxDefineCFunctionExactIntegerSprinter{slong}
+@MmuxDefineCFunctionExactIntegerSprinter{ulong}
+@MmuxDefineCFunctionExactIntegerSprinter{sllong}
+@MmuxDefineCFunctionExactIntegerSprinter{ullong}
+
+@MmuxDefineCFunctionExactIntegerSprinter{sint8}
+@MmuxDefineCFunctionExactIntegerSprinter{uint8}
+@MmuxDefineCFunctionExactIntegerSprinter{sint16}
+@MmuxDefineCFunctionExactIntegerSprinter{uint16}
+@MmuxDefineCFunctionExactIntegerSprinter{sint32}
+@MmuxDefineCFunctionExactIntegerSprinter{uint32}
+@MmuxDefineCFunctionExactIntegerSprinter{sint64}
+@MmuxDefineCFunctionExactIntegerSprinter{uint64}
+
+@MmuxDefineCFunctionExactIntegerSprinter{ssize}
+@MmuxDefineCFunctionExactIntegerSprinter{usize}
+@MmuxDefineCFunctionExactIntegerSprinter{sintmax}
+@MmuxDefineCFunctionExactIntegerSprinter{uintmax}
+@MmuxDefineCFunctionExactIntegerSprinter{sintptr}
+@MmuxDefineCFunctionExactIntegerSprinter{uintptr}
+@MmuxDefineCFunctionExactIntegerSprinter{ptrdiff}
+@MmuxDefineCFunctionExactIntegerSprinter{mode}
+@MmuxDefineCFunctionExactIntegerSprinter{off}
+@MmuxDefineCFunctionExactIntegerSprinter{pid}
+@MmuxDefineCFunctionExactIntegerSprinter{uid}
+@MmuxDefineCFunctionExactIntegerSprinter{gid}
+@MmuxDefineCFunctionExactIntegerSprinter{wchar}
+@MmuxDefineCFunctionExactIntegerSprinter{wint}
+@MmuxDefineCFunctionExactIntegerSprinter{time}
+@MmuxDefineCFunctionExactIntegerSprinter{socklen}
+@MmuxDefineCFunctionExactIntegerSprinter{rlim}
 
 @c page
 @node printing

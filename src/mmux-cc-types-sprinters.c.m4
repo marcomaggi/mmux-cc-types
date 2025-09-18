@@ -597,89 +597,118 @@ DEFINE_ALIASED_TYPES_SPRINTER([[[rlim]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
 static char const	map_to_output[1+62] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 bool
-mmux_sint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen,
-			      mmux_sint64_t op, mmux_uint_t const base)
+mmux_sint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p,
+			      bool * is_negative_p, mmux_sint64_t op, mmux_uint_t const ubase)
 {
-  constexpr mmux_standard_usize_t	maximum_buflen = 1 + 64;
+  mmux_usize_t				buflen = *buflen_p;
+  constexpr mmux_standard_usize_t	maximum_buflen = 64;
   char					reverse_result[maximum_buflen];
-  mmux_standard_usize_t			i = 0;
-  mmux_standard_sint64_t		rest;
+  mmux_standard_usize_t			cipher_counter = 0;
+  mmux_sint64_t				rest;
+  bool					is_negative;
+  auto					base = mmux_sint64(ubase.value);
 
-  for (;; ++i) {
-    if (i == buflen.value) {
+  /* Validate the base argument. */
+  if (mmux_sint64_less(base,    mmux_sint64_literal(2)) ||
+      mmux_sint64_greater(base, mmux_sint64_literal(62))) {
+    return true;
+  }
+
+  if (mmux_sint64_is_negative(op)) {
+    is_negative = true;
+    op = mmux_sint64_neg(op);
+  } else {
+    is_negative = false;
+  }
+
+  for (; (! mmux_sint64_is_zero(op)); ++cipher_counter) {
+    if (cipher_counter == buflen.value) {
       /* Not enough room in output buffer. */
       return true;
     }
-    rest     = op.value % base.value;
-    op.value = op.value / base.value;
-    reverse_result[i] = map_to_output[rest];
-    if (0 == op.value) { break; }
+    rest  = mmux_sint64_modulo(op, base);
+    op    = mmux_sint64_div(op, base);
+    reverse_result[cipher_counter] = map_to_output[rest.value];
   }
-  ++i;
 
-  /* Now "i" equals the number of characters including the terminating zero. */
-  if (i > buflen.value) {
-    /* Not enough room in output buffer. */
-    return true;
-  } else {
-    bufptr[i] = '\0';
-    /* Copy in reverse from "reverse_result" to "bufptr". */
-    for (mmux_standard_usize_t j = i-1, k = 0; k < i; --j, ++k) {
+  /* Copy in reverse from "reverse_result" to "bufptr". */
+  {
+    for (mmux_standard_usize_t j = cipher_counter-1, k = 0; k < cipher_counter; --j, ++k) {
       bufptr[k] = reverse_result[j];
+      //dprintf(2, "%s: offset %lu, output char %c\n", __func__, k, bufptr[k]);
     }
-    return false;
   }
+
+  *is_negative_p  = is_negative;
+  buflen_p->value = cipher_counter;
+  return false;
 }
 bool
-mmux_uint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen,
-			      mmux_uint64_t op, mmux_uint_t const base)
+mmux_uint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p,
+			      bool * is_negative_p, mmux_uint64_t op, mmux_uint_t const ubase)
 {
-  constexpr mmux_standard_usize_t	maximum_buflen = 1 + 64;
+  mmux_usize_t				buflen = *buflen_p;
+  constexpr mmux_standard_usize_t	maximum_buflen = 64;
   char					reverse_result[maximum_buflen];
-  mmux_standard_usize_t			i = 0;
-  mmux_standard_uint64_t		rest;
+  mmux_standard_usize_t			cipher_counter = 0;
+  mmux_uint64_t				rest;
+  auto					base = mmux_uint64(ubase.value);
 
-  for (;; ++i) {
-    if (i == buflen.value) {
+  /* Validate the base argument. */
+  if (mmux_uint64_less(base,    mmux_uint64_literal(2)) ||
+      mmux_uint64_greater(base, mmux_uint64_literal(62))) {
+    return true;
+  }
+
+  for (; (! mmux_uint64_is_zero(op)); ++cipher_counter) {
+    if (cipher_counter == buflen.value) {
       /* Not enough room in output buffer. */
       return true;
     }
-    rest     = op.value % base.value;
-    op.value = op.value / base.value;
-    reverse_result[i] = map_to_output[rest];
-    if (0 == op.value) { break; }
+    rest  = mmux_uint64_modulo(op, base);
+    op    = mmux_uint64_div(op, base);
+    reverse_result[cipher_counter] = map_to_output[rest.value];
   }
-  ++i;
 
-  /* Now "i" equals the number of characters including the terminating zero. */
-  if (i > buflen.value) {
-    /* Not enough room in output buffer. */
-    return true;
-  } else {
-    bufptr[i] = '\0';
-    /* Copy in reverse from "reverse_result" to "bufptr". */
-    for (mmux_standard_usize_t j = i-1, k = 0; k < i; --j, ++k) {
+  /* Copy in reverse from "reverse_result" to "bufptr". */
+  {
+    for (mmux_standard_usize_t j = cipher_counter-1, k = 0; k < cipher_counter; --j, ++k) {
       bufptr[k] = reverse_result[j];
     }
-    return false;
   }
+
+  *is_negative_p  = false;
+  buflen_p->value = cipher_counter;
+  return false;
 }
 
 m4_divert(-1)
 m4_define([[[DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
-mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen, mmux_$1_t op, mmux_uint_t const base)
+mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p, bool * is_negative_p,
+			  mmux_$1_t op, mmux_uint_t const base)
 {
-  return mmux_sint64_sprint_with_base(bufptr, buflen, mmux_sint64(op.value), base);
+  return mmux_sint64_sprint_with_base(bufptr, buflen_p, is_negative_p, mmux_sint64(op.value), base);
 }]]])]]])
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
-mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t buflen, mmux_$1_t op, mmux_uint_t const base)
+mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p, bool * is_negative_p,
+			  mmux_$1_t op, mmux_uint_t const base)
 {
-  return mmux_uint64_sprint_with_base(bufptr, buflen, mmux_uint64(op.value), base);
+  return mmux_uint64_sprint_with_base(bufptr, buflen_p, is_negative_p, mmux_uint64(op.value), base);
 }]]])]]])
 m4_divert(0)m4_dnl
+
+bool
+mmux_pointer_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p, bool * is_negative_p,
+			       mmux_pointer_t op, mmux_uint_t const base)
+{
+  auto	U = (mmux_standard_uintptr_t)op;
+
+  return mmux_uint64_sprint_with_base(bufptr, buflen_p, is_negative_p, mmux_uint64(U), base);
+}
+
 m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])]]],[[[m4_dnl
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])]]])
@@ -846,5 +875,131 @@ DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[wint]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[time]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[socklen]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[rlim]]])
+
+
+/** --------------------------------------------------------------------
+ ** Printers with custom base.
+ ** ----------------------------------------------------------------- */
+
+bool
+mmux_sint64_dprintf_with_base (int fd, mmux_sint64_t op, mmux_uint_t const base)
+{
+  auto	buflen = mmux_usize_literal(64);
+  char 	bufptr[buflen.value];
+  bool	is_negative;
+
+  if (mmux_sint64_sprint_with_base(bufptr, &buflen, &is_negative, op, base)) {
+    return true;
+  } else {
+    /* The longest generated string is of 64  characters; we need a character for the
+       sign; we need a character for the terminating zero. */
+    char	the_string[64+1+1];
+    auto	char_counter = mmux_usize_literal(0);
+
+    the_string[char_counter.value] = (is_negative)? '-' : '+';
+    char_counter = mmux_ctype_incr(char_counter);
+    memcpy(the_string + char_counter.value, bufptr, buflen.value);
+    char_counter = mmux_ctype_add(char_counter, buflen);
+    the_string[char_counter.value] = '\0';
+    if (0 > dprintf(fd, "%s", the_string)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+bool
+mmux_uint64_dprintf_with_base (int fd, mmux_uint64_t op, mmux_uint_t const base)
+{
+  auto	buflen = mmux_usize_literal(64);
+  char 	bufptr[buflen.value];
+  bool	is_negative;
+
+  if (mmux_uint64_sprint_with_base(bufptr, &buflen, &is_negative, op, base)) {
+    return true;
+  } else {
+    /* The longest generated string is of 64  characters; we need a character for the
+       sign; we need a character for the terminating zero. */
+    char	the_string[64+1+1];
+    auto	char_counter = mmux_usize_literal(0);
+
+    the_string[char_counter.value] = (is_negative)? '-' : '+';
+    char_counter = mmux_ctype_incr(char_counter);
+    memcpy(the_string + char_counter.value, bufptr, buflen.value);
+    char_counter = mmux_ctype_add(char_counter, buflen);
+    the_string[char_counter.value] = '\0';
+    if (0 > dprintf(fd, "%s", the_string)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+m4_divert(-1)
+m4_define([[[DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t const base)
+{
+  return mmux_sint64_dprintf_with_base(fd, mmux_sint64(op.value), base);
+}]]])]]])
+
+m4_define([[[DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t const base)
+{
+  return mmux_uint64_dprintf_with_base(fd, mmux_uint64(op.value), base);
+}]]])]]])
+m4_divert(0)m4_dnl
+
+bool
+mmux_pointer_dprintf_with_base (int fd, mmux_pointer_t op, mmux_uint_t const base)
+{
+  return mmux_uintptr_dprintf_with_base(fd, mmux_uintptr((mmux_standard_uintptr_t)op), base);
+}
+
+m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[char]]])]]],[[[m4_dnl
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[char]]])]]])
+
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[schar]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uchar]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sshort]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ushort]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sint]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uint]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[slong]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ulong]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sllong]]], [[[MMUX_CC_TYPES_HAS_SLLONG]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ullong]]], [[[MMUX_CC_TYPES_HAS_ULLONG]]])
+
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sint8]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uint8]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sint16]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uint16]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sint32]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uint32]]])
+
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[byte]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[octet]]])
+
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ssize]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[usize]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sintmax]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uintmax]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[sintptr]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uintptr]]])
+
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ptrdiff]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[mode]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[off]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[pid]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uid]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[gid]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[wchar]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[wint]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[time]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[socklen]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[rlim]]])
 
 /* end of file */

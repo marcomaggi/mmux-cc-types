@@ -21,7 +21,7 @@
 
 
 /** --------------------------------------------------------------------
- ** Integers.
+ ** Basic sprinter: exact integers.
  ** ----------------------------------------------------------------- */
 
 #undef  DEFINE_TEST_SPRINTER_FUNCTION
@@ -90,7 +90,7 @@ DEFINE_TEST_SPRINTER_FUNCTION(rlim,		123,	"123")
 
 
 /** --------------------------------------------------------------------
- ** Real flonums.
+ ** Basic sprinter: real flonums.
  ** ----------------------------------------------------------------- */
 
 #undef  DEFINE_TEST_SPRINTER_FUNCTION
@@ -151,7 +151,7 @@ DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123000")
 
 
 /** --------------------------------------------------------------------
- ** Complex flonums.
+ ** Basic sprinter: complex flonums.
  ** ----------------------------------------------------------------- */
 
 #undef  DEFINE_TEST_SPRINTER_FUNCTION
@@ -209,6 +209,552 @@ DEFINE_TEST_SPRINTER_FUNCTION(flonumcd64,	0.123, 0.456,	"(0.123000)+i*(0.456000)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
 DEFINE_TEST_SPRINTER_FUNCTION(flonumcd128,	0.123, 0.456,	"(0.123000)+i*(0.456000)")
 #endif
+
+
+/** --------------------------------------------------------------------
+ ** Sprinter with base: exact integers.
+ ** ----------------------------------------------------------------- */
+
+#undef  DOIT_FOR_THIS_NUMBER
+#define DOIT_FOR_THIS_NUMBER(STEM,NUMBER,BASE,EXPECTED_STRING)					\
+  {												\
+    auto	number		= mmux_##STEM##_literal(NUMBER);				\
+    auto	base		= mmux_uint_literal(BASE);					\
+    bool	is_negative;									\
+												\
+    /* First try with small output buffer, the with big output buffer. */			\
+    {												\
+      auto		buflen = mmux_usize_literal(2);						\
+      mmux_asciip_t 	bufptr = alloca(buflen.value);						\
+												\
+      if (mmux_##STEM##_sprint_with_base(bufptr, &buflen, &is_negative, number, base)) {	\
+	buflen = mmux_usize_literal(65);							\
+	bufptr = alloca(buflen.value);								\
+												\
+	if (mmux_##STEM##_sprint_with_base(bufptr, &buflen, &is_negative, number, base)) {	\
+	  dprintf(2, "%s: failed conversion of '", __func__);					\
+	  mmux_ctype_dprintf(2, number);							\
+	  dprintf(2, "' in base '");								\
+	  mmux_ctype_dprintf(2, base);								\
+	  dprintf(2, "'\n");									\
+	  exit(EXIT_FAILURE);									\
+	}											\
+      }												\
+												\
+      {												\
+	char	the_string[65];									\
+	auto	char_counter = mmux_usize_literal(0);						\
+												\
+	memset(the_string, 'Z', 63);								\
+	the_string[64] = '\0';									\
+												\
+	the_string[char_counter.value] = (is_negative)? '-' : '+';				\
+	char_counter = mmux_ctype_incr(char_counter);						\
+	memcpy(the_string + char_counter.value, bufptr, buflen.value);				\
+	char_counter = mmux_ctype_add(char_counter, buflen);					\
+	the_string[char_counter.value] = '\0';							\
+	if (0) {										\
+	  dprintf(2, "%s: buflen %lu, char_counter %lu, string: '%s'\n", __func__,		\
+		  buflen.value, char_counter.value, the_string);				\
+	}											\
+	if (0 != strcmp(the_string, EXPECTED_STRING)) {						\
+	  dprintf(2, "\n%s: invalid conversion, expected '%s', got '%s'\n", __func__,		\
+		  EXPECTED_STRING, the_string);							\
+	  exit(EXIT_FAILURE);									\
+	}											\
+      }												\
+      {												\
+	dprintf(2, " ");									\
+	if (mmux_ctype_dprintf_with_base(2, number, base)) {					\
+	  dprintf(2, "\n%s: error dprintfing value\n", __func__);				\
+	  exit(EXIT_FAILURE);									\
+	}											\
+      }												\
+    }	 											\
+  }
+
+static void
+test_sprint_with_base_pointer (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(pointer,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(pointer,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(pointer,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_char (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(char,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(char,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(char,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_schar (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(char,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(char,	+123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(char,	-123,	10,	"-123");
+    DOIT_FOR_THIS_NUMBER(char,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(char,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uchar (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uchar,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uchar,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uchar,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sshort (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sshort,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sshort,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sshort,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sshort,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sshort,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_ushort (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(ushort,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(ushort,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(ushort,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sint (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sint,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sint,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sint,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sint,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sint,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uint (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uint,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uint,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uint,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_slong (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(slong,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(slong,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(slong,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(slong,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(slong,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_ulong (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(ulong,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(ulong,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(ulong,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+static void
+test_sprint_with_base_sllong (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sllong,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sllong,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sllong,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sllong,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sllong,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
+static void
+test_sprint_with_base_ullong (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(ullong,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(ullong,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(ullong,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+#endif
+static void
+test_sprint_with_base_sint8 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sint8,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sint8,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sint8,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uint8 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uint8,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uint8,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uint8,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sint16 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sint16,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sint16,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sint16,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sint16,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sint16,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uint16 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uint16,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uint16,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uint16,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sint32 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sint32,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sint32,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sint32,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sint32,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sint32,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uint32 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uint32,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uint32,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uint32,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sint64 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sint64,	 +123,	2,	"+1111011");
+    DOIT_FOR_THIS_NUMBER(sint64,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sint64,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sint64,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sint64,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sint64,	-123,	16,	"-7B");
+
+    DOIT_FOR_THIS_NUMBER(sint64,	10,	11,	"+A");
+    DOIT_FOR_THIS_NUMBER(sint64,	20,	21,	"+K");
+    DOIT_FOR_THIS_NUMBER(sint64,	30,	31,	"+U");
+    DOIT_FOR_THIS_NUMBER(sint64,	40,	41,	"+e");
+    DOIT_FOR_THIS_NUMBER(sint64,	50,	51,	"+o");
+    DOIT_FOR_THIS_NUMBER(sint64,	60,	61,	"+y");
+    DOIT_FOR_THIS_NUMBER(sint64,	61,	62,	"+z");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uint64 (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uint64,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uint64,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uint64,	123,	16,	"+7B");
+
+    DOIT_FOR_THIS_NUMBER(sint64,	10,	11,	"+A");
+    DOIT_FOR_THIS_NUMBER(sint64,	20,	21,	"+K");
+    DOIT_FOR_THIS_NUMBER(sint64,	30,	31,	"+U");
+    DOIT_FOR_THIS_NUMBER(sint64,	40,	41,	"+e");
+    DOIT_FOR_THIS_NUMBER(sint64,	50,	51,	"+o");
+    DOIT_FOR_THIS_NUMBER(sint64,	60,	61,	"+y");
+    DOIT_FOR_THIS_NUMBER(sint64,	61,	62,	"+z");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_byte (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(byte,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(byte,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(byte,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_octet (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(octet,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(octet,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(octet,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_ssize (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(ssize,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(ssize,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(ssize,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(ssize,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(ssize,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_usize (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(usize,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(usize,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(usize,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sintmax (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sintmax,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sintmax,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sintmax,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sintmax,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sintmax,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uintmax (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uintmax,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uintmax,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uintmax,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_sintptr (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(sintptr,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(sintptr,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(sintptr,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(sintptr,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(sintptr,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uintptr (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uintptr,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uintptr,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uintptr,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_ptrdiff (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(ptrdiff,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(ptrdiff,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(ptrdiff,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(ptrdiff,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(ptrdiff,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_mode (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(mode,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(mode,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(mode,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_off (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(off,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(off,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(off,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(off,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(off,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_pid (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(pid,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(pid,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(pid,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(pid,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(pid,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_uid (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(uid,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(uid,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(uid,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_gid (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(gid,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(gid,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(gid,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_wchar (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(wchar,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(wchar,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(wchar,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(wchar,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(wchar,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_wint (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(wint,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(wint,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(wint,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_time (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(time,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(time,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(time,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(time,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(time,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_socklen (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(socklen,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(socklen,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(socklen,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_rlim (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(rlim,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(rlim,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(rlim,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
 
 
 /** --------------------------------------------------------------------
@@ -336,6 +882,52 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
   if (1) {	test_sprint_flonumcd128();	}
 #endif
+
+/* ------------------------------------------------------------------ */
+
+  if (1) {	test_sprint_with_base_pointer();	}
+  if (1) {	test_sprint_with_base_char();		}
+  if (1) {	test_sprint_with_base_schar();		}
+  if (1) {	test_sprint_with_base_uchar();		}
+  if (1) {	test_sprint_with_base_sshort();		}
+  if (1) {	test_sprint_with_base_ushort();		}
+  if (1) {	test_sprint_with_base_sint();		}
+  if (1) {	test_sprint_with_base_uint();		}
+  if (1) {	test_sprint_with_base_slong();		}
+  if (1) {	test_sprint_with_base_ulong();		}
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  if (1) {	test_sprint_with_base_sllong();		}
+#endif
+#ifdef MMUX_CC_TYPES_HAS_ULLONG
+  if (1) {	test_sprint_with_base_ullong();		}
+#endif
+  if (1) {	test_sprint_with_base_sint8();		}
+  if (1) {	test_sprint_with_base_uint8();		}
+  if (1) {	test_sprint_with_base_sint16();		}
+  if (1) {	test_sprint_with_base_uint16();		}
+  if (1) {	test_sprint_with_base_sint32();		}
+  if (1) {	test_sprint_with_base_uint32();		}
+  if (1) {	test_sprint_with_base_sint64();		}
+  if (1) {	test_sprint_with_base_uint64();		}
+  if (1) {	test_sprint_with_base_byte();		}
+  if (1) {	test_sprint_with_base_octet();		}
+  if (1) {	test_sprint_with_base_ssize();		}
+  if (1) {	test_sprint_with_base_usize();		}
+  if (1) {	test_sprint_with_base_sintmax();	}
+  if (1) {	test_sprint_with_base_uintmax();	}
+  if (1) {	test_sprint_with_base_sintptr();	}
+  if (1) {	test_sprint_with_base_uintptr();	}
+  if (1) {	test_sprint_with_base_ptrdiff();	}
+  if (1) {	test_sprint_with_base_mode();		}
+  if (1) {	test_sprint_with_base_off();		}
+  if (1) {	test_sprint_with_base_pid();		}
+  if (1) {	test_sprint_with_base_uid();		}
+  if (1) {	test_sprint_with_base_gid();		}
+  if (1) {	test_sprint_with_base_wchar();		}
+  if (1) {	test_sprint_with_base_wint();		}
+  if (1) {	test_sprint_with_base_time();		}
+  if (1) {	test_sprint_with_base_socklen();	}
+  if (1) {	test_sprint_with_base_rlim();		}
 
   exit(EXIT_SUCCESS);
 }

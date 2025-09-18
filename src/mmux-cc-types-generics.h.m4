@@ -2395,6 +2395,106 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 
 
 /** --------------------------------------------------------------------
+ ** String representation with custom base.
+ ** ----------------------------------------------------------------- */
+
+#define mmux_ctype_sprint_with_base(BUFPTR,BUFLEN_P,IS_NEGATIVE_P,VALUE,BASE)		\
+  _Generic((VALUE),									\
+	   mmux_pointer_t:		mmux_pointer_sprint_with_base,			\
+	   mmux_char_t:			mmux_char_sprint_with_base,			\
+           mmux_schar_t:		mmux_schar_sprint_with_base,			\
+           mmux_uchar_t:		mmux_uchar_sprint_with_base,			\
+           mmux_sshort_t:		mmux_sshort_sprint_with_base,			\
+           mmux_ushort_t:		mmux_ushort_sprint_with_base,			\
+           mmux_sint_t:			mmux_sint_sprint_with_base,			\
+           mmux_uint_t:			mmux_uint_sprint_with_base,			\
+           mmux_slong_t:		mmux_slong_sprint_with_base,			\
+           mmux_ulong_t:		mmux_ulong_sprint_with_base,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		mmux_sllong_sprint_with_base,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		mmux_ullong_sprint_with_base,			\
+]]])m4_dnl
+	   mmux_sint8_t:		mmux_sint8_sprint_with_base,			\
+	   mmux_uint8_t:		mmux_uint8_sprint_with_base,			\
+	   mmux_sint16_t:		mmux_sint16_sprint_with_base,			\
+	   mmux_uint16_t:		mmux_uint16_sprint_with_base,			\
+	   mmux_sint32_t:		mmux_sint32_sprint_with_base,			\
+	   mmux_uint32_t:		mmux_uint32_sprint_with_base,			\
+	   mmux_sint64_t:		mmux_sint64_sprint_with_base,			\
+	   mmux_uint64_t:		mmux_uint64_sprint_with_base,			\
+	   mmux_byte_t:			mmux_byte_sprint_with_base,			\
+	   mmux_octet_t:		mmux_octet_sprint_with_base,			\
+           mmux_ssize_t:		mmux_ssize_sprint_with_base,			\
+           mmux_usize_t:		mmux_usize_sprint_with_base,			\
+           mmux_sintmax_t:		mmux_sintmax_sprint_with_base,			\
+           mmux_uintmax_t:		mmux_uintmax_sprint_with_base,			\
+           mmux_sintptr_t:		mmux_sintptr_sprint_with_base,			\
+           mmux_uintptr_t:		mmux_uintptr_sprint_with_base,			\
+           mmux_mode_t:			mmux_mode_sprint_with_base,			\
+           mmux_off_t:			mmux_off_sprint_with_base,			\
+           mmux_pid_t:			mmux_pid_sprint_with_base,			\
+           mmux_uid_t:			mmux_uid_sprint_with_base,			\
+           mmux_gid_t:			mmux_gid_sprint_with_base,			\
+           mmux_ptrdiff_t:		mmux_ptrdiff_sprint_with_base,			\
+           mmux_wchar_t:		mmux_wchar_sprint_with_base,			\
+           mmux_wint_t:			mmux_wint_sprint_with_base,			\
+           mmux_time_t:			mmux_time_sprint_with_base,			\
+           mmux_socklen_t:		mmux_socklen_sprint_with_base,			\
+           mmux_rlim_t:			mmux_rlim_sprint_with_base)((BUFPTR),(BUFLEN_P),(IS_NEGATIVE_P),(VALUE),(BASE))
+
+/* ------------------------------------------------------------------ */
+
+#define mmux_ctype_dprintf_with_base(FD,VALUE,BASE)					\
+  _Generic((VALUE),									\
+	   mmux_pointer_t:		mmux_pointer_dprintf_with_base,			\
+	   mmux_char_t:			mmux_char_dprintf_with_base,			\
+           mmux_schar_t:		mmux_schar_dprintf_with_base,			\
+           mmux_uchar_t:		mmux_uchar_dprintf_with_base,			\
+           mmux_sshort_t:		mmux_sshort_dprintf_with_base,			\
+           mmux_ushort_t:		mmux_ushort_dprintf_with_base,			\
+           mmux_sint_t:			mmux_sint_dprintf_with_base,			\
+           mmux_uint_t:			mmux_uint_dprintf_with_base,			\
+           mmux_slong_t:		mmux_slong_dprintf_with_base,			\
+           mmux_ulong_t:		mmux_ulong_dprintf_with_base,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		mmux_sllong_dprintf_with_base,			\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		mmux_ullong_dprintf_with_base,			\
+]]])m4_dnl
+	   mmux_sint8_t:		mmux_sint8_dprintf_with_base,			\
+	   mmux_uint8_t:		mmux_uint8_dprintf_with_base,			\
+	   mmux_sint16_t:		mmux_sint16_dprintf_with_base,			\
+	   mmux_uint16_t:		mmux_uint16_dprintf_with_base,			\
+	   mmux_sint32_t:		mmux_sint32_dprintf_with_base,			\
+	   mmux_uint32_t:		mmux_uint32_dprintf_with_base,			\
+	   mmux_sint64_t:		mmux_sint64_dprintf_with_base,			\
+	   mmux_uint64_t:		mmux_uint64_dprintf_with_base,			\
+	   mmux_byte_t:			mmux_byte_dprintf_with_base,			\
+	   mmux_octet_t:		mmux_octet_dprintf_with_base,			\
+           mmux_ssize_t:		mmux_ssize_dprintf_with_base,			\
+           mmux_usize_t:		mmux_usize_dprintf_with_base,			\
+           mmux_sintmax_t:		mmux_sintmax_dprintf_with_base,			\
+           mmux_uintmax_t:		mmux_uintmax_dprintf_with_base,			\
+           mmux_sintptr_t:		mmux_sintptr_dprintf_with_base,			\
+           mmux_uintptr_t:		mmux_uintptr_dprintf_with_base,			\
+           mmux_mode_t:			mmux_mode_dprintf_with_base,			\
+           mmux_off_t:			mmux_off_dprintf_with_base,			\
+           mmux_pid_t:			mmux_pid_dprintf_with_base,			\
+           mmux_uid_t:			mmux_uid_dprintf_with_base,			\
+           mmux_gid_t:			mmux_gid_dprintf_with_base,			\
+           mmux_ptrdiff_t:		mmux_ptrdiff_dprintf_with_base,			\
+           mmux_wchar_t:		mmux_wchar_dprintf_with_base,			\
+           mmux_wint_t:			mmux_wint_dprintf_with_base,			\
+           mmux_time_t:			mmux_time_dprintf_with_base,			\
+           mmux_socklen_t:		mmux_socklen_dprintf_with_base,			\
+           mmux_rlim_t:			mmux_rlim_dprintf_with_base)((FD),(VALUE),(BASE))
+
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 
