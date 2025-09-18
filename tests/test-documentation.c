@@ -406,6 +406,9 @@ test_bitwise (void)
   {
     dprintf(2, "%s: XOR two numbers\n", __func__);
     {
+      auto	buflen = mmux_usize_literal(100);
+      char	bufptr[buflen.value];
+
       mmux_uint_t	A = mmux_uint_literal(0b111000);
       mmux_uint_t	B = mmux_uint_literal(0b101010);
       mmux_uint_t	C = mmux_uint_bitwise_xor(A, B);
