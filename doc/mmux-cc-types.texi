@@ -163,7 +163,6 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * makers::                      Making values.
 * constants::                   Functions returning constant values.
 * stringrep::                   String representations of supported types.
-* printing::                    Printing string representations.
 * complex::                     Basic complex number operations.
 * predicates::                  Type predicates.
 * comparison::                  Comparison functions.
@@ -1943,6 +1942,7 @@ the parsing operation, for example: the name of a C function.
 @menu
 * stringrep sprinters general::         General string representations.
 * stringrep sprinters integers::        Exact integer string representations.
+* stringrep sprinters printing::        Printing string representations.
 @end menu
 
 @c page
@@ -2238,8 +2238,8 @@ type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @MmuxDefineCFunctionExactIntegerSprinter{rlim}
 
 @c page
-@node printing
-@chapter Printing string representations
+@node stringrep sprinters printing
+@subsection Printing string representations
 
 
 To print a value to @stderr{}, we can do:
