@@ -2422,9 +2422,8 @@ Compute the sign of the operand.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement, sign.  The type @objtype{mmux_ctype_t} is a placeholder for the
-type of the operands and result.
+Compute the sign of the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the type of
+the operands and result.
 @end deftypefn
 
 @c ------------------------------------------------------------------------
