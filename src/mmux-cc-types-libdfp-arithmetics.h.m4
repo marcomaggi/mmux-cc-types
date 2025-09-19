@@ -76,9 +76,6 @@ mmux_standard_flonumd$1_decr (mmux_standard_flonumd$1_t op)
 
 mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_absolute
   __attribute__((__const__));
-
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_sign (mmux_standard_flonumd$1_t op)
-  __attribute__((__const__));
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_ARITHMETICS_FUNCTIONS_AND_PROTOS(32)
@@ -175,7 +172,6 @@ DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		inverse)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		incr)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		decr)
 DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		absolute)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		sign)
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMD_ARITHMETICS_FUNCTIONS_AND_PROTOS(32)

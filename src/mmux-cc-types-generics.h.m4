@@ -1865,7 +1865,6 @@ DEFINE_UNARY_FUNCTION_NO_POINTER([[[absolute]]])
 DEFINE_BINARY_FUNCTION_REAL_NUMBERS_ONLY([[[modulo]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[incr]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
-DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[sign]]])
 
 
 /** --------------------------------------------------------------------

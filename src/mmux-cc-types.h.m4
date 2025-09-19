@@ -73,19 +73,22 @@ mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt,
 #include <mmux-cc-types-typedefs.h>
 #include <mmux-cc-types-complex.h>
 #include <mmux-cc-types-constants.h>
-#include <mmux-cc-types-sign-predicates.h>
-#include <mmux-cc-types-arithmetics.h>
-#include <mmux-cc-types-comparison.h>
-#include <mmux-cc-types-mathematics.h>
-#include <mmux-cc-types-bitwise.h>
-#include <mmux-cc-types-stringrep.h>
-#include <mmux-cc-types-generics.h>
 
 #if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
      (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
      (defined MMUX_CC_TYPES_HAS_FLONUMD128))
 #  include <mmux-cc-types-libdfp.h>
 #endif
+
+
+#include <mmux-cc-types-sign-predicates.h>
+#include <mmux-cc-types-arithmetics.h>
+#include <mmux-cc-types-comparison.h>
+#include <mmux-cc-types-mathematics.h>
+#include <mmux-cc-types-bitwise.h>
+#include <mmux-cc-types-real-numbers.h>
+#include <mmux-cc-types-stringrep.h>
+#include <mmux-cc-types-generics.h>
 
 
 /** --------------------------------------------------------------------

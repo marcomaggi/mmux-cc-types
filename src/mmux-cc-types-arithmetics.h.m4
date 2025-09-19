@@ -105,17 +105,6 @@ mmux_standard_$1_absolute (mmux_standard_$1_t op)
 {
   return ((mmux_standard_$1_is_negative(op))? mmux_standard_$1_neg(op) : op);
 }
-mmux_cc_types_inline_decl mmux_standard_$1_t
-mmux_standard_$1_sign (mmux_standard_$1_t op)
-{
-  if (mmux_standard_$1_is_positive(op)) {
-    return mmux_standard_$1_constant_one();
-  } else if (mmux_standard_$1_is_negative(op)) {
-    return mmux_standard_$1_neg(mmux_standard_$1_constant_one());
-  } else {
-    return mmux_standard_$1_constant_zero();
-  }
-}
 ]]])]]])
 m4_divert(0)
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[char]]])
@@ -192,7 +181,6 @@ DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	incr)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	decr)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	neg)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	absolute)
-DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	sign)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[char]]])
@@ -290,9 +278,6 @@ mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonum$1_t mmux_stand
 
 mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_absolute
   __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_sign
-  __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUM_ARITHMETICS_INLINE_FUNCTIONS(fl)
@@ -338,7 +323,6 @@ DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	incr)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	decr)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	neg)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	absolute)
-DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	sign)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUM_ARITHMETICS_INLINE_FUNCTIONS([[[fl]]])
@@ -393,9 +377,6 @@ mmux_standard_flonumc$1_neg (mmux_standard_flonumc$1_t op)
 
 mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_absolute (mmux_standard_flonumc$1_t op)
   __attribute__((__const__));
-
-mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumc$1_t mmux_standard_flonumc$1_sign
-  __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMC_ARITHMETICS_PROTOS([[[fl]]])
@@ -438,7 +419,6 @@ DEFINE_FLONUMC_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	mul)
 DEFINE_FLONUMC_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	div)
 DEFINE_FLONUMC_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	inverse)
 DEFINE_FLONUMC_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	neg)
-DEFINE_FLONUMC_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	sign)
 
 mmux_cc_types_inline_decl mmux_flonum$1_t
 mmux_flonumc$1_absolute (mmux_flonumc$1_t op)

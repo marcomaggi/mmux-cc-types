@@ -46,26 +46,7 @@ mmux_standard_flonumd$1_modulo (mmux_standard_flonumd$1_t op1, mmux_standard_flo
 {
   return fmodd$1(op1, op2);
 }
-mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_sign (mmux_standard_flonumd$1_t op)
-{
-  if (mmux_standard_flonumd$1_is_nan(op)) {
-    return mmux_standard_flonumd$1_constant_nan();
-  } else if (mmux_standard_flonumd$1_is_zero(op)) {
-    if (signbit(op)) {
-      return mmux_standard_flonumd$1_literal(-1.0);
-    } else {
-      return mmux_standard_flonumd$1_constant_one();
-    }
-  } else if (mmux_standard_flonumd$1_is_positive(op)) {
-    return mmux_standard_flonumd$1_constant_one();
-  } else if (mmux_standard_flonumd$1_is_negative(op)) {
-    return mmux_standard_flonumd$1_literal(-1.0);
-  } else {
-    /* We should never come here. */
-    return mmux_standard_flonumd$1_constant_zero();
-  }
-}]]])
+]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_ARITHMETICS_FUNCTIONS(32)
 DEFINE_STANDARD_FLONUMD_ARITHMETICS_FUNCTIONS(64)

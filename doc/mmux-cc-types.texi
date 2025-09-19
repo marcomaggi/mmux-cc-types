@@ -163,7 +163,8 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * makers::                      Making values.
 * constants::                   Functions returning constant values.
 * stringrep::                   String representations of supported types.
-* complex::                     Basic complex number operations.
+* real::                        Basic real numbers operations.
+* complex::                     Basic complex numbers operations.
 * predicates::                  Type predicates.
 * comparison::                  Comparison functions.
 * arithmetics::                 Arithmetical operations.
@@ -2367,8 +2368,137 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionPrinters{flonumcd128}
 
 @c page
+@node real
+@chapter Basic real numbers operations
+
+
+@menu
+* real sign::                   Sign of floating-point numbers.
+@end menu
+
+@c page
+@node real sign
+@section Sign of floating--point numbers
+
+
+Notes on operations:
+
+@itemize
+@item
+The @code{sign} function returns @samp{+1}, @samp{-1}, @samp{0} depending on the sign of its
+operand; for @code{flonum} operands the result is always @samp{+1.0} or @samp{-1.0} because
+@code{flonum} zero has a sign; for @code{flonumc} operands the result is a complex number whose real
+and imaginary parts represent the signs of the real and imaginary parts of the operand.
+@end itemize
+
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineExactIntegerSignFunctions{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
+Compute the sign of the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineRealFlonumSignFunctions{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
+Compute the sign of the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineCplxFlonumSignFunctions{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
+Compute the sign of the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
+remainder, increment, decrement, sign.  The type @objtype{mmux_ctype_t} is a placeholder for the
+type of the operands and result.
+@end deftypefn
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineExactIntegerSignFunctions{char}
+@MmuxDefineExactIntegerSignFunctions{schar}
+@MmuxDefineExactIntegerSignFunctions{uchar}
+@MmuxDefineExactIntegerSignFunctions{sshort}
+@MmuxDefineExactIntegerSignFunctions{ushort}
+@MmuxDefineExactIntegerSignFunctions{sint}
+@MmuxDefineExactIntegerSignFunctions{uint}
+@MmuxDefineExactIntegerSignFunctions{slong}
+@MmuxDefineExactIntegerSignFunctions{ulong}
+@MmuxDefineExactIntegerSignFunctions{sllong}
+@MmuxDefineExactIntegerSignFunctions{ullong}
+@MmuxDefineExactIntegerSignFunctions{sint8}
+@MmuxDefineExactIntegerSignFunctions{uint8}
+@MmuxDefineExactIntegerSignFunctions{sint16}
+@MmuxDefineExactIntegerSignFunctions{uint16}
+@MmuxDefineExactIntegerSignFunctions{sint32}
+@MmuxDefineExactIntegerSignFunctions{uint32}
+@MmuxDefineExactIntegerSignFunctions{sint64}
+@MmuxDefineExactIntegerSignFunctions{uint64}
+
+@MmuxDefineExactIntegerSignFunctions{byte}
+@MmuxDefineExactIntegerSignFunctions{octet}
+
+@MmuxDefineExactIntegerSignFunctions{ssize}
+@MmuxDefineExactIntegerSignFunctions{usize}
+@MmuxDefineExactIntegerSignFunctions{sintmax}
+@MmuxDefineExactIntegerSignFunctions{uintmax}
+@MmuxDefineExactIntegerSignFunctions{sintptr}
+@MmuxDefineExactIntegerSignFunctions{uintptr}
+@MmuxDefineExactIntegerSignFunctions{ptrdiff}
+@MmuxDefineExactIntegerSignFunctions{off}
+@MmuxDefineExactIntegerSignFunctions{wchar}
+@MmuxDefineExactIntegerSignFunctions{wint}
+@MmuxDefineExactIntegerSignFunctions{time}
+
+@MmuxDefineRealFlonumSignFunctions{flonumfl}
+@MmuxDefineRealFlonumSignFunctions{flonumdb}
+@MmuxDefineRealFlonumSignFunctions{flonumldb}
+
+@MmuxDefineRealFlonumSignFunctions{flonumf32}
+@MmuxDefineRealFlonumSignFunctions{flonumf64}
+@MmuxDefineRealFlonumSignFunctions{flonumf128}
+
+@MmuxDefineRealFlonumSignFunctions{flonumf32x}
+@MmuxDefineRealFlonumSignFunctions{flonumf64x}
+@MmuxDefineRealFlonumSignFunctions{flonumf128x}
+
+@MmuxDefineRealFlonumSignFunctions{flonumd32}
+@MmuxDefineRealFlonumSignFunctions{flonumd64}
+@MmuxDefineRealFlonumSignFunctions{flonumd128}
+
+@MmuxDefineCplxFlonumSignFunctions{flonumcfl}
+@MmuxDefineCplxFlonumSignFunctions{flonumcdb}
+@MmuxDefineCplxFlonumSignFunctions{flonumcldb}
+
+@MmuxDefineCplxFlonumSignFunctions{flonumcf32}
+@MmuxDefineCplxFlonumSignFunctions{flonumcf64}
+@MmuxDefineCplxFlonumSignFunctions{flonumcf128}
+
+@MmuxDefineCplxFlonumSignFunctions{flonumcf32x}
+@MmuxDefineCplxFlonumSignFunctions{flonumcf64x}
+@MmuxDefineCplxFlonumSignFunctions{flonumcf128x}
+
+@MmuxDefineCplxFlonumSignFunctions{flonumcd32}
+@MmuxDefineCplxFlonumSignFunctions{flonumcd64}
+@MmuxDefineCplxFlonumSignFunctions{flonumcd128}
+
+@c page
 @node complex
-@chapter Basic complex number operations
+@chapter Basic complex numbers operations
 
 
 @menu
@@ -3506,12 +3636,6 @@ auto    rop = mmux_ctype_neg(op);
 
 mmux_ctype_dprintf(2, rop);     @print{} 18446744073709551611
 @end example
-
-@item
-The @code{sign} function returns @samp{+1}, @samp{-1}, @samp{0} depending on the sign of its
-operand; for @code{flonum} operands the result is always @samp{+1.0} or @samp{-1.0} because
-@code{flonum} zero has a sign; for @code{flonumc} operands the result is a complex number whose real
-and imaginary parts represent the signs of the real and imaginary parts of the operand.
 @end itemize
 
 
@@ -3525,10 +3649,9 @@ and imaginary parts represent the signs of the real and imaginary parts of the o
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_modulo (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_incr (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_decr (mmux_ctype_t @var{OP})
-@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement, sign.  The type @objtype{mmux_ctype_t} is a placeholder for the
-type of the operands and result.
+remainder, increment, decrement.  The type @objtype{mmux_ctype_t} is a placeholder for the type of
+the operands and result.
 @end deftypefn
 
 
@@ -3554,9 +3677,8 @@ as @code{mmux_uint8_t *}, return the result.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_modulo (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement, sign.
+remainder, increment, decrement.
 @end deftypefun
 
 @end macro
@@ -3569,9 +3691,7 @@ remainder, increment, decrement, sign.
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_neg (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inverse (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_absolute (mmux_\CPLXSTEM\_t @var{OP})
-@deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_sign (mmux_\CPLXSTEM\_t @var{OP})
-Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values,
-sign.
+Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values.
 @end deftypefun
 
 @end macro
@@ -3587,13 +3707,13 @@ sign.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_modulo (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
-@deftypefunx mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement, sign.
+remainder, increment, decrement.
 @end deftypefun
 
 @end macro
 
+@c ------------------------------------------------------------------------
 
 @MmuxDefineIntegerArithmeticsFunc{char}
 @MmuxDefineIntegerArithmeticsFunc{schar}
@@ -3652,7 +3772,7 @@ remainder, increment, decrement, sign.
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumd64}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumd128}
 
-@MmuxDefineComplexArithmeticsFunc{flonumcfl,float}
+@MmuxDefineComplexArithmeticsFunc{flonumcfl,flonumfl}
 @MmuxDefineComplexArithmeticsFunc{flonumcdb,flonumdb}
 @MmuxDefineComplexArithmeticsFunc{flonumcldb,flonumldb}
 
