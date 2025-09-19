@@ -133,6 +133,17 @@ DEFINE_STANDARD_FLONUMC_REAL_NUMBERS_PROTOS([[[f128x]]])
 
 
 /** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-real-numbers.h>
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Real number functions.
  ** ----------------------------------------------------------------- */
 
