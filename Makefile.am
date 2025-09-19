@@ -111,7 +111,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp.h.m4			\
 	src/mmux-cc-types-libdfp-arithmetics.h.m4	\
 	src/mmux-cc-types-libdfp-comparison.h.m4	\
-	src/mmux-cc-types-libdfp-complex.h.m4		\
+	src/mmux-cc-types-libdfp-complex-numbers.h.m4	\
 	src/mmux-cc-types-libdfp-constants.h.m4		\
 	src/mmux-cc-types-libdfp-internal.h.m4		\
 	src/mmux-cc-types-libdfp-mathematics.h.m4	\
@@ -120,7 +120,7 @@ EXTRA_DIST	+= \
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c.m4	\
 	src/mmux-cc-types-libdfp-comparison.c.m4	\
-	src/mmux-cc-types-libdfp-complex.c.m4		\
+	src/mmux-cc-types-libdfp-complex-numbers.c.m4	\
 	src/mmux-cc-types-libdfp-constants.c.m4		\
 	src/mmux-cc-types-libdfp-mathematics.c.m4	\
 	src/mmux-cc-types-libdfp-real-numbers.c.m4	\
@@ -132,7 +132,7 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-comparison.h		\
-	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-internal.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
@@ -141,7 +141,7 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
 	src/mmux-cc-types-libdfp-comparison.c		\
-	src/mmux-cc-types-libdfp-complex.c		\
+	src/mmux-cc-types-libdfp-complex-numbers.c	\
 	src/mmux-cc-types-libdfp-constants.c		\
 	src/mmux-cc-types-libdfp-mathematics.c		\
 	src/mmux-cc-types-libdfp-real-numbers.c		\
@@ -160,7 +160,7 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-comparison.h		\
-	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-internal.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
@@ -169,7 +169,7 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
 	src/mmux-cc-types-libdfp-comparison.c		\
-	src/mmux-cc-types-libdfp-complex.c		\
+	src/mmux-cc-types-libdfp-complex-numbers.c	\
 	src/mmux-cc-types-libdfp-constants.c		\
 	src/mmux-cc-types-libdfp-mathematics.c		\
 	src/mmux-cc-types-libdfp-real-numbers.c		\
@@ -179,7 +179,7 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 include_HEADERS			+= \
 	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
-	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-sign-predicates.h
@@ -195,7 +195,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-arithmetics.h.m4		\
 	src/mmux-cc-types-bitwise.h.m4			\
 	src/mmux-cc-types-comparison.h.m4		\
-	src/mmux-cc-types-complex.h.m4			\
+	src/mmux-cc-types-complex-numbers.h.m4		\
 	src/mmux-cc-types-constants.h.m4		\
 	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-mathematics.h.m4		\
@@ -206,7 +206,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-arithmetics.c.m4		\
 	src/mmux-cc-types-bitwise.c.m4			\
 	src/mmux-cc-types-comparison.c.m4		\
-	src/mmux-cc-types-complex.c.m4			\
+	src/mmux-cc-types-complex-numbers.c.m4		\
 	src/mmux-cc-types-constants.c.m4		\
 	src/mmux-cc-types-library.c.m4			\
 	src/mmux-cc-types-mathematics.c.m4		\
@@ -223,7 +223,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
-	src/mmux-cc-types-complex.h			\
+	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
@@ -234,7 +234,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-arithmetics.c			\
 	src/mmux-cc-types-bitwise.c			\
 	src/mmux-cc-types-comparison.c			\
-	src/mmux-cc-types-complex.c			\
+	src/mmux-cc-types-complex-numbers.c		\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-library.c			\
 	src/mmux-cc-types-mathematics.c			\
@@ -259,7 +259,7 @@ include_HEADERS			+= \
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
-	src/mmux-cc-types-complex.h			\
+	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
@@ -282,7 +282,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
-	src/mmux-cc-types-complex.h			\
+	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
@@ -293,7 +293,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-arithmetics.c			\
 	src/mmux-cc-types-bitwise.c			\
 	src/mmux-cc-types-comparison.c			\
-	src/mmux-cc-types-complex.c			\
+	src/mmux-cc-types-complex-numbers.c		\
 	src/mmux-cc-types-constants.c			\
 	src/mmux-cc-types-library.c			\
 	src/mmux-cc-types-mathematics.c			\
@@ -306,7 +306,7 @@ if WANT_LIBDFP
 libmmux_cc_types_la_SOURCES	+= \
 	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
-	src/mmux-cc-types-libdfp-complex.h		\
+	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
@@ -331,7 +331,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-arithmetics.h			\
 	src/mmux-cc-types-bitwise.h			\
 	src/mmux-cc-types-comparison.h			\
-	src/mmux-cc-types-complex.h			\
+	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\

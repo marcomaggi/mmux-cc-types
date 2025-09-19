@@ -71,7 +71,7 @@ mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt,
 /* Order is important here!  There are a lot of inline functions. */
 
 #include <mmux-cc-types-typedefs.h>
-#include <mmux-cc-types-complex.h>
+#include <mmux-cc-types-complex-numbers.h>
 #include <mmux-cc-types-constants.h>
 
 #if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
