@@ -21,6 +21,9 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MMUX_CC_TYPES_LIBDFP_SIGN_PREDICATES_H
+#define MMUX_CC_TYPES_LIBDFP_SIGN_PREDICATES_H		1
+
 
 /** --------------------------------------------------------------------
  ** Sign predicates: standard flonumd
@@ -150,5 +153,12 @@ m4_divert(0)m4_dnl
 DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(32)
 DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(64)
 DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Done.
+ ** ----------------------------------------------------------------- */
+
+#endif /* define MMUX_CC_TYPES_LIBDFP_SIGN_PREDICATES_H */
 
 /* end of file */

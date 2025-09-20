@@ -22,6 +22,9 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MMUX_CC_TYPES_LIBDFP_CONSTANTS_H
+#define MMUX_CC_TYPES_LIBDFP_CONSTANTS_H	1
+
 
 /** --------------------------------------------------------------------
  ** Mathematics: standard flonumd constants.
@@ -235,5 +238,12 @@ m4_divert(0)m4_dnl
 DEFINE_FLONUMCD_CONSTANTS(32)
 DEFINE_FLONUMCD_CONSTANTS(64)
 DEFINE_FLONUMCD_CONSTANTS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Done.
+ ** ----------------------------------------------------------------- */
+
+#endif /* define MMUX_CC_TYPES_LIBDFP_CONSTANTS_H */
 
 /* end of file */

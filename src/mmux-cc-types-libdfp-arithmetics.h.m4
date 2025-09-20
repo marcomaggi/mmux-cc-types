@@ -22,6 +22,9 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MMUX_CC_TYPES_LIBDFP_ARITHMETICS_H
+#define MMUX_CC_TYPES_LIBDFP_ARITHMETICS_H	1
+
 
 /** --------------------------------------------------------------------
  ** Arithmetics: standard flonumd functions.
@@ -142,78 +145,9 @@ DEFINE_STANDARD_FLONUMCD_ARITHMETICS_FUNCTIONS_AND_PROTOS(128)
 
 
 /** --------------------------------------------------------------------
- ** Arithmetics: flonumd functions.
+ ** Done.
  ** ----------------------------------------------------------------- */
 
-m4_divert(-1)
-
-m4_define([[[DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumd$1_$2 (mmux_flonumd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op.value));
-}]]])
-
-m4_define([[[DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumd$1_$2 (mmux_flonumd$1_t op1, mmux_flonumd$1_t op2)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_$2(op1.value, op2.value));
-}]]])
-
-m4_define([[[DEFINE_FLONUMD_ARITHMETICS_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
-DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		add)
-DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		sub)
-DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		mul)
-DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		div)
-DEFINE_FLONUMD_ARITHMETICS_BINARY_FUNCTION($1,		modulo)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		neg)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		inverse)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		incr)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		decr)
-DEFINE_FLONUMD_ARITHMETICS_UNARY_FUNCTION($1,		absolute)
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMD_ARITHMETICS_FUNCTIONS_AND_PROTOS(32)
-DEFINE_FLONUMD_ARITHMETICS_FUNCTIONS_AND_PROTOS(64)
-DEFINE_FLONUMD_ARITHMETICS_FUNCTIONS_AND_PROTOS(128)
-
-
-/** --------------------------------------------------------------------
- ** Arithmetics: flonumcd functions.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-
-m4_define([[[DEFINE_FLONUMCD_ARITHMETICS_UNARY_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_flonumcd$1_t
-mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op.value));
-}]]])
-
-m4_define([[[DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_flonumcd$1_t
-mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op1, mmux_flonumcd$1_t op2)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_$2(op1.value, op2.value));
-}]]])
-
-m4_define([[[DEFINE_FLONUMCD_ARITHMETICS_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
-DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		add)
-DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		sub)
-DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		mul)
-DEFINE_FLONUMCD_ARITHMETICS_BINARY_FUNCTION($1,		div)
-DEFINE_FLONUMCD_ARITHMETICS_UNARY_FUNCTION($1,		neg)
-DEFINE_FLONUMCD_ARITHMETICS_UNARY_FUNCTION($1,		inverse)
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumcd$1_absolute (mmux_flonumcd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumcd$1_absolute(op.value));
-}]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMCD_ARITHMETICS_FUNCTIONS_AND_PROTOS(32)
-DEFINE_FLONUMCD_ARITHMETICS_FUNCTIONS_AND_PROTOS(64)
-DEFINE_FLONUMCD_ARITHMETICS_FUNCTIONS_AND_PROTOS(128)
+#endif /* define MMUX_CC_TYPES_LIBDFP_ARITHMETICS_H */
 
 /* end of file */

@@ -3744,16 +3744,10 @@ remainder, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{sintptr}
 @MmuxDefineIntegerArithmeticsFunc{uintptr}
 @MmuxDefineIntegerArithmeticsFunc{ptrdiff}
-@MmuxDefineIntegerArithmeticsFunc{mode}
 @MmuxDefineIntegerArithmeticsFunc{off}
-@MmuxDefineIntegerArithmeticsFunc{pid}
-@MmuxDefineIntegerArithmeticsFunc{uid}
-@MmuxDefineIntegerArithmeticsFunc{gid}
 @MmuxDefineIntegerArithmeticsFunc{wchar}
 @MmuxDefineIntegerArithmeticsFunc{wint}
 @MmuxDefineIntegerArithmeticsFunc{time}
-@MmuxDefineIntegerArithmeticsFunc{socklen}
-@MmuxDefineIntegerArithmeticsFunc{rlim}
 
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumfl}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumdb}

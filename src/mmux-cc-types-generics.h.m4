@@ -1851,23 +1851,6 @@ DEFINE_BINARY_FUNCTION([[[min]]])
 
 
 /** --------------------------------------------------------------------
- ** Arithmetics.
- ** ----------------------------------------------------------------- */
-
-DEFINE_BINARY_FUNCTION([[[add]]])
-DEFINE_BINARY_FUNCTION([[[sub]]])
-DEFINE_BINARY_FUNCTION_NO_POINTER([[[mul]]])
-DEFINE_BINARY_FUNCTION_NO_POINTER([[[div]]])
-DEFINE_UNARY_FUNCTION_NO_POINTER([[[neg]]])
-DEFINE_UNARY_FUNCTION_NO_POINTER([[[inverse]]])
-DEFINE_UNARY_FUNCTION_NO_POINTER([[[absolute]]])
-
-DEFINE_BINARY_FUNCTION_REAL_NUMBERS_ONLY([[[modulo]]])
-DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[incr]]])
-DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
-
-
-/** --------------------------------------------------------------------
  ** Mathematics.
  ** ----------------------------------------------------------------- */
 

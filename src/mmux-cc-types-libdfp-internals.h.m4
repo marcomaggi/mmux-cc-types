@@ -21,6 +21,9 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MMUX_CC_TYPES_LIBDFP_INTERNAL_H
+#define MMUX_CC_TYPES_LIBDFP_INTERNAL_H		1
+
 
 /** --------------------------------------------------------------------
  ** Headers.
@@ -85,5 +88,12 @@ m4_divert(0)m4_dnl
 DEFINE_SOME_MACROS(32)
 DEFINE_SOME_MACROS(64)
 DEFINE_SOME_MACROS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Done.
+ ** ----------------------------------------------------------------- */
+
+#endif /* define MMUX_CC_TYPES_LIBDFP_INTERNAL_H */
 
 /* end of file */

@@ -22,6 +22,16 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MMUX_CC_TYPES_LIBDFP_COMPARISON_H
+#define MMUX_CC_TYPES_LIBDFP_COMPARISON_H	1
+
+
+/** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#include <mmux-cc-types-libdfp-arithmetics.h>
+
 
 /** --------------------------------------------------------------------
  ** Comparison functions: standard flonumd.
@@ -234,5 +244,12 @@ m4_divert(0)m4_dnl
 DEFINE_FLONUMCD_COMPARISON_INLINE_FUNCTIONS(32)
 DEFINE_FLONUMCD_COMPARISON_INLINE_FUNCTIONS(64)
 DEFINE_FLONUMCD_COMPARISON_INLINE_FUNCTIONS(128)
+
+
+/** --------------------------------------------------------------------
+ ** Done.
+ ** ----------------------------------------------------------------- */
+
+#endif /* define MMUX_CC_TYPES_LIBDFP_COMPARISON_H */
 
 /* end of file */

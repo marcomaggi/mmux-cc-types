@@ -23,8 +23,8 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MMUX_CC_TYPES_COMPLEX_H
-#define MMUX_CC_TYPES_COMPLEX_H 1
+#ifndef MMUX_CC_TYPES_COMPLEX_NUMBERS_H
+#define MMUX_CC_TYPES_COMPLEX_NUMBERS_H 1
 
 
 /** --------------------------------------------------------------------
@@ -334,6 +334,6 @@ DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUM
  ** Done.
  ** ----------------------------------------------------------------- */
 
-#endif /* defined MMUX_CC_TYPES_COMPLEX_H */
+#endif /* defined MMUX_CC_TYPES_COMPLEX_NUMBERS_H */
 
 /* end of file */

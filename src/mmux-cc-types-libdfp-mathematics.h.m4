@@ -24,7 +24,7 @@
 */
 
 #ifndef MMUX_CC_TYPES_LIBDFP_MATHEMATICS_H
-#define MMUX_CC_TYPES_LIBDFP_MATHEMATICS_H 1
+#define MMUX_CC_TYPES_LIBDFP_MATHEMATICS_H	1
 
 
 /** --------------------------------------------------------------------

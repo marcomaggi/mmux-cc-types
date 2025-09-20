@@ -146,7 +146,6 @@ DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
 #include <mmux-cc-types-libdfp-constants.h>
 #include <mmux-cc-types-libdfp-complex-numbers.h>
 #include <mmux-cc-types-libdfp-sign-predicates.h>
-#include <mmux-cc-types-libdfp-arithmetics.h>
 #include <mmux-cc-types-libdfp-comparison.h>
 #include <mmux-cc-types-libdfp-mathematics.h>
 

@@ -24,7 +24,7 @@
 */
 
 #ifndef MMUX_CC_TYPES_LIBDFP_REAL_NUMBERS_H
-#define MMUX_CC_TYPES_LIBDFP_REAL_NUMBERS_H 1
+#define MMUX_CC_TYPES_LIBDFP_REAL_NUMBERS_H		1
 
 
 /** --------------------------------------------------------------------
@@ -66,6 +66,6 @@ DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_INLINE_FUNCTIONS(128)
  ** Done.
  ** ----------------------------------------------------------------- */
 
-#endif /* defined MMUX_CC_TYPES_LIBDFP_REAL_NUMBERS_H_H */
+#endif /* defined MMUX_CC_TYPES_LIBDFP_REAL_NUMBERS_H */
 
 /* end of file */
