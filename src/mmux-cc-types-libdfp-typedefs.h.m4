@@ -1,13 +1,11 @@
 /*
   Part of: MMUX CC Types
   Contents: public header file for _DecimalN support
-  Date: Aug 16, 2025
+  Date: Sep 20, 2025
 
   Abstract
 
-	This is the public header file  defining the API of "_DecimalN" types support
-	in  the library  MMUX  CC  Types; it  is  included  by "mmux-cc-types.h"  and
-	"mmux-cc-types-libdfp.c"; it must not be included by itself.
+	Type definitions for "_DecimalN" support.
 
   Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
 
@@ -28,18 +26,33 @@
 
 
 /** --------------------------------------------------------------------
- ** Preliminary definitions.
+ ** Headers.
  ** ----------------------------------------------------------------- */
 
 #include <mmux-cc-types-typedefs.h>
 
 
 /** --------------------------------------------------------------------
- ** Standard types definitions: typedefs, literals, makers.
+ ** Standard types definitions: literals.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_LIBDFP_TYPE]]],[[[
+m4_define([[[DEFINE_LIBDFP_LITERALS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
+#define mmux_standard_flonumd$1_literal(VALUE)		(VALUE ## $2)
+#define mmux_standard_flonumcd$1_part_literal(VALUE)	(mmux_standard_flonumd$1_literal(VALUE))
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_LIBDFP_LITERALS(32,	[[[DF]]])
+DEFINE_LIBDFP_LITERALS(64,	[[[DD]]])
+DEFINE_LIBDFP_LITERALS(128,	[[[DL]]])
+
+
+/** --------------------------------------------------------------------
+ ** Standard types definitions: typedefs, literals.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_LIBDFP_TYPE]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
 __extension__ typedef _Decimal$1	mmux_standard_flonumd$1_t;
 
 typedef struct mmux_standard_flonumcd$1_t {
@@ -52,54 +65,43 @@ typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
 typedef struct mmux_flonumd$1_t	 { mmux_standard_flonumd$1_t	value; } mmux_flonumd$1_t;
 typedef struct mmux_flonumcd$1_t { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
 typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_LIBDFP_TYPE(32)
+DEFINE_LIBDFP_TYPE(64)
+DEFINE_LIBDFP_TYPE(128)
 
-#define mmux_standard_flonumd$1_literal(VALUE)		(VALUE ## $2)
-#define mmux_standard_flonumcd$1_part_literal(VALUE)	(mmux_standard_flonumd$1_literal(VALUE))
+
+/** --------------------------------------------------------------------
+ ** Standard types definitions: makers.
+ ** ----------------------------------------------------------------- */
 
+m4_divert(-1)
+m4_define([[[DEFINE_LIBDFP_TYPE]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
 #define mmux_standard_flonumd$1(STANDARD_DECIMAL)	((mmux_standard_flonumd$1_t)(STANDARD_DECIMAL))
 #define mmux_standard_flonumcd$1(STANDARD_FLONUMCDB)	((mmux_standard_flonumcd$1_t)(STANDARD_FLONUMCDB))
-
-mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_rectangular (mmux_standard_flonumd$1_t re, mmux_standard_flonumd$1_t im)
-{
-  return (mmux_standard_flonumcd$1_t){ .re = re, .im = im };
-}
-
-#define mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM) \
-  (mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
-					mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
 
 mmux_cc_types_inline_decl mmux_flonumd$1_t
 mmux_flonumd$1 (mmux_standard_flonumd$1_t value)
 {
   return (mmux_flonumd$1_t){ .value = value };
 }
-
-#define mmux_flonumd$1_literal(STANDARD_DECIMAL_LITERAL) \
-  (mmux_flonumd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL)))
-
 mmux_cc_types_inline_decl mmux_flonumcd$1_t
 mmux_flonumcd$1 (mmux_standard_flonumcd$1_t value)
 {
   return (mmux_flonumcd$1_t){ .value = value };
 }
 
-mmux_cc_types_inline_decl mmux_flonumcd$1_t
-mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular(re.value,im.value));
-}
-#define mmux_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,STANDARD_DECIMAL_LITERAL_IM)	\
-  (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,		\
-								STANDARD_DECIMAL_LITERAL_IM)))
+#define mmux_flonumd$1_literal(STANDARD_DECIMAL_LITERAL) \
+  (mmux_flonumd$1(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL)))
 
 #define mmux_flonumcd$1_part(VALUE)		(mmux_flonumd$1(VALUE))
 #define mmux_flonumcd$1_part_literal(VALUE)	(mmux_flonumd$1(VALUE))
-]]])
+]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_LIBDFP_TYPE(32,	[[[DF]]])
-DEFINE_LIBDFP_TYPE(64,	[[[DD]]])
-DEFINE_LIBDFP_TYPE(128,	[[[DL]]])
+DEFINE_LIBDFP_TYPE(32)
+DEFINE_LIBDFP_TYPE(64)
+DEFINE_LIBDFP_TYPE(128)
 
 
 /** --------------------------------------------------------------------
@@ -107,7 +109,7 @@ DEFINE_LIBDFP_TYPE(128,	[[[DL]]])
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_FUNCTION_PROTOTYPES_TYPES]]],[[[m4_dnl
+m4_define([[[DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
 typedef mmux_standard_$1_t mmux_cc_types_nullary_operation_standard_$1_t (void);
 typedef mmux_standard_$1_t mmux_cc_types_unary_operation_standard_$1_t (mmux_standard_$1_t X);
 typedef mmux_standard_$1_t mmux_cc_types_binary_operation_standard_$1_t  (mmux_standard_$1_t X, mmux_standard_$1_t Y);
@@ -127,78 +129,71 @@ typedef bool mmux_cc_types_unary_predicate_$1_t   (mmux_$1_t X);
 typedef bool mmux_cc_types_binary_predicate_$1_t  (mmux_$1_t X, mmux_$1_t Y);
 typedef bool mmux_cc_types_ternary_predicate_$1_t (mmux_$1_t X, mmux_$1_t Y, mmux_$1_t Z);
 typedef mmux_sint_t mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2);
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd32]]])
-DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd64]]])
-DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumd128]]])
-DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd32]]])
-DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd64]]])
-DEFINE_FUNCTION_PROTOTYPES_TYPES([[[flonumcd128]]])
-
-
-/** --------------------------------------------------------------------
- ** Includes.
- ** ----------------------------------------------------------------- */
-
-/* Order is important here!  There are a lot of inline functions. */
-
-#include <mmux-cc-types-libdfp-constants.h>
-#include <mmux-cc-types-libdfp-complex-numbers.h>
-#include <mmux-cc-types-libdfp-sign-predicates.h>
-#include <mmux-cc-types-libdfp-comparison.h>
-#include <mmux-cc-types-libdfp-mathematics.h>
-
-
-/** --------------------------------------------------------------------
- ** Standard types adapters: sprinter and parser.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_STRING_TO_FROM_PROTOS]]],[[[
-mmux_cc_types_decl mmux_standard_sint_t mmux_standard_strfrom$1 (mmux_asciizp_t restrict result_p,
-								 size_t size, mmux_asciizcp_t restrict format,
-								 mmux_standard_flonum$1_t value)
-  __attribute__((__const__));
-mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_strto$1 (mmux_asciizcp_t restrict s_input_value,
-								   mmux_asciizpp_t restrict tailptr)
-  __attribute__((__const__));
-]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d32)
-DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d64)
-DEFINE_STANDARD_STRING_TO_FROM_PROTOS(d128)
-
-m4_divert(-1)
-m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl
-mmux_cc_types_decl bool mmux_string_is_flonum$1 (mmux_asciizcp_t s_value);
-
-mmux_cc_types_decl bool mmux_flonum$1_parse  (mmux_flonum$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
-  __attribute__((__nonnull__(1,2)));
-
-mmux_cc_types_decl bool mmux_flonum$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_flonum$1_t value)
-  __attribute__((__nonnull__(1)));
-
-mmux_cc_types_decl mmux_sint_t mmux_flonum$1_sprint_size (mmux_flonum$1_t value);
-
-mmux_cc_types_decl bool mmux_flonum$1_dprintf (mmux_standard_sint_t fd, mmux_flonum$1_t value);
-
-mmux_cc_types_decl bool mmux_flonum$1_fprintf (void * stream, mmux_flonum$1_t value)
-  __attribute__((__nonnull__(1)));
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_STRINGREP_PRINTING_PROTOS(d32)
-DEFINE_STRINGREP_PRINTING_PROTOS(d64)
-DEFINE_STRINGREP_PRINTING_PROTOS(d128)
-DEFINE_STRINGREP_PRINTING_PROTOS(cd32)
-DEFINE_STRINGREP_PRINTING_PROTOS(cd64)
-DEFINE_STRINGREP_PRINTING_PROTOS(cd128)
+DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS([[[flonumd32]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS([[[flonumd64]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS([[[flonumd128]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS([[[flonumcd32]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS([[[flonumcd64]]])
+DEFINE_FUNCTION_PROTOTYPES_TYPEDEFS([[[flonumcd128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Complex numbers: functions that are so important that we need them here.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_LIBDFP_COMPLEX_NUMBERS_INLINE_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_rectangular (mmux_standard_flonumd$1_t re, mmux_standard_flonumd$1_t im)
+{
+  return (mmux_standard_flonumcd$1_t){ .re = re, .im = im };
+}
+
+mmux_cc_types_inline_decl mmux_flonumcd$1_t
+mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
+{
+  return mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular(re.value,im.value));
+}
+
+/* ------------------------------------------------------------------ */
+
+#define mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,		      \
+						     STANDARD_DECIMAL_LITERAL_IM)		      \
+  (mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_RE), \
+                                        mmux_standard_flonumd$1_literal(STANDARD_DECIMAL_LITERAL_IM)))
+
+#define mmux_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,			      \
+					    STANDARD_DECIMAL_LITERAL_IM)			      \
+  (mmux_flonumcd$1(mmux_standard_flonumcd$1_rectangular_literal(STANDARD_DECIMAL_LITERAL_RE,	      \
+								STANDARD_DECIMAL_LITERAL_IM)))
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
+mmux_standard_flonumcd$1_real_part (mmux_standard_flonumcd$1_t op)
+{
+  return op.re;
+}
+
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
+mmux_standard_flonumcd$1_imag_part (mmux_standard_flonumcd$1_t op)
+{
+  return op.im;
+}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_LIBDFP_COMPLEX_NUMBERS_INLINE_FUNCTIONS(32)
+DEFINE_LIBDFP_COMPLEX_NUMBERS_INLINE_FUNCTIONS(64)
+DEFINE_LIBDFP_COMPLEX_NUMBERS_INLINE_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 
-#endif /* MMUX_CC_TYPES_LIBDFP_H */
+#endif /* define MMUX_CC_TYPES_LIBDFP_H */
 
 /* end of file */

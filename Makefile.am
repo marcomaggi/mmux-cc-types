@@ -108,7 +108,6 @@ install-html-local:
 #
 
 EXTRA_DIST	+= \
-	src/mmux-cc-types-libdfp.h.m4			\
 	src/mmux-cc-types-libdfp-arithmetics.h.m4	\
 	src/mmux-cc-types-libdfp-comparison.h.m4	\
 	src/mmux-cc-types-libdfp-complex-numbers.h.m4	\
@@ -117,6 +116,8 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp-mathematics.h.m4	\
 	src/mmux-cc-types-libdfp-real-numbers.h.m4	\
 	src/mmux-cc-types-libdfp-sign-predicates.h.m4	\
+	src/mmux-cc-types-libdfp-stringreps.h.m4	\
+	src/mmux-cc-types-libdfp-typedefs.h.m4		\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c.m4	\
 	src/mmux-cc-types-libdfp-comparison.c.m4	\
@@ -125,11 +126,10 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp-mathematics.c.m4	\
 	src/mmux-cc-types-libdfp-real-numbers.c.m4	\
 	src/mmux-cc-types-libdfp-sign-predicates.c.m4	\
-	src/mmux-cc-types-libdfp-string.c.m4
+	src/mmux-cc-types-libdfp-stringreps.c.m4
 
 if WANT_LIBDFP
 MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
-	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-comparison.h		\
 	src/mmux-cc-types-libdfp-complex-numbers.h	\
@@ -138,6 +138,8 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
 	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-stringreps.h		\
+	src/mmux-cc-types-libdfp-typedefs.h		\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
 	src/mmux-cc-types-libdfp-comparison.c		\
@@ -146,7 +148,7 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp-mathematics.c		\
 	src/mmux-cc-types-libdfp-real-numbers.c		\
 	src/mmux-cc-types-libdfp-sign-predicates.c	\
-	src/mmux-cc-types-libdfp-string.c
+	src/mmux-cc-types-libdfp-stringreps.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
 CLEANFILES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
@@ -157,7 +159,6 @@ libmmux_cc_types_libdfp_la_CPPFLAGS	= $(AM_CPPFLAGS)
 libmmux_cc_types_libdfp_la_CFLAGS	= $(AM_CFLAGS)  $(LIBDFP_CFLAGS) -Wno-pedantic
 libmmux_cc_types_libdfp_la_LDFLAGS	= $(AM_LDFLAGS) $(LIBDFP_LIBS)
 libmmux_cc_types_libdfp_la_SOURCES	= \
-	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-comparison.h		\
 	src/mmux-cc-types-libdfp-complex-numbers.h	\
@@ -166,6 +167,8 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
 	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-stringreps.h		\
+	src/mmux-cc-types-libdfp-typedefs.h		\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c		\
 	src/mmux-cc-types-libdfp-comparison.c		\
@@ -174,15 +177,21 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp-mathematics.c		\
 	src/mmux-cc-types-libdfp-real-numbers.c		\
 	src/mmux-cc-types-libdfp-sign-predicates.c	\
-	src/mmux-cc-types-libdfp-string.c
+	src/mmux-cc-types-libdfp-stringreps.c
 
 include_HEADERS			+= \
-	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h
+	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-stringreps.h		\
+	src/mmux-cc-types-libdfp-typedefs.h
+
+.PHONY: dfp
+
+dfp: libmmux-cc-types-libdfp.la
+
 endif
 
 
@@ -304,13 +313,14 @@ libmmux_cc_types_la_SOURCES	= \
 
 if WANT_LIBDFP
 libmmux_cc_types_la_SOURCES	+= \
-	src/mmux-cc-types-libdfp.h			\
 	src/mmux-cc-types-libdfp-arithmetics.h		\
 	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h
+	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-typedefs.h		\
+	src/mmux-cc-types-libdfp-stringreps.h
 endif
 
 .PHONY: library

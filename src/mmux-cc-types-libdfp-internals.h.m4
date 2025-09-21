@@ -69,7 +69,17 @@
 #  include <float.h>
 #endif
 
-#include <mmux-cc-types-libdfp.h>
+/* ------------------------------------------------------------------ */
+
+#include <mmux-cc-types-libdfp-typedefs.h>
+#include <mmux-cc-types-libdfp-sign-predicates.h>
+#include <mmux-cc-types-libdfp-real-numbers.h>
+#include <mmux-cc-types-libdfp-complex-numbers.h>
+#include <mmux-cc-types-libdfp-constants.h>
+#include <mmux-cc-types-libdfp-arithmetics.h>
+#include <mmux-cc-types-libdfp-mathematics.h>
+#include <mmux-cc-types-libdfp-comparison.h>
+#include <mmux-cc-types-libdfp-stringreps.h>
 
 
 /** --------------------------------------------------------------------

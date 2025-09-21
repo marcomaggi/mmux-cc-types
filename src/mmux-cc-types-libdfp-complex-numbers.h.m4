@@ -40,12 +40,12 @@ mmux_standard_flonumd$1_real_part (mmux_standard_flonumd$1_t op)
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_imag_part (mmux_standard_flonumd$1_t op MMUX_CC_TYPES_UNUSED)
 {
-  return mmux_standard_flonumd$1_constant_zero();
+  return mmux_standard_flonumd$1_literal(0.0);
 }
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_argument (mmux_standard_flonumd$1_t op  MMUX_CC_TYPES_UNUSED)
 {
-  return mmux_standard_flonumd$1_constant_zero();
+  return mmux_standard_flonumd$1_literal(0.0);
 }
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_conjugate (mmux_standard_flonumd$1_t op)
@@ -59,54 +59,12 @@ DEFINE_STANDARD_FLONUMD_COMPLEX_INLINE_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
- ** Complex numbers functions: flonumd.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_FLONUMD_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumd$1_real_part (mmux_flonumd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_real_part(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumd$1_imag_part (mmux_flonumd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_imag_part(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumd$1_argument (mmux_flonumd$1_t op __attribute__((__unused__)))
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_argument(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumd$1_conjugate (mmux_flonumd$1_t op __attribute__((__unused__)))
-{
-  return mmux_flonumd$1(mmux_standard_flonumd$1_conjugate(op.value));
-}]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMD_COMPLEX_INLINE_FUNCTIONS(32)
-DEFINE_FLONUMD_COMPLEX_INLINE_FUNCTIONS(64)
-DEFINE_FLONUMD_COMPLEX_INLINE_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
  ** Complex numbers functions: standard flonumcd.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
-mmux_standard_flonumcd$1_real_part (mmux_standard_flonumcd$1_t op)
-{
-  return op.re;
-}
-mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
-mmux_standard_flonumcd$1_imag_part (mmux_standard_flonumcd$1_t op)
-{
-  return op.im;
-}
 mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumcd$1_argument (mmux_standard_flonumcd$1_t op)
   __attribute__((__const__));
 mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
@@ -118,39 +76,6 @@ m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(32)
 DEFINE_STANDARD_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(64)
 DEFINE_STANDARD_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(128)
-
-
-/** --------------------------------------------------------------------
- ** Complex numbers functions: flonumcd.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumcd$1_real_part (mmux_flonumcd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumcd$1_real_part(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumcd$1_imag_part (mmux_flonumcd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumcd$1_imag_part(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonumd$1_t
-mmux_flonumcd$1_argument (mmux_flonumcd$1_t op)
-{
-  return mmux_flonumd$1(mmux_standard_flonumcd$1_argument(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonumcd$1_t
-mmux_flonumcd$1_conjugate (mmux_flonumcd$1_t op)
-{
-  return mmux_flonumcd$1(mmux_standard_flonumcd$1_conjugate(op.value));
-}]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(32)
-DEFINE_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(64)
-DEFINE_FLONUMCD_COMPLEX_INLINE_FUNCTIONS_AND_PROTOS(128)
 
 
 /** --------------------------------------------------------------------

@@ -61,37 +61,6 @@ DEFINE_FLONUMD_PREDICATE_PROTOS(128)
 
 
 /** --------------------------------------------------------------------
- ** Sign predicates: flonumd
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-
-m4_define([[[DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl bool
-mmux_flonumd$1_$2 (mmux_flonumd$1_t op)
-{
-  return mmux_standard_flonumd$1_$2(op.value);
-}]]])
-
-m4_define([[[DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS]]],[[[m4_dnl
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_zero)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_positive)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_negative)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_non_positive)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_non_negative)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_nan)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_infinite)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_finite)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_normal)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTION($1,	is_subnormal)
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS(32)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS(64)
-DEFINE_FLONUMD_PREDICATE_INLINE_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
  ** Sign predicates: standard flonumcd
  ** ----------------------------------------------------------------- */
 
@@ -122,37 +91,6 @@ m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(32)
 DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(64)
 DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Sign predicates: flonumcd
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-
-m4_define([[[DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl bool
-mmux_flonumcd$1_$2 (mmux_flonumcd$1_t op)
-{
-  return mmux_standard_flonumcd$1_$2(op.value);
-}]]])
-
-m4_define([[[DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS]]],[[[m4_dnl
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_zero)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_positive)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_negative)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_non_positive)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_non_negative)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_nan)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_infinite)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_finite)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_normal)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTION($1,	is_subnormal)
-]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(32)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(64)
-DEFINE_FLONUMCD_SIGN_PREDICATE_INLINE_FUNCTIONS(128)
 
 
 /** --------------------------------------------------------------------
