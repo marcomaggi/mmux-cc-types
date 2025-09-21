@@ -21,6 +21,32 @@
 
 
 static void
+test_real_numbers (void)
+{
+  dprintf(2, "%s: enter\n", __func__);
+
+  {
+    dprintf(2, "%s: compute the sign of a number\n", __func__);
+    {
+      mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
+      mmux_flonumf128_t  S = mmux_flonumf128_sign(A);
+
+      mmux_flonumf128_dprintf(2, S); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically compute the sign of a number\n", __func__);
+    {
+      auto  A = mmux_flonumf128_literal(0.123);
+      auto  S = mmux_ctype_sign(A);
+
+      mmux_ctype_dprintf(2, S); dprintf_newline(2);
+    }
+  }
+
+  dprintf(2, "%s: leave\n", __func__);
+}
+
+
+static void
 test_complex_numbers (void)
 {
   dprintf(2, "%s: enter\n", __func__);
@@ -436,6 +462,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   mmux_cc_types_init();
   test_set_output_formats();
 
+  if (1) {	test_real_numbers();		}
   if (1) {	test_complex_numbers();		}
   if (1) {	test_stringrep_sprinters();	}
   if (1) {	test_predicates();		}
