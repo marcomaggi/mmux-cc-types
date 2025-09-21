@@ -558,6 +558,98 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[flonumcf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCF128
 
 
 /** --------------------------------------------------------------------
+ ** Complex numbers: functions so basic that we need them here.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
+mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular (mmux_standard_flonum$1_t re,
+										  mmux_standard_flonum$1_t im)
+  __attribute__((__const__));
+
+#define mmux_standard_flonumc$1_rectangular_literal(RE,IM)			\
+  mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_literal(RE),	\
+				      mmux_standard_flonum$1_literal(IM))
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_flonumc$1_t
+mmux_flonumc$1_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
+{
+  return mmux_flonumc$1(mmux_standard_flonumc$1_rectangular(re.value, im.value));
+}
+#define mmux_flonumc$1_rectangular_literal(RE,IM)				\
+  mmux_flonumc$1_rectangular(mmux_flonum$1(mmux_standard_flonum$1_literal(RE)), \
+			     mmux_flonum$1(mmux_standard_flonum$1_literal(IM)))
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+mmux_standard_flonum$1_real_part (mmux_standard_flonum$1_t op)
+{
+  return op;
+}
+mmux_cc_types_inline_decl mmux_standard_flonum$1_t
+mmux_standard_flonum$1_imag_part (mmux_standard_flonum$1_t op MMUX_CC_TYPES_UNUSED)
+{
+  return mmux_standard_flonum$1_literal(0.0);
+}
+mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_real_part (mmux_standard_flonumc$1_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_imag_part (mmux_standard_flonumc$1_t op)
+  __attribute__((__const__));
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_flonum$1_t
+mmux_flonum$1_real_part (mmux_flonum$1_t op)
+{
+  return mmux_flonum$1(mmux_standard_flonum$1_real_part(op.value));
+}
+mmux_cc_types_inline_decl mmux_flonum$1_t
+mmux_flonum$1_imag_part (mmux_flonum$1_t op)
+{
+  return mmux_flonum$1(mmux_standard_flonum$1_imag_part(op.value));
+}
+
+mmux_cc_types_inline_decl mmux_flonum$1_t
+mmux_flonumc$1_real_part (mmux_flonumc$1_t op)
+{
+  return mmux_flonum$1(mmux_standard_flonumc$1_real_part(op.value));
+}
+mmux_cc_types_inline_decl mmux_flonum$1_t
+mmux_flonumc$1_imag_part (mmux_flonumc$1_t op)
+{
+  return mmux_flonum$1(mmux_standard_flonumc$1_imag_part(op.value));
+}
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_COMPLEX_INLINE_FUNCTIONS(fl)
+DEFINE_COMPLEX_INLINE_FUNCTIONS(db)
+DEFINE_COMPLEX_INLINE_FUNCTIONS(ldb)
+
+DEFINE_COMPLEX_INLINE_FUNCTIONS(f32)
+DEFINE_COMPLEX_INLINE_FUNCTIONS(f64)
+DEFINE_COMPLEX_INLINE_FUNCTIONS(f128)
+
+DEFINE_COMPLEX_INLINE_FUNCTIONS(f32x)
+DEFINE_COMPLEX_INLINE_FUNCTIONS(f64x)
+DEFINE_COMPLEX_INLINE_FUNCTIONS(f128x)
+
+
+/** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-typedefs.h>
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

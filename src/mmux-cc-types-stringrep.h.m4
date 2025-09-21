@@ -124,6 +124,17 @@ DEFINE_STRINGREP_PROTOS([[[flonumcf128x]]])
 
 
 /** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-stringrep.h>
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Selecting printf output format for floating point numbers.
  ** ----------------------------------------------------------------- */
 

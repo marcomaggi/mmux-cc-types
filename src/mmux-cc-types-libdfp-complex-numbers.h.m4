@@ -33,16 +33,6 @@
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUMD_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_real_part (mmux_standard_flonumd$1_t op)
-{
-  return op;
-}
-mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
-mmux_standard_flonumd$1_imag_part (mmux_standard_flonumd$1_t op MMUX_CC_TYPES_UNUSED)
-{
-  return mmux_standard_flonumd$1_literal(0.0);
-}
-mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_argument (mmux_standard_flonumd$1_t op  MMUX_CC_TYPES_UNUSED)
 {
   return mmux_standard_flonumd$1_literal(0.0);

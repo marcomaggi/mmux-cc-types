@@ -352,44 +352,6 @@ DEFINE_STANDARD_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],	[[[MMUX_CC_TYPE
 
 
 /** --------------------------------------------------------------------
- ** Predicates: flonum.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION]]],[[[m4_dnl
-mmux_cc_types_inline_decl bool
-mmux_$1_$2 (mmux_$1_t op)
-{
-  return mmux_standard_$1_$2(op.value);
-}]]])
-
-m4_define([[[DEFINE_FLONUM_SIGN_PREDICATES_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_zero)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_positive)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_negative)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_non_positive)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_non_negative)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_nan)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_infinite)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_finite)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_normal)
-DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_subnormal)
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumfl]]])
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumdb]]])
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
-
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
-
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
-DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
-
-
-/** --------------------------------------------------------------------
  ** Predicates: standard flonumc.
  ** ----------------------------------------------------------------- */
 
@@ -438,6 +400,59 @@ DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-sign-predicates.h>
+#endif
+
+
+/** --------------------------------------------------------------------
+ ** Predicates: flonum.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_$1_$2 (mmux_$1_t op)
+{
+  return mmux_standard_$1_$2(op.value);
+}]]])
+
+m4_define([[[DEFINE_FLONUM_SIGN_PREDICATES_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_zero)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_positive)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_negative)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_non_positive)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_non_negative)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_nan)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_infinite)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_finite)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_normal)
+DEFINE_FLONUM_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_subnormal)
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumfl]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumdb]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumldb]]],		[[[MMUX_CC_TYPES_HAS_FLONUMLDB]]])
+
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128]]])
+
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf32x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF32X]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf64x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumf128x]]],		[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
+
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumd32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumd64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUM_SIGN_PREDICATES_PROTOS([[[flonumd128]]],		[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
+
+
+/** --------------------------------------------------------------------
  ** Predicates: flonumc.
  ** ----------------------------------------------------------------- */
 
@@ -473,6 +488,10 @@ DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf128]]],	[[[MMUX_CC_TYPES_HAS_FL
 DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
 DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
 DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcf128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+
+DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcd32]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCD32]]])
+DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcd64]]],		[[[MMUX_CC_TYPES_HAS_FLONUMCD64]]])
+DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcd128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD128]]])
 
 
 /** --------------------------------------------------------------------

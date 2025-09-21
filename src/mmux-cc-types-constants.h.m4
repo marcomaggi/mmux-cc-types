@@ -312,6 +312,17 @@ DEFINE_STANDARD_FLONUMC_CONSTANTS(f128x)
 
 
 /** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-constants.h>
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Mathematics: flonum constants.
  ** ----------------------------------------------------------------- */
 
@@ -366,6 +377,9 @@ DEFINE_FLONUM_CONSTANTS(f128)
 DEFINE_FLONUM_CONSTANTS(f32x)
 DEFINE_FLONUM_CONSTANTS(f64x)
 DEFINE_FLONUM_CONSTANTS(f128x)
+DEFINE_FLONUM_CONSTANTS(d32)
+DEFINE_FLONUM_CONSTANTS(d64)
+DEFINE_FLONUM_CONSTANTS(d128)
 
 
 /** --------------------------------------------------------------------
@@ -418,5 +432,8 @@ DEFINE_FLONUMC_CONSTANTS(f128)
 DEFINE_FLONUMC_CONSTANTS(f32x)
 DEFINE_FLONUMC_CONSTANTS(f64x)
 DEFINE_FLONUMC_CONSTANTS(f128x)
+DEFINE_FLONUMC_CONSTANTS(d32)
+DEFINE_FLONUMC_CONSTANTS(d64)
+DEFINE_FLONUMC_CONSTANTS(d128)
 
 /* end of file */

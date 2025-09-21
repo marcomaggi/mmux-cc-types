@@ -164,16 +164,6 @@ DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[rlim]]])
 m4_divert(-1)
 m4_define([[[DEFINE_STANDARD_FLONUM_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
 mmux_cc_types_inline_decl mmux_standard_flonum$1_t
-mmux_standard_flonum$1_real_part (mmux_standard_flonum$1_t op)
-{
-  return op;
-}
-mmux_cc_types_inline_decl mmux_standard_flonum$1_t
-mmux_standard_flonum$1_imag_part (mmux_standard_flonum$1_t op MMUX_CC_TYPES_UNUSED)
-{
-  return mmux_standard_flonum$1_literal(0.0);
-}
-mmux_cc_types_inline_decl mmux_standard_flonum$1_t
 mmux_standard_flonum$1_argument (mmux_standard_flonum$1_t op MMUX_CC_TYPES_UNUSED)
 {
   return mmux_standard_flonum$1_literal(0.0);
@@ -200,21 +190,48 @@ DEFINE_STANDARD_FLONUM_COMPLEX_INLINE_FUNCTIONS(f128x,	[[[MMUX_CC_TYPES_HAS_FLON
 
 
 /** --------------------------------------------------------------------
+ ** Complex numbers: standard flonumc
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_argument (mmux_standard_flonumc$1_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_conjugate (mmux_standard_flonumc$1_t op)
+  __attribute__((__const__));
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[fl]]])
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[db]]])
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[ldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
+
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
+
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
+DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+
+
+/** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-complex-numbers.h>
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Complex numbers: flonum.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_inline_decl mmux_flonum$1_t
-mmux_flonum$1_real_part (mmux_flonum$1_t op)
-{
-  return mmux_flonum$1(mmux_standard_flonum$1_real_part(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonum$1_t
-mmux_flonum$1_imag_part (mmux_flonum$1_t op)
-{
-  return mmux_flonum$1(mmux_standard_flonum$1_imag_part(op.value));
-}
 mmux_cc_types_inline_decl mmux_flonum$1_t
 mmux_flonum$1_argument (mmux_flonum$1_t op)
 {
@@ -239,45 +256,9 @@ DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS([[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF3
 DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS([[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF64X]]])
 DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMF128X]]])
 
-
-/** --------------------------------------------------------------------
- ** Complex numbers: standard flonumc
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_rectangular (mmux_standard_flonum$1_t re,
-										  mmux_standard_flonum$1_t im)
-  __attribute__((__const__));
-
-#define mmux_standard_flonumc$1_rectangular_literal(RE,IM)			\
-  mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_literal(RE),	\
-				      mmux_standard_flonum$1_literal(IM))
-
-mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_real_part (mmux_standard_flonumc$1_t op)
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_imag_part (mmux_standard_flonumc$1_t op)
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_standard_flonum$1_t mmux_standard_flonumc$1_argument (mmux_standard_flonumc$1_t op)
-  __attribute__((__const__));
-
-mmux_cc_types_decl mmux_standard_flonumc$1_t mmux_standard_flonumc$1_conjugate (mmux_standard_flonumc$1_t op)
-  __attribute__((__const__));
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[fl]]])
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[db]]])
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[ldb]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]])
-
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32]]])
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64]]])
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128]]])
-
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
-DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS([[[d32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD32]]])
+DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS([[[d64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD64]]])
+DEFINE_FLONUM_COMPLEX_INLINE_FUNCTIONS([[[d128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMD128]]])
 
 
 /** --------------------------------------------------------------------
@@ -286,25 +267,6 @@ DEFINE_STANDARD_FLONUMC_COMPLEX_PROTOS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMC
 
 m4_divert(-1)
 m4_define([[[DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
-mmux_cc_types_inline_decl mmux_flonumc$1_t
-mmux_flonumc$1_rectangular (mmux_flonum$1_t re, mmux_flonum$1_t im)
-{
-  return mmux_flonumc$1(mmux_standard_flonumc$1_rectangular(re.value, im.value));
-}
-#define mmux_flonumc$1_rectangular_literal(RE,IM)				\
-  mmux_flonumc$1_rectangular(mmux_flonum$1(mmux_standard_flonum$1_literal(RE)), \
-			     mmux_flonum$1(mmux_standard_flonum$1_literal(IM)))
-
-mmux_cc_types_inline_decl mmux_flonum$1_t
-mmux_flonumc$1_real_part (mmux_flonumc$1_t op)
-{
-  return mmux_flonum$1(mmux_standard_flonumc$1_real_part(op.value));
-}
-mmux_cc_types_inline_decl mmux_flonum$1_t
-mmux_flonumc$1_imag_part (mmux_flonumc$1_t op)
-{
-  return mmux_flonum$1(mmux_standard_flonumc$1_imag_part(op.value));
-}
 mmux_cc_types_inline_decl mmux_flonum$1_t
 mmux_flonumc$1_argument (mmux_flonumc$1_t op)
 {
@@ -328,6 +290,10 @@ DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[f128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMC
 DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[f32x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]])
 DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[f64x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]])
 DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[f128x]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]])
+
+DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[d32]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD32]]])
+DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[d64]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD64]]])
+DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[d128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMCD128]]])
 
 
 /** --------------------------------------------------------------------

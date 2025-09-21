@@ -173,15 +173,48 @@ mmux_flonumcd$1_rectangular (mmux_flonumd$1_t re, mmux_flonumd$1_t im)
 /* ------------------------------------------------------------------ */
 
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_real_part (mmux_standard_flonumd$1_t op)
+{
+  return op;
+}
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_imag_part (mmux_standard_flonumd$1_t op MMUX_CC_TYPES_UNUSED)
+{
+  return mmux_standard_flonumd$1_literal(0.0);
+}
+mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumcd$1_real_part (mmux_standard_flonumcd$1_t op)
 {
   return op.re;
 }
-
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumcd$1_imag_part (mmux_standard_flonumcd$1_t op)
 {
   return op.im;
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_flonumd$1_t
+mmux_flonumd$1_real_part (mmux_flonumd$1_t op)
+{
+  return op;
+}
+mmux_cc_types_inline_decl mmux_flonumd$1_t
+mmux_flonumd$1_imag_part (mmux_flonumd$1_t op MMUX_CC_TYPES_UNUSED)
+{
+  return mmux_flonumd$1_literal(0.0);
+}
+
+mmux_cc_types_inline_decl mmux_flonumd$1_t
+mmux_flonumcd$1_real_part (mmux_flonumcd$1_t op)
+{
+  return mmux_flonumd$1(mmux_standard_flonumcd$1_real_part(op.value));
+}
+mmux_cc_types_inline_decl mmux_flonumd$1_t
+mmux_flonumcd$1_imag_part (mmux_flonumcd$1_t op)
+{
+  return mmux_flonumd$1(mmux_standard_flonumcd$1_imag_part(op.value));
 }
 ]]])]]])
 m4_divert(0)m4_dnl

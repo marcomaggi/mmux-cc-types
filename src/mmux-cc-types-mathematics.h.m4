@@ -111,6 +111,79 @@ DEFINE_STANDARD_FLONUM_MATHEMATICS_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
+ ** Mathematics: standard flonumc
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumc$1_t mmux_standard_flonumc$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumc$1_t mmux_standard_flonumc$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_BINARY_SINT_MATH_PROTO]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_binary_sint_operation_standard_flonumc$1_t mmux_standard_flonumc$1_$2
+  __attribute__((__const__));]]])
+
+m4_define([[[DEFINE_FLONUMC_MATHEMATICS_PROTOS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
+DEFINE_UNARY_MATH_PROTO($1,		sin)
+DEFINE_UNARY_MATH_PROTO($1,		cos)
+DEFINE_UNARY_MATH_PROTO($1,		tan)
+
+DEFINE_UNARY_MATH_PROTO($1,		asin)
+DEFINE_UNARY_MATH_PROTO($1,		acos)
+DEFINE_UNARY_MATH_PROTO($1,		atan)
+
+DEFINE_UNARY_MATH_PROTO($1,		sinh)
+DEFINE_UNARY_MATH_PROTO($1,		cosh)
+DEFINE_UNARY_MATH_PROTO($1,		tanh)
+
+DEFINE_UNARY_MATH_PROTO($1,		asinh)
+DEFINE_UNARY_MATH_PROTO($1,		acosh)
+DEFINE_UNARY_MATH_PROTO($1,		atanh)
+
+DEFINE_UNARY_MATH_PROTO($1,		exp)
+DEFINE_UNARY_MATH_PROTO($1,		exp2)
+DEFINE_UNARY_MATH_PROTO($1,		exp10)
+
+DEFINE_UNARY_MATH_PROTO($1,		log)
+DEFINE_UNARY_MATH_PROTO($1,		log2)
+DEFINE_UNARY_MATH_PROTO($1,		log10)
+
+DEFINE_BINARY_MATH_PROTO($1,		pow)
+DEFINE_UNARY_MATH_PROTO($1,		square)
+DEFINE_UNARY_MATH_PROTO($1,		cube)
+DEFINE_UNARY_MATH_PROTO($1,		sqrt)
+DEFINE_UNARY_MATH_PROTO($1,		cbrt)
+]]])]]])
+m4_divert(0)m4_dnl
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(fl)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(db)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(ldb)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(f32)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(f64)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(f128)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(f32x)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(f64x)
+DEFINE_FLONUMC_MATHEMATICS_PROTOS(f128x)
+
+
+/** --------------------------------------------------------------------
+ ** Headers.
+ ** ----------------------------------------------------------------- */
+
+#if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
+     (defined MMUX_CC_TYPES_HAS_FLONUMD128))
+#  include <mmux-cc-types-libdfp-mathematics.h>
+#endif
+
+
+/** --------------------------------------------------------------------
  ** Mathematics: flonum
  ** ----------------------------------------------------------------- */
 
@@ -201,67 +274,10 @@ DEFINE_FLONUM_MATHEMATICS_INLINE_FUNCTIONS(f32x)
 DEFINE_FLONUM_MATHEMATICS_INLINE_FUNCTIONS(f64x)
 DEFINE_FLONUM_MATHEMATICS_INLINE_FUNCTIONS(f128x)
 
-
-/** --------------------------------------------------------------------
- ** Mathematics: standard flonumc
- ** ----------------------------------------------------------------- */
+DEFINE_FLONUM_MATHEMATICS_INLINE_FUNCTIONS(d32)
+DEFINE_FLONUM_MATHEMATICS_INLINE_FUNCTIONS(d64)
+DEFINE_FLONUM_MATHEMATICS_INLINE_FUNCTIONS(d128)
 
-m4_divert(-1)
-
-m4_define([[[DEFINE_UNARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumc$1_t mmux_standard_flonumc$1_$2
-  __attribute__((__const__));]]])
-
-m4_define([[[DEFINE_BINARY_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumc$1_t mmux_standard_flonumc$1_$2
-  __attribute__((__const__));]]])
-
-m4_define([[[DEFINE_BINARY_SINT_MATH_PROTO]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_binary_sint_operation_standard_flonumc$1_t mmux_standard_flonumc$1_$2
-  __attribute__((__const__));]]])
-
-m4_define([[[DEFINE_FLONUMC_MATHEMATICS_PROTOS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
-DEFINE_UNARY_MATH_PROTO($1,		sin)
-DEFINE_UNARY_MATH_PROTO($1,		cos)
-DEFINE_UNARY_MATH_PROTO($1,		tan)
-
-DEFINE_UNARY_MATH_PROTO($1,		asin)
-DEFINE_UNARY_MATH_PROTO($1,		acos)
-DEFINE_UNARY_MATH_PROTO($1,		atan)
-
-DEFINE_UNARY_MATH_PROTO($1,		sinh)
-DEFINE_UNARY_MATH_PROTO($1,		cosh)
-DEFINE_UNARY_MATH_PROTO($1,		tanh)
-
-DEFINE_UNARY_MATH_PROTO($1,		asinh)
-DEFINE_UNARY_MATH_PROTO($1,		acosh)
-DEFINE_UNARY_MATH_PROTO($1,		atanh)
-
-DEFINE_UNARY_MATH_PROTO($1,		exp)
-DEFINE_UNARY_MATH_PROTO($1,		exp2)
-DEFINE_UNARY_MATH_PROTO($1,		exp10)
-
-DEFINE_UNARY_MATH_PROTO($1,		log)
-DEFINE_UNARY_MATH_PROTO($1,		log2)
-DEFINE_UNARY_MATH_PROTO($1,		log10)
-
-DEFINE_BINARY_MATH_PROTO($1,		pow)
-DEFINE_UNARY_MATH_PROTO($1,		square)
-DEFINE_UNARY_MATH_PROTO($1,		cube)
-DEFINE_UNARY_MATH_PROTO($1,		sqrt)
-DEFINE_UNARY_MATH_PROTO($1,		cbrt)
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(fl)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(db)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(ldb)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(f32)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(f64)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(f128)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(f32x)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(f64x)
-DEFINE_FLONUMC_MATHEMATICS_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -327,12 +343,18 @@ m4_divert(0)m4_dnl
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(fl)
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(db)
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(ldb)
+
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(f32)
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(f64)
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(f128)
+
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(f32x)
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(f64x)
 DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(f128x)
+
+DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(d32)
+DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(d64)
+DEFINE_FLONUMC_MATHEMATICS_INLINE_FUNCTIONS(d128)
 
 
 /** --------------------------------------------------------------------

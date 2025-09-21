@@ -79,7 +79,7 @@
 #include <mmux-cc-types-libdfp-arithmetics.h>
 #include <mmux-cc-types-libdfp-mathematics.h>
 #include <mmux-cc-types-libdfp-comparison.h>
-#include <mmux-cc-types-libdfp-stringreps.h>
+#include <mmux-cc-types-libdfp-stringrep.h>
 
 
 /** --------------------------------------------------------------------
