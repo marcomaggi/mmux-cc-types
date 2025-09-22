@@ -432,19 +432,21 @@ test_bitwise (void)
   {
     dprintf(2, "%s: XOR two numbers\n", __func__);
     {
-      mmux_uint_t	A = mmux_uint_literal(0b111000);
-      mmux_uint_t	B = mmux_uint_literal(0b101010);
-      mmux_uint_t	C = mmux_uint_bitwise_xor(A, B);
+      mmux_uint_t	A    = mmux_uint_literal(0b111000);
+      mmux_uint_t	B    = mmux_uint_literal(0b101010);
+      mmux_uint_t	C    = mmux_uint_bitwise_xor(A, B);
+      mmux_uint_t	base = mmux_uint_literal(2);
 
-      mmux_uint_dprintf(2, C); dprintf_newline(2);
+      mmux_uint_dprintf_with_base(2, C, base); dprintf_newline(2);
     }
     dprintf(2, "%s: generically XOR two numbers\n", __func__);
     {
       auto	A = mmux_uint_literal(0b111000);
       auto	B = mmux_uint_literal(0b101010);
       auto	C = mmux_ctype_bitwise_xor(A, B);
+      auto	base = mmux_uint_literal(2);
 
-      mmux_ctype_dprintf(2, C); dprintf_newline(2);
+      mmux_ctype_dprintf_with_base(2, C, base); dprintf_newline(2);
     }
   }
 
