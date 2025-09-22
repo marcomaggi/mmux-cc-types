@@ -56,6 +56,9 @@ mmux_standard_flonumd$1_div (mmux_standard_flonumd$1_t op1, mmux_standard_flonum
 mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_modulo
   __attribute__((__const__));
 
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_remainder
+  __attribute__((__const__));
+
 mmux_cc_types_inline_decl mmux_standard_flonumd$1_t
 mmux_standard_flonumd$1_neg (mmux_standard_flonumd$1_t op)
 {

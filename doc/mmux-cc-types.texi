@@ -3830,6 +3830,10 @@ auto    rop = mmux_ctype_neg(op);
 
 mmux_ctype_dprintf(2, rop);     @print{} 18446744073709551611
 @end example
+
+@item
+The @code{modulo} functions for floating--point numbers is implemented using the @cfunc{fmod}
+standard functions.
 @end itemize
 
 
@@ -3841,11 +3845,12 @@ mmux_ctype_dprintf(2, rop);     @print{} 18446744073709551611
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_inverse (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_absolute (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_modulo (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_remainder (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_incr (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_decr (mmux_ctype_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement.  The type @objtype{mmux_ctype_t} is a placeholder for the type of
-the operands and result.
+modulo, remainder, increment, decrement.  The type @objtype{mmux_ctype_t} is a placeholder for the
+type of the operands and result.
 @end deftypefn
 
 
@@ -3859,6 +3864,7 @@ Compute the difference between the operands @code{@vari{OP} - @varii{OP}}, inter
 as @code{mmux_uint8_t *}, return the result.
 @end deftypefun
 
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineNotIntegerRealArithmeticsFunc{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_add (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -3869,13 +3875,16 @@ as @code{mmux_uint8_t *}, return the result.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inverse (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_absolute (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_modulo (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_remainder (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement.
+modulo, increment, decrement.
 @end deftypefun
 
 @end macro
+
+@c ------------------------------------------------------------------------
 
 @macro MmuxDefineComplexArithmeticsFunc{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_add (mmux_\CPLXSTEM\_t @vari{OP}, mmux_\CPLXSTEM\_t @varii{OP})
@@ -3890,6 +3899,8 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 
 @end macro
 
+@c ------------------------------------------------------------------------
+
 @macro MmuxDefineIntegerArithmeticsFunc{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_add (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_sub (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -3902,7 +3913,7 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
-remainder, increment, decrement.
+modulo, increment, decrement.
 @end deftypefun
 
 @end macro

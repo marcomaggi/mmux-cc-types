@@ -1232,6 +1232,65 @@ test_arithmetics_modulo (void)
 
 
 /** --------------------------------------------------------------------
+ ** Remainder.
+ ** ----------------------------------------------------------------- */
+
+#undef  DEFINE_REAL_FLONUM_REMAINDER
+#define DEFINE_REAL_FLONUM_REMAINDER(STEM)					\
+  {										\
+    auto	op1 = mmux_## STEM ## _literal(10.0);				\
+    auto	op2 = mmux_## STEM ## _literal(3.0);				\
+    auto	rop = mmux_## STEM ## _literal(1.0);				\
+    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_remainder(op1, op2)));	\
+    assert(mmux_ctype_equal(rop, mmux_ctype_remainder(op1, op2)));		\
+    dprintf(2," %s,", #STEM);							\
+  }
+
+/* ------------------------------------------------------------------ */
+
+static void
+test_arithmetics_remainder (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+  DEFINE_REAL_FLONUM_REMAINDER(flonumfl);
+  DEFINE_REAL_FLONUM_REMAINDER(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DEFINE_REAL_FLONUM_REMAINDER(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DEFINE_REAL_FLONUM_REMAINDER(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DEFINE_REAL_FLONUM_REMAINDER(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DEFINE_REAL_FLONUM_REMAINDER(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DEFINE_REAL_FLONUM_REMAINDER(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DEFINE_REAL_FLONUM_REMAINDER(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DEFINE_REAL_FLONUM_REMAINDER(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DEFINE_REAL_FLONUM_REMAINDER(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DEFINE_REAL_FLONUM_REMAINDER(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DEFINE_REAL_FLONUM_REMAINDER(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+/** --------------------------------------------------------------------
  ** Increment.
  ** ----------------------------------------------------------------- */
 
@@ -1459,6 +1518,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_arithmetics_inverse();	}
   if (1) {	test_arithmetics_absolute();	}
   if (1) {	test_arithmetics_modulo();	}
+  if (1) {	test_arithmetics_remainder();	}
   if (1) {	test_arithmetics_incr();	}
   if (1) {	test_arithmetics_decr();	}
 

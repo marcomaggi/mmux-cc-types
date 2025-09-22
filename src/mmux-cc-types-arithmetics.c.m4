@@ -42,6 +42,11 @@ mmux_standard_flonum$1_modulo (mmux_standard_flonum$1_t op1, mmux_standard_flonu
   return fmod$2(op1, op2);
 }
 mmux_standard_flonum$1_t
+mmux_standard_flonum$1_remainder (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
+{
+  return remainder$2(op1, op2);
+}
+mmux_standard_flonum$1_t
 mmux_standard_flonum$1_absolute (mmux_standard_flonum$1_t op)
 {
   return fabs$2(op);

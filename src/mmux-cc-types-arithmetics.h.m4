@@ -270,6 +270,9 @@ mmux_standard_flonum$1_neg (mmux_standard_flonum$1_t op)
 mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonum$1_t mmux_standard_flonum$1_modulo
   __attribute__((__const__));
 
+mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonum$1_t mmux_standard_flonum$1_remainder
+  __attribute__((__const__));
+
 mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_absolute
   __attribute__((__const__));
 ]]])]]])
@@ -378,6 +381,7 @@ DEFINE_FLONUM_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	mul)
 DEFINE_FLONUM_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	div)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	inverse)
 DEFINE_FLONUM_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	modulo)
+DEFINE_FLONUM_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	remainder)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	incr)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	decr)
 DEFINE_FLONUM_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	neg)
@@ -855,6 +859,46 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 
 /* ------------------------------------------------------------------ */
 
+m4_define([[[DEFINE_BINARY_FUNCTION_FLONUM_NUMBERS_ONLY]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE1,VALUE2)					\
+  (_Generic((VALUE1),							\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,		\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
+]]])m4_dnl
+           default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
+]]]) m4_dnl
+
+/* ------------------------------------------------------------------ */
+
 m4_define([[[DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE)						\
   (_Generic((VALUE),							\
@@ -939,6 +983,7 @@ DEFINE_UNARY_FUNCTION_NO_POINTER([[[neg]]])
 DEFINE_UNARY_FUNCTION_NO_POINTER([[[inverse]]])
 DEFINE_UNARY_FUNCTION_NO_POINTER([[[absolute]]])
 DEFINE_BINARY_FUNCTION_REAL_NUMBERS_ONLY([[[modulo]]])
+DEFINE_BINARY_FUNCTION_FLONUM_NUMBERS_ONLY([[[remainder]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[incr]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 

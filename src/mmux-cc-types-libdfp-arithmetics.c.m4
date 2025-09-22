@@ -46,6 +46,11 @@ mmux_standard_flonumd$1_modulo (mmux_standard_flonumd$1_t op1, mmux_standard_flo
 {
   return fmodd$1(op1, op2);
 }
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_remainder (mmux_standard_flonumd$1_t op1, mmux_standard_flonumd$1_t op2)
+{
+  return remainderd$1(op1, op2);
+}
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_ARITHMETICS_FUNCTIONS(32)
