@@ -374,7 +374,7 @@ check_PROGRAMS	= \
 	tests/test-arithmetics			\
 	tests/test-bitwise			\
 	tests/test-comparison			\
-	tests/test-complex			\
+	tests/test-complex-numbers		\
 	tests/test-constants			\
 	tests/test-documentation		\
 	tests/test-experiments			\
@@ -398,8 +398,8 @@ tests_version_LDADD			= $(mmux_cc_types_tests_ldadd)
 tests_test_demo_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_demo_LDADD			= $(mmux_cc_types_tests_ldadd)
 
-tests_test_complex_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
-tests_test_complex_LDADD		= $(mmux_cc_types_tests_ldadd)
+tests_test_complex_numbers_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
+tests_test_complex_numbers_LDADD	= $(mmux_cc_types_tests_ldadd)
 
 tests_test_constants_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_constants_LDADD		= $(mmux_cc_types_tests_ldadd)

@@ -2374,6 +2374,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 
 @menu
 * real sign::                   Sign of floating-point numbers.
+* real rounding::               Rounding floating-point numbers.
 @end menu
 
 @c page
@@ -2409,7 +2410,6 @@ operand; for @code{flonum} operands the result is always @samp{+1.0} or @samp{-1
 @code{flonum} zero has a sign; for @code{flonumc} operands the result is a complex number whose real
 and imaginary parts represent the signs of the real and imaginary parts of the operand.
 @end itemize
-
 
 @c ------------------------------------------------------------------------
 
@@ -2513,6 +2513,117 @@ the operands and result.
 @MmuxDefineCplxFlonumSignFunctions{flonumcd32}
 @MmuxDefineCplxFlonumSignFunctions{flonumcd64}
 @MmuxDefineCplxFlonumSignFunctions{flonumcd128}
+
+@c page
+@node real rounding
+@section Rounding floating-point numbers
+
+
+To compute the ceil of a number we do:
+
+@example
+mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
+mmux_flonumf128_t  B = mmux_flonumf128_ceil(A);
+
+mmux_flonumf128_dprintf(2, B);  @print{} 1.0
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto  A = mmux_flonumf128_literal(0.123);
+auto  B = mmux_ctype_ceil(A);
+
+mmux_ctype_dprintf(2, B);       @print{} 1.0
+@end example
+
+@c ------------------------------------------------------------------------
+
+Notes on operations:
+
+@itemize
+@item
+When a rounding function is applied to a complex number: the rounding operation is applied to both
+the real and imaginary parts.
+@end itemize
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineRealFlonumRoundingFunctions{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_ceil (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_floor (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_trunc (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_rint (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_nearbyint (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_round (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_roundeven (mmux_\STEM\_t @var{OP})
+Compute the rounded result of the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineCplxFlonumRoundingFunctions{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_ceil (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_floor (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_trunc (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_rint (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_nearbyint (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_round (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_roundeven (mmux_\STEM\_t @var{OP})
+Compute the rounded result of the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_floor (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_trunc (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_rint (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_nearbyint (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_round (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_roundeven (mmux_ctype_t @var{OP})
+Compute the rounded result of the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the
+type of the operands and result.
+@end deftypefn
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineRealFlonumRoundingFunctions{flonumfl}
+@MmuxDefineRealFlonumRoundingFunctions{flonumdb}
+@MmuxDefineRealFlonumRoundingFunctions{flonumldb}
+
+@MmuxDefineRealFlonumRoundingFunctions{flonumf32}
+@MmuxDefineRealFlonumRoundingFunctions{flonumf64}
+@MmuxDefineRealFlonumRoundingFunctions{flonumf128}
+
+@MmuxDefineRealFlonumRoundingFunctions{flonumf32x}
+@MmuxDefineRealFlonumRoundingFunctions{flonumf64x}
+@MmuxDefineRealFlonumRoundingFunctions{flonumf128x}
+
+@MmuxDefineRealFlonumRoundingFunctions{flonumd32}
+@MmuxDefineRealFlonumRoundingFunctions{flonumd64}
+@MmuxDefineRealFlonumRoundingFunctions{flonumd128}
+
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcfl}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcdb}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcldb}
+
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcf32}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcf64}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcf128}
+
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcf32x}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcf64x}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcf128x}
+
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcd32}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcd64}
+@MmuxDefineCplxFlonumRoundingFunctions{flonumcd128}
 
 @c page
 @node complex

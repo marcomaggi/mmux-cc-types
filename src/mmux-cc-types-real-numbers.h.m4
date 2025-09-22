@@ -89,23 +89,44 @@ DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[time]]])
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS]]],[[[m4_dnl
+m4_define([[[DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
 mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_sign
   __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_ceil
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_floor
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_trunc
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_rint
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_nearbyint
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_round
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_roundeven
+  __attribute__((__const__));
 ]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(fl)
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(db)
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(ldb)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(fl)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(db)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(ldb)
 
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f32)
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f64)
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f128)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(f32)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(f64)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(f128)
 
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f32x)
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f64x)
-DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f128x)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(f32x)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(f64x)
+DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(f128x)
 
 
 /** --------------------------------------------------------------------
@@ -113,10 +134,24 @@ DEFINE_STANDARD_FLONUM_REAL_NUMBERS_INLINE_FUNCTIONS(f128x)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
+
+m4_define([[[DEFINE_UNARY_INLINE_FUNCTION]]],[[[mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_$2 (mmux_standard_flonumc$1_t op)
+{
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_$2(mmux_standard_flonumc$1_real_part(op)),
+					     mmux_standard_flonum$1_$2(mmux_standard_flonumc$1_imag_part(op)));
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUMC_REAL_NUMBERS_PROTOS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumc$1_t mmux_standard_flonumc$1_sign
-  __attribute__((__const__));
+DEFINE_UNARY_INLINE_FUNCTION($1,	sign)
+DEFINE_UNARY_INLINE_FUNCTION($1,	ceil)
+DEFINE_UNARY_INLINE_FUNCTION($1,	floor)
+DEFINE_UNARY_INLINE_FUNCTION($1,	trunc)
+DEFINE_UNARY_INLINE_FUNCTION($1,	rint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	nearbyint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	round)
+DEFINE_UNARY_INLINE_FUNCTION($1,	roundeven)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMC_REAL_NUMBERS_PROTOS([[[fl]]])
@@ -144,7 +179,7 @@ DEFINE_STANDARD_FLONUMC_REAL_NUMBERS_PROTOS([[[f128x]]])
 
 
 /** --------------------------------------------------------------------
- ** Real number functions.
+ ** Real number functions: sign.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -231,7 +266,149 @@ DEFINE_REAL_NUMBER_INLINE_FUNCTIONS(flonumcd128)
 
 
 /** --------------------------------------------------------------------
- ** Generic macros.
+ ** Real number functions: floating-point numbers rounding.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_INLINE_FUNCTION]]],[[[mmux_cc_types_inline_decl mmux_$1_t
+mmux_$1_$2 (mmux_$1_t op)
+{
+  return mmux_$1(mmux_standard_$1_$2(op.value));
+}]]])
+
+m4_define([[[DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_UNARY_INLINE_FUNCTION($1,	ceil)
+DEFINE_UNARY_INLINE_FUNCTION($1,	floor)
+DEFINE_UNARY_INLINE_FUNCTION($1,	trunc)
+DEFINE_UNARY_INLINE_FUNCTION($1,	rint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	nearbyint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	round)
+DEFINE_UNARY_INLINE_FUNCTION($1,	roundeven)
+]]])]]])
+m4_divert(0)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumfl)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumdb)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumldb)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf32)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf64)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf128)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf32x)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf64x)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf128x)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd32)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd64)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd128)
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcfl)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcdb)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcldb)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcf32)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcf64)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcf128)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcf32x)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcf64x)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcf128x)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcd32)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcd64)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcd128)
+
+
+/** --------------------------------------------------------------------
+ ** Generic macros: flonum and flonumc rounding.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_UNARY_FUNCTION]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE)						\
+  (_Generic((VALUE),							\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,		\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
+]]])m4_dnl
+	    \
+	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
+]]])m4_dnl
+           default:			mmux_ctype_generic_error)(VALUE))
+]]])
+
+DEFINE_UNARY_FUNCTION(ceil)
+DEFINE_UNARY_FUNCTION(floor)
+DEFINE_UNARY_FUNCTION(trunc)
+DEFINE_UNARY_FUNCTION(rint)
+DEFINE_UNARY_FUNCTION(nearbyint)
+DEFINE_UNARY_FUNCTION(round)
+DEFINE_UNARY_FUNCTION(roundeven)
+
+
+/** --------------------------------------------------------------------
+ ** Generic macros: sign.
  ** ----------------------------------------------------------------- */
 
 #define mmux_ctype_sign(VALUE)						\

@@ -34,6 +34,13 @@
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
+
+m4_define([[[DEFINE_UNARY_FUNCTION]]],[[[mmux_standard_flonum$1_t
+mmux_standard_flonum$1_$3 (mmux_standard_flonum$1_t op)
+{
+  return $3$2(op);
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUM_REAL_NUMBER_FUNCTIONS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonum$1]]],[[[m4_dnl
 mmux_standard_flonum$1_t
@@ -56,6 +63,14 @@ mmux_standard_flonum$1_sign (mmux_standard_flonum$1_t op)
     return mmux_standard_flonum$1_constant_zero();
   }
 }
+
+DEFINE_UNARY_FUNCTION($1,$2,	ceil)
+DEFINE_UNARY_FUNCTION($1,$2,	floor)
+DEFINE_UNARY_FUNCTION($1,$2,	trunc)
+DEFINE_UNARY_FUNCTION($1,$2,	rint)
+DEFINE_UNARY_FUNCTION($1,$2,	nearbyint)
+DEFINE_UNARY_FUNCTION($1,$2,	round)
+DEFINE_UNARY_FUNCTION($1,$2,	roundeven)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUM_REAL_NUMBER_FUNCTIONS(fl,	f)
@@ -69,33 +84,5 @@ DEFINE_STANDARD_FLONUM_REAL_NUMBER_FUNCTIONS(f128,	f128)
 DEFINE_STANDARD_FLONUM_REAL_NUMBER_FUNCTIONS(f32x,	f32x)
 DEFINE_STANDARD_FLONUM_REAL_NUMBER_FUNCTIONS(f64x,	f64x)
 DEFINE_STANDARD_FLONUM_REAL_NUMBER_FUNCTIONS(f128x,	f128x)
-
-
-/** --------------------------------------------------------------------
- ** Real number functions: standard flonumc.
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[m4_dnl
-mmux_standard_flonumc$1_t
-mmux_standard_flonumc$1_sign (mmux_standard_flonumc$1_t op)
-{
-  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_sign(mmux_standard_flonumc$1_real_part(op)),
-					     mmux_standard_flonum$1_sign(mmux_standard_flonumc$1_imag_part(op)));
-}
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(fl)
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(db)
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(ldb)
-
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(f32)
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(f64)
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(f128)
-
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(f32x)
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(f64x)
-DEFINE_STANDARD_FLONUMC_REAL_NUMBER_FUNCTIONS(f128x)
 
 /* end of file */

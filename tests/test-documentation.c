@@ -42,6 +42,25 @@ test_real_numbers (void)
     }
   }
 
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: compute the ceil of a number\n", __func__);
+    {
+      mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
+      mmux_flonumf128_t  S = mmux_flonumf128_ceil(A);
+
+      mmux_flonumf128_dprintf(2, S); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically compute the ceil of a number\n", __func__);
+    {
+      auto  A = mmux_flonumf128_literal(0.123);
+      auto  S = mmux_ctype_ceil(A);
+
+      mmux_ctype_dprintf(2, S); dprintf_newline(2);
+    }
+  }
+
   dprintf(2, "%s: leave\n", __func__);
 }
 

@@ -34,6 +34,13 @@
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
+
+m4_define([[[DEFINE_UNARY_FUNCTION]]],[[[mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_$2 (mmux_standard_flonumd$1_t op)
+{
+  return $2d$1(op);
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
 mmux_standard_flonumd$1_t
@@ -56,30 +63,17 @@ mmux_standard_flonumd$1_sign (mmux_standard_flonumd$1_t op)
     return mmux_standard_flonumd$1_constant_zero();
   }
 }
+DEFINE_UNARY_FUNCTION($1,	ceil)
+DEFINE_UNARY_FUNCTION($1,	floor)
+DEFINE_UNARY_FUNCTION($1,	trunc)
+DEFINE_UNARY_FUNCTION($1,	rint)
+DEFINE_UNARY_FUNCTION($1,	nearbyint)
+DEFINE_UNARY_FUNCTION($1,	round)
+DEFINE_UNARY_FUNCTION($1,	roundeven)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS(32)
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS(64)
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS(128)
-
-
-/** --------------------------------------------------------------------
- ** Real number functions: standard flonumcd
- ** ----------------------------------------------------------------- */
-
-m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_INLINE_FUNCTIONS]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-mmux_standard_flonumcd$1_t
-mmux_standard_flonumcd$1_sign (mmux_standard_flonumcd$1_t op)
-{
-  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_sign(mmux_standard_flonumcd$1_real_part(op)),
-					      mmux_standard_flonumd$1_sign(mmux_standard_flonumcd$1_imag_part(op)));
-}
-]]])]]])
-m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_INLINE_FUNCTIONS(32)
-DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_INLINE_FUNCTIONS(64)
-DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_INLINE_FUNCTIONS(128)
 
 /* end of file */

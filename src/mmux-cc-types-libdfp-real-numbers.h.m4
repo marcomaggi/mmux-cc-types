@@ -32,14 +32,36 @@
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS_AND_PROTOS]]],[[[m4_dnl
-mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_sign (mmux_standard_flonumd$1_t op)
+m4_define([[[DEFINE_STANDARD_FLONUMD_REAL_NUMBER_PROTOS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_sign
   __attribute__((__const__));
-]]])
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_ceil
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_floor
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_trunc
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_rint
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_nearbyint
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_round
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_roundeven
+  __attribute__((__const__));
+]]])]]])
 m4_divert(0)m4_dnl
-DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS_AND_PROTOS(32)
-DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS_AND_PROTOS(64)
-DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS_AND_PROTOS(128)
+DEFINE_STANDARD_FLONUMD_REAL_NUMBER_PROTOS(32)
+DEFINE_STANDARD_FLONUMD_REAL_NUMBER_PROTOS(64)
+DEFINE_STANDARD_FLONUMD_REAL_NUMBER_PROTOS(128)
 
 
 /** --------------------------------------------------------------------
@@ -47,10 +69,24 @@ DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS_AND_PROTOS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
+
+m4_define([[[DEFINE_UNARY_INLINE_FUNCTION]]],[[[mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_$2 (mmux_standard_flonumcd$1_t op)
+{
+  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_$2(mmux_standard_flonumcd$1_real_part(op)),
+					      mmux_standard_flonumd$1_$2(mmux_standard_flonumcd$1_imag_part(op)));
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_PROTOS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumcd$1]]],[[[m4_dnl
-mmux_cc_types_decl mmux_standard_flonumcd$1_t mmux_standard_flonumcd$1_sign (mmux_standard_flonumcd$1_t op)
-  __attribute__((__const__));
+DEFINE_UNARY_INLINE_FUNCTION($1,	sign)
+DEFINE_UNARY_INLINE_FUNCTION($1,	ceil)
+DEFINE_UNARY_INLINE_FUNCTION($1,	floor)
+DEFINE_UNARY_INLINE_FUNCTION($1,	trunc)
+DEFINE_UNARY_INLINE_FUNCTION($1,	rint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	nearbyint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	round)
+DEFINE_UNARY_INLINE_FUNCTION($1,	roundeven)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMCD_REAL_NUMBER_PROTOS(32)
