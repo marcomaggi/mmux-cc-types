@@ -2375,6 +2375,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @menu
 * real sign::                   Sign of floating-point numbers.
 * real rounding::               Rounding floating-point numbers.
+* real exact rounding::         Rounding floating-point numbers to exact integers.
 @end menu
 
 @c page
@@ -2580,7 +2581,7 @@ Compute the rounded result of the operand.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_ceil (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_floor (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_trunc (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_rint (mmux_ctype_t @var{OP})
@@ -2624,6 +2625,70 @@ type of the operands and result.
 @MmuxDefineCplxFlonumRoundingFunctions{flonumcd32}
 @MmuxDefineCplxFlonumRoundingFunctions{flonumcd64}
 @MmuxDefineCplxFlonumRoundingFunctions{flonumcd128}
+
+@c page
+@node real exact rounding
+@section Rounding floating--point numbers to exact integers
+
+
+To round to an exact integer a floating--point number we do:
+
+@example
+mmux_flonumf128_t A = mmux_flonumf128_literal(123.456);
+mmux_slong_t      B = mmux_flonumf128_lrint(A);
+
+mmux_slong_dprintf(2, B);       @print{} 123
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto      A = mmux_flonumf128_literal(123.456);
+auto      B = mmux_ctype_lrint(A);
+
+mmux_ctype_dprintf(2, B);       @print{} 123
+@end example
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineRealFlonumRoundingToExactFunctions{STEM}
+@deftypefun mmux_slong_t mmux_\STEM\_lrint (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_slong_t mmux_\STEM\_lround (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_sllong_t mmux_\STEM\_llrint (mmux_\STEM\_t @var{OP})
+@deftypefunx mmux_sllong_t mmux_\STEM\_llround (mmux_\STEM\_t @var{OP})
+Compute the rounded result of the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_slong_t mmux_ctype_lrint (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_slong_t mmux_ctype_lround (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_sllong_t mmux_ctype_llrint (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_sllong_t mmux_ctype_llround (mmux_ctype_t @var{OP})
+Compute the rounded result of the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the
+type of the operands.
+@end deftypefn
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumfl}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumdb}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumldb}
+
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumf32}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumf64}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumf128}
+
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumf32x}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumf64x}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumf128x}
+
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumd32}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumd64}
+@MmuxDefineRealFlonumRoundingToExactFunctions{flonumd128}
 
 @c page
 @node complex

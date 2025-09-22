@@ -57,6 +57,20 @@ mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_stand
 
 mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonumd$1_t mmux_standard_flonumd$1_roundeven
   __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_slong_t mmux_standard_flonumd$1_lrint (mmux_standard_flonumd$1_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_slong_t mmux_standard_flonumd$1_lround (mmux_standard_flonumd$1_t op)
+  __attribute__((__const__));
+
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+mmux_cc_types_decl mmux_standard_sllong_t mmux_standard_flonumd$1_llrint (mmux_standard_flonumd$1_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_sllong_t mmux_standard_flonumd$1_llround (mmux_standard_flonumd$1_t op)
+  __attribute__((__const__));
+#endif
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_PROTOS(32)

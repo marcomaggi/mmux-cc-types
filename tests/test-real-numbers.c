@@ -21,7 +21,7 @@
 
 
 static void
-test_arithmetics_sign (void)
+test_real_numbers_sign (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -222,7 +222,7 @@ test_arithmetics_sign (void)
 
 
 static void
-test_arithmetics_ceil (void)
+test_real_numbers_ceil (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -359,7 +359,7 @@ test_arithmetics_ceil (void)
 
 
 static void
-test_arithmetics_floor (void)
+test_real_numbers_floor (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -495,7 +495,7 @@ test_arithmetics_floor (void)
 
 
 static void
-test_arithmetics_trunc (void)
+test_real_numbers_trunc (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -631,7 +631,7 @@ test_arithmetics_trunc (void)
 
 
 static void
-test_arithmetics_rint (void)
+test_real_numbers_rint (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -767,7 +767,7 @@ test_arithmetics_rint (void)
 
 
 static void
-test_arithmetics_nearbyint (void)
+test_real_numbers_nearbyint (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -903,7 +903,7 @@ test_arithmetics_nearbyint (void)
 
 
 static void
-test_arithmetics_round (void)
+test_real_numbers_round (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -1039,7 +1039,7 @@ test_arithmetics_round (void)
 
 
 static void
-test_arithmetics_roundeven (void)
+test_real_numbers_roundeven (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
@@ -1174,6 +1174,330 @@ test_arithmetics_roundeven (void)
 }
 
 
+static void
+test_real_numbers_lrint (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  EQUAL_UNARY
+#define EQUAL_UNARY(STEM, FUNC, OP, RESULT_WE_EXPECTED, RESULT_WE_GOT)	\
+  if (! mmux_slong_equal(RESULT_WE_EXPECTED, RESULT_WE_GOT)) {		\
+    dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);	\
+    mmux_ctype_dprintf(2, op);						\
+    dprintf(2, ")=");							\
+    mmux_ctype_dprintf(2, erop);					\
+    dprintf(2, "' got '");						\
+    mmux_ctype_dprintf(2, rop1);					\
+    dprintf(2, "'\n");							\
+    exit(EXIT_FAILURE);							\
+  }
+
+#undef  DOIT_FOR_THIS_NUMBER
+#define DOIT_FOR_THIS_NUMBER(STEM,OP,ROP)		    \
+  {							    \
+    auto	op   = mmux_## STEM ## _literal(OP);	    \
+    auto	erop = mmux_slong_literal(ROP);		    \
+    auto	rop1 = mmux_## STEM ##_lrint(op);	    \
+    auto	rop2 = mmux_ctype_lrint(op);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop1);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop2);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+1.234,	+1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-1.123,	-1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+0.0,	+0);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-0.0,	-0);		    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+static void
+test_real_numbers_lround (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  EQUAL_UNARY
+#define EQUAL_UNARY(STEM, FUNC, OP, RESULT_WE_EXPECTED, RESULT_WE_GOT)	\
+  if (! mmux_slong_equal(RESULT_WE_EXPECTED, RESULT_WE_GOT)) {		\
+    dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);	\
+    mmux_ctype_dprintf(2, op);						\
+    dprintf(2, ")=");							\
+    mmux_ctype_dprintf(2, erop);					\
+    dprintf(2, "' got '");						\
+    mmux_ctype_dprintf(2, rop1);					\
+    dprintf(2, "'\n");							\
+    exit(EXIT_FAILURE);							\
+  }
+
+#undef  DOIT_FOR_THIS_NUMBER
+#define DOIT_FOR_THIS_NUMBER(STEM,OP,ROP)		    \
+  {							    \
+    auto	op   = mmux_## STEM ## _literal(OP);	    \
+    auto	erop = mmux_slong_literal(ROP);		    \
+    auto	rop1 = mmux_## STEM ##_lround(op);	    \
+    auto	rop2 = mmux_ctype_lround(op);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop1);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop2);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+1.234,	+1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-1.123,	-1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+0.0,	+0);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-0.0,	-0);		    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+static void
+test_real_numbers_llrint (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  EQUAL_UNARY
+#define EQUAL_UNARY(STEM, FUNC, OP, RESULT_WE_EXPECTED, RESULT_WE_GOT)	\
+  if (! mmux_sllong_equal(RESULT_WE_EXPECTED, RESULT_WE_GOT)) {		\
+    dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);	\
+    mmux_ctype_dprintf(2, op);						\
+    dprintf(2, ")=");							\
+    mmux_ctype_dprintf(2, erop);					\
+    dprintf(2, "' got '");						\
+    mmux_ctype_dprintf(2, rop1);					\
+    dprintf(2, "'\n");							\
+    exit(EXIT_FAILURE);							\
+  }
+
+#undef  DOIT_FOR_THIS_NUMBER
+#define DOIT_FOR_THIS_NUMBER(STEM,OP,ROP)		    \
+  {							    \
+    auto	op   = mmux_## STEM ## _literal(OP);	    \
+    auto	erop = mmux_sllong_literal(ROP);	    \
+    auto	rop1 = mmux_## STEM ##_llrint(op);	    \
+    auto	rop2 = mmux_ctype_llrint(op);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop1);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop2);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+1.234,	+1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-1.123,	-1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+0.0,	+0);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-0.0,	-0);		    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+#endif
+}
+
+
+static void
+test_real_numbers_llround (void)
+{
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+  dprintf(2, "running test: %s:", __func__);
+
+#undef  EQUAL_UNARY
+#define EQUAL_UNARY(STEM, FUNC, OP, RESULT_WE_EXPECTED, RESULT_WE_GOT)	\
+  if (! mmux_sllong_equal(RESULT_WE_EXPECTED, RESULT_WE_GOT)) {		\
+    dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);	\
+    mmux_ctype_dprintf(2, op);						\
+    dprintf(2, ")=");							\
+    mmux_ctype_dprintf(2, erop);					\
+    dprintf(2, "' got '");						\
+    mmux_ctype_dprintf(2, rop1);					\
+    dprintf(2, "'\n");							\
+    exit(EXIT_FAILURE);							\
+  }
+
+#undef  DOIT_FOR_THIS_NUMBER
+#define DOIT_FOR_THIS_NUMBER(STEM,OP,ROP)		    \
+  {							    \
+    auto	op   = mmux_## STEM ## _literal(OP);	    \
+    auto	erop = mmux_sllong_literal(ROP);	    \
+    auto	rop1 = mmux_## STEM ##_llround(op);	    \
+    auto	rop2 = mmux_ctype_llround(op);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop1);		    \
+    EQUAL_UNARY(STEM, rint, OP, erop, rop2);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+#undef  DOIT_FOR_FLONUM
+#define DOIT_FOR_FLONUM(STEM)				    \
+  {							    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+1.234,	+1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-1.123,	-1);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	+0.0,	+0);		    \
+    DOIT_FOR_THIS_NUMBER(STEM,	-0.0,	-0);		    \
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  DOIT_FOR_FLONUM(flonumfl);
+  DOIT_FOR_FLONUM(flonumdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
+  DOIT_FOR_FLONUM(flonumldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32
+  DOIT_FOR_FLONUM(flonumf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64
+  DOIT_FOR_FLONUM(flonumf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128
+  DOIT_FOR_FLONUM(flonumf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
+  DOIT_FOR_FLONUM(flonumf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
+  DOIT_FOR_FLONUM(flonumf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
+  DOIT_FOR_FLONUM(flonumf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD32
+  DOIT_FOR_FLONUM(flonumd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD64
+  DOIT_FOR_FLONUM(flonumd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMD128
+  DOIT_FOR_FLONUM(flonumd128);
+#endif
+
+  dprintf(2, " DONE.\n\n");
+#endif
+}
+
+
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
@@ -1184,14 +1508,19 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   mmux_cc_types_init();
   test_set_output_formats();
 
-  if (1) {	test_arithmetics_sign();	}
-  if (1) {	test_arithmetics_ceil();	}
-  if (1) {	test_arithmetics_floor();	}
-  if (1) {	test_arithmetics_trunc();	}
-  if (1) {	test_arithmetics_rint();	}
-  if (1) {	test_arithmetics_nearbyint();	}
-  if (1) {	test_arithmetics_round();	}
-  if (1) {	test_arithmetics_roundeven();	}
+  if (1) {	test_real_numbers_sign();	}
+  if (1) {	test_real_numbers_ceil();	}
+  if (1) {	test_real_numbers_floor();	}
+  if (1) {	test_real_numbers_trunc();	}
+  if (1) {	test_real_numbers_rint();	}
+  if (1) {	test_real_numbers_nearbyint();	}
+  if (1) {	test_real_numbers_round();	}
+  if (1) {	test_real_numbers_roundeven();	}
+
+  if (1) {	test_real_numbers_lrint();	}
+  if (1) {	test_real_numbers_lround();	}
+  if (1) {	test_real_numbers_llrint();	}
+  if (1) {	test_real_numbers_llround();	}
 
   exit(EXIT_SUCCESS);
 }

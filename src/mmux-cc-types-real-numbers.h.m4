@@ -114,6 +114,20 @@ mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standa
 
 mmux_cc_types_decl mmux_cc_types_unary_operation_standard_flonum$1_t mmux_standard_flonum$1_roundeven
   __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_slong_t mmux_standard_flonum$1_lrint (mmux_standard_flonum$1_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_slong_t mmux_standard_flonum$1_lround (mmux_standard_flonum$1_t op)
+  __attribute__((__const__));
+
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+mmux_cc_types_decl mmux_standard_sllong_t mmux_standard_flonum$1_llrint (mmux_standard_flonum$1_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_decl mmux_standard_sllong_t mmux_standard_flonum$1_llround (mmux_standard_flonum$1_t op)
+  __attribute__((__const__));
+#endif
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUM_REAL_NUMBERS_PROTOS(fl)
@@ -266,7 +280,66 @@ DEFINE_REAL_NUMBER_INLINE_FUNCTIONS(flonumcd128)
 
 
 /** --------------------------------------------------------------------
- ** Real number functions: floating-point numbers rounding.
+ ** Real number functions: flonum floating-point numbers rounding.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_UNARY_INLINE_FUNCTION]]],[[[mmux_cc_types_inline_decl mmux_$1_t
+mmux_$1_$2 (mmux_$1_t op)
+{
+  return mmux_$1(mmux_standard_$1_$2(op.value));
+}]]])
+
+m4_define([[[DEFINE_SLONG_UNARY_INLINE_FUNCTION]]],[[[mmux_cc_types_inline_decl mmux_slong_t
+mmux_$1_$2 (mmux_$1_t op)
+{
+  return mmux_slong(mmux_standard_$1_$2(op.value));
+}]]])
+
+m4_define([[[DEFINE_SLLONG_UNARY_INLINE_FUNCTION]]],[[[mmux_cc_types_inline_decl mmux_sllong_t
+mmux_$1_$2 (mmux_$1_t op)
+{
+  return mmux_sllong(mmux_standard_$1_$2(op.value));
+}]]])
+
+m4_define([[[DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS]]],[[[m4_dnl
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_UNARY_INLINE_FUNCTION($1,	ceil)
+DEFINE_UNARY_INLINE_FUNCTION($1,	floor)
+DEFINE_UNARY_INLINE_FUNCTION($1,	trunc)
+DEFINE_UNARY_INLINE_FUNCTION($1,	rint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	nearbyint)
+DEFINE_UNARY_INLINE_FUNCTION($1,	round)
+DEFINE_UNARY_INLINE_FUNCTION($1,	roundeven)
+
+DEFINE_SLONG_UNARY_INLINE_FUNCTION($1,	lrint)
+DEFINE_SLONG_UNARY_INLINE_FUNCTION($1,	lround)
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+DEFINE_SLLONG_UNARY_INLINE_FUNCTION($1,	llrint)
+DEFINE_SLLONG_UNARY_INLINE_FUNCTION($1,	llround)
+#endif
+]]])]]])
+m4_divert(0)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumfl)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumdb)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumldb)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf32)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf64)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf128)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf32x)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf64x)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf128x)
+
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd32)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd64)
+DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd128)
+
+
+/** --------------------------------------------------------------------
+ ** Real number functions: flonumc floating-point numbers rounding.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
@@ -287,25 +360,6 @@ DEFINE_UNARY_INLINE_FUNCTION($1,	round)
 DEFINE_UNARY_INLINE_FUNCTION($1,	roundeven)
 ]]])]]])
 m4_divert(0)
-
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumfl)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumdb)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumldb)
-
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf32)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf64)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf128)
-
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf32x)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf64x)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumf128x)
-
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd32)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd64)
-DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumd128)
-
-/* ------------------------------------------------------------------ */
-
 DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcfl)
 DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcdb)
 DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcldb)
@@ -405,6 +459,54 @@ DEFINE_UNARY_FUNCTION(rint)
 DEFINE_UNARY_FUNCTION(nearbyint)
 DEFINE_UNARY_FUNCTION(round)
 DEFINE_UNARY_FUNCTION(roundeven)
+
+
+/** --------------------------------------------------------------------
+ ** Generic macros: flonum rounding.
+ ** ----------------------------------------------------------------- */
+
+m4_define([[[DEFINE_UNARY_FUNCTION]]],[[[m4_dnl
+#define mmux_ctype_$1(VALUE)						\
+  (_Generic((VALUE),							\
+	   mmux_flonumfl_t:		mmux_flonumfl_$1,		\
+	   mmux_flonumdb_t:		mmux_flonumdb_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
+]]])m4_dnl
+           default:			mmux_ctype_generic_error)(VALUE))
+]]])
+
+DEFINE_UNARY_FUNCTION(lrint)
+DEFINE_UNARY_FUNCTION(lround)
+DEFINE_UNARY_FUNCTION(llrint)
+DEFINE_UNARY_FUNCTION(llround)
 
 
 /** --------------------------------------------------------------------

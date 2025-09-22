@@ -61,6 +61,25 @@ test_real_numbers (void)
     }
   }
 
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: round to integer a floating-point number\n", __func__);
+    {
+      mmux_flonumf128_t	A = mmux_flonumf128_literal(123.456);
+      mmux_slong_t	B = mmux_flonumf128_lrint(A);
+
+      mmux_slong_dprintf(2, B); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically round to integer a floating-point number\n", __func__);
+    {
+      auto	A = mmux_flonumf128_literal(123.456);
+      auto	B = mmux_ctype_lrint(A);
+
+      mmux_ctype_dprintf(2, B); dprintf_newline(2);
+    }
+  }
+
   dprintf(2, "%s: leave\n", __func__);
 }
 

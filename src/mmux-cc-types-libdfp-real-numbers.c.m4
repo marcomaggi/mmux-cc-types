@@ -41,6 +41,18 @@ mmux_standard_flonumd$1_$2 (mmux_standard_flonumd$1_t op)
   return $2d$1(op);
 }]]])
 
+m4_define([[[DEFINE_SLONG_UNARY_FUNCTION]]],[[[mmux_standard_slong_t
+mmux_standard_flonumd$1_$3 (mmux_standard_flonumd$1_t op)
+{
+  return $3$2(op);
+}]]])
+
+m4_define([[[DEFINE_SLLONG_UNARY_FUNCTION]]],[[[mmux_standard_sllong_t
+mmux_standard_flonumd$1_$3 (mmux_standard_flonumd$1_t op)
+{
+  return $3$2(op);
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS]]],[[[m4_dnl
 MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
 mmux_standard_flonumd$1_t
@@ -70,6 +82,13 @@ DEFINE_UNARY_FUNCTION($1,	rint)
 DEFINE_UNARY_FUNCTION($1,	nearbyint)
 DEFINE_UNARY_FUNCTION($1,	round)
 DEFINE_UNARY_FUNCTION($1,	roundeven)
+
+DEFINE_SLONG_UNARY_FUNCTION($1,$2,	lrint)
+DEFINE_SLONG_UNARY_FUNCTION($1,$2,	lround)
+#ifdef MMUX_CC_TYPES_HAS_SLLONG
+DEFINE_SLLONG_UNARY_FUNCTION($1,$2,	llrint)
+DEFINE_SLLONG_UNARY_FUNCTION($1,$2,	llround)
+#endif
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS(32)
