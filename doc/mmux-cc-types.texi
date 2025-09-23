@@ -2376,6 +2376,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 * real sign::                   Sign of floating-point numbers.
 * real rounding::               Rounding floating-point numbers.
 * real exact rounding::         Rounding floating-point numbers to exact integers.
+* real splitting::              Splitting floating-point numbers.
 @end menu
 
 @c page
@@ -2689,6 +2690,75 @@ type of the operands.
 @MmuxDefineRealFlonumRoundingToExactFunctions{flonumd32}
 @MmuxDefineRealFlonumRoundingToExactFunctions{flonumd64}
 @MmuxDefineRealFlonumRoundingToExactFunctions{flonumd128}
+
+@c page
+@node real splitting
+@section Splitting floating--point numbers
+
+
+@cindex Splitting a floating--point number in integer and fractional parts
+@cindex Floating--point numbers, splitting in integer and fractional parts
+@cindex Flonums, splitting in integer and fractional parts
+@cindex Integer part of a floating--point number
+@cindex Fractional part of a floating--point number
+
+
+To split a floating--point number into integer and fractional parts we do:
+
+@example
+mmux_flonumf128_t       A = mmux_flonumf128_literal(123.456);
+mmux_flonumf128_t       integer_of_A;
+mmux_flonumf128_t       fractional_of_A = mmux_flonumf128_modf(A, &integer_of_A);
+
+mmux_flonumf128_dprintf(2, integer_of_A);       @print{} 123.0
+mmux_flonumf128_dprintf(2, fractional_of_A);    @print{} 0.456
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto            A = mmux_flonumf128_literal(123.456);
+typeof(A)       integer_of_A;
+auto            fractional_of_A = mmux_ctype_modf(A, &integer_of_A);
+
+mmux_ctype_dprintf(2, integer_of_A);            @print{} 123.0
+mmux_ctype_dprintf(2, fractional_of_A);         @print{} 0.456
+@end example
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineRealFlonumModfFunctions{STEM}
+@deftypefun mmux_\STEM\_t mmux_\STEM\_modf (mmux_\STEM\_t @var{OP}, mmux_\STEM\_t * @var{INTEGER_PART_P})
+Compute the result from the operand.
+@end deftypefun
+
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_modf (mmux_ctype_t @var{OP}, mmux_ctype_t * @var{INTEGER_PART_P})
+Compute the result from the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the type
+of the operands.
+@end deftypefn
+
+@c ------------------------------------------------------------------------
+
+@MmuxDefineRealFlonumModfFunctions{flonumfl}
+@MmuxDefineRealFlonumModfFunctions{flonumdb}
+@MmuxDefineRealFlonumModfFunctions{flonumldb}
+
+@MmuxDefineRealFlonumModfFunctions{flonumf32}
+@MmuxDefineRealFlonumModfFunctions{flonumf64}
+@MmuxDefineRealFlonumModfFunctions{flonumf128}
+
+@MmuxDefineRealFlonumModfFunctions{flonumf32x}
+@MmuxDefineRealFlonumModfFunctions{flonumf64x}
+@MmuxDefineRealFlonumModfFunctions{flonumf128x}
+
+@MmuxDefineRealFlonumModfFunctions{flonumd32}
+@MmuxDefineRealFlonumModfFunctions{flonumd64}
+@MmuxDefineRealFlonumModfFunctions{flonumd128}
 
 @c page
 @node complex

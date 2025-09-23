@@ -71,6 +71,9 @@ mmux_cc_types_decl mmux_standard_sllong_t mmux_standard_flonumd$1_llrint (mmux_s
 mmux_cc_types_decl mmux_standard_sllong_t mmux_standard_flonumd$1_llround (mmux_standard_flonumd$1_t op)
   __attribute__((__const__));
 #endif
+
+mmux_cc_types_decl mmux_standard_flonumd$1_t mmux_standard_flonumd$1_modf (mmux_standard_flonumd$1_t op,
+									   mmux_standard_flonumd$1_t * integer_part_p);
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_PROTOS(32)

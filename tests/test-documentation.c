@@ -80,6 +80,29 @@ test_real_numbers (void)
     }
   }
 
+/* ------------------------------------------------------------------ */
+
+  {
+    dprintf(2, "%s: split a floating-point number into integer and fractional parts\n", __func__);
+    {
+      mmux_flonumf128_t	A = mmux_flonumf128_literal(123.456);
+      mmux_flonumf128_t	integer_of_A;
+      mmux_flonumf128_t	fractional_of_A = mmux_flonumf128_modf(A, &integer_of_A);
+
+      mmux_flonumf128_dprintf(2, integer_of_A); dprintf_newline(2);
+      mmux_flonumf128_dprintf(2, fractional_of_A); dprintf_newline(2);
+    }
+    dprintf(2, "%s: generically split a floating-point number into integer and fractional parts\n", __func__);
+    {
+      auto	A = mmux_flonumf128_literal(123.456);
+      typeof(A)	integer_of_A;
+      auto	fractional_of_A = mmux_ctype_modf(A, &integer_of_A);
+
+      mmux_ctype_dprintf(2, integer_of_A); dprintf_newline(2);
+      mmux_ctype_dprintf(2, fractional_of_A); dprintf_newline(2);
+    }
+  }
+
   dprintf(2, "%s: leave\n", __func__);
 }
 

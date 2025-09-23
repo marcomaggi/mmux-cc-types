@@ -89,6 +89,12 @@ DEFINE_SLONG_UNARY_FUNCTION($1,$2,	lround)
 DEFINE_SLLONG_UNARY_FUNCTION($1,$2,	llrint)
 DEFINE_SLLONG_UNARY_FUNCTION($1,$2,	llround)
 #endif
+
+mmux_standard_flonumd$1_t
+mmux_standard_flonumd$1_modf (mmux_standard_flonumd$1_t op, mmux_standard_flonumd$1_t * integer_part_p)
+{
+  return modfd$1(op, integer_part_p);
+}
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMD_REAL_NUMBER_FUNCTIONS(32)
