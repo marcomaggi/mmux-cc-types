@@ -9,8 +9,6 @@
   mmux_ctype_is_complex
   mmux_ctype_is_flonum
 
-* Implement rounding mathematical functions.
-
 * Implement flonum sign bit mathematical functions.
 
 * See if it  is possible to implement mathematical  root functions, both
