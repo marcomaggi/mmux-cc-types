@@ -4661,6 +4661,30 @@ mmux_ctype_is_complex_number(op) @expansion{} false
 @end example
 @end deftypefn
 
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_flonum (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is a flonum, otherwise expand to @cfalse{}.  All the types with stem
+@samp{flonumfl}, @samp{flonumdb}, @samp{flonumldb}, @dots{} are flonums.
+
+@example
+auto    op = mmux_flonumldb_literal(1.23);
+
+mmux_ctype_is_flonum(op)        @expansion{} true
+@end example
+@end deftypefn
+
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_flonumc (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is a flonumc, otherwise expand to @cfalse{}.  All the types with stem
+@samp{flonumcfl}, @samp{flonumcdb}, @samp{flonumcldb}, @dots{} are flonumcs.
+
+@example
+auto    op = mmux_flonumcdb_literal(1.23, 4.56);
+
+mmux_ctype_is_flonumc(op)       @expansion{} true
+@end example
+@end deftypefn
+
 @c page
 @c ------------------------------------------------------------
 @c Appendices.
