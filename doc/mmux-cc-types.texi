@@ -4685,6 +4685,29 @@ mmux_ctype_is_flonumc(op)       @expansion{} true
 @end example
 @end deftypefn
 
+
+@deftypefn {Generic Macro} mmux_asciizcp_t mmux_ctype_typedef_name (mmux_ctype_t @var{op})
+Expand to a pointer to a statically allocated @asciiz{} string representing the name of the type.
+
+@example
+auto    op = mmux_flonumcdb_literal(1.23, 4.56);
+
+mmux_ctype_typedef_name(op)       @expansion{} "mmux_flonumcdb_t"
+@end example
+@end deftypefn
+
+
+@deftypefn {Generic Macro} mmux_asciizcp_t mmux_ctype_stem_name (mmux_ctype_t @var{op})
+Expand to a pointer to a statically allocated @asciiz{} string representing the name of the type
+stem.
+
+@example
+auto    op = mmux_flonumcdb_literal(1.23, 4.56);
+
+mmux_ctype_typedef_name(op)       @expansion{} "flonumcdb"
+@end example
+@end deftypefn
+
 @c page
 @c ------------------------------------------------------------
 @c Appendices.

@@ -2717,7 +2717,7 @@ DEFINE_BINARY_PRINTING_FUNCTION([[[dprintf]]])
  ** Dispatching name inspection.
  ** ----------------------------------------------------------------- */
 
-#define mmux_ctype_dispatch_typedef(VALUE)				\
+#define mmux_ctype_typedef_name(VALUE)					\
   (_Generic((VALUE),							\
            mmux_pointer_t:		"mmux_pointer_t",		\
 	   mmux_char_t:			"mmux_char_t",			\
@@ -2830,7 +2830,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 
 /* ------------------------------------------------------------------ */
 
-#define mmux_ctype_dispatch_stem(VALUE)				\
+#define mmux_ctype_stem_name(VALUE)				\
   (_Generic((VALUE),						\
            mmux_pointer_t:		"pointer",		\
 	   mmux_char_t:			"char",			\
