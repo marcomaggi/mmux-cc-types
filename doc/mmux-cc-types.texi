@@ -4625,6 +4625,42 @@ mmux_ctype_is_unsigned(op)      @expansion{} false
 @end example
 @end deftypefn
 
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_exact_integer (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is an exact integer number, otherwise expand to @cfalse{}.  All the
+real and complex floating--point numbers are not exact integers.
+
+@example
+auto    op = mmux_sint64_literal(123);
+
+mmux_ctype_is_exact_integer(op) @expansion{} true
+@end example
+@end deftypefn
+
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_real_number (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is a real number, otherwise expand to @cfalse{}.  All the exact
+integers and flonums are real numbers.
+
+@example
+auto    op = mmux_sint64_literal(123);
+
+mmux_ctype_is_real_number(op)   @expansion{} true
+@end example
+@end deftypefn
+
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_complex_number (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is a complex number, otherwise expand to @cfalse{}.  All the exact
+integers and flonums are @strong{not} complex numbers.
+
+@example
+auto    op = mmux_sint64_literal(123);
+
+mmux_ctype_is_complex_number(op) @expansion{} false
+@end example
+@end deftypefn
+
 @c page
 @c ------------------------------------------------------------
 @c Appendices.
