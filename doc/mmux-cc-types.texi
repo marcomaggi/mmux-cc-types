@@ -170,6 +170,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * arithmetics::                 Arithmetical operations.
 * mathematics::                 Mathematical operations.
 * bitwise::                     Bitwise operations.
+* generic::                     Miscellaneous generic macros.
 
 Appendices
 
@@ -4586,6 +4587,43 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{time}
 @MmuxDefineBitwiseFuncs{socklen}
 @MmuxDefineBitwiseFuncs{rlim}
+
+@c page
+@node generic
+@chapter Miscellaneous generic macros
+
+
+Notes on generic macros:
+
+@itemize
+@item
+In the following documentation the type @objtype{mmux_ctype_t} is a placeholder for the actual type
+of the operand.
+@end itemize
+
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_signed (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is a signed number, otherwise expand to @cfalse{}.  All the real and
+complex floating--point numbers are considered signed numbers.
+
+@example
+auto    op = mmux_sint64_literal(123);
+
+mmux_ctype_is_signed(op)        @expansion{} true
+@end example
+@end deftypefn
+
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_unsigned (mmux_ctype_t @var{op})
+Expand to @ctrue{} if @var{op} is an unsigned number, otherwise expand to @cfalse{}.  All the real
+and complex floating--point numbers are considered signed numbers.
+
+@example
+auto    op = mmux_sint64_literal(123);
+
+mmux_ctype_is_unsigned(op)      @expansion{} false
+@end example
+@end deftypefn
 
 @c page
 @c ------------------------------------------------------------

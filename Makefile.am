@@ -383,7 +383,8 @@ check_PROGRAMS	= \
 	tests/test-parsers			\
 	tests/test-real-numbers			\
 	tests/test-sign-predicates		\
-	tests/test-sprint
+	tests/test-sprint			\
+	tests/test-generic-macros
 
 TESTS				= $(check_PROGRAMS)
 
@@ -436,6 +437,9 @@ tests_test_documentation_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_comparison_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_comparison_LDADD		= $(mmux_cc_types_tests_ldadd)
+
+tests_test_generic_macros_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
+tests_test_generic_macros_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"
