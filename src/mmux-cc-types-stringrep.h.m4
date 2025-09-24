@@ -39,9 +39,9 @@ mmux_cc_types_decl bool mmux_$1_parse  (mmux_$1_t * p_value, mmux_asciizcp_t s_v
 mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value)
   __attribute__((__const__));
 
-mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_$1_t value)
+mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_usize_t len, mmux_$1_t value)
   __attribute__((__nonnull__(1)));
-mmux_cc_types_decl mmux_sint_t mmux_$1_sprint_size (mmux_$1_t value);
+mmux_cc_types_decl bool mmux_$1_sprint_size (mmux_usize_t * result_required_size_p, mmux_$1_t value);
 
 mmux_cc_types_decl bool mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p,
 						  bool * is_negative,

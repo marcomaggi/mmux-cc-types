@@ -35,7 +35,7 @@
 
 #define DOIT_VALUE(STEM,INPUT_VALUE)				\
   {								\
-    auto	buflen = mmux_sint(4096);			\
+    auto	buflen = mmux_usize(4096);			\
     char	bufptr[buflen.value];				\
     mmux_ ## STEM ## _sprint(bufptr, buflen, INPUT_VALUE);	\
     DOIT(STEM,bufptr);						\

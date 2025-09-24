@@ -51,10 +51,10 @@ mmux_cc_types_decl bool mmux_string_is_flonum$1 (mmux_asciizcp_t s_value);
 mmux_cc_types_decl bool mmux_flonum$1_parse  (mmux_flonum$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
   __attribute__((__nonnull__(1,2)));
 
-mmux_cc_types_decl bool mmux_flonum$1_sprint (mmux_asciizp_t ptr, mmux_sint_t len, mmux_flonum$1_t value)
+mmux_cc_types_decl bool mmux_flonum$1_sprint (mmux_asciizp_t ptr, mmux_usize_t len, mmux_flonum$1_t value)
   __attribute__((__nonnull__(1)));
 
-mmux_cc_types_decl mmux_sint_t mmux_flonum$1_sprint_size (mmux_flonum$1_t value);
+mmux_cc_types_decl bool mmux_flonum$1_sprint_size (mmux_usize_t *result_required_size_p, mmux_flonum$1_t value);
 
 mmux_cc_types_decl bool mmux_flonum$1_dprintf (mmux_standard_sint_t fd, mmux_flonum$1_t value);
 

@@ -31,14 +31,14 @@
   {											\
     dprintf(2, "running test: %s", __func__);						\
     auto		X = mmux_##STEM##_literal(LITERAL_VALUE);			\
-    auto		required_nbytes = mmux_##STEM##_sprint_size(X);			\
+    mmux_usize_t	required_nbytes;						\
 											\
-    assert(mmux_ctype_is_positive(required_nbytes));					\
+    assert(false == mmux_##STEM##_sprint_size(&required_nbytes, X));				\
     {											\
       char	str[required_nbytes.value];						\
 											\
       assert(false == mmux_##STEM##_sprint(str, required_nbytes, X));			\
-      fprintf(stderr, " required_bytes = %d, str = '%s'", required_nbytes.value, str);	\
+      fprintf(stderr, " required_bytes = %lu, str = '%s'", required_nbytes.value, str);	\
       assert(0 == strcmp(EXPECTED_STRING, (char *)str));				\
     }											\
     dprintf(2, " DONE\n");								\
@@ -103,15 +103,15 @@ DEFINE_TEST_SPRINTER_FUNCTION(blkcnt,		123,	"123")
   test_sprint_##STEM (void)								\
   {											\
     dprintf(2, "running test: %s", __func__);						\
-    auto	X = mmux_##STEM##_literal(LITERAL_VALUE);				\
-    auto	required_nbytes = mmux_##STEM##_sprint_size(X);				\
+    auto		X = mmux_##STEM##_literal(LITERAL_VALUE);			\
+    mmux_usize_t	required_nbytes;						\
 											\
-    assert(mmux_ctype_is_positive(required_nbytes));					\
+    assert(false == mmux_##STEM##_sprint_size(&required_nbytes,X));				\
     {											\
       char	str[required_nbytes.value];						\
 											\
       assert(false == mmux_##STEM##_sprint(str, required_nbytes, X));			\
-      dprintf(2, " required_bytes = %d, str = '%s'", required_nbytes.value, str);	\
+      dprintf(2, " required_bytes = %lu, str = '%s'", required_nbytes.value, str);	\
       assert(0 == strcmp(EXPECTED_STRING, (char *)str));				\
     }											\
     dprintf(2, " DONE\n");								\
@@ -159,23 +159,23 @@ DEFINE_TEST_SPRINTER_FUNCTION(flonumd128,	0.123,	"0.123000")
  ** ----------------------------------------------------------------- */
 
 #undef  DEFINE_TEST_SPRINTER_FUNCTION
-#define DEFINE_TEST_SPRINTER_FUNCTION(STEM,LITERAL_VALUE_RE,LITERAL_VALUE_IM,EXPECTED_STRING)	\
-  static void											\
-  test_sprint_##STEM (void)									\
-  {												\
-    dprintf(2, "running test: %s", __func__);							\
-    auto	Z = mmux_##STEM##_rectangular_literal(LITERAL_VALUE_RE,LITERAL_VALUE_IM);	\
-    auto	required_nbytes = mmux_##STEM##_sprint_size(Z);					\
-												\
-    assert(mmux_ctype_is_positive(required_nbytes));						\
-    {												\
-      char	str[required_nbytes.value];							\
-												\
-      assert(false == mmux_##STEM##_sprint(str, required_nbytes, Z));				\
-      fprintf(stderr, " required_bytes = %d, str = '%s'", required_nbytes.value, str);		\
-      assert(0 == strcmp(EXPECTED_STRING, (char *)str));					\
-    }												\
-    dprintf(2, " DONE\n");									\
+#define DEFINE_TEST_SPRINTER_FUNCTION(STEM,LITERAL_VALUE_RE,LITERAL_VALUE_IM,EXPECTED_STRING)		\
+  static void												\
+  test_sprint_##STEM (void)										\
+  {													\
+    dprintf(2, "running test: %s", __func__);								\
+    auto		Z = mmux_##STEM##_rectangular_literal(LITERAL_VALUE_RE,LITERAL_VALUE_IM);	\
+    mmux_usize_t	required_nbytes;								\
+													\
+    assert(false == mmux_##STEM##_sprint_size(&required_nbytes, Z));					\
+    {													\
+      char	str[required_nbytes.value];								\
+													\
+      assert(false == mmux_##STEM##_sprint(str, required_nbytes, Z));					\
+      fprintf(stderr, " required_bytes = %lu, str = '%s'", required_nbytes.value, str);			\
+      assert(0 == strcmp(EXPECTED_STRING, (char *)str));						\
+    }													\
+    dprintf(2, " DONE\n");										\
   }
 
 DEFINE_TEST_SPRINTER_FUNCTION(flonumcfl,	0.123, 0.456,	"(0.123000)+i*(0.456000)")

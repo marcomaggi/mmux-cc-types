@@ -451,8 +451,6 @@ non--standard C language type implementing complex floating--point numbers havin
 Most of the functions that can fail return a @objtype{bool} value: @cfalse{} when successful;
 @ctrue{} when an error occurs.
 
-The functions @cfunc{*_sprint_size} return @samp{-1} when an error occurred.
-
 @c page
 
 @include overview-linking.texi
@@ -1999,10 +1997,10 @@ Type string printers convert binary representations of C language values to stri
 to construct a @objtype{mmux_flonumdb_t} string representation we do:
 
 @example
-mmux_flonumdb_t  value           = mmux_flonumdb_literal(0.123);
-mmux_sint_t      required_nbytes = mmux_flonumdb_sprint_size(value);
+mmux_flonumdb_t  value = mmux_flonumdb_literal(0.123);
+mmux_usize_t     required_nbytes;
 
-if (mmux_sint_is_negative(required_nbytes)) @{
+if (mmux_flonumdb_sprint_size(&required_nbytes, value)) @{
   /* error */
 @} else @{
   char    str[required_nbytes.value];
@@ -2017,10 +2015,10 @@ if (mmux_sint_is_negative(required_nbytes)) @{
 or more generically:
 
 @example
-auto    value           = mmux_flonumdb_literal(0.123);
-auto    required_nbytes = mmux_ctype_sprint_size(value);
+auto            value = mmux_flonumdb_literal(0.123);
+mmux_usize_t    required_nbytes;
 
-if (mmux_ctype_is_negative(required_nbytes)) @{
+if (mmux_flonumdb_sprint_size(&required_nbytes, value)) @{
   /* error */
 @} else @{
   char    str[required_nbytes.value];
@@ -2034,24 +2032,25 @@ if (mmux_ctype_is_negative(required_nbytes)) @{
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionSprinter{STEM}
-@deftypefun bool mmux_\STEM\_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, mmux_\STEM\_t @var{VALUE})
-@deftypefunx mmux_sint_t mmux_\STEM\_sprint_size (mmux_\STEM\_t @var{VALUE})
+@deftypefun bool mmux_\STEM\_sprint (mmux_asciizp_t @var{STRPTR}, mmux_usize_t @var{LEN}, mmux_\STEM\_t @var{VALUE})
+@deftypefunx bool mmux_\STEM\_sprint_size (mmux_usize_t * @var{result_required_nbytes_p}, mmux_\STEM\_t @var{VALUE})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
 characters (terminating zero included).  When successful return @cfalse{}; otherwise leave
 @var{STRPTR} untouched and return @ctrue{}.
 
 The @samp{sprint_size} function computes how many characters are needed to hold the string
-representation of @var{VALUE}.  When successful returns the number of characters, @strong{including
-the terminating zero}; otherwise return @samp{-1}.
+representation of @var{VALUE}.  When successful: it stores the number of characters,
+@strong{including the terminating zero}, in the variable referenced by
+@var{result_required_nbytes_p} then it returns @cfalse{}; otherwise it returns @ctrue{}.
 @end deftypefun
 
 @end macro
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_sint_t @var{LEN}, mmux_ctype_t @var{VALUE})
-@deftypefnx {Generic Macro} mmux_sint_t mmux_ctype_sprint_size (mmux_ctype_t @var{VALUE})
+@deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_usize_t @var{LEN}, mmux_ctype_t @var{VALUE})
+@deftypefnx {Generic Macro} bool mmux_ctype_sprint_size (mmux_usize_t @var{result_required_nbytes_p}, mmux_ctype_t @var{VALUE})
 Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @end deftypefn
 

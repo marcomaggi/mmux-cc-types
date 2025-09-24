@@ -3139,8 +3139,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 
 /* ------------------------------------------------------------------ */
 
-#define mmux_ctype_sprint_size(VALUE)						\
-  _Generic((VALUE),								\
+#define mmux_ctype_sprint_size(VALUE1,VALUE2)					\
+  _Generic((VALUE2),								\
 	   mmux_pointer_t:		mmux_pointer_sprint_size,		\
 	   mmux_char_t:			mmux_char_sprint_size,			\
            mmux_schar_t:		mmux_schar_sprint_size,			\
@@ -3252,7 +3252,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_flonumcd128_t:		mmux_flonumcd128_sprint_size,		\
 ]]])m4_dnl
-           default:			mmux_ctype_generic_error)((VALUE))
+           default:			mmux_ctype_generic_error)((VALUE1),(VALUE2))
 
 
 /** --------------------------------------------------------------------

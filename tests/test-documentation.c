@@ -243,10 +243,10 @@ test_stringrep_sprinters (void)
   {
     dprintf(2, "%s: sprinting a flonumdb\n", __func__);
     {
-      mmux_flonumdb_t  value           = mmux_flonumdb_literal(0.123);
-      mmux_sint_t      required_nbytes = mmux_flonumdb_sprint_size(value);
+      mmux_flonumdb_t	value = mmux_flonumdb_literal(0.123);
+      mmux_usize_t      required_nbytes;
 
-      if (mmux_sint_is_negative(required_nbytes)) {
+      if (mmux_flonumdb_sprint_size(&required_nbytes, value)) {
 	exit(EXIT_FAILURE);
       } else {
 	char    str[required_nbytes.value];
@@ -260,10 +260,10 @@ test_stringrep_sprinters (void)
 
     dprintf(2, "%s: generically sprinting a flonumdb\n", __func__);
     {
-      auto    value           = mmux_flonumdb_literal(0.123);
-      auto    required_nbytes = mmux_ctype_sprint_size(value);
+      auto		value           = mmux_flonumdb_literal(0.123);
+      mmux_usize_t	required_nbytes;
 
-      if (mmux_ctype_is_negative(required_nbytes)) {
+      if (mmux_ctype_sprint_size(&required_nbytes, value)) {
 	exit(EXIT_FAILURE);
       } else {
 	char    str[required_nbytes.value];
