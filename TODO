@@ -8,6 +8,22 @@
 * See if it is possible to implement mathematical rationalise functions,
   from rational number to numerator and denominator.
 
+* To be considered: should the libc  types be prefixed with "libc"?  For
+  example:
+
+    mode -> libc_mode
+    pid -> libc_pid
+    uid -> libc_uid
+    gid -> libc_gid
+    off -> libc_off
+    rlim -> libc_rlim
+    socklen -> libc_socklen
+    ino -> libc_ino
+    dev -> libc_dev
+    nlink -> libc_nlink
+    blkcnt -> libc_blkcnt
+
+
 ### end of file
 # Local Variables:
 # mode: text
