@@ -19,9 +19,10 @@ Topics
 1. Introduction
 ---------------
 
-This package  installs a C23 library  which implements a uniform  API to
-interface  C23 language  types.  A  possible use  of the  library is  in
-foreign functions interfaces for higher--level languages.
+This package  installs a  C23 library, with  GNU C  Compiler extensions,
+which  implements a  uniform API  to  interface C23  language types.   A
+possible  use of  the library  is  in foreign  functions interfaces  for
+higher--level languages.
 
   The package targets POSIX systems.
 

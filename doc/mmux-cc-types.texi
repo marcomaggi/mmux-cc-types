@@ -88,11 +88,9 @@
 
 @copying
 This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C23 language
-library meant to be used in foreign functions interfaces for higher--level languages.
-
-This package installs a C23 library which implements an @api{} to interface C23 language types with
-higher--level platforms.  The source code must be compiled with the @gnu{} C Compiler
-(@command{gcc}) and depending on the @gnu{} C Library (@command{glibc}) and the @emph{Decimal
+library, with @gnu{} C Compiler extensions, implementing an @api{} to interface C23 language types
+with higher--level platforms.  The source code must be compiled with the @gnu{} C Compiler
+(@command{gcc}) and it depends on the @gnu{} C Library (@command{glibc}) and the @emph{Decimal
 Floating Point C Library} (@command{libdfp}).
 
 The package targets @posix{} platforms.
@@ -193,7 +191,10 @@ Indexes
 
 
 This document describes version @value{MmuxPkgSemanticVersion} of @value{PACKAGE}, a C23 language
-library meant to be used in foreign functions interfaces for higher--level languages.
+library, with @gnu{} C Compiler extensions, implementing an @api{} to interface C23 language types
+with higher--level platforms.  The source code must be compiled with the @gnu{} C Compiler
+(@command{gcc}) and it depends on the @gnu{} C Library (@command{glibc}) and the @emph{Decimal
+Floating Point C Library} (@command{libdfp}).
 
 @cindex @value{PackageHeaderFile}, header file
 @cindex Header file @value{PackageHeaderFile}
