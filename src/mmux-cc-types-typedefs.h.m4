@@ -83,6 +83,10 @@ typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t	mmux_standard_
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t	mmux_standard_time_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN[[[]]]_t	mmux_standard_socklen_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t	mmux_standard_rlim_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_INO[[[]]]_t	mmux_standard_ino_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_DEV[[[]]]_t	mmux_standard_dev_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_NLINK[[[]]]_t	mmux_standard_nlink_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_BLKCNT[[[]]]_t	mmux_standard_blkcnt_t;
 
 typedef float				mmux_standard_flonumfl_t;
 typedef double				mmux_standard_flonumdb_t;
@@ -195,6 +199,10 @@ DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ino,	[[[MMUX_CC_TYPES_STEM_ALIAS_INO]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(dev,	[[[MMUX_CC_TYPES_STEM_ALIAS_DEV]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(nlink,	[[[MMUX_CC_TYPES_STEM_ALIAS_NLINK]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(blkcnt,	[[[MMUX_CC_TYPES_STEM_ALIAS_BLKCNT]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -363,6 +371,11 @@ typedef struct mmux_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
 typedef struct mmux_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SOCKLEN;	}     mmux_socklen_t;
 typedef struct mmux_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_RLIM;	}     mmux_rlim_t;
 
+typedef struct mmux_ino_t	{ MMUX_CC_TYPES_TYPE_ALIAS_INO;		}     mmux_ino_t;
+typedef struct mmux_dev_t	{ MMUX_CC_TYPES_TYPE_ALIAS_DEV;		}     mmux_dev_t;
+typedef struct mmux_nlink_t	{ MMUX_CC_TYPES_TYPE_ALIAS_NLINK;	}     mmux_nlink_t;
+typedef struct mmux_blkcnt_t	{ MMUX_CC_TYPES_TYPE_ALIAS_BLKCNT;	}     mmux_blkcnt_t;
+
 
 /** --------------------------------------------------------------------
  ** Makers.
@@ -460,6 +473,10 @@ DEFINE_TYPE_MAKERS(wint)
 DEFINE_TYPE_MAKERS(time)
 DEFINE_TYPE_MAKERS(socklen)
 DEFINE_TYPE_MAKERS(rlim)
+DEFINE_TYPE_MAKERS(ino)
+DEFINE_TYPE_MAKERS(dev)
+DEFINE_TYPE_MAKERS(nlink)
+DEFINE_TYPE_MAKERS(blkcnt)
 
 
 /** --------------------------------------------------------------------
@@ -531,6 +548,10 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[wint]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[time]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[socklen]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ino]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[dev]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[nlink]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[blkcnt]]])
 
 DEFINE_PROTOTYPES_TYPEDEFS([[[flonumfl]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[flonumdb]]])

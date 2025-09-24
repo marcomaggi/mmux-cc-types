@@ -281,6 +281,10 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{time}, type stem
 @cindex @code{socklen}, type stem
 @cindex @code{rlim}, type stem
+@cindex @code{ino}, type stem
+@cindex @code{dev}, type stem
+@cindex @code{nlink}, type stem
+@cindex @code{blkcnt}, type stem
 
 @cindex @code{flonumfl}, type stem
 @cindex @code{flonumdb}, type stem
@@ -385,6 +389,11 @@ it is an alias for @code{@value{\ALIAS\}}.
 @MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
 @MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
 @MmuxDefineAliasedTypeStem{rlim, rlim_t,ALIASRLIM}
+@MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
+@MmuxDefineAliasedTypeStem{ino, ino_t,ALIASINO}
+@MmuxDefineAliasedTypeStem{dev, dev_t,ALIASDEV}
+@MmuxDefineAliasedTypeStem{nlink, nlink_t,ALIASNLINK}
+@MmuxDefineAliasedTypeStem{blkcnt, blkcnt_t,ALIASBLKCNT}
 
 @MmuxDefineTypeStem{flonumfl,float}
 @MmuxDefineTypeStem{flonumdb,flonumdb}
@@ -664,6 +673,11 @@ type is supported.
 @cindex @code{socklen}, type stem
 @cindex @code{rlim}, type stem
 
+@cindex @code{ino}, type stem
+@cindex @code{dev}, type stem
+@cindex @code{nlink}, type stem
+@cindex @code{blkcnt}, type stem
+
 @cindex @code{asciizp}, type stem
 @cindex @code{asciizpp}, type stem
 @cindex @code{asciizppp}, type stem
@@ -874,7 +888,10 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedefForAliasedType{time,            time_t,         @value{ALIASTIME}}
 @MmuxDefineCAliasTypedefForAliasedType{socklen,         socklen_t,      @value{ALIASSOCKLEN}}
 @MmuxDefineCAliasTypedefForAliasedType{rlim,            rlim_t,         @value{ALIASRLIM}}
-
+@MmuxDefineCAliasTypedefForAliasedType{ino,             ino_t,          @value{ALIASINO}}
+@MmuxDefineCAliasTypedefForAliasedType{dev,             dev_t,          @value{ALIASDEV}}
+@MmuxDefineCAliasTypedefForAliasedType{nlink,           nlink_t,        @value{ALIASNLINK}}
+@MmuxDefineCAliasTypedefForAliasedType{blkcnt,          blkcnt_t,       @value{ALIASBLKCNT}}
 
 @MmuxDefineCAliasTypedefPart{flonumcfl,float}
 @MmuxDefineCAliasTypedefPart{flonumcdb,flonumdb}
@@ -1071,6 +1088,10 @@ mmux_standard_pointerc_literal(@var{ARG})
 @MmuxDefineLiteralMacro{time}
 @MmuxDefineLiteralMacroUnsignedInteger{socklen}
 @MmuxDefineLiteralMacroUnsignedInteger{rlim}
+@MmuxDefineLiteralMacroUnsignedInteger{ino}
+@MmuxDefineLiteralMacroUnsignedInteger{dev}
+@MmuxDefineLiteralMacroUnsignedInteger{nlink}
+@MmuxDefineLiteralMacroUnsignedInteger{blkcnt}
 
 @MmuxDefineLiteralMacroWithSuffix{flonumfl,F,0.123}
 @MmuxDefineLiteralMacro{flonumdb}
@@ -1237,6 +1258,10 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 @MmuxDefineCMacroMaker{time}
 @MmuxDefineCMacroMaker{socklen}
 @MmuxDefineCMacroMaker{rlim}
+@MmuxDefineCMacroMaker{ino}
+@MmuxDefineCMacroMaker{dev}
+@MmuxDefineCMacroMaker{nlink}
+@MmuxDefineCMacroMaker{blkcnt}
 
 @MmuxDefineCMacroMaker{asciip}
 @MmuxDefineCMacroMaker{asciipp}
@@ -1386,6 +1411,11 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{socklen}
 @MmuxDefineCFunctionSizeof{rlim}
 
+@MmuxDefineCFunctionSizeof{ino}
+@MmuxDefineCFunctionSizeof{dev}
+@MmuxDefineCFunctionSizeof{nlink}
+@MmuxDefineCFunctionSizeof{blkcnt}
+
 @c page
 @node constants limits
 @section Type maximum and minimum values
@@ -1463,6 +1493,10 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{time}
 @MmuxDefineCFunctionMaximum{socklen}
 @MmuxDefineCFunctionMaximum{rlim}
+@MmuxDefineCFunctionMaximum{ino}
+@MmuxDefineCFunctionMaximum{dev}
+@MmuxDefineCFunctionMaximum{nlink}
+@MmuxDefineCFunctionMaximum{blkcnt}
 
 @c page
 @node constants flonum
@@ -1709,6 +1743,10 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{time}
 @MmuxDefineCFunctionPredicate{socklen}
 @MmuxDefineCFunctionPredicate{rlim}
+@MmuxDefineCFunctionPredicate{ino}
+@MmuxDefineCFunctionPredicate{dev}
+@MmuxDefineCFunctionPredicate{nlink}
+@MmuxDefineCFunctionPredicate{blkcnt}
 
 @c page
 @node stringrep formats
@@ -1936,6 +1974,10 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{time}
 @MmuxDefineCFunctionParser{socklen}
 @MmuxDefineCFunctionParser{rlim}
+@MmuxDefineCFunctionParser{ino}
+@MmuxDefineCFunctionParser{dev}
+@MmuxDefineCFunctionParser{nlink}
+@MmuxDefineCFunctionParser{blkcnt}
 
 @c page
 @node stringrep sprinters
@@ -2053,6 +2095,10 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{time}
 @MmuxDefineCFunctionSprinter{socklen}
 @MmuxDefineCFunctionSprinter{rlim}
+@MmuxDefineCFunctionSprinter{ino}
+@MmuxDefineCFunctionSprinter{dev}
+@MmuxDefineCFunctionSprinter{nlink}
+@MmuxDefineCFunctionSprinter{blkcnt}
 
 @MmuxDefineCFunctionSprinter{flonumfl}
 @MmuxDefineCFunctionSprinter{flonumdb}
@@ -2239,6 +2285,10 @@ type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @MmuxDefineCFunctionExactIntegerSprinter{time}
 @MmuxDefineCFunctionExactIntegerSprinter{socklen}
 @MmuxDefineCFunctionExactIntegerSprinter{rlim}
+@MmuxDefineCFunctionExactIntegerSprinter{ino}
+@MmuxDefineCFunctionExactIntegerSprinter{dev}
+@MmuxDefineCFunctionExactIntegerSprinter{nlink}
+@MmuxDefineCFunctionExactIntegerSprinter{blkcnt}
 
 @c page
 @node stringrep sprinters printing
@@ -2336,6 +2386,10 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionPrinters{time}
 @MmuxDefineCFunctionPrinters{socklen}
 @MmuxDefineCFunctionPrinters{rlim}
+@MmuxDefineCFunctionPrinters{ino}
+@MmuxDefineCFunctionPrinters{dev}
+@MmuxDefineCFunctionPrinters{nlink}
+@MmuxDefineCFunctionPrinters{blkcnt}
 
 @MmuxDefineCFunctionPrinters{flonumfl}
 @MmuxDefineCFunctionPrinters{flonumdb}
@@ -3335,6 +3389,10 @@ placeholder for the type of the operand.
 @MmuxDefineTypePredicates{time}
 @MmuxDefineTypePredicates{socklen}
 @MmuxDefineTypePredicates{rlim}
+@MmuxDefineTypePredicates{ino}
+@MmuxDefineTypePredicates{dev}
+@MmuxDefineTypePredicates{nlink}
+@MmuxDefineTypePredicates{blkcnt}
 
 @MmuxDefineFlonumTypePredicates{flonumfl}
 @MmuxDefineFlonumTypePredicates{flonumdb}
@@ -3495,6 +3553,10 @@ operands.
 @MmuxDefineTypeComparisonExactFunction{time}
 @MmuxDefineTypeComparisonExactFunction{socklen}
 @MmuxDefineTypeComparisonExactFunction{rlim}
+@MmuxDefineTypeComparisonExactFunction{ino}
+@MmuxDefineTypeComparisonExactFunction{dev}
+@MmuxDefineTypeComparisonExactFunction{nlink}
+@MmuxDefineTypeComparisonExactFunction{blkcnt}
 
 @MmuxDefineTypeComparisonExactFunction{flonumfl}
 @MmuxDefineTypeComparisonExactFunction{flonumdb}
@@ -3618,6 +3680,10 @@ placeholder for the type of the operands and result.
 @MmuxDefineTypeComparisonMinMaxFunction{time}
 @MmuxDefineTypeComparisonMinMaxFunction{socklen}
 @MmuxDefineTypeComparisonMinMaxFunction{rlim}
+@MmuxDefineTypeComparisonMinMaxFunction{ino}
+@MmuxDefineTypeComparisonMinMaxFunction{dev}
+@MmuxDefineTypeComparisonMinMaxFunction{nlink}
+@MmuxDefineTypeComparisonMinMaxFunction{blkcnt}
 
 @MmuxDefineTypeComparisonMinMaxFunction{flonumfl}
 @MmuxDefineTypeComparisonMinMaxFunction{flonumdb}
@@ -4588,6 +4654,10 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{time}
 @MmuxDefineBitwiseFuncs{socklen}
 @MmuxDefineBitwiseFuncs{rlim}
+@MmuxDefineBitwiseFuncs{ino}
+@MmuxDefineBitwiseFuncs{dev}
+@MmuxDefineBitwiseFuncs{nlink}
+@MmuxDefineBitwiseFuncs{blkcnt}
 
 @c page
 @node generic

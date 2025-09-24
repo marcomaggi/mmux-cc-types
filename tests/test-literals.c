@@ -153,6 +153,10 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   DOIT_FOR_EXACT_INTEGER(time,		65);
   DOIT_FOR_EXACT_INTEGER(socklen,	65);
   DOIT_FOR_EXACT_INTEGER(rlim,		65);
+  DOIT_FOR_EXACT_INTEGER(ino,		65);
+  DOIT_FOR_EXACT_INTEGER(dev,		65);
+  DOIT_FOR_EXACT_INTEGER(nlink,		65);
+  DOIT_FOR_EXACT_INTEGER(blkcnt,	65);
 
   /* ------------------------------------------------------------------ */
 

@@ -92,6 +92,10 @@ test_constant_maximum (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
@@ -216,6 +220,11 @@ test_constant_minimum (void)
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(socklen);
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(rlim);
 
+  DOIT_FOR_EXACT_UNSIGNED_INTEGER(ino);
+  DOIT_FOR_EXACT_UNSIGNED_INTEGER(dev);
+  DOIT_FOR_EXACT_UNSIGNED_INTEGER(nlink);
+  DOIT_FOR_EXACT_UNSIGNED_INTEGER(blkcnt);
+
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
@@ -331,6 +340,10 @@ test_constant_zero (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
@@ -699,6 +712,10 @@ test_constant_one (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
@@ -848,6 +865,10 @@ test_constant_two (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
@@ -1000,6 +1021,10 @@ test_constant_ten (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
@@ -2205,6 +2230,10 @@ test_constant_sizeof (void)
   DOIT(time);
   DOIT(socklen);
   DOIT(rlim);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   DOIT(flonumfl);
   DOIT(flonumdb);

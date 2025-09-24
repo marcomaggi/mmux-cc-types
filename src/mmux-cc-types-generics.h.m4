@@ -113,6 +113,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -230,6 +234,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -348,6 +356,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -466,6 +478,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -584,6 +600,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -701,6 +721,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
@@ -786,6 +810,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
 
@@ -840,6 +868,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
            default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
@@ -894,6 +926,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
            default:			mmux_ctype_generic_error)(VALUE))
 ]]]) m4_dnl
 
@@ -1394,6 +1430,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_$1,			\
            mmux_socklen_t:		mmux_socklen_$1,		\
            mmux_rlim_t:			mmux_rlim_$1,			\
+           mmux_ino_t:			mmux_ino_$1,			\
+           mmux_dev_t:			mmux_dev_$1,			\
+           mmux_nlink_t:		mmux_nlink_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_$1,			\
            default:			mmux_ctype_generic_error)(VALUE1,VALUE2)
 ]]]) m4_dnl
 
@@ -2026,7 +2066,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			false,			\
            mmux_time_t:			true,			\
            mmux_socklen_t:		false,			\
-           mmux_rlim_t:			false))
+           mmux_rlim_t:			false,			\
+           mmux_ino_t:			false,			\
+           mmux_dev_t:			false,			\
+           mmux_nlink_t:		false,			\
+           mmux_blkcnt_t:		false))
 
 /* ------------------------------------------------------------------ */
 
@@ -2142,7 +2186,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			true,			\
            mmux_time_t:			false,			\
            mmux_socklen_t:		true,			\
-           mmux_rlim_t:			true))
+           mmux_rlim_t:			true,			\
+           mmux_ino_t:			true,			\
+           mmux_dev_t:			true,			\
+           mmux_nlink_t:		true,			\
+           mmux_blkcnt_t:		true))
 
 /* ------------------------------------------------------------------ */
 
@@ -2254,7 +2302,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			true,			\
            mmux_time_t:			true,			\
            mmux_socklen_t:		true,			\
-           mmux_rlim_t:			true))
+           mmux_rlim_t:			true,			\
+           mmux_ino_t:			true,			\
+           mmux_dev_t:			true,			\
+           mmux_nlink_t:		true,			\
+           mmux_blkcnt_t:		true))
 
 /* ------------------------------------------------------------------ */
 
@@ -2366,7 +2418,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			true,			\
            mmux_time_t:			true,			\
            mmux_socklen_t:		true,			\
-           mmux_rlim_t:			true))
+           mmux_rlim_t:			true,			\
+           mmux_ino_t:			true,			\
+           mmux_dev_t:			true,			\
+           mmux_nlink_t:		true,			\
+           mmux_blkcnt_t:		true))
 
 /* ------------------------------------------------------------------ */
 
@@ -2478,7 +2534,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			false,			\
            mmux_time_t:			false,			\
            mmux_socklen_t:		false,			\
-           mmux_rlim_t:			false))
+           mmux_rlim_t:			false,			\
+           mmux_ino_t:			false,			\
+           mmux_dev_t:			false,			\
+           mmux_nlink_t:		false,			\
+           mmux_blkcnt_t:		false))
 
 /* ------------------------------------------------------------------ */
 
@@ -2590,7 +2650,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			false,			\
            mmux_time_t:			false,			\
            mmux_socklen_t:		false,			\
-           mmux_rlim_t:			false))
+           mmux_rlim_t:			false,			\
+           mmux_ino_t:			false,			\
+           mmux_dev_t:			false,			\
+           mmux_nlink_t:		false,			\
+           mmux_blkcnt_t:		false))
 
 /* ------------------------------------------------------------------ */
 
@@ -2702,7 +2766,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wint_t:			false,			\
            mmux_time_t:			false,			\
            mmux_socklen_t:		false,			\
-           mmux_rlim_t:			false))
+           mmux_rlim_t:			false,			\
+           mmux_ino_t:			false,			\
+           mmux_dev_t:			false,			\
+           mmux_nlink_t:		false,			\
+           mmux_blkcnt_t:		false))
 
 
 /** --------------------------------------------------------------------
@@ -2794,6 +2862,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			"mmux_time_t",			\
            mmux_socklen_t:		"mmux_socklen_t",		\
            mmux_rlim_t:			"mmux_rlim_t",			\
+           mmux_ino_t:			"mmux_ino_t",			\
+           mmux_dev_t:			"mmux_dev_t",			\
+           mmux_nlink_t:		"mmux_nlink_t",			\
+           mmux_blkcnt_t:		"mmux_blkcnt_t",		\
 	   mmux_flonumcfl_t:		"mmux_flonumcfl_t",		\
 	   mmux_flonumcdb_t:		"mmux_flonumcdb_t",		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -2907,6 +2979,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			"time",			\
            mmux_socklen_t:		"socklen",		\
            mmux_rlim_t:			"rlim",			\
+           mmux_ino_t:			"ino",			\
+           mmux_dev_t:			"dev",			\
+           mmux_nlink_t:		"nlink",		\
+           mmux_blkcnt_t:		"blkcnt",		\
 	   mmux_flonumcfl_t:		"flonumcfl",		\
 	   mmux_flonumcdb_t:		"flonumcdb",		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -3023,6 +3099,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_sprint,			\
            mmux_socklen_t:		mmux_socklen_sprint,			\
            mmux_rlim_t:			mmux_rlim_sprint,			\
+           mmux_ino_t:			mmux_ino_sprint,			\
+           mmux_dev_t:			mmux_dev_sprint,			\
+           mmux_nlink_t:		mmux_nlink_sprint,			\
+           mmux_blkcnt_t:		mmux_blkcnt_sprint,			\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_sprint,			\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_sprint,			\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -3136,6 +3216,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_time_t:			mmux_time_sprint_size,			\
            mmux_socklen_t:		mmux_socklen_sprint_size,		\
            mmux_rlim_t:			mmux_rlim_sprint_size,			\
+           mmux_ino_t:			mmux_ino_sprint_size,			\
+           mmux_dev_t:			mmux_dev_sprint_size,			\
+           mmux_nlink_t:		mmux_nlink_sprint_size,			\
+           mmux_blkcnt_t:		mmux_blkcnt_sprint_size,		\
 	   mmux_flonumcfl_t:		mmux_flonumcfl_sprint_size,		\
 	   mmux_flonumcdb_t:		mmux_flonumcdb_sprint_size,		\
 m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
@@ -3219,7 +3303,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_wint_t:			mmux_wint_sprint_with_base,			\
            mmux_time_t:			mmux_time_sprint_with_base,			\
            mmux_socklen_t:		mmux_socklen_sprint_with_base,			\
-           mmux_rlim_t:			mmux_rlim_sprint_with_base)((BUFPTR),(BUFLEN_P),(IS_NEGATIVE_P),(VALUE),(BASE))
+           mmux_rlim_t:			mmux_rlim_sprint_with_base,			\
+           mmux_ino_t:			mmux_ino_sprint_with_base,			\
+           mmux_dev_t:			mmux_dev_sprint_with_base,			\
+           mmux_nlink_t:		mmux_nlink_sprint_with_base,			\
+           mmux_blkcnt_t:		mmux_blkcnt_sprint_with_base)((BUFPTR),(BUFLEN_P),(IS_NEGATIVE_P),(VALUE),(BASE))
 
 /* ------------------------------------------------------------------ */
 
@@ -3267,8 +3355,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_wint_t:			mmux_wint_dprintf_with_base,			\
            mmux_time_t:			mmux_time_dprintf_with_base,			\
            mmux_socklen_t:		mmux_socklen_dprintf_with_base,			\
-           mmux_rlim_t:			mmux_rlim_dprintf_with_base)((FD),(VALUE),(BASE))
-
+           mmux_rlim_t:			mmux_rlim_dprintf_with_base,			\
+           mmux_ino_t:			mmux_ino_dprintf_with_base,			\
+           mmux_dev_t:			mmux_dev_dprintf_with_base,			\
+           mmux_nlink_t:		mmux_nlink_dprintf_with_base,			\
+           mmux_blkcnt_t:		mmux_blkcnt_dprintf_with_base)((FD),(VALUE),(BASE))
 
 
 /** --------------------------------------------------------------------

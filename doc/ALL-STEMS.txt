@@ -74,6 +74,10 @@ wint
 time
 socklen
 rlim
+ino
+dev
+nlink
+blkcnt
 asciip
 asciipp
 asciippp

@@ -152,6 +152,10 @@ test_sign_predicate_is_zero (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);
@@ -361,6 +365,10 @@ test_sign_predicate_is_positive (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);
@@ -570,6 +578,10 @@ test_sign_predicate_is_negative (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);
@@ -779,6 +791,10 @@ test_sign_predicate_is_non_positive (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);
@@ -988,6 +1004,10 @@ test_sign_predicate_is_non_negative (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);
@@ -1197,6 +1217,10 @@ test_sign_predicate_is_finite (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);
@@ -1406,6 +1430,10 @@ test_sign_predicate_is_infinite (void)
   DOIT_UNSIGNED_INTEGER(rlim);
   DOIT_UNSIGNED_INTEGER(socklen);
   DOIT_UNSIGNED_INTEGER(time);
+  DOIT_UNSIGNED_INTEGER(ino);
+  DOIT_UNSIGNED_INTEGER(dev);
+  DOIT_UNSIGNED_INTEGER(nlink);
+  DOIT_UNSIGNED_INTEGER(blkcnt);
 
   DOIT_FLONUM(flonumfl);
   DOIT_FLONUM(flonumdb);

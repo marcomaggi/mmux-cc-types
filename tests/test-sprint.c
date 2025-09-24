@@ -87,6 +87,10 @@ DEFINE_TEST_SPRINTER_FUNCTION(wint,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(time,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(socklen,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(rlim,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(ino,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(dev,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(nlink,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(blkcnt,		123,	"123")
 
 
 /** --------------------------------------------------------------------
@@ -755,6 +759,50 @@ test_sprint_with_base_rlim (void)
   }
   dprintf(2, " DONE\n");
 }
+static void
+test_sprint_with_base_ino (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(ino,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(ino,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(ino,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_dev (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(dev,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(dev,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(dev,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_nlink (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(nlink,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(nlink,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(nlink,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
+test_sprint_with_base_blkcnt (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(blkcnt,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(blkcnt,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(blkcnt,	123,	16,	"+7B");
+  }
+  dprintf(2, " DONE\n");
+}
 
 
 /** --------------------------------------------------------------------
@@ -810,6 +858,11 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_time();		}
   if (1) {	test_sprint_socklen();		}
   if (1) {	test_sprint_rlim();		}
+
+  if (1) {	test_sprint_ino();		}
+  if (1) {	test_sprint_dev();		}
+  if (1) {	test_sprint_nlink();		}
+  if (1) {	test_sprint_blkcnt();		}
 
   if (1) {	test_sprint_flonumfl();		}
   if (1) {	test_sprint_flonumdb();		}
@@ -928,6 +981,11 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_with_base_time();		}
   if (1) {	test_sprint_with_base_socklen();	}
   if (1) {	test_sprint_with_base_rlim();		}
+
+  if (1) {	test_sprint_with_base_ino();		}
+  if (1) {	test_sprint_with_base_dev();		}
+  if (1) {	test_sprint_with_base_nlink();		}
+  if (1) {	test_sprint_with_base_blkcnt();		}
 
   exit(EXIT_SUCCESS);
 }

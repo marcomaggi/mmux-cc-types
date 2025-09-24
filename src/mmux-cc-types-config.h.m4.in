@@ -148,6 +148,11 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[#define MMUX_CC_TYPES_HAS_FLONUM
 #define MMUX_CC_TYPES_HAS_SOCKLEN	1
 #define MMUX_CC_TYPES_HAS_RLIM		1
 
+#define MMUX_CC_TYPES_HAS_INO		1
+#define MMUX_CC_TYPES_HAS_DEV		1
+#define MMUX_CC_TYPES_HAS_NLINK		1
+#define MMUX_CC_TYPES_HAS_BLKCNT	1
+
 /* ------------------------------------------------------------------ */
 
 /* The macro  MMUX_CC_TYPES_UNUSED indicates  that a  function, function  argument or

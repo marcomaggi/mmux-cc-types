@@ -155,5 +155,9 @@ DEFINE_BITWISE_FUNCS([[[wint]]])
 DEFINE_BITWISE_FUNCS([[[time]]])
 DEFINE_BITWISE_FUNCS([[[socklen]]])
 DEFINE_BITWISE_FUNCS([[[rlim]]])
+DEFINE_BITWISE_FUNCS([[[ino]]])
+DEFINE_BITWISE_FUNCS([[[dev]]])
+DEFINE_BITWISE_FUNCS([[[nlink]]])
+DEFINE_BITWISE_FUNCS([[[blkcnt]]])
 
 /* end of file */

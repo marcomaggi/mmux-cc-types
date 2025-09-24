@@ -425,6 +425,38 @@ test_sprint_rlim (void)
   DOIT_VALUE(rlim,mmux_rlim_constant_minimum());
   DOIT_VALUE(rlim,mmux_rlim_constant_maximum());
 }
+static void
+test_sprint_ino (void)
+{
+  DOIT(ino,"0");
+  DOIT(ino,"123");
+  DOIT_VALUE(ino,mmux_ino_constant_minimum());
+  DOIT_VALUE(ino,mmux_ino_constant_maximum());
+}
+static void
+test_sprint_dev (void)
+{
+  DOIT(dev,"0");
+  DOIT(dev,"123");
+  DOIT_VALUE(dev,mmux_dev_constant_minimum());
+  DOIT_VALUE(dev,mmux_dev_constant_maximum());
+}
+static void
+test_sprint_nlink (void)
+{
+  DOIT(nlink,"0");
+  DOIT(nlink,"123");
+  DOIT_VALUE(nlink,mmux_nlink_constant_minimum());
+  DOIT_VALUE(nlink,mmux_nlink_constant_maximum());
+}
+static void
+test_sprint_blkcnt (void)
+{
+  DOIT(blkcnt,"0");
+  DOIT(blkcnt,"123");
+  DOIT_VALUE(blkcnt,mmux_blkcnt_constant_minimum());
+  DOIT_VALUE(blkcnt,mmux_blkcnt_constant_maximum());
+}
 
 
 /** --------------------------------------------------------------------
@@ -760,6 +792,10 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_time();		}
   if (1) {	test_sprint_socklen();		}
   if (1) {	test_sprint_rlim();		}
+  if (1) {	test_sprint_ino();		}
+  if (1) {	test_sprint_dev();		}
+  if (1) {	test_sprint_nlink();		}
+  if (1) {	test_sprint_blkcnt();		}
 
   if (1) {	test_sprint_flonumfl();		}
   if (1) {	test_sprint_flonumdb();		}

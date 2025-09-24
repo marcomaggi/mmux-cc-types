@@ -98,6 +98,10 @@ test_bitwise_and (void)
   DOIT(rlim);
   DOIT(socklen);
   DOIT(time);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -180,6 +184,10 @@ test_bitwise_or (void)
   DOIT(rlim);
   DOIT(socklen);
   DOIT(time);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -262,6 +270,10 @@ test_bitwise_xor (void)
   DOIT(rlim);
   DOIT(socklen);
   DOIT(time);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -356,6 +368,10 @@ test_bitwise_not (void)
   DOIT(rlim);
   DOIT(socklen);
   DOIT(time);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -424,6 +440,10 @@ test_bitwise_shl (void)
   DOIT(rlim);
   DOIT(socklen);
   DOIT(time);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -492,6 +512,10 @@ test_bitwise_shr (void)
   DOIT(rlim);
   DOIT(socklen);
   DOIT(time);
+  DOIT(ino);
+  DOIT(dev);
+  DOIT(nlink);
+  DOIT(blkcnt);
 
   dprintf(2, " DONE.\n\n");
 }

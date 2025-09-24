@@ -102,6 +102,10 @@ DEFINE_BITWISE_PROTOS([[[wint]]])
 DEFINE_BITWISE_PROTOS([[[time]]])
 DEFINE_BITWISE_PROTOS([[[socklen]]])
 DEFINE_BITWISE_PROTOS([[[rlim]]])
+DEFINE_BITWISE_PROTOS([[[ino]]])
+DEFINE_BITWISE_PROTOS([[[dev]]])
+DEFINE_BITWISE_PROTOS([[[nlink]]])
+DEFINE_BITWISE_PROTOS([[[blkcnt]]])
 
 
 /** --------------------------------------------------------------------

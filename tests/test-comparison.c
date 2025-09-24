@@ -581,6 +581,10 @@ test_comparison_equal (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
@@ -735,6 +739,10 @@ test_comparison_not_equal (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
   /* ------------------------------------------------------------------ */
 
@@ -889,6 +897,10 @@ test_comparison_less (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
@@ -1043,6 +1055,10 @@ test_comparison_greater (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
@@ -1197,6 +1213,10 @@ test_comparison_less_equal (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
@@ -1351,6 +1371,10 @@ test_comparison_greater_equal (void)
   DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(socklen);
   DOIT_FOR_EXACT_INTEGER(rlim);
+  DOIT_FOR_EXACT_INTEGER(ino);
+  DOIT_FOR_EXACT_INTEGER(dev);
+  DOIT_FOR_EXACT_INTEGER(nlink);
+  DOIT_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
@@ -1505,6 +1529,10 @@ test_comparison_min (void)
   DO_MINMAX_FOR_EXACT_INTEGER(time);
   DO_MINMAX_FOR_EXACT_INTEGER(socklen);
   DO_MINMAX_FOR_EXACT_INTEGER(rlim);
+  DO_MINMAX_FOR_EXACT_INTEGER(ino);
+  DO_MINMAX_FOR_EXACT_INTEGER(dev);
+  DO_MINMAX_FOR_EXACT_INTEGER(nlink);
+  DO_MINMAX_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
@@ -1659,6 +1687,10 @@ test_comparison_max (void)
   DO_MINMAX_FOR_EXACT_INTEGER(time);
   DO_MINMAX_FOR_EXACT_INTEGER(socklen);
   DO_MINMAX_FOR_EXACT_INTEGER(rlim);
+  DO_MINMAX_FOR_EXACT_INTEGER(ino);
+  DO_MINMAX_FOR_EXACT_INTEGER(dev);
+  DO_MINMAX_FOR_EXACT_INTEGER(nlink);
+  DO_MINMAX_FOR_EXACT_INTEGER(blkcnt);
 
 /* ------------------------------------------------------------------ */
 
