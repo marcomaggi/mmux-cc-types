@@ -181,9 +181,11 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 
 include_HEADERS			+= \
 	src/mmux-cc-types-libdfp-arithmetics.h		\
+	src/mmux-cc-types-libdfp-comparison.h		\
 	src/mmux-cc-types-libdfp-complex-numbers.h	\
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
+	src/mmux-cc-types-libdfp-real-numbers.h		\
 	src/mmux-cc-types-libdfp-sign-predicates.h	\
 	src/mmux-cc-types-libdfp-stringrep.h		\
 	src/mmux-cc-types-libdfp-typedefs.h
