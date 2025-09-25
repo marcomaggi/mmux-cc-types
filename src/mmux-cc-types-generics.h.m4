@@ -3478,7 +3478,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ino_t:			((VALUE).value),		\
            mmux_dev_t:			((VALUE).value),		\
            mmux_nlink_t:		((VALUE).value),		\
-           mmux_blkcnt_t:		((VALUE).value))
+           mmux_blkcnt_t:		((VALUE).value)))
 
 
 /** --------------------------------------------------------------------
