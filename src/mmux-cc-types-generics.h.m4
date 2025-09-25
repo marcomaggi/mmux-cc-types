@@ -3363,6 +3363,125 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 
 
 /** --------------------------------------------------------------------
+ ** Inspection.
+ ** ----------------------------------------------------------------- */
+
+#define mmux_ctype_value(VALUE)						\
+  (_Generic((VALUE),							\
+	   mmux_pointer_t:		(VALUE),			\
+	   mmux_char_t:			((VALUE).value),		\
+           mmux_schar_t:		((VALUE).value),		\
+           mmux_uchar_t:		((VALUE).value),		\
+           mmux_sshort_t:		((VALUE).value),		\
+           mmux_ushort_t:		((VALUE).value),		\
+           mmux_sint_t:			((VALUE).value),		\
+           mmux_uint_t:			((VALUE).value),		\
+           mmux_slong_t:		((VALUE).value),		\
+           mmux_ulong_t:		((VALUE).value),		\
+m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		((VALUE).value),		\
+]]])m4_dnl
+	   mmux_flonumfl_t:		((VALUE).value),		\
+	   mmux_flonumdb_t:		((VALUE).value),		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		((VALUE).value),		\
+]]])m4_dnl
+	   mmux_sint8_t:		((VALUE).value),		\
+	   mmux_uint8_t:		((VALUE).value),		\
+	   mmux_sint16_t:		((VALUE).value),		\
+	   mmux_uint16_t:		((VALUE).value),		\
+	   mmux_sint32_t:		((VALUE).value),		\
+	   mmux_uint32_t:		((VALUE).value),		\
+	   mmux_sint64_t:		((VALUE).value),		\
+	   mmux_uint64_t:		((VALUE).value),		\
+	   mmux_byte_t:			((VALUE).value),		\
+	   mmux_octet_t:		((VALUE).value),		\
+           mmux_ssize_t:		((VALUE).value),		\
+           mmux_usize_t:		((VALUE).value),		\
+           mmux_sintmax_t:		((VALUE).value),		\
+           mmux_uintmax_t:		((VALUE).value),		\
+           mmux_sintptr_t:		((VALUE).value),		\
+           mmux_uintptr_t:		((VALUE).value),		\
+	   mmux_flonumcfl_t:		((VALUE).value),		\
+	   mmux_flonumcdb_t:		((VALUE).value),		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		((VALUE).value),		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		((VALUE).value),		\
+]]])m4_dnl
+           mmux_mode_t:			((VALUE).value),		\
+           mmux_off_t:			((VALUE).value),		\
+           mmux_pid_t:			((VALUE).value),		\
+           mmux_uid_t:			((VALUE).value),		\
+           mmux_gid_t:			((VALUE).value),		\
+           mmux_ptrdiff_t:		((VALUE).value),		\
+           mmux_wchar_t:		((VALUE).value),		\
+           mmux_wint_t:			((VALUE).value),		\
+           mmux_time_t:			((VALUE).value),		\
+           mmux_socklen_t:		((VALUE).value),		\
+           mmux_rlim_t:			((VALUE).value),		\
+           mmux_ino_t:			((VALUE).value),		\
+           mmux_dev_t:			((VALUE).value),		\
+           mmux_nlink_t:		((VALUE).value),		\
+           mmux_blkcnt_t:		((VALUE).value))
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

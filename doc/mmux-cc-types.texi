@@ -4684,6 +4684,22 @@ mmux_ctype_is_signed(op)        @expansion{} true
 @end deftypefn
 
 
+@deftypefn {Generic Macro} mmux_standard_ctype_t mmux_ctype_value (mmux_ctype_t @var{op})
+For the types that are data structures with the field @code{value}, expand as follows:
+
+@example
+mmux_ctype_value(@var{op})      @expansion{} ((@var{op}).value)
+@end example
+
+@noindent
+for the types that are unwrapped values, expand as follows:
+
+@example
+mmux_ctype_value(@var{op})      @expansion{} (@var{op})
+@end example
+@end deftypefn
+
+
 @deftypefn {Generic Macro} bool mmux_ctype_is_unsigned (mmux_ctype_t @var{op})
 Expand to @ctrue{} if @var{op} is an unsigned number, otherwise expand to @cfalse{}.  All the real
 and complex floating--point numbers are considered signed numbers.
