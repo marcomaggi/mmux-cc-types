@@ -1320,7 +1320,8 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 * constants sizeof::            Size of data types.
 * constants limits::            Type maximum and minimum values.
 * constants flonum::            Floating--point numbers mathematical constants.
-* constants exact::             Exact integer--point numbers constants.
+* constants exact::             Exact integer--point numeric constants.
+* constants generic::           Generic numeric constants.
 @end menu
 
 @c page
@@ -1419,11 +1420,21 @@ Return a positive integer representing the size in bytes of the C language type
 @section Type maximum and minimum values
 
 
-The following functions return the maximum and minimum values representable by a C language real
-number type; this is true even for floating--point numbers: the returned minimum value is the
-minimum negative representable value.  This is different from the standard C language constants like
-@code{FLT_MIN}, @code{DBL_MIN}, @code{LDBL_MIN}, which represent some sort of minimum representable
-positive value.
+The following functions return the maximum and minimum values representable by a C language numeric
+type.
+
+Implementation notes:
+
+@itemize
+@item
+For floating--point numbers: the returned minimum value is the minimum negative representable value.
+This is different from the standard C language constants like @code{FLT_MIN}, @code{DBL_MIN},
+@code{LDBL_MIN}, which represent some sort of minimum representable positive value.
+
+@item
+For complex numbers: the returned complex number has both real and imaginary parts set to the
+minimum or maximum value of the corresponding real type.
+@end itemize
 
 
 @macro MmuxDefineCFunctionMaximum{STEM}
@@ -1449,6 +1460,7 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{ulong}
 @MmuxDefineCFunctionMaximum{sllong}
 @MmuxDefineCFunctionMaximum{ullong}
+
 @MmuxDefineCFunctionMaximum{flonumfl}
 @MmuxDefineCFunctionMaximum{flonumdb}
 @MmuxDefineCFunctionMaximum{flonumldb}
@@ -1464,6 +1476,22 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{flonumd32}
 @MmuxDefineCFunctionMaximum{flonumd64}
 @MmuxDefineCFunctionMaximum{flonumd128}
+
+@MmuxDefineCFunctionMaximum{flonumcfl}
+@MmuxDefineCFunctionMaximum{flonumcdb}
+@MmuxDefineCFunctionMaximum{flonumcldb}
+
+@MmuxDefineCFunctionMaximum{flonumcf32}
+@MmuxDefineCFunctionMaximum{flonumcf64}
+@MmuxDefineCFunctionMaximum{flonumcf128}
+
+@MmuxDefineCFunctionMaximum{flonumcf32x}
+@MmuxDefineCFunctionMaximum{flonumcf64x}
+@MmuxDefineCFunctionMaximum{flonumcf128x}
+
+@MmuxDefineCFunctionMaximum{flonumcd32}
+@MmuxDefineCFunctionMaximum{flonumcd64}
+@MmuxDefineCFunctionMaximum{flonumcd128}
 
 @MmuxDefineCFunctionMaximum{sint8}
 @MmuxDefineCFunctionMaximum{uint8}
@@ -1501,7 +1529,12 @@ Return the maximum and minimum values representable by the range of values of th
 @section Floating--point numbers mathematical constants
 
 
-@macro MmuxDefineFlonumConstantFunction{STEM,FUNCSTEM,EXPR}
+The following functions return specific value constants representable by a C language
+floating--point numeric type.
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineNumericConstantFunction{STEM,FUNCSTEM,EXPR}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_constant_\FUNCSTEM\ (void)
 Return a constant value corresponding to @samp{\EXPR\}.
 @end deftypefun
@@ -1511,32 +1544,54 @@ Return a constant value corresponding to @samp{\EXPR\}.
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineFlonumConstantFunctions{STEM}
-@MmuxDefineFlonumConstantFunction{\STEM\,zero,0.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,one,1.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,two,2.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,ten,10.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,one_half,1.0/2.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,one_third,1.0/3.0}
+@MmuxDefineNumericConstantFunction{\STEM\,zero,0.0}
+@MmuxDefineNumericConstantFunction{\STEM\,one,1.0}
+@MmuxDefineNumericConstantFunction{\STEM\,two,2.0}
+@MmuxDefineNumericConstantFunction{\STEM\,ten,10.0}
+@MmuxDefineNumericConstantFunction{\STEM\,one_half,1.0/2.0}
+@MmuxDefineNumericConstantFunction{\STEM\,one_third,1.0/3.0}
 
-@MmuxDefineFlonumConstantFunction{\STEM\,positive_zero,+0.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,negative_zero,-0.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,positive_infinity,+inf.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,negative_infinity,-inf.0}
+@MmuxDefineNumericConstantFunction{\STEM\,positive_zero,+0.0}
+@MmuxDefineNumericConstantFunction{\STEM\,negative_zero,-0.0}
+@MmuxDefineNumericConstantFunction{\STEM\,positive_infinity,+inf.0}
+@MmuxDefineNumericConstantFunction{\STEM\,negative_infinity,-inf.0}
 
-@MmuxDefineFlonumConstantFunction{\STEM\,nan,+nan.0}
-@MmuxDefineFlonumConstantFunction{\STEM\,E,e}
-@MmuxDefineFlonumConstantFunction{\STEM\,LOG2E,log_2(e)}
-@MmuxDefineFlonumConstantFunction{\STEM\,LOG10E,log_10(e)}
-@MmuxDefineFlonumConstantFunction{\STEM\,LN2,ln(2)}
-@MmuxDefineFlonumConstantFunction{\STEM\,LN10,ln(10)}
-@MmuxDefineFlonumConstantFunction{\STEM\,PI,pi}
-@MmuxDefineFlonumConstantFunction{\STEM\,PI_2,pi/2}
-@MmuxDefineFlonumConstantFunction{\STEM\,PI_4,pi/4}
-@MmuxDefineFlonumConstantFunction{\STEM\,1_PI,1/pi}
-@MmuxDefineFlonumConstantFunction{\STEM\,2_PI,2/pi}
-@MmuxDefineFlonumConstantFunction{\STEM\,2_SQRTPI,2/sqrt(pi)}
-@MmuxDefineFlonumConstantFunction{\STEM\,SQRT2,sqrt(2)}
-@MmuxDefineFlonumConstantFunction{\STEM\,SQRT1_2,sqrt(1/2)}
+@MmuxDefineNumericConstantFunction{\STEM\,nan,+nan.0}
+@MmuxDefineNumericConstantFunction{\STEM\,E,e}
+@MmuxDefineNumericConstantFunction{\STEM\,LOG2E,log_2(e)}
+@MmuxDefineNumericConstantFunction{\STEM\,LOG10E,log_10(e)}
+@MmuxDefineNumericConstantFunction{\STEM\,LN2,ln(2)}
+@MmuxDefineNumericConstantFunction{\STEM\,LN10,ln(10)}
+@MmuxDefineNumericConstantFunction{\STEM\,PI,pi}
+@MmuxDefineNumericConstantFunction{\STEM\,PI_2,pi/2}
+@MmuxDefineNumericConstantFunction{\STEM\,PI_4,pi/4}
+@MmuxDefineNumericConstantFunction{\STEM\,1_PI,1/pi}
+@MmuxDefineNumericConstantFunction{\STEM\,2_PI,2/pi}
+@MmuxDefineNumericConstantFunction{\STEM\,2_SQRTPI,2/sqrt(pi)}
+@MmuxDefineNumericConstantFunction{\STEM\,SQRT2,sqrt(2)}
+@MmuxDefineNumericConstantFunction{\STEM\,SQRT1_2,sqrt(1/2)}
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@macro MmuxDefineFlonumcConstantFunctions{STEM}
+@MmuxDefineNumericConstantFunction{\STEM\,one,(1.0)+i*(0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,two,(2.0)+i*(0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,ten,(10.0)+i*(0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,one_half,(1.0/2.0)+i*(0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,one_third,(1.0/3.0)+i*(0.0)}
+
+@MmuxDefineNumericConstantFunction{\STEM\,positive_positive_zero,(+0.0)+i*(+0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,positive_negative_zero,(+0.0)+i*(-0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,negative_positive_zero,(-0.0)+i*(+0.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,negative_negative_zero,(-0.0)+i*(-0.0)}
+
+@MmuxDefineNumericConstantFunction{\STEM\,positive_positive_infinity,(+inf.0)+i*(+inf.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,positive_negative_infinity,(+inf.0)+i*(-inf.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,negative_positive_infinity,(-inf.0)+i*(+inf.0)}
+@MmuxDefineNumericConstantFunction{\STEM\,negative_negative_infinity,(-inf.0)+i*(-inf.0)}
+
+@MmuxDefineNumericConstantFunction{\STEM\,nan,(+nan.0)+i*(+nan.0)}
 @end macro
 
 @c ------------------------------------------------------------------------
@@ -1557,9 +1612,27 @@ Return a constant value corresponding to @samp{\EXPR\}.
 @MmuxDefineFlonumConstantFunctions{flonumd64}
 @MmuxDefineFlonumConstantFunctions{flonumd128}
 
+@c ------------------------------------------------------------------------
+
+@MmuxDefineFlonumcConstantFunctions{flonumcfl}
+@MmuxDefineFlonumcConstantFunctions{flonumcdb}
+@MmuxDefineFlonumcConstantFunctions{flonumcldb}
+
+@MmuxDefineFlonumcConstantFunctions{flonumcf32}
+@MmuxDefineFlonumcConstantFunctions{flonumcf64}
+@MmuxDefineFlonumcConstantFunctions{flonumcf128}
+
+@MmuxDefineFlonumcConstantFunctions{flonumcf32x}
+@MmuxDefineFlonumcConstantFunctions{flonumcf64x}
+@MmuxDefineFlonumcConstantFunctions{flonumcf128x}
+
+@MmuxDefineFlonumcConstantFunctions{flonumcd32}
+@MmuxDefineFlonumcConstantFunctions{flonumcd64}
+@MmuxDefineFlonumcConstantFunctions{flonumcd128}
+
 @c page
 @node constants exact
-@section Exact integer--point numbers constants
+@section Exact integer--point numeric constants
 
 
 @macro MmuxDefineExactConstantFunction{STEM,FUNCSTEM,EXPR}
@@ -1577,6 +1650,12 @@ Return a constant value corresponding to @samp{\EXPR\}.
 @MmuxDefineExactConstantFunction{\STEM\,two,2}
 @MmuxDefineExactConstantFunction{\STEM\,ten,10}
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefun mmux_pointer_t mmux_pointer_constant_zero (void)
+Return a constant value corresponding to @cnull{}.
+@end deftypefun
 
 @c ------------------------------------------------------------------------
 
@@ -1619,6 +1698,23 @@ Return a constant value corresponding to @samp{\EXPR\}.
 @MmuxDefineExactConstantFunctions{time}
 @MmuxDefineExactConstantFunctions{socklen}
 @MmuxDefineExactConstantFunctions{rlim}
+
+@c page
+@node constants generic
+@section Generic numeric constants
+
+
+@deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_constant_zero (mmux_ctype_t @var{op})
+@deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_constant_one (mmux_ctype_t @var{op})
+Expand into an expression evaluating to the @samp{zero} or @samp{one} constants of the same type of
+@var{op}.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the expression.
+
+@example
+auto    A = mmux_flonumdb(1.23);
+
+mmux_ctype_constant_zero(A)     @expansion{} mmux_flonumdb_constant_zero()
+@end example
+@end deftypefn
 
 @c page
 @node stringrep
@@ -3990,6 +4086,29 @@ modulo, remainder, increment, decrement.  The type @objtype{mmux_ctype_t} is a p
 type of the operands and result.
 @end deftypefn
 
+
+@deffn {Generic Macro} mmux_ctype_add_to_variable (@var{VARNAME}, @var{VALUE})
+@deffnx {Generic Macro} mmux_ctype_sub_from_variable (@var{VARNAME}, @var{VALUE})
+@deffnx {Generic Macro} mmux_ctype_incr_variable (@var{VARNAME})
+@deffnx {Generic Macro} mmux_ctype_decr_variable (@var{VARNAME})
+Perform the following expansions:
+
+@example
+mmux_ctype_add_to_variable(@var{VARNAME},@var{VALUE})
+@expansion{} ((VARNAME) = mmux_ctype_add((VARNAME),(VALUE)))
+
+mmux_ctype_sub_from_variable(@var{VARNAME},@var{VALUE})
+@expansion{} ((VARNAME) = mmux_ctype_sub((VARNAME),(VALUE)))
+
+mmux_ctype_incr_variable(VARNAME)
+@expansion{} ((VARNAME) = mmux_ctype_add((VARNAME),(mmux_ctype_constant_one(VALUE))))
+
+mmux_ctype_decr_variable(VARNAME)
+@expansion{} ((VARNAME) = mmux_ctype_sub((VARNAME),(mmux_ctype_constant_one(VALUE))))
+@end example
+@end deffn
+
+@c ------------------------------------------------------------------------
 
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
 Perform the addition between @var{PTR} and @var{DELTA}, return the result.

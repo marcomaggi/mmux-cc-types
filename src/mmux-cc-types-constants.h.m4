@@ -261,12 +261,20 @@ DEFINE_STANDARD_FLONUM_CONSTANTS(f128x)
 
 m4_divert(-1)
 
-m4_define([[[DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+m4_define([[[DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
 mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_$2 (void)
 {
   return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_$2(),
 					     mmux_standard_flonum$1_constant_zero());
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMC_CPLX_NUMERIC_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_$2 (void)
+{
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_$2(),
+					     mmux_standard_flonum$1_constant_$2());
 }]]])
 
 m4_define([[[DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
@@ -277,13 +285,23 @@ mmux_standard_flonumc$1_constant_$2_$3_infinity (void)
 					     mmux_standard_flonum$1_constant_$3_infinity());
 }]]])
 
+m4_define([[[DEFINE_STANDARD_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
+mmux_standard_flonumc$1_constant_$2_$3_zero (void)
+{
+  return mmux_standard_flonumc$1_rectangular(mmux_standard_flonum$1_constant_$2_zero(),
+					     mmux_standard_flonum$1_constant_$3_zero());
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUMC_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
-DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	zero)
-DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one)
-DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	two)
-DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	ten)
-DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_half)
-DEFINE_STANDARD_FLONUMC_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_third)
+DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	zero)
+DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one)
+DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	two)
+DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	ten)
+DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_half)
+DEFINE_STANDARD_FLONUMC_REAL_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	one_third)
+DEFINE_STANDARD_FLONUMC_CPLX_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	maximum)
+DEFINE_STANDARD_FLONUMC_CPLX_NUMERIC_CONSTANT_INLINE_FUNCTION($1,	minimum)
 
 mmux_cc_types_inline_decl mmux_standard_flonumc$1_t
 mmux_standard_flonumc$1_constant_imag (void)
@@ -302,6 +320,11 @@ DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive
 DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
 DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
 DEFINE_STANDARD_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
+
+DEFINE_STANDARD_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_STANDARD_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_STANDARD_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_STANDARD_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMC_CONSTANTS(fl)
@@ -406,6 +429,13 @@ mmux_flonumc$1_constant_$2_$3_infinity (void)
   return (mmux_flonumc$1_t) { .value = mmux_standard_flonumc$1_constant_$2_$3_infinity() };
 }]]])
 
+m4_define([[[DEFINE_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_flonumc$1_t
+mmux_flonumc$1_constant_$2_$3_zero (void)
+{
+  return (mmux_flonumc$1_t) { .value = mmux_standard_flonumc$1_constant_$2_$3_zero() };
+}]]])
+
 m4_define([[[DEFINE_FLONUMC_CONSTANTS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumc$1]]],[[[
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	nan)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	imag)
@@ -415,11 +445,18 @@ DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	two)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	ten)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	one_half)
 DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	one_third)
+DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	maximum)
+DEFINE_FLONUMC_CONSTANT_INLINE_FUNCTION($1,	minimum)
 
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
 DEFINE_FLONUMC_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
+
+DEFINE_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_FLONUMC_ZERO_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
 
 mmux_cc_types_inline_decl mmux_usize_t
 mmux_flonumc$1_constant_sizeof (void)
@@ -439,5 +476,138 @@ DEFINE_FLONUMC_CONSTANTS(f128x)
 DEFINE_FLONUMC_CONSTANTS(d32)
 DEFINE_FLONUMC_CONSTANTS(d64)
 DEFINE_FLONUMC_CONSTANTS(d128)
+
+
+/** --------------------------------------------------------------------
+ ** Constants: generic macros.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_CONSTANT_GENERIC_MACRO]]],[[[m4_dnl
+#define mmux_ctype_constant_$1(VALUE)						\
+  (_Generic((VALUE),								\
+	   mmux_char_t:			mmux_char_constant_$1,			\
+           mmux_schar_t:		mmux_schar_constant_$1,			\
+           mmux_uchar_t:		mmux_uchar_constant_$1,			\
+           mmux_sshort_t:		mmux_sshort_constant_$1,		\
+           mmux_ushort_t:		mmux_ushort_constant_$1,		\
+           mmux_sint_t:			mmux_sint_constant_$1,			\
+           mmux_uint_t:			mmux_uint_constant_$1,			\
+           mmux_slong_t:		mmux_slong_constant_$1,			\
+           mmux_ulong_t:		mmux_ulong_constant_$1,			\
+m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
+	   mmux_sllong_t:		mmux_sllong_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
+	   mmux_ullong_t:		mmux_ullong_constant_$1,		\
+]]])m4_dnl
+           mmux_flonumfl_t:		mmux_flonumfl_constant_$1,		\
+	   mmux_flonumdb_t:		mmux_flonumdb_constant_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+	   mmux_flonumldb_t:		mmux_flonumldb_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+	   mmux_flonumf32_t:		mmux_flonumf32_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+	   mmux_flonumf64_t:		mmux_flonumf64_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+	   mmux_flonumf128_t:		mmux_flonumf128_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+	   mmux_flonumf32x_t:		mmux_flonumf32x_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+	   mmux_flonumf64x_t:		mmux_flonumf64x_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+	   mmux_flonumf128x_t:		mmux_flonumf128x_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+	   mmux_flonumd32_t:		mmux_flonumd32_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+	   mmux_flonumd64_t:		mmux_flonumd64_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+	   mmux_flonumd128_t:		mmux_flonumd128_constant_$1,		\
+]]])m4_dnl
+	   mmux_flonumcfl_t:		mmux_flonumcfl_constant_$1,		\
+	   mmux_flonumcdb_t:		mmux_flonumcdb_constant_$1,		\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
+	   mmux_flonumcldb_t:		mmux_flonumcldb_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
+	   mmux_flonumcf32_t:		mmux_flonumcf32_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
+	   mmux_flonumcf64_t:		mmux_flonumcf64_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
+	   mmux_flonumcf128_t:		mmux_flonumcf128_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
+	   mmux_flonumcf32x_t:		mmux_flonumcf32x_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
+	   mmux_flonumcf64x_t:		mmux_flonumcf64x_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
+	   mmux_flonumcf128x_t:		mmux_flonumcf128x_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
+	   mmux_flonumcd32_t:		mmux_flonumcd32_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
+	   mmux_flonumcd64_t:		mmux_flonumcd64_constant_$1,		\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
+	   mmux_flonumcd128_t:		mmux_flonumcd128_constant_$1,		\
+]]])m4_dnl
+	   mmux_sint8_t:		mmux_sint8_constant_$1,			\
+	   mmux_uint8_t:		mmux_uint8_constant_$1,			\
+	   mmux_sint16_t:		mmux_sint16_constant_$1,		\
+	   mmux_uint16_t:		mmux_uint16_constant_$1,		\
+	   mmux_sint32_t:		mmux_sint32_constant_$1,		\
+	   mmux_uint32_t:		mmux_uint32_constant_$1,		\
+	   mmux_sint64_t:		mmux_sint64_constant_$1,		\
+	   mmux_uint64_t:		mmux_uint64_constant_$1,		\
+	   mmux_byte_t:			mmux_byte_constant_$1,			\
+	   mmux_octet_t:		mmux_octet_constant_$1,			\
+           mmux_ssize_t:		mmux_ssize_constant_$1,			\
+           mmux_usize_t:		mmux_usize_constant_$1,			\
+           mmux_sintmax_t:		mmux_sintmax_constant_$1,		\
+           mmux_uintmax_t:		mmux_uintmax_constant_$1,		\
+           mmux_sintptr_t:		mmux_sintptr_constant_$1,		\
+           mmux_uintptr_t:		mmux_uintptr_constant_$1,		\
+           mmux_mode_t:			mmux_mode_constant_$1,			\
+           mmux_off_t:			mmux_off_constant_$1,			\
+           mmux_pid_t:			mmux_pid_constant_$1,			\
+           mmux_uid_t:			mmux_uid_constant_$1,			\
+           mmux_gid_t:			mmux_gid_constant_$1,			\
+           mmux_ptrdiff_t:		mmux_ptrdiff_constant_$1,		\
+           mmux_wchar_t:		mmux_wchar_constant_$1,			\
+           mmux_wint_t:			mmux_wint_constant_$1,			\
+           mmux_time_t:			mmux_time_constant_$1,			\
+           mmux_socklen_t:		mmux_socklen_constant_$1,		\
+           mmux_rlim_t:			mmux_rlim_constant_$1,			\
+           mmux_ino_t:			mmux_ino_constant_$1,			\
+           mmux_dev_t:			mmux_dev_constant_$1,			\
+           mmux_nlink_t:		mmux_nlink_constant_$1,			\
+           mmux_blkcnt_t:		mmux_blkcnt_constant_$1)())
+]]])
+
+m4_divert(0)m4_dnl
+
+DEFINE_CONSTANT_GENERIC_MACRO([[[zero]]])
+DEFINE_CONSTANT_GENERIC_MACRO([[[one]]])
+
+
+/** --------------------------------------------------------------------
+ ** Done.
+ ** ----------------------------------------------------------------- */
+
 
 /* end of file */

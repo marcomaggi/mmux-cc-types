@@ -90,13 +90,24 @@ DEFINE_STANDARD_FLONUMD_CONSTANTS(128)
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION]]],
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION]]],
 [[[mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_$2 (void)
 {
   return (mmux_standard_flonumcd$1_t) {
     .re = mmux_standard_flonumd$1_constant_$2(),
     .im = mmux_standard_flonumd$1_constant_zero(),
+  };
+}]]])
+
+m4_define([[[DEFINE_STANDARD_FLONUMCD_CPLX_CONSTANT_INLINE_FUNCTION]]],
+[[[mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_constant_$2 (void)
+{
+  return (mmux_standard_flonumcd$1_t) {
+    .re = mmux_standard_flonumd$1_constant_$2(),
+    .im = mmux_standard_flonumd$1_constant_$2(),
   };
 }]]])
 
@@ -108,13 +119,23 @@ mmux_standard_flonumcd$1_constant_$2_$3_infinity (void)
 					      mmux_standard_flonumd$1_constant_$3_infinity());
 }]]])
 
+m4_define([[[DEFINE_STANDARD_FLONUMCD_ZERO_CONSTANT_INLINE_FUNCTION]]],[[[m4_dnl
+mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
+mmux_standard_flonumcd$1_constant_$2_$3_zero (void)
+{
+  return mmux_standard_flonumcd$1_rectangular(mmux_standard_flonumd$1_constant_$2_zero(),
+					      mmux_standard_flonumd$1_constant_$3_zero());
+}]]])
+
 m4_define([[[DEFINE_STANDARD_FLONUMCD_CONSTANTS]]],[[[m4_dnl
-DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	zero)
-DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one)
-DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	two)
-DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	ten)
-DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one_half)
-DEFINE_STANDARD_FLONUMCD_CONSTANT_INLINE_FUNCTION($1,	one_third)
+DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION($1,	zero)
+DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION($1,	one)
+DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION($1,	two)
+DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION($1,	ten)
+DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION($1,	one_half)
+DEFINE_STANDARD_FLONUMCD_REAL_CONSTANT_INLINE_FUNCTION($1,	one_third)
+DEFINE_STANDARD_FLONUMCD_CPLX_CONSTANT_INLINE_FUNCTION($1,	maximum)
+DEFINE_STANDARD_FLONUMCD_CPLX_CONSTANT_INLINE_FUNCTION($1,	minimum)
 
 mmux_cc_types_inline_decl mmux_standard_flonumcd$1_t
 mmux_standard_flonumcd$1_constant_imag (void)
@@ -137,6 +158,11 @@ DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	positiv
 DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
 DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
 DEFINE_STANDARD_FLONUMCD_INFINITY_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
+
+DEFINE_STANDARD_FLONUMCD_ZERO_CONSTANT_INLINE_FUNCTION($1,	positive,	positive)
+DEFINE_STANDARD_FLONUMCD_ZERO_CONSTANT_INLINE_FUNCTION($1,	positive,	negative)
+DEFINE_STANDARD_FLONUMCD_ZERO_CONSTANT_INLINE_FUNCTION($1,	negative,	positive)
+DEFINE_STANDARD_FLONUMCD_ZERO_CONSTANT_INLINE_FUNCTION($1,	negative,	negative)
 ]]])
 m4_divert(0)m4_dnl
 DEFINE_STANDARD_FLONUMCD_CONSTANTS(32)

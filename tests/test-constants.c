@@ -49,6 +49,16 @@ test_constant_maximum (void)
     dprintf(2,"\n");							\
   }
 
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)						\
+  {									\
+    auto	op  = mmux_## STEM ## _constant_maximum();		\
+    assert(mmux_## STEM ## _is_positive(op));				\
+    dprintf(2,"\nmaximum(%s) = ", #STEM);				\
+    mmux_##STEM##_dprintf(2, op);					\
+    dprintf(2,"\n");							\
+  }
+
   DOIT_FOR_EXACT_INTEGER(pointer);
   DOIT_FOR_EXACT_INTEGER(char);
   DOIT_FOR_EXACT_INTEGER(schar);
@@ -97,6 +107,8 @@ test_constant_maximum (void)
   DOIT_FOR_EXACT_INTEGER(nlink);
   DOIT_FOR_EXACT_INTEGER(blkcnt);
 
+/* ------------------------------------------------------------------ */
+
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
@@ -129,6 +141,42 @@ test_constant_maximum (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
   DOIT_FOR_FLONUM(flonumd128);
 #endif
+
+/* ------------------------------------------------------------------ */
+
+  DOIT_FOR_FLONUMC(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FOR_FLONUMC(flonumcldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FOR_FLONUMC(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FOR_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FOR_FLONUMC(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FOR_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FOR_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_FLONUMC(flonumcf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_FLONUMC(flonumcd128);
+#endif
+
   dprintf(2, " DONE.\n\n");
 }
 
@@ -171,6 +219,18 @@ test_constant_minimum (void)
     mmux_##STEM##_dprintf(2, op);					\
     dprintf(2,"\n");							\
   }
+
+#undef  DOIT_FOR_FLONUMC
+#define DOIT_FOR_FLONUMC(STEM)						\
+  {									\
+    auto	op  = mmux_## STEM ## _constant_minimum();		\
+    assert(mmux_## STEM ## _is_negative(op));				\
+    dprintf(2,"\nminimum(%s) = ", #STEM);				\
+    mmux_##STEM##_dprintf(2, op);					\
+    dprintf(2,"\n");							\
+  }
+
+/* ------------------------------------------------------------------ */
 
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(pointer);
 #ifdef MMUX_CC_TYPES_CHAR_IS_UNSIGNED
@@ -225,6 +285,8 @@ test_constant_minimum (void)
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(nlink);
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(blkcnt);
 
+/* ------------------------------------------------------------------ */
+
   DOIT_FOR_FLONUM(flonumfl);
   DOIT_FOR_FLONUM(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
@@ -257,6 +319,42 @@ test_constant_minimum (void)
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD128
   DOIT_FOR_FLONUM(flonumd128);
 #endif
+
+/* ------------------------------------------------------------------ */
+
+  DOIT_FOR_FLONUMC(flonumcfl);
+  DOIT_FOR_FLONUMC(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DOIT_FOR_FLONUMC(flonumcldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DOIT_FOR_FLONUMC(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DOIT_FOR_FLONUMC(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DOIT_FOR_FLONUMC(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DOIT_FOR_FLONUMC(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DOIT_FOR_FLONUMC(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DOIT_FOR_FLONUMC(flonumcf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DOIT_FOR_FLONUMC(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DOIT_FOR_FLONUMC(flonumcd64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
+  DOIT_FOR_FLONUMC(flonumcd128);
+#endif
+
   dprintf(2, " DONE.\n\n");
 }
 
@@ -273,31 +371,47 @@ test_constant_zero (void)
 #undef  DOIT_FOR_EXACT_INTEGER
 #define DOIT_FOR_EXACT_INTEGER(STEM)			    \
   {							    \
-    auto	op  = mmux_ ## STEM ## _constant_zero();    \
+    auto	op1 = mmux_ ## STEM ## _constant_zero();    \
+    auto	op2 = mmux_ctype_constant_zero(op1);	    \
     auto	rop = mmux_ ## STEM ## _literal(0);	    \
-    assert(mmux_ ## STEM ## _equal(op, rop));		    \
+    assert(mmux_ ## STEM ## _equal(op1, rop));		    \
+    assert(mmux_ ## STEM ## _equal(op2, rop));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUM
 #define DOIT_FOR_FLONUM(STEM)				    \
   {							    \
-    auto	op  = mmux_## STEM ## _constant_zero();	    \
+    auto	op1  = mmux_## STEM ## _constant_zero();    \
+    auto	op2 = mmux_ctype_constant_zero(op1);	    \
     auto	rop = mmux_## STEM ## _literal(0.0);	    \
-    assert(mmux_## STEM ## _equal(op, rop));		    \
+    assert(mmux_## STEM ## _equal(op1, rop));		    \
+    assert(mmux_## STEM ## _equal(op2, rop));		    \
     dprintf(2," %s,", #STEM);				    \
   }
 
 #undef  DOIT_FOR_FLONUMC
 #define DOIT_FOR_FLONUMC(STEM)						\
   {									\
-    auto	op  = mmux_## STEM ## _constant_zero();			\
+    auto	op1 = mmux_## STEM ## _constant_zero();			\
+    auto	op2 = mmux_ctype_constant_zero(op1);			\
     auto	rop = mmux_## STEM ## _rectangular_literal(0.0,0.0);	\
-    assert(mmux_## STEM ## _equal(op, rop));				\
+    assert(mmux_## STEM ## _equal(op1, rop));				\
+    assert(mmux_## STEM ## _equal(op2, rop));				\
     dprintf(2," %s,", #STEM);						\
   }
 
-  DOIT_FOR_EXACT_INTEGER(pointer);
+/* ------------------------------------------------------------------ */
+
+  {
+    auto	op = mmux_pointer_constant_zero();
+    auto	rop = mmux_pointer_literal(0);
+    assert(mmux_pointer_equal(op, rop));
+    dprintf(2," %s,", "pointer");
+  }
+
+/* ------------------------------------------------------------------ */
+
   DOIT_FOR_EXACT_INTEGER(char);
   DOIT_FOR_EXACT_INTEGER(schar);
   DOIT_FOR_EXACT_INTEGER(uchar);

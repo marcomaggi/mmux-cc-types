@@ -990,6 +990,12 @@ DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 #define mmux_ctype_add_to_variable(VARNAME,VALUE)	((VARNAME) = mmux_ctype_add((VARNAME),(VALUE)))
 #define mmux_ctype_sub_from_variable(VARNAME,VALUE)	((VARNAME) = mmux_ctype_sub((VARNAME),(VALUE)))
 
+#define mmux_ctype_incr_variable(VARNAME)	\
+     ((VARNAME) = mmux_ctype_add((VARNAME),(mmux_ctype_constant_one(VALUE))))
+
+#define mmux_ctype_decr_variable(VARNAME)	\
+     ((VARNAME) = mmux_ctype_sub((VARNAME),(mmux_ctype_constant_one(VALUE))))
+
 
 /** --------------------------------------------------------------------
  ** Done.
