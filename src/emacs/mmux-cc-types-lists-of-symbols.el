@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-09-26 07:27:43 marco>
+;; Time-stamp: <2025-09-26 07:29:18 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -456,6 +456,11 @@
 (mmux-cc-type-define-integer-list time)
 (mmux-cc-type-define-integer-list socklen)
 (mmux-cc-type-define-integer-list rlim)
+
+(mmux-cc-type-define-integer-list ino)
+(mmux-cc-type-define-integer-list dev)
+(mmux-cc-type-define-integer-list nlink)
+(mmux-cc-type-define-integer-list blkcnt)
 
 (mmux-cc-type-define-flonum-list flonumfl)
 (mmux-cc-type-define-flonum-list flonumdb)
