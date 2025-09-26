@@ -77,20 +77,20 @@ DEFINE_TEST_SPRINTER_FUNCTION(uintmax,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(sintptr,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(uintptr,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(ptrdiff,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(mode,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_mode,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(off,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(pid,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(uid,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(gid,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_pid,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_uid,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_gid,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(wchar,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(wint,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(time,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(socklen,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(rlim,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(ino,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(dev,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(nlink,		123,	"123")
-DEFINE_TEST_SPRINTER_FUNCTION(blkcnt,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_time,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_socklen,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_rlim,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_ino,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_dev,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_nlink,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(libc_blkcnt,		123,	"123")
 
 
 /** --------------------------------------------------------------------
@@ -642,13 +642,13 @@ test_sprint_with_base_ptrdiff (void)
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_mode (void)
+test_sprint_with_base_libc_mode (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(mode,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(mode,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(mode,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_mode,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_mode,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_mode,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
@@ -666,37 +666,37 @@ test_sprint_with_base_off (void)
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_pid (void)
+test_sprint_with_base_libc_pid (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(pid,	 +123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(pid,	+1234,	10,	"+1234");
-    DOIT_FOR_THIS_NUMBER(pid,	-1234,	10,	"-1234");
-    DOIT_FOR_THIS_NUMBER(pid,	+123,	16,	"+7B");
-    DOIT_FOR_THIS_NUMBER(pid,	-123,	16,	"-7B");
+    DOIT_FOR_THIS_NUMBER(libc_pid,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_pid,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(libc_pid,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(libc_pid,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_pid,	-123,	16,	"-7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_uid (void)
+test_sprint_with_base_libc_uid (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(uid,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(uid,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(uid,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_uid,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_uid,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_uid,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_gid (void)
+test_sprint_with_base_libc_gid (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(gid,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(gid,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(gid,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_gid,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_gid,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_gid,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
@@ -725,81 +725,81 @@ test_sprint_with_base_wint (void)
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_time (void)
+test_sprint_with_base_libc_time (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(time,	 +123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(time,	+1234,	10,	"+1234");
-    DOIT_FOR_THIS_NUMBER(time,	-1234,	10,	"-1234");
-    DOIT_FOR_THIS_NUMBER(time,	+123,	16,	"+7B");
-    DOIT_FOR_THIS_NUMBER(time,	-123,	16,	"-7B");
+    DOIT_FOR_THIS_NUMBER(libc_time,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_time,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(libc_time,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(libc_time,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_time,	-123,	16,	"-7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_socklen (void)
+test_sprint_with_base_libc_socklen (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(socklen,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(socklen,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(socklen,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_socklen,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_socklen,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_socklen,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_rlim (void)
+test_sprint_with_base_libc_rlim (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(rlim,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(rlim,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(rlim,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_rlim,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_rlim,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_rlim,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_ino (void)
+test_sprint_with_base_libc_ino (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(ino,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(ino,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(ino,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_ino,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_ino,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_ino,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_dev (void)
+test_sprint_with_base_libc_dev (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(dev,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(dev,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(dev,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_dev,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_dev,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_dev,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_nlink (void)
+test_sprint_with_base_libc_nlink (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(nlink,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(nlink,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(nlink,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_nlink,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_nlink,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_nlink,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
 static void
-test_sprint_with_base_blkcnt (void)
+test_sprint_with_base_libc_blkcnt (void)
 {
   dprintf(2, "%s: running test", __func__);
   {
-    DOIT_FOR_THIS_NUMBER(blkcnt,	  3,	10,	"+3");
-    DOIT_FOR_THIS_NUMBER(blkcnt,	123,	10,	"+123");
-    DOIT_FOR_THIS_NUMBER(blkcnt,	123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(libc_blkcnt,	  3,	10,	"+3");
+    DOIT_FOR_THIS_NUMBER(libc_blkcnt,	123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(libc_blkcnt,	123,	16,	"+7B");
   }
   dprintf(2, " DONE\n");
 }
@@ -848,21 +848,21 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_sintptr();		}
   if (1) {	test_sprint_uintptr();		}
   if (1) {	test_sprint_ptrdiff();		}
-  if (1) {	test_sprint_mode();		}
+  if (1) {	test_sprint_libc_mode();		}
   if (1) {	test_sprint_off();		}
-  if (1) {	test_sprint_pid();		}
-  if (1) {	test_sprint_uid();		}
-  if (1) {	test_sprint_gid();		}
+  if (1) {	test_sprint_libc_pid();		}
+  if (1) {	test_sprint_libc_uid();		}
+  if (1) {	test_sprint_libc_gid();		}
   if (1) {	test_sprint_wchar();		}
   if (1) {	test_sprint_wint();		}
-  if (1) {	test_sprint_time();		}
-  if (1) {	test_sprint_socklen();		}
-  if (1) {	test_sprint_rlim();		}
+  if (1) {	test_sprint_libc_time();		}
+  if (1) {	test_sprint_libc_socklen();		}
+  if (1) {	test_sprint_libc_rlim();		}
 
-  if (1) {	test_sprint_ino();		}
-  if (1) {	test_sprint_dev();		}
-  if (1) {	test_sprint_nlink();		}
-  if (1) {	test_sprint_blkcnt();		}
+  if (1) {	test_sprint_libc_ino();		}
+  if (1) {	test_sprint_libc_dev();		}
+  if (1) {	test_sprint_libc_nlink();		}
+  if (1) {	test_sprint_libc_blkcnt();		}
 
   if (1) {	test_sprint_flonumfl();		}
   if (1) {	test_sprint_flonumdb();		}
@@ -971,21 +971,21 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_with_base_sintptr();	}
   if (1) {	test_sprint_with_base_uintptr();	}
   if (1) {	test_sprint_with_base_ptrdiff();	}
-  if (1) {	test_sprint_with_base_mode();		}
+  if (1) {	test_sprint_with_base_libc_mode();		}
   if (1) {	test_sprint_with_base_off();		}
-  if (1) {	test_sprint_with_base_pid();		}
-  if (1) {	test_sprint_with_base_uid();		}
-  if (1) {	test_sprint_with_base_gid();		}
+  if (1) {	test_sprint_with_base_libc_pid();		}
+  if (1) {	test_sprint_with_base_libc_uid();		}
+  if (1) {	test_sprint_with_base_libc_gid();		}
   if (1) {	test_sprint_with_base_wchar();		}
   if (1) {	test_sprint_with_base_wint();		}
-  if (1) {	test_sprint_with_base_time();		}
-  if (1) {	test_sprint_with_base_socklen();	}
-  if (1) {	test_sprint_with_base_rlim();		}
+  if (1) {	test_sprint_with_base_libc_time();		}
+  if (1) {	test_sprint_with_base_libc_socklen();	}
+  if (1) {	test_sprint_with_base_libc_rlim();		}
 
-  if (1) {	test_sprint_with_base_ino();		}
-  if (1) {	test_sprint_with_base_dev();		}
-  if (1) {	test_sprint_with_base_nlink();		}
-  if (1) {	test_sprint_with_base_blkcnt();		}
+  if (1) {	test_sprint_with_base_libc_ino();		}
+  if (1) {	test_sprint_with_base_libc_dev();		}
+  if (1) {	test_sprint_with_base_libc_nlink();		}
+  if (1) {	test_sprint_with_base_libc_blkcnt();		}
 
   exit(EXIT_SUCCESS);
 }

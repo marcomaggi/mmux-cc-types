@@ -81,9 +81,9 @@ test_ctype_is_signed (void)
   DOIT(ptrdiff,	true);
   DOIT(wchar,	true);
   DOIT(wint,	false);
-  DOIT(time,	true);
-  DOIT(socklen,	false);
-  DOIT(rlim,	false);
+  DOIT(libc_time,	true);
+  DOIT(libc_socklen,	false);
+  DOIT(libc_rlim,	false);
 
 /* ------------------------------------------------------------------ */
 
@@ -220,9 +220,9 @@ test_ctype_is_unsigned (void)
   DOIT(ptrdiff,	false);
   DOIT(wchar,	false);
   DOIT(wint,	true);
-  DOIT(time,	false);
-  DOIT(socklen,	true);
-  DOIT(rlim,	true);
+  DOIT(libc_time,	false);
+  DOIT(libc_socklen,	true);
+  DOIT(libc_rlim,	true);
 
 /* ------------------------------------------------------------------ */
 
@@ -355,9 +355,9 @@ test_ctype_is_exact_integer (void)
   DOIT(ptrdiff,	true);
   DOIT(wchar,	true);
   DOIT(wint,	true);
-  DOIT(time,	true);
-  DOIT(socklen,	true);
-  DOIT(rlim,	true);
+  DOIT(libc_time,	true);
+  DOIT(libc_socklen,	true);
+  DOIT(libc_rlim,	true);
 
 /* ------------------------------------------------------------------ */
 
@@ -490,9 +490,9 @@ test_ctype_is_real_number (void)
   DOIT(ptrdiff,	true);
   DOIT(wchar,	true);
   DOIT(wint,	true);
-  DOIT(time,	true);
-  DOIT(socklen,	true);
-  DOIT(rlim,	true);
+  DOIT(libc_time,	true);
+  DOIT(libc_socklen,	true);
+  DOIT(libc_rlim,	true);
 
 /* ------------------------------------------------------------------ */
 
@@ -625,9 +625,9 @@ test_ctype_is_complex_number (void)
   DOIT(ptrdiff,	false);
   DOIT(wchar,	false);
   DOIT(wint,	false);
-  DOIT(time,	false);
-  DOIT(socklen,	false);
-  DOIT(rlim,	false);
+  DOIT(libc_time,	false);
+  DOIT(libc_socklen,	false);
+  DOIT(libc_rlim,	false);
 
 /* ------------------------------------------------------------------ */
 
@@ -760,9 +760,9 @@ test_ctype_is_flonumc (void)
   DOIT(ptrdiff,	false);
   DOIT(wchar,	false);
   DOIT(wint,	false);
-  DOIT(time,	false);
-  DOIT(socklen,	false);
-  DOIT(rlim,	false);
+  DOIT(libc_time,	false);
+  DOIT(libc_socklen,	false);
+  DOIT(libc_rlim,	false);
 
 /* ------------------------------------------------------------------ */
 
@@ -895,9 +895,9 @@ test_ctype_is_flonum (void)
   DOIT(ptrdiff,	false);
   DOIT(wchar,	false);
   DOIT(wint,	false);
-  DOIT(time,	false);
-  DOIT(socklen,	false);
-  DOIT(rlim,	false);
+  DOIT(libc_time,	false);
+  DOIT(libc_socklen,	false);
+  DOIT(libc_rlim,	false);
 
 /* ------------------------------------------------------------------ */
 

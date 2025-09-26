@@ -137,17 +137,17 @@ DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[sintmax]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[uintmax]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[sintptr]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[uintptr]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[mode]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_mode]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[off]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[pid]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[uid]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[gid]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_pid]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_uid]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_gid]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[ptrdiff]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[wchar]]])
 DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[wint]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[time]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[socklen]]])
-DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[rlim]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_time]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_socklen]]])
+DEFINE_STANDARD_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_rlim]]])
 
 
 /** --------------------------------------------------------------------
@@ -217,7 +217,7 @@ DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[off]]])
 DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[ptrdiff]]])
 DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[wchar]]])
 DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[wint]]])
-DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[time]]])
+DEFINE_EXACT_INTEGER_ARITHMETICS_INLINE_FUNCTIONS([[[libc_time]]])
 
 
 /** --------------------------------------------------------------------
@@ -564,7 +564,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_libc_time_t:			mmux_libc_time_$1)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
@@ -671,7 +671,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_libc_time_t:			mmux_libc_time_$1)(VALUE))
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
@@ -779,7 +779,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_libc_time_t:			mmux_libc_time_$1)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
@@ -854,7 +854,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_libc_time_t:			mmux_libc_time_$1)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */
@@ -969,7 +969,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_libc_time_t:		mmux_libc_time_$1)(VALUE))
 ]]]) m4_dnl
 
 /* ------------------------------------------------------------------ */

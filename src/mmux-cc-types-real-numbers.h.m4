@@ -81,7 +81,7 @@ DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[off]]])
 DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[ptrdiff]]])
 DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[wchar]]])
 DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[wint]]])
-DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[time]]])
+DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[libc_time]]])
 
 
 /** --------------------------------------------------------------------
@@ -243,7 +243,7 @@ DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[off]]])
 DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[ptrdiff]]])
 DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[wchar]]])
 DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[wint]]])
-DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[time]]])
+DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[libc_time]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -561,7 +561,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_sign,		\
            mmux_wchar_t:		mmux_wchar_sign,		\
            mmux_wint_t:			mmux_wint_sign,			\
-           mmux_time_t:			mmux_time_sign,			\
+           mmux_libc_time_t:			mmux_libc_time_sign,			\
 	    \
 	   mmux_flonumfl_t:		mmux_flonumfl_sign,		\
 	   mmux_flonumdb_t:		mmux_flonumdb_sign,		\

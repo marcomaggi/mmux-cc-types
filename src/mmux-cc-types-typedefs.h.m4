@@ -66,27 +66,27 @@ typedef uint64_t		mmux_standard_uint64_t;
 typedef mmux_standard_sint8_t	mmux_standard_byte_t;
 typedef mmux_standard_uint8_t	mmux_standard_octet_t;
 
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t	mmux_standard_ssize_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_USIZE[[[]]]_t	mmux_standard_usize_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTMAX[[[]]]_t	mmux_standard_sintmax_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTMAX[[[]]]_t	mmux_standard_uintmax_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTPTR[[[]]]_t	mmux_standard_sintptr_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTPTR[[[]]]_t	mmux_standard_uintptr_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_MODE[[[]]]_t	mmux_standard_mode_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_OFF[[[]]]_t	mmux_standard_off_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PID[[[]]]_t	mmux_standard_pid_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UID[[[]]]_t	mmux_standard_uid_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_GID[[[]]]_t	mmux_standard_gid_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t	mmux_standard_ptrdiff_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t	mmux_standard_wchar_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t	mmux_standard_wint_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t	mmux_standard_time_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN[[[]]]_t	mmux_standard_socklen_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_RLIM[[[]]]_t	mmux_standard_rlim_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_INO[[[]]]_t	mmux_standard_ino_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_DEV[[[]]]_t	mmux_standard_dev_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_NLINK[[[]]]_t	mmux_standard_nlink_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_BLKCNT[[[]]]_t	mmux_standard_blkcnt_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SSIZE[[[]]]_t		mmux_standard_ssize_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_USIZE[[[]]]_t		mmux_standard_usize_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTMAX[[[]]]_t		mmux_standard_sintmax_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTMAX[[[]]]_t		mmux_standard_uintmax_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_SINTPTR[[[]]]_t		mmux_standard_sintptr_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_UINTPTR[[[]]]_t		mmux_standard_uintptr_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_MODE[[[]]]_t		mmux_standard_libc_mode_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_OFF[[[]]]_t		mmux_standard_off_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_PID[[[]]]_t		mmux_standard_libc_pid_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_UID[[[]]]_t		mmux_standard_libc_uid_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_GID[[[]]]_t		mmux_standard_libc_gid_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t		mmux_standard_ptrdiff_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t		mmux_standard_wchar_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t		mmux_standard_wint_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_TIME[[[]]]_t		mmux_standard_libc_time_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN[[[]]]_t	mmux_standard_libc_socklen_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM[[[]]]_t		mmux_standard_libc_rlim_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO[[[]]]_t		mmux_standard_libc_ino_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_DEV[[[]]]_t		mmux_standard_libc_dev_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_NLINK[[[]]]_t		mmux_standard_libc_nlink_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_BLKCNT[[[]]]_t	mmux_standard_libc_blkcnt_t;
 
 typedef float				mmux_standard_flonumfl_t;
 typedef double				mmux_standard_flonumdb_t;
@@ -188,21 +188,21 @@ DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTMA
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintmax,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTMAX]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(sintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPTR]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uintptr,	[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(mode,	[[[MMUX_CC_TYPES_STEM_ALIAS_MODE]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_mode,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_MODE]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(off,	[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(pid,	[[[MMUX_CC_TYPES_STEM_ALIAS_PID]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(uid,	[[[MMUX_CC_TYPES_STEM_ALIAS_UID]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(gid,	[[[MMUX_CC_TYPES_STEM_ALIAS_GID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_pid,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_PID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_uid,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_UID]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_gid,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_GID]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ptrdiff,	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wchar,	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_SOCKLEN]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_RLIM]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ino,	[[[MMUX_CC_TYPES_STEM_ALIAS_INO]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(dev,	[[[MMUX_CC_TYPES_STEM_ALIAS_DEV]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(nlink,	[[[MMUX_CC_TYPES_STEM_ALIAS_NLINK]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(blkcnt,	[[[MMUX_CC_TYPES_STEM_ALIAS_BLKCNT]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_time,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_TIME]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_ino,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_dev,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_DEV]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_nlink,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_NLINK]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_blkcnt,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_BLKCNT]]])
 
 /* ------------------------------------------------------------------ */
 
@@ -359,22 +359,22 @@ typedef struct mmux_sintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sin
 typedef struct mmux_uintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UINTMAX;	}     mmux_uintmax_t;
 typedef struct mmux_sintptr_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTPTR;	}     mmux_sintptr_t;
 typedef struct mmux_uintptr_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UINTPTR;	}     mmux_uintptr_t;
-typedef struct mmux_mode_t	{ MMUX_CC_TYPES_TYPE_ALIAS_MODE;	}     mmux_mode_t;
+typedef struct mmux_libc_mode_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_MODE;	}     mmux_libc_mode_t;
 typedef struct mmux_off_t	{ MMUX_CC_TYPES_TYPE_ALIAS_OFF;		}     mmux_off_t;
-typedef struct mmux_pid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_PID;		}     mmux_pid_t;
-typedef struct mmux_uid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UID;		}     mmux_uid_t;
-typedef struct mmux_gid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_GID;		}     mmux_gid_t;
+typedef struct mmux_libc_pid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_PID;		}     mmux_libc_pid_t;
+typedef struct mmux_libc_uid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_UID;		}     mmux_libc_uid_t;
+typedef struct mmux_libc_gid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_GID;		}     mmux_libc_gid_t;
 typedef struct mmux_ptrdiff_t	{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
 typedef struct mmux_wchar_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
 typedef struct mmux_wint_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
-typedef struct mmux_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
-typedef struct mmux_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SOCKLEN;	}     mmux_socklen_t;
-typedef struct mmux_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_RLIM;	}     mmux_rlim_t;
+typedef struct mmux_libc_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_TIME;	}     mmux_libc_time_t;
+typedef struct mmux_libc_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_SOCKLEN;	}     mmux_libc_socklen_t;
+typedef struct mmux_libc_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_RLIM;	}     mmux_libc_rlim_t;
 
-typedef struct mmux_ino_t	{ MMUX_CC_TYPES_TYPE_ALIAS_INO;		}     mmux_ino_t;
-typedef struct mmux_dev_t	{ MMUX_CC_TYPES_TYPE_ALIAS_DEV;		}     mmux_dev_t;
-typedef struct mmux_nlink_t	{ MMUX_CC_TYPES_TYPE_ALIAS_NLINK;	}     mmux_nlink_t;
-typedef struct mmux_blkcnt_t	{ MMUX_CC_TYPES_TYPE_ALIAS_BLKCNT;	}     mmux_blkcnt_t;
+typedef struct mmux_libc_ino_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_INO;		}     mmux_libc_ino_t;
+typedef struct mmux_libc_dev_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_DEV;		}     mmux_libc_dev_t;
+typedef struct mmux_libc_nlink_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_NLINK;	}     mmux_libc_nlink_t;
+typedef struct mmux_libc_blkcnt_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_BLKCNT;	}     mmux_libc_blkcnt_t;
 
 
 /** --------------------------------------------------------------------
@@ -462,21 +462,21 @@ DEFINE_TYPE_MAKERS(sintmax)
 DEFINE_TYPE_MAKERS(uintmax)
 DEFINE_TYPE_MAKERS(sintptr)
 DEFINE_TYPE_MAKERS(uintptr)
-DEFINE_TYPE_MAKERS(mode)
+DEFINE_TYPE_MAKERS(libc_mode)
 DEFINE_TYPE_MAKERS(off)
-DEFINE_TYPE_MAKERS(pid)
-DEFINE_TYPE_MAKERS(uid)
-DEFINE_TYPE_MAKERS(gid)
+DEFINE_TYPE_MAKERS(libc_pid)
+DEFINE_TYPE_MAKERS(libc_uid)
+DEFINE_TYPE_MAKERS(libc_gid)
 DEFINE_TYPE_MAKERS(ptrdiff)
 DEFINE_TYPE_MAKERS(wchar)
 DEFINE_TYPE_MAKERS(wint)
-DEFINE_TYPE_MAKERS(time)
-DEFINE_TYPE_MAKERS(socklen)
-DEFINE_TYPE_MAKERS(rlim)
-DEFINE_TYPE_MAKERS(ino)
-DEFINE_TYPE_MAKERS(dev)
-DEFINE_TYPE_MAKERS(nlink)
-DEFINE_TYPE_MAKERS(blkcnt)
+DEFINE_TYPE_MAKERS(libc_time)
+DEFINE_TYPE_MAKERS(libc_socklen)
+DEFINE_TYPE_MAKERS(libc_rlim)
+DEFINE_TYPE_MAKERS(libc_ino)
+DEFINE_TYPE_MAKERS(libc_dev)
+DEFINE_TYPE_MAKERS(libc_nlink)
+DEFINE_TYPE_MAKERS(libc_blkcnt)
 
 
 /** --------------------------------------------------------------------
@@ -537,21 +537,21 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[sintmax]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[uintmax]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[sintptr]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[uintptr]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[mode]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_mode]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[off]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[pid]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[uid]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[gid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_pid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_uid]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_gid]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[ptrdiff]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[wchar]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[wint]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[time]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[socklen]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[rlim]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[ino]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[dev]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[nlink]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[blkcnt]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_time]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_socklen]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_rlim]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_ino]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_dev]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_nlink]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[libc_blkcnt]]])
 
 DEFINE_PROTOTYPES_TYPEDEFS([[[flonumfl]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[flonumdb]]])

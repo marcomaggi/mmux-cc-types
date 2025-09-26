@@ -346,12 +346,12 @@ test_sprint_ptrdiff (void)
   DOIT_VALUE(ptrdiff,mmux_ptrdiff_constant_maximum());
 }
 static void
-test_sprint_mode (void)
+test_sprint_libc_mode (void)
 {
-  DOIT(mode,"0");
-  DOIT(mode,"123");
-  DOIT_VALUE(mode,mmux_mode_constant_minimum());
-  DOIT_VALUE(mode,mmux_mode_constant_maximum());
+  DOIT(libc_mode,"0");
+  DOIT(libc_mode,"123");
+  DOIT_VALUE(libc_mode,mmux_libc_mode_constant_minimum());
+  DOIT_VALUE(libc_mode,mmux_libc_mode_constant_maximum());
 }
 static void
 test_sprint_off (void)
@@ -362,28 +362,28 @@ test_sprint_off (void)
   DOIT_VALUE(off,mmux_off_constant_maximum());
 }
 static void
-test_sprint_pid (void)
+test_sprint_libc_pid (void)
 {
-  DOIT(pid,"0");
-  DOIT(pid,"123");
-  DOIT_VALUE(pid,mmux_pid_constant_minimum());
-  DOIT_VALUE(pid,mmux_pid_constant_maximum());
+  DOIT(libc_pid,"0");
+  DOIT(libc_pid,"123");
+  DOIT_VALUE(libc_pid,mmux_libc_pid_constant_minimum());
+  DOIT_VALUE(libc_pid,mmux_libc_pid_constant_maximum());
 }
 static void
-test_sprint_uid (void)
+test_sprint_libc_uid (void)
 {
-  DOIT(uid,"0");
-  DOIT(uid,"123");
-  DOIT_VALUE(uid,mmux_uid_constant_minimum());
-  DOIT_VALUE(uid,mmux_uid_constant_maximum());
+  DOIT(libc_uid,"0");
+  DOIT(libc_uid,"123");
+  DOIT_VALUE(libc_uid,mmux_libc_uid_constant_minimum());
+  DOIT_VALUE(libc_uid,mmux_libc_uid_constant_maximum());
 }
 static void
-test_sprint_gid (void)
+test_sprint_libc_gid (void)
 {
-  DOIT(gid,"0");
-  DOIT(gid,"123");
-  DOIT_VALUE(gid,mmux_gid_constant_minimum());
-  DOIT_VALUE(gid,mmux_gid_constant_maximum());
+  DOIT(libc_gid,"0");
+  DOIT(libc_gid,"123");
+  DOIT_VALUE(libc_gid,mmux_libc_gid_constant_minimum());
+  DOIT_VALUE(libc_gid,mmux_libc_gid_constant_maximum());
 }
 static void
 test_sprint_wchar (void)
@@ -402,60 +402,60 @@ test_sprint_wint (void)
   DOIT_VALUE(wint,mmux_wint_constant_maximum());
 }
 static void
-test_sprint_time (void)
+test_sprint_libc_time (void)
 {
-  DOIT(time,"0");
-  DOIT(time,"123");
-  DOIT_VALUE(time,mmux_time_constant_minimum());
-  DOIT_VALUE(time,mmux_time_constant_maximum());
+  DOIT(libc_time,"0");
+  DOIT(libc_time,"123");
+  DOIT_VALUE(libc_time,mmux_libc_time_constant_minimum());
+  DOIT_VALUE(libc_time,mmux_libc_time_constant_maximum());
 }
 static void
-test_sprint_socklen (void)
+test_sprint_libc_socklen (void)
 {
-  DOIT(socklen,"0");
-  DOIT(socklen,"123");
-  DOIT_VALUE(socklen,mmux_socklen_constant_minimum());
-  DOIT_VALUE(socklen,mmux_socklen_constant_maximum());
+  DOIT(libc_socklen,"0");
+  DOIT(libc_socklen,"123");
+  DOIT_VALUE(libc_socklen,mmux_libc_socklen_constant_minimum());
+  DOIT_VALUE(libc_socklen,mmux_libc_socklen_constant_maximum());
 }
 static void
-test_sprint_rlim (void)
+test_sprint_libc_rlim (void)
 {
-  DOIT(rlim,"0");
-  DOIT(rlim,"123");
-  DOIT_VALUE(rlim,mmux_rlim_constant_minimum());
-  DOIT_VALUE(rlim,mmux_rlim_constant_maximum());
+  DOIT(libc_rlim,"0");
+  DOIT(libc_rlim,"123");
+  DOIT_VALUE(libc_rlim,mmux_libc_rlim_constant_minimum());
+  DOIT_VALUE(libc_rlim,mmux_libc_rlim_constant_maximum());
 }
 static void
-test_sprint_ino (void)
+test_sprint_libc_ino (void)
 {
-  DOIT(ino,"0");
-  DOIT(ino,"123");
-  DOIT_VALUE(ino,mmux_ino_constant_minimum());
-  DOIT_VALUE(ino,mmux_ino_constant_maximum());
+  DOIT(libc_ino,"0");
+  DOIT(libc_ino,"123");
+  DOIT_VALUE(libc_ino,mmux_libc_ino_constant_minimum());
+  DOIT_VALUE(libc_ino,mmux_libc_ino_constant_maximum());
 }
 static void
-test_sprint_dev (void)
+test_sprint_libc_dev (void)
 {
-  DOIT(dev,"0");
-  DOIT(dev,"123");
-  DOIT_VALUE(dev,mmux_dev_constant_minimum());
-  DOIT_VALUE(dev,mmux_dev_constant_maximum());
+  DOIT(libc_dev,"0");
+  DOIT(libc_dev,"123");
+  DOIT_VALUE(libc_dev,mmux_libc_dev_constant_minimum());
+  DOIT_VALUE(libc_dev,mmux_libc_dev_constant_maximum());
 }
 static void
-test_sprint_nlink (void)
+test_sprint_libc_nlink (void)
 {
-  DOIT(nlink,"0");
-  DOIT(nlink,"123");
-  DOIT_VALUE(nlink,mmux_nlink_constant_minimum());
-  DOIT_VALUE(nlink,mmux_nlink_constant_maximum());
+  DOIT(libc_nlink,"0");
+  DOIT(libc_nlink,"123");
+  DOIT_VALUE(libc_nlink,mmux_libc_nlink_constant_minimum());
+  DOIT_VALUE(libc_nlink,mmux_libc_nlink_constant_maximum());
 }
 static void
-test_sprint_blkcnt (void)
+test_sprint_libc_blkcnt (void)
 {
-  DOIT(blkcnt,"0");
-  DOIT(blkcnt,"123");
-  DOIT_VALUE(blkcnt,mmux_blkcnt_constant_minimum());
-  DOIT_VALUE(blkcnt,mmux_blkcnt_constant_maximum());
+  DOIT(libc_blkcnt,"0");
+  DOIT(libc_blkcnt,"123");
+  DOIT_VALUE(libc_blkcnt,mmux_libc_blkcnt_constant_minimum());
+  DOIT_VALUE(libc_blkcnt,mmux_libc_blkcnt_constant_maximum());
 }
 
 
@@ -782,20 +782,20 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_sintptr();		}
   if (1) {	test_sprint_uintptr();		}
   if (1) {	test_sprint_ptrdiff();		}
-  if (1) {	test_sprint_mode();		}
+  if (1) {	test_sprint_libc_mode();	}
   if (1) {	test_sprint_off();		}
-  if (1) {	test_sprint_pid();		}
-  if (1) {	test_sprint_uid();		}
-  if (1) {	test_sprint_gid();		}
+  if (1) {	test_sprint_libc_pid();		}
+  if (1) {	test_sprint_libc_uid();		}
+  if (1) {	test_sprint_libc_gid();		}
   if (1) {	test_sprint_wchar();		}
   if (1) {	test_sprint_wint();		}
-  if (1) {	test_sprint_time();		}
-  if (1) {	test_sprint_socklen();		}
-  if (1) {	test_sprint_rlim();		}
-  if (1) {	test_sprint_ino();		}
-  if (1) {	test_sprint_dev();		}
-  if (1) {	test_sprint_nlink();		}
-  if (1) {	test_sprint_blkcnt();		}
+  if (1) {	test_sprint_libc_time();		}
+  if (1) {	test_sprint_libc_socklen();		}
+  if (1) {	test_sprint_libc_rlim();		}
+  if (1) {	test_sprint_libc_ino();		}
+  if (1) {	test_sprint_libc_dev();		}
+  if (1) {	test_sprint_libc_nlink();		}
+  if (1) {	test_sprint_libc_blkcnt();		}
 
   if (1) {	test_sprint_flonumfl();		}
   if (1) {	test_sprint_flonumdb();		}

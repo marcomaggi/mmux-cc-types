@@ -271,20 +271,20 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{sintptr}, type stem
 @cindex @code{uintptr}, type stem
 @cindex @code{ptrdiff}, type stem
-@cindex @code{mode}, type stem
+@cindex @code{libc_mode}, type stem
 @cindex @code{off}, type stem
-@cindex @code{pid}, type stem
-@cindex @code{uid}, type stem
-@cindex @code{gid}, type stem
+@cindex @code{libc_pid}, type stem
+@cindex @code{libc_uid}, type stem
+@cindex @code{libc_gid}, type stem
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
-@cindex @code{time}, type stem
-@cindex @code{socklen}, type stem
-@cindex @code{rlim}, type stem
-@cindex @code{ino}, type stem
-@cindex @code{dev}, type stem
-@cindex @code{nlink}, type stem
-@cindex @code{blkcnt}, type stem
+@cindex @code{libc_time}, type stem
+@cindex @code{libc_socklen}, type stem
+@cindex @code{libc_rlim}, type stem
+@cindex @code{libc_ino}, type stem
+@cindex @code{libc_dev}, type stem
+@cindex @code{libc_nlink}, type stem
+@cindex @code{libc_blkcnt}, type stem
 
 @cindex @code{flonumfl}, type stem
 @cindex @code{flonumdb}, type stem
@@ -322,8 +322,8 @@ package--configuration time.  This package relies on the availability of the ext
 The following word definitions just alias the corresponding C language type; such uniform names are
 useful when using preprocessor macros to generate code.
 
-If @value{PACKAGE} supports a type: it blindly implements all the possible operations for it, even
-when it looks like an operation does not make much sense.  A type is a type.
+If @value{PACKAGE} supports a type: it blindly implements many of the possible operations for it,
+even when it looks like an operation does not make much sense.  A type is a type.
 
 @c ------------------------------------------------------------------------
 
@@ -379,21 +379,21 @@ it is an alias for @code{@value{\ALIAS\}}.
 @MmuxDefineAliasedTypeStem{sintptr, intptr_t,ALIASSINTPTR}
 @MmuxDefineAliasedTypeStem{uintptr, uintptr_t,ALIASUINTPTR}
 @MmuxDefineAliasedTypeStem{ptrdiff, ptrdiff_t,ALIASPTRDIFF}
-@MmuxDefineAliasedTypeStem{mode, mode_t,ALIASMODE}
+@MmuxDefineAliasedTypeStem{libc_mode, libc_mode_t,ALIASMODE}
 @MmuxDefineAliasedTypeStem{off, off_t,ALIASOFF}
-@MmuxDefineAliasedTypeStem{pid, pid_t,ALIASPID}
-@MmuxDefineAliasedTypeStem{uid, uid_t,ALIASUID}
-@MmuxDefineAliasedTypeStem{gid, gid_t,ALIASGID}
+@MmuxDefineAliasedTypeStem{libc_pid, libc_pid_t,ALIASPID}
+@MmuxDefineAliasedTypeStem{libc_uid, libc_uid_t,ALIASUID}
+@MmuxDefineAliasedTypeStem{libc_gid, libc_gid_t,ALIASGID}
 @MmuxDefineAliasedTypeStem{wchar, wchar_t,ALIASWCHAR}
 @MmuxDefineAliasedTypeStem{wint, wint_t,ALIASWINT}
-@MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
-@MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
-@MmuxDefineAliasedTypeStem{rlim, rlim_t,ALIASRLIM}
-@MmuxDefineAliasedTypeStem{socklen, socklen_t,ALIASSOCKLEN}
-@MmuxDefineAliasedTypeStem{ino, ino_t,ALIASINO}
-@MmuxDefineAliasedTypeStem{dev, dev_t,ALIASDEV}
-@MmuxDefineAliasedTypeStem{nlink, nlink_t,ALIASNLINK}
-@MmuxDefineAliasedTypeStem{blkcnt, blkcnt_t,ALIASBLKCNT}
+@MmuxDefineAliasedTypeStem{libc_time, libc_time_t,ALIASTIME}
+@MmuxDefineAliasedTypeStem{libc_socklen, libc_socklen_t,ALIASSOCKLEN}
+@MmuxDefineAliasedTypeStem{libc_rlim, libc_rlim_t,ALIASRLIM}
+@MmuxDefineAliasedTypeStem{libc_socklen, libc_socklen_t,ALIASSOCKLEN}
+@MmuxDefineAliasedTypeStem{libc_ino, libc_ino_t,ALIASINO}
+@MmuxDefineAliasedTypeStem{libc_dev, libc_dev_t,ALIASDEV}
+@MmuxDefineAliasedTypeStem{libc_nlink, libc_nlink_t,ALIASNLINK}
+@MmuxDefineAliasedTypeStem{libc_blkcnt, libc_blkcnt_t,ALIASBLKCNT}
 
 @MmuxDefineTypeStem{flonumfl,float}
 @MmuxDefineTypeStem{flonumdb,flonumdb}
@@ -660,21 +660,21 @@ type is supported.
 @cindex @code{sintptr}, type stem
 @cindex @code{uintptr}, type stem
 @cindex @code{ptrdiff}, type stem
-@cindex @code{mode}, type stem
+@cindex @code{libc_mode}, type stem
 @cindex @code{off}, type stem
-@cindex @code{pid}, type stem
-@cindex @code{uid}, type stem
-@cindex @code{gid}, type stem
+@cindex @code{libc_pid}, type stem
+@cindex @code{libc_uid}, type stem
+@cindex @code{libc_gid}, type stem
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
-@cindex @code{time}, type stem
-@cindex @code{socklen}, type stem
-@cindex @code{rlim}, type stem
+@cindex @code{libc_time}, type stem
+@cindex @code{libc_socklen}, type stem
+@cindex @code{libc_rlim}, type stem
 
-@cindex @code{ino}, type stem
-@cindex @code{dev}, type stem
-@cindex @code{nlink}, type stem
-@cindex @code{blkcnt}, type stem
+@cindex @code{libc_ino}, type stem
+@cindex @code{libc_dev}, type stem
+@cindex @code{libc_nlink}, type stem
+@cindex @code{libc_blkcnt}, type stem
 
 @cindex @code{asciizp}, type stem
 @cindex @code{asciizpp}, type stem
@@ -684,8 +684,9 @@ type is supported.
 @cindex @code{asciizcppp}, type stem
 
 We use the following type definitions as aliases and placeholders for the corresponding C language
-type; the type name is composed from a ``stem'': a single word representing the name of the type.
-Such uniform names are useful when using preprocessor macros to generate code.
+type; the type name is composed from a ``stem'': a single word (@samp{uint32}) or double word
+(@samp{libc_pid}) representing the name of the type.  Such uniform names are useful when using
+preprocessor macros to generate code.
 
 The definitions of some data structures leverage the @gnu{} C Compiler extension
 @option{-fplan9-extensions} as follows:
@@ -876,20 +877,20 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedefForAliasedType{sintptr,         intptr_t,       @value{ALIASSINTPTR}}
 @MmuxDefineCAliasTypedefForAliasedType{uintptr,         uintptr_t,      @value{ALIASUINTPTR}}
 @MmuxDefineCAliasTypedefForAliasedType{ptrdiff,         ptrdiff_t,      @value{ALIASPTRDIFF}}
-@MmuxDefineCAliasTypedefForAliasedType{mode,            mode_t,         @value{ALIASMODE}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_mode,            libc_mode_t,         @value{ALIASMODE}}
 @MmuxDefineCAliasTypedefForAliasedType{off,             off_t,          @value{ALIASOFF}}
-@MmuxDefineCAliasTypedefForAliasedType{pid,             pid_t,          @value{ALIASPID}}
-@MmuxDefineCAliasTypedefForAliasedType{uid,             uid_t,          @value{ALIASUID}}
-@MmuxDefineCAliasTypedefForAliasedType{gid,             gid_t,          @value{ALIASGID}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_pid,             libc_pid_t,          @value{ALIASPID}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_uid,             libc_uid_t,          @value{ALIASUID}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_gid,             libc_gid_t,          @value{ALIASGID}}
 @MmuxDefineCAliasTypedefForAliasedType{wchar,           wchar_t,        @value{ALIASWCHAR}}
 @MmuxDefineCAliasTypedefForAliasedType{wint,            wint_t,         @value{ALIASWINT}}
-@MmuxDefineCAliasTypedefForAliasedType{time,            time_t,         @value{ALIASTIME}}
-@MmuxDefineCAliasTypedefForAliasedType{socklen,         socklen_t,      @value{ALIASSOCKLEN}}
-@MmuxDefineCAliasTypedefForAliasedType{rlim,            rlim_t,         @value{ALIASRLIM}}
-@MmuxDefineCAliasTypedefForAliasedType{ino,             ino_t,          @value{ALIASINO}}
-@MmuxDefineCAliasTypedefForAliasedType{dev,             dev_t,          @value{ALIASDEV}}
-@MmuxDefineCAliasTypedefForAliasedType{nlink,           nlink_t,        @value{ALIASNLINK}}
-@MmuxDefineCAliasTypedefForAliasedType{blkcnt,          blkcnt_t,       @value{ALIASBLKCNT}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_time,            libc_time_t,         @value{ALIASTIME}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_socklen,         libc_socklen_t,      @value{ALIASSOCKLEN}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_rlim,            libc_rlim_t,         @value{ALIASRLIM}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_ino,             libc_ino_t,          @value{ALIASINO}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_dev,             libc_dev_t,          @value{ALIASDEV}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_nlink,           libc_nlink_t,        @value{ALIASNLINK}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_blkcnt,          libc_blkcnt_t,       @value{ALIASBLKCNT}}
 
 @MmuxDefineCAliasTypedefPart{flonumcfl,float}
 @MmuxDefineCAliasTypedefPart{flonumcdb,flonumdb}
@@ -1075,21 +1076,21 @@ mmux_standard_pointerc_literal(@var{ARG})
 @MmuxDefineLiteralMacroUnsignedInteger{uintmax}
 @MmuxDefineLiteralMacro{sintptr}
 @MmuxDefineLiteralMacroUnsignedInteger{uintptr}
-@MmuxDefineLiteralMacroUnsignedInteger{mode}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_mode}
 @MmuxDefineLiteralMacro{off}
-@MmuxDefineLiteralMacro{pid}
-@MmuxDefineLiteralMacroUnsignedInteger{uid}
-@MmuxDefineLiteralMacroUnsignedInteger{gid}
+@MmuxDefineLiteralMacro{libc_pid}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_uid}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_gid}
 @MmuxDefineLiteralMacro{ptrdiff}
 @MmuxDefineLiteralMacro{wchar}
 @MmuxDefineLiteralMacroUnsignedInteger{wint}
-@MmuxDefineLiteralMacro{time}
-@MmuxDefineLiteralMacroUnsignedInteger{socklen}
-@MmuxDefineLiteralMacroUnsignedInteger{rlim}
-@MmuxDefineLiteralMacroUnsignedInteger{ino}
-@MmuxDefineLiteralMacroUnsignedInteger{dev}
-@MmuxDefineLiteralMacroUnsignedInteger{nlink}
-@MmuxDefineLiteralMacroUnsignedInteger{blkcnt}
+@MmuxDefineLiteralMacro{libc_time}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_socklen}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_rlim}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_ino}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_dev}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_nlink}
+@MmuxDefineLiteralMacroUnsignedInteger{libc_blkcnt}
 
 @MmuxDefineLiteralMacroWithSuffix{flonumfl,F,0.123}
 @MmuxDefineLiteralMacro{flonumdb}
@@ -1143,7 +1144,7 @@ The @dfn{maker} functions are used as follows:
 auto    A = mmux_sint(123);
 auto    B = mmux_uint(123);
 auto    C = mmux_flonumldb(0.123);
-auto    D = mmux_mode(MMUX_LIBC_O_RDWR);
+auto    D = mmux_libc_mode(MMUX_LIBC_O_RDWR);
 
 auto    Z = mmux_sint_add(mmux_sint(123), mmux_sint(456));
 @end example
@@ -1246,20 +1247,20 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 @MmuxDefineCMacroMaker{sintptr}
 @MmuxDefineCMacroMaker{uintptr}
 @MmuxDefineCMacroMaker{ptrdiff}
-@MmuxDefineCMacroMaker{mode}
+@MmuxDefineCMacroMaker{libc_mode}
 @MmuxDefineCMacroMaker{off}
-@MmuxDefineCMacroMaker{pid}
-@MmuxDefineCMacroMaker{uid}
-@MmuxDefineCMacroMaker{gid}
+@MmuxDefineCMacroMaker{libc_pid}
+@MmuxDefineCMacroMaker{libc_uid}
+@MmuxDefineCMacroMaker{libc_gid}
 @MmuxDefineCMacroMaker{wchar}
 @MmuxDefineCMacroMaker{wint}
-@MmuxDefineCMacroMaker{time}
-@MmuxDefineCMacroMaker{socklen}
-@MmuxDefineCMacroMaker{rlim}
-@MmuxDefineCMacroMaker{ino}
-@MmuxDefineCMacroMaker{dev}
-@MmuxDefineCMacroMaker{nlink}
-@MmuxDefineCMacroMaker{blkcnt}
+@MmuxDefineCMacroMaker{libc_time}
+@MmuxDefineCMacroMaker{libc_socklen}
+@MmuxDefineCMacroMaker{libc_rlim}
+@MmuxDefineCMacroMaker{libc_ino}
+@MmuxDefineCMacroMaker{libc_dev}
+@MmuxDefineCMacroMaker{libc_nlink}
+@MmuxDefineCMacroMaker{libc_blkcnt}
 
 @MmuxDefineCMacroMaker{asciip}
 @MmuxDefineCMacroMaker{asciipp}
@@ -1399,21 +1400,21 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{sintptr}
 @MmuxDefineCFunctionSizeof{uintptr}
 @MmuxDefineCFunctionSizeof{ptrdiff}
-@MmuxDefineCFunctionSizeof{mode}
+@MmuxDefineCFunctionSizeof{libc_mode}
 @MmuxDefineCFunctionSizeof{off}
-@MmuxDefineCFunctionSizeof{pid}
-@MmuxDefineCFunctionSizeof{uid}
-@MmuxDefineCFunctionSizeof{gid}
+@MmuxDefineCFunctionSizeof{libc_pid}
+@MmuxDefineCFunctionSizeof{libc_uid}
+@MmuxDefineCFunctionSizeof{libc_gid}
 @MmuxDefineCFunctionSizeof{wchar}
 @MmuxDefineCFunctionSizeof{wint}
-@MmuxDefineCFunctionSizeof{time}
-@MmuxDefineCFunctionSizeof{socklen}
-@MmuxDefineCFunctionSizeof{rlim}
+@MmuxDefineCFunctionSizeof{libc_time}
+@MmuxDefineCFunctionSizeof{libc_socklen}
+@MmuxDefineCFunctionSizeof{libc_rlim}
 
-@MmuxDefineCFunctionSizeof{ino}
-@MmuxDefineCFunctionSizeof{dev}
-@MmuxDefineCFunctionSizeof{nlink}
-@MmuxDefineCFunctionSizeof{blkcnt}
+@MmuxDefineCFunctionSizeof{libc_ino}
+@MmuxDefineCFunctionSizeof{libc_dev}
+@MmuxDefineCFunctionSizeof{libc_nlink}
+@MmuxDefineCFunctionSizeof{libc_blkcnt}
 
 @c page
 @node constants limits
@@ -1509,20 +1510,20 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{sintptr}
 @MmuxDefineCFunctionMaximum{uintptr}
 @MmuxDefineCFunctionMaximum{ptrdiff}
-@MmuxDefineCFunctionMaximum{mode}
+@MmuxDefineCFunctionMaximum{libc_mode}
 @MmuxDefineCFunctionMaximum{off}
-@MmuxDefineCFunctionMaximum{pid}
-@MmuxDefineCFunctionMaximum{uid}
-@MmuxDefineCFunctionMaximum{gid}
+@MmuxDefineCFunctionMaximum{libc_pid}
+@MmuxDefineCFunctionMaximum{libc_uid}
+@MmuxDefineCFunctionMaximum{libc_gid}
 @MmuxDefineCFunctionMaximum{wchar}
 @MmuxDefineCFunctionMaximum{wint}
-@MmuxDefineCFunctionMaximum{time}
-@MmuxDefineCFunctionMaximum{socklen}
-@MmuxDefineCFunctionMaximum{rlim}
-@MmuxDefineCFunctionMaximum{ino}
-@MmuxDefineCFunctionMaximum{dev}
-@MmuxDefineCFunctionMaximum{nlink}
-@MmuxDefineCFunctionMaximum{blkcnt}
+@MmuxDefineCFunctionMaximum{libc_time}
+@MmuxDefineCFunctionMaximum{libc_socklen}
+@MmuxDefineCFunctionMaximum{libc_rlim}
+@MmuxDefineCFunctionMaximum{libc_ino}
+@MmuxDefineCFunctionMaximum{libc_dev}
+@MmuxDefineCFunctionMaximum{libc_nlink}
+@MmuxDefineCFunctionMaximum{libc_blkcnt}
 
 @c page
 @node constants flonum
@@ -1687,17 +1688,17 @@ Return a constant value corresponding to @cnull{}.
 @MmuxDefineExactConstantFunctions{uintmax}
 @MmuxDefineExactConstantFunctions{sintptr}
 @MmuxDefineExactConstantFunctions{uintptr}
-@MmuxDefineExactConstantFunctions{mode}
+@MmuxDefineExactConstantFunctions{libc_mode}
 @MmuxDefineExactConstantFunctions{off}
-@MmuxDefineExactConstantFunctions{pid}
-@MmuxDefineExactConstantFunctions{uid}
-@MmuxDefineExactConstantFunctions{gid}
+@MmuxDefineExactConstantFunctions{libc_pid}
+@MmuxDefineExactConstantFunctions{libc_uid}
+@MmuxDefineExactConstantFunctions{libc_gid}
 @MmuxDefineExactConstantFunctions{ptrdiff}
 @MmuxDefineExactConstantFunctions{wchar}
 @MmuxDefineExactConstantFunctions{wint}
-@MmuxDefineExactConstantFunctions{time}
-@MmuxDefineExactConstantFunctions{socklen}
-@MmuxDefineExactConstantFunctions{rlim}
+@MmuxDefineExactConstantFunctions{libc_time}
+@MmuxDefineExactConstantFunctions{libc_socklen}
+@MmuxDefineExactConstantFunctions{libc_rlim}
 
 @c page
 @node constants generic
@@ -1827,20 +1828,20 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{sintptr}
 @MmuxDefineCFunctionPredicate{uintptr}
 @MmuxDefineCFunctionPredicate{ptrdiff}
-@MmuxDefineCFunctionPredicate{mode}
+@MmuxDefineCFunctionPredicate{libc_mode}
 @MmuxDefineCFunctionPredicate{off}
-@MmuxDefineCFunctionPredicate{pid}
-@MmuxDefineCFunctionPredicate{uid}
-@MmuxDefineCFunctionPredicate{gid}
+@MmuxDefineCFunctionPredicate{libc_pid}
+@MmuxDefineCFunctionPredicate{libc_uid}
+@MmuxDefineCFunctionPredicate{libc_gid}
 @MmuxDefineCFunctionPredicate{wchar}
 @MmuxDefineCFunctionPredicate{wint}
-@MmuxDefineCFunctionPredicate{time}
-@MmuxDefineCFunctionPredicate{socklen}
-@MmuxDefineCFunctionPredicate{rlim}
-@MmuxDefineCFunctionPredicate{ino}
-@MmuxDefineCFunctionPredicate{dev}
-@MmuxDefineCFunctionPredicate{nlink}
-@MmuxDefineCFunctionPredicate{blkcnt}
+@MmuxDefineCFunctionPredicate{libc_time}
+@MmuxDefineCFunctionPredicate{libc_socklen}
+@MmuxDefineCFunctionPredicate{libc_rlim}
+@MmuxDefineCFunctionPredicate{libc_ino}
+@MmuxDefineCFunctionPredicate{libc_dev}
+@MmuxDefineCFunctionPredicate{libc_nlink}
+@MmuxDefineCFunctionPredicate{libc_blkcnt}
 
 @c page
 @node stringrep formats
@@ -2058,20 +2059,20 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{sintptr}
 @MmuxDefineCFunctionParser{uintptr}
 @MmuxDefineCFunctionParser{ptrdiff}
-@MmuxDefineCFunctionParser{mode}
+@MmuxDefineCFunctionParser{libc_mode}
 @MmuxDefineCFunctionParser{off}
-@MmuxDefineCFunctionParser{pid}
-@MmuxDefineCFunctionParser{uid}
-@MmuxDefineCFunctionParser{gid}
+@MmuxDefineCFunctionParser{libc_pid}
+@MmuxDefineCFunctionParser{libc_uid}
+@MmuxDefineCFunctionParser{libc_gid}
 @MmuxDefineCFunctionParser{wchar}
 @MmuxDefineCFunctionParser{wint}
-@MmuxDefineCFunctionParser{time}
-@MmuxDefineCFunctionParser{socklen}
-@MmuxDefineCFunctionParser{rlim}
-@MmuxDefineCFunctionParser{ino}
-@MmuxDefineCFunctionParser{dev}
-@MmuxDefineCFunctionParser{nlink}
-@MmuxDefineCFunctionParser{blkcnt}
+@MmuxDefineCFunctionParser{libc_time}
+@MmuxDefineCFunctionParser{libc_socklen}
+@MmuxDefineCFunctionParser{libc_rlim}
+@MmuxDefineCFunctionParser{libc_ino}
+@MmuxDefineCFunctionParser{libc_dev}
+@MmuxDefineCFunctionParser{libc_nlink}
+@MmuxDefineCFunctionParser{libc_blkcnt}
 
 @c page
 @node stringrep sprinters
@@ -2180,20 +2181,20 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{sintptr}
 @MmuxDefineCFunctionSprinter{uintptr}
 @MmuxDefineCFunctionSprinter{ptrdiff}
-@MmuxDefineCFunctionSprinter{mode}
+@MmuxDefineCFunctionSprinter{libc_mode}
 @MmuxDefineCFunctionSprinter{off}
-@MmuxDefineCFunctionSprinter{pid}
-@MmuxDefineCFunctionSprinter{uid}
-@MmuxDefineCFunctionSprinter{gid}
+@MmuxDefineCFunctionSprinter{libc_pid}
+@MmuxDefineCFunctionSprinter{libc_uid}
+@MmuxDefineCFunctionSprinter{libc_gid}
 @MmuxDefineCFunctionSprinter{wchar}
 @MmuxDefineCFunctionSprinter{wint}
-@MmuxDefineCFunctionSprinter{time}
-@MmuxDefineCFunctionSprinter{socklen}
-@MmuxDefineCFunctionSprinter{rlim}
-@MmuxDefineCFunctionSprinter{ino}
-@MmuxDefineCFunctionSprinter{dev}
-@MmuxDefineCFunctionSprinter{nlink}
-@MmuxDefineCFunctionSprinter{blkcnt}
+@MmuxDefineCFunctionSprinter{libc_time}
+@MmuxDefineCFunctionSprinter{libc_socklen}
+@MmuxDefineCFunctionSprinter{libc_rlim}
+@MmuxDefineCFunctionSprinter{libc_ino}
+@MmuxDefineCFunctionSprinter{libc_dev}
+@MmuxDefineCFunctionSprinter{libc_nlink}
+@MmuxDefineCFunctionSprinter{libc_blkcnt}
 
 @MmuxDefineCFunctionSprinter{flonumfl}
 @MmuxDefineCFunctionSprinter{flonumdb}
@@ -2370,20 +2371,20 @@ type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @MmuxDefineCFunctionExactIntegerSprinter{sintptr}
 @MmuxDefineCFunctionExactIntegerSprinter{uintptr}
 @MmuxDefineCFunctionExactIntegerSprinter{ptrdiff}
-@MmuxDefineCFunctionExactIntegerSprinter{mode}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_mode}
 @MmuxDefineCFunctionExactIntegerSprinter{off}
-@MmuxDefineCFunctionExactIntegerSprinter{pid}
-@MmuxDefineCFunctionExactIntegerSprinter{uid}
-@MmuxDefineCFunctionExactIntegerSprinter{gid}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_pid}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_uid}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_gid}
 @MmuxDefineCFunctionExactIntegerSprinter{wchar}
 @MmuxDefineCFunctionExactIntegerSprinter{wint}
-@MmuxDefineCFunctionExactIntegerSprinter{time}
-@MmuxDefineCFunctionExactIntegerSprinter{socklen}
-@MmuxDefineCFunctionExactIntegerSprinter{rlim}
-@MmuxDefineCFunctionExactIntegerSprinter{ino}
-@MmuxDefineCFunctionExactIntegerSprinter{dev}
-@MmuxDefineCFunctionExactIntegerSprinter{nlink}
-@MmuxDefineCFunctionExactIntegerSprinter{blkcnt}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_time}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_socklen}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_rlim}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_ino}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_dev}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_nlink}
+@MmuxDefineCFunctionExactIntegerSprinter{libc_blkcnt}
 
 @c page
 @node stringrep sprinters printing
@@ -2471,20 +2472,20 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionPrinters{sintptr}
 @MmuxDefineCFunctionPrinters{uintptr}
 @MmuxDefineCFunctionPrinters{ptrdiff}
-@MmuxDefineCFunctionPrinters{mode}
+@MmuxDefineCFunctionPrinters{libc_mode}
 @MmuxDefineCFunctionPrinters{off}
-@MmuxDefineCFunctionPrinters{pid}
-@MmuxDefineCFunctionPrinters{uid}
-@MmuxDefineCFunctionPrinters{gid}
+@MmuxDefineCFunctionPrinters{libc_pid}
+@MmuxDefineCFunctionPrinters{libc_uid}
+@MmuxDefineCFunctionPrinters{libc_gid}
 @MmuxDefineCFunctionPrinters{wchar}
 @MmuxDefineCFunctionPrinters{wint}
-@MmuxDefineCFunctionPrinters{time}
-@MmuxDefineCFunctionPrinters{socklen}
-@MmuxDefineCFunctionPrinters{rlim}
-@MmuxDefineCFunctionPrinters{ino}
-@MmuxDefineCFunctionPrinters{dev}
-@MmuxDefineCFunctionPrinters{nlink}
-@MmuxDefineCFunctionPrinters{blkcnt}
+@MmuxDefineCFunctionPrinters{libc_time}
+@MmuxDefineCFunctionPrinters{libc_socklen}
+@MmuxDefineCFunctionPrinters{libc_rlim}
+@MmuxDefineCFunctionPrinters{libc_ino}
+@MmuxDefineCFunctionPrinters{libc_dev}
+@MmuxDefineCFunctionPrinters{libc_nlink}
+@MmuxDefineCFunctionPrinters{libc_blkcnt}
 
 @MmuxDefineCFunctionPrinters{flonumfl}
 @MmuxDefineCFunctionPrinters{flonumdb}
@@ -2633,7 +2634,7 @@ the operands and result.
 @MmuxDefineExactIntegerSignFunctions{off}
 @MmuxDefineExactIntegerSignFunctions{wchar}
 @MmuxDefineExactIntegerSignFunctions{wint}
-@MmuxDefineExactIntegerSignFunctions{time}
+@MmuxDefineExactIntegerSignFunctions{libc_time}
 
 @MmuxDefineRealFlonumSignFunctions{flonumfl}
 @MmuxDefineRealFlonumSignFunctions{flonumdb}
@@ -3474,20 +3475,20 @@ placeholder for the type of the operand.
 @MmuxDefineTypePredicates{sintptr}
 @MmuxDefineTypePredicates{uintptr}
 @MmuxDefineTypePredicates{ptrdiff}
-@MmuxDefineTypePredicates{mode}
+@MmuxDefineTypePredicates{libc_mode}
 @MmuxDefineTypePredicates{off}
-@MmuxDefineTypePredicates{pid}
-@MmuxDefineTypePredicates{uid}
-@MmuxDefineTypePredicates{gid}
+@MmuxDefineTypePredicates{libc_pid}
+@MmuxDefineTypePredicates{libc_uid}
+@MmuxDefineTypePredicates{libc_gid}
 @MmuxDefineTypePredicates{wchar}
 @MmuxDefineTypePredicates{wint}
-@MmuxDefineTypePredicates{time}
-@MmuxDefineTypePredicates{socklen}
-@MmuxDefineTypePredicates{rlim}
-@MmuxDefineTypePredicates{ino}
-@MmuxDefineTypePredicates{dev}
-@MmuxDefineTypePredicates{nlink}
-@MmuxDefineTypePredicates{blkcnt}
+@MmuxDefineTypePredicates{libc_time}
+@MmuxDefineTypePredicates{libc_socklen}
+@MmuxDefineTypePredicates{libc_rlim}
+@MmuxDefineTypePredicates{libc_ino}
+@MmuxDefineTypePredicates{libc_dev}
+@MmuxDefineTypePredicates{libc_nlink}
+@MmuxDefineTypePredicates{libc_blkcnt}
 
 @MmuxDefineFlonumTypePredicates{flonumfl}
 @MmuxDefineFlonumTypePredicates{flonumdb}
@@ -3638,20 +3639,20 @@ operands.
 @MmuxDefineTypeComparisonExactFunction{sintptr}
 @MmuxDefineTypeComparisonExactFunction{uintptr}
 @MmuxDefineTypeComparisonExactFunction{ptrdiff}
-@MmuxDefineTypeComparisonExactFunction{mode}
+@MmuxDefineTypeComparisonExactFunction{libc_mode}
 @MmuxDefineTypeComparisonExactFunction{off}
-@MmuxDefineTypeComparisonExactFunction{pid}
-@MmuxDefineTypeComparisonExactFunction{uid}
-@MmuxDefineTypeComparisonExactFunction{gid}
+@MmuxDefineTypeComparisonExactFunction{libc_pid}
+@MmuxDefineTypeComparisonExactFunction{libc_uid}
+@MmuxDefineTypeComparisonExactFunction{libc_gid}
 @MmuxDefineTypeComparisonExactFunction{wchar}
 @MmuxDefineTypeComparisonExactFunction{wint}
-@MmuxDefineTypeComparisonExactFunction{time}
-@MmuxDefineTypeComparisonExactFunction{socklen}
-@MmuxDefineTypeComparisonExactFunction{rlim}
-@MmuxDefineTypeComparisonExactFunction{ino}
-@MmuxDefineTypeComparisonExactFunction{dev}
-@MmuxDefineTypeComparisonExactFunction{nlink}
-@MmuxDefineTypeComparisonExactFunction{blkcnt}
+@MmuxDefineTypeComparisonExactFunction{libc_time}
+@MmuxDefineTypeComparisonExactFunction{libc_socklen}
+@MmuxDefineTypeComparisonExactFunction{libc_rlim}
+@MmuxDefineTypeComparisonExactFunction{libc_ino}
+@MmuxDefineTypeComparisonExactFunction{libc_dev}
+@MmuxDefineTypeComparisonExactFunction{libc_nlink}
+@MmuxDefineTypeComparisonExactFunction{libc_blkcnt}
 
 @MmuxDefineTypeComparisonExactFunction{flonumfl}
 @MmuxDefineTypeComparisonExactFunction{flonumdb}
@@ -3765,20 +3766,20 @@ placeholder for the type of the operands and result.
 @MmuxDefineTypeComparisonMinMaxFunction{sintptr}
 @MmuxDefineTypeComparisonMinMaxFunction{uintptr}
 @MmuxDefineTypeComparisonMinMaxFunction{ptrdiff}
-@MmuxDefineTypeComparisonMinMaxFunction{mode}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_mode}
 @MmuxDefineTypeComparisonMinMaxFunction{off}
-@MmuxDefineTypeComparisonMinMaxFunction{pid}
-@MmuxDefineTypeComparisonMinMaxFunction{uid}
-@MmuxDefineTypeComparisonMinMaxFunction{gid}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_pid}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_uid}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_gid}
 @MmuxDefineTypeComparisonMinMaxFunction{wchar}
 @MmuxDefineTypeComparisonMinMaxFunction{wint}
-@MmuxDefineTypeComparisonMinMaxFunction{time}
-@MmuxDefineTypeComparisonMinMaxFunction{socklen}
-@MmuxDefineTypeComparisonMinMaxFunction{rlim}
-@MmuxDefineTypeComparisonMinMaxFunction{ino}
-@MmuxDefineTypeComparisonMinMaxFunction{dev}
-@MmuxDefineTypeComparisonMinMaxFunction{nlink}
-@MmuxDefineTypeComparisonMinMaxFunction{blkcnt}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_time}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_socklen}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_rlim}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_ino}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_dev}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_nlink}
+@MmuxDefineTypeComparisonMinMaxFunction{libc_blkcnt}
 
 @MmuxDefineTypeComparisonMinMaxFunction{flonumfl}
 @MmuxDefineTypeComparisonMinMaxFunction{flonumdb}
@@ -4209,7 +4210,7 @@ modulo, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{off}
 @MmuxDefineIntegerArithmeticsFunc{wchar}
 @MmuxDefineIntegerArithmeticsFunc{wint}
-@MmuxDefineIntegerArithmeticsFunc{time}
+@MmuxDefineIntegerArithmeticsFunc{libc_time}
 
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumfl}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumdb}
@@ -4762,20 +4763,20 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{sintptr}
 @MmuxDefineBitwiseFuncs{uintptr}
 @MmuxDefineBitwiseFuncs{ptrdiff}
-@MmuxDefineBitwiseFuncs{mode}
+@MmuxDefineBitwiseFuncs{libc_mode}
 @MmuxDefineBitwiseFuncs{off}
-@MmuxDefineBitwiseFuncs{pid}
-@MmuxDefineBitwiseFuncs{uid}
-@MmuxDefineBitwiseFuncs{gid}
+@MmuxDefineBitwiseFuncs{libc_pid}
+@MmuxDefineBitwiseFuncs{libc_uid}
+@MmuxDefineBitwiseFuncs{libc_gid}
 @MmuxDefineBitwiseFuncs{wchar}
 @MmuxDefineBitwiseFuncs{wint}
-@MmuxDefineBitwiseFuncs{time}
-@MmuxDefineBitwiseFuncs{socklen}
-@MmuxDefineBitwiseFuncs{rlim}
-@MmuxDefineBitwiseFuncs{ino}
-@MmuxDefineBitwiseFuncs{dev}
-@MmuxDefineBitwiseFuncs{nlink}
-@MmuxDefineBitwiseFuncs{blkcnt}
+@MmuxDefineBitwiseFuncs{libc_time}
+@MmuxDefineBitwiseFuncs{libc_socklen}
+@MmuxDefineBitwiseFuncs{libc_rlim}
+@MmuxDefineBitwiseFuncs{libc_ino}
+@MmuxDefineBitwiseFuncs{libc_dev}
+@MmuxDefineBitwiseFuncs{libc_nlink}
+@MmuxDefineBitwiseFuncs{libc_blkcnt}
 
 @c page
 @node generic
