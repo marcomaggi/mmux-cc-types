@@ -973,6 +973,56 @@ test_ctype_is_flonum (void)
 }
 
 
+static void
+test_ctype_add_to_variable (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+  {
+    auto	A = mmux_flonumdb(12.34);
+    auto	B = mmux_flonumdb(43.21);
+    auto	C = mmux_ctype_add(A, B);
+    mmux_ctype_add_to_variable(A, B);
+    if (mmux_ctype_not_equal(A,C)) {
+      dprintf(2, "%s: expected ctype_equal[%s]='", __func__, mmux_ctype_stem_name(A));
+      mmux_ctype_dprintf(2, C);
+      dprintf(2, "' got '");
+      mmux_ctype_dprintf(2, A);
+      dprintf(2, "'n");
+      exit(EXIT_FAILURE);
+    }
+    dprintf(2, " %s,", mmux_ctype_stem_name(A));
+  }
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
+static void
+test_ctype_sub_from_variable (void)
+{
+  dprintf(2, "running test: %s:", __func__);
+
+  {
+    auto	A = mmux_flonumdb(12.34);
+    auto	B = mmux_flonumdb(43.21);
+    auto	C = mmux_ctype_sub(A, B);
+    mmux_ctype_sub_from_variable(A, B);
+    if (mmux_ctype_not_equal(A,C)) {
+      dprintf(2, "%s: expected ctype_equal[%s]='", __func__, mmux_ctype_stem_name(A));
+      mmux_ctype_dprintf(2, C);
+      dprintf(2, "' got '");
+      mmux_ctype_dprintf(2, A);
+      dprintf(2, "'n");
+      exit(EXIT_FAILURE);
+    }
+    dprintf(2, " %s,", mmux_ctype_stem_name(A));
+  }
+
+  dprintf(2, " DONE.\n\n");
+}
+
+
 /** --------------------------------------------------------------------
  ** Let's go.
  ** ----------------------------------------------------------------- */
@@ -990,6 +1040,9 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_ctype_is_complex_number();	}
   if (1) {	test_ctype_is_flonum();		}
   if (1) {	test_ctype_is_flonumc();	}
+
+  if (1) {	test_ctype_add_to_variable();	}
+  if (1) {	test_ctype_sub_from_variable();	}
 
   exit(EXIT_SUCCESS);
 }

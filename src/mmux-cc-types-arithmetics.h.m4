@@ -987,6 +987,9 @@ DEFINE_BINARY_FUNCTION_FLONUM_NUMBERS_ONLY([[[remainder]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[incr]]])
 DEFINE_UNARY_FUNCTION_REAL_NUMBERS_ONLY([[[decr]]])
 
+#define mmux_ctype_add_to_variable(VARNAME,VALUE)	((VARNAME) = mmux_ctype_add((VARNAME),(VALUE)))
+#define mmux_ctype_sub_from_variable(VARNAME,VALUE)	((VARNAME) = mmux_ctype_sub((VARNAME),(VALUE)))
+
 
 /** --------------------------------------------------------------------
  ** Done.

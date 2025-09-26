@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-09-22 07:34:47 marco>
+;; Time-stamp: <2025-09-26 07:27:43 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -51,7 +51,9 @@
     "mmux_ctype_inv"
     "mmux_ctype_incr"
     "mmux_ctype_decr"
-    "mmux_ctype_absolute"))
+    "mmux_ctype_absolute"
+    "mmux_ctype_add_to_variable"
+    "mmux_ctype_sub_from_variable"))
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/bitwise
   '("mmux_ctype_bitwise_and"
