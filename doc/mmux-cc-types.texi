@@ -4167,6 +4167,7 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_inverse (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_absolute (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_modulo (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx mmux_\STEM\_t mmux_\STEM\_remainder (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,

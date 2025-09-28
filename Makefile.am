@@ -220,6 +220,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-constants.h.m4		\
 	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-mathematics.h.m4		\
+	src/mmux-cc-types-pointers-api.h.m4		\
 	src/mmux-cc-types-real-numbers.h.m4		\
 	src/mmux-cc-types-sign-predicates.h.m4		\
 	src/mmux-cc-types-stringrep.h.m4		\
@@ -247,6 +248,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
+	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
 	src/mmux-cc-types-sign-predicates.h		\
 	src/mmux-cc-types-stringrep.h			\
@@ -282,6 +284,7 @@ include_HEADERS			+= \
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
+	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
 	src/mmux-cc-types-sign-predicates.h		\
 	src/mmux-cc-types-stringrep.h
@@ -305,6 +308,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
+	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
 	src/mmux-cc-types-sign-predicates.h		\
 	src/mmux-cc-types-stringrep.h			\
@@ -354,6 +358,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-constants.h			\
 	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
+	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
 	src/mmux-cc-types-sign-predicates.h		\
 	src/mmux-cc-types-stringrep.h
@@ -380,6 +385,7 @@ check_PROGRAMS	= \
 	tests/test-literals			\
 	tests/test-mathematics			\
 	tests/test-parsers			\
+	tests/test-pointers-api			\
 	tests/test-real-numbers			\
 	tests/test-sign-predicates		\
 	tests/test-sprint			\
@@ -439,6 +445,9 @@ tests_test_comparison_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_generic_macros_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
 tests_test_generic_macros_LDADD		= $(mmux_cc_types_tests_ldadd)
+
+tests_test_pointers_api_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
+tests_test_pointers_api_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 
 #### interface to "make installcheck"

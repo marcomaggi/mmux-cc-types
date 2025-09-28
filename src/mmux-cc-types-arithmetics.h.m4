@@ -86,6 +86,13 @@ mmux_standard_$1_modulo (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
   return op1 % op2;
 }
 mmux_cc_types_inline_decl mmux_standard_$1_t
+mmux_standard_$1_remainder (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
+/* It is  the same  as "modulo".   It is  defined for  compatibility with  the flonum
+   API. */
+{
+  return op1 % op2;
+}
+mmux_cc_types_inline_decl mmux_standard_$1_t
 mmux_standard_$1_incr (mmux_standard_$1_t op)
 {
   return op + mmux_standard_$1_constant_one();
@@ -177,6 +184,7 @@ DEFINE_EXACT_INTEGER_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	mul)
 DEFINE_EXACT_INTEGER_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	div)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	inverse)
 DEFINE_EXACT_INTEGER_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	modulo)
+DEFINE_EXACT_INTEGER_ARITHMETIC_BINARY_INLINE_FUNCTION($1,	remainder)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	incr)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	decr)
 DEFINE_EXACT_INTEGER_ARITHMETIC_UNARY_INLINE_FUNCTION($1,	neg)
