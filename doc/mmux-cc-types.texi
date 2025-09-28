@@ -220,6 +220,7 @@ C language header files are installed under @code{$includedir}, for example:
 @menu
 * overview decimal::            Support for the @objtype{_DecimalN} types.
 * overview stems::              Specifying C language types with their stem.
+* overview typedefs::           Rationale of type definitions.
 * overview errors::             Error handling.
 * overview linking::            Linking code with the shared library.
 @end menu
@@ -442,6 +443,110 @@ Single--word specification of a C language type supported by this package.  It i
 non--standard C language type implementing complex floating--point numbers having
 @objtype{flonumd128} values as real and imaginary parts.
 @end deftp
+
+@c page
+@node overview typedefs
+@section Rationale of type definitions
+
+
+@value{PACKAGE} attempts to leverage the features of the standard language C23 in addition to some
+@gnu{} C Compiler extensions, like @option{-fplan9-extensions}.
+
+Many  standard data types are wrapped into a data structure as follows:
+
+@example
+typedef slong_t        mmux_standard_slong_t;
+
+typedef struct mmux_slong_t @{ mmux_standard_slong_t value; @} mmux_slong_t;
+@end example
+
+@noindent
+and the definitions of some derived data type is as follows:
+
+@example
+typedef struct mmux_ssize_t @{ mmux_@value{ALIASSSIZE}_t; @} mmux_ssize_t;
+@end example
+
+@noindent
+notice the anonymous field, which is a feature allowed by @option{-fplan9-extensions}; it means that
+a pointer to @objtype{mmux_ssize_t} is seen by the compiler as a pointer to
+@objtype{mmux_@value{ALIASSSIZE}_t} and also we can write:
+
+@example
+mmux_ssize_t    val = @{ .value = mmux_standard_ssize_literal(123) @};
+
+do_something_with(val.value);
+@end example
+
+@noindent
+because the field @code{value} of @objtype{mmux_@value{ALIASSSIZE}_t} is also seen as a field of
+@objtype{mmux_ssize_t}.  Regarding this coding example, notice that, to define a local variable, we
+can just write:
+
+@example
+auto    val = mmux_ssize_literal(123);
+
+do_something_with(val.value);
+@end example
+
+@noindent
+which is equivalent to the code above.
+
+Wrapping the standard types into data structures has consequences.
+
+@itemize
+@item
+It allows us to leverage C language's @code{_Generic} features to write generic macros; for example:
+
+@example
+auto    op1 = mmux_flonumd128_literal(0.123);
+auto    op2 = mmux_flonumd128_literal(0.456);
+auto    rop = mmux_ctype_add(op1, op2);
+
+mmux_ctype_dprintf(2, rop);
+@end example
+
+@noindent
+using the ``pointers @api{}'' this becomes:
+
+@example
+auto            op1 = mmux_flonumd128_literal(0.123);
+auto            op2 = mmux_flonumd128_literal(0.456);
+typeof(op1)     rop;
+
+mmux_ctype_add_p(&rop, &op1, &op2);
+mmux_ctype_dprintf_p(2, &rop);
+@end example
+
+@item
+It makes most of the code we write significantly more articulated than what we could have written
+using the standard types; in the experimental design of @value{PACKAGE} this is accepted up to a
+certain level of complexity.
+
+As a comparison paradigm, let's consider code using the @emph{Multiple Precision Floating--Point
+Reliable Library} (MPFR); with it we write code like:
+
+@example
+mpfr_t  op1;
+mpfr_t  op2;
+mpfr_t  rop;
+
+mpfr_init(op1);
+mpfr_init(op2);
+mpfr_init(rop);
+@{
+  mpfr_add(rop, op1, op2, MPFR_RNDN);
+  mpfr_printf("%f\n", rop);
+@}
+mpfr_clear(rop);
+mpfr_clear(op2);
+mpfr_clear(op1);
+@end example
+
+@noindent
+which is quite articulated.  If the design choices of @value{PACKAGE} make the code articulated but
+not more than how much it is using MPFR: it will be considered a success.
+@end itemize
 
 @c page
 @node overview errors
@@ -683,8 +788,11 @@ type is supported.
 @cindex @code{asciizcpp}, type stem
 @cindex @code{asciizcppp}, type stem
 
-We use the following type definitions as aliases and placeholders for the corresponding C language
-type; the type name is composed from a ``stem'': a single word (@samp{uint32}) or double word
+
+We use the following type definitions in place of the corresponding C language types, for details
+about the rational of such type definitions @ref{overview typedefs, Rationale of type definitions}.
+
+The type names are built around a ``stem'': a single word (@samp{uint32}) or double word
 (@samp{libc_pid}) representing the name of the type.  Such uniform names are useful when using
 preprocessor macros to generate code.
 
