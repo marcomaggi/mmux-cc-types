@@ -225,7 +225,6 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-stringrep.h.m4		\
 	\
 	src/mmux-cc-types-arithmetics.c.m4		\
-	src/mmux-cc-types-bitwise.c.m4			\
 	src/mmux-cc-types-comparison.c.m4		\
 	src/mmux-cc-types-complex-numbers.c.m4		\
 	src/mmux-cc-types-constants.c.m4		\
@@ -253,7 +252,6 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-stringrep.h			\
 	\
 	src/mmux-cc-types-arithmetics.c			\
-	src/mmux-cc-types-bitwise.c			\
 	src/mmux-cc-types-comparison.c			\
 	src/mmux-cc-types-complex-numbers.c		\
 	src/mmux-cc-types-constants.c			\
@@ -312,7 +310,6 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-stringrep.h			\
 	\
 	src/mmux-cc-types-arithmetics.c			\
-	src/mmux-cc-types-bitwise.c			\
 	src/mmux-cc-types-comparison.c			\
 	src/mmux-cc-types-complex-numbers.c		\
 	src/mmux-cc-types-constants.c			\
