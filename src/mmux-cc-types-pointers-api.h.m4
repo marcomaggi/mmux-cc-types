@@ -39,21 +39,21 @@ mmux_$1_$2_p (mmux_$1_t * rop)
 }]]])
 
 m4_define([[[DEFINE_UNARY_OPERATION]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t * op1)
+mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t const * op1)
 {
   *rop = mmux_$1_$2(*op1);
   return false;
 }]]])
 
 m4_define([[[DEFINE_BINARY_OPERATION]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t * op1, mmux_$1_t * op2)
+mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t const * op1, mmux_$1_t const * op2)
 {
   *rop = mmux_$1_$2(*op1, *op2);
   return false;
 }]]])
 
 m4_define([[[DEFINE_TERNARY_OPERATION]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t * op1, mmux_$1_t * op2, mmux_$1_t * op3)
+mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t const * op1, mmux_$1_t const * op2, mmux_$1_t const * op3)
 {
   *rop = mmux_$1_$2(*op1, *op2, *op3);
   return false;
@@ -61,24 +61,49 @@ mmux_$1_$2_p (mmux_$1_t * rop, mmux_$1_t * op1, mmux_$1_t * op2, mmux_$1_t * op3
 
 /* ------------------------------------------------------------------ */
 
+m4_define([[[DEFINE_UNARY_OPERATION_SLONG]]],[[[mmux_cc_types_inline_decl bool
+mmux_$1_$2_p (mmux_slong_t * rop, mmux_$1_t const * op1)
+{
+  *rop = mmux_$1_$2(*op1);
+  return false;
+}]]])
+
+m4_define([[[DEFINE_UNARY_OPERATION_SLLONG]]],[[[mmux_cc_types_inline_decl bool
+mmux_$1_$2_p (mmux_sllong_t * rop, mmux_$1_t const * op1)
+{
+  *rop = mmux_$1_$2(*op1);
+  return false;
+}]]])
+
+/* ------------------------------------------------------------------ */
+
 m4_define([[[DEFINE_UNARY_PREDICATE]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (bool * rop, mmux_$1_t * op1)
+mmux_$1_$2_p (bool * rop, mmux_$1_t const * op1)
 {
   *rop = mmux_$1_$2(*op1);
   return false;
 }]]])
 
 m4_define([[[DEFINE_BINARY_PREDICATE]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (bool * rop, mmux_$1_t * op1, mmux_$1_t * op2)
+mmux_$1_$2_p (bool * rop, mmux_$1_t const * op1, mmux_$1_t const * op2)
 {
   *rop = mmux_$1_$2(*op1, *op2);
   return false;
 }]]])
 
 m4_define([[[DEFINE_TERNARY_PREDICATE]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (bool * rop, mmux_$1_t * op1, mmux_$1_t * op2, mmux_$1_t * op3)
+mmux_$1_$2_p (bool * rop, mmux_$1_t const * op1, mmux_$1_t const * op2, mmux_$1_t const * op3)
 {
   *rop = mmux_$1_$2(*op1, *op2, *op3);
+  return false;
+}]]])
+
+/* ------------------------------------------------------------------ */
+
+m4_define([[[DEFINE_SINT_COMPARISON]]],[[[mmux_cc_types_inline_decl bool
+mmux_$1_$2_p (mmux_sint_t * rop, mmux_$1_t const * op1, mmux_$1_t const * op2)
+{
+  *rop = mmux_$1_$2(*op1, *op2);
   return false;
 }]]])
 
@@ -90,7 +115,7 @@ m4_divert(0)m4_dnl
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
-m4_define([[[DEFINE_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
+m4_define([[[DEFINE_PREDICATES]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
 DEFINE_UNARY_PREDICATE($1,	is_zero)
 DEFINE_UNARY_PREDICATE($1,	is_positive)
 DEFINE_UNARY_PREDICATE($1,	is_negative)
@@ -101,7 +126,7 @@ DEFINE_UNARY_PREDICATE($1,	is_finite)
 DEFINE_UNARY_PREDICATE($1,	is_nan)
 ]]])]]])
 
-m4_define([[[DEFINE_PREDICATES_FLONUM]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
+m4_define([[[DEFINE_PREDICATES_FLONUM]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
 DEFINE_UNARY_PREDICATE($1,	is_subnormal)
 DEFINE_UNARY_PREDICATE($1,	is_normal)
 ]]])]]])
@@ -228,12 +253,341 @@ DEFINE_PREDICATES_FLONUM([[[flonumcd128]]])
 
 
 /** --------------------------------------------------------------------
+ ** Comparison operations.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_COMPARISON_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_SINT_COMPARISON($1,	cmp)
+DEFINE_BINARY_PREDICATE($1,	equal)
+DEFINE_BINARY_PREDICATE($1,	not_equal)
+DEFINE_BINARY_PREDICATE($1,	greater)
+DEFINE_BINARY_PREDICATE($1,	less)
+DEFINE_BINARY_PREDICATE($1,	greater_equal)
+DEFINE_BINARY_PREDICATE($1,	less_equal)
+DEFINE_BINARY_OPERATION($1,	min)
+DEFINE_BINARY_OPERATION($1,	max)
+]]])]]])
+
+m4_define([[[DEFINE_COMPARISON_OPERATIONS_FLONUM]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_TERNARY_PREDICATE($1,	equal_absmargin)
+DEFINE_TERNARY_PREDICATE($1,	equal_relepsilon)
+]]])]]])
+
+m4_divert(0)m4_dnl
+
+DEFINE_COMPARISON_OPERATIONS([[[pointer]]])
+DEFINE_COMPARISON_OPERATIONS([[[char]]])
+DEFINE_COMPARISON_OPERATIONS([[[schar]]])
+DEFINE_COMPARISON_OPERATIONS([[[uchar]]])
+DEFINE_COMPARISON_OPERATIONS([[[sshort]]])
+DEFINE_COMPARISON_OPERATIONS([[[ushort]]])
+DEFINE_COMPARISON_OPERATIONS([[[sint]]])
+DEFINE_COMPARISON_OPERATIONS([[[uint]]])
+DEFINE_COMPARISON_OPERATIONS([[[slong]]])
+DEFINE_COMPARISON_OPERATIONS([[[ulong]]])
+DEFINE_COMPARISON_OPERATIONS([[[sllong]]])
+DEFINE_COMPARISON_OPERATIONS([[[ullong]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[sint8]]])
+DEFINE_COMPARISON_OPERATIONS([[[uint8]]])
+DEFINE_COMPARISON_OPERATIONS([[[sint16]]])
+DEFINE_COMPARISON_OPERATIONS([[[uint16]]])
+DEFINE_COMPARISON_OPERATIONS([[[sint32]]])
+DEFINE_COMPARISON_OPERATIONS([[[uint32]]])
+DEFINE_COMPARISON_OPERATIONS([[[sint64]]])
+DEFINE_COMPARISON_OPERATIONS([[[uint64]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[byte]]])
+DEFINE_COMPARISON_OPERATIONS([[[octet]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[ssize]]])
+DEFINE_COMPARISON_OPERATIONS([[[usize]]])
+DEFINE_COMPARISON_OPERATIONS([[[sintmax]]])
+DEFINE_COMPARISON_OPERATIONS([[[uintmax]]])
+DEFINE_COMPARISON_OPERATIONS([[[sintptr]]])
+DEFINE_COMPARISON_OPERATIONS([[[uintptr]]])
+DEFINE_COMPARISON_OPERATIONS([[[ptrdiff]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_mode]]])
+DEFINE_COMPARISON_OPERATIONS([[[off]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_pid]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_uid]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_gid]]])
+DEFINE_COMPARISON_OPERATIONS([[[wchar]]])
+DEFINE_COMPARISON_OPERATIONS([[[wint]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_time]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_socklen]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_rlim]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_ino]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_dev]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_nlink]]])
+DEFINE_COMPARISON_OPERATIONS([[[libc_blkcnt]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumfl]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumdb]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumldb]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumf32]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumf64]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumf128]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumf32x]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumf64x]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumf128x]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumd32]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumd64]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumcfl]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcdb]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcldb]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumcf32]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcf64]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcf128]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumcf32x]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcf64x]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcf128x]]])
+
+DEFINE_COMPARISON_OPERATIONS([[[flonumcd32]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcd64]]])
+DEFINE_COMPARISON_OPERATIONS([[[flonumcd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumfl]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumdb]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumldb]]])
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumf32]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumf64]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumf128]]])
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumf32x]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumf64x]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumf128x]]])
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumd32]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumd64]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcfl]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcdb]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcldb]]])
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcf32]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcf64]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcf128]]])
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcf32x]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcf64x]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcf128x]]])
+
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcd32]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcd64]]])
+DEFINE_COMPARISON_OPERATIONS_FLONUM([[[flonumcd128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Rounding and splitting floating-point numbers.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+m4_define([[[DEFINE_ROUNDING_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_UNARY_OPERATION($1,	ceil)
+DEFINE_UNARY_OPERATION($1,	floor)
+DEFINE_UNARY_OPERATION($1,	trunc)
+DEFINE_UNARY_OPERATION($1,	rint)
+DEFINE_UNARY_OPERATION($1,	nearbyint)
+DEFINE_UNARY_OPERATION($1,	round)
+DEFINE_UNARY_OPERATION($1,	roundeven)
+]]])]]])
+
+m4_define([[[DEFINE_ROUNDING_OPERATIONS_FLONUM]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_$1_modf_p (mmux_$1_t * rop, mmux_$1_t const * op1, mmux_$1_t * op2)
+{
+  *rop = mmux_$1_modf(*op1, op2);
+  return false;
+}
+DEFINE_UNARY_OPERATION_SLONG($1,	lrint)
+DEFINE_UNARY_OPERATION_SLONG($1,	lround)
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[sllong]]],[[[m4_dnl
+DEFINE_UNARY_OPERATION_SLLONG($1,	llrint)
+DEFINE_UNARY_OPERATION_SLLONG($1,	llround)
+]]])]]])]]])
+
+m4_divert(0)m4_dnl
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumfl]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumdb]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumldb]]])
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumf32]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumf64]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumf128]]])
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumf32x]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumf64x]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumf128x]]])
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumd32]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumd64]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumcfl]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcdb]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcldb]]])
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumcf32]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcf64]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcf128]]])
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumcf32x]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcf64x]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcf128x]]])
+
+DEFINE_ROUNDING_OPERATIONS([[[flonumcd32]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcd64]]])
+DEFINE_ROUNDING_OPERATIONS([[[flonumcd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumfl]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumdb]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumldb]]])
+
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumf32]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumf64]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumf128]]])
+
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumf32x]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumf64x]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumf128x]]])
+
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumd32]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumd64]]])
+DEFINE_ROUNDING_OPERATIONS_FLONUM([[[flonumd128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Complex number operations.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_COMPLEX_NUMBER_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_UNARY_OPERATION($1,	real_part)
+DEFINE_UNARY_OPERATION($1,	imag_part)
+DEFINE_UNARY_OPERATION($1,	argument)
+DEFINE_UNARY_OPERATION($1,	conjugate)
+]]])]]])
+
+m4_define([[[DEFINE_UNARY_OPERATION_CPLX_TO_REAL]]],[[[mmux_cc_types_inline_decl bool
+mmux_$1_$2_p (mmux_$1_part_t * rop, mmux_$1_t const * op1)
+{
+  *rop = mmux_$1_$2(*op1);
+  return false;
+}]]])
+
+m4_define([[[DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_UNARY_OPERATION_CPLX_TO_REAL($1,	real_part)
+DEFINE_UNARY_OPERATION_CPLX_TO_REAL($1,	imag_part)
+DEFINE_UNARY_OPERATION_CPLX_TO_REAL($1,	argument)
+DEFINE_UNARY_OPERATION($1,	conjugate)
+]]])]]])
+
+m4_divert(0)m4_dnl
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[char]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[schar]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uchar]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sshort]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[ushort]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sint]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uint]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[slong]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[ulong]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sllong]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[ullong]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sint8]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uint8]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sint16]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uint16]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sint32]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uint32]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sint64]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uint64]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[byte]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[octet]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[ssize]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[usize]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sintmax]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uintmax]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[sintptr]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uintptr]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[off]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[ptrdiff]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[wchar]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[wint]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumfl]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumdb]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumldb]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumf32]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumf64]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumf128]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumf32x]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumf64x]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumf128x]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumd32]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumd64]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcfl]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcdb]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcldb]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcf32]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcf64]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcf128]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcf32x]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcf64x]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcf128x]]])
+
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcd32]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcd64]]])
+DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC([[[flonumcd128]]])
+
+
+/** --------------------------------------------------------------------
  ** Arithemtics.
  ** ----------------------------------------------------------------- */
 
 m4_divert(-1)
 
-m4_define([[[DEFINE_ARITHMETIC_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
+m4_define([[[DEFINE_ARITHMETIC_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
 DEFINE_BINARY_OPERATION($1,	add)
 DEFINE_BINARY_OPERATION($1,	sub)
 DEFINE_BINARY_OPERATION($1,	mul)
@@ -245,9 +599,10 @@ DEFINE_UNARY_OPERATION($1,	incr)
 DEFINE_UNARY_OPERATION($1,	decr)
 DEFINE_UNARY_OPERATION($1,	neg)
 DEFINE_UNARY_OPERATION($1,	absolute)
+DEFINE_UNARY_OPERATION($1,	sign)
 ]]])]]])
 
-m4_define([[[DEFINE_ARITHMETIC_OPERATIONS_FLONUMC]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[
+m4_define([[[DEFINE_ARITHMETIC_OPERATIONS_FLONUMC]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
 DEFINE_BINARY_OPERATION($1,	add)
 DEFINE_BINARY_OPERATION($1,	sub)
 DEFINE_BINARY_OPERATION($1,	mul)
@@ -256,7 +611,7 @@ DEFINE_UNARY_OPERATION($1,	inverse)
 DEFINE_UNARY_OPERATION($1,	neg)
 
 mmux_cc_types_inline_decl bool
-mmux_$1_absolute_p (mmux_$1_part_t * rop, mmux_$1_t * op1)
+mmux_$1_absolute_p (mmux_$1_part_t * rop, mmux_$1_t const * op1)
 {
   *rop = mmux_$1_absolute(*op1);
   return false;
@@ -354,6 +709,120 @@ DEFINE_ARITHMETIC_OPERATIONS_FLONUMC([[[flonumcd128]]])
 
 
 /** --------------------------------------------------------------------
+ ** Mathematics.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_MATHEMATIC_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_UNARY_OPERATION($1,	sin)
+DEFINE_UNARY_OPERATION($1,	cos)
+DEFINE_UNARY_OPERATION($1,	tan)
+DEFINE_UNARY_OPERATION($1,	asin)
+DEFINE_UNARY_OPERATION($1,	acos)
+DEFINE_UNARY_OPERATION($1,	atan)
+DEFINE_UNARY_OPERATION($1,	sinh)
+DEFINE_UNARY_OPERATION($1,	cosh)
+DEFINE_UNARY_OPERATION($1,	tanh)
+DEFINE_UNARY_OPERATION($1,	asinh)
+DEFINE_UNARY_OPERATION($1,	acosh)
+DEFINE_UNARY_OPERATION($1,	atanh)
+DEFINE_UNARY_OPERATION($1,	exp)
+DEFINE_UNARY_OPERATION($1,	exp2)
+DEFINE_UNARY_OPERATION($1,	exp10)
+DEFINE_UNARY_OPERATION($1,	log)
+DEFINE_UNARY_OPERATION($1,	log2)
+DEFINE_UNARY_OPERATION($1,	log10)
+DEFINE_UNARY_OPERATION($1,	pow)
+DEFINE_UNARY_OPERATION($1,	square)
+DEFINE_UNARY_OPERATION($1,	cube)
+DEFINE_UNARY_OPERATION($1,	sqrt)
+DEFINE_UNARY_OPERATION($1,	cbrt)
+]]])]]])
+
+m4_define([[[DEFINE_MATHEMATIC_OPERATIONS_FLONUM]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+DEFINE_BINARY_OPERATION($1,	atan2)
+DEFINE_BINARY_OPERATION($1,	hypot)
+DEFINE_UNARY_OPERATION($1,	expm1)
+DEFINE_UNARY_OPERATION($1,	logb)
+DEFINE_UNARY_OPERATION($1,	log1p)
+DEFINE_UNARY_OPERATION($1,	erf)
+DEFINE_UNARY_OPERATION($1,	erfc)
+DEFINE_UNARY_OPERATION($1,	lgamma)
+DEFINE_UNARY_OPERATION($1,	tgamma)
+DEFINE_UNARY_OPERATION($1,	j0)
+DEFINE_UNARY_OPERATION($1,	j1)
+DEFINE_UNARY_OPERATION($1,	y0)
+DEFINE_UNARY_OPERATION($1,	y1)
+mmux_cc_types_inline_decl bool
+mmux_$1_jn_p (mmux_$1_t * rop, mmux_sint_t const * N, mmux_$1_t const * op)
+{
+  *rop = mmux_$1_jn(*N, *op);
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_$1_yn_p (mmux_$1_t * rop, mmux_sint_t const * N, mmux_$1_t const * op)
+{
+  *rop = mmux_$1_yn(*N, *op);
+  return false;
+}]]])]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumfl]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumdb]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumldb]]])
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumf32]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumf64]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumf128]]])
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumf32x]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumf64x]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumf128x]]])
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumd32]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumd64]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumfl]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumdb]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumldb]]])
+
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumf32]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumf64]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumf128]]])
+
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumf32x]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumf64x]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumf128x]]])
+
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumd32]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumd64]]])
+DEFINE_MATHEMATIC_OPERATIONS_FLONUM([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcfl]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcdb]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcldb]]])
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcf32]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcf64]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcf128]]])
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcf32x]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcf64x]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcf128x]]])
+
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcd32]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcd64]]])
+DEFINE_MATHEMATIC_OPERATIONS([[[flonumcd128]]])
+
+
+/** --------------------------------------------------------------------
  ** Bitwise operations.
  ** ----------------------------------------------------------------- */
 
@@ -364,13 +833,13 @@ DEFINE_BINARY_OPERATION($1,	bitwise_or)
 DEFINE_BINARY_OPERATION($1,	bitwise_xor)
 DEFINE_UNARY_OPERATION($1,	bitwise_not)
 mmux_cc_types_inline_decl bool
-mmux_$1_bitwise_shl_p (mmux_$1_t * rop, mmux_$1_t * op1, mmux_sint_t * op2)
+mmux_$1_bitwise_shl_p (mmux_$1_t * rop, mmux_$1_t const * op1, mmux_sint_t * op2)
 {
   *rop = mmux_$1_bitwise_shl(*op1, *op2);
   return false;
 }
 mmux_cc_types_inline_decl bool
-mmux_$1_bitwise_shr_p (mmux_$1_t * rop, mmux_$1_t * op1, mmux_sint_t * op2)
+mmux_$1_bitwise_shr_p (mmux_$1_t * rop, mmux_$1_t const * op1, mmux_sint_t * op2)
 {
   *rop = mmux_$1_bitwise_shr(*op1, *op2);
   return false;
@@ -464,6 +933,135 @@ DEFINE_BITWISE_OPERATIONS([[[libc_ino]]])
 DEFINE_BITWISE_OPERATIONS([[[libc_dev]]])
 DEFINE_BITWISE_OPERATIONS([[[libc_nlink]]])
 DEFINE_BITWISE_OPERATIONS([[[libc_blkcnt]]])
+
+
+/** --------------------------------------------------------------------
+ ** Printing and string representation.
+ ** ----------------------------------------------------------------- */
+
+m4_divert(-1)
+
+m4_define([[[DEFINE_STRINGREP_OPERATIONS]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_$1_sprint_p (mmux_asciizp_t bufptr, mmux_usize_t buflen, mmux_$1_t const * value_ptr)
+{
+  return mmux_$1_sprint(bufptr, buflen, *value_ptr);
+}
+mmux_cc_types_inline_decl bool
+mmux_$1_sprint_size_p (mmux_usize_t * required_nbytes_ptr, mmux_$1_t const * value_ptr)
+{
+  return mmux_$1_sprint_size(required_nbytes_ptr, *value_ptr);
+}
+mmux_cc_types_inline_decl bool
+mmux_$1_dprintf_p (mmux_standard_sint_t fd, mmux_$1_t const * value_ptr)
+{
+  return mmux_$1_dprintf(fd, *value_ptr);
+}
+mmux_cc_types_inline_decl bool
+mmux_$1_fprintf_p (mmux_pointer_t stream, mmux_$1_t const * value_ptr)
+{
+  return mmux_$1_fprintf(stream, *value_ptr);
+}]]])]]])
+
+m4_define([[[DEFINE_STRINGREP_OPERATIONS_INTEGER]]],[[[m4_dnl
+DEFINE_STRINGREP_OPERATIONS([[[$1]]])
+MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+mmux_cc_types_inline_decl bool
+mmux_$1_sprint_with_base_p (mmux_asciizp_t bufptr, mmux_usize_t * buflen_ptr, bool * is_negative_ptr,
+			    mmux_$1_t const * value_ptr, mmux_uint_t const base)
+{
+  return mmux_$1_sprint_with_base(bufptr, buflen_ptr, is_negative_ptr, *value_ptr, base);
+}
+mmux_cc_types_inline_decl bool
+mmux_$1_dprintf_with_base_p (int fd, mmux_$1_t const * value_ptr, mmux_uint_t const base)
+{
+  return mmux_$1_dprintf_with_base(fd, *value_ptr, base);
+}]]])]]])
+
+m4_divert(0)m4_dnl
+
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[pointer]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[char]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[schar]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uchar]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sshort]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[ushort]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sint]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uint]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[slong]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[ulong]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sllong]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[ullong]]])
+
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sint8]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uint8]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sint16]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uint16]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sint32]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uint32]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sint64]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uint64]]])
+
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[byte]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[octet]]])
+
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[ssize]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[usize]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sintmax]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uintmax]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[sintptr]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uintptr]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[ptrdiff]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_mode]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[off]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_pid]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_uid]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_gid]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[wchar]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[wint]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_time]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_socklen]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_rlim]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_ino]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_dev]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_nlink]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[libc_blkcnt]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumfl]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumdb]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumldb]]])
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumf32]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumf64]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumf128]]])
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumf32x]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumf64x]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumf128x]]])
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumd32]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumd64]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumd128]]])
+
+/* ------------------------------------------------------------------ */
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumcfl]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcdb]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcldb]]])
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumcf32]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcf64]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcf128]]])
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumcf32x]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcf64x]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcf128x]]])
+
+DEFINE_STRINGREP_OPERATIONS([[[flonumcd32]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcd64]]])
+DEFINE_STRINGREP_OPERATIONS([[[flonumcd128]]])
 
 
 /** --------------------------------------------------------------------

@@ -1864,7 +1864,7 @@ complex numbers reducing the work needed by human eyes to parse the expression. 
 
 
 @macro MmuxDefineCFunctionPredicate{STEM}
-@deftypefun bool mmux_string_is_\STEM\ (char const * @var{str})
+@deftypefun bool mmux_string_is_\STEM\ (mmux_aciizcp_t @var{str})
 Return @ctrue{} if @var{str} references the string representation, in @asciiz{} format, of a value
 of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @end deftypefun
@@ -1974,7 +1974,7 @@ the following facilities are implemented to select the string format.
 To select an output format for the result of the @cfunc{mmux_flonumdb_sprint} function, we do:
 
 @example
-char const * fmt = "%.4f";
+mmux_aciizcp_t fmt = "%.4f";
 
 if (mmux_flonumdb_set_output_format(fmt, __func__)) @{
   /* error: invalid format */
@@ -1990,7 +1990,7 @@ char saved_fmt[MMUX_CC_TYPES_FLOAT_FORMAT_MAXLEN];
 
 mmux_flonumdb_save_output_format(saved_fmt);
 @{
-  char const * fmt = "%.4f";
+  mmux_aciizcp_t fmt = "%.4f";
 
   if (mmux_flonumdb_set_output_format(fmt, __func__)) @{
     /* error: invalid format */
@@ -2043,8 +2043,8 @@ terminating nul character.
 @c ------------------------------------------------------------------------
 
 @macro MmuxRealSelectOutputFormatFunction{STEM,DEFAULTFORMAT}
-@deftypefun bool mmux_\STEM\_set_output_format (char const * @var{OUTPUT_FORMAT}, char const * @var{CALLER_NAME})
-@deftypefunx {char const *} mmux_\STEM\_ref_output_format (void)
+@deftypefun bool mmux_\STEM\_set_output_format (mmux_aciizcp_t @var{OUTPUT_FORMAT}, mmux_aciizcp_t @var{CALLER_NAME})
+@deftypefunx {mmux_aciizcp_t} mmux_\STEM\_ref_output_format (void)
 @deftypefunx void mmux_\STEM\_save_output_format (char * @var{DEST})
 Select, retrieve or save the current format for string representations of floating--point numbers of
 type @objtype{\STEM\}.  The default format is @samp{\DEFAULTFORMAT\}.
@@ -2408,10 +2408,14 @@ library, @xref{I/O of Integers, Input and Output Functions, Input and Output Fun
 Some usage examples:
 
 @example
-#define DOIT(LITERAL, BASE) \
-  mmux_ctype_dprintf_with_base(2, \
-    mmux_sint64_literal(LITERAL), \
-    mmux_uint_literal(BASE))
+#undef  DOIT
+#define DOIT(LITERAL, BASE)                           \
+  @{                                                   \
+    int   fd    = 2;                                  \
+    auto  value = mmux_sint64_literal(LITERAL);       \
+    auto  base  = mmux_uint_literal(BASE);            \
+    mmux_ctype_dprintf_with_base(fd, value, base);    \
+  @}
 
 DOIT(+123,       2);    @print{} +1111011
 DOIT(+123,      10);    @print{} +123
@@ -2432,7 +2436,7 @@ DOIT(61,        62);    @print{} +z
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionExactIntegerSprinter{STEM}
-@deftypefun bool mmux_\STEM\_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_\STEM\_t @var{VALUE})
+@deftypefun bool mmux_\STEM\_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_\STEM\_t @var{VALUE}, mmux_uint_t @var{BASE})
 @deftypefunx bool mmux_\STEM\_dprintf_with_base (int @var{FD}, mmux_\STEM\_t @var{VALUE}, mmux_uint_t @var{BASE})
 Generate or print a string representation of the exact integer @var{VALUE}.
 @end deftypefun
@@ -2441,7 +2445,7 @@ Generate or print a string representation of the exact integer @var{VALUE}.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} bool mmux_ctype_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_ctype_t @var{VALUE})
+@deftypefn {Generic Macro} bool mmux_ctype_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_ctype_t @var{VALUE}, mmux_uint_t @var{BASE})
 @deftypefnx {Generic Macro} bool mmux_ctype_dprintf_with_base (int @var{FD}, mmux_ctype_t @var{VALUE}, mmux_uint_t @var{BASE})
 Generic macros.  Generate or print a string representation of the exact integer @var{VALUE}.  The
 type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
