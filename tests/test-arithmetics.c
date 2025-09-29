@@ -24,161 +24,167 @@
  ** Addition.
  ** ----------------------------------------------------------------- */
 
-#undef  DEFINE_REAL_INTEGER_ADD
-#define DEFINE_REAL_INTEGER_ADD(STEM)					\
-  {									\
-    auto	op1 = mmux_## STEM ## _literal(5);			\
-    auto	op2 = mmux_## STEM ## _literal(4);			\
-    auto	rop = mmux_## STEM ## _literal(9);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_add(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
-  }
-
-#undef  DEFINE_REAL_FLONUM_ADD
-#define DEFINE_REAL_FLONUM_ADD(STEM)					\
-  {									\
-    auto	op1 = mmux_## STEM ##_literal(5.0);			\
-    auto	op2 = mmux_## STEM ##_literal(4.0);			\
-    auto	rop = mmux_## STEM ##_literal(9.0);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_add(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
-  }
-
-#define DEFINE_CPLX_FLONUM_ADD(CSTEM,RSTEM)						\
-  {											\
-    {											\
-      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_rectangular_literal(4.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_rectangular_literal(9.0,5.0);			\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));		\
-      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));				\
-    }											\
-    {											\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),	\
-						   mmux_## RSTEM ##_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(4.0),	\
-						   mmux_## RSTEM ##_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(9.0),	\
-						   mmux_## RSTEM ##_literal(5.0));	\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));		\
-      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));				\
-    }											\
-    {											\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
-						   mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(4.0),	\
-						   mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
-						   mmux_## CSTEM ##_part_literal(5.0));	\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_add(op1, op2)));		\
-      assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));				\
-    }											\
-    dprintf(2," %s,", #CSTEM);								\
-  }
-
-/* ------------------------------------------------------------------ */
-
 static void
 test_arithmetics_add (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
   {
-    auto	op1 = mmux_pointer(mmux_standard_pointer_literal(5));
-    auto	op2 = mmux_ptrdiff(mmux_standard_ptrdiff_literal(4));
-    auto	rop = mmux_pointer(mmux_standard_pointer_literal(9));
-    assert(mmux_pointer_equal(rop, mmux_pointer_add(op1, op2)));
-    assert(mmux_ctype_equal(rop, mmux_ctype_add(op1, op2)));
+    auto		op1  = mmux_pointer_literal(5);
+    auto		op2  = mmux_ptrdiff_literal(4);
+    auto		erop = mmux_pointer_literal(9);
+    auto		rop1 = mmux_pointer_add(op1, op2);
+    auto		rop2 = mmux_ctype_add(op1, op2);
+    typeof(rop1)	rop3;
+    PERFORM_CALL_P(mmux_pointer_add_p(&rop3,&op1, &op2));
+    BINARY_EXACT_COMPARISON(pointer,add,op1,op2,erop,rop1);
+    BINARY_EXACT_COMPARISON(pointer,add,op1,op2,erop,rop2);
+    BINARY_EXACT_COMPARISON(pointer,add,op1,op2,erop,rop3);
+    dprintf(2," %s,", "pointer");
   }
 
-  DEFINE_REAL_INTEGER_ADD(char);
-  DEFINE_REAL_INTEGER_ADD(schar);
-  DEFINE_REAL_INTEGER_ADD(uchar);
-  DEFINE_REAL_INTEGER_ADD(sshort);
-  DEFINE_REAL_INTEGER_ADD(ushort);
-  DEFINE_REAL_INTEGER_ADD(sint);
-  DEFINE_REAL_INTEGER_ADD(uint);
-  DEFINE_REAL_INTEGER_ADD(slong);
-  DEFINE_REAL_INTEGER_ADD(ulong);
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)			    \
+  {							    \
+    BINARY_INTEGER_FUNC(STEM,add,5,4,9);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_FLONUM_TEST
+#define DEFINE_FLONUM_TEST(STEM)			    \
+  {							    \
+    BINARY_FLONUM_FUNC(STEM,add,			    \
+		       5.1,				    \
+		       4.2,				    \
+		       9.3);				    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_FLONUMC_TEST
+#define DEFINE_FLONUMC_TEST(STEM)			    \
+  {							    \
+    BINARY_FLONUMC_FUNC(STEM,add,			    \
+			5.1,3.2, 			    \
+			4.3,2.3,			    \
+			9.4,5.5);			    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DEFINE_REAL_INTEGER_ADD(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  DEFINE_REAL_INTEGER_ADD(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DEFINE_REAL_INTEGER_ADD(sint8);
-  DEFINE_REAL_INTEGER_ADD(uint8);
-  DEFINE_REAL_INTEGER_ADD(sint16);
-  DEFINE_REAL_INTEGER_ADD(uint16);
-  DEFINE_REAL_INTEGER_ADD(sint32);
-  DEFINE_REAL_INTEGER_ADD(uint32);
-  DEFINE_REAL_INTEGER_ADD(sint64);
-  DEFINE_REAL_INTEGER_ADD(uint64);
-  DEFINE_REAL_FLONUM_ADD(flonumfl);
-  DEFINE_REAL_FLONUM_ADD(flonumdb);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_time);
+
+/* ------------------------------------------------------------------ */
+
+  DEFINE_FLONUM_TEST(flonumfl);
+  DEFINE_FLONUM_TEST(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DEFINE_REAL_FLONUM_ADD(flonumldb);
+  DEFINE_FLONUM_TEST(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DEFINE_REAL_FLONUM_ADD(flonumf32);
+  DEFINE_FLONUM_TEST(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DEFINE_REAL_FLONUM_ADD(flonumf64);
+  DEFINE_FLONUM_TEST(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_ADD(flonumf128);
+  DEFINE_FLONUM_TEST(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DEFINE_REAL_FLONUM_ADD(flonumf32x);
+  DEFINE_FLONUM_TEST(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DEFINE_REAL_FLONUM_ADD(flonumf64x);
+  DEFINE_FLONUM_TEST(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DEFINE_REAL_FLONUM_ADD(flonumf128x);
+  DEFINE_FLONUM_TEST(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DEFINE_REAL_FLONUM_ADD(flonumd32);
+  DEFINE_FLONUM_TEST(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DEFINE_REAL_FLONUM_ADD(flonumd64);
+  DEFINE_FLONUM_TEST(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_ADD(flonumd128);
+  DEFINE_FLONUM_TEST(flonumd128);
 #endif
 
-  DEFINE_REAL_INTEGER_ADD(byte);
-  DEFINE_REAL_INTEGER_ADD(octet);
+/* ------------------------------------------------------------------ */
 
-  DEFINE_REAL_INTEGER_ADD(ssize);
-  DEFINE_REAL_INTEGER_ADD(usize);
-  DEFINE_REAL_INTEGER_ADD(sintmax);
-  DEFINE_REAL_INTEGER_ADD(uintmax);
-  DEFINE_REAL_INTEGER_ADD(sintptr);
-  DEFINE_REAL_INTEGER_ADD(uintptr);
-  DEFINE_REAL_INTEGER_ADD(off);
-  DEFINE_REAL_INTEGER_ADD(ptrdiff);
-  DEFINE_REAL_INTEGER_ADD(wchar);
-  DEFINE_REAL_INTEGER_ADD(wint);
-  DEFINE_REAL_INTEGER_ADD(libc_time);
-
-  DEFINE_CPLX_FLONUM_ADD(flonumcfl,	flonumfl);
-  DEFINE_CPLX_FLONUM_ADD(flonumcdb,	flonumdb);
-  DEFINE_CPLX_FLONUM_ADD(flonumcldb,	flonumldb);
-  DEFINE_CPLX_FLONUM_ADD(flonumcf32,	flonumf32);
-  DEFINE_CPLX_FLONUM_ADD(flonumcf64,	flonumf64);
-  DEFINE_CPLX_FLONUM_ADD(flonumcf128,	flonumf128);
-  DEFINE_CPLX_FLONUM_ADD(flonumcf32x,	flonumf32x);
-  DEFINE_CPLX_FLONUM_ADD(flonumcf64x,	flonumf64x);
+  DEFINE_FLONUMC_TEST(flonumcfl);
+  DEFINE_FLONUMC_TEST(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DEFINE_FLONUMC_TEST(flonumcldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DEFINE_FLONUMC_TEST(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DEFINE_FLONUMC_TEST(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DEFINE_FLONUMC_TEST(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DEFINE_FLONUMC_TEST(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DEFINE_FLONUMC_TEST(flonumcf64x);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DEFINE_CPLX_FLONUM_ADD(flonumcf128x,	flonumf128x);
+  DEFINE_FLONUMC_TEST(flonumcf128x);
 #endif
-  DEFINE_CPLX_FLONUM_ADD(flonumcd32,	flonumd32);
-  DEFINE_CPLX_FLONUM_ADD(flonumcd64,	flonumd64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DEFINE_FLONUMC_TEST(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DEFINE_FLONUMC_TEST(flonumcd64);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DEFINE_CPLX_FLONUM_ADD(flonumcd128,	flonumd128);
+  DEFINE_FLONUMC_TEST(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -189,160 +195,166 @@ test_arithmetics_add (void)
  ** Subtraction.
  ** ----------------------------------------------------------------- */
 
-#undef  DEFINE_REAL_INTEGER_SUB
-#define DEFINE_REAL_INTEGER_SUB(STEM)					\
-  {									\
-    auto	op1 = mmux_## STEM ## _literal(5);			\
-    auto	op2 = mmux_## STEM ## _literal(3);			\
-    auto	rop = mmux_## STEM ## _literal(2);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_sub(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
-  }
-
-#undef  DEFINE_REAL_FLONUM_SUB
-#define DEFINE_REAL_FLONUM_SUB(STEM)					\
-  {									\
-    auto	op1 = mmux_## STEM ## _literal(5.0);			\
-    auto	op2 = mmux_## STEM ## _literal(3.0);			\
-    auto	rop = mmux_## STEM ## _literal(2.0);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_sub(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
-  }
-
-#define DEFINE_COMPLEX_SUB(CSTEM,RSTEM)								\
-  {												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_rectangular_literal(3.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_rectangular_literal(2.0,1.0);			\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_sub(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
-    }												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
-							mmux_## RSTEM ##_literal(3.0));		\
-      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(3.0),		\
-							mmux_## RSTEM ##_literal(2.0));		\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(2.0),		\
-							mmux_## RSTEM ##_literal(1.0));		\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_sub(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
-    }												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
-							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
-							mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(2.0),	\
-							mmux_## CSTEM ##_part_literal(1.0));	\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_sub(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));					\
-    }												\
-    dprintf(2," %s,", #CSTEM);									\
-  }
-
-/* ------------------------------------------------------------------ */
-
 static void
 test_arithmetics_sub (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
   {
-    auto	op1 = mmux_pointer(mmux_standard_pointer_literal(5));
-    auto	op2 = mmux_pointer(mmux_standard_pointer_literal(3));
-    auto	rop = mmux_ptrdiff(mmux_standard_ptrdiff_literal(2));
-    assert(mmux_ptrdiff_equal(rop, mmux_pointer_sub(op1, op2)));
-    assert(mmux_ctype_equal(rop, mmux_ctype_sub(op1, op2)));
+    auto		op1  = mmux_pointer_literal(9);
+    auto		op2  = mmux_pointer_literal(4);
+    auto		erop = mmux_ptrdiff_literal(5);
+    auto		rop1 = mmux_pointer_sub(op1, op2);
+    auto		rop2 = mmux_ctype_sub(op1, op2);
+    typeof(rop1)	rop3;
+    PERFORM_CALL_P(mmux_pointer_sub_p(&rop3,&op1, &op2));
+    BINARY_EXACT_COMPARISON(ptrdiff,sub,op1,op2,erop,rop1);
+    BINARY_EXACT_COMPARISON(ptrdiff,sub,op1,op2,erop,rop2);
+    BINARY_EXACT_COMPARISON(ptrdiff,sub,op1,op2,erop,rop3);
     dprintf(2," %s,", "pointer");
   }
 
-  DEFINE_REAL_INTEGER_SUB(char);
-  DEFINE_REAL_INTEGER_SUB(schar);
-  DEFINE_REAL_INTEGER_SUB(uchar);
-  DEFINE_REAL_INTEGER_SUB(sshort);
-  DEFINE_REAL_INTEGER_SUB(ushort);
-  DEFINE_REAL_INTEGER_SUB(sint);
-  DEFINE_REAL_INTEGER_SUB(uint);
-  DEFINE_REAL_INTEGER_SUB(slong);
-  DEFINE_REAL_INTEGER_SUB(ulong);
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)			    \
+  {							    \
+    BINARY_INTEGER_FUNC(STEM,sub,9,5,4);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_FLONUM_TEST
+#define DEFINE_FLONUM_TEST(STEM)			    \
+  {							    \
+    BINARY_FLONUM_FUNC(STEM,sub,			    \
+		       9.3,				    \
+		       4.2,				    \
+		       5.1);				    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_FLONUMC_TEST
+#define DEFINE_FLONUMC_TEST(STEM)			    \
+  {							    \
+    BINARY_FLONUMC_FUNC(STEM,sub,			    \
+			9.4,5.5, 			    \
+			4.3,2.3,			    \
+			5.1,3.2);			    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DEFINE_REAL_INTEGER_SUB(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  DEFINE_REAL_INTEGER_SUB(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DEFINE_REAL_INTEGER_SUB(sint8);
-  DEFINE_REAL_INTEGER_SUB(uint8);
-  DEFINE_REAL_INTEGER_SUB(sint16);
-  DEFINE_REAL_INTEGER_SUB(uint16);
-  DEFINE_REAL_INTEGER_SUB(sint32);
-  DEFINE_REAL_INTEGER_SUB(uint32);
-  DEFINE_REAL_INTEGER_SUB(sint64);
-  DEFINE_REAL_INTEGER_SUB(uint64);
-  DEFINE_REAL_FLONUM_SUB(flonumfl);
-  DEFINE_REAL_FLONUM_SUB(flonumdb);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_time);
+
+/* ------------------------------------------------------------------ */
+
+  DEFINE_FLONUM_TEST(flonumfl);
+  DEFINE_FLONUM_TEST(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DEFINE_REAL_FLONUM_SUB(flonumldb);
+  DEFINE_FLONUM_TEST(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DEFINE_REAL_FLONUM_SUB(flonumf32);
+  DEFINE_FLONUM_TEST(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DEFINE_REAL_FLONUM_SUB(flonumf64);
+  DEFINE_FLONUM_TEST(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_SUB(flonumf128);
+  DEFINE_FLONUM_TEST(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DEFINE_REAL_FLONUM_SUB(flonumf32x);
+  DEFINE_FLONUM_TEST(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DEFINE_REAL_FLONUM_SUB(flonumf64x);
+  DEFINE_FLONUM_TEST(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DEFINE_REAL_FLONUM_SUB(flonumf128x);
+  DEFINE_FLONUM_TEST(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DEFINE_REAL_FLONUM_SUB(flonumd32);
+  DEFINE_FLONUM_TEST(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DEFINE_REAL_FLONUM_SUB(flonumd64);
+  DEFINE_FLONUM_TEST(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_SUB(flonumd128);
+  DEFINE_FLONUM_TEST(flonumd128);
 #endif
-  DEFINE_REAL_INTEGER_SUB(byte);
-  DEFINE_REAL_INTEGER_SUB(octet);
-  DEFINE_REAL_INTEGER_SUB(ssize);
-  DEFINE_REAL_INTEGER_SUB(usize);
-  DEFINE_REAL_INTEGER_SUB(sintmax);
-  DEFINE_REAL_INTEGER_SUB(uintmax);
-  DEFINE_REAL_INTEGER_SUB(sintptr);
-  DEFINE_REAL_INTEGER_SUB(uintptr);
-  DEFINE_REAL_INTEGER_SUB(off);
-  DEFINE_REAL_INTEGER_SUB(ptrdiff);
-  DEFINE_REAL_INTEGER_SUB(wchar);
-  DEFINE_REAL_INTEGER_SUB(wint);
-  DEFINE_REAL_INTEGER_SUB(libc_time);
 
-  DEFINE_COMPLEX_SUB(flonumcfl,		flonumfl);
-  DEFINE_COMPLEX_SUB(flonumcdb,		flonumdb);
-  DEFINE_COMPLEX_SUB(flonumcldb,	flonumldb);
-  DEFINE_COMPLEX_SUB(flonumcf32,	flonumf32);
-  DEFINE_COMPLEX_SUB(flonumcf64,	flonumf64);
-  DEFINE_COMPLEX_SUB(flonumcf128,	flonumf128);
-  DEFINE_COMPLEX_SUB(flonumcf32x,	flonumf32x);
-  DEFINE_COMPLEX_SUB(flonumcf64x,	flonumf64x);
-#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DEFINE_COMPLEX_SUB(flonumcf128x,	flonumf128x);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_FLONUMC_TEST(flonumcfl);
+  DEFINE_FLONUMC_TEST(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DEFINE_FLONUMC_TEST(flonumcldb);
 #endif
-  DEFINE_COMPLEX_SUB(flonumcd32,	flonumd32);
-  DEFINE_COMPLEX_SUB(flonumcd64,	flonumd64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DEFINE_FLONUMC_TEST(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DEFINE_FLONUMC_TEST(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DEFINE_FLONUMC_TEST(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DEFINE_FLONUMC_TEST(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DEFINE_FLONUMC_TEST(flonumcf64x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
+  DEFINE_FLONUMC_TEST(flonumcf128x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DEFINE_FLONUMC_TEST(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DEFINE_FLONUMC_TEST(flonumcd64);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DEFINE_COMPLEX_SUB(flonumcd128,	flonumd128);
+  DEFINE_FLONUMC_TEST(flonumcd128);
 #endif
 
   dprintf(2, " DONE.\n\n");
@@ -353,160 +365,152 @@ test_arithmetics_sub (void)
  ** Multiplication.
  ** ----------------------------------------------------------------- */
 
-#undef  DEFINE_REAL_INTEGER_MUL
-#define DEFINE_REAL_INTEGER_MUL(STEM)					\
-  {									\
-    auto	op1 = mmux_## STEM ## _literal(5);			\
-    auto	op2 = mmux_## STEM ## _literal(3);			\
-    auto	rop = mmux_## STEM ## _literal(15);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mul(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
-  }
-
-#undef  DEFINE_REAL_FLONUM_MUL
-#define DEFINE_REAL_FLONUM_MUL(STEM)					\
-  {									\
-    auto	op1 = mmux_## STEM ## _literal(5.0);			\
-    auto	op2 = mmux_## STEM ## _literal(3.0);			\
-    auto	rop = mmux_## STEM ## _literal(15.0);			\
-    assert(mmux_## STEM ##_equal(rop, mmux_## STEM ##_mul(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
-  }
-
-#define DEFINE_COMPLEX_MUL(CSTEM,RSTEM)								\
-  {												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular_literal(5.0,3.0);			\
-      auto	op2 = mmux_## CSTEM ##_rectangular_literal(3.0,2.0);			\
-      auto	rop = mmux_## CSTEM ##_rectangular_literal(9.0,19.0);			\
-      auto	eps = mmux_## CSTEM ##_rectangular_literal(1e-4,1e-4);			\
-      if (0) {											\
-	dprintf(2, "\nop1 '"); mmux_ctype_dprintf(2, op1);					\
-	dprintf(2, "' op2 '"); mmux_ctype_dprintf(2, op2);					\
-	dprintf(2, "' result '");								\
-	mmux_ctype_dprintf(2, mmux_ctype_mul(op1, op2));					\
-	dprintf(2, "'\n");									\
-      }												\
-      assert(mmux_## CSTEM ##_equal_relepsilon(rop, mmux_## CSTEM ##_mul(op1, op2), eps));	\
-      assert(mmux_ctype_equal_relepsilon(rop, mmux_ctype_mul(op1, op2), eps));			\
-    }												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(5.0),		\
-							mmux_## RSTEM ##_literal(3.0));		\
-      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(3.0),		\
-							mmux_## RSTEM ##_literal(2.0));		\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## RSTEM ##_literal(9.0),		\
-							mmux_## RSTEM ##_literal(19.0));	\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_mul(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));					\
-    }												\
-    {												\
-      auto	op1 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(5.0),	\
-							mmux_## CSTEM ##_part_literal(3.0));	\
-      auto	op2 = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(3.0),	\
-							mmux_## CSTEM ##_part_literal(2.0));	\
-      auto	rop = mmux_## CSTEM ##_rectangular(mmux_## CSTEM ##_part_literal(9.0),	\
-							mmux_## CSTEM ##_part_literal(19.0));	\
-      assert(mmux_## CSTEM ##_equal(rop, mmux_## CSTEM ##_mul(op1, op2)));			\
-      assert(mmux_ctype_equal(rop, mmux_ctype_mul(op1, op2)));					\
-    }												\
-    dprintf(2," %s,", #CSTEM);									\
-  }
-
-/* ------------------------------------------------------------------ */
-
 static void
 test_arithmetics_mul (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-  DEFINE_REAL_INTEGER_MUL(char);
-  DEFINE_REAL_INTEGER_MUL(schar);
-  DEFINE_REAL_INTEGER_MUL(uchar);
-  DEFINE_REAL_INTEGER_MUL(sshort);
-  DEFINE_REAL_INTEGER_MUL(ushort);
-  DEFINE_REAL_INTEGER_MUL(sint);
-  DEFINE_REAL_INTEGER_MUL(uint);
-  DEFINE_REAL_INTEGER_MUL(slong);
-  DEFINE_REAL_INTEGER_MUL(ulong);
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)			    \
+  {							    \
+    BINARY_INTEGER_FUNC(STEM,mul,5,3,15);		    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_FLONUM_TEST
+#define DEFINE_FLONUM_TEST(STEM)			    \
+  {							    \
+    BINARY_FLONUM_FUNC(STEM,mul,			    \
+		       5.0,				    \
+		       3.0,				    \
+		       15.0);				    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_FLONUMC_TEST
+#define DEFINE_FLONUMC_TEST(STEM)			    \
+  {							    \
+    BINARY_FLONUMC_FUNC(STEM,mul,			    \
+			5.0,3.0, 			    \
+			3.0,2.0,			    \
+			9.0,19.0);			    \
+    dprintf(2," %s,", #STEM);				    \
+  }
+
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DEFINE_REAL_INTEGER_MUL(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_ULLONG
-  DEFINE_REAL_INTEGER_MUL(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DEFINE_REAL_INTEGER_MUL(sint8);
-  DEFINE_REAL_INTEGER_MUL(uint8);
-  DEFINE_REAL_INTEGER_MUL(sint16);
-  DEFINE_REAL_INTEGER_MUL(uint16);
-  DEFINE_REAL_INTEGER_MUL(sint32);
-  DEFINE_REAL_INTEGER_MUL(uint32);
-  DEFINE_REAL_INTEGER_MUL(sint64);
-  DEFINE_REAL_INTEGER_MUL(uint64);
-  DEFINE_REAL_FLONUM_MUL(flonumfl);
-  DEFINE_REAL_FLONUM_MUL(flonumdb);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_time);
+
+/* ------------------------------------------------------------------ */
+
+  DEFINE_FLONUM_TEST(flonumfl);
+  DEFINE_FLONUM_TEST(flonumdb);
 #ifdef MMUX_CC_TYPES_HAS_FLONUMLDB
-  DEFINE_REAL_FLONUM_MUL(flonumldb);
+  DEFINE_FLONUM_TEST(flonumldb);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32
-  DEFINE_REAL_FLONUM_MUL(flonumf32);
+  DEFINE_FLONUM_TEST(flonumf32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64
-  DEFINE_REAL_FLONUM_MUL(flonumf64);
+  DEFINE_FLONUM_TEST(flonumf64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_MUL(flonumf128);
+  DEFINE_FLONUM_TEST(flonumf128);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF32X
-  DEFINE_REAL_FLONUM_MUL(flonumf32x);
+  DEFINE_FLONUM_TEST(flonumf32x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF64X
-  DEFINE_REAL_FLONUM_MUL(flonumf64x);
+  DEFINE_FLONUM_TEST(flonumf64x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128X
-  DEFINE_REAL_FLONUM_MUL(flonumf128x);
+  DEFINE_FLONUM_TEST(flonumf128x);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD32
-  DEFINE_REAL_FLONUM_MUL(flonumd32);
+  DEFINE_FLONUM_TEST(flonumd32);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMD64
-  DEFINE_REAL_FLONUM_MUL(flonumd64);
+  DEFINE_FLONUM_TEST(flonumd64);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMF128
-  DEFINE_REAL_FLONUM_MUL(flonumd128);
+  DEFINE_FLONUM_TEST(flonumd128);
 #endif
-  DEFINE_REAL_INTEGER_MUL(byte);
-  DEFINE_REAL_INTEGER_MUL(octet);
-  DEFINE_REAL_INTEGER_MUL(ssize);
-  DEFINE_REAL_INTEGER_MUL(usize);
-  DEFINE_REAL_INTEGER_MUL(sintmax);
-  DEFINE_REAL_INTEGER_MUL(uintmax);
-  DEFINE_REAL_INTEGER_MUL(sintptr);
-  DEFINE_REAL_INTEGER_MUL(uintptr);
-  DEFINE_REAL_INTEGER_MUL(off);
-  DEFINE_REAL_INTEGER_MUL(ptrdiff);
-  DEFINE_REAL_INTEGER_MUL(wchar);
-  DEFINE_REAL_INTEGER_MUL(wint);
-  DEFINE_REAL_INTEGER_MUL(libc_time);
 
-  DEFINE_COMPLEX_MUL(flonumcfl,		flonumfl);
-  DEFINE_COMPLEX_MUL(flonumcdb,		flonumdb);
-  DEFINE_COMPLEX_MUL(flonumcldb,	flonumldb);
-  DEFINE_COMPLEX_MUL(flonumcf32,	flonumf32);
-  DEFINE_COMPLEX_MUL(flonumcf64,	flonumf64);
-  DEFINE_COMPLEX_MUL(flonumcf128,	flonumf128);
-  DEFINE_COMPLEX_MUL(flonumcf32x,	flonumf32x);
-  DEFINE_COMPLEX_MUL(flonumcf64x,	flonumf64x);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_FLONUMC_TEST(flonumcfl);
+  DEFINE_FLONUMC_TEST(flonumcdb);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCLDB
+  DEFINE_FLONUMC_TEST(flonumcldb);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32
+  DEFINE_FLONUMC_TEST(flonumcf32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64
+  DEFINE_FLONUMC_TEST(flonumcf64);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF128
+  DEFINE_FLONUMC_TEST(flonumcf128);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF32X
+  DEFINE_FLONUMC_TEST(flonumcf32x);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCF64X
+  DEFINE_FLONUMC_TEST(flonumcf64x);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCF128X
-  DEFINE_COMPLEX_MUL(flonumcf128x,	flonumf128x);
+  DEFINE_FLONUMC_TEST(flonumcf128x);
 #endif
-  DEFINE_COMPLEX_MUL(flonumcd32,	flonumd32);
-  DEFINE_COMPLEX_MUL(flonumcd64,	flonumd64);
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD32
+  DEFINE_FLONUMC_TEST(flonumcd32);
+#endif
+#ifdef MMUX_CC_TYPES_HAS_FLONUMCD64
+  DEFINE_FLONUMC_TEST(flonumcd64);
+#endif
 #ifdef MMUX_CC_TYPES_HAS_FLONUMCD128
-  DEFINE_COMPLEX_MUL(flonumcd128,	flonumd128);
+  DEFINE_FLONUMC_TEST(flonumcd128);
 #endif
+
 
   dprintf(2, " DONE.\n\n");
 }
