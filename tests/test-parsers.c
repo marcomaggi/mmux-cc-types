@@ -402,12 +402,12 @@ test_sprint_wint (void)
   DOIT_VALUE(wint,mmux_wint_constant_maximum());
 }
 static void
-test_sprint_libc_time (void)
+test_sprint_time (void)
 {
-  DOIT(libc_time,"0");
-  DOIT(libc_time,"123");
-  DOIT_VALUE(libc_time,mmux_libc_time_constant_minimum());
-  DOIT_VALUE(libc_time,mmux_libc_time_constant_maximum());
+  DOIT(time,"0");
+  DOIT(time,"123");
+  DOIT_VALUE(time,mmux_time_constant_minimum());
+  DOIT_VALUE(time,mmux_time_constant_maximum());
 }
 static void
 test_sprint_libc_socklen (void)
@@ -789,7 +789,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_libc_gid();		}
   if (1) {	test_sprint_wchar();		}
   if (1) {	test_sprint_wint();		}
-  if (1) {	test_sprint_libc_time();		}
+  if (1) {	test_sprint_time();		}
   if (1) {	test_sprint_libc_socklen();		}
   if (1) {	test_sprint_libc_rlim();		}
   if (1) {	test_sprint_libc_ino();		}

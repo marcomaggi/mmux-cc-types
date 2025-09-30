@@ -578,7 +578,7 @@ test_comparison_equal (void)
   DOIT_FOR_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
-  DOIT_FOR_EXACT_INTEGER(libc_time);
+  DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -736,7 +736,7 @@ test_comparison_not_equal (void)
   DOIT_FOR_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
-  DOIT_FOR_EXACT_INTEGER(libc_time);
+  DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -894,7 +894,7 @@ test_comparison_less (void)
   DOIT_FOR_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
-  DOIT_FOR_EXACT_INTEGER(libc_time);
+  DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -1052,7 +1052,7 @@ test_comparison_greater (void)
   DOIT_FOR_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
-  DOIT_FOR_EXACT_INTEGER(libc_time);
+  DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -1210,7 +1210,7 @@ test_comparison_less_equal (void)
   DOIT_FOR_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
-  DOIT_FOR_EXACT_INTEGER(libc_time);
+  DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -1368,7 +1368,7 @@ test_comparison_greater_equal (void)
   DOIT_FOR_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
-  DOIT_FOR_EXACT_INTEGER(libc_time);
+  DOIT_FOR_EXACT_INTEGER(time);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -1526,7 +1526,7 @@ test_comparison_min (void)
   DO_MINMAX_FOR_EXACT_INTEGER(ptrdiff);
   DO_MINMAX_FOR_EXACT_INTEGER(wchar);
   DO_MINMAX_FOR_EXACT_INTEGER(wint);
-  DO_MINMAX_FOR_EXACT_INTEGER(libc_time);
+  DO_MINMAX_FOR_EXACT_INTEGER(time);
   DO_MINMAX_FOR_EXACT_INTEGER(libc_socklen);
   DO_MINMAX_FOR_EXACT_INTEGER(libc_rlim);
   DO_MINMAX_FOR_EXACT_INTEGER(libc_ino);
@@ -1684,7 +1684,7 @@ test_comparison_max (void)
   DO_MINMAX_FOR_EXACT_INTEGER(ptrdiff);
   DO_MINMAX_FOR_EXACT_INTEGER(wchar);
   DO_MINMAX_FOR_EXACT_INTEGER(wint);
-  DO_MINMAX_FOR_EXACT_INTEGER(libc_time);
+  DO_MINMAX_FOR_EXACT_INTEGER(time);
   DO_MINMAX_FOR_EXACT_INTEGER(libc_socklen);
   DO_MINMAX_FOR_EXACT_INTEGER(libc_rlim);
   DO_MINMAX_FOR_EXACT_INTEGER(libc_ino);

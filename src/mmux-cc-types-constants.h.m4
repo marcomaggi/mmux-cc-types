@@ -137,7 +137,7 @@ DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(libc_gid,		MMUX_CC_TYPES_STEM_ALIAS_
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(ptrdiff,		MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF)
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(wchar,		MMUX_CC_TYPES_STEM_ALIAS_WCHAR)
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(wint,		MMUX_CC_TYPES_STEM_ALIAS_WINT)
-DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(libc_time,		MMUX_CC_TYPES_STEM_ALIAS_LIBC_TIME)
+DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(time,		MMUX_CC_TYPES_STEM_ALIAS_TIME)
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(libc_socklen,	MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN)
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(libc_rlim,		MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM)
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(libc_ino,		MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO)
@@ -590,7 +590,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_constant_$1,		\
            mmux_wchar_t:		mmux_wchar_constant_$1,			\
            mmux_wint_t:			mmux_wint_constant_$1,			\
-           mmux_libc_time_t:		mmux_libc_time_constant_$1,		\
+           mmux_time_t:		mmux_time_constant_$1,		\
            mmux_libc_socklen_t:		mmux_libc_socklen_constant_$1,		\
            mmux_libc_rlim_t:		mmux_libc_rlim_constant_$1,		\
            mmux_libc_ino_t:		mmux_libc_ino_constant_$1,		\

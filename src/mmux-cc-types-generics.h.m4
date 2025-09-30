@@ -110,7 +110,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -231,7 +231,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -353,7 +353,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -475,7 +475,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -597,7 +597,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -718,7 +718,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -807,7 +807,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -865,7 +865,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -923,7 +923,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -1427,7 +1427,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_libc_time_t:			mmux_libc_time_$1,			\
+           mmux_time_t:			mmux_time_$1,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_$1,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_$1,			\
            mmux_libc_ino_t:			mmux_libc_ino_$1,			\
@@ -2064,7 +2064,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		true,			\
            mmux_wchar_t:		true,			\
            mmux_wint_t:			false,			\
-           mmux_libc_time_t:			true,			\
+           mmux_time_t:			true,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:			false,			\
            mmux_libc_ino_t:			false,			\
@@ -2184,7 +2184,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		false,			\
            mmux_wchar_t:		false,			\
            mmux_wint_t:			true,			\
-           mmux_libc_time_t:			false,			\
+           mmux_time_t:			false,			\
            mmux_libc_socklen_t:		true,			\
            mmux_libc_rlim_t:			true,			\
            mmux_libc_ino_t:			true,			\
@@ -2300,7 +2300,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		true,			\
            mmux_wchar_t:		true,			\
            mmux_wint_t:			true,			\
-           mmux_libc_time_t:			true,			\
+           mmux_time_t:			true,			\
            mmux_libc_socklen_t:		true,			\
            mmux_libc_rlim_t:			true,			\
            mmux_libc_ino_t:			true,			\
@@ -2416,7 +2416,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		true,			\
            mmux_wchar_t:		true,			\
            mmux_wint_t:			true,			\
-           mmux_libc_time_t:			true,			\
+           mmux_time_t:			true,			\
            mmux_libc_socklen_t:		true,			\
            mmux_libc_rlim_t:			true,			\
            mmux_libc_ino_t:			true,			\
@@ -2532,7 +2532,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		false,			\
            mmux_wchar_t:		false,			\
            mmux_wint_t:			false,			\
-           mmux_libc_time_t:			false,			\
+           mmux_time_t:			false,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:			false,			\
            mmux_libc_ino_t:			false,			\
@@ -2648,7 +2648,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		false,			\
            mmux_wchar_t:		false,			\
            mmux_wint_t:			false,			\
-           mmux_libc_time_t:			false,			\
+           mmux_time_t:			false,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:			false,			\
            mmux_libc_ino_t:			false,			\
@@ -2764,7 +2764,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		false,			\
            mmux_wchar_t:		false,			\
            mmux_wint_t:			false,			\
-           mmux_libc_time_t:			false,			\
+           mmux_time_t:			false,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:			false,			\
            mmux_libc_ino_t:			false,			\
@@ -2859,7 +2859,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		"mmux_ptrdiff_t",		\
            mmux_wchar_t:		"mmux_wchar_t",			\
            mmux_wint_t:			"mmux_wint_t",			\
-           mmux_libc_time_t:			"mmux_libc_time_t",			\
+           mmux_time_t:			"mmux_time_t",			\
            mmux_libc_socklen_t:		"mmux_libc_socklen_t",		\
            mmux_libc_rlim_t:			"mmux_libc_rlim_t",			\
            mmux_libc_ino_t:			"mmux_libc_ino_t",			\
@@ -2976,7 +2976,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		"ptrdiff",		\
            mmux_wchar_t:		"wchar",		\
            mmux_wint_t:			"wint",			\
-           mmux_libc_time_t:			"libc_time",			\
+           mmux_time_t:			"time",			\
            mmux_libc_socklen_t:		"libc_socklen",		\
            mmux_libc_rlim_t:			"libc_rlim",			\
            mmux_libc_ino_t:			"libc_ino",			\
@@ -3096,7 +3096,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_sprint,			\
            mmux_wchar_t:		mmux_wchar_sprint,			\
            mmux_wint_t:			mmux_wint_sprint,			\
-           mmux_libc_time_t:			mmux_libc_time_sprint,			\
+           mmux_time_t:			mmux_time_sprint,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_sprint,			\
            mmux_libc_rlim_t:			mmux_libc_rlim_sprint,			\
            mmux_libc_ino_t:			mmux_libc_ino_sprint,			\
@@ -3213,7 +3213,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_sprint_size,		\
            mmux_wchar_t:		mmux_wchar_sprint_size,			\
            mmux_wint_t:			mmux_wint_sprint_size,			\
-           mmux_libc_time_t:			mmux_libc_time_sprint_size,			\
+           mmux_time_t:			mmux_time_sprint_size,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_sprint_size,		\
            mmux_libc_rlim_t:			mmux_libc_rlim_sprint_size,			\
            mmux_libc_ino_t:			mmux_libc_ino_sprint_size,			\
@@ -3301,7 +3301,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_sprint_with_base,			\
            mmux_wchar_t:		mmux_wchar_sprint_with_base,			\
            mmux_wint_t:			mmux_wint_sprint_with_base,			\
-           mmux_libc_time_t:			mmux_libc_time_sprint_with_base,			\
+           mmux_time_t:			mmux_time_sprint_with_base,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_sprint_with_base,			\
            mmux_libc_rlim_t:			mmux_libc_rlim_sprint_with_base,			\
            mmux_libc_ino_t:			mmux_libc_ino_sprint_with_base,			\
@@ -3353,7 +3353,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_dprintf_with_base,			\
            mmux_wchar_t:		mmux_wchar_dprintf_with_base,			\
            mmux_wint_t:			mmux_wint_dprintf_with_base,			\
-           mmux_libc_time_t:			mmux_libc_time_dprintf_with_base,			\
+           mmux_time_t:			mmux_time_dprintf_with_base,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_dprintf_with_base,			\
            mmux_libc_rlim_t:			mmux_libc_rlim_dprintf_with_base,			\
            mmux_libc_ino_t:			mmux_libc_ino_dprintf_with_base,			\
@@ -3472,7 +3472,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		((VALUE).value),		\
            mmux_wchar_t:		((VALUE).value),		\
            mmux_wint_t:			((VALUE).value),		\
-           mmux_libc_time_t:			((VALUE).value),		\
+           mmux_time_t:			((VALUE).value),		\
            mmux_libc_socklen_t:		((VALUE).value),		\
            mmux_libc_rlim_t:			((VALUE).value),		\
            mmux_libc_ino_t:			((VALUE).value),		\

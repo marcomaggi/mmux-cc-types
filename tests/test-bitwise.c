@@ -97,7 +97,7 @@ test_bitwise_and (void)
   DOIT(wint);
   DOIT(libc_rlim);
   DOIT(libc_socklen);
-  DOIT(libc_time);
+  DOIT(time);
   DOIT(libc_ino);
   DOIT(libc_dev);
   DOIT(libc_nlink);
@@ -183,7 +183,7 @@ test_bitwise_or (void)
   DOIT(wint);
   DOIT(libc_rlim);
   DOIT(libc_socklen);
-  DOIT(libc_time);
+  DOIT(time);
   DOIT(libc_ino);
   DOIT(libc_dev);
   DOIT(libc_nlink);
@@ -269,7 +269,7 @@ test_bitwise_xor (void)
   DOIT(wint);
   DOIT(libc_rlim);
   DOIT(libc_socklen);
-  DOIT(libc_time);
+  DOIT(time);
   DOIT(libc_ino);
   DOIT(libc_dev);
   DOIT(libc_nlink);
@@ -367,7 +367,7 @@ test_bitwise_not (void)
   DOIT(wint);
   DOIT(libc_rlim);
   DOIT(libc_socklen);
-  DOIT(libc_time);
+  DOIT(time);
   DOIT(libc_ino);
   DOIT(libc_dev);
   DOIT(libc_nlink);
@@ -439,7 +439,7 @@ test_bitwise_shl (void)
   DOIT(wint);
   DOIT(libc_rlim);
   DOIT(libc_socklen);
-  DOIT(libc_time);
+  DOIT(time);
   DOIT(libc_ino);
   DOIT(libc_dev);
   DOIT(libc_nlink);
@@ -511,7 +511,7 @@ test_bitwise_shr (void)
   DOIT(wint);
   DOIT(libc_rlim);
   DOIT(libc_socklen);
-  DOIT(libc_time);
+  DOIT(time);
   DOIT(libc_ino);
   DOIT(libc_dev);
   DOIT(libc_nlink);

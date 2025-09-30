@@ -279,7 +279,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{libc_gid}, type stem
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
-@cindex @code{libc_time}, type stem
+@cindex @code{time}, type stem
 @cindex @code{libc_socklen}, type stem
 @cindex @code{libc_rlim}, type stem
 @cindex @code{libc_ino}, type stem
@@ -387,10 +387,9 @@ it is an alias for @code{@value{\ALIAS\}}.
 @MmuxDefineAliasedTypeStem{libc_gid, libc_gid_t,ALIASGID}
 @MmuxDefineAliasedTypeStem{wchar, wchar_t,ALIASWCHAR}
 @MmuxDefineAliasedTypeStem{wint, wint_t,ALIASWINT}
-@MmuxDefineAliasedTypeStem{libc_time, libc_time_t,ALIASTIME}
+@MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
 @MmuxDefineAliasedTypeStem{libc_socklen, libc_socklen_t,ALIASSOCKLEN}
 @MmuxDefineAliasedTypeStem{libc_rlim, libc_rlim_t,ALIASRLIM}
-@MmuxDefineAliasedTypeStem{libc_socklen, libc_socklen_t,ALIASSOCKLEN}
 @MmuxDefineAliasedTypeStem{libc_ino, libc_ino_t,ALIASINO}
 @MmuxDefineAliasedTypeStem{libc_dev, libc_dev_t,ALIASDEV}
 @MmuxDefineAliasedTypeStem{libc_nlink, libc_nlink_t,ALIASNLINK}
@@ -772,7 +771,7 @@ type is supported.
 @cindex @code{libc_gid}, type stem
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
-@cindex @code{libc_time}, type stem
+@cindex @code{time}, type stem
 @cindex @code{libc_socklen}, type stem
 @cindex @code{libc_rlim}, type stem
 
@@ -992,7 +991,7 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedefForAliasedType{libc_gid,             libc_gid_t,          @value{ALIASGID}}
 @MmuxDefineCAliasTypedefForAliasedType{wchar,           wchar_t,        @value{ALIASWCHAR}}
 @MmuxDefineCAliasTypedefForAliasedType{wint,            wint_t,         @value{ALIASWINT}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_time,            libc_time_t,         @value{ALIASTIME}}
+@MmuxDefineCAliasTypedefForAliasedType{time,            time_t,         @value{ALIASTIME}}
 @MmuxDefineCAliasTypedefForAliasedType{libc_socklen,         libc_socklen_t,      @value{ALIASSOCKLEN}}
 @MmuxDefineCAliasTypedefForAliasedType{libc_rlim,            libc_rlim_t,         @value{ALIASRLIM}}
 @MmuxDefineCAliasTypedefForAliasedType{libc_ino,             libc_ino_t,          @value{ALIASINO}}
@@ -1192,7 +1191,7 @@ mmux_standard_pointerc_literal(@var{ARG})
 @MmuxDefineLiteralMacro{ptrdiff}
 @MmuxDefineLiteralMacro{wchar}
 @MmuxDefineLiteralMacroUnsignedInteger{wint}
-@MmuxDefineLiteralMacro{libc_time}
+@MmuxDefineLiteralMacro{time}
 @MmuxDefineLiteralMacroUnsignedInteger{libc_socklen}
 @MmuxDefineLiteralMacroUnsignedInteger{libc_rlim}
 @MmuxDefineLiteralMacroUnsignedInteger{libc_ino}
@@ -1362,7 +1361,7 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 @MmuxDefineCMacroMaker{libc_gid}
 @MmuxDefineCMacroMaker{wchar}
 @MmuxDefineCMacroMaker{wint}
-@MmuxDefineCMacroMaker{libc_time}
+@MmuxDefineCMacroMaker{time}
 @MmuxDefineCMacroMaker{libc_socklen}
 @MmuxDefineCMacroMaker{libc_rlim}
 @MmuxDefineCMacroMaker{libc_ino}
@@ -1515,7 +1514,7 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{libc_gid}
 @MmuxDefineCFunctionSizeof{wchar}
 @MmuxDefineCFunctionSizeof{wint}
-@MmuxDefineCFunctionSizeof{libc_time}
+@MmuxDefineCFunctionSizeof{time}
 @MmuxDefineCFunctionSizeof{libc_socklen}
 @MmuxDefineCFunctionSizeof{libc_rlim}
 
@@ -1625,7 +1624,7 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{libc_gid}
 @MmuxDefineCFunctionMaximum{wchar}
 @MmuxDefineCFunctionMaximum{wint}
-@MmuxDefineCFunctionMaximum{libc_time}
+@MmuxDefineCFunctionMaximum{time}
 @MmuxDefineCFunctionMaximum{libc_socklen}
 @MmuxDefineCFunctionMaximum{libc_rlim}
 @MmuxDefineCFunctionMaximum{libc_ino}
@@ -1804,7 +1803,7 @@ Return a constant value corresponding to @cnull{}.
 @MmuxDefineExactConstantFunctions{ptrdiff}
 @MmuxDefineExactConstantFunctions{wchar}
 @MmuxDefineExactConstantFunctions{wint}
-@MmuxDefineExactConstantFunctions{libc_time}
+@MmuxDefineExactConstantFunctions{time}
 @MmuxDefineExactConstantFunctions{libc_socklen}
 @MmuxDefineExactConstantFunctions{libc_rlim}
 
@@ -1943,7 +1942,7 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{libc_gid}
 @MmuxDefineCFunctionPredicate{wchar}
 @MmuxDefineCFunctionPredicate{wint}
-@MmuxDefineCFunctionPredicate{libc_time}
+@MmuxDefineCFunctionPredicate{time}
 @MmuxDefineCFunctionPredicate{libc_socklen}
 @MmuxDefineCFunctionPredicate{libc_rlim}
 @MmuxDefineCFunctionPredicate{libc_ino}
@@ -2174,7 +2173,7 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{libc_gid}
 @MmuxDefineCFunctionParser{wchar}
 @MmuxDefineCFunctionParser{wint}
-@MmuxDefineCFunctionParser{libc_time}
+@MmuxDefineCFunctionParser{time}
 @MmuxDefineCFunctionParser{libc_socklen}
 @MmuxDefineCFunctionParser{libc_rlim}
 @MmuxDefineCFunctionParser{libc_ino}
@@ -2296,7 +2295,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{libc_gid}
 @MmuxDefineCFunctionSprinter{wchar}
 @MmuxDefineCFunctionSprinter{wint}
-@MmuxDefineCFunctionSprinter{libc_time}
+@MmuxDefineCFunctionSprinter{time}
 @MmuxDefineCFunctionSprinter{libc_socklen}
 @MmuxDefineCFunctionSprinter{libc_rlim}
 @MmuxDefineCFunctionSprinter{libc_ino}
@@ -2490,7 +2489,7 @@ type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @MmuxDefineCFunctionExactIntegerSprinter{libc_gid}
 @MmuxDefineCFunctionExactIntegerSprinter{wchar}
 @MmuxDefineCFunctionExactIntegerSprinter{wint}
-@MmuxDefineCFunctionExactIntegerSprinter{libc_time}
+@MmuxDefineCFunctionExactIntegerSprinter{time}
 @MmuxDefineCFunctionExactIntegerSprinter{libc_socklen}
 @MmuxDefineCFunctionExactIntegerSprinter{libc_rlim}
 @MmuxDefineCFunctionExactIntegerSprinter{libc_ino}
@@ -2591,7 +2590,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionPrinters{libc_gid}
 @MmuxDefineCFunctionPrinters{wchar}
 @MmuxDefineCFunctionPrinters{wint}
-@MmuxDefineCFunctionPrinters{libc_time}
+@MmuxDefineCFunctionPrinters{time}
 @MmuxDefineCFunctionPrinters{libc_socklen}
 @MmuxDefineCFunctionPrinters{libc_rlim}
 @MmuxDefineCFunctionPrinters{libc_ino}
@@ -2746,7 +2745,7 @@ the operands and result.
 @MmuxDefineExactIntegerSignFunctions{off}
 @MmuxDefineExactIntegerSignFunctions{wchar}
 @MmuxDefineExactIntegerSignFunctions{wint}
-@MmuxDefineExactIntegerSignFunctions{libc_time}
+@MmuxDefineExactIntegerSignFunctions{time}
 
 @MmuxDefineRealFlonumSignFunctions{flonumfl}
 @MmuxDefineRealFlonumSignFunctions{flonumdb}
@@ -3594,7 +3593,7 @@ placeholder for the type of the operand.
 @MmuxDefineTypePredicates{libc_gid}
 @MmuxDefineTypePredicates{wchar}
 @MmuxDefineTypePredicates{wint}
-@MmuxDefineTypePredicates{libc_time}
+@MmuxDefineTypePredicates{time}
 @MmuxDefineTypePredicates{libc_socklen}
 @MmuxDefineTypePredicates{libc_rlim}
 @MmuxDefineTypePredicates{libc_ino}
@@ -3758,7 +3757,7 @@ operands.
 @MmuxDefineTypeComparisonExactFunction{libc_gid}
 @MmuxDefineTypeComparisonExactFunction{wchar}
 @MmuxDefineTypeComparisonExactFunction{wint}
-@MmuxDefineTypeComparisonExactFunction{libc_time}
+@MmuxDefineTypeComparisonExactFunction{time}
 @MmuxDefineTypeComparisonExactFunction{libc_socklen}
 @MmuxDefineTypeComparisonExactFunction{libc_rlim}
 @MmuxDefineTypeComparisonExactFunction{libc_ino}
@@ -3885,7 +3884,7 @@ placeholder for the type of the operands and result.
 @MmuxDefineTypeComparisonMinMaxFunction{libc_gid}
 @MmuxDefineTypeComparisonMinMaxFunction{wchar}
 @MmuxDefineTypeComparisonMinMaxFunction{wint}
-@MmuxDefineTypeComparisonMinMaxFunction{libc_time}
+@MmuxDefineTypeComparisonMinMaxFunction{time}
 @MmuxDefineTypeComparisonMinMaxFunction{libc_socklen}
 @MmuxDefineTypeComparisonMinMaxFunction{libc_rlim}
 @MmuxDefineTypeComparisonMinMaxFunction{libc_ino}
@@ -4323,7 +4322,7 @@ modulo, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{off}
 @MmuxDefineIntegerArithmeticsFunc{wchar}
 @MmuxDefineIntegerArithmeticsFunc{wint}
-@MmuxDefineIntegerArithmeticsFunc{libc_time}
+@MmuxDefineIntegerArithmeticsFunc{time}
 
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumfl}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumdb}
@@ -4883,7 +4882,7 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{libc_gid}
 @MmuxDefineBitwiseFuncs{wchar}
 @MmuxDefineBitwiseFuncs{wint}
-@MmuxDefineBitwiseFuncs{libc_time}
+@MmuxDefineBitwiseFuncs{time}
 @MmuxDefineBitwiseFuncs{libc_socklen}
 @MmuxDefineBitwiseFuncs{libc_rlim}
 @MmuxDefineBitwiseFuncs{libc_ino}

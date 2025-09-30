@@ -150,7 +150,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   DOIT_FOR_EXACT_INTEGER(wchar,		-65);
 
   DOIT_FOR_EXACT_INTEGER(wint,		65);
-  DOIT_FOR_EXACT_INTEGER(libc_time,		65);
+  DOIT_FOR_EXACT_INTEGER(time,		65);
   DOIT_FOR_EXACT_INTEGER(libc_socklen,	65);
   DOIT_FOR_EXACT_INTEGER(libc_rlim,		65);
   DOIT_FOR_EXACT_INTEGER(libc_ino,		65);

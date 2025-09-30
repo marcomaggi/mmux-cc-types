@@ -115,7 +115,7 @@ test_arithmetics_add (void)
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
-  DEFINE_INTEGER_TEST(libc_time);
+  DEFINE_INTEGER_TEST(time);
 
 /* ------------------------------------------------------------------ */
 
@@ -285,7 +285,7 @@ test_arithmetics_sub (void)
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
-  DEFINE_INTEGER_TEST(libc_time);
+  DEFINE_INTEGER_TEST(time);
 
 /* ------------------------------------------------------------------ */
 
@@ -439,7 +439,7 @@ test_arithmetics_mul (void)
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
-  DEFINE_INTEGER_TEST(libc_time);
+  DEFINE_INTEGER_TEST(time);
 
 /* ------------------------------------------------------------------ */
 
@@ -658,7 +658,7 @@ test_arithmetics_div (void)
   DEFINE_REAL_INTEGER_DIV(ptrdiff);
   DEFINE_REAL_INTEGER_DIV(wchar);
   DEFINE_REAL_INTEGER_DIV(wint);
-  DEFINE_REAL_INTEGER_DIV(libc_time);
+  DEFINE_REAL_INTEGER_DIV(time);
 
   DEFINE_COMPLEX_DIV(flonumcfl,		flonumfl);
   DEFINE_COMPLEX_DIV(flonumcdb,		flonumdb);
@@ -944,7 +944,7 @@ test_arithmetics_inverse (void)
   DEFINE_REAL_INTEGER_INVERSE(ptrdiff);
   DEFINE_REAL_INTEGER_INVERSE(wchar);
   DEFINE_REAL_INTEGER_INVERSE(wint);
-  DEFINE_REAL_INTEGER_INVERSE(libc_time);
+  DEFINE_REAL_INTEGER_INVERSE(time);
 
   DEFINE_COMPLEX_INVERSE(flonumcfl,		flonumfl);
   DEFINE_COMPLEX_INVERSE(flonumcdb,		flonumdb);
@@ -1102,7 +1102,7 @@ test_arithmetics_absolute (void)
   DEFINE_REAL_INTEGER_ABSOLUTE(ptrdiff);
   DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(wchar);
   DEFINE_REAL_UNSIGNED_INTEGER_ABSOLUTE(wint);
-  DEFINE_REAL_INTEGER_ABSOLUTE(libc_time);
+  DEFINE_REAL_INTEGER_ABSOLUTE(time);
 
   DEFINE_COMPLEX_ABSOLUTE(flonumcfl,		flonumfl);
   DEFINE_COMPLEX_ABSOLUTE(flonumcdb,		flonumdb);
@@ -1229,7 +1229,7 @@ test_arithmetics_modulo (void)
   DEFINE_REAL_INTEGER_MODULO(ptrdiff);
   DEFINE_REAL_INTEGER_MODULO(wchar);
   DEFINE_REAL_INTEGER_MODULO(wint);
-  DEFINE_REAL_INTEGER_MODULO(libc_time);
+  DEFINE_REAL_INTEGER_MODULO(time);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -1393,7 +1393,7 @@ test_arithmetics_incr (void)
   DEFINE_REAL_INTEGER_INCR(ptrdiff);
   DEFINE_REAL_INTEGER_INCR(wchar);
   DEFINE_REAL_INTEGER_INCR(wint);
-  DEFINE_REAL_INTEGER_INCR(libc_time);
+  DEFINE_REAL_INTEGER_INCR(time);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -1498,7 +1498,7 @@ test_arithmetics_decr (void)
   DEFINE_REAL_INTEGER_DECR(ptrdiff);
   DEFINE_REAL_INTEGER_DECR(wchar);
   DEFINE_REAL_INTEGER_DECR(wint);
-  DEFINE_REAL_INTEGER_DECR(libc_time);
+  DEFINE_REAL_INTEGER_DECR(time);
 
   dprintf(2, " DONE.\n\n");
 }

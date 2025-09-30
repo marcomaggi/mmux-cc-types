@@ -80,7 +80,7 @@ typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_GID[[[]]]_t		mmux_stan
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t		mmux_standard_ptrdiff_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t		mmux_standard_wchar_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t		mmux_standard_wint_t;
-typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_TIME[[[]]]_t		mmux_standard_libc_time_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t		mmux_standard_time_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN[[[]]]_t	mmux_standard_libc_socklen_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM[[[]]]_t		mmux_standard_libc_rlim_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO[[[]]]_t		mmux_standard_libc_ino_t;
@@ -196,7 +196,7 @@ DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_gid,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ptrdiff,	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wchar,	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
-DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_time,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_TIME]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_ino,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO]]])
@@ -367,7 +367,7 @@ typedef struct mmux_libc_gid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_GID;		}     mmux_
 typedef struct mmux_ptrdiff_t	{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
 typedef struct mmux_wchar_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
 typedef struct mmux_wint_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
-typedef struct mmux_libc_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_TIME;	}     mmux_libc_time_t;
+typedef struct mmux_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
 typedef struct mmux_libc_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_SOCKLEN;	}     mmux_libc_socklen_t;
 typedef struct mmux_libc_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_RLIM;	}     mmux_libc_rlim_t;
 
@@ -470,7 +470,7 @@ DEFINE_TYPE_MAKERS(libc_gid)
 DEFINE_TYPE_MAKERS(ptrdiff)
 DEFINE_TYPE_MAKERS(wchar)
 DEFINE_TYPE_MAKERS(wint)
-DEFINE_TYPE_MAKERS(libc_time)
+DEFINE_TYPE_MAKERS(time)
 DEFINE_TYPE_MAKERS(libc_socklen)
 DEFINE_TYPE_MAKERS(libc_rlim)
 DEFINE_TYPE_MAKERS(libc_ino)
@@ -545,7 +545,7 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[libc_gid]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[ptrdiff]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[wchar]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[wint]]])
-DEFINE_PROTOTYPES_TYPEDEFS([[[libc_time]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[time]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[libc_socklen]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[libc_rlim]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[libc_ino]]])

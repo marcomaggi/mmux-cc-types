@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-09-28 08:24:28 marco>
+;; Time-stamp: <2025-09-30 06:14:27 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -453,20 +453,19 @@
 
 (mmux-cc-type-define-integer-list ptrdiff)
 (mmux-cc-type-define-integer-list off)
-(mmux-cc-type-define-integer-list mode)
-(mmux-cc-type-define-integer-list pid)
-(mmux-cc-type-define-integer-list uid)
-(mmux-cc-type-define-integer-list gid)
+(mmux-cc-type-define-integer-list libc_mode)
+(mmux-cc-type-define-integer-list libc_pid)
+(mmux-cc-type-define-integer-list libc_uid)
+(mmux-cc-type-define-integer-list libc_gid)
 (mmux-cc-type-define-integer-list wchar)
 (mmux-cc-type-define-integer-list wint)
 (mmux-cc-type-define-integer-list time)
-(mmux-cc-type-define-integer-list socklen)
-(mmux-cc-type-define-integer-list rlim)
-
-(mmux-cc-type-define-integer-list ino)
-(mmux-cc-type-define-integer-list dev)
-(mmux-cc-type-define-integer-list nlink)
-(mmux-cc-type-define-integer-list blkcnt)
+(mmux-cc-type-define-integer-list libc_socklen)
+(mmux-cc-type-define-integer-list libc_rlim)
+(mmux-cc-type-define-integer-list libc_ino)
+(mmux-cc-type-define-integer-list libc_dev)
+(mmux-cc-type-define-integer-list libc_nlink)
+(mmux-cc-type-define-integer-list licb_blkcnt)
 
 (mmux-cc-type-define-flonum-list flonumfl)
 (mmux-cc-type-define-flonum-list flonumdb)

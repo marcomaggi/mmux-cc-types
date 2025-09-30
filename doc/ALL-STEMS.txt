@@ -71,7 +71,7 @@ libc_gid
 ptrdiff
 wchar
 wint
-libc_time
+time
 libc_socklen
 libc_rlim
 libc_ino
