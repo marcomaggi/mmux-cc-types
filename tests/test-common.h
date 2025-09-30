@@ -302,7 +302,7 @@ dprintf_newline (int fd)
 			   ELITERAL_RE,ELITERAL_IM)					\
   {											\
     auto	op   = mmux_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);	\
-    auto	erop = mmux_##STEM##_rectangular_literal(ELITERAL_RE,LITERAL_IM);	\
+    auto	erop = mmux_##STEM##_rectangular_literal(ELITERAL_RE,ELITERAL_IM);	\
     auto	rop1 = mmux_##STEM##_##FUNC(op);					\
     auto	rop2 = mmux_ctype_##FUNC(op);						\
     typeof(op)	rop3;									\
@@ -330,23 +330,40 @@ dprintf_newline (int fd)
     BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop3);				\
   }
 
-
-/** --------------------------------------------------------------------
- ** Macros: performing pointers API functions calls for exact integers, flonums, flonumcs
- ** ----------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
 
-#undef  UNARY_INTEGER_FUNC_P
-#define UNARY_INTEGER_FUNC_P(STEM,FUNC,LITERAL,ELITERAL)					\
+#undef  UNARY_FLONUMC_TO_FLONUM_FUNC
+#define UNARY_FLONUMC_TO_FLONUM_FUNC(CSTEM,RSTEM,FUNC,						\
+				     LITERAL_RE,LITERAL_IM,					\
+				     ELITERAL)							\
   {												\
-    auto	op   = mmux_##STEM## _literal(LITERAL);						\
-    auto	erop = mmux_##STEM## _literal(ELITERAL);					\
-    typeof(op)	rop1;										\
-    if (mmux_##STEM##_##FUNC##_p(&rop1, &op)) {							\
-      dprintf(2, "\n*** %s: returned error from mmux_%s_%s_p\n", __func__, #STEM, #FUNC);	\
-    }												\
-    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop1);						\
+    auto		op   = mmux_##CSTEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);	\
+    auto		erop = mmux_##RSTEM##_literal(ELITERAL);				\
+    auto		rop1 = mmux_##CSTEM##_##FUNC(op);					\
+    auto		rop2 = mmux_ctype_##FUNC(op);						\
+    typeof(erop)	rop3;									\
+    PERFORM_CALL_P(mmux_##CSTEM##_##FUNC##_p(&rop3,&op));					\
+    UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop1);						\
+    UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop2);						\
+    UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop3);						\
   }
 
-
+#undef  BINARY_FLONUMC_TO_FLONUM_FUNC
+#define BINARY_FLONUMC_TO_FLONUM_FUNC(CSTEM,RSTEM,FUNC,						\
+				      LITERAL_RE1,LITERAL_IM1,					\
+				      LITERAL_RE2,LITERAL_IM2,					\
+				      ELITERAL)							\
+  {												\
+    auto		op1  = mmux_##CSTEM##_rectangular_literal(LITERAL_RE1,LITERAL_IM1);	\
+    auto		op2  = mmux_##CSTEM##_rectangular_literal(LITERAL_RE2,LITERAL_IM2);	\
+    auto		erop = mmux_##RSTEM##_literal(LITERAL);					\
+    auto		rop1 = mmux_##CSTEM##_##FUNC(op1, op2);					\
+    auto		rop2 = mmux_ctype_##FUNC(op1, op2);					\
+    typeof(erop)	rop3;									\
+    PERFORM_CALL_P(mmux_##CSTEM##_##FUNC##_p(&rop3,&op1,&op2));					\
+    BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop1);					\
+    BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop2);					\
+    BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop3);					\
+  }
 
 /* end of file */
