@@ -235,17 +235,20 @@ dprintf_newline (int fd)
 /* ------------------------------------------------------------------ */
 
 #undef  UNARY_INTEGER_FUNC
-#define UNARY_INTEGER_FUNC(STEM,FUNC,LITERAL,ELITERAL)		\
-  {								\
-    auto	op   = mmux_##STEM## _literal(LITERAL);		\
-    auto	erop = mmux_##STEM## _literal(ELITERAL);	\
-    auto	rop1 = mmux_##STEM##_##FUNC(op);		\
-    auto	rop2 = mmux_ctype_##FUNC(op);			\
-    typeof(op)	rop3;						\
-    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op));	\
-    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop1);		\
-    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop2);		\
-    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop3);		\
+#define UNARY_INTEGER_FUNC(STEM,FUNC,LITERAL,ELITERAL)			\
+  {									\
+    auto		op   = mmux_##STEM## _literal(LITERAL);		\
+    auto		erop = mmux_##STEM## _literal(ELITERAL);	\
+    auto		rop1 = mmux_##STEM##_##FUNC(op);		\
+    auto		rop2 = mmux_ctype_##FUNC(op);			\
+    typeof(rop1)	rop3;						\
+    typeof(rop1)	rop4;						\
+    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op));		\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op));			\
+    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop1);			\
+    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop2);			\
+    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop3);			\
+    UNARY_EXACT_COMPARISON(STEM,FUNC,op,erop,rop4);			\
   }
 
 #undef  BINARY_INTEGER_FUNC
@@ -256,78 +259,93 @@ dprintf_newline (int fd)
     auto	erop = mmux_##STEM## _literal(ELITERAL);		\
     auto	rop1 = mmux_##STEM##_##FUNC(op1, op2);			\
     auto	rop2 = mmux_ctype_##FUNC(op1, op2);			\
-    typeof(op1)	rop3;							\
+    typeof(rop1)	rop3;						\
+    typeof(rop1)	rop4;						\
     PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op1,&op2));		\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op1,&op2));		\
     BINARY_EXACT_COMPARISON(STEM,FUNC,op1,op2,erop,rop1);		\
     BINARY_EXACT_COMPARISON(STEM,FUNC,op1,op2,erop,rop2);		\
     BINARY_EXACT_COMPARISON(STEM,FUNC,op1,op2,erop,rop3);		\
+    BINARY_EXACT_COMPARISON(STEM,FUNC,op1,op2,erop,rop4);		\
   }
 
 /* ------------------------------------------------------------------ */
 
 #undef  UNARY_FLONUM_FUNC
-#define UNARY_FLONUM_FUNC(STEM,FUNC,LITERAL,ELITERAL)		\
-  {								\
-    auto	op   = mmux_##STEM## _literal(LITERAL);		\
-    auto	erop = mmux_##STEM## _literal(ELITERAL);	\
-    auto	rop1 = mmux_##STEM##_##FUNC(op);		\
-    auto	rop2 = mmux_ctype_##FUNC(op);			\
-    typeof(op)	rop3;						\
-    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op));	\
-    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop1);		\
-    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop2);		\
-    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop3);		\
+#define UNARY_FLONUM_FUNC(STEM,FUNC,LITERAL,ELITERAL)			\
+  {									\
+    auto		op   = mmux_##STEM## _literal(LITERAL);		\
+    auto		erop = mmux_##STEM## _literal(ELITERAL);	\
+    auto		rop1 = mmux_##STEM##_##FUNC(op);		\
+    auto		rop2 = mmux_ctype_##FUNC(op);			\
+    typeof(rop1)	rop3;						\
+    typeof(rop1)	rop4;						\
+    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op));		\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op));			\
+    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop1);			\
+    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop2);			\
+    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop3);			\
+    UNARY_FLONUM_COMPARISON(STEM,FUNC,op,erop,rop4);			\
   }
 
 #undef  BINARY_FLONUM_FUNC
 #define BINARY_FLONUM_FUNC(STEM,FUNC,LITERAL1,LITERAL2,ELITERAL)	\
   {									\
-    auto	op1  = mmux_##STEM## _literal(LITERAL1);		\
-    auto	op2  = mmux_##STEM## _literal(LITERAL2);		\
-    auto	erop = mmux_##STEM## _literal(ELITERAL);		\
-    auto	rop1 = mmux_##STEM##_##FUNC(op1, op2);			\
-    auto	rop2 = mmux_ctype_##FUNC(op1, op2);			\
-    typeof(op1)	rop3;							\
+    auto		op1  = mmux_##STEM## _literal(LITERAL1);	\
+    auto		op2  = mmux_##STEM## _literal(LITERAL2);	\
+    auto		erop = mmux_##STEM## _literal(ELITERAL);	\
+    auto		rop1 = mmux_##STEM##_##FUNC(op1, op2);		\
+    auto		rop2 = mmux_ctype_##FUNC(op1, op2);		\
+    typeof(rop1)	rop3;						\
+    typeof(rop1)	rop4;						\
     PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op1,&op2));		\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op1,&op2));		\
     BINARY_FLONUM_COMPARISON(STEM,FUNC,op1,op2,erop,rop1);		\
     BINARY_FLONUM_COMPARISON(STEM,FUNC,op1,op2,erop,rop2);		\
     BINARY_FLONUM_COMPARISON(STEM,FUNC,op1,op2,erop,rop3);		\
+    BINARY_FLONUM_COMPARISON(STEM,FUNC,op1,op2,erop,rop4);		\
   }
 
 /* ------------------------------------------------------------------ */
 
 #undef  UNARY_FLONUMC_FUNC
-#define UNARY_FLONUMC_FUNC(STEM,FUNC,							\
-			   LITERAL_RE,LITERAL_IM,					\
-			   ELITERAL_RE,ELITERAL_IM)					\
-  {											\
-    auto	op   = mmux_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);	\
-    auto	erop = mmux_##STEM##_rectangular_literal(ELITERAL_RE,ELITERAL_IM);	\
-    auto	rop1 = mmux_##STEM##_##FUNC(op);					\
-    auto	rop2 = mmux_ctype_##FUNC(op);						\
-    typeof(op)	rop3;									\
-    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op));				\
-    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop1);					\
-    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop2);					\
-    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop3);					\
+#define UNARY_FLONUMC_FUNC(STEM,FUNC,								\
+			   LITERAL_RE,LITERAL_IM,						\
+			   ELITERAL_RE,ELITERAL_IM)						\
+  {												\
+    auto		op   = mmux_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);	\
+    auto		erop = mmux_##STEM##_rectangular_literal(ELITERAL_RE,ELITERAL_IM);	\
+    auto		rop1 = mmux_##STEM##_##FUNC(op);					\
+    auto		rop2 = mmux_ctype_##FUNC(op);						\
+    typeof(rop1)	rop3;									\
+    typeof(rop1)	rop4;									\
+    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op));					\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op));						\
+    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop1);						\
+    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop2);						\
+    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop3);						\
+    UNARY_FLONUMC_COMPARISON(STEM,FUNC,op,erop,rop4);						\
   }
 
 #undef  BINARY_FLONUMC_FUNC
-#define BINARY_FLONUMC_FUNC(STEM,FUNC,							\
-			    LITERAL_RE1,LITERAL_IM1,					\
-			    LITERAL_RE2,LITERAL_IM2,					\
-			    ELITERAL_RE,ELITERAL_IM)					\
-  {											\
-    auto	op1  = mmux_##STEM##_rectangular_literal(LITERAL_RE1,LITERAL_IM1);	\
-    auto	op2  = mmux_##STEM##_rectangular_literal(LITERAL_RE2,LITERAL_IM2);	\
-    auto	erop = mmux_##STEM##_rectangular_literal(ELITERAL_RE,ELITERAL_IM);	\
-    auto	rop1 = mmux_##STEM##_##FUNC(op1, op2);					\
-    auto	rop2 = mmux_ctype_##FUNC(op1, op2);					\
-    typeof(op1)	rop3;									\
-    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op1,&op2));				\
-    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop1);				\
-    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop2);				\
-    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop3);				\
+#define BINARY_FLONUMC_FUNC(STEM,FUNC,								\
+			    LITERAL_RE1,LITERAL_IM1,						\
+			    LITERAL_RE2,LITERAL_IM2,						\
+			    ELITERAL_RE,ELITERAL_IM)						\
+  {												\
+    auto		op1  = mmux_##STEM##_rectangular_literal(LITERAL_RE1,LITERAL_IM1);	\
+    auto		op2  = mmux_##STEM##_rectangular_literal(LITERAL_RE2,LITERAL_IM2);	\
+    auto		erop = mmux_##STEM##_rectangular_literal(ELITERAL_RE,ELITERAL_IM);	\
+    auto		rop1 = mmux_##STEM##_##FUNC(op1, op2);					\
+    auto		rop2 = mmux_ctype_##FUNC(op1, op2);					\
+    typeof(rop1)	rop3;									\
+    typeof(rop1)	rop4;									\
+    PERFORM_CALL_P(mmux_##STEM##_##FUNC##_p(&rop3,&op1,&op2));					\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op1,&op2));					\
+    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop1);					\
+    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop2);					\
+    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop3);					\
+    BINARY_FLONUMC_COMPARISON(STEM,FUNC,op1,op2,erop,rop4);					\
   }
 
 /* ------------------------------------------------------------------ */
@@ -342,10 +360,13 @@ dprintf_newline (int fd)
     auto		rop1 = mmux_##CSTEM##_##FUNC(op);					\
     auto		rop2 = mmux_ctype_##FUNC(op);						\
     typeof(erop)	rop3;									\
+    typeof(erop)	rop4;									\
     PERFORM_CALL_P(mmux_##CSTEM##_##FUNC##_p(&rop3,&op));					\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op));						\
     UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop1);						\
     UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop2);						\
     UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop3);						\
+    UNARY_FLONUM_COMPARISON(RSTEM,FUNC,op,erop,rop4);						\
   }
 
 #undef  BINARY_FLONUMC_TO_FLONUM_FUNC
@@ -360,10 +381,13 @@ dprintf_newline (int fd)
     auto		rop1 = mmux_##CSTEM##_##FUNC(op1, op2);					\
     auto		rop2 = mmux_ctype_##FUNC(op1, op2);					\
     typeof(erop)	rop3;									\
+    typeof(erop)	rop4;									\
     PERFORM_CALL_P(mmux_##CSTEM##_##FUNC##_p(&rop3,&op1,&op2));					\
+    PERFORM_CALL_P(mmux_ctype_##FUNC##_p(&rop4,&op1,&op2));					\
     BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop1);					\
     BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop2);					\
     BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop3);					\
+    BINARY_FLONUM_COMPARISON(RSTEM,FUNC,op1,op2,erop,rop4);					\
   }
 
 /* end of file */
