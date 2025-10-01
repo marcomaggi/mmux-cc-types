@@ -33,75 +33,83 @@ test_bitwise_and (void)
 #define OP1		0b1111
 #undef  OP2
 #define OP2		0b1001
-#undef	ROP
-#define ROP		0b1001
+#undef	EROP
+#define EROP		0b1001
 
   {
-    auto	op1 = mmux_pointer_literal(OP1);
-    auto	op2 = mmux_uintptr_literal(OP2);
-    auto	rop = mmux_pointer_literal(ROP);
-    assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_and(op1, op2)));
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2)));
+    auto		op1  = mmux_pointer_literal(OP1);
+    auto		op2  = mmux_uintptr_literal(OP2);
+    auto		erop = mmux_pointer_literal(EROP);
+    auto		rop1 = mmux_pointer_bitwise_and(op1, op2);
+    auto		rop2 = mmux_ctype_bitwise_and(op1, op2);
+    typeof(erop)	rop3;
+    typeof(erop)	rop4;
+    PERFORM_CALL_P(mmux_pointer_bitwise_and_p(&rop3, &op1, &op2));
+    PERFORM_CALL_P(mmux_ctype_bitwise_and_p(&rop4, &op1, &op2));
+    BINARY_EXACT_COMPARISON(pointer,bitwise_and,op1,op2,erop,rop1);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_and,op1,op2,erop,rop2);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_and,op1,op2,erop,rop3);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_and,op1,op2,erop,rop4);
     dprintf(2," %s,", "pointer");
   }
 
-#undef  DOIT
-#define DOIT(STEM)								\
-  {										\
-    auto	op1 = mmux_##STEM##_literal(OP1);				\
-    auto	op2 = mmux_##STEM##_literal(OP2);				\
-    auto	rop = mmux_##STEM##_literal(ROP);				\
-    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_and(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_and(op1, op2)));		\
-    dprintf(2," %s,", #STEM);						\
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)			    \
+  {							    \
+    BINARY_INTEGER_FUNC(STEM,bitwise_and,OP1,OP2,EROP);	    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-  DOIT(char);
-  DOIT(schar);
-  DOIT(uchar);
-  DOIT(sshort);
-  DOIT(ushort);
-  DOIT(sint);
-  DOIT(uint);
-  DOIT(slong);
-  DOIT(ulong);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DOIT(sint8);
-  DOIT(uint8);
-  DOIT(sint16);
-  DOIT(uint16);
-  DOIT(sint32);
-  DOIT(uint32);
-  DOIT(sint64);
-  DOIT(uint64);
-  DOIT(byte);
-  DOIT(octet);
-  DOIT(ssize);
-  DOIT(usize);
-  DOIT(sintmax);
-  DOIT(uintmax);
-  DOIT(sintptr);
-  DOIT(uintptr);
-  DOIT(ptrdiff);
-  DOIT(libc_mode);
-  DOIT(libc_pid);
-  DOIT(libc_uid);
-  DOIT(libc_gid);
-  DOIT(off);
-  DOIT(wchar);
-  DOIT(wint);
-  DOIT(libc_rlim);
-  DOIT(libc_socklen);
-  DOIT(time);
-  DOIT(libc_ino);
-  DOIT(libc_dev);
-  DOIT(libc_nlink);
-  DOIT(libc_blkcnt);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_blkcnt);
+  DEFINE_INTEGER_TEST(libc_dev);
+  DEFINE_INTEGER_TEST(libc_gid);
+  DEFINE_INTEGER_TEST(libc_ino);
+  DEFINE_INTEGER_TEST(libc_mode);
+  DEFINE_INTEGER_TEST(libc_nlink);
+  DEFINE_INTEGER_TEST(libc_pid);
+  DEFINE_INTEGER_TEST(libc_rlim);
+  DEFINE_INTEGER_TEST(libc_socklen);
+  DEFINE_INTEGER_TEST(libc_uid);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -120,74 +128,83 @@ test_bitwise_or (void)
 #define OP1		0b1111
 #undef  OP2
 #define OP2		0b1001
-#undef	ROP
-#define ROP		0b1111
+#undef	EROP
+#define EROP		0b1111
 
   {
-    auto	op1 = mmux_pointer_literal(OP1);
-    auto	op2 = mmux_uintptr_literal(OP2);
-    auto	rop = mmux_pointer_literal(ROP);
-    assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_or(op1, op2)));
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2)));
+    auto		op1  = mmux_pointer_literal(OP1);
+    auto		op2  = mmux_uintptr_literal(OP2);
+    auto		erop = mmux_pointer_literal(EROP);
+    auto		rop1 = mmux_pointer_bitwise_or(op1, op2);
+    auto		rop2 = mmux_ctype_bitwise_or(op1, op2);
+    typeof(erop)	rop3;
+    typeof(erop)	rop4;
+    PERFORM_CALL_P(mmux_pointer_bitwise_or_p(&rop3, &op1, &op2));
+    PERFORM_CALL_P(mmux_ctype_bitwise_or_p(&rop4, &op1, &op2));
+    BINARY_EXACT_COMPARISON(pointer,bitwise_or,op1,op2,erop,rop1);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_or,op1,op2,erop,rop2);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_or,op1,op2,erop,rop3);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_or,op1,op2,erop,rop4);
+    dprintf(2," %s,", "pointer");
   }
 
-#undef  DOIT
-#define DOIT(STEM)								\
-  {										\
-    auto	op1 = mmux_##STEM##_literal(OP1);				\
-    auto	op2 = mmux_##STEM##_literal(OP2);				\
-    auto	rop = mmux_##STEM##_literal(ROP);				\
-    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_or(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_or(op1, op2)));		\
-    dprintf(2," %s,", #STEM);							\
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)			    \
+  {							    \
+    BINARY_INTEGER_FUNC(STEM,bitwise_or,OP1,OP2,EROP);	    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-  DOIT(char);
-  DOIT(schar);
-  DOIT(uchar);
-  DOIT(sshort);
-  DOIT(ushort);
-  DOIT(sint);
-  DOIT(uint);
-  DOIT(slong);
-  DOIT(ulong);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DOIT(sint8);
-  DOIT(uint8);
-  DOIT(sint16);
-  DOIT(uint16);
-  DOIT(sint32);
-  DOIT(uint32);
-  DOIT(sint64);
-  DOIT(uint64);
-  DOIT(byte);
-  DOIT(octet);
-  DOIT(ssize);
-  DOIT(usize);
-  DOIT(sintmax);
-  DOIT(uintmax);
-  DOIT(sintptr);
-  DOIT(uintptr);
-  DOIT(ptrdiff);
-  DOIT(libc_mode);
-  DOIT(libc_pid);
-  DOIT(libc_uid);
-  DOIT(libc_gid);
-  DOIT(off);
-  DOIT(wchar);
-  DOIT(wint);
-  DOIT(libc_rlim);
-  DOIT(libc_socklen);
-  DOIT(time);
-  DOIT(libc_ino);
-  DOIT(libc_dev);
-  DOIT(libc_nlink);
-  DOIT(libc_blkcnt);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_blkcnt);
+  DEFINE_INTEGER_TEST(libc_dev);
+  DEFINE_INTEGER_TEST(libc_gid);
+  DEFINE_INTEGER_TEST(libc_ino);
+  DEFINE_INTEGER_TEST(libc_mode);
+  DEFINE_INTEGER_TEST(libc_nlink);
+  DEFINE_INTEGER_TEST(libc_pid);
+  DEFINE_INTEGER_TEST(libc_rlim);
+  DEFINE_INTEGER_TEST(libc_socklen);
+  DEFINE_INTEGER_TEST(libc_uid);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -206,74 +223,83 @@ test_bitwise_xor (void)
 #define OP1		0b1111
 #undef  OP2
 #define OP2		0b1001
-#undef	ROP
-#define ROP		0b0110
+#undef	EROP
+#define EROP		0b0110
 
   {
-    auto	op1 = mmux_pointer_literal(OP1);
-    auto	op2 = mmux_uintptr_literal(OP2);
-    auto	rop = mmux_pointer_literal(ROP);
-    assert(mmux_pointer_equal(rop, mmux_pointer_bitwise_xor(op1, op2)));
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2)));
+    auto		op1  = mmux_pointer_literal(OP1);
+    auto		op2  = mmux_uintptr_literal(OP2);
+    auto		erop = mmux_pointer_literal(EROP);
+    auto		rop1 = mmux_pointer_bitwise_xor(op1, op2);
+    auto		rop2 = mmux_ctype_bitwise_xor(op1, op2);
+    typeof(erop)	rop3;
+    typeof(erop)	rop4;
+    PERFORM_CALL_P(mmux_pointer_bitwise_xor_p(&rop3, &op1, &op2));
+    PERFORM_CALL_P(mmux_ctype_bitwise_xor_p(&rop4, &op1, &op2));
+    BINARY_EXACT_COMPARISON(pointer,bitwise_xor,op1,op2,erop,rop1);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_xor,op1,op2,erop,rop2);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_xor,op1,op2,erop,rop3);
+    BINARY_EXACT_COMPARISON(pointer,bitwise_xor,op1,op2,erop,rop4);
+    dprintf(2," %s,", "pointer");
   }
 
-#undef  DOIT
-#define DOIT(STEM)								\
-  {										\
-    auto	op1 = mmux_##STEM##_literal(OP1);				\
-    auto	op2 = mmux_##STEM##_literal(OP2);				\
-    auto	rop = mmux_##STEM##_literal(ROP);				\
-    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_xor(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_xor(op1, op2)));		\
-    dprintf(2," %s,", #STEM);							\
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)			    \
+  {							    \
+    BINARY_INTEGER_FUNC(STEM,bitwise_xor,OP1,OP2,EROP);	    \
+    dprintf(2," %s,", #STEM);				    \
   }
 
-  DOIT(char);
-  DOIT(schar);
-  DOIT(uchar);
-  DOIT(sshort);
-  DOIT(ushort);
-  DOIT(sint);
-  DOIT(uint);
-  DOIT(slong);
-  DOIT(ulong);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DOIT(sint8);
-  DOIT(uint8);
-  DOIT(sint16);
-  DOIT(uint16);
-  DOIT(sint32);
-  DOIT(uint32);
-  DOIT(sint64);
-  DOIT(uint64);
-  DOIT(byte);
-  DOIT(octet);
-  DOIT(ssize);
-  DOIT(usize);
-  DOIT(sintmax);
-  DOIT(uintmax);
-  DOIT(sintptr);
-  DOIT(uintptr);
-  DOIT(ptrdiff);
-  DOIT(libc_mode);
-  DOIT(libc_pid);
-  DOIT(libc_uid);
-  DOIT(libc_gid);
-  DOIT(off);
-  DOIT(wchar);
-  DOIT(wint);
-  DOIT(libc_rlim);
-  DOIT(libc_socklen);
-  DOIT(time);
-  DOIT(libc_ino);
-  DOIT(libc_dev);
-  DOIT(libc_nlink);
-  DOIT(libc_blkcnt);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_blkcnt);
+  DEFINE_INTEGER_TEST(libc_dev);
+  DEFINE_INTEGER_TEST(libc_gid);
+  DEFINE_INTEGER_TEST(libc_ino);
+  DEFINE_INTEGER_TEST(libc_mode);
+  DEFINE_INTEGER_TEST(libc_nlink);
+  DEFINE_INTEGER_TEST(libc_pid);
+  DEFINE_INTEGER_TEST(libc_rlim);
+  DEFINE_INTEGER_TEST(libc_socklen);
+  DEFINE_INTEGER_TEST(libc_uid);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -288,90 +314,75 @@ test_bitwise_not (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT
-#define DOIT(STEM)							\
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)					\
   {									\
-    {									\
-      auto	op1 = mmux_##STEM##_constant_maximum();			\
-      auto	rop = mmux_##STEM##_constant_minimum();			\
-      if (0) {								\
-	dprintf(2, "op1 = '");						\
-	mmux_##STEM##_dprintf(2, op1);					\
-	dprintf(2, "', rop = '");					\
-	mmux_##STEM##_dprintf(2, rop);					\
-	dprintf(2, "', result = '");					\
-	mmux_##STEM##_dprintf(2, mmux_##STEM##_bitwise_not(op1));	\
-	dprintf(2, "'\n");						\
-      }									\
-      assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_not(op1)));	\
-      assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_not(op1)));	\
-      dprintf(2," %s,", #STEM);						\
-    }									\
-    {									\
-      auto	op1 = mmux_##STEM##_constant_minimum();			\
-      auto	rop = mmux_##STEM##_constant_maximum();			\
-      if (0) {								\
-	dprintf(2, "op1 = '");						\
-	mmux_##STEM##_dprintf(2, op1);					\
-	dprintf(2, "', rop = '");					\
-	mmux_##STEM##_dprintf(2, rop);					\
-	dprintf(2, "', result = '");					\
-	mmux_##STEM##_dprintf(2, mmux_##STEM##_bitwise_not(op1));	\
-	dprintf(2, "'\n");						\
-      }									\
-      assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_not(op1)));	\
-      assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_not(op1)));	\
-      dprintf(2," %s,", #STEM);						\
-    }									\
+    auto		op   = mmux_##STEM##_constant_maximum();	\
+    auto		erop = mmux_##STEM##_constant_minimum();	\
+    auto		rop1 = mmux_##STEM##_bitwise_not(op);		\
+    auto		rop2 = mmux_ctype_bitwise_not(op);		\
+    typeof(erop)	rop3;						\
+    typeof(erop)	rop4;						\
+    PERFORM_CALL_P(mmux_##STEM##_bitwise_not_p(&rop3, &op));		\
+    PERFORM_CALL_P(mmux_ctype_bitwise_not_p(&rop4, &op));		\
+    UNARY_EXACT_COMPARISON(STEM,bitwise_not,op,erop,rop1);		\
+    UNARY_EXACT_COMPARISON(STEM,bitwise_not,op,erop,rop2);		\
+    UNARY_EXACT_COMPARISON(STEM,bitwise_not,op,erop,rop3);		\
+    UNARY_EXACT_COMPARISON(STEM,bitwise_not,op,erop,rop4);		\
+    dprintf(2," %s,", #STEM);						\
   }
 
-  DOIT(pointer);
-  DOIT(char);
-  DOIT(schar);
-  DOIT(uchar);
-  DOIT(sshort);
-  DOIT(ushort);
-  DOIT(sint);
-  DOIT(uint);
-  DOIT(slong);
-  DOIT(ulong);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(pointer);
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DOIT(sint8);
-  DOIT(uint8);
-  DOIT(sint16);
-  DOIT(uint16);
-  DOIT(sint32);
-  DOIT(uint32);
-  DOIT(sint64);
-  DOIT(uint64);
-  DOIT(byte);
-  DOIT(octet);
-  DOIT(ssize);
-  DOIT(usize);
-  DOIT(sintmax);
-  DOIT(uintmax);
-  DOIT(sintptr);
-  DOIT(uintptr);
-  DOIT(ptrdiff);
-  DOIT(libc_mode);
-  DOIT(libc_pid);
-  DOIT(libc_uid);
-  DOIT(libc_gid);
-  DOIT(off);
-  DOIT(wchar);
-  DOIT(wint);
-  DOIT(libc_rlim);
-  DOIT(libc_socklen);
-  DOIT(time);
-  DOIT(libc_ino);
-  DOIT(libc_dev);
-  DOIT(libc_nlink);
-  DOIT(libc_blkcnt);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_blkcnt);
+  DEFINE_INTEGER_TEST(libc_dev);
+  DEFINE_INTEGER_TEST(libc_gid);
+  DEFINE_INTEGER_TEST(libc_ino);
+  DEFINE_INTEGER_TEST(libc_mode);
+  DEFINE_INTEGER_TEST(libc_nlink);
+  DEFINE_INTEGER_TEST(libc_pid);
+  DEFINE_INTEGER_TEST(libc_rlim);
+  DEFINE_INTEGER_TEST(libc_socklen);
+  DEFINE_INTEGER_TEST(libc_uid);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -386,64 +397,76 @@ test_bitwise_shl (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT
-#define DOIT(STEM)								\
-  {										\
-    auto	op1 = mmux_##STEM##_literal(0b0001);				\
-    auto	op2 = mmux_sint(3);						\
-    auto	rop = mmux_##STEM##_literal(0b1000);				\
-    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_shl(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shl(op1, op2)));		\
-    dprintf(2," %s,", #STEM);							\
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)					\
+  {									\
+    auto		op1  = mmux_##STEM##_literal(0b0001);		\
+    auto		op2  = mmux_sint_literal(3);			\
+    auto		erop = mmux_##STEM##_literal(0b1000);		\
+    auto		rop1 = mmux_##STEM##_bitwise_shl(op1,op2);	\
+    auto		rop2 = mmux_ctype_bitwise_shl(op1,op2);		\
+    typeof(erop)	rop3;						\
+    typeof(erop)	rop4;						\
+    PERFORM_CALL_P(mmux_##STEM##_bitwise_shl_p(&rop3, &op1, &op2));	\
+    PERFORM_CALL_P(mmux_ctype_bitwise_shl_p(&rop4, &op1, &op2));	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shl,op1,op2,erop,rop1);	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shl,op1,op2,erop,rop2);	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shl,op1,op2,erop,rop3);	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shl,op1,op2,erop,rop4);	\
+    dprintf(2," %s,", #STEM);						\
   }
 
-  DOIT(pointer);
-  DOIT(char);
-  DOIT(schar);
-  DOIT(uchar);
-  DOIT(sshort);
-  DOIT(ushort);
-  DOIT(sint);
-  DOIT(uint);
-  DOIT(slong);
-  DOIT(ulong);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(pointer);
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DOIT(sint8);
-  DOIT(uint8);
-  DOIT(sint16);
-  DOIT(uint16);
-  DOIT(sint32);
-  DOIT(uint32);
-  DOIT(sint64);
-  DOIT(uint64);
-  DOIT(byte);
-  DOIT(octet);
-  DOIT(ssize);
-  DOIT(usize);
-  DOIT(sintmax);
-  DOIT(uintmax);
-  DOIT(sintptr);
-  DOIT(uintptr);
-  DOIT(ptrdiff);
-  DOIT(libc_mode);
-  DOIT(libc_pid);
-  DOIT(libc_uid);
-  DOIT(libc_gid);
-  DOIT(off);
-  DOIT(wchar);
-  DOIT(wint);
-  DOIT(libc_rlim);
-  DOIT(libc_socklen);
-  DOIT(time);
-  DOIT(libc_ino);
-  DOIT(libc_dev);
-  DOIT(libc_nlink);
-  DOIT(libc_blkcnt);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_blkcnt);
+  DEFINE_INTEGER_TEST(libc_dev);
+  DEFINE_INTEGER_TEST(libc_gid);
+  DEFINE_INTEGER_TEST(libc_ino);
+  DEFINE_INTEGER_TEST(libc_mode);
+  DEFINE_INTEGER_TEST(libc_nlink);
+  DEFINE_INTEGER_TEST(libc_pid);
+  DEFINE_INTEGER_TEST(libc_rlim);
+  DEFINE_INTEGER_TEST(libc_socklen);
+  DEFINE_INTEGER_TEST(libc_uid);
 
   dprintf(2, " DONE.\n\n");
 }
@@ -458,64 +481,76 @@ test_bitwise_shr (void)
 {
   dprintf(2, "running test: %s:", __func__);
 
-#undef  DOIT
-#define DOIT(STEM)								\
-  {										\
-    auto	op1 = mmux_##STEM##_literal(0b1000);				\
-    auto	op2 = mmux_sint(3);						\
-    auto	rop = mmux_##STEM##_literal(0b0001);				\
-    assert(mmux_##STEM##_equal(rop, mmux_##STEM##_bitwise_shr(op1, op2)));	\
-    assert(mmux_ctype_equal(rop, mmux_ctype_bitwise_shr(op1, op2)));		\
-    dprintf(2," %s,", #STEM);							\
+/* ------------------------------------------------------------------ */
+
+#undef  DEFINE_INTEGER_TEST
+#define DEFINE_INTEGER_TEST(STEM)					\
+  {									\
+    auto		op1  = mmux_##STEM##_literal(0b1000);		\
+    auto		op2  = mmux_sint_literal(3);			\
+    auto		erop = mmux_##STEM##_literal(0b0001);		\
+    auto		rop1 = mmux_##STEM##_bitwise_shr(op1,op2);	\
+    auto		rop2 = mmux_ctype_bitwise_shr(op1,op2);		\
+    typeof(erop)	rop3;						\
+    typeof(erop)	rop4;						\
+    PERFORM_CALL_P(mmux_##STEM##_bitwise_shr_p(&rop3, &op1, &op2));	\
+    PERFORM_CALL_P(mmux_ctype_bitwise_shr_p(&rop4, &op1, &op2));	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shr,op1,op2,erop,rop1);	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shr,op1,op2,erop,rop2);	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shr,op1,op2,erop,rop3);	\
+    BINARY_EXACT_COMPARISON(STEM,bitwise_shr,op1,op2,erop,rop4);	\
+    dprintf(2," %s,", #STEM);						\
   }
 
-  DOIT(pointer);
-  DOIT(char);
-  DOIT(schar);
-  DOIT(uchar);
-  DOIT(sshort);
-  DOIT(ushort);
-  DOIT(sint);
-  DOIT(uint);
-  DOIT(slong);
-  DOIT(ulong);
+/* ------------------------------------------------------------------ */
+
+  DEFINE_INTEGER_TEST(pointer);
+  DEFINE_INTEGER_TEST(char);
+  DEFINE_INTEGER_TEST(schar);
+  DEFINE_INTEGER_TEST(uchar);
+  DEFINE_INTEGER_TEST(sshort);
+  DEFINE_INTEGER_TEST(ushort);
+  DEFINE_INTEGER_TEST(sint);
+  DEFINE_INTEGER_TEST(uint);
+  DEFINE_INTEGER_TEST(slong);
+  DEFINE_INTEGER_TEST(ulong);
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(sllong);
+  DEFINE_INTEGER_TEST(sllong);
 #endif
 #ifdef MMUX_CC_TYPES_HAS_SLLONG
-  DOIT(ullong);
+  DEFINE_INTEGER_TEST(ullong);
 #endif
-  DOIT(sint8);
-  DOIT(uint8);
-  DOIT(sint16);
-  DOIT(uint16);
-  DOIT(sint32);
-  DOIT(uint32);
-  DOIT(sint64);
-  DOIT(uint64);
-  DOIT(byte);
-  DOIT(octet);
-  DOIT(ssize);
-  DOIT(usize);
-  DOIT(sintmax);
-  DOIT(uintmax);
-  DOIT(sintptr);
-  DOIT(uintptr);
-  DOIT(ptrdiff);
-  DOIT(libc_mode);
-  DOIT(libc_pid);
-  DOIT(libc_uid);
-  DOIT(libc_gid);
-  DOIT(off);
-  DOIT(wchar);
-  DOIT(wint);
-  DOIT(libc_rlim);
-  DOIT(libc_socklen);
-  DOIT(time);
-  DOIT(libc_ino);
-  DOIT(libc_dev);
-  DOIT(libc_nlink);
-  DOIT(libc_blkcnt);
+  DEFINE_INTEGER_TEST(sint8);
+  DEFINE_INTEGER_TEST(uint8);
+  DEFINE_INTEGER_TEST(sint16);
+  DEFINE_INTEGER_TEST(uint16);
+  DEFINE_INTEGER_TEST(sint32);
+  DEFINE_INTEGER_TEST(uint32);
+  DEFINE_INTEGER_TEST(sint64);
+  DEFINE_INTEGER_TEST(uint64);
+  DEFINE_INTEGER_TEST(byte);
+  DEFINE_INTEGER_TEST(octet);
+  DEFINE_INTEGER_TEST(ssize);
+  DEFINE_INTEGER_TEST(usize);
+  DEFINE_INTEGER_TEST(sintmax);
+  DEFINE_INTEGER_TEST(uintmax);
+  DEFINE_INTEGER_TEST(sintptr);
+  DEFINE_INTEGER_TEST(uintptr);
+  DEFINE_INTEGER_TEST(off);
+  DEFINE_INTEGER_TEST(ptrdiff);
+  DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(wchar);
+  DEFINE_INTEGER_TEST(wint);
+  DEFINE_INTEGER_TEST(libc_blkcnt);
+  DEFINE_INTEGER_TEST(libc_dev);
+  DEFINE_INTEGER_TEST(libc_gid);
+  DEFINE_INTEGER_TEST(libc_ino);
+  DEFINE_INTEGER_TEST(libc_mode);
+  DEFINE_INTEGER_TEST(libc_nlink);
+  DEFINE_INTEGER_TEST(libc_pid);
+  DEFINE_INTEGER_TEST(libc_rlim);
+  DEFINE_INTEGER_TEST(libc_socklen);
+  DEFINE_INTEGER_TEST(libc_uid);
 
   dprintf(2, " DONE.\n\n");
 }
