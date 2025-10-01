@@ -454,13 +454,13 @@ non--standard C language type implementing complex floating--point numbers havin
 Many  standard data types are wrapped into a data structure as follows:
 
 @example
-typedef slong_t        mmux_standard_slong_t;
+typedef signed long int         mmux_standard_slong_t;
 
 typedef struct mmux_slong_t @{ mmux_standard_slong_t value; @} mmux_slong_t;
 @end example
 
 @noindent
-and the definitions of some derived data type is as follows:
+and the definitions of some derived data types is as follows:
 
 @example
 typedef struct mmux_ssize_t @{ mmux_@value{ALIASSSIZE}_t; @} mmux_ssize_t;
