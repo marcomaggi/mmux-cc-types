@@ -553,6 +553,25 @@ DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(d128)
 
 
 /** --------------------------------------------------------------------
+ ** Comparison.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[cmp]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[not_equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[greater]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[less]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[greater_equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[less_equal]]])
+
+DEFINE_GENERIC_TERNARY_FUNCTION_FLONUM_FLONUMC([[[equal_absmargin]]])
+DEFINE_GENERIC_TERNARY_FUNCTION_FLONUM_FLONUMC([[[equal_relepsilon]]])
+
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[max]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[min]]])
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

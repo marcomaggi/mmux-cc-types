@@ -390,286 +390,31 @@ DEFINE_REAL_NUMBER_FLONUM_INLINE_FUNCTIONS(flonumcd128)
  ** Generic macros: flonum and flonumc rounding.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_UNARY_FUNCTION]]],[[[m4_dnl
-#define mmux_ctype_$1(VALUE)						\
-  (_Generic((VALUE),							\
-	   mmux_flonumfl_t:		mmux_flonumfl_$1,		\
-	   mmux_flonumdb_t:		mmux_flonumdb_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
-	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
-	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
-	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
-	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
-	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
-	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
-	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
-	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
-	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
-	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
-]]])m4_dnl
-	    \
-	   mmux_flonumcfl_t:		mmux_flonumcfl_$1,		\
-	   mmux_flonumcdb_t:		mmux_flonumcdb_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
-	   mmux_flonumcldb_t:		mmux_flonumcldb_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
-	   mmux_flonumcf32_t:		mmux_flonumcf32_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
-	   mmux_flonumcf64_t:		mmux_flonumcf64_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
-	   mmux_flonumcf128_t:		mmux_flonumcf128_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
-	   mmux_flonumcf32x_t:		mmux_flonumcf32x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
-	   mmux_flonumcf64x_t:		mmux_flonumcf64x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
-	   mmux_flonumcf128x_t:		mmux_flonumcf128x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
-	   mmux_flonumcd32_t:		mmux_flonumcd32_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
-	   mmux_flonumcd64_t:		mmux_flonumcd64_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
-	   mmux_flonumcd128_t:		mmux_flonumcd128_$1,		\
-]]])m4_dnl
-           default:			mmux_ctype_generic_error)(VALUE))
-]]])
-
-DEFINE_UNARY_FUNCTION(ceil)
-DEFINE_UNARY_FUNCTION(floor)
-DEFINE_UNARY_FUNCTION(trunc)
-DEFINE_UNARY_FUNCTION(rint)
-DEFINE_UNARY_FUNCTION(nearbyint)
-DEFINE_UNARY_FUNCTION(round)
-DEFINE_UNARY_FUNCTION(roundeven)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(ceil)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(floor)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(trunc)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(rint)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(nearbyint)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(round)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC(roundeven)
 
 
 /** --------------------------------------------------------------------
  ** Generic macros: flonum rounding.
  ** ----------------------------------------------------------------- */
 
-m4_define([[[DEFINE_UNARY_FUNCTION]]],[[[m4_dnl
-#define mmux_ctype_$1(VALUE)						\
-  (_Generic((VALUE),							\
-	   mmux_flonumfl_t:		mmux_flonumfl_$1,		\
-	   mmux_flonumdb_t:		mmux_flonumdb_$1,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
-	   mmux_flonumldb_t:		mmux_flonumldb_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
-	   mmux_flonumf32_t:		mmux_flonumf32_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
-	   mmux_flonumf64_t:		mmux_flonumf64_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
-	   mmux_flonumf128_t:		mmux_flonumf128_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
-	   mmux_flonumf32x_t:		mmux_flonumf32x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
-	   mmux_flonumf64x_t:		mmux_flonumf64x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
-	   mmux_flonumf128x_t:		mmux_flonumf128x_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
-	   mmux_flonumd32_t:		mmux_flonumd32_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
-	   mmux_flonumd64_t:		mmux_flonumd64_$1,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
-	   mmux_flonumd128_t:		mmux_flonumd128_$1,		\
-]]])m4_dnl
-           default:			mmux_ctype_generic_error)(VALUE))
-]]])
-
-DEFINE_UNARY_FUNCTION(lrint)
-DEFINE_UNARY_FUNCTION(lround)
-DEFINE_UNARY_FUNCTION(llrint)
-DEFINE_UNARY_FUNCTION(llround)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM(lrint)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM(lround)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM(llrint)
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM(llround)
 
 
 /** --------------------------------------------------------------------
- ** Generic macros: sign.
+ ** Other generic macros.
  ** ----------------------------------------------------------------- */
 
-#define mmux_ctype_sign(VALUE)						\
-  (_Generic((VALUE),							\
-	   mmux_char_t:			mmux_char_sign,			\
-           mmux_schar_t:		mmux_schar_sign,		\
-           mmux_uchar_t:		mmux_uchar_sign,		\
-           mmux_sshort_t:		mmux_sshort_sign,		\
-           mmux_ushort_t:		mmux_ushort_sign,		\
-           mmux_sint_t:			mmux_sint_sign,			\
-           mmux_uint_t:			mmux_uint_sign,			\
-           mmux_slong_t:		mmux_slong_sign,		\
-           mmux_ulong_t:		mmux_ulong_sign,		\
-	   mmux_sint8_t:		mmux_sint8_sign,		\
-	   mmux_uint8_t:		mmux_uint8_sign,		\
-	   mmux_sint16_t:		mmux_sint16_sign,		\
-	   mmux_uint16_t:		mmux_uint16_sign,		\
-	   mmux_sint32_t:		mmux_sint32_sign,		\
-	   mmux_uint32_t:		mmux_uint32_sign,		\
-	   mmux_sint64_t:		mmux_sint64_sign,		\
-	   mmux_uint64_t:		mmux_uint64_sign,		\
-									\
-m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
-	   mmux_sllong_t:		mmux_sllong_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
-	   mmux_ullong_t:		mmux_ullong_sign,		\
-]]])m4_dnl
-									\
-	   mmux_byte_t:			mmux_byte_sign,			\
-	   mmux_octet_t:		mmux_octet_sign,		\
-           mmux_ssize_t:		mmux_ssize_sign,		\
-           mmux_usize_t:		mmux_usize_sign,		\
-           mmux_sintmax_t:		mmux_sintmax_sign,		\
-           mmux_uintmax_t:		mmux_uintmax_sign,		\
-           mmux_sintptr_t:		mmux_sintptr_sign,		\
-           mmux_uintptr_t:		mmux_uintptr_sign,		\
-           mmux_off_t:			mmux_off_sign,			\
-           mmux_ptrdiff_t:		mmux_ptrdiff_sign,		\
-           mmux_wchar_t:		mmux_wchar_sign,		\
-           mmux_wint_t:			mmux_wint_sign,			\
-           mmux_time_t:			mmux_time_sign,			\
-	    \
-	   mmux_flonumfl_t:		mmux_flonumfl_sign,		\
-	   mmux_flonumdb_t:		mmux_flonumdb_sign,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
-	   mmux_flonumldb_t:		mmux_flonumldb_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
-	   mmux_flonumf32_t:		mmux_flonumf32_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
-	   mmux_flonumf64_t:		mmux_flonumf64_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
-	   mmux_flonumf128_t:		mmux_flonumf128_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
-	   mmux_flonumf32x_t:		mmux_flonumf32x_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
-	   mmux_flonumf64x_t:		mmux_flonumf64x_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
-	   mmux_flonumf128x_t:		mmux_flonumf128x_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
-	   mmux_flonumd32_t:		mmux_flonumd32_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
-	   mmux_flonumd64_t:		mmux_flonumd64_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
-	   mmux_flonumd128_t:		mmux_flonumd128_sign,		\
-]]])m4_dnl
-	    \
-	   mmux_flonumcfl_t:		mmux_flonumcfl_sign,		\
-	   mmux_flonumcdb_t:		mmux_flonumcdb_sign,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCLDB_M4,1,[[[m4_dnl
-	   mmux_flonumcldb_t:		mmux_flonumcldb_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32_M4,1,[[[m4_dnl
-	   mmux_flonumcf32_t:		mmux_flonumcf32_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64_M4,1,[[[m4_dnl
-	   mmux_flonumcf64_t:		mmux_flonumcf64_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128_M4,1,[[[m4_dnl
-	   mmux_flonumcf128_t:		mmux_flonumcf128_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF32X_M4,1,[[[m4_dnl
-	   mmux_flonumcf32x_t:		mmux_flonumcf32x_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF64X_M4,1,[[[m4_dnl
-	   mmux_flonumcf64x_t:		mmux_flonumcf64x_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCF128X_M4,1,[[[m4_dnl
-	   mmux_flonumcf128x_t:		mmux_flonumcf128x_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD32_M4,1,[[[m4_dnl
-	   mmux_flonumcd32_t:		mmux_flonumcd32_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD64_M4,1,[[[m4_dnl
-	   mmux_flonumcd64_t:		mmux_flonumcd64_sign,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
-	   mmux_flonumcd128_t:		mmux_flonumcd128_sign,		\
-]]])m4_dnl
-           default:			mmux_ctype_generic_error)(VALUE))
-
-
-/** --------------------------------------------------------------------
- ** Generic macros: modf.
- ** ----------------------------------------------------------------- */
-
-#define mmux_ctype_modf(VALUE1,VALUE2)					\
-  (_Generic((VALUE1),							\
-	   mmux_flonumfl_t:		mmux_flonumfl_modf,		\
-	   mmux_flonumdb_t:		mmux_flonumdb_modf,		\
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
-	   mmux_flonumldb_t:		mmux_flonumldb_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
-	   mmux_flonumf32_t:		mmux_flonumf32_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
-	   mmux_flonumf64_t:		mmux_flonumf64_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
-	   mmux_flonumf128_t:		mmux_flonumf128_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
-	   mmux_flonumf32x_t:		mmux_flonumf32x_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
-	   mmux_flonumf64x_t:		mmux_flonumf64x_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
-	   mmux_flonumf128x_t:		mmux_flonumf128x_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
-	   mmux_flonumd32_t:		mmux_flonumd32_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
-	   mmux_flonumd64_t:		mmux_flonumd64_modf,		\
-]]])m4_dnl
-m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
-	   mmux_flonumd128_t:		mmux_flonumd128_modf,		\
-]]])m4_dnl
-           default:			mmux_ctype_generic_error)(VALUE1,VALUE2))
+DEFINE_GENERIC_UNARY_FUNCTION_ARITHINT_FLONUM_FLONUMC(sign)
+DEFINE_GENERIC_BINARY_FUNCTION_FLONUM(modf)
 
 
 /** --------------------------------------------------------------------

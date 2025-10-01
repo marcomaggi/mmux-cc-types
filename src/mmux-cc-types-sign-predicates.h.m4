@@ -504,6 +504,22 @@ DEFINE_FLONUMC_SIGN_PREDICATES_PROTOS([[[flonumcd128]]],	[[[MMUX_CC_TYPES_HAS_FL
 
 
 /** --------------------------------------------------------------------
+ ** Generic macros.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_zero]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_positive]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_negative]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_non_positive]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_non_negative]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_finite]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_infinite]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[is_nan]]])
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC([[[is_normal]]])
+DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC([[[is_subnormal]]])
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

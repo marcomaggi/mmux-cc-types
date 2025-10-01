@@ -297,6 +297,52 @@ DEFINE_FLONUMC_COMPLEX_INLINE_FUNCTIONS([[[d128]]],	[[[MMUX_CC_TYPES_HAS_FLONUMC
 
 
 /** --------------------------------------------------------------------
+ ** Generic macros.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_GENERIC_UNARY_FUNCTION_ARITHINT_FLONUM_FLONUMC(real_part)
+DEFINE_GENERIC_UNARY_FUNCTION_ARITHINT_FLONUM_FLONUMC(imag_part)
+DEFINE_GENERIC_UNARY_FUNCTION_ARITHINT_FLONUM_FLONUMC(argument)
+DEFINE_GENERIC_UNARY_FUNCTION_ARITHINT_FLONUM_FLONUMC(conjugate)
+
+#define mmux_ctype_rectangular(VALUE1,VALUE2)			\
+  (_Generic((VALUE1),						\
+    mmux_flonumfl_t:		mmux_flonumcfl_rectangular,	\
+    mmux_flonumdb_t:		mmux_flonumcdb_rectangular,	\
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMLDB_M4,1,[[[m4_dnl
+    mmux_flonumldb_t:		mmux_flonumcldb_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32_M4,1,[[[m4_dnl
+    mmux_flonumf32_t:		mmux_flonumcf32_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64_M4,1,[[[m4_dnl
+    mmux_flonumf64_t:		mmux_flonumcf64_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128_M4,1,[[[m4_dnl
+    mmux_flonumf128_t:		mmux_flonumcf128_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF32X_M4,1,[[[m4_dnl
+    mmux_flonumf32x_t:		mmux_flonumcf32x_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF64X_M4,1,[[[m4_dnl
+    mmux_flonumf64x_t:		mmux_flonumcf64x_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMF128X_M4,1,[[[m4_dnl
+    mmux_flonumf128x_t:		mmux_flonumcf128x_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD32_M4,1,[[[m4_dnl
+    mmux_flonumd32_t:		mmux_flonumcd32_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD64_M4,1,[[[m4_dnl
+    mmux_flonumd64_t:		mmux_flonumcd64_rectangular,	\
+]]])m4_dnl
+m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
+    mmux_flonumd128_t:		mmux_flonumcd128_rectangular,	\
+]]])m4_dnl
+default:			mmux_ctype_generic_error)((VALUE1),(VALUE2)))
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 
