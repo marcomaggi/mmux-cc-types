@@ -160,6 +160,18 @@ DEFINE_BITWISE_FUNCS([[[libc_blkcnt]]])
 
 
 /** --------------------------------------------------------------------
+ ** Bitwise operations.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_POINTER([[[bitwise_and]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_POINTER([[[bitwise_or]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_POINTER([[[bitwise_xor]]])
+DEFINE_GENERIC_UNARY_FUNCTION_INTEGER_POINTER([[[bitwise_not]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_POINTER([[[bitwise_shl]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_POINTER([[[bitwise_shr]]])
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 

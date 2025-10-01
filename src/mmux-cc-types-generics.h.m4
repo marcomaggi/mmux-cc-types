@@ -1486,19 +1486,6 @@ DEFINE_BINARY_FUNCTION_SINT_AND_INEXACT_REAL_NUMBERS_ONLY([[[yn]]])
 
 
 /** --------------------------------------------------------------------
- ** Bitwise operations.
- ** ----------------------------------------------------------------- */
-
-DEFINE_BINARY_FUNCTION_EXACT_REAL_NUMBERS_ONLY([[[bitwise_and]]])
-DEFINE_BINARY_FUNCTION_EXACT_REAL_NUMBERS_ONLY([[[bitwise_or]]])
-DEFINE_BINARY_FUNCTION_EXACT_REAL_NUMBERS_ONLY([[[bitwise_xor]]])
-DEFINE_UNARY_FUNCTION_EXACT_REAL_NUMBERS_ONLY([[[bitwise_not]]])
-
-DEFINE_BINARY_FUNCTION_EXACT_REAL_NUMBERS_ONLY_AND_SINT([[[bitwise_shl]]])
-DEFINE_BINARY_FUNCTION_EXACT_REAL_NUMBERS_ONLY_AND_SINT([[[bitwise_shr]]])
-
-
-/** --------------------------------------------------------------------
  ** Type inspection.
  ** ----------------------------------------------------------------- */
 
