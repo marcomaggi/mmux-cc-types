@@ -71,7 +71,7 @@ mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt,
 /* Order is important here!  There are a lot of inline functions. */
 
 #include <mmux-cc-types-typedefs.h>
-#include <mmux-cc-types-sign-predicates.h>
+#include <mmux-cc-types-predicates.h>
 #include <mmux-cc-types-complex-numbers.h>
 #include <mmux-cc-types-constants.h>
 #include <mmux-cc-types-arithmetics.h>

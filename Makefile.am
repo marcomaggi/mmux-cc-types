@@ -115,8 +115,8 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp-internals.h.m4		\
 	src/mmux-cc-types-libdfp-mathematics.h.m4	\
 	src/mmux-cc-types-libdfp-real-numbers.h.m4	\
-	src/mmux-cc-types-libdfp-sign-predicates.h.m4	\
-	src/mmux-cc-types-libdfp-stringrep.h.m4	\
+	src/mmux-cc-types-libdfp-predicates.h.m4	\
+	src/mmux-cc-types-libdfp-stringrep.h.m4		\
 	src/mmux-cc-types-libdfp-typedefs.h.m4		\
 	\
 	src/mmux-cc-types-libdfp-arithmetics.c.m4	\
@@ -125,7 +125,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-libdfp-constants.c.m4		\
 	src/mmux-cc-types-libdfp-mathematics.c.m4	\
 	src/mmux-cc-types-libdfp-real-numbers.c.m4	\
-	src/mmux-cc-types-libdfp-sign-predicates.c.m4	\
+	src/mmux-cc-types-libdfp-predicates.c.m4	\
 	src/mmux-cc-types-libdfp-stringrep.c.m4
 
 if WANT_LIBDFP
@@ -137,7 +137,7 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp-internals.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-predicates.h		\
 	src/mmux-cc-types-libdfp-stringrep.h		\
 	src/mmux-cc-types-libdfp-typedefs.h		\
 	\
@@ -147,7 +147,7 @@ MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES	= \
 	src/mmux-cc-types-libdfp-constants.c		\
 	src/mmux-cc-types-libdfp-mathematics.c		\
 	src/mmux-cc-types-libdfp-real-numbers.c		\
-	src/mmux-cc-types-libdfp-sign-predicates.c	\
+	src/mmux-cc-types-libdfp-predicates.c		\
 	src/mmux-cc-types-libdfp-stringrep.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_LIBDFP_BUILT_SOURCES)
@@ -166,7 +166,7 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp-internals.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-predicates.h		\
 	src/mmux-cc-types-libdfp-stringrep.h		\
 	src/mmux-cc-types-libdfp-typedefs.h		\
 	\
@@ -176,7 +176,7 @@ libmmux_cc_types_libdfp_la_SOURCES	= \
 	src/mmux-cc-types-libdfp-constants.c		\
 	src/mmux-cc-types-libdfp-mathematics.c		\
 	src/mmux-cc-types-libdfp-real-numbers.c		\
-	src/mmux-cc-types-libdfp-sign-predicates.c	\
+	src/mmux-cc-types-libdfp-predicates.c		\
 	src/mmux-cc-types-libdfp-stringrep.c
 
 include_HEADERS			+= \
@@ -186,7 +186,7 @@ include_HEADERS			+= \
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-predicates.h		\
 	src/mmux-cc-types-libdfp-stringrep.h		\
 	src/mmux-cc-types-libdfp-typedefs.h
 
@@ -200,7 +200,7 @@ src/mmux-cc-types-libdfp-%.$(OBJEXT): \
 	src/mmux-cc-types-libdfp-internals.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-predicates.h		\
 	src/mmux-cc-types-libdfp-stringrep.h		\
 	src/mmux-cc-types-libdfp-typedefs.h
 
@@ -218,11 +218,10 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-comparison.h.m4		\
 	src/mmux-cc-types-complex-numbers.h.m4		\
 	src/mmux-cc-types-constants.h.m4		\
-	src/mmux-cc-types-generics.h.m4			\
 	src/mmux-cc-types-mathematics.h.m4		\
 	src/mmux-cc-types-pointers-api.h.m4		\
 	src/mmux-cc-types-real-numbers.h.m4		\
-	src/mmux-cc-types-sign-predicates.h.m4		\
+	src/mmux-cc-types-predicates.h.m4		\
 	src/mmux-cc-types-stringrep.h.m4		\
 	\
 	src/mmux-cc-types-arithmetics.c.m4		\
@@ -233,7 +232,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-mathematics.c.m4		\
 	src/mmux-cc-types-parsers.c.m4			\
 	src/mmux-cc-types-real-numbers.c.m4		\
-	src/mmux-cc-types-sign-predicates.c.m4		\
+	src/mmux-cc-types-predicates.c.m4		\
 	src/mmux-cc-types-sprinters.c.m4
 
 MMUX_CC_TYPES_BUILT_SOURCES	= \
@@ -246,11 +245,10 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
-	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
-	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-predicates.h			\
 	src/mmux-cc-types-stringrep.h			\
 	\
 	src/mmux-cc-types-arithmetics.c			\
@@ -261,7 +259,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-mathematics.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-real-numbers.c		\
-	src/mmux-cc-types-sign-predicates.c		\
+	src/mmux-cc-types-predicates.c			\
 	src/mmux-cc-types-sprinters.c
 
 BUILT_SOURCES	+= $(MMUX_CC_TYPES_BUILT_SOURCES)
@@ -282,11 +280,10 @@ include_HEADERS			+= \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
-	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
-	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-predicates.h			\
 	src/mmux-cc-types-stringrep.h
 
 lib_LTLIBRARIES			= libmmux-cc-types.la
@@ -306,11 +303,10 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
-	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
-	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-predicates.h			\
 	src/mmux-cc-types-stringrep.h			\
 	\
 	src/mmux-cc-types-arithmetics.c			\
@@ -321,7 +317,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-mathematics.c			\
 	src/mmux-cc-types-parsers.c			\
 	src/mmux-cc-types-real-numbers.c		\
-	src/mmux-cc-types-sign-predicates.c		\
+	src/mmux-cc-types-predicates.c			\
 	src/mmux-cc-types-sprinters.c
 
 if WANT_LIBDFP
@@ -331,7 +327,7 @@ libmmux_cc_types_la_SOURCES	+= \
 	src/mmux-cc-types-libdfp-constants.h		\
 	src/mmux-cc-types-libdfp-mathematics.h		\
 	src/mmux-cc-types-libdfp-real-numbers.h		\
-	src/mmux-cc-types-libdfp-sign-predicates.h	\
+	src/mmux-cc-types-libdfp-predicates.h		\
 	src/mmux-cc-types-libdfp-typedefs.h		\
 	src/mmux-cc-types-libdfp-stringrep.h
 endif
@@ -356,11 +352,10 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
-	src/mmux-cc-types-generics.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
-	src/mmux-cc-types-sign-predicates.h		\
+	src/mmux-cc-types-predicates.h			\
 	src/mmux-cc-types-stringrep.h
 
 
@@ -387,7 +382,7 @@ check_PROGRAMS	= \
 	tests/test-parsers			\
 	tests/test-pointers-api			\
 	tests/test-real-numbers			\
-	tests/test-sign-predicates		\
+	tests/test-predicates			\
 	tests/test-sprint			\
 	tests/test-generic-macros
 
@@ -413,8 +408,8 @@ tests_test_constants_LDADD		= $(mmux_cc_types_tests_ldadd)
 tests_test_sprint_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_sprint_LDADD			= $(mmux_cc_types_tests_ldadd)
 
-tests_test_sign_predicates_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
-tests_test_sign_predicates_LDADD	= $(mmux_cc_types_tests_ldadd)
+tests_test_predicates_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_predicates_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_arithmetics_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_arithmetics_LDADD		= $(mmux_cc_types_tests_ldadd)
@@ -428,7 +423,7 @@ tests_test_mathematics_LDADD		= $(mmux_cc_types_tests_ldadd)
 tests_test_parsers_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
 tests_test_parsers_LDADD		= $(mmux_cc_types_tests_ldadd)
 
-tests_test_real_numbers_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)
+tests_test_real_numbers_CPPFLAGS	= $(mmux_cc_types_tests_cppflags)
 tests_test_real_numbers_LDADD		= $(mmux_cc_types_tests_ldadd)
 
 tests_test_experiments_CPPFLAGS		= $(mmux_cc_types_tests_cppflags)

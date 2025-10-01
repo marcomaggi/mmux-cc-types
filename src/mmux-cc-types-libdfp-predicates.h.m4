@@ -21,8 +21,8 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MMUX_CC_TYPES_LIBDFP_SIGN_PREDICATES_H
-#define MMUX_CC_TYPES_LIBDFP_SIGN_PREDICATES_H		1
+#ifndef MMUX_CC_TYPES_LIBDFP_PREDICATES_H
+#define MMUX_CC_TYPES_LIBDFP_PREDICATES_H		1
 
 
 /** --------------------------------------------------------------------
@@ -97,6 +97,6 @@ DEFINE_STANDARD_FLONUMCD_PREDICATE_PROTOS_AND_INLINE_FUNCTIONS(128)
  ** Done.
  ** ----------------------------------------------------------------- */
 
-#endif /* define MMUX_CC_TYPES_LIBDFP_SIGN_PREDICATES_H */
+#endif /* define MMUX_CC_TYPES_LIBDFP_PREDICATES_H */
 
 /* end of file */

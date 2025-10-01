@@ -5,7 +5,7 @@
 
   Abstract
 
-	This is module implements the sign predicates functions.  This header file is
+	This  is module  implements the  predicates functions.   This header  file is
 	included by the main header "mmux-cc-types.h"  and it must not be included by
 	itself.
 
@@ -23,8 +23,8 @@
   program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MMUX_CC_TYPES_SIGN_PREDICATES_H
-#define MMUX_CC_TYPES_SIGN_PREDICATES_H 1
+#ifndef MMUX_CC_TYPES_PREDICATES_H
+#define MMUX_CC_TYPES_PREDICATES_H 1
 
 
 /** --------------------------------------------------------------------
@@ -415,7 +415,7 @@ DEFINE_STANDARD_FLONUMC_SIGN_PREDICATES_PROTOS(f128x)
 #if ((defined MMUX_CC_TYPES_HAS_FLONUMD32) || \
      (defined MMUX_CC_TYPES_HAS_FLONUMD64) || \
      (defined MMUX_CC_TYPES_HAS_FLONUMD128))
-#  include <mmux-cc-types-libdfp-sign-predicates.h>
+#  include <mmux-cc-types-libdfp-predicates.h>
 #endif
 
 
@@ -1346,6 +1346,6 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
  ** Done.
  ** ----------------------------------------------------------------- */
 
-#endif /* defined MMUX_CC_TYPES_SIGN_PREDICATES_H */
+#endif /* defined MMUX_CC_TYPES_PREDICATES_H */
 
 /* end of file */
