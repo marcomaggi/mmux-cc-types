@@ -80,7 +80,6 @@ mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt,
 #include <mmux-cc-types-bitwise.h>
 #include <mmux-cc-types-real-numbers.h>
 #include <mmux-cc-types-stringrep.h>
-#include <mmux-cc-types-generics.h>
 #include <mmux-cc-types-pointers-api.h>
 
 
