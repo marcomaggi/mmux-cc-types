@@ -174,6 +174,14 @@ DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]])
 
 
 /** --------------------------------------------------------------------
+ ** Generic macros.
+ ** ----------------------------------------------------------------- */
+
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG([[[fprintf]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG([[[dprintf]]])
+
+
+/** --------------------------------------------------------------------
  ** Done.
  ** ----------------------------------------------------------------- */
 
