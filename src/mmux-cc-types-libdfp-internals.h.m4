@@ -72,7 +72,7 @@
 /* ------------------------------------------------------------------ */
 
 #include <mmux-cc-types-libdfp-typedefs.h>
-#include <mmux-cc-types-libdfp-sign-predicates.h>
+#include <mmux-cc-types-libdfp-predicates.h>
 #include <mmux-cc-types-libdfp-real-numbers.h>
 #include <mmux-cc-types-libdfp-complex-numbers.h>
 #include <mmux-cc-types-libdfp-constants.h>
