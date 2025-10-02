@@ -786,7 +786,16 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_libc_ino_t:		((VALUE).value),		\
            mmux_libc_dev_t:		((VALUE).value),		\
            mmux_libc_nlink_t:		((VALUE).value),		\
-           mmux_libc_blkcnt_t:		((VALUE).value)))
+           mmux_libc_blkcnt_t:		((VALUE).value),		\
+           /* NOTE: We do want a default here,  to make it possible to use this macro	\
+	    *  itself as default of a supermacro definition:				\
+	    *										\
+	    *  _Generic((VALUE),							\
+	    *    ...,									\
+	    *    default: mmux_ctype_value(VALUE))					\
+	    *										\
+	    */										\
+           default:			mmux_ctype_generic_error(VALUE)))
 
 
 /** --------------------------------------------------------------------
