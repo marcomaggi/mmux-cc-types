@@ -1015,7 +1015,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 ]]]) m4_dnl
 
 
-m4_define([[[DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG]]],[[[m4_dnl
+m4_define([[[DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG_NO_RESULT]]],[[[m4_dnl
 #define mmux_ctype_$1(VALUE1,VALUE2)					\
   (_Generic((VALUE2),							\
 	   mmux_char_t:			mmux_char_$1,			\
@@ -1130,7 +1130,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
            mmux_pointer_t:		mmux_pointer_$1)((VALUE1),(VALUE2)))
 
-#define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
+#define mmux_ctype_$1_p(VALUE1,VALUE2)					\
   (_Generic((VALUE2),							\
 	   mmux_char_t *:		mmux_char_$1_p,			\
            mmux_schar_t *:		mmux_schar_$1_p,		\
@@ -1242,7 +1242,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_pointer_t *:		mmux_pointer_$1_p)((RESULT),(VALUE1),(VALUE2)))
+           mmux_pointer_t *:		mmux_pointer_$1_p)((VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 
