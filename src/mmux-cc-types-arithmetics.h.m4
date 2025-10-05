@@ -484,10 +484,10 @@ DEFINE_GENERIC_UNARY_FUNCTION_ARITHINT_FLONUM([[[decr]]])
 #define mmux_ctype_sub_from_variable(VARNAME,VALUE)	((VARNAME) = mmux_ctype_sub((VARNAME),(VALUE)))
 
 #define mmux_ctype_incr_variable(VARNAME)	\
-     ((VARNAME) = mmux_ctype_add((VARNAME),(mmux_ctype_constant_one(VALUE))))
+     ((VARNAME) = mmux_ctype_add((VARNAME),(mmux_ctype_constant_one(VARNAME))))
 
 #define mmux_ctype_decr_variable(VARNAME)	\
-     ((VARNAME) = mmux_ctype_sub((VARNAME),(mmux_ctype_constant_one(VALUE))))
+     ((VARNAME) = mmux_ctype_sub((VARNAME),(mmux_ctype_constant_one(VARNAME))))
 
 
 /** --------------------------------------------------------------------
