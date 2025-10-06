@@ -124,6 +124,12 @@ mmux_cc_types_inline_decl mmux_usize_t
 mmux_$1_constant_sizeof (void)
 {
   return mmux_usize(sizeof(mmux_$1_t));
+
+}
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_$1_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_$1_t));
 }]]])
 m4_divert(0)m4_dnl
 DEFINE_EXACT_INTEGER_ALIASED_TYPE_FUNCTIONS(byte,		MMUX_CC_TYPES_STEM_ALIAS_BYTE)
@@ -190,6 +196,11 @@ mmux_pointer_constant_minimum (void)
 }
 mmux_cc_types_inline_decl mmux_usize_t
 mmux_pointer_constant_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_pointer_t));
+}
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_pointer_sizeof (void)
 {
   return mmux_usize(sizeof(mmux_pointer_t));
 }
@@ -398,7 +409,13 @@ mmux_cc_types_inline_decl mmux_usize_t
 mmux_flonum$1_constant_sizeof (void)
 {
   return mmux_usize(sizeof(mmux_flonum$1_t));
-}]]])]]])
+}
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_flonum$1_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_flonum$1_t));
+}
+]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUM_CONSTANTS(fl)
 DEFINE_FLONUM_CONSTANTS(db)
@@ -467,7 +484,13 @@ mmux_cc_types_inline_decl mmux_usize_t
 mmux_flonumc$1_constant_sizeof (void)
 {
   return mmux_usize(sizeof(mmux_flonumc$1_t));
-}]]])]]])
+}
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_flonumc$1_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_flonumc$1_t));
+}
+]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_FLONUMC_CONSTANTS(fl)
 DEFINE_FLONUMC_CONSTANTS(db)
