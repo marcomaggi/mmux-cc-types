@@ -1438,7 +1438,8 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 
 
 @macro MmuxDefineCFunctionSizeof{STEM}
-@deftypefun mmux_sint_t mmux_\STEM\_constant_sizeof (void)
+@deftypefun mmux_sint_t mmux_\STEM\_sizeof (void)
+@deftypefunx mmux_sint_t mmux_\STEM\_constant_sizeof (void)
 Return a positive integer representing the size in bytes of the C language type
 @objtype{mmux_\STEM\_t}.
 @end deftypefun

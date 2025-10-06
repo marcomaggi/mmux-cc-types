@@ -62,6 +62,11 @@ mmux_$1_constant_sizeof (void)
 {
   return mmux_usize(sizeof(mmux_$1_t));
 }
+mmux_cc_types_inline_decl mmux_usize_t
+mmux_$1_sizeof (void)
+{
+  return mmux_usize(sizeof(mmux_$1_t));
+}
 
 DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS($1,	zero,	0)
 DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS($1,	one,	1)
