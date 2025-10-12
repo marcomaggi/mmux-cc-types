@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-10-01 08:15:48 marco>
+;; Time-stamp: <2025-10-12 06:42:34 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -140,22 +140,29 @@
     "mmux_ctype_constant_zero"
     "mmux_ctype_constant_one"))
 
+(defun mmux-cc-types-make-regexp-opt-from-list-of-strings (LIST)
+  "Build regex for generic macros."
+  (let ((LIST_P		(mapcar #'(lambda (STR)
+				    (format "%s_p" STR))
+				LIST)))
+    (regexp-opt (append LIST LIST_P) 'symbols)))
+
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/complex
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/complex 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/complex))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/arithmetics
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/arithmetics 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/arithmetics))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/bitwise
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/bitwise 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/bitwise))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/predicates
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/predicates 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/predicates))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/comparison
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/comparison 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/comparison))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/mathematics
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/mathematics 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/mathematics))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/stringrep
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/stringrep 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/stringrep))
 (defconst mmux-cc-types-font-lock-rex/known-generic-macros/miscellaneous
-  (regexp-opt mmux-cc-types-font-lock-list/known-generic-macros/miscellaneous 'symbols))
+  (mmux-cc-types-make-regexp-opt-from-list-of-strings mmux-cc-types-font-lock-list/known-generic-macros/miscellaneous))
 
 
 (defconst mmux-cc-types-font-lock-list/known-functions-misc
