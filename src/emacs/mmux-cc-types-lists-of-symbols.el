@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-10-12 06:42:34 marco>
+;; Time-stamp: <2025-10-30 06:20:13 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -77,6 +77,7 @@
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/comparison
   '("mmux_ctype_equal"
+    "mmux_ctype_not_equal"
     "mmux_ctype_greater"
     "mmux_ctype_less"
     "mmux_ctype_greater_equal"
