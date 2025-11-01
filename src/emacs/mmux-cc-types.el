@@ -157,6 +157,8 @@
     (,mmux-cc-types-font-lock-rex/known-functions-flonumcd32	1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-flonumcd64	1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-flonumcd128	1 mmux-cc-types-function-face keep)
+
+    (,mmux-cc-types-font-lock-rex/known-functions-ternary-comparison-result	1 mmux-cc-types-function-face keep)
     )
 
   ;;This  true value  as HOW  argument causes  this specification  to be  appended to  the value  of

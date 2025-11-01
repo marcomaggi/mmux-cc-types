@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-10-30 06:20:13 marco>
+;; Time-stamp: <2025-11-01 08:04:50 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -506,6 +506,43 @@
 (mmux-cc-type-define-complex-list flonumcd32)
 (mmux-cc-type-define-complex-list flonumcd64)
 (mmux-cc-type-define-complex-list flonumcd128)
+
+(progn
+  (defconst mmux-cc-types-font-lock-list/known-functions-ternary-comparison-result
+    (quote ("mmux_make_ternary_comparison_result"
+	    "mmux_make_ternary_comparison_result_equal"
+	    "mmux_make_ternary_comparison_result_greater"
+	    "mmux_make_ternary_comparison_result_less"
+	    "mmux_ternary_comparison_result_p"
+	    "mmux_make_ternary_comparison_result_equal_p"
+	    "mmux_make_ternary_comparison_result_greater_p"
+	    "mmux_make_ternary_comparison_result_less_p"
+	    "mmux_ternary_comparison_result_is_equal"
+	    "mmux_ternary_comparison_result_is_not_equal"
+	    "mmux_ternary_comparison_result_is_less"
+	    "mmux_ternary_comparison_result_is_greater"
+	    "mmux_ternary_comparison_result_is_less_equal"
+	    "mmux_ternary_comparison_result_is_greater_equal"
+	    "mmux_ternary_comparison_result_is_equal_p"
+	    "mmux_ternary_comparison_result_is_not_equal_p"
+	    "mmux_ternary_comparison_result_is_less_p"
+	    "mmux_ternary_comparison_result_is_greater_p"
+	    "mmux_ternary_comparison_result_is_less_equal_p"
+	    "mmux_ternary_comparison_result_is_greater_equal_p"
+	    "mmux_ternary_comparison_result_equal"
+	    "mmux_ternary_comparison_result_not_equal"
+	    "mmux_ternary_comparison_result_less"
+	    "mmux_ternary_comparison_result_greater"
+	    "mmux_ternary_comparison_result_less_equal"
+	    "mmux_ternary_comparison_result_greater_equal"
+	    "mmux_ternary_comparison_result_equal_p"
+	    "mmux_ternary_comparison_result_not_equal_p"
+	    "mmux_ternary_comparison_result_less_p"
+	    "mmux_ternary_comparison_result_greater_p"
+	    "mmux_ternary_comparison_result_less_equal_p"
+	    "mmux_ternary_comparison_result_greater_equal_p")))
+  (defconst mmux-cc-types-font-lock-rex/known-functions-ternary-comparison-result
+    (regexp-opt mmux-cc-types-font-lock-list/known-functions-ternary-comparison-result 'symbols)))
 
 
 ;;;; done
