@@ -101,7 +101,7 @@ mmux_$1_$2_p (bool * rop, mmux_$1_t const * op1, mmux_$1_t const * op2, mmux_$1_
 /* ------------------------------------------------------------------ */
 
 m4_define([[[DEFINE_SINT_COMPARISON]]],[[[mmux_cc_types_inline_decl bool
-mmux_$1_$2_p (mmux_sint_t * rop, mmux_$1_t const * op1, mmux_$1_t const * op2)
+mmux_$1_$2_p (mmux_ternary_comparison_result_t * rop, mmux_$1_t const * op1, mmux_$1_t const * op2)
 {
   *rop = mmux_$1_$2(*op1, *op2);
   return false;

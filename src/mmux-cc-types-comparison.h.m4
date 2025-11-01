@@ -28,6 +28,216 @@
 
 
 /** --------------------------------------------------------------------
+ ** Ternary comparison results.
+ ** ----------------------------------------------------------------- */
+
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
+mmux_make_ternary_comparison_result_equal (void)
+{
+  return mmux_ternary_comparison_result_literal(0);
+}
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
+mmux_make_ternary_comparison_result_greater (void)
+{
+  return mmux_ternary_comparison_result_literal(+1);
+}
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
+mmux_make_ternary_comparison_result_less (void)
+{
+  return mmux_ternary_comparison_result_literal(-1);
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_p (mmux_ternary_comparison_result_t * cmp_result_p, mmux_standard_sint_t cmpnum)
+{
+  *cmp_result_p = mmux_ternary_comparison_result(cmpnum);
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_make_ternary_comparison_result_equal_p (mmux_ternary_comparison_result_t * cmp_result_p)
+{
+  *cmp_result_p = mmux_make_ternary_comparison_result_equal();
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_make_ternary_comparison_result_greater_p (mmux_ternary_comparison_result_t * cmp_result_p)
+{
+  *cmp_result_p = mmux_make_ternary_comparison_result_greater();
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_make_ternary_comparison_result_less_p (mmux_ternary_comparison_result_t * cmp_result_p)
+{
+  *cmp_result_p = mmux_make_ternary_comparison_result_less();
+  return false;
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_equal (mmux_ternary_comparison_result_t value)
+{
+  return (0 == value.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_not_equal (mmux_ternary_comparison_result_t value)
+{
+  return (0 != value.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_less (mmux_ternary_comparison_result_t value)
+{
+  return (0 > value.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_greater (mmux_ternary_comparison_result_t value)
+{
+  return (0 < value.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_less_equal (mmux_ternary_comparison_result_t value)
+{
+  return (0 >= value.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_greater_equal (mmux_ternary_comparison_result_t value)
+{
+  return (0 <= value.value)? true : false;
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_equal_p (bool * result_p, mmux_ternary_comparison_result_t value)
+{
+  *result_p = (0 == value.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_not_equal_p (bool * result_p, mmux_ternary_comparison_result_t value)
+{
+  *result_p = (0 != value.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_less_p (bool * result_p, mmux_ternary_comparison_result_t value)
+{
+  *result_p = (0 > value.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_greater_p (bool * result_p, mmux_ternary_comparison_result_t value)
+{
+  *result_p = (0 < value.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_less_equal_p (bool * result_p, mmux_ternary_comparison_result_t value)
+{
+  *result_p = (0 >= value.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_is_greater_equal_p (bool * result_p, mmux_ternary_comparison_result_t value)
+{
+  *result_p = (0 <= value.value)? true : false;
+  return false;
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_equal (mmux_ternary_comparison_result_t value1,
+				      mmux_ternary_comparison_result_t value2)
+{
+  return (value1.value == value2.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_not_equal (mmux_ternary_comparison_result_t value1,
+					  mmux_ternary_comparison_result_t value2)
+{
+  return (value1.value != value2.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_less (mmux_ternary_comparison_result_t value1,
+				     mmux_ternary_comparison_result_t value2)
+{
+  return (value1.value < value2.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_greater (mmux_ternary_comparison_result_t value1,
+					mmux_ternary_comparison_result_t value2)
+{
+  return (value1.value > value2.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_less_equal (mmux_ternary_comparison_result_t value1,
+					   mmux_ternary_comparison_result_t value2)
+{
+  return (value1.value <= value2.value)? true : false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_greater_equal (mmux_ternary_comparison_result_t value1,
+					      mmux_ternary_comparison_result_t value2)
+{
+  return (value1.value >= value2.value)? true : false;
+}
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_equal_p (bool * result_p,
+					mmux_ternary_comparison_result_t value1,
+					mmux_ternary_comparison_result_t value2)
+{
+  *result_p = (value1.value == value2.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_not_equal_p (bool * result_p,
+					    mmux_ternary_comparison_result_t value1,
+					    mmux_ternary_comparison_result_t value2)
+{
+  *result_p = (value1.value != value2.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_less_p (bool * result_p,
+				       mmux_ternary_comparison_result_t value1,
+				       mmux_ternary_comparison_result_t value2)
+{
+  *result_p = (value1.value < value2.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_greater_p (bool * result_p,
+					  mmux_ternary_comparison_result_t value1,
+					  mmux_ternary_comparison_result_t value2)
+{
+  *result_p = (value1.value > value2.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_less_equal_p (bool * result_p,
+					     mmux_ternary_comparison_result_t value1,
+					     mmux_ternary_comparison_result_t value2)
+{
+  *result_p = (value1.value <= value2.value)? true : false;
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_ternary_comparison_result_greater_equal_p (bool * result_p,
+						mmux_ternary_comparison_result_t value1,
+						mmux_ternary_comparison_result_t value2)
+{
+  *result_p = (value1.value >= value2.value)? true : false;
+  return false;
+}
+
+
+/** --------------------------------------------------------------------
  ** Pointers.
  ** ----------------------------------------------------------------- */
 
@@ -41,15 +251,15 @@ mmux_pointer_not_equal (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   return (op1 != op2)? true : false;
 }
-mmux_cc_types_inline_decl mmux_sint_t
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
 mmux_pointer_cmp (mmux_pointer_t op1, mmux_pointer_t op2)
 {
   if (op1 > op2) {
-    return mmux_sint(+1);
+    return mmux_make_ternary_comparison_result_greater();
   } else if (op1 < op2) {
-    return mmux_sint(-1);
+    return mmux_make_ternary_comparison_result_less();
   } else {
-    return mmux_sint(0);
+    return mmux_make_ternary_comparison_result_equal();
   }
 }
 mmux_cc_types_inline_decl bool
@@ -134,11 +344,11 @@ mmux_cc_types_inline_decl mmux_standard_sint_t
 mmux_standard_$1_cmp (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
 {
   if (mmux_standard_$1_greater(op1, op2)) {
-    return +1;
+    return mmux_standard_sint_literal(+1);
   } else if (mmux_standard_$1_less(op1, op2)) {
-    return -1;
+    return mmux_standard_sint_literal(-1);
   } else {
-    return 0;
+    return mmux_standard_sint_literal(0);
   }
 }]]])]]])
 m4_divert(0)m4_dnl
@@ -207,10 +417,10 @@ DEFINE_EXACT_INTEGER_COMPARISON_WRAPPER_FUNCTION($1,	greater)
 DEFINE_EXACT_INTEGER_COMPARISON_WRAPPER_FUNCTION($1,	less)
 DEFINE_EXACT_INTEGER_COMPARISON_WRAPPER_FUNCTION($1,	greater_equal)
 DEFINE_EXACT_INTEGER_COMPARISON_WRAPPER_FUNCTION($1,	less_equal)
-mmux_cc_types_inline_decl mmux_sint_t
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
 mmux_$1_cmp (mmux_$1_t op1, mmux_$1_t op2)
 {
-  return mmux_sint(mmux_standard_$1_cmp(op1.value, op2.value));
+  return mmux_ternary_comparison_result(mmux_standard_$1_cmp(op1.value, op2.value));
 }
 mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_max (mmux_$1_t op1, mmux_$1_t op2)
@@ -304,11 +514,11 @@ mmux_cc_types_inline_decl mmux_standard_sint_t
 mmux_standard_flonum$1_cmp (mmux_standard_flonum$1_t op1, mmux_standard_flonum$1_t op2)
 {
   if (mmux_standard_flonum$1_greater(op1, op2)) {
-    return +1;
+    return mmux_standard_sint_literal(+1);
   } else if (mmux_standard_flonum$1_less(op1, op2)) {
-    return -1;
+    return mmux_standard_sint_literal(-11);
   } else {
-    return 0;
+    return mmux_standard_sint_literal(0);
   }
 }
 mmux_cc_types_decl mmux_cc_types_binary_operation_standard_flonum$1_t  mmux_standard_flonum$1_max __attribute__((__const__));
@@ -356,11 +566,11 @@ mmux_standard_flonumc$1_cmp (mmux_standard_flonumc$1_t op1, mmux_standard_flonum
   auto	aop2 = mmux_standard_flonumc$1_absolute(op2);
 
   if (mmux_standard_flonum$1_greater(aop1, aop2)) {
-    return +1;
+    return mmux_standard_sint_literal(+1);
   } else if (mmux_standard_flonum$1_less(aop1, aop2)) {
-    return -1;
+    return mmux_standard_sint_literal(-1);
   } else {
-    return 0;
+    return mmux_standard_sint_literal(0);
   }
 }
 mmux_cc_types_inline_decl bool
@@ -464,10 +674,10 @@ DEFINE_FLONUM_COMPARISON_TERNARY_PREDICATE_FUNCTION($1,		equal_relepsilon)
 DEFINE_FLONUM_COMPARISON_BINARY_OPERATION_FUNCTION($1,		max)
 DEFINE_FLONUM_COMPARISON_BINARY_OPERATION_FUNCTION($1,		min)
 
-mmux_cc_types_inline_decl mmux_sint_t
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
 mmux_flonum$1_cmp (mmux_flonum$1_t op1, mmux_flonum$1_t op2)
 {
-  return mmux_sint(mmux_standard_flonum$1_cmp(op1.value, op2.value));
+  return mmux_ternary_comparison_result(mmux_standard_flonum$1_cmp(op1.value, op2.value));
 }
 ]]])]]])
 m4_divert(0)m4_dnl
@@ -509,10 +719,10 @@ DEFINE_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,		less)
 DEFINE_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,		greater_equal)
 DEFINE_FLONUMC_COMPARISON_PREDICATE_WRAPPER($1,		less_equal)
 
-mmux_cc_types_inline_decl mmux_sint_t
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
 mmux_flonumc$1_cmp (mmux_flonumc$1_t op1, mmux_flonumc$1_t op2)
 {
-  return mmux_sint(mmux_standard_flonumc$1_cmp(op1.value, op2.value));
+  return mmux_ternary_comparison_result(mmux_standard_flonumc$1_cmp(op1.value, op2.value));
 }
 mmux_cc_types_inline_decl bool
 mmux_flonumc$1_equal_absmargin (mmux_flonumc$1_t op1, mmux_flonumc$1_t op2, mmux_flonumc$1_t mrg)
@@ -557,12 +767,12 @@ DEFINE_FLONUMC_COMPARISON_INLINE_FUNCTIONS(d128)
  ** ----------------------------------------------------------------- */
 
 DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[cmp]]])
-DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[equal]]])
-DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[not_equal]]])
-DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[greater]]])
-DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[less]]])
-DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[greater_equal]]])
-DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER([[[less_equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_TERNARY([[[equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_TERNARY([[[not_equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_TERNARY([[[greater]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_TERNARY([[[less]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_TERNARY([[[greater_equal]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_TERNARY([[[less_equal]]])
 
 DEFINE_GENERIC_TERNARY_FUNCTION_FLONUM_FLONUMC([[[equal_absmargin]]])
 DEFINE_GENERIC_TERNARY_FUNCTION_FLONUM_FLONUMC([[[equal_relepsilon]]])

@@ -3640,11 +3640,184 @@ placeholder for the type of the operand.
 
 
 @menu
+* comparison result::           Representing comparison functions results.
 * comparison exact::            Exact comparison functions.
 * comparison mimmax::           Maximum and minimum values.
 * comparison absmargin::        Absolute margin comparison criterion.
 * comparison relepsilon::       Relative epsilon comparison criterion.
 @end menu
+
+@c page
+@node comparison result
+@section Representing comparison functions results
+
+
+The standard C language library has established a representation for the result of binary comparison
+functions like @cfunc{strcmp} and @cfunc{memcmp}; the result is represented by an exact integer
+whose value is:
+
+@itemize
+@item
+zero if the first operand is equal to the second operand;
+
+@item
+negative if the first operand is less than the second operand;
+
+@item
+positive if the first operand is greater than the second operand;
+@end itemize
+
+@noindent
+@value{PACKAGE} represents such result with the following @api{}, in which all the functions are
+defined as @code{inline}.
+
+
+@deftp {Struct Type} mmux_ternary_comparison_result_t
+Data structure type representing the result of a comparison operation.
+@end deftp
+
+
+@deftypefun mmux_ternary_comparison_result_t mmux_ternary_comparison_result (mmux_standard_sint_t @var{cmpnum})
+Build and return a new instance of @objtype{mmux_ternary_comparison_result_t}; the returned value
+represents the result of a binary comparison function in which, respectively:
+
+@itemize
+@item
+if @var{cmpnum} is zero: the first operand is equal to the second operand;
+
+@item
+if @var{cmpnum} is negative: the first operand is less than the second operand;
+@item
+
+if @var{cmpnum} is positive: the first operand is greater than the second operand.
+@end itemize
+@end deftypefun
+
+
+@deftypefun mmux_ternary_comparison_result_t mmux_ternary_comparison_result_equal (void)
+@deftypefunx mmux_ternary_comparison_result_t mmux_ternary_comparison_result_less (void)
+@deftypefunx mmux_ternary_comparison_result_t mmux_ternary_comparison_result_greater (void)
+Build and return a new instance of @objtype{mmux_ternary_comparison_result_t} representing the
+result of a binary comparison function in which, respectively:
+
+@itemize
+@item
+the first operand is equal to the second operand;
+
+@item
+the first operand is less than the second operand;
+
+@item
+the first operand is greater than the second operand.
+@end itemize
+@end deftypefun
+
+
+@deftypefun bool mmux_ternary_comparison_result_p (mmux_ternary_comparison_result_t * @var{cmp_result_p}, mmux_standard_sint_t @var{cmpnum})
+Build a new instance of @objtype{mmux_ternary_comparison_result_t} and store it in the variable
+referenced by @var{cmp_result_p}.  The return value is always @cfalse{}.
+@end deftypefun
+
+
+@deftypefun bool mmux_ternary_comparison_result_equal_p (mmux_ternary_comparison_result_t * @var{cmp_result_p})
+@deftypefunx bool mmux_ternary_comparison_result_less_p (mmux_ternary_comparison_result_t * @var{cmp_result_p})
+@deftypefunx bool mmux_ternary_comparison_result_greater_p (mmux_ternary_comparison_result_t * @var{cmp_result_p})
+Build a new instance of @objtype{mmux_ternary_comparison_result_t} and store it in the variable
+referenced by @var{cmp_result_p}; the instance represents the result of a binary comparison function
+in which, respectively:
+
+@itemize
+@item
+the first operand is equal to the second operand;
+
+@item
+the first operand is less than the second operand;
+
+@item
+the first operand is greater than the second operand.
+@end itemize
+
+The return value is always @cfalse{}.
+@end deftypefun
+
+
+@deftypefun bool mmux_ternary_comparison_result_is_equal (mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_less (mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_greater (mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_less_equal (mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_greater_equal (mmux_ternary_comparison_result_t @var{value})
+Return @ctrue{} if @var{value} represents the result of a binary comparison function in which,
+respectively:
+
+@itemize
+@item
+the first operand is equal to the second operand;
+
+@item
+the first operand is less than the second operand;
+
+@item
+the first operand is greater than the second operand.
+
+@item
+the first operand is less than, or equal to, the second operand;
+
+@item
+the first operand is greater than, or equal to, the second operand.
+@end itemize
+@end deftypefun
+
+
+@deftypefun bool mmux_ternary_comparison_result_is_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_less_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_greater_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_less_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_greater_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
+Store @ctrue{} in the variable referenced by @var{result_p} if @var{value} represents the result of
+a binary comparison function in which, respectively:
+
+@itemize
+@item
+the first operand is equal to the second operand;
+
+@item
+the first operand is less than the second operand;
+
+@item
+the first operand is greater than the second operand.
+
+@item
+the first operand is less than, or equal to, the second operand;
+
+@item
+the first operand is greater than, or equal, the second operand;
+@end itemize
+
+@noindent
+otherwise store @cfalse{}.  The return value is always @cfalse{}.
+@end deftypefun
+
+
+@deftypefun bool mmux_ternary_comparison_result_equal (mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_not_equal (mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_less (mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_greater (mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_less_equal (mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_greater_equal (mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+Compare the two results @vari{value} and @varii{value} and return @ctrue{} if they satisfy the
+specified predicate; otherwise return @cfalse{}.
+@end deftypefun
+
+
+@deftypefun bool mmux_ternary_comparison_result_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_not_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_less_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_greater_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_less_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+@deftypefunx bool mmux_ternary_comparison_result_greater_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @vari{value}, mmux_ternary_comparison_result_t @varii{value})
+Compare the two results @vari{value} and @varii{value} and store @ctrue{} in the variable referenced
+by @var{result_p}if they satisfy the specified predicate; otherwise store @cfalse{}.
+@end deftypefun
 
 @c page
 @node comparison exact
@@ -3654,12 +3827,11 @@ placeholder for the type of the operand.
 To compare two numbers we do:
 
 @example
-mmux_slong_t      A = mmux_slong_literal(123);
-mmux_slong_t      B = mmux_slong_literal(456);
-mmux_sint_t       V = mmux_slong_cmp(A, B);
+mmux_slong_t                      A = mmux_slong_literal(123);
+mmux_slong_t                      B = mmux_slong_literal(456);
+mmux_ternary_comparison_result_t  V = mmux_slong_cmp(A, B);
 
-mmux_sint_dprintf(2, V);        @print{} -1
-if (0 == V.value) @{
+if (mmux_ternary_comparison_result_is_equal(V)) @{
   ...
 @}
 @end example
@@ -3668,12 +3840,11 @@ if (0 == V.value) @{
 or more generically:
 
 @example
-auto              A = mmux_slong_literal(123);
-auto              B = mmux_slong_literal(456);
-mmux_sint_t       V = mmux_ctype_cmp(A, B);
+auto  A = mmux_slong_literal(123);
+auto  B = mmux_slong_literal(456);
+auto  V = mmux_ctype_cmp(A, B);
 
-mmux_sint_dprintf(2, V);        @print{} -1
-if (0 == V.value) @{
+if (mmux_ternary_comparison_result_is_equal(V)) @{
   ...
 @}
 @end example
@@ -3694,7 +3865,7 @@ functions return @ctrue{} if the operands are in the named relation; otherwise r
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineTypeComparisonExactFunction{STEM}
-@deftypefun mmux_sint_t mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefun mmux_ternary_comparison_result_t mmux_\STEM\_cmp (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_not_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
@@ -3708,7 +3879,7 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} mmux_sint_t mmux_ctype_cmp (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefn {Generic Macro} mmux_ternary_comparison_result_t mmux_ctype_cmp (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_not_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_greater (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})

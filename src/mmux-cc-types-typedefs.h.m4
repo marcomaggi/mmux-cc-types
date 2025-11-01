@@ -353,6 +353,8 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonu
 typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
 typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
 
+typedef struct mmux_ternary_comparison_result_t { mmux_sint_t; } mmux_ternary_comparison_result_t;
+
 typedef struct mmux_ssize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
 typedef struct mmux_usize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
 typedef struct mmux_sintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sintmax_t;
@@ -477,6 +479,14 @@ DEFINE_TYPE_MAKERS(libc_ino)
 DEFINE_TYPE_MAKERS(libc_dev)
 DEFINE_TYPE_MAKERS(libc_nlink)
 DEFINE_TYPE_MAKERS(libc_blkcnt)
+
+mmux_cc_types_inline_decl mmux_ternary_comparison_result_t
+mmux_ternary_comparison_result (mmux_standard_sint_t the_value)
+{
+  return (mmux_ternary_comparison_result_t){ .value = the_value };
+}
+#define mmux_ternary_comparison_result_literal(VALUE)	\
+  (mmux_ternary_comparison_result(mmux_standard_sint_literal(VALUE)))
 
 
 /** --------------------------------------------------------------------

@@ -322,15 +322,15 @@ test_comparison (void)
     {
       mmux_slong_t	A = mmux_slong_literal(123);
       mmux_slong_t	B = mmux_slong_literal(456);
-      mmux_sint_t	V = mmux_slong_cmp(A, B);
+      auto		V = mmux_slong_cmp(A, B);
 
       dprintf(2, "%s: V=%d\n", __func__, V.value);
     }
     dprintf(2, "%s: generically compare two numbers\n", __func__);
     {
-      auto		A = mmux_slong_literal(123);
-      auto		B = mmux_slong_literal(456);
-      mmux_sint_t	V = mmux_ctype_cmp(A, B);
+      auto	A = mmux_slong_literal(123);
+      auto	B = mmux_slong_literal(456);
+      auto	V = mmux_ctype_cmp(A, B);
 
       dprintf(2, "%s: V=%d\n", __func__, V.value);
     }
