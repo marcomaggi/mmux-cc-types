@@ -3742,6 +3742,7 @@ The return value is always @cfalse{}.
 
 
 @deftypefun bool mmux_ternary_comparison_result_is_equal (mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_not_equal (mmux_ternary_comparison_result_t @var{value})
 @deftypefunx bool mmux_ternary_comparison_result_is_less (mmux_ternary_comparison_result_t @var{value})
 @deftypefunx bool mmux_ternary_comparison_result_is_greater (mmux_ternary_comparison_result_t @var{value})
 @deftypefunx bool mmux_ternary_comparison_result_is_less_equal (mmux_ternary_comparison_result_t @var{value})
@@ -3752,6 +3753,9 @@ respectively:
 @itemize
 @item
 the first operand is equal to the second operand;
+
+@item
+the first operand is not equal to the second operand;
 
 @item
 the first operand is less than the second operand;
@@ -3769,6 +3773,7 @@ the first operand is greater than, or equal to, the second operand.
 
 
 @deftypefun bool mmux_ternary_comparison_result_is_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
+@deftypefunx bool mmux_ternary_comparison_result_is_not_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
 @deftypefunx bool mmux_ternary_comparison_result_is_less_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
 @deftypefunx bool mmux_ternary_comparison_result_is_greater_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
 @deftypefunx bool mmux_ternary_comparison_result_is_less_equal_p (bool * @var{result_p}, mmux_ternary_comparison_result_t @var{value})
@@ -3779,6 +3784,9 @@ a binary comparison function in which, respectively:
 @itemize
 @item
 the first operand is equal to the second operand;
+
+@item
+the first operand is not equal to the second operand;
 
 @item
 the first operand is less than the second operand;
