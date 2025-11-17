@@ -100,6 +100,7 @@ test_constant_maximum (void)
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
   DOIT_FOR_EXACT_INTEGER(time);
+  DOIT_FOR_EXACT_INTEGER(clock);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -277,6 +278,7 @@ test_constant_minimum (void)
   DOIT_FOR_EXACT_SIGNED_INTEGER(wchar);
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(wint);
   DOIT_FOR_EXACT_SIGNED_INTEGER(time);
+  DOIT_FOR_EXACT_SIGNED_INTEGER(clock);
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_UNSIGNED_INTEGER(libc_rlim);
 
@@ -452,6 +454,7 @@ test_constant_zero (void)
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
   DOIT_FOR_EXACT_INTEGER(time);
+  DOIT_FOR_EXACT_INTEGER(clock);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -824,6 +827,7 @@ test_constant_one (void)
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
   DOIT_FOR_EXACT_INTEGER(time);
+  DOIT_FOR_EXACT_INTEGER(clock);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -977,6 +981,7 @@ test_constant_two (void)
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
   DOIT_FOR_EXACT_INTEGER(time);
+  DOIT_FOR_EXACT_INTEGER(clock);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -1133,6 +1138,7 @@ test_constant_ten (void)
   DOIT_FOR_EXACT_INTEGER(wchar);
   DOIT_FOR_EXACT_INTEGER(wint);
   DOIT_FOR_EXACT_INTEGER(time);
+  DOIT_FOR_EXACT_INTEGER(clock);
   DOIT_FOR_EXACT_INTEGER(libc_socklen);
   DOIT_FOR_EXACT_INTEGER(libc_rlim);
   DOIT_FOR_EXACT_INTEGER(libc_ino);
@@ -2342,6 +2348,7 @@ test_constant_sizeof (void)
   DOIT(wchar);
   DOIT(wint);
   DOIT(time);
+  DOIT(clock);
   DOIT(libc_socklen);
   DOIT(libc_rlim);
   DOIT(libc_ino);

@@ -85,6 +85,7 @@ DEFINE_TEST_SPRINTER_FUNCTION(libc_gid,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(wchar,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(wint,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(time,		123,	"123")
+DEFINE_TEST_SPRINTER_FUNCTION(clock,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(libc_socklen,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(libc_rlim,		123,	"123")
 DEFINE_TEST_SPRINTER_FUNCTION(libc_ino,		123,	"123")
@@ -738,6 +739,19 @@ test_sprint_with_base_time (void)
   dprintf(2, " DONE\n");
 }
 static void
+test_sprint_with_base_clock (void)
+{
+  dprintf(2, "%s: running test", __func__);
+  {
+    DOIT_FOR_THIS_NUMBER(clock,	 +123,	10,	"+123");
+    DOIT_FOR_THIS_NUMBER(clock,	+1234,	10,	"+1234");
+    DOIT_FOR_THIS_NUMBER(clock,	-1234,	10,	"-1234");
+    DOIT_FOR_THIS_NUMBER(clock,	+123,	16,	"+7B");
+    DOIT_FOR_THIS_NUMBER(clock,	-123,	16,	"-7B");
+  }
+  dprintf(2, " DONE\n");
+}
+static void
 test_sprint_with_base_libc_socklen (void)
 {
   dprintf(2, "%s: running test", __func__);
@@ -856,6 +870,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_wchar();		}
   if (1) {	test_sprint_wint();		}
   if (1) {	test_sprint_time();		}
+  if (1) {	test_sprint_clock();		}
   if (1) {	test_sprint_libc_socklen();		}
   if (1) {	test_sprint_libc_rlim();		}
 
@@ -979,6 +994,7 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
   if (1) {	test_sprint_with_base_wchar();		}
   if (1) {	test_sprint_with_base_wint();		}
   if (1) {	test_sprint_with_base_time();		}
+  if (1) {	test_sprint_with_base_clock();		}
   if (1) {	test_sprint_with_base_libc_socklen();	}
   if (1) {	test_sprint_with_base_libc_rlim();		}
 

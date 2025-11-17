@@ -96,6 +96,7 @@ DEFINE_STRINGREP_PROTOS([[[ptrdiff]]])
 DEFINE_STRINGREP_PROTOS([[[wchar]]])
 DEFINE_STRINGREP_PROTOS([[[wint]]])
 DEFINE_STRINGREP_PROTOS([[[time]]])
+DEFINE_STRINGREP_PROTOS([[[clock]]])
 DEFINE_STRINGREP_PROTOS([[[libc_socklen]]])
 DEFINE_STRINGREP_PROTOS([[[libc_rlim]]])
 DEFINE_STRINGREP_PROTOS([[[libc_ino]]])
@@ -260,6 +261,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		"mmux_wchar_t",			\
            mmux_wint_t:			"mmux_wint_t",			\
            mmux_time_t:			"mmux_time_t",			\
+           mmux_clock_t:		"mmux_clock_t",			\
            mmux_libc_socklen_t:		"mmux_libc_socklen_t",		\
            mmux_libc_rlim_t:		"mmux_libc_rlim_t",		\
            mmux_libc_ino_t:		"mmux_libc_ino_t",		\
@@ -377,6 +379,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		"wchar",		\
            mmux_wint_t:			"wint",			\
            mmux_time_t:			"time",			\
+           mmux_clock_t:		"clock",		\
            mmux_libc_socklen_t:		"libc_socklen",		\
            mmux_libc_rlim_t:		"libc_rlim",		\
            mmux_libc_ino_t:		"libc_ino",		\
@@ -497,6 +500,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_sprint,			\
            mmux_wint_t:			mmux_wint_sprint,			\
            mmux_time_t:			mmux_time_sprint,			\
+           mmux_clock_t:		mmux_clock_sprint,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_sprint,		\
            mmux_libc_rlim_t:		mmux_libc_rlim_sprint,			\
            mmux_libc_ino_t:		mmux_libc_ino_sprint,			\
@@ -614,6 +618,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_sprint_size,			\
            mmux_wint_t:			mmux_wint_sprint_size,			\
            mmux_time_t:			mmux_time_sprint_size,			\
+           mmux_clock_t:		mmux_clock_sprint_size,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_sprint_size,		\
            mmux_libc_rlim_t:		mmux_libc_rlim_sprint_size,		\
            mmux_libc_ino_t:		mmux_libc_ino_sprint_size,		\
@@ -702,6 +707,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_sprint_with_base,			\
            mmux_wint_t:			mmux_wint_sprint_with_base,			\
            mmux_time_t:			mmux_time_sprint_with_base,			\
+           mmux_clock_t:		mmux_clock_sprint_with_base,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_sprint_with_base,		\
            mmux_libc_rlim_t:		mmux_libc_rlim_sprint_with_base,		\
            mmux_libc_ino_t:		mmux_libc_ino_sprint_with_base,			\
@@ -754,6 +760,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_dprintf_with_base,			\
            mmux_wint_t:			mmux_wint_dprintf_with_base,			\
            mmux_time_t:			mmux_time_dprintf_with_base,			\
+           mmux_clock_t:		mmux_clock_dprintf_with_base,			\
            mmux_libc_socklen_t:		mmux_libc_socklen_dprintf_with_base,		\
            mmux_libc_rlim_t:		mmux_libc_rlim_dprintf_with_base,		\
            mmux_libc_ino_t:		mmux_libc_ino_dprintf_with_base,		\

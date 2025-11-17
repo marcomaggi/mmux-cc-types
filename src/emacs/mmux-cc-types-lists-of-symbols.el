@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-11-01 08:04:50 marco>
+;; Time-stamp: <2025-11-17 09:22:40 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -468,6 +468,7 @@
 (mmux-cc-type-define-integer-list wchar)
 (mmux-cc-type-define-integer-list wint)
 (mmux-cc-type-define-integer-list time)
+(mmux-cc-type-define-integer-list clock)
 (mmux-cc-type-define-integer-list libc_socklen)
 (mmux-cc-type-define-integer-list libc_rlim)
 (mmux-cc-type-define-integer-list libc_ino)

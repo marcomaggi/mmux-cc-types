@@ -81,6 +81,7 @@ typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF[[[]]]_t		mmux_stand
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WCHAR[[[]]]_t		mmux_standard_wchar_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_WINT[[[]]]_t		mmux_standard_wint_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_TIME[[[]]]_t		mmux_standard_time_t;
+typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_CLOCK[[[]]]_t		mmux_standard_clock_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN[[[]]]_t	mmux_standard_libc_socklen_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM[[[]]]_t		mmux_standard_libc_rlim_t;
 typedef mmux_standard_[[[]]]MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO[[[]]]_t		mmux_standard_libc_ino_t;
@@ -197,6 +198,7 @@ DEFINE_ALIASED_INTEGER_LITERAL_MACRO(ptrdiff,	[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIF
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wchar,	[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(wint,	[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(time,	[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
+DEFINE_ALIASED_INTEGER_LITERAL_MACRO(clock,	[[[MMUX_CC_TYPES_STEM_ALIAS_CLOCK]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_socklen,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_rlim,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM]]])
 DEFINE_ALIASED_INTEGER_LITERAL_MACRO(libc_ino,	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO]]])
@@ -355,26 +357,27 @@ typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
 
 typedef struct mmux_ternary_comparison_result_t { mmux_sint_t; } mmux_ternary_comparison_result_t;
 
-typedef struct mmux_ssize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
-typedef struct mmux_usize_t	{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
-typedef struct mmux_sintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sintmax_t;
-typedef struct mmux_uintmax_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UINTMAX;	}     mmux_uintmax_t;
-typedef struct mmux_sintptr_t	{ MMUX_CC_TYPES_TYPE_ALIAS_SINTPTR;	}     mmux_sintptr_t;
-typedef struct mmux_uintptr_t	{ MMUX_CC_TYPES_TYPE_ALIAS_UINTPTR;	}     mmux_uintptr_t;
-typedef struct mmux_libc_mode_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_MODE;	}     mmux_libc_mode_t;
-typedef struct mmux_off_t	{ MMUX_CC_TYPES_TYPE_ALIAS_OFF;		}     mmux_off_t;
-typedef struct mmux_libc_pid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_PID;		}     mmux_libc_pid_t;
-typedef struct mmux_libc_uid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_UID;		}     mmux_libc_uid_t;
-typedef struct mmux_libc_gid_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_GID;		}     mmux_libc_gid_t;
-typedef struct mmux_ptrdiff_t	{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
-typedef struct mmux_wchar_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
-typedef struct mmux_wint_t	{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
-typedef struct mmux_time_t	{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
-typedef struct mmux_libc_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_SOCKLEN;	}     mmux_libc_socklen_t;
-typedef struct mmux_libc_rlim_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_RLIM;	}     mmux_libc_rlim_t;
+typedef struct mmux_ssize_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
+typedef struct mmux_usize_t		{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
+typedef struct mmux_sintmax_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sintmax_t;
+typedef struct mmux_uintmax_t		{ MMUX_CC_TYPES_TYPE_ALIAS_UINTMAX;	}     mmux_uintmax_t;
+typedef struct mmux_sintptr_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SINTPTR;	}     mmux_sintptr_t;
+typedef struct mmux_uintptr_t		{ MMUX_CC_TYPES_TYPE_ALIAS_UINTPTR;	}     mmux_uintptr_t;
+typedef struct mmux_libc_mode_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_MODE;	}     mmux_libc_mode_t;
+typedef struct mmux_off_t		{ MMUX_CC_TYPES_TYPE_ALIAS_OFF;		}     mmux_off_t;
+typedef struct mmux_libc_pid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_PID;	}     mmux_libc_pid_t;
+typedef struct mmux_libc_uid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_UID;	}     mmux_libc_uid_t;
+typedef struct mmux_libc_gid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_GID;	}     mmux_libc_gid_t;
+typedef struct mmux_ptrdiff_t		{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
+typedef struct mmux_wchar_t		{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
+typedef struct mmux_wint_t		{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
+typedef struct mmux_time_t		{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
+typedef struct mmux_clock_t		{ MMUX_CC_TYPES_TYPE_ALIAS_CLOCK;	}     mmux_clock_t;
+typedef struct mmux_libc_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_SOCKLEN;}     mmux_libc_socklen_t;
+typedef struct mmux_libc_rlim_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_RLIM;	}     mmux_libc_rlim_t;
 
-typedef struct mmux_libc_ino_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_INO;		}     mmux_libc_ino_t;
-typedef struct mmux_libc_dev_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_DEV;		}     mmux_libc_dev_t;
+typedef struct mmux_libc_ino_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_INO;	}     mmux_libc_ino_t;
+typedef struct mmux_libc_dev_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_DEV;	}     mmux_libc_dev_t;
 typedef struct mmux_libc_nlink_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_NLINK;	}     mmux_libc_nlink_t;
 typedef struct mmux_libc_blkcnt_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_BLKCNT;	}     mmux_libc_blkcnt_t;
 
@@ -473,6 +476,7 @@ DEFINE_TYPE_MAKERS(ptrdiff)
 DEFINE_TYPE_MAKERS(wchar)
 DEFINE_TYPE_MAKERS(wint)
 DEFINE_TYPE_MAKERS(time)
+DEFINE_TYPE_MAKERS(clock)
 DEFINE_TYPE_MAKERS(libc_socklen)
 DEFINE_TYPE_MAKERS(libc_rlim)
 DEFINE_TYPE_MAKERS(libc_ino)
@@ -556,6 +560,7 @@ DEFINE_PROTOTYPES_TYPEDEFS([[[ptrdiff]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[wchar]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[wint]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[time]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[clock]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[libc_socklen]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[libc_rlim]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[libc_ino]]])
@@ -791,6 +796,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		((VALUE).value),		\
            mmux_wint_t:			((VALUE).value),		\
            mmux_time_t:			((VALUE).value),		\
+           mmux_clock_t:		((VALUE).value),		\
            mmux_libc_socklen_t:		((VALUE).value),		\
            mmux_libc_rlim_t:		((VALUE).value),		\
            mmux_libc_ino_t:		((VALUE).value),		\

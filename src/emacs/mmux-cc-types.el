@@ -119,6 +119,7 @@
     (,mmux-cc-types-font-lock-rex/known-functions-wchar		1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-wint		1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-time		1 mmux-cc-types-function-face keep)
+    (,mmux-cc-types-font-lock-rex/known-functions-clock		1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-libc_socklen	1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-libc_rlim	1 mmux-cc-types-function-face keep)
     (,mmux-cc-types-font-lock-rex/known-functions-libc_ino	1 mmux-cc-types-function-face keep)

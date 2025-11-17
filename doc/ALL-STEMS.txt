@@ -72,6 +72,7 @@ ptrdiff
 wchar
 wint
 time
+clock
 libc_socklen
 libc_rlim
 libc_ino

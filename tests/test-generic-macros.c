@@ -82,6 +82,7 @@ test_ctype_is_signed (void)
   DOIT(wchar,	true);
   DOIT(wint,	false);
   DOIT(time,	true);
+  DOIT(clock,	true);
   DOIT(libc_socklen,	false);
   DOIT(libc_rlim,	false);
 
@@ -221,6 +222,7 @@ test_ctype_is_unsigned (void)
   DOIT(wchar,	false);
   DOIT(wint,	true);
   DOIT(time,	false);
+  DOIT(clock,	false);
   DOIT(libc_socklen,	true);
   DOIT(libc_rlim,	true);
 
@@ -356,6 +358,7 @@ test_ctype_is_exact_integer (void)
   DOIT(wchar,	true);
   DOIT(wint,	true);
   DOIT(time,	true);
+  DOIT(clock,	true);
   DOIT(libc_socklen,	true);
   DOIT(libc_rlim,	true);
 
@@ -491,6 +494,7 @@ test_ctype_is_real_number (void)
   DOIT(wchar,	true);
   DOIT(wint,	true);
   DOIT(time,	true);
+  DOIT(clock,	true);
   DOIT(libc_socklen,	true);
   DOIT(libc_rlim,	true);
 
@@ -626,6 +630,7 @@ test_ctype_is_complex_number (void)
   DOIT(wchar,	false);
   DOIT(wint,	false);
   DOIT(time,	false);
+  DOIT(clock,	false);
   DOIT(libc_socklen,	false);
   DOIT(libc_rlim,	false);
 
@@ -761,6 +766,7 @@ test_ctype_is_flonumc (void)
   DOIT(wchar,	false);
   DOIT(wint,	false);
   DOIT(time,	false);
+  DOIT(clock,	false);
   DOIT(libc_socklen,	false);
   DOIT(libc_rlim,	false);
 
@@ -896,6 +902,7 @@ test_ctype_is_flonum (void)
   DOIT(wchar,	false);
   DOIT(wint,	false);
   DOIT(time,	false);
+  DOIT(clock,	false);
   DOIT(libc_socklen,	false);
   DOIT(libc_rlim,	false);
 

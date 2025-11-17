@@ -145,7 +145,8 @@ test_real_numbers_sign (void)
   DOIT_FOR_SIGNED_EXACT_INTEGER(ptrdiff);
   DOIT_FOR_UNSIGNED_EXACT_INTEGER(wchar);
   DOIT_FOR_UNSIGNED_EXACT_INTEGER(wint);
-  DOIT_FOR_UNSIGNED_EXACT_INTEGER(time);
+  DOIT_FOR_SIGNED_EXACT_INTEGER(time);
+  DOIT_FOR_SIGNED_EXACT_INTEGER(clock);
 
 /* ------------------------------------------------------------------ */
 

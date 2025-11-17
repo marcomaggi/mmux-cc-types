@@ -116,6 +116,7 @@ test_arithmetics_add (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -292,6 +293,7 @@ test_arithmetics_sub (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -451,6 +453,7 @@ test_arithmetics_mul (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -616,6 +619,7 @@ test_arithmetics_div (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -760,6 +764,7 @@ test_arithmetics_neg (void)
   DEFINE_SIGNED_INTEGER_TEST(wchar);
   DEFINE_SIGNED_INTEGER_TEST(wint);
   DEFINE_SIGNED_INTEGER_TEST(time);
+  DEFINE_SIGNED_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -923,6 +928,7 @@ test_arithmetics_inverse (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -1099,6 +1105,7 @@ test_arithmetics_absolute (void)
   DEFINE_SIGNED_INTEGER_TEST(wchar);
   DEFINE_UNSIGNED_INTEGER_TEST(wint);
   DEFINE_SIGNED_INTEGER_TEST(time);
+  DEFINE_SIGNED_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -1252,6 +1259,7 @@ test_arithmetics_modulo (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -1366,6 +1374,7 @@ test_arithmetics_remainder (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
   /* ------------------------------------------------------------------ */
 
@@ -1479,6 +1488,7 @@ test_arithmetics_incr (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 
@@ -1593,6 +1603,7 @@ test_arithmetics_decr (void)
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
 
 /* ------------------------------------------------------------------ */
 

@@ -151,7 +151,8 @@ test_sign_predicate_is_zero (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(clock);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);
@@ -364,7 +365,8 @@ test_sign_predicate_is_positive (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(clock);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);
@@ -577,7 +579,8 @@ test_sign_predicate_is_negative (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(clock);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);
@@ -790,7 +793,8 @@ test_sign_predicate_is_non_positive (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(clock);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);
@@ -1003,7 +1007,8 @@ test_sign_predicate_is_non_negative (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(clock);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);
@@ -1216,7 +1221,8 @@ test_sign_predicate_is_finite (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(clock);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);
@@ -1429,7 +1435,8 @@ test_sign_predicate_is_infinite (void)
   DOIT_UNSIGNED_INTEGER(wint);
   DOIT_UNSIGNED_INTEGER(libc_rlim);
   DOIT_UNSIGNED_INTEGER(libc_socklen);
-  DOIT_UNSIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
+  DOIT_SIGNED_INTEGER(time);
   DOIT_UNSIGNED_INTEGER(libc_ino);
   DOIT_UNSIGNED_INTEGER(libc_dev);
   DOIT_UNSIGNED_INTEGER(libc_nlink);

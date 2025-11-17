@@ -159,6 +159,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
 	   mmux_libc_mode_t:		mmux_libc_mode_$1,		\
 	   mmux_libc_pid_t:		mmux_libc_pid_$1,		\
 	   mmux_libc_uid_t:		mmux_libc_uid_$1,		\
@@ -273,6 +274,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
 	   mmux_libc_mode_t *:		mmux_libc_mode_$1_p,		\
 	   mmux_libc_pid_t *:		mmux_libc_pid_$1_p,		\
 	   mmux_libc_uid_t *:		mmux_libc_uid_$1_p,		\
@@ -399,7 +401,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t:		mmux_libc_dev_$1,		\
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_time_t:			mmux_time_$1,			\
+	   mmux_clock_t:		mmux_clock_$1)(VALUE))
 
 #define mmux_ctype_$1_p(RESULT,VALUE)					\
   (_Generic((VALUE),							\
@@ -512,7 +515,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE)))
 ]]]) m4_dnl
 
 
@@ -596,7 +600,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t:		mmux_libc_dev_$1,		\
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)(VALUE))
 
 #define mmux_ctype_$1_p(RESULT,VALUE)					\
   (_Generic((VALUE),							\
@@ -677,7 +682,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE)))
 ]]]) m4_dnl
 
 
@@ -730,7 +736,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
 	   mmux_pointer_t:		mmux_pointer_$1,		\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)(VALUE))
 
 #define mmux_ctype_$1_p(RESULT,VALUE)					\
   (_Generic((VALUE),							\
@@ -780,7 +787,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
 	   mmux_pointer_t *:		mmux_pointer_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE)))
 ]]]) m4_dnl
 
 
@@ -888,6 +896,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
 	   mmux_libc_mode_t:		mmux_libc_mode_$1,		\
 	   mmux_libc_pid_t:		mmux_libc_pid_$1,		\
 	   mmux_libc_uid_t:		mmux_libc_uid_$1,		\
@@ -1003,6 +1012,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
 	   mmux_libc_mode_t *:		mmux_libc_mode_$1_p,		\
 	   mmux_libc_pid_t *:		mmux_libc_pid_$1_p,		\
 	   mmux_libc_uid_t *:		mmux_libc_uid_$1_p,		\
@@ -1120,6 +1130,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
 	   mmux_libc_mode_t:		mmux_libc_mode_$1,		\
 	   mmux_libc_pid_t:		mmux_libc_pid_$1,		\
 	   mmux_libc_uid_t:		mmux_libc_uid_$1,		\
@@ -1234,6 +1245,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
 	   mmux_libc_mode_t *:		mmux_libc_mode_$1_p,		\
 	   mmux_libc_pid_t *:		mmux_libc_pid_$1_p,		\
 	   mmux_libc_uid_t *:		mmux_libc_uid_$1_p,		\
@@ -1351,6 +1363,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
 	   mmux_libc_mode_t:		mmux_libc_mode_$1,		\
 	   mmux_libc_pid_t:		mmux_libc_pid_$1,		\
 	   mmux_libc_uid_t:		mmux_libc_uid_$1,		\
@@ -1465,6 +1478,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
 	   mmux_libc_mode_t *:		mmux_libc_mode_$1_p,		\
 	   mmux_libc_pid_t *:		mmux_libc_pid_$1_p,		\
 	   mmux_libc_uid_t *:		mmux_libc_uid_$1_p,		\
@@ -1591,7 +1605,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t:		mmux_libc_dev_$1,		\
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
   (_Generic((VALUE1),							\
@@ -1704,7 +1719,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 
@@ -1788,7 +1804,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t:		mmux_libc_dev_$1,		\
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
   (_Generic((VALUE1),							\
@@ -1869,7 +1886,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 
@@ -1922,7 +1940,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
 	   mmux_pointer_t:		mmux_pointer_$1,		\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
   (_Generic((VALUE1),							\
@@ -1972,7 +1991,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
 	   mmux_pointer_t *:		mmux_pointer_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 
@@ -2079,6 +2099,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
 	   mmux_libc_mode_t:		mmux_libc_mode_$1,		\
 	   mmux_libc_pid_t:		mmux_libc_pid_$1,		\
 	   mmux_libc_uid_t:		mmux_libc_uid_$1,		\
@@ -2193,6 +2214,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
 	   mmux_libc_mode_t *:		mmux_libc_mode_$1_p,		\
 	   mmux_libc_pid_t *:		mmux_libc_pid_$1_p,		\
 	   mmux_libc_uid_t *:		mmux_libc_uid_$1_p,		\
@@ -2319,7 +2341,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t:		mmux_libc_dev_$1,		\
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2),(VALUE3)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2,VALUE3)			\
   (_Generic((VALUE1),							\
@@ -2432,7 +2455,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
 ]]]) m4_dnl
 
 
@@ -2516,7 +2540,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t:		mmux_libc_dev_$1,		\
 	   mmux_libc_nlink_t:		mmux_libc_nlink_$1,		\
 	   mmux_libc_blkcnt_t:		mmux_libc_blkcnt_$1,		\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2),(VALUE3)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2,VALUE3)			\
   (_Generic((VALUE1),							\
@@ -2597,7 +2622,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
 	   mmux_libc_dev_t *:		mmux_libc_dev_$1_p,		\
 	   mmux_libc_nlink_t *:		mmux_libc_nlink_$1_p,		\
 	   mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_$1_p,		\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
 ]]]) m4_dnl
 
 
@@ -2704,6 +2730,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
            mmux_pointer_t:		mmux_pointer_$1)(VALUE))
 
 #define mmux_ctype_$1_p(RESULT,VALUE)					\
@@ -2808,6 +2835,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
            mmux_pointer_t *:		mmux_pointer_$1_p)((RESULT),(VALUE)))
 ]]]) m4_dnl
 
@@ -2914,7 +2942,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)(VALUE))
 
 #define mmux_ctype_$1_p(RESULT,VALUE)					\
   (_Generic((VALUE),							\
@@ -3017,7 +3046,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t *:		mmux_ptrdiff_$1_p,		\
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE)))
 ]]]) m4_dnl
 
 
@@ -3091,7 +3121,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)(VALUE))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)(VALUE))
 
 #define mmux_ctype_$1_p(RESULT,VALUE)					\
   (_Generic((VALUE),							\
@@ -3162,7 +3193,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t *:		mmux_ptrdiff_$1_p,		\
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE)))
 ]]]) m4_dnl
 
 
@@ -3483,6 +3515,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
            mmux_pointer_t:		mmux_pointer_$1)((VALUE1),(VALUE2)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
@@ -3587,6 +3620,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
            mmux_pointer_t *:		mmux_pointer_$1_p)((RESULT),(VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
@@ -3693,7 +3727,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
   (_Generic((VALUE1),							\
@@ -3796,7 +3831,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t *:		mmux_ptrdiff_$1_p,		\
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 
@@ -3870,7 +3906,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2)				\
   (_Generic((VALUE1),							\
@@ -3941,7 +3978,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t *:		mmux_ptrdiff_$1_p,		\
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+	   mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2)))
 ]]]) m4_dnl
 
 
@@ -4337,6 +4375,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
            mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1,			\
            mmux_pointer_t:		mmux_pointer_$1)((VALUE1),(VALUE2),(VALUE3)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2,VALUE3)			\
@@ -4441,6 +4480,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
            mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p,		\
            mmux_pointer_t *:		mmux_pointer_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
 ]]]) m4_dnl
 
@@ -4547,7 +4587,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2),(VALUE3)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2,VALUE3)			\
   (_Generic((VALUE1),							\
@@ -4650,7 +4691,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t *:		mmux_ptrdiff_$1_p,		\
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
 ]]]) m4_dnl
 
 
@@ -4724,7 +4766,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t:		mmux_ptrdiff_$1,		\
            mmux_wchar_t:		mmux_wchar_$1,			\
            mmux_wint_t:			mmux_wint_$1,			\
-           mmux_time_t:			mmux_time_$1)((VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t:			mmux_time_$1,			\
+           mmux_clock_t:		mmux_clock_$1)((VALUE1),(VALUE2),(VALUE3)))
 
 #define mmux_ctype_$1_p(RESULT,VALUE1,VALUE2,VALUE3)			\
   (_Generic((VALUE1),							\
@@ -4795,7 +4838,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMD128_M4,1,[[[m4_dnl
            mmux_ptrdiff_t *:		mmux_ptrdiff_$1_p,		\
            mmux_wchar_t *:		mmux_wchar_$1_p,		\
            mmux_wint_t *:		mmux_wint_$1_p,			\
-           mmux_time_t *:		mmux_time_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
+           mmux_time_t *:		mmux_time_$1_p,			\
+           mmux_clock_t *:		mmux_clock_$1_p)((RESULT),(VALUE1),(VALUE2),(VALUE3)))
 ]]]) m4_dnl
 
 

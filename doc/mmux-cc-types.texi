@@ -280,6 +280,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
 @cindex @code{time}, type stem
+@cindex @code{clock}, type stem
 @cindex @code{libc_socklen}, type stem
 @cindex @code{libc_rlim}, type stem
 @cindex @code{libc_ino}, type stem
@@ -388,6 +389,7 @@ it is an alias for @code{@value{\ALIAS\}}.
 @MmuxDefineAliasedTypeStem{wchar, wchar_t,ALIASWCHAR}
 @MmuxDefineAliasedTypeStem{wint, wint_t,ALIASWINT}
 @MmuxDefineAliasedTypeStem{time, time_t,ALIASTIME}
+@MmuxDefineAliasedTypeStem{clock, clock_t,ALIASCLOCK}
 @MmuxDefineAliasedTypeStem{libc_socklen, libc_socklen_t,ALIASSOCKLEN}
 @MmuxDefineAliasedTypeStem{libc_rlim, libc_rlim_t,ALIASRLIM}
 @MmuxDefineAliasedTypeStem{libc_ino, libc_ino_t,ALIASINO}
@@ -772,6 +774,7 @@ type is supported.
 @cindex @code{wchar}, type stem
 @cindex @code{wint}, type stem
 @cindex @code{time}, type stem
+@cindex @code{clock}, type stem
 @cindex @code{libc_socklen}, type stem
 @cindex @code{libc_rlim}, type stem
 
@@ -992,6 +995,7 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedefForAliasedType{wchar,           wchar_t,        @value{ALIASWCHAR}}
 @MmuxDefineCAliasTypedefForAliasedType{wint,            wint_t,         @value{ALIASWINT}}
 @MmuxDefineCAliasTypedefForAliasedType{time,            time_t,         @value{ALIASTIME}}
+@MmuxDefineCAliasTypedefForAliasedType{clock,           clock_t,         @value{ALIASCLOCK}}
 @MmuxDefineCAliasTypedefForAliasedType{libc_socklen,         libc_socklen_t,      @value{ALIASSOCKLEN}}
 @MmuxDefineCAliasTypedefForAliasedType{libc_rlim,            libc_rlim_t,         @value{ALIASRLIM}}
 @MmuxDefineCAliasTypedefForAliasedType{libc_ino,             libc_ino_t,          @value{ALIASINO}}
@@ -1192,6 +1196,7 @@ mmux_standard_pointerc_literal(@var{ARG})
 @MmuxDefineLiteralMacro{wchar}
 @MmuxDefineLiteralMacroUnsignedInteger{wint}
 @MmuxDefineLiteralMacro{time}
+@MmuxDefineLiteralMacro{clock}
 @MmuxDefineLiteralMacroUnsignedInteger{libc_socklen}
 @MmuxDefineLiteralMacroUnsignedInteger{libc_rlim}
 @MmuxDefineLiteralMacroUnsignedInteger{libc_ino}
@@ -1362,6 +1367,7 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 @MmuxDefineCMacroMaker{wchar}
 @MmuxDefineCMacroMaker{wint}
 @MmuxDefineCMacroMaker{time}
+@MmuxDefineCMacroMaker{clock}
 @MmuxDefineCMacroMaker{libc_socklen}
 @MmuxDefineCMacroMaker{libc_rlim}
 @MmuxDefineCMacroMaker{libc_ino}
@@ -1516,6 +1522,7 @@ Return a positive integer representing the size in bytes of the C language type
 @MmuxDefineCFunctionSizeof{wchar}
 @MmuxDefineCFunctionSizeof{wint}
 @MmuxDefineCFunctionSizeof{time}
+@MmuxDefineCFunctionSizeof{clock}
 @MmuxDefineCFunctionSizeof{libc_socklen}
 @MmuxDefineCFunctionSizeof{libc_rlim}
 
@@ -1626,6 +1633,7 @@ Return the maximum and minimum values representable by the range of values of th
 @MmuxDefineCFunctionMaximum{wchar}
 @MmuxDefineCFunctionMaximum{wint}
 @MmuxDefineCFunctionMaximum{time}
+@MmuxDefineCFunctionMaximum{clock}
 @MmuxDefineCFunctionMaximum{libc_socklen}
 @MmuxDefineCFunctionMaximum{libc_rlim}
 @MmuxDefineCFunctionMaximum{libc_ino}
@@ -1805,6 +1813,7 @@ Return a constant value corresponding to @cnull{}.
 @MmuxDefineExactConstantFunctions{wchar}
 @MmuxDefineExactConstantFunctions{wint}
 @MmuxDefineExactConstantFunctions{time}
+@MmuxDefineExactConstantFunctions{clock}
 @MmuxDefineExactConstantFunctions{libc_socklen}
 @MmuxDefineExactConstantFunctions{libc_rlim}
 
@@ -1944,6 +1953,7 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 @MmuxDefineCFunctionPredicate{wchar}
 @MmuxDefineCFunctionPredicate{wint}
 @MmuxDefineCFunctionPredicate{time}
+@MmuxDefineCFunctionPredicate{clock}
 @MmuxDefineCFunctionPredicate{libc_socklen}
 @MmuxDefineCFunctionPredicate{libc_rlim}
 @MmuxDefineCFunctionPredicate{libc_ino}
@@ -2175,6 +2185,7 @@ the parsing operation, for example: the name of a C function.
 @MmuxDefineCFunctionParser{wchar}
 @MmuxDefineCFunctionParser{wint}
 @MmuxDefineCFunctionParser{time}
+@MmuxDefineCFunctionParser{clock}
 @MmuxDefineCFunctionParser{libc_socklen}
 @MmuxDefineCFunctionParser{libc_rlim}
 @MmuxDefineCFunctionParser{libc_ino}
@@ -2297,6 +2308,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{wchar}
 @MmuxDefineCFunctionSprinter{wint}
 @MmuxDefineCFunctionSprinter{time}
+@MmuxDefineCFunctionSprinter{clock}
 @MmuxDefineCFunctionSprinter{libc_socklen}
 @MmuxDefineCFunctionSprinter{libc_rlim}
 @MmuxDefineCFunctionSprinter{libc_ino}
@@ -2491,6 +2503,7 @@ type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @MmuxDefineCFunctionExactIntegerSprinter{wchar}
 @MmuxDefineCFunctionExactIntegerSprinter{wint}
 @MmuxDefineCFunctionExactIntegerSprinter{time}
+@MmuxDefineCFunctionExactIntegerSprinter{clock}
 @MmuxDefineCFunctionExactIntegerSprinter{libc_socklen}
 @MmuxDefineCFunctionExactIntegerSprinter{libc_rlim}
 @MmuxDefineCFunctionExactIntegerSprinter{libc_ino}
@@ -2592,6 +2605,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionPrinters{wchar}
 @MmuxDefineCFunctionPrinters{wint}
 @MmuxDefineCFunctionPrinters{time}
+@MmuxDefineCFunctionPrinters{clock}
 @MmuxDefineCFunctionPrinters{libc_socklen}
 @MmuxDefineCFunctionPrinters{libc_rlim}
 @MmuxDefineCFunctionPrinters{libc_ino}
@@ -2747,6 +2761,7 @@ the operands and result.
 @MmuxDefineExactIntegerSignFunctions{wchar}
 @MmuxDefineExactIntegerSignFunctions{wint}
 @MmuxDefineExactIntegerSignFunctions{time}
+@MmuxDefineExactIntegerSignFunctions{clock}
 
 @MmuxDefineRealFlonumSignFunctions{flonumfl}
 @MmuxDefineRealFlonumSignFunctions{flonumdb}
@@ -3595,6 +3610,7 @@ placeholder for the type of the operand.
 @MmuxDefineTypePredicates{wchar}
 @MmuxDefineTypePredicates{wint}
 @MmuxDefineTypePredicates{time}
+@MmuxDefineTypePredicates{clock}
 @MmuxDefineTypePredicates{libc_socklen}
 @MmuxDefineTypePredicates{libc_rlim}
 @MmuxDefineTypePredicates{libc_ino}
@@ -3938,6 +3954,7 @@ operands.
 @MmuxDefineTypeComparisonExactFunction{wchar}
 @MmuxDefineTypeComparisonExactFunction{wint}
 @MmuxDefineTypeComparisonExactFunction{time}
+@MmuxDefineTypeComparisonExactFunction{clock}
 @MmuxDefineTypeComparisonExactFunction{libc_socklen}
 @MmuxDefineTypeComparisonExactFunction{libc_rlim}
 @MmuxDefineTypeComparisonExactFunction{libc_ino}
@@ -4065,6 +4082,7 @@ placeholder for the type of the operands and result.
 @MmuxDefineTypeComparisonMinMaxFunction{wchar}
 @MmuxDefineTypeComparisonMinMaxFunction{wint}
 @MmuxDefineTypeComparisonMinMaxFunction{time}
+@MmuxDefineTypeComparisonMinMaxFunction{clock}
 @MmuxDefineTypeComparisonMinMaxFunction{libc_socklen}
 @MmuxDefineTypeComparisonMinMaxFunction{libc_rlim}
 @MmuxDefineTypeComparisonMinMaxFunction{libc_ino}
@@ -4503,6 +4521,7 @@ modulo, increment, decrement.
 @MmuxDefineIntegerArithmeticsFunc{wchar}
 @MmuxDefineIntegerArithmeticsFunc{wint}
 @MmuxDefineIntegerArithmeticsFunc{time}
+@MmuxDefineIntegerArithmeticsFunc{clock}
 
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumfl}
 @MmuxDefineNotIntegerRealArithmeticsFunc{flonumdb}
@@ -5063,6 +5082,7 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{wchar}
 @MmuxDefineBitwiseFuncs{wint}
 @MmuxDefineBitwiseFuncs{time}
+@MmuxDefineBitwiseFuncs{clock}
 @MmuxDefineBitwiseFuncs{libc_socklen}
 @MmuxDefineBitwiseFuncs{libc_rlim}
 @MmuxDefineBitwiseFuncs{libc_ino}

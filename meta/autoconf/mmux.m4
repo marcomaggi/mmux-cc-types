@@ -570,7 +570,7 @@ AC_DEFUN([MMUX_LANG_C11],[
     [AS_VAR_IF(GCC,'yes',
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
-       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes -Wuninitialized], [MMUX_CFLAGS], [-Werror])])])
 
   MMUX_CC_CHECK_COMMON_HEADERS])
 
@@ -623,7 +623,7 @@ AC_DEFUN([MMUX_LANG_C23],[
     [AS_VAR_IF(GCC,'yes',
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
-       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes -Wuninitialized], [MMUX_CFLAGS], [-Werror])])])
 
   MMUX_CC_CHECK_COMMON_HEADERS])
 
@@ -680,7 +680,7 @@ AC_DEFUN([MMUX_LANG_GCC23],[
     [AS_VAR_IF(GCC,'yes',
       [AX_APPEND_COMPILE_FLAGS([-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict], [MMUX_CFLAGS], [-Werror])
        AX_APPEND_COMPILE_FLAGS([-Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow], [MMUX_CFLAGS], [-Werror])
-       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes], [MMUX_CFLAGS], [-Werror])])])
+       AX_APPEND_COMPILE_FLAGS([-Wformat=2 -Wmisleading-indentation -Wattributes -Wuninitialized], [MMUX_CFLAGS], [-Werror])])])
 
   MMUX_CC_CHECK_COMMON_HEADERS])
 
@@ -1341,6 +1341,7 @@ AC_DEFUN([MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES],
    MMUX_CC_DETERMINE_TYPE_SIZEOF([WCHAR],       [wchar_t])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([WINT],        [wint_t])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([TIME],        [time_t])
+   MMUX_CC_DETERMINE_TYPE_SIZEOF([CLOCK],       [clock_t])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([SOCKLEN],     [socklen_t])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([RLIM],        [rlim_t])
    MMUX_CC_DETERMINE_TYPE_SIZEOF([INO],         [ino_t])
@@ -1356,6 +1357,7 @@ AC_DEFUN([MMUX_CC_INSPECT_STANDARD_FEATURE_TYPES],
    MMUX_CC_DETERMINE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([PTRDIFF],      [ptrdiff_t])
    MMUX_CC_DETERMINE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([WCHAR],        [wchar_t])
    MMUX_CC_DETERMINE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([TIME],         [time_t])
+   MMUX_CC_DETERMINE_SIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([CLOCK],        [clock_t])
 
    MMUX_CC_DETERMINE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([USIZE],      [size_t])
    MMUX_CC_DETERMINE_UNSIGNED_INTEGER_ALIAS_FOR_CUSTOM_TYPE([UINTMAX],    [uintmax_t])

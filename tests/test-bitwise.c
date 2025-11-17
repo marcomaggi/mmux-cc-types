@@ -98,6 +98,7 @@ test_bitwise_and (void)
   DEFINE_INTEGER_TEST(off);
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(libc_blkcnt);
@@ -193,6 +194,7 @@ test_bitwise_or (void)
   DEFINE_INTEGER_TEST(off);
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(libc_blkcnt);
@@ -288,6 +290,7 @@ test_bitwise_xor (void)
   DEFINE_INTEGER_TEST(off);
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(libc_blkcnt);
@@ -371,6 +374,7 @@ test_bitwise_not (void)
   DEFINE_INTEGER_TEST(off);
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(libc_blkcnt);
@@ -455,6 +459,7 @@ test_bitwise_shl (void)
   DEFINE_INTEGER_TEST(off);
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(libc_blkcnt);
@@ -539,6 +544,7 @@ test_bitwise_shr (void)
   DEFINE_INTEGER_TEST(off);
   DEFINE_INTEGER_TEST(ptrdiff);
   DEFINE_INTEGER_TEST(time);
+  DEFINE_INTEGER_TEST(clock);
   DEFINE_INTEGER_TEST(wchar);
   DEFINE_INTEGER_TEST(wint);
   DEFINE_INTEGER_TEST(libc_blkcnt);

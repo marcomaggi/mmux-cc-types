@@ -182,6 +182,7 @@ DEFINE_STANDARD_SIGNED_EXACT_INTEGER_PREDICATE_INLINE_FUNCTIONS([[[off]]])
 DEFINE_STANDARD_SIGNED_EXACT_INTEGER_PREDICATE_INLINE_FUNCTIONS([[[libc_pid]]])
 DEFINE_STANDARD_SIGNED_EXACT_INTEGER_PREDICATE_INLINE_FUNCTIONS([[[wchar]]])
 DEFINE_STANDARD_SIGNED_EXACT_INTEGER_PREDICATE_INLINE_FUNCTIONS([[[time]]])
+DEFINE_STANDARD_SIGNED_EXACT_INTEGER_PREDICATE_INLINE_FUNCTIONS([[[clock]]])
 
 
 /** --------------------------------------------------------------------
@@ -321,6 +322,7 @@ DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[ptrdiff]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[wchar]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[wint]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[time]]])
+DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[clock]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[libc_socklen]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[libc_rlim]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[libc_ino]]])
@@ -634,6 +636,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		true,			\
            mmux_wint_t:			false,			\
            mmux_time_t:			true,			\
+           mmux_clock_t:		true,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:		false,			\
            mmux_libc_ino_t:		false,			\
@@ -754,6 +757,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		false,			\
            mmux_wint_t:			true,			\
            mmux_time_t:			false,			\
+           mmux_clock_t:		false,			\
            mmux_libc_socklen_t:		true,			\
            mmux_libc_rlim_t:		true,			\
            mmux_libc_ino_t:		true,			\
@@ -870,6 +874,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		true,			\
            mmux_wint_t:			true,			\
            mmux_time_t:			true,			\
+           mmux_clock_t:		true,			\
            mmux_libc_socklen_t:		true,			\
            mmux_libc_rlim_t:		true,			\
            mmux_libc_ino_t:		true,			\
@@ -986,6 +991,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		true,			\
            mmux_wint_t:			true,			\
            mmux_time_t:			true,			\
+           mmux_clock_t:		true,			\
            mmux_libc_socklen_t:		true,			\
            mmux_libc_rlim_t:		true,			\
            mmux_libc_ino_t:		true,			\
@@ -1102,6 +1108,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		false,			\
            mmux_wint_t:			false,			\
            mmux_time_t:			false,			\
+           mmux_clock_t:		false,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:		false,			\
            mmux_libc_ino_t:		false,			\
@@ -1218,6 +1225,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		false,			\
            mmux_wint_t:			false,			\
            mmux_time_t:			false,			\
+           mmux_clock_t:		false,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:		false,			\
            mmux_libc_ino_t:		false,			\
@@ -1334,6 +1342,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_wchar_t:		false,			\
            mmux_wint_t:			false,			\
            mmux_time_t:			false,			\
+           mmux_clock_t:		false,			\
            mmux_libc_socklen_t:		false,			\
            mmux_libc_rlim_t:		false,			\
            mmux_libc_ino_t:		false,			\
