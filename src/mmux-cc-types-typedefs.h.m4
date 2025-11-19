@@ -402,6 +402,42 @@ mmux_pointerc (mmux_standard_pointerc_t value)
 
 /* ------------------------------------------------------------------ */
 
+mmux_cc_types_inline_decl mmux_asciip_t
+mmux_asciip (mmux_standard_pointer_t value)
+{
+  return (mmux_asciip_t)value;
+}
+#define mmux_asciip_literal(VALUE)	(mmux_asciip(mmux_standard_pointer_literal(VALUE)))
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_asciicp_t
+mmux_asciicp (mmux_standard_pointer_t value)
+{
+  return (mmux_asciicp_t)value;
+}
+#define mmux_asciicp_literal(VALUE)	(mmux_asciicp(mmux_standard_pointer_literal(VALUE)))
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_asciizp_t
+mmux_asciizp (mmux_standard_pointer_t value)
+{
+  return (mmux_asciizp_t)value;
+}
+#define mmux_asciizp_literal(VALUE)	(mmux_asciizp(mmux_standard_pointer_literal(VALUE)))
+
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_inline_decl mmux_asciizcp_t
+mmux_asciizcp (mmux_standard_pointer_t value)
+{
+  return (mmux_asciizcp_t)value;
+}
+#define mmux_asciizcp_literal(VALUE)	(mmux_asciizcp(mmux_standard_pointer_literal(VALUE)))
+
+/* ------------------------------------------------------------------ */
+
 m4_divert(-1)
 m4_dnl $1 - type stem
 m4_dnl $2 - conditional definition symbol
