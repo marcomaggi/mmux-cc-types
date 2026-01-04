@@ -7,7 +7,7 @@
 
 	Test file for literal macros.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -36,13 +36,13 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
       constexpr auto	val  = mmux_standard_##STEM##_literal(LITERAL);	\
       auto		stru = mmux_##STEM(val);			\
       dprintf(2, "%s: ", mmux_ctype_stem_name(stru));		\
-      mmux_ctype_dprintf(2, stru);					\
+      mmux_ctype_dprintf_no_error(2, stru);					\
       dprintf(2, "\n");							\
     }									\
     if (1) {								\
       auto	stru = mmux_##STEM##_literal(LITERAL);			\
       dprintf(2, "%s: ", mmux_ctype_typedef_name(stru));		\
-      mmux_ctype_dprintf(2, stru);					\
+      mmux_ctype_dprintf_no_error(2, stru);					\
       dprintf(2, "\n");							\
     }									\
   }
@@ -59,13 +59,13 @@ main (int argc MMUX_CC_TYPES_UNUSED, char const *const argv[] MMUX_CC_TYPES_UNUS
       auto	val  = mmux_standard_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);		\
       auto	stru = mmux_##STEM(val);								\
       dprintf(2, "%s: ", mmux_ctype_stem_name(stru));						\
-      mmux_ctype_dprintf(2, stru);									\
+      mmux_ctype_dprintf_no_error(2, stru);									\
       dprintf(2, "\n");											\
     }													\
     if (1) {												\
       auto	stru = mmux_##STEM##_rectangular_literal(LITERAL_RE,LITERAL_IM);			\
       dprintf(2, "%s: ", mmux_ctype_typedef_name(stru));						\
-      mmux_ctype_dprintf(2, stru);									\
+      mmux_ctype_dprintf_no_error(2, stru);									\
       dprintf(2, "\n");											\
     }													\
   }

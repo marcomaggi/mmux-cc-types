@@ -8,7 +8,7 @@
 	This is the public  header file of the library, defining  the public API.  It
 	must be included in all the code that uses the library.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -62,6 +62,13 @@ mmux_cc_types_decl int mmux_ctype_generic_error (...);
 /* This is a helper to make it easier to debug inline functions defined by the header
    files when we do not include the standard headers. */
 mmux_cc_types_decl int mmux_cc_types_dprintf (int fd, char const * restrict fmt, ...);
+
+mmux_cc_types_inline_decl bool
+mmux_cc_types_ignore_retval (bool statement MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+#define MMUX_CC_TYPES_IGNORE_RETVAL_DEFINED	1
 
 
 /** --------------------------------------------------------------------

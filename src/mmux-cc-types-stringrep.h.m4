@@ -8,7 +8,7 @@
 	This  public header  file  declares  the string  representation  API.  It  is
 	included in the main header file; it must not be included by itself.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -40,20 +40,33 @@ mmux_cc_types_decl bool mmux_string_is_$1 (mmux_asciizcp_t s_value)
   __attribute__((__const__));
 
 mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_usize_t len, mmux_$1_t value)
-  __attribute__((__nonnull__(1)));
+  __attribute__((__nonnull__(1),__warn_unused_result__));
+
 mmux_cc_types_decl bool mmux_$1_sprint_size (mmux_usize_t * result_required_size_p, mmux_$1_t value)
-  __attribute__((__nonnull__(1)));
+  __attribute__((__nonnull__(1),__warn_unused_result__));
 
 mmux_cc_types_decl bool mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p,
 						  bool * is_negative,
-						  mmux_$1_t op, mmux_uint_t const base)
-  __attribute__((__nonnull__(1)));
+						  mmux_$1_t op, mmux_uint_t base)
+  __attribute__((__nonnull__(1),__warn_unused_result__));
 
-mmux_cc_types_decl bool mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t const base);
+mmux_cc_types_decl bool mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t base)
+  __attribute__((__warn_unused_result__));
 
-mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd, mmux_$1_t value);
+mmux_cc_types_decl bool mmux_$1_dprintf (mmux_standard_sint_t fd_num, mmux_$1_t value)
+  __attribute__((__warn_unused_result__));
+
+mmux_cc_types_inline_no_retval_decl void
+mmux_$1_dprintf_no_error (mmux_standard_sint_t fd_num, mmux_$1_t value)
+{
+  mmux_cc_types_ignore_retval(mmux_$1_dprintf(fd_num, value));
+}
+
 mmux_cc_types_decl bool mmux_$1_fprintf (mmux_pointer_t stream, mmux_$1_t value)
-  __attribute__((__nonnull__(1)));
+  __attribute__((__nonnull__(1),__warn_unused_result__));
+
+mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_usize_t len, mmux_$1_t value)
+  __attribute__((__nonnull__(1),__warn_unused_result__));
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STRINGREP_PROTOS([[[pointer]]])
@@ -180,6 +193,7 @@ DEFINE_FLONUMFL_OUTPUT_FORMAT_VARS_AND_PROTOS([[[flonumd128]]])
 
 DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG_NO_RESULT([[[fprintf]]])
 DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG_NO_RESULT([[[dprintf]]])
+DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG_NO_RESULT([[[dprintf_no_error]]])
 
 
 /** --------------------------------------------------------------------

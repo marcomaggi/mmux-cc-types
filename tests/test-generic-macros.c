@@ -7,7 +7,7 @@
 
 	Test file for generic macros.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -992,9 +992,9 @@ test_ctype_add_to_variable (void)
     mmux_ctype_add_to_variable(A, B);
     if (mmux_ctype_not_equal(A,C)) {
       dprintf(2, "%s: expected ctype_equal[%s]='", __func__, mmux_ctype_stem_name(A));
-      mmux_ctype_dprintf(2, C);
+      mmux_ctype_dprintf_no_error(2, C);
       dprintf(2, "' got '");
-      mmux_ctype_dprintf(2, A);
+      mmux_ctype_dprintf_no_error(2, A);
       dprintf(2, "'n");
       exit(EXIT_FAILURE);
     }
@@ -1017,9 +1017,9 @@ test_ctype_sub_from_variable (void)
     mmux_ctype_sub_from_variable(A, B);
     if (mmux_ctype_not_equal(A,C)) {
       dprintf(2, "%s: expected ctype_equal[%s]='", __func__, mmux_ctype_stem_name(A));
-      mmux_ctype_dprintf(2, C);
+      mmux_ctype_dprintf_no_error(2, C);
       dprintf(2, "' got '");
-      mmux_ctype_dprintf(2, A);
+      mmux_ctype_dprintf_no_error(2, A);
       dprintf(2, "'n");
       exit(EXIT_FAILURE);
     }

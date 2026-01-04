@@ -8,7 +8,7 @@
 	This  a the  public  header included  by "mmux-cc-types.h";  it  must not  be
 	included by itself.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -1068,6 +1068,261 @@ DEFINE_STRINGREP_OPERATIONS([[[flonumcf128x]]])
 DEFINE_STRINGREP_OPERATIONS([[[flonumcd32]]])
 DEFINE_STRINGREP_OPERATIONS([[[flonumcd64]]])
 DEFINE_STRINGREP_OPERATIONS([[[flonumcd128]]])
+
+
+/** --------------------------------------------------------------------
+ ** Printing and string representation: generic macros.
+ ** ----------------------------------------------------------------- */
+
+/* FIXME This does not work with pointers to subtypes because GCC's implementation of
+   "_Generic" is not integrated with "-fplan9-extensions".  There is nothing I can do
+   about it.  (Marco Maggi; Jan 3, 2026) */
+#define mmux_ctype_sprint_p(BUFPTR,BUFLEN,VALUE_P) \
+  (_Generic((VALUE_P),								\
+	   mmux_char_t *:		mmux_char_sprint_p,			\
+           mmux_schar_t *:		mmux_schar_sprint_p,			\
+           mmux_uchar_t *:		mmux_uchar_sprint_p,			\
+           mmux_sshort_t *:		mmux_sshort_sprint_p,			\
+           mmux_ushort_t *:		mmux_ushort_sprint_p,			\
+           mmux_sint_t *:		mmux_sint_sprint_p,			\
+           mmux_uint_t *:		mmux_uint_sprint_p,			\
+           mmux_slong_t *:		mmux_slong_sprint_p,			\
+           mmux_ulong_t *:		mmux_ulong_sprint_p,			\
+	   mmux_sllong_t *:		mmux_sllong_sprint_p,			\
+	   mmux_ullong_t *:		mmux_ullong_sprint_p,			\
+	   mmux_flonumfl_t *:		mmux_flonumfl_sprint_p,			\
+	   mmux_flonumdb_t *:		mmux_flonumdb_sprint_p,			\
+	   mmux_flonumldb_t *:		mmux_flonumldb_sprint_p,		\
+	   mmux_flonumf32_t *:		mmux_flonumf32_sprint_p,		\
+	   mmux_flonumf64_t *:		mmux_flonumf64_sprint_p,		\
+	   mmux_flonumf128_t *:		mmux_flonumf128_sprint_p,		\
+	   mmux_flonumf32x_t *:		mmux_flonumf32x_sprint_p,		\
+	   mmux_flonumf64x_t *:		mmux_flonumf64x_sprint_p,		\
+	   mmux_flonumd32_t *:		mmux_flonumd32_sprint_p,		\
+	   mmux_flonumd64_t *:		mmux_flonumd64_sprint_p,		\
+	   mmux_flonumd128_t *:		mmux_flonumd128_sprint_p,		\
+	   mmux_sint8_t *:		mmux_sint8_sprint_p,			\
+	   mmux_uint8_t *:		mmux_uint8_sprint_p,			\
+	   mmux_sint16_t *:		mmux_sint16_sprint_p,			\
+	   mmux_uint16_t *:		mmux_uint16_sprint_p,			\
+	   mmux_sint32_t *:		mmux_sint32_sprint_p,			\
+	   mmux_uint32_t *:		mmux_uint32_sprint_p,			\
+	   mmux_sint64_t *:		mmux_sint64_sprint_p,			\
+	   mmux_uint64_t *:		mmux_uint64_sprint_p,			\
+	   mmux_byte_t *:		mmux_byte_sprint_p,			\
+	   mmux_octet_t *:		mmux_octet_sprint_p,			\
+           mmux_ssize_t *:		mmux_ssize_sprint_p,			\
+           mmux_usize_t *:		mmux_usize_sprint_p,			\
+           mmux_sintmax_t *:		mmux_sintmax_sprint_p,			\
+           mmux_uintmax_t *:		mmux_uintmax_sprint_p,			\
+           mmux_sintptr_t *:		mmux_sintptr_sprint_p,			\
+           mmux_uintptr_t *:		mmux_uintptr_sprint_p,			\
+           mmux_libc_mode_t *:		mmux_libc_mode_sprint_p,		\
+           mmux_off_t *:		mmux_off_sprint_p,			\
+           mmux_libc_pid_t *:		mmux_libc_pid_sprint_p,			\
+           mmux_libc_uid_t *:		mmux_libc_uid_sprint_p,			\
+           mmux_libc_gid_t *:		mmux_libc_gid_sprint_p,			\
+           mmux_ptrdiff_t *:		mmux_ptrdiff_sprint_p,			\
+           mmux_wchar_t *:		mmux_wchar_sprint_p,			\
+           mmux_wint_t *:		mmux_wint_sprint_p,			\
+           mmux_time_t *:		mmux_time_sprint_p,			\
+           mmux_clock_t *:		mmux_clock_sprint_p,			\
+           mmux_libc_socklen_t *:	mmux_libc_socklen_sprint_p,		\
+           mmux_libc_rlim_t *:		mmux_libc_rlim_sprint_p,		\
+           mmux_libc_ino_t *:		mmux_libc_ino_sprint_p,			\
+           mmux_libc_dev_t *:		mmux_libc_dev_sprint_p,			\
+           mmux_libc_nlink_t *:		mmux_libc_nlink_sprint_p,		\
+           mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_sprint_p,		\
+	   mmux_flonumcfl_t *:		mmux_flonumcfl_sprint_p,		\
+	   mmux_flonumcdb_t *:		mmux_flonumcdb_sprint_p,		\
+	   mmux_flonumcldb_t *:		mmux_flonumcldb_sprint_p,		\
+	   mmux_flonumcf32_t *:		mmux_flonumcf32_sprint_p,		\
+	   mmux_flonumcf64_t *:		mmux_flonumcf64_sprint_p,		\
+	   mmux_flonumcf128_t *:	mmux_flonumcf128_sprint_p,		\
+	   mmux_flonumcf32x_t *:	mmux_flonumcf32x_sprint_p,		\
+	   mmux_flonumcf64x_t *:	mmux_flonumcf64x_sprint_p,		\
+	   mmux_flonumcd32_t *:		mmux_flonumcd32_sprint_p,		\
+	   mmux_flonumcd64_t *:		mmux_flonumcd64_sprint_p,		\
+	   mmux_flonumcd128_t *:	mmux_flonumcd128_sprint_p,		\
+	   mmux_pointer_t *:		mmux_pointer_sprint_p)(BUFPTR,BUFLEN,VALUE_P))
+
+/* ------------------------------------------------------------------ */
+
+/* FIXME This does not work with pointers to subtypes because GCC's implementation of
+   "_Generic" is not integrated with "-fplan9-extensions".  There is nothing I can do
+   about it.  (Marco Maggi; Jan 3, 2026) */
+#define mmux_ctype_sprint_size_p(REQUIRED_NBYTES_RESULT_P,VALUE_P)		\
+  (_Generic((VALUE_P),								\
+	    mmux_char_t *:		mmux_char_sprint_size_p,		\
+	    mmux_schar_t *:		mmux_schar_sprint_size_p,		\
+	    mmux_uchar_t *:		mmux_uchar_sprint_size_p,		\
+	    mmux_sshort_t *:		mmux_sshort_sprint_size_p,		\
+	    mmux_ushort_t *:		mmux_ushort_sprint_size_p,		\
+	    mmux_sint_t *:		mmux_sint_sprint_size_p,		\
+	    mmux_uint_t *:		mmux_uint_sprint_size_p,		\
+	    mmux_slong_t *:		mmux_slong_sprint_size_p,		\
+	    mmux_ulong_t *:		mmux_ulong_sprint_size_p,		\
+	    mmux_sllong_t *:		mmux_sllong_sprint_size_p,		\
+	    mmux_ullong_t *:		mmux_ullong_sprint_size_p,		\
+	    mmux_flonumfl_t *:		mmux_flonumfl_sprint_size_p,		\
+	    mmux_flonumdb_t *:		mmux_flonumdb_sprint_size_p,		\
+	    mmux_flonumldb_t *:		mmux_flonumldb_sprint_size_p,		\
+	    mmux_flonumf32_t *:		mmux_flonumf32_sprint_size_p,		\
+	    mmux_flonumf64_t *:		mmux_flonumf64_sprint_size_p,		\
+	    mmux_flonumf128_t *:	mmux_flonumf128_sprint_size_p,		\
+	    mmux_flonumf32x_t *:	mmux_flonumf32x_sprint_size_p,		\
+	    mmux_flonumf64x_t *:	mmux_flonumf64x_sprint_size_p,		\
+	    mmux_flonumd32_t *:		mmux_flonumd32_sprint_size_p,		\
+	    mmux_flonumd64_t *:		mmux_flonumd64_sprint_size_p,		\
+	    mmux_flonumd128_t *:	mmux_flonumd128_sprint_size_p,		\
+	    mmux_sint8_t *:		mmux_sint8_sprint_size_p,		\
+	    mmux_uint8_t *:		mmux_uint8_sprint_size_p,		\
+	    mmux_sint16_t *:		mmux_sint16_sprint_size_p,		\
+	    mmux_uint16_t *:		mmux_uint16_sprint_size_p,		\
+	    mmux_sint32_t *:		mmux_sint32_sprint_size_p,		\
+	    mmux_uint32_t *:		mmux_uint32_sprint_size_p,		\
+	    mmux_sint64_t *:		mmux_sint64_sprint_size_p,		\
+	    mmux_uint64_t *:		mmux_uint64_sprint_size_p,		\
+	    mmux_byte_t *:		mmux_byte_sprint_size_p,		\
+	    mmux_octet_t *:		mmux_octet_sprint_size_p,		\
+	    mmux_ssize_t *:		mmux_ssize_sprint_size_p,		\
+	    mmux_usize_t *:		mmux_usize_sprint_size_p,		\
+	    mmux_sintmax_t *:		mmux_sintmax_sprint_size_p,		\
+	    mmux_uintmax_t *:		mmux_uintmax_sprint_size_p,		\
+	    mmux_sintptr_t *:		mmux_sintptr_sprint_size_p,		\
+	    mmux_uintptr_t *:		mmux_uintptr_sprint_size_p,		\
+	    mmux_libc_mode_t *:		mmux_libc_mode_sprint_size_p,		\
+	    mmux_off_t *:		mmux_off_sprint_size_p,			\
+	    mmux_libc_pid_t *:		mmux_libc_pid_sprint_size_p,		\
+	    mmux_libc_uid_t *:		mmux_libc_uid_sprint_size_p,		\
+	    mmux_libc_gid_t *:		mmux_libc_gid_sprint_size_p,		\
+	    mmux_ptrdiff_t *:		mmux_ptrdiff_sprint_size_p,		\
+	    mmux_wchar_t *:		mmux_wchar_sprint_size_p,		\
+	    mmux_wint_t *:		mmux_wint_sprint_size_p,		\
+	    mmux_time_t *:		mmux_time_sprint_size_p,		\
+	    mmux_clock_t *:		mmux_clock_sprint_size_p,		\
+	    mmux_libc_socklen_t *:	mmux_libc_socklen_sprint_size_p,	\
+	    mmux_libc_rlim_t *:		mmux_libc_rlim_sprint_size_p,		\
+	    mmux_libc_ino_t *:		mmux_libc_ino_sprint_size_p,		\
+	    mmux_libc_dev_t *:		mmux_libc_dev_sprint_size_p,		\
+	    mmux_libc_nlink_t *:	mmux_libc_nlink_sprint_size_p,		\
+	    mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_sprint_size_p,		\
+	    mmux_flonumcfl_t *:		mmux_flonumcfl_sprint_size_p,		\
+	    mmux_flonumcdb_t *:		mmux_flonumcdb_sprint_size_p,		\
+	    mmux_flonumcldb_t *:	mmux_flonumcldb_sprint_size_p,		\
+	    mmux_flonumcf32_t *:	mmux_flonumcf32_sprint_size_p,		\
+	    mmux_flonumcf64_t *:	mmux_flonumcf64_sprint_size_p,		\
+	    mmux_flonumcf128_t *:	mmux_flonumcf128_sprint_size_p,		\
+	    mmux_flonumcf32x_t *:	mmux_flonumcf32x_sprint_size_p,		\
+	    mmux_flonumcf64x_t *:	mmux_flonumcf64x_sprint_size_p,		\
+	    mmux_flonumcd32_t *:	mmux_flonumcd32_sprint_size_p,		\
+	    mmux_flonumcd64_t *:	mmux_flonumcd64_sprint_size_p,		\
+	    mmux_flonumcd128_t *:	mmux_flonumcd128_sprint_size_p,		\
+	    mmux_pointer_t *:		mmux_pointer_sprint_size_p)((REQUIRED_NBYTES_RESULT_P),(VALUE_P)))
+
+/* ------------------------------------------------------------------ */
+
+/* FIXME This does not work with pointers to subtypes because GCC's implementation of
+   "_Generic" is not integrated with "-fplan9-extensions".  There is nothing I can do
+   about it.  (Marco Maggi; Jan 3, 2026) */
+#define mmux_ctype_sprint_with_base_p(BUFPTR,BUFLEN_P,IS_NEGATIVE_P,VALUE_P,BASE)	\
+  (_Generic((VALUE_P),									\
+	    mmux_char_t *:		mmux_char_sprint_with_base_p,			\
+	    mmux_schar_t *:		mmux_schar_sprint_with_base_p,			\
+	    mmux_uchar_t *:		mmux_uchar_sprint_with_base_p,			\
+	    mmux_sshort_t *:		mmux_sshort_sprint_with_base_p,			\
+	    mmux_ushort_t *:		mmux_ushort_sprint_with_base_p,			\
+	    mmux_sint_t *:		mmux_sint_sprint_with_base_p,			\
+	    mmux_uint_t *:		mmux_uint_sprint_with_base_p,			\
+	    mmux_slong_t *:		mmux_slong_sprint_with_base_p,			\
+	    mmux_ulong_t *:		mmux_ulong_sprint_with_base_p,			\
+	    mmux_sllong_t *:		mmux_sllong_sprint_with_base_p,			\
+	    mmux_ullong_t *:		mmux_ullong_sprint_with_base_p,			\
+	    mmux_sint8_t *:		mmux_sint8_sprint_with_base_p,			\
+	    mmux_uint8_t *:		mmux_uint8_sprint_with_base_p,			\
+	    mmux_sint16_t *:		mmux_sint16_sprint_with_base_p,			\
+	    mmux_uint16_t *:		mmux_uint16_sprint_with_base_p,			\
+	    mmux_sint32_t *:		mmux_sint32_sprint_with_base_p,			\
+	    mmux_uint32_t *:		mmux_uint32_sprint_with_base_p,			\
+	    mmux_sint64_t *:		mmux_sint64_sprint_with_base_p,			\
+	    mmux_uint64_t *:		mmux_uint64_sprint_with_base_p,			\
+	    mmux_byte_t *:		mmux_byte_sprint_with_base_p,			\
+	    mmux_octet_t *:		mmux_octet_sprint_with_base_p,			\
+	    mmux_ssize_t *:		mmux_ssize_sprint_with_base_p,			\
+	    mmux_usize_t *:		mmux_usize_sprint_with_base_p,			\
+	    mmux_sintmax_t *:		mmux_sintmax_sprint_with_base_p,		\
+	    mmux_uintmax_t *:		mmux_uintmax_sprint_with_base_p,		\
+	    mmux_sintptr_t *:		mmux_sintptr_sprint_with_base_p,		\
+	    mmux_uintptr_t *:		mmux_uintptr_sprint_with_base_p,		\
+	    mmux_off_t *:		mmux_off_sprint_with_base_p,			\
+	    mmux_ptrdiff_t *:		mmux_ptrdiff_sprint_with_base_p,		\
+	    mmux_wchar_t *:		mmux_wchar_sprint_with_base_p,			\
+	    mmux_wint_t *:		mmux_wint_sprint_with_base_p,			\
+	    mmux_time_t *:		mmux_time_sprint_with_base_p,			\
+	    mmux_clock_t *:		mmux_clock_sprint_with_base_p,			\
+	    mmux_libc_mode_t *:		mmux_libc_mode_sprint_with_base_p,		\
+	    mmux_libc_pid_t *:		mmux_libc_pid_sprint_with_base_p,		\
+	    mmux_libc_uid_t *:		mmux_libc_uid_sprint_with_base_p,		\
+	    mmux_libc_gid_t *:		mmux_libc_gid_sprint_with_base_p,		\
+	    mmux_libc_socklen_t *:	mmux_libc_socklen_sprint_with_base_p,		\
+	    mmux_libc_rlim_t *:		mmux_libc_rlim_sprint_with_base_p,		\
+	    mmux_libc_ino_t *:		mmux_libc_ino_sprint_with_base_p,		\
+	    mmux_libc_dev_t *:		mmux_libc_dev_sprint_with_base_p,		\
+	    mmux_libc_nlink_t *:	mmux_libc_nlink_sprint_with_base_p,		\
+	    mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_sprint_with_base_p,		\
+	    mmux_pointer_t *:		mmux_pointer_sprint_with_base_p)((BUFPTR),(BUFLEN_P),(IS_NEGATIVE_P),(VALUE_P),(BASE)))
+
+/* ------------------------------------------------------------------ */
+
+/* FIXME This does not work with pointers to subtypes because GCC's implementation of
+   "_Generic" is not integrated with "-fplan9-extensions".  There is nothing I can do
+   about it.  (Marco Maggi; Jan 3, 2026) */
+#define mmux_ctype_dprintf_with_base_p(FD,VALUE_P,BASE)					\
+  (_Generic((VALUE_P),									\
+	    mmux_char_t *:		mmux_char_dprintf_with_base_p,			\
+	    mmux_schar_t *:		mmux_schar_dprintf_with_base_p,			\
+	    mmux_uchar_t *:		mmux_uchar_dprintf_with_base_p,			\
+	    mmux_sshort_t *:		mmux_sshort_dprintf_with_base_p,		\
+	    mmux_ushort_t *:		mmux_ushort_dprintf_with_base_p,		\
+	    mmux_sint_t *:		mmux_sint_dprintf_with_base_p,			\
+	    mmux_uint_t *:		mmux_uint_dprintf_with_base_p,			\
+	    mmux_slong_t *:		mmux_slong_dprintf_with_base_p,			\
+	    mmux_ulong_t *:		mmux_ulong_dprintf_with_base_p,			\
+	    mmux_sllong_t *:		mmux_sllong_dprintf_with_base_p,		\
+	    mmux_ullong_t *:		mmux_ullong_dprintf_with_base_p,		\
+	    mmux_sint8_t *:		mmux_sint8_dprintf_with_base_p,			\
+	    mmux_uint8_t *:		mmux_uint8_dprintf_with_base_p,			\
+	    mmux_sint16_t *:		mmux_sint16_dprintf_with_base_p,		\
+	    mmux_uint16_t *:		mmux_uint16_dprintf_with_base_p,		\
+	    mmux_sint32_t *:		mmux_sint32_dprintf_with_base_p,		\
+	    mmux_uint32_t *:		mmux_uint32_dprintf_with_base_p,		\
+	    mmux_sint64_t *:		mmux_sint64_dprintf_with_base_p,		\
+	    mmux_uint64_t *:		mmux_uint64_dprintf_with_base_p,		\
+	    mmux_byte_t *:		mmux_byte_dprintf_with_base_p,			\
+	    mmux_octet_t *:		mmux_octet_dprintf_with_base_p,			\
+	    mmux_ssize_t *:		mmux_ssize_dprintf_with_base_p,			\
+	    mmux_usize_t *:		mmux_usize_dprintf_with_base_p,			\
+	    mmux_sintmax_t *:		mmux_sintmax_dprintf_with_base_p,		\
+	    mmux_uintmax_t *:		mmux_uintmax_dprintf_with_base_p,		\
+	    mmux_sintptr_t *:		mmux_sintptr_dprintf_with_base_p,		\
+	    mmux_uintptr_t *:		mmux_uintptr_dprintf_with_base_p,		\
+	    mmux_off_t *:		mmux_off_dprintf_with_base_p,			\
+	    mmux_ptrdiff_t *:		mmux_ptrdiff_dprintf_with_base_p,		\
+	    mmux_wchar_t *:		mmux_wchar_dprintf_with_base_p,			\
+	    mmux_wint_t *:		mmux_wint_dprintf_with_base_p,			\
+	    mmux_time_t *:		mmux_time_dprintf_with_base_p,			\
+	    mmux_clock_t *:		mmux_clock_dprintf_with_base_p,			\
+	    mmux_libc_mode_t *:		mmux_libc_mode_dprintf_with_base_p,		\
+	    mmux_libc_pid_t *:		mmux_libc_pid_dprintf_with_base_p,		\
+	    mmux_libc_uid_t *:		mmux_libc_uid_dprintf_with_base_p,		\
+	    mmux_libc_gid_t *:		mmux_libc_gid_dprintf_with_base_p,		\
+	    mmux_libc_socklen_t *:	mmux_libc_socklen_dprintf_with_base_p,		\
+	    mmux_libc_rlim_t *:		mmux_libc_rlim_dprintf_with_base_p,		\
+	    mmux_libc_ino_t *:		mmux_libc_ino_dprintf_with_base_p,		\
+	    mmux_libc_dev_t *:		mmux_libc_dev_dprintf_with_base_p,		\
+	    mmux_libc_nlink_t *:	mmux_libc_nlink_dprintf_with_base_p,		\
+	    mmux_libc_blkcnt_t *:	mmux_libc_blkcnt_dprintf_with_base_p,		\
+	    mmux_pointer_t *:		mmux_pointer_dprintf_with_base_p)((FD),(VALUE_P),(BASE)))
 
 
 /** --------------------------------------------------------------------

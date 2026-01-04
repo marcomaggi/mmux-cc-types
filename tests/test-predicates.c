@@ -7,7 +7,7 @@
 
 	Test file for functions.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -36,7 +36,7 @@ test_sign_predicate_is_zero (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_zero(op);				\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_zero(mmux_##STEM##_##CTOR));	\
@@ -250,7 +250,7 @@ test_sign_predicate_is_positive (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_positive(op);			\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_positive(mmux_##STEM##_##CTOR));	\
@@ -464,7 +464,7 @@ test_sign_predicate_is_negative (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_negative(op);			\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_negative(mmux_##STEM##_##CTOR));	\
@@ -678,7 +678,7 @@ test_sign_predicate_is_non_positive (void)
       auto	op = mmux_##STEM##_##CTOR;					\
       bool	rv = mmux_##STEM##_is_non_positive(op);				\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);			\
-      mmux_##STEM##_dprintf(2, op);						\
+      mmux_##STEM##_dprintf_no_error(2, op);						\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));			\
     }										\
     assert(RESULT == mmux_##STEM##_is_non_positive(mmux_##STEM##_##CTOR));	\
@@ -892,7 +892,7 @@ test_sign_predicate_is_non_negative (void)
       auto	op = mmux_##STEM##_##CTOR;					\
       bool	rv = mmux_##STEM##_is_non_negative(op);				\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);			\
-      mmux_##STEM##_dprintf(2, op);						\
+      mmux_##STEM##_dprintf_no_error(2, op);						\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));			\
     }										\
     assert(RESULT == mmux_##STEM##_is_non_negative(mmux_##STEM##_##CTOR));	\
@@ -1106,7 +1106,7 @@ test_sign_predicate_is_finite (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_finite(op);			\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_finite(mmux_##STEM##_##CTOR));	\
@@ -1320,7 +1320,7 @@ test_sign_predicate_is_infinite (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_infinite(op);			\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_infinite(mmux_##STEM##_##CTOR));	\
@@ -1534,7 +1534,7 @@ test_sign_predicate_is_normal (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_normal(op);			\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_normal(mmux_##STEM##_##CTOR));	\
@@ -1675,7 +1675,7 @@ test_sign_predicate_is_subnormal (void)
       auto	op = mmux_##STEM##_##CTOR;				\
       bool	rv = mmux_##STEM##_is_subnormal(op);			\
       dprintf(2, "\n%s: stem='%s': number='", __func__, #STEM);		\
-      mmux_##STEM##_dprintf(2, op);					\
+      mmux_##STEM##_dprintf_no_error(2, op);					\
       dprintf(2, "' result='%s'\n", ((rv)? "true" : "false"));		\
     }									\
     assert(RESULT == mmux_##STEM##_is_subnormal(mmux_##STEM##_##CTOR));	\

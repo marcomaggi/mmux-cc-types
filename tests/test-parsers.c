@@ -7,7 +7,7 @@
 
 	Test file for version functions.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -28,17 +28,17 @@
       exit(EXIT_FAILURE);									\
     } else {											\
       fprintf(stderr, "%s: correctly parsed '%s' input '%s' to: '", __func__, #STEM, str);	\
-      mmux_ ## STEM ## _fprintf(stderr, value);							\
+      mmux_cc_types_ignore_retval(mmux_ ## STEM ## _fprintf(stderr, value));			\
       fprintf(stderr, "'\n");									\
     }												\
   }
 
-#define DOIT_VALUE(STEM,INPUT_VALUE)				\
-  {								\
-    auto	buflen = mmux_usize(4096);			\
-    char	bufptr[buflen.value];				\
-    mmux_ ## STEM ## _sprint(bufptr, buflen, INPUT_VALUE);	\
-    DOIT(STEM,bufptr);						\
+#define DOIT_VALUE(STEM,INPUT_VALUE)							\
+  {											\
+    auto	buflen = mmux_usize(4096);						\
+    char	bufptr[buflen.value];							\
+    mmux_cc_types_ignore_retval(mmux_ ## STEM ## _sprint(bufptr, buflen, INPUT_VALUE));	\
+    DOIT(STEM,bufptr);									\
   }
 
 

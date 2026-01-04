@@ -7,7 +7,7 @@
 
 	String representation handling for "_DecimalN" types.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -49,17 +49,25 @@ m4_define([[[DEFINE_STRINGREP_PRINTING_PROTOS]]],[[[m4_dnl
 mmux_cc_types_decl bool mmux_string_is_flonum$1 (mmux_asciizcp_t s_value);
 
 mmux_cc_types_decl bool mmux_flonum$1_parse  (mmux_flonum$1_t * p_value, mmux_asciizcp_t s_value, mmux_asciizcp_t who)
-  __attribute__((__nonnull__(1,2)));
+  __attribute__((__nonnull__(1,2),__warn_unused_result__));
 
 mmux_cc_types_decl bool mmux_flonum$1_sprint (mmux_asciizp_t ptr, mmux_usize_t len, mmux_flonum$1_t value)
-  __attribute__((__nonnull__(1)));
+  __attribute__((__nonnull__(1),__warn_unused_result__));
 
-mmux_cc_types_decl bool mmux_flonum$1_sprint_size (mmux_usize_t *result_required_size_p, mmux_flonum$1_t value);
+mmux_cc_types_decl bool mmux_flonum$1_sprint_size (mmux_usize_t *result_required_size_p, mmux_flonum$1_t value)
+  __attribute__((__nonnull__(1),__warn_unused_result__));
 
-mmux_cc_types_decl bool mmux_flonum$1_dprintf (mmux_standard_sint_t fd, mmux_flonum$1_t value);
+mmux_cc_types_decl bool mmux_flonum$1_dprintf (mmux_standard_sint_t fd, mmux_flonum$1_t value)
+  __attribute__((__warn_unused_result__));
 
 mmux_cc_types_decl bool mmux_flonum$1_fprintf (void * stream, mmux_flonum$1_t value)
-  __attribute__((__nonnull__(1)));
+  __attribute__((__nonnull__(1),__warn_unused_result__));
+
+mmux_cc_types_inline_no_retval_decl void
+mmux_flonum$1_dprintf_no_error (mmux_standard_sint_t fd, mmux_flonum$1_t value)
+{
+  mmux_cc_types_ignore_retval(mmux_flonum$1_dprintf(fd, value));
+}
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STRINGREP_PRINTING_PROTOS(d32)

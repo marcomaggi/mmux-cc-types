@@ -7,7 +7,7 @@
 
 	Test file for functions.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -238,9 +238,9 @@ DEFINE_TEST_SPRINTER_FUNCTION(flonumcd128,	0.123, 0.456,	"(0.123000)+i*(0.456000
 												\
 	if (mmux_##STEM##_sprint_with_base(bufptr, &buflen, &is_negative, number, base)) {	\
 	  dprintf(2, "%s: failed conversion of '", __func__);					\
-	  mmux_ctype_dprintf(2, number);							\
+	  mmux_ctype_dprintf_no_error(2, number);							\
 	  dprintf(2, "' in base '");								\
-	  mmux_ctype_dprintf(2, base);								\
+	  mmux_ctype_dprintf_no_error(2, base);								\
 	  dprintf(2, "'\n");									\
 	  exit(EXIT_FAILURE);									\
 	}											\

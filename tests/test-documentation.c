@@ -7,7 +7,7 @@
 
 	Test file for code examples in the documentation.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -31,14 +31,14 @@ test_real_numbers (void)
       mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
       mmux_flonumf128_t  S = mmux_flonumf128_sign(A);
 
-      mmux_flonumf128_dprintf(2, S); dprintf_newline(2);
+      mmux_flonumf128_dprintf_no_error(2, S); dprintf_newline(2);
     }
     dprintf(2, "%s: generically compute the sign of a number\n", __func__);
     {
       auto  A = mmux_flonumf128_literal(0.123);
       auto  S = mmux_ctype_sign(A);
 
-      mmux_ctype_dprintf(2, S); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, S); dprintf_newline(2);
     }
   }
 
@@ -50,14 +50,14 @@ test_real_numbers (void)
       mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
       mmux_flonumf128_t  S = mmux_flonumf128_ceil(A);
 
-      mmux_flonumf128_dprintf(2, S); dprintf_newline(2);
+      mmux_flonumf128_dprintf_no_error(2, S); dprintf_newline(2);
     }
     dprintf(2, "%s: generically compute the ceil of a number\n", __func__);
     {
       auto  A = mmux_flonumf128_literal(0.123);
       auto  S = mmux_ctype_ceil(A);
 
-      mmux_ctype_dprintf(2, S); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, S); dprintf_newline(2);
     }
   }
 
@@ -69,14 +69,14 @@ test_real_numbers (void)
       mmux_flonumf128_t	A = mmux_flonumf128_literal(123.456);
       mmux_slong_t	B = mmux_flonumf128_lrint(A);
 
-      mmux_slong_dprintf(2, B); dprintf_newline(2);
+      mmux_slong_dprintf_no_error(2, B); dprintf_newline(2);
     }
     dprintf(2, "%s: generically round to integer a floating-point number\n", __func__);
     {
       auto	A = mmux_flonumf128_literal(123.456);
       auto	B = mmux_ctype_lrint(A);
 
-      mmux_ctype_dprintf(2, B); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, B); dprintf_newline(2);
     }
   }
 
@@ -89,8 +89,8 @@ test_real_numbers (void)
       mmux_flonumf128_t	integer_of_A;
       mmux_flonumf128_t	fractional_of_A = mmux_flonumf128_modf(A, &integer_of_A);
 
-      mmux_flonumf128_dprintf(2, integer_of_A); dprintf_newline(2);
-      mmux_flonumf128_dprintf(2, fractional_of_A); dprintf_newline(2);
+      mmux_flonumf128_dprintf_no_error(2, integer_of_A); dprintf_newline(2);
+      mmux_flonumf128_dprintf_no_error(2, fractional_of_A); dprintf_newline(2);
     }
     dprintf(2, "%s: generically split a floating-point number into integer and fractional parts\n", __func__);
     {
@@ -98,8 +98,8 @@ test_real_numbers (void)
       typeof(A)	integer_of_A;
       auto	fractional_of_A = mmux_ctype_modf(A, &integer_of_A);
 
-      mmux_ctype_dprintf(2, integer_of_A); dprintf_newline(2);
-      mmux_ctype_dprintf(2, fractional_of_A); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, integer_of_A); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, fractional_of_A); dprintf_newline(2);
     }
   }
 
@@ -119,8 +119,8 @@ test_complex_numbers (void)
       mmux_flonumf64_t   Zre = mmux_flonumcf64_real_part(Z);
       mmux_flonumf64_t   Zim = mmux_flonumcf64_imag_part(Z);
 
-      mmux_flonumf64_dprintf(2, Zre); dprintf_newline(2);
-      mmux_flonumf64_dprintf(2, Zim); dprintf_newline(2);
+      mmux_flonumf64_dprintf_no_error(2, Zre); dprintf_newline(2);
+      mmux_flonumf64_dprintf_no_error(2, Zim); dprintf_newline(2);
     }
     dprintf(2, "%s: generically compute the real part of a complex number\n", __func__);
     {
@@ -128,8 +128,8 @@ test_complex_numbers (void)
       auto	Zre = mmux_ctype_real_part(Z);
       auto	Zim = mmux_ctype_imag_part(Z);
 
-      mmux_ctype_dprintf(2, Zre); dprintf_newline(2);
-      mmux_ctype_dprintf(2, Zim); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, Zre); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, Zim); dprintf_newline(2);
     }
     dprintf(2, "%s: compute the real and imag parts of a real number\n", __func__);
     {
@@ -137,8 +137,8 @@ test_complex_numbers (void)
       mmux_flonumf64_t   Zre = mmux_flonumf64_real_part(Z);
       mmux_flonumf64_t   Zim = mmux_flonumf64_imag_part(Z);
 
-      mmux_flonumf64_dprintf(2, Zre); dprintf_newline(2);
-      mmux_flonumf64_dprintf(2, Zim); dprintf_newline(2);
+      mmux_flonumf64_dprintf_no_error(2, Zre); dprintf_newline(2);
+      mmux_flonumf64_dprintf_no_error(2, Zim); dprintf_newline(2);
     }
     dprintf(2, "%s: generically compute the real part of a real number\n", __func__);
     {
@@ -146,8 +146,8 @@ test_complex_numbers (void)
       auto	Zre = mmux_ctype_real_part(Z);
       auto	Zim = mmux_ctype_imag_part(Z);
 
-      mmux_ctype_dprintf(2, Zre); dprintf_newline(2);
-      mmux_ctype_dprintf(2, Zim); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, Zre); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, Zim); dprintf_newline(2);
     }
   }
 
@@ -159,7 +159,7 @@ test_complex_numbers (void)
       mmux_flonumcf64_t  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
       mmux_flonumf64_t   A = mmux_flonumcf64_argument(Z);
 
-      mmux_flonumf64_dprintf(2, A);
+      mmux_flonumf64_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
 
@@ -168,7 +168,7 @@ test_complex_numbers (void)
       auto	Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
       auto	A = mmux_ctype_argument(Z);
 
-      mmux_ctype_dprintf(2, A);
+      mmux_ctype_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
 
@@ -177,7 +177,7 @@ test_complex_numbers (void)
       mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
       mmux_flonumf64_t   A = mmux_flonumf64_argument(Z);
 
-      mmux_flonumf64_dprintf(2, A);
+      mmux_flonumf64_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
 
@@ -186,7 +186,7 @@ test_complex_numbers (void)
       auto	Z = mmux_flonumf64_literal(0.123);
       auto	A = mmux_ctype_argument(Z);
 
-      mmux_ctype_dprintf(2, A);
+      mmux_ctype_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
   }
@@ -199,7 +199,7 @@ test_complex_numbers (void)
       mmux_flonumcf64_t  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
       mmux_flonumcf64_t  A = mmux_flonumcf64_conjugate(Z);
 
-      mmux_flonumcf64_dprintf(2, A);
+      mmux_flonumcf64_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
 
@@ -208,7 +208,7 @@ test_complex_numbers (void)
       auto	Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
       auto	A = mmux_ctype_conjugate(Z);
 
-      mmux_ctype_dprintf(2, A);
+      mmux_ctype_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
 
@@ -217,7 +217,7 @@ test_complex_numbers (void)
       mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
       mmux_flonumf64_t   A = mmux_flonumf64_conjugate(Z);
 
-      mmux_flonumf64_dprintf(2, A);
+      mmux_flonumf64_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
 
@@ -226,7 +226,7 @@ test_complex_numbers (void)
       auto	Z = mmux_flonumf64_literal(0.123);
       auto	A = mmux_ctype_conjugate(Z);
 
-      mmux_ctype_dprintf(2, A);
+      mmux_ctype_dprintf_no_error(2, A);
       dprintf_newline(2);
     }
   }
@@ -240,6 +240,7 @@ test_stringrep_sprinters (void)
 {
   dprintf(2, "%s: enter\n", __func__);
 
+  /* Sprint a flonumdb. */
   {
     dprintf(2, "%s: sprinting a flonumdb\n", __func__);
     {
@@ -273,6 +274,233 @@ test_stringrep_sprinters (void)
 	}
 	dprintf(2, "%s", str); dprintf_newline(2);
       }
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  /* Sprinting a subtype with the pointers API. */
+  {
+    typedef struct augmented_flonumdb_t {
+      mmux_flonumdb_t;
+      mmux_sint_t  some_property_descriptor;
+    } augmented_flonumdb_t;
+
+    dprintf(2, "%s: sprinting a subtype of flonumdb using the pointers API\n", __func__);
+    {
+      augmented_flonumdb_t	value;
+      mmux_usize_t		required_nbytes;
+
+      value.value			= mmux_standard_flonumdb_literal(0.456);
+      value.some_property_descriptor	= mmux_sint_literal(123);
+
+      if (mmux_flonumdb_sprint_size_p(&required_nbytes, &value)) {
+	exit(EXIT_FAILURE);
+      } else {
+	char    str[required_nbytes.value];
+
+	if (mmux_flonumdb_sprint_p(str, required_nbytes, &value)) {
+	  exit(EXIT_FAILURE);
+	}
+	dprintf(2, "%s", str); dprintf_newline(2);
+      }
+    }
+
+    /* FIXME This  does not work  because GCC's  implementation of "_Generic"  is not
+       integrated with  "-fplan9-extensions".  There  is nothing I  can do  about it.
+       (Marco Maggi; Jan 3, 2026) */
+#if 0
+    dprintf(2, "%s: generically sprinting a subtype of flonumdb using the pointers API\n", __func__);
+    {
+      augmented_flonumdb_t	value;
+      mmux_usize_t		required_nbytes = mmux_usize_constant_zero();
+
+      value.value			= mmux_standard_flonumdb_literal(0.456);
+      value.some_property_descriptor	= mmux_sint_literal(123);
+
+      if (mmux_ctype_sprint_size_p(&required_nbytes, &value)) {
+	exit(EXIT_FAILURE);
+      } else {
+	char    str[required_nbytes.value];
+
+	if (mmux_ctype_sprint_p(str, required_nbytes, &value)) {
+	  exit(EXIT_FAILURE);
+	}
+	dprintf(2, "required_nbytes=%lu str=%s", required_nbytes.value, str); dprintf_newline(2);
+      }
+    }
+#endif
+
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  /* Sprint a sint32. */
+  {
+    dprintf(2, "%s: sprinting with base a sint32\n", __func__);
+    {
+      auto	value  = mmux_sint32_literal(123);
+      auto	buflen = mmux_usize_literal(64);
+      char	bufptr[buflen.value];
+      bool	is_negative;
+      auto	base   = mmux_uint_literal(12);
+
+      if (mmux_sint32_sprint_with_base(bufptr, &buflen, &is_negative, value, base)) {
+	exit(EXIT_FAILURE);
+      } else {
+	bufptr[buflen.value] = '\0';
+	dprintf(2, "buflen=%lu, is_negative=%d, bufptr=%s",
+		buflen.value, is_negative, bufptr); dprintf_newline(2);
+      }
+    }
+
+    dprintf(2, "%s: generically sprinting with base a sint32\n", __func__);
+    {
+      auto	value  = mmux_sint32_literal(123);
+      auto	buflen = mmux_usize_literal(64);
+      char	bufptr[buflen.value];
+      bool	is_negative;
+      auto	base   = mmux_uint_literal(12);
+
+      if (mmux_ctype_sprint_with_base(bufptr, &buflen, &is_negative, value, base)) {
+	exit(EXIT_FAILURE);
+      } else {
+	bufptr[buflen.value] = '\0';
+	dprintf(2, "buflen=%lu, is_negative=%d, bufptr=%s",
+		buflen.value, is_negative, bufptr); dprintf_newline(2);
+      }
+    }
+
+    dprintf(2, "%s: sprinting with base a sint32 using the pointers API\n", __func__);
+    {
+      auto	value  = mmux_sint32_literal(123);
+      auto	buflen = mmux_usize_literal(64);
+      char	bufptr[buflen.value];
+      bool	is_negative;
+      auto	base   = mmux_uint_literal(12);
+
+      if (mmux_sint32_sprint_with_base_p(bufptr, &buflen, &is_negative, &value, base)) {
+	exit(EXIT_FAILURE);
+      } else {
+	bufptr[buflen.value] = '\0';
+	dprintf(2, "buflen=%lu, is_negative=%d, bufptr=%s",
+		buflen.value, is_negative, bufptr); dprintf_newline(2);
+      }
+    }
+
+    dprintf(2, "%s: generically sprinting with base a sint32 using the pointers API\n", __func__);
+    {
+      auto	value  = mmux_sint32_literal(123);
+      auto	buflen = mmux_usize_literal(64);
+      char	bufptr[buflen.value];
+      bool	is_negative;
+      auto	base   = mmux_uint_literal(12);
+
+      if (mmux_ctype_sprint_with_base_p(bufptr, &buflen, &is_negative, &value, base)) {
+	exit(EXIT_FAILURE);
+      } else {
+	bufptr[buflen.value] = '\0';
+	dprintf(2, "buflen=%lu, is_negative=%d, bufptr=%s",
+		buflen.value, is_negative, bufptr); dprintf_newline(2);
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  /* Dprint a sint32. */
+  {
+    dprintf(2, "%s: dprinting a sint32\n", __func__);
+    {
+      auto	value = mmux_sint32_literal(123);
+
+      if (mmux_sint32_dprintf(STDERR_FILENO, value)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(STDERR_FILENO);
+    }
+
+    dprintf(2, "%s: generically dprinting a sint32\n", __func__);
+    {
+      auto	value = mmux_sint32_literal(123);
+
+      if (mmux_ctype_dprintf(STDERR_FILENO, value)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(STDERR_FILENO);
+    }
+
+    dprintf(2, "%s: dprinting a sint32, using the pointers API\n", __func__);
+    {
+      auto	value = mmux_sint32_literal(123);
+
+      if (mmux_sint32_dprintf_p(STDERR_FILENO, &value)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(STDERR_FILENO);
+    }
+
+    dprintf(2, "%s: generically dprinting a sint32, using the pointers API\n", __func__);
+    {
+      auto	value = mmux_sint32_literal(123);
+
+      if (mmux_ctype_dprintf_p(STDERR_FILENO, &value)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(STDERR_FILENO);
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  /* Dprint a sint32 with base. */
+  {
+    dprintf(2, "%s: dprinting a sint32 with base\n", __func__);
+    {
+      int	fd    = 2;
+      auto	value = mmux_sint32_literal(123);
+      auto	base  = mmux_uint_literal(16);
+
+      if (mmux_sint32_dprintf_with_base(fd, value, base)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(fd);
+    }
+
+    dprintf(2, "%s: generically dprinting a sint32 with base\n", __func__);
+    {
+      int	fd    = 2;
+      auto	value = mmux_sint32_literal(123);
+      auto	base  = mmux_uint_literal(16);
+
+      if (mmux_ctype_dprintf_with_base(fd, value, base)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(fd);
+    }
+
+    dprintf(2, "%s: dprinting a sint32 with base, using the pointers API\n", __func__);
+    {
+      int	fd    = 2;
+      auto	value = mmux_sint32_literal(123);
+      auto	base  = mmux_uint_literal(16);
+
+      if (mmux_sint32_dprintf_with_base_p(fd, &value, base)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(fd);
+    }
+
+    dprintf(2, "%s: generically dprinting a sint32 with base, using the pointers API\n", __func__);
+    {
+      int	fd    = 2;
+      auto	value = mmux_sint32_literal(123);
+      auto	base  = mmux_uint_literal(16);
+
+      if (mmux_ctype_dprintf_with_base_p(fd, &value, base)) {
+	exit(EXIT_FAILURE);
+      }
+      dprintf_newline(fd);
     }
   }
 
@@ -345,7 +573,7 @@ test_comparison (void)
       mmux_uint64_t	B = mmux_uint64_literal(456);
       mmux_uint64_t	V = mmux_uint64_max(A, B);
 
-      mmux_uint64_dprintf(2, V); dprintf_newline(2);
+      mmux_uint64_dprintf_no_error(2, V); dprintf_newline(2);
     }
     dprintf(2, "%s: generically determine the maximum between two numbers\n", __func__);
     {
@@ -353,7 +581,7 @@ test_comparison (void)
       auto	B = mmux_uint64_literal(456);
       auto	V = mmux_ctype_max(A, B);
 
-      mmux_ctype_dprintf(2, V); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, V); dprintf_newline(2);
     }
   }
 
@@ -431,7 +659,7 @@ test_arithmetics (void)
       mmux_flonumf128_t	B = mmux_flonumf128_literal(4.56);
       mmux_flonumf128_t	C = mmux_flonumf128_add(A, B);
 
-      mmux_flonumf128_dprintf(2, C); dprintf_newline(2);
+      mmux_flonumf128_dprintf_no_error(2, C); dprintf_newline(2);
     }
     dprintf(2, "%s: generically add two numbers\n", __func__);
     {
@@ -439,7 +667,7 @@ test_arithmetics (void)
       auto	B = mmux_flonumf128_literal(4.56);
       auto	C = mmux_ctype_add(A, B);
 
-      mmux_ctype_dprintf(2, C); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, C); dprintf_newline(2);
     }
   }
 
@@ -451,7 +679,7 @@ test_arithmetics (void)
       auto    op  = mmux_ulong_literal(5);
       auto    rop = mmux_ctype_neg(op);
 
-      mmux_ctype_dprintf(2, rop); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, rop); dprintf_newline(2);
     }
   }
 
@@ -470,14 +698,14 @@ test_mathematics (void)
       mmux_flonumdb_t	X = mmux_flonumdb_literal(0.123);
       mmux_flonumdb_t	Y = mmux_flonumdb_cos(X);
 
-      mmux_flonumdb_dprintf(2, Y); dprintf_newline(2);
+      mmux_flonumdb_dprintf_no_error(2, Y); dprintf_newline(2);
     }
     dprintf(2, "%s: generically compute the trigonometric cosine of a number\n", __func__);
     {
       auto	X = mmux_flonumdb_literal(0.123);
       auto	Y = mmux_ctype_cos(X);
 
-      mmux_ctype_dprintf(2, Y); dprintf_newline(2);
+      mmux_ctype_dprintf_no_error(2, Y); dprintf_newline(2);
     }
   }
 
@@ -498,7 +726,7 @@ test_bitwise (void)
       mmux_uint_t	C    = mmux_uint_bitwise_xor(A, B);
       mmux_uint_t	base = mmux_uint_literal(2);
 
-      mmux_uint_dprintf_with_base(2, C, base); dprintf_newline(2);
+      mmux_cc_types_ignore_retval(mmux_uint_dprintf_with_base(2, C, base)); dprintf_newline(2);
     }
     dprintf(2, "%s: generically XOR two numbers\n", __func__);
     {
@@ -507,7 +735,7 @@ test_bitwise (void)
       auto	C = mmux_ctype_bitwise_xor(A, B);
       auto	base = mmux_uint_literal(2);
 
-      mmux_ctype_dprintf_with_base(2, C, base); dprintf_newline(2);
+      mmux_cc_types_ignore_retval(mmux_ctype_dprintf_with_base(2, C, base)); dprintf_newline(2);
     }
   }
 

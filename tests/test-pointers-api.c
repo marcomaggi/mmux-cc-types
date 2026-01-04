@@ -7,7 +7,7 @@
 
 	Test file for functions.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -37,9 +37,9 @@
 #define VALIDATE_RESULT_EXACTLY(STEM,FUNC,EXPECTED_RESULT,GOT_RESULT)		\
   if (mmux_##STEM##_not_equal(EXPECTED_RESULT, GOT_RESULT)) {			\
     dprintf(2, "\n*** %s: expected %s[%s]='", __func__, #FUNC, #STEM);		\
-    mmux_ctype_dprintf(2, EXPECTED_RESULT);					\
+    mmux_ctype_dprintf_no_error(2, EXPECTED_RESULT);					\
     dprintf(2, "' got '");							\
-    mmux_ctype_dprintf(2, GOT_RESULT);						\
+    mmux_ctype_dprintf_no_error(2, GOT_RESULT);						\
     dprintf(2, "'\n");								\
     exit(EXIT_FAILURE);								\
   }

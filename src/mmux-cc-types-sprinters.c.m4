@@ -11,7 +11,7 @@
 	more convenient to implement these here rather than in the source file of the
 	libdfp API adapter.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -422,10 +422,10 @@ m4_define([[[DEFINE_CPLX_FLONUM_SPRINTER]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_ST
 bool
 mmux_flonumc$1_sprint_size (mmux_usize_t * result_required_size_p, mmux_flonumc$1_t value)
 {
-  auto		re = mmux_flonumc$1_real_part(value);
-  auto		im = mmux_flonumc$1_imag_part(value);
-  int		total_required_nbytes = strlen("()+i*()");
-  mmux_usize_t	required_nbytes;
+  auto			re = mmux_flonumc$1_real_part(value);
+  auto			im = mmux_flonumc$1_imag_part(value);
+  int			total_required_nbytes = strlen("()+i*()");
+  mmux_usize_t		required_nbytes;
 
   if (mmux_flonum$1_sprint_size(&required_nbytes, re)) {
     return true;
@@ -572,18 +572,18 @@ DEFINE_ALIASED_TYPES_SPRINTER([[[sintptr]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_SINTPT
 DEFINE_ALIASED_TYPES_SPRINTER([[[uintptr]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_UINTPTR]]])
 
 DEFINE_ALIASED_TYPES_SPRINTER([[[ptrdiff]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_PTRDIFF]]])
-DEFINE_ALIASED_TYPES_SPRINTER([[[libc_mode]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_MODE]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[off]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_OFF]]])
-DEFINE_ALIASED_TYPES_SPRINTER([[[libc_pid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_PID]]])
-DEFINE_ALIASED_TYPES_SPRINTER([[[libc_uid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_UID]]])
-DEFINE_ALIASED_TYPES_SPRINTER([[[libc_gid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_GID]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[wchar]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_WCHAR]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[wint]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_WINT]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[time]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_TIME]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[clock]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_CLOCK]]])
+
+DEFINE_ALIASED_TYPES_SPRINTER([[[libc_mode]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_MODE]]])
+DEFINE_ALIASED_TYPES_SPRINTER([[[libc_pid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_PID]]])
+DEFINE_ALIASED_TYPES_SPRINTER([[[libc_uid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_UID]]])
+DEFINE_ALIASED_TYPES_SPRINTER([[[libc_gid]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_GID]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[libc_socklen]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_SOCKLEN]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[libc_rlim]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_RLIM]]])
-
 DEFINE_ALIASED_TYPES_SPRINTER([[[libc_ino]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_INO]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[libc_dev]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_DEV]]])
 DEFINE_ALIASED_TYPES_SPRINTER([[[libc_nlink]]],		[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_NLINK]]])
@@ -688,20 +688,24 @@ mmux_uint64_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p,
 
 m4_divert(-1)
 m4_define([[[DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+bool
 mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p, bool * is_negative_p,
 			  mmux_$1_t op, mmux_uint_t const base)
 {
   return mmux_sint64_sprint_with_base(bufptr, buflen_p, is_negative_p, mmux_sint64(op.value), base);
-}]]])]]])
+}
+]]])]]])
 
 m4_define([[[DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+bool
 mmux_$1_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p, bool * is_negative_p,
 			  mmux_$1_t op, mmux_uint_t const base)
 {
   return mmux_uint64_sprint_with_base(bufptr, buflen_p, is_negative_p, mmux_uint64(op.value), base);
-}]]])]]])
+}
+]]])]]])
 m4_divert(0)m4_dnl
 
 bool
@@ -746,15 +750,16 @@ DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[sintptr]]])
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uintptr]]])
 
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[ptrdiff]]])
-DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_mode]]])
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[off]]])
-DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_pid]]])
-DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_uid]]])
-DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_gid]]])
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[wchar]]])
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[wint]]])
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[time]]])
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[clock]]])
+
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_mode]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_pid]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_uid]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_gid]]])
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_socklen]]])
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_rlim]]])
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[libc_ino]]])
@@ -873,19 +878,19 @@ DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[sintmax]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[uintmax]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[sintptr]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[uintptr]]])
-DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_mode]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[off]]])
-DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_pid]]])
-DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_uid]]])
-DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_gid]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[ptrdiff]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[wchar]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[wint]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[time]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[clock]]])
+
+DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_mode]]])
+DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_pid]]])
+DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_uid]]])
+DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_gid]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_socklen]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_rlim]]])
-
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_ino]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_dev]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[libc_nlink]]])
@@ -952,19 +957,21 @@ mmux_uint64_dprintf_with_base (int fd, mmux_uint64_t op, mmux_uint_t const base)
 }
 
 m4_divert(-1)
-m4_define([[[DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+m4_define([[[DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+bool
 mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t const base)
 {
   return mmux_sint64_dprintf_with_base(fd, mmux_sint64(op.value), base);
-}]]])]]])
+}
+]]])]]])
 
-m4_define([[[DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE]]],[[[m4_dnl
-MMUX_CONDITIONAL_CODE([[[$2]]],[[[bool
+m4_define([[[DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE]]],[[[MMUX_CONDITIONAL_CODE([[[$2]]],[[[
+bool
 mmux_$1_dprintf_with_base (int fd, mmux_$1_t op, mmux_uint_t const base)
 {
   return mmux_uint64_dprintf_with_base(fd, mmux_uint64(op.value), base);
-}]]])]]])
+}
+]]])]]])
 m4_divert(0)m4_dnl
 
 bool

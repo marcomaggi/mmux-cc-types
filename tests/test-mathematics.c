@@ -7,7 +7,7 @@
 
 	Test file for functions.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -34,11 +34,11 @@
 #define EQUAL_RELEPSILON_UNARY(STEM, FUNC, OP, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)	\
   if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {		\
     dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);				\
-    mmux_ctype_dprintf(2, op);								\
+    mmux_ctype_dprintf_no_error(2, op);								\
     dprintf(2, ")=");										\
-    mmux_ctype_dprintf(2, erop);								\
+    mmux_ctype_dprintf_no_error(2, erop);								\
     dprintf(2, "' got '");									\
-    mmux_ctype_dprintf(2, rop1);								\
+    mmux_ctype_dprintf_no_error(2, rop1);								\
     dprintf(2, "'\n");										\
     exit(EXIT_FAILURE);										\
   }
@@ -47,13 +47,13 @@
 #define EQUAL_RELEPSILON_BINARY(STEM, FUNC, OP1, OP2, RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)	\
   if (! mmux_##STEM##_equal_relepsilon(RESULT_WE_EXPECTED, RESULT_WE_GOT, EPSILON)) {			\
     dprintf(2, "\n%s: %s: expected '%s(", __func__, #STEM, #FUNC);					\
-    mmux_ctype_dprintf(2, op1);										\
+    mmux_ctype_dprintf_no_error(2, op1);										\
     dprintf(2, ",");											\
-    mmux_ctype_dprintf(2, op2);										\
+    mmux_ctype_dprintf_no_error(2, op2);										\
     dprintf(2, ")=");											\
-    mmux_ctype_dprintf(2, erop);									\
+    mmux_ctype_dprintf_no_error(2, erop);									\
     dprintf(2, "' got '");										\
-    mmux_ctype_dprintf(2, rop1);									\
+    mmux_ctype_dprintf_no_error(2, rop1);									\
     dprintf(2, "'\n");											\
     exit(EXIT_FAILURE);											\
   }

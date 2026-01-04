@@ -7,7 +7,7 @@
 
 	This module implements some internal definitions for libdfp adapter code.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -67,6 +67,17 @@
 /* When using libdfp: this will load <dfp/float.h> */
 #ifdef HAVE_FLOAT_H
 #  include <float.h>
+#endif
+
+/* ------------------------------------------------------------------ */
+
+#ifndef MMUX_CC_TYPES_IGNORE_RETVAL_DEFINED
+#  define MMUX_CC_TYPES_IGNORE_RETVAL_DEFINED	1
+mmux_cc_types_inline_decl bool
+mmux_cc_types_ignore_retval (bool statement MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
 #endif
 
 /* ------------------------------------------------------------------ */

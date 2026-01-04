@@ -7,7 +7,7 @@
 
 	Test file for functions.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -46,7 +46,7 @@ test_complex_rectangular (void)
       assert(mmux_ctype_equal(mmux_flonum##FL(IMP), mmux_ctype_imag_part(Z)));			\
       if (0) {											\
 	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			\
-	mmux_ctype_dprintf(2, Z);								\
+	mmux_ctype_dprintf_no_error(2, Z);								\
 	dprintf(2, "\n");									\
       }												\
     }												\
@@ -59,7 +59,7 @@ test_complex_rectangular (void)
       assert(mmux_ctype_equal(mmux_flonum##FL(IMP), mmux_ctype_imag_part(Z)));			\
       if (0) {											\
 	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			\
-	mmux_ctype_dprintf(2, Z);								\
+	mmux_ctype_dprintf_no_error(2, Z);								\
 	dprintf(2, "\n");									\
       }												\
     }												\
@@ -123,7 +123,7 @@ test_complex_real_imag_parts (void)
     assert(mmux_ctype_is_zero(mmux_ctype_imag_part(op)));			\
     if (0) {									\
       dprintf(2, "%s: op(%s)=", __func__, mmux_ctype_stem_name(op));	\
-      mmux_ctype_dprintf(2, op);						\
+      mmux_ctype_dprintf_no_error(2, op);						\
       dprintf(2, "\n");								\
     }										\
     dprintf(2," %s,", #STEM);							\
@@ -139,7 +139,7 @@ test_complex_real_imag_parts (void)
     assert(mmux_ctype_is_zero(mmux_ctype_imag_part(op)));			\
     if (0) {									\
       dprintf(2, "%s: op(%s)=", __func__, mmux_ctype_stem_name(op));	\
-      mmux_ctype_dprintf(2, op);						\
+      mmux_ctype_dprintf_no_error(2, op);						\
       dprintf(2, "\n");								\
     }										\
     dprintf(2," %s,", #STEM);							\
@@ -155,7 +155,7 @@ test_complex_real_imag_parts (void)
     assert(mmux_ctype_equal(mmux_flonum##FL##_literal(IMP), mmux_ctype_imag_part(Z)));		\
     if (0) {											\
       dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));				\
-      mmux_ctype_dprintf(2, Z);									\
+      mmux_ctype_dprintf_no_error(2, Z);									\
       dprintf(2, "\n");										\
     }												\
     dprintf(2," %s,", "flonumc" #FL);								\
@@ -276,7 +276,7 @@ test_complex_conjugate (void)
     assert(mmux_ctype_equal(op, mmux_ctype_conjugate(op)));			\
     if (0) {									\
       dprintf(2, "%s: op(%s)=", __func__, mmux_ctype_stem_name(op));	\
-      mmux_ctype_dprintf(2, op);						\
+      mmux_ctype_dprintf_no_error(2, op);						\
       dprintf(2, "\n");								\
     }										\
     dprintf(2," %s,", #STEM);							\
@@ -290,7 +290,7 @@ test_complex_conjugate (void)
     assert(mmux_ctype_equal(op, mmux_ctype_conjugate(op)));			\
     if (0) {									\
       dprintf(2, "%s: op(%s)=", __func__, mmux_ctype_stem_name(op));	\
-      mmux_ctype_dprintf(2, op);						\
+      mmux_ctype_dprintf_no_error(2, op);						\
       dprintf(2, "\n");								\
     }										\
     dprintf(2," %s,", #STEM);							\
@@ -307,7 +307,7 @@ test_complex_conjugate (void)
     assert(mmux_ctype_equal(mmux_flonum##FL##_literal(- IMP), mmux_ctype_imag_part(Z)));		\
     if (0) {												\
       dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));					\
-      mmux_ctype_dprintf(2, Z);										\
+      mmux_ctype_dprintf_no_error(2, Z);										\
       dprintf(2, "\n");											\
     }													\
     dprintf(2," %s,", "flonumc" #FL);									\
@@ -432,7 +432,7 @@ test_complex_argument (void)
     assert(mmux_ctype_is_zero(mmux_ctype_argument(op)));			\
     if (0) {									\
       dprintf(2, "%s: op(%s)=", __func__, mmux_ctype_stem_name(op));	\
-      mmux_ctype_dprintf(2, op);						\
+      mmux_ctype_dprintf_no_error(2, op);						\
       dprintf(2, "\n");								\
     }										\
     dprintf(2," %s,", #STEM);							\
@@ -446,7 +446,7 @@ test_complex_argument (void)
     assert(mmux_ctype_is_zero(mmux_ctype_argument(op)));			\
     if (0) {									\
       dprintf(2, "%s: op(%s)=", __func__, mmux_ctype_stem_name(op));	\
-      mmux_ctype_dprintf(2, op);						\
+      mmux_ctype_dprintf_no_error(2, op);						\
       dprintf(2, "\n");								\
     }										\
     dprintf(2," %s,", #STEM);							\
@@ -461,9 +461,9 @@ test_complex_argument (void)
     assert(mmux_ctype_equal_relepsilon(mmux_flonum##FL(ARG), A, mmux_flonum##FL(EPS)));		\
     if (0) {											\
       dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));				\
-      mmux_ctype_dprintf(2, Z);									\
+      mmux_ctype_dprintf_no_error(2, Z);									\
       dprintf(2, " argument=");									\
-      mmux_ctype_dprintf(2, A);									\
+      mmux_ctype_dprintf_no_error(2, A);									\
       dprintf(2, "\n");										\
     }												\
     dprintf(2," %s,", "flonumc" #FL);								\

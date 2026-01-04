@@ -7,7 +7,7 @@
 
 	Test comparison functions.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -31,17 +31,17 @@
     auto	op2 = mmux_##STEM##_literal(LITERAL2);				\
     if (! mmux_##STEM##_##PRED(op1, op2)) {					\
       dprintf(2, "\nexpected '%s_%s(", #STEM, #PRED);				\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = true\n");						\
       exit(EXIT_FAILURE);							\
     }										\
     if (! mmux_ctype_##PRED(op1, op2)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_%s(", #STEM, #PRED);			\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = true\n");						\
       exit(EXIT_FAILURE);							\
     }										\
@@ -54,17 +54,17 @@
     auto	op2 = mmux_##STEM##_literal(LITERAL2);				\
     if (mmux_##STEM##_##PRED(op1, op2)) {					\
       dprintf(2, "\nexpected '%s_%s(", #STEM, #PRED);				\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = false\n");						\
       exit(EXIT_FAILURE);							\
     }										\
     if (mmux_ctype_##PRED(op1, op2)) {						\
       dprintf(2, "\nexpected 'ctype(%s)_%s(", #STEM, #PRED);			\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = false\n");						\
       exit(EXIT_FAILURE);							\
     }										\
@@ -81,17 +81,17 @@
     auto	op2 = mmux_##STEM##_rectangular_literal(LITERAL2_RE, LITERAL2_IM);	\
     if (! mmux_##STEM##_##PRED(op1, op2)) {						\
       dprintf(2, "\nexpected '%s_%s(", #STEM, #PRED);					\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_##PRED(op1, op2)) {						\
       dprintf(2, "\nexpected 'ctype(%s)_%s(", #STEM, #PRED);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -106,17 +106,17 @@
     auto	op2 = mmux_##STEM##_rectangular_literal(LITERAL2_RE, LITERAL2_IM);	\
     if (mmux_##STEM##_##PRED(op1, op2)) {						\
       dprintf(2, "\nexpected '%s_%s(", #STEM, #PRED);					\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (mmux_ctype_##PRED(op1, op2)) {							\
       dprintf(2, "\nexpected 'ctype(%s)_%s(", #STEM, #PRED);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -135,17 +135,17 @@
     auto	mrg = mmux_##STEM##_literal(1e-3);					\
     if (! mmux_##STEM##_equal_absmargin(op1, op2, mrg)) {				\
       dprintf(2, "\nexpected '%s_equal_absmargin(", #STEM);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal_absmargin(op1, op2, mrg)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_equal_absmargin(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -159,17 +159,17 @@
     auto	mrg = mmux_##STEM##_literal(1e-3);					\
     if (mmux_##STEM##_equal_absmargin(op1, op2, mrg)) {					\
       dprintf(2, "\nexpected '%s_equal_absmargin(", #STEM);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (mmux_ctype_equal_absmargin(op1, op2, mrg)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_equal_absmargin(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -187,17 +187,17 @@
     auto	mrg = mmux_##STEM##_rectangular_literal(1e-3, 1e-3);			\
     if (! mmux_##STEM##_equal_absmargin(op1, op2, mrg)) {				\
       dprintf(2, "\nexpected '%s_equal_absmargin(", #STEM);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal_absmargin(op1, op2, mrg)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_equal_absmargin(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -213,17 +213,17 @@
     auto	mrg = mmux_##STEM##_rectangular_literal(1e-3, 1e-3);			\
     if (mmux_##STEM##_equal_absmargin(op1, op2, mrg)) {					\
       dprintf(2, "\nexpected '%s_equal_absmargin(", #STEM);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (mmux_ctype_equal_absmargin(op1, op2, mrg)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_equal_absmargin(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -242,17 +242,17 @@
     auto	eps = mmux_##STEM##_literal(1e-3);				\
     if (! mmux_##STEM##_equal_relepsilon(op1, op2, eps)) {			\
       dprintf(2, "\nexpected '%s_equal_relepsilon(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = true\n");						\
       exit(EXIT_FAILURE);							\
     }										\
     if (! mmux_ctype_equal_relepsilon(op1, op2, eps)) {				\
       dprintf(2, "\nexpected 'ctype(%s)_equal_relepsilon(", #STEM);		\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = true\n");						\
       exit(EXIT_FAILURE);							\
     }										\
@@ -266,17 +266,17 @@
     auto	eps = mmux_##STEM##_literal(1e-3);				\
     if (mmux_##STEM##_equal_relepsilon(op1, op2, eps)) {			\
       dprintf(2, "\nexpected '%s_equal_relepsilon(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = false\n");						\
       exit(EXIT_FAILURE);							\
     }										\
     if (mmux_ctype_equal_relepsilon(op1, op2, eps)) {				\
       dprintf(2, "\nexpected 'ctype(%s)_equal_relepsilon(", #STEM);		\
-      mmux_ctype_dprintf(2, op1);						\
+      mmux_ctype_dprintf_no_error(2, op1);						\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, op2);						\
+      mmux_ctype_dprintf_no_error(2, op2);						\
       dprintf(2, ")' = false\n");						\
       exit(EXIT_FAILURE);							\
     }										\
@@ -294,17 +294,17 @@
     auto	eps = mmux_##STEM##_rectangular_literal(1e-3, 1e-3);			\
     if (! mmux_##STEM##_equal_relepsilon(op1, op2, eps)) {				\
       dprintf(2, "\nexpected '%s_equal_relepsilon(", #STEM);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal_relepsilon(op1, op2, eps)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_equal_relepsilon(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = true\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -320,17 +320,17 @@
     auto	eps = mmux_##STEM##_rectangular_literal(1e-3, 1e-3);			\
     if (mmux_##STEM##_equal_relepsilon(op1, op2, eps)) {				\
       dprintf(2, "\nexpected '%s_equal_relepsilon(", #STEM);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
     if (mmux_ctype_equal_relepsilon(op1, op2, eps)) {					\
       dprintf(2, "\nexpected 'ctype(%s)_equal_relepsilon(", #STEM);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = false\n");							\
       exit(EXIT_FAILURE);								\
     }											\
@@ -350,25 +350,25 @@
     auto	rop2 = mmux_ctype_##MINMAX(op1, op2);					\
     if (! mmux_ctype_equal(op1, rop1)) {						\
       dprintf(2, "\nexpected 1st '%s_%s(", #STEM, #MINMAX);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop1);							\
+      mmux_ctype_dprintf_no_error(2, rop1);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal(op1, rop2)) {						\
       dprintf(2, "\nexpected 1st 'ctype(%s)_%s(", #STEM, #MINMAX);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop2);							\
+      mmux_ctype_dprintf_no_error(2, rop2);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
@@ -383,25 +383,25 @@
     auto	rop2 = mmux_ctype_##MINMAX(op1, op2);					\
     if (! mmux_ctype_equal(op2, rop1)) {						\
       dprintf(2, "\nexpected 2nd '%s_%s(", #STEM, #MINMAX);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop1);							\
+      mmux_ctype_dprintf_no_error(2, rop1);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal(op2, rop2)) {						\
       dprintf(2, "\nexpected 2nd 'ctype(%s)_%s(", #STEM, #MINMAX);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop2);							\
+      mmux_ctype_dprintf_no_error(2, rop2);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
@@ -420,39 +420,39 @@
     auto	rop2 = mmux_ctype_##MINMAX(op1, op2);					\
     if (0) {										\
       dprintf(2, "\nop1 = '");								\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, "'\n");								\
       dprintf(2, "op2 = '");								\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, "'\n");								\
       dprintf(2, "rop1 = '");								\
-      mmux_ctype_dprintf(2, rop1);							\
+      mmux_ctype_dprintf_no_error(2, rop1);							\
       dprintf(2, "'\n");								\
       dprintf(2, "rop2 = '");								\
-      mmux_ctype_dprintf(2, rop2);							\
+      mmux_ctype_dprintf_no_error(2, rop2);							\
       dprintf(2, "'\n");								\
     }											\
     if (! mmux_ctype_equal(op1, rop1)) {						\
       dprintf(2, "\nexpected 1st '%s_%s(", #STEM, #MINMAX);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop1);							\
+      mmux_ctype_dprintf_no_error(2, rop1);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal(op1, rop2)) {						\
       dprintf(2, "\nexpected 1st 'ctype(%s)_%s(", #STEM, #MINMAX);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop2);							\
+      mmux_ctype_dprintf_no_error(2, rop2);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
@@ -469,39 +469,39 @@
     auto	rop2 = mmux_ctype_##MINMAX(op1, op2);					\
     if (0) {										\
       dprintf(2, "\nop1 = '");								\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, "'\n");								\
       dprintf(2, "op2 = '");								\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, "'\n");								\
       dprintf(2, "rop1 = '");								\
-      mmux_ctype_dprintf(2, rop1);							\
+      mmux_ctype_dprintf_no_error(2, rop1);							\
       dprintf(2, "'\n");								\
       dprintf(2, "rop2 = '");								\
-      mmux_ctype_dprintf(2, rop2);							\
+      mmux_ctype_dprintf_no_error(2, rop2);							\
       dprintf(2, "'\n");								\
     }											\
     if (! mmux_ctype_equal(op2, rop1)) {						\
       dprintf(2, "\nexpected 2nd '%s_%s(", #STEM, #MINMAX);				\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop1);							\
+      mmux_ctype_dprintf_no_error(2, rop1);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\
     if (! mmux_ctype_equal(op2, rop2)) {						\
       dprintf(2, "\nexpected 2nd 'ctype(%s)_%s(", #STEM, #MINMAX);			\
-      mmux_ctype_dprintf(2, op1);							\
+      mmux_ctype_dprintf_no_error(2, op1);							\
       dprintf(2, ", ");									\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, ")' = '");								\
-      mmux_ctype_dprintf(2, op2);							\
+      mmux_ctype_dprintf_no_error(2, op2);							\
       dprintf(2, "' got '");								\
-      mmux_ctype_dprintf(2, rop2);							\
+      mmux_ctype_dprintf_no_error(2, rop2);							\
       dprintf(2, "'\n");								\
       exit(EXIT_FAILURE);								\
     }											\

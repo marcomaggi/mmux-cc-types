@@ -35,7 +35,7 @@
 
 @c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
 @c list of copyright years.
-@set COPYRIGHT_YEARS            2024, 2025
+@set COPYRIGHT_YEARS            2024, 2025, 2026
 
 @c ------------------------------------------------------------
 
@@ -169,6 +169,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * mathematics::                 Mathematical operations.
 * bitwise::                     Bitwise operations.
 * generic::                     Miscellaneous generic macros.
+* misc::                        Miscellaneous definitions.
 
 Appendices
 
@@ -504,7 +505,7 @@ auto    op1 = mmux_flonumd128_literal(0.123);
 auto    op2 = mmux_flonumd128_literal(0.456);
 auto    rop = mmux_ctype_add(op1, op2);
 
-mmux_ctype_dprintf(2, rop);
+mmux_ctype_dprintf(STDERR_FILENO, rop);
 @end example
 
 @noindent
@@ -2219,7 +2220,7 @@ mmux_usize_t     required_nbytes;
 if (mmux_flonumdb_sprint_size(&required_nbytes, value)) @{
   /* error */
 @} else @{
-  char    str[required_nbytes.value];
+  char  str[required_nbytes.value];
 
   if (mmux_flonumdb_sprint(str, required_nbytes, value)) @{
     /* error */
@@ -2231,13 +2232,13 @@ if (mmux_flonumdb_sprint_size(&required_nbytes, value)) @{
 or more generically:
 
 @example
-auto            value = mmux_flonumdb_literal(0.123);
-mmux_usize_t    required_nbytes;
+auto          value = mmux_flonumdb_literal(0.123);
+mmux_usize_t  required_nbytes;
 
 if (mmux_flonumdb_sprint_size(&required_nbytes, value)) @{
   /* error */
 @} else @{
-  char    str[required_nbytes.value];
+  char  str[required_nbytes.value];
 
   if (mmux_ctype_sprint(str, required_nbytes, value)) @{
     /* error */
@@ -2245,11 +2246,63 @@ if (mmux_flonumdb_sprint_size(&required_nbytes, value)) @{
 @}
 @end example
 
+If we derive a type from @objtype{mmux_flonumdb_t}:
+
+@example
+typedef struct augmented_flonumdb_t @{
+  mmux_flonumdb_t;
+  mmux_sint_t  some_property_descriptor;
+@} augmented_flonumdb_t;
+@end example
+
+@noindent
+we can apply to values of such type the same conversion function we use for
+@objtype{mmux_flonumdb_t}, by using the pointers @api{}:
+
+@example
+augmented_flonumdb_t  value = gimme_an_augmented_flonumdb();
+mmux_usize_t          required_nbytes;
+
+if (mmux_flonumdb_sprint_size_p(&required_nbytes, &value)) @{
+  /* error */
+@} else @{
+  char  str[required_nbytes.value];
+
+  if (mmux_flonumdb_sprint_p(str, required_nbytes, &value)) @{
+    /* error */
+  @}
+@}
+@end example
+
+@c FIXME This does not work with pointers  to subtypes because GCC's implementation of "_Generic" is
+@c not integrated with "-fplan9-extensions".  There is nothing I can do about it.  (Marco Maggi; Jan
+@c 3, 2026)
+@c
+@c @noindent
+@c or more generically:
+@c
+@c @example
+@c augmented_flonumdb_t  value = gimme_an_augmented_flonumdb();
+@c mmux_usize_t          required_nbytes;
+@c
+@c if (mmux_ctype_sprint_size_p(&required_nbytes, &value)) @{
+@c   /* error */
+@c @} else @{
+@c   char  str[required_nbytes.value];
+@c
+@c   if (mmux_ctype_sprint_p(str, required_nbytes, &value)) @{
+@c     /* error */
+@c   @}
+@c @}
+@c @end example
+
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineCFunctionSprinter{STEM}
 @deftypefun bool mmux_\STEM\_sprint (mmux_asciizp_t @var{STRPTR}, mmux_usize_t @var{LEN}, mmux_\STEM\_t @var{VALUE})
 @deftypefunx bool mmux_\STEM\_sprint_size (mmux_usize_t * @var{result_required_nbytes_p}, mmux_\STEM\_t @var{VALUE})
+@deftypefunx bool mmux_\STEM\_sprint_p (mmux_asciizp_t @var{STRPTR}, mmux_usize_t @var{LEN}, mmux_\STEM\_t * @var{VALUE_P})
+@deftypefunx bool mmux_\STEM\_sprint_size_p (mmux_usize_t * @var{result_required_nbytes_p}, mmux_\STEM\_t * @var{VALUE_P})
 The @samp{sprint} function generates a string representation of @var{VALUE} and stores it, in
 @asciiz{} format, in the string referenced by @var{STRPTR}, which can hold at most @var{LEN}
 characters (terminating zero included).  When successful return @cfalse{}; otherwise leave
@@ -2267,7 +2320,17 @@ representation of @var{VALUE}.  When successful: it stores the number of charact
 
 @deftypefn {Generic Macro} bool mmux_ctype_sprint (mmux_asciizp_t @var{STRPTR}, mmux_usize_t @var{LEN}, mmux_ctype_t @var{VALUE})
 @deftypefnx {Generic Macro} bool mmux_ctype_sprint_size (mmux_usize_t @var{result_required_nbytes_p}, mmux_ctype_t @var{VALUE})
+@deftypefnx {Generic Macro} bool mmux_ctype_sprint_p (mmux_asciizp_t @var{STRPTR}, mmux_usize_t @var{LEN}, mmux_ctype_t * @var{VALUE_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_sprint_size_p (mmux_usize_t @var{result_required_nbytes_p}, mmux_ctype_t * @var{VALUE_P})
 Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+
+@quotation
+@strong{NOTE} The generic pointers @api{} implemented by @cfunc{mmux_ctype_sprint_p} and
+@cfunc{mmux_ctype_sprint_size_p} @strong{does} work with pointers to the types implemented by
+@value{PACKAGE}.  It @strong{does not} work with pointers to subtypes of such types; this is because
+@gcc{}'s implementation of @code{_Generic} is not integrated with @option{-fplan9-extensions}.  At
+present there is nothing we can do about it.
+@end quotation
 @end deftypefn
 
 
@@ -2309,6 +2372,7 @@ Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type o
 @MmuxDefineCFunctionSprinter{wint}
 @MmuxDefineCFunctionSprinter{time}
 @MmuxDefineCFunctionSprinter{clock}
+
 @MmuxDefineCFunctionSprinter{libc_socklen}
 @MmuxDefineCFunctionSprinter{libc_rlim}
 @MmuxDefineCFunctionSprinter{libc_ino}
@@ -2362,7 +2426,80 @@ The following functions @cfunc{mmux_*_dprintf_with_base} generate a string repre
 exact integer @var{VALUE} and write it to the file descriptor @var{FD}.  When successful return
 @cfalse{}; otherwise return @ctrue{}.
 
-Behavioural notes for the functions @cfunc{mmux_*_sprint_with_base}:
+To construct a @objtype{mmux_sint32_t} string representation, using a custom base, we do:
+
+@example
+mmux_sint32_t  value  = mmux_sint32_literal(123);
+mmux_uint_t    base   = mmux_uint_literal(12);
+mmux_usize_t   buflen = mmux_usize_literal(64);
+char           bufptr[buflen.value];
+bool           is_negative;
+
+if (mmux_sint32_sprint_with_base(bufptr, &buflen, &is_negative, value, base)) @{
+  /* error */
+@}
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto  value  = mmux_sint32_literal(123);
+auto  base   = mmux_uint_literal(12);
+auto  buflen = mmux_usize_literal(64);
+char  bufptr[buflen.value];
+bool  is_negative;
+
+if (mmux_ctype_sprint_with_base(bufptr, &buflen, &is_negative, value, base)) @{
+  /* error */
+@}
+@end example
+
+If we derive a type from @objtype{mmux_sint32_t}:
+
+@example
+typedef struct augmented_sint32_t @{
+  mmux_sint32_t;
+  mmux_sint_t  some_property_descriptor;
+@} augmented_sint32_t;
+@end example
+
+@noindent
+we can apply to values of such type the same conversion function we use for @objtype{mmux_sint32_t},
+by using the pointers @api{}:
+
+@example
+augmented_sint32_t  value = gimme_an_augmented_sint32();
+auto  base   = mmux_uint_literal(12);
+auto  buflen = mmux_usize_literal(64);
+char  bufptr[buflen.value];
+bool  is_negative;
+
+if (mmux_sint32_sprint_with_base_p(bufptr, &buflen, &is_negative, &value, base)) @{
+  /* error */
+@}
+@end example
+
+@c FIXME This does not work with pointers  to subtypes because GCC's implementation of "_Generic" is
+@c not integrated with "-fplan9-extensions".  There is nothing I can do about it.  (Marco Maggi; Jan
+@c 3, 2026)
+@c
+@c @noindent
+@c or more generically:
+@c
+@c @example
+@c augmented_sint32_t  value = gimme_an_augmented_sint32();
+@c auto  base   = mmux_uint_literal(12);
+@c auto  buflen = mmux_usize_literal(64);
+@c char  bufptr[buflen.value];
+@c bool  is_negative;
+@c
+@c if (mmux_ctype_sprint_with_base_p(bufptr, &buflen, &is_negative, &value, base)) @{
+@c   /* error */
+@c @}
+@c @end example
+
+Below are behavioural notes for the functions @cfunc{mmux_*_sprint_with_base}.
 
 @itemize
 @item
@@ -2382,7 +2519,7 @@ characters that can be stored in the buffer referenced by @var{BUFPTR};
 
 @item
 upon successfully returning from a function call: it is set to the number of characters stored in
-the buffer referenced by by @var{BUFPTR};
+the buffer referenced by @var{BUFPTR};
 
 @item
 upon returning with failure from a function call: it is left untouched.
@@ -2407,7 +2544,7 @@ Internally all the exact integers are converted to @objtype{mmux_sint64_t} or
 No padding is performed for the generated string.
 @end itemize
 
-The cipher to output character map is:
+The cipher--to--output--character map is:
 
 @example
 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
@@ -2423,7 +2560,7 @@ Some usage examples:
 #undef  DOIT
 #define DOIT(LITERAL, BASE)                           \
   @{                                                   \
-    int   fd    = 2;                                  \
+    int   fd    = STDERR_FILENO;                      \
     auto  value = mmux_sint64_literal(LITERAL);       \
     auto  base  = mmux_uint_literal(BASE);            \
     mmux_ctype_dprintf_with_base(fd, value, base);    \
@@ -2449,7 +2586,9 @@ DOIT(61,        62);    @print{} +z
 
 @macro MmuxDefineCFunctionExactIntegerSprinter{STEM}
 @deftypefun bool mmux_\STEM\_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_\STEM\_t @var{VALUE}, mmux_uint_t @var{BASE})
-@deftypefunx bool mmux_\STEM\_dprintf_with_base (int @var{FD}, mmux_\STEM\_t @var{VALUE}, mmux_uint_t @var{BASE})
+@deftypefunx bool mmux_\STEM\_sprint_with_base_p (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_\STEM\_t * @var{VALUE_P}, mmux_uint_t @var{BASE})
+@deftypefunx bool mmux_\STEM\_dprintf_with_base (mmux_standard_sint_t @var{FD}, mmux_\STEM\_t @var{VALUE}, mmux_uint_t @var{BASE})
+@deftypefunx bool mmux_\STEM\_dprintf_with_base_p (mmux_standard_sint_t @var{FD}, mmux_\STEM\_t * @var{VALUE_P}, mmux_uint_t @var{BASE})
 Generate or print a string representation of the exact integer @var{VALUE}.
 @end deftypefun
 
@@ -2458,9 +2597,18 @@ Generate or print a string representation of the exact integer @var{VALUE}.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} bool mmux_ctype_sprint_with_base (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_ctype_t @var{VALUE}, mmux_uint_t @var{BASE})
-@deftypefnx {Generic Macro} bool mmux_ctype_dprintf_with_base (int @var{FD}, mmux_ctype_t @var{VALUE}, mmux_uint_t @var{BASE})
-Generic macros.  Generate or print a string representation of the exact integer @var{VALUE}.  The
-type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+@deftypefnx {Generic Macro} bool mmux_ctype_sprint_with_base_p (mmux_asciizp_t @var{BUFPTR}, mmux_usize_t * @var{BUFLEN_P}, bool * @var{IS_NEGATIVE_P}, mmux_ctype_t * @var{VALUE_P}, mmux_uint_t @var{BASE})
+@deftypefnx {Generic Macro} bool mmux_ctype_dprintf_with_base (mmux_standard_sint_t @var{FD}, mmux_ctype_t @var{VALUE}, mmux_uint_t @var{BASE})
+@deftypefnx {Generic Macro} bool mmux_ctype_dprintf_with_base_p (mmux_standard_sint_t @var{FD}, mmux_ctype_t * @var{VALUE_P}, mmux_uint_t @var{BASE})
+Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+
+@quotation
+@strong{NOTE} The generic pointers @api{} implemented by @cfunc{mmux_ctype_sprint_with_base_p} and
+@cfunc{mmux_ctype_dprintf_with_base_p} @strong{does} work with pointers to the types implemented by
+@value{PACKAGE}.  It @strong{does not} work with pointers to subtypes of such types; this is because
+@gcc{}'s implementation of @code{_Generic} is not integrated with @option{-fplan9-extensions}.  At
+present there is nothing we can do about it.
+@end quotation
 @end deftypefn
 
 @c ------------------------------------------------------------------------
@@ -2521,7 +2669,7 @@ To print a value to @stderr{}, we can do:
 @example
 mmux_flonumdb_t  X = mmux_flonumdb_literal(1.2);
 
-if (mmux_flonumdb_dprintf(2, X)) @{
+if (mmux_flonumdb_dprintf(STDERR_FILENO, X)) @{
   /* error */
 @}
 
@@ -2536,7 +2684,7 @@ or more generically:
 @example
 auto  X = mmux_flonumdb_literal(1.2);
 
-if (mmux_ctype_dprintf(2, X)) @{
+if (mmux_ctype_dprintf(STDERR_FILENO, X)) @{
   /* error */
 @}
 
@@ -2549,9 +2697,14 @@ if (mmux_ctype_fprintf(stderr, X)) @{
 
 @macro MmuxDefineCFunctionPrinters{STEM}
 @deftypefun bool mmux_\STEM\_dprintf (int @var{fd}, mmux_\STEM\_t @var{value})
+@deftypefunx bool mmux_\STEM\_dprintf_p (int @var{fd}, mmux_\STEM\_t * @var{value_p})
+@deftypefunx void mmux_\STEM\_dprintf_no_error (int @var{fd}, mmux_\STEM\_t @var{value})
 @deftypefunx bool mmux_\STEM\_fprintf (mmux_pointer_t @var{stream}, mmux_\STEM\_t @var{value})
+@deftypefunx bool mmux_\STEM\_fprintf_p (mmux_pointer_t @var{stream}, mmux_\STEM\_t * @var{value_p})
 Print a string representation of @var{value} to the given file descriptor @var{fd} or stream
 @var{stream}.  When successful return @cfalse{}, otherwise return @ctrue{}.
+
+The @cfunc{_no_error} variant ignores errors; it is useful for debugging purposes.
 @end deftypefun
 
 @end macro
@@ -2560,8 +2713,13 @@ Print a string representation of @var{value} to the given file descriptor @var{f
 
 
 @deftypefn {Generic macro} bool mmux_ctype_dprintf (int @var{fd}, mmux_ctype_t @var{value})
+@deftypefnx {Generic macro} bool mmux_ctype_dprintf_p (int @var{fd}, mmux_ctype_t * @var{value_p})
+@deftypefnx {Generic macro} void mmux_ctype_dprintf_no_error (int @var{fd}, mmux_ctype_t @var{value})
 @deftypefnx {Generic macro} bool mmux_ctype_fprintf (mmux_pointer_t @var{stream}, mmux_ctype_t @var{value})
+@deftypefnx {Generic macro} bool mmux_ctype_fprintf_p (mmux_pointer_t @var{stream}, mmux_ctype_t * @var{value_p})
 Generic macros.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+
+The @cfunc{_no_error} variant ignores errors; it is useful for debugging purposes.
 @end deftypefn
 
 
@@ -2668,7 +2826,7 @@ To determine the sign of a number we do:
 mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
 mmux_flonumf128_t  S = mmux_flonumf128_sign(A);
 
-mmux_flonumf128_dprintf(2, S);  @print{} 1.0
+mmux_flonumf128_dprintf(STDERR_FILENO, S);  @print{} 1.0
 @end example
 
 @noindent
@@ -2678,7 +2836,7 @@ or more generically:
 auto  A = mmux_flonumf128_literal(0.123);
 auto  S = mmux_ctype_sign(A);
 
-mmux_ctype_dprintf(2, S);       @print{} 1.0
+mmux_ctype_dprintf(STDERR_FILENO, S);       @print{} 1.0
 @end example
 
 Notes on operations:
@@ -2806,7 +2964,7 @@ To compute the ceil of a number we do:
 mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
 mmux_flonumf128_t  B = mmux_flonumf128_ceil(A);
 
-mmux_flonumf128_dprintf(2, B);  @print{} 1.0
+mmux_flonumf128_dprintf(STDERR_FILENO, B);  @print{} 1.0
 @end example
 
 @noindent
@@ -2816,7 +2974,7 @@ or more generically:
 auto  A = mmux_flonumf128_literal(0.123);
 auto  B = mmux_ctype_ceil(A);
 
-mmux_ctype_dprintf(2, B);       @print{} 1.0
+mmux_ctype_dprintf(STDERR_FILENO, B);       @print{} 1.0
 @end example
 
 @c ------------------------------------------------------------------------
@@ -2917,7 +3075,7 @@ To round to an exact integer a floating--point number we do:
 mmux_flonumf128_t A = mmux_flonumf128_literal(123.456);
 mmux_slong_t      B = mmux_flonumf128_lrint(A);
 
-mmux_slong_dprintf(2, B);       @print{} 123
+mmux_slong_dprintf(STDERR_FILENO, B);       @print{} 123
 @end example
 
 @noindent
@@ -2927,7 +3085,7 @@ or more generically:
 auto      A = mmux_flonumf128_literal(123.456);
 auto      B = mmux_ctype_lrint(A);
 
-mmux_ctype_dprintf(2, B);       @print{} 123
+mmux_ctype_dprintf(STDERR_FILENO, B);       @print{} 123
 @end example
 
 @c ------------------------------------------------------------------------
@@ -2989,8 +3147,8 @@ mmux_flonumf128_t       A = mmux_flonumf128_literal(123.456);
 mmux_flonumf128_t       integer_of_A;
 mmux_flonumf128_t       fractional_of_A = mmux_flonumf128_modf(A, &integer_of_A);
 
-mmux_flonumf128_dprintf(2, integer_of_A);       @print{} 123.0
-mmux_flonumf128_dprintf(2, fractional_of_A);    @print{} 0.456
+mmux_flonumf128_dprintf(STDERR_FILENO, integer_of_A);       @print{} 123.0
+mmux_flonumf128_dprintf(STDERR_FILENO, fractional_of_A);    @print{} 0.456
 @end example
 
 @noindent
@@ -3001,8 +3159,8 @@ auto            A = mmux_flonumf128_literal(123.456);
 typeof(A)       integer_of_A;
 auto            fractional_of_A = mmux_ctype_modf(A, &integer_of_A);
 
-mmux_ctype_dprintf(2, integer_of_A);            @print{} 123.0
-mmux_ctype_dprintf(2, fractional_of_A);         @print{} 0.456
+mmux_ctype_dprintf(STDERR_FILENO, integer_of_A);            @print{} 123.0
+mmux_ctype_dprintf(STDERR_FILENO, fractional_of_A);         @print{} 0.456
 @end example
 
 @c ------------------------------------------------------------------------
@@ -3062,8 +3220,8 @@ mmux_flonumcf64_t  Z   = mmux_flonumcf64_rectangular_literal(1.2,3.4);
 mmux_flonumf64_t   Zre = mmux_flonumcf64_real_part(Z);
 mmux_flonumf64_t   Zim = mmux_flonumcf64_imag_part(Z);
 
-mmux_flonumf64_dprintf(2, Zre);         @print{} 1.2
-mmux_flonumf64_dprintf(2, Zim);         @print{} 3.4
+mmux_flonumf64_dprintf(STDERR_FILENO, Zre);         @print{} 1.2
+mmux_flonumf64_dprintf(STDERR_FILENO, Zim);         @print{} 3.4
 @end example
 
 @noindent
@@ -3074,8 +3232,8 @@ auto    Z   = mmux_flonumcf64_rectangular_literal(1.2,3.4);
 auto    Zre = mmux_ctype_real_part(Z);
 auto    Zim = mmux_ctype_imag_part(Z);
 
-mmux_ctype_dprintf(2, Zre);     @print{} 1.2
-mmux_ctype_dprintf(2, Zim);     @print{} 3.4
+mmux_ctype_dprintf(STDERR_FILENO, Zre);     @print{} 1.2
+mmux_ctype_dprintf(STDERR_FILENO, Zim);     @print{} 3.4
 @end example
 
 To extract the real and imaginary parts from a real number we do:
@@ -3085,8 +3243,8 @@ mmux_flonumf64_t   Z   = mmux_flonumf64_literal(0.123);
 mmux_flonumf64_t   Zre = mmux_flonumf64_real_part(Z);
 mmux_flonumf64_t   Zim = mmux_flonumf64_imag_part(Z);
 
-mmux_flonumf64_dprintf(2, Zre); @print{} 0.123
-mmux_flonumf64_dprintf(2, Zim); @print{} 0.0
+mmux_flonumf64_dprintf(STDERR_FILENO, Zre); @print{} 0.123
+mmux_flonumf64_dprintf(STDERR_FILENO, Zim); @print{} 0.0
 @end example
 
 @noindent
@@ -3097,8 +3255,8 @@ auto      Z   = mmux_flonumf64_literal(0.123);
 auto      Zre = mmux_ctype_real_part(Z);
 auto      Zim = mmux_ctype_imag_part(Z);
 
-mmux_ctype_dprintf(2, Zre); @print{} 0.123
-mmux_ctype_dprintf(2, Zim); @print{} 0.0
+mmux_ctype_dprintf(STDERR_FILENO, Zre); @print{} 0.123
+mmux_ctype_dprintf(STDERR_FILENO, Zim); @print{} 0.0
 @end example
 
 @c ------------------------------------------------------------------------
@@ -3202,7 +3360,7 @@ To compute the complex argument of a complex number we do:
 mmux_flonumcf64_t  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
 mmux_flonumf64_t   A = mmux_flonumcf64_argument(Z);
 
-mmux_flonumf64_dprintf(2, A);
+mmux_flonumf64_dprintf(STDERR_FILENO, A);
 @print{} 1.231504
 @end example
 
@@ -3213,7 +3371,7 @@ or more generically:
 auto    Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
 auto    A = mmux_ctype_argument(Z);
 
-mmux_ctype_dprintf(2, A);
+mmux_ctype_dprintf(STDERR_FILENO, A);
 @print{} 1.231504
 @end example
 
@@ -3223,7 +3381,7 @@ To compute the complex argument of a real number we do:
 mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
 mmux_flonumf64_t   A = mmux_flonumf64_argument(Z);
 
-mmux_flonumf64_dprintf(2, A);
+mmux_flonumf64_dprintf(STDERR_FILENO, A);
 @print{} 0.0
 @end example
 
@@ -3234,7 +3392,7 @@ or more generically:
 auto    Z = mmux_flonumf64_literal(0.123);
 auto    A = mmux_ctype_argument(Z);
 
-mmux_ctype_dprintf(2, A);
+mmux_ctype_dprintf(STDERR_FILENO, A);
 @print{} 0.0
 @end example
 
@@ -3335,7 +3493,7 @@ To compute the complex conjugate of a complex number we do:
 mmux_flonumcf64_t  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
 mmux_flonumcf64_t  A = mmux_flonumcf64_conjugate(Z);
 
-mmux_flonumcf64_dprintf(2, A);  @print{} (1.2)+i*(-3.4)
+mmux_flonumcf64_dprintf(STDERR_FILENO, A);  @print{} (1.2)+i*(-3.4)
 @end example
 
 @noindent
@@ -3345,7 +3503,7 @@ or more generically:
 auto      Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
 auto      A = mmux_ctype_conjugate(Z);
 
-mmux_ctype_dprintf(2, A);       @print{} (1.2)+i*(-3.4)
+mmux_ctype_dprintf(STDERR_FILENO, A);       @print{} (1.2)+i*(-3.4)
 @end example
 
 To compute the complex conjugate of a real number we do:
@@ -3354,7 +3512,7 @@ To compute the complex conjugate of a real number we do:
 mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
 mmux_flonumf64_t   A = mmux_flonumf64_conjugate(Z);
 
-mmux_flonumf64_dprintf(2, A);   @print{} 0.123
+mmux_flonumf64_dprintf(STDERR_FILENO, A);   @print{} 0.123
 @end example
 
 @noindent
@@ -3364,7 +3522,7 @@ or more generically:
 auto      Z = mmux_flonumf64_literal(0.123);
 auto      A = mmux_ctype_conjugate(Z);
 
-mmux_ctype_dprintf(2, A);       @print{} 0.123
+mmux_ctype_dprintf(STDERR_FILENO, A);       @print{} 0.123
 @end example
 
 @c ------------------------------------------------------------------------
@@ -4006,7 +4164,7 @@ mmux_uint64_t     A = mmux_uint64_literal(123);
 mmux_uint64_t     B = mmux_uint64_literal(456);
 mmux_uint64_t     V = mmux_uint64_max(A, B);
 
-mmux_uint64_dprintf(2, V);       @print{} 456
+mmux_uint64_dprintf(STDERR_FILENO, V);       @print{} 456
 @end example
 
 @noindent
@@ -4017,7 +4175,7 @@ auto      A = mmux_uint64_literal(123);
 auto      B = mmux_uint64_literal(456);
 auto      V = mmux_ctype_max(A, B);
 
-mmux_ctype_dprintf(2, V);       @print{} 456
+mmux_ctype_dprintf(STDERR_FILENO, V);       @print{} 456
 @end example
 
 In what follows: complex floating--point numbers are compared by comparing their absolute values.
@@ -4346,7 +4504,7 @@ mmux_flonumf128_t A = mmux_flonumf128_literal(1.23);
 mmux_flonumf128_t B = mmux_flonumf128_literal(4.56);
 mmux_flonumf128_t C = mmux_flonumf128_add(A, B);
 
-mmux_flonumf128_dprintf(2, C);  @print{} 5.79
+mmux_flonumf128_dprintf(STDERR_FILENO, C);  @print{} 5.79
 @end example
 
 @noindent
@@ -4357,7 +4515,7 @@ auto      A = mmux_flonumf128_literal(1.23);
 auto      B = mmux_flonumf128_literal(4.56);
 auto      C = mmux_ctype_add(A, B);
 
-mmux_ctype_dprintf(2, C);  @print{} 5.79
+mmux_ctype_dprintf(STDERR_FILENO, C);  @print{} 5.79
 @end example
 
 Notes on arithmetics functions:
@@ -4371,7 +4529,7 @@ operation is whatever the compiled code produces; for example:
 auto    op  = mmux_ulong_literal(5);
 auto    rop = mmux_ctype_neg(op);
 
-mmux_ctype_dprintf(2, rop);     @print{} 18446744073709551611
+mmux_ctype_dprintf(STDERR_FILENO, rop);     @print{} 18446744073709551611
 @end example
 
 @item
@@ -4566,7 +4724,7 @@ If we want to compute the trigonometric cosine of a floating--point number we do
 mmux_flonumdb_t   X = mmux_flonumdb_literal(0.123);
 mmux_flonumdb_t   Y = mmux_flonumdb_cos(X);
 
-mmux_flonumdb_dprintf(2, Y);    @print{} 0.992445
+mmux_flonumdb_dprintf(STDERR_FILENO, Y);    @print{} 0.992445
 @end example
 
 @noindent
@@ -4576,7 +4734,7 @@ or more generically:
 auto      X = mmux_flonumdb_literal(0.123);
 auto      Y = mmux_ctype_cos(X);
 
-mmux_ctype_dprintf(2, Y);       @print{} 0.992445
+mmux_ctype_dprintf(STDERR_FILENO, Y);       @print{} 0.992445
 @end example
 
 @menu
@@ -5223,6 +5381,21 @@ stem.
 auto    op = mmux_flonumcdb_literal(1.23, 4.56);
 
 mmux_ctype_typedef_name(op)       @expansion{} "flonumcdb"
+@end example
+@end deftypefn
+
+@c page
+@node misc
+@chapter Miscellaneous definitions
+
+
+@deftypefn {Inline Function} bool mmux_cc_types_ignore_retval (bool @var{rv})
+Ignore @var{rv} and return @cfalse{}.  This function is useful to wrap function call of which we
+want to ignore the return value, even when they are marked with the @gcc{} attribute
+@samp{warn_unused_result}.
+
+@example
+mmux_cc_types_ignore_retval(mmux_uint_dprintf(STDERR_FILENO, mmux_uint_literal(123)));
 @end example
 @end deftypefn
 

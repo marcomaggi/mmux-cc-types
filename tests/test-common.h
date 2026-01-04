@@ -7,7 +7,7 @@
 
 	Common facilities for testing.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mmux-cc-types.h>
+
+#define STDERR_FILENO	2
 
 #define BOOL_STRING(BOOL)	((true == BOOL)? "true" : "false")
 
@@ -120,11 +122,11 @@ dprintf_newline (int fd)
   {										\
     if (mmux_##STEM##_not_equal(EROP,ROP)) {					\
       dprintf(2, "\n*** %s: for %s expected %s(", __func__, #STEM, #FUNC);	\
-      mmux_ctype_dprintf(2, OP);						\
+      mmux_ctype_dprintf_no_error(2, OP);					\
       dprintf(2, ")=");								\
-      mmux_ctype_dprintf(2, EROP);						\
+      mmux_ctype_dprintf_no_error(2, EROP);					\
       dprintf(2, " got ");							\
-      mmux_ctype_dprintf(2, ROP);						\
+      mmux_ctype_dprintf_no_error(2, ROP);					\
       dprintf(2, "\n");								\
       exit(EXIT_FAILURE);							\
     }										\
@@ -135,13 +137,13 @@ dprintf_newline (int fd)
   {										\
     if (mmux_##STEM##_not_equal(EROP,ROP)) {					\
       dprintf(2, "\n*** %s: for %s expected %s(", __func__, #STEM, #FUNC);	\
-      mmux_ctype_dprintf(2, OP1);						\
+      mmux_ctype_dprintf_no_error(2, OP1);					\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, OP2);						\
+      mmux_ctype_dprintf_no_error(2, OP2);					\
       dprintf(2, ")=");								\
-      mmux_ctype_dprintf(2, EROP);						\
+      mmux_ctype_dprintf_no_error(2, EROP);					\
       dprintf(2, " got ");							\
-      mmux_ctype_dprintf(2, ROP);						\
+      mmux_ctype_dprintf_no_error(2, ROP);					\
       dprintf(2, "\n");								\
       exit(EXIT_FAILURE);							\
     }										\
@@ -155,11 +157,11 @@ dprintf_newline (int fd)
     auto	eps = mmux_##STEM##_literal(1e-3);				\
     if (! mmux_##STEM##_equal_relepsilon(EROP,ROP,eps)) {			\
       dprintf(2, "\n*** %s: for %s expected %s(", __func__, #STEM, #FUNC);	\
-      mmux_ctype_dprintf(2, OP);						\
+      mmux_ctype_dprintf_no_error(2, OP);					\
       dprintf(2, ")=");								\
-      mmux_ctype_dprintf(2, EROP);						\
+      mmux_ctype_dprintf_no_error(2, EROP);					\
       dprintf(2, " got ");							\
-      mmux_ctype_dprintf(2, ROP);						\
+      mmux_ctype_dprintf_no_error(2, ROP);					\
       dprintf(2, "\n");								\
       exit(EXIT_FAILURE);							\
     }										\
@@ -171,13 +173,13 @@ dprintf_newline (int fd)
     auto	eps = mmux_##STEM##_literal(1e-3);				\
     if (! mmux_##STEM##_equal_relepsilon(EROP,ROP,eps)) {			\
       dprintf(2, "\n*** %s: for %s expected %s(", __func__, #STEM, #FUNC);	\
-      mmux_ctype_dprintf(2, OP1);						\
+      mmux_ctype_dprintf_no_error(2, OP1);					\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, OP2);						\
+      mmux_ctype_dprintf_no_error(2, OP2);					\
       dprintf(2, ")=");								\
-      mmux_ctype_dprintf(2, EROP);						\
+      mmux_ctype_dprintf_no_error(2, EROP);					\
       dprintf(2, " got ");							\
-      mmux_ctype_dprintf(2, ROP);						\
+      mmux_ctype_dprintf_no_error(2, ROP);					\
       dprintf(2, "\n");								\
       exit(EXIT_FAILURE);							\
     }										\
@@ -191,11 +193,11 @@ dprintf_newline (int fd)
     auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);		\
     if (! mmux_##STEM##_equal_relepsilon(EROP,ROP,eps)) {			\
       dprintf(2, "\n*** %s: for %s expected %s(", __func__, #STEM, #FUNC);	\
-      mmux_ctype_dprintf(2, OP);						\
+      mmux_ctype_dprintf_no_error(2, OP);					\
       dprintf(2, ")=");								\
-      mmux_ctype_dprintf(2, EROP);						\
+      mmux_ctype_dprintf_no_error(2, EROP);					\
       dprintf(2, " got ");							\
-      mmux_ctype_dprintf(2, ROP);						\
+      mmux_ctype_dprintf_no_error(2, ROP);					\
       dprintf(2, "\n");								\
       exit(EXIT_FAILURE);							\
     }										\
@@ -207,13 +209,13 @@ dprintf_newline (int fd)
     auto	eps = mmux_##STEM##_rectangular_literal(1e-3,1e-3);		\
     if (! mmux_##STEM##_equal_relepsilon(EROP,ROP,eps)) {			\
       dprintf(2, "\n*** %s: for %s expected %s(", __func__, #STEM, #FUNC);	\
-      mmux_ctype_dprintf(2, OP1);						\
+      mmux_ctype_dprintf_no_error(2, OP1);					\
       dprintf(2, ", ");								\
-      mmux_ctype_dprintf(2, OP2);						\
+      mmux_ctype_dprintf_no_error(2, OP2);					\
       dprintf(2, ")=");								\
-      mmux_ctype_dprintf(2, EROP);						\
+      mmux_ctype_dprintf_no_error(2, EROP);					\
       dprintf(2, " got ");							\
-      mmux_ctype_dprintf(2, ROP);						\
+      mmux_ctype_dprintf_no_error(2, ROP);					\
       dprintf(2, "\n");								\
       exit(EXIT_FAILURE);							\
     }										\

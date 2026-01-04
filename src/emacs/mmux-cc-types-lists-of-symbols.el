@@ -1,10 +1,10 @@
 ;;; mmux-cc-types-lists-of-symbols.el --- definition of lists of symbols for MMUX CC Types
 
-;; Copyright (C) 2025 Marco Maggi
+;; Copyright (C) 2025, 2026 Marco Maggi
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Aug 14, 2025
-;; Time-stamp: <2025-11-17 09:22:40 marco>
+;; Time-stamp: <2026-01-02 07:41:16 marco>
 ;; Keywords: convenience, data, languages
 
 ;; This file is part of MMUX CC Types.
@@ -127,6 +127,7 @@
 
 (defconst mmux-cc-types-font-lock-list/known-generic-macros/stringrep
   '("mmux_ctype_dprintf"
+    "mmux_ctype_dprintf_no_error"
     "mmux_ctype_fprintf"
     "mmux_ctype_parse"
     "mmux_ctype_sprint"
@@ -139,7 +140,8 @@
     "mmux_ctype_constant_minimum"
     "mmux_ctype_constant_maximum"
     "mmux_ctype_constant_zero"
-    "mmux_ctype_constant_one"))
+    "mmux_ctype_constant_one"
+    "mmux_cc_types_ignore_retval"))
 
 (defun mmux-cc-types-make-regexp-opt-from-list-of-strings (LIST)
   "Build regex for generic macros."
@@ -212,6 +214,7 @@
     "mmux_pointer_minimum"
     "mmux_pointer_maximum"
     "mmux_pointer_dprintf"
+    "mmux_pointer_dprintf_no_error"
     "mmux_pointer_fprintf"
     "mmux_pointer_parse"
     "mmux_pointer_sprint"
@@ -320,6 +323,7 @@
 
   (defconst mmux-cc-types-known-function-names/stringrep
     '("dprintf"
+      "dprintf_no_error"
       "fprintf"
       "parse"
       "sprint"

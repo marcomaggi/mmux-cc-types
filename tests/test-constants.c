@@ -7,7 +7,7 @@
 
 	Test file for functions.
 
-  Copyright (C) 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   See the COPYING file.
 */
@@ -35,7 +35,7 @@ test_constant_maximum (void)
     auto	op  = mmux_ ## STEM ## _constant_maximum();	\
     assert(mmux_ ## STEM ## _is_positive(op));			\
     dprintf(2,"\nmaximum(%s) = ", #STEM);				\
-    mmux_##STEM##_dprintf(2, op);					\
+    mmux_##STEM##_dprintf_no_error(2, op);					\
     dprintf(2,"\n");							\
   }
 
@@ -45,7 +45,7 @@ test_constant_maximum (void)
     auto	op  = mmux_## STEM ## _constant_maximum();		\
     assert(mmux_## STEM ## _is_positive(op));				\
     dprintf(2,"\nmaximum(%s) = ", #STEM);				\
-    mmux_##STEM##_dprintf(2, op);					\
+    mmux_##STEM##_dprintf_no_error(2, op);					\
     dprintf(2,"\n");							\
   }
 
@@ -55,7 +55,7 @@ test_constant_maximum (void)
     auto	op  = mmux_## STEM ## _constant_maximum();		\
     assert(mmux_## STEM ## _is_positive(op));				\
     dprintf(2,"\nmaximum(%s) = ", #STEM);				\
-    mmux_##STEM##_dprintf(2, op);					\
+    mmux_##STEM##_dprintf_no_error(2, op);					\
     dprintf(2,"\n");							\
   }
 
@@ -197,7 +197,7 @@ test_constant_minimum (void)
     auto	op  = mmux_ ## STEM ## _constant_minimum();	\
     assert(mmux_ ## STEM ## _is_negative(op));			\
     dprintf(2,"\nminimum(%s) = ", #STEM);			\
-    mmux_##STEM##_dprintf(2, op);				\
+    mmux_##STEM##_dprintf_no_error(2, op);				\
     dprintf(2,"\n");						\
   }
 
@@ -207,7 +207,7 @@ test_constant_minimum (void)
     auto	op  = mmux_ ## STEM ## _constant_minimum();	\
     assert(mmux_ ## STEM ## _is_zero(op));			\
     dprintf(2,"\nminimum(%s) = ", #STEM);			\
-    mmux_##STEM##_dprintf(2, op);				\
+    mmux_##STEM##_dprintf_no_error(2, op);				\
     dprintf(2,"\n");						\
   }
 
@@ -217,7 +217,7 @@ test_constant_minimum (void)
     auto	op  = mmux_## STEM ## _constant_minimum();		\
     assert(mmux_## STEM ## _is_negative(op));				\
     dprintf(2,"\nminimum(%s) = ", #STEM);				\
-    mmux_##STEM##_dprintf(2, op);					\
+    mmux_##STEM##_dprintf_no_error(2, op);					\
     dprintf(2,"\n");							\
   }
 
@@ -227,7 +227,7 @@ test_constant_minimum (void)
     auto	op  = mmux_## STEM ## _constant_minimum();		\
     assert(mmux_## STEM ## _is_negative(op));				\
     dprintf(2,"\nminimum(%s) = ", #STEM);				\
-    mmux_##STEM##_dprintf(2, op);					\
+    mmux_##STEM##_dprintf_no_error(2, op);					\
     dprintf(2,"\n");							\
   }
 
@@ -781,7 +781,7 @@ test_constant_one (void)
     auto	op  = mmux_## STEM ## _constant_one();			\
     auto	rop = mmux_## STEM ## _rectangular_literal(1.0,0.0);	\
     if (0) {								\
-      mmux_## STEM ## _dprintf(2, op);					\
+      mmux_## STEM ## _dprintf_no_error(2, op);					\
     }									\
     assert(mmux_## STEM ## _equal(op, rop));				\
     dprintf(2," %s,", #STEM);						\
@@ -1092,7 +1092,7 @@ test_constant_ten (void)
     auto	op  = mmux_## STEM ## _constant_ten();			\
     auto	rop = mmux_## STEM ## _rectangular_literal(10.0,0.0);	\
     if (0) {								\
-      mmux_## STEM ## _dprintf(2, op);					\
+      mmux_## STEM ## _dprintf_no_error(2, op);					\
     }									\
     assert(mmux_## STEM ## _equal(op, rop));				\
     dprintf(2," flonumc%s,", #STEM);					\
@@ -1328,7 +1328,7 @@ test_constant_one_third (void)
     auto	op  = mmux_## STEM ## _constant_one_third();				\
     auto	rop = mmux_## STEM(1.0/3.0);						\
     if (0) {										\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
     }											\
     assert(mmux_## STEM ## _equal_relepsilon(op, rop, mmux_##STEM(1e-6)));		\
     dprintf(2," flonum%s,", #STEM);							\
@@ -1342,7 +1342,7 @@ test_constant_one_third (void)
 						  mmux_## STEM ##_part(0.0));		\
     auto	eps  = mmux_## STEM ## _rectangular_literal(1e-6,1e-6);			\
     if (0) {										\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
     }											\
     assert(mmux_## STEM ## _equal_relepsilon(op, rop, eps));				\
     dprintf(2," flonumc%s,", #STEM);							\
@@ -1812,7 +1812,7 @@ test_constant_PI (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -1874,7 +1874,7 @@ test_constant_PI_2 (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -1936,7 +1936,7 @@ test_constant_PI_4 (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -1998,7 +1998,7 @@ test_constant_1_PI (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -2060,7 +2060,7 @@ test_constant_2_PI (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -2123,7 +2123,7 @@ test_constant_2_SQRTPI (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -2184,7 +2184,7 @@ test_constant_SQRT2 (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -2245,7 +2245,7 @@ test_constant_SQRT1_2 (void)
     auto	eps	= mmux_## STEM ## _literal(1e-6);				\
     if (0) {										\
       dprintf(2, "\nf(%s): ", #STEM);							\
-      mmux_## STEM ## _dprintf(2, op);							\
+      mmux_## STEM ## _dprintf_no_error(2, op);							\
       dprintf(2, "\n");									\
     }											\
     assert(mmux_ ## STEM ## _equal_relepsilon(op, rop, eps));				\
@@ -2301,7 +2301,7 @@ test_constant_sizeof (void)
     assert(mmux_ctype_is_positive(op));				\
     if (0) {							\
       dprintf(2,"\nsizeof(%s) = ", #STEM);			\
-      mmux_ctype_dprintf(2, op);				\
+      mmux_ctype_dprintf_no_error(2, op);				\
       dprintf(2,"\n");						\
     }								\
     dprintf(2," %s,", #STEM);					\
