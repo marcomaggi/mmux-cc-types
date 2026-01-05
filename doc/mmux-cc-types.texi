@@ -3229,10 +3229,24 @@ mmux_ctype_dprintf(STDERR_FILENO, integer_of_A);            @print{} 123.0
 mmux_ctype_dprintf(STDERR_FILENO, fractional_of_A);         @print{} 0.456
 @end example
 
+@noindent
+or using the pointers @api{}:
+
+@example
+auto              A = mmux_flonumf128_literal(123.456);
+typeof(A)         integer_of_A;
+mmux_flonum128_t  fractional_of_A;
+
+mmux_ctype_modf_p(&fractional_of_A, &A, &integer_of_A);
+mmux_ctype_dprintf(STDERR_FILENO, integer_of_A);            @print{} 123.0
+mmux_ctype_dprintf(STDERR_FILENO, fractional_of_A);         @print{} 0.456
+@end example
+
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineRealFlonumModfFunctions{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_modf (mmux_\STEM\_t @var{OP}, mmux_\STEM\_t * @var{INTEGER_PART_P})
+@deftypefunx bool mmux_\STEM\_modf_p (mmux_\STEM\_t * @var{FRACTIONAL_PART_P}, mmux_\STEM\_t * @var{OP_P}, mmux_\STEM\_t * @var{INTEGER_PART_P})
 Compute the result from the operand.
 @end deftypefun
 
@@ -3241,6 +3255,7 @@ Compute the result from the operand.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_modf (mmux_ctype_t @var{OP}, mmux_ctype_t * @var{INTEGER_PART_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_modf_p (mmux_ctype_t * @var{FRACTIONAL_PART_P}, mmux_ctype_t * @var{OP_P}, mmux_ctype_t * @var{INTEGER_PART_P})
 Compute the result from the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the type
 of the operands.
 @end deftypefn
