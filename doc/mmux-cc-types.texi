@@ -811,7 +811,7 @@ notice the anonymous field; it means that a pointer to @objtype{mmux_ssize_t} is
 compiler as a pointer to @objtype{mmux_@value{ALIASSSIZE}_t} and also we can write:
 
 @example
-mmux_ssize_t    val = @{ .value = mmux_standard_ssize_literal(123) @};
+mmux_ssize_t  val = @{ .value = mmux_standard_ssize_literal(123) @};
 
 do_something_with(val.value);
 @end example
@@ -822,7 +822,7 @@ because the field @code{value} of @objtype{mmux_@value{ALIASSSIZE}_t} is also se
 can just write:
 
 @example
-auto    val = mmux_ssize_literal(123);
+auto  val = mmux_ssize_literal(123);
 
 do_something_with(val.value);
 @end example
@@ -988,21 +988,21 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 @MmuxDefineCAliasTypedefForAliasedType{sintptr,         intptr_t,       @value{ALIASSINTPTR}}
 @MmuxDefineCAliasTypedefForAliasedType{uintptr,         uintptr_t,      @value{ALIASUINTPTR}}
 @MmuxDefineCAliasTypedefForAliasedType{ptrdiff,         ptrdiff_t,      @value{ALIASPTRDIFF}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_mode,            libc_mode_t,         @value{ALIASMODE}}
 @MmuxDefineCAliasTypedefForAliasedType{off,             off_t,          @value{ALIASOFF}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_pid,             libc_pid_t,          @value{ALIASPID}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_uid,             libc_uid_t,          @value{ALIASUID}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_gid,             libc_gid_t,          @value{ALIASGID}}
 @MmuxDefineCAliasTypedefForAliasedType{wchar,           wchar_t,        @value{ALIASWCHAR}}
 @MmuxDefineCAliasTypedefForAliasedType{wint,            wint_t,         @value{ALIASWINT}}
 @MmuxDefineCAliasTypedefForAliasedType{time,            time_t,         @value{ALIASTIME}}
-@MmuxDefineCAliasTypedefForAliasedType{clock,           clock_t,         @value{ALIASCLOCK}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_socklen,         libc_socklen_t,      @value{ALIASSOCKLEN}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_rlim,            libc_rlim_t,         @value{ALIASRLIM}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_ino,             libc_ino_t,          @value{ALIASINO}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_dev,             libc_dev_t,          @value{ALIASDEV}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_nlink,           libc_nlink_t,        @value{ALIASNLINK}}
-@MmuxDefineCAliasTypedefForAliasedType{libc_blkcnt,          libc_blkcnt_t,       @value{ALIASBLKCNT}}
+@MmuxDefineCAliasTypedefForAliasedType{clock,           clock_t,        @value{ALIASCLOCK}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_mode,       libc_mode_t,    @value{ALIASMODE}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_pid,        libc_pid_t,     @value{ALIASPID}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_uid,        libc_uid_t,     @value{ALIASUID}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_gid,        libc_gid_t,     @value{ALIASGID}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_socklen,    libc_socklen_t, @value{ALIASSOCKLEN}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_rlim,       libc_rlim_t,    @value{ALIASRLIM}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_ino,        libc_ino_t,     @value{ALIASINO}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_dev,        libc_dev_t,     @value{ALIASDEV}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_nlink,      libc_nlink_t,   @value{ALIASNLINK}}
+@MmuxDefineCAliasTypedefForAliasedType{libc_blkcnt,     libc_blkcnt_t,  @value{ALIASBLKCNT}}
 
 @MmuxDefineCAliasTypedefPart{flonumcfl,float}
 @MmuxDefineCAliasTypedefPart{flonumcdb,flonumdb}
@@ -2823,20 +2823,31 @@ The @cfunc{_no_error} variant ignores errors; it is useful for debugging purpose
 To determine the sign of a number we do:
 
 @example
-mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
-mmux_flonumf128_t  S = mmux_flonumf128_sign(A);
+mmux_flonumf128_t  OP  = mmux_flonumf128_literal(0.123);
+mmux_flonumf128_t  ROP = mmux_flonumf128_sign(OP);
 
-mmux_flonumf128_dprintf(STDERR_FILENO, S);  @print{} 1.0
+mmux_flonumf128_dprintf(STDERR_FILENO, OP);     @print{} 1.0
 @end example
 
 @noindent
 or more generically:
 
 @example
-auto  A = mmux_flonumf128_literal(0.123);
-auto  S = mmux_ctype_sign(A);
+auto  OP  = mmux_flonumf128_literal(0.123);
+auto  ROP = mmux_ctype_sign(OP);
 
-mmux_ctype_dprintf(STDERR_FILENO, S);       @print{} 1.0
+mmux_ctype_dprintf(STDERR_FILENO, ROP);         @print{} 1.0
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto               OP = mmux_flonumf128_literal(0.123);
+mmux_flonumf128_t  ROP;
+
+mmux_ctype_sign_p(&ROP, &OP);
+mmux_ctype_dprintf(STDERR_FILENO, ROP);         @print{} 1.0
 @end example
 
 Notes on operations:
@@ -2853,6 +2864,7 @@ and imaginary parts represent the signs of the real and imaginary parts of the o
 
 @macro MmuxDefineExactIntegerSignFunctions{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_sign_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the sign of the operand.
 @end deftypefun
 
@@ -2862,6 +2874,7 @@ Compute the sign of the operand.
 
 @macro MmuxDefineRealFlonumSignFunctions{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_sign_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the sign of the operand.
 @end deftypefun
 
@@ -2871,6 +2884,7 @@ Compute the sign of the operand.
 
 @macro MmuxDefineCplxFlonumSignFunctions{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_sign (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_sign_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the sign of the operand.
 @end deftypefun
 
@@ -2879,6 +2893,7 @@ Compute the sign of the operand.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_sign (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_sign_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
 Compute the sign of the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the type of
 the operands and result.
 @end deftypefn
@@ -2961,20 +2976,31 @@ the operands and result.
 To compute the ceil of a number we do:
 
 @example
-mmux_flonumf128_t  A = mmux_flonumf128_literal(0.123);
-mmux_flonumf128_t  B = mmux_flonumf128_ceil(A);
+mmux_flonumf128_t  OP  = mmux_flonumf128_literal(0.123);
+mmux_flonumf128_t  ROP = mmux_flonumf128_ceil(A);
 
-mmux_flonumf128_dprintf(STDERR_FILENO, B);  @print{} 1.0
+mmux_flonumf128_dprintf(STDERR_FILENO, ROP);    @print{} 1.0
 @end example
 
 @noindent
 or more generically:
 
 @example
-auto  A = mmux_flonumf128_literal(0.123);
-auto  B = mmux_ctype_ceil(A);
+auto  OP  = mmux_flonumf128_literal(0.123);
+auto  ROP = mmux_ctype_ceil(OP);
 
-mmux_ctype_dprintf(STDERR_FILENO, B);       @print{} 1.0
+mmux_ctype_dprintf(STDERR_FILENO, OP);          @print{} 1.0
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto               OP = mmux_flonumf128_literal(0.123);
+mmux_flonumf128_t  ROP;
+
+mmux_ctype_ceil_p(&ROP, &OP);
+mmux_ctype_dprintf(STDERR_FILENO, OP);          @print{} 1.0
 @end example
 
 @c ------------------------------------------------------------------------
@@ -2997,6 +3023,13 @@ the real and imaginary parts.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_nearbyint (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_round (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_roundeven (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_ceil_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_floor_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_trunc_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_rint_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_nearbyint_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_round_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_roundeven_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the rounded result of the operand.
 @end deftypefun
 
@@ -3012,6 +3045,13 @@ Compute the rounded result of the operand.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_nearbyint (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_round (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_roundeven (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_ceil_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_floor_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_trunc_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_rint_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_nearbyint_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_round_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_roundeven_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the rounded result of the operand.
 @end deftypefun
 
@@ -3026,6 +3066,13 @@ Compute the rounded result of the operand.
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_nearbyint (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_round (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_roundeven (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_ceil_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_floor_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_trunc_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_rint_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_nearbyint_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_round_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_roundeven_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
 Compute the rounded result of the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the
 type of the operands and result.
 @end deftypefn
@@ -3072,20 +3119,31 @@ type of the operands and result.
 To round to an exact integer a floating--point number we do:
 
 @example
-mmux_flonumf128_t A = mmux_flonumf128_literal(123.456);
-mmux_slong_t      B = mmux_flonumf128_lrint(A);
+mmux_flonumf128_t  OP  = mmux_flonumf128_literal(123.456);
+mmux_slong_t       ROP = mmux_flonumf128_lrint(OP);
 
-mmux_slong_dprintf(STDERR_FILENO, B);       @print{} 123
+mmux_slong_dprintf(STDERR_FILENO, ROP);         @print{} 123
 @end example
 
 @noindent
 or more generically:
 
 @example
-auto      A = mmux_flonumf128_literal(123.456);
-auto      B = mmux_ctype_lrint(A);
+auto  OP  = mmux_flonumf128_literal(123.456);
+auto  ROP = mmux_ctype_lrint(OP);
 
-mmux_ctype_dprintf(STDERR_FILENO, B);       @print{} 123
+mmux_ctype_dprintf(STDERR_FILENO, ROP);         @print{} 123
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto          OP = mmux_flonumf128_literal(123.456);
+mmux_slong_t  ROP;
+
+mmux_ctype_lrint_p(&ROP, &OP);
+mmux_ctype_dprintf(STDERR_FILENO, ROP);         @print{} 123
 @end example
 
 @c ------------------------------------------------------------------------
@@ -3095,6 +3153,10 @@ mmux_ctype_dprintf(STDERR_FILENO, B);       @print{} 123
 @deftypefunx mmux_slong_t mmux_\STEM\_lround (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_sllong_t mmux_\STEM\_llrint (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_sllong_t mmux_\STEM\_llround (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_lrint_p (mmux_slong_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_lround_p (mmux_slong_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_llrint_p (mmux_sllong_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_llround_p (mmux_sllong_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the rounded result of the operand.
 @end deftypefun
 
@@ -3106,6 +3168,10 @@ Compute the rounded result of the operand.
 @deftypefnx {Generic Macro} mmux_slong_t mmux_ctype_lround (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_sllong_t mmux_ctype_llrint (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_sllong_t mmux_ctype_llround (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_lrint_p (mmux_slong_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_lround_p (mmux_slong_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_llrint_p (mmux_sllong_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_llround_p (mmux_sllong_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
 Compute the rounded result of the operand.  The type @objtype{mmux_ctype_t} is a placeholder for the
 type of the operands.
 @end deftypefn
