@@ -7,7 +7,7 @@
 
 	This the public header defines the core types.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -722,12 +722,42 @@ DEFINE_COMPLEX_INLINE_FUNCTIONS(f128x)
 
 
 /** --------------------------------------------------------------------
+ ** Pointer types.
+ ** ----------------------------------------------------------------- */
+
+/* NOTE These are experimental.  (Marco Maggi; Jan 5, 2026) */
+
+typedef struct mmux_ptr_t {
+  void *	value;
+} mmux_ptr_t;
+
+typedef struct mmux_ptrc_t {
+  void const *	value;
+} mmux_ptrc_t;
+
+typedef struct mmux_ptr_ascii_t {
+  mmux_ptr_t;
+} mmux_ptr_ascii_t;
+
+typedef struct mmux_ptrc_ascii_t {
+  mmux_ptrc_t;
+} mmux_ptrc_ascii_t;
+
+typedef struct mmux_ptr_asciiz_t {
+  mmux_ptr_ascii_t;
+} mmux_ptr_asciiz_t;
+
+typedef struct mmux_ptrc_asciiz_t {
+  mmux_ptrc_ascii_t;
+} mmux_ptrc_asciiz_t;
+
+
+/** --------------------------------------------------------------------
  ** Generic macros: inspection.
  ** ----------------------------------------------------------------- */
 
 #define mmux_ctype_value(VALUE)						\
   (_Generic((VALUE),							\
-	   mmux_pointer_t:		(VALUE),			\
 	   mmux_char_t:			((VALUE).value),		\
            mmux_schar_t:		((VALUE).value),		\
            mmux_uchar_t:		((VALUE).value),		\
@@ -839,6 +869,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
            mmux_libc_dev_t:		((VALUE).value),		\
            mmux_libc_nlink_t:		((VALUE).value),		\
            mmux_libc_blkcnt_t:		((VALUE).value),		\
+	   mmux_pointer_t:		(VALUE),			\
            /* NOTE: We do want a default here,  to make it possible to use this macro	\
 	    *  itself as default of a supermacro definition:				\
 	    *										\
