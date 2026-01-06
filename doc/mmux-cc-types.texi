@@ -1281,16 +1281,37 @@ expression.
 To construct a complex number from its real and imaginary parts, we do:
 
 @example
-auto    rep = mmux_flonumdb_literal(1.2);
-auto    imp = mmux_flonumdb_literal(3.4);
-auto    Z   = mmux_flonumcdb_rectangular(rep, imp);
+auto  rep = mmux_flonumdb_literal(1.2);
+auto  imp = mmux_flonumdb_literal(3.4);
+auto  Z   = mmux_flonumcdb_rectangular(rep, imp);
 @end example
 
 @noindent
 or:
 
 @example
-auto    Z   = mmux_flonumcldb_rectangular_literal(1.2, 3.4);
+auto  Z = mmux_flonumcldb_rectangular_literal(1.2, 3.4);
+@end example
+
+@noindent
+or more generically:
+
+@example
+auto  rep = mmux_flonumdb_literal(1.2);
+auto  imp = mmux_flonumdb_literal(3.4);
+auto  Z   = mmux_ctype_rectangular(rep, imp);
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  Zre = mmux_flonumf64_literal(1.2);
+auto  Zim = mmux_flonumf64_literal(3.4);
+mmux_flonumcf64_t  Z;
+
+mmux_ctype_rectangular_p(&Z, &Zre, &Zim);
+mmux_ctype_dprintf(STDERR_FILENO, Z);           @print{} (1.2)+i*(3.4)
 @end example
 
 @c ------------------------------------------------------------------------
@@ -1310,6 +1331,7 @@ mmux_\STEM\_literal(@var{LITERAL_ARG})
 
 @macro MmuxDefineComplexMakeRectangularFunction{CPLXSTEM,REALSTEM}
 @deftypefn {Function} mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular (mmux_\REALSTEM\_t @var{REP}, mmux_\REALSTEM\_t @var{IMP})
+@deftypefnx {Function} bool mmux_\CPLXSTEM\_rectangular_p (mmux_\CPLXSTEM\_t * @var{Z_P}, mmux_\REALSTEM\_t * @var{REP_P}, mmux_\REALSTEM\_t * @var{IMP_P})
 @deftypefnx {Preprocessor Macro} mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 Make a data structure holding a complex number, of type @objtype{\CPLXSTEM\}, from the real and
 imaginary parts @var{REP} and @var{IMP}, of type @objtype{\REALSTEM\}; return the result.
@@ -1324,6 +1346,16 @@ mmux_\CPLXSTEM\_rectangular_literal (@var{LITERAL_REP}, @var{LITERAL_IMP})
 @end deftypefn
 
 @end macro
+
+@c ------------------------------------------------------------------------
+
+@deftypefn {Preprocessor Macro} mmux_cplx_ctype_t mmux_ctype_rectangular (mmux_real_ctype_t @var{REP}, mmux_real_ctype_t @var{IMP})
+@deftypefnx {Preprocessor Macro} bool mmux_ctype_rectangular_p (mmux_cplx_ctype_t * @var{Z_P}, mmux_real_ctype_t * @var{REP_P}, mmux_real_ctype_t * @var{IMP_P})
+Build a new complex floating--point number.
+
+The types @objtype{mmux_real_ctype_t} and @objtype{mmux_cplx_ctype_t} are placeholders for the
+actual types.
+@end deftypefn
 
 @c ------------------------------------------------------------------------
 

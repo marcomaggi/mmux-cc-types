@@ -45,8 +45,8 @@ test_complex_rectangular (void)
       assert(mmux_ctype_equal(mmux_flonum##FL(REP), mmux_ctype_real_part(Z)));			\
       assert(mmux_ctype_equal(mmux_flonum##FL(IMP), mmux_ctype_imag_part(Z)));			\
       if (0) {											\
-	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			\
-	mmux_ctype_dprintf_no_error(2, Z);								\
+	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			        \
+	mmux_ctype_dprintf_no_error(2, Z);							\
 	dprintf(2, "\n");									\
       }												\
     }												\
@@ -58,8 +58,40 @@ test_complex_rectangular (void)
       assert(mmux_ctype_equal(mmux_flonum##FL(REP), mmux_ctype_real_part(Z)));			\
       assert(mmux_ctype_equal(mmux_flonum##FL(IMP), mmux_ctype_imag_part(Z)));			\
       if (0) {											\
-	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			\
-	mmux_ctype_dprintf_no_error(2, Z);								\
+	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			        \
+	mmux_ctype_dprintf_no_error(2, Z);							\
+	dprintf(2, "\n");									\
+      }												\
+    }												\
+    if (true) {											\
+      /* Use the type specific pointer constructor. */						\
+      auto	re = mmux_flonum##FL(REP);							\
+      auto	im = mmux_flonum##FL(IMP);							\
+      mmux_flonumc##FL##_t	Z;								\
+      mmux_flonumc##FL##_rectangular_p(&Z, &re, &im);						\
+      assert(mmux_flonum##FL##_equal(mmux_flonum##FL(REP), mmux_flonumc##FL##_real_part(Z)));	\
+      assert(mmux_flonum##FL##_equal(mmux_flonum##FL(IMP), mmux_flonumc##FL##_imag_part(Z)));	\
+      assert(mmux_ctype_equal(mmux_flonum##FL(REP), mmux_ctype_real_part(Z)));			\
+      assert(mmux_ctype_equal(mmux_flonum##FL(IMP), mmux_ctype_imag_part(Z)));			\
+      if (0) {											\
+	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			        \
+	mmux_ctype_dprintf_no_error(2, Z);							\
+	dprintf(2, "\n");									\
+      }												\
+    }												\
+    if (true) {											\
+      /* Use the generic pointer constructor. */						\
+      auto	re = mmux_flonum##FL(REP);							\
+      auto	im = mmux_flonum##FL(IMP);							\
+      mmux_flonumc##FL##_t	Z;								\
+      mmux_ctype_rectangular_p(&Z, &re, &im);							\
+      assert(mmux_flonum##FL##_equal(mmux_flonum##FL(REP), mmux_flonumc##FL##_real_part(Z)));	\
+      assert(mmux_flonum##FL##_equal(mmux_flonum##FL(IMP), mmux_flonumc##FL##_imag_part(Z)));	\
+      assert(mmux_ctype_equal(mmux_flonum##FL(REP), mmux_ctype_real_part(Z)));			\
+      assert(mmux_ctype_equal(mmux_flonum##FL(IMP), mmux_ctype_imag_part(Z)));			\
+      if (0) {											\
+	dprintf(2, "%s: Z(%s)=", __func__, mmux_ctype_stem_name(Z));			        \
+	mmux_ctype_dprintf_no_error(2, Z);							\
 	dprintf(2, "\n");									\
       }												\
     }												\

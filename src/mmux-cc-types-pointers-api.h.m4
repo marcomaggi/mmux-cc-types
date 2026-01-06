@@ -503,6 +503,12 @@ mmux_$1_$2_p (mmux_$1_part_t * rop, mmux_$1_t const * op1)
 }]]])
 
 m4_define([[[DEFINE_COMPLEX_NUMBER_OPERATIONS_FLONUMC]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[$1]]],[[[m4_dnl
+mmux_cc_types_inline_no_retval_decl bool
+mmux_$1_rectangular_p (mmux_$1_t * rop_p, mmux_$1_part_t * re_p, mmux_$1_part_t * im_p)
+{
+  *rop_p = mmux_$1_rectangular(*re_p, *im_p);
+  return false;
+}
 DEFINE_UNARY_OPERATION_CPLX_TO_REAL($1,	real_part)
 DEFINE_UNARY_OPERATION_CPLX_TO_REAL($1,	imag_part)
 DEFINE_UNARY_OPERATION_CPLX_TO_REAL($1,	argument)
