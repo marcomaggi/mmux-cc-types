@@ -3349,6 +3349,20 @@ mmux_ctype_dprintf(STDERR_FILENO, Zre);     @print{} 1.2
 mmux_ctype_dprintf(STDERR_FILENO, Zim);     @print{} 3.4
 @end example
 
+@noindent
+or using the pointers @api{}:
+
+@example
+auto    Z   = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumcf64_t  Zre, Zim;
+
+mmux_ctype_real_part_p(&Zre, &Z);
+mmux_ctype_imag_part_p(&Zim, &Z);
+
+mmux_ctype_dprintf(STDERR_FILENO, Zre);     @print{} 1.2
+mmux_ctype_dprintf(STDERR_FILENO, Zim);     @print{} 3.4
+@end example
+
 To extract the real and imaginary parts from a real number we do:
 
 @example
@@ -3377,6 +3391,8 @@ mmux_ctype_dprintf(STDERR_FILENO, Zim); @print{} 0.0
 @macro MmuxDefineRealRealImagPartFunction{REALSTEM}
 @deftypefun  mmux_\REALSTEM\_t mmux_\REALSTEM\_real_part (mmux_\REALSTEM\_t @var{OP})
 @deftypefunx mmux_\REALSTEM\_t mmux_\REALSTEM\_imag_part (mmux_\REALSTEM\_t @var{OP})
+@deftypefunx bool mmux_\REALSTEM\_real_part_p (mmux_\REALSTEM\_t * @var{REP_P}, mmux_\REALSTEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\REALSTEM\_imag_part_p (mmux_\REALSTEM\_t * @var{IMP_P}, mmux_\REALSTEM\_t * @var{OP_P})
 Extract and return the real or imaginary parts from the real number @var{OP}.  The real part is
 @var{OP} itself; the imaginary part is always zero.
 @end deftypefun
@@ -3388,6 +3404,8 @@ Extract and return the real or imaginary parts from the real number @var{OP}.  T
 @macro MmuxDefineComplexRealImagPartFunction{CPLXSTEM,REALSTEM}
 @deftypefun  mmux_\REALSTEM\_t mmux_\CPLXSTEM\_real_part (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_imag_part (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx bool mmux_\CPLXSTEM\_real_part_p (mmux_\REALSTEM\_t * @var{REP_P}, mmux_\CPLXSTEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_imag_part_p (mmux_\REALSTEM\_t * @var{REP_P}, mmux_\CPLXSTEM\_t * @var{OP_P})
 Extract and return the real or imaginary parts from the complex number @var{OP}.
 @end deftypefun
 
@@ -3397,6 +3415,8 @@ Extract and return the real or imaginary parts from the complex number @var{OP}.
 
 @deftypefn {Generic Macro}  mmux_ctype_t mmux_ctype_real_part (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_imag_part (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_real_part_p (mmux_ctype_t * @var{REP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_imag_part_p (mmux_ctype_t * @var{REP_P}, mmux_ctype_t * @var{OP_P})
 Extract and return the real or imaginary parts from the real number @var{OP}.  The real part is
 @var{OP} itself; the imaginary part is always zero.  The type @objtype{mmux_ctype_t} is a
 placeholder for the type of the operand and result.
