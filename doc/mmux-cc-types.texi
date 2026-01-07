@@ -4025,7 +4025,7 @@ The pointers macros store the result in the variable referenced by @var{PREDICAT
 @menu
 * comparison result::           Representing comparison functions results.
 * comparison exact::            Exact comparison functions.
-* comparison mimmax::           Maximum and minimum values.
+* comparison minmax::           Maximum and minimum values.
 * comparison absmargin::        Absolute margin comparison criterion.
 * comparison relepsilon::       Relative epsilon comparison criterion.
 @end menu
@@ -4218,8 +4218,8 @@ by @var{result_p}if they satisfy the specified predicate; otherwise store @cfals
 To compare two numbers we do:
 
 @example
-mmux_slong_t                      A = mmux_slong_literal(123);
-mmux_slong_t                      B = mmux_slong_literal(456);
+mmux_slong_t  A = mmux_slong_literal(123);
+mmux_slong_t  B = mmux_slong_literal(456);
 mmux_ternary_comparison_result_t  V = mmux_slong_cmp(A, B);
 
 if (mmux_ternary_comparison_result_is_equal(V)) @{
@@ -4235,6 +4235,20 @@ auto  A = mmux_slong_literal(123);
 auto  B = mmux_slong_literal(456);
 auto  V = mmux_ctype_cmp(A, B);
 
+if (mmux_ternary_comparison_result_is_equal(V)) @{
+  ...
+@}
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  A = mmux_slong_literal(123);
+auto  B = mmux_slong_literal(456);
+mmux_ternary_comparison_result_t  V;
+
+mmux_ctype_cmp_p(&V, &A, &B);
 if (mmux_ternary_comparison_result_is_equal(V)) @{
   ...
 @}
@@ -4263,6 +4277,13 @@ functions return @ctrue{} if the operands are in the named relation; otherwise r
 @deftypefunx bool mmux_\STEM\_less (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_greater_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx bool mmux_\STEM\_less_equal (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_cmp_p (mmux_ternary_comparison_result_t * @var{CMP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_equal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_not_equal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_greater_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_less_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_greater_equal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_less_equal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
 Comparison between @objtype{mmux_\STEM\_t} values.
 @end deftypefun
 
@@ -4277,6 +4298,13 @@ Comparison between @objtype{mmux_\STEM\_t} values.
 @deftypefnx {Generic Macro} bool mmux_ctype_less (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_greater_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_less_equal (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_cmp_p (mmux_ternary_comparison_result_t * @var{CMP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_equal (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_not_equal (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_greater (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_less (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_greater_equal (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_less_equal (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
 Comparison between values.  The type @objtype{mmux_ctype_t} is a placeholder for the type of the
 operands.
 @end deftypefn
@@ -4362,16 +4390,16 @@ operands.
 @MmuxDefineTypeComparisonExactFunction{flonumcd128}
 
 @c page
-@node comparison mimmax
+@node comparison minmax
 @section Maximum and minimum values
 
 
 To determine the maximum between two numbers we do:
 
 @example
-mmux_uint64_t     A = mmux_uint64_literal(123);
-mmux_uint64_t     B = mmux_uint64_literal(456);
-mmux_uint64_t     V = mmux_uint64_max(A, B);
+mmux_uint64_t  A = mmux_uint64_literal(123);
+mmux_uint64_t  B = mmux_uint64_literal(456);
+mmux_uint64_t  V = mmux_uint64_max(A, B);
 
 mmux_uint64_dprintf(STDERR_FILENO, V);       @print{} 456
 @end example
@@ -4380,10 +4408,22 @@ mmux_uint64_dprintf(STDERR_FILENO, V);       @print{} 456
 or more generically:
 
 @example
-auto      A = mmux_uint64_literal(123);
-auto      B = mmux_uint64_literal(456);
-auto      V = mmux_ctype_max(A, B);
+auto  A = mmux_uint64_literal(123);
+auto  B = mmux_uint64_literal(456);
+auto  V = mmux_ctype_max(A, B);
 
+mmux_ctype_dprintf(STDERR_FILENO, V);       @print{} 456
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto       A = mmux_uint64_literal(123);
+auto       B = mmux_uint64_literal(456);
+typeof(B)  V;
+
+mmux_ctype_max_p(&V, &A, &B);
 mmux_ctype_dprintf(STDERR_FILENO, V);       @print{} 456
 @end example
 
@@ -4394,6 +4434,8 @@ In what follows: complex floating--point numbers are compared by comparing their
 @macro MmuxDefineTypeComparisonMinMaxFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_max (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_min (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
+@deftypefunx bool mmux_\STEM\_max_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_min_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
 Return the maximum or minimum value between the operands.
 @end deftypefun
 
@@ -4403,6 +4445,8 @@ Return the maximum or minimum value between the operands.
 
 @deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_max (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_min (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_max_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_min_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
 Return the maximum or minimum value between the operands.  The type @objtype{mmux_ctype_t} is a
 placeholder for the type of the operands and result.
 @end deftypefn
@@ -4533,11 +4577,27 @@ if (mmux_flonumldb_equal_absmargin(op1, op2, mrg)) @{
 or more generically:
 
 @example
-auto      op1 = mmux_flonumldb_literal(1.2);
-auto      op2 = mmux_flonumldb_literal(1.23);
-auto      mrg = mmux_flonumldb_literal(1e-6);
+auto  op1 = mmux_flonumldb_literal(1.2);
+auto  op2 = mmux_flonumldb_literal(1.23);
+auto  mrg = mmux_flonumldb_literal(1e-6);
 
 if (mmux_ctype_equal_absmargin(op1, op2, mrg)) @{
+  ... /* equal */
+@} else @{
+  ... /* not equal */
+@}
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  op1 = mmux_flonumldb_literal(1.2);
+auto  op2 = mmux_flonumldb_literal(1.23);
+auto  mrg = mmux_flonumldb_literal(1e-6);
+bool  predicate_is_true;
+
+if (mmux_ctype_equal_absmargin_p(&predicate_is_true, &op1, &op2, &mrg)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -4547,7 +4607,8 @@ if (mmux_ctype_equal_absmargin(op1, op2, mrg)) @{
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineAbsmarginFunc{STEM}
-@deftypefun bool mmux_\STEM\_equal_absmargin (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @vari{MARGIN})
+@deftypefun bool mmux_\STEM\_equal_absmargin (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @var{MARGIN})
+@deftypefunx bool mmux_\STEM\_equal_absmargin_p (bool @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P}, mmux_\STEM\_t * @var{MARGIN_P})
 Compare the operands using the given margin.
 @end deftypefun
 
@@ -4556,6 +4617,7 @@ Compare the operands using the given margin.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} bool mmux_ctype_equal_absmargin (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP}, mmux_ctype_t @vari{MARGIN})
+@deftypefnx {Generic Macro} bool mmux_ctype_equal_absmargin_p (bool @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P}, mmux_ctype_t * @vari{MARGIN_P})
 Compare the operands using the given margin.  The type @objtype{mmux_ctype_t} is a placeholder for
 the type of the operands.
 @end deftypefn
@@ -4639,11 +4701,27 @@ if (mmux_flonumldb_equal_relepsilon(op1, op2, eps)) @{
 or more generically:
 
 @example
-auto      op1 = mmux_flonumldb_literal(1.2);
-auto      op2 = mmux_flonumldb_literal(1.23);
-auto      eps = mmux_flonumldb_literal(1e-6);
+auto  op1 = mmux_flonumldb_literal(1.2);
+auto  op2 = mmux_flonumldb_literal(1.23);
+auto  eps = mmux_flonumldb_literal(1e-6);
 
 if (mmux_ctype_equal_relepsilon(op1, op2, eps)) @{
+  ... /* equal */
+@} else @{
+  ... /* not equal */
+@}
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  op1 = mmux_flonumldb_literal(1.2);
+auto  op2 = mmux_flonumldb_literal(1.23);
+auto  eps = mmux_flonumldb_literal(1e-6);
+bool  predicate_is_true;
+
+if (mmux_ctype_equal_relepsilon_p(&predicate_is_true, &op1, &op2, &eps)) @{
   ... /* equal */
 @} else @{
   ... /* not equal */
@@ -4653,7 +4731,8 @@ if (mmux_ctype_equal_relepsilon(op1, op2, eps)) @{
 @c ------------------------------------------------------------------------
 
 @macro MmuxDefineRelepsilonFunc{STEM}
-@deftypefun bool mmux_\STEM\_equal_relepsilon (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @vari{EPSILON})
+@deftypefun bool mmux_\STEM\_equal_relepsilon (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP}, mmux_\STEM\_t @var{EPSILON})
+@deftypefunx bool mmux_\STEM\_equal_relepsilon_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P}, mmux_\STEM\_t * @var{EPSILON_P})
 Compare the operands using the given epsilon.
 @end deftypefun
 
@@ -4661,7 +4740,8 @@ Compare the operands using the given epsilon.
 
 @c ------------------------------------------------------------------------
 
-@deftypefn {Generic Macro} bool mmux_ctype_equal_relepsilon (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP}, mmux_ctype_t @vari{EPSILON})
+@deftypefn {Generic Macro} bool mmux_ctype_equal_relepsilon (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP}, mmux_ctype_t @var{EPSILON})
+@deftypefnx {Generic Macro} bool mmux_ctype_equal_relepsilon_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P}, mmux_ctype_t * @var{EPSILON_P})
 Compare the operands using the given epsilon.  The type @objtype{mmux_ctype_t} is a placeholder for
 the type of the operands.
 @end deftypefn
