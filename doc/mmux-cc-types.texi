@@ -3501,9 +3501,21 @@ mmux_flonumf64_dprintf(STDERR_FILENO, A);
 or more generically:
 
 @example
-auto    Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
-auto    A = mmux_ctype_argument(Z);
+auto  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+auto  A = mmux_ctype_argument(Z);
 
+mmux_ctype_dprintf(STDERR_FILENO, A);
+@print{} 1.231504
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumf64_t  A;
+
+mmux_ctype_argument_p(&A, &Z);
 mmux_ctype_dprintf(STDERR_FILENO, A);
 @print{} 1.231504
 @end example
@@ -3533,6 +3545,7 @@ mmux_ctype_dprintf(STDERR_FILENO, A);
 
 @macro MmuxDefineRealArgumentFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_argument (mmux_\STEM\_t @var{OP})
+@deftypefunx bool  mmux_\STEM\_argument_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute and return the argument value of @var{OP} interpreted as complex number.  The result is
 always positive zero.
 @end deftypefun
@@ -3543,6 +3556,7 @@ always positive zero.
 
 @macro MmuxDefineComplexArgumentFunction{CPLXSTEM,REALSTEM}
 @deftypefun mmux_\REALSTEM\_t mmux_\CPLXSTEM\_argument (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx bool mmux_\CPLXSTEM\_argument_p (mmux_\REALSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @var{OP_P})
 Compute and return the argument value of the complex number @var{OP}.
 @end deftypefun
 
@@ -3551,6 +3565,7 @@ Compute and return the argument value of the complex number @var{OP}.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_argument (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_argument_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
 Compute and return the complex argument value of @var{OP} interpreted as complex number.  The type
 @objtype{mmux_ctype_t} is a placeholder for the type of the operand.
 @end deftypefn
@@ -3633,17 +3648,28 @@ mmux_flonumcf64_dprintf(STDERR_FILENO, A);  @print{} (1.2)+i*(-3.4)
 or more generically:
 
 @example
-auto      Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
-auto      A = mmux_ctype_conjugate(Z);
+auto  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+auto  A = mmux_ctype_conjugate(Z);
 
+mmux_ctype_dprintf(STDERR_FILENO, A);       @print{} (1.2)+i*(-3.4)
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  Z = mmux_flonumcf64_rectangular_literal(1.2,3.4);
+mmux_flonumcf64_t  A;
+
+mmux_ctype_conjugate_p(&A, &Z);
 mmux_ctype_dprintf(STDERR_FILENO, A);       @print{} (1.2)+i*(-3.4)
 @end example
 
 To compute the complex conjugate of a real number we do:
 
 @example
-mmux_flonumf64_t   Z = mmux_flonumf64_literal(0.123);
-mmux_flonumf64_t   A = mmux_flonumf64_conjugate(Z);
+mmux_flonumf64_t  Z = mmux_flonumf64_literal(0.123);
+mmux_flonumf64_t  A = mmux_flonumf64_conjugate(Z);
 
 mmux_flonumf64_dprintf(STDERR_FILENO, A);   @print{} 0.123
 @end example
@@ -3652,8 +3678,8 @@ mmux_flonumf64_dprintf(STDERR_FILENO, A);   @print{} 0.123
 or more generically:
 
 @example
-auto      Z = mmux_flonumf64_literal(0.123);
-auto      A = mmux_ctype_conjugate(Z);
+auto  Z = mmux_flonumf64_literal(0.123);
+auto  A = mmux_ctype_conjugate(Z);
 
 mmux_ctype_dprintf(STDERR_FILENO, A);       @print{} 0.123
 @end example
@@ -3662,6 +3688,7 @@ mmux_ctype_dprintf(STDERR_FILENO, A);       @print{} 0.123
 
 @macro MmuxDefineRealConjugateFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_conjugate (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_conjugate_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute and return complex conjugate value of @var{OP} interpreted as a complex number; the result
 is always @var{op} itself.
 @end deftypefun
@@ -3672,6 +3699,7 @@ is always @var{op} itself.
 
 @macro MmuxDefineComplexConjugateFunction{STEM}
 @deftypefun mmux_\STEM\_t mmux_\STEM\_conjugate (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_conjugate_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute and return complex conjugate value of the complex number @var{OP}.
 @end deftypefun
 
@@ -3680,6 +3708,7 @@ Compute and return complex conjugate value of the complex number @var{OP}.
 @c ------------------------------------------------------------------------
 
 @deftypefn {Generic Macro} mmux_ctype_t mmux_ctype_conjugate (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_conjugate_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
 Compute and return complex conjugate value of @var{OP}.  The type @objtype{mmux_ctype_t} is a
 placeholder for the type of the operand and result.
 @end deftypefn
