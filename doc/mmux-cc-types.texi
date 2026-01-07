@@ -4800,10 +4800,22 @@ mmux_flonumf128_dprintf(STDERR_FILENO, C);  @print{} 5.79
 or more generically:
 
 @example
-auto      A = mmux_flonumf128_literal(1.23);
-auto      B = mmux_flonumf128_literal(4.56);
-auto      C = mmux_ctype_add(A, B);
+auto  A = mmux_flonumf128_literal(1.23);
+auto  B = mmux_flonumf128_literal(4.56);
+auto  C = mmux_ctype_add(A, B);
 
+mmux_ctype_dprintf(STDERR_FILENO, C);  @print{} 5.79
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto       A = mmux_flonumf128_literal(1.23);
+auto       B = mmux_flonumf128_literal(4.56);
+typeof(B)  C;
+
+mmux_ctype_add_p(&C, &A, &B);
 mmux_ctype_dprintf(STDERR_FILENO, C);  @print{} 5.79
 @end example
 
@@ -4838,6 +4850,17 @@ standard functions.
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_remainder (mmux_ctype_t @vari{OP}, mmux_ctype_t @varii{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_incr (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_decr (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_add_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_sub_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_mul_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_div_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_neg_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_inverse_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_absolute_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_modulo_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_remainder_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @vari{OP_P}, mmux_ctype_t * @varii{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_incr_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_decr_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
 modulo, remainder, increment, decrement.  The type @objtype{mmux_ctype_t} is a placeholder for the
 type of the operands and result.
@@ -4868,11 +4891,13 @@ mmux_ctype_decr_variable(VARNAME)
 @c ------------------------------------------------------------------------
 
 @deftypefun mmux_pointer_t mmux_pointer_add (mmux_pointer_t @var{OP}, mmux_ptrdiff_t @var{DELTA})
+@deftypefunx bool mmux_pointer_add_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P}, mmux_ptrdiff_t * @var{DELTA_P})
 Perform the addition between @var{PTR} and @var{DELTA}, return the result.
 @end deftypefun
 
 
 @deftypefun mmux_ptrdiff_t mmux_pointer_sub (mmux_pointer_t @vari{OP}, mmux_pointer_t @varii{OP})
+@deftypefunx bool mmux_pointer_sub_p (mmux_ptrdiff_t * @var{ROP_P}, mmux_pointer_t * @vari{OP_P}, mmux_pointer_t * @varii{OP_P})
 Compute the difference between the operands @code{@vari{OP} - @varii{OP}}, interpreting the pointers
 as @code{mmux_uint8_t *}, return the result.
 @end deftypefun
@@ -4891,6 +4916,17 @@ as @code{mmux_uint8_t *}, return the result.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_remainder (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_add_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_sub_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_mul_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_div_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_neg_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_inverse_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_absolute_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_modulo_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_remainder_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_incr_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_decr_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
 modulo, increment, decrement.
 @end deftypefun
@@ -4907,6 +4943,13 @@ modulo, increment, decrement.
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_neg (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\CPLXSTEM\_t mmux_\CPLXSTEM\_inverse (mmux_\CPLXSTEM\_t @var{OP})
 @deftypefunx mmux_\REALSTEM\_t mmux_\CPLXSTEM\_absolute (mmux_\CPLXSTEM\_t @var{OP})
+@deftypefunx bool mmux_\CPLXSTEM\_add_p (mmux_\CPLXSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @vari{OP_P}, mmux_\CPLXSTEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_sub_p (mmux_\CPLXSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @vari{OP_P}, mmux_\CPLXSTEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_mul_p (mmux_\CPLXSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @vari{OP_P}, mmux_\CPLXSTEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_div_p (mmux_\CPLXSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @vari{OP_P}, mmux_\CPLXSTEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_neg_p (mmux_\CPLXSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_inverse_p (mmux_\CPLXSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\CPLXSTEM\_absolute_p (mmux_\REALSTEM\_t * @var{ROP_P}, mmux_\CPLXSTEM\_t * @var{OP_P})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute values.
 @end deftypefun
 
@@ -4926,6 +4969,17 @@ Compute the addition, subtraction, multiplication, division, negation, inverse, 
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_remainder (mmux_\STEM\_t @vari{OP}, mmux_\STEM\_t @varii{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_incr (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_decr (mmux_\STEM\_t @var{OP})
+@deftypefunx bool mmux_\STEM\_add_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_sub_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_mul_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_div_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_neg_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_inverse_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t @var{OP_P})
+@deftypefunx bool mmux_\STEM\_absolute_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t @var{OP_P})
+@deftypefunx bool mmux_\STEM\_modulo_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_remainder_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_incr_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t @var{OP_P})
+@deftypefunx bool mmux_\STEM\_decr_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t @var{OP_P})
 Compute the addition, subtraction, multiplication, division, negation, inverse, absolute value,
 modulo, increment, decrement.
 @end deftypefun
