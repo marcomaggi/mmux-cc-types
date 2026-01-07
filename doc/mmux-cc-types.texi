@@ -3805,6 +3805,19 @@ if (mmux_ctype_is_zero(val)) @{
 @}
 @end example
 
+@noindent
+or using the pointers @api{}:
+
+@example
+auto  val = mmux_flonumf32x_literal(123.45);
+bool  predicate_is_true;
+
+mmux_ctype_is_zero_p(&predicate_is_true, &val);
+if (rv) @{
+  ...
+@}
+@end example
+
 Notes:
 
 @itemize
@@ -3848,8 +3861,18 @@ dependent.  We can use them as follows:
 @deftypefunx bool mmux_\STEM\_is_infinite (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_finite (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
-not--a--number; otherwise return @cfalse{}.
+@deftypefunx bool mmux_\STEM\_is_zero_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_positive_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_negative_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_non_positive_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_non_negative_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_infinite_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_finite_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
+The common functions return @ctrue{} if @var{OP} is zero, positive, negative, non--positive,
+non--negative, infinite, not--a--number; otherwise return @cfalse{}.
+
+The pointers functions store the result in the variable referenced by @var{PREDICATE_IS_TRUE_P}.
 @end deftypefun
 
 @end macro
@@ -3867,8 +3890,20 @@ not--a--number; otherwise return @cfalse{}.
 @deftypefunx bool mmux_\STEM\_is_nan (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_normal (mmux_\STEM\_t @var{OP})
 @deftypefunx bool mmux_\STEM\_is_subnormal (mmux_\STEM\_t @var{OP})
-Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
-not--a--number, normal, subnormal; otherwise return @cfalse{}.
+@deftypefunx bool mmux_\STEM\_is_zero_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_positive_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_negative_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_non_positive_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_non_negative_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_infinite_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_finite_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_nan_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_normal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_is_subnormal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_\STEM\_t * @var{OP_P})
+The common functions return @ctrue{} if @var{OP} is zero, positive, negative, non--positive,
+non--negative, infinite, not--a--number, normal, subnormal; otherwise return @cfalse{}.
+
+The pointers functions store the result in the variable referenced by @var{PREDICATE_IS_TRUE_P}.
 @end deftypefun
 
 @end macro
@@ -3885,9 +3920,21 @@ not--a--number, normal, subnormal; otherwise return @cfalse{}.
 @deftypefnx {Generic Macro} bool mmux_ctype_is_nan (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_is_normal (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} bool mmux_ctype_is_subnormal (mmux_ctype_t @var{OP})
-Return @ctrue{} if @var{OP} is zero, positive, negative, non--positive, non--negative, infinite,
-not--a--number, normal, subnormal; otherwise return @cfalse{}.  The type @objtype{mmux_ctype_t} is a
-placeholder for the type of the operand.
+@deftypefnx {Generic Macro} bool mmux_ctype_is_zero_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_positive_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_negative_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_non_positive_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_non_negative_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_infinite_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_finite_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_nan_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_normal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_subnormal_p (bool * @var{PREDICATE_IS_TRUE_P}, mmux_ctype_t * @var{OP_P})
+The common macros return @ctrue{} if @var{OP} is zero, positive, negative, non--positive,
+non--negative, infinite, not--a--number, normal, subnormal; otherwise return @cfalse{}.  The type
+@objtype{mmux_ctype_t} is a placeholder for the type of the operand.
+
+The pointers macros store the result in the variable referenced by @var{PREDICATE_IS_TRUE_P}.
 @end deftypefn
 
 @MmuxDefineTypePredicates{pointer}
