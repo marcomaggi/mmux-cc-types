@@ -5591,10 +5591,10 @@ Bitwise operations are implemented for exact integer types.  If we want to perfo
 exclusive--OR operation on two integers we do:
 
 @example
-mmux_uint_t     A = mmux_uint_literal(0b111000);
-mmux_uint_t     B = mmux_uint_literal(0b101010);
-mmux_uint_t     C = mmux_uint_bitwise_xor(A, B);
-mmux_uint_t     base = mmux_uint_literal(2);
+mmux_uint_t  A = mmux_uint_literal(0b111000);
+mmux_uint_t  B = mmux_uint_literal(0b101010);
+mmux_uint_t  C = mmux_uint_bitwise_xor(A, B);
+mmux_uint_t  base = mmux_uint_constant_two();
 
 mmux_uint_dprintf_with_base(2, C, base);        @print{} +10010
 @end example
@@ -5603,12 +5603,28 @@ mmux_uint_dprintf_with_base(2, C, base);        @print{} +10010
 or more generically:
 
 @example
-auto    A = mmux_uint_literal(0b111000);
-auto    B = mmux_uint_literal(0b101010);
-auto    C = mmux_ctype_bitwise_xor(A, B);
-auto    base = mmux_uint_literal(2);
+auto  A = mmux_uint_literal(0b111000);
+auto  B = mmux_uint_literal(0b101010);
+auto  C = mmux_ctype_bitwise_xor(A, B);
+auto  base = mmux_uint_constant_two();
 
 mmux_ctype_dprintf_with_base(2, C, base);       @print{} +10010
+@end example
+
+@noindent
+or using the pointers @api{}:
+
+@example
+auto       A = mmux_uint_literal(0b111000);
+auto       B = mmux_uint_literal(0b101010);
+typeof(B)  C;
+
+mmux_ctype_bitwise_xor_p(&C, &A, &B);
+@{
+  auto  base = mmux_uint_constant_two();
+
+  mmux_ctype_dprintf_with_base(2, C, base);     @print{} +10010
+@}
 @end example
 
 
@@ -5618,6 +5634,12 @@ mmux_ctype_dprintf_with_base(2, C, base);       @print{} +10010
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_not (mmux_ctype_t @var{OP})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_shl (mmux_ctype_t @var{OP}, mmux_sint_t @var{NBITS})
 @deftypefnx {Generic Macro} mmux_ctype_t mmux_ctype_bitwise_shr (mmux_ctype_t @var{OP}, mmux_sint_t @var{NBITS})
+@deftypefnx {Generic Macro} bool mmux_ctype_bitwise_and_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P}, mmux_ctype_t * @var{MASK_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_bitwise_or_p(mmmux_ctype_t * @var{ROP_P}, mux_ctype_t @* var{OP}_P, mmux_ctype_t @* var{MASK_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_bitwise_xor_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P}, mmux_ctype_t * @var{MASK_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_bitwise_not_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_bitwise_shl_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P}, mmux_sint_t * @var{NBITS_P})
+@deftypefnx {Generic Macro} bool mmux_ctype_bitwise_shr_p (mmux_ctype_t * @var{ROP_P}, mmux_ctype_t * @var{OP_P}, mmux_sint_t * @var{NBITS_P})
 Perform the bitwise operations on exact integer values.  The type @objtype{mmux_ctype_t} is a
 placeholder for the type of the operands and result.
 @end deftypefn
@@ -5629,6 +5651,12 @@ placeholder for the type of the operands and result.
 @deftypefunx mmux_pointer_t mmux_pointer_bitwise_not (mmux_pointer_t @var{OP})
 @deftypefunx mmux_pointer_t mmux_pointer_bitwise_shl (mmux_pointer_t @var{OP}, mmux_sint_t @var{NBITS})
 @deftypefunx mmux_pointer_t mmux_pointer_bitwise_shr (mmux_pointer_t @var{OP}, mmux_sint_t @var{NBITS})
+@deftypefunx bool mmux_pointer_bitwise_and_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P}, mmux_uintptr_t * @var{MASK_P})
+@deftypefunx bool mmux_pointer_bitwise_or_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P}, mmux_uintptr_t * @var{MASK_P})
+@deftypefunx bool mmux_pointer_bitwise_xor_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P}, mmux_uintptr_t * @var{MASK_P})
+@deftypefunx bool mmux_pointer_bitwise_not_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P})
+@deftypefunx bool mmux_pointer_bitwise_shl_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P}, mmux_sint_t * @var{NBITS_P})
+@deftypefunx bool mmux_pointer_bitwise_shr_p (mmux_pointer_t * @var{ROP_P}, mmux_pointer_t * @var{OP_P}, mmux_sint_t * @var{NBITS_P})
 Perform the bitwise operations on a pointer value.
 @end deftypefun
 
@@ -5640,6 +5668,12 @@ Perform the bitwise operations on a pointer value.
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_bitwise_not (mmux_\STEM\_t @var{OP})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_bitwise_shl (mmux_\STEM\_t @var{OP}, mmux_sint_t @var{NBITS})
 @deftypefunx mmux_\STEM\_t mmux_\STEM\_bitwise_shr (mmux_\STEM\_t @var{OP}, mmux_sint_t @var{NBITS})
+@deftypefunx bool mmux_\STEM\_bitwise_and_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_bitwise_or_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_bitwise_xor_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @vari{OP_P}, mmux_\STEM\_t * @varii{OP_P})
+@deftypefunx bool mmux_\STEM\_bitwise_not_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P})
+@deftypefunx bool mmux_\STEM\_bitwise_shl_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P}, mmux_sint_t * @var{NBITS_P})
+@deftypefunx bool mmux_\STEM\_bitwise_shr_p (mmux_\STEM\_t * @var{ROP_P}, mmux_\STEM\_t * @var{OP_P}, mmux_sint_t * @var{NBITS_P})
 Perform the bitwise operations.
 @end deftypefun
 
