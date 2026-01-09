@@ -28,12 +28,23 @@ test_ctype_is_signed (void)
 #undef  DOIT
 #define DOIT(STEM,EXPECTED_RESULT)					\
   {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_signed(value);		\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_signed(value);		\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
+    }									\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_signed_p(&value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
     }									\
     dprintf(2, " %s,", #STEM);						\
   }
@@ -168,12 +179,23 @@ test_ctype_is_unsigned (void)
 #undef  DOIT
 #define DOIT(STEM,EXPECTED_RESULT)					\
   {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_unsigned(value);		\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_unsigned(value);		\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
+    }									\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_unsigned_p(&value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
     }									\
     dprintf(2, " %s,", #STEM);						\
   }
@@ -308,12 +330,23 @@ test_ctype_is_exact_integer (void)
 #undef  DOIT
 #define DOIT(STEM,EXPECTED_RESULT)					\
   {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_exact_integer(value);	\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_exact_integer(value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
+    }									\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_exact_integer_p(&value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
     }									\
     dprintf(2, " %s,", #STEM);						\
   }
@@ -444,12 +477,23 @@ test_ctype_is_real_number (void)
 #undef  DOIT
 #define DOIT(STEM,EXPECTED_RESULT)					\
   {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_real_number(value);	\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_real_number(value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
+    }									\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_real_number_p(&value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
     }									\
     dprintf(2, " %s,", #STEM);						\
   }
@@ -578,16 +622,27 @@ test_ctype_is_complex_number (void)
   dprintf(2, "running test: %s:", __func__);
 
 #undef  DOIT
-#define DOIT(STEM,EXPECTED_RESULT)					\
-  {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_complex_number(value);	\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
-    }									\
-    dprintf(2, " %s,", #STEM);						\
+#define DOIT(STEM,EXPECTED_RESULT)						\
+  {										\
+    {										\
+      mmux_##STEM##_t	value;							\
+      bool		result = mmux_ctype_is_complex_number(value);		\
+      if (EXPECTED_RESULT != result) {						\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",		\
+		__func__, #STEM, EXPECTED_RESULT, result);			\
+	exit(EXIT_FAILURE);							\
+      }										\
+    }										\
+    {										\
+      mmux_##STEM##_t	value;							\
+      bool		result = mmux_ctype_is_complex_number_p(&value);	\
+      if (EXPECTED_RESULT != result) {						\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",		\
+		__func__, #STEM, EXPECTED_RESULT, result);			\
+	exit(EXIT_FAILURE);							\
+      }										\
+    }										\
+    dprintf(2, " %s,", #STEM);							\
   }
 
 /* ------------------------------------------------------------------ */
@@ -716,12 +771,23 @@ test_ctype_is_flonumc (void)
 #undef  DOIT
 #define DOIT(STEM,EXPECTED_RESULT)					\
   {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_flonumc(value);		\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_flonumc(value);		\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
+    }									\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_flonumc_p(&value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
     }									\
     dprintf(2, " %s,", #STEM);						\
   }
@@ -852,12 +918,23 @@ test_ctype_is_flonum (void)
 #undef  DOIT
 #define DOIT(STEM,EXPECTED_RESULT)					\
   {									\
-    mmux_##STEM##_t	value;						\
-    bool		result = mmux_ctype_is_flonum(value);		\
-    if (EXPECTED_RESULT != result) {					\
-      dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
-	      __func__, #STEM, EXPECTED_RESULT, result);		\
-      exit(EXIT_FAILURE);						\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_flonum(value);		\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
+    }									\
+    {									\
+      mmux_##STEM##_t	value;						\
+      bool		result = mmux_ctype_is_flonum_p(&value);	\
+      if (EXPECTED_RESULT != result) {					\
+	dprintf(2, "%s: expected ctype_is_signed[%s]=%d, got %d\n",	\
+		__func__, #STEM, EXPECTED_RESULT, result);		\
+	exit(EXIT_FAILURE);						\
+      }									\
     }									\
     dprintf(2, " %s,", #STEM);						\
   }

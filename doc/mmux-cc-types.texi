@@ -5740,18 +5740,6 @@ of the operand.
 @end itemize
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_signed (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is a signed number, otherwise expand to @cfalse{}.  All the real and
-complex floating--point numbers are considered signed numbers.
-
-@example
-auto    op = mmux_sint64_literal(123);
-
-mmux_ctype_is_signed(op)        @expansion{} true
-@end example
-@end deftypefn
-
-
 @deftypefn {Generic Macro} mmux_standard_ctype_t mmux_ctype_value (mmux_ctype_t @var{op})
 For the types that are data structures with the field @code{value}, expand as follows:
 
@@ -5768,9 +5756,23 @@ mmux_ctype_value(@var{op})      @expansion{} (@var{op})
 @end deftypefn
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_unsigned (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is an unsigned number, otherwise expand to @cfalse{}.  All the real
-and complex floating--point numbers are considered signed numbers.
+@deftypefn {Generic Macro} bool mmux_ctype_is_signed (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_signed_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is a signed number, otherwise to @cfalse{}.
+All the real and complex floating--point numbers are considered signed numbers.
+
+@example
+auto    op = mmux_sint64_literal(123);
+
+mmux_ctype_is_signed(op)        @expansion{} true
+@end example
+@end deftypefn
+
+
+@deftypefn {Generic Macro} bool mmux_ctype_is_unsigned (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_unsigned_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is an unsigned number, otherwise to
+@cfalse{}.  All the real and complex floating--point numbers are considered signed numbers.
 
 @example
 auto    op = mmux_sint64_literal(123);
@@ -5780,9 +5782,10 @@ mmux_ctype_is_unsigned(op)      @expansion{} false
 @end deftypefn
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_exact_integer (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is an exact integer number, otherwise expand to @cfalse{}.  All the
-real and complex floating--point numbers are not exact integers.
+@deftypefn {Generic Macro} bool mmux_ctype_is_exact_integer (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_exact_integer_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is an exact integer number, otherwise to
+@cfalse{}.  All the real and complex floating--point numbers are not exact integers.
 
 @example
 auto    op = mmux_sint64_literal(123);
@@ -5792,9 +5795,10 @@ mmux_ctype_is_exact_integer(op) @expansion{} true
 @end deftypefn
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_real_number (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is a real number, otherwise expand to @cfalse{}.  All the exact
-integers and flonums are real numbers.
+@deftypefn {Generic Macro} bool mmux_ctype_is_real_number (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_real_number_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is a real number, otherwise to @cfalse{}.
+All the exact integers and flonums are real numbers.
 
 @example
 auto    op = mmux_sint64_literal(123);
@@ -5804,9 +5808,10 @@ mmux_ctype_is_real_number(op)   @expansion{} true
 @end deftypefn
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_complex_number (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is a complex number, otherwise expand to @cfalse{}.  All the exact
-integers and flonums are @strong{not} complex numbers.
+@deftypefn {Generic Macro} bool mmux_ctype_is_complex_number (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_complex_number_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is a complex number, otherwise to @cfalse{}.
+All the exact integers and flonums are @strong{not} complex numbers.
 
 @example
 auto    op = mmux_sint64_literal(123);
@@ -5816,9 +5821,10 @@ mmux_ctype_is_complex_number(op) @expansion{} false
 @end deftypefn
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_flonum (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is a flonum, otherwise expand to @cfalse{}.  All the types with stem
-@samp{flonumfl}, @samp{flonumdb}, @samp{flonumldb}, @dots{} are flonums.
+@deftypefn {Generic Macro} bool mmux_ctype_is_flonum (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_flonum_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is a flonum, otherwise to @cfalse{}.  All the
+types with stem @samp{flonumfl}, @samp{flonumdb}, @samp{flonumldb}, @dots{} are flonums.
 
 @example
 auto    op = mmux_flonumldb_literal(1.23);
@@ -5828,9 +5834,10 @@ mmux_ctype_is_flonum(op)        @expansion{} true
 @end deftypefn
 
 
-@deftypefn {Generic Macro} bool mmux_ctype_is_flonumc (mmux_ctype_t @var{op})
-Expand to @ctrue{} if @var{op} is a flonumc, otherwise expand to @cfalse{}.  All the types with stem
-@samp{flonumcfl}, @samp{flonumcdb}, @samp{flonumcldb}, @dots{} are flonumcs.
+@deftypefn {Generic Macro} bool mmux_ctype_is_flonumc (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} bool mmux_ctype_is_flonumc_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to @ctrue{} if @var{op} is a flonumc, otherwise to @cfalse{}.  All
+the types with stem @samp{flonumcfl}, @samp{flonumcdb}, @samp{flonumcldb}, @dots{} are flonumcs.
 
 @example
 auto    op = mmux_flonumcdb_literal(1.23, 4.56);
@@ -5840,8 +5847,10 @@ mmux_ctype_is_flonumc(op)       @expansion{} true
 @end deftypefn
 
 
-@deftypefn {Generic Macro} mmux_asciizcp_t mmux_ctype_typedef_name (mmux_ctype_t @var{op})
-Expand to a pointer to a statically allocated @asciiz{} string representing the name of the type.
+@deftypefn {Generic Macro} mmux_asciizcp_t mmux_ctype_typedef_name (mmux_ctype_t @var{OP})
+@deftypefnx {Generic Macro} mmux_asciizcp_t mmux_ctype_typedef_name_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to a pointer to a statically allocated @asciiz{} string representing
+the name of the type.
 
 @example
 auto    op = mmux_flonumcdb_literal(1.23, 4.56);
@@ -5852,8 +5861,9 @@ mmux_ctype_typedef_name(op)       @expansion{} "mmux_flonumcdb_t"
 
 
 @deftypefn {Generic Macro} mmux_asciizcp_t mmux_ctype_stem_name (mmux_ctype_t @var{op})
-Expand to a pointer to a statically allocated @asciiz{} string representing the name of the type
-stem.
+@deftypefnx {Generic Macro} mmux_asciizcp_t mmux_ctype_stem_name_p (mmux_ctype_t * @var{OP_P})
+Use @code{_Generic} to compile to a pointer to a statically allocated @asciiz{} string representing
+the name of the type stem.
 
 @example
 auto    op = mmux_flonumcdb_literal(1.23, 4.56);
