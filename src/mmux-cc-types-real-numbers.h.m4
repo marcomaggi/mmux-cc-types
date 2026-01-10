@@ -9,7 +9,7 @@
 	included by the main header "mmux-cc-types.h"  and it must not be included by
 	itself.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -47,6 +47,7 @@ mmux_standard_$1_sign (mmux_standard_$1_t op)
 }
 ]]])]]])
 m4_divert(0)
+DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[ascii]]])
 DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[char]]])
 DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[schar]]])
 DEFINE_STANDARD_EXACT_INTEGER_REAL_NUMBER_INLINE_FUNCTIONS([[[uchar]]])
@@ -210,6 +211,7 @@ mmux_$1_sign (mmux_$1_t op)
 }
 ]]])]]])
 m4_divert(0)
+DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[ascii]]])
 DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[char]]])
 DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[schar]]])
 DEFINE_REAL_NUMBER_INLINE_FUNCTIONS([[[uchar]]])

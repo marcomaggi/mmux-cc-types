@@ -7,7 +7,7 @@
 
 	This module implements parsers from strings to internal values.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -662,8 +662,10 @@ DEFINE_TYPEDEF_PARSER([[[libc_blkcnt]]],	[[[MMUX_CC_TYPES_STEM_ALIAS_LIBC_BLKCNT
 
 #ifdef __CHAR_UNSIGNED__
 DEFINE_SIGNED_INTEGER_PARSER([[[char]]])
+DEFINE_SIGNED_INTEGER_PARSER([[[ascii]]])
 #else
 DEFINE_UNSIGNED_INTEGER_PARSER([[[char]]])
+DEFINE_UNSIGNED_INTEGER_PARSER([[[ascii]]])
 #endif
 
 
@@ -684,6 +686,7 @@ mmux_string_is_$1 (char const * s_value)
 m4_divert(0)m4_dnl
 
 DEFINE_STRING_IS_FUNCTION([[[pointer]]])
+DEFINE_STRING_IS_FUNCTION([[[ascii]]])
 DEFINE_STRING_IS_FUNCTION([[[char]]])
 DEFINE_STRING_IS_FUNCTION([[[schar]]])
 DEFINE_STRING_IS_FUNCTION([[[uchar]]])

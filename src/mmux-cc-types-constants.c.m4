@@ -7,7 +7,7 @@
 
 	This module implements functions returning constant values.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -84,6 +84,7 @@ mmux_standard_$1_constant_minimum (void)
   return $3;
 }]]])]]])
 
+DEFINE_REAL_TYPE_FUNCTIONS(ascii,	CHAR_MAX,	CHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(char,	CHAR_MAX,	CHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(schar,	SCHAR_MAX,	SCHAR_MIN)
 DEFINE_REAL_TYPE_FUNCTIONS(uchar,	UCHAR_MAX,	0)

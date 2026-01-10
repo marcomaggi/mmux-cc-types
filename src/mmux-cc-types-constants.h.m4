@@ -8,7 +8,7 @@
 	This  header   file  implements  mathematical  constants   for  the  standard
 	floating-point.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -74,6 +74,7 @@ DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS($1,	two,	2)
 DEFINE_EXACT_INTEGER_NUMERIC_CONSTANT_INLINE_FUNCTIONS($1,	ten,	10)
 ]]])]]])
 m4_divert(0)m4_dnl
+DEFINE_EXACT_INTEGER_CONSTANT_INLINE_FUNCTIONS(ascii)
 DEFINE_EXACT_INTEGER_CONSTANT_INLINE_FUNCTIONS(char)
 DEFINE_EXACT_INTEGER_CONSTANT_INLINE_FUNCTIONS(schar)
 DEFINE_EXACT_INTEGER_CONSTANT_INLINE_FUNCTIONS(uchar)
@@ -516,6 +517,7 @@ m4_divert(-1)
 m4_define([[[DEFINE_CONSTANT_GENERIC_MACRO]]],[[[m4_dnl
 #define mmux_ctype_constant_$1(VALUE)						\
   (_Generic((VALUE),								\
+	   mmux_ascii_t:		mmux_ascii_constant_$1,			\
 	   mmux_char_t:			mmux_char_constant_$1,			\
            mmux_schar_t:		mmux_schar_constant_$1,			\
            mmux_uchar_t:		mmux_uchar_constant_$1,			\

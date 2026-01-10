@@ -70,6 +70,7 @@ mmux_cc_types_decl bool mmux_$1_sprint (mmux_asciizp_t ptr, mmux_usize_t len, mm
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_STRINGREP_PROTOS([[[pointer]]])
+DEFINE_STRINGREP_PROTOS([[[ascii]]])
 DEFINE_STRINGREP_PROTOS([[[char]]])
 DEFINE_STRINGREP_PROTOS([[[schar]]])
 DEFINE_STRINGREP_PROTOS([[[uchar]]])
@@ -203,6 +204,7 @@ DEFINE_GENERIC_BINARY_FUNCTION_INTEGER_FLONUM_FLONUMC_POINTER_SECOND_ARG_NO_RESU
 #define mmux_ctype_typedef_name(VALUE)					\
   (_Generic((VALUE),							\
            mmux_pointer_t:		"mmux_pointer_t",		\
+	   mmux_ascii_t:		"mmux_ascii_t",			\
 	   mmux_char_t:			"mmux_char_t",			\
            mmux_schar_t:		"mmux_schar_t",			\
            mmux_uchar_t:		"mmux_uchar_t",			\
@@ -319,7 +321,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_typedef_name_p(VALUE)					\
   (_Generic((VALUE),							\
            mmux_pointer_t *:		"mmux_pointer_t",		\
-	   mmux_char_t *:			"mmux_char_t",			\
+	   mmux_ascii_t *:		"mmux_ascii_t",			\
+	   mmux_char_t *:		"mmux_char_t",			\
            mmux_schar_t *:		"mmux_schar_t",			\
            mmux_uchar_t *:		"mmux_uchar_t",			\
            mmux_sshort_t *:		"mmux_sshort_t",		\
@@ -437,7 +440,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_stem_name(VALUE)				\
   (_Generic((VALUE),						\
            mmux_pointer_t:		"pointer",		\
-	   mmux_char_t:			"char",			\
+	   mmux_ascii_t:		"ascii",			\
+           mmux_char_t:			"char",			\
            mmux_schar_t:		"schar",		\
            mmux_uchar_t:		"uchar",		\
            mmux_sshort_t:		"sshort",		\
@@ -553,7 +557,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_stem_name_p(VALUE)				\
   (_Generic((VALUE),						\
            mmux_pointer_t *:		"pointer",		\
-	   mmux_char_t *:			"char",			\
+	   mmux_ascii_t *:		"ascii",			\
+	   mmux_char_t *:		"char",			\
            mmux_schar_t *:		"schar",		\
            mmux_uchar_t *:		"uchar",		\
            mmux_sshort_t *:		"sshort",		\
@@ -674,6 +679,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_sprint(BUFPTR,BUFLEN,VALUE)					\
   _Generic((VALUE),								\
 	   mmux_pointer_t:		mmux_pointer_sprint,			\
+	   mmux_ascii_t:		mmux_ascii_sprint,			\
 	   mmux_char_t:			mmux_char_sprint,			\
            mmux_schar_t:		mmux_schar_sprint,			\
            mmux_uchar_t:		mmux_uchar_sprint,			\
@@ -792,6 +798,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_sprint_size(VALUE1,VALUE2)					\
   _Generic((VALUE2),								\
 	   mmux_pointer_t:		mmux_pointer_sprint_size,		\
+	   mmux_ascii_t:		mmux_ascii_sprint_size,			\
 	   mmux_char_t:			mmux_char_sprint_size,			\
            mmux_schar_t:		mmux_schar_sprint_size,			\
            mmux_uchar_t:		mmux_uchar_sprint_size,			\
@@ -913,6 +920,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_sprint_with_base(BUFPTR,BUFLEN_P,IS_NEGATIVE_P,VALUE,BASE)		\
   _Generic((VALUE),									\
 	   mmux_pointer_t:		mmux_pointer_sprint_with_base,			\
+	   mmux_ascii_t:		mmux_ascii_sprint_with_base,			\
 	   mmux_char_t:			mmux_char_sprint_with_base,			\
            mmux_schar_t:		mmux_schar_sprint_with_base,			\
            mmux_uchar_t:		mmux_uchar_sprint_with_base,			\
@@ -966,6 +974,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_ULLONG_M4,1,[[[m4_dnl
 #define mmux_ctype_dprintf_with_base(FD,VALUE,BASE)					\
   _Generic((VALUE),									\
 	   mmux_pointer_t:		mmux_pointer_dprintf_with_base,			\
+	   mmux_ascii_t:		mmux_ascii_dprintf_with_base,			\
 	   mmux_char_t:			mmux_char_dprintf_with_base,			\
            mmux_schar_t:		mmux_schar_dprintf_with_base,			\
            mmux_uchar_t:		mmux_uchar_dprintf_with_base,			\

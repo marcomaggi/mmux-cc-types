@@ -9,7 +9,7 @@
 	included by the main header "mmux-cc-types.h"  and it must not be included by
 	itself.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -112,6 +112,7 @@ mmux_$1_bitwise_shr (mmux_$1_t op, mmux_sint_t nbits)
 }
 ]]])]]])
 
+DEFINE_BITWISE_FUNCS([[[ascii]]])
 DEFINE_BITWISE_FUNCS([[[char]]])
 DEFINE_BITWISE_FUNCS([[[schar]]])
 DEFINE_BITWISE_FUNCS([[[uchar]]])

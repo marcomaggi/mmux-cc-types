@@ -243,6 +243,7 @@ package--configuration time.  This package relies on the availability of the ext
 @cindex Type stems
 @cindex @code{pointer}, type stem
 @cindex @code{pointerc}, type stem
+@cindex @code{ascii}, type stem
 @cindex @code{char}, type stem
 @cindex @code{schar}, type stem
 @cindex @code{uchar}, type stem
@@ -708,6 +709,7 @@ type is supported.
 @cindex Type stems
 @cindex @code{pointer}, type stem
 @cindex @code{pointerc}, type stem
+@cindex @code{ascii}, type stem
 @cindex @code{char}, type stem
 @cindex @code{schar}, type stem
 @cindex @code{uchar}, type stem
@@ -915,9 +917,6 @@ Type definition aliasing the C language types @code{char * * *} and @code{char c
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineCAliasTypedef{char,char}
-@MmuxDefineCAliasTypedef{schar,signed char}
-@MmuxDefineCAliasTypedef{uchar,unsigned char}
 @MmuxDefineCAliasTypedef{sshort,signed short int}
 @MmuxDefineCAliasTypedef{ushort,unsigned short int}
 @MmuxDefineCAliasTypedef{sint,signed int}
@@ -980,6 +979,33 @@ parts are values of type @objtype{mmux_flonumd128_t}.
 
 @MmuxDefineCAliasTypedefForAliasedType{byte,            sint8_t,        sint8}
 @MmuxDefineCAliasTypedefForAliasedType{octet,           uint8_t,        uint8}
+
+@deftp {Typedef} mmux_schar_t
+@deftpx {Parent Typedef} mmux_byte_t
+Type definition representing a C language @code{signed char} type.
+@end deftp
+
+
+@deftp {Typedef} mmux_uchar_t
+@deftpx {Parent Typedef} mmux_octet_t
+Type definition representing a C language @code{unsigned char} type.
+@end deftp
+
+
+@deftp {Typedef} mmux_char_t
+@deftpx {Possible Parent Typedef} mmux_schar_t
+@deftpx {Possible Parent Typedef} mmux_uchar_t
+Type definition representing a C language @code{char} type.  Its parent type is either
+@objtype{mmux_schar_t} or @objtype{mmux_uchar_t} depending on whether the underlying platform
+defines the standard type @code{char} as signed or unsigned.
+@end deftp
+
+
+@deftp {Typedef} mmux_ascii_t
+@deftpx {Parent Typedef} mmux_char_t
+Type definition representing a an @MmuxAscii{} encoded character.
+@end deftp
+
 
 @MmuxDefineCAliasTypedefForAliasedType{ssize,           ssize_t,        @value{ALIASSSIZE}}
 @MmuxDefineCAliasTypedefForAliasedType{usize,           size_t,         @value{ALIASUSIZE}}
@@ -1150,10 +1176,11 @@ mmux_standard_pointerc_literal(@var{ARG})
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineLiteralMacro{char}
-
 @MmuxDefineLiteralMacro{schar}
 @MmuxDefineLiteralMacroUnsignedInteger{uchar}
+
+@MmuxDefineLiteralMacro{char}
+@MmuxDefineLiteralMacro{ascii}
 
 @MmuxDefineLiteralMacro{sshort}
 @MmuxDefineLiteralMacroUnsignedInteger{ushort}
@@ -1362,9 +1389,10 @@ actual types.
 @MmuxDefineCMacroMaker{pointer}
 @MmuxDefineCMacroMaker{pointerc}
 
-@MmuxDefineCMacroMaker{char}
 @MmuxDefineCMacroMaker{schar}
 @MmuxDefineCMacroMaker{uchar}
+@MmuxDefineCMacroMaker{char}
+@MmuxDefineCMacroMaker{ascii}
 @MmuxDefineCMacroMaker{sshort}
 @MmuxDefineCMacroMaker{ushort}
 @MmuxDefineCMacroMaker{sint}
@@ -1488,9 +1516,10 @@ Return a positive integer representing the size in bytes of the C language type
 
 @MmuxDefineCFunctionSizeof{pointer}
 
-@MmuxDefineCFunctionSizeof{char}
 @MmuxDefineCFunctionSizeof{schar}
 @MmuxDefineCFunctionSizeof{uchar}
+@MmuxDefineCFunctionSizeof{char}
+@MmuxDefineCFunctionSizeof{ascii}
 @MmuxDefineCFunctionSizeof{sshort}
 @MmuxDefineCFunctionSizeof{ushort}
 @MmuxDefineCFunctionSizeof{sint}
@@ -1598,9 +1627,10 @@ Return the maximum and minimum values representable by the range of values of th
 
 @MmuxDefineCFunctionMaximum{pointer}
 
-@MmuxDefineCFunctionMaximum{char}
 @MmuxDefineCFunctionMaximum{schar}
 @MmuxDefineCFunctionMaximum{uchar}
+@MmuxDefineCFunctionMaximum{char}
+@MmuxDefineCFunctionMaximum{ascii}
 @MmuxDefineCFunctionMaximum{sshort}
 @MmuxDefineCFunctionMaximum{ushort}
 @MmuxDefineCFunctionMaximum{sint}
@@ -1809,9 +1839,10 @@ Return a constant value corresponding to @cnull{}.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineExactConstantFunctions{char}
 @MmuxDefineExactConstantFunctions{schar}
 @MmuxDefineExactConstantFunctions{uchar}
+@MmuxDefineExactConstantFunctions{char}
+@MmuxDefineExactConstantFunctions{ascii}
 @MmuxDefineExactConstantFunctions{sshort}
 @MmuxDefineExactConstantFunctions{ushort}
 @MmuxDefineExactConstantFunctions{sint}
@@ -1916,9 +1947,10 @@ of type @objtype{mmux_\STEM\_t}; otherwise return @cfalse{}.
 
 @MmuxDefineCFunctionPredicate{pointer}
 
-@MmuxDefineCFunctionPredicate{char}
 @MmuxDefineCFunctionPredicate{schar}
 @MmuxDefineCFunctionPredicate{uchar}
+@MmuxDefineCFunctionPredicate{char}
+@MmuxDefineCFunctionPredicate{ascii}
 @MmuxDefineCFunctionPredicate{sshort}
 @MmuxDefineCFunctionPredicate{ushort}
 @MmuxDefineCFunctionPredicate{sint}
@@ -2148,9 +2180,10 @@ the parsing operation, for example: the name of a C function.
 
 @MmuxDefineCFunctionParser{pointer}
 
-@MmuxDefineCFunctionParser{char}
 @MmuxDefineCFunctionParser{schar}
 @MmuxDefineCFunctionParser{uchar}
+@MmuxDefineCFunctionParser{char}
+@MmuxDefineCFunctionParser{ascii}
 @MmuxDefineCFunctionParser{sshort}
 @MmuxDefineCFunctionParser{ushort}
 @MmuxDefineCFunctionParser{sint}
@@ -2368,9 +2401,10 @@ present there is nothing we can do about it.
 
 @MmuxDefineCFunctionSprinter{pointer}
 
-@MmuxDefineCFunctionSprinter{char}
 @MmuxDefineCFunctionSprinter{schar}
 @MmuxDefineCFunctionSprinter{uchar}
+@MmuxDefineCFunctionSprinter{char}
+@MmuxDefineCFunctionSprinter{ascii}
 @MmuxDefineCFunctionSprinter{sshort}
 @MmuxDefineCFunctionSprinter{ushort}
 @MmuxDefineCFunctionSprinter{sint}
@@ -2647,9 +2681,10 @@ present there is nothing we can do about it.
 
 @MmuxDefineCFunctionExactIntegerSprinter{pointer}
 
-@MmuxDefineCFunctionExactIntegerSprinter{char}
 @MmuxDefineCFunctionExactIntegerSprinter{schar}
 @MmuxDefineCFunctionExactIntegerSprinter{uchar}
+@MmuxDefineCFunctionExactIntegerSprinter{char}
+@MmuxDefineCFunctionExactIntegerSprinter{ascii}
 @MmuxDefineCFunctionExactIntegerSprinter{sshort}
 @MmuxDefineCFunctionExactIntegerSprinter{ushort}
 @MmuxDefineCFunctionExactIntegerSprinter{sint}
@@ -2757,9 +2792,10 @@ The @cfunc{_no_error} variant ignores errors; it is useful for debugging purpose
 
 @MmuxDefineCFunctionPrinters{pointer}
 
-@MmuxDefineCFunctionPrinters{char}
 @MmuxDefineCFunctionPrinters{schar}
 @MmuxDefineCFunctionPrinters{uchar}
+@MmuxDefineCFunctionPrinters{char}
+@MmuxDefineCFunctionPrinters{ascii}
 @MmuxDefineCFunctionPrinters{sshort}
 @MmuxDefineCFunctionPrinters{ushort}
 @MmuxDefineCFunctionPrinters{sint}
@@ -2932,9 +2968,10 @@ the operands and result.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineExactIntegerSignFunctions{char}
 @MmuxDefineExactIntegerSignFunctions{schar}
 @MmuxDefineExactIntegerSignFunctions{uchar}
+@MmuxDefineExactIntegerSignFunctions{char}
+@MmuxDefineExactIntegerSignFunctions{ascii}
 @MmuxDefineExactIntegerSignFunctions{sshort}
 @MmuxDefineExactIntegerSignFunctions{ushort}
 @MmuxDefineExactIntegerSignFunctions{sint}
@@ -4311,9 +4348,10 @@ operands.
 
 @MmuxDefineTypeComparisonExactFunction{pointer}
 
-@MmuxDefineTypeComparisonExactFunction{char}
 @MmuxDefineTypeComparisonExactFunction{schar}
 @MmuxDefineTypeComparisonExactFunction{uchar}
+@MmuxDefineTypeComparisonExactFunction{char}
+@MmuxDefineTypeComparisonExactFunction{ascii}
 @MmuxDefineTypeComparisonExactFunction{sshort}
 @MmuxDefineTypeComparisonExactFunction{ushort}
 @MmuxDefineTypeComparisonExactFunction{sint}
@@ -4454,9 +4492,10 @@ placeholder for the type of the operands and result.
 
 @MmuxDefineTypeComparisonMinMaxFunction{pointer}
 
-@MmuxDefineTypeComparisonMinMaxFunction{char}
 @MmuxDefineTypeComparisonMinMaxFunction{schar}
 @MmuxDefineTypeComparisonMinMaxFunction{uchar}
+@MmuxDefineTypeComparisonMinMaxFunction{char}
+@MmuxDefineTypeComparisonMinMaxFunction{ascii}
 @MmuxDefineTypeComparisonMinMaxFunction{sshort}
 @MmuxDefineTypeComparisonMinMaxFunction{ushort}
 @MmuxDefineTypeComparisonMinMaxFunction{sint}
@@ -4988,9 +5027,10 @@ modulo, increment, decrement.
 
 @c ------------------------------------------------------------------------
 
-@MmuxDefineIntegerArithmeticsFunc{char}
 @MmuxDefineIntegerArithmeticsFunc{schar}
 @MmuxDefineIntegerArithmeticsFunc{uchar}
+@MmuxDefineIntegerArithmeticsFunc{char}
+@MmuxDefineIntegerArithmeticsFunc{ascii}
 @MmuxDefineIntegerArithmeticsFunc{sshort}
 @MmuxDefineIntegerArithmeticsFunc{ushort}
 @MmuxDefineIntegerArithmeticsFunc{sint}
@@ -5679,9 +5719,10 @@ Perform the bitwise operations.
 
 @end macro
 
-@MmuxDefineBitwiseFuncs{char}
 @MmuxDefineBitwiseFuncs{schar}
 @MmuxDefineBitwiseFuncs{uchar}
+@MmuxDefineBitwiseFuncs{char}
+@MmuxDefineBitwiseFuncs{ascii}
 @MmuxDefineBitwiseFuncs{sshort}
 @MmuxDefineBitwiseFuncs{ushort}
 @MmuxDefineBitwiseFuncs{sint}

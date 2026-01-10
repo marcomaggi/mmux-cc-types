@@ -114,6 +114,35 @@ mmux_standard_char_is_finite (mmux_standard_char_t op MMUX_CC_TYPES_UNUSED)
   return true;
 }
 
+/* ------------------------------------------------------------------ */
+
+mmux_cc_types_decl bool mmux_standard_ascii_is_zero (mmux_standard_ascii_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl bool mmux_standard_ascii_is_positive (mmux_standard_ascii_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl bool mmux_standard_ascii_is_negative (mmux_standard_ascii_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl bool mmux_standard_ascii_is_non_positive (mmux_standard_ascii_t op)
+  __attribute__((__const__));
+mmux_cc_types_decl bool mmux_standard_ascii_is_non_negative (mmux_standard_ascii_t op)
+  __attribute__((__const__));
+
+mmux_cc_types_inline_decl bool
+mmux_standard_ascii_is_nan (mmux_standard_ascii_t op MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_standard_ascii_is_infinite (mmux_standard_ascii_t op MMUX_CC_TYPES_UNUSED)
+{
+  return false;
+}
+mmux_cc_types_inline_decl bool
+mmux_standard_ascii_is_finite (mmux_standard_ascii_t op MMUX_CC_TYPES_UNUSED)
+{
+  return true;
+}
+
 
 /** --------------------------------------------------------------------
  ** Sign predicates: standard signed exact integers.
@@ -283,6 +312,7 @@ DEFINE_EXACT_INTEGER_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_infinite)
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_WRAPPER_FUNCTION($1,	is_finite)
 ]]])]]])
 m4_divert(0)m4_dnl
+DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[ascii]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[char]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[schar]]])
 DEFINE_EXACT_INTEGER_SIGN_PREDICATE_INLINE_FUNCTIONS([[[uchar]]])
@@ -530,8 +560,10 @@ DEFINE_GENERIC_UNARY_FUNCTION_FLONUM_FLONUMC([[[is_subnormal]]])
 	   mmux_pointer_t:		false,			\
 m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,[[[m4_dnl
 	   mmux_char_t:			false,			\
+	   mmux_ascii_t:		false,			\
 ]]],[[[m4_dnl
 	   mmux_char_t:			true,			\
+           mmux_ascii_t:		true,			\
 ]]])m4_dnl
            mmux_schar_t:		true,			\
            mmux_uchar_t:		false,			\
@@ -648,16 +680,18 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		false,			\
 m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,[[[m4_dnl
-	   mmux_char_t *:			false,			\
+	   mmux_char_t *:		false,			\
+	   mmux_ascii_t *:		false,			\
 ]]],[[[m4_dnl
-	   mmux_char_t *:			true,			\
+	   mmux_char_t *:		true,			\
+	   mmux_ascii_t *:		true,			\
 ]]])m4_dnl
            mmux_schar_t *:		true,			\
            mmux_uchar_t *:		false,			\
            mmux_sshort_t *:		true,			\
            mmux_ushort_t *:		false,			\
-           mmux_sint_t *:			true,			\
-           mmux_uint_t *:			false,			\
+           mmux_sint_t *:		true,			\
+           mmux_uint_t *:		false,			\
            mmux_slong_t *:		true,			\
            mmux_ulong_t *:		false,			\
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
@@ -770,8 +804,10 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 	   mmux_pointer_t:		true,			\
 m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,[[[m4_dnl
 	   mmux_char_t:			true,			\
+	   mmux_ascii_t:		true,			\
 ]]],[[[m4_dnl
 	   mmux_char_t:			false,			\
+	   mmux_ascii_t:		false,			\
 ]]])m4_dnl
            mmux_schar_t:		false,			\
            mmux_uchar_t:		true,			\
@@ -888,16 +924,18 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		true,			\
 m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,[[[m4_dnl
-	   mmux_char_t *:			true,			\
+	   mmux_char_t *:		true,			\
+	   mmux_ascii_t *:		true,			\
 ]]],[[[m4_dnl
-	   mmux_char_t *:			false,			\
+	   mmux_char_t *:		false,			\
+	   mmux_ascii_t *:		false,			\
 ]]])m4_dnl
            mmux_schar_t *:		false,			\
            mmux_uchar_t *:		true,			\
            mmux_sshort_t *:		false,			\
            mmux_ushort_t *:		true,			\
-           mmux_sint_t *:			false,			\
-           mmux_uint_t *:			true,			\
+           mmux_sint_t *:		false,			\
+           mmux_uint_t *:		true,			\
            mmux_slong_t *:		false,			\
            mmux_ulong_t *:		true,			\
 m4_ifelse(MMUX_CC_TYPES_HAS_SLLONG_M4,1,[[[m4_dnl
@@ -1008,6 +1046,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_exact_integer(VALUE)			\
   (_Generic((VALUE),						\
 	   mmux_pointer_t:		true,			\
+	   mmux_ascii_t:		true,			\
 	   mmux_char_t:			true,			\
            mmux_schar_t:		true,			\
            mmux_uchar_t:		true,			\
@@ -1123,7 +1162,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_exact_integer_p(VALUE)			\
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		true,			\
-	   mmux_char_t *:			true,			\
+	   mmux_ascii_t *:		true,			\
+	   mmux_char_t *:		true,			\
            mmux_schar_t *:		true,			\
            mmux_uchar_t *:		true,			\
            mmux_sshort_t *:		true,			\
@@ -1240,6 +1280,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_real_number(VALUE)			\
   (_Generic((VALUE),						\
 	   mmux_pointer_t:		true,			\
+	   mmux_ascii_t:		true,			\
 	   mmux_char_t:			true,			\
            mmux_schar_t:		true,			\
            mmux_uchar_t:		true,			\
@@ -1355,7 +1396,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_real_number_p(VALUE)			\
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		true,			\
-	   mmux_char_t *:			true,			\
+	   mmux_ascii_t *:		true,			\
+	   mmux_char_t *:		true,			\
            mmux_schar_t *:		true,			\
            mmux_uchar_t *:		true,			\
            mmux_sshort_t *:		true,			\
@@ -1472,6 +1514,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_complex_number(VALUE)			\
   (_Generic((VALUE),						\
 	   mmux_pointer_t:		false,			\
+	   mmux_ascii_t:		false,			\
 	   mmux_char_t:			false,			\
            mmux_schar_t:		false,			\
            mmux_uchar_t:		false,			\
@@ -1587,7 +1630,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_complex_number_p(VALUE)			\
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		false,			\
-	   mmux_char_t *:			false,			\
+	   mmux_ascii_t *:		false,			\
+	   mmux_char_t *:		false,			\
            mmux_schar_t *:		false,			\
            mmux_uchar_t *:		false,			\
            mmux_sshort_t *:		false,			\
@@ -1704,6 +1748,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_flonum(VALUE)				\
   (_Generic((VALUE),						\
 	   mmux_pointer_t:		false,			\
+	   mmux_ascii_t:		false,			\
 	   mmux_char_t:			false,			\
            mmux_schar_t:		false,			\
            mmux_uchar_t:		false,			\
@@ -1819,7 +1864,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_flonum_p(VALUE)				\
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		false,			\
-	   mmux_char_t *:			false,			\
+	   mmux_ascii_t *:		false,			\
+	   mmux_char_t *:		false,			\
            mmux_schar_t *:		false,			\
            mmux_uchar_t *:		false,			\
            mmux_sshort_t *:		false,			\
@@ -1936,6 +1982,7 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_flonumc(VALUE)				\
   (_Generic((VALUE),						\
 	   mmux_pointer_t:		false,			\
+	   mmux_ascii_t:		false,			\
 	   mmux_char_t:			false,			\
            mmux_schar_t:		false,			\
            mmux_uchar_t:		false,			\
@@ -2051,7 +2098,8 @@ m4_ifelse(MMUX_CC_TYPES_HAS_FLONUMCD128_M4,1,[[[m4_dnl
 #define mmux_ctype_is_flonumc_p(VALUE)				\
   (_Generic((VALUE),						\
 	   mmux_pointer_t *:		false,			\
-	   mmux_char_t *:			false,			\
+	   mmux_ascii_t *:		false,			\
+	   mmux_char_t *:		false,			\
            mmux_schar_t *:		false,			\
            mmux_uchar_t *:		false,			\
            mmux_sshort_t *:		false,			\

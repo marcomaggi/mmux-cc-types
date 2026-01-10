@@ -9,7 +9,7 @@
 	included by the main header "mmux-cc-types.h"  and it must not be included by
 	itself.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -352,6 +352,7 @@ mmux_standard_$1_cmp (mmux_standard_$1_t op1, mmux_standard_$1_t op2)
   }
 }]]])]]])
 m4_divert(0)m4_dnl
+DEFINE_STANDARD_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[ascii]]])
 DEFINE_STANDARD_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[char]]])
 DEFINE_STANDARD_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[schar]]])
 DEFINE_STANDARD_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[uchar]]])
@@ -434,6 +435,7 @@ mmux_$1_min (mmux_$1_t op1, mmux_$1_t op2)
   return mmux_$1(mmux_standard_$1_min(op1.value, op2.value));
 }]]])]]])
 m4_divert(0)m4_dnl
+DEFINE_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[ascii]]])
 DEFINE_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[char]]])
 DEFINE_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[schar]]])
 DEFINE_EXACT_INTEGER_COMPARISON_INLINE_FUNCTIONS([[[uchar]]])

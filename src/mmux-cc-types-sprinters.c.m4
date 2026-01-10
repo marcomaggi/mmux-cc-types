@@ -308,6 +308,7 @@ mmux_$1_sprint (mmux_asciizp_t strptr, mmux_usize_t len, mmux_$1_t value)
   }
 }]]])]]])
 
+DEFINE_INTEGER_SPRINTER([[[ascii]]],	[[["%c"]]])
 DEFINE_INTEGER_SPRINTER([[[char]]],	[[["%c"]]])
 DEFINE_INTEGER_SPRINTER([[[schar]]],	[[["%hhd"]]])
 DEFINE_INTEGER_SPRINTER([[[uchar]]],	[[["%hhu"]]])
@@ -718,8 +719,12 @@ mmux_pointer_sprint_with_base (mmux_asciizp_t bufptr, mmux_usize_t * buflen_p, b
 }
 
 m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
-DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])]]],[[[m4_dnl
-DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[ascii]]])
+DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])
+]]],[[[m4_dnl
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[ascii]]])
+DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[char]]])
+]]])
 
 DEFINE_SIGNED_INTEGER_SPRINTER_WITH_BASE([[[schar]]])
 DEFINE_UNSIGNED_INTEGER_SPRINTER_WITH_BASE([[[uchar]]])
@@ -816,6 +821,7 @@ m4_divert(0)m4_dnl
 /* ------------------------------------------------------------------ */
 
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[pointer]]])
+DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[ascii]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[char]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[schar]]])
 DEFINE_STREAM_AND_CHANNEL_PRINTERS([[[uchar]]])
@@ -981,8 +987,12 @@ mmux_pointer_dprintf_with_base (int fd, mmux_pointer_t op, mmux_uint_t const bas
 }
 
 m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
-DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[char]]])]]],[[[m4_dnl
-DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[char]]])]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ascii]]])
+DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[char]]])
+]]],[[[m4_dnl
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[ascii]]])
+DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[char]]])
+]]])
 
 DEFINE_SIGNED_INTEGER_DPRINTFER_WITH_BASE([[[schar]]])
 DEFINE_UNSIGNED_INTEGER_DPRINTFER_WITH_BASE([[[uchar]]])

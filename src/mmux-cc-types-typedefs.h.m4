@@ -41,6 +41,7 @@
 typedef void *			mmux_standard_pointer_t;
 typedef void const *		mmux_standard_pointerc_t;
 
+typedef char			mmux_standard_ascii_t;
 typedef char			mmux_standard_char_t;
 typedef signed char		mmux_standard_schar_t;
 typedef unsigned char		mmux_standard_uchar_t;
@@ -140,9 +141,15 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],
 #define mmux_standard_unsigned_literal(X)	(X ## U)
 #define mmux_standard_pointer_literal(X)	((mmux_standard_pointer_t) (mmux_standard_unsigned_literal(X)))
 #define mmux_standard_pointerc_literal(X)	((mmux_standard_pointerc_t)(mmux_standard_unsigned_literal(X)))
+
 m4_ifelse([[[MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4]]],[[[1]]],[[[m4_dnl
-#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(mmux_standard_unsigned_literal(X)))]]],[[[m4_dnl
-#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(X))]]])
+#define mmux_standard_ascii_literal(X)		((mmux_standard_char_t)(mmux_standard_unsigned_literal(X)))
+#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(mmux_standard_unsigned_literal(X)))
+]]],[[[m4_dnl
+#define mmux_standard_ascii_literal(X)		((mmux_standard_char_t)(X))
+#define mmux_standard_char_literal(X)		((mmux_standard_char_t)(X))
+]]])
+
 #define mmux_standard_schar_literal(X)		((mmux_standard_schar_t)(X))
 #define mmux_standard_uchar_literal(X)		((mmux_standard_uchar_t)(mmux_standard_unsigned_literal(X)))
 #define mmux_standard_sshort_literal(X)		((mmux_standard_sshort_t)(X))
@@ -274,10 +281,6 @@ typedef char const ***		mmux_asciizcppp_t;
  * pointer "result_p"  would mutate the  immutable field "value".  (Marco  Maggi; Aug
  * 15, 2025)
  */
-typedef struct mmux_char_t	{ mmux_standard_char_t		value; }	mmux_char_t;
-typedef struct mmux_schar_t	{ mmux_standard_schar_t		value; }	mmux_schar_t;
-typedef struct mmux_uchar_t	{ mmux_standard_uchar_t		value; }	mmux_uchar_t;
-
 typedef struct mmux_sshort_t	{ mmux_standard_sshort_t	value; }	mmux_sshort_t;
 typedef struct mmux_ushort_t	{ mmux_standard_ushort_t	value; }	mmux_ushort_t;
 typedef struct mmux_sint_t	{ mmux_standard_sint_t		value; }	mmux_sint_t;
@@ -354,6 +357,14 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonu
 
 typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
 typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
+
+typedef struct mmux_schar_t	{ mmux_sint8_t; }		mmux_schar_t;
+typedef struct mmux_uchar_t	{ mmux_uint8_t; }		mmux_uchar_t;
+typedef struct mmux_char_t      { m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,
+					    [[[mmux_uchar_t;]]],
+					    [[[mmux_schar_t;]]]) } mmux_char_t;
+
+typedef struct mmux_ascii_t	{ mmux_char_t; }		mmux_ascii_t;
 
 typedef struct mmux_ternary_comparison_result_t { mmux_sint_t; } mmux_ternary_comparison_result_t;
 
@@ -449,6 +460,7 @@ mmux_$1 (mmux_standard_$1_t the_value)
 }
 #define mmux_$1_literal(VALUE)		(mmux_$1(mmux_standard_$1_literal(VALUE)))]]])]]])
 m4_divert(0)m4_dnl
+DEFINE_TYPE_MAKERS(ascii)
 DEFINE_TYPE_MAKERS(char)
 DEFINE_TYPE_MAKERS(schar)
 DEFINE_TYPE_MAKERS(uchar)
@@ -557,6 +569,7 @@ typedef mmux_sint_t mmux_cc_types_comparison_$1_t (mmux_$1_t op1, mmux_$1_t op2)
 ]]])]]])
 m4_divert(0)m4_dnl
 DEFINE_PROTOTYPES_TYPEDEFS([[[pointer]]])
+DEFINE_PROTOTYPES_TYPEDEFS([[[ascii]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[char]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[schar]]])
 DEFINE_PROTOTYPES_TYPEDEFS([[[uchar]]])
@@ -758,6 +771,7 @@ typedef struct mmux_ptrc_asciiz_t {
 
 #define mmux_ctype_value(VALUE)						\
   (_Generic((VALUE),							\
+	   mmux_ascii_t:		((VALUE).value),		\
 	   mmux_char_t:			((VALUE).value),		\
            mmux_schar_t:		((VALUE).value),		\
            mmux_uchar_t:		((VALUE).value),		\

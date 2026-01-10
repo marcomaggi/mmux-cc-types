@@ -67,6 +67,10 @@
 @acronym{ASCII}
 @end macro
 
+@macro MmuxAscii{}
+@acronym{ASCII}
+@end macro
+
 @macro asciiz{}
 @acronym{ASCIIZ}
 @end macro

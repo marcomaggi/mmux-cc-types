@@ -133,6 +133,7 @@ DEFINE_UNARY_PREDICATE($1,	is_normal)
 m4_divert(0)m4_dnl
 
 DEFINE_PREDICATES([[[pointer]]])
+DEFINE_PREDICATES([[[ascii]]])
 DEFINE_PREDICATES([[[char]]])
 DEFINE_PREDICATES([[[schar]]])
 DEFINE_PREDICATES([[[uchar]]])
@@ -278,6 +279,7 @@ DEFINE_TERNARY_PREDICATE($1,	equal_relepsilon)
 m4_divert(0)m4_dnl
 
 DEFINE_COMPARISON_OPERATIONS([[[pointer]]])
+DEFINE_COMPARISON_OPERATIONS([[[ascii]]])
 DEFINE_COMPARISON_OPERATIONS([[[char]]])
 DEFINE_COMPARISON_OPERATIONS([[[schar]]])
 DEFINE_COMPARISON_OPERATIONS([[[uchar]]])
@@ -517,6 +519,7 @@ DEFINE_UNARY_OPERATION($1,	conjugate)
 
 m4_divert(0)m4_dnl
 
+DEFINE_COMPLEX_NUMBER_OPERATIONS([[[ascii]]])
 DEFINE_COMPLEX_NUMBER_OPERATIONS([[[char]]])
 DEFINE_COMPLEX_NUMBER_OPERATIONS([[[schar]]])
 DEFINE_COMPLEX_NUMBER_OPERATIONS([[[uchar]]])
@@ -644,6 +647,7 @@ mmux_pointer_sub_p (mmux_ptrdiff_t * rop, mmux_pointer_t * op1, mmux_pointer_t *
 
 /* ------------------------------------------------------------------ */
 
+DEFINE_ARITHMETIC_OPERATIONS([[[ascii]]])
 DEFINE_ARITHMETIC_OPERATIONS([[[char]]])
 DEFINE_ARITHMETIC_OPERATIONS([[[schar]]])
 DEFINE_ARITHMETIC_OPERATIONS([[[uchar]]])
@@ -898,6 +902,7 @@ mmux_pointer_bitwise_shr_p (mmux_pointer_t * rop, mmux_pointer_t * op1, mmux_sin
 
 /* ------------------------------------------------------------------ */
 
+DEFINE_BITWISE_OPERATIONS([[[ascii]]])
 DEFINE_BITWISE_OPERATIONS([[[char]]])
 DEFINE_BITWISE_OPERATIONS([[[schar]]])
 DEFINE_BITWISE_OPERATIONS([[[uchar]]])
@@ -992,6 +997,7 @@ mmux_$1_dprintf_with_base_p (int fd, mmux_$1_t const * value_ptr, mmux_uint_t co
 m4_divert(0)m4_dnl
 
 DEFINE_STRINGREP_OPERATIONS_INTEGER([[[pointer]]])
+DEFINE_STRINGREP_OPERATIONS_INTEGER([[[ascii]]])
 DEFINE_STRINGREP_OPERATIONS_INTEGER([[[char]]])
 DEFINE_STRINGREP_OPERATIONS_INTEGER([[[schar]]])
 DEFINE_STRINGREP_OPERATIONS_INTEGER([[[uchar]]])
@@ -1085,6 +1091,7 @@ DEFINE_STRINGREP_OPERATIONS([[[flonumcd128]]])
    about it.  (Marco Maggi; Jan 3, 2026) */
 #define mmux_ctype_sprint_p(BUFPTR,BUFLEN,VALUE_P) \
   (_Generic((VALUE_P),								\
+	   mmux_ascii_t *:		mmux_ascii_sprint_p,			\
 	   mmux_char_t *:		mmux_char_sprint_p,			\
            mmux_schar_t *:		mmux_schar_sprint_p,			\
            mmux_uchar_t *:		mmux_uchar_sprint_p,			\
@@ -1159,6 +1166,7 @@ DEFINE_STRINGREP_OPERATIONS([[[flonumcd128]]])
    about it.  (Marco Maggi; Jan 3, 2026) */
 #define mmux_ctype_sprint_size_p(REQUIRED_NBYTES_RESULT_P,VALUE_P)		\
   (_Generic((VALUE_P),								\
+	    mmux_ascii_t *:		mmux_ascii_sprint_size_p,		\
 	    mmux_char_t *:		mmux_char_sprint_size_p,		\
 	    mmux_schar_t *:		mmux_schar_sprint_size_p,		\
 	    mmux_uchar_t *:		mmux_uchar_sprint_size_p,		\
@@ -1233,6 +1241,7 @@ DEFINE_STRINGREP_OPERATIONS([[[flonumcd128]]])
    about it.  (Marco Maggi; Jan 3, 2026) */
 #define mmux_ctype_sprint_with_base_p(BUFPTR,BUFLEN_P,IS_NEGATIVE_P,VALUE_P,BASE)	\
   (_Generic((VALUE_P),									\
+	    mmux_ascii_t *:		mmux_ascii_sprint_with_base_p,			\
 	    mmux_char_t *:		mmux_char_sprint_with_base_p,			\
 	    mmux_schar_t *:		mmux_schar_sprint_with_base_p,			\
 	    mmux_uchar_t *:		mmux_uchar_sprint_with_base_p,			\
@@ -1285,6 +1294,7 @@ DEFINE_STRINGREP_OPERATIONS([[[flonumcd128]]])
    about it.  (Marco Maggi; Jan 3, 2026) */
 #define mmux_ctype_dprintf_with_base_p(FD,VALUE_P,BASE)					\
   (_Generic((VALUE_P),									\
+	    mmux_ascii_t *:		mmux_ascii_dprintf_with_base_p,			\
 	    mmux_char_t *:		mmux_char_dprintf_with_base_p,			\
 	    mmux_schar_t *:		mmux_schar_dprintf_with_base_p,			\
 	    mmux_uchar_t *:		mmux_uchar_dprintf_with_base_p,			\
