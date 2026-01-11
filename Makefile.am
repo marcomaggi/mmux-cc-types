@@ -67,6 +67,12 @@ info_TEXINFOS		= doc/mmux-cc-types.texi
 EXTRA_DIST		+= doc/mmux-cc-types.style.css
 CLEANFILES		+= doc/mmux-cc-types.css
 
+# NOTE When using the GNU Automake option "info-in-builddir" I see the
+# Info  files  left   in  the  build  directory   when  running  "make
+# distcheck"; it  should not happen,  IMHO, but  it does.  So  I clean
+# them here.  (Marco Maggi; Jan 11, 2026)
+CLEANFILES		+= $(top_builddir)/doc/mmux-cc-types.info*
+
 doc_mmux_cc_types_TEXINFOS	= \
 	doc/macros.texi			\
 	doc/overview-linking.texi	\

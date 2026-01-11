@@ -9,7 +9,7 @@ AC_INIT([MMUX CC Types],[MMUX_PACKAGE_VERSION],
 MMUX_INIT
 MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_cc_types],0,0,0)
 AC_REVISION([0.1])
-AC_COPYRIGHT([Copyright (c) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+AC_COPYRIGHT([Copyright (c) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it
 under  the  terms of  the GNU  General Public  License as  published  by
@@ -32,7 +32,7 @@ AC_USE_SYSTEM_EXTENSIONS
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
-AM_INIT_AUTOMAKE([1.17 foreign subdir-objects])
+AM_INIT_AUTOMAKE([1.17 foreign subdir-objects info-in-builddir])
 AM_MAINTAINER_MODE
 
 AM_PROG_AR
