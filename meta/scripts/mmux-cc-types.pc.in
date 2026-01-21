@@ -21,6 +21,7 @@ sysconfdir=@sysconfdir@
 Name: @PACKAGE_NAME@
 Description: C11 language types for higher-level platforms
 Version: @MMUX_PKG_CONFIG_VERSION@
+# Requires: libdfp >= 1.0.16
 Libs: -L${libdir} -lmmux-cc-types
 Cflags: -I${includedir}
 
