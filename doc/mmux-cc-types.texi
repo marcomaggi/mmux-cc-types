@@ -168,6 +168,7 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 * arithmetics::                 Arithmetical operations.
 * mathematics::                 Mathematical operations.
 * bitwise::                     Bitwise operations.
+* conversion::                  Conversion between types.
 * generic::                     Miscellaneous generic macros.
 * misc::                        Miscellaneous definitions.
 
@@ -5766,6 +5767,35 @@ Perform the bitwise operations.
 @MmuxDefineBitwiseFuncs{libc_dev}
 @MmuxDefineBitwiseFuncs{libc_nlink}
 @MmuxDefineBitwiseFuncs{libc_blkcnt}
+
+@c page
+@node conversion
+@chapter Conversion between types
+
+
+@menu
+* conversion integers::         Conversion between integer types.
+@end menu
+
+@c page
+@node conversion integers
+@section Conversion between integer types
+
+
+@deftypefun bool mmux_ptrdiff_from_usize (mmux_ptrdiff_t * @var{ouput_p}, mmux_usize_t @var{input})
+Convert a @samp{usize} value to a @samp{ptrdiff} value.  Notice that it is possible that
+@cfunc{mmux_ptrdiff_constant_maximum} returns a value that is less than the value returned by
+@cfunc{mmux_usize_constant_maximum}: so this value can actually fail and return @ctrue{}.
+
+@example
+mmux_ptrdiff_t  ouput;
+auto            input = mmux_usize_literal(123);
+
+if (mmux_ptrdiff_from_usize(&ouput, input)) @{
+  /* Conversion error. */
+@}
+@end example
+@end deftypefun
 
 @c page
 @node generic

@@ -224,6 +224,7 @@ EXTRA_DIST	+= \
 	src/mmux-cc-types-comparison.h.m4		\
 	src/mmux-cc-types-complex-numbers.h.m4		\
 	src/mmux-cc-types-constants.h.m4		\
+	src/mmux-cc-types-conversion.h.m4		\
 	src/mmux-cc-types-mathematics.h.m4		\
 	src/mmux-cc-types-pointers-api.h.m4		\
 	src/mmux-cc-types-real-numbers.h.m4		\
@@ -251,6 +252,7 @@ MMUX_CC_TYPES_BUILT_SOURCES	= \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-conversion.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
@@ -286,6 +288,7 @@ include_HEADERS			+= \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-conversion.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
@@ -309,6 +312,7 @@ libmmux_cc_types_la_SOURCES	= \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-conversion.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\
@@ -358,6 +362,7 @@ src/%.$(OBJEXT): \
 	src/mmux-cc-types-comparison.h			\
 	src/mmux-cc-types-complex-numbers.h		\
 	src/mmux-cc-types-constants.h			\
+	src/mmux-cc-types-conversion.h			\
 	src/mmux-cc-types-mathematics.h			\
 	src/mmux-cc-types-pointers-api.h		\
 	src/mmux-cc-types-real-numbers.h		\

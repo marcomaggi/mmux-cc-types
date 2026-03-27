@@ -88,6 +88,7 @@ mmux_cc_types_ignore_retval (bool statement MMUX_CC_TYPES_UNUSED)
 #include <mmux-cc-types-real-numbers.h>
 #include <mmux-cc-types-stringrep.h>
 #include <mmux-cc-types-pointers-api.h>
+#include <mmux-cc-types-conversion.h>
 
 
 /** --------------------------------------------------------------------
