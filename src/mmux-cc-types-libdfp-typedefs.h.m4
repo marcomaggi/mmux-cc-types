@@ -7,7 +7,7 @@
 
 	Type definitions for "_DecimalN" support.
 
-  Copyright (C) 2024, 2025 Marco Maggi <mrc.mgg@gmail.com>
+  Copyright (C) 2024, 2025, 2026 Marco Maggi <mrc.mgg@gmail.com>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -55,15 +55,15 @@ m4_divert(-1)
 m4_define([[[DEFINE_LIBDFP_TYPE]]],[[[MMUX_CONDITIONAL_CODE_FOR_TYPE_STEM([[[flonumd$1]]],[[[m4_dnl
 __extension__ typedef _Decimal$1	mmux_standard_flonumd$1_t;
 
-typedef struct mmux_standard_flonumcd$1_t {
+mmux_cc_types_structdef mmux_standard_flonumcd$1_t {
   mmux_standard_flonumd$1_t	re;
   mmux_standard_flonumd$1_t	im;
 } mmux_standard_flonumcd$1_t;
 
 typedef mmux_standard_flonumd$1_t		mmux_standard_flonumcd$1_part_t;
 
-typedef struct mmux_flonumd$1_t	 { mmux_standard_flonumd$1_t	value; } mmux_flonumd$1_t;
-typedef struct mmux_flonumcd$1_t { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
+mmux_cc_types_structdef mmux_flonumd$1_t   { mmux_standard_flonumd$1_t	value; } mmux_flonumd$1_t;
+mmux_cc_types_structdef mmux_flonumcd$1_t  { mmux_standard_flonumcd$1_t	value; } mmux_flonumcd$1_t;
 typedef mmux_flonumd$1_t	mmux_flonumcd$1_part_t;
 ]]])]]])
 m4_divert(0)m4_dnl

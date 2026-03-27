@@ -329,7 +329,10 @@ DEFINE_SLLONG_UNARY_INLINE_FUNCTION($1,	llround)
 mmux_cc_types_inline_decl mmux_$1_t
 mmux_$1_modf (mmux_$1_t op, mmux_$1_t * integer_part_p)
 {
+  _Pragma("GCC diagnostic push");
+  _Pragma("GCC diagnostic ignored \"-Waddress-of-packed-member\"");
   return mmux_$1(mmux_standard_$1_modf(op.value, &(integer_part_p->value)));
+  _Pragma("GCC diagnostic pop");
 }
 ]]])]]])
 m4_divert(0)

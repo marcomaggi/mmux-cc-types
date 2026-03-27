@@ -281,65 +281,69 @@ typedef char const ***		mmux_asciizcppp_t;
  * pointer "result_p"  would mutate the  immutable field "value".  (Marco  Maggi; Aug
  * 15, 2025)
  */
-typedef struct mmux_sshort_t	{ mmux_standard_sshort_t	value; }	mmux_sshort_t;
-typedef struct mmux_ushort_t	{ mmux_standard_ushort_t	value; }	mmux_ushort_t;
-typedef struct mmux_sint_t	{ mmux_standard_sint_t		value; }	mmux_sint_t;
-typedef struct mmux_uint_t	{ mmux_standard_uint_t		value; }	mmux_uint_t;
-typedef struct mmux_slong_t	{ mmux_standard_slong_t		value; }	mmux_slong_t;
-typedef struct mmux_ulong_t	{ mmux_standard_ulong_t		value; }	mmux_ulong_t;
+
+#undef  mmux_cc_types_structdef
+#define mmux_cc_types_structdef		typedef struct __attribute__((__packed__))
+
+mmux_cc_types_structdef mmux_sshort_t	{ mmux_standard_sshort_t	value; }	mmux_sshort_t;
+mmux_cc_types_structdef mmux_ushort_t	{ mmux_standard_ushort_t	value; }	mmux_ushort_t;
+mmux_cc_types_structdef mmux_sint_t	{ mmux_standard_sint_t		value; }	mmux_sint_t;
+mmux_cc_types_structdef mmux_uint_t	{ mmux_standard_uint_t		value; }	mmux_uint_t;
+mmux_cc_types_structdef mmux_slong_t	{ mmux_standard_slong_t		value; }	mmux_slong_t;
+mmux_cc_types_structdef mmux_ulong_t	{ mmux_standard_ulong_t		value; }	mmux_ulong_t;
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_SLLONG]]],[[[m4_dnl
-typedef struct mmux_sllong_t	{ mmux_standard_sllong_t	value; }	mmux_sllong_t;]]])
+mmux_cc_types_structdef mmux_sllong_t	{ mmux_standard_sllong_t	value; }	mmux_sllong_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_ULLONG]]],[[[
-typedef struct mmux_ullong_t	{ mmux_standard_ullong_t	value; }	mmux_ullong_t;]]])
+mmux_cc_types_structdef mmux_ullong_t	{ mmux_standard_ullong_t	value; }	mmux_ullong_t;]]])
 
-typedef struct mmux_sint8_t	{ mmux_standard_sint8_t		value; }	mmux_sint8_t;
-typedef struct mmux_uint8_t	{ mmux_standard_uint8_t		value; }	mmux_uint8_t;
-typedef struct mmux_sint16_t	{ mmux_standard_sint16_t	value; }	mmux_sint16_t;
-typedef struct mmux_uint16_t	{ mmux_standard_uint16_t	value; }	mmux_uint16_t;
-typedef struct mmux_sint32_t	{ mmux_standard_sint32_t	value; }	mmux_sint32_t;
-typedef struct mmux_uint32_t	{ mmux_standard_uint32_t	value; }	mmux_uint32_t;
-typedef struct mmux_sint64_t	{ mmux_standard_sint64_t	value; }	mmux_sint64_t;
-typedef struct mmux_uint64_t	{ mmux_standard_uint64_t	value; }	mmux_uint64_t;
+mmux_cc_types_structdef mmux_sint8_t	{ mmux_standard_sint8_t		value; }	mmux_sint8_t;
+mmux_cc_types_structdef mmux_uint8_t	{ mmux_standard_uint8_t		value; }	mmux_uint8_t;
+mmux_cc_types_structdef mmux_sint16_t	{ mmux_standard_sint16_t	value; }	mmux_sint16_t;
+mmux_cc_types_structdef mmux_uint16_t	{ mmux_standard_uint16_t	value; }	mmux_uint16_t;
+mmux_cc_types_structdef mmux_sint32_t	{ mmux_standard_sint32_t	value; }	mmux_sint32_t;
+mmux_cc_types_structdef mmux_uint32_t	{ mmux_standard_uint32_t	value; }	mmux_uint32_t;
+mmux_cc_types_structdef mmux_sint64_t	{ mmux_standard_sint64_t	value; }	mmux_sint64_t;
+mmux_cc_types_structdef mmux_uint64_t	{ mmux_standard_uint64_t	value; }	mmux_uint64_t;
 
-typedef struct mmux_flonumfl_t	{ mmux_standard_flonumfl_t		value; }	mmux_flonumfl_t;
-typedef struct mmux_flonumdb_t	{ mmux_standard_flonumdb_t		value; }	mmux_flonumdb_t;
+mmux_cc_types_structdef mmux_flonumfl_t	{ mmux_standard_flonumfl_t		value; }	mmux_flonumfl_t;
+mmux_cc_types_structdef mmux_flonumdb_t	{ mmux_standard_flonumdb_t		value; }	mmux_flonumdb_t;
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMLDB]]],  [[[m4_dnl
-typedef struct mmux_flonumldb_t	{ mmux_standard_flonumldb_t		value; }	mmux_flonumldb_t;]]])
+mmux_cc_types_structdef mmux_flonumldb_t	{ mmux_standard_flonumldb_t		value; }	mmux_flonumldb_t;]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32]]],   [[[m4_dnl
-typedef struct mmux_flonumf32_t	{ mmux_standard_flonumf32_t		value; }	mmux_flonumf32_t;]]])
+mmux_cc_types_structdef mmux_flonumf32_t	{ mmux_standard_flonumf32_t		value; }	mmux_flonumf32_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64]]],   [[[m4_dnl
-typedef struct mmux_flonumf64_t	{ mmux_standard_flonumf64_t		value; }	mmux_flonumf64_t;]]])
+mmux_cc_types_structdef mmux_flonumf64_t	{ mmux_standard_flonumf64_t		value; }	mmux_flonumf64_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128]]],  [[[m4_dnl
-typedef struct mmux_flonumf128_t	{ mmux_standard_flonumf128_t	value; }	mmux_flonumf128_t;]]])
+mmux_cc_types_structdef mmux_flonumf128_t	{ mmux_standard_flonumf128_t	value; }	mmux_flonumf128_t;]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF32X]]],  [[[m4_dnl
-typedef struct mmux_flonumf32x_t	{ mmux_standard_flonumf32x_t	value; }	mmux_flonumf32x_t;]]])
+mmux_cc_types_structdef mmux_flonumf32x_t	{ mmux_standard_flonumf32x_t	value; }	mmux_flonumf32x_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF64X]]],  [[[m4_dnl
-typedef struct mmux_flonumf64x_t	{ mmux_standard_flonumf64x_t	value; }	mmux_flonumf64x_t;]]])
+mmux_cc_types_structdef mmux_flonumf64x_t	{ mmux_standard_flonumf64x_t	value; }	mmux_flonumf64x_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMF128X]]], [[[m4_dnl
-typedef struct mmux_flonumf128x_t	{ mmux_standard_flonumf128x_t	value; }	mmux_flonumf128x_t;]]])
+mmux_cc_types_structdef mmux_flonumf128x_t	{ mmux_standard_flonumf128x_t	value; }	mmux_flonumf128x_t;]]])
 
 /* ------------------------------------------------------------------ */
 
-typedef struct mmux_flonumcfl_t	{ mmux_standard_flonumcfl_t	value; }	mmux_flonumcfl_t;
-typedef struct mmux_flonumcdb_t	{ mmux_standard_flonumcdb_t	value; }	mmux_flonumcdb_t;
+mmux_cc_types_structdef mmux_flonumcfl_t	{ mmux_standard_flonumcfl_t	value; }	mmux_flonumcfl_t;
+mmux_cc_types_structdef mmux_flonumcdb_t	{ mmux_standard_flonumcdb_t	value; }	mmux_flonumcdb_t;
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCLDB]]],  [[[m4_dnl
-typedef struct mmux_flonumcldb_t	{ mmux_standard_flonumcldb_t	value; }	mmux_flonumcldb_t;]]])
+mmux_cc_types_structdef mmux_flonumcldb_t	{ mmux_standard_flonumcldb_t	value; }	mmux_flonumcldb_t;]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32]]], [[[m4_dnl
-typedef struct mmux_flonumcf32_t { mmux_standard_flonumcf32_t	value; }      mmux_flonumcf32_t;]]])
+mmux_cc_types_structdef mmux_flonumcf32_t { mmux_standard_flonumcf32_t	value; }      mmux_flonumcf32_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64]]], [[[m4_dnl
-typedef struct mmux_flonumcf64_t { mmux_standard_flonumcf64_t	value; }      mmux_flonumcf64_t;]]])
+mmux_cc_types_structdef mmux_flonumcf64_t { mmux_standard_flonumcf64_t	value; }      mmux_flonumcf64_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128]]],[[[m4_dnl
-typedef struct mmux_flonumcf128_t { mmux_standard_flonumcf128_t	value; }      mmux_flonumcf128_t;]]])
+mmux_cc_types_structdef mmux_flonumcf128_t { mmux_standard_flonumcf128_t	value; }      mmux_flonumcf128_t;]]])
 
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF32X]]], [[[m4_dnl
-typedef struct mmux_flonumcf32x_t { mmux_standard_flonumcf32x_t	value; }      mmux_flonumcf32x_t;]]])
+mmux_cc_types_structdef mmux_flonumcf32x_t { mmux_standard_flonumcf32x_t	value; }      mmux_flonumcf32x_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF64X]]], [[[m4_dnl
-typedef struct mmux_flonumcf64x_t { mmux_standard_flonumcf64x_t value; }      mmux_flonumcf64x_t;]]])
+mmux_cc_types_structdef mmux_flonumcf64x_t { mmux_standard_flonumcf64x_t value; }      mmux_flonumcf64x_t;]]])
 MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[m4_dnl
-typedef struct mmux_flonumcf128x_t { mmux_standard_flonumcf128x_t value; }	mmux_flonumcf128x_t;]]])
+mmux_cc_types_structdef mmux_flonumcf128x_t { mmux_standard_flonumcf128x_t value; }	mmux_flonumcf128x_t;]]])
 
 typedef mmux_flonumfl_t		mmux_flonumcfl_part_t;
 typedef mmux_flonumdb_t		mmux_flonumcdb_part_t;
@@ -355,42 +359,42 @@ MMUX_CONDITIONAL_CODE([[[MMUX_CC_TYPES_HAS_FLONUMCF128X]]],[[[typedef mmux_flonu
 
 /* ------------------------------------------------------------------ */
 
-typedef struct mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
-typedef struct mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
+mmux_cc_types_structdef mmux_byte_t	{ mmux_sint8_t; }		mmux_byte_t;
+mmux_cc_types_structdef mmux_octet_t	{ mmux_uint8_t; }		mmux_octet_t;
 
-typedef struct mmux_schar_t	{ mmux_sint8_t; }		mmux_schar_t;
-typedef struct mmux_uchar_t	{ mmux_uint8_t; }		mmux_uchar_t;
-typedef struct mmux_char_t      { m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,
+mmux_cc_types_structdef mmux_schar_t	{ mmux_sint8_t; }		mmux_schar_t;
+mmux_cc_types_structdef mmux_uchar_t	{ mmux_uint8_t; }		mmux_uchar_t;
+mmux_cc_types_structdef mmux_char_t      { m4_ifelse(MMUX_CC_TYPES_CHAR_IS_UNSIGNED_M4,1,
 					    [[[mmux_uchar_t;]]],
 					    [[[mmux_schar_t;]]]) } mmux_char_t;
 
-typedef struct mmux_ascii_t	{ mmux_char_t; }		mmux_ascii_t;
+mmux_cc_types_structdef mmux_ascii_t	{ mmux_char_t; }		mmux_ascii_t;
 
-typedef struct mmux_ternary_comparison_result_t { mmux_sint_t; } mmux_ternary_comparison_result_t;
+mmux_cc_types_structdef mmux_ternary_comparison_result_t { mmux_sint_t; } mmux_ternary_comparison_result_t;
 
-typedef struct mmux_ssize_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
-typedef struct mmux_usize_t		{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
-typedef struct mmux_sintmax_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sintmax_t;
-typedef struct mmux_uintmax_t		{ MMUX_CC_TYPES_TYPE_ALIAS_UINTMAX;	}     mmux_uintmax_t;
-typedef struct mmux_sintptr_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SINTPTR;	}     mmux_sintptr_t;
-typedef struct mmux_uintptr_t		{ MMUX_CC_TYPES_TYPE_ALIAS_UINTPTR;	}     mmux_uintptr_t;
-typedef struct mmux_libc_mode_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_MODE;	}     mmux_libc_mode_t;
-typedef struct mmux_off_t		{ MMUX_CC_TYPES_TYPE_ALIAS_OFF;		}     mmux_off_t;
-typedef struct mmux_libc_pid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_PID;	}     mmux_libc_pid_t;
-typedef struct mmux_libc_uid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_UID;	}     mmux_libc_uid_t;
-typedef struct mmux_libc_gid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_GID;	}     mmux_libc_gid_t;
-typedef struct mmux_ptrdiff_t		{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
-typedef struct mmux_wchar_t		{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
-typedef struct mmux_wint_t		{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
-typedef struct mmux_time_t		{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
-typedef struct mmux_clock_t		{ MMUX_CC_TYPES_TYPE_ALIAS_CLOCK;	}     mmux_clock_t;
-typedef struct mmux_libc_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_SOCKLEN;}     mmux_libc_socklen_t;
-typedef struct mmux_libc_rlim_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_RLIM;	}     mmux_libc_rlim_t;
+mmux_cc_types_structdef mmux_ssize_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SSIZE;	}     mmux_ssize_t;
+mmux_cc_types_structdef mmux_usize_t		{ MMUX_CC_TYPES_TYPE_ALIAS_USIZE;	}     mmux_usize_t;
+mmux_cc_types_structdef mmux_sintmax_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SINTMAX;	}     mmux_sintmax_t;
+mmux_cc_types_structdef mmux_uintmax_t		{ MMUX_CC_TYPES_TYPE_ALIAS_UINTMAX;	}     mmux_uintmax_t;
+mmux_cc_types_structdef mmux_sintptr_t		{ MMUX_CC_TYPES_TYPE_ALIAS_SINTPTR;	}     mmux_sintptr_t;
+mmux_cc_types_structdef mmux_uintptr_t		{ MMUX_CC_TYPES_TYPE_ALIAS_UINTPTR;	}     mmux_uintptr_t;
+mmux_cc_types_structdef mmux_libc_mode_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_MODE;	}     mmux_libc_mode_t;
+mmux_cc_types_structdef mmux_off_t		{ MMUX_CC_TYPES_TYPE_ALIAS_OFF;		}     mmux_off_t;
+mmux_cc_types_structdef mmux_libc_pid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_PID;	}     mmux_libc_pid_t;
+mmux_cc_types_structdef mmux_libc_uid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_UID;	}     mmux_libc_uid_t;
+mmux_cc_types_structdef mmux_libc_gid_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_GID;	}     mmux_libc_gid_t;
+mmux_cc_types_structdef mmux_ptrdiff_t		{ MMUX_CC_TYPES_TYPE_ALIAS_PTRDIFF;	}     mmux_ptrdiff_t;
+mmux_cc_types_structdef mmux_wchar_t		{ MMUX_CC_TYPES_TYPE_ALIAS_WCHAR;	}     mmux_wchar_t;
+mmux_cc_types_structdef mmux_wint_t		{ MMUX_CC_TYPES_TYPE_ALIAS_WINT;	}     mmux_wint_t;
+mmux_cc_types_structdef mmux_time_t		{ MMUX_CC_TYPES_TYPE_ALIAS_TIME;	}     mmux_time_t;
+mmux_cc_types_structdef mmux_clock_t		{ MMUX_CC_TYPES_TYPE_ALIAS_CLOCK;	}     mmux_clock_t;
+mmux_cc_types_structdef mmux_libc_socklen_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_SOCKLEN;}     mmux_libc_socklen_t;
+mmux_cc_types_structdef mmux_libc_rlim_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_RLIM;	}     mmux_libc_rlim_t;
 
-typedef struct mmux_libc_ino_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_INO;	}     mmux_libc_ino_t;
-typedef struct mmux_libc_dev_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_DEV;	}     mmux_libc_dev_t;
-typedef struct mmux_libc_nlink_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_NLINK;	}     mmux_libc_nlink_t;
-typedef struct mmux_libc_blkcnt_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_BLKCNT;	}     mmux_libc_blkcnt_t;
+mmux_cc_types_structdef mmux_libc_ino_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_INO;	}     mmux_libc_ino_t;
+mmux_cc_types_structdef mmux_libc_dev_t		{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_DEV;	}     mmux_libc_dev_t;
+mmux_cc_types_structdef mmux_libc_nlink_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_NLINK;	}     mmux_libc_nlink_t;
+mmux_cc_types_structdef mmux_libc_blkcnt_t	{ MMUX_CC_TYPES_TYPE_ALIAS_LIBC_BLKCNT;	}     mmux_libc_blkcnt_t;
 
 
 /** --------------------------------------------------------------------
